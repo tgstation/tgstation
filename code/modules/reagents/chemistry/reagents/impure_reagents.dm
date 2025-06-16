@@ -7,7 +7,7 @@
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from suboptimal reactions. Causes mild liver damage"
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
-	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT | REAGENT_CAN_BE_SYNTHESIZED //impure can be synthed, and is one of the only ways to get almost pure impure
+	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_CAN_BE_SYNTHESIZED //impure can be synthed, and is one of the only ways to get almost pure impure
 	ph = 3
 	inverse_chem = null
 	inverse_chem_val = 0
@@ -32,7 +32,7 @@
 	name = "Toxic Monomers"
 	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
 	ph = 2
-	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //Inverse generally cannot be synthed - they're difficult to get
+	chemical_flags = REAGENT_SNEAKYNAME //Inverse generally cannot be synthed - they're difficult to get
 	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
 	inverse_chem = null
 	///how much this reagent does for tox damage too
@@ -64,7 +64,7 @@
 	name = "Eigenswap"
 	description = "This reagent is known to swap the handedness of a patient."
 	ph = 3.3
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	tox_damage = 0
 
 /datum/reagent/inverse/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
@@ -94,18 +94,26 @@
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
-	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT | REAGENT_UNAFFECTED_BY_METABOLISM
+	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_UNAFFECTED_BY_METABOLISM
 	metabolization_rate = 1 * REM
 
-/datum/reagent/inverse/cryostylane/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+/datum/reagent/inverse/cryostylane/on_transfer(atom/transfered_thing, methods, trans_volume)
 	. = ..()
-	if(HAS_TRAIT(exposed_mob, TRAIT_RESISTCOLD))
+	if(methods & INGEST)
+		return
+
+	if(!ishuman(transfered_thing))
+		return
+
+	var/mob/living/carbon/human/human_thing = transfered_thing
+
+	if(HAS_TRAIT(human_thing, TRAIT_RESISTCOLD))
 		holder.remove_reagent(type, volume)
 		return
-	if(!(methods & INGEST))
-		exposed_mob.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
-		if(!exposed_mob.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
-			exposed_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
+
+	human_thing.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
+	if(!human_thing.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
+		human_thing.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

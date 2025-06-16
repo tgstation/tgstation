@@ -1,0 +1,362 @@
+2025-06-01:
+  Rhials:
+  - spellcheck: Diamond material statue names are no longer punctuated.
+  carlarctg:
+  - code_imp: Adds support for PVP Bitrunning Domains
+  hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  necromanceranne:
+  - map: Opens up sections of Nebulastation's medical department to allow for greater
+      visibility into and out of medical.
+2025-06-02:
+  00-Steven:
+  - bugfix: PDA painters no longer break the visuals of any PDAs painted with them.
+  - bugfix: Placing an item on a table/turf via the alt-click menu actually centers
+      it, again.
+  - bugfix: Certain items, like canvases or syringe guns, are no longer weirdly offset
+      when placed on tables.
+  - bugfix: Placing items on racks, closets, crates, hoops, beds, conveyor belts,
+      and pin the tail corgi posters is animated again, instead of instantly teleporting
+      followed by the pickup animation.
+  - bugfix: Placing a canvas on an easels no longer applies a random offset as if
+      dropped.
+  - bugfix: Tucking in someone else actually animates the bedsheet from you to them,
+      instead of from them to them.
+  - qol: Placing a canvas on an easel is animated.
+  Ezel:
+  - bugfix: Catwalk ordnance cycling airlocks properly cycle again.
+  Ghommie:
+  - refactor: Refactored crafting backend. Report possible pesky bugs.
+  - balance: the MEAT backpack (from the MEAT cargo pack) may be a smidge different
+      because of code standardization.
+  JohnFulpWillard:
+  - qol: internal tanks gives a progress bar when you toggle them, allowing you to
+      see how much you've consumed so far.
+  - refactor: Cyborg's modules now use storage (so opening a bag will close modules
+      instead of overlap one over the other).
+  - qol: Observers can now see Cyborg's inventories (like they can for humans).
+  - bugfix: The title bar is back for non-fullscreen users.
+  - qol: The escape menu no longer blurs the game in the background.
+  - qol: The escape menu now has a more readable font, and the escape menu's back
+      button is now smaller and in the corner.
+  Melbert:
+  - bugfix: Cleaning a mob cleans all of their equipment again
+  SmArtKar:
+  - bugfix: Certain emotes (like twitching) no longer stop all ontoing animations
+  - bugfix: Fixed revolver reloading, again
+  - bugfix: Fixed speed potions behaving super inconsistently on magboots, duffelbags
+      and laptops
+  SmArtKar, MrMelbert:
+  - rscadd: Some bloodtypes now have unique behavior, such as liquid electricity blood
+      glowing in the dark, podpeople "water-blood" not staining items or turfs, and
+      oil not transferring viruses.
+  - rscadd: Non-blood blood now contains DNA, meaning that, for example, Ethereal
+      blood works just fine for making a vaccine in a PANDEMIC machine.
+  - rscadd: Cyborgs and bots can now leave bloody (or oily) tracks if their wheels
+      get stained.
+  - balance: Slimepeople are now capable of bleeding (slime jelly), be careful with
+      knives!
+  - balance: Oil blood now requires welding fuel to be restored, slime jelly can be
+      restored with stable plasma and snail lube with silicon (previously all 3 were
+      affected by iron). Saline solution no longer works on non-iron-based blood.
+  - bugfix: Mindless monkeys and big manipulators should be able to harvest replica
+      pods now.
+  - bugfix: Reagents that went inside of a mob no longer lose some of their properties
+      when sucked back out.
+  - bugfix: Burdened chaplain's blessing now properly plays its SFX and grants a moodlet
+      when successful, instead of doing so upon failure.
+  - code_imp: Optimized human rendering slightly.
+  - refactor: Species reagent interactions now are fully handled by their livers.
+  - refactor: Refactored all blood decals and a lot of mob blood handling code, report
+      if anything is broken!
+  TealSeer:
+  - server: increment DB schema version to 5.32
+  - server: changed column name in manifest table from character to character_name
+      because the former is a reserved word
+  - bugfix: changed round start manifest DB queries from dozens of individual inserts
+      to one mass insert
+  - bugfix: hopefully fixed some lag on round start
+  Y0SH1M4S73R:
+  - bugfix: Fixes assembly shells not taking power from machines/mechs/borgs instead
+      of needing a cell when attached to such things. Did you know this was supposed
+      to be a feature, but didn't work for who-knows-how-long?
+  - bugfix: If you find a custom shuttle flight control console that was created by
+      an admin or loaded as part of the map, you can dismantle it with a screwdriver.
+  necromanceranne:
+  - balance: Caged mechs cannot accept silicon pilots. AI uploaded pilots, AI control
+      beacons, MMIs or positronics. Malfunctioning AIs can still dominate these mechs.
+  - code_imp: Allows for a higher degree of granularity for what mechs can and cannot
+      accept by including additoinal mecha flags to block beacon type installations,
+      pilot uploads and so on.
+2025-06-03:
+  Ezel:
+  - bugfix: fixes a pixel on the HFR fuel input box
+  SyncIt21:
+  - bugfix: create object panel for game admins works again
+  Tostah:
+  - bugfix: Ninja Camera Vision module now correctly applies welding protection.
+2025-06-05:
+  ArrisFairburne:
+  - qol: monkey cube boxes can now be inserted straight into the xenobiology console
+  - qol: placing/sucking slimes/monkeys is slightly less text spammy
+  Ezel:
+  - bugfix: Adds missing HFR fuel input box to catwalk
+  - map: Tidies catwalk HFR room a bit
+  - bugfix: fixes wawa ordnance cycle issue
+  - map: adds a binary pump to catwalk ordnance"
+  TealSeer:
+  - bugfix: fixed infinite credit exploit in spacebet app
+  TheRealSpriteMan1337:
+  - image: Changes the footstep sprite from Unconsciousness and Blindness.
+  Y0SH1M4S73R:
+  - map: Catwalk Station's tech storage now has the same collection of shuttle parts
+      that other stations do.
+  carlarctg:
+  - rscadd: Added bloodroaches, a rare variant of cockroaches that explode into a
+      shower of blood when squashed.
+2025-06-06:
+  Absolucy:
+  - balance: Changeling Void Adaptation no longer fully negates their breathing -
+      instead, it removes their NEED to breathe oxygen, but they will still breathe,
+      meaning they'll still be affected by gases such as N2O and BZ.
+  Bisar:
+  - code_imp: A proc has been added to the subsystem for ID access to serve to standardize
+      the way information is read and returned from a given ID.
+2025-06-08:
+  Absolucy:
+  - spellcheck: 'PR announcements should now say "X merged by Y: ..." instead of "X
+      merged Y: ..."'
+  Ghommie:
+  - bugfix: 'Fixed fishing lines bugging out if the target falls down a z-level.
+
+      fix Fixed offspring fish not showing the colors of the material they''re made
+      of.'
+  Jacquerel:
+  - qol: ghost candidates for blackout drunk are selected more quickly
+  - bugfix: Small stacking mobs like mice and bees will attempt to spread out visually
+      within their tile as soon as they spawn rather than just when moving
+  JohnFulpWillard:
+  - bugfix: Users with runechat disabled now get their balloon alerts in chat instead.
+  - bugfix: Scarves, hats and glasses now fit monkeys better.
+  Majkl-J:
+  - bugfix: Your mom now correctly turns around when running after her disappointment
+      of a child
+  Melbert:
+  - balance: Paddy is 2.5x slower
+  - rscadd: Adds airlock pumps to all external airlocks on Deltastation
+  - qol: Airlock pumps will unbolt their linked airlocks on losing power, allowing
+      them to be forced through
+  - rscadd: Adds airlock pumps to all external airlocks on Metastation
+  - qol: Airlock pumps work on L shaped airlocks, assuming [the airlocks] are already
+      linked.
+  SmArtKar:
+  - bugfix: Fixed the "Alert Admins" button not allowing you to click it
+  - bugfix: Fixed holy hoverboards being able to gain speed boosts via move intent
+      changing while in space
+  - rscadd: Androids and fully augmented humans now drop robotic gibs instead of meat
+  - rscadd: Improved gibber VFX
+  - bugfix: Fixed gibber overlays being darker than intended
+  - bugfix: Fixed xenomorph and lizard meat leaving orange trails behind
+  - code_imp: Improved gibs and gibspawner code
+  TealSeer:
+  - bugfix: fixed runtimes with splashing ants and uranium onto tiles
+  - bugfix: fixed broken GAGS icons in the crafting menu
+  Xander3359:
+  - bugfix: Healium crystals properly work in a 7 range AOE
+  carpotoxin:
+  - code_imp: bots use their correct pronouns, if given any, in their tooltips
+2025-06-09:
+  00-Steven:
+  - refactor: Refactored the book interaction chain. Please report any issues.
+  - bugfix: You can no longer vandalize carved out books if you carve it after opening
+      the input menu but before entering anything.
+  - qol: Added screentips to book interactions.
+  - qol: Added screentips to barcode scanner interactions.
+  - qol: Carving out books no longer uses combat mode, instead using left-click by
+      default and right-click if your tool can also write. Screentips account for
+      this.
+  Arturlang:
+  - bugfix: fix duffels making you fast as fuck
+  EnterTheJake:
+  - bugfix: removed a stray white pixel in the Miku Outfit.
+  Ezel:
+  - bugfix: Replaces 2 instances of the traitor AI toy with the real toy on Wawastation
+  Ghommie:
+  - refactor: Refactored mutation code backend. Report any issue.
+  JohnFulpWillard:
+  - code_imp: The escape menu has a slightly different UI, again.
+  NanoCats, Arturlang:
+  - map: Heavily changes catwalkstation's science department, including moving the
+      protolathe downstairs and north of the cupboard it is currently in, and adds
+      a second exofabber for robotics.
+  OrbisAnima, necromanceranne:
+  - bugfix: PKA's can no longer have multiple offensive AOE modkits installed at once,
+      which was not intended.
+  SmArtKar:
+  - rscadd: Emissive objects now have a bit of a colored bloom around them.
+  - bugfix: Fixed vents and pipes partially poking out from under glass and catwalk
+      floors
+  SyncIt21:
+  - bugfix: lathes don't break on ore silo deletion
+  - bugfix: impure chems(cryostylane below 50% purity) will now expose the mob to
+      their inverse chems(cryogelidia) after transfer
+  Xander3359:
+  - qol: Atmos holofans automatically open firelocks
+  moocowswag:
+  - bugfix: fixed conveyors running away after being crowbarred
+  necromanceranne:
+  - bugfix: Cryogelidia can no longer freeze things arbitrarily forever.
+  throwawayuseless:
+  - bugfix: blind psykers are not blinded twice by two different sources, head and
+      brain.
+  - qol: Psyker bounty hunters and chaplains are no longer blinded by default, so
+      as to reduce the amount of eye strain from the echolocation effect. The echolocation
+      virtual domains remain as they are.
+  timothymtorres:
+  - rscadd: Photocopiers can now be emagged to disable the payment system that charges
+      you for printing copies
+  - rscadd: Photocopiers are now affected by stock part upgrades. Matter bins affect
+      paper capacity, lasers affect toner usage, and scanning module affects time
+      to print. The servo stock part was replaced with matter bin.
+  - rscadd: Photocopiers can now be loaded with regular, carbon, construction, and
+      natural paper. You can select which kind to use in the UI when printing copies
+      if any are stored.
+  - qol: Photocopiers can now be loaded with paper bins
+  - bugfix: Photocopiers now display the correct amount of stored paper
+  - bugfix: Photocopiers now drop toner and paper when machine is deconstructed
+  - code_imp: Paper subtypes (carbon, construction, natural) were given proper names
+      to use with photocopiers UI menu.
+  - refactor: Photocopier code was refactored to not spawn paper when it is initialized.
+      Instead it stores blank papers as a numeric value. Also switched the `attackby()`
+      code handling to use the modern `item_interaction()` proc.
+2025-06-10:
+  Ghommie:
+  - bugfix: Non-abductors can yet again NOT use abductor batons.
+  - bugfix: Fixed DNA consoles.
+  - balance: Buffed the acrobatics skillchip (the one that disables spinning and flipping
+      cooldowns). Gave new item descriptions to skillchips that were missing one.
+  Melbert, sprites from Baystation / Aurorastation:
+  - rscadd: Adds grabbable handrails (mapper only for now)
+  - image: Adds a visual effect to buckling to shuttle seats
+  - qol: Different objects have different chat messages for buckling.
+  - qol: 'If you''re buckled in on a violent shuttle ride, you will be knocked down
+      and immobilized, but not fully stunned (ie: can still use hands).'
+  SmArtKar:
+  - rscadd: You can now attach anesthetic tanks and breathing masks to surgical tables.
+  Steve-Cambridge:
+  - bugfix: create mob and create turf both function correctly again.
+  SyncIt21:
+  - code_imp: Atmos machines turns on/off correctly from the code perspective
+  Xander3359:
+  - code_imp: removes action_slots when not needed
+  massaheartsu:
+  - rscadd: Added a new brand of cigarettes to hacked & syndicate vending machines+spawner
+      list.
+  necromanceranne:
+  - bugfix: Deltastation rounds can now once again end as expected, as the shuttle
+      will once again dock.
+2025-06-11:
+  Ben10Omintrix:
+  - bugfix: fixes stoats not having dead sprites
+  - bugfix: fixes stoats not following pet commands
+  Ghommie:
+  - bugfix: Fixed mutation injectors.
+  - bugfix: Fixed mutadone turning actual monkeys into humonkeys.
+  Jacquerel:
+  - qol: You can walk through stoats and snails
+  - balance: Stoats and snails can climb tables
+  - image: Stoats inside disposals are a little less rowdy
+  - image: Snails are rounder
+  Kuricityy:
+  - map: Heavily changes Catwalk Station's security department; almost completely
+      altering the brig.
+  Xander3359:
+  - rscadd: Hyper-insulated flooring, made from 1 plastitanium sheet
+  mc-oofert:
+  - rscadd: atmospherics shield generator, unlocked by Holographics research
+  vinylspiders:
+  - bugfix: stops stack merging from causing spurious CI runtimes
+2025-06-12:
+  Absolucy, PowerfulBacon:
+  - bugfix: Screentip icons work on the latest BYOND 516 again.
+  Bisar:
+  - balance: 'Repurposed Glands is now instead Gene Stim; simply put, your stuns are
+      reset and you are dosed with 4 units of Changeling Adrenaline on use. This ability
+      cannot be used while on fire. /:cl:'
+  SyncIt21:
+  - bugfix: map exported APC's now locate the terminals under them & attach to it
+      thus enabling charging & stuff
+2025-06-13:
+  00-Steven:
+  - bugfix: The static from holocalls no longer stays even after exiting the holocall.
+  Absolucy:
+  - admin: Added a "Count Atoms/Datums" debug verb.
+  Ghommie:
+  - bugfix: fixed gene disks and chromosomes.
+  JohnFulpWillard:
+  - bugfix: Borgs can't drop their omnitool's tools on conveyor belts & into closets.
+  Maximal08:
+  - bugfix: items with TRAIT_NODROP can no longer be worn
+  Melbert:
+  - qol: Mappers can put recharge floors on any floor type
+  TealSeer:
+  - code_imp: the russian derelict vault computer now uses a variable for the door
+      id
+  carlarctg:
+  - bugfix: Fixed cockroach spawners not doing anything
+2025-06-14:
+  00-Steven:
+  - refactor: Refactored tablet/ID painter item interactions. Please report any issues.
+  - bugfix: You can no longer circumvent the block on inserting chameleon IDs into
+      tablet/ID painters by inserting them via the UI.
+  - bugfix: You can no longer insert non-advanced IDs into the tablet/ID painter and
+      change their trims.
+  - sound: Inserting IDs into tablet/ID painters is no longer silent.
+  - qol: You can repair tablet/ID painters when they're damaged, instead of just when
+      they're broken.
+  - qol: Improved feedback for tablet/ID painter interactions.
+  - qol: Added screentips to tablet/ID painters.
+  Ben10Omintrix:
+  - bugfix: moving away from the surgery table with its mask no longer causes lag
+  Hatterhat:
+  - bugfix: Some old cells in space ruins reliant on replacing an APC's power cell
+      have been replaced with their megacell counterparts.
+  Melbert:
+  - qol: Some external airlocks - particularly solar arrays - on Metastation and Deltastation
+      are now 1-3 tiles larger, allowing for crates to pass through without venting
+      the room.
+  - qol: External airlock supply pipes on Metastation and Deltastation now run on
+      layer 5 instead of layer 3 where possible
+  SmArtKar:
+  - balance: Ripley goliath plating now takes up an armor slot on the mech
+  - rscadd: Ghost verbs are back in the chatbar, you can now type out things like
+      "Orbit" or "T-ray-scan" once again as a ghost.
+  throwawayuseless:
+  - qol: Posibrains have EAL.
+2025-06-15:
+  00-Steven:
+  - bugfix: Critter crates no longer re-attain their ability to lift you despite being
+      open if you move one after opening it, and neither does this lifting field stay
+      after you destroy it.
+  JohnFulpWillard:
+  - qol: Changing your ghost lighting in the ghost menu now saves between rounds.
+  Melbert:
+  - bugfix: Cargo request consoles can't loan the shuttle
+  Rhials:
+  - bugfix: Mines will now properly behave when placed under lights or other wallmounts.
+  SmArtKar:
+  - bugfix: Fixed black character previews
+  - bugfix: Fixed xenomorphs being able to infinitely vomit out the same person
+  SyncIt21:
+  - code_imp: removed `REAGENT_NOSPLIT` flag
+2025-06-16:
+  SmArtKar:
+  - bugfix: Plasmamen no longer should get perpetually stuck ablaze in rare edge case
+      scenarios
+  - bugfix: Plasmamen need to wear gloves once again
+  - code_imp: Updated plasmamen limb tracking/effects to be more performant
+  - qol: Cyborgs can right-click their stored omnitools to pull out a specific tool
+      instead of having to use it in-hand after selecting it to do so.
+  plsleavemealon:
+  - rscadd: Adds new morbid themed tools for the coroners enjoyment. Coroners now
+      perform autopsies slightly faster.
