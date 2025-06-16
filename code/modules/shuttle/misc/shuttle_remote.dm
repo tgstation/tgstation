@@ -1,8 +1,8 @@
 /obj/item/shuttle_remote
 	name = "shuttle remote"
 	desc = "A remote to send away or call a shuttle."
-	icon = 'icons/obj/devices/voice.dmi'
-	icon_state = "walkietalkie"
+	icon = 'icons/obj/devices/remote.dmi'
+	icon_state = "shuttleremote"
 	w_class = WEIGHT_CLASS_SMALL
 	///if the docks may be changed
 	var/may_change_docks = TRUE
@@ -11,12 +11,13 @@
 	///the port where the shuttle returns to
 	var/shuttle_home_id = "whiteship_home"
 	///var which will hold the nav computer
-	var/obj/machinery/computer/shuttle/our_computer
+	var/datum/weakref/computer_ref
 	///var which will hold the mobile port
 	var/obj/docking_port/mobile/our_port
 
 /obj/item/shuttle_remote/examine(mob/user)
 	. = ..()
+	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(may_change_docks && our_computer)
 		. += span_notice("You can change where the [get_area_name(SSshuttle.getShuttle(our_computer.shuttleId))] docks using [EXAMINE_HINT("alt-right-click")].")
 
@@ -26,27 +27,28 @@
 		return
 	var/obj/machinery/computer/shuttle/computer = locate(/obj/machinery/computer/shuttle) in loc
 	if(!computer)
-		log_mapping("[src] failed to find a navigation computer at [AREACOORD(src)]")
 		return
-	our_computer = computer
-	our_computer.remote_control = WEAKREF(src)
+	computer.remote_ref = WEAKREF(src)
+	computer_ref = WEAKREF(computer)
 
 /obj/item/shuttle_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(!istype(interacting_with, /obj/machinery/computer/shuttle))
 		return NONE
 	if(our_computer || our_port)
 		balloon_alert(user, "already linked!")
 		return ITEM_INTERACT_BLOCKING
 	var/obj/machinery/computer/shuttle/new_computer = interacting_with
-	if(new_computer.remote_control || !new_computer.may_be_remote_controlled)
+	if(new_computer.remote_ref || !new_computer.may_be_remote_controlled)
 		balloon_alert(user, "occupied signal!")
 		return ITEM_INTERACT_BLOCKING
-	new_computer.remote_control = WEAKREF(src)
-	our_computer = new_computer
+	new_computer.remote_ref = WEAKREF(src)
+	our_computer = WEAKREF(new_computer)
 	our_port = SSshuttle.getShuttle(our_computer.shuttleId)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shuttle_remote/attack_self(mob/user)
+	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(!our_port)
 		our_port = SSshuttle.getShuttle(our_computer.shuttleId) //incase we were maploaded
 	if(!can_use(user))
@@ -77,30 +79,38 @@
 			if("Send to custom")
 				destination = "[our_computer.shuttleId]_custom"
 
-	if(!destination)
+	if(!destination || !can_use(user))
 		return
 	transit_shuttle(user, destination)
 
 /obj/item/shuttle_remote/click_alt_secondary(mob/user)
+	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(!may_change_docks || !our_computer)
 		return NONE
 	var/list/destinations_list = our_computer.get_valid_destinations()
 	var/list/destination_names = list()
 	var/list/destination_ids = list()
 	for(var/list/destination_data in destinations_list)
+		if(destination_data["id"] == "[our_computer.shuttleId]_custom")
+			continue // we already handle custom docking
 		LAZYADD(destination_names, destination_data["name"])
 		LAZYADDASSOC(destination_ids, destination_data["name"], destination_data["id"])
-	if(!destination_names.len > 1)
+	if(destination_names.len < 1)
 		return NONE
 	var/picked_home = tgui_input_list(user, "choose which dock to designate as the shuttle's home point...", "Choose Home Dock", destination_names)
 	var/picked_away = tgui_input_list(user, "choose which dock to designate as the shuttle's away point...", "Choose Away Dock", destination_names)
-	if(picked_home)
+	if(picked_home && can_use(user))
 		shuttle_home_id = LAZYACCESS(destination_ids, picked_home)
-	if(picked_away)
+	if(picked_away && can_use(user))
 		shuttle_away_id = LAZYACCESS(destination_ids, picked_away)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/shuttle_remote/proc/can_use(mob/user)
+	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
+	if(user.stat != CONSCIOUS)
+		return FALSE
+	if(!user.is_holding_item_of_type(type))
+		return FALSE
 	if(is_reserved_level(loc.z))
 		balloon_alert(user, "can't use here!")
 		return FALSE
@@ -122,5 +132,6 @@
 	return TRUE
 
 /obj/item/shuttle_remote/proc/transit_shuttle(mob/user, destination)
+	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	our_computer.send_shuttle(destination, user)
 	our_computer.destination = destination
