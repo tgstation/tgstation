@@ -262,11 +262,12 @@
 /mob/living/basic/soulscythe/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), ROUNDSTART_TRAIT)
+	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-/mob/living/basic/soulscythe/Life(seconds_per_tick, times_fired)
-	. = ..()
-	if(!stat)
+/mob/living/basic/soulscythe/proc/on_life(seconds_per_tick, times_fired) // done like this because there's no need to go through all of life since the item does the work anyways
+	if(stat == CONSCIOUS)
 		blood_volume = min(MAX_BLOOD_LEVEL, blood_volume + round(1 * seconds_per_tick))
+	return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 /// Special projectile for the soulscythe.
 /obj/projectile/soulscythe
