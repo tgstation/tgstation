@@ -93,7 +93,7 @@
 		return ..()
 
 	var/mob/living/victim = target
-	if(victim.stat == DEAD || isnull(victim))
+	if(victim.stat == DEAD)
 		return ..()
 
 	if(!source.combat_mode)
@@ -108,8 +108,8 @@
 		return ..()
 
 	if(victim.check_block(chassis, clamp_damage, name, attack_type = MELEE_ATTACK))
-		source.visible_message(span_danger("[chassis] attempts to squeeze [victim], but the [name] is blocked!"), span_userdanger("You attempt to squeeze [victim], but [victim.p_They()] managed to block the attempt!"), ignored_mobs = victim)
-		to_chat(victim, span_userdanger("[victim] blocks [chassis]'s attempt to squeeze [victim.p_Them()]!"))
+		source.visible_message(span_danger("[chassis] attempts to squeeze [victim] with [src], but the [name] is blocked!"), span_userdanger("You attempt to squeeze [victim] with [src], but [victim.p_They()] managed to block the attempt!"), ignored_mobs = victim)
+		to_chat(victim, span_userdanger("You block [chassis]'s attempt to squeeze you with [src]!"))
 		return ..()
 
 	if(iscarbon(victim) && killer_clamp)//meme clamp here
