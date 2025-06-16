@@ -8,7 +8,7 @@
 	acid = 100
 	bio = 100
 
-/obj/structsure/cursed_thing
+/obj/structure/cursed_thing
 	name = "strange relic"
 	desc = "A strange relic of the past. It seems to be made of some kind of metal, and is covered in strange runes. \
 		It radiates a dark aura."
