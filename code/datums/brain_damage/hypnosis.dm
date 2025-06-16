@@ -9,6 +9,7 @@
 	var/datum/antagonist/hypnotized/antagonist
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
+	var/snap_out = TRUE
 
 /datum/brain_trauma/hypnosis/New(phrase)
 	if(!phrase)
@@ -50,9 +51,10 @@
 	. = ..()
 
 /datum/brain_trauma/hypnosis/on_lose()
-	message_admins("[ADMIN_LOOKUPFLW(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
-	owner.log_message("is no longer hypnotized with the phrase '[hypnotic_phrase]'.", LOG_GAME)
-	to_chat(owner, span_userdanger("You suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you."))
+	if(snap_out)
+		message_admins("[ADMIN_LOOKUPFLW(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
+		owner.log_message("is no longer hypnotized with the phrase '[hypnotic_phrase]'.", LOG_GAME)
+		to_chat(owner, span_userdanger("You suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you."))
 	owner.clear_alert(ALERT_HYPNOSIS)
 	..()
 	if (!isnull(antagonist))

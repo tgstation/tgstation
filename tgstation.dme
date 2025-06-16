@@ -2121,6 +2121,7 @@
 #include "code\game\atom\atom_tool_acts.dm"
 #include "code\game\atom\atom_vv.dm"
 #include "code\game\atom\atoms_initializing_EXPENSIVE.dm"
+#include "code\game\gamemodes\event_objects.dm"
 #include "code\game\gamemodes\events.dm"
 #include "code\game\gamemodes\objective.dm"
 #include "code\game\gamemodes\objective_items.dm"
