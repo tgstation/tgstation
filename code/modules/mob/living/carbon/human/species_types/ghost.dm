@@ -115,7 +115,7 @@
 	var/datum/action/innate/toggle_passthrough/passthrough_ability
 
 /datum/species/spirit/ghost/get_physical_attributes()
-	return "Ghosts are the spiritual remains of long-passed entities. They lack legs, can fly, can choose at will to become opaque, \
+	return "Ghosts are the spiritual remains of long-passed entities. They lack legs, can fly, can choose at will to become incorporeal, \
 		but still eat, breathe, hear and see."
 
 /datum/species/spirit/ghost/get_species_lore()
