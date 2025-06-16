@@ -256,9 +256,12 @@
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
-	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 	blood_volume = MAX_BLOOD_LEVEL
 	hud_type = /datum/hud/soulscythe
+
+/mob/living/basic/soulscythe/Initialize(mapload)
+	. = ..()
+	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), ROUNDSTART_TRAIT)
 
 /mob/living/basic/soulscythe/Life(seconds_per_tick, times_fired)
 	. = ..()
