@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Plasmamen no longer should get perpetually stuck ablaze in rare edge case scenarios"
-  - bugfix: "Plasmamen need to wear gloves once again"
-  - code_imp: "Updated plasmamen limb tracking/effects to be more performant"
