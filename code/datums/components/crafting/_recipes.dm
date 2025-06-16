@@ -75,6 +75,7 @@
 		/obj/item/scalpel/cruel/augment,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/surgicaldrill/augment,
+		/obj/item/surgicaldrill/cruel/augment,
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/wirecutters/cyborg,
 		/obj/item/wrench/cyborg,
