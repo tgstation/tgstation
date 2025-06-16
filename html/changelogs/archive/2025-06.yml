@@ -286,3 +286,77 @@
   SyncIt21:
   - bugfix: map exported APC's now locate the terminals under them & attach to it
       thus enabling charging & stuff
+2025-06-13:
+  00-Steven:
+  - bugfix: The static from holocalls no longer stays even after exiting the holocall.
+  Absolucy:
+  - admin: Added a "Count Atoms/Datums" debug verb.
+  Ghommie:
+  - bugfix: fixed gene disks and chromosomes.
+  JohnFulpWillard:
+  - bugfix: Borgs can't drop their omnitool's tools on conveyor belts & into closets.
+  Maximal08:
+  - bugfix: items with TRAIT_NODROP can no longer be worn
+  Melbert:
+  - qol: Mappers can put recharge floors on any floor type
+  TealSeer:
+  - code_imp: the russian derelict vault computer now uses a variable for the door
+      id
+  carlarctg:
+  - bugfix: Fixed cockroach spawners not doing anything
+2025-06-14:
+  00-Steven:
+  - refactor: Refactored tablet/ID painter item interactions. Please report any issues.
+  - bugfix: You can no longer circumvent the block on inserting chameleon IDs into
+      tablet/ID painters by inserting them via the UI.
+  - bugfix: You can no longer insert non-advanced IDs into the tablet/ID painter and
+      change their trims.
+  - sound: Inserting IDs into tablet/ID painters is no longer silent.
+  - qol: You can repair tablet/ID painters when they're damaged, instead of just when
+      they're broken.
+  - qol: Improved feedback for tablet/ID painter interactions.
+  - qol: Added screentips to tablet/ID painters.
+  Ben10Omintrix:
+  - bugfix: moving away from the surgery table with its mask no longer causes lag
+  Hatterhat:
+  - bugfix: Some old cells in space ruins reliant on replacing an APC's power cell
+      have been replaced with their megacell counterparts.
+  Melbert:
+  - qol: Some external airlocks - particularly solar arrays - on Metastation and Deltastation
+      are now 1-3 tiles larger, allowing for crates to pass through without venting
+      the room.
+  - qol: External airlock supply pipes on Metastation and Deltastation now run on
+      layer 5 instead of layer 3 where possible
+  SmArtKar:
+  - balance: Ripley goliath plating now takes up an armor slot on the mech
+  - rscadd: Ghost verbs are back in the chatbar, you can now type out things like
+      "Orbit" or "T-ray-scan" once again as a ghost.
+  throwawayuseless:
+  - qol: Posibrains have EAL.
+2025-06-15:
+  00-Steven:
+  - bugfix: Critter crates no longer re-attain their ability to lift you despite being
+      open if you move one after opening it, and neither does this lifting field stay
+      after you destroy it.
+  JohnFulpWillard:
+  - qol: Changing your ghost lighting in the ghost menu now saves between rounds.
+  Melbert:
+  - bugfix: Cargo request consoles can't loan the shuttle
+  Rhials:
+  - bugfix: Mines will now properly behave when placed under lights or other wallmounts.
+  SmArtKar:
+  - bugfix: Fixed black character previews
+  - bugfix: Fixed xenomorphs being able to infinitely vomit out the same person
+  SyncIt21:
+  - code_imp: removed `REAGENT_NOSPLIT` flag
+2025-06-16:
+  SmArtKar:
+  - bugfix: Plasmamen no longer should get perpetually stuck ablaze in rare edge case
+      scenarios
+  - bugfix: Plasmamen need to wear gloves once again
+  - code_imp: Updated plasmamen limb tracking/effects to be more performant
+  - qol: Cyborgs can right-click their stored omnitools to pull out a specific tool
+      instead of having to use it in-hand after selecting it to do so.
+  plsleavemealon:
+  - rscadd: Adds new morbid themed tools for the coroners enjoyment. Coroners now
+      perform autopsies slightly faster.

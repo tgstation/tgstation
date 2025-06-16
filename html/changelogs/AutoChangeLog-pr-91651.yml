@@ -1,0 +1,4 @@
+author: "Justice12354"
+delete-after: True
+changes:
+  - bugfix: "henchmen jumpsuit no longer turns pink and black when u try to adjust it (you can't adjust it now)"
