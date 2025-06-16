@@ -5879,7 +5879,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/maintenance/department/science/central)
+/area/station/science/research)
 "bOC" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -5910,7 +5910,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/maintenance/department/science/central)
+/area/station/science/research)
 "bOO" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -13845,6 +13845,21 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/construction)
+"eel" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "scistores";
+	name = "Science Store Shutters"
+	},
+/obj/machinery/door/window/left/directional/south{
+	req_access = list("science");
+	name = "Research Lab Desk"
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/lobby)
 "een" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20986,7 +21001,7 @@
 	desc = "The R&D console used to be here once upon a time."
 	},
 /turf/open/floor/plating,
-/area/station/science/research)
+/area/station/maintenance/department/science/central)
 "gkN" = (
 /obj/structure/closet/crate/trashcart/filled,
 /obj/effect/spawner/random/maintenance,
@@ -22158,7 +22173,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/maintenance/department/science/central)
+/area/station/science/research)
 "gDE" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -26393,7 +26408,7 @@
 	desc = "They say if you stand here at round end, you gain a special ending."
 	},
 /turf/open/floor/plating,
-/area/station/science/research)
+/area/station/maintenance/department/science/central)
 "hPQ" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/event_spawn,
@@ -26466,7 +26481,7 @@
 "hQD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/science/research)
+/area/station/maintenance/department/science/central)
 "hQE" = (
 /obj/structure/railing{
 	dir = 8
@@ -36284,7 +36299,7 @@
 	},
 /obj/item/wrench,
 /turf/open/floor/plating,
-/area/station/science/research)
+/area/station/maintenance/department/science/central)
 "kMj" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
@@ -38114,7 +38129,7 @@
 	},
 /obj/structure/sign/warning/yes_smoking/circle/directional/west,
 /turf/open/floor/iron,
-/area/station/maintenance/department/science/central)
+/area/station/science/research)
 "lqn" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/computer/records/security{
@@ -51223,7 +51238,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/maintenance/department/science/central)
+/area/station/science/research)
 "plp" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
@@ -61532,7 +61547,7 @@
 	},
 /obj/structure/sign/poster/contraband/bojack/directional/east,
 /turf/open/floor/iron,
-/area/station/maintenance/department/science/central)
+/area/station/science/research)
 "srx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -63001,7 +63016,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/maintenance/department/science/central)
+/area/station/science/research)
 "sPk" = (
 /obj/structure/ladder,
 /turf/open/floor/glass,
@@ -71676,7 +71691,7 @@
 	pixel_y = 21
 	},
 /turf/open/floor/plating,
-/area/station/science/research)
+/area/station/maintenance/department/science/central)
 "vrx" = (
 /obj/machinery/shower/directional/west,
 /obj/machinery/light/small/directional/south,
@@ -74694,25 +74709,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/kitchen)
-"wmk" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "scistores";
-	name = "Science Store Shutters"
-	},
-/obj/machinery/door/window/left/directional/south{
-	req_access = list("science");
-	name = "Research Lab Desk"
-	},
-/obj/item/newspaper{
-	pixel_y = 7;
-	pixel_x = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/lobby)
 "wmm" = (
 /obj/structure/railing{
 	dir = 4
@@ -76354,7 +76350,7 @@
 	desc = "Absolutely loves the broom closet."
 	},
 /turf/open/floor/plating,
-/area/station/science/research)
+/area/station/maintenance/department/science/central)
 "wMn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -79465,6 +79461,10 @@
 /obj/machinery/door/window/left/directional/south{
 	req_access = list("science");
 	name = "Research Lab Desk"
+	},
+/obj/item/newspaper{
+	pixel_y = 7;
+	pixel_x = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
@@ -116650,7 +116650,7 @@ nGH
 fLr
 aZs
 fLr
-xKq
+eel
 nfG
 quJ
 lga
@@ -116907,7 +116907,7 @@ fLr
 aKc
 aZs
 fLr
-wmk
+xKq
 afL
 kzm
 kFt
@@ -181690,9 +181690,9 @@ dTc
 vsK
 rrT
 soU
-qSk
-qSk
-qSk
+soU
+soU
+soU
 rXL
 dTr
 qeP
@@ -181949,7 +181949,7 @@ fZL
 vpn
 lqj
 gDw
-qSk
+soU
 rXL
 lAl
 lAl
@@ -182206,7 +182206,7 @@ ibj
 lqg
 bOx
 pkQ
-qSk
+soU
 yfm
 yfm
 ujI
@@ -182974,7 +182974,7 @@ aBO
 jLl
 orJ
 vsC
-soU
+qSk
 vrw
 kMb
 soU
@@ -183488,7 +183488,7 @@ qSk
 tuY
 pKA
 kny
-soU
+qSk
 wMe
 gkI
 soU
