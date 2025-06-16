@@ -333,7 +333,7 @@
 
 /atom/movable/screen/alert/status_effect/eldritch_painting/desire
 	name = "The First Desire"
-	desc = "Your are struck with a ravenous hunger! SATIATE IT AT ANY COST! Or maybe just go start at the painting and long for the excellent meal it promises..."
+	desc = "Your are struck with a ravenous hunger! SATIATE IT AT ANY COST! Or maybe just go stare at the painting and long for the excellent meal it promises..."
 	icon_state = "eldritch_painting_desire"
 
 /datum/status_effect/eldritch_painting/desire/permanent
