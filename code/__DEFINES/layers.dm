@@ -59,15 +59,17 @@
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
 
-#define EMISSIVE_BLOOM_PLATE 15
+#define EMISSIVE_BLOOM_MASK_PLATE 15
+#define EMISSIVE_BLOOM_MASK_TARGET "*EMISSIVE_BLOOM_MASK_PLATE"
+#define EMISSIVE_BLOOM_PLATE 16
 
 //-------------------- Game plane assembly ---------------------
 
-#define RENDER_PLANE_GAME 16
+#define RENDER_PLANE_GAME 17
 /// If fov is enabled we'll draw game to this and do shit to it
-#define RENDER_PLANE_GAME_MASKED 17
+#define RENDER_PLANE_GAME_MASKED 18
 /// The bit of the game plane that is let alone is sent here
-#define RENDER_PLANE_GAME_UNMASKED 18
+#define RENDER_PLANE_GAME_UNMASKED 19
 
 //-------------------- Lighting ---------------------
 
