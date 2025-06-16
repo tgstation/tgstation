@@ -35057,7 +35057,7 @@
 	dir = 8
 	},
 /obj/item/paper{
-	default_raw_text = "Hey, you might want to check temperature outside before using that cooling loop for... you know, cooling. Nights get hot out there";
+	default_raw_text = "Hey, you might want to check temperature outside before using that cooling loop for, you know, cooling. Outside temperatures get unstable at night.";
 	name = "Engineer's warning"
 	},
 /turf/open/floor/engine,
