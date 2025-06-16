@@ -5,7 +5,7 @@
 	icon_state = "shuttleremote"
 	w_class = WEIGHT_CLASS_SMALL
 	///if the docks may be changed
-	var/may_change_docks = TRUE //if this is set to FALSE make sure the shuttle it will be linked to does get to have multiple instances of itself
+	var/may_change_docks = TRUE //if this is set to FALSE make sure the shuttle it will be linked to does NOT get to have multiple instances of itself
 	///the port where the shuttle leaves to
 	var/shuttle_away_id = "whiteship_away"
 	///the port where the shuttle returns to
