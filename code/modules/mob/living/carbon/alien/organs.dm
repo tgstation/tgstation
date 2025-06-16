@@ -192,6 +192,7 @@
 		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
 
 /obj/item/organ/stomach/alien/content_moved(atom/movable/source)
+	. = ..()
 	if(source.loc == src || source.loc == owner)
 		return
 	UnregisterSignal(source, COMSIG_LIVING_DEATH)
