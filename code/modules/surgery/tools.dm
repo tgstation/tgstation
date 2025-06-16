@@ -761,3 +761,30 @@
 	inhand_icon_state = "cruelbloodfilter"
 	surgical_tray_overlay = "filter_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/retractor/cruel/augment
+	desc = "A twisted micro-mechanical manipulator for retracting flesh and sinew."
+	toolspeed = 0.5
+
+/obj/item/hemostat/cruel/augment
+	desc = "Tiny, warped servos power a pair of pincers to stop bleeding."
+	toolspeed = 0.5
+
+/obj/item/cautery/cruel/augment
+	desc = "Chalk this one up as another successful vivisection."
+	toolspeed = 0.5
+
+/obj/item/scalpel/cruel/augment
+	desc = "Ultra-sharp blade attached directly to your bone for enhanced vivisection."
+	toolspeed = 0.5
+
+/obj/item/surgicaldrill/cruel/augment
+	desc = "What secrets do they keep buried within those pearls..."
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	w_class = WEIGHT_CLASS_SMALL
+	toolspeed = 0.5
+
+/obj/item/circular_saw/cruel/augment
+	desc = "A twisted blade for twisted purpose. Rip sinew and bone until your work is done."
+	w_class = WEIGHT_CLASS_SMALL
+	toolspeed = 0.5
