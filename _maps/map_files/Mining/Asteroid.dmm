@@ -29,6 +29,12 @@
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/airless,
 /area/asteroid/nomap)
+"yW" = (
+/obj/structure/cursed_thing,
+/turf/open/misc/asteroid/dug{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/asteroid/nomap)
 "CM" = (
 /turf/open/misc/asteroid/airless,
 /area/asteroid/nomap)
@@ -61,6 +67,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"XQ" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/airless,
+/area/asteroid/nomap)
 
 (1,1,1) = {"
 HZ
@@ -32055,11 +32065,11 @@ HZ
 HZ
 HZ
 HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+xG
+xG
+xG
+xG
+xG
 HZ
 HZ
 HZ
@@ -32312,15 +32322,15 @@ HZ
 HZ
 HZ
 HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+xG
+CM
+CM
+xG
+xG
+xG
+xG
+xG
+xG
 HZ
 HZ
 HZ
@@ -32568,15 +32578,15 @@ HZ
 HZ
 HZ
 HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+xG
+CM
+CM
+XQ
+CM
+CM
+xG
+xG
+xG
 HZ
 HZ
 HZ
@@ -32825,14 +32835,14 @@ HZ
 HZ
 HZ
 HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+xG
+xG
+CM
+CM
+yW
+XQ
+CM
+xG
 HZ
 HZ
 HZ
@@ -33083,13 +33093,13 @@ HZ
 HZ
 HZ
 HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+xG
+xG
+CM
+CM
+CM
+xG
+xG
 HZ
 HZ
 HZ
@@ -33341,11 +33351,11 @@ HZ
 HZ
 HZ
 HZ
-HZ
-HZ
-HZ
-HZ
-HZ
+xG
+xG
+xG
+xG
+xG
 HZ
 HZ
 HZ

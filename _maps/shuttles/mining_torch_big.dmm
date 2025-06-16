@@ -753,6 +753,12 @@
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
 	},
+/obj/item/paper{
+	pixel_x = -8;
+	pixel_y = 7;
+	default_raw_text = "This behemoth of a shuttle is what we call the FOB shuttle. When going out to mine in squads, be sure to wait for everyone to get equipped and on board before heading out - it takes a while for the engines to spool up.";
+	name = "miner's note"
+	},
 /turf/open/floor/iron/half,
 /area/shuttle/mining_ship/cockpit)
 "xz" = (

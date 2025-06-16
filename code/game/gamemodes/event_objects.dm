@@ -17,6 +17,12 @@
 	max_integrity = 1000
 	armor_type = /datum/armor/obj_structure/relic
 	drag_slowdown = 2
+	light_color = COLOR_DARK_PURPLE
+	light_range = 3
+	light_power = 1
+	light_system = OVERLAY_LIGHT
+	light_on = TRUE
+	density = TRUE
 	var/list/past_examiners = list()
 	var/list/past_touchers = list()
 
@@ -72,7 +78,7 @@
 
 	var/mob/living/carbon/human/examiner = user
 	var/datum/brain_trauma/hypnosis/hypnotize = examiner.has_trauma_type(__IMPLIED_TYPE__)
-	if(istype(hypnotize, /datum/brain_trauma/hypnosis/curse))
+	if(hypnotize?.hypnotic_phrase == "Touch the relic.")
 		qdel(hypnotize)
 	else if(hypnotize)
 		return
@@ -90,3 +96,6 @@
 	. = ..()
 	owner.adjust_hallucinations_up_to(5 SECONDS * seconds_per_tick, 5 MINUTES)
 	owner.mob_mood?.adjust_sanity(-2.5 * seconds_per_tick, minimum = SANITY_CRAZY, override = TRUE)
+
+/datum/antagonist/hypnotized/greet()
+	play_stinger()
