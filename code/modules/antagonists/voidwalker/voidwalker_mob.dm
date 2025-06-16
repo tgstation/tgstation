@@ -71,8 +71,8 @@
 	var/rclick_damage_type = BRUTE
 	/// Can we speak?
 	var/can_speak = FALSE
-	/// Turf that we can kidnap on
-	var/kidnapping_turf = /turf/open/space
+	/// Turf that our abilities rely on. VVing this automatically sets all the components and removes space dependency stuff if the new tile isnt space
+	var/home_turf = /turf/open/space
 	/// Decal that we can kidnap on
 	var/kidnapping_decal = /obj/effect/decal/cleanable/vomit/nebula
 
@@ -161,7 +161,7 @@
 
 /// Called by the regenerator component so we only regen in space
 /mob/living/basic/voidwalker/proc/can_regen()
-	if(istype(get_turf(src), kidnapping_turf))
+	if(istype(get_turf(src), home_turf))
 		return TRUE
 	return FALSE
 
@@ -171,7 +171,7 @@
 /mob/living/basic/voidwalker/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 
-	if(!isturf(loc))
+	if(!isturf(loc) || !speed_modifier)
 		return
 
 	var/turf/new_turf = loc
@@ -211,7 +211,7 @@
 	if(!victim.incapacitated)
 		return
 
-	if(!istype(get_turf(victim), kidnapping_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
+	if(!istype(get_turf(victim), home_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
 		victim.balloon_alert(src, "not in space!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -261,6 +261,25 @@
 /// Check if theyre still incapacitated for the kidnap do_after
 /mob/living/basic/voidwalker/proc/check_incapacitated(mob/living/carbon/human/kidnappee)
 	return kidnappee.incapacitated
+
+/// Modding the voidwalker is funny, so setting the home_turf sets everything right for easy of modding
+/mob/living/basic/voidwalker/vv_edit_var(vname, vval)
+	. = ..()
+	// This is all very snowflakey code but like, it's supposed to be. It's just for helping admins mod it
+	if(vname == NAMEOF(src, home_turf))
+		var/datum/component/space_camo/camo = GetComponent(/datum/component/space_camo)
+		var/datum/component/space_dive/dive = GetComponent(/datum/component/space_dive)
+
+		camo.camo_tile = vval
+		dive.diveable_turf = vval
+		if(istype(charge, /datum/action/cooldown/mob_cooldown/charge/voidwalker))
+			var/datum/action/cooldown/mob_cooldown/charge/voidwalker/charge_voidwalker = charge
+			charge_voidwalker.valid_target_turf = vval
+
+		if(!isspaceturf(vval))
+			qdel(GetComponent(/datum/component/planet_allergy))
+			remove_movespeed_modifier(speed_modifier)
+			speed_modifier = null
 
 ///
 /// Wall Conversion

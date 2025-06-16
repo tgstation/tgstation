@@ -34,7 +34,8 @@
 	if(ban_from_space)
 		owner.AddComponent(/datum/component/banned_from_space)
 
-	owner.AddComponent(/datum/component/planet_allergy)
+	if(!is_on_a_planet(owner))
+		owner.AddComponent(/datum/component/planet_allergy)
 	owner.AddElement(/datum/element/glass_bleeder)
 
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb)) //also catch new limbs being attached

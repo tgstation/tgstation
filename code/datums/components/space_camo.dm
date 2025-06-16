@@ -16,6 +16,8 @@
 	var/alpha_to_self
 	/// Are we currently camouflaged?
 	var/is_camouflaged = FALSE
+	/// What is the type for the space tile? For easy admin modding
+	var/turf/open/camo_tile = /turf/open/space
 
 /datum/component/space_camo/Initialize(space_alpha, non_space_alpha, alpha_to_self = 120, reveal_after_combat, camo_icon)
 	if(!ismovable(parent))
@@ -72,7 +74,7 @@
 		exit_camo(parent)
 
 /datum/component/space_camo/proc/attempt_enter_camo()
-	if(!isspaceturf(get_turf(parent)) || next_camo > world.time || HAS_TRAIT(parent, TRAIT_INVISIBILITY_BLOCKED))
+	if(!istype(get_turf(parent), camo_tile) || next_camo > world.time || HAS_TRAIT(parent, TRAIT_INVISIBILITY_BLOCKED))
 		return FALSE
 
 	if(!is_camouflaged)
