@@ -688,6 +688,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"akX" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "akY" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
@@ -48702,6 +48708,12 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/port)
+"oyd" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/space/openspace,
+/area/space)
 "oyf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -57180,6 +57192,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
+"rac" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "raf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /obj/machinery/light/directional/west,
@@ -188814,7 +188832,7 @@ arP
 arP
 rQn
 arP
-jQj
+rac
 bNw
 ddN
 ddN
@@ -189328,7 +189346,7 @@ arP
 arP
 vGm
 eNm
-jQj
+akX
 jQj
 rrs
 dLy
@@ -194438,7 +194456,7 @@ nlm
 nlm
 nlm
 nlm
-nlm
+oyd
 nlm
 nlm
 nlm
