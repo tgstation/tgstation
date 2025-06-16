@@ -1021,7 +1021,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
-	description = "Synthetic medication that induces blood regeneration and liver regeneration in patients. Causes adverse side effects when excessively used over time."
+	description = "Synthetic medication that induces blood regeneration, liver healing and wound clotting in patients. Causes adverse side effects when excessively used over time."
 	color = "#dee4ff"
 	metabolization_rate = 0.25 * REM
 	overdose_threshold = 20
