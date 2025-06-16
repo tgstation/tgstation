@@ -79,7 +79,7 @@
 
 	signed_up += candidate
 
-	log_game("[candidate.key] signed candidate poll [role ? "for [role]" : "\"[question]\""]")
+	log_ghost_poll("[candidate.key] signed candidate poll [role ? "for [role]" : "\"[question]\""]")
 
 	if(!silent)
 		to_chat(candidate, span_notice(response_messages[POLL_RESPONSE_SIGNUP]))
@@ -106,7 +106,7 @@
 
 	signed_up -= candidate
 
-	log_game("[candidate.key] removed their candidacy for candidate poll [role ? "for [role]" : "\"[question]\""]")
+	log_ghost_poll("[candidate.key] removed their candidacy for candidate poll [role ? "for [role]" : "\"[question]\""]")
 
 	if(!silent)
 		to_chat(candidate, span_danger(response_messages[POLL_RESPONSE_UNREGISTERED]))
