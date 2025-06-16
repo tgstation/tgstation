@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Malfunctioning AI's can once again dominate mechs without a beacon."
