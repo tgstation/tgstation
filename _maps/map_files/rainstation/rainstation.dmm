@@ -10154,7 +10154,9 @@
 "aHa" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/paper,
+/obj/item/paper{
+	default_raw_text = "Hey, you might want to check temperature outside before using that cooling loop for... you know, cooling. Nights get hot out there"
+	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/north{
 	name = "Security Checkpoint";
@@ -13899,7 +13901,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "aSv" = (
@@ -13981,7 +13982,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "aSD" = (
@@ -14960,7 +14960,9 @@
 /area/station/hallway/primary/starboard)
 "aVP" = (
 /obj/structure/table/wood,
-/obj/item/paper,
+/obj/item/paper{
+	default_raw_text = "Hey, you might want to check temperature outside before using that cooling loop for... you know, cooling. Nights get hot out there"
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "aVQ" = (
@@ -33456,10 +33458,10 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "crL" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "crM" = (
@@ -35054,6 +35056,10 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
 	},
+/obj/item/paper{
+	default_raw_text = "Hey, you might want to check temperature outside before using that cooling loop for... you know, cooling. Nights get hot out there";
+	name = "Engineer's warning"
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "cEs" = (
@@ -35171,11 +35177,11 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "cEW" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "cFb" = (
@@ -40610,9 +40616,7 @@
 /area/station/medical/medbay/central)
 "gHP" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/half{
-	dir = 1
-	},
+/turf/open/floor/iron/smooth_half,
 /area/station/engineering/atmos)
 "gHS" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -50937,9 +50941,7 @@
 "pFK" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/half{
-	dir = 1
-	},
+/turf/open/floor/iron/smooth_half,
 /area/station/engineering/atmos)
 "pFV" = (
 /obj/machinery/suit_storage_unit/security,
@@ -54470,7 +54472,9 @@
 "sJr" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paper,
+/obj/item/paper{
+	default_raw_text = "Hey, you might want to check temperature outside before using that cooling loop for... you know, cooling. Nights get hot out there"
+	},
 /obj/item/pen,
 /turf/open/floor/iron/smooth,
 /area/station/security/prison)
@@ -55615,6 +55619,12 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/science/xenobiology)
+"tJG" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "tJX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -91652,8 +91662,8 @@ bof
 jDb
 jDb
 czF
-csd
-csd
+tJG
+tJG
 crM
 luJ
 cGj

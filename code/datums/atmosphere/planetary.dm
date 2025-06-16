@@ -58,8 +58,8 @@
 		/datum/gas/nitrogen=10,
 	)
 	normal_gases = list(
-		/datum/gas/nitrogen=10,
-		/datum/gas/oxygen=10,
+		/datum/gas/nitrogen=8,
+		/datum/gas/helium=3,
 	)
 	restricted_gases = list(
 		/datum/gas/hydrogen=0.3,
