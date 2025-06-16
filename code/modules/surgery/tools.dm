@@ -771,7 +771,7 @@
 	toolspeed = 0.5
 
 /obj/item/cautery/cruel/augment
-	desc = "Chalk this one up as another successful vivisection."
+	desc = "All mistakes can be burned away with a little flame..."
 	toolspeed = 0.5
 
 /obj/item/scalpel/cruel/augment
@@ -779,12 +779,12 @@
 	toolspeed = 0.5
 
 /obj/item/surgicaldrill/cruel/augment
-	desc = "What secrets do they keep buried within those pearls..."
+	desc = "You cannot hide your secrets from me..."
 	hitsound = 'sound/items/weapons/circsawhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
 /obj/item/circular_saw/cruel/augment
-	desc = "A twisted blade for twisted purpose. Rip sinew and bone until your work is done."
+	desc = "A jagged sawblade built for grisly work."
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
