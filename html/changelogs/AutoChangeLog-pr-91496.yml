@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - qol: "Eldritch paintings no longer inflict brain traumas on you that need surgery to remove. Instead, they inflict a status effect that can be protected from and removed using large doses of holy water."
