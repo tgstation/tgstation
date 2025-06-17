@@ -25,7 +25,6 @@ const createStats = (verbose) => ({
 
 module.exports = (env = {}, argv) => {
   const mode = argv.mode || 'production';
-  const bench = env.TGUI_BENCH;
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
@@ -135,12 +134,6 @@ module.exports = (env = {}, argv) => {
       }),
     ],
   };
-
-  if (bench) {
-    config.entry = {
-      'tgui-bench': ['./packages/tgui-bench/entrypoint'],
-    };
-  }
 
   // Production build specific options
   if (mode === 'production') {
