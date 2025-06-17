@@ -29,7 +29,9 @@
 	owner.adjust_drowsiness_up_to(1 SECONDS, 60 SECONDS)
 	if(HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		owner.AdjustSleeping(10 SECONDS)
-		fall_chance = 50
+
+	if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+		fall_chance = clamp(fall_chance + 30, 0, 100)
 
 /obj/projectile/energy/bolt/halloween
 	name = "candy corn"
