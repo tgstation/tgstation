@@ -1,7 +1,7 @@
 // Constants and standard colors for the holomap
 
 /// Icon file to start with when drawing holomaps (to get a 480x480 canvas).
-#define HOLOMAP_ICON 'monkestation/code/modules/holomaps/icons/480x480.dmi'
+#define HOLOMAP_ICON 'code/modules/holomaps/icons/480x480.dmi'
 /// Pixel width & height of the holomap icon. Used for auto-centering etc.
 #define HOLOMAP_ICON_SIZE 480
 #define ui_holomap "CENTER-7,CENTER-7" // Screen location of the holomap "hud"
