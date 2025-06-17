@@ -27,7 +27,7 @@ module.exports = (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
   const config = {
-    mode: mode === 'production' ? 'production' : 'development',
+    mode,
     context: path.resolve(__dirname),
     target: ['web', 'browserslist:edge>=123'],
     entry: {
@@ -36,9 +36,10 @@ module.exports = (env = {}, argv) => {
       'tgui-say': ['./packages/tgui-say'],
     },
     output: {
-      path: argv.useTmpFolder
-        ? path.resolve(__dirname, './public/.tmp')
-        : path.resolve(__dirname, './public'),
+      path:
+        mode !== 'production'
+          ? path.resolve(__dirname, './public/.tmp')
+          : path.resolve(__dirname, './public'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
@@ -151,15 +152,9 @@ module.exports = (env = {}, argv) => {
         legalComments: 'none',
       }),
     ];
-  }
-
-  // Development build specific options
-  if (mode !== 'production') {
+  } else {
     config.devtool = 'cheap-module-source-map';
-  }
 
-  // Development server specific options
-  if (argv.devServer) {
     config.devServer = {
       progress: false,
       quiet: false,

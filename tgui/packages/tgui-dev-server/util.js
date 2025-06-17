@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import { Glob } from 'bun';
@@ -21,14 +22,12 @@ export async function resolveGlob(directory, pattern = '*') {
   // If no pattern is supplied, just return the directory if it exists
   if (pattern === '*') {
     try {
-      const stat = await Bun.file(directory).stat();
-      if (stat?.isDirectory()) {
-        return [directory];
-      }
+      const dir = await fs.stat(directory);
+
+      return [dir];
     } catch (e) {
       return [];
     }
-    return [];
   }
 
   // Otherwise, use glob logic
