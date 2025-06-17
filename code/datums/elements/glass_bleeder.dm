@@ -17,6 +17,9 @@
 /datum/element/glass_bleeder/proc/on_apply_damage(mob/living/liver, amount, damage_type)
 	SIGNAL_HANDLER
 
+	if(damage_type != BRUTE)
+		return
+
 	if(amount > 20)
 		new /obj/effect/spawner/random/glass_shards ((get_turf(liver)))
 		playsound(liver, SFX_SHATTER, 60)

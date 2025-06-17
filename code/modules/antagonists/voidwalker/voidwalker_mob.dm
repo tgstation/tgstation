@@ -120,9 +120,6 @@
 	unsettle = new(src)
 	unsettle.Grant(src)
 
-	// Maybe slightly dubious?
-	RegisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack))
-
 	fully_replace_character_name(null, pick(GLOB.voidwalker_names))
 
 /mob/living/basic/voidwalker/Destroy()
@@ -133,20 +130,23 @@
 	return ..()
 
 /// Called on COMSIG_LIVING_UNARMED_ATTACK
-/mob/living/basic/voidwalker/proc/on_attack(mob/living/source, atom/target, proximity, modifiers)
-	SIGNAL_HANDLER
+/mob/living/basic/voidwalker/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
 
-	// universial click interactions
+	if(!.)
+		return
+
 	if(ishuman(target))
 		var/mob/living/carbon/human/hewmon = target
 
-		var/signal = try_kidnap(hewmon)
+		var/should_attack = try_kidnap(hewmon)
 
-		if(signal)
-			return signal
+		if(!should_attack)
+			return FALSE
+
 		if(hewmon.stat == HARD_CRIT && !hewmon.has_trauma_type(/datum/brain_trauma/voided))
 			hewmon.balloon_alert(src, "is in crit!")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return FALSE
 
 	// left click
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
@@ -159,6 +159,7 @@
 		if(!istype(target, /turf/closed/wall))
 			return
 		INVOKE_ASYNC(src, PROC_REF(try_convert_wall), target)
+	return TRUE
 
 /// Called by the regenerator component so we only regen in space
 /mob/living/basic/voidwalker/proc/can_regen()
@@ -203,22 +204,22 @@
 		victim.balloon_alert(src, "already voided!")
 		new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(victim))
 		victim.SetSleeping(30 SECONDS)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return FALSE
 
 	if(victim.stat == DEAD)
 		victim.balloon_alert(src, "is dead!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return FALSE
 
 	if(victim.stat == CONSCIOUS) //we're still beating them up!!
-		return
+		return TRUE
 
 	if(!istype(get_turf(victim), home_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
 		victim.balloon_alert(src, "not in space!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return FALSE
 
 	if(!kidnapping)
 		INVOKE_ASYNC(src, PROC_REF(kidnap), src, victim)
-		return COMPONENT_SKIP_ATTACK
+		return FALSE
 
 /// Start kidnapping the victim
 /mob/living/basic/voidwalker/proc/kidnap(mob/living/parent, mob/living/victim)
