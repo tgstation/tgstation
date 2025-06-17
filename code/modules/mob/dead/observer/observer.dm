@@ -966,12 +966,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	GLOB.observer_default_invisibility = amount
 
 /mob/dead/observer/proc/open_spawners_menu()
+	set name = "Spawners Menu"
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
 
 /mob/dead/observer/proc/open_minigames_menu()
+	set name = "Minigames Menu"
 	if(!client)
 		return
 	if(!isobserver(src))
