@@ -126,3 +126,62 @@
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+
+/obj/item/gun/energy/ebow
+	name = "mini energy crossbow"
+	desc = "A weapon favored by syndicate stealth specialists."
+	icon_state = "crossbow"
+	base_icon_state = "crossbow"
+	inhand_icon_state = "crossbow"
+	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	suppressed = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+	/// How long it takes for our gun to be recharged.
+	var/recharge_time = 1.5 SECONDS
+	/// instead of an overlay, sets the icon_state directly.
+	var/no_charge_state = "crossbow_empty"
+
+/obj/item/gun/energy/ebow/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
+
+/obj/item/gun/energy/ebow/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+	AddComponent( \
+		/datum/component/crank_recharge, \
+		charging_cell = get_cell(), \
+		charge_amount = STANDARD_CELL_CHARGE, \
+		cooldown_time = recharge_time, \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
+		charge_sound_cooldown_time = recharge_time, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
+		crank_hidden = suppressed, \
+	)
+
+/obj/item/gun/energy/ebow/update_icon_state()
+	. = ..()
+	if(no_charge_state && !can_shoot())
+		icon_state = no_charge_state
+	else
+		icon_state = base_icon_state
+
+/obj/item/gun/energy/ebow/halloween
+	name = "candy corn crossbow"
+	desc = "A weapon favored by Syndicate trick-or-treaters."
+	icon_state = "crossbow_halloween"
+	base_icon_state = "crossbow_halloween"
+	no_charge_state = "crossbow_halloween_empty"
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
+
+/obj/item/gun/energy/ebow/large
+	name = "energy crossbow"
+	desc = "A reverse engineered weapon using syndicate technology."
+	icon_state = "crossbowlarge"
+	base_icon_state = "crossbowlarge"
+	no_charge_state = "crossbowlarge_empty"
+	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
+	suppressed = FALSE
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+	recharge_time = 0.5 SECONDS

@@ -36,7 +36,7 @@
 				/obj/item/gun/ballistic/revolver,
 				/obj/item/gun/energy/e_gun/hos,
 				/obj/item/gun/energy/laser/captain,
-				/obj/item/gun/energy/recharge/ebow,
+				/obj/item/gun/energy/ebow,
 				/obj/item/gun/syringe/syndicate,
 				/obj/item/hand_tele,
 				/obj/item/melee/baton/security,

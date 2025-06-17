@@ -97,43 +97,6 @@
 	if(no_charge_state && !can_shoot())
 		icon_state = no_charge_state
 
-/obj/item/gun/energy/recharge/ebow
-	name = "mini energy crossbow"
-	desc = "A weapon favored by syndicate stealth specialists."
-	icon_state = "crossbow"
-	base_icon_state = "crossbow"
-	inhand_icon_state = "crossbow"
-	no_charge_state = "crossbow_empty"
-	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
-	suppressed = TRUE
-	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
-	recharge_time = 2 SECONDS
-	holds_charge = TRUE
-	unique_frequency = TRUE
-
-/obj/item/gun/energy/recharge/ebow/add_bayonet_point()
-	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
-
-/obj/item/gun/energy/recharge/ebow/halloween
-	name = "candy corn crossbow"
-	desc = "A weapon favored by Syndicate trick-or-treaters."
-	icon_state = "crossbow_halloween"
-	base_icon_state = "crossbow_halloween"
-	no_charge_state = "crossbow_halloween_empty"
-	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
-
-/obj/item/gun/energy/recharge/ebow/large
-	name = "energy crossbow"
-	desc = "A reverse engineered weapon using syndicate technology."
-	icon_state = "crossbowlarge"
-	base_icon_state = "crossbowlarge"
-	no_charge_state = "crossbowlarge_empty"
-	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
-	suppressed = null
-	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
-
 /// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
 /obj/item/gun/energy/recharge/fisher
 	name = "\improper SC/FISHER disruptor"

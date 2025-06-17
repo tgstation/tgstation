@@ -243,7 +243,7 @@
 		apply_damage(stamina, STAMINA, null, blocked)
 
 	if(drowsy)
-		adjust_drowsiness(drowsy)
+		adjust_drowsiness_up_to(drowsy, drowsy * 2)
 	if(eyeblur)
 		adjust_eye_blur_up_to(eyeblur, eyeblur)
 	if(jitter && !check_stun_immunity(CANSTUN))

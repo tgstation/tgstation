@@ -110,7 +110,7 @@
 	mask = /obj/item/clothing/mask/gas
 	belt = /obj/item/storage/belt
 	l_hand = /obj/item/melee/energy/sword/saber/red
-	r_hand = /obj/item/gun/energy/recharge/ebow
+	r_hand = /obj/item/gun/energy/ebow
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
 /datum/outfit/heretic_hallucination
@@ -219,7 +219,7 @@
 		qdel(briefcase_item)
 	for(var/i = 3 to 0 step -1)
 		sec_briefcase.contents += new /obj/item/stack/spacecash/c1000
-	sec_briefcase.contents += new /obj/item/gun/energy/recharge/ebow
+	sec_briefcase.contents += new /obj/item/gun/energy/ebow
 	sec_briefcase.contents += new /obj/item/gun/ballistic/revolver/mateba
 	sec_briefcase.contents += new /obj/item/ammo_box/a357
 	sec_briefcase.contents += new /obj/item/grenade/c4/x4

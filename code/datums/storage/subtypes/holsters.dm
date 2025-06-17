@@ -10,7 +10,7 @@
 	if(length(holdables))
 		set_holdable(holdables)
 		return
-		
+
 	set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
@@ -35,7 +35,7 @@
 		/obj/item/gun/energy/dueling,
 		/obj/item/food/grown/banana,
 		/obj/item/gun/energy/laser/thermal,
-		/obj/item/gun/energy/recharge/ebow,
+		/obj/item/gun/energy/ebow,
 		/obj/item/gun/energy/laser/captain,
 		/obj/item/gun/energy/e_gun/hos,
 	)
@@ -88,7 +88,7 @@
 		/obj/item/ammo_box/a357,
 		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_box/magazine/toy/pistol,
-		/obj/item/gun/energy/recharge/ebow,
+		/obj/item/gun/energy/ebow,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,

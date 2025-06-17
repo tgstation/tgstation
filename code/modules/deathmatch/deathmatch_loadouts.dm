@@ -602,7 +602,7 @@
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
 	glasses = /obj/item/clothing/glasses/thermal/syndi
 	gloves = /obj/item/clothing/gloves/combat
-	suit_store = /obj/item/gun/energy/recharge/ebow
+	suit_store = /obj/item/gun/energy/ebow
 	l_hand = /obj/item/melee/energy/sword
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	l_pocket = /obj/item/soap/syndie

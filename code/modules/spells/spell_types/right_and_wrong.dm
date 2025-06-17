@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/rifle/boltaction/harpoon,
 	/obj/item/gun/ballistic/automatic/mini_uzi,
 	/obj/item/gun/energy/lasercannon,
-	/obj/item/gun/energy/recharge/ebow/large,
+	/obj/item/gun/energy/ebow/large,
 	/obj/item/gun/energy/e_gun/nuclear,
 	/obj/item/gun/ballistic/automatic/proto,
 	/obj/item/gun/ballistic/automatic/c20r,
