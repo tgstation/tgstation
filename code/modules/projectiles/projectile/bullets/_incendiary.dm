@@ -35,7 +35,7 @@
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
 	armor_flag = BOMB
-	speed = 0.8
+	speed = 1.6
 	wound_bonus = 30
 	bare_wound_bonus = 30
 	wound_falloff_tile = -4
