@@ -135,6 +135,7 @@
 	inhand_icon_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	automatic_charge_overlays = FALSE
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	/// How long it takes for our gun to be recharged.
