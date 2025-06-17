@@ -84,7 +84,7 @@
 	damage = 5
 	wound_bonus = 5
 	exposed_wound_bonus = 5
-	speed = 1.1
+	speed = 2
 	wound_falloff_tile = -0.5 //We would very much like this to cause wounds despite the low damage, so the drop off is relatively slow
 	sharpness = SHARP_EDGED
 
@@ -107,7 +107,7 @@
 	stamina = 10
 	sharpness = NONE
 	embed_type = null
-	speed = 0.8
+	speed = 1.8
 	stamina_falloff_tile = -0.25
 	ricochets_max = 4
 	ricochet_chance = 120
@@ -139,7 +139,7 @@
 	armour_penetration = 30
 	damage_falloff_tile = -0.2
 	wound_falloff_tile = -0.5
-	speed = 1.2
+	speed = 2
 	sharpness = SHARP_POINTY
 	embed_type = /datum/embedding/bullet/flechette
 
