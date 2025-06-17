@@ -103,7 +103,7 @@
 	var/obj/item/radio/internal_radio = new /obj/item/radio(src)
 	internal_radio.keyslot = /obj/item/encryptionkey/heads/captain
 	internal_radio.subspace_transmission = TRUE
-	internal_radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
+	internal_radio.canhear_range = 0 // anything higher and people in the area will hear it too
 	internal_radio.recalculateChannels()
 
 	telepathy =  new telepathy(src)
@@ -125,11 +125,11 @@
 	fully_replace_character_name(null, pick(GLOB.voidwalker_names))
 
 /mob/living/basic/voidwalker/Destroy()
-	. = ..()
-
 	QDEL_NULL(unsettle)
 	QDEL_NULL(telepathy)
 	QDEL_NULL(charge)
+
+	return ..()
 
 /// Called on COMSIG_LIVING_UNARMED_ATTACK
 /mob/living/basic/voidwalker/proc/on_attack(mob/living/source, atom/target, proximity, modifiers)

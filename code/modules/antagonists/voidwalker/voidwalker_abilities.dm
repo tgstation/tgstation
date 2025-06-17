@@ -133,5 +133,5 @@
 	if(istype(get_turf(target), valid_target_turf))
 		return ..()
 
-	owner.balloon_alert(owner, "must target space!")
+	owner.balloon_alert(owner, "must target [initial(valid_target_turf.name)]!")
 	return FALSE

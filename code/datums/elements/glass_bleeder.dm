@@ -8,13 +8,13 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, PROC_REF(on_adjust_brute_damage))
+	RegisterSignal(target, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_apply_damage))
 
 /datum/element/glass_bleeder/Detach(datum/source, ...)
-	UnregisterSignal(source, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE )
+	UnregisterSignal(source, COMSIG_MOB_APPLY_DAMAGE )
 	return ..()
 
-/datum/element/glass_bleeder/proc/on_adjust_brute_damage(mob/living/liver, damage_type, amount)
+/datum/element/glass_bleeder/proc/on_apply_damage(mob/living/liver, amount, damage_type)
 	SIGNAL_HANDLER
 
 	if(amount > 20)
