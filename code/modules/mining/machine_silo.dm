@@ -53,19 +53,19 @@
 		RADIO_CHANNEL_SECURITY = NONE,
 	)
 	var/static/alist/announcement_messages = alist(
-		BAN_ATTEMPT_FAILURE_NO_ACCESS = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME lacks SUPPLY_COMMAND_AUTHORITY.",
-		BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME attempting subversion of SUPPLY_COMMAND_AUTHORITY.",
+		BAN_ATTEMPT_FAILURE_NO_ACCESS = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME lacks supply command authority.",
+		BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME attempting subversion of supply command authority.",
 		BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE = "$SILO_USER_NAME INTERFACE_EXCEPTION -> BANNED_USERS+=\[$TARGET_NAME\] => NO_OP",
 		BAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME banned from ore silo access.",
 		UNBAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME unbanned from ore silo access.",
 		FAILED_OPERATION_SUSPICIOUS = "NULL_ACCOUNT_RESOLVE_PTR_#?",
 		FAILED_OPERATION_NO_BANK_ID = "ACCESS ENFORCEMENT FAILURE: No account ID found. Please contact a banker.",
-		UNRESTRICT_FAILURE_NO_ACCESS = "ID ACCESS REQUIREMENT ENFORCED: $SILO_USER lacks SUPPLY_COMMAND_AUTHORITY; ID ACCESS REQUIREMENT REMOVAL FAILED.",
+		UNRESTRICT_FAILURE_NO_ACCESS = "ID ACCESS REQUIREMENT ENFORCED: $SILO_USER lacks supply command authority; ID ACCESS REQUIREMENT REMOVAL FAILED.",
 		UNRESTRICT_FAILURE_SOULLESS_MACHINE = "$SILO_USER_NAME INTERFACE_EXCEPTION -> ID_ACCESS_REQUIREMENT = !ID_ACCESS_REQUIREMENT => NO_OP",
-		RESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE STARTED: $SILO_USER_NAME has enforced ID access requirement for this ore silo.",
+		RESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE STARTED: $SILO_USER_NAME has enforced ID read requirement for this ore silo.",
+		UNRESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE SUSPENDED: $SILO_USER_NAME has removed ID read requirement for this ore silo.",
 		RESTRICT_FAILURE = "ID ACCESS REQUIREMENT ROUTINE FAILED TO START: $SILO_USER_NAME()"
 	)
-	var/static/alist/feedback_sound_params = alist()
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
@@ -83,16 +83,9 @@
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 	register_context()
-	radio = new(src)
-	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
-	radio.set_listening(FALSE)
-	radio.keyslot = new /obj/item/encryptionkey/heads/captain
-	radio.recalculateChannels()
+	setup_radio()
 	configure_default_announcements_policy()
 	// Setting up a global list for this static list of sound parameters would be a waste
-	if(!feedback_sound_params["INITIALIZED"])
-		configure_feedback_sound_params()
 
 /obj/machinery/ore_silo/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -100,44 +93,18 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/ore_silo/proc/configure_feedback_sound_params()
-	feedback_sound_params[BAN_ATTEMPT_FAILURE_NO_ACCESS] = alist(
-		iterations = 3,
-		intervals = 0.5 SECONDS,
-		soundin = 'sound/machines/scanner/scanbuzz.ogg',
-		vol = 100,
-		vary = FALSE, frequency = 1.8)
-	feedback_sound_params[BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF] = alist(
-		iterations = 3,
-		intervals = 2.5 SECONDS,
-		soundin = 'sound/machines/warning-buzzer.ogg',
-		vol = 100,
-		vary = FALSE, extrarange = 21, frequency = 0.2)
-	feedback_sound_params[BAN_CONFIRMATION] = alist(
-		iterations = 1,
-		intervals = 0 SECONDS,
-		soundin = 'sound/machines/chime.ogg',
-		vol = 50,
-		vary = FALSE, frequency = 1.5)
-	feedback_sound_params[UNBAN_CONFIRMATION] = alist(
-		iterations = 1,
-		intervals = 0 SECONDS,
-		soundin = 'sound/machines/chime.ogg',
-		vol = 50,
-		vary = FALSE)
-	feedback_sound_params[UNRESTRICT_FAILURE_NO_ACCESS] = alist(
-		iterations = 3,
-		intervals = 0.5 SECONDS,
-		soundin = 'sound/machines/scanner/scanbuzz.ogg',
-		vol = 100,
-		vary = FALSE, frequency = 1.8)
-	feedback_sound_params[RESTRICT_CONFIRMATION]= alist(
-		iterations = 1,
-		intervals = 0 SECONDS,
-		soundin = 'sound/machines/chime.ogg',
-		vol=50,
-		vary=FALSE)
-	feedback_sound_params["INITIALIZED"] = TRUE
+/obj/machinery/ore_silo/proc/setup_radio()
+	radio = new(src)
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.set_listening(FALSE)
+	radio.keyslot = new
+	radio.keyslot.channels[RADIO_CHANNEL_COMMON] = TRUE
+	radio.keyslot.channels[RADIO_CHANNEL_COMMAND] = TRUE
+	radio.keyslot.channels[RADIO_CHANNEL_SUPPLY] = TRUE
+	radio.keyslot.channels[RADIO_CHANNEL_SECURITY] = TRUE
+	radio.recalculateChannels()
+
 
 /obj/machinery/ore_silo/Destroy()
 	if (GLOB.ore_silo_default == src)
@@ -285,6 +252,7 @@
 			)
 		)
 	data["banned_users"] = banned_users
+	data["ID_required"] = ID_required
 
 	return data
 
@@ -502,30 +470,8 @@
 	for(var/channel in radio_channels)
 		// Key is the channel name, value is the bitmask of announced actions
 		if(action & radio_channels[channel])
-			radio.talk_into(src, message, channel)
-	if(!feedback_sound_params["INITIALIZED"])
-		configure_feedback_sound_params()
-		CRASH("Feedback sound parameters not initialized after round setup, initialized here instead.")
-	if(!feedback_sound_params[action])
-		return
-	var/alist/sound_params = feedback_sound_params[action]
-	var/iterations = sound_params["iterations"]
-	var/intervals = sound_params["intervals"]
-	var/source = src
-	var/soundin = sound_params["soundin"]
-	var/vol = sound_params["vol"]
-	var/vary = sound_params["vary"]
-	var/frequency = (sound_params["frequency"] || 1)
-	var/extrarange = (sound_params["extrarange"] || 0)
-	var/play_delay = 0
-
-	do
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound),
-			source, soundin, vol, vary, extrarange, SOUND_FALLOFF_EXPONENT, frequency ), play_delay)
-		play_delay = intervals * iterations
-		iterations--
-	while(iterations)
-
+			var/say_cooldown_adherence_timer = 1 SECONDS * radio_channels.Find(channel) // * 1, * 2, * 3, etc.
+			addtimer(CALLBACK(radio, TYPE_PROC_REF(/obj/item, talk_into), src, message, channel), say_cooldown_adherence_timer)
 
 /**
  * Creates a log entry for depositing/withdrawing from the silo both ingame and in text based log

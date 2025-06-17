@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Collapsible,
+  Divider,
   Icon,
   Image,
   LabeledList,
@@ -13,7 +14,7 @@ import {
   Tooltip,
   VirtualList,
 } from 'tgui-core/components';
-import { classes } from 'tgui-core/react';
+import { BooleanLike, classes } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -32,9 +33,9 @@ type UserData = {
   Name: string;
   Age: number;
   Assignment: string;
-  Account_ID: number;
-  Account_Holder: string;
-  Account_Assignment: string;
+  'Account ID': number;
+  'Account Holder': string;
+  'Account Assignment': string;
   Accesses: string[];
   chamelon_override: string | null;
   silicon_override: string | null;
@@ -64,6 +65,7 @@ type Data = {
   logs: Log[];
   // Banned users is a list of bank account datum IDs
   banned_users: number[];
+  ID_required: BooleanLike;
 };
 
 export const OreSilo = (props: any) => {
@@ -224,11 +226,27 @@ type LogsListProps = {
   logs: Log[];
 };
 
+const RestrictButton = () => {
+  const { act, data } = useBackend<Data>();
+  const { ID_required } = data;
+  return (
+    <Button
+      className="__RestrictButton"
+      color={ID_required ? 'bad' : 'good'}
+      onClick={() => act('toggle_restrict')}
+    >
+      {ID_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
+    </Button>
+  );
+};
+
 const LogsList = (props: LogsListProps) => {
   const { logs } = props;
 
   return logs.length > 0 ? (
-    <Section fill scrollable pr={1} height="100%">
+    <Section fill scrollable pr={1} align="center" height="100%">
+      <RestrictButton />
+      <Divider />
       <VirtualList>
         {logs.map((log, index) => (
           <LogEntry key={index} {...log} />
@@ -297,9 +315,9 @@ const UserItem = (user_data: UserData) => {
     Name,
     Age,
     Assignment,
-    Account_ID,
-    Account_Holder,
-    Account_Assignment,
+    'Account ID': accountId,
+    'Account Holder': accountHolder,
+    'Account Assignment': accountAssignment,
     Accesses,
     chamelon_override,
     silicon_override,
@@ -319,10 +337,10 @@ const UserItem = (user_data: UserData) => {
         <Stack.Item>
           <Button
             className="__AntiRoboticistButton" // we have fun here
-            color={banned_users.includes(Account_ID) ? 'bad' : 'good'}
+            color={banned_users.includes(accountId) ? 'bad' : 'good'}
             onClick={() => act('toggle_ban', { user_data: user_data })}
           >
-            {banned_users.includes(Account_ID) ? 'Unban' : 'Ban'} User?
+            {banned_users.includes(accountId) ? 'Unban' : 'Ban'} User?
           </Button>
         </Stack.Item>
       ) : null}
