@@ -585,3 +585,5 @@
 /obj/effect/turf_decal/board_letter/h
 	icon_state = "board_h"
 
+/obj/effect/turf_decal/recharge
+	icon_state = "recharge"

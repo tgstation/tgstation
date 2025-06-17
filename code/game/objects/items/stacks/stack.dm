@@ -129,7 +129,6 @@
 		if(item_stack == src || QDELING(item_stack) || (item_stack.amount >= item_stack.max_amount))
 			continue
 		if(!(item_stack.flags_1 & INITIALIZED_1))
-			stack_trace("find_other_stack found uninitialized stack in loc? skipping for now")
 			continue
 		var/stack_ref = REF(item_stack)
 		if(already_found[stack_ref])

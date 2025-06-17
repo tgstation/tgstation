@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "\"Spawners Menu\" and \"Minigames Menu\" are back as chat verbs for power users"
+  - qol: "report-issue is now a verb that can be used in chat to open the issue report prompt for power users"

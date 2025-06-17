@@ -1,0 +1,4 @@
+author: "plsleavemealon"
+delete-after: True
+changes:
+  - rscadd: "Adds a brand new morbid themed surgical toolset, along with a way to craft it from a normal surgical toolset! These tools, much like their non-augmented counterparts are faster at certain surgeries when used by someone that is morbidly inclined."

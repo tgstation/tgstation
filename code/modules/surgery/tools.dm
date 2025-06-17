@@ -617,9 +617,10 @@
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
+	var/surgical_tray_overlay = "bonesetter"
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
-	return "bonesetter" + (tray_extended ? "" : "_out")
+	return surgical_tray_overlay + (tray_extended ? "" : "_out")
 
 /obj/item/bonesetter/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -642,9 +643,10 @@
 	toolspeed = 1
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
+	var/surgical_tray_overlay = "filter"
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
-	return "filter"
+	return surgical_tray_overlay
 
 /obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -726,3 +728,63 @@
 /obj/item/scalpel/cruel/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
+
+/obj/item/surgicaldrill/cruel
+	name = "tearing drill"
+	desc = "What secrets do they keep buried within those pearls..."
+	icon_state = "crueldrill"
+	inhand_icon_state = "crueldrill"
+	surgical_tray_overlay = "drill_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/circular_saw/cruel
+	name = "jagged bonesaw"
+	desc = "A twisted blade for twisted purpose. Rip sinew and bone until your work is done."
+	icon_state = "cruelsaw"
+	inhand_icon_state = "cruelsaw"
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	surgical_tray_overlay = "saw_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/bonesetter/cruel
+	name = "harsh bonesetter"
+	desc = "We shall make you whole once more..."
+	icon_state = "cruelbonesetter"
+	inhand_icon_state = "cruelbonesetter"
+	surgical_tray_overlay = "bonesetter_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/blood_filter/cruel
+	name = "malignant blood filter"
+	desc = "You must be made pure..."
+	icon_state = "cruelbloodfilter"
+	inhand_icon_state = "cruelbloodfilter"
+	surgical_tray_overlay = "filter_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/retractor/cruel/augment
+	desc = "A twisted micro-mechanical manipulator for retracting flesh and sinew."
+	toolspeed = 0.5
+
+/obj/item/hemostat/cruel/augment
+	desc = "Tiny, warped servos power a pair of pincers to stop bleeding."
+	toolspeed = 0.5
+
+/obj/item/cautery/cruel/augment
+	desc = "All mistakes can be burned away with a little flame..."
+	toolspeed = 0.5
+
+/obj/item/scalpel/cruel/augment
+	desc = "Ultra-sharp blade attached directly to your bone for enhanced vivisection."
+	toolspeed = 0.5
+
+/obj/item/surgicaldrill/cruel/augment
+	desc = "You cannot hide your secrets from me..."
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	w_class = WEIGHT_CLASS_SMALL
+	toolspeed = 0.5
+
+/obj/item/circular_saw/cruel/augment
+	desc = "A jagged sawblade built for grisly work."
+	w_class = WEIGHT_CLASS_SMALL
+	toolspeed = 0.5
