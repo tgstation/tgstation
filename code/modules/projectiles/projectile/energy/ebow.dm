@@ -7,6 +7,7 @@
 	knockdown = 1 SECONDS
 	slur = 10 SECONDS
 	speed = 2
+	shrapnel_type = /obj/item/shrapnel/energy_bolt
 	embed_type = /datum/embedding/energy_bolt
 
 /datum/embedding/energy_bolt
