@@ -472,6 +472,7 @@
 		if(action & radio_channels[channel])
 			var/say_cooldown_adherence_timer = 1 SECONDS * radio_channels.Find(channel) // * 1, * 2, * 3, etc.
 			addtimer(CALLBACK(radio, TYPE_PROC_REF(/obj/item, talk_into), src, message, channel), say_cooldown_adherence_timer)
+
 #undef ALWAYS_ANNOUNCE
 #undef BAN_ATTEMPT_FAILURE_NO_ACCESS
 #undef BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF
