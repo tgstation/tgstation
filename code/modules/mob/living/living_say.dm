@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced, tts_message = tts_message, tts_filter = tts_filter)//roughly 58% of living/say()'s total cost
 	if(succumbed)
 		succumb(TRUE)
-		to_chat(src, compose_message(src, language, message, "", "", "", spans, message_mods))
+		to_chat(src, compose_message(src, language, message, null, null, null, spans, message_mods))
 
 	return TRUE
 
