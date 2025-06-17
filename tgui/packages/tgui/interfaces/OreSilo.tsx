@@ -104,7 +104,12 @@ export const OreSilo = (props: any) => {
                 onRemove={(index) => act('remove', { id: index })}
               />
             ) : null}
-            {currentTab === Tab.Logs ? <LogsList logs={logs!} /> : null}
+            {currentTab === Tab.Logs ? (
+              <>
+                <RestrictButton />
+                <LogsList logs={logs!} />
+              </>
+            ) : null}
           </Stack.Item>
           <Stack.Item>
             <Section fill>
@@ -230,13 +235,16 @@ const RestrictButton = () => {
   const { act, data } = useBackend<Data>();
   const { ID_required } = data;
   return (
-    <Button
-      className="__RestrictButton"
-      color={ID_required ? 'bad' : 'good'}
-      onClick={() => act('toggle_restrict')}
-    >
-      {ID_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
-    </Button>
+    <Box align="center">
+      <Button
+        position="relative"
+        className="__RestrictButton"
+        color={ID_required ? 'bad' : 'good'}
+        onClick={() => act('toggle_restrict')}
+      >
+        {ID_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
+      </Button>
+    </Box>
   );
 };
 
@@ -245,7 +253,6 @@ const LogsList = (props: LogsListProps) => {
 
   return logs.length > 0 ? (
     <Section fill scrollable pr={1} align="center" height="100%">
-      <RestrictButton />
       <Divider />
       <VirtualList>
         {logs.map((log, index) => (
