@@ -286,12 +286,21 @@
 	update_appearance()
 	update_item_action_buttons()
 
+// Didn't attempt to catch the casing.
 #define CASING_CATCH_NO_ATTEMPT	0
+// Tried to catch, failed because casing was hot and hands were unprotected.
 #define CASING_CATCH_FAILED_SPICY	1
+// Tried to catch, failed because clumsy.
 #define CASING_CATCH_FAILED_CLUMSY	2
+// Tried to catch, failed because hands full.
 #define CASING_CATCH_FAILED_PLACEMENT	3
+// Tried to catch, succeeded. Hands protected or casing was cold (not recently fired).
 #define CASING_CATCH_SUCCESSFUL	4
+// Tried to catch, succeeded. Casing was hot, hands were unprotected, hands burned.
 #define CASING_CATCH_SUCCESSFUL_OUCH	5
+// Offset added to an ejected casing's fire timestamp;
+// if world.time is past the casing's fired timestamp plus this offset, casing is considered cold, and won't burn hands.
+#define CASING_HOT_DELAY 5 SECONDS
 
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
@@ -328,7 +337,7 @@
 								span_warning("You reach out and catch \the [casing] as it ejects from [src]... before fumbling it in an incredibly unlikely, comical manner! Uncool!"),
 								span_notice("You hear someone reaching for something, shortly followed by an embarassingly loud, comedic clattering."),
 							)
-							if(!(world.time >= casing.shot_timestamp + 5 SECONDS))
+							if(!(world.time >= casing.shot_timestamp + CASING_HOT_DELAY))
 								var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
 								to_chat(wielder, span_warning("As if to add insult to injury, \the [casing] lands in the perfect way... to burn your [affecting.plaintext_zone]."))
 								wielder.apply_damage(5, BURN, affecting, wound_bonus = CANT_WOUND)
@@ -370,7 +379,7 @@
 		if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
 			protected_hands = TRUE
 	// from left to right: are our hands protected from hot things via gloves? are we or our hands heat resistant? was this casing shot more than 5 seconds ago?
-	if(protected_hands || HAS_TRAIT(wielder, TRAIT_RESISTHEAT) || HAS_TRAIT(wielder, TRAIT_RESISTHEATHANDS) || world.time >= casing.shot_timestamp + 5 SECONDS)
+	if(protected_hands || HAS_TRAIT(wielder, TRAIT_RESISTHEAT) || HAS_TRAIT(wielder, TRAIT_RESISTHEATHANDS) || world.time >= casing.shot_timestamp + CASING_HOT_DELAY)
 		if(wielder.put_in_hands(casing)) // try placement in hand,
 			return CASING_CATCH_SUCCESSFUL // success
 		return CASING_CATCH_FAILED_PLACEMENT // or not.
