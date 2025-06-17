@@ -1,4 +1,0 @@
-author: "MiraHell"
-delete-after: True
-changes:
-  - bugfix: "Empty revolvers can now be reloaded"

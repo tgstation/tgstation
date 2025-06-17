@@ -360,3 +360,42 @@
   plsleavemealon:
   - rscadd: Adds new morbid themed tools for the coroners enjoyment. Coroners now
       perform autopsies slightly faster.
+2025-06-17:
+  Absolucy:
+  - bugfix: The lobby art properly fades out during roundstart, latejoin, and server
+      restart again.
+  Ghommie:
+  - bugfix: Sundered blade ritual shouldn't delete more than one sheet of silver or
+      titanium.
+  Justice12354:
+  - bugfix: henchmen jumpsuit no longer turns pink and black when u try to adjust
+      it (you can't adjust it now)
+  MGO:
+  - rscadd: Introduces new inverse reagents for Krokodil, Bath Salts, Aranesp, Happiness,
+      Baldium, Colorful Reagent and Gravitum!
+  - rscadd: An alternate reaction output has been added for Monkey Powder. Instead
+      of 1u Water, add 10u Monkey Dust to make an angry monkey!
+  - rscadd: 'Adds a medicine: Naloxone! Requires equal parts Morphine, Hydrogen Peroxide,
+      Bromine and Ethanol to be made. Purges opioid-class reagents, can also help
+      with mitigating drowsiness and breath loss. Also purges good moodlets associated
+      with opiates and replaces them with negative moodlets, so don''t expect your
+      patient to be happy about losing their high!'
+  MiraHell:
+  - bugfix: Empty revolvers can now be reloaded
+  SmArtKar:
+  - bugfix: Fixed holobarriers going invisible after being spraypainted
+  - bugfix: Fixed some edge cases where antagonist datums would "stick" and not get
+      removed if your body got destroyed.
+  TealSeer:
+  - bugfix: fixed being unable to attack suit storage units
+  Y0SH1M4S73R:
+  - bugfix: You can no longer deploy flatpacks in places that aren't turfs.
+  jlsnow301:
+  - bugfix: Tgui core v4.2 brings more stylized components, fixes for stuck movement
+      keys, and more
+  - bugfix: Draggable tgui components (like slider) will let you type numbers again
+  necromanceranne:
+  - bugfix: Malfunctioning AI's can once again dominate mechs without a beacon.
+  - qol: Eldritch paintings no longer inflict brain traumas on you that need surgery
+      to remove. Instead, they inflict a status effect that can be protected from
+      and removed using large doses of holy water.

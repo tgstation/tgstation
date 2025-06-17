@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Tgui core v4.2 brings more stylized components, fixes for stuck movement keys, and more"
-  - bugfix: "Draggable tgui components (like slider) will let you type numbers again"
