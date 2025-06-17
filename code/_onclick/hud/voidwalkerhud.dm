@@ -12,12 +12,8 @@
 	action_intent.icon = ui_style
 	static_inventory += action_intent
 
-	throw_icon.icon = ui_style
-	throw_icon.screen_loc = ui_rest
-	static_inventory += throw_icon
-
 	var/atom/movable/screen/space_camo_toggle = new /atom/movable/screen/space_camo(null, src)
-	space_camo_toggle.screen_loc = ui_combat_toggle
+	space_camo_toggle.screen_loc = ui_rest
 	static_inventory += space_camo_toggle
 
 	var/atom/movable/screen/vomit_jump/vomit = new /atom/movable/screen/vomit_jump(null, src)

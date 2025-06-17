@@ -1588,6 +1588,7 @@
 #include "code\datums\elements\pet_bonus.dm"
 #include "code\datums\elements\pet_collar.dm"
 #include "code\datums\elements\pet_cult.dm"
+#include "code\datums\elements\pick_and_drop_only.dm"
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"
 #include "code\datums\elements\poster_tearer.dm"

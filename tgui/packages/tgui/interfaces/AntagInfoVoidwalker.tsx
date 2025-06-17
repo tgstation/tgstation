@@ -63,7 +63,9 @@ export const AntagInfoVoidwalker = (props) => {
                 <LabeledList.Item label="Draining Slash">
                   You take the breath right from their lungs and quickly take
                   down even the strongest opponents. Should they resist,
-                  right-click allows you to do some raw damage.
+                  right-click allows you to do some raw damage. Your arms are
+                  otherwise not very sophisticated, and are not good for much
+                  more than just grabbing things.
                 </LabeledList.Item>
                 <LabeledList.Item label="Cosmic Physiology">
                   Your natural camouflage makes you invisible in space, as well

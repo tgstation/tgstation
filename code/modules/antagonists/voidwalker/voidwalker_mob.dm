@@ -87,9 +87,10 @@
 	AddComponent(/datum/component/glass_passer, deform_glass = 5 SECONDS)
 	AddComponent(/datum/component/planet_allergy)
 
-	AddElement(/datum/element/dextrous, hud_type = hud_type, can_throw = TRUE)
-	AddComponent(/datum/component/personal_crafting, ui_combat_toggle)
+	AddElement(/datum/element/dextrous, hud_type = hud_type)
 	AddComponent(/datum/component/basic_inhands, x_offset = -2)
+
+	AddElement(/datum/element/pick_and_drop_only)
 
 	AddElement(/datum/element/glass_bleeder)
 
@@ -208,7 +209,7 @@
 		victim.balloon_alert(src, "is dead!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!victim.incapacitated)
+	if(victim.stat == CONSCIOUS) //we're still beating them up!!
 		return
 
 	if(!istype(get_turf(victim), home_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
