@@ -138,7 +138,7 @@
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	/// How long it takes for our gun to be recharged.
-	var/recharge_time = 1.5 SECONDS
+	var/recharge_time = 2 SECONDS
 	/// instead of an overlay, sets the icon_state directly.
 	var/no_charge_state = "crossbow_empty"
 
@@ -184,4 +184,4 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 	suppressed = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
-	recharge_time = 0.5 SECONDS
+	recharge_time = 1 SECONDS
