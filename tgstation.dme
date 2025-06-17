@@ -1727,6 +1727,7 @@
 #include "code\datums\martial\_martial.dm"
 #include "code\datums\martial\boxing.dm"
 #include "code\datums\martial\cqc.dm"
+#include "code\datums\martial\junglearts.dm"
 #include "code\datums\martial\krav_maga.dm"
 #include "code\datums\martial\mushpunch.dm"
 #include "code\datums\martial\plasma_fist.dm"
