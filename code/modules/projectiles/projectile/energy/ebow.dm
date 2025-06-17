@@ -27,7 +27,7 @@
 
 	owner.set_silence_if_lower(2 SECONDS)
 	owner.adjust_drowsiness_up_to(1 SECONDS, 60 SECONDS)
-	if(HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(the_snoozer, TRAIT_KNOCKEDOUT))
+	if(HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		owner.AdjustSleeping(10 SECONDS)
 		fall_chance = 50
 

@@ -153,7 +153,7 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = recharge_time, \
-		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/kinetic_reload.ogg', \
 		charge_sound_cooldown_time = recharge_time, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 		crank_hidden = suppressed, \
