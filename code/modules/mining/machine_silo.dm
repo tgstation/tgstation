@@ -1,14 +1,26 @@
+// Always announce this action
 #define ALWAYS_ANNOUNCE (ALL)
+// Announced when someone tries to ban someone without QM access
 #define BAN_ATTEMPT_FAILURE_NO_ACCESS (1<<1)
+// Announced when someone tries to ban someone with QM access without being the Captain
 #define BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF (1<<2)
+// Announced when a silicon tries to ban someone
 #define BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE (1<<3)
+// Announced when a user is banned from the ore silo
 #define BAN_CONFIRMATION (1<<4)
+// Announced when a user is unbanned from the ore silo
 #define UNBAN_CONFIRMATION (1<<5)
+// Announced when a suspicious(chameleon ID worn by user) log is Among the ore silo logs and someone tries to ban them
 #define FAILED_OPERATION_SUSPICIOUS (1<<6)
+// Announced when a user tries to ban someone without a bank account ID
 #define FAILED_OPERATION_NO_BANK_ID (1<<7)
+// Announced when a user tries to unrestrict the ore silo without QM access
 #define UNRESTRICT_FAILURE_NO_ACCESS (1<<8)
+// Announced when a silicon tries to unrestrict the ore silo
 #define UNRESTRICT_FAILURE_SOULLESS_MACHINE (1<<9)
+// Announced when a user removes the worn ID(with valid bank account) requirement from the ore silo
 #define UNRESTRICT_CONFIRMATION (1<<10)
+// Announced when a user restricts the ore silo to require a valid ID with bank account
 #define RESTRICT_CONFIRMATION (1<<11)
 
 /obj/machinery/ore_silo
@@ -41,21 +53,19 @@
 		RADIO_CHANNEL_SECURITY = NONE,
 	)
 	var/static/alist/announcement_messages = alist(
-		BAN_ATTEMPT_FAILURE_NO_ACCESS = "ACCESS ENFORCEMENT FAILURE: You lack SUPPLY_COMMAND_AUTHORITY.",
-		BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF = "ACCESS ENFORCEMENT FAILURE: You are challenging the authority of the Director of Administration.",
-		BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE = "ACCESS ENFORCEMENT FAILURE: You are a soulless machine.",
-		BAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION: [banned_user_data["Name"]] banned from ore silo access.",
-		UNBAN_CONFIRMATION = "ACCESS ENFORCEMENT REPRIEVE: [banned_user_data["Name"]] granted UNRESTRICTED status.",
-		FAILED_OPERATION_SUSPICIOUS = "ACCESS ENFORCEMENT FAILURE: Suspicious activity detected. Please contact a banker.",
+		BAN_ATTEMPT_FAILURE_NO_ACCESS = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME lacks SUPPLY_COMMAND_AUTHORITY.",
+		BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME attempting subversion of SUPPLY_COMMAND_AUTHORITY.",
+		BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE = "$SILO_USER_NAME INTERFACE_EXCEPTION -> BANNED_USERS+=\[$TARGET_NAME\] => NO_OP",
+		BAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME banned from ore silo access.",
+		UNBAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME unbanned from ore silo access.",
+		FAILED_OPERATION_SUSPICIOUS = "NULL_ACCOUNT_RESOLVE_PTR_#?",
 		FAILED_OPERATION_NO_BANK_ID = "ACCESS ENFORCEMENT FAILURE: No account ID found. Please contact a banker.",
-		UNRESTRICT_FAILURE_NO_ACCESS = "ACCESS ENFORCEMENT FAILURE: You lack SUPPLY_COMMAND_AUTHORITY to unrestrict this ore silo.",
-		UNRESTRICT_FAILURE_SOULLESS_MACHINE = "ACCESS ENFORCEMENT FAILURE: You are a soulless machine, you cannot unrestrict this ore silo.",
-		RESTRICT_CONFIRMATION = "Ore Silo restricted to [banned_user_data["Name"]]'s account ID [banned_user_data["Account ID"]].",
-		RESTRICT_FAILURE = "Ore Silo restriction failed, please contact a banker."
+		UNRESTRICT_FAILURE_NO_ACCESS = "ID ACCESS REQUIREMENT ENFORCED: $SILO_USER lacks SUPPLY_COMMAND_AUTHORITY; ID ACCESS REQUIREMENT REMOVAL FAILED.",
+		UNRESTRICT_FAILURE_SOULLESS_MACHINE = "$SILO_USER_NAME INTERFACE_EXCEPTION -> ID_ACCESS_REQUIREMENT = !ID_ACCESS_REQUIREMENT => NO_OP",
+		RESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE STARTED: $SILO_USER_NAME has enforced ID access requirement for this ore silo.",
+		RESTRICT_FAILURE = "ID ACCESS REQUIREMENT ROUTINE FAILED TO START: $SILO_USER_NAME()"
 	)
 	var/static/alist/feedback_sound_params = alist()
-
-
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
@@ -77,11 +87,18 @@
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.set_listening(FALSE)
+	radio.keyslot = new /obj/item/encryptionkey/heads/captain
 	radio.recalculateChannels()
 	configure_default_announcements_policy()
 	// Setting up a global list for this static list of sound parameters would be a waste
-	if(!feedback_sound_params['INITIALIZED'])
+	if(!feedback_sound_params["INITIALIZED"])
 		configure_feedback_sound_params()
+
+/obj/machinery/ore_silo/emag_act(mob/living/user)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/ore_silo/proc/configure_feedback_sound_params()
 	feedback_sound_params[BAN_ATTEMPT_FAILURE_NO_ACCESS] = alist(
@@ -89,38 +106,38 @@
 		intervals = 0.5 SECONDS,
 		soundin = 'sound/machines/scanner/scanbuzz.ogg',
 		vol = 100,
-		vary = TRUE, frequency = 1.8)
+		vary = FALSE, frequency = 1.8)
 	feedback_sound_params[BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF] = alist(
 		iterations = 3,
-		intervals = 1.5 SECONDS,
-		soundin = sound('sound/machines/warning-buzzer.ogg', pitch = 0.5),
+		intervals = 2.5 SECONDS,
+		soundin = 'sound/machines/warning-buzzer.ogg',
 		vol = 100,
-		vary = TRUE, extrarange = 21, frequency = 0.2)
+		vary = FALSE, extrarange = 21, frequency = 0.2)
 	feedback_sound_params[BAN_CONFIRMATION] = alist(
 		iterations = 1,
 		intervals = 0 SECONDS,
-		soundin = sound('sound/machines/chime.ogg', pitch = 0.25),
+		soundin = 'sound/machines/chime.ogg',
 		vol = 50,
-		vary = TRUE, frequency = 1.5)
+		vary = FALSE, frequency = 1.5)
 	feedback_sound_params[UNBAN_CONFIRMATION] = alist(
 		iterations = 1,
 		intervals = 0 SECONDS,
 		soundin = 'sound/machines/chime.ogg',
 		vol = 50,
-		vary = TRUE)
+		vary = FALSE)
 	feedback_sound_params[UNRESTRICT_FAILURE_NO_ACCESS] = alist(
 		iterations = 3,
 		intervals = 0.5 SECONDS,
 		soundin = 'sound/machines/scanner/scanbuzz.ogg',
 		vol = 100,
-		vary = TRUE, frequency = 1.8)
+		vary = FALSE, frequency = 1.8)
 	feedback_sound_params[RESTRICT_CONFIRMATION]= alist(
 		iterations = 1,
 		intervals = 0 SECONDS,
-		soundin = sound('sound/machines/chime.ogg', pitch = 2),
+		soundin = 'sound/machines/chime.ogg',
 		vol=50,
-		vary=TRUE)
-	feedback_sound_params['INITIALIZED'] = TRUE
+		vary=FALSE)
+	feedback_sound_params["INITIALIZED"] = TRUE
 
 /obj/machinery/ore_silo/Destroy()
 	if (GLOB.ore_silo_default == src)
@@ -336,16 +353,8 @@
 /obj/machinery/ore_silo/proc/attempt_ban_toggle(mob/living/user, list/target_user_data)
 	if(!istype(user) || !istype(target_user_data))
 		CRASH("Bad arguments passed to [callee]")
-	if(!isnull(target_user_data[SILICON_OVERRIDE]) || !isnull(target_user_data[ID_READ_FAILURE]))
-		// this shouldn't ever happen
-		CRASH("Bad proc call to [callee] from [caller].")
-	if(isAI(user) || iscyborg(user) || isdrone(user))
-		if(emagged)
-			var/target_bank_id = target_user_data["Account ID"]
-			if(!target_bank_id || !isnum(target_bank_id))
-				return
-			banned_users.Find(target_bank_id) ? banned_users.Remove(target_bank_id) : banned_users.Add(target_bank_id)
-			return
+	var/emagged = obj_flags & EMAGGED
+	if((isAI(user) || iscyborg(user) || isdrone(user)) && !emagged)
 		to_chat(user, span_danger("A scroll of red text occludes your vision: ACCESS ENFORCEMENT _disabled_ for SILICON INTERFACE."))
 		user.flash_act(intensity = 1, affect_silicon = TRUE)
 		handle_access_action_feedback(
@@ -356,33 +365,34 @@
 		return
 
 	var/target_bank_id = target_user_data["Account ID"]
-	var/target_is_banned = !!(banned_users.Find(target_bank_id))
-
-	to_chat(user, span_warning("You press the button to [target_is_banned ? "un" : ""]ban [banned_user_data["Name"]]'s account..."))
-	// No feedback if emagged
-	if(emagged)
-		target_is_banned ? banned_users.Remove(target_bank_id) : banned_users.Add(target_bank_id)
-		return
-
-	var/alist/silo_user_data = ID_DATA(user)
-	var/list/silo_user_accesses = astype(silo_user_data["Accesses"], /list)
-	var/list/target_user_accesses = astype(target_user_data["Accesses"], /list)
+	var/target_is_banned = banned_users.Find(target_bank_id)
 	// Agent card bypasses bans but we want to specially handle them anyway
 	// so a bunch of random account IDs don't fill the list and do something
 	// like ban people who haven't joined the round yet
 	var/haxxor_card_ban_immunity = !isnull(target_user_data[CHAMELEON_OVERRIDE])
 
+	to_chat(user, span_warning("You press the button to [target_is_banned ? "un" : ""]ban [target_user_data["Name"]]'s account..."))
+	// No feedback if emagged
+	if(emagged)
+		if(!haxxor_card_ban_immunity && isnum(target_bank_id))
+			target_is_banned ? banned_users.Remove(target_bank_id) : banned_users.Add(target_bank_id)
+		return
+
+	var/alist/silo_user_data = ID_DATA(user)
+	var/list/silo_user_accesses = astype(silo_user_data["Accesses"], /list)
+	var/list/target_user_accesses = astype(target_user_data["Accesses"], /list)
+
 
 	// Even though QM bypasses the access check (or rather always pases)
 	// perhaps the Captain would pre-emptively ban them right before a demotion
-	if(target_user_accesses.Find(ACCESS_QM) && !silo_user_accesses.Find(ACCESS_CAPTAIN))
+	if(target_user_accesses?.Find(ACCESS_QM) && !silo_user_accesses?.Find(ACCESS_CAPTAIN))
 		handle_access_action_feedback(
 			BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF,
 			silo_user_data,
 			target_user_data
 		)
 		return
-	if(!silo_user_accesses.Find(ACCESS_QM))
+	if(!silo_user_accesses?.Find(ACCESS_QM))
 		handle_access_action_feedback(
 			BAN_ATTEMPT_FAILURE_NO_ACCESS,
 			silo_user_data,
@@ -422,11 +432,12 @@
 /obj/machinery/ore_silo/proc/attempt_toggle_restrict(mob/living/user)
 	if(!istype(user))
 		CRASH()
-	var/alist/silo_user_data = ID_DATA(user)
+	var/emagged = obj_flags & EMAGGED
 	if(emagged)
 		ID_required = !ID_required
 		return
-	var/is_a_robot = !!silo_user_data[SILICON_OVERRIDE]
+	var/alist/silo_user_data = ID_DATA(user)
+	var/is_a_robot = silo_user_data[SILICON_OVERRIDE]
 	if(is_a_robot)
 		handle_access_action_feedback(
 			UNRESTRICT_FAILURE_SOULLESS_MACHINE,
@@ -448,37 +459,73 @@
 		silo_user_data,
 		null)
 
-// Forgive me for how many lines this adds but I wanted to spare them of horizontal scrolling
+// I must sacrifice the line diff to the gods of readable code
+/// Set up the default announcement policy for actions
+/// radio_channels[channel_name_key] = policy_bitmask
+/// where channel_name_key is one of RADIO_CHANNEL_(COMMON|COMMAND|SECURITY|SUPPLY)
+/// and policy_bitmask is a bitmask of actions that will be announced on that channel
+/// by default
 /obj/machinery/ore_silo/proc/configure_default_announcements_policy()
 
-	radio_channels[RADIO_CHANNEL_COMMON] = DEFAULT_COMMON_POLICY
+	radio_channels[RADIO_CHANNEL_COMMON] = BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF
+	radio_channels[RADIO_CHANNEL_COMMON] |= RESTRICT_CONFIRMATION
+	radio_channels[RADIO_CHANNEL_COMMON] |= UNRESTRICT_CONFIRMATION
 
-	radio_channels[RADIO_CHANNEL_COMMAND] = DEFAULT_COMMAND_POLICY
+	// start off with the common channel bitmask policy as a base
+	radio_channels[RADIO_CHANNEL_COMMAND] = radio_channels[RADIO_CHANNEL_COMMON]
+	radio_channels[RADIO_CHANNEL_COMMAND] |= BAN_ATTEMPT_FAILURE_NO_ACCESS
+	radio_channels[RADIO_CHANNEL_COMMAND] |= BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE
+	radio_channels[RADIO_CHANNEL_COMMAND] |= UNRESTRICT_FAILURE_NO_ACCESS
+	radio_channels[RADIO_CHANNEL_COMMAND] |= UNRESTRICT_FAILURE_SOULLESS_MACHINE
+	radio_channels[RADIO_CHANNEL_COMMAND] |= FAILED_OPERATION_NO_BANK_ID
+	radio_channels[RADIO_CHANNEL_COMMAND] |= BAN_CONFIRMATION
+	radio_channels[RADIO_CHANNEL_COMMAND] |= UNBAN_CONFIRMATION
 
-	radio_channels[RADIO_CHANNEL_SECURITY] = DEFAULT_SECURITY_POLICY
+	// Security channel is used for security-related announcements
+	// but gets less information than command to avoid over-informing them without
+	// QM involvement
+	radio_channels[RADIO_CHANNEL_SECURITY] = radio_channels[RADIO_CHANNEL_COMMAND]
+	radio_channels[RADIO_CHANNEL_SECURITY] |= BAN_ATTEMPT_FAILURE_NO_ACCESS
+	radio_channels[RADIO_CHANNEL_SECURITY] |= UNRESTRICT_FAILURE_NO_ACCESS
+	radio_channels[RADIO_CHANNEL_SECURITY] |= BAN_CONFIRMATION
+	radio_channels[RADIO_CHANNEL_SECURITY] |= UNBAN_CONFIRMATION
 
-	radio_channels[RADIO_CHANNEL_SUPPLY] = DEFAULT_SUPPLY_POLICY
+	// Supply channel has the same policy by default as the command channel
+	// due to their usual purview of the ore silo
+	radio_channels[RADIO_CHANNEL_SUPPLY] = radio_channels[RADIO_CHANNEL_COMMAND]
 
 /obj/machinery/ore_silo/proc/handle_access_action_feedback(action, alist/silo_user_data, list/target_user_data = null)
-	switch(action)
-		if(BAN_ATTEMPT_FAILURE_NO_ACCESS)
-			say("ACCESS ENFORCEMENT FAILURE: [current_user_data["Name"]] lacks SUPPLY_COMMAND_AUTHORITY.")
+	var/message = announcement_messages[action]
+	message = replacetext(message, "$TARGET_NAME", target_user_data?["Name"])
+	message = replacetext(message, "$SILO_USER_NAME", silo_user_data["Name"])
+	say(message)
+	for(var/channel in radio_channels)
+		// Key is the channel name, value is the bitmask of announced actions
+		if(action & radio_channels[channel])
+			radio.talk_into(src, message, channel)
+	if(!feedback_sound_params["INITIALIZED"])
+		configure_feedback_sound_params()
+		CRASH("Feedback sound parameters not initialized after round setup, initialized here instead.")
+	if(!feedback_sound_params[action])
+		return
+	var/alist/sound_params = feedback_sound_params[action]
+	var/iterations = sound_params["iterations"]
+	var/intervals = sound_params["intervals"]
+	var/source = src
+	var/soundin = sound_params["soundin"]
+	var/vol = sound_params["vol"]
+	var/vary = sound_params["vary"]
+	var/frequency = (sound_params["frequency"] || 1)
+	var/extrarange = (sound_params["extrarange"] || 0)
+	var/play_delay = 0
 
-	playsound(source = src, soundin = 'sound/effects/adminhelp.ogg',
-		vol = 50,
-		vary = TRUE, frequency = 2)
-	say("ACCESS ENFORCEMENT CONFIRMATION: [banned_user_data["Name"]] banned from ore silo access.")
-	playsound(src, 'sound/machines/chime.ogg',
-		 50, FALSE)
-	say("WARNING. Possible COMMAND AUTHORITY SUBVERSIVE [silo_user_data["Name"]] present at [get_area(src)].")
-	playsound(source = src, soundin = 'sound/machines/scanner/scanbuzz.ogg',
-		vol = 100,
-		vary = TRUE, extrarange = 21/*Three screen lengths away*/, frequency = 0.2)
-	say("ACCESS ENFORCEMENT REPRIEVE: [banned_user_data["Name"]] granted UNRESTRICTED status.")
-/obj/machinery/ore_silo/proc/sound_feedback(action)
-	playsound(source = src, soundin = 'sound/machines/scanner/scanbuzz.ogg',
-		vol = 100,
-		vary = TRUE, frequency = 1.8)
+	do
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound),
+			source, soundin, vol, vary, extrarange, SOUND_FALLOFF_EXPONENT, frequency ), play_delay)
+		play_delay = intervals * iterations
+		iterations--
+	while(iterations)
+
 
 /**
  * Creates a log entry for depositing/withdrawing from the silo both ingame and in text based log

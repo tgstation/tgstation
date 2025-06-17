@@ -315,10 +315,10 @@ const UserItem = (user_data: UserData) => {
       <Stack.Item>
         <Box className="__Assignment">{Assignment}</Box>
       </Stack.Item>
-      {(!id_read_failure && !silicon_override) ? (
+      {!id_read_failure && !silicon_override ? (
         <Stack.Item>
           <Button
-            className="__AntiRoboticistButton"
+            className="__AntiRoboticistButton" // we have fun here
             color={banned_users.includes(Account_ID) ? 'bad' : 'good'}
             onClick={() => act('toggle_ban', { user_data: user_data })}
           >
