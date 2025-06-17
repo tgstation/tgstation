@@ -165,7 +165,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
-	var/atom/movable/supermatter_warp_effect/warp
+	var/atom/movable/warp_effect/warp
 	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
 	var/powerloss_linear_threshold = 0
 	///The offset of the linear powerloss function set so the transition is differentiable.
