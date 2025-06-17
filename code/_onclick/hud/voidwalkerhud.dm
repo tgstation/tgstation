@@ -5,7 +5,7 @@
 	. = ..()
 
 	floor_change.icon = ui_style
-	floor_change.screen_loc = ui_above_movement
+	floor_change.screen_loc = ui_rest
 	static_inventory += floor_change
 
 	action_intent = new /atom/movable/screen/combattoggle/flashy/voidwalker(null, src)
@@ -13,7 +13,7 @@
 	static_inventory += action_intent
 
 	var/atom/movable/screen/space_camo_toggle = new /atom/movable/screen/space_camo(null, src)
-	space_camo_toggle.screen_loc = ui_rest
+	space_camo_toggle.screen_loc = ui_above_movement
 	static_inventory += space_camo_toggle
 
 	var/atom/movable/screen/vomit_jump/vomit = new /atom/movable/screen/vomit_jump(null, src)
