@@ -171,8 +171,27 @@
 	blend_mode = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
+	// We start out hidden as we do not need to render when there's no distortion on our level
+	start_hidden = TRUE
 
-///Contains just the floor
+/atom/movable/screen/plane_master/gravpulse/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	RegisterSignal(GLOB, SIGNAL_ADDTRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_enabled))
+	RegisterSignal(GLOB, SIGNAL_REMOVETRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_disabled))
+	if(HAS_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset)))
+		distortion_enabled()
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_enabled(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_disabled(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	hide_plane()
+
+/// Contains just the floor
 /atom/movable/screen/plane_master/floor
 	name = "Floor"
 	documentation = "The well, floor. This is mostly used as a sorting mechanism, but it also lets us create a \"border\" around the game world plane, so its drop shadow will actually work."
@@ -481,3 +500,27 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
+
+/atom/movable/screen/plane_master/escape_menu/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/hud/our_hud = home.our_hud
+	if(!our_hud)
+		return
+
+	RegisterSignal(our_hud, SIGNAL_ADDTRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_opened), override = TRUE)
+	RegisterSignal(our_hud, SIGNAL_REMOVETRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_closed), override = TRUE)
+	if(!HAS_TRAIT(our_hud, TRAIT_ESCAPE_MENU_OPEN))
+		escape_closed()
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_opened(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_closed(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	hide_plane(our_mob)
