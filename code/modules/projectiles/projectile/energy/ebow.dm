@@ -6,16 +6,29 @@
 	eyeblur = 20 SECONDS
 	knockdown = 1 SECONDS
 	slur = 10 SECONDS
-	drowsy = 10 SECONDS
 	speed = 2
+	embed_type = /datum/embedding/energy_bolt
 
-/obj/projectile/energy/bolt/on_hit(atom/target, blocked, pierce_hit)
+/datum/embedding/energy_bolt
+	embed_chance = 100
+	fall_chance = 1
+	jostle_chance = 5
+	jostle_pain_mult = 0.2
+	pain_stam_pct = 0.2
+	ignore_throwspeed_threshold = TRUE
+	rip_time = 1.5 SECONDS
+
+/datum/embedding/energy_bolt/process(seconds_per_tick)
 	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/the_snoozer = target
-		the_snoozer.adjust_silence_up_to(1 SECONDS, 2 SECONDS)
-		if(HAS_TRAIT_FROM(the_snoozer, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(the_snoozer, TRAIT_KNOCKEDOUT))
-			the_snoozer.AdjustSleeping(drowsy)
+
+	if(!(owner.mob_biotypes & MOB_ORGANIC))
+		return
+
+	owner.set_silence_if_lower(2 SECONDS)
+	owner.adjust_drowsiness_up_to(1 SECONDS, 60 SECONDS)
+	if(HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(the_snoozer, TRAIT_KNOCKEDOUT))
+		owner.AdjustSleeping(10 SECONDS)
+		fall_chance = 50
 
 /obj/projectile/energy/bolt/halloween
 	name = "candy corn"
@@ -25,4 +38,3 @@
 /obj/projectile/energy/bolt/large
 	damage = 80
 	knockdown = 2 SECONDS
-	drowsy = 30 SECONDS
