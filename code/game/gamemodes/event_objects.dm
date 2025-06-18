@@ -34,6 +34,7 @@
 	animate(curse_filter, 2 SECONDS, alpha = 0, loop = -1)
 	animate(2 SECONDS, alpha = 255, loop = -1, flags = ANIMATION_PARALLEL)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP_PUSHED, PROC_REF(block_bump))
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/structure/cursed_thing/Destroy()
 	past_examiners.Cut()
