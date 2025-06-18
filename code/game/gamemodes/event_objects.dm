@@ -95,7 +95,7 @@
 /datum/brain_trauma/hypnosis/curse/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	owner.adjust_hallucinations_up_to(5 SECONDS * seconds_per_tick, 5 MINUTES)
-	owner.mob_mood?.adjust_sanity(-2.5 * seconds_per_tick, minimum = SANITY_CRAZY, override = TRUE)
+	owner.mob_mood?.adjust_sanity(-1.5 * seconds_per_tick, minimum = SANITY_CRAZY, override = TRUE)
 
 /datum/antagonist/hypnotized/greet()
 	play_stinger()
