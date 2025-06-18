@@ -382,11 +382,11 @@
 */
 /obj/machinery/rnd/production/proc/do_make_item(
 		datum/design/design,
- 		items_remaining,
- 		build_time_per_item,
- 		material_cost_coefficient,
- 		charge_per_item,
- 		turf/target,
+		items_remaining,
+		build_time_per_item,
+		material_cost_coefficient,
+		charge_per_item,
+		turf/target,
 		alist/user_data)
 	PROTECTED_PROC(TRUE)
 
