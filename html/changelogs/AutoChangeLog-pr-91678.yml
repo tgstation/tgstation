@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - code_imp: "Autochangelog no longer cares if your changelog entry tag has capital letters in it"

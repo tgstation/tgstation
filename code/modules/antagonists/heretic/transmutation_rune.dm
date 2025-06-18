@@ -106,6 +106,8 @@
 	if(!ritual.recipe_snowflake_check(user, atoms_in_range, selected_atoms, loc))
 		return FALSE
 
+	var/list/stack_reqs = list()
+
 	// Now go through all our nearby atoms and see which are good for our ritual.
 	for(var/atom/nearby_atom as anything in atoms_in_range)
 		// Go through all of our required atoms
@@ -115,7 +117,7 @@
 				continue
 			// If req_type is a list of types, check all of them for one match.
 			if(islist(req_type))
-				if(!(is_type_in_list(nearby_atom, req_type)))
+				if(!is_type_in_list(nearby_atom, req_type))
 					continue
 			else if(!istype(nearby_atom, req_type))
 				continue
@@ -123,17 +125,21 @@
 			if(length(banned_atom_types))
 				if(nearby_atom.type in banned_atom_types)
 					continue
-			// This item is a valid type. Add it to our selected atoms list.
-			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
 			// as our requirements may want more than one item of a stack
+			// It's also important that we split the required amount from the stack and add that
+			// to the selected_atoms AFTERWARD so we don't change anything if the reqs aren't met.
 			if(isstack(nearby_atom))
 				var/obj/item/stack/picked_stack = nearby_atom
-				requirements_list[req_type] -= picked_stack.amount // Can go negative, but doesn't matter. Negative = fulfilled
+				if(!stack_reqs[req_type])
+					stack_reqs[req_type] = requirements_list[req_type]
+				requirements_list[req_type] -= min(picked_stack.amount || requirements_list[req_type])
 
 			// Otherwise, just add the mark down the item as fulfilled x1
 			else
 				requirements_list[req_type]--
+				// This item is a valid type. Add it to our selected atoms list.
+				selected_atoms |= nearby_atom
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
@@ -164,6 +170,20 @@
 		// Then let them know what they're missing
 		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
 		return FALSE
+
+	//Everything's good, proceed and collect from the available stacks what's needed if needed.
+	if(length(stack_reqs))
+		for(var/obj/item/stack/nearby_stack in atoms_in_range)
+			for(var/stack_path in stack_reqs)
+				if(!istype(nearby_stack, stack_path) && (!islist(stack_path) || !is_type_in_list(nearby_stack, stack_path)))
+					continue
+				var/amount_to_give = min(nearby_stack.amount || stack_reqs[stack_path])
+				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in selected_atoms
+				if(!our_stack)
+					our_stack = nearby_stack.split_stack(amount = amount_to_give)
+					selected_atoms |= our_stack
+				else
+					nearby_stack.merge(our_stack, limit = our_stack.amount + amount_to_give)
 
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
