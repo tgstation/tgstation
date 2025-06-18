@@ -244,7 +244,6 @@
 	internal_bleeding_coefficient = 1
 	threshold_penalty = 5
 
-
 /datum/wound_pregen_data/flesh_pierce/open_puncture/pinprick
 	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/needle_fail
 	can_be_randomly_generated = FALSE
