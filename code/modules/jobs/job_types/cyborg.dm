@@ -34,4 +34,4 @@
 		robot_spawn.log_current_laws()
 
 /datum/job/cyborg/get_radio_information()
-	return "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>"
+	return "<b>Prefix your message with :[MODE_KEY_BINARY] to speak with other cyborgs and AI.</b>"

@@ -482,13 +482,6 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	if(state_open)
 		close_machine()
 	set_occupant(joining_mob)
-	// // Jobs that hold stuff protection
-	// for(var/obj/item/thing in joining_mob.held_items)
-	// 	if(!joining_mob.equip_to_storage(thing, ITEM_SLOT_BACK, indirect_action = TRUE))
-	// 		thing.forceMove(loc)
-	// // Wheelchair protection
-	// joining_mob.buckled?.forceMove(loc)
-	// joining_mob.buckled?.unbuckle_all_mobs()
 	joining_mob.forceMove(src)
 	ADD_TRAIT(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING)
 	if(roundstart_job == JOB_CAPTAIN)
@@ -512,15 +505,15 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	msg += "<br><br>"
 
 	if(world.time - SSticker.round_start_time >= 10 MINUTES)
-		msg += span_notice("You woke up late, missing the crew briefing. \
+		msg += span_green("You woke up late, missing the crew briefing. \
 			You should collect yourself and check in with your head of staff \
 			(or the Captain / Executive Officer) to get up to speed on the situation.")
 	else if(roundstart_job == JOB_CAPTAIN)
-		msg += span_notice("Check the communnication's console messages for an update from the AI as to why you were awakened. \
-			Afterwards, it is your duty to gather the crew in the briefing room and inform them of the situation.")
+		msg += span_green("Check the communnication's console messages for an update from the AI as to why you were awakened. \
+			Afterwards, it is your duty to gather the crew in the briefing room on deck six and inform them of the situation.")
 	else
-		msg += span_notice("You should collect yourself and get familiar with your department. \
-			Afterwards, report to the staff meeting room on deck 6 - the Captain will brief you on the situation.")
+		msg += span_green("You should collect yourself and get familiar with your department. \
+			Afterwards, report to the staff meeting room on deck six - the Captain will brief you on the situation.")
 
 	to_chat(sleeping, boxed_message(msg))
 

@@ -84,5 +84,27 @@
 /datum/job/ai/config_check()
 	return CONFIG_GET(flag/allow_ai)
 
+/datum/job/ai/get_how_to_play_information()
+	return list(
+		span_green("Event context: Read the message log on the communication's console for important backstory. \
+			<b>Don't leak information unless prompted to!</b> You may risk the mission if you are careless with data security."),
+		"The AI cannot move, but can interact with many objects while viewing them (through cameras).",
+		"While observing through a camera, you can use most (networked) devices which you can see - such as computers, APCs, intercoms, doors, etc. - by clicking on them.",
+	)
+
 /datum/job/ai/get_radio_information()
-	return "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>"
+	return "<b>Prefix your message with \
+		:[MODE_KEY_BINARY] to speak with cyborgs and other AIs, \
+		:[RADIO_KEY_AI_PRIVATE] to use the AI Private channel, and \
+		:[/datum/saymode/holopad::key] to speak through connected holoapds.</b><br>\
+		Otherwise, remember common radio prefixes: \
+		:[RADIO_KEY_COMMAND] for Command, \
+		:[RADIO_KEY_ENGINEERING] for Engineering, \
+		:[RADIO_KEY_MEDICAL] for Medical, \
+		:[RADIO_KEY_SCIENCE] for Science, \
+		:[RADIO_KEY_SECURITY] for Security, \
+		:[RADIO_KEY_SERVICE] for Service, and \
+		:[RADIO_KEY_SUPPLY] for Supply."
+
+/datum/job/ai/get_access_information()
+	return

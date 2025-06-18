@@ -52,6 +52,12 @@
 /datum/job/head_of_personnel/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
 
+/datum/job/head_of_personnel/get_how_to_play_information()
+	return list(
+		span_green("Event context: The Head of Personnel is renamed the Executive Officer, and is the second in the command of the ship. \
+			Thus, you have some degree of authority over the crew besides Service, though you will not be expected to use it while the Captain is around."),
+	)
+
 
 /datum/outfit/job/hop
 	name = "Executive Officer"

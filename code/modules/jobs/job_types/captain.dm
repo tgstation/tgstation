@@ -56,8 +56,17 @@
 	return "Captain [captain.real_name] on deck!"
 
 /datum/job/captain/get_radio_information()
-	. = ..()
-	. += "\nYou have access to all radio channels, but they are not automatically tuned. Check your radio for more information."
+	return span_bold("You have access to all radio channels, but they are not automatically tuned. Check your radio for more information.")
+
+/datum/job/captain/get_how_to_play_information()
+	return list(
+		span_green("Event context: Read the message log on the communication's console for important backstory. \
+			<b>It is recommended to keep some information secret where relevant,</b> \
+			but ultimately you may choose what you reveal to the crew in your debriefing."),
+	)
+
+/datum/job/captain/get_access_information()
+	return span_notice("You have access to all areas of the ship.")
 
 /datum/outfit/job/captain
 	name = "Captain"

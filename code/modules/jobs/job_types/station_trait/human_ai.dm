@@ -86,7 +86,7 @@
 		minor_announce("Due to a research mishap, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
 
 /datum/job/human_ai/get_radio_information()
-	return "<b>Prefix your message with :b to speak with cyborgs.</b>"
+	return "<b>Prefix your message with :[MODE_KEY_BINARY] to speak with cyborgs.</b>"
 
 /datum/outfit/job/human_ai
 	name = "Human AI"

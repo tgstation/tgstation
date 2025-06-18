@@ -42,6 +42,11 @@
 	rpg_title = "Jailor"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT
 
+/datum/job/warden/get_how_to_play_information()
+	return list(
+		span_green("Event context: The Warden has elevated access, being able to access the Bridge and make desk announcements via requests consoles."),
+	)
+
 /datum/outfit/job/warden
 	name = "Warden"
 	jobtype = /datum/job/warden

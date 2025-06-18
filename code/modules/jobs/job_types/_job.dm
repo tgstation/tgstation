@@ -295,17 +295,20 @@
 /// Gets the message that shows up when spawning as this job
 /datum/job/proc/get_spawn_message()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+	return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "<br>&bull; ")))
 
 /// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
 /datum/job/proc/get_spawn_message_information()
 	SHOULD_CALL_PARENT(TRUE)
 	var/list/info = list()
-	info += "<b>You are the [get_title()].</b>\n"
+	info += separator_hr(span_big("You are the <b>[get_title()]</b>."))
 	var/related_policy = get_policy(policy_override || title)
 	var/radio_info = get_radio_information()
 	if(related_policy)
 		info += related_policy
+	var/list/how_to_play_info = get_how_to_play_information()
+	if(length(how_to_play_info))
+		info += how_to_play_info
 	if(supervisors)
 		info += "As the [get_title()] you answer directly to [supervisors]. Special circumstances may change this."
 	if(radio_info)
@@ -313,17 +316,24 @@
 	if(req_admin_notify)
 		info += "<b>You are playing a job that is important for Game Progression. \
 			If you have to disconnect, please notify the admins via adminhelp.</b>"
-	if(CONFIG_GET(number/minimal_access_threshold))
-		info += span_boldnotice("As this station was initially staffed with a \
-			[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
-			have been added to your ID card.")
+	var/access_info = get_access_information()
+	if(access_info)
+		info += access_info
 
 	return info
+
+/datum/job/proc/get_how_to_play_information()
+	return
 
 /// Returns information pertaining to this job's radio.
 /datum/job/proc/get_radio_information()
 	if(job_flags & JOB_CREW_MEMBER)
-		return "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>"
+		return "<b>Prefix your message with :h to speak on your department's radio.</b> To see other prefixes, look closely at your headset."
+
+/datum/job/proc/get_access_information()
+	return span_boldnotice("As this station was initially staffed with a \
+		[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
+		have been added to your ID card.")
 
 /datum/outfit/job
 	name = "Standard Gear"

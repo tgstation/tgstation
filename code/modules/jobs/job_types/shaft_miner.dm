@@ -28,6 +28,12 @@
 	rpg_title = "Adventurer"
 	job_flags = STATION_JOB_FLAGS
 
+/datum/job/shaft_miner/get_how_to_play_information()
+	return list(
+		span_green("Event context: Shaft Miners mine on a distant asteroid rather than Lavaland. \
+			Be sure to bring appropriate equipment, primarily a MODsuit, before heading out."),
+	)
+
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
