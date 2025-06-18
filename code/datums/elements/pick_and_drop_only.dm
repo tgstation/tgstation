@@ -1,3 +1,4 @@
+/// Give to a human or other dextrous mob to have them only be able to pick up and drop items, and not use them on anything
 /datum/element/pick_and_drop_only
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
@@ -40,5 +41,5 @@
 
 /datum/element/pick_and_drop_only/proc/on_item_use()
 	SIGNAL_HANDLER
-
+	// CANCEL EVERYTHING, WAHAHAHA!!
 	return COMPONENT_CANCEL_ATTACK_CHAIN

@@ -38,6 +38,7 @@
 
 	hud_type = /datum/hud/dextrous/voidwalker
 	hud_possible = list(ANTAG_HUD)
+	sight = SEE_TURFS | SEE_MOBS
 
 	/// Color of our regen outline
 	var/regenerate_colour = COLOR_GRAY
