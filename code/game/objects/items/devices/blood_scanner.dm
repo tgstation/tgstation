@@ -20,7 +20,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 	if(!istype(interacting_with, /mob/living/carbon))
-		to_chat(user, span_warning("[src] doesn't work on that kind of life."))
+		to_chat(user, span_warning("[src] is incompatible."))
 		return NONE
 	var/mob/living/carbon/poked_guy = interacting_with
 	if(!user.can_read(src) || user.is_blind())
