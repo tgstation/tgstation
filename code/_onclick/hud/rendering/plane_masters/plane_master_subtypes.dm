@@ -309,6 +309,7 @@
 	plane = ABOVE_LIGHTING_PLANE
 	documentation = "Anything on the game plane that needs a space to draw on that will be above the lighting plane.\
 		<br>Mostly little alerts and effects, also sometimes contains things that are meant to look as if they glow."
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/weather_glow
 	name = "Weather Glow"
@@ -316,6 +317,7 @@
 	plane = WEATHER_GLOW_PLANE
 	start_hidden = TRUE
 	critical = PLANE_CRITICAL_DISPLAY
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/weather_glow/set_home(datum/plane_master_group/home)
 	. = ..()
@@ -334,8 +336,17 @@
 	plane = EMISSIVE_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(EMISSIVE_RENDER_PLATE)
+	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	/// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e. adding light so objects glow)
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 1,1,1,0, 0,0,0,1, 0,0,0,0))
+	/// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
+	/// which allows us to selectively bloom only a part of our emissives
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), relay_color = list(255,255,255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_MASK_PLATE, offset), relay_color = list(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
@@ -343,6 +354,7 @@
 		<br>Has a few effects and a funky color matrix designed to make things a bit more visually readable."
 	plane = PIPECRAWL_IMAGES_PLANE
 	start_hidden = TRUE
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/pipecrawl/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -358,6 +370,7 @@
 	documentation = "Holds camera static images. Usually only visible to people who can well, see static.\
 		<br>We use images rather then vis contents because they're lighter on maptick, and maptick sucks butt."
 	plane = CAMERA_STATIC_PLANE
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/camera_static/show_to(mob/mymob)
 	. = ..()
@@ -376,6 +389,11 @@
 /atom/movable/screen/plane_master/camera_static/proc/eye_changed(datum/hud/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
 
+	if(istype(new_eye, /obj/effect/landmark/ai_multicam_room))
+		if(force_hidden)
+			unhide_plane(source.mymob)
+		return
+
 	if(!iscameramob(new_eye))
 		if(!force_hidden)
 			hide_plane(source.mymob)
@@ -391,6 +409,7 @@
 		<br>Really only exists for its layering potential, we don't use this for any vfx"
 	plane = HIGH_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/ghost
 	name = "Ghost"

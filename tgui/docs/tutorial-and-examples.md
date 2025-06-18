@@ -13,15 +13,15 @@ ui_state()
 
 - `src_object` - The atom, which UI corresponds to in the game world.
 - `ui_interact` - The proc where you will handle a request to open an
-interface. Typically, you would update an existing UI (if it exists),
-or set up a new instance of UI by calling the `SStgui` subsystem.
+  interface. Typically, you would update an existing UI (if it exists),
+  or set up a new instance of UI by calling the `SStgui` subsystem.
 - `ui_data` - In this proc you munges whatever complex data your `src_object`
-has into an associative list, which will then be sent to UI as a JSON string.
+  has into an associative list, which will then be sent to UI as a JSON string.
 - `ui_act` - This proc receives user actions and reacts to them by changing
-the state of the game.
+  the state of the game.
 - `ui_state` - This proc dictates under what conditions a UI may be interacted
-with. This may be the standard checks that check if you are in range and
-conscious, or more.
+  with. This may be the standard checks that check if you are in range and
+  conscious, or more.
 
 Once backend is complete, you create an new interface component on the
 frontend, which will receive this JSON data and render it on screen.
@@ -128,55 +128,49 @@ import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
-  const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
-  const {
-    health,
-    color,
-  } = data;
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section title="Health status">
-          <LabeledList>
-            <LabeledList.Item label="Health">
-              {health}
-            </LabeledList.Item>
-            <LabeledList.Item label="Color">
-              {color}
-            </LabeledList.Item>
-            <LabeledList.Item label="Button">
-              <Button
-                content="Dispatch a 'test' action"
-                onClick={() => act('test')} />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Window.Content>
-    </Window>
-  );
+	const { act, data } = useBackend(context);
+	// Extract `health` and `color` variables from the `data` object.
+	const { health, color } = data;
+	return (
+		<Window resizable>
+			<Window.Content scrollable>
+				<Section title="Health status">
+					<LabeledList>
+						<LabeledList.Item label="Health">{health}</LabeledList.Item>
+						<LabeledList.Item label="Color">{color}</LabeledList.Item>
+						<LabeledList.Item label="Button">
+							<Button
+								content="Dispatch a 'test' action"
+								onClick={() => act('test')}
+							/>
+						</LabeledList.Item>
+					</LabeledList>
+				</Section>
+			</Window.Content>
+		</Window>
+	);
 };
 ```
 
 Here are the key variables you get from a `useBackend(context)` function:
 
 - `config` is part of core tgui. It contains meta-information about the
-interface and who uses it, BYOND refs to various objects, and so forth.
-You are rarely going to use it, but sometimes it can be used to your
-advantage when doing complex UIs.
+  interface and who uses it, BYOND refs to various objects, and so forth.
+  You are rarely going to use it, but sometimes it can be used to your
+  advantage when doing complex UIs.
 - `data` is the data returned from `ui_data` and `ui_static_data` procs in
-your DM code. Pretty straight forward.
+  your DM code. Pretty straight forward.
   - Note, that javascript doesn't have associative arrays, so when you
-  return an associative list from DM, it will be available in `data` as a
-  javascript object instead of an array. You can use it normally
-  like so: `object.key`, so it's not a problem if it's representing a
-  data structure, but common `Array` methods, such as `array.map(item => ...)`,
-  are not available on it. Always prefer returning clean arrays from your
-  code, since arrays are easier to work with in javascript!
+    return an associative list from DM, it will be available in `data` as a
+    javascript object instead of an array. You can use it normally
+    like so: `object.key`, so it's not a problem if it's representing a
+    data structure, but common `Array` methods, such as `array.map(item => ...)`,
+    are not available on it. Always prefer returning clean arrays from your
+    code, since arrays are easier to work with in javascript!
 - `act(name, params)` is a function, which you can call to dispatch an action
-to your DM code. It will be processed in `ui_act` proc. Action name will be
-available in `params["action"]`, mixed together with the rest of parameters
-you have passed in `params` object.
+  to your DM code. It will be processed in `ui_act` proc. Action name will be
+  available in `params["action"]`, mixed together with the rest of parameters
+  you have passed in `params` object.
 
 **Let's talk about the syntax.**
 
@@ -187,17 +181,19 @@ expressions that look like html, and turns them into function calls.
 Take a look at this example:
 
 ```jsx
-<div className={'color-' + status}>
-  You are in {status} condition!
-</div>
+<div className={'color-' + status}>You are in {status} condition!</div>
 ```
 
 After compiling the code above, this is what it becomes:
 
 ```js
-createElement('div',
-  { className: 'color-' + status },
-  'You are in ', status, ' condition!');
+createElement(
+	'div',
+	{ className: 'color-' + status },
+	'You are in ',
+	status,
+	' condition!',
+);
 ```
 
 It is very important to remember, that JSX is just a javascript expression
@@ -218,11 +214,7 @@ to a `<ProgressBar />` element. If `showProgress` is `false`, the whole
 expression evaluates to `false`, and `false` is not rendered by React.
 
 ```jsx
-<Box>
-  {showProgress && (
-    <ProgressBar value={progress} />
-  )}
-</Box>
+<Box>{showProgress && <ProgressBar value={progress} />}</Box>
 ```
 
 You can also use the `||` operator (the logical OR), which works the same way,
@@ -235,13 +227,11 @@ and builds a new array based on what was returned by that function.
 
 ```jsx
 <LabeledList>
-  {items.map(item => (
-    <LabeledList.Item
-      key={item.id}
-      label={item.label}>
-      {item.content}
-    </LabeledList.Item>
-  ))}
+	{items.map((item) => (
+		<LabeledList.Item key={item.id} label={item.label}>
+			{item.content}
+		</LabeledList.Item>
+	))}
 </LabeledList>
 ```
 
@@ -260,36 +250,27 @@ import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <HealthStatus user="Jerry" />
-      </Window.Content>
-    </Window>
-  );
+	return (
+		<Window resizable>
+			<Window.Content scrollable>
+				<HealthStatus user="Jerry" />
+			</Window.Content>
+		</Window>
+	);
 };
 
 const HealthStatus = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    user,
-  } = props;
-  const {
-    health,
-    color,
-  } = data;
-  return (
-    <Section title={"Health status of: " + user}>
-      <LabeledList>
-        <LabeledList.Item label="Health">
-          {health}
-        </LabeledList.Item>
-        <LabeledList.Item label="Color">
-          {color}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
+	const { act, data } = useBackend(context);
+	const { user } = props;
+	const { health, color } = data;
+	return (
+		<Section title={'Health status of: ' + user}>
+			<LabeledList>
+				<LabeledList.Item label="Health">{health}</LabeledList.Item>
+				<LabeledList.Item label="Color">{color}</LabeledList.Item>
+			</LabeledList>
+		</Section>
+	);
 };
 ```
 
@@ -331,32 +312,26 @@ import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
-  const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
-  const {
-    health,
-    color,
-  } = data;
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section title="Health status">
-          <LabeledList>
-            <LabeledList.Item label="Health">
-              {health}
-            </LabeledList.Item>
-            <LabeledList.Item label="Color">
-              {color}
-            </LabeledList.Item>
-            <LabeledList.Item label="Button">
-              <Button
-                content="Dispatch a 'test' action"
-                onClick={() => act('test')} />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Window.Content>
-    </Window>
-  );
+	const { act, data } = useBackend(context);
+	// Extract `health` and `color` variables from the `data` object.
+	const { health, color } = data;
+	return (
+		<Window resizable>
+			<Window.Content scrollable>
+				<Section title="Health status">
+					<LabeledList>
+						<LabeledList.Item label="Health">{health}</LabeledList.Item>
+						<LabeledList.Item label="Color">{color}</LabeledList.Item>
+						<LabeledList.Item label="Button">
+							<Button
+								content="Dispatch a 'test' action"
+								onClick={() => act('test')}
+							/>
+						</LabeledList.Item>
+					</LabeledList>
+				</Section>
+			</Window.Content>
+		</Window>
+	);
 };
 ```

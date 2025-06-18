@@ -189,11 +189,7 @@
 /proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/announcer/notice/notice2.ogg'
 
-	// note for later: low-hanging fruit to convert to astype() behind an experiment define whenever the 516 beta releases
-	// var/datum/callback/should_play_sound_callback = astype(should_play_sound)
-	var/datum/callback/should_play_sound_callback
-	if(istype(should_play_sound, /datum/callback))
-		should_play_sound_callback = should_play_sound
+	var/datum/callback/should_play_sound_callback = astype(should_play_sound)
 
 	for(var/mob/target in players)
 		if(isnewplayer(target) || !target.can_hear())

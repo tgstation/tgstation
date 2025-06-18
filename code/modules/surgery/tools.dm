@@ -379,10 +379,6 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 
-/obj/item/surgical_processor/cyborg_unequip(mob/user)
-	. = ..()
-	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
-
 /obj/item/surgical_processor/interact_with_atom(atom/design_holder, mob/living/user, list/modifiers)
 	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
 		return NONE
@@ -621,9 +617,10 @@
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
+	var/surgical_tray_overlay = "bonesetter"
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
-	return "bonesetter" + (tray_extended ? "" : "_out")
+	return surgical_tray_overlay + (tray_extended ? "" : "_out")
 
 /obj/item/bonesetter/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -646,9 +643,10 @@
 	toolspeed = 1
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
+	var/surgical_tray_overlay = "filter"
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
-	return "filter"
+	return surgical_tray_overlay
 
 /obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -730,3 +728,36 @@
 /obj/item/scalpel/cruel/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
+
+/obj/item/surgicaldrill/cruel
+	name = "tearing drill"
+	desc = "What secrets do they keep buried within those pearls..."
+	icon_state = "crueldrill"
+	inhand_icon_state = "crueldrill"
+	surgical_tray_overlay = "drill_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/circular_saw/cruel
+	name = "jagged bonesaw"
+	desc = "A twisted blade for twisted purpose. Rip sinew and bone until your work is done."
+	icon_state = "cruelsaw"
+	inhand_icon_state = "cruelsaw"
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	surgical_tray_overlay = "saw_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/bonesetter/cruel
+	name = "harsh bonesetter"
+	desc = "We shall make you whole once more..."
+	icon_state = "cruelbonesetter"
+	inhand_icon_state = "cruelbonesetter"
+	surgical_tray_overlay = "bonesetter_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/blood_filter/cruel
+	name = "malignant blood filter"
+	desc = "You must be made pure..."
+	icon_state = "cruelbloodfilter"
+	inhand_icon_state = "cruelbloodfilter"
+	surgical_tray_overlay = "filter_cruel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT

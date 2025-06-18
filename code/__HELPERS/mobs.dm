@@ -8,6 +8,7 @@
 
 /// Returns one of the human blood types at random, weighted by their rarity
 /proc/random_human_blood_type()
+	RETURN_TYPE(/datum/blood_type)
 	return get_blood_type(pick_weight(
 		list(
 			BLOOD_TYPE_O_MINUS = 4,

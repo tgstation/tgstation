@@ -153,7 +153,7 @@
 
 // This is where stun gets applied
 /obj/item/melee/baton/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!active || !COOLDOWN_FINISHED(src, cooldown_check) || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+	if(!isliving(target) || !active || !COOLDOWN_FINISHED(src, cooldown_check) || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
 		return
 	// worst check in the chain but - right click = harmbaton
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !stun_on_harmbaton)

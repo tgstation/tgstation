@@ -64,6 +64,8 @@
 		operated_wound = null
 	if(target)
 		target.surgeries -= src
+		if(!QDELING(target))
+			SEND_SIGNAL(target, COMSIG_MOB_SURGERY_FINISHED, type, location, operated_bodypart)
 	target = null
 	operated_bodypart = null
 	return ..()
