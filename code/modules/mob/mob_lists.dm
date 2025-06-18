@@ -110,7 +110,7 @@
 		return
 
 	for (var/datum/antagonist/antagonist in mind.antag_datums)
-		if (!(antagonist.antag_flags & ANTAG_SKIP_GLOBAL_LIST))
+		if (antagonist.antag_flags & ANTAG_SKIP_GLOBAL_LIST)
 			continue
 		GLOB.current_living_antags |= src
 		return

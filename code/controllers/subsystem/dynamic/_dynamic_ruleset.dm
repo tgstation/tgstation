@@ -151,7 +151,7 @@
 
 	// we can assert that tier[1] and tier[4] are not null, but we cannot say the same for tier[2] and tier[3]
 	// this can be happen due to the following setup: list(1, null, null, 4)
-	// (which is an inew_valid config, and should be fixed by the operator)
+	// (which is an invalid config, and should be fixed by the operator)
 	if(isnull(tier_list[2]))
 		tier_list[2] = tier_list[1]
 	if(isnull(tier_list[3]))
@@ -169,6 +169,7 @@
  * Calculates the weight of this ruleset for the given tier.
  *
  * * population_size - How many players are alive
+ * * tier - The dynamic tier to calculate the weight for
  */
 /datum/dynamic_ruleset/proc/get_weight(population_size = 0, tier = DYNAMIC_TIER_LOW)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -237,7 +238,7 @@
 
 	return TRUE
 
-/// Gets the mind of a candidate
+/// Gets the mind of a candidate, can be overridden to return a different mind if necessary
 /datum/dynamic_ruleset/proc/get_candidate_mind(mob/dead/candidate)
 	return candidate.mind
 
@@ -302,6 +303,7 @@
 	resulting_candidates.Cut(num_candidates + 1)
 	return resulting_candidates
 
+/// Handles loading map templates that this ruleset requires
 /datum/dynamic_ruleset/proc/load_templates()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PRIVATE_PROC(TRUE)
