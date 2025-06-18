@@ -30,8 +30,9 @@ SUBSYSTEM_DEF(minor_mapping)
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(to_spawn=10)
 	var/list/exposed_wires = find_exposed_wires()
 	var/turf/open/proposed_turf
-	while((to_spawn > 0) && exposed_wires.len)
-		proposed_turf = pick_n_take(exposed_wires)
+	while((to_spawn > 0) && length(exposed_wires))
+		proposed_turf = pick_weight(exposed_wires)
+		exposed_wires -= proposed_turf
 		if (!valid_mouse_turf(proposed_turf))
 			continue
 
@@ -74,16 +75,13 @@ SUBSYSTEM_DEF(minor_mapping)
 /proc/find_exposed_wires()
 	var/list/exposed_wires = list()
 
-	var/list/all_turfs
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		all_turfs += Z_TURFS(z)
-	for(var/turf/open/floor/plating/T in all_turfs)
-		if(T.is_blocked_turf())
+	for(var/spawnpoint in get_area_turfs(/area/station/maintenance, subtypes = TRUE))
+		var/isplating = istype(spawnpoint, /turf/open/floor/plating)
+		var/iscatwalk = istype(spawnpoint, /turf/open/floor/catwalk_floor)
+		if(!isplating && !iscatwalk)
 			continue
-		//dont include multiz cables in the list because repairing them sucks
-		var/cable = locate(/obj/structure/cable) in T
-		if(cable && !istype(cable, /obj/structure/cable/multilayer/multiz))
-			exposed_wires += T
+		if(locate(/obj/structure/cable) in spawnpoint)
+			exposed_wires[spawnpoint] = isplating ? 3 : 1 // more weighting for raw plating
 
 	return shuffle(exposed_wires)
 

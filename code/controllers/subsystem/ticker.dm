@@ -289,6 +289,7 @@ SUBSYSTEM_DEF(ticker)
 	// to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
 	to_chat(world, span_green("[icon2html('icons/obj/machines/wallmounts.dmi', world, "intercom")] <b><i>Emergency crew wake-up sequence initiated.</i></b>"))
 	// SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
+	SEND_SOUND(world, sound('sound/announcer/announcement/announce_syndi.ogg'))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)

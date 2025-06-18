@@ -10035,6 +10035,12 @@
 /obj/machinery/camera/autoname/directional/west,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
+/obj/item/paper{
+	pixel_x = -8;
+	pixel_y = 7;
+	default_raw_text = "Security EVA suits can be found in EVA on deck two. You don't even need to ask the AI to open it up for you.";
+	name = "security note"
+	},
 /turf/open/floor/iron/large,
 /area/station/security/lockers)
 "dsq" = (
@@ -11982,6 +11988,7 @@
 	name = "Lockdown Shutters";
 	id = "bridge_top_deck_big_lockdown_s"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
 "dYD" = (
@@ -12036,6 +12043,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/command/meeting_room/council)
 "dZA" = (
@@ -19677,8 +19685,13 @@
 /area/station/science/lab)
 "gwT" = (
 /obj/effect/turf_decal/tile/blue/full,
-/obj/structure/filingcabinet/chestdrawer,
 /obj/structure/noticeboard/directional/east,
+/obj/structure/filingcabinet/medical{
+	pixel_x = 8
+	},
+/obj/structure/filingcabinet/filingcabinet{
+	pixel_x = -8
+	},
 /turf/open/floor/iron/large,
 /area/station/medical/exam_room)
 "gwY" = (
@@ -22387,6 +22400,7 @@
 	name = "Lockdown Shutters";
 	id = "bridge_top_deck_big_lockdown_s"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/command/meeting_room)
 "hoq" = (
@@ -22507,6 +22521,12 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/dark_red/full,
+/obj/item/paper{
+	pixel_x = -8;
+	pixel_y = 7;
+	default_raw_text = "To encourage greater coordination, you (the warden) have been given access to the Bridge, the deck five Teleporter, and most importantly, desk announcements from your request console over there.<br><br>And yes, the armory is locked according to alert levels. It'll unbolt automatically. Ask the Captain.";
+	name = "warden's note"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/warden)
 "hqy" = (
@@ -24295,7 +24315,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "tele2_s";
 	name = "Teleporter Shutter Control";
-	req_access = list("teleporter")
+	req_one_access = list("teleporter", "armory")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/command/teleporter/deck_five)
@@ -25015,6 +25035,12 @@
 /obj/item/folder/biscuit/confidential{
 	pixel_y = -6;
 	pixel_x = 1
+	},
+/obj/item/paper{
+	pixel_x = -5;
+	pixel_y = 2;
+	default_raw_text = "The alert level of the ship will open many opportunities for the crew. For Security, their weapons are locked behind Blue and Red alert. For Medical, suit sensor tracking is disabled on Green alert. Many emergency closets will open to everyone on Red Alert and above. If the ship's in dire straights, the emergency armory on the aft end of deck five will unlock on Blue and Red alert, as well. Only members of command can access it.";
+	name = "captain's note"
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -25831,7 +25857,7 @@
 /obj/machinery/door/airlock/grunge{
 	bolt_sec_level = 1;
 	hackProof = 1;
-	desc = "Behind this door lies a plethora of supplies intended for use only in the most dire of circumstances. Thus, it is locked until the Captain calls for its use."
+	desc = "Behind this door lies a plethora of supplies intended for use only in the most dire of circumstances. Thus, it is locked until the Captain calls for its use, and only members of command are authorized entry to pass out equipment."
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
@@ -26246,11 +26272,11 @@
 "izI" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/south,
-/obj/effect/spawner/random/aimodule/harmful,
 /obj/item/ai_module/reset/purge{
 	pixel_y = 7;
 	pixel_x = 2
 	},
+/obj/effect/spawner/random/aimodule/harmless,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "izS" = (
@@ -34071,6 +34097,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "kRG" = (
@@ -36904,11 +36931,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
-"lMB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/floor1/starboard/aft)
 "lMD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38025,7 +38047,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/structure/sign/warning/secure_area/directional/south,
 /obj/effect/landmark/navigate_destination/teleporter{
-	location = "Deck 3 Teleporter"
+	location = "Deck Three Teleporter"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/floor3/fore)
@@ -47951,6 +47973,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/command/meeting_room/council)
 "pgx" = (
@@ -51075,7 +51098,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "tele2_s";
 	name = "Teleporter Shutter Control";
-	req_access = list("teleporter")
+	req_one_access = list("teleporter", "armory")
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -59930,6 +59953,12 @@
 /obj/machinery/computer/crew{
 	dir = 2
 	},
+/obj/item/paper{
+	pixel_x = -8;
+	pixel_y = 7;
+	default_raw_text = "Medical EVA suits can be found in EVA on deck two. You don't even need to ask the AI to open it up for you.<br><br>Yes, you see right. Sensor tracking is disabled on Green alert for privacy reasons. However, the crew's got death alarms installed into their chest, so at least you'll know if someone fell down the elevator shaft.";
+	name = "paramedic note"
+	},
 /turf/open/floor/iron,
 /area/station/medical/paramedic)
 "sZa" = (
@@ -60690,6 +60719,7 @@
 	name = "Lockdown Shutters";
 	id = "bridge_top_deck_big_lockdown_s"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
 "tmd" = (
@@ -64889,6 +64919,7 @@
 	name = "Lockdown Shutters";
 	id = "bridge_top_deck_big_lockdown_s"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
 "uHR" = (
@@ -65528,7 +65559,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/navigate_destination/teleporter{
-	location = "Deck 5 Teleporter"
+	location = "Deck Five Teleporter"
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/hallway/floor5/fore)
@@ -66538,7 +66569,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	dir = 4;
-	pipe_color = "#FFFF00";
 	on = 1;
 	target_pressure = 600
 	},
@@ -70945,6 +70975,7 @@
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/any/command/teleporter,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/command/teleporter/deck_five)
 "wGN" = (
@@ -72346,6 +72377,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "xfE" = (
@@ -112621,7 +112653,7 @@ mkw
 fMB
 mkw
 mkw
-lMB
+mkw
 reS
 seu
 bqs
