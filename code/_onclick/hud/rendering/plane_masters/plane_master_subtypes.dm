@@ -188,7 +188,6 @@
 
 /atom/movable/screen/plane_master/gravpulse/proc/distortion_disabled(datum/source)
 	SIGNAL_HANDLER
-	var/mob/our_mob = home?.our_hud?.mymob
 	hide_plane()
 
 /// Contains just the floor
