@@ -1,8 +1,9 @@
 /obj/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 60
-	damage_type = STAMINA
+	damage = 15
+	stamina = 60
+	damage_type = TOX
 	eyeblur = 20 SECONDS
 	knockdown = 1 SECONDS
 	slur = 10 SECONDS
@@ -22,15 +23,20 @@
 /datum/embedding/energy_bolt/process(seconds_per_tick)
 	. = ..()
 
-	if(!(owner.mob_biotypes & MOB_ORGANIC))
+	if(!isliving(owner))
 		return
 
-	owner.set_silence_if_lower(2 SECONDS)
-	owner.adjust_drowsiness_up_to(1 SECONDS, 60 SECONDS)
-	if(HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
-		owner.AdjustSleeping(10 SECONDS)
+	var/mob/living/living_owner = owner
 
-	if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+	if(!(living_owner.mob_biotypes & MOB_ORGANIC))
+		return
+
+	living_owner.set_silence_if_lower(2 SECONDS)
+	living_owner.adjust_drowsiness_up_to(1 SECONDS, 60 SECONDS)
+	if(HAS_TRAIT_FROM(living_owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(living_owner, TRAIT_KNOCKEDOUT))
+		living_owner.AdjustSleeping(10 SECONDS)
+
+	if(HAS_TRAIT(living_owner, TRAIT_KNOCKEDOUT))
 		fall_chance = clamp(fall_chance + 30, 0, 100)
 
 /obj/projectile/energy/bolt/halloween
@@ -39,5 +45,6 @@
 	icon = 'icons/obj/food/food.dmi'
 
 /obj/projectile/energy/bolt/large
-	damage = 80
+	damage = 20
+	stamina = 80
 	knockdown = 2 SECONDS
