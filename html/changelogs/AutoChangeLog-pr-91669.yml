@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - code_imp: "examine text for dufflebag zipper status uses examine proc instead of update_desc"
