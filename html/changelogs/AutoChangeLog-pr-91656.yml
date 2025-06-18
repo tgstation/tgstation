@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "stacks error on invalid amounts, removed manual passing of number `1` when creating a single stack in many cases"
