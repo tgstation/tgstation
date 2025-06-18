@@ -34,7 +34,7 @@
 		key = target_ai.key
 
 	var/datum/job/ai/aijob = SSjob.get_job_type(__IMPLIED_TYPE__)
-	to_chat(src, aijob.get_spawn_message())
+	to_chat(src, aijob?.get_spawn_message())
 
 	show_laws()
 

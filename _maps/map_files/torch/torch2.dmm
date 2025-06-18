@@ -19548,7 +19548,6 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/floor1/starboard)
 "gtP" = (
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/reinforced,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /obj/machinery/door/airlock/external/glass{
@@ -23648,6 +23647,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -26252,6 +26252,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/engineering/atmos/storage)
 "iyX" = (
@@ -39109,7 +39110,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
@@ -55733,7 +55733,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/binary/valve/layer4,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/security/brig/entrance)
 "rHg" = (
