@@ -2,46 +2,33 @@
 
 ///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection. Also acts as a welding screen.
 /obj/item/mod/module/armor_booster
-	name = "MOD armor booster module"
-	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
-		giving the user incredible protection against conventional firearms, or everyday attacks in close-quarters. \
-		However, the additional plating cannot deploy alongside parts of the suit used for vacuum sealing, \
-		so this extra armor provides zero ability for extravehicular activity while deployed."
+	name = "MOD EVA booster module"
+	desc = "Trades off speed for space protection. Once activated, it will activate the sensors within the suit to reactively apply the EVA protections."
 	icon_state = "armor_booster"
-	module_type = MODULE_TOGGLE
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
 	use_mod_colors = TRUE
 	mask_worn_overlay = TRUE
-	/// Whether or not this module removes pressure protection.
-	var/remove_pressure_protection = TRUE
 	/// Slowdown added to the control unit while this module is disabled
 	var/space_slowdown = 0.5
-	/// Armor values added to the suit parts.
-	var/datum/armor/armor_mod = /datum/armor/mod_module_armor_boost
-	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
-	var/list/spaceproofed = list()
+	/// Toggle cooldown to prevent sound spam
+	COOLDOWN_DECLARE(toggle_cooldown)
 
 /obj/item/mod/module/armor_booster/no_speedbost
 	space_slowdown = 0
 
-/datum/armor/mod_module_armor_boost
-	melee = 25
-	bullet = 30
-	laser = 15
-	energy = 15
-
 /obj/item/mod/module/armor_booster/on_part_activation()
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
-		head_cover.flash_protect = FLASH_PROTECTION_WELDER
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_part_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	if(deleting)
 		return
 	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
@@ -50,45 +37,59 @@
 		head_cover.flash_protect = initial(head_cover.flash_protect)
 	mod.update_speed()
 
+/obj/item/mod/module/armor_booster/proc/on_move(atom/source, atom/oldloc, dir, forced)
+	if(!isturf(mod.wearer.loc))
+		return
+	mod.update_speed()
+
+/obj/item/mod/module/armor_booster/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
+	SIGNAL_HANDLER
+
+	if(prevent_slowdown)
+		if(active)
+			on_deactivation()
+		return
+
+	var/datum/gas_mixture/environment = mod.loc?.return_air()
+	if(isnull(environment))
+		module_slowdowns += space_slowdown
+		if(COOLDOWN_FINISHED(src, toggle_cooldown) && !active)
+			COOLDOWN_START(src, toggle_cooldown, 2 SECONDS)
+			on_activation()
+		return
+
+	var/affected_temperature = environment.return_temperature()
+	var/affected_pressure = environment.return_pressure()
+	if(affected_temperature <= T0C || affected_pressure < HAZARD_LOW_PRESSURE)
+		module_slowdowns += space_slowdown
+		if(COOLDOWN_FINISHED(src, toggle_cooldown) && !active)
+			COOLDOWN_START(src, toggle_cooldown, 2 SECONDS)
+			on_activation()
+	else
+		if(COOLDOWN_FINISHED(src, toggle_cooldown) && active)
+			COOLDOWN_START(src, toggle_cooldown, 2 SECONDS)
+			on_deactivation()
+
 /obj/item/mod/module/armor_booster/on_activation()
+	active = TRUE
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(mod.wearer, "armor boosted, EVA lost")
+	balloon_alert(mod.wearer, "EVA ready!")
 	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
 	if(head_cover)
 		RegisterSignal(mod, COMSIG_MOD_PART_SEALED, PROC_REF(seal_helmet))
 		seal_helmet(mod, head_cover)
-	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
-		part.set_armor(part.get_armor().add_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
-			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
-			spaceproofed[clothing_part] = TRUE
-	mod.update_speed()
+	update_clothing_slots()
 
 /obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
+	active = FALSE
 	if(!deleting)
 		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		balloon_alert(mod.wearer, "armor retracts, EVA ready")
+		balloon_alert(mod.wearer, "Combat ready!")
 	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
 	if(head_cover)
 		UnregisterSignal(mod, COMSIG_MOD_PART_SEALED)
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
-	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
-		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(spaceproofed[clothing_part])
-			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-	mod.update_speed()
-	spaceproofed = list()
-
-/obj/item/mod/module/armor_booster/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
-	SIGNAL_HANDLER
-	if (!active)
-		module_slowdowns += space_slowdown
+	update_clothing_slots()
 
 /obj/item/mod/module/armor_booster/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
@@ -140,8 +141,6 @@
 	var/charge_recovery = 1
 	/// Whether or not this shield can lose multiple charges.
 	var/lose_multiple_charges = FALSE
-	/// The item path to recharge this shielkd.
-	var/recharge_path = null
 	/// The icon file of the shield.
 	var/shield_icon_file = 'icons/effects/effects.dmi'
 	/// The icon_state of the shield.
@@ -154,8 +153,16 @@
 	charges = max_charges
 
 /obj/item/mod/module/energy_shield/on_part_activation()
-	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
+	mod.AddComponent(\
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		starting_charges = charges, \
+		shield_icon_file = shield_icon_file, \
+		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_part_deactivation(deleting = FALSE)
@@ -188,12 +195,9 @@
 	icon_state = "battlemage_shield"
 	idle_power_cost = 0 //magic
 	use_energy_cost = 0 //magic too
-	max_charges = 15
-	recharge_start_delay = 0 SECONDS
-	charge_recovery = 8
+	max_charges = 5
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
-	recharge_path = /obj/item/wizard_armour_charge
 	required_slots = list()
 
 ///Magic Nullifier - Protects you from magic.
@@ -225,10 +229,22 @@
 	required_slots = list()
 
 /obj/item/mod/module/anti_magic/wizard/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), REF(src))
+	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK, TRAIT_NO_SLIP_WATER, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK), REF(src))
+	// Welding protection
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
+	// Radiation protection
+	for(var/obj/item/part in mod.get_parts(all = TRUE))
+		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
 /obj/item/mod/module/anti_magic/wizard/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), REF(src))
+	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK, TRAIT_NO_SLIP_WATER, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK), REF(src))
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = initial(head_cover.flash_protect)
+	for(var/obj/item/part in mod.get_parts(all = TRUE))
+		REMOVE_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
 ///Insignia - Gives you a skin specific stripe.
 /obj/item/mod/module/insignia

@@ -23,6 +23,9 @@
 	var/obj/item/organ/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
+	var/obj/item/clothing/head/helmet = get_item_by_slot(ITEM_SLOT_HEAD)
+	if(helmet.clothing_flags & SOUND_PROTECTION)
+		return INFINITY
 	else
 		. += E.bang_protect
 

@@ -148,11 +148,4 @@
 		return
 	mod.quick_activation()
 
-/datum/spellbook_entry/item/battlemage_charge
-	name = "Battlemage Armour Charges"
-	desc = "A powerful defensive rune, it will grant eight additional charges to a battlemage shield."
-	item_path = /obj/item/wizard_armour_charge
-	category = SPELLBOOK_CATEGORY_DEFENSIVE
-	cost = 1
-
 #undef SPELLBOOK_CATEGORY_DEFENSIVE

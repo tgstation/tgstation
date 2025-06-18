@@ -75,3 +75,6 @@
 		yet brightening everything into a spooky green glow. They say these also let you see behind you."
 	icon_state = "night_visor"
 	visor_traits = list(TRAIT_TRUE_NIGHT_VISION)
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	complexity = 0
+	incompatible_modules = list()
