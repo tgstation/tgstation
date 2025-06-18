@@ -215,4 +215,9 @@
 	price_min = CARGO_CRATE_VALUE * 5
 	price_max = CARGO_CRATE_VALUE * 10
 	stock_max = 1
-	availability_prob = 33
+	availability_prob = 15
+
+/datum/market_item/misc/self_surgery_skillchip/buy(obj/item/market_uplink/uplink, mob/buyer, shipping_method, legal_status)
+	. = ..()
+	if(.)
+		availability_prob *= 0.5
