@@ -31,8 +31,7 @@
 		return
 	user.visible_message(span_notice("[user] pricks [poked_guy] with [src]."), span_notice("You begin scanning [poked_guy] with [src]."), ignored_mobs = poked_guy)
 	to_chat(poked_guy, span_notice("[user] slides the needle of [src] into your [poked_bit] and begins pressing buttons."))
-	var/success = do_after(user, 2 SECONDS, poked_guy)
-	if(success)
+	if(do_after(user, 2 SECONDS, poked_guy))
 		var/render_list = list()
 		var/oxy_loss = poked_guy.getOxyLoss()
 		var/tox_loss = poked_guy.getToxLoss()
