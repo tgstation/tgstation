@@ -792,6 +792,12 @@ SUBSYSTEM_DEF(ticker)
 	deathrattle_group.station_only = TRUE
 	deathrattle_group.RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, TYPE_PROC_REF(/datum/deathrattle_group, on_job_after_spawn))
 
+	var/datum/supply_pack/sat = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat]
+	sat.special_enabled = TRUE
+
+	var/datum/supply_pack/satcom = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat_control]
+	satcom.special_enabled = TRUE
+
 /proc/generate_background()
 	var/datum/comm_message/mission = new()
 	mission.title = "Mission Report"

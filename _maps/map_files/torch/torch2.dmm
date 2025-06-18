@@ -9444,7 +9444,7 @@
 /obj/effect/turf_decal/tile/blue/full,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/modular_computer/preset/command,
+/obj/machinery/computer/sat_control,
 /turf/open/floor/iron/smooth_large,
 /area/station/command/bridge)
 "dhM" = (
