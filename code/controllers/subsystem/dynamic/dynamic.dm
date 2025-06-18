@@ -346,8 +346,10 @@ SUBSYSTEM_DEF(dynamic)
 		return FALSE
 	// Purely for logging
 	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
-		message_admins("Midround ([range]): [ADMIN_LOOKUPFLW(selected)] has been selected for [picked_ruleset.config_tag].")
-		log_dynamic("Midround ([range]): [key_name(selected)] has been selected for [picked_ruleset.config_tag].")
+		message_admins("Midround ([range]): [ADMIN_LOOKUPFLW(selected.current)] has been selected for [picked_ruleset.config_tag].")
+		log_dynamic("Midround ([range]): [key_name(selected.current)] has been selected for [picked_ruleset.config_tag].")
+		notify_ghosts("[selected.name] has been picked for [picked_ruleset.config_tag]!", source = selected.current)
+
 	// Run the thing
 	executed_rulesets += picked_ruleset
 	rulesets_weighted -= picked_ruleset
@@ -409,8 +411,9 @@ SUBSYSTEM_DEF(dynamic)
 
 	// Purely for logging
 	for(var/datum/mind/selected as anything in running.selected_minds)
-		message_admins("Midround (forced): [ADMIN_LOOKUPFLW(selected)] has been selected for [running.config_tag].")
-		log_dynamic("Midround (forced): [key_name(selected)] has been selected for [running.config_tag].")
+		message_admins("Midround (forced): [ADMIN_LOOKUPFLW(selected.current)] has been selected for [running.config_tag].")
+		log_dynamic("Midround (forced): [key_name(selected.current)] has been selected for [running.config_tag].")
+		notify_ghosts("[selected.name] has been picked for [running.config_tag]!", source = selected.current)
 
 	executed_rulesets += running
 	running.execute()
@@ -429,8 +432,8 @@ SUBSYSTEM_DEF(dynamic)
 			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin. (<a href='byond://?src=[REF(src)];admin_dequeue=[REF(queued)]'>REMOVE FROM QUEUE</a>)")
 			log_dynamic("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
 			continue
-		message_admins("Latejoin (forced): [ADMIN_LOOKUPFLW(queued)] has been selected for [queued.config_tag].")
-		log_dynamic("Latejoin (forced): [key_name(queued)] has been selected for [queued.config_tag].")
+		message_admins("Latejoin (forced): [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [queued.config_tag].")
+		log_dynamic("Latejoin (forced): [key_name(latejoiner)] has been selected for [queued.config_tag].")
 		queued_rulesets -= queued
 		executed_rulesets += queued
 		queued.execute()

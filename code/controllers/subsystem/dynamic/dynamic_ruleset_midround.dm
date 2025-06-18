@@ -255,8 +255,8 @@
 	return SSpolling.poll_candidates(
 		group = trim_candidates(GLOB.dead_player_list | GLOB.current_observers_list),
 		question = "Looking for volunteers to become [span_notice(readable_poll_role)] for [span_danger(name)]",
-		// check_jobban = list(ROLE_SYNDICATE, jobban_flag || pref_flag),
-		// role = pref_flag,
+		// check_jobban = list(ROLE_SYNDICATE, jobban_flag || pref_flag), // Not necessary, handled in trim_candidates()
+		// role = pref_flag, // Not necessary, handled in trim_candidates()
 		poll_time = 30 SECONDS,
 		alert_pic = signup_atom_appearance,
 		role_name_text = readable_poll_role,
@@ -954,7 +954,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/morph
 	name = "Morph"
 	config_tag = "Morph"
-	// preview_antag_datum = /datum/antagonist/morph
+	// preview_antag_datum = /datum/antagonist/morph // Doesn't actually have its own pref
 	midround_type = LIGHT_MIDROUND
 	candidate_role = "Morphling"
 	jobban_flag = ROLE_ALIEN
@@ -977,7 +977,7 @@
 	name = "Slaughter Demon"
 	config_tag = "Slaughter Demon"
 	candidate_role = "Slaughter Demon"
-	// preview_antag_datum = /datum/antagonist/slaughter
+	// preview_antag_datum = /datum/antagonist/slaughter // Doesn't actually have its own pref
 	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
