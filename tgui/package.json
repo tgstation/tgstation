@@ -8,9 +8,9 @@
 	],
 	"scripts": {
 		"tgui:analyze": "webpack --analyze",
-		"tgui:bench": "webpack --env TGUI_BENCH=1 && bun packages/tgui-bench/index.js",
+		"tgui:bench": "webpack --env TGUI_BENCH=1 && bun packages/tgui-bench/index.ts",
 		"tgui:build": "webpack",
-		"tgui:dev": "bun packages/tgui-dev-server/index.js",
+		"tgui:dev": "bun run --hot ",
 		"tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
 		"tgui:prettier": "prettier --check .",
 		"tgui:sonar": "eslint packages -c .eslintrc-sonar.yml",

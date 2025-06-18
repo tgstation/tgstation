@@ -10,7 +10,7 @@ import './styles/main.scss';
 import { perf } from 'common/perf';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
-import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
+import { setupHotReloading } from 'tgui-dev-server/link/client';
 
 import { App } from './App';
 import { setGlobalStore } from './backend';
@@ -49,7 +49,7 @@ function setupApp() {
   // Enable hot module reloading
   if (import.meta.webpackHot) {
     setupHotReloading();
-    import.meta.webpackHot.accept(
+    import.meta.webpackHot?.accept(
       ['./debug', './layouts', './routes', './App'],
       () => {
         render(<App />);
