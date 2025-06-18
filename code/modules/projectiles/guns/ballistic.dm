@@ -395,6 +395,7 @@
 #undef CASING_CATCH_FAILED_PLACEMENT
 #undef CASING_CATCH_SUCCESSFUL
 #undef CASING_CATCH_SUCCESSFUL_OUCH
+#undef CASING_HOT_DELAY
 
 ///Used to chamber a new round and eject the old one
 /obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)
