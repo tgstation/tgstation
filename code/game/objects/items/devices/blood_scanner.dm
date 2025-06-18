@@ -87,7 +87,7 @@
 	if(!isliving(scanee))
 		return FALSE
 	if(!istype(scanee, /mob/living/carbon))
-		to_chat(person_scanning, span_warning("[src] doesn't work on that kind of life."))
+		to_chat(person_scanning, span_warning("[src] is incompatible."))
 		return FALSE
 	if(!person_scanning.can_read(src) || person_scanning.is_blind())
 		to_chat(person_scanning, span_warning("You are unable to read [src]'s screen!"))
