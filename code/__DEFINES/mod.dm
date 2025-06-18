@@ -31,7 +31,6 @@
 #define SEALED_INVISIBILITY "sealed_invisibility"
 #define UNSEALED_COVER "unsealed_cover"
 #define SEALED_COVER "sealed_cover"
-#define CAN_OVERSLOT "can_overslot"
 #define UNSEALED_MESSAGE "unsealed_message"
 #define SEALED_MESSAGE "sealed_message"
 
