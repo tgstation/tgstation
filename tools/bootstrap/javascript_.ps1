@@ -3,6 +3,22 @@
 
 $ErrorActionPreference = "Stop"
 
+# Check minimum PowerShell version and required cmdlets
+if ($PSVersionTable.PSVersion.Major -lt 5 -or $PSVersionTable.PSVersion.Minor -lt 1) {
+    Write-Error "This script requires PowerShell 5.1 or newer. Your version: $($PSVersionTable.PSVersion)"
+    exit 1
+}
+
+if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
+    Write-Error "Expand-Archive cmdlet is not available. Please update your PowerShell."
+    exit 1
+}
+
+if (-not (Get-Command Get-FileHash -ErrorAction SilentlyContinue)) {
+    Write-Error "Get-FileHash cmdlet is not available. Please update your PowerShell."
+    exit 1
+}
+
 function Get-VariableFromFile {
     param([string] $Path, [string] $Key)
     foreach ($Line in Get-Content $Path) {
@@ -21,8 +37,12 @@ function Get-Bun {
 
     Write-Output "Downloading Bun v$BunVersion (may take a while)"
     New-Item $BunTargetDir -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
-    $WebClient = New-Object Net.WebClient
-    $WebClient.DownloadFile($BunSource, "$BunZip.downloading")
+    try {
+        Invoke-WebRequest -Uri $BunSource -OutFile "$BunZip.downloading" -UseBasicParsing
+    } catch {
+        Write-Error "Failed to download Bun from $BunSource. $_"
+        exit 1
+    }
     Rename-Item "$BunZip.downloading" $BunZip
     Test-BunHash
 
