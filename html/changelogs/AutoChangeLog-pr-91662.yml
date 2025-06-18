@@ -1,0 +1,5 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed petrified statues dropping victims into nullspace if they somehow ended up in a jaunt"
+  - bugfix: "mobs exiting petrification actually get paralyzed for 10 seconds now as intended"
