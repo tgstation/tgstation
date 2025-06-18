@@ -110,9 +110,7 @@
 		return SHAME
 	user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return FIRELOSS
-#define span_notice_ml(text) "<span class='notice ml-1'>[text]</span>"
-#define span_danger_ml(text) "<span class='danger ml-1'>[text]</span>"
-#define span_info_ml(text) "<span class='info ml-1'>[text]</span>"
+
 /obj/item/flashlight/proc/eye_examine(mob/living/carbon/human/patient, mob/living/user)
 	. = list()
 	if((patient.head && patient.head.flags_cover & HEADCOVERSEYES) || (patient.wear_mask && patient.wear_mask.flags_cover & MASKCOVERSEYES) || (patient.glasses && patient.glasses.flags_cover & GLASSESCOVERSEYES))
@@ -251,9 +249,6 @@
 	else
 		. += span_notice_ml("Color returns quickly.\n")//they're okay :D
 
-#undef span_notice_ml
-#undef span_danger_ml
-#undef span_info_ml
 
 /obj/item/flashlight/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ishuman(interacting_with))
