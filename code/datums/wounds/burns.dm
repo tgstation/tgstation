@@ -54,7 +54,7 @@
 
 	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
 		sanitization += 0.9
-	if(HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
+	if(HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY))
 		infestation += 0.05
 		sanitization = max(sanitization - 0.15, 0)
 		if(infestation_rate <= 0.15 && prob(50))

@@ -21,3 +21,4 @@
 	// Like, physically bigger.
 	holder_heart.reagents.add_reagent(/datum/reagent/consumable/nutriment/organ_tissue, 5)
 	holder_heart.transform = holder_heart.transform.Scale(1.5)
+	holder_heart.beat_noise += ". It radiates loving warmth" // wuv is a detectable diagnostic quality

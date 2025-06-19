@@ -191,15 +191,15 @@
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !ishuman(user))
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
-			H.visible_message(span_alert("[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
-			reagents.trans_to(H, reagents.total_volume, transferred_by = user, methods = INGEST)
-			qdel(src)
+	var/mob/living/carbon/human/as_human = user
+	if(!isflyperson(as_human))
+		return
+	playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
+	as_human.visible_message(span_alert("[as_human] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
+	lazy_init_reagents()?.trans_to(as_human, reagents.total_volume, transferred_by = user, methods = INGEST)
+	qdel(src)
 
 /obj/effect/decal/cleanable/vomit/toxic // this has a more toned-down color palette, which may be why it's used as the default in so many spots
 	icon_state = "vomittox_1"
