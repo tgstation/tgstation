@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "removes un-needed calls to `RefreshParts()`"
