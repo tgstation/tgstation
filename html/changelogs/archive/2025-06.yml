@@ -360,3 +360,78 @@
   plsleavemealon:
   - rscadd: Adds new morbid themed tools for the coroners enjoyment. Coroners now
       perform autopsies slightly faster.
+2025-06-17:
+  Absolucy:
+  - bugfix: The lobby art properly fades out during roundstart, latejoin, and server
+      restart again.
+  Ghommie:
+  - bugfix: Sundered blade ritual shouldn't delete more than one sheet of silver or
+      titanium.
+  Justice12354:
+  - bugfix: henchmen jumpsuit no longer turns pink and black when u try to adjust
+      it (you can't adjust it now)
+  MGO:
+  - rscadd: Introduces new inverse reagents for Krokodil, Bath Salts, Aranesp, Happiness,
+      Baldium, Colorful Reagent and Gravitum!
+  - rscadd: An alternate reaction output has been added for Monkey Powder. Instead
+      of 1u Water, add 10u Monkey Dust to make an angry monkey!
+  - rscadd: 'Adds a medicine: Naloxone! Requires equal parts Morphine, Hydrogen Peroxide,
+      Bromine and Ethanol to be made. Purges opioid-class reagents, can also help
+      with mitigating drowsiness and breath loss. Also purges good moodlets associated
+      with opiates and replaces them with negative moodlets, so don''t expect your
+      patient to be happy about losing their high!'
+  MiraHell:
+  - bugfix: Empty revolvers can now be reloaded
+  SmArtKar:
+  - bugfix: Fixed holobarriers going invisible after being spraypainted
+  - bugfix: Fixed some edge cases where antagonist datums would "stick" and not get
+      removed if your body got destroyed.
+  TealSeer:
+  - bugfix: fixed being unable to attack suit storage units
+  Y0SH1M4S73R:
+  - bugfix: You can no longer deploy flatpacks in places that aren't turfs.
+  jlsnow301:
+  - bugfix: Tgui core v4.2 brings more stylized components, fixes for stuck movement
+      keys, and more
+  - bugfix: Draggable tgui components (like slider) will let you type numbers again
+  necromanceranne:
+  - bugfix: Malfunctioning AI's can once again dominate mechs without a beacon.
+  - qol: Eldritch paintings no longer inflict brain traumas on you that need surgery
+      to remove. Instead, they inflict a status effect that can be protected from
+      and removed using large doses of holy water.
+2025-06-18:
+  TealSeer:
+  - code_imp: examine text for dufflebag zipper status uses examine proc instead of
+      update_desc
+  plsleavemealon:
+  - rscadd: Adds a brand new morbid themed surgical toolset, along with a way to craft
+      it from a normal surgical toolset! These tools, much like their non-augmented
+      counterparts are faster at certain surgeries when used by someone that is morbidly
+      inclined.
+  vinylspiders:
+  - qol: '"Spawners Menu" and "Minigames Menu" are back as chat verbs for power users'
+  - qol: report-issue is now a verb that can be used in chat to open the issue report
+      prompt for power users
+2025-06-19:
+  Sealed101:
+  - bugfix: fixed petrified statues dropping victims into nullspace if they somehow
+      ended up in a jaunt
+  - bugfix: mobs exiting petrification actually get paralyzed for 10 seconds now as
+      intended
+  SmArtKar:
+  - bugfix: Maps with a large amount of Z levels should no longer randomly display
+      space parallax to players with low multi-z culling settings.
+  SyncIt21:
+  - code_imp: stacks error on invalid amounts, removed manual passing of number `1`
+      when creating a single stack in many cases
+  TealSeer:
+  - code_imp: Autochangelog no longer cares if your changelog entry tag has capital
+      letters in it
+  Y0SH1M4S73R:
+  - rscadd: Why would you ever make chocolate pudding at 04:00 station time? Have
+      you lost control of your life?
+  - admin: Adding reagents to a beaker from a chem dispenser adds a hidden fingerprint
+      to the beaker.
+  timothymtorres:
+  - bugfix: Fix water vapor making water tiles and no slip turfs wet
+  - bugfix: Fix admin immersion buttons scaling incorrectly when UI is stretched.

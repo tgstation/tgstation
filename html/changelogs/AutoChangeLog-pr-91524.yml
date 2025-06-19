@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed some edge cases where antagonist datums would \"stick\" and not get removed if your body got destroyed."

@@ -687,7 +687,7 @@
 	armour_penetration = 0
 	damage = 25
 	wound_bonus = -20
-	bare_wound_bonus = 40
+	exposed_wound_bonus = 40
 	silent_blown = TRUE
 
 /obj/projectile/kiss/french
