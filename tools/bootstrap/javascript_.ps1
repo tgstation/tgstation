@@ -20,7 +20,7 @@ function Get-VariableFromFile {
 }
 
 function Get-Bun {
-    if (Test-Path $BunTarget -PathType Leaf) {
+    if (Test-Path $BunExe -PathType Leaf) {
         # Bun already exists
         return
     }
@@ -29,13 +29,15 @@ function Get-Bun {
     # https://bun.sh/docs/installation#cpu-requirements-and-baseline-builds
     Get-CoreInfo
     Write-Output "Checking CPU for AVX2 support"
-    $avx2Support = & $CoreInfoExe | Select-String "AVX2\s+\*"
+    $avx2Supported = (& $CoreInfoExe | Select-String "AVX2\s+\*") -ne $null
     $BunRelease= "$BunPlatform"
     $BunTag
-    if ($avx2Support -eq $null) {
+    if (-not $avx2Supported) {
         $BunRelease = "$BunPlatform-baseline"
         $BunTag = " (baseline)"
     }
+
+    $BunSource = "https://github.com/oven-sh/bun/releases/download/bun-v$BunVersion/$BunRelease.zip"
 
     Write-Output "Downloading Bun v$BunVersion$BunTag"
     New-Item $BunTargetDir -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
@@ -46,7 +48,7 @@ function Get-Bun {
         exit 1
     }
     Rename-Item "$BunZip.downloading" $BunZip
-    Test-BunHash -Baseline ($avx2Support -eq $null)
+    Test-BunHash -Baseline (-not $avx2Supported)
 
     Write-Output "Extracting Bun archive"
     Expand-Archive -Path $BunZip -DestinationPath $BunTargetDir -Force
@@ -82,6 +84,7 @@ function Get-CoreInfo {
         Write-Error "Failed to download Coreinfo. $_"
         exit 1
     }
+
     Expand-Archive -Path $CoreInfoZip -DestinationPath $CoreInfoCacheDir -Force
     Remove-Item $CoreInfoZip -Force
 
@@ -125,7 +128,7 @@ function Test-BunHash {
             exit 1
         }
         Write-Output "Checksum mismatch on Bun. Retrying."
-        Remove-Item $BunTarget
+        Remove-Item $BunTargetDir -Recurse -Force
         Get-Bun
     }
 }
@@ -136,12 +139,10 @@ $Cache = "$BaseDir\.cache"
 if ($Env:TG_BOOTSTRAP_CACHE) {
     $Cache = $Env:TG_BOOTSTRAP_CACHE
 }
-
 $BunVersion = Get-VariableFromFile -Path "$BaseDir\..\..\dependencies.sh" -Key "BUN_VERSION"
 $BunPlatform = "bun-windows-x64"
-$BunSource = "https://github.com/oven-sh/bun/releases/download/bun-v$BunVersion/$BunPlatform.zip"
 $BunTargetDir = "$Cache\bun-v$BunVersion-x64"
-$BunTarget = "$BunTargetDir\bun.exe"
+$BunExe = "$BunTargetDir\bun.exe"
 $BunZip = "$BunTargetDir\bun.zip"
 $CoreInfoExe = "$Cache\coreinfo\Coreinfo.exe"
 
@@ -165,5 +166,5 @@ $Env:PATH = "$BunTargetDir;$ENV:Path"
 
 ## Invoke Bun with all command-line arguments
 $ErrorActionPreference = "Continue"
-& "$BunTarget" @Args
+& "$BunExe" @Args
 exit $LastExitCode
