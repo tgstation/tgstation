@@ -107,7 +107,7 @@ function Test-BunHash {
         $EntrySplit = $ShaArrayEntry -split "\s+"
         $EntrySha = $EntrySplit[0]
         $EntryFile = $EntrySplit[1]
-        if ($EntryFile -eq $BunRelease) {
+        if ($EntryFile -eq "$BunRelease.zip") {
             $ExpectedSha = $EntrySha
             break
         }
