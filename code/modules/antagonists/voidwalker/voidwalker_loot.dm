@@ -66,7 +66,7 @@
 	tool_behaviour = TOOL_MINING
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	wound_bonus = -30
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 
 /obj/item/void_eater/Initialize(mapload)
 	. = ..()
