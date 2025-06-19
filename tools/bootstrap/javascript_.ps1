@@ -9,16 +9,6 @@ if ($PSVersionTable.PSVersion.Major -lt 5 -or $PSVersionTable.PSVersion.Minor -l
     exit 1
 }
 
-if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
-    Write-Error "Expand-Archive cmdlet is not available. Please update your PowerShell."
-    exit 1
-}
-
-if (-not (Get-Command Get-FileHash -ErrorAction SilentlyContinue)) {
-    Write-Error "Get-FileHash cmdlet is not available. Please update your PowerShell."
-    exit 1
-}
-
 function Get-VariableFromFile {
     param([string] $Path, [string] $Key)
     foreach ($Line in Get-Content $Path) {
@@ -35,7 +25,19 @@ function Get-Bun {
         return
     }
 
-    Write-Output "Downloading Bun v$BunVersion (may take a while)"
+    # Test AVX2 support. Bun builds for this
+    # https://bun.sh/docs/installation#cpu-requirements-and-baseline-builds
+    Get-CoreInfo
+    Write-Output "Checking CPU for AVX2 support"
+    $avx2Support = & $CoreInfoExe | Select-String "AVX2\s+\*"
+    $BunRelease= "$BunPlatform"
+    $BunTag
+    if ($avx2Support -eq $null) {
+        $BunRelease = "$BunPlatform-baseline"
+        $BunTag = " (baseline)"
+    }
+
+    Write-Output "Downloading Bun v$BunVersion$BunTag"
     New-Item $BunTargetDir -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
     try {
         Invoke-WebRequest -Uri $BunSource -OutFile "$BunZip.downloading" -UseBasicParsing
@@ -44,14 +46,14 @@ function Get-Bun {
         exit 1
     }
     Rename-Item "$BunZip.downloading" $BunZip
-    Test-BunHash
+    Test-BunHash -Baseline ($avx2Support -eq $null)
 
     Write-Output "Extracting Bun archive"
     Expand-Archive -Path $BunZip -DestinationPath $BunTargetDir -Force
 
     # Move the exe out of the subdirectory
-    if (Test-Path "$BunTargetDir\$BunPlatform\bun.exe") {
-        Move-Item "$BunTargetDir\$BunPlatform\bun.exe" $BunTargetDir -Force
+    if (Test-Path "$BunTargetDir\$BunRelease\bun.exe") {
+        Move-Item "$BunTargetDir\$BunRelease\bun.exe" $BunTargetDir -Force
     }
     else {
         Write-Output "Failed to find bun.exe in the extracted directory."
@@ -59,11 +61,41 @@ function Get-Bun {
     }
 
     Remove-Item $BunZip -Force
-    Remove-Item "$BunTargetDir\$BunPlatform" -Recurse -Force
+    Remove-Item "$BunTargetDir\$BunRelease" -Recurse -Force
+}
+
+# For CPU detection (Bun needs avx2 instructions)
+function Get-CoreInfo {
+    $CoreInfoUrl = "https://download.sysinternals.com/files/Coreinfo.zip"
+    $CoreInfoCacheDir = "$Cache\coreinfo"
+    $CoreInfoZip = "$CoreInfoCacheDir\Coreinfo.zip"
+
+    if (Test-Path $CoreInfoExe -PathType Leaf) {
+        return
+    }
+
+    Write-Output "Downloading Coreinfo from Microsoft Sysinternals"
+    New-Item $CoreInfoCacheDir -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+    try {
+        Invoke-WebRequest -Uri $CoreInfoUrl -OutFile $CoreInfoZip -UseBasicParsing
+    } catch {
+        Write-Error "Failed to download Coreinfo. $_"
+        exit 1
+    }
+    Expand-Archive -Path $CoreInfoZip -DestinationPath $CoreInfoCacheDir -Force
+    Remove-Item $CoreInfoZip -Force
+
 }
 
 function Test-BunHash {
+    param(
+        [bool]$Baseline = $false
+    )
     $Tries = $Tries + 1
+    $BunRelease = $BunPlatform
+    if ($Baseline) {
+        $BunRelease = "$BunPlatform-baseline"
+    }
 
     Write-Output "Verifying Bun checksum"
     $FileHash = Get-FileHash $BunZip -Algorithm SHA256
@@ -75,7 +107,7 @@ function Test-BunHash {
         $EntrySplit = $ShaArrayEntry -split "\s+"
         $EntrySha = $EntrySplit[0]
         $EntryFile = $EntrySplit[1]
-        if ($EntryFile -eq "bun-windows-x64.zip") {
+        if ($EntryFile -eq $BunRelease) {
             $ExpectedSha = $EntrySha
             break
         }
@@ -111,6 +143,7 @@ $BunSource = "https://github.com/oven-sh/bun/releases/download/bun-v$BunVersion/
 $BunTargetDir = "$Cache\bun-v$BunVersion-x64"
 $BunTarget = "$BunTargetDir\bun.exe"
 $BunZip = "$BunTargetDir\bun.zip"
+$CoreInfoExe = "$Cache\coreinfo\Coreinfo.exe"
 
 ## Just print the path and exit
 if ($Args.length -eq 1 -and $Args[0] -eq "Get-Path") {
