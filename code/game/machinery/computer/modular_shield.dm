@@ -27,11 +27,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///checks if all connected generators exist
-/obj/machinery/computer/modular_shield/proc/generator_deleted()
+/obj/machinery/computer/modular_shield/proc/generator_deleted(obj/machinery/modular_shield_generator/generator)
 	SIGNAL_HANDLER
-	for(var/obj/machinery/modular_shield_generator/generator in generators)
-		if(QDELETED(generator))
-			generators -= generator
+	generators -= generator
 
 /obj/machinery/computer/modular_shield/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
