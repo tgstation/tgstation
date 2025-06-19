@@ -172,7 +172,7 @@
 	if(lose_multiple_charges) // if the shield has health like damage we'll lose charges equal to the damage of the hit
 		charge_loss = damage
 
-	else if(damage < 10)
+	else if(damage < 3)
 		charge_loss = 0
 
 	adjust_charge(-charge_loss)
