@@ -12,6 +12,7 @@
 	wound_bonus = 0
 	wound_falloff_tile = -5
 	embed_falloff_tile = -3
+	speed = 2
 
 /obj/projectile/bullet/smite
 	name = "divine retribution"
