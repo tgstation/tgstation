@@ -63,7 +63,7 @@ async function getNamedByondVersionPath(namedVersion: string): Promise<string> {
   const map_entry = all_entries.find((x) => x.name === namedVersion);
   if (map_entry === undefined) {
     Juke.logger.error(
-      `No named byond version with name "${namedVersion}" found.`,
+      `No named byond version with name "${namedVersion}" found.`
     );
     throw new Juke.ExitCode(1);
   }
@@ -87,7 +87,7 @@ let namedDmVersionList: NamedDmVersion[];
 export const NamedVersionFile = "tools/build/dm_versions.json";
 
 async function getAllNamedDmVersions(
-  throw_on_fail: boolean,
+  throw_on_fail: boolean
 ): Promise<NamedDmVersion[]> {
   if (!namedDmVersionList) {
     if (!fs.existsSync(NamedVersionFile)) {
@@ -121,7 +121,7 @@ type Option = Partial<{
 
 export async function DreamMaker(
   dmeFile: string,
-  options: Option = {},
+  options: Option = {}
 ): Promise<void> {
   if (options.namedDmVersion !== null) {
     Juke.logger.info("Using named byond version:", options.namedDmVersion);
@@ -139,7 +139,7 @@ export async function DreamMaker(
       }
       if (err && err.code === "EBUSY") {
         Juke.logger.error(
-          `File '${name}' is locked by the DreamDaemon process.`,
+          `File '${name}' is locked by the DreamDaemon process.`
         );
         Juke.logger.error(`Stop the currently running server and try again.`);
         throw new Juke.ExitCode(1);
@@ -154,11 +154,11 @@ export async function DreamMaker(
       throw: false,
     });
     const version = execReturn.combined.match(
-      `DM compiler version (\\d+)\\.(\\d+)`,
+      `DM compiler version (\\d+)\\.(\\d+)`
     );
     if (version == null) {
       Juke.logger.error(
-        `Unexpected DreamMaker return, ensure "${dmPath}" is correct DM path.`,
+        `Unexpected DreamMaker return, ensure "${dmPath}" is correct DM path.`
       );
       throw new Juke.ExitCode(1);
     }
@@ -171,7 +171,7 @@ export async function DreamMaker(
       (major == requiredMajorVersion && minor < requiredMinorVersion)
     ) {
       Juke.logger.error(
-        `${requiredMajorVersion}.${requiredMinorVersion} or later DM version required. Version ${major}.${minor} found at: ${dmPath}`,
+        `${requiredMajorVersion}.${requiredMinorVersion} or later DM version required. Version ${major}.${minor} found at: ${dmPath}`
       );
       throw new Juke.ExitCode(1);
     }
@@ -188,7 +188,7 @@ export async function DreamMaker(
       if (ignoredWarningCodes.length > 0) {
         Juke.logger.info(
           "Ignored warning codes:",
-          ignoredWarningCodes.join(", "),
+          ignoredWarningCodes.join(", ")
         );
       }
       const base_regex = "\\d+:warning( \\([a-z_]*\\))?:";
@@ -218,17 +218,20 @@ export async function DreamMaker(
   ]);
 }
 
-/**
- * @param {{
- *   dmbFile: string;
- *   namedDmVersion?: string;
- * }} options
- */
-export const DreamDaemon = async (options, ...args) => {
+type DDOptions = {
+  dmbFile: string;
+  namedDmVersion?: string | null;
+};
+
+export async function DreamDaemon(
+  options: DDOptions,
+  ...args: any[]
+): Promise<Juke.ExecReturn> {
   const dmPath = await getDmPath(options.namedDmVersion);
   const baseDir = path.dirname(dmPath);
   const ddExeName =
     process.platform === "win32" ? "dreamdaemon.exe" : "DreamDaemon";
   const ddExePath = baseDir === "." ? ddExeName : path.join(baseDir, ddExeName);
+
   return Juke.exec(ddExePath, [options.dmbFile, ...args]);
-};
+}
