@@ -30,8 +30,11 @@
 	MakeRotate()
 	if (has_armrest)
 		gen_armrest()
-	if(can_buckle && fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+	if(can_buckle)
+		if(fishing_modifier)
+			AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		//if(istype(get_area(src), /area/shuttle/arrival))
+		//	AddComponent(/datum/component/unbuckle_on_arrival)
 
 /obj/structure/chair/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	if(HAS_TRAIT(being_buckled, TRAIT_RESTRAINED))
