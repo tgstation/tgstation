@@ -519,7 +519,7 @@ rules:
   ## Require super() calls in constructors
   # constructor-super: error
   ## Enforce consistent spacing around * operators in generator functions
-  generator-star-spacing: [error, { before: false, after: false }]
+  generator-star-spacing: [error, { before: false, after: true }]
   ## Disallow reassigning class members
   no-class-assign: error
   ## Disallow arrow functions where they could be confused with comparisons
