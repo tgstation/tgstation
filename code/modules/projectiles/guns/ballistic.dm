@@ -300,7 +300,7 @@
 #define CASING_CATCH_SUCCESSFUL_OUCH	5
 // Offset added to an ejected casing's fire timestamp;
 // if world.time is past the casing's fired timestamp plus this offset, casing is considered cold, and won't burn hands.
-#define CASING_HOT_DELAY 5 SECONDS
+#define CASING_HOT_DELAY (5 SECONDS)
 
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
