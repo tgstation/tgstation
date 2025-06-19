@@ -71,7 +71,7 @@
 	var/mob/living/silicon/ai/combatai = lawed
 	if(combatai.malf_picker)
 		return
-	to_chat(combatai, span_userdanger("Your law rack has been upgraded with combat software!"))
+	to_chat(combatai, span_userdanger("Your module rack has been upgraded with combat software!"))
 	to_chat(combatai, span_danger("Your current laws and objectives remain unchanged.")) //this unlocks malf powers, but does not give the license to plasma flood
 	combatai.add_malf_picker()
 	combatai.hack_software = TRUE

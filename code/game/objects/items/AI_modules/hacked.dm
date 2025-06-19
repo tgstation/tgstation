@@ -63,7 +63,7 @@
 		target_ai = rack.linked_ref
 
 	if(!isAI(target_ai))
-		to_chat(user, span_warning("You can only use this on an AI or AI Law Rack connected to an AI."))
+		to_chat(user, span_warning("You can only use this on an AI or a module rack connected to an AI."))
 		return ITEM_INTERACT_BLOCKING
 	if(target_ai.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 		to_chat(user, span_warning("An unknown error has occured. Upload cancelled."))

@@ -126,15 +126,15 @@
 
 /// Returns a text display of the laws for the module.
 /obj/item/ai_module/law/proc/display_laws()
-	// Used to assemble the laws to show to an examining user.
 	var/assembled_laws = ""
 
-	if(laws.len)
-		assembled_laws += "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B><br>"
-		for(var/law in laws)
-			assembled_laws += "\"[law]\"<br>"
+	for(var/law in laws)
+		assembled_laws += "\"[law]\"<br>"
 
-	return assembled_laws
+	if(assembled_laws)
+		return "<b>Programmed Law[(length(laws) > 1) ? "s" : ""]:</b><br>[assembled_laws]"
+
+	return null
 
 ///what this module should do if it is mapload spawning on a unique AI station trait round.
 /obj/item/ai_module/law/proc/handle_unique_ai()

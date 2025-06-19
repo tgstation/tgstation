@@ -371,6 +371,6 @@
 /obj/item/mmi/syndie/examine(mob/user)
 	. = ..()
 	. += span_notice("If used to create a cyborg, it will be unlinked from the station's AI. \
-		The lawset cannot be modified until it is synced to a law rack or an AI.")
-	. += span_notice("If used to create an AI, it will not automatically sync to a law rack. \
-		The lawset cannot be modified until it is synced to a law rack.")
+		The lawset cannot be modified until it is synced to a module rack or an AI.")
+	. += span_notice("If used to create an AI, it will not automatically sync to a module rack. \
+		The lawset cannot be modified until it is synced to a module rack.")

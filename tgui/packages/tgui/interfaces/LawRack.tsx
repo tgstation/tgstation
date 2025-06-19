@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Section, Stack } from 'tgui-core/components';
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  Floating,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -17,6 +25,11 @@ type SlotData = {
   empty: BooleanLike;
 };
 
+type Linkable = {
+  name: string;
+  ref: string;
+};
+
 type Data = {
   slots: SlotData[];
   holding_module: BooleanLike;
@@ -25,6 +38,12 @@ type Data = {
   holding_multitool: BooleanLike;
   linked: string | null;
   has_core_slot: BooleanLike;
+  depowered: BooleanLike;
+  allowed: BooleanLike;
+  linked_racks?: string[];
+  parent_rack?: string;
+  linkable_silicons: Linkable[];
+  linkable_racks: Linkable[];
 };
 
 function getSlotColor(
@@ -72,7 +91,7 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
       className="LawRack__Slot"
     >
       <Flex>
-        <Flex.Item width="10%" mr={1}>
+        <Flex.Item width="8%" mr={1}>
           <LawSlotScrew
             noscrew={slot.empty || slot.security === SlotSecurity.NONE}
             disabled={
@@ -83,7 +102,7 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
             handleScrew={() => act('screw_module', { slot: index + 1 })}
           />
         </Flex.Item>
-        <Flex.Item width="80%">
+        <Flex.Item width="84%">
           {(slot.security === SlotSecurity.WELDED || !!holding_welder) && (
             <Button
               height="100%"
@@ -125,6 +144,7 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
                   (!holding_module && slot.empty) ||
                   slot.security !== SlotSecurity.NONE
                 }
+                style={{ textTransform: 'capitalize' }}
                 onClick={() =>
                   act(
                     holding_module && slot.empty
@@ -138,7 +158,7 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
               </Button>
             )}
         </Flex.Item>
-        <Flex.Item width="10%" ml={1}>
+        <Flex.Item width="8%" ml={1}>
           <LawSlotScrew
             noscrew={slot.empty || slot.security === SlotSecurity.NONE}
             disabled={
@@ -154,12 +174,51 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
   );
 };
 
-export const LawRack = () => {
-  const { data } = useBackend<Data>();
-  const { slots, linked } = data;
+const LinkableFloating = (props: {
+  linkable: Linkable[];
+  link_act: (ref: string) => void;
+}) => {
+  const { linkable, link_act } = props;
 
   return (
-    <Window title="Law Rack" width={350} height={600}>
+    <Floating
+      stopChildPropagation
+      placement="top-start"
+      content={
+        <Stack vertical>
+          {linkable.map((item) => (
+            <Stack.Item key={item.ref}>
+              <Button
+                style={{ textTransform: 'capitalize' }}
+                onClick={() => link_act(item.ref)}
+              >
+                {item.name}
+              </Button>
+            </Stack.Item>
+          ))}
+        </Stack>
+      }
+    />
+  );
+};
+
+export const LawRack = () => {
+  const { data, act } = useBackend<Data>();
+  const {
+    allowed,
+    depowered,
+    linkable_racks,
+    linkable_silicons,
+    linked,
+    parent_rack,
+    slots,
+  } = data;
+
+  const [rackLink, setRackLink] = useState(false);
+  const [siliconLink, setSiliconLink] = useState(false);
+
+  return (
+    <Window title="Module Rack" width={350} height={600}>
       <Window.Content>
         <Section>
           <Stack vertical>
@@ -169,9 +228,72 @@ export const LawRack = () => {
               </Stack.Item>
             ))}
             <Stack.Divider />
-            <Stack.Item align="center">
-              {linked ? `Linked to ${linked}` : 'Unlinked'}
-            </Stack.Item>
+            {linked || parent_rack ? (
+              <Stack.Item align="center">
+                Linked to <b>{linked || parent_rack}</b>
+                <Button
+                  ml={1}
+                  disabled={!allowed || depowered}
+                  icon="link-slash"
+                  onClick={() => act(linked ? 'unlink_silicon' : 'unlink_rack')}
+                />
+              </Stack.Item>
+            ) : (
+              <Stack.Item align="center">
+                <Flex>
+                  <Flex.Item>
+                    {rackLink && (
+                      <LinkableFloating
+                        linkable={data.linkable_racks}
+                        link_act={(ref) => act('link_rack', { rack_ref: ref })}
+                      />
+                    )}
+                    <Button
+                      fluid
+                      icon="link"
+                      disabled={!data.linkable_racks.length || depowered}
+                      tooltip={
+                        data.linkable_racks.length
+                          ? depowered
+                            ? 'No power!'
+                            : undefined
+                          : 'No linkable racks!'
+                      }
+                      onClick={() => setRackLink(!rackLink)}
+                      mr={0.5}
+                    >
+                      Link to Core Rack
+                    </Button>
+                  </Flex.Item>
+                  <Flex.Item>
+                    {siliconLink && (
+                      <LinkableFloating
+                        linkable={data.linkable_silicons}
+                        link_act={(ref) =>
+                          act('link_silicon', { silicon_ref: ref })
+                        }
+                      />
+                    )}
+                    <Button
+                      fluid
+                      icon="link"
+                      disabled={!data.linkable_silicons.length || depowered}
+                      tooltip={
+                        data.linkable_silicons.length
+                          ? depowered
+                            ? 'No power!'
+                            : undefined
+                          : 'No linkable silicons!'
+                      }
+                      onClick={() => setSiliconLink(!siliconLink)}
+                      ml={0.5}
+                    >
+                      Link to Silicon
+                    </Button>
+                  </Flex.Item>
+                </Flex>
+              </Stack.Item>
+            )}
           </Stack>
         </Section>
       </Window.Content>

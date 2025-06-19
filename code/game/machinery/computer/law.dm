@@ -2,7 +2,7 @@
 #define MODULE_SCREWED 1
 #define MODULE_WELDED 2
 
-#define MODULE_NAME(module) (ai_modules[module] == MODULE_WELDED ? "Unidentified Welded Module" : (module?.name || "Empty"))
+#define MODULE_NAME(module) (ai_modules[module] == MODULE_WELDED ? "unidentified welded module" : (module?.name || "Empty"))
 
 /datum/armor/obj_machinery/law_rack
 	melee = 50
@@ -18,8 +18,8 @@
 	laser = 10
 
 /obj/machinery/ai_law_rack
-	name = "law rack"
-	desc = "A simple law rack. It has a slot for a core module, but far fewer slots than a core law rack."
+	name = "module rack"
+	desc = "A simple module rack. It has a slot for a core module, but far fewer slots than a core module rack."
 	icon = 'icons/obj/machines/law_rack.dmi'
 	icon_state = "law_rack"
 	density = TRUE
@@ -27,7 +27,10 @@
 	max_integrity = 300
 	damage_deflection = 12
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
-	interaction_flags_machine = parent_type::interaction_flags_machine & ~INTERACT_MACHINE_ALLOW_SILICON
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
+	anchored = FALSE
+	// Anyone can link a rack to an AI but only people with access can UNLINK it
+	req_one_access =  list(ACCESS_AI_UPLOAD)
 
 	/// How many slots for laws
 	var/law_slots = 5
@@ -42,7 +45,7 @@
 	VAR_FINAL/list/obj/item/ai_module/ai_modules
 
 	/// If we are welded to the floor
-	var/welded = TRUE
+	var/welded = FALSE
 
 	/// The AI or cyborg that is linked to this law rack
 	VAR_FINAL/mob/living/silicon/linked_ref
@@ -58,7 +61,6 @@
 	ai_modules = new /list(law_slots)
 	combined_lawset = new()
 	update_appearance()
-	AddComponent(/datum/component/gps, "Active Law Rack")
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
@@ -78,7 +80,6 @@
 	return "unlinked"
 
 /obj/machinery/ai_law_rack/on_set_is_operational(old_value)
-	. = ..()
 	update_lawset()
 
 /obj/machinery/ai_law_rack/proc/update_lawset()
@@ -146,6 +147,8 @@
 /obj/machinery/ai_law_rack/proc/can_link_to(mob/living/silicon/new_bot)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(is_valid_z_level(get_turf(src), get_turf(new_bot)))
+		return FALSE // Can't link to bots on different z-levels
 	if(new_bot.control_disabled)
 		return FALSE
 	if(iscyborg(new_bot))
@@ -167,22 +170,25 @@
 	linked_ref = new_bot
 	linked = new_bot.name
 	update_lawset()
-	for(var/obj/item/ai_module/installed as anything in ai_modules)
+	for(var/obj/item/ai_module/installed in ai_modules)
 		installed.silicon_linked_to_installed(linked_ref)
+	AddComponent(/datum/component/gps, "Active Module Rack")
 
 /obj/machinery/ai_law_rack/proc/unlink_silicon()
 	if(!linked)
 		return
 
 	if(!QDELING(linked_ref))
+		linked_ref.laws.set_zeroth_law(null, null)
 		linked_ref.laws.clear_hacked_laws()
 		linked_ref.laws.clear_inherent_laws()
 		linked_ref.laws.clear_supplied_laws()
 		linked_ref.announce_law_change()
 	clear_silicon_ref()
-	for(var/obj/item/ai_module/installed as anything in ai_modules)
+	for(var/obj/item/ai_module/installed in ai_modules)
 		installed.silicon_unlinked_from_installed(linked_ref)
 	linked = null
+	qdel(GetComponent(/datum/component/gps))
 
 /obj/machinery/ai_law_rack/proc/clear_silicon_ref()
 	SIGNAL_HANDLER
@@ -222,9 +228,6 @@
 	if(!anchored)
 		balloon_alert(user, "fasten it first!")
 		return FALSE
-	if(welded)
-		balloon_alert(user, "already welded!")
-		return FALSE
 	if(!is_anchorable_floor(loc))
 		balloon_alert(user, "nothing to weld to!")
 		return FALSE
@@ -242,20 +245,6 @@
 		balloon_alert(user, "welded")
 		welded = TRUE
 	return ITEM_INTERACT_SUCCESS
-
-// /obj/machinery/ai_law_rack/multitool_act(mob/living/user, obj/item/tool)
-// 	var/obj/item/multitool/multitool = tool
-// 	if(!istype(multitool) || !issilicon(multitool.buffer))
-// 		return NONE
-// 	if(!can_link_to(multitool.buffer))
-// 		balloon_alert(user, "can't link [multitool.buffer] to this law rack!")
-// 		return ITEM_INTERACT_BLOCKING
-// 	if(linked)
-// 		balloon_alert(user, "already linked to [linked]!")
-// 		return ITEM_INTERACT_BLOCKING
-// 	link_silicon(multitool.buffer)
-// 	balloon_alert(user, "linked to [linked]")
-// 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai_law_rack/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -277,16 +266,16 @@
 	. = ..()
 	if(isAI(user))
 		if(linked_ref == user)
-			. += span_notice("This is your law rack.")
+			. += span_notice("This is your module rack.")
 		return
 	if(!isobserver(user) && get_dist(user, src) > LAW_EXAMINE_RANGE)
-		. += span_notice("If you got a bit closer, you could probably [EXAMINE_HINT("examine closer")] to see what law modules are installed.")
+		. += span_notice("If you got a bit closer, you could probably [EXAMINE_HINT("examine closer")] to see what modules are installed.")
 	else
-		. += span_notice("[EXAMINE_HINT("Examine closer")] to see what law modules are installed.")
+		. += span_notice("[EXAMINE_HINT("Examine closer")] to see what modules are installed.")
 	var/filled = 0
 	for(var/obj/item/ai_module/module in ai_modules)
 		filled++
-	. += span_info("Otherwise, you can see that [filled] out of [length(ai_modules)] slots are filled with law modules.")
+	. += span_info("Otherwise, you can see that [filled] out of [length(ai_modules)] slots are filled with modules.")
 	if(has_core_slot && isnull(get_core_module()))
 		. += span_warning("You also note that the core slot is empty!")
 	if(anchored)
@@ -376,9 +365,6 @@
 		ui = new(user, src, "LawRack")
 		ui.open()
 
-/obj/machinery/ai_law_rack/ui_state(mob/user)
-	return GLOB.physical_state
-
 /obj/machinery/ai_law_rack/ui_data(mob/user)
 	var/list/data = list()
 
@@ -389,6 +375,8 @@
 	data["holding_multitool"] = holding?.tool_behaviour == TOOL_MULTITOOL
 	data["linked"] = linked
 	data["has_core_slot"] = has_core_slot
+	data["depowered"] = !is_operational
+	data["allowed"] = allowed(user)
 
 	data["slots"] = new /list(length(ai_modules))
 	for(var/i in 1 to length(ai_modules))
@@ -400,6 +388,31 @@
 			"security" = ai_modules[module] || MODULE_UNSECURED,
 			"ioned" = astype(module, /obj/item/ai_module/law)?.ioned || FALSE,
 		)
+
+	data["linkable_silicons"] = list()
+	if(!linked)
+		var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
+		if(core_rack)
+			data["parent_rack"] = list(
+				"name" = core_rack.name,
+				"ref" = REF(core_rack),
+			)
+		for(var/mob/living/silicon/linkable as anything in GLOB.silicon_mobs)
+			if(!can_link_to(linkable))
+				continue
+			data["linkable_silicons"] += list(list(
+				"name" = linkable.name,
+				"ref" = REF(linkable),
+			))
+
+	data["linkable_racks"] = list()
+	for(var/obj/machinery/ai_law_rack/core/core_rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+		if(core_rack == src || !core_rack.is_operational)
+			continue
+		data["linkable_racks"] += list(list(
+			"name" = core_rack.name,
+			"ref" = REF(core_rack),
+		))
 
 	return data
 
@@ -416,23 +429,24 @@
 			var/obj/item/ai_module/module = user.get_active_held_item()
 			if(!istype(module))
 				to_chat(user, span_warning("You need to hold an AI module to insert it!"))
-				return
+				return TRUE
 			if(!module.can_install_to_rack(user, src))
-				return
+				return TRUE
 			if(istype(module, /obj/item/ai_module/law/core))
 				if(!has_core_slot)
 					to_chat(user, span_warning("[src] has no slots for core modules!"))
-					return
+					return TRUE
 				if(index != 1)
 					to_chat(user, span_warning("You can't install a core module in a non-core slot!"))
-					return
+					return TRUE
 			else if(has_core_slot)
 				if(index == 1)
 					to_chat(user, span_warning("You can only install core modules in the core slot!"))
-					return
+					return TRUE
 			if(!user.transferItemToLoc(module, src))
 				to_chat(user, span_warning("You can't seem to insert [module.name] into [src]!"))
-				return
+				return TRUE
+			balloon_alert_to_viewers("inserted slot [index]")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			module.pre_user_install_to_rack(user, src)
 			return add_law_module(module, index)
@@ -440,28 +454,29 @@
 			var/index = clamp(text2num(params["slot"]), 1, length(ai_modules))
 			var/obj/item/ai_module/module = ai_modules[index]
 			if(isnull(module) || ai_modules[module])
-				// These have feedback messages in the UI, the checks are only for sanity
-				return
+				// These have feedback in the UI, the checks are only for sanity
+				return TRUE
 			module.pre_user_uninstall_from_rack(src)
 			// calls exited which handles updating laws and such
 			try_put_in_hand(module, user)
+			balloon_alert_to_viewers("removed slot [index]")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return TRUE
 		if("screw_module")
 			var/index = clamp(text2num(params["slot"]), 1, length(ai_modules))
 			var/obj/item/ai_module/module = ai_modules[index]
 			if(isnull(module) || ai_modules[module] == MODULE_WELDED)
-				// These have feedback messages in the UI, the checks are only for sanity
-				return
+				// These have feedback in the UI, the checks are only for sanity
+				return TRUE
 			var/obj/item/screwer = user.get_active_held_item()
-			if(screwer.tool_behaviour != TOOL_SCREWDRIVER)
-				return
+			if(screwer.tool_behaviour != TOOL_SCREWDRIVER || DOING_INTERACTION_WITH_TARGET(user, src))
+				return TRUE
 			balloon_alert_to_viewers("[ai_modules[module] == MODULE_SCREWED ? "un":""]screwing slot [index]...")
 			if(!screwer.use_tool(src, user, 3 SECONDS, volume = 25))
-				return
+				return TRUE
 			module = ai_modules[index]
 			if(isnull(module) || ai_modules[module] == MODULE_WELDED)
-				return
+				return TRUE
 			if(ai_modules[module] == MODULE_UNSECURED)
 				ai_modules[module] = MODULE_SCREWED
 			else if(ai_modules[module] == MODULE_SCREWED)
@@ -471,17 +486,17 @@
 			var/index = clamp(text2num(params["slot"]), 1, length(ai_modules))
 			var/obj/item/ai_module/module = ai_modules[index]
 			if(isnull(module) || ai_modules[module] == MODULE_UNSECURED)
-				// These have feedback messages in the UI, the checks are only for sanity
-				return
+				// These have feedback in the UI, the checks are only for sanity
+				return TRUE
 			balloon_alert_to_viewers("[ai_modules[module] == MODULE_WELDED ? "un":""]welding slot [index]...")
 			var/obj/item/welder = user.get_active_held_item()
-			if(welder.tool_behaviour != TOOL_WELDER)
-				return
+			if(welder.tool_behaviour != TOOL_WELDER || DOING_INTERACTION_WITH_TARGET(user, src))
+				return TRUE
 			if(!welder.use_tool(src, user, 3 SECONDS, volume = 25, amount = 1))
-				return
+				return TRUE
 			module = ai_modules[index]
 			if(isnull(module) || ai_modules[module] == MODULE_UNSECURED)
-				return
+				return TRUE
 			if(ai_modules[module] == MODULE_SCREWED)
 				ai_modules[module] = MODULE_WELDED
 			else if(ai_modules[module] == MODULE_WELDED)
@@ -490,10 +505,80 @@
 		if("multitool_module")
 			var/index = clamp(text2num(params["slot"]), 1, length(ai_modules))
 			var/obj/item/ai_module/module = ai_modules[index]
-			if(isnull(module))
-				return
+			if(isnull(module) || DOING_INTERACTION_WITH_TARGET(user, src))
+				return TRUE
 			module.multitool_act(user, user.get_inactive_hand())
 			return TRUE
+		if("unlink_silicon")
+			if(!linked || !is_operational)
+				return TRUE
+			if(!allowed(user))
+				balloon_alert(user, "access denied!")
+				return TRUE
+			unlink_silicon()
+			balloon_alert_to_viewers("unlinked")
+			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
+			return TRUE
+		if("link_silicon")
+			if(linked || !is_operational)
+				return TRUE
+			var/mob/living/silicon/new_bot = find_silicon_by_ref(params["silicon_ref"])
+			if(!new_bot || !can_link_to(new_bot))
+				return TRUE
+			link_silicon(new_bot)
+			balloon_alert_to_viewers("linked to [new_bot.name]")
+			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, TRUE)
+			return TRUE
+		if("link_rack")
+			if(linked || !is_operational)
+				return TRUE
+			var/obj/machinery/ai_law_rack/core/core_rack = find_parent_rack_by_ref(params["rack_ref"])
+			if(!core_rack || core_rack == src) // shouldn't happen
+				return TRUE
+			if(!core_rack.is_operational)
+				balloon_alert(user, "failed to link!")
+				return TRUE
+			core_rack.link_child_law_rack(src)
+			balloon_alert_to_viewers("linked to [core_rack.name]")
+			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, TRUE)
+			return TRUE
+		if("unlink_rack")
+			if(!is_operational)
+				return TRUE
+			var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
+			if(!core_rack) // shouldn't happen
+				return TRUE
+			if(!core_rack.is_operational) // can happen
+				balloon_alert(user, "failed to unlink!")
+				return TRUE
+			core_rack.unlink_child_law_rack(src)
+			balloon_alert_to_viewers("unlinked from [core_rack.name]")
+			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
+			return TRUE
+
+/// When given a ref(), finds a silicon mob it belongs to
+/obj/machinery/ai_law_rack/proc/find_silicon_by_ref(silicon_ref)
+	PRIVATE_PROC(TRUE)
+	for(var/mob/living/silicon/silicon as anything in GLOB.silicon_mobs)
+		if(REF(silicon) == silicon_ref)
+			return silicon
+	return null
+
+/// When given a ref(), finds a core law rack it belongs to
+/obj/machinery/ai_law_rack/proc/find_parent_rack_by_ref(rack_ref)
+	PRIVATE_PROC(TRUE)
+	for(var/obj/machinery/ai_law_rack/core/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+		if(REF(rack) == rack_ref)
+			return rack
+	return null
+
+/// Finds a core law rack this rack is linked to, if any
+/obj/machinery/ai_law_rack/proc/get_parent_rack()
+	PRIVATE_PROC(TRUE)
+	for(var/obj/machinery/ai_law_rack/core/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+		if(src in rack.linked_racks)
+			return rack
+	return null
 
 /**
  * Scrambles the modules on the rack, messing up their laws
@@ -585,9 +670,9 @@
 
 // Used for the station's primary AI
 /obj/machinery/ai_law_rack/core
-	name = "core law rack"
-	desc = "A massive law rack which can hold a core module, many law modules, \
-		and can even be linked to other law racks to add additional slots. \
+	name = "core module rack"
+	desc = "A massive module rack which can hold many modules including a core law module. \
+		It can even be linked to other module racks to add additional slots. \
 		Designed to be used by the station's primary AI and its legion of cyborgs."
 	icon_state = "core_rack"
 	max_integrity = 500
@@ -600,6 +685,8 @@
 /obj/machinery/ai_law_rack/core/Initialize(mapload)
 	. = ..()
 	if(mapload)
+		anchored = TRUE
+		welded = TRUE
 		load_config_law()
 
 /obj/machinery/ai_law_rack/core/Destroy()
@@ -625,6 +712,7 @@
 	LAZYADD(linked_racks, child)
 	RegisterSignal(child, COMSIG_QDELETING, PROC_REF(unlink_child_law_rack))
 	update_lawset()
+	child.AddComponent(/datum/component/gps, "Active Submodule Rack")
 
 /obj/machinery/ai_law_rack/core/proc/unlink_child_law_rack(obj/machinery/ai_law_rack/child)
 	SIGNAL_HANDLER
@@ -633,12 +721,19 @@
 	LAZYREMOVE(linked_racks, child)
 	if(!QDELING(src))
 		update_lawset()
+	qdel(child.GetComponent(/datum/component/gps))
+
+/obj/machinery/ai_law_rack/core/ui_data(mob/user)
+	. = ..()
+	.["linked_racks"] = list()
+	for(var/obj/machinery/ai_law_rack/linked_rack as anything in linked_racks)
+		.["linked_racks"] += linked_rack.name
 
 // Can be linked to a core law rack, and constructed anywhere - allowing traitors to subvert the AI or the crew to counter a subversion
 /obj/machinery/ai_law_rack/small
-	name = "portable law rack"
-	desc = "A smaller law rack. While it can function on its own should the need arise, \
-		it's primarily designed to be paired with a core law rack, providing extra slots for emergency law modifications."
+	name = "portable module rack"
+	desc = "A smaller module rack. While it can function on its own should the need arise, \
+		it's primarily designed to be paired with a core module rack, providing extra slots for emergency law modifications."
 	icon_state = "small_rack"
 	armor_type = /datum/armor/obj_machinery/law_rack/portable
 	max_integrity = 200
@@ -647,9 +742,6 @@
 	max_slot_overlays = 3
 	first_slot_offset = 12
 	has_core_slot = FALSE
-	welded = FALSE
-	anchored = FALSE
-
 
 #undef MODULE_UNSECURED
 #undef MODULE_SCREWED
