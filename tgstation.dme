@@ -1326,7 +1326,6 @@
 #include "code\datums\components\twohanded.dm"
 #include "code\datums\components\udder.dm"
 #include "code\datums\components\unbreakable.dm"
-#include "code\datums\components\unbuckle_on_arrival.dm"
 #include "code\datums\components\unobserved_actor.dm"
 #include "code\datums\components\unusual_effect.dm"
 #include "code\datums\components\uplink.dm"

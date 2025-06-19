@@ -108,5 +108,3 @@
 /// Global signal whenever a camera network broadcast is started/stopped/updated: (camera_net, is_show_active, announcement)
 #define COMSIG_GLOB_NETWORK_BROADCAST_UPDATED "!network_broadcast_updated"
 
-/// Global signal sent when a new player gets on the station via the arrival shuttle
-#define COMSIG_NEW_PLAYER_ARRIVED_ON_STATION "!new_player_arrived_on_station"
