@@ -42,7 +42,6 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
-	RefreshParts()
 	update_appearance(UPDATE_ICON)
 	register_context()
 
