@@ -7,7 +7,52 @@
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 */
 
-//mob traits
+
+// Traits applied to global objects
+
+/// GLOB trait, applied whenever something in the world wants to use the distortion plane
+/// Distortion is an expensive effect, so it's worthwhile to keep it off until we care
+#define TRAIT_DISTORTION_IN_USE(z_layer) "distortion_in_use_#[z_layer]"
+
+/// SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
+#define TRAIT_MARKET_CRASHING "market_crashing"
+
+/// Traits given by station traits
+#define STATION_TRAIT_ASSISTANT_GIMMICKS "station_trait_assistant_gimmicks"
+#define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
+#define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
+#define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
+#define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
+#define STATION_TRAIT_MACHINES_GLITCHED "station_trait_machine_glitch"
+#define STATION_TRAIT_BRIGHT_DAY "station_trait_bright_day"
+#define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
+#define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
+#define STATION_TRAIT_ECONOMY_ALERTS "station_trait_economy_alerts"
+#define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
+#define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
+#define STATION_TRAIT_FORESTED "station_trait_forested"
+#define STATION_TRAIT_HANGOVER "station_trait_hangover"
+#define STATION_TRAIT_HUMAN_AI "station_trait_human_ai"
+#define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
+#define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
+#define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
+#define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
+#define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
+#define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
+#define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
+#define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
+#define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
+#define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
+#define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
+#define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
+#define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
+#define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
+
+// Hud traits
+/// This hud is owned by a client with an open escape menu
+#define TRAIT_ESCAPE_MENU_OPEN "escape_menu_open"
+
+// Mob traits
 /// Forces the user to stay unconscious.
 #define TRAIT_KNOCKEDOUT "knockedout"
 /// Prevents voluntary movement.
@@ -789,9 +834,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///If the crate is immune to the wrong content in manifest error
 #define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error"
 
-///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
-#define TRAIT_MARKET_CRASHING "market_crashing"
-
 // item traits
 #define TRAIT_NODROP "nodrop"
 /// cannot be inserted in a storage.
@@ -1141,37 +1183,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHUUNIBYOU "chuunibyou"
 /// Has splattercasting
 #define TRAIT_SPLATTERCASTER "splattercaster"
-
-///Traits given by station traits
-#define STATION_TRAIT_ASSISTANT_GIMMICKS "station_trait_assistant_gimmicks"
-#define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
-#define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
-#define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
-#define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
-#define STATION_TRAIT_MACHINES_GLITCHED "station_trait_machine_glitch"
-#define STATION_TRAIT_BRIGHT_DAY "station_trait_bright_day"
-#define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
-#define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
-#define STATION_TRAIT_ECONOMY_ALERTS "station_trait_economy_alerts"
-#define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
-#define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
-#define STATION_TRAIT_FORESTED "station_trait_forested"
-#define STATION_TRAIT_HANGOVER "station_trait_hangover"
-#define STATION_TRAIT_HUMAN_AI "station_trait_human_ai"
-#define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
-#define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
-#define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
-#define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
-#define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
-#define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
-#define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
-#define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
-#define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
-#define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
-#define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
-#define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
-#define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
-#define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 
 ///Deathmatch traits
 #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
