@@ -412,3 +412,26 @@
   - qol: '"Spawners Menu" and "Minigames Menu" are back as chat verbs for power users'
   - qol: report-issue is now a verb that can be used in chat to open the issue report
       prompt for power users
+2025-06-19:
+  Sealed101:
+  - bugfix: fixed petrified statues dropping victims into nullspace if they somehow
+      ended up in a jaunt
+  - bugfix: mobs exiting petrification actually get paralyzed for 10 seconds now as
+      intended
+  SmArtKar:
+  - bugfix: Maps with a large amount of Z levels should no longer randomly display
+      space parallax to players with low multi-z culling settings.
+  SyncIt21:
+  - code_imp: stacks error on invalid amounts, removed manual passing of number `1`
+      when creating a single stack in many cases
+  TealSeer:
+  - code_imp: Autochangelog no longer cares if your changelog entry tag has capital
+      letters in it
+  Y0SH1M4S73R:
+  - rscadd: Why would you ever make chocolate pudding at 04:00 station time? Have
+      you lost control of your life?
+  - admin: Adding reagents to a beaker from a chem dispenser adds a hidden fingerprint
+      to the beaker.
+  timothymtorres:
+  - bugfix: Fix water vapor making water tiles and no slip turfs wet
+  - bugfix: Fix admin immersion buttons scaling incorrectly when UI is stretched.
