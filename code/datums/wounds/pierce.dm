@@ -4,6 +4,7 @@
 */
 /datum/wound/pierce
 	undiagnosed_name = "Puncture"
+	threshold_penalty = 5
 
 /datum/wound/pierce/get_self_check_description(self_aware)
 	if(!limb.can_bleed())
@@ -208,7 +209,7 @@
 	clot_rate = 0.03
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
-	threshold_penalty = 20
+	series_threshold_penalty = 20
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
@@ -287,7 +288,7 @@
 	clot_rate = 0.02
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
-	threshold_penalty = 35
+	series_threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
 
@@ -399,7 +400,7 @@
 	gauzed_clot_rate = 0.4
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
-	threshold_penalty = 50
+	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
