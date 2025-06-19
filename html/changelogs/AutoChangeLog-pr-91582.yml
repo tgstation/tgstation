@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - rscadd: "Why would you ever make chocolate pudding at 04:00 station time? Have you lost control of your life?"
+  - admin: "Adding reagents to a beaker from a chem dispenser adds a hidden fingerprint to the beaker."
