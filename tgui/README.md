@@ -32,7 +32,7 @@ translate concepts between old and new tgui, read this
 
 ### Other Documentation
 
-- [Component Reference](docs/component-reference.md) - UI building blocks
+- [Component Reference](https://tgstation.github.io/tgui-core/?path=/docs/components-animatednumber--docs) - UI building blocks
 - [Tgui Core](https://github.com/tgstation/tgui-core) - The component library for tgui.
 - [Using TGUI and Byond API for custom HTML popups](docs/tgui-for-custom-html-popups.md)
 - [Chat Embedded Components](docs/chat-embedded-components.md)

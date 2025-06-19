@@ -222,6 +222,11 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/message_monitor
 
+/obj/item/circuitboard/computer/modular_shield_console
+	name = "Modular Shield Generator Console"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/computer/modular_shield
+
 /obj/item/circuitboard/computer/powermonitor
 	name = "Power Monitor"  //name fixed 250810
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

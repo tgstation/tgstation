@@ -534,3 +534,8 @@
 	if(HAS_TRAIT(owner, TRAIT_SMOKER))
 		description = "Blowing smoke in my face, really?"
 		mood_change = 0
+
+/datum/mood_event/lost_control_of_life
+	description = "I've lost control of my life."
+	mood_change = -5
+	timeout = 5 MINUTES

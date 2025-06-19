@@ -184,11 +184,14 @@
 	return COMPONENT_MINDSHIELD_RESISTED
 
 /datum/antagonist/rev/head/on_removal()
-	if(give_hud)
-		var/mob/living/carbon/C = owner.current
-		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
-		if(S)
-			S.Remove(C)
+	if(!give_hud)
+		return ..()
+	var/mob/living/carbon/C = owner.current
+	if (!C)
+		return ..()
+	var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
+	if(S)
+		S.Remove(C)
 	return ..()
 
 /datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
@@ -310,6 +313,8 @@
 	to_chat(old_owner, span_userdanger("Revolution has been disappointed of your leader traits! You are a regular revolutionary now!"))
 
 /datum/antagonist/rev/farewell()
+	if(!owner.current)
+		return
 	owner.current.balloon_alert_to_viewers("deconverted!")
 	if(ishuman(owner.current))
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
@@ -319,7 +324,7 @@
 		to_chat(owner, span_userdanger("The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you."))
 
 /datum/antagonist/rev/head/farewell()
-	if (deconversion_source == DECONVERTER_STATION_WIN)
+	if (deconversion_source == DECONVERTER_STATION_WIN || !owner.current)
 		return
 	owner.current.balloon_alert_to_viewers("deconverted!")
 	if((ishuman(owner.current)))

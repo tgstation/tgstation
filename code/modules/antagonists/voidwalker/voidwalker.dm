@@ -45,4 +45,4 @@
 	..()
 
 /datum/objective/voidwalker_objective/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD

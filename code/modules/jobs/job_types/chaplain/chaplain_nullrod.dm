@@ -554,7 +554,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
-	bare_wound_bonus = 25
+	exposed_wound_bonus = 25
 	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/armblade/Initialize(mapload)
@@ -795,7 +795,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 12
 	wound_bonus = 10
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -934,6 +934,6 @@
 	var/armor_block = living_target.run_armor_check(affecting, MELEE, armour_penetration = armour_penetration)
 
 	// We got a sneak attack!
-	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
+	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = exposed_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
 	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 50, TRUE)
