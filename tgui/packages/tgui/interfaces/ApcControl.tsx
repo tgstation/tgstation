@@ -1,5 +1,5 @@
-import { sortBy } from 'common/collections';
-import { useState } from 'react';
+import { chain } from 'common/collections';
+import { Dispatch, SetStateAction, useState } from 'react';
 import {
   Box,
   Button,
@@ -236,28 +236,26 @@ function ControlPanel(props: ControlProps) {
 
 type WithIndex = APC & { id: string };
 
-function ApcControlScene(props) {
+function ApcControlScene(props: {
+  sortByState: [string, Dispatch<SetStateAction<string>>];
+}) {
   const { data, act } = useBackend<Data>();
 
   const [sortByField] = props.sortByState;
 
-  const withIndex = data.apcs.map((apc, idx) => ({
-    ...apc,
-    id: apc.name + idx,
-  }));
-
-  let sorted: WithIndex[] = [];
-  if (sortByField === 'name') {
-    sorted = sortBy(withIndex, (apc) => apc.name);
-  } else if (sortByField === 'charge') {
-    sorted = sortBy(withIndex, (apc) => -apc.charge);
-  } else if (sortByField === 'draw') {
-    sorted = sortBy(
-      withIndex,
-      (apc) => -powerRank(apc.load),
-      (apc) => -parseFloat(apc.load),
+  const apcs = chain(data.apcs)
+    .map<WithIndex>((apc, idx) => ({
+      ...apc,
+      id: apc.name + idx,
+    }))
+    .if(sortByField === 'name', (apcs) => apcs.sortBy((apc) => apc.name))
+    .if(sortByField === 'charge', (apcs) => apcs.sortBy((apc) => apc.charge))
+    .if(sortByField === 'draw', (apcs) =>
+      apcs.sortBy(
+        (apc) => -powerRank(apc.load),
+        (apc) => -parseFloat(apc.load),
+      ),
     );
-  }
 
   return (
     <Table>
@@ -272,7 +270,7 @@ function ApcControlScene(props) {
         <Table.Cell collapsing>Lgt</Table.Cell>
         <Table.Cell collapsing>Env</Table.Cell>
       </Table.Row>
-      {sorted.map((apc, i) => (
+      {apcs.map((apc, i) => (
         <Table.Row key={apc.id} className="candystripe">
           <Table.Cell>
             <Button

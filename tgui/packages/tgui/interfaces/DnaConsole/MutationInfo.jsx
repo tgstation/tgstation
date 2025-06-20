@@ -1,4 +1,4 @@
-import { filter, uniqBy } from 'common/collections';
+import { chain } from 'common/collections';
 import {
   Box,
   Button,
@@ -121,10 +121,10 @@ export const MutationInfo = (props) => {
     isSameMutation(x, mutation),
   );
   const savedToDisk = diskMutations.find((x) => isSameMutation(x, mutation));
-  const combinedMutations = filter(
-    uniqBy([...diskMutations, ...mutationStorage], (mutation) => mutation.Name),
-    (x) => x.Name !== mutation.Name,
-  );
+  const combinedMutations = chain([...diskMutations, ...mutationStorage])
+    .uniqBy((mutation) => mutation.Name)
+    .filter((x) => x.Name !== mutation.Name)
+    .unwrap();
   return (
     <>
       <LabeledList>
