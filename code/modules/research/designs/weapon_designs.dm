@@ -108,7 +108,7 @@
 	id = "c38_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38
@@ -123,7 +123,7 @@
 	id = "c38_trac_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
@@ -140,7 +140,7 @@
 	id = "c38_hotshot_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
@@ -156,7 +156,7 @@
 	id = "c38_iceblox_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
@@ -172,7 +172,7 @@
 	id = "c38_rubber_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/match/bouncy
@@ -187,7 +187,7 @@
 	id = "c38_true_strike_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
@@ -203,7 +203,7 @@
 	id = "c38_hellfire_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
