@@ -13,11 +13,11 @@
 @include meta.load-css('~tgui/styles/reset.scss');
 
 // Atomic classes
-@include meta.load-css('~tgui/styles/atomic/candystripe.scss');
-@include meta.load-css('~tgui/styles/atomic/color.scss');
-@include meta.load-css('~tgui/styles/atomic/debug-layout.scss');
-@include meta.load-css('~tgui/styles/atomic/outline.scss');
-@include meta.load-css('~tgui/styles/atomic/text.scss');
+@include meta.load-css('~tgui-core/styles/atomic/candystripe.scss');
+@include meta.load-css('~tgui-core/styles/atomic/color.scss');
+@include meta.load-css('~tgui-core/styles/atomic/debug-layout.scss');
+@include meta.load-css('~tgui-core/styles/atomic/outline.scss');
+@include meta.load-css('~tgui-core/styles/atomic/text.scss');
 
 // Components specific to tgui-panel
 @include meta.load-css('./components/Chat.scss');

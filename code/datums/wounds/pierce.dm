@@ -4,6 +4,7 @@
 */
 /datum/wound/pierce
 	undiagnosed_name = "Puncture"
+	threshold_penalty = 5
 
 /datum/wound/pierce/get_self_check_description(self_aware)
 	if(!limb.can_bleed())
@@ -208,7 +209,7 @@
 	clot_rate = 0.03
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
-	threshold_penalty = 20
+	series_threshold_penalty = 20
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
@@ -231,6 +232,23 @@
 	if (isprojectile(damage_source))
 		return 0
 	return weight
+
+/datum/wound/pierce/bleed/moderate/needle_fail //for blood testamajig
+	name = "Pinprick Pierce"
+	desc = "Patient's skin has been deeply pierced, causing mild bleeding."
+	treat_text_short = "Apply bandaging or suturing."
+	examine_desc = "has a small red pinprick, gently bleeding"
+	initial_flow = 0.5 //very minor, mostly there as fluff and "dont do that idiot" reminder
+	gauzed_clot_rate = 0.1
+	clot_rate = 0.03 // will close quickly on its own
+	internal_bleeding_chance = 0
+	internal_bleeding_coefficient = 1
+	threshold_penalty = 5
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/pinprick
+	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/needle_fail
+	can_be_randomly_generated = FALSE
+	abstract = FALSE
 
 /datum/wound/pierce/bleed/moderate/projectile
 	name = "Minor Skin Penetration"
@@ -270,7 +288,7 @@
 	clot_rate = 0.02
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
-	threshold_penalty = 35
+	series_threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
 
@@ -349,6 +367,24 @@
 		return FALSE
 	return ..()
 
+/datum/wound/pierce/bleed/severe/magicalearpain //what happens if you try to listen to the heartbeat of a corrupt heart while not a heretic
+	name = "Bleeding Ears"
+	desc = "Patient's ears are bleeding heavily as blood seeps through the inner flesh of the ear through some unknown means."
+	examine_desc = "is covered in blood, black-purple fluid flowing from its ears"
+	occur_text = "is soaked as two spurts of black liquid spray from its ears"
+	internal_bleeding_chance = 0 // just your ears
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/magicalearpain
+	wound_path_to_generate = /datum/wound/pierce/bleed/severe/magicalearpain
+	viable_zones = list(BODY_ZONE_HEAD)
+	can_be_randomly_generated = FALSE
+
+/datum/wound/pierce/bleed/severe/magicalearpain/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing)
+	var/obj/item/organ/ears/ears = locate() in limb
+	if (!istype(ears))
+		return FALSE
+	. = ..()
+
 /datum/wound/pierce/bleed/critical
 	name = "Ruptured Cavity"
 	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
@@ -364,7 +400,7 @@
 	gauzed_clot_rate = 0.4
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
-	threshold_penalty = 50
+	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
