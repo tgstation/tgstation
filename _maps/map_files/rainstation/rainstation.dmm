@@ -25014,6 +25014,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "bFR" = (
@@ -47882,6 +47883,16 @@
 "mzQ" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/gravity_generator)
+"mAp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/science/explab)
 "mAs" = (
 /obj/structure/table,
 /obj/effect/landmark/start/hangover,
@@ -48035,6 +48046,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "mJt" = (
@@ -49088,6 +49100,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple/diagonal_edge,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white/diagonal,
 /area/station/science/lab)
 "nGR" = (
@@ -56154,6 +56167,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
+"tzP" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/white/textured,
+/area/station/science/research)
 "tAB" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -104607,7 +104624,7 @@ boL
 bsQ
 bsR
 box
-bWr
+tzP
 gMF
 byf
 bzw
@@ -107972,7 +107989,7 @@ uSh
 dIG
 uCq
 uCq
-uCq
+mAp
 xeP
 itG
 igY
