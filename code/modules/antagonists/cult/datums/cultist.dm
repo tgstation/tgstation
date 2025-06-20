@@ -39,6 +39,9 @@
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color=COLOR_CULT_RED)
 
 /datum/antagonist/cult/on_removal()
+	if (!owner.current)
+		return ..()
+
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
 		to_chat(owner.current, span_userdanger("An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant."))
@@ -238,7 +241,7 @@
 /datum/antagonist/cult/proc/deathrattle(datum/source)
 	SIGNAL_HANDLER
 
-	if(owner.current.stat != DEAD)
+	if(owner.current?.stat != DEAD)
 		return
 	if(!QDELETED(GLOB.cult_narsie))
 		return

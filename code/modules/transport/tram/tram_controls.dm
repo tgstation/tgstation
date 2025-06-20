@@ -183,7 +183,7 @@
 
 	update_appearance()
 
-/obj/machinery/computer/tram_controls/on_construction(mob/user)
+/obj/machinery/computer/tram_controls/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
 	split_mode = my_circuit.split_mode

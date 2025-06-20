@@ -14,7 +14,7 @@
 		control_tracker = B
 		break
 
-	if(!data_tracker)
+	if(!data_tracker && !user.can_dominate_mechs)
 		to_chat(user, span_warning("You cannot interface this exosuit without tracking beacons installed."))
 		return
 

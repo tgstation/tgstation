@@ -1,0 +1,5 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - qol: "With Nanotrasen's brand new Auto-Seats™, late crew members will now automatically unbuckle from their seats when the arrival shuttle arrives at the destination!"
+  - bugfix: "Leaving your seat too early on a shuttle with a knockdown force will now properly immobilize and knockdown you as intended."

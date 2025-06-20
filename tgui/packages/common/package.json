@@ -1,8 +1,5 @@
 {
-	"private": true,
 	"name": "common",
 	"version": "4.3.1",
-	"devDependencies": {
-		"vitest": "^3.1.1"
-	}
+	"private": true
 }

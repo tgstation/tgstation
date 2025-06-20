@@ -48,8 +48,8 @@
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
-	owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
-	return ..()
+	if (owner_mob)
+		owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
 
 /datum/team/pirate
 	name = "\improper Pirate crew"

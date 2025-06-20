@@ -125,7 +125,7 @@
 		def_zone = def_zone,
 		blocked = min(ARMOR_MAX_BLOCK, armor_check),  //cap damage reduction at 90%
 		wound_bonus = proj.wound_bonus,
-		bare_wound_bonus = proj.bare_wound_bonus,
+		exposed_wound_bonus = proj.exposed_wound_bonus,
 		sharpness = proj.sharpness,
 		attack_direction = get_dir(proj.starting, src),
 		attacking_item = proj,
@@ -219,7 +219,7 @@
 		return ..()
 
 	var/obj/item/thrown_item = AM
-	if(throwingdatum.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
+	if(throwingdatum?.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
 		if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
 			hitpush = FALSE
 			skipcatch = TRUE
@@ -235,13 +235,13 @@
 		return SUCCESSFUL_BLOCK
 
 	if(nosell_hit)
-		log_hit_combat(throwingdatum.get_thrower(), thrown_item)
+		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return ..()
 
 	visible_message(span_danger("[src] is hit by [thrown_item]!"),
 		span_userdanger("You're hit by [thrown_item]!"))
 	if(!thrown_item.throwforce)
-		log_hit_combat(throwingdatum.get_thrower(), thrown_item)
+		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return
 
 	var/armor = run_armor_check(
@@ -255,7 +255,7 @@
 		thrown_item.weak_against_armour,
 	)
 	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND), attacking_item = thrown_item)
-	log_hit_combat(throwingdatum.get_thrower(), thrown_item)
+	log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
@@ -437,7 +437,7 @@
 		def_zone = user.zone_selected,
 		blocked = armor_block,
 		wound_bonus = user.wound_bonus,
-		bare_wound_bonus = user.bare_wound_bonus,
+		exposed_wound_bonus = user.exposed_wound_bonus,
 		sharpness = user.sharpness,
 		attack_direction = get_dir(user, src),
 	)

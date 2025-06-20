@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	def_zone,
 	blocked,
 	wound_bonus,
-	bare_wound_bonus,
+	exposed_wound_bonus,
 	sharpness,
 	attack_direction,
 	attacking_item,
@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	// Track being hit by a mob throwing a stick
 	if(!isitem(throwingdatum.thrownthing))
 		return
-	var/thrown_by = throwingdatum.get_thrower()
+	var/thrown_by = throwingdatum?.get_thrower()
 	if(ismob(thrown_by))
 		last_attacker = WEAKREF(thrown_by)
 

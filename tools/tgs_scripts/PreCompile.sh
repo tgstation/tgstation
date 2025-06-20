@@ -32,7 +32,7 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --re
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
-# 
+#
 cd "$original_dir"
 # update dreamluau
 if [ ! -d "dreamluau" ]; then
@@ -53,7 +53,10 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --re
 mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 cd ..
 
+# Get unzip
+apt-get install -y unzip
+
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
-env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 CBT_BUILD_MODE="TGS" tools/bootstrap/node tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$original_dir" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.js

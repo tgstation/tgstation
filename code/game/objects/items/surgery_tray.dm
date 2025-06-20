@@ -190,10 +190,10 @@
 	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, \
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
 	starting_items = list(
-		/obj/item/blood_filter,
-		/obj/item/bonesetter,
+		/obj/item/blood_filter/cruel,
+		/obj/item/bonesetter/cruel,
 		/obj/item/cautery/cruel,
-		/obj/item/circular_saw,
+		/obj/item/circular_saw/cruel,
 		/obj/item/clothing/mask/surgical,
 		/obj/item/hemostat/cruel,
 		/obj/item/razor/surgery,
@@ -202,7 +202,7 @@
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/stack/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
-		/obj/item/surgicaldrill,
+		/obj/item/surgicaldrill/cruel,
 	)
 
 /obj/item/surgery_tray/full/morgue/deployed

@@ -69,7 +69,7 @@
 	update_static_data(user)
 	return TRUE
 
-/obj/machinery/computer/cargo/on_construction(mob/user)
+/obj/machinery/computer/cargo/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	circuit.configure_machine(src)
 
@@ -95,6 +95,7 @@
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	data["can_send"] = can_send
 	data["can_approve_requests"] = can_approve_requests
+	data["requestonly"] = requestonly
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message

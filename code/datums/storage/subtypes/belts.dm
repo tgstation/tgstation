@@ -72,6 +72,8 @@
 		/obj/item/wrench/medical,
 		/obj/item/knife/ritual,
 		/obj/item/flesh_shears,
+		/obj/item/blood_scanner,
+		/obj/item/reflexhammer,
 	))
 
 ///Security belt

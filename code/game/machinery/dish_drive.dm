@@ -39,10 +39,6 @@
 
 	COOLDOWN_DECLARE(time_since_dishes)
 
-/obj/machinery/dish_drive/Initialize(mapload)
-	. = ..()
-	RefreshParts()
-
 /obj/machinery/dish_drive/examine(mob/user)
 	. = ..()
 	if(user.Adjacent(src))

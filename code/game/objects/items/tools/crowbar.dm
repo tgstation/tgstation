@@ -217,7 +217,7 @@
 	toolspeed = 1.25
 	armor_type = /datum/armor/crowbar_mechremoval
 	resistance_flags = FIRE_PROOF
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	wound_bonus = 10
 
 /datum/armor/crowbar_mechremoval

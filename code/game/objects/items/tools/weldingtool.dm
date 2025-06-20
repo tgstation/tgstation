@@ -29,7 +29,7 @@
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 1
 	wound_bonus = 10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.3)
 	/// Whether the welding tool is on or off.
 	var/welding = FALSE

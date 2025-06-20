@@ -8,7 +8,7 @@
 	force = 12
 	sharpness = SHARP_POINTY
 	wound_bonus = -10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	armour_penetration = 6
 	demolition_mod = 1.2
 	throwforce = 11
@@ -114,7 +114,7 @@
 	force = 19
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 12
 	block_chance = 33
 	throwforce = 7
@@ -188,7 +188,7 @@
 	block_chance *= multiplier
 	armour_penetration *= multiplier
 	wound_bonus *= multiplier
-	bare_wound_bonus *= multiplier
+	exposed_wound_bonus *= multiplier
 
 /obj/item/fish/dolphish/do_fish_process(seconds_per_tick)
 	. = ..()
@@ -226,7 +226,7 @@
 		if(0)
 			// No check, we always want sharky to bite jerky on 0
 			moc.visible_message(span_bolddanger("[src] bites directly into [moc] and squirms away from [moc.p_their()] grasp!"), span_userdanger("[src] sinks its fangs into you!!"))
-			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
+			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
 			forceMove(moc.drop_location())
 			moc.painful_scream()
 			patience = max_patience
@@ -258,7 +258,7 @@
 		span_warning("You try to pet [src], but it sinks its fangs into your hand!"),
 		vision_distance = DEFAULT_MESSAGE_RANGE - 3,
 		)
-	user.apply_damage(force, BRUTE, user.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
+	user.apply_damage(force, BRUTE, user.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
 	if(!in_aquarium)
 		forceMove(user.drop_location())
 	user.painful_scream()

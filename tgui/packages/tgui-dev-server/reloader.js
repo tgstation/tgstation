@@ -15,6 +15,9 @@ import { regQuery } from './winreg.js';
 
 const logger = createLogger('reloader');
 
+// Basic glob pattern for bundle files
+const bundleGlob = '*.{bundle,chunk,hot-update}.*';
+
 const HOME = os.homedir();
 const SEARCH_LOCATIONS = [
   // Custom location
@@ -73,7 +76,7 @@ export async function reloadByondCache(bundleDir) {
     return;
   }
   // Find tmp folders in cache
-  const cacheDirs = resolveGlob(cacheRoot, './tmp*');
+  const cacheDirs = await resolveGlob(cacheRoot, 'tmp*');
   if (cacheDirs.length === 0) {
     logger.log('found no tmp folder in cache');
     return;
@@ -85,16 +88,10 @@ export async function reloadByondCache(bundleDir) {
 
   const dssPromise = DreamSeeker.getInstancesByPids(pids);
   // Copy assets
-  const assets = await resolveGlob(
-    bundleDir,
-    './*.+(bundle|chunk|hot-update).*',
-  );
+  const assets = await resolveGlob(bundleDir, bundleGlob);
   for (let cacheDir of cacheDirs) {
     // Clear garbage
-    const garbage = await resolveGlob(
-      cacheDir,
-      './*.+(bundle|chunk|hot-update).*',
-    );
+    const garbage = await resolveGlob(cacheDir, bundleGlob);
     try {
       // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515-516.
       fs.closeSync(fs.openSync(cacheDir + '/dummy.htm', 'w'));

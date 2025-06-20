@@ -112,7 +112,8 @@
 			if(location?.freeze_turf())
 				consumed = MOLES_GAS_VISIBLE
 		if(WATER_VAPOR_DEPOSITION_POINT to WATER_VAPOR_CONDENSATION_POINT)
-			location.water_vapor_gas_act()
+			if(!isgroundlessturf(location) && !isnoslipturf(location))
+				location.water_vapor_gas_act()
 			consumed = MOLES_GAS_VISIBLE
 
 	if(consumed)

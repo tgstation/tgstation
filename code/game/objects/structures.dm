@@ -74,7 +74,7 @@
 /// For when a mob comes flying through the window, smash it and damage the mob
 /obj/structure/proc/smash_and_injure(mob/living/flying_mob, atom/oldloc, direction)
 	flying_mob.balloon_alert_to_viewers("smashed through!")
-	flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(src, oldloc))
+	flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, exposed_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(src, oldloc))
 	new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
 	deconstruct(disassembled = FALSE)
 

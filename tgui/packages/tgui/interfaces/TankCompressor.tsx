@@ -175,7 +175,7 @@ const TankCompressorControls = (props) => {
                 maxValue={maxTransfer}
                 step={1}
                 stepPixelSize={8}
-                onDrag={(e, value) =>
+                onChange={(e, value) =>
                   act('change_rate', {
                     target: value,
                   })

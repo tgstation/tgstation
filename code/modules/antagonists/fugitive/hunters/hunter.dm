@@ -79,7 +79,6 @@
 /datum/antagonist/fugitive_hunter/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
 	owner_mob.remove_language(/datum/language/spinwarder, source = LANGUAGE_BOUNTYHUNTER)
-	return ..()
 
 /datum/team/fugitive_hunters
 	var/backstory = "error"

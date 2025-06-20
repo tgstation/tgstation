@@ -166,7 +166,7 @@ export const ChemSeparator = (props) => {
               step={1}
               stepPixelSize={10}
               value={knob}
-              onDrag={(_e, value) =>
+              onChange={(_e, value) =>
                 act('knob', {
                   amount: value,
                 })

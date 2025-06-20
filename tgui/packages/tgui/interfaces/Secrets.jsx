@@ -576,7 +576,7 @@ const FunForYouTab = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Stack>
-          <Stack.Item grow>
+          <Stack.Item>
             <NoticeBox danger width={19.6} mb={0}>
               <Button
                 color="red"
@@ -587,7 +587,7 @@ const FunForYouTab = (props) => {
               />
             </NoticeBox>
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item>
             <NoticeBox info width={19.6} mb={0}>
               <Button
                 color="blue"

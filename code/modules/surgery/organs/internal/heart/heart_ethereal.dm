@@ -2,6 +2,7 @@
 	name = "crystal core"
 	icon_state = "ethereal_heart-on"
 	base_icon_state = "ethereal_heart"
+	beat_noise = "a pulsing crackle"
 	visual = TRUE //This is used by the ethereal species for color
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 

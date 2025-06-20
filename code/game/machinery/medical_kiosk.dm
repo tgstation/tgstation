@@ -23,9 +23,7 @@
 	payment_department = ACCOUNT_MED
 	var/obj/item/scanner_wand
 	/// How much it costs to use the kiosk by default.
-	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
-	/// How much it currently costs to use the kiosk.
-	var/active_price = 15           //Change by using a multitool on the board.
+	var/default_price = 15
 	/// Makes the TGUI display gibberish and/or incorrect/erratic information.
 	var/pandemonium = FALSE //AKA: Emag mode.
 
@@ -42,7 +40,7 @@
 
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
-	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
+	AddComponent(/datum/component/payment, get_cost(), SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	register_context()
 	scanner_wand = new/obj/item/scanner_wand(src)
 
@@ -78,7 +76,6 @@
 		use_energy(active_power_usage)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
-		RefreshParts()
 		return
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
@@ -87,7 +84,6 @@
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
-	RefreshParts()
 	return
 
 /obj/machinery/medical_kiosk/proc/clearScans() //Called it enough times to be it's own proc
@@ -110,12 +106,13 @@
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/medical_kiosk/RefreshParts()
-	. = ..()
+///Returns the active cost of the board
+/obj/machinery/medical_kiosk/proc/get_cost()
+	PRIVATE_PROC(TRUE)
+
 	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
-	if(board)
-		active_price = board.custom_cost
-	return
+
+	return board.custom_cost
 
 /obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", O))
@@ -212,7 +209,6 @@
 		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
 		icon_state = "[base_icon_state]_active"
-		RefreshParts()
 		var/mob/living/carbon/human/paying = user
 		paying_ref = WEAKREF(paying)
 
@@ -356,7 +352,7 @@
 	else if(user.has_status_effect(/datum/status_effect/hallucination))
 		chaos_modifier = 0.3
 
-	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
+	data["kiosk_cost"] = get_cost() + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
 	data["patient_health"] = round(((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100, 0.001)
 	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001) //To break this down for easy reading, all health values are rounded to the .001 place

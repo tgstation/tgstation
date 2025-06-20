@@ -94,7 +94,7 @@ const ComboKnob = (props: ComboProps) => {
         maxValue={maxValue}
         step={step}
         stepPixelSize={1}
-        onDrag={(_, v) => act(parameter, { [parameter]: v })}
+        onChange={(_, v) => act(parameter, { [parameter]: v })}
         {...rest}
       />
       <Button

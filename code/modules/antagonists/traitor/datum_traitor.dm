@@ -204,7 +204,6 @@
 		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
-	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
 	handle_clown_mutation(datum_owner, removing = FALSE)
 

@@ -261,7 +261,7 @@
 	desc = "Fish DNA infused on what once was a normal pair of lungs that now require spacemen to breathe water vapor, or keep themselves covered in water."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "gills"
-
+	breath_noise = "the dribbling of water"
 	organ_traits = list(TRAIT_NODROWN)
 	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
@@ -306,7 +306,7 @@
 
 /// Requires the spaceman to have either water vapor or be wet.
 /obj/item/organ/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
-	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
+	var/need_to_breathe = !HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE) && !HAS_TRAIT(breather, TRAIT_IS_WET)
 	if(water_pp < safe_water_level && need_to_breathe)
 		on_low_water(breather, breath, water_pp)
 		return

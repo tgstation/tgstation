@@ -16,7 +16,9 @@
 	table_type = /obj/structure/table/greyscale
 	pickup_sound = 'sound/items/handling/materials/metal_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
-	var/sheettype = null //this is used for girders in the creation of walls/false walls
+	sound_vary = TRUE
+	/// this is used for girders in the creation of walls/false walls
+	var/sheettype = null
 	///If true, this is worth points in the gulag labour stacker
 	var/gulag_valid = FALSE
 	///Set to true if this is vended from a material storage
@@ -25,8 +27,6 @@
 	var/walltype
 	/// whether this sheet can be sniffed by the material sniffer
 	var/sniffable = FALSE
-	/// this makes pickup and drop sounds vary
-	sound_vary = TRUE
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()

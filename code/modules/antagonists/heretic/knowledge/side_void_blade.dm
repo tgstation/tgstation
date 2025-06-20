@@ -112,7 +112,7 @@
 	hitsound = SFX_SHATTER
 	force = 16
 	wound_bonus = -30
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	demolition_mod = 1.5
 	sharpness = SHARP_EDGED
 

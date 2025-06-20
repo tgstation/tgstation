@@ -323,6 +323,19 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
 		restock(installed_refill)
 
+/obj/machinery/vending/on_construction(mob/user, from_flatpack = FALSE)
+	if (!from_flatpack)
+		return
+	// When built from a flatpack, empty our canister upon construction
+	for(var/obj/item/vending_refill/installed_refill in component_parts)
+		for (var/item_sold in installed_refill.products)
+			installed_refill.products[item_sold] = 0
+		for (var/item_sold in installed_refill.contraband)
+			installed_refill.contraband[item_sold] = 0
+		for (var/item_sold in installed_refill.premium)
+			installed_refill.premium[item_sold] = 0
+	RefreshParts()
+
 /obj/machinery/vending/on_deconstruction(disassembled)
 	if(refill_canister)
 		return ..()

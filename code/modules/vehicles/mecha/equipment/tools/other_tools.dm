@@ -385,7 +385,7 @@
 
 ///Introduces the actual fuel type to be used, as well as the starting amount of said fuel
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 1)
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 

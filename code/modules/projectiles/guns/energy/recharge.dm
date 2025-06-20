@@ -168,5 +168,5 @@
 	// ...you reeeeeally just shoot them, but in case you can't/won't
 	. = ..()
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
-	simulated_hit.firer = throwingdatum.get_thrower()
+	simulated_hit.firer = throwingdatum?.get_thrower()
 	simulated_hit.on_hit(hit_atom)

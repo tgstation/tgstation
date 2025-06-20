@@ -201,7 +201,7 @@
 	linked_venue = null
 	return ..()
 
-/obj/machinery/restaurant_portal/on_construction(mob/user)
+/obj/machinery/restaurant_portal/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	circuit.configure_machine(src)
 

@@ -57,7 +57,7 @@
 		GLOB.navbeacons["[new_turf?.z]"] += src
 	return ..()
 
-/obj/machinery/navbeacon/on_construction(mob/user)
+/obj/machinery/navbeacon/on_construction(mob/user, from_flatpack = FALSE)
 	var/turf/our_turf = loc
 	if(!isfloorturf(our_turf))
 		return

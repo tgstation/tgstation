@@ -543,7 +543,7 @@
 		PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 	return pipe_overlay
 
-/obj/machinery/atmospherics/on_construction(mob/user, obj_color, set_layer = PIPING_LAYER_DEFAULT)
+/obj/machinery/atmospherics/on_construction(mob/user, obj_color, set_layer = PIPING_LAYER_DEFAULT, from_flatpack = FALSE)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		set_pipe_color(obj_color)

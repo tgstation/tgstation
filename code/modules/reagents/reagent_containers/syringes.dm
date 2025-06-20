@@ -192,7 +192,7 @@
 		"embedding" = embed_data,
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
-		"bare_wound_bonus" = bare_wound_bonus,
+		"exposed_wound_bonus" = exposed_wound_bonus,
 		"demolition_mod" = demolition_mod,
 	)
 

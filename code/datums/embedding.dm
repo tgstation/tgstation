@@ -142,7 +142,7 @@
 	if (pierce_hit)
 		return
 
-	if (blocked || !can_embed(source, hit))
+	if (blocked >= 100 || !can_embed(source, hit))
 		failed_embed(hit, hit_zone)
 		return
 
@@ -253,7 +253,7 @@
 		def_zone = owner_limb.body_zone,
 		blocked = armor,
 		wound_bonus = parent.wound_bonus,
-		bare_wound_bonus = parent.bare_wound_bonus,
+		exposed_wound_bonus = parent.exposed_wound_bonus,
 		sharpness = parent.get_sharpness(),
 		attacking_item = parent,
 	)

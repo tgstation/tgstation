@@ -1239,7 +1239,6 @@
 		if (breath_mask != tool)
 			breath_mask = tool
 			RegisterSignal(breath_mask, COMSIG_MOVABLE_MOVED, PROC_REF(on_mask_moved))
-			RegisterSignal(breath_mask, COMSIG_ITEM_DROPPED, PROC_REF(check_mask_range))
 
 		balloon_alert(user, "mask attached")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)

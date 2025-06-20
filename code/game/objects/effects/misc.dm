@@ -87,3 +87,7 @@
 /obj/effect/abstract/marker/intercom
 	name = "intercom range marker"
 	color = COLOR_YELLOW
+
+/obj/effect/abstract/marker/powernet
+	name = "powernet run marker"
+	var/powernet_owner

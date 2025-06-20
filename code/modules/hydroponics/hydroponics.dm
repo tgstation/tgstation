@@ -1047,9 +1047,6 @@
 				set_seed(null)
 			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
 			return
-	else if(istype(O, /obj/item/storage/part_replacer))
-		RefreshParts()
-		return
 	else if(istype(O, /obj/item/gun/energy/floragun))
 		var/obj/item/gun/energy/floragun/flowergun = O
 		if(flowergun.cell.charge < flowergun.cell.maxcharge)

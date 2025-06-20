@@ -7,7 +7,7 @@
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from suboptimal reactions. Causes mild liver damage"
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
-	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT | REAGENT_CAN_BE_SYNTHESIZED //impure can be synthed, and is one of the only ways to get almost pure impure
+	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_CAN_BE_SYNTHESIZED //impure can be synthed, and is one of the only ways to get almost pure impure
 	ph = 3
 	inverse_chem = null
 	inverse_chem_val = 0
@@ -32,7 +32,7 @@
 	name = "Toxic Monomers"
 	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
 	ph = 2
-	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //Inverse generally cannot be synthed - they're difficult to get
+	chemical_flags = REAGENT_SNEAKYNAME //Inverse generally cannot be synthed - they're difficult to get
 	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
 	inverse_chem = null
 	///how much this reagent does for tox damage too
@@ -64,7 +64,7 @@
 	name = "Eigenswap"
 	description = "This reagent is known to swap the handedness of a patient."
 	ph = 3.3
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	tox_damage = 0
 
 /datum/reagent/inverse/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
@@ -94,7 +94,7 @@
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
-	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT | REAGENT_UNAFFECTED_BY_METABOLISM
+	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_UNAFFECTED_BY_METABOLISM
 	metabolization_rate = 1 * REM
 
 /datum/reagent/inverse/cryostylane/on_transfer(atom/transfered_thing, methods, trans_volume)

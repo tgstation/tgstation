@@ -102,8 +102,7 @@
 
 /obj/machinery/teleport/hub/syndicate/Initialize(mapload)
 	. = ..()
-	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
-	LAZYADD(component_parts, super_bin)
+	LAZYADD(component_parts, GLOB.stock_part_datums[/datum/stock_part/matter_bin/tier3])
 	RefreshParts()
 
 /obj/machinery/teleport/station

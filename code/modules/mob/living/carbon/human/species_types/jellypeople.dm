@@ -112,7 +112,7 @@
 	human.hair_color = COLOR_PINK
 	human.update_body(is_creating = TRUE)
 
-// Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
+// Unique handling for slime blood here, it's got some unique properties that warrant a more detailed desc.
 // They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
 /datum/species/jelly/create_pref_blood_perks()
 	var/list/to_add = list()

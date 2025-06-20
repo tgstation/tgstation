@@ -5,7 +5,7 @@
 	armour_penetration = 30
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 
 /obj/projectile/bullet/shotgun_slug/milspec
 	name = "12g shotgun milspec slug"
@@ -83,7 +83,7 @@
 	name = "buckshot pellet"
 	damage = 5
 	wound_bonus = 5
-	bare_wound_bonus = 5
+	exposed_wound_bonus = 5
 	speed = 1.1
 	wound_falloff_tile = -0.5 //We would very much like this to cause wounds despite the low damage, so the drop off is relatively slow
 	sharpness = SHARP_EDGED
@@ -95,7 +95,7 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot/old
 	damage_falloff_tile = -1
 	wound_bonus = -100
-	bare_wound_bonus = -100
+	exposed_wound_bonus = -100
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/milspec
 	name = "milspec buckshot pellet"
@@ -135,7 +135,7 @@
 	icon_state = "flechette"
 	damage = 2
 	wound_bonus = 5
-	bare_wound_bonus = 5
+	exposed_wound_bonus = 5
 	armour_penetration = 30
 	damage_falloff_tile = -0.2
 	wound_falloff_tile = -0.5
@@ -159,7 +159,7 @@
 	icon_state = "flechette_plastic"
 	damage = 1 // good god its awful
 	wound_bonus = 20 // but it WILL mulch you if you don't have armor.
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 0
 	damage_falloff_tile = -0.1
 	wound_falloff_tile = -2

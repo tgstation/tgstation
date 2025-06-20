@@ -173,6 +173,10 @@
 	//is the toolset upgraded or not
 	var/upgraded = FALSE
 
+/obj/item/borg/cyborg_omnitool/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/item/borg/cyborg_omnitool/Destroy(force)
 	for(var/obj/item/tool_path as anything in atoms)
 		var/obj/item/tool = atoms[tool_path]
@@ -181,6 +185,15 @@
 	atoms.Cut()
 
 	return ..()
+
+/obj/item/borg/cyborg_omnitool/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!issilicon(user))
+		return
+	var/mob/living/silicon/robot/as_cyborg = user
+	if (!(src in as_cyborg.held_items))
+		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Sets the new internal tool to be used
@@ -248,6 +261,15 @@
 	set_internal_tool(tool_map[internal_tool_name])
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
+
+/obj/item/borg/cyborg_omnitool/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !iscyborg(usr))
+		return ..()
+	var/mob/living/silicon/robot/user = usr
+	if (!(src in user.held_items))
+		attack_self(user)
+	return ..()
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)

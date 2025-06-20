@@ -14,6 +14,19 @@ assert.equal(basicChangelog.changes.length, 1);
 assert.equal(basicChangelog.changes[0].type.changelogKey, "rscadd");
 assert.equal(basicChangelog.changes[0].description, "Adds new stuff");
 
+// Case-insensitivity test
+const mixedCaseChangelog = parseChangelog(`
+    My cool PR!
+    :cl: DenverCoder9
+    Add: Adds new stuff
+    /:cl:
+`);
+
+assert.equal(mixedCaseChangelog.author, "DenverCoder9");
+assert.equal(mixedCaseChangelog.changes.length, 1);
+assert.equal(mixedCaseChangelog.changes[0].type.changelogKey, "rscadd");
+assert.equal(mixedCaseChangelog.changes[0].description, "Adds new stuff");
+
 // Multi-line test
 const multiLineChangelog = parseChangelog(`
 	My cool PR!

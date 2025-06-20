@@ -44,7 +44,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	wound_bonus = 10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	/*What state is our scythe in?
 
 	If it is SCYTHE_WEAK, it will harm our reaper on being sheathed.

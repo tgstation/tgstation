@@ -459,11 +459,11 @@
 	/// Beyond a threshold we change to a bloodier icon state
 	var/very_bloody = FALSE
 
-/obj/effect/decal/cleanable/blood/update_desc(updates)
+/obj/effect/decal/cleanable/blood/trail/update_desc(updates)
 	. = ..()
 	desc = "A [dried ? "dried " : ""]trail of [get_blood_string()]."
 
-/obj/effect/decal/cleanable/blood/lazy_init_reagents()
+/obj/effect/decal/cleanable/blood/trail/lazy_init_reagents()
 	if(!istype(loc, /obj/effect/decal/cleanable/blood/trail_holder))
 		return ..()
 

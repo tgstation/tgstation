@@ -39,7 +39,7 @@ function parseChangelogBody(lines, openTag) {
     if (match) {
       const [_, type, description] = match;
 
-      const entry = CHANGELOG_KEYS_TO_ENTRY[type];
+      const entry = CHANGELOG_KEYS_TO_ENTRY[type.toLowerCase()];
 
       if (!entry || entry.placeholders.includes(description)) {
         continue;

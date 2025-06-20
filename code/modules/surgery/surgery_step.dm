@@ -142,7 +142,10 @@
 
 		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
-				update_surgery_mood(target, SURGERY_STATE_SUCCESS)
+				if((tool && tool.item_flags & CRUEL_IMPLEMENT) || (accept_hand && surgery.surgery_flags & SURGERY_MORBID_CURIOSITY && HAS_MIND_TRAIT(user, TRAIT_MORBID)))
+					update_surgery_mood(target, SURGERY_STATE_FAILURE)
+				else
+					update_surgery_mood(target, SURGERY_STATE_SUCCESS)
 				play_success_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 		else
@@ -297,9 +300,11 @@
 /datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
 	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
 		return FALSE
-	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
-		return FALSE
 	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
+		return FALSE
+	if(!tool && accept_hand)
+		return TRUE
+	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
 	return TRUE
 

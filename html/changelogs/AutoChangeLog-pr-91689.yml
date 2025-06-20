@@ -1,0 +1,6 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "killed the impostor infinite pizza"
+  - bugfix: "the One True infinite pizza no longer gets stuck on a single pizza type if the pizza conjured by the box gets sliced"
+  - bugfix: "the cargo pizza order now pre-slices the pizza, because that's what all pizza places have been doing since the dawn of time and our favorite supplier PizzNTe has been forcefully convinced to not break this sacred tradition"

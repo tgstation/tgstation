@@ -17,7 +17,7 @@
 	ricochet_chance = 80
 	reflectable = TRUE
 	wound_bonus = -20
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 
 
 /obj/projectile/beam/laser
@@ -26,7 +26,7 @@
 	impact_type = /obj/effect/projectile/impact/laser
 	wound_bonus = -20
 	damage = 25
-	bare_wound_bonus = 40
+	exposed_wound_bonus = 40
 
 /obj/projectile/beam/laser/carbine
 	icon_state = "carbine_laser"
@@ -102,7 +102,7 @@
 	icon_state = "scatterlaser"
 	damage = 7.5
 	wound_bonus = 5
-	bare_wound_bonus = 5
+	exposed_wound_bonus = 5
 	damage_falloff_tile = -0.45
 	wound_falloff_tile = -2.5
 
@@ -206,7 +206,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 	wound_bonus = -40
-	bare_wound_bonus = 70
+	exposed_wound_bonus = 70
 
 /obj/projectile/beam/emitter/singularity_pull(atom/singularity, current_size)
 	return //don't want the emitters to miss

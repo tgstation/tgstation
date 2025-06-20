@@ -30,7 +30,7 @@
 	armor_type = /datum/armor/item_dualsaber
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	item_flags = NO_BLOOD_ON_ITEM
 	var/w_class_on = WEIGHT_CLASS_BULKY
@@ -59,6 +59,9 @@
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	if(user && HAS_TRAIT(user, TRAIT_HULK))
 		to_chat(user, span_warning("You lack the grace to wield this!"))
+		return COMPONENT_TWOHANDED_BLOCK_WIELD
+	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT))
+		to_chat(user, span_warning("You can't seem to hold [src] properly!"))
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
 	update_weight_class(w_class_on)
 	hitsound = 'sound/items/weapons/blade1.ogg'

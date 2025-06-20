@@ -33,14 +33,14 @@
 	var/datum/antagonist/A = has_antag_datum(datum_type)
 	if(A)
 		A.on_removal()
-		current.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
+		current?.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
 		return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
 		A.on_removal()
-	current.log_message("has lost all antag datums.", LOG_GAME)
+	current?.log_message("has lost all antag datums.", LOG_GAME)
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
 	if(!datum_type)
@@ -92,6 +92,8 @@
 
 
 /datum/mind/proc/remove_antag_equip()
+	if(!current)
+		return
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
 		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink) //Todo make this reset signal

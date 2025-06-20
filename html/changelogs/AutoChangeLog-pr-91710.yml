@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - rscdel: "Flying mobs no longer have 3x worse damage slowdown"

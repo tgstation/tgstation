@@ -6,13 +6,13 @@
 	if(!istype(parent, /atom/movable/screen/plane_master))
 		return
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
-	offset_increase(SSmapping.max_plane_offset)
+	offset_increase(-1, SSmapping.max_plane_offset)
 
 /datum/component/plane_hide_highest_offset/proc/on_offset_increase(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
-	offset_increase(new_offset)
+	offset_increase(old_offset, new_offset)
 
-/datum/component/plane_hide_highest_offset/proc/offset_increase(new_offset)
+/datum/component/plane_hide_highest_offset/proc/offset_increase(old_offset, new_offset)
 	var/atom/movable/screen/plane_master/plane_parent = parent
 	var/mob/our_mob = plane_parent.home?.our_hud?.mymob
 	var/our_offset = plane_parent.offset
@@ -20,5 +20,5 @@
 		return
 	if(our_offset == new_offset)
 		plane_parent.hide_plane(our_mob)
-	else if(plane_parent.force_hidden)
+	else if(our_offset == old_offset && plane_parent.force_hidden)
 		plane_parent.unhide_plane(our_mob)

@@ -8,7 +8,7 @@
 	base_icon_state = "classic"
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
-	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the unit is open
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION // Becomes undense when the unit is open
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	max_integrity = 250
 	req_access = list()
@@ -619,15 +619,15 @@
 
 /obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
 	if(!card_reader_installed || state_open)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(locked)
 		balloon_alert(user, "unlock first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	access_locked = !access_locked
 	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/suit_storage_unit/proc/can_install_card_reader(mob/user)
 	if(card_reader_installed || !panel_open || state_open || !is_operational)
@@ -639,88 +639,82 @@
 
 	return TRUE
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	. = TRUE
-	var/obj/item/card/id/id = null
-	if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
+/obj/machinery/suit_storage_unit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(istype(tool, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
-
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
-			return
-
-		qdel(weapon)
+			return ITEM_INTERACT_BLOCKING
+		qdel(tool)
 		card_reader_installed = TRUE
-
 		balloon_alert(user, "card reader installed")
+		return ITEM_INTERACT_SUCCESS
 
-	else if(!state_open && is_operational && card_reader_installed && !isnull((id = weapon.GetID())))
+	var/obj/item/card/id/id = null
+	if(!state_open && is_operational && card_reader_installed && !isnull((id = tool.GetID())))
 		if(panel_open)
 			balloon_alert(user, "close panel!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
 		if(locked)
 			balloon_alert(user, "unlock first!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
 		if(access_locked)
 			balloon_alert(user, "access panel locked!")
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		//change the access type
+		// change the access type
 		var/static/list/choices = list(
 			"Personal",
 			"Departmental",
-			"None"
+			"None",
 		)
 		var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
 		if(isnull(choice))
-			return
-
+			return ITEM_INTERACT_BLOCKING
 		id_card = null
 		switch(choice)
-			if("Personal") //only the player who swiped their id has access.
+			if("Personal") // only the player who swiped their id has access
 				id_card = WEAKREF(id)
-				name = "[id.registered_name] Suit Storage Unit"
+				name = "[id.registered_name] suit storage unit"
 				desc = "Owned by [id.registered_name]. [initial(desc)]"
-			if("Departmental") //anyone who has the same access permissions as this id has access
-				name = "[id.assignment] Suit Storage Unit"
-				desc = "Its a [id.assignment] Suit Storage Unit. [initial(desc)]"
+			if("Departmental") // anyone who has the same access permissions as this id has access
+				name = "[id.assignment] suit storage unit"
+				desc = "Its a [id.assignment] suit storage unit. [initial(desc)]"
 				set_access(id.GetAccess())
-			if("None") //free for all
+			if("None") // free for all
 				name = initial(name)
 				desc = initial(desc)
 				req_access = list()
 				req_one_access = null
 				set_access(list())
-
 		if(!isnull(id_card))
 			balloon_alert(user, "now owned by [id.registered_name]")
 		else
 			balloon_alert(user, "set to [choice]")
+		return ITEM_INTERACT_SUCCESS
 
-	else if(!state_open && IS_WRITING_UTENSIL(weapon))
+	if(!state_open && IS_WRITING_UTENSIL(tool))
 		if(locked)
 			balloon_alert(user, "unlock first!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
 		if(isnull(id_card))
 			balloon_alert(user, "not yours to rename!")
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		var/name_set = FALSE
 		var/desc_set = FALSE
-
 		var/str = tgui_input_text(user, "Personal Unit Name", "Unit Name", max_length = MAX_NAME_LEN)
 		if(!isnull(str))
 			name = str
 			name_set = TRUE
-
 		str = tgui_input_text(user, "Personal Unit Description", "Unit Description", max_length = MAX_DESC_LEN)
 		if(!isnull(str))
 			desc = str
 			desc_set = TRUE
-
 		var/bit_flag = NONE
 		if(name_set)
 			bit_flag |= UPDATE_NAME
@@ -728,64 +722,64 @@
 			bit_flag |= UPDATE_DESC
 		if(bit_flag)
 			update_appearance(bit_flag)
+		return ITEM_INTERACT_SUCCESS
 
 	if(state_open && is_operational)
-		if(istype(weapon, /obj/item/clothing/suit))
+		if(istype(tool, /obj/item/clothing/suit))
 			if(suit)
-				to_chat(user, span_warning("The unit already contains a suit!."))
-				return
-			if(!user.transferItemToLoc(weapon, src))
-				return
-			suit = weapon
-		else if(istype(weapon, /obj/item/clothing/head))
+				to_chat(user, span_warning("The unit already contains a suit!"))
+				return ITEM_INTERACT_BLOCKING
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			suit = tool
+		else if(istype(tool, /obj/item/clothing/head))
 			if(helmet)
 				to_chat(user, span_warning("The unit already contains a helmet!"))
-				return
-			if(!user.transferItemToLoc(weapon, src))
-				return
-			helmet = weapon
-		else if(istype(weapon, /obj/item/clothing/mask))
+				return ITEM_INTERACT_BLOCKING
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			helmet = tool
+		else if(istype(tool, /obj/item/clothing/mask))
 			if(mask)
 				to_chat(user, span_warning("The unit already contains a mask!"))
-				return
-			if(!user.transferItemToLoc(weapon, src))
-				return
-			mask = weapon
-		else if(istype(weapon, /obj/item/storage/backpack) || istype(weapon, /obj/item/mod/control))
+				return ITEM_INTERACT_BLOCKING
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			mask = tool
+		else if(istype(tool, /obj/item/storage/backpack) || istype(tool, /obj/item/mod/control))
 			if(mod)
 				to_chat(user, span_warning("The unit already contains a backpack or MOD!"))
-				return
-			if(!user.transferItemToLoc(weapon, src))
-				return
-			mod = weapon
+				return ITEM_INTERACT_BLOCKING
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			mod = tool
 		else
 			if(storage)
 				to_chat(user, span_warning("The auxiliary storage compartment is full!"))
-				return
-			if(!user.transferItemToLoc(weapon, src))
-				return
-			storage = weapon
-
-		visible_message(span_notice("[user] inserts [weapon] into [src]"), span_notice("You load [weapon] into [src]."))
+				return ITEM_INTERACT_BLOCKING
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			storage = tool
+		visible_message(span_notice("[user] inserts [tool] into [src]"), span_notice("You load [tool] into [src]."))
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(panel_open)
-		if(is_wire_tool(weapon))
+		if(is_wire_tool(tool))
 			wires.interact(user)
-			return
-		else if(weapon.tool_behaviour == TOOL_CROWBAR)
-			default_deconstruction_crowbar(weapon)
-			return
-	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", weapon))	//Set to base_icon_state because the panels for this are overlays
-			update_appearance()
-			return
-	if(default_pry_open(weapon))
-		dump_inventory_contents()
-		return
+			return ITEM_INTERACT_SUCCESS
+		else if(tool.tool_behaviour == TOOL_CROWBAR)
+			default_deconstruction_crowbar(tool)
+			return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	if(!state_open)
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))	//Set to base_icon_state because the panels for this are overlays
+			update_appearance()
+			return ITEM_INTERACT_SUCCESS
+
+	if(default_pry_open(tool))
+		dump_inventory_contents()
+		return ITEM_INTERACT_SUCCESS
 
 /* ref tg-git issue #45036
 	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish

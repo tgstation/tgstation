@@ -25,7 +25,7 @@
 	throwforce = 25
 	block_chance = 25
 	wound_bonus = -10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
 	///Reference to a boomerang component we add when a non-cultist throws us.
@@ -101,7 +101,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 10
 	block_chance = 50 // now it's officially a cult esword
 	wound_bonus = -50
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	block_sound = 'sound/items/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
@@ -158,7 +158,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 25
 	block_chance = 55
 	wound_bonus = -25
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 3
