@@ -400,7 +400,7 @@ export const TguiLintTarget = new Juke.Target({
 
 export const TguiDevTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: () => bun("run", "--hot", "packages/tgui-dev-server/index.ts"),
+  executes: ({ args }) => bun("tgui:dev", ...args),
 });
 
 export const TguiAnalyzeTarget = new Juke.Target({
