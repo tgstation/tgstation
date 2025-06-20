@@ -84,17 +84,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/c38_hellfire
-	name = "Speedloader (.38 Hellfire) (VERY Lethal)"
-	desc = "Designed to quickly reload revolvers. Hellfire casings launch a concentrated pparticle beam towards a target, all housed in a ballistic package!"
-	id = "c38_hellfire"
+/datum/design/c38_flare
+	name = "Speedloader (.38 Flare) (VERY Lethal)"
+	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated pparticle beam towards a target, lighting them up for everyone to see."
+	id = "c38_flare"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
 		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/ammo_box/c38/hellfire
+	build_path = /obj/item/ammo_box/c38/flare
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -197,10 +197,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/c38_hellfire
-	name = "Magazine (.38 Hellfire) (VERY Lethal)"
-	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Hellfire casings launch a concentrated pparticle beam towards a target, all housed in a ballistic package!"
-	id = "c38_hellfire_mag"
+/datum/design/c38_flare_mag
+	name = "Magazine (.38 Flae) (VERY Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Flare casings launch a concentrated pparticle beam towards a target, lighting them up for everyone to see."
+	id = "c38_flare_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
@@ -209,7 +209,7 @@
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 
 	)
-	build_path = /obj/item/ammo_box/magazine/m38/hellfire
+	build_path = /obj/item/ammo_box/magazine/m38/flare
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)

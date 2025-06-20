@@ -1093,6 +1093,22 @@
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon()
 
+/datum/status_effect/designated_target
+	id = "designated_target"
+	duration = 2 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+	// Dummy object to act as our flare
+	var/obj/effect/dummy/lighting_obj/moblight/mob_flare
+
+/datum/status_effect/designated_target/on_apply()
+	mob_flare = owner.mob_light(3, 15, LIGHT_COLOR_FLARE)
+	ADD_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
+	return TRUE
+
+/datum/status_effect/designated_target/on_remove()
+	QDEL_NULL(mob_flare)
+	REMOVE_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
+
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER
 #undef SLEEP_QUALITY_WORKOUT_MULTIPLER

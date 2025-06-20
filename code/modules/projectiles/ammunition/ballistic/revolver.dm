@@ -79,11 +79,11 @@
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
 
-/obj/item/ammo_casing/c38/hellfire
-	name = ".38 hellfire casing"
-	desc = "A .38 hellfire casing."
+/obj/item/ammo_casing/c38/flare
+	name = ".38 flare casing"
+	desc = "A .38 flare casing."
 	icon_state = "sL-casing"
-	projectile_type = /obj/projectile/beam/laser/hellfire/alt
+	projectile_type = /obj/projectile/beam/laser/flare
 	lead_or_laser = "laser"
 
 //gatfruit

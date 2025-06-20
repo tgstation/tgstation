@@ -56,9 +56,16 @@
 	speed = 1.6
 	light_color = "#FF969D"
 
-/obj/projectile/beam/laser/hellfire/alt
-	name = ".38 hellfire particle"
-	icon_state = "hellfire_alt"
+/obj/projectile/beam/laser/flare
+	name = ".38 flare particle"
+	icon_state = "flare"
+
+/obj/projectile/beam/laser/flare/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/designated_target = target
+	designated_target.apply_status_effect(/datum/status_effect/designated_target)
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
