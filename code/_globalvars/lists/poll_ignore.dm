@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_PYROSLIME = "Slime",
 	POLL_IGNORE_RAW_PROPHET = "Raw Prophet",
 	POLL_IGNORE_REGAL_RAT = "Regal rat",
-	POLL_IGNORE_RUST_SPIRIT = "Rust Spirit",
+	POLL_IGNORE_RUST_SPIRIT = "Rust Walker",
 	POLL_IGNORE_SENTIENCE_POTION = "Sentience potion",
 	POLL_IGNORE_SHADE = "Shade",
 	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",
