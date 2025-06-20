@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { Component } from 'react';
 import { Button, KeyListener, Stack } from 'tgui-core/components';
 import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'tgui-core/keycodes';

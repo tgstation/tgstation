@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { Button, Flex, Section, Tabs } from 'tgui-core/components';
 
 import { useSharedState } from '../../backend';

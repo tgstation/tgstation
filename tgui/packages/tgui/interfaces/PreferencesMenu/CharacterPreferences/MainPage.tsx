@@ -1,4 +1,4 @@
-import { filter, map, sortBy } from 'common/collections';
+import { filter, map, sortBy } from 'es-toolkit/compat';
 import { ReactNode, useState } from 'react';
 import { sendAct, useBackend } from 'tgui/backend';
 import {

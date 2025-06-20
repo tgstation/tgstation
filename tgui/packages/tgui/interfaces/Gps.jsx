@@ -1,5 +1,5 @@
-import { map, sortBy } from 'common/collections';
 import { vecLength, vecSubtract } from 'common/vector';
+import { map, sortBy } from 'es-toolkit/compat';
 import {
   Box,
   Button,

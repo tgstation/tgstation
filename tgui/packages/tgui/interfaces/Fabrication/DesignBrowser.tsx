@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { ReactNode } from 'react';
 import {
   Dimmer,

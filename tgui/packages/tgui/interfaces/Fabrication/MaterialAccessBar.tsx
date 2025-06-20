@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { useState } from 'react';
 import { AnimatedNumber, Button, Flex } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';

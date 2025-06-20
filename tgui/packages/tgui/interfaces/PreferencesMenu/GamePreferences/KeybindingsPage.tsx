@@ -1,4 +1,5 @@
-import { range, sortBy } from 'common/collections';
+import { range } from 'es-toolkit';
+import { sortBy } from 'es-toolkit/compat';
 import { Component } from 'react';
 import { resolveAsset } from 'tgui/assets';
 import { useBackend } from 'tgui/backend';

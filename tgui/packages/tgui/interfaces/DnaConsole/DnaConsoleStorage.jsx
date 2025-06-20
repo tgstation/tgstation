@@ -1,4 +1,4 @@
-import { uniqBy } from 'common/collections';
+import { uniqBy } from 'es-toolkit/compat';
 import {
   Box,
   Button,

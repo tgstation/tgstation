@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { filter, sortBy } from 'es-toolkit/compat';
 import { ReactNode, useState } from 'react';
 import {
   Box,

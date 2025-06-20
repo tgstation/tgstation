@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { useMemo } from 'react';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 

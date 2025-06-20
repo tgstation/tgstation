@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import {
   BlockQuote,

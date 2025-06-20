@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { map, sortBy } from 'es-toolkit/compat';
 import { Box, Button, Flex, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';

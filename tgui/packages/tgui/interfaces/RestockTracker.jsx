@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { ColorBox, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
 

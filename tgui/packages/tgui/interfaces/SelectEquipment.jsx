@@ -1,4 +1,4 @@
-import { filter, map, sortBy, uniq } from 'common/collections';
+import { filter, map, sortBy, uniq } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Box,

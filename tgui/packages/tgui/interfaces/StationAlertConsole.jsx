@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit/compat';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
