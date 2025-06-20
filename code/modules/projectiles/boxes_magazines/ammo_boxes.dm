@@ -39,7 +39,7 @@
 	max_ammo = 6
 	caliber = CALIBER_38
 	multiple_sprites = AMMO_BOX_PER_BULLET
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	ammo_band_icon = "+38_ammo_band"
 	ammo_band_color = null
 

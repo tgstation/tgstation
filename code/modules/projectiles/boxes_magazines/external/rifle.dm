@@ -24,8 +24,8 @@
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = CALIBER_38
 	custom_materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 1,
 	)
 	max_ammo = 15
 	ammo_band_icon = "+38mag_ammo_band"
