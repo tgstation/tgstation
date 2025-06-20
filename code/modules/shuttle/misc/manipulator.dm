@@ -13,7 +13,7 @@
 
 	density = TRUE
 
-/obj/machinery/shuttle_manipulator/Initialize()
+/obj/machinery/shuttle_manipulator/Initialize(mapload)
 	. = ..()
 	update_icon()
 
