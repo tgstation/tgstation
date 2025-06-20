@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed lobby art not fading in when server hopping."

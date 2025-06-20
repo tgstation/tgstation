@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed certain pirate spawners having broken Jump to/Spawn buttons in the ghost spawners menu (greytide, space IRS, Interdyne)"

@@ -1,8 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - rscadd: "You can take pictures over advanced camera consoles."
-  - rscadd: "You can take pictures while looking up or down."
-  - bugfix: "AIs taking pictures in multi-z shows the objects of your floor and the ones below, instead of just the ones below."
-  - bugfix: "Humans taking pictures through holes in multi-z actually shows the floor below, instead of pitch-black nothingness."
-  - bugfix: "Taking pictures of glass floors in multi-z actually shows the floor below."
