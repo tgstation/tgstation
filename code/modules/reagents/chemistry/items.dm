@@ -125,11 +125,11 @@
 	if(cont.reagents.is_reacting)
 		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
 	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
-		var/blood_info = "" 
-		if(istype(reagent.data["blood_type"], /datum/blood_type))
+		var/blood_info = ""
+		if(reagent.id == "blood" && istype(reagent.data["blood_type"], /datum/blood_type))
 			var/datum/blood_type/bt = reagent.data["blood_type"]
 			blood_info = " (type: [bt.name])"
-		else if(reagent.data && "blood_type" in reagent.data)
+		else if(reagent.id == "blood")
 			blood_info = " (type: unknown)"
 		if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem)
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
