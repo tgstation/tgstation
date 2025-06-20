@@ -38891,6 +38891,11 @@
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
+"eWX" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/obj/item/mod/module/atrocinator,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "eXp" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
@@ -43753,7 +43758,7 @@
 	id_tag = "commissarydoor";
 	name = "Commissary"
 	},
-/obj/structure/disposalpipe/junction/flip{
+/obj/structure/disposalpipe/junction{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -47949,6 +47954,12 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/exit/departure_lounge)
+"mMq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/closed/wall,
+/area/station/commons/vacant_room/commissary)
 "mMM" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Port Mix to East Ports"
@@ -49378,7 +49389,9 @@
 /area/station/security/prison)
 "nXi" = (
 /obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/vacant_room/commissary)
 "nXj" = (
@@ -50206,10 +50219,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "oJf" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/machinery/light/directional/south,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/vacant_room/commissary)
 "oJH" = (
@@ -83210,7 +83223,7 @@ fgB
 aNZ
 aPz
 bdW
-aSg
+eWX
 aPz
 bgz
 biT
@@ -85005,7 +85018,7 @@ kWe
 kWe
 bLE
 rGJ
-kWe
+mMq
 jlM
 kWe
 beA
