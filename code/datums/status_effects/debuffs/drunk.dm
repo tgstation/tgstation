@@ -58,8 +58,8 @@
 /datum/status_effect/inebriated/proc/set_drunk_value(set_to)
 	if(!isnum(set_to))
 		CRASH("[type] - invalid value passed to set_drunk_value. (Got: [set_to])")
-	if(drunk_value >= 51 && iron_liver)
-		return
+	if(iron_liver)
+		set_to = min(51, set_to)
 	drunk_value = set_to
 	if(drunk_value <= 0)
 		qdel(src)
