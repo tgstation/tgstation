@@ -1096,6 +1096,7 @@
 /datum/status_effect/designated_target
 	id = "designated_target"
 	duration = 2 MINUTES
+	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH
 	// Dummy object to act as our flare
 	var/obj/effect/dummy/lighting_obj/moblight/mob_flare
