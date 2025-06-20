@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "If a cable is destroyed by an explosion, all rooms within 64-100 (it's a probability) tiles AND which are connected to the same powernet as the split cable will have their lights flicker 1-3 times."
+  - balance: "Cable integrity has been reduced from 300 to 50"
+  - balance: "Cables have an innate 75% bomb resistance while under floor tiles"
