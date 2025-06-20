@@ -1012,6 +1012,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
+	light_range = 1
+	light_color = LIGHT_COLOR_HALOGEN
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
 
 	/// The capacity of the vape.
 	var/chem_volume = 100
@@ -1111,12 +1115,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	to_chat(user, span_notice("You start puffing on the vape."))
 	reagents.flags &= ~(NO_REACT)
 	START_PROCESSING(SSobj, src)
+	set_light_on(TRUE)
 
 /obj/item/vape/dropped(mob/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
 		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
+		set_light_on(FALSE)
 
 /obj/item/vape/proc/handle_reagents()
 	if(!reagents.total_volume)
