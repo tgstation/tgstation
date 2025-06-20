@@ -155,8 +155,10 @@
 	if(destroy_objects)
 		if(isturf(target))
 			SSexplosions.medturf += target
-		if(isobj(target) && target.density)
+		if(isobj(target) && target.density && !ismecha(target))
 			SSexplosions.med_mov_atom += target
+		if(ismecha(target))
+			target.take_damage(25, BRUTE, MELEE, 1)
 
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	try_hit_target(source, target)
