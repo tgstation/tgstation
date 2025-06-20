@@ -320,8 +320,8 @@ export const AutowikiTarget = new Juke.Target({
 export const BunTarget = new Juke.Target({
   parameters: [CiParameter],
   inputs: ["tgui/**/package.json"],
-  executes: ({ get }) => {
-    return bun("install", get(CiParameter));
+  executes: () => {
+    return bun("install", "--frozen-lockfile", "--ignore-scripts");
   },
 });
 
