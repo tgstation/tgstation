@@ -7,7 +7,7 @@
 import { createRequire } from 'module';
 
 import { loadSourceMaps } from './link/retrace';
-import { setupLink } from './link/server';
+import { broadcastMessage, setupLink } from './link/server';
 import { createLogger } from './logging.js';
 import { reloadByondCache } from './reloader.js';
 import { resolveGlob } from './util';
@@ -73,7 +73,7 @@ class WebpackCompiler {
       // Reload cache
       await reloadByondCache(this.bundleDir);
       // Notify all clients that update has happened
-      link.broadcastMessage({
+      broadcastMessage({
         type: 'hotUpdate',
       });
     });

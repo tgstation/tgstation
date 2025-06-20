@@ -49,7 +49,7 @@ function setupApp() {
   // Enable hot module reloading
   if (import.meta.webpackHot) {
     setupHotReloading();
-    import.meta.webpackHot?.accept(
+    import.meta.webpackHot.accept(
       ['./debug', './layouts', './routes', './App'],
       () => {
         render(<App />);

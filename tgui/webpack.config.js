@@ -71,23 +71,12 @@ module.exports = (env = {}, argv) => {
         {
           test: /\.(s)?css$/,
           use: [
-            {
-              loader: ExtractCssPlugin.loader,
-              options: {
-                esModule: false,
-              },
-            },
-            {
-              loader: require.resolve('css-loader'),
-              options: {
-                esModule: false,
-              },
-            },
-            {
-              loader: require.resolve('sass-loader'),
-            },
+            ExtractCssPlugin.loader,
+            require.resolve('css-loader'),
+            require.resolve('sass-loader'),
           ],
         },
+
         {
           test: /\.(cur|png|jpg)$/,
           type: 'asset/resource',
@@ -127,8 +116,6 @@ module.exports = (env = {}, argv) => {
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: mode,
-        WEBPACK_HMR_ENABLED: mode === 'development',
-        DEV_SERVER_IP: '127.0.0.1',
       }),
       new ExtractCssPlugin({
         filename: '[name].bundle.css',
@@ -153,15 +140,15 @@ module.exports = (env = {}, argv) => {
       }),
     ];
   } else {
-    config.devtool = 'cheap-module-source-map';
-
     config.devServer = {
+      clientLogLevel: 'silent',
+      hot: true,
+      noInfo: false,
       progress: false,
       quiet: false,
-      noInfo: false,
-      clientLogLevel: 'silent',
       stats: createStats(false),
     };
+    config.devtool = 'cheap-module-source-map';
   }
 
   return config;
