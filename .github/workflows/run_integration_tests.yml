@@ -46,10 +46,10 @@ jobs:
           MYSQL_CREDENTIALS: --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }}
         run: |
           sudo systemctl start mysql
-          mysql MYSQL_CREDENTIALS -e 'CREATE DATABASE tg_ci;'
-          mysql MYSQL_CREDENTIALS tg_ci < SQL/tgstation_schema.sql
-          mysql MYSQL_CREDENTIALS -e 'CREATE DATABASE tg_ci_prefixed;'
-          mysql MYSQL_CREDENTIALS tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+          mysql ${{ env.MYSQL_CREDENTIALS }} -e 'CREATE DATABASE tg_ci;'
+          mysql ${{ env.MYSQL_CREDENTIALS }} tg_ci < SQL/tgstation_schema.sql
+          mysql ${{ env.MYSQL_CREDENTIALS }} -e 'CREATE DATABASE tg_ci_prefixed;'
+          mysql ${{ env.MYSQL_CREDENTIALS }} tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
