@@ -42,6 +42,7 @@
 	desc = "A .38 bullet casing."
 	caliber = CALIBER_38
 	projectile_type = /obj/projectile/bullet/c38
+	var/lead_or_laser = "lead"
 
 /obj/item/ammo_casing/c38/trac
 	name = ".38 TRAC bullet casing"
@@ -77,6 +78,13 @@
 	name = ".38 Iceblox bullet casing"
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
+
+/obj/item/ammo_casing/c38/hellfire
+	name = ".38 hellfire casing"
+	desc = "A .38 hellfire casing."
+	icon_state = "sL-casing"
+	projectile_type = /obj/projectile/beam/laser/hellfire/alt
+	lead_or_laser = "laser"
 
 //gatfruit
 /obj/item/ammo_casing/pea

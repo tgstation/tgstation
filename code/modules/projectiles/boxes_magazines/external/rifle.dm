@@ -23,6 +23,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = CALIBER_38
+	custom_materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+	)
 	max_ammo = 15
 	ammo_band_icon = "+38mag_ammo_band"
 	ammo_band_color = null
@@ -75,3 +79,9 @@
 	desc = parent_type::desc + " Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = COLOR_AMMO_ICEBLOX
+
+/obj/item/ammo_box/magazine/m38/hellfire
+	name = "battle rifle magazine (.38 Hellfire)"
+	desc = parent_type::desc + " Hellfire casings launch a concentrated pparticle beam towards a target, all housed in a ballistic package!"
+	ammo_type = /obj/item/ammo_casing/c38/hellfire
+	ammo_band_color = COLOR_AMMO_HELLFIRE

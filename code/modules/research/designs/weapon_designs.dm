@@ -17,8 +17,8 @@
 	id = "c38_trac"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/ammo_box/c38/trac
@@ -33,8 +33,8 @@
 	id = "c38_hotshot"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/ammo_box/c38/hotshot
 	category = list(
@@ -48,8 +48,8 @@
 	id = "c38_iceblox"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/ammo_box/c38/iceblox
 	category = list(
@@ -62,7 +62,7 @@
 	desc = "Designed to quickly reload revolvers. Rubber bullets are bouncy and less-than-lethal."
 	id = "c38_rubber"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_box/c38/match/bouncy
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -75,10 +75,26 @@
 	id = "c38_true_strike"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/true
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_hellfire
+	name = "Speedloader (.38 Hellfire) (VERY Lethal)"
+	desc = "Designed to quickly reload revolvers. Hellfire casings launch a concentrated pparticle beam towards a target, all housed in a ballistic package!"
+	id = "c38_hellfire"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/ammo_box/c38/hellfire
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -92,8 +108,8 @@
 	id = "c38_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38
 	category = list(
@@ -107,10 +123,10 @@
 	id = "c38_trac_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/trac
 	category = list(
@@ -124,9 +140,9 @@
 	id = "c38_hotshot_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/hotshot
 	category = list(
@@ -140,9 +156,9 @@
 	id = "c38_iceblox_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/iceblox
 	category = list(
@@ -156,8 +172,8 @@
 	id = "c38_rubber_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/match/bouncy
 	category = list(
@@ -171,11 +187,29 @@
 	id = "c38_true_strike_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
-		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/true
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_hellfire
+	name = "Magazine (.38 Hellfire) (VERY Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Hellfire casings launch a concentrated pparticle beam towards a target, all housed in a ballistic package!"
+	id = "c38_hellfire_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/hellfire
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)

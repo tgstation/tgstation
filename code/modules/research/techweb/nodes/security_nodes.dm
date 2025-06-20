@@ -106,6 +106,8 @@
 		"ioncarbine",
 		"temp_gun",
 		"lasershell",
+		"c38_hellfire",
+		"c38_hellfire_mag",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)

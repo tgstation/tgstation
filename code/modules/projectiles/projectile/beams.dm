@@ -56,6 +56,10 @@
 	speed = 1.6
 	light_color = "#FF969D"
 
+/obj/projectile/beam/laser/hellfire/alt
+	name = ".38 hellfire particle"
+	icon_state = "hellfire_alt"
+
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"
