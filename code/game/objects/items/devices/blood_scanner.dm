@@ -7,7 +7,7 @@
 	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "This Me-Lo Tech branded medical device"
+	desc = "This Me-Lo Tech branded medical device analyzes blood composition. A side button scans for medical substances in the bloodstream."
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
