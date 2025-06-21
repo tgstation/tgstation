@@ -50,6 +50,8 @@
 		final_block_chance += 30
 	if(attack_type == LEAP_ATTACK)
 		final_block_chance = 100
+	if(attack_type == OVERWHELMING_ATTACK)
+		final_block_chance -= 25
 	. = ..()
 	if(.)
 		on_shield_block(owner, hitby, attack_text, damage, attack_type, damage_type)
@@ -341,6 +343,9 @@
 
 		if(our_projectile.reflectable) //We handle this via IsReflect() instead.
 			final_block_chance = 0
+
+	if(attack_type == OVERWHELMING_ATTACK)
+		final_block_chance -= 25
 
 	return ..()
 

@@ -107,7 +107,7 @@
 			span_notice("[chassis] pushes you aside."))
 		return ..()
 
-	if(victim.check_block(chassis, clamp_damage, name, attack_type = MELEE_ATTACK))
+	if(victim.check_block(chassis, clamp_damage, name, attack_type = OVERWHELMING_ATTACK))
 		source.visible_message(span_danger("[chassis] attempts to squeeze [victim] with [src], but the [name] is blocked!"), span_userdanger("You attempt to squeeze [victim] with [src], but [victim.p_They()] managed to block the attempt!"), ignored_mobs = victim)
 		to_chat(victim, span_userdanger("You block [chassis]'s attempt to squeeze you with [src]!"))
 		return ..()
@@ -129,7 +129,7 @@
 						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
-	var/armor_check = victim.run_armor_check(null, MELEE)
+	var/armor_check = clamp(victim.run_armor_check(null, MELEE) / 3, 0, 100) //our target only benefits from a third of their armor. Because it's a huge ass clamp
 	victim.visible_message(span_danger("[chassis] squeezes [victim]!"), \
 						span_userdanger("[chassis] squeezes you!"),\
 						span_hear("You hear something crack."))
