@@ -131,7 +131,7 @@
 	. = ..()
 	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
 		for(var/obj/item/ammo_casing/rebar/healium/other_rebar in limb.embedded_objects)
-			if (other_rebar = parent)
+			if (other_rebar == parent)
 				continue
 			var/datum/embedding/rebar_healium/embed_data = other_rebar.get_embed()
 			if (istype(embed_data) && embed_data.can_sleep)
