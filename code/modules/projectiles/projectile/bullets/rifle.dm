@@ -176,22 +176,19 @@
 	armour_penetration = 100
 	wound_bonus = -100
 	exposed_wound_bonus = -100
-	embed_type = null
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/healium
+	embed_type = /datum/embedding/rebar_healium
+	/// Amount of heals left in our bolt, so we can track it between embeds/misses
+	var/heals_left = 6 SECONDS
 
-/obj/projectile/bullet/rebar/healium/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/bullet/rebar/healium/Initialize(mapload)
 	. = ..()
-	if(!iscarbon(target))
-		return BULLET_ACT_HIT
-	var/mob/living/breather = target
-	breather.SetSleeping(3 SECONDS)
-	breather.adjustFireLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
-	breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
+	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(on_spawn_embedded))
 
-	return BULLET_ACT_HIT
+/obj/projectile/bullet/rebar/healium/proc/on_spawn_embedded(datum/source, obj/item/ammo_casing/rebar/healium/rebar)
+	SIGNAL_HANDLER
+	rebar.heals_left = heals_left
 
 /obj/projectile/bullet/rebar/supermatter
 	name = "supermatter bolt"
