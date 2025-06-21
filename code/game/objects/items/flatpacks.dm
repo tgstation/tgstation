@@ -71,10 +71,22 @@
 		return ITEM_INTERACT_BLOCKING
 
 	new /obj/effect/temp_visual/mook_dust(loc)
-	var/obj/machinery/new_machine = new board.build_path(loc)
+	board.replacement_parts = board.flatten_component_list()
+	for(var/obj/item/flatpack_component in src)
+		if(flatpack_component == board)
+			continue
+		for(var/i in 1 to board.replacement_parts.len)
+			var/obj/item/machine_component = board.replacement_parts[i]
+			if(!ispath(machine_component, /obj/item))
+				continue
+			if(flatpack_component.type == machine_component)
+				board.replacement_parts[i] = flatpack_component
+				break
+	var/obj/machinery/new_machine = new board.build_path(loc, board)
+	new_machine.on_construction(user)
 	loc.visible_message(span_warning("[src] deploys!"))
 	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
-	new_machine.on_construction(user)
+	board = null
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

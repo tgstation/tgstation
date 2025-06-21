@@ -76,14 +76,16 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	/// Default replacements for req_components, to be used in apply_default_parts instead of req_components types
 	/// Example: list(/obj/item/stock_parts/matter_bin = /obj/item/stock_parts/matter_bin/super)
 	var/list/def_components
+	/// List of atoms/datums to replace the default components placed inside the machine
+	var/list/replacement_parts
+	/// Components that need to be flatpacked along with the circuitboard so as to replace the defaults
+	var/list/obj/item/flatpack_components
 
-// Applies the default parts defined by the circuit board when the machine is created
-/obj/item/circuitboard/machine/apply_default_parts(obj/machinery/machine)
-	if(!req_components)
-		return
+/// Converts req_components map into a linear list with its typepaths resolved
+/obj/item/circuitboard/machine/proc/flatten_component_list(obj/machinery/machine)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	. = ..()
-
+	. = list()
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]
 		if(!comp_amt)
@@ -99,10 +101,26 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if (isnull(stock_part_datum))
 				CRASH("[comp_path] didn't have a matching stock part datum")
 			for (var/_ in 1 to comp_amt)
-				machine.component_parts += stock_part_datum
+				. += stock_part_datum
 		else
 			for(var/component in 1 to comp_amt)
-				machine.component_parts += new comp_path(machine)
+				. += comp_path
+
+// Applies the default parts defined by the circuit board when the machine is created
+/obj/item/circuitboard/machine/apply_default_parts(obj/machinery/machine)
+	if(!req_components && !length(replacement_parts))
+		return
+
+	. = ..()
+
+	var/list/final_parts = length(replacement_parts) ? replacement_parts : flatten_component_list(machine)
+	for(var/part in final_parts)
+		if(ispath(part, /obj/item))
+			part = new part(machine)
+		else if(ismovable(part))
+			var/atom/movable/thing = part
+			thing.forceMove(machine)
+		machine.component_parts += part
 
 	machine.RefreshParts()
 

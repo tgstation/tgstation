@@ -29,7 +29,6 @@ type Design = {
   name: string;
   icon: string;
   requiredMaterials: Material[];
-  canPrint: BooleanLike;
   disableReason?: string;
 };
 
@@ -145,7 +144,7 @@ const BoardPreview = (props: BoardPreviewProps) => {
             icon="cog"
             fontSize={1.2}
             textAlign="center"
-            disabled={!design || !design.canPrint}
+            disabled={!design || design.disableReason !== ''}
             tooltip={design.disableReason}
             tooltipPosition="bottom"
             onClick={() => onPrint()}

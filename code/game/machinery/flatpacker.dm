@@ -19,6 +19,8 @@
 	var/datum/component/material_container/materials
 	/// The inserted board
 	var/obj/item/circuitboard/machine/inserted_board
+	/// List of components that need to be packed along with the circuitboard
+	var/list/obj/item/flatpacked_components = list()
 	/// Materials needed to print this board
 	var/list/needed_mats = list()
 	/// The highest tier of this board
@@ -44,12 +46,17 @@
 /obj/machinery/flatpacker/Destroy()
 	materials = null
 	QDEL_NULL(inserted_board)
+	QDEL_LIST(flatpacked_components)
 	. = ..()
 
 /obj/machinery/flatpacker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(!QDELETED(inserted_board))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject board"
+		if(!isnull(held_item) && length(inserted_board.flatpack_components) && is_type_in_list(held_item, inserted_board.flatpack_components))
+			context[SCREENTIP_CONTEXT_LMB] = "Insert flatpack component"
+			return CONTEXTUAL_SCREENTIP_SET
+
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(!isnull(held_item))
@@ -78,12 +85,38 @@
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
 	if(!QDELETED(inserted_board))
 		. += span_notice("The board can be ejected via [EXAMINE_HINT("Ctrl Click")]")
+		if(length(inserted_board.flatpack_components))
+			var/list/obj/item/to_insert
+			for(var/obj/item/component as anything in inserted_board.flatpack_components)
+				var/inserted = get_flatpack_component_count(component)
+				var/required = inserted_board.flatpack_components[component]
+				if(inserted == required)
+					continue
+				LAZYADDASSOC(to_insert, component::name, "[inserted]/[required]")
+			if(length(to_insert))
+				. += span_warning("The following components must be inserted by hand before packaging")
+				for(var/component_name in to_insert)
+					. += span_warning("[component_name]:[to_insert[component_name]]")
 
 /obj/machinery/flatpacker/update_overlays()
 	. = ..()
 
 	if(!QDELETED(inserted_board))
 		. += mutable_appearance(icon, "[base_icon_state]_c")
+
+
+/**
+ * Returns count of inserted flatpack component parts
+ * Arguments
+ * obj/item/type - the component type we are trying to count
+ */
+/obj/machinery/flatpacker/proc/get_flatpack_component_count(obj/item/type)
+	PRIVATE_PROC(TRUE)
+
+	. = 0
+	for(var/obj/item/test as anything in flatpacked_components)
+		if(test.type == type)
+			. += 1
 
 /obj/machinery/flatpacker/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -92,6 +125,8 @@
 		needed_mats.Cut()
 		print_tier = 1
 		update_appearance(UPDATE_OVERLAYS)
+	if(gone in flatpacked_components)
+		flatpacked_components -= gone
 
 /obj/machinery/flatpacker/RefreshParts()
 	. = ..()
@@ -191,6 +226,17 @@
 
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
+	else if(!QDELETED(inserted_board) && length(inserted_board.flatpack_components) && is_type_in_list(attacking_item, inserted_board.flatpack_components))
+		if(get_flatpack_component_count(attacking_item.type) == inserted_board.flatpack_components[attacking_item.type])
+			balloon_alert(user, "max count reached!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck in hand!"))
+			return ITEM_INTERACT_BLOCKING
+
+		LAZYADD(flatpacked_components, attacking_item)
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
@@ -237,16 +283,19 @@
 		var/atom/build = initial(inserted_board.build_path)
 
 		var/disableReason = ""
-		var/has_materials = materials.has_materials(needed_mats, creation_efficiency)
-		if(!has_materials)
-			disableReason += "Not enough materials. "
 		if(print_tier > max_part_tier)
 			disableReason += "This design is too advanced for this machine. "
+		else if(!materials.has_materials(needed_mats, creation_efficiency))
+			disableReason += "Not enough materials. "
+		else
+			for(var/obj/item/component as anything in inserted_board.flatpack_components)
+				var/diff = inserted_board.flatpack_components[component] - get_flatpack_component_count(component)
+				if(diff)
+					disableReason += "Please insert [diff] [component::name]"
 		design = list(
 			"name" = initial(build.name),
 			"requiredMaterials" = cost_mats,
 			"icon" = icon2base64(icon(initial(build.icon), initial(build.icon_state), frame = 1)),
-			"canPrint" = has_materials && print_tier <= max_part_tier,
 			"disableReason" = disableReason
 		)
 	.["design"] = design
@@ -266,6 +315,10 @@
 			if(print_tier > max_part_tier)
 				say("Design too complex.")
 				return
+			for(var/obj/item/component as anything in inserted_board.flatpack_components)
+				if(inserted_board.flatpack_components[component] != get_flatpack_component_count(component))
+					balloon_alert(ui.user, "Not enough [component::name]!")
+					return
 			if(!materials.has_materials(needed_mats, creation_efficiency))
 				say("Not enough materials to begin production.")
 				return
@@ -313,7 +366,9 @@
 	busy = FALSE
 
 	materials.use_materials(needed_mats, creation_efficiency)
-	new /obj/item/flatpack(drop_location(), board)
+	var/obj/item/flatpack/box = new (drop_location(), board)
+	for(var/obj/item/component as anything in flatpacked_components)
+		component.forceMove(box)
 
 	SStgui.update_uis(src)
 
@@ -322,6 +377,9 @@
 		return CLICK_ACTION_BLOCKING
 
 	try_put_in_hand(inserted_board, user)
+	var/drop = drop_location()
+	for(var/obj/item/component as anything in flatpacked_components)
+		component.forceMove(drop)
 
 	return CLICK_ACTION_SUCCESS
 
