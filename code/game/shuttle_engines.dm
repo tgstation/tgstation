@@ -43,7 +43,7 @@
 		engine_state = ENGINE_UNWRENCHED
 		anchored = FALSE
 
-/obj/machinery/power/shuttle_engine/on_construction(mob/user)
+/obj/machinery/power/shuttle_engine/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	if(anchored)
 		connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
