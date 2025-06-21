@@ -422,9 +422,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
-		var/their_moles
-		TOTAL_MOLES(sharer_gases,their_moles)
-		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
+		return (temperature_archived*((our_moles + moved_moles) - our_moles)) * R_IDEAL_GAS_EQUATION / volume //return the change in pressure of our gas mix bc this is the pressure that is doing the work to push
 
 ///Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
 ///Returns: new temperature of the sharer
