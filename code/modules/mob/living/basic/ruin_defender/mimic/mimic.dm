@@ -53,11 +53,16 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	desc = "A very hostile rectangular steel crate."
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
-	base_icon_state = "crate"
+	base_icon_state = "crate_mimic"
 	icon_living = "crate"
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	speak_emote = list("clatters")
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	speed = 1
+	health = 210
+	maxHealth = 210
+	melee_attack_cooldown = 1 SECOND
 	layer = BELOW_MOB_LAYER
 	ai_controller = /datum/ai_controller/basic_controller/mimic_crate
 	/// are we open
@@ -74,6 +79,8 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/mob_storage_capacity = 10
 	///Nullspaced crate that we are pretending to be
 	var/atom/movable/crate = /obj/structure/closet/crate
+	///mimick overlay
+	var/static/mutable_appearance/mimic_overlay
 
 // Pickup loot
 /mob/living/basic/mimic/crate/Initialize(mapload)
@@ -85,12 +92,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(mapload) //eat shit
 		for(var/obj/item/item in loc)
 			item.forceMove(src)
-
 	crate = new crate(null) // Nullspaced so we don't accidentally spew it out when opening
-	icon = crate.icon
-	icon_state = crate.icon_state
-	base_icon_state = crate.base_icon_state
-	icon_living = icon_state
 
 /mob/living/basic/mimic/crate/Destroy()
 	QDEL_NULL(crate)
@@ -108,7 +110,8 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/crate/melee_attack(mob/living/carbon/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	toggle_open() // show our cool lid at the dumbass humans
+	if(opened)
+		do_bite_animation()
 
 /mob/living/basic/mimic/crate/proc/trigger()
 	if(isnull(ai_controller) || client)
@@ -150,6 +153,13 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return crate.examine(user)
 	return ..()
 
+/mob/living/basic/mimic/crate/update_icon_state()
+	. = ..()
+	if(opened)
+		icon_state = "[base_icon_state]open"
+	else
+		icon_state = crate.
+
 /**
 * Used to open and close the mimic
 *
@@ -165,19 +175,40 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(!opened)
 		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = TRUE
-		icon_state = "[base_icon_state]open"
 		playsound(src, 'sound/machines/crate/crate_open.ogg', 50, TRUE)
+
+		//Cooler attack effect and wound bonus but we lose the ability to knockdown.
+		attack_verb_continuous = "bites"
+		attack_verb_simple = "bite"
+		attack_sound = 'sound/items/weapons/bite.ogg'
+		attack_vis_effect = ATTACK_EFFECT_BITE
+		wound_bonus = 10
+		exposed_wound_bonus = 10
+		sharpness = SHARP_POINTY
+		knockdown_people = FALSE
+
 		for(var/atom/movable/movable as anything in src)
 			movable.forceMove(loc)
 	else
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
-		icon_state = base_icon_state
 		playsound(src, 'sound/machines/crate/crate_close.ogg', 50, TRUE)
+
+		//A robust slam attack that might be better against hard threats, but we cannot wound.
+		attack_verb_continuous = "slams"
+		attack_verb_simple = "slam"
+		attack_sound = 'sound/items/weapons/punch1.ogg'
+		attack_vis_effect = ATTACK_EFFECT_SMASH
+		wound_bonus = CANT_WOUND
+		exposed_wound_bonus = 0
+		sharpness =  NONE
+		knockdown_people = TRUE
+
 		for(var/atom/movable/movable as anything in get_turf(src))
 			if(movable != src && insert(movable) == CANT_INSERT_FULL)
 				playsound(src, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 				break
+	update_appearance()
 
 /**
 * Called by toggle_open to put items inside the mimic when it's being closed
@@ -226,13 +257,15 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	return TRUE
 
-/mob/living/basic/mimic/crate/xenobio
-	health = 210
-	maxHealth = 210
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
-	speak_emote = list("clatters")
-	gold_core_spawnable = HOSTILE_SPAWN
+/mob/living/basic/mimic/crate/proc/do_bite_animation()
+	flick(icon, "[base_icon_state]_mimic_bite")
+
+
+///shitty slow type for ruins, 3 speed is still plenty slow.
+/mob/living/basic/mimic/crate/slow
+	health = 250
+	maxHealth = 250
+	speed = 3
 
 /datum/action/innate/mimic_lock
 	name = "Lock/Unlock"
@@ -249,6 +282,44 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		to_chat(mimic, span_warning("You loosen up, allowing yourself to be opened and closed."))
 	else
 		to_chat(mimic, span_warning("You stiffen up, preventing anyone from opening or closing you."))
+
+///A version that can be used for crate types that don't have bespoke sprites yet.
+/datum/action/innate/mimic/crate/omni
+	///mimick graphic to overlay on the open crate.
+	var/static/mutable_appearance/mimic_overlay
+
+/mob/living/basic/mimic/crate/omni/Initialize(mapload)
+	. = ..()
+	icon = crate.icon
+	icon_state = crate.icon_state
+	base_icon_state = crate.base_icon_state
+	icon_living = icon_state
+
+/mob/living/basic/mimic/crate/omni/update_overlays()
+	. = ..()
+	if(!mimic_overlay)
+		mimic_overlay = mutable_appearance('icons/obj/storage/crates.dmi', "mimic_overlay")
+
+	if(opened)
+		. += mimic_overlay
+
+/mob/living/basic/mimic/crate/omni/do_bite_animation()
+	if(!opened)
+		return
+
+	toggle_open()
+	addtimer(CALLBACK(src, PROC_REF(do_open_animation), 0.5 SECONDS))
+	//shake animation
+	animate(src, pixel_z = 2, time = 40, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -2, time = 40, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = 1, time = 40, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -1, time = 40, flags = ANIMATION_RELATIVE)
+
+///Reopen our mouth after biting
+/mob/living/basic/mimic/crate/omni/proc/do_do_open_animation()
+	if(opened)
+		return
+	toggle_open()
 
 // ****************************
 // COPYING (actually imitates target object) MIMIC
