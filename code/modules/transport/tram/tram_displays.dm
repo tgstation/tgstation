@@ -81,13 +81,14 @@
 		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
 
 /obj/machinery/transport/destination_sign/on_deconstruction(disassembled)
+	var/atom/drop = drop_location()
 	if(disassembled)
-		new /obj/item/wallframe/indicator_display(drop_location())
+		new /obj/item/wallframe/indicator_display(drop)
 	else
-		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
-		new /obj/item/stack/sheet/iron(drop_location(), 1)
-		new /obj/item/shard(drop_location())
-		new /obj/item/shard(drop_location())
+		new /obj/item/stack/sheet/mineral/titanium(drop, 2)
+		new /obj/item/stack/sheet/iron(drop)
+		new /obj/item/shard(drop)
+		new /obj/item/shard(drop)
 
 /obj/machinery/transport/destination_sign/indicator/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

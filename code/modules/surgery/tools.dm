@@ -173,7 +173,7 @@
 	toolspeed = 1
 	sharpness = SHARP_POINTY
 	wound_bonus = 10
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "drill_normal"
 
@@ -226,7 +226,7 @@
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
 	wound_bonus = 10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "scalpel_normal"
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
@@ -285,7 +285,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
 	wound_bonus = 15
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "saw_normal"
 
