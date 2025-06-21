@@ -327,7 +327,7 @@
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
-/datum/techweb/proc/enqueue_node(id, mob/user)
+/datum/techweb/proc/enqueue_node(id, mob/user, queued_time, turf/queued_location)
 	var/queue_first = FALSE
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/human_user = user
@@ -342,29 +342,53 @@
 			return FALSE
 
 	for(var/node_id in research_queue_nodes)
-		if(research_queue_nodes[node_id] == user)
+		if(research_queue_nodes[node_id]["user"] == user)
 			research_queue_nodes.Remove(node_id)
 
 	if (queue_first)
 		research_queue_nodes.Insert(1, id)
-	research_queue_nodes[id] = user
+	research_queue_nodes[id] = list(
+		"user" = user,
+		"time" = queued_time,
+		"location" = queued_location)
 
 	return TRUE
 
 /datum/techweb/proc/dequeue_node(id, mob/user)
 	if(!(id in research_queue_nodes))
 		return FALSE
-	if(research_queue_nodes[id] != user)
+	if(research_queue_nodes[id]["user"] != user)
 		return FALSE
 
 	research_queue_nodes.Remove(id)
 
 	return TRUE
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
+/datum/techweb/proc/research_node_id(
+	id,
+	force,
+	bypass_logging,
+	auto_update_points,
+	get_that_dosh_id,
+	researcher = null)
+	return research_node(
+		SSresearch.techweb_node_by_id(id),
+		force,
+		bypass_logging,
+		auto_update_points,
+		get_that_dosh_id,
+		research_interface,
+		researcher
+		)
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
+/datum/techweb/proc/research_node(
+	datum/techweb_node/node,
+	force = FALSE,
+	auto_adjust_cost = TRUE,
+	bypass_logging = FALSE,
+	get_that_dosh = TRUE,
+	researcher = null,
+	alist/included_log_details = null)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -415,9 +439,34 @@
 
 	// Dequeue
 	if(node.id in research_queue_nodes)
+		if(isnull(included_log_details))
+			var/user = research_queue_nodes[node.id]["user"]
+			var/queued_time = research_queue_nodes[node.id]["time"]
+			var/location = research_queue_nodes[node.id]["location"]
+			SSresearch._InCharacter_log_research(
+				researcher_atom = user,
+				logged_node = node,
+				techweb_logged_to = src,
+				queued_time = queued_time,
+				researcher_location = location
+			)
+		else
+			SSresearch._InCharacter_log_research(log_details = included_log_details)
 		research_queue_nodes.Remove(node.id)
-
+		return TRUE
+	if(!bypass_logging)
+		if(isnull(included_log_details))
+			SSresearch._InCharacter_log_research(
+				logged_node = node,
+				researcher_atom = researcher,
+				techweb_logged_to = src,
+			)
+		else
+			SSresearch._InCharacter_log_research(log_details = included_log_details)
 	return TRUE
+
+
+
 
 /datum/techweb/proc/unresearch_node_id(id)
 	return unresearch_node(SSresearch.techweb_node_by_id(id))
