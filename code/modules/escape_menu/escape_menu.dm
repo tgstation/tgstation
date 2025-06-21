@@ -21,6 +21,8 @@ GLOBAL_LIST_EMPTY(escape_menus)
 /datum/escape_menu
 	/// The client that owns this escape menu
 	var/client/client
+	/// A weakref to the hud this escape menu currently applies to
+	var/datum/weakref/our_hud_ref
 
 	VAR_PRIVATE
 		ckey
@@ -41,6 +43,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 
 	ckey = client?.ckey
 	src.client = client
+	refresh_hud()
 
 	base_holder = new(client)
 	if(isnull(dim_screen))
@@ -64,11 +67,16 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	QDEL_NULL(base_holder)
 	QDEL_NULL(page_holder)
 
+	var/datum/our_hud = our_hud_ref?.resolve()
+	if(our_hud)
+		REMOVE_TRAIT(our_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
+
 	GLOB.escape_menus -= ckey
 
 	var/sound/esc_clear = sound(null, repeat = FALSE, channel = CHANNEL_ESCAPEMENU) //yes, I'm doing it like this with a null, no its absolutely intentional, cuts off the sound right as needed.
 	SEND_SOUND(client, esc_clear)
 	SEND_SOUND(client, 'sound/misc/escape_menu/esc_close.ogg')
+	client = null
 
 	return ..()
 
@@ -84,6 +92,19 @@ GLOBAL_LIST_EMPTY(escape_menus)
 
 	if (menu_page == PAGE_LEAVE_BODY)
 		qdel(src)
+	else
+		// Otherwise our client just switched bodies, let's update our hud
+		refresh_hud()
+
+/datum/escape_menu/proc/refresh_hud()
+	var/datum/old_hud = our_hud_ref?.resolve()
+	if(old_hud)
+		REMOVE_TRAIT(old_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
+
+	var/datum/new_hud = client.mob?.hud_used
+	our_hud_ref = WEAKREF(new_hud)
+	if(new_hud)
+		ADD_TRAIT(new_hud, TRAIT_ESCAPE_MENU_OPEN, ref(src))
 
 /datum/escape_menu/proc/show_page()
 	PRIVATE_PROC(TRUE)

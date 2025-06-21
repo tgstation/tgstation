@@ -25,9 +25,9 @@
 	set_zipper(TRUE)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
 
-/obj/item/storage/backpack/duffelbag/update_desc(updates)
+/obj/item/storage/backpack/duffelbag/examine(mob/user)
 	. = ..()
-	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
+	. += "[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
 	if(loc != user) // God fuck TK

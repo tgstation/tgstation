@@ -90,7 +90,7 @@
 			bonfire_log.pixel_x += rand(1,4)
 			bonfire_log.pixel_y += rand(1,4)
 		if(can_buckle || grill)
-			new /obj/item/stack/rods(loc, 1)
+			new /obj/item/stack/rods(loc)
 		qdel(src)
 		return
 
