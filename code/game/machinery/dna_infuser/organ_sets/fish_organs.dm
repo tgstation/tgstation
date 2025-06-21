@@ -82,6 +82,8 @@
 
 /datum/status_effect/organ_set_bonus/fish/set_organs(new_value)
 	. = ..()
+	if (!iscarbon(owner))
+		return
 	var/mob/living/carbon/carbon_owner = owner
 	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
 	var/tail_color = tail?.bodypart_overlay?.draw_color
@@ -105,9 +107,8 @@
 
 /datum/status_effect/organ_set_bonus/fish/texture_limb(atom/source, obj/item/bodypart/limb)
 	. = ..()
-	if (!color_active)
+	if (!color_active || !iscarbon(owner))
 		return
-
 	var/mob/living/carbon/carbon_owner = owner
 	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
 	var/tail_color = tail?.bodypart_overlay?.draw_color
