@@ -294,6 +294,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.nukeop_overwatch_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/sapper
+	name = "sapper"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "x"
+
+/obj/effect/landmark/start/sapper/Initialize(mapload)
+	..()
+	GLOB.sapper_start += loc
+	return INITIALIZE_HINT_QDEL
+
 // Must be immediate because players will
 // join before SSatom initializes everything.
 INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
