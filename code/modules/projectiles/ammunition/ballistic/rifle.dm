@@ -124,6 +124,16 @@
 	var/drowsy_per_second = 2 SECONDS
 	/// At what point of drowsiness do we knock out the owner
 	var/drowsy_knockout = 5 SECONDS // Actually more like 8 seconds, because you need 4 ticks to reach this
+	/// Can this bolt cause sleeping? Used to prevent sleep stacking by shooting multiple bolts
+	var/can_sleep = TRUE
+
+/datum/embedding/rebar_healium/embed_into(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+	. = ..()
+	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+		for(var/obj/item/ammo_casing/rebar/healium/other_rebar in limb.embedded_objects)
+			if (other_rebar != parent)
+				can_sleep = FALSE
+				return
 
 /datum/embedding/rebar_healium/process(seconds_per_tick)
 	. = ..()
@@ -137,13 +147,19 @@
 	update_health += owner.adjustOxyLoss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)
 	if (update_health)
 		owner.updatehealth()
-	if (owner.mob_biotypes & MOB_ORGANIC)
+	if (can_sleep && (owner.mob_biotypes & MOB_ORGANIC))
 		owner.adjust_drowsiness(drowsy_per_second * seconds_per_tick)
 		var/datum/status_effect/drowsiness/drowsiness = owner.has_status_effect(/datum/status_effect/drowsiness)
 		if (drowsiness?.duration - world.time >= drowsy_knockout)
 			owner.Sleeping(3 SECONDS)
 	if (casing.heals_left <= 0)
-		qdel(casing)
+		fall_out()
+
+/datum/embedding/rebar_healium/remove_embedding(mob/living/to_hands)
+	. = ..()
+	var/obj/item/ammo_casing/rebar/healium/casing = parent
+	casing.heals_left = initial(casing.heals_left)
+	can_sleep = TRUE
 
 /obj/item/ammo_casing/rebar/supermatter
 	name = "supermatter bolt"

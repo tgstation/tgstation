@@ -18,6 +18,7 @@
 		blood_spawn_chance = 45,\
 		transfer_blood_dna = TRUE,\
 		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
+		blood_dna_info = blood_dna_list,\
 	)
 
 	AddComponent(

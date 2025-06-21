@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	block_chance = initial(block_chance)
 	armour_penetration = initial(armour_penetration)
 	wound_bonus = initial(wound_bonus)
-	bare_wound_bonus = initial(bare_wound_bonus)
+	exposed_wound_bonus = initial(exposed_wound_bonus)
 	toolspeed = initial(toolspeed)
 
 	var/weight_rank = GET_FISH_WEIGHT_RANK(weight)
@@ -1088,7 +1088,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	SIGNAL_HANDLER
 	visual.icon = dedicated_in_aquarium_icon || icon
 	visual.icon_state = dedicated_in_aquarium_icon_state || "[initial(icon_state)]_small"
-	visual.color = aquarium_vc_color
 
 /obj/item/fish/proc/randomize_aquarium_position(datum/source, atom/movable/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
@@ -1549,10 +1548,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 /obj/item/fish/proc/undo_petted()
 	fish_flags &= ~FISH_FLAG_PETTED
-
-/obj/item/fish/update_atom_colour()
-	. = ..()
-	aquarium_vc_color = color || initial(aquarium_vc_color)
 
 ///Proc called in trophy_fishes.dm, when a fish is mounted on persistent trophy mounts
 /obj/item/fish/proc/persistence_save(list/data)

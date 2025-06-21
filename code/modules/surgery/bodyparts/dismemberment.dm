@@ -118,10 +118,10 @@
 
 	if(!special)
 		if(phantom_owner.dna)
-			for(var/datum/mutation/human/mutation as anything in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
+			for(var/datum/mutation/mutation as anything in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
 				if(mutation.limb_req && (mutation.limb_req == body_zone))
 					to_chat(phantom_owner, span_warning("You feel your [mutation] deactivating from the loss of your [body_zone]!"))
-					phantom_owner.dna.force_lose(mutation)
+					phantom_owner.dna.remove_mutation(mutation, mutation.sources)
 
 	update_icon_dropped()
 	phantom_owner.update_health_hud() //update the healthdoll
@@ -131,7 +131,8 @@
 
 	if(bodypart_flags & BODYPART_PSEUDOPART)
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
-		qdel(src)
+		if(!QDELING(src)) // we might be removed as a part of something qdeling us
+			qdel(src)
 		return
 
 	if(move_to_floor)
@@ -170,9 +171,9 @@
  * * wounding_type: Either WOUND_BLUNT, WOUND_SLASH, or WOUND_PIERCE, basically only matters for the dismember message
  * * wounding_dmg: The damage of the strike that prompted this roll, higher damage = higher chance
  * * wound_bonus: Not actually used right now, but maybe someday
- * * bare_wound_bonus: ditto above
+ * * exposed_wound_bonus: ditto above
  */
-/obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+/obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus)
 	if (!can_dismember())
 		return
 

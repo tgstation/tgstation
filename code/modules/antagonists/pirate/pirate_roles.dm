@@ -219,5 +219,5 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob)
 	. = ..()
-	spawned_mob.dna.add_mutation(/datum/mutation/human/hulk/superhuman)
-	spawned_mob.dna.add_mutation(/datum/mutation/human/gigantism)
+	spawned_mob.dna.add_mutation(/datum/mutation/hulk/superhuman, MUTATION_SOURCE_GHOST_ROLE)
+	spawned_mob.dna.add_mutation(/datum/mutation/gigantism, MUTATION_SOURCE_GHOST_ROLE)

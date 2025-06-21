@@ -84,6 +84,7 @@
 	. = ..()
 	if(offset != 0)
 		// You aren't the source? don't change yourself
+		critical = PLANE_CRITICAL_FUCKO_PARALLAX
 		return
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 	RegisterSignal(SSdcs, COMSIG_NARSIE_SUMMON_UPDATE, PROC_REF(narsie_modified))
@@ -171,8 +172,26 @@
 	blend_mode = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
+	// We start out hidden as we do not need to render when there's no distortion on our level
+	start_hidden = TRUE
 
-///Contains just the floor
+/atom/movable/screen/plane_master/gravpulse/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	RegisterSignal(GLOB, SIGNAL_ADDTRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_enabled))
+	RegisterSignal(GLOB, SIGNAL_REMOVETRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_disabled))
+	if(HAS_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset)))
+		distortion_enabled()
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_enabled(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_disabled(datum/source)
+	SIGNAL_HANDLER
+	hide_plane()
+
+/// Contains just the floor
 /atom/movable/screen/plane_master/floor
 	name = "Floor"
 	documentation = "The well, floor. This is mostly used as a sorting mechanism, but it also lets us create a \"border\" around the game world plane, so its drop shadow will actually work."
@@ -309,6 +328,7 @@
 	plane = ABOVE_LIGHTING_PLANE
 	documentation = "Anything on the game plane that needs a space to draw on that will be above the lighting plane.\
 		<br>Mostly little alerts and effects, also sometimes contains things that are meant to look as if they glow."
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/weather_glow
 	name = "Weather Glow"
@@ -316,6 +336,7 @@
 	plane = WEATHER_GLOW_PLANE
 	start_hidden = TRUE
 	critical = PLANE_CRITICAL_DISPLAY
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/weather_glow/set_home(datum/plane_master_group/home)
 	. = ..()
@@ -334,8 +355,17 @@
 	plane = EMISSIVE_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(EMISSIVE_RENDER_PLATE)
+	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	/// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e. adding light so objects glow)
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 1,1,1,0, 0,0,0,1, 0,0,0,0))
+	/// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
+	/// which allows us to selectively bloom only a part of our emissives
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), relay_color = list(255,255,255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_MASK_PLATE, offset), relay_color = list(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
@@ -343,6 +373,7 @@
 		<br>Has a few effects and a funky color matrix designed to make things a bit more visually readable."
 	plane = PIPECRAWL_IMAGES_PLANE
 	start_hidden = TRUE
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/pipecrawl/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -358,6 +389,7 @@
 	documentation = "Holds camera static images. Usually only visible to people who can well, see static.\
 		<br>We use images rather then vis contents because they're lighter on maptick, and maptick sucks butt."
 	plane = CAMERA_STATIC_PLANE
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/camera_static/show_to(mob/mymob)
 	. = ..()
@@ -396,6 +428,7 @@
 		<br>Really only exists for its layering potential, we don't use this for any vfx"
 	plane = HIGH_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(LIT_GAME_RENDER_PLATE)
 
 /atom/movable/screen/plane_master/ghost
 	name = "Ghost"
@@ -425,7 +458,9 @@
 		return
 	remove_filter("AO")
 	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
-		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
+		// We use outlines instead of drop shadow due to how extremely expensive it is, and there's no reason to use it for runechat
+		// which already has high drop shadow transparency at just 32 alpha, so outline does the job good enough
+		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"
@@ -465,3 +500,27 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
+
+/atom/movable/screen/plane_master/escape_menu/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/hud/our_hud = home.our_hud
+	if(!our_hud)
+		return
+
+	RegisterSignal(our_hud, SIGNAL_ADDTRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_opened), override = TRUE)
+	RegisterSignal(our_hud, SIGNAL_REMOVETRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_closed), override = TRUE)
+	if(!HAS_TRAIT(our_hud, TRAIT_ESCAPE_MENU_OPEN))
+		escape_closed()
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_opened(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_closed(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	hide_plane(our_mob)
