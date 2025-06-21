@@ -1194,7 +1194,7 @@
 		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
-/obj/machinery/proc/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/proc/on_construction(mob/user)
 	return
 
 /**
