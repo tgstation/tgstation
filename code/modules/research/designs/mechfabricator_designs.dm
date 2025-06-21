@@ -2180,6 +2180,15 @@
 	)
 	build_path = /obj/item/mod/module/storage
 
+/datum/design/module/mod_diving
+	name = "Diving Module"
+	id = "mod_diving"
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT *1.25,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/mod/module/diving
+
 /datum/design/module/mod_storage_expanded
 	name = "Expanded Storage Module"
 	id = "mod_storage_expanded"
