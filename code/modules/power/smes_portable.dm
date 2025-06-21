@@ -132,7 +132,7 @@
 			if(!charge_adjust)
 				break
 
-/obj/machinery/smesbank/on_construction(mob/user)
+/obj/machinery/power/smesbank/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	set_anchored(FALSE)
 
