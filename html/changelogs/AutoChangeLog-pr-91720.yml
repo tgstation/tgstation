@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Glass shards from colliding with vendors or glass table hurt you again."
