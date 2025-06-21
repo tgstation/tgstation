@@ -10,7 +10,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	if(!length(accesses))
-		stack_trace("attempted to assign an empty access to a mob!")
+		stack_trace("attempted to assign an empty access list to a mob!")
 		return
 	my_access = accesses
 	RegisterSignal(target, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
