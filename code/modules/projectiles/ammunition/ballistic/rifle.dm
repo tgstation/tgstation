@@ -127,7 +127,7 @@
 	/// Can this bolt cause sleeping? Used to prevent sleep stacking by shooting multiple bolts
 	var/can_sleep = TRUE
 
-/datum/embedding/rebar_healium/embed_into(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+/datum/embedding/rebar_healium/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
 	. = ..()
 	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
 		for(var/obj/item/ammo_casing/rebar/healium/other_rebar in limb.embedded_objects)
