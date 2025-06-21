@@ -133,7 +133,7 @@
 	///What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
 	var/subsystem_type = /datum/controller/subsystem/machines
 	///Circuit to be created and inserted when the machinery is created
-	var/obj/item/circuitboard/circuit = null
+	var/obj/item/circuitboard/circuit
 	///See code/DEFINES/interaction_flags.dm
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	///The department we are paying to use this machine
@@ -160,11 +160,12 @@
 	fire = 50
 	acid = 70
 
-/obj/machinery/Initialize(mapload, obj/item/circuitboard/board = circuit)
+/obj/machinery/Initialize(mapload, obj/item/circuitboard/board)
 	. = ..()
 	SSmachines.register_machine(src)
 
-	circuit = board
+	if(board)
+		circuit = board
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
 	if(istype(circuit, /obj/item/circuitboard))
@@ -1193,7 +1194,7 @@
 /obj/machinery/examine_more(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) && component_parts)
-		. += display_parts(user, TRUE)
+		. += display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction(mob/user)

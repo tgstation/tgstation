@@ -103,7 +103,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			for (var/_ in 1 to comp_amt)
 				. += stock_part_datum
 		else
-			for(var/component in 1 to comp_amt)
+			for(var/_ in 1 to comp_amt)
 				. += comp_path
 
 // Applies the default parts defined by the circuit board when the machine is created
