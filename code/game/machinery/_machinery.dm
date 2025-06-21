@@ -160,11 +160,11 @@
 	fire = 50
 	acid = 70
 
-/obj/machinery/Initialize(mapload, obj/item/circuitboard/board)
+/obj/machinery/Initialize(mapload, obj/item/circuitboard/board = circuit)
 	. = ..()
 	SSmachines.register_machine(src)
 
-	if(board)
+	if(ispath(board, /obj/item/circuitboard) || istype(circuit, /obj/item/circuitboard))
 		circuit = board
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
