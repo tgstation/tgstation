@@ -82,7 +82,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	var/list/obj/item/flatpack_components
 
 /// Converts req_components map into a linear list with its typepaths resolved
-/obj/item/circuitboard/machine/proc/flatten_component_list(obj/machinery/machine)
+/obj/item/circuitboard/machine/proc/flatten_component_list()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	. = list()
@@ -113,7 +113,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 	. = ..()
 
-	var/list/final_parts = length(replacement_parts) ? replacement_parts : flatten_component_list(machine)
+	var/list/final_parts = length(replacement_parts) ? replacement_parts : flatten_component_list()
 	for(var/part in final_parts)
 		if(ispath(part, /obj/item))
 			part = new part(machine)
