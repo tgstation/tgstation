@@ -83,7 +83,7 @@
  * * hit_atom: The atom that has been hit by the boomerang'd object.
  */
 /datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwingdatum)
-	var/mob/thrown_by = throwingdatum.get_thrower()
+	var/mob/thrown_by = throwingdatum?.get_thrower()
 	var/obj/item/true_parent = parent
 	if(thrown_by)
 		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwingdatum.speed, thrown_by, TRUE), 0.1 SECONDS)

@@ -102,7 +102,7 @@
 
 	var/war_declared = FALSE
 	for(var/obj/item/circuitboard/computer/syndicate_shuttle/board as anything in GLOB.syndicate_shuttle_boards)
-		if(board.challenge)
+		if(board.challenge_start_time)
 			war_declared = TRUE
 
 	var/force_war_button = ""

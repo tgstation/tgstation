@@ -114,7 +114,7 @@
  *
  * Does a special effect if we blocked damage with our back
  */
-/obj/item/organ/heart/roach/proc/do_block_effect(mob/living/carbon/human/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+/obj/item/organ/heart/roach/proc/do_block_effect(mob/living/carbon/human/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(!is_blocking(source, damage_dealt, damagetype, attack_direction))
