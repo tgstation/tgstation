@@ -317,7 +317,7 @@
 				return
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
 				if(inserted_board.flatpack_components[component] != get_flatpack_component_count(component))
-					balloon_alert(ui.user, "Not enough [component::name]!")
+					balloon_alert(ui.user, "not enough [component::name]!")
 					return
 			if(!materials.has_materials(needed_mats, creation_efficiency))
 				say("Not enough materials to begin production.")
