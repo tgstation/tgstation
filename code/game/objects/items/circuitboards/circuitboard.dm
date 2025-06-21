@@ -81,7 +81,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	/// Components that need to be flatpacked along with the circuitboard so as to replace the defaults
 	var/list/obj/item/flatpack_components
 
-/// Converts req_components map into a linear list with its typepaths resolved
+/// Converts req_components map into a linear list with its datum components resolved
 /obj/item/circuitboard/machine/proc/flatten_component_list()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
