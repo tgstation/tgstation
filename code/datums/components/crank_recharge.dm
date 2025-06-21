@@ -16,9 +16,11 @@
 	var/is_charging = FALSE
 	/// Should you be able to move while charging, use IGNORE_USER_LOC_CHANGE if you want to move and crank
 	var/charge_move = NONE
+	/// Should our do_after() to crank the gun show the cogwheel effect? If TRUE, will hide the cogwheel.
+	var/crank_hidden = FALSE
 	COOLDOWN_DECLARE(charge_sound_cooldown)
 
-/datum/component/crank_recharge/Initialize(charging_cell, spin_to_win = FALSE, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/items/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS, charge_move = NONE)
+/datum/component/crank_recharge/Initialize(charging_cell, spin_to_win = FALSE, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/items/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS, charge_move = NONE, crank_hidden = FALSE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -31,6 +33,7 @@
 	src.charge_sound = charge_sound
 	src.charge_sound_cooldown_time = charge_sound_cooldown_time
 	src.charge_move = charge_move
+	src.crank_hidden = crank_hidden
 /datum/component/crank_recharge/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
@@ -59,7 +62,7 @@
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
 		playsound(source, charge_sound, 40)
 	source.balloon_alert(user, "charging...")
-	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE, timed_action_flags = charge_move))
+	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE, timed_action_flags = charge_move, hidden = crank_hidden))
 		is_charging = FALSE
 		return
 	charging_cell.give(charge_amount)

@@ -27,6 +27,11 @@
 	sharpness = SHARP_EDGED
 	embed_type = /datum/embedding/shrapnel
 
+/obj/item/shrapnel/energy_bolt
+	name = "glowing green bolt"
+	custom_materials = list(/datum/material/uranium = SMALL_MATERIAL_AMOUNT * 0.5)
+	embed_type = /datum/embedding/energy_bolt
+
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
 	damage = 14

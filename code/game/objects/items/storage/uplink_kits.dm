@@ -68,7 +68,7 @@
 			new /obj/item/implanter/storage(src) // 6 tc
 
 		if(KIT_STEALTHY)
-			new /obj/item/gun/energy/recharge/ebow(src) // 10 tc
+			new /obj/item/gun/energy/ebow(src) // 10 tc
 			new /obj/item/pen/sleepy(src) // 4 tc
 			new /obj/item/healthanalyzer/rad_laser(src) // 3 tc
 			new /obj/item/chameleon(src) // 7 tc

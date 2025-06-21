@@ -324,7 +324,7 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 	mask = /obj/item/clothing/mask/gas
 	l_hand = /obj/item/melee/energy/sword
-	r_hand = /obj/item/gun/energy/recharge/ebow
+	r_hand = /obj/item/gun/energy/ebow
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visuals_only)

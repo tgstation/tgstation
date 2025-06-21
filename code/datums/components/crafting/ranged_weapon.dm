@@ -99,7 +99,7 @@
 
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
-	result = /obj/item/gun/energy/recharge/ebow/large
+	result = /obj/item/gun/energy/ebow/large
 	reqs = list(
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 		/obj/item/weaponcrafting/gunkit/ebow = 1,

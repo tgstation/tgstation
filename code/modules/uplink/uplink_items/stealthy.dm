@@ -98,8 +98,8 @@
 	toxin that will damage and disorient targets, causing them to \
 	slur as if inebriated. It can produce an infinite number \
 	of bolts, but takes time to automatically recharge after each shot."
-	item = /obj/item/gun/energy/recharge/ebow
-	cost = 10
+	item = /obj/item/gun/energy/ebow
+	cost = 8
 	surplus = 50
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
