@@ -121,6 +121,9 @@
 /// log emotes
 /datum/config_entry/flag/log_emote
 
+/// log ghost polling
+/datum/config_entry/flag/log_ghost_poll
+
 /// log economy actions
 /datum/config_entry/flag/log_econ
 
