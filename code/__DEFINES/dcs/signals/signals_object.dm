@@ -47,6 +47,12 @@
 	/// Can't use tools on the machine
 	#define COMPONENT_CANT_USE_MACHINE_TOOLS (1<<1)
 
+#define COMSIG_ORE_SILO_PERMISSION_CHECKED "ore_silo_permission_checked"
+	/// The ore silo is not allowed to be used
+	#define COMPONENT_ORE_SILO_DENY (1<<0)
+	/// The ore silo is allowed to be used
+	#define COMPONENT_ORE_SILO_ALLOW (1<<1)
+
 ///from obj/machinery/iv_drip/IV_attach(target, usr) : (attachee)
 #define COMSIG_IV_ATTACH "iv_attach"
 ///from obj/machinery/iv_drip/IV_detach() : (detachee)
