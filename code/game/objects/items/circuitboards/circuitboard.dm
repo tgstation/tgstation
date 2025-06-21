@@ -121,6 +121,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			var/atom/movable/thing = part
 			thing.forceMove(machine)
 		machine.component_parts += part
+	LAZYCLEARLIST(replacement_parts)
 
 	machine.RefreshParts()
 
