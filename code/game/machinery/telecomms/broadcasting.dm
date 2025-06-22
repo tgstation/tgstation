@@ -141,10 +141,11 @@
 					radios -= subspace_radio
 
 			// Syndicate radios can hear all well-known radio channels
-			if (num2text(frequency) in GLOB.reverseradiochannels)
-				for(var/obj/item/radio/syndicate_radios in GLOB.all_radios["[FREQ_SYNDICATE]"])
-					if(syndicate_radios.can_receive(FREQ_SYNDICATE, RADIO_NO_Z_LEVEL_RESTRICTION))
-						radios |= syndicate_radios
+			for(var/channel in GLOB.default_radio_channels)
+				if (GLOB.default_radio_channels[channel] == frequency)
+					for(var/obj/item/radio/syndicate_radios in GLOB.all_radios["[FREQ_SYNDICATE]"])
+						if(syndicate_radios.can_receive(FREQ_SYNDICATE, RADIO_NO_Z_LEVEL_RESTRICTION))
+							radios |= syndicate_radios
 
 		if (TRANSMISSION_RADIO)
 			// Only radios not currently in subspace mode
@@ -173,14 +174,14 @@
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
 	var/list/message_mods = data["mods"]
-	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
+	var/rendered = virt.compose_message(virt, language, message, frequency, data["frequency_name"], data["frequency_color"], spans)
 
 	for(var/atom/movable/hearer as anything in receive)
 		if(!hearer)
 			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
 			continue
 		spans -= blacklisted_spans
-		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods, message_range = INFINITY)
+		hearer.Hear(rendered, virt, language, message, frequency, data["frequency_name"], data["frequency_color"], spans, message_mods, message_range = INFINITY)
 
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))

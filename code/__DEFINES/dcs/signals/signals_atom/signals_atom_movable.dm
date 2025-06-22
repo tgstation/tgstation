@@ -70,9 +70,11 @@
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
 	#define HEARING_RADIO_FREQ 5
-	#define HEARING_SPANS 6
-	#define HEARING_MESSAGE_MODE 7
-	#define HEARING_RANGE 8
+	#define HEARING_RADIO_FREQ_NAME 6
+	#define HEARING_RADIO_FREQ_COLOR 7
+	#define HEARING_SPANS 8
+	#define HEARING_MESSAGE_MODE 9
+	#define HEARING_RANGE 10
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
