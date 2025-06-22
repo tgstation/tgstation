@@ -51,7 +51,7 @@
 	///Which pressure holds docked vessel\station for override of external_pressure_target
 	var/docked_side_pressure
 	///Rate of the pump to remove gases from the air
-	var/volume_rate = 1000
+	var/volume_rate = 2000
 	///The start time of the current cycle to calculate cycle duration
 	var/cycle_start_time
 	///Max duration of cycle, after which the pump will unlock the airlocks with a warning
