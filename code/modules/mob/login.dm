@@ -94,8 +94,7 @@
 
 	//Reload alternate appearances
 	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
-		if(!alt_hud.apply_to_new_mob(src))
-			alt_hud.hide_from(src, absolute = TRUE)
+		alt_hud.check_hud(src)
 
 	update_client_colour()
 	update_mouse_pointer()
