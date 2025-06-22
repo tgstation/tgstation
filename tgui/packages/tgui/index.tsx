@@ -6,25 +6,6 @@
 
 // Themes
 import './styles/main.scss';
-import './styles/themes/abductor.scss';
-import './styles/themes/cardtable.scss';
-import './styles/themes/spookyconsole.scss';
-import './styles/themes/hackerman.scss';
-import './styles/themes/malfunction.scss';
-import './styles/themes/neutral.scss';
-import './styles/themes/ntos.scss';
-import './styles/themes/ntos_cat.scss';
-import './styles/themes/ntos_darkmode.scss';
-import './styles/themes/ntos_lightmode.scss';
-import './styles/themes/ntOS95.scss';
-import './styles/themes/ntos_synth.scss';
-import './styles/themes/ntos_terminal.scss';
-import './styles/themes/ntos_spooky.scss';
-import './styles/themes/paper.scss';
-import './styles/themes/retro.scss';
-import './styles/themes/syndicate.scss';
-import './styles/themes/wizard.scss';
-import './styles/themes/admin.scss';
 
 import { perf } from 'common/perf';
 import { setupGlobalEvents } from 'tgui-core/events';
@@ -52,7 +33,12 @@ function setupApp() {
   setGlobalStore(store);
 
   setupGlobalEvents();
-  setupHotKeys();
+  setupHotKeys({
+    keyUpVerb: 'KeyUp',
+    keyDownVerb: 'KeyDown',
+    // In the future you could send a winget here to get mousepos/size from the map here if it's necessary
+    verbParamsFn: (verb, key) => `${verb} "${key}" 0 0 0 0`,
+  });
   captureExternalLinks();
 
   store.subscribe(() => render(<App />));

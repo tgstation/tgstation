@@ -1,14 +1,16 @@
 /obj/effect/appearance_clone
 
-/obj/effect/appearance_clone/New(loc, atom/A) //Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
-	if(istype(A))
-		appearance = A.appearance
-		dir = A.dir
-		if(ismovable(A))
-			var/atom/movable/AM = A
-			step_x = AM.step_x
-			step_y = AM.step_y
-	. = ..()
+/obj/effect/appearance_clone/New(loc, atom/our_atom) //Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
+	if(!istype(our_atom))
+		return ..()
+	if(!isopenspaceturf(our_atom))
+		appearance = our_atom.appearance
+	dir = our_atom.dir
+	if(ismovable(our_atom))
+		var/atom/movable/our_movable = our_atom
+		step_x = our_movable.step_x
+		step_y = our_movable.step_y
+	return ..()
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 

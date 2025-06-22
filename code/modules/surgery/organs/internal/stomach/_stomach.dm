@@ -405,7 +405,7 @@
 	return span_boldwarning("Your stomach cramps in pain!")
 
 /// If damage is high enough, we may end up vomiting out whatever we had stored
-/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
 	SIGNAL_HANDLER
 	if (!length(stomach_contents) || damage < 9 || final_armor_block || kicking)
 		return

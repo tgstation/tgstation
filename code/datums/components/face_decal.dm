@@ -95,7 +95,7 @@
 		return NONE
 
 	qdel(src)
-	return COMPONENT_CLEANED
+	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /// Ensures normal_overlay overlay in case the mob is not a carbon
 /datum/component/face_decal/proc/update_overlays(atom/parent_atom, list/overlays)

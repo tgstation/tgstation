@@ -39,6 +39,9 @@
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color=COLOR_CULT_RED)
 
 /datum/antagonist/cult/on_removal()
+	if (!owner.current)
+		return ..()
+
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
 		to_chat(owner.current, span_userdanger("An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant."))
@@ -149,11 +152,11 @@
 	if(!where)
 		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get [item]. This is very bad and you should adminhelp immediately (press F1)."))
 		return FALSE
-	else
-		to_chat(mob, span_danger("You have [item] in your [where]."))
-		if(where == "backpack")
-			mob.back.atom_storage?.show_contents(mob)
-		return TRUE
+
+	to_chat(mob, span_danger("You have [item] in your [where]."))
+	if(where == "backpack")
+		mob.back.atom_storage?.show_contents(mob)
+	return TRUE
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
 	if(!equip_cultist(metal = FALSE))
@@ -238,7 +241,7 @@
 /datum/antagonist/cult/proc/deathrattle(datum/source)
 	SIGNAL_HANDLER
 
-	if(owner.current.stat != DEAD)
+	if(owner.current?.stat != DEAD)
 		return
 	if(!QDELETED(GLOB.cult_narsie))
 		return

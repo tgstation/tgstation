@@ -29,14 +29,10 @@
 	name = "tesla bolt"
 	icon_state = null
 	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/lightning
+	impact_effect_type = null
 	damage = 5
 	var/shock_damage = 10
-	var/datum/beam/chain
-
-/obj/projectile/energy/tesla_cannon/fire(setAngle)
-	if(firer)
-		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = 0.5 SECONDS)
-	return ..()
 
 /obj/projectile/energy/tesla_cannon/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

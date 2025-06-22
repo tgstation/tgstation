@@ -357,6 +357,10 @@
  * Automatic logging and uses poll_candidates_for_mob, how convenient
  */
 /proc/offer_control(mob/M)
+	if(isdead(M))
+		to_chat(usr, "You can't give ghosts control of a ghost. They're already ghosts.")
+		return FALSE
+
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
@@ -425,7 +429,7 @@
 
 /// Returns this mob's default lighting alpha
 /mob/proc/default_lighting_cutoff()
-	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
+	if(client?.combo_hud_enabled && (client?.prefs?.toggles & COMBOHUD_LIGHTING))
 		return LIGHTING_CUTOFF_FULLBRIGHT
 	return initial(lighting_cutoff)
 

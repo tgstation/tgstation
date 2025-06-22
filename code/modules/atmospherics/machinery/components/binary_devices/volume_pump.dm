@@ -38,7 +38,6 @@
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 		return CLICK_ACTION_SUCCESS
 	return CLICK_ACTION_BLOCKING
 
@@ -49,7 +48,7 @@
 	transfer_rate = MAX_TRANSFER_RATE
 	investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "volume output set to [transfer_rate] L/s")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
@@ -142,7 +141,7 @@
 			if(.)
 				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
@@ -154,11 +153,10 @@
 	if(!overclocked)
 		overclocked = TRUE
 		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
-		update_icon()
 	else
 		overclocked = FALSE
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")
-		update_icon()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 // mapping
@@ -263,14 +261,14 @@
 	if(!connected_pump)
 		return
 	connected_pump.set_on(TRUE)
-	connected_pump.update_appearance()
+	connected_pump.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/atmos_volume_pump/proc/set_pump_off()
 	CIRCUIT_TRIGGER
 	if(!connected_pump)
 		return
 	connected_pump.set_on(FALSE)
-	connected_pump.update_appearance()
+	connected_pump.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/atmos_volume_pump/proc/request_pump_data()
 	CIRCUIT_TRIGGER

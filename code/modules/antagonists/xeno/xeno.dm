@@ -96,7 +96,7 @@
 	explanation_text = "Survive and advance the Hive."
 
 /datum/objective/advance_hive/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD
 
 ///Captive Xenomorphs team
 /datum/team/xeno/captive

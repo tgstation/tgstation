@@ -273,7 +273,7 @@
 		/datum/job/coroner = /obj/item/organ/tongue/bone, //hes got a bone to pick with you
 		/datum/job/curator = /obj/item/organ/cyberimp/brain/connector,
 		/datum/job/detective = /obj/item/organ/lungs/cybernetic/tier3,
-		/datum/job/doctor = /obj/item/organ/cyberimp/arm/surgery,
+		/datum/job/doctor = /obj/item/organ/cyberimp/arm/toolkit/surgery,
 		/datum/job/geneticist = /obj/item/organ/fly, //we don't care about implants, we have cancer.
 		/datum/job/head_of_personnel = /obj/item/organ/eyes/robotic,
 		/datum/job/head_of_security = /obj/item/organ/eyes/robotic/thermals,
@@ -289,9 +289,9 @@
 		/datum/job/research_director = /obj/item/organ/cyberimp/bci,
 		/datum/job/roboticist = /obj/item/organ/cyberimp/eyes/hud/diagnostic,
 		/datum/job/scientist = /obj/item/organ/ears/cybernetic,
-		/datum/job/security_officer = /obj/item/organ/cyberimp/arm/flash,
+		/datum/job/security_officer = /obj/item/organ/cyberimp/arm/toolkit/flash,
 		/datum/job/shaft_miner = /obj/item/organ/monster_core/rush_gland,
-		/datum/job/station_engineer = /obj/item/organ/cyberimp/arm/toolset,
+		/datum/job/station_engineer = /obj/item/organ/cyberimp/arm/toolkit/toolset,
 		/datum/job/warden = /obj/item/organ/cyberimp/eyes/hud/security,
 	)
 

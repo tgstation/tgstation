@@ -27,7 +27,9 @@
 /obj/item/clothing/suit/hooded/hostile_environment
 	name = "H.E.C.K. suit"
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
-	icon_state = "hostile_env"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/hostile_environment"
+	post_init_icon_state = "hostile_env"
 	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
 	armor_type = /datum/armor/hooded_hostile_environment
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -73,9 +75,10 @@
 /obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
 	desc = "Hostile Environment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
-	icon = 'icons/obj/clothing/head/helmet.dmi'
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/hooded/hostile_environment"
+	post_init_icon_state = "hostile_env"
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor_type = /datum/armor/hooded_hostile_environment
 	cold_protection = HEAD
@@ -145,7 +148,7 @@
 	throwforce = 17
 	armour_penetration = 50
 	sharpness = SHARP_EDGED
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	layer = MOB_LAYER
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	/// Soulscythe mob in the scythe
@@ -172,7 +175,7 @@
 	. = ..()
 	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
 
-/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, list/modifiers)
+/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(attacked.stat != DEAD)
 		give_blood(10)
@@ -334,7 +337,7 @@
 		var/mob/living/attacked_mob = attacked_atom
 		if(attacked_mob.stat != DEAD)
 			give_blood(15)
-		attacked_mob.apply_damage(damage = force * (ismining(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, bare_wound_bonus = 5)
+		attacked_mob.apply_damage(damage = force * (ismining(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, exposed_wound_bonus = 5)
 		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
 	else if((ismachinery(attacked_atom) || isstructure(attacked_atom)) && use_blood(5))
 		var/obj/attacked_obj = attacked_atom

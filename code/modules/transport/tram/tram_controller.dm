@@ -845,7 +845,7 @@
 		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Left-click.")]")
 
 
-/obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, list/modifiers)
+/obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(user.combat_mode || cover_open)
 		return ..()
 
@@ -946,7 +946,7 @@
 		new /obj/item/wallframe/tram/controller(drop_location)
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
-		new /obj/item/stack/sheet/iron(drop_location, 1)
+		new /obj/item/stack/sheet/iron(drop_location)
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.

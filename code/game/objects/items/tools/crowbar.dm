@@ -90,6 +90,10 @@
 	custom_materials = list(/datum/material/wood=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7)
 	wound_bonus = 35
 
+/obj/item/crowbar/hammer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/kneejerk)
+
 /obj/item/crowbar/large/twenty_force //from space ruin
 	name = "heavy crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
@@ -213,7 +217,7 @@
 	toolspeed = 1.25
 	armor_type = /datum/armor/crowbar_mechremoval
 	resistance_flags = FIRE_PROOF
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	wound_bonus = 10
 
 /datum/armor/crowbar_mechremoval

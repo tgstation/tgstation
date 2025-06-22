@@ -142,7 +142,10 @@
 
 		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
-				update_surgery_mood(target, SURGERY_STATE_SUCCESS)
+				if((tool && tool.item_flags & CRUEL_IMPLEMENT) || (accept_hand && surgery.surgery_flags & SURGERY_MORBID_CURIOSITY && HAS_MIND_TRAIT(user, TRAIT_MORBID)))
+					update_surgery_mood(target, SURGERY_STATE_FAILURE)
+				else
+					update_surgery_mood(target, SURGERY_STATE_SUCCESS)
 				play_success_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 		else
@@ -174,8 +177,13 @@
 		CRASH("Not passed a target, how did we get here?")
 	if(!surgery_effects_mood)
 		return
-	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
-		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery. has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
+	// Determine how drunk our patient is
+	var/drunken_patient = target.get_drunk_amount()
+	// Create a probability to ignore the pain based on drunkenness level
+	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
+
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
+		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery (or became drunk). has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
 		return
 	if(target.stat >= UNCONSCIOUS)
 		var/datum/mood_event/surgery/target_mood_event = target.mob_mood?.mood_events[SURGERY_MOOD_CATEGORY]
@@ -292,9 +300,11 @@
 /datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
 	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
 		return FALSE
-	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
-		return FALSE
 	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
+		return FALSE
+	if(!tool && accept_hand)
+		return TRUE
+	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
 	return TRUE
 
@@ -320,8 +330,13 @@
  * * mechanical_surgery - Boolean flag that represents if a surgery step is done on a mechanical limb (therefore does not force scream)
  */
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
+	// Determine how drunk our patient is
+	var/drunken_patient = target.get_drunk_amount()
+	// Create a probability to ignore the pain based on drunkenness level
+	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
+
 	if(target.stat < UNCONSCIOUS)
-		if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+		if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
 			if(!pain_message)
 				return
 			to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))

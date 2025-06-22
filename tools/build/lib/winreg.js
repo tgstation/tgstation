@@ -8,11 +8,11 @@
  * @license MIT
  */
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 export const regQuery = async (path, key) => {
-  if (process.platform !== 'win32') {
+  if (process.platform !== "win32") {
     return null;
   }
   try {
@@ -23,20 +23,17 @@ export const regQuery = async (path, key) => {
     if (indexOfKey === -1) {
       return null;
     }
-    const indexOfEol = stdout.indexOf('\r\n', indexOfKey);
+    const indexOfEol = stdout.indexOf("\r\n", indexOfKey);
     if (indexOfEol === -1) {
       return null;
     }
-    const indexOfValue = stdout.indexOf(
-      '    ',
-      indexOfKey + keyPattern.length);
+    const indexOfValue = stdout.indexOf("    ", indexOfKey + keyPattern.length);
     if (indexOfValue === -1) {
       return null;
     }
     const value = stdout.substring(indexOfValue + 4, indexOfEol);
     return value;
-  }
-  catch (err) {
+  } catch (err) {
     return null;
   }
 };

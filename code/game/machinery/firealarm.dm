@@ -306,7 +306,7 @@
 /obj/machinery/firealarm/attack_robot_secondary(mob/user)
 	return attack_hand_secondary(user)
 
-/obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, list/modifiers)
+/obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == FIRE_ALARM_BUILD_SECURED)
@@ -437,7 +437,7 @@
 	return ..()
 
 /obj/machinery/firealarm/on_deconstruction(disassembled)
-	new /obj/item/stack/sheet/iron(loc, 1)
+	new /obj/item/stack/sheet/iron(loc)
 	if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
 		var/obj/item/item = new /obj/item/electronics/firealarm(loc)
 		if(!disassembled)

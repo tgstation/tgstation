@@ -64,7 +64,6 @@
 	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
 	illegal_local_designs = list()
-	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/Destroy()

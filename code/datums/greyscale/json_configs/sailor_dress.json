@@ -4,19 +4,19 @@
 			"type": "icon_state",
 			"icon_state": "sailor_dress_skirt",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "sailor_dress_jacket",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "sailor_dress_stripes",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",

@@ -234,7 +234,7 @@
 	))
 	hat = new hat(spawned_mob)
 	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
-		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned_mob.equip_to_storage(hat, ITEM_SLOT_BACK, indirect_action = TRUE)
 	var/obj/item/toy = pick_weight(list(
 		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
 		/obj/item/toy/balloon = 2,
@@ -246,12 +246,12 @@
 	if(istype(toy, /obj/item/toy/balloon))
 		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_HANDS) //Balloons do not fit inside of backpacks.
 	else
-		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned_mob.equip_to_storage(toy, ITEM_SLOT_BACK, indirect_action = TRUE)
 	if(birthday_person_name) //Anyone who joins after the annoucement gets one of these.
 		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
 		birthday_invite.setup_card(birthday_person_name)
 		if(!spawned_mob.equip_to_slot_if_possible(birthday_invite, ITEM_SLOT_HANDS, disable_warning = TRUE))
-			spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_BACKPACK) //Just incase someone spawns with both hands full.
+			spawned_mob.equip_to_storage(birthday_invite, ITEM_SLOT_BACK, indirect_action = TRUE) //Just incase someone spawns with both hands full.
 
 /obj/item/birthday_invite
 	name = "birthday invitation"
@@ -311,9 +311,10 @@
 	// Put their silly little scarf or necktie somewhere else
 	var/obj/item/silly_little_scarf = humanspawned.wear_neck
 	if(silly_little_scarf)
+		var/list/backup_slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_BACKPACK)
 		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
 		silly_little_scarf.forceMove(get_turf(humanspawned))
-		humanspawned.equip_in_one_of_slots(silly_little_scarf, ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET, qdel_on_fail = FALSE, indirect_action = TRUE)
+		humanspawned.equip_in_one_of_slots(silly_little_scarf, backup_slots, qdel_on_fail = FALSE)
 
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
 	new_scryer.label = spawned.name
@@ -477,7 +478,7 @@
 
 	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
 		var/obj/item/storage/box/stickers/skub/boxie = new(spawned.loc)
-		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned.equip_to_storage(boxie, ITEM_SLOT_BACK, indirect_action = TRUE)
 		if(ishuman(spawned))
 			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
 			if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
@@ -485,7 +486,7 @@
 		return
 
 	var/obj/item/storage/box/stickers/anti_skub/boxie = new(spawned.loc)
-	spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	spawned.equip_to_storage(boxie, ITEM_SLOT_BACK, indirect_action = TRUE)
 	if(!ishuman(spawned))
 		return
 	var/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti/shirt = new(spawned.loc)

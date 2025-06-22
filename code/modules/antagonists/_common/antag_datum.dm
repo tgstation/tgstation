@@ -194,7 +194,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 ///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transferred.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
-	remove_innate_effects(old_body)
+	if(old_body)
+		remove_innate_effects(old_body)
 	if(old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
@@ -229,11 +230,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	var/mob/living/carbon/human/human_override = mob_override
 	if(removing) // They're a clown becoming an antag, remove clumsy
-		human_override.dna.remove_mutation(/datum/mutation/human/clumsy)
+		human_override.dna.remove_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 		if(!silent && message)
 			to_chat(human_override, span_boldnotice("[message]"))
 	else
-		human_override.dna.add_mutation(/datum/mutation/human/clumsy) // We're removing their antag status, add back clumsy
+		human_override.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS) // We're removing their antag status, add back clumsy
 
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -318,10 +319,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		CRASH("Antag datum with no owner.")
 
-	remove_innate_effects()
+	if(owner.current)
+		remove_innate_effects()
 	clear_antag_moodies()
 	LAZYREMOVE(owner.antag_datums, src)
-	if(!LAZYLEN(owner.antag_datums))
+	if(!LAZYLEN(owner.antag_datums) && owner.current)
 		owner.current.remove_from_current_living_antags()
 	if(info_button_ref)
 		QDEL_NULL(info_button_ref)
@@ -358,7 +360,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Use this proc for playing sounds, sending alerts, or otherwise informing the player that they're no longer a specific antagonist type.
  */
 /datum/antagonist/proc/farewell()
-	if(!silent)
+	if(!silent && owner.current)
 		to_chat(owner.current, span_userdanger("You are no longer \the [src]!"))
 
 /**

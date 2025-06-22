@@ -1,6 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes:
-  - rscadd: "Added a new type of reagent container; the jerrycan."
-  - rscadd: "Added some prefilled jerrycans to maint loot."
-  - balance: "Botany nutrients now come in bulk packaging."
