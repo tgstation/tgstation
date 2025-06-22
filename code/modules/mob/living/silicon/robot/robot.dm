@@ -1079,3 +1079,6 @@
 		buckled_mob.Paralyze(1 SECONDS)
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
+
+/mob/living/silicon/robot/can_smell()
+	return FALSE
