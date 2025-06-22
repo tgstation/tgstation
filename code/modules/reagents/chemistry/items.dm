@@ -124,7 +124,7 @@
 	out_message += "Chemicals found in [interacting_with.name]:</b>\n"
 	if(cont.reagents.is_reacting)
 		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
-	for(var/datum/reagent/reagent in cont.reagents.reagent_list) // bloodtyping if blood present in container
+	for(var/datum/reagent/reagent as anything in cont.reagents.reagent_list) // bloodtyping if blood present in container
 		var/blood_info = null
 		if(reagent.data)
 			if(istype(reagent.data["blood_type"], /datum/blood_type))
