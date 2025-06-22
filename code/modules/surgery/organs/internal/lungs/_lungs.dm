@@ -463,7 +463,7 @@
 	// Inhale Miasma. Exhale nothing.
 	breathe_gas_volume(breath, /datum/gas/miasma)
 	// Miasma side effects
-	if (HAS_TRAIT(breather, TRAIT_ANOSMIA)) //Anosmia quirk holder cannot smell miasma, but can get diseases from it.
+	if (!breather.can_smell()) //Anosmia quirk holder cannot smell miasma, but can get diseases from it.
 		return
 	switch(miasma_pp)
 		if(0.25 to 5)

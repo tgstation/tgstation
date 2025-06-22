@@ -1284,6 +1284,10 @@
 /mob/proc/is_literate()
 	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
 
+/// This mob can smell, use this instead of checking for anosmia.
+/mob/proc/can_smell()
+	return !HAS_TRAIT(src, TRAIT_ANOSMIA)
+
 /**
  * Proc that returns TRUE if the mob can write using the writing_instrument, FALSE otherwise.
  *

@@ -37,6 +37,8 @@
 ///Gaze upon the target
 /datum/status_effect/slime_food/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	if(!can_smell(user))
+		return
 	if(user == feeder)
 		examine_list += span_boldnotice("Their smell reminds you of serenity and yourself.")
 	else
