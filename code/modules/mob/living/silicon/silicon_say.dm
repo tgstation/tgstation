@@ -1,4 +1,4 @@
-/mob/living/proc/robot_talk(message)
+/mob/living/proc/robot_talk(message, list/message_mods = list())
 	log_talk(message, LOG_SAY, tag="binary")
 
 	var/designation = "Default Cyborg"
@@ -15,9 +15,10 @@
 		// AIs are loud and ugly
 		spans |= SPAN_COMMAND
 
-	var/quoted_message = say_quote(
+	var/messagepart = generate_messagepart(
 		message,
-		spans
+		spans,
+		message_mods,
 	)
 
 	var/namepart = name
@@ -39,7 +40,7 @@
 					span_binarysay("\
 						Robotic Talk, \
 						<a href='byond://?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
-						<span class='message'>[quoted_message]</span>\
+						<span class='message'>[messagepart]</span>\
 					"),
 					type = MESSAGE_TYPE_RADIO,
 					avoid_highlighting = src == M
@@ -49,7 +50,7 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
+						[span_name("[namepart]")] <span class='message'>[messagepart]</span>\
 					"),
 					type = MESSAGE_TYPE_RADIO,
 					avoid_highlighting = src == M
@@ -72,7 +73,7 @@
 				span_binarysay("\
 					[follow_link] \
 					Robotic Talk, \
-					[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
+					[span_name("[namepart]")] <span class='message'>[messagepart]</span>\
 				"),
 				type = MESSAGE_TYPE_RADIO,
 				avoid_highlighting = src == M

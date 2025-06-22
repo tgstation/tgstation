@@ -165,18 +165,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//End name span.
 	var/endspanpart = "</span>"
 
-	//Message
-	var/messagepart
+	// Language icon.
 	var/languageicon = ""
-	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
-	else
-		messagepart = speaker.say_quote(raw_message, spans, message_mods)
-
+	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
 		if(istype(dialect) && dialect.display_icon(src))
 			languageicon = "[dialect.get_icon()] "
 
+	// The actual message part.
+	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)
 	messagepart = " <span class='message'>[messagepart]</span></span>"
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
@@ -230,6 +227,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		return apply_message_emphasis(message_mods[MODE_CUSTOM_SAY_EMOTE])
 
+	// Otherwise, we format our full quoted message.
 	if(!input)
 		input = "..."
 

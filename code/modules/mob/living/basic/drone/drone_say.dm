@@ -39,5 +39,6 @@
  *
  * Shares the same radio code with binary
  */
-/mob/living/basic/drone/proc/drone_chat(msg)
-	alert_drones("<i>Drone Chat: [span_name("[name]")] <span class='message'>[say_quote(msg)]</span></i>", TRUE)
+/mob/living/basic/drone/proc/drone_chat(message, list/message_mods = list())
+	var/message_part = generate_messagepart(message, message_mods = message_mods)
+	alert_drones("<i>Drone Chat: [span_name("[name]")] <span class='message'>[message_part]</span></i>", TRUE)

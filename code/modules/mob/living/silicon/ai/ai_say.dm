@@ -42,7 +42,7 @@
 	return FALSE
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message, language)
+/mob/living/silicon/ai/proc/holopad_talk(message, language, list/message_mods = list())
 	message = trim(message)
 
 	if (!message)
@@ -58,7 +58,7 @@
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		ai_holo.say(message, sanitize = FALSE, language = language)
+		ai_holo.say(message, sanitize = FALSE, language = language, message_mods = message_mods)
 	else
 		to_chat(src, span_alert("No holopad connected."))
 

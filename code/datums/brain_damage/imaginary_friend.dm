@@ -258,9 +258,9 @@
 		else
 			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
-	var/quoted_message = say_quote(apply_message_emphasis(message), spans, message_mods)
-	var/rendered = "[span_name("[name]")] [quoted_message]"
-	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
+	var/messagepart = generate_messagepart(message, spans, message_mods)
+	var/rendered = "[span_name("[name]")] [messagepart]"
+	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [messagepart]"
 
 	var/language = message_language || owner.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say

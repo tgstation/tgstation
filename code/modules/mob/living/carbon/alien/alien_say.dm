@@ -1,10 +1,10 @@
-/mob/living/proc/alien_talk(message, shown_name = real_name, big_voice = FALSE)
+/mob/living/proc/alien_talk(message, list/message_mods = list(), shown_name = real_name, big_voice = FALSE, )
 	src.log_talk(message, LOG_SAY)
 	message = trim(message)
 	if(!message)
 		return
 
-	var/message_a = say_quote(message)
+	var/message_a = generate_messagepart(message, message_mods = message_mods)
 	var/hivemind_spans = "alien"
 	if(big_voice)
 		hivemind_spans += " big"
@@ -16,8 +16,8 @@
 			var/link = FOLLOW_LINK(player, src)
 			to_chat(player, "[link] [rendered]", type = MESSAGE_TYPE_RADIO)
 
-/mob/living/carbon/alien/adult/royal/queen/alien_talk(message, shown_name = name)
-	..(message, shown_name, TRUE)
+/mob/living/carbon/alien/adult/royal/queen/alien_talk(message, shown_name = name, big_voice = TRUE)
+	..(message, message_mods, shown_name, TRUE)
 
 /mob/living/carbon/hivecheck()
 	var/obj/item/organ/alien/hivenode/N = get_organ_by_type(/obj/item/organ/alien/hivenode)

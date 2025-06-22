@@ -140,7 +140,9 @@
 /datum/component/blob_minion/proc/on_try_speech(mob/living/minion, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 	minion.log_talk(message, LOG_SAY, tag = "blob hivemind telepathy")
-	var/spanned_message = minion.say_quote(message)
+	var/list/message_mods = list()
+	var/adjusted_message = minion.check_for_custom_say_emote(message, message_mods)
+	var/spanned_message = minion.generate_messagepart(adjusted_message, message_mods = message_mods)
 	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, minion, MESSAGE_TYPE_RADIO)
 	return COMPONENT_CANNOT_SPEAK
