@@ -215,6 +215,9 @@
 	icon_state = "vomitnanite_1"
 	random_icon_states = list("vomitnanite_1", "vomitnanite_2", "vomitnanite_3", "vomitnanite_4")
 
+/// Tracked for voidwalkers to jump to and from
+GLOBAL_LIST_EMPTY(nebula_vomits)
+
 /obj/effect/decal/cleanable/vomit/nebula
 	name = "nebula vomit"
 	desc = "Gosh, how... beautiful."
@@ -225,10 +228,16 @@
 /obj/effect/decal/cleanable/vomit/nebula/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
+	GLOB.nebula_vomits += src
 
 /obj/effect/decal/cleanable/vomit/nebula/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
+
+/obj/effect/decal/cleanable/vomit/nebula/Destroy()
+	. = ..()
+
+	GLOB.nebula_vomits -= src
 
 /// Nebula vomit with extra guests
 /obj/effect/decal/cleanable/vomit/nebula/worms
