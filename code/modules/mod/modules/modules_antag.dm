@@ -38,6 +38,7 @@
 	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/proc/on_move(atom/source, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
 	if(!isturf(mod.wearer.loc))
 		return
 	mod.update_speed()
@@ -51,24 +52,18 @@
 		return
 
 	var/datum/gas_mixture/environment = mod.loc?.return_air()
-	if(isnull(environment))
+	var/affected_temperature = environment?.return_temperature() || 0
+	var/affected_pressure = environment?.return_pressure() || 0
+	if(isnull(environment) || affected_temperature <= T0C || affected_pressure < HAZARD_LOW_PRESSURE)
 		module_slowdowns += space_slowdown
 		if(COOLDOWN_FINISHED(src, toggle_cooldown) && !active)
 			COOLDOWN_START(src, toggle_cooldown, 2 SECONDS)
 			on_activation()
 		return
 
-	var/affected_temperature = environment.return_temperature()
-	var/affected_pressure = environment.return_pressure()
-	if(affected_temperature <= T0C || affected_pressure < HAZARD_LOW_PRESSURE)
-		module_slowdowns += space_slowdown
-		if(COOLDOWN_FINISHED(src, toggle_cooldown) && !active)
-			COOLDOWN_START(src, toggle_cooldown, 2 SECONDS)
-			on_activation()
-	else
-		if(COOLDOWN_FINISHED(src, toggle_cooldown) && active)
-			COOLDOWN_START(src, toggle_cooldown, 2 SECONDS)
-			on_deactivation()
+	if(COOLDOWN_FINISHED(src, toggle_cooldown) && active)
+		COOLDOWN_START(src, toggle_cooldown, 2 SECONDS)
+		on_deactivation()
 
 /obj/item/mod/module/armor_booster/on_activation()
 	active = TRUE
@@ -220,11 +215,11 @@
 	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), REF(src))
 
 /obj/item/mod/module/anti_magic/wizard
-	name = "MOD magic neutralizer module"
+	name = "MOD magical hazard protection module"
 	desc = "The caster wielding this spell gains an invisible barrier around them, channeling arcane power through \
 		specialized runes engraved onto the surface of the suit to generate anti-magic field. \
 		The field will neutralize all magic that comes into contact with the user. \
-		It will not protect the caster from social ridicule."
+		It will not protect the caster from social ridicule, but it will protect from environmental hazards."
 	icon_state = "magic_neutralizer"
 	required_slots = list()
 

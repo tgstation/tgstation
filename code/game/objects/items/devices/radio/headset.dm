@@ -174,10 +174,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs."
 	icon_state = "syndie_headset"
 	worn_icon_state = "syndie_headset"
-
-/obj/item/radio/headset/syndicate/alt/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	item_flags = SOUND_PROTECTION
 
 /obj/item/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -198,10 +195,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "This is used by your elite security force. Protects ears from flashbangs."
 	icon_state = "sec_headset_alt"
 	worn_icon_state = "sec_headset_alt"
-
-/obj/item/radio/headset/headset_sec/alt/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	item_flags = SOUND_PROTECTION
 
 /obj/item/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -281,10 +275,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "The headset of the boss. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	worn_icon_state = "com_headset_alt"
-
-/obj/item/radio/headset/heads/captain/alt/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	item_flags = SOUND_PROTECTION
 
 /obj/item/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -313,10 +304,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	worn_icon_state = "com_headset_alt"
-
-/obj/item/radio/headset/heads/hos/alt/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	item_flags = SOUND_PROTECTION
 
 /obj/item/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -405,10 +393,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "cent_headset_alt"
 	worn_icon_state = "cent_headset_alt"
 	keyslot2 = null
-
-/obj/item/radio/headset/headset_cent/alt/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	item_flags = SOUND_PROTECTION
 
 /obj/item/radio/headset/headset_cent/alt/leader
 	command = TRUE
