@@ -23,7 +23,7 @@
 	var/obj/item/organ/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
-	for(var/obj/item/worn_item in get_equipped_items)
+	for(var/obj/item/worn_item in get_equipped_items())
 		if(worn_item.item_flags & SOUND_PROTECTION)
 			return INFINITY
 	. += E.bang_protect
