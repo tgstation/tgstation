@@ -172,11 +172,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/succumbed = FALSE
 
 	// If there's a custom say emote it gets logged differently.
-	if(message_mods[MODE_CUSTOM_SAY_EMOTE])
+	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		log_message(message_mods[MODE_CUSTOM_SAY_EMOTE], LOG_RADIO_EMOTE)
 
 	// If it's not erasing the input portion, then something is being said and this isn't a pure custom say emote.
-	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+	else if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 			message_range = 1
 			log_talk(message, LOG_WHISPER, forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])

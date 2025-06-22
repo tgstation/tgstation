@@ -1,5 +1,5 @@
 /mob/living/proc/alien_talk(message, list/message_mods = list(), shown_name = real_name, big_voice = FALSE, )
-	src.log_talk(message, LOG_SAY)
+	log_talk(message, LOG_SAY, tag = "alien hivemind", custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 	message = trim(message)
 	if(!message)
 		return

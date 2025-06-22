@@ -1,5 +1,5 @@
 /mob/living/proc/robot_talk(message, list/message_mods = list())
-	log_talk(message, LOG_SAY, tag="binary")
+	log_talk(message, LOG_SAY, tag="binary", custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
 	var/designation = "Default Cyborg"
 	var/spans = list(SPAN_ROBOT)
