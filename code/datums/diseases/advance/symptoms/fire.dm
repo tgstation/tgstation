@@ -71,7 +71,7 @@
 	if(prob(33.33))
 		living_mob.show_message(span_hear("You hear a crackling noise."), type = MSG_AUDIBLE)
 	else
-		if(!living_mob.can_smell()) //Anosmia quirk holder can't smell anything.
+		if(!smeller.can_smell()) //Anosmia quirk holder can't smell anything.
 			to_chat(living_mob, span_warning("You feel hot."))
 		else
 			to_chat(living_mob, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
