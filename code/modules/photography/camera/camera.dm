@@ -305,7 +305,9 @@
 		mobs_spotted += mob
 		if(mob.stat == DEAD)
 			dead_spotted += mob
-		desc += mob.get_photo_description(src)
+		var/info = mob.get_photo_description(src)
+		if(!isnull(info))
+			desc += info
 
 	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
 	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y

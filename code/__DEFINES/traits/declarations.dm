@@ -748,6 +748,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Cannot be turned into a funny skeleton by the plasma river
 #define TRAIT_NO_PLASMA_TRANSFORM "no_plasma_transform"
 
+/// Mind trait that allows you to see blessed tiles.
+#define TRAIT_SEE_BLESSED_TILES "sees_blessed_tiles"
+
 /// Weather immunities, also protect mobs inside them.
 #define TRAIT_LAVA_IMMUNE "lava_immune" //Used by lava turfs and The Floor Is Lava.
 #define TRAIT_ASHSTORM_IMMUNE "ashstorm_immune"
@@ -973,6 +976,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
+
+///Won't show up on cameras when they snap a photo.
+#define TRAIT_INVISIBLE_TO_CAMERA "invisible_to_camera"
 
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
