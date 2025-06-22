@@ -72,17 +72,18 @@
 
 	new /obj/effect/temp_visual/mook_dust(loc)
 	var/obj/item/circuitboard/machine/leaving_circuit = board
-	leaving_circuit.replacement_parts = leaving_circuit.flatten_component_list()
-	for(var/obj/item/flatpack_component in src)
-		if(flatpack_component == leaving_circuit)
-			continue
-		for(var/i in 1 to leaving_circuit.replacement_parts.len)
-			var/obj/item/machine_component = leaving_circuit.replacement_parts[i]
-			if(!ispath(machine_component, /obj/item))
+	if(contents.len > 1)
+		leaving_circuit.replacement_parts = leaving_circuit.flatten_component_list()
+		for(var/obj/item/flatpack_component in src)
+			if(flatpack_component == leaving_circuit)
 				continue
-			if(flatpack_component.type == machine_component)
-				leaving_circuit.replacement_parts[i] = flatpack_component
-				break
+			for(var/i in 1 to leaving_circuit.replacement_parts.len)
+				var/obj/item/machine_component = leaving_circuit.replacement_parts[i]
+				if(!ispath(machine_component, /obj/item))
+					continue
+				if(flatpack_component.type == machine_component)
+					leaving_circuit.replacement_parts[i] = flatpack_component
+					break
 
 	board = null
 	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)

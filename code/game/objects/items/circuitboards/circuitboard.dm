@@ -134,10 +134,12 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 	if(replacement_parts)
 		for(var/part in replacement_parts)
-			machine.component_parts += part
-			if(ismovable(part))
+			if(ispath(part, /obj/item))
+				part = new part(machine)
+			else if(ismovable(part))
 				var/atom/movable/thing = part
 				thing.forceMove(machine)
+			machine.component_parts += part
 		replacement_parts = null
 	else
 		flatten_component_list(machine)
