@@ -269,6 +269,14 @@
 	new /obj/item/melee/baton/security/loaded(src)
 	update_appearance()
 
+/obj/item/storage/belt/security/hos/full/PopulateContents()
+	new /obj/item/reagent_containers/spray/pepper(src)
+	new /obj/item/restraints/handcuffs(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/melee/baton/security/loaded/hos(src)
+	update_appearance()
+
 /obj/item/storage/belt/security/webbing
 	name = "security webbing"
 	desc = "Unique and versatile chest rig, can hold security gear."
