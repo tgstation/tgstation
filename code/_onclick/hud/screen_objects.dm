@@ -899,6 +899,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(QDELETED(src))
 		return
 	if(out)
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		animate(src, alpha = 0, time = 30)
 	else
 		alpha = 0
