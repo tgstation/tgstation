@@ -582,7 +582,7 @@ SUBSYSTEM_DEF(ticker)
 			// Had an emergency reason supplied to pass along
 			if(emergency_reason)
 				news_message = "[decoded_station_name] has been evacuated after transmitting \
-					the following distress beacon:\n\n[decoded_emergency_reason]"
+					the following distress beacon:\n\n[Gibberish(decoded_emergency_reason, FALSE, 8)]"
 			else
 				news_message = "The crew of [decoded_station_name] has been \
 					evacuated amid unconfirmed reports of enemy activity."
