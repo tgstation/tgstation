@@ -496,8 +496,12 @@
 		return
 
 	last_impact_turf = get_turf(target)
+
+	// If our target has TRAIT_DESIGNATED_TARGET, treat accuracy_falloff as 0
+	var/effective_accuracy = HAS_TRAIT(target, TRAIT_DESIGNATED_TARGET) ? 0 : accuracy_falloff
+
 	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(last_impact_turf, starting)), 5, 100))
+	def_zone = ran_zone(def_zone, clamp(accurate_range - (effective_accuracy * get_dist(last_impact_turf, starting)), 5, 100))
 	var/impact_result = process_hit_loop(select_target(last_impact_turf, target))
 	if (impact_result == PROJECTILE_IMPACT_PASSED)
 		return
