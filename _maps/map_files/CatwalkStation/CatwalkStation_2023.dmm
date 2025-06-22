@@ -4858,10 +4858,6 @@
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/radio/headset/headset_medsci{
-	pixel_x = -5;
-	pixel_y = 12
-	},
 /obj/item/storage/pill_bottle/mutadone{
 	pixel_x = 8;
 	pixel_y = 16

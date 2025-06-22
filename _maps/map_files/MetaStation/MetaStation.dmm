@@ -62856,10 +62856,6 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/item/radio/headset/headset_medsci{
-	pixel_x = -7;
-	pixel_y = 4
-	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 6;
 	pixel_y = 9

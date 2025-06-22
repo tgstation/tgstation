@@ -31217,6 +31217,10 @@
 /obj/machinery/firealarm/directional/south,
 /obj/item/radio/headset/headset_medsci{
 	pixel_x = 16;
+	pixel_y = 3
+	},
+/obj/item/radio/headset/headset_medsci{
+	pixel_x = 16;
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
