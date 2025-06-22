@@ -160,12 +160,17 @@
 	fire = 50
 	acid = 70
 
-/obj/machinery/Initialize(mapload, obj/item/circuitboard/board = circuit)
+///Needed by machine frame & flatpacker i.e the named arg board
+/obj/machinery/New(loc, obj/item/circuitboard/board, ...)
+	if(istype(board, /obj/item/circuitboard))
+		circuit = board
+
+	return ..()
+
+/obj/machinery/Initialize(mapload)
 	. = ..()
 	SSmachines.register_machine(src)
 
-	if(ispath(board, /obj/item/circuitboard) || istype(circuit, /obj/item/circuitboard))
-		circuit = board
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
 	if(istype(circuit, /obj/item/circuitboard))
