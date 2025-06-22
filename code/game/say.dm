@@ -217,14 +217,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return verb_say
 
 /**
- * This prock is used to generate a message for chat
- * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`.
+ * This proc is used to generate the 'message' part of a chat message.
+ * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`,
+ * or the `taps their microphone.` part of `Grey Tider taps their microphone.`.
  *
  * input - The message to be said
  * spans - A list of spans to attach to the message. Includes the atom's speech span by default
  * message_mods - A list of message modifiers, i.e. whispering/singing
  */
-/atom/movable/proc/say_quote(input, list/spans = list(speech_span), list/message_mods = list())
+/atom/movable/proc/generate_messagepart(input, list/spans = list(speech_span), list/message_mods = list())
+	// If we only care about the emote part, early return.
+	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		return apply_message_emphasis(message_mods[MODE_CUSTOM_SAY_EMOTE])
+
 	if(!input)
 		input = "..."
 
