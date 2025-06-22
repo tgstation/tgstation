@@ -513,8 +513,9 @@
 /obj/item/mod/core/soul
 	name = "MOD soul shard core"
 	desc = "A soul shard haphazardly jammed into a hand-crafted MOD core frame."
-	icon_state = "mod-core-soul"
-	icon_state_preview = "mod-core-soul-preview"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/mod/core/soul"
+	post_init_icon_state = "mod-core-soul"
 	var/base_desc
 	var/theme = THEME_CULT
 	greyscale_config = /datum/greyscale_config/mod_core_soul
@@ -552,14 +553,12 @@
 			greyscale_colors = "#00ff00"
 	return ..()
 
-/obj/item/mod/core/soul/CheckParts(list/parts_list, datum/crafting_recipe/current_recipe)
-	var/obj/item/soulstone/stone = locate() in parts_list
+/obj/item/mod/core/soul/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/soulstone/stone = locate() in components
 	set_theme(stone.theme)
 	for(var/mob/living/basic/shade/shade in stone)
 		shade.forceMove(get_turf(src))
 		shade.visible_message(span_warning("[shade] is ejected from [stone] as it is inserted into [src]!"), span_warning("You are ejected from [stone] as it is inserted into [src]!"))
-	parts_list -= stone
-	qdel(stone)
 	return ..()
 
 /obj/item/mod/core/soul/proc/set_theme(new_theme)
@@ -604,7 +603,7 @@
 
 /obj/item/mod/core/soul/get_chargebar_string()
 	var/mob/living/wearer = mod.wearer
-	if(wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
+	if(!wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
 		return "No power source detected."
 	if(CONFIG_GET(flag/disable_human_mood))
 		return "Infinite"
@@ -673,4 +672,5 @@
 	timeout = 10 SECONDS
 
 /obj/item/mod/core/soul/wizard
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	theme = THEME_WIZARD

@@ -1,0 +1,10 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Added a new halloween species: Spirits, a species without legs and instead floats."
+  - rscadd: "Added a new magic mirror species: Ghosts, like spirits but with the ability to become incorporeal, traversing through solid wall."
+  - bugfix: "Mobs unable to use storage items now can't use storage items."
+  - bugfix: "Mobs unable to use items can now not open airlocks & closets"
+  - bugfix: "Mobs unable to pick items up can no longer pick items up and immediately drop, moving one tile at a time."
+  - bugfix: "Mobs with intentional missing limbs (Alien larva) no longer show their limbs as missing on examine (again)"
+  - bugfix: "Golems' pref page had a missing icon, it now has one."

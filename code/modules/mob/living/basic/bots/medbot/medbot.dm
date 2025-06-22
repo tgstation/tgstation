@@ -162,6 +162,15 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
+/mob/living/basic/bot/medbot/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	var/obj/item/storage/medkit/medkit = locate() in contents
+	medkit_type = medkit
+	health_analyzer = locate(/obj/item/healthanalyzer) in contents
+	skin = medkit.get_medbot_skin()
+	damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+	update_appearance()
+
 /mob/living/basic/bot/medbot/update_icon_state()
 	. = ..()
 
@@ -351,7 +360,7 @@
 	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "[span_infoplain(span_green("[src] tends your wounds!"))]")
 
 	if(done_healing)
-		visible_message(span_infoplain("[src] places its tools back into itself."))
+		visible_message(span_infoplain("[src] places [p_their()] tools back into [p_themselves()]."))
 		to_chat(src, "[patient] is now healthy!")
 		update_bot_mode(new_mode = BOT_IDLE)
 		return

@@ -13,10 +13,12 @@
 	var/mob/living/split_personality/owner_backseat
 	///The role to display when polling ghost
 	var/poll_role = "split personality"
+	///How long do we give ghosts to respond?
+	var/poll_time = 20 SECONDS
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/brain_owner = owner
-	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner)) //No use assigning people to a corpse or braindead
+	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch)) //No use assigning people to a corpse or braindead
 		return FALSE
 	. = ..()
 	make_backseats()
@@ -41,7 +43,7 @@
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
 		check_jobban = ROLE_PAI,
-		poll_time = 20 SECONDS,
+		poll_time = poll_time,
 		checked_target = owner,
 		ignore_category = POLL_IGNORE_SPLITPERSONALITY,
 		alert_pic = owner,
@@ -264,6 +266,7 @@
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
 	random_gain = FALSE
+	poll_time = 10 SECONDS
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
 	var/duration_in_seconds = 180
 

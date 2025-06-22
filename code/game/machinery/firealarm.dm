@@ -437,7 +437,7 @@
 	return ..()
 
 /obj/machinery/firealarm/on_deconstruction(disassembled)
-	new /obj/item/stack/sheet/iron(loc, 1)
+	new /obj/item/stack/sheet/iron(loc)
 	if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
 		var/obj/item/item = new /obj/item/electronics/firealarm(loc)
 		if(!disassembled)

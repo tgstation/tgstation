@@ -77,11 +77,11 @@
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
-		new /obj/item/stack/ore/iron(src, 1)
-		new /obj/item/stack/ore/glass(src, 1)
+		new /obj/item/stack/ore/iron(src)
+		new /obj/item/stack/ore/glass(src)
 		new /obj/effect/decal/remains/human(src, 1)
 	else
-		new /obj/item/stack/sheet/bone(src, 1)
+		new /obj/item/stack/sheet/bone(src)
 
 //***Oil well puddles.
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
@@ -128,7 +128,7 @@
 		return ..()
 
 /obj/structure/sink/oil_well/drop_materials()
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 
 //***Grave mounds.
 /// has no items inside unless you use the filled subtype

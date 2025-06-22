@@ -51,10 +51,12 @@
 	foodtypes = MEAT|GRAIN
 	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
 	warm_type = /obj/item/food/donkpocket/warm/homemade
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/warm/homemade
 	foodtypes = MEAT|GRAIN
 	tastes = list("meat" = 2, "dough" = 2, "comfiness" = 1)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/dank
 	name = "\improper Dank-pocket"
@@ -126,10 +128,12 @@
 	tastes = list("meat" = 2, "dough" = 2, "spice" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/spicy/homemade
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/warm/spicy/homemade
 	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/teriyaki
 	name = "\improper Teriyaki-pocket"
@@ -167,10 +171,12 @@
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = MEAT|GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/teriyaki/homemade
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/warm/teriyaki/homemade
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = MEAT|GRAIN
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/pizza
 	name = "\improper Pizza-pocket"
@@ -220,6 +226,7 @@
 		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/consumable/laughter = 6,
 	)
+	custom_materials = null
 
 /obj/item/food/donkpocket/honk/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, honk_added_reagents)
@@ -240,6 +247,7 @@
 	tastes = list("banana" = 2, "dough" = 2, "children's antibiotics" = 1)
 	foodtypes = GRAIN|FRUIT|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = null
 
 /obj/item/food/donkpocket/berry
 	name = "\improper Berry-pocket"
@@ -252,6 +260,7 @@
 	tastes = list("dough" = 2, "jam" = 2)
 	foodtypes = GRAIN|FRUIT|SUGAR
 	warm_type = /obj/item/food/donkpocket/warm/berry
+	custom_materials = null
 
 /obj/item/food/donkpocket/berry/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, child_added_reagents)
@@ -270,6 +279,7 @@
 	)
 	tastes = list("dough" = 2, "warm jam" = 2)
 	foodtypes = GRAIN|FRUIT|SUGAR
+	custom_materials = null
 
 /obj/item/food/donkpocket/gondola
 	name = "\improper Gondola-pocket"
@@ -284,6 +294,7 @@
 	foodtypes = GRAIN|MEAT
 
 	warm_type = /obj/item/food/donkpocket/warm/gondola
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	var/static/list/gondola_added_reagents = list(
 		/datum/reagent/medicine/omnizine = 2,
 		/datum/reagent/gondola_mutation_toxin = 5,
@@ -307,6 +318,7 @@
 	)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtypes = GRAIN|MEAT
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donkpocket/deluxe
 	name = "\improper Donk-pocket Deluxe"
@@ -326,6 +338,7 @@
 	var/static/list/deluxe_added_reagents = list(
 		/datum/reagent/medicine/omnizine = 8,
 	)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/donkpocket/deluxe/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, deluxe_added_reagents)
@@ -345,6 +358,7 @@
 	)
 	tastes = list("quality meat" = 2, "dough" = 2, "fanciness" = 1)
 	foodtypes = GRAIN|MEAT|VEGETABLES|FRIED
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/donkpocket/deluxe/nocarb
 	name = "\improper Meat-pocket"
@@ -359,6 +373,7 @@
 	foodtypes = MEAT|RAW
 	crafting_complexity = FOOD_COMPLEXITY_4
 	warm_type = /obj/item/food/donkpocket/warm/deluxe/nocarb
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 4)
 
 /obj/item/food/donkpocket/deluxe/meat/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, deluxe_added_reagents)
@@ -377,6 +392,7 @@
 	)
 	tastes = list("meat" = 2, "more meat" = 2, "no carbs" = 1)
 	foodtypes = MEAT
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 4)
 
 /obj/item/food/donkpocket/deluxe/vegan
 	name = "\improper Donk-roll"
@@ -391,6 +407,7 @@
 	foodtypes = GRAIN | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
 	warm_type = /obj/item/food/donkpocket/warm/deluxe/vegan
+	custom_materials = null
 
 /obj/item/food/donkpocket/deluxe/vegan/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, deluxe_added_reagents)
@@ -409,3 +426,4 @@
 	)
 	tastes = list("rice patty" = 2, "fried dough" = 2, "peppery kick" = 1)
 	foodtypes = GRAIN | VEGETABLES | FRIED
+	custom_materials = null

@@ -359,7 +359,6 @@
 	fire_delay = 2
 	burst_size = 1
 	actions_types = list()
-	spread = 10 //slightly inaccurate in burst fire mode, mostly important for long range shooting
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	suppressor_x_offset = 8
 

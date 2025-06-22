@@ -232,8 +232,7 @@
 		if(cell_type)
 			cell = new cell_type(src)
 			cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
-		if(!locate(/obj/machinery/power/terminal) in loc)
-			make_terminal()
+		make_terminal()
 		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
 		if(abs(offset_old) != APC_PIXEL_OFFSET)
 			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
@@ -536,19 +535,26 @@
 			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
-			for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
-				for(var/turf/area_turf as anything in zlevel_turfs)
-					for(var/obj/machinery/light/area_light in area_turf)
-						if(!initial(area_light.no_low_power)) //If there was an override set on creation, keep that override
-							area_light.no_low_power = emergency_lights
-							INVOKE_ASYNC(area_light, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
-					CHECK_TICK
+			for(var/obj/machinery/light/area_light as anything in get_lights())
+				if(!initial(area_light.no_low_power)) //If there was an override set on creation, keep that override
+					area_light.no_low_power = emergency_lights
+					INVOKE_ASYNC(area_light, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
+				CHECK_TICK
 	return TRUE
 
 /obj/machinery/power/apc/ui_close(mob/user)
 	. = ..()
 	if(user == remote_control_user)
 		disconnect_remote_access()
+
+/// Returns a list of lights powered/controlled by src
+/obj/machinery/power/apc/proc/get_lights()
+	var/list/lights = list()
+	for(var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/light/found_light in area_turf)
+				lights += found_light
+	return lights
 
 /**
  * APC early processing. This gets processed after any other machine on the powernet does.
@@ -727,12 +733,10 @@
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
-	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
-		for(var/turf/area_turf as anything in zlevel_turfs)
-			for(var/obj/machinery/light/breaked_light in area_turf)
-				breaked_light.on = TRUE
-				breaked_light.break_light_tube()
-				stoplag()
+	for(var/obj/machinery/light/breaked_light as anything in get_lights())
+		breaked_light.on = TRUE
+		breaked_light.break_light_tube()
+		CHECK_TICK
 
 /obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 2000)
