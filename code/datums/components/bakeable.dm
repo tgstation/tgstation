@@ -92,7 +92,7 @@
 
 	var/list/asomnia_hadders = list()
 	for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, used_oven))
-		if(!smeller.can_smell())
+		if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
 			asomnia_hadders += smeller
 
 	if(positive_result)

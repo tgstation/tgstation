@@ -704,7 +704,7 @@
 		if(successful_shock) //We only want to give feedback once, regardless of how many mobs got shocked
 			var/list/cant_smell = list()
 			for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
-				if(!smeller.can_smell())
+				if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
 					cant_smell += smeller
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"), ignored_mobs = cant_smell)
 			add_shared_particles(/particles/smoke)
