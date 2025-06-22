@@ -63,7 +63,7 @@
 	light_power = 3
 	damage = 20
 	wound_bonus = -15
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 
 /obj/projectile/beam/laser/flare/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
