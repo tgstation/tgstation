@@ -81,11 +81,19 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	/// Components that need to be flatpacked along with the circuitboard so as to replace the defaults
 	var/list/obj/item/flatpack_components
 
-/// Converts req_components map into a linear list with its datum components resolved
-/obj/item/circuitboard/machine/proc/flatten_component_list()
+/**
+ * Converts req_components map into a linear list with its datum components resolved
+ *
+ * Arguments
+ * * obj/machinery/machine - if not null adds the parts to the machine directly & will not return anything
+*/
+/obj/item/circuitboard/machine/proc/flatten_component_list(obj/machinery/machine)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	. = list()
+	. = NONE
+	if(QDELETED(machine))
+		. = list()
+
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]
 		if(!comp_amt)
@@ -101,27 +109,38 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if (isnull(stock_part_datum))
 				CRASH("[comp_path] didn't have a matching stock part datum")
 			for (var/_ in 1 to comp_amt)
-				. += stock_part_datum
+				if(!.)
+					machine.component_parts += stock_part_datum
+				else
+					. += stock_part_datum
 		else
 			for(var/_ in 1 to comp_amt)
-				. += comp_path
+				if(!.)
+					machine.component_parts += new comp_path(machine)
+				else
+					. += comp_path
 
-// Applies the default parts defined by the circuit board when the machine is created
+/**
+ * Applies the default component parts for this machine
+ *
+ * Arguments
+ * * obj/machinery/machine - the machine to apply the default parts to
+*/
 /obj/item/circuitboard/machine/apply_default_parts(obj/machinery/machine)
 	if(!req_components && !length(replacement_parts))
 		return
 
 	. = ..()
 
-	var/list/final_parts = length(replacement_parts) ? replacement_parts : flatten_component_list()
-	for(var/part in final_parts)
-		if(ispath(part, /obj/item))
-			part = new part(machine)
-		else if(ismovable(part))
-			var/atom/movable/thing = part
-			thing.forceMove(machine)
-		machine.component_parts += part
-	LAZYCLEARLIST(replacement_parts)
+	if(replacement_parts)
+		for(var/part in replacement_parts)
+			machine.component_parts += part
+			if(ismovable(part))
+				var/atom/movable/thing = part
+				thing.forceMove(machine)
+		replacement_parts = null
+	else
+		flatten_component_list(machine)
 
 	machine.RefreshParts()
 
