@@ -1093,10 +1093,17 @@
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon()
 
+// Desginated Target - Applied typically by Flare lasers
+
+/atom/movable/screen/alert/status_effect/designated_target
+	name = "Designated Target"
+	desc = "You've been lit up by some kind of bright energy! Wash it off to get rid of it, or you'll be a lot easier to hit!"
+	icon_state = "designated_target"
+
 /datum/status_effect/designated_target
 	id = "designated_target"
 	duration = 2 MINUTES
-	alert_type = null
+	alert_type = /atom/movable/screen/alert/status_effect/designated_target
 	status_type = STATUS_EFFECT_REFRESH
 	// Dummy object to act as our flare
 	var/obj/effect/dummy/lighting_obj/moblight/mob_flare
@@ -1104,10 +1111,18 @@
 /datum/status_effect/designated_target/on_apply()
 	mob_flare = owner.mob_light(3, 15, LIGHT_COLOR_FLARE)
 	ADD_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
+	owner.add_filter("designated_target", 3, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
 	return TRUE
+
+/datum/status_effect/designated_target/tick(seconds_between_ticks)
+	// If we are ever wet, remove our flare status effect
+	var/datum/status_effect/fire_handler/wet_stacks/splashed_with_water = locate() in owner.status_effects
+	if(istype(splashed_with_water))
+		qdel(src)
 
 /datum/status_effect/designated_target/on_remove()
 	QDEL_NULL(mob_flare)
+	owner.remove_filter("designated_target")
 	REMOVE_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
 
 #undef HEALING_SLEEP_DEFAULT

@@ -57,8 +57,13 @@
 	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/flare
-	name = ".38 flare particle"
+	name = "flare particle"
 	icon_state = "flare"
+	light_range = 2
+	light_power = 3
+	damage = 20
+	wound_bonus = -15
+	bare_wound_bonus = 15
 
 /obj/projectile/beam/laser/flare/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
