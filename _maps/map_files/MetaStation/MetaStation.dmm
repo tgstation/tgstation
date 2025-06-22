@@ -1867,7 +1867,9 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
+	volume_rate = 2000
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aIO" = (
@@ -11556,7 +11558,8 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 1
+	dir = 1;
+	volume_rate = 2000
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -20395,7 +20398,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 8
+	dir = 8;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
@@ -21427,7 +21431,8 @@
 "hBD" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 1
+	dir = 1;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
@@ -22816,7 +22821,8 @@
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 1
+	dir = 1;
+	volume_rate = 2000
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -23727,7 +23733,8 @@
 	pixel_y = 20
 	},
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
@@ -33190,7 +33197,8 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/caution,
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -33473,7 +33481,8 @@
 "lHA" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 1
+	dir = 1;
+	volume_rate = 2000
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -36083,7 +36092,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 8
+	dir = 8;
+	volume_rate = 2000
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
@@ -39843,7 +39853,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 8
+	dir = 8;
+	volume_rate = 2000
 	},
 /obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/plating,
@@ -41862,7 +41873,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -45441,7 +45453,8 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 1
+	dir = 1;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
@@ -45940,7 +45953,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
+	volume_rate = 2000
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "pWX" = (
@@ -46406,7 +46421,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -49532,7 +49548,8 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/caution,
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -54722,7 +54739,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
+	volume_rate = 2000
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "sTY" = (
@@ -59015,7 +59034,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
@@ -59149,7 +59169,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 8
+	dir = 8;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -59470,7 +59491,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
@@ -66125,7 +66147,8 @@
 /area/station/engineering/supermatter/room)
 "wJX" = (
 /obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
@@ -68991,7 +69014,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
-	dir = 4
+	dir = 4;
+	volume_rate = 2000
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -69233,7 +69257,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump,
+/obj/machinery/atmospherics/components/unary/airlock_pump{
+	volume_rate = 2000
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "xPy" = (
@@ -69355,7 +69381,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
+	volume_rate = 2000
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "xSO" = (
