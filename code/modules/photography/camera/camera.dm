@@ -197,7 +197,7 @@
 
 /// Check whether a mob could take a picture of the target turf.
 /obj/item/camera/proc/can_mob_target(turf/target_turf, mob/user)
-	var/user_view = user.client ? user.client.view : CONFIG_GET(string/default_view)
+	var/user_view = user.client ? user.client.view : WIDESCREEN_VIEWPORT_SIZE
 	var/user_eye = user.client ? user.client.eye : user
 	if(!(target_turf in get_hear(user_view, user_eye)))
 		return FALSE
