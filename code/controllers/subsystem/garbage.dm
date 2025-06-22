@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(garbage)
 		return
 
 #ifdef OPENDREAM
-	spawn(1) //so many things use after del, holy shit
+	spawn(world.tick_lag) //so many things use after del, holy shit
 		HardDelete(D) //OpenDream hard deletes are instant, and the dotnet GC cleans up in a seperate thread
 	return
 #endif
