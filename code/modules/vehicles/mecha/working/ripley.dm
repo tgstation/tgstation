@@ -158,7 +158,7 @@
 
 /obj/vehicle/sealed/mecha/ripley/paddy/proc/togglesiren(force_off = FALSE)
 	if(force_off || siren)
-		movedelay = initial(move_delay)
+		movedelay = initial(movedelay)
 		slow_pressure_step_in = initial(slow_pressure_step_in)
 		fast_pressure_step_in = initial(fast_pressure_step_in)
 		weewooloop.stop()
