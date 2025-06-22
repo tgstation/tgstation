@@ -130,3 +130,59 @@
 	affected_mob.remove_status_effect(/datum/status_effect/frozenstasis/irresistable)
 	affected_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 
+/datum/reagent/inverse/condensedcapsaicin
+	name = "Achoonium"
+	description = "A strange poison that induces dangerously powerful sneezing."
+	color = "#B37008"
+	taste_description = "black pepper"
+	penetrates_skin = TOUCH|VAPOR
+	ph = 7.4
+	tox_damage = 0
+	chemical_flags = REAGENT_DONOTSPLIT
+
+/datum/reagent/inverse/condensedcapsaicin/on_mob_add(mob/living/carbon/affected_mob)
+	. = ..()
+	to_chat(affected_mob, span_notice("Your nose itches."))
+	affected_mob.emote("sneeze")
+/datum/reagent/inverse/condensedcapsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
+	switch(current_cycle)
+		if(1 to 10)
+			if(prob(33))
+				affected_mob.emote("sneeze")
+		if(10 to 21)
+			if(prob(33))
+				affected_mob.emote("sneeze")
+				need_mob_update = affected_mob.adjustOxyLoss(5 * REM * seconds_per_tick, updating_health = FALSE)
+				affected_mob.AdjustKnockdown(2 SECONDS)
+				to_chat(affected_mob, span_warning("You sneeze violently, stumbling to the ground!"))
+		if(21 to 29) //shamelessly copied from the cartoon sneezing effect since it's exactly what i was going for anyways
+			if(prob(33))
+				affected_mob.emote("sneeze")
+				to_chat(affected_mob, span_userdanger("You are launched backwards by an all-mighty sneeze!"))
+				var/sneeze_distance = rand(2,4)
+				var/turf/target = get_ranged_target_turf(affected_mob, REVERSE_DIR(affected_mob.dir), sneeze_distance)
+				affected_mob.throw_at(target, sneeze_distance, rand(1,5))
+				need_mob_update = affected_mob.adjustOxyLoss(5 * REM * seconds_per_tick, updating_health = FALSE)
+		if(29 to INFINITY)
+			if(prob(33))
+				affected_mob.emote("sneeze")
+				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
+				var/sneeze_distance = rand(3,5)
+				var/turf/target = get_ranged_target_turf(affected_mob, REVERSE_DIR(affected_mob.dir), sneeze_distance)
+				affected_mob.throw_at(target, sneeze_distance, rand(2,6))
+				need_mob_update = affected_mob.adjustOxyLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+				need_mob_update += affected_mob.adjustStaminaLoss(25 * REM * seconds_per_tick, updating_stamina = FALSE)
+				if(prob(25) && affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS))
+					var/obj/item/organ/lungs/breathybits = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+					to_chat(affected_mob, span_userdanger("Something mushy is expelled from your nose!"))
+					var/turf/T = get_turf(affected_mob)
+					breathybits.Remove(affected_mob)
+					breathybits.forceMove(T)
+					breathybits.throw_at(target, 5, 4, affected_mob)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+
+
+

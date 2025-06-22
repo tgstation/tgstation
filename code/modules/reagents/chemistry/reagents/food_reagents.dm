@@ -429,6 +429,8 @@
 	ph = 7.4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/bottle/capsaicin
+	inverse_chem = /datum/reagent/inverse/condensedcapsaicin
+	inverse_chem_val = 0.5
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(!ishuman(exposed_mob))
