@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Fish infusion now gives you scales, and tail color if you hit certain thresholds"
