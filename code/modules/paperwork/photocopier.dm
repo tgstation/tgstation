@@ -124,7 +124,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
-	RefreshParts()
 	setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 	if(starting_paper)

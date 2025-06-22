@@ -138,12 +138,14 @@
 	. = ..()
 	if (!disassembled)
 		return
-	new /obj/item/stack/rods(drop_location(), 2)
-	new /obj/item/stack/sheet/iron(drop_location(), 6)
+
+	var/atom/drop = drop_location()
+	new /obj/item/stack/rods(drop, 2)
+	new /obj/item/stack/sheet/iron(drop, 6)
 	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
+		new part.physical_object_type(drop)
 	if(!isnull(power_cell))
-		power_cell.forceMove(drop_location())
+		power_cell.forceMove(drop)
 		power_cell = null
 
 /obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)
