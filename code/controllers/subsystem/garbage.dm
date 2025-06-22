@@ -266,6 +266,13 @@ SUBSYSTEM_DEF(garbage)
 /datum/controller/subsystem/garbage/proc/Queue(datum/D, level = GC_QUEUE_FILTER)
 	if (isnull(D))
 		return
+
+#ifdef OPENDREAM
+	spawn(1) //so many things use after del, holy shit
+		HardDelete(D) //OpenDream hard deletes are instant, and the dotnet GC cleans up in a seperate thread
+	return
+#endif
+
 	if (level > GC_QUEUE_COUNT)
 		HardDelete(D)
 		return
