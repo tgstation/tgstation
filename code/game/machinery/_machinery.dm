@@ -162,7 +162,7 @@
 
 ///Needed by machine frame & flatpacker i.e the named arg board
 /obj/machinery/New(loc, obj/item/circuitboard/board, ...)
-	if(istype(board, /obj/item/circuitboard))
+	if(istype(board))
 		circuit = board
 
 	return ..()
@@ -173,7 +173,7 @@
 
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
-	if(istype(circuit, /obj/item/circuitboard))
+	if(istype(circuit))
 		circuit.apply_default_parts(src)
 
 	if(processing_flags & START_PROCESSING_ON_INIT)
