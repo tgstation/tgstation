@@ -714,7 +714,7 @@
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[vending_names_paths[build_path]] Vendor"
-	req_components = list(initial(typepath.refill_canister) = 1)
+	req_components = flatpack_components = list(initial(typepath.refill_canister) = 1)
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
 	for(var/typepath in vending_names_paths)

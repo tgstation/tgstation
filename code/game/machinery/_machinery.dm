@@ -160,12 +160,15 @@
 	fire = 50
 	acid = 70
 
-/obj/machinery/Initialize(mapload)
+/obj/machinery/Initialize(mapload, obj/item/circuitboard/board = circuit)
 	. = ..()
 	SSmachines.register_machine(src)
 
+	if(ispath(board, /obj/item/circuitboard) || istype(circuit, /obj/item/circuitboard))
+		circuit = board
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
+	if(istype(circuit, /obj/item/circuitboard))
 		circuit.apply_default_parts(src)
 
 	if(processing_flags & START_PROCESSING_ON_INIT)
@@ -1191,10 +1194,10 @@
 /obj/machinery/examine_more(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) && component_parts)
-		. += display_parts(user, TRUE)
+		. += display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
-/obj/machinery/proc/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/proc/on_construction(mob/user)
 	return
 
 /**
