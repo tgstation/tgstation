@@ -353,9 +353,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize(mapload)
-	var/obj/item/robot_model/kiltkit = loc
-	robot = kiltkit.loc
 	. = ..()
+	robot = loc
 	if(!istype(robot))
 		return INITIALIZE_HINT_QDEL
 
