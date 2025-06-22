@@ -452,7 +452,7 @@
 	leaving_circuit.replacement_parts = components
 	// Build the machine with the replacement parts
 	circuit = null
-	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, leaving_circuit)
+	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)
 	if(istype(new_machine))
 		// Set anchor state
 		new_machine.set_anchored(anchored)
