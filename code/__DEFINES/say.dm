@@ -49,7 +49,7 @@
 #define MODE_KEY_ALIEN "a"
 
 #define MODE_HOLOPAD "holopad"
-#define MODE_KEY_MODE_HOLOPAD "h"
+#define MODE_KEY_HOLOPAD "h"
 
 #define MODE_CHANGELING "changeling"
 #define MODE_KEY_CHANGELING "g"

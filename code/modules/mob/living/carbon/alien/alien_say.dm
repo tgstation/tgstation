@@ -16,7 +16,7 @@
 			var/link = FOLLOW_LINK(player, src)
 			to_chat(player, "[link] [rendered]", type = MESSAGE_TYPE_RADIO)
 
-/mob/living/carbon/alien/adult/royal/queen/alien_talk(message, shown_name = name, big_voice = TRUE)
+/mob/living/carbon/alien/adult/royal/queen/alien_talk(message, list/message_mods = list(), shown_name = name, big_voice = TRUE)
 	..(message, message_mods, shown_name, TRUE)
 
 /mob/living/carbon/hivecheck()

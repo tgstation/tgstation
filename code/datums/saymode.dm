@@ -46,6 +46,7 @@
 	return TRUE
 
 /datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language, list/message_mods = list())
+	var/datum/antagonist/changeling/ling_sender = IS_CHANGELING(user)
 	user.log_talk(message, LOG_SAY, tag="changeling [ling_sender.changelingID]")
 	var/msg = span_changeling("<b>[ling_sender.changelingID]:</b> [message]")
 

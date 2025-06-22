@@ -116,7 +116,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
-	saymode = get_available_say_mode(src, message_mods[RADIO_KEY])
+	saymode = SSradio.get_available_say_mode(src, message_mods[RADIO_KEY])
 	if(!forced && (isnull(saymode) || saymode.allows_custom_say_emotes))
 		message = check_for_custom_say_emote(message, message_mods)
 
