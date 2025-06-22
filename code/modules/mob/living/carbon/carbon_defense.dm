@@ -26,8 +26,7 @@
 	for(var/obj/item/worn_item in get_equipped_items)
 		if(worn_item.item_flags & SOUND_PROTECTION)
 			return INFINITY
-	else
-		. += E.bang_protect
+	. += E.bang_protect
 
 /mob/living/carbon/is_mouth_covered(check_flags = ALL)
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
