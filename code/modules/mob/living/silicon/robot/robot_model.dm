@@ -110,7 +110,7 @@
 		added_module.forceMove(src)
 	modules += added_module
 	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
-	added_module.obj_flags |= ABSTRACT
+	added_module.item_flags |= ABSTRACT
 	if(nonstandard)
 		added_modules += added_module
 	if(requires_rebuild)
