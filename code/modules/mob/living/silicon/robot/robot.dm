@@ -1031,10 +1031,7 @@
 
 /mob/living/silicon/robot/get_exp_list(minutes)
 	. = ..()
-
-	var/datum/job/cyborg/cyborg_job_ref = SSjob.get_job_type(/datum/job/cyborg)
-
-	.[cyborg_job_ref.title] = minutes
+	.[/datum/job/cyborg::title] = minutes
 
 /mob/living/silicon/robot/proc/untip_roleplay()
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))

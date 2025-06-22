@@ -249,33 +249,14 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 		SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)
 		new_character.mind.give_uplink(silent = TRUE, antag_datum = traitordatum)
 
-	switch(new_character.mind.special_role)
-		if(ROLE_WIZARD)
-			new_character.forceMove(pick(GLOB.wizardstart))
-			var/datum/antagonist/wizard/A = new_character.mind.has_antag_datum(/datum/antagonist/wizard,TRUE)
-			A.equip_wizard()
-		if(ROLE_SYNDICATE)
-			new_character.forceMove(pick(GLOB.nukeop_start))
-			var/datum/antagonist/nukeop/N = new_character.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-			N.equip_op()
-		if(ROLE_NINJA)
-			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
-				ninja_spawn += L
-			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(/datum/antagonist/ninja)
-			ninjadatum.equip_space_ninja()
-			if(ninja_spawn.len)
-				new_character.forceMove(pick(ninja_spawn))
+	var/skip_job_respawn = FALSE
+	for(var/datum/antagonist/antag as anything in new_character.mind.antag_datums)
+		skip_job_respawn ||= antag.on_respawn(new_character)
+		if(skip_job_respawn)
+			break
 
-		else//They may also be a cyborg or AI.
-			switch(new_character.mind.assigned_role.type)
-				if(/datum/job/cyborg)//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize(TRUE)
-				if(/datum/job/ai)
-					new_character = new_character.AIize()
-				else
-					if(!traitordatum) // Already equipped there.
-						SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)//Or we simply equip them.
+	if(!skip_job_respawn)
+		new_character.mind.assigned_role.on_respawn(new_character)
 
 	//Announces the character on all the systems, based on the record.
 	if(!record_found && (new_character.mind.assigned_role.job_flags & JOB_CREW_MEMBER))

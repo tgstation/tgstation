@@ -1,7 +1,7 @@
 /datum/antagonist/nightmare
 	name = "\improper Nightmare"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
-	job_rank = ROLE_NIGHTMARE
+	pref_flag = ROLE_NIGHTMARE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE

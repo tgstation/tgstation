@@ -98,7 +98,7 @@
 	remove_from_list_when_spawned = TRUE
 	self_destruct_when_empty = TRUE
 
-	role_type = ROLE_NUCLEAR_OPERATIVE
+	role_type = ROLE_OPERATIVE
 
 /datum/outfit/shuttle_nukie
 	name = "Shuttle Nuclear Operative"

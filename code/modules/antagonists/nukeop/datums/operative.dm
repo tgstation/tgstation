@@ -1,8 +1,8 @@
 /datum/antagonist/nukeop
-	name = ROLE_NUCLEAR_OPERATIVE
+	name = ROLE_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
-	job_rank = ROLE_OPERATIVE
+	pref_flag = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
@@ -12,10 +12,10 @@
 
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
-	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
-	var/always_new_team = FALSE
 	/// Should the user be moved to default spawnpoint after being granted this datum.
 	var/send_to_spawnpoint = TRUE
+
+	var/job_type = /datum/job/nuclear_operative
 	/// The DEFAULT outfit we will give to players granted this datum
 	var/nukeop_outfit = /datum/outfit/syndicate
 
@@ -23,6 +23,7 @@
 
 	/// In the preview icon, the nukies who are behind the leader
 	var/preview_outfit_behind = /datum/outfit/nuclear_operative
+
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
 	var/nuke_icon_state = "nuclearbomb_base"
 
@@ -40,6 +41,7 @@
 	give_alias()
 	forge_objectives()
 	. = ..()
+	owner.set_assigned_role(SSjob.get_job_type(job_type))
 	equip_op()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
@@ -61,7 +63,8 @@
 			nuke_team.team_discounts += create_uplink_sales(discount_limited_amount, /datum/uplink_category/limited_discount_team_gear, 1, uplink_items)
 		uplink.uplink_handler.extra_purchasable += nuke_team.team_discounts
 
-	memorize_code()
+	if(nuke_team?.tracked_nuke && nuke_team?.memorized_code)
+		memorize_code()
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
@@ -78,24 +81,19 @@
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
 	if(!new_team)
-		if(!always_new_team)
-			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
-				if(!N.owner)
-					stack_trace("Antagonist datum without owner in GLOB.antagonists: [N]")
-					continue
-				if(N.nuke_team)
-					nuke_team = N.nuke_team
-					return
-		nuke_team = new /datum/team/nuclear
-		nuke_team.update_objectives()
-		assign_nuke() //This is bit ugly
+		// Find the first leader to join up
+		for(var/datum/antagonist/nukeop/leader/leader in GLOB.antagonists)
+			if(leader.nuke_team)
+				nuke_team = leader.nuke_team
+				return
+		// Otherwise make a new team entirely
+		nuke_team = new /datum/team/nuclear()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	nuke_team = new_team
 
 /datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/nuclear_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
@@ -158,42 +156,21 @@
 	else
 		to_chat(admin, span_danger("No valid nuke found!"))
 
-/datum/antagonist/nukeop/proc/assign_nuke()
-	if(!nuke_team || nuke_team.tracked_nuke)
-		return
-	nuke_team.memorized_code = random_nukecode()
-	var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/syndicate)
-	if(!nuke)
-		stack_trace("Syndicate nuke not found during nuke team creation.")
-		nuke_team.memorized_code = null
-		return
-	nuke_team.tracked_nuke = nuke
-	if(nuke.r_code == NUKE_CODE_UNSET)
-		nuke.r_code = nuke_team.memorized_code
-	else //Already set by admins/something else?
-		nuke_team.memorized_code = nuke.r_code
-	for(var/obj/machinery/nuclearbomb/beer/beernuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/beer))
-		beernuke.r_code = nuke_team.memorized_code
-
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team?.syndicate_name)
 		var/mob/living/carbon/human/human_to_rename = owner.current
 		if(istype(human_to_rename)) // Reinforcements get a real name
 			var/first_name = owner.current.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
 			var/chosen_name = "[first_name] [nuke_team.syndicate_name]"
-			human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
+			human_to_rename.fully_replace_character_name(null, chosen_name)
 		else
-			var/number = 1
-			number = nuke_team.members.Find(owner)
-			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+			var/number = nuke_team?.members.Find(owner) || 1
+			owner.current.fully_replace_character_name(null, "[nuke_team.syndicate_name] Operative #[number]")
 
 /datum/antagonist/nukeop/proc/memorize_code()
-	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
-		antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
-		owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = nuke_team.memorized_code)
-		to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
-	else
-		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
+	antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
+	owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = nuke_team.memorized_code)
+	to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
 
 /// Actually moves our nukie to where they should be
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
@@ -212,3 +189,8 @@
 		team_number = nuke_team.members.Find(owner)
 
 	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
+
+/datum/antagonist/nukeop/on_respawn(mob/new_character)
+	new_character.forceMove(pick(GLOB.nukeop_start))
+	equip_op()
+	return TRUE

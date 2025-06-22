@@ -49,9 +49,9 @@
 			var/obj/energy_ball/tesla = new (current_location)
 			tesla.energy = 200
 		if (DOOM_METEORS)
-			var/datum/dynamic_ruleset/roundstart/meteor/meteors = new()
-			meteors.meteordelay = 0
-			SSdynamic.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
+			GLOB.meteor_mode ||= new()
+			GLOB.meteor_mode.meteordelay = 0
+			GLOB.meteor_mode.start_meteor()
 			priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
 
 #undef DOOM_SINGULARITY
