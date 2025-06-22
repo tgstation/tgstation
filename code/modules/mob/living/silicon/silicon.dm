@@ -519,3 +519,6 @@
 
 /mob/living/silicon/get_access()
 	return REGION_ACCESS_ALL_STATION
+
+/mob/living/silicon/can_smell()
+	return FALSE
