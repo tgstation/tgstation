@@ -53,7 +53,8 @@
 	. = NONE
 	if(!QDELETED(inserted_board))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject board"
-		if(!isnull(held_item) && length(inserted_board.flatpack_components) && is_type_in_list(held_item, inserted_board.flatpack_components))
+
+		if(!isnull(held_item) && (held_item.type in inserted_board.flatpack_components))
 			context[SCREENTIP_CONTEXT_LMB] = "Insert flatpack component"
 			return CONTEXTUAL_SCREENTIP_SET
 
@@ -89,7 +90,7 @@
 			var/list/obj/item/to_insert
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
 				var/inserted = get_flatpack_component_count(component)
-				var/required = inserted_board.flatpack_components[component]
+				var/required = inserted_board.req_components[component]
 				if(inserted == required)
 					continue
 				LAZYADDASSOC(to_insert, component::name, "[inserted]/[required]")
@@ -168,10 +169,11 @@
  * Otherwise, the typepath is created in nullspace and fetches materials from the initialized one, then deleted.
  *
  * Args:
- * part_type - Typepath of the item we are trying to find the costs of
- * costs - Assoc list we modify and return
+ * * part_type - Typepath of the item we are trying to find the costs of
+ * * costs - Assoc list we modify and return
+ * * count - the number of parts to compute the cost of
  */
-/obj/machinery/flatpacker/proc/analyze_cost(part_type, costs)
+/obj/machinery/flatpacker/proc/analyze_cost(part_type, costs, count)
 	PRIVATE_PROC(TRUE)
 
 	var/comp_type = part_type
@@ -194,7 +196,7 @@
 			mat_list = null_comp.custom_materials
 
 	for(var/atom/mat as anything in mat_list)
-		CREATE_AND_INCREMENT(costs, mat.type, mat_list[mat] * inserted_board.req_components[part_type])
+		CREATE_AND_INCREMENT(costs, mat.type, mat_list[mat] * count)
 
 	if(null_comp)
 		qdel(null_comp)
@@ -218,7 +220,10 @@
 
 		//compute the needed mats from its stock parts
 		for(var/type as anything in inserted_board.req_components)
-			needed_mats = analyze_cost(type, needed_mats)
+			//these don't count to the final cost as they have to inserted manually
+			if(type in inserted_board.flatpack_components)
+				continue
+			needed_mats = analyze_cost(type, needed_mats, inserted_board.req_components[type])
 
 		// 5 sheets of iron and 5 of cable coil
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
@@ -226,8 +231,8 @@
 
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
-	else if(!QDELETED(inserted_board) && length(inserted_board.flatpack_components) && is_type_in_list(attacking_item, inserted_board.flatpack_components))
-		if(get_flatpack_component_count(attacking_item.type) == inserted_board.flatpack_components[attacking_item.type])
+	else if(!QDELETED(inserted_board) && (attacking_item.type in inserted_board.flatpack_components))
+		if(get_flatpack_component_count(attacking_item.type) == inserted_board.req_components[attacking_item.type])
 			balloon_alert(user, "max count reached!")
 			return ITEM_INTERACT_BLOCKING
 
@@ -284,14 +289,15 @@
 
 		var/disableReason = ""
 		if(print_tier > max_part_tier)
-			disableReason += "This design is too advanced for this machine. "
+			disableReason = "This design is too advanced for this machine. "
 		else if(!materials.has_materials(needed_mats, creation_efficiency))
-			disableReason += "Not enough materials. "
+			disableReason = "Not enough materials. "
 		else
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
-				var/diff = inserted_board.flatpack_components[component] - get_flatpack_component_count(component)
+				var/diff = inserted_board.req_components[component] - get_flatpack_component_count(component)
 				if(diff)
-					disableReason += "Please insert [diff] [component::name]"
+					disableReason = "Please insert [diff] [component::name]"
+					break
 		design = list(
 			"name" = initial(build.name),
 			"requiredMaterials" = cost_mats,
@@ -316,8 +322,8 @@
 				say("Design too complex.")
 				return
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
-				if(inserted_board.flatpack_components[component] != get_flatpack_component_count(component))
-					balloon_alert(ui.user, "not enough [component::name]!")
+				if(inserted_board.req_components[component] != get_flatpack_component_count(component))
+					say("Not enough [component::name].")
 					return
 			if(!materials.has_materials(needed_mats, creation_efficiency))
 				say("Not enough materials to begin production.")
