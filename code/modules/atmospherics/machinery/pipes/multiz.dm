@@ -29,7 +29,6 @@
  * This is true for the other manifolds (the 4 ways and the heat exchanges) too.
  */
 /obj/machinery/atmospherics/pipe/multiz/Initialize(mapload, process, setdir, init_dir)
-	. = ..()
 	icon_state = ""
 	center = mutable_appearance(icon, "adapter_center", layer = HIGH_OBJ_LAYER)
 	pipe = mutable_appearance(icon, "pipe-[piping_layer]")
