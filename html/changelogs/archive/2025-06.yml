@@ -538,3 +538,28 @@
       :cl:'
   necromanceranne:
   - bugfix: Projectiles can once again embed targets that are armoured.
+2025-06-22:
+  Ben10Omintrix:
+  - bugfix: 50 minebots no longer crash the server
+  Ghommie:
+  - bugfix: You can nullify mutations that are either scrambled (mutagen etc.) or
+      from a mutator (not activator) again.
+  - bugfix: Mutations with applied chromosomes won't display "no chromosome applied"
+      when saved or have zero instability among other things.
+  Iamgoofball:
+  - admin: Makes mushroom people available to admins via config.
+  Jacquerel:
+  - balance: Many kinds of mob will now more aggressively attempt to escape being
+      confined or restricted by obstacles such as chairs, lockers, or human arms.
+  KazooBard:
+  - bugfix: Rust Spirit -> Rust Walker in ghost poll menu
+  Rhials:
+  - qol: Supermatter hallucinatory anomalies no longer spawn decoys.
+  Y0SH1M4S73R:
+  - sound: Clown Operatives will now broadcast their declarations of war with a fitting
+      auditory cue.
+  necromanceranne:
+  - bugfix: Phazon fire punches now properly deal damage, rather than make a funny
+      fire special effect and doing literally nothing at all.
+  - qol: Nuclear Operatives can now purchase support bags for their specific kind
+      of mech; Dark Gygax or Mauler. No need to buy useless amoo just to get a toolbelt!
