@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed equipping straight jackets onto people with attack-equip then equipping another jacket through the equip window causing magical jacket consumption into the recipient's contents"

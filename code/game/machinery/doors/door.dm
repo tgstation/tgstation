@@ -314,7 +314,7 @@
 		return
 	return ..()
 
-/obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/proc/try_to_activate_door(mob/living/user, access_bypass = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
 		return
@@ -328,6 +328,10 @@
 		run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/allowed(mob/M)
+	if(isliving(M))
+		var/mob/living/living_user = M
+		if(!(living_user.mobility_flags & MOBILITY_USE))
+			return FALSE
 	if(emergency)
 		return TRUE
 	if(unrestricted_side(M))

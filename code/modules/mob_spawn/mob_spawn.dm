@@ -141,13 +141,13 @@
 /obj/effect/mob_spawn/ghost_role/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
-	LAZYADD(GLOB.mob_spawners[name], src)
+	LAZYADD(GLOB.mob_spawners[format_text(name)], src)
 
 /obj/effect/mob_spawn/ghost_role/Destroy()
-	var/list/spawners = GLOB.mob_spawners[name]
+	var/list/spawners = GLOB.mob_spawners[format_text(name)]
 	LAZYREMOVE(spawners, src)
 	if(!LAZYLEN(spawners))
-		GLOB.mob_spawners -= name
+		GLOB.mob_spawners -= format_text(name)
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE

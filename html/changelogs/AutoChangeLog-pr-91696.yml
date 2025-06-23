@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Ambient Occlusion pref should now update immediately upon being changed, instead of having to swap bodies or waiting for server restart to get it updated."
-  - code_imp: "Slightly improved rendering code/performance just a tiny bit."

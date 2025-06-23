@@ -110,7 +110,7 @@
 	copy.synchronizer_coeff = synchronizer_coeff
 	copy.power_coeff = power_coeff
 	copy.energy_coeff = energy_coeff
-	can_chromosome = can_chromosome
+	copy.can_chromosome = can_chromosome
 	copy.valid_chrom_list = valid_chrom_list
 	update_valid_chromosome_list()
 
