@@ -20,12 +20,14 @@
 	cost = 1
 
 /datum/uplink_item/explosives/x4
-	name = "Composition C-4"
+	name = "Composition X-4"
 	desc = "Similar to C4, but with a stronger blast that is directional instead of circular. X-4 can be placed on a solid surface, such as a wall or window, \
 		and it will blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a controlled explosion that \
 		leaves a wider, deeper, hole."
 	item = /obj/item/grenade/c4/x4
 	cost = 2
+	limited_stock = 3
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 
 /datum/uplink_item/explosives/c4bag
 	name = "Bag of C-4 explosives"

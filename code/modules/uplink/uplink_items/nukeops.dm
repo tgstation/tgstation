@@ -441,6 +441,14 @@
 	item = /obj/item/storage/box/syndie_kit/frag_grenades
 	cost = 5
 
+/datum/uplink_item/explosives/military_grade/x4
+	name = "Composition X-4"
+	desc = "Similar to C4, but with a stronger blast that is directional instead of circular. X-4 can be placed on a solid surface, such as a wall or window, \
+		and it will blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a controlled explosion that \
+		leaves a wider, deeper, hole."
+	item = /obj/item/grenade/c4/x4
+	cost = 2
+
 // ~~ Grenadier's Belt Kit ~~
 
 /datum/uplink_item/weapon_kits/high_cost/grenadier
