@@ -40,7 +40,8 @@
 	for(var/law in laws.inherent)
 		lawcheck += law
 
-	// melbert todo : fuck you
+/mob/living/silicon/robot/make_laws()
+	. = ..()
 	var/datum/job/human_ai_job = SSjob.get_job(JOB_HUMAN_AI)
 	if(human_ai_job && human_ai_job.current_positions && !laws.zeroth_borg)
 		laws.zeroth_borg = "Follow the orders of Big Brother."

@@ -15,6 +15,30 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/ai_law_rack
+	name = "AI Module Rack Board"
+	desc = "Allows for the construction of a new AI Module Rack."
+	id = "airack_normal"
+	build_path = /obj/item/circuitboard/ai_law_rack
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/ai_law_rack/New()
+	. = ..()
+	desc += " Can hold [build_path::build_path::law_slots] modules[build_path::build_path::has_core_slot ? ", one of which is a core module slot" : ""]."
+
+/datum/design/board/ai_law_rack/portable
+	name = "Portable AI Module Rack Board"
+	desc = "Allows for the construction of a portable AI Module Rack."
+	id = "airack_small"
+	build_path = /obj/item/circuitboard/ai_law_rack/small
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/safeguard_module
 	name = "Safeguard Module"
 	desc = "Allows for the construction of a Safeguard AI Module."

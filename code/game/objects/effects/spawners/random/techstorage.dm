@@ -118,9 +118,9 @@
 /obj/effect/spawner/random/techstorage/ai_all
 	name = "secure AI circuit board spawner"
 	loot = list(
-		// melbert todo
-		// /obj/item/circuitboard/computer/aiupload,
-		// /obj/item/circuitboard/computer/borgupload,
+		/obj/item/circuitboard/ai_law_rack/core,
+		/obj/item/circuitboard/ai_law_rack/small,
+		/obj/item/circuitboard/ai_law_rack/small,
 		/obj/item/circuitboard/aicore,
 	)
 

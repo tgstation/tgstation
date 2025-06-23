@@ -31,7 +31,8 @@
 	design_ids = list(
 		"aicore",
 		"aifixer",
-		"aiupload",
+		"airack_normal",
+		"airack_small",
 		"asimov_module",
 		"borg_ai_control",
 		"corporate_module",
@@ -59,7 +60,6 @@
 		design_ids -= list(
 			"aicore",
 			"aifixer",
-			"aiupload",
 			"borg_ai_control",
 			"intellicard",
 			"mecha_tracking_ai_control",
