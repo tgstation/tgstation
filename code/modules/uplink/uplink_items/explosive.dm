@@ -96,6 +96,33 @@
 	limited_stock = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 
+/datum/uplink_item/explosives/syndicate_bomb/emp
+	name = "Syndicate EMP Bomb"
+	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
+	item = /obj/item/sbeacondrop/emp
+	cost = 7
+
+/datum/uplink_item/explosives/syndicate_bomb/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 2
+
+/datum/uplink_item/explosives/syndicate_bomb
+	name = "Syndicate Bomb"
+	desc = "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
+		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so. \
+		The bomb core can be pried out and manually detonated with other explosives."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/sbeacondrop/bomb
+	cost = 11
+
+/datum/uplink_item/explosives/syndicate_bomb/New()
+	. = ..()
+	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
+
 /datum/uplink_item/dangerous/cat
 	name = "Feral Cat Grenade Box"
 	desc = "This box contains 5 grenades filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders. WARNING: The cats are not trained to discern friend from foe!"
