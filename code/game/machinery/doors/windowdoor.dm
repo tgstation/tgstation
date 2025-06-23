@@ -446,7 +446,8 @@
 	qdel(src)
 	return TRUE
 
-/obj/machinery/door/window/interact(mob/user) //for sillycones
+/obj/machinery/door/window/attack_ai(mob/user) //for sillycones
+	. = ..()
 	try_to_activate_door(user)
 
 /obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE)
