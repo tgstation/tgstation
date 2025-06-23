@@ -542,6 +542,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	update_freelook_sight()
 
 	operating = FALSE
+	update_appearance()
 
 	return TRUE
 
@@ -556,5 +557,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	update_freelook_sight()
 
 	operating = FALSE
+	update_appearance()
 
 	return TRUE
