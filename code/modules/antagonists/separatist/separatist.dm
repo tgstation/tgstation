@@ -98,7 +98,7 @@
 /datum/antagonist/separatist/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/united_nations_ai = mob_override || owner.current
-	if(isAI(united_nations_ai))
+	if(isAI(united_nations_ai)) // melbert todo
 		united_nations_ai.laws = new /datum/ai_laws/united_nations()
 		united_nations_ai.show_laws()
 
