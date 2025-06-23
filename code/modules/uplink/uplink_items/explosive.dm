@@ -36,6 +36,7 @@
 	cost = 5 // 50% discount!
 	cant_discount = TRUE
 	limited_stock = 1
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 
 /datum/uplink_item/explosives/frag
 	name = "Frag Grenade"
@@ -43,6 +44,7 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
 	cost = 1
 	limited_stock = 4
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get a whole box of these at once at a considerable discount.
 
 /datum/uplink_item/explosives/detomatix
 	name = "Detomatix disk"

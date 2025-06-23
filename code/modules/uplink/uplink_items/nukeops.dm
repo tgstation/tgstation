@@ -468,6 +468,12 @@
 	item = /obj/item/syndicatedetonator
 	cost = 1
 
+/datum/uplink_item/explosives/military_grade/c4bag
+	name = "Bag of C-4 explosives"
+	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
+	item = /obj/item/storage/backpack/duffelbag/syndie/c4
+	cost = 5 // 50% discount!
+
 /datum/uplink_item/explosives/military_grade/x4bag
 	name = "Bag of X-4 explosives"
 	desc = "For when you didn't bring the bunker buster to your latest operation. Contains 10 X-4 shaped plastic explosives."
