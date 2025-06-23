@@ -13,9 +13,7 @@
 
 	if(istype(preset_laws, /datum/ai_laws))
 		laws = preset_laws
-		for(var/law in laws.inherent)
-			lawcheck += law
-
+		law_ui.update_inherent_stated_laws(laws)
 	else
 		make_laws()
 

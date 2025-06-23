@@ -37,8 +37,7 @@
 			continue
 		law_rack.link_silicon(src)
 
-	for(var/law in laws.inherent)
-		lawcheck += law
+	law_ui.update_inherent_stated_laws(laws)
 
 /mob/living/silicon/robot/make_laws()
 	. = ..()
