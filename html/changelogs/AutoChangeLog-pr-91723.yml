@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Phazon fire punches now properly deal damage, rather than make a funny fire special effect and doing literally nothing at all."

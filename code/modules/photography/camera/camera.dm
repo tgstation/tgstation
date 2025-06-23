@@ -174,7 +174,6 @@
 	var/turf/target_turf = get_turf(target)
 	if(isnull(target_turf))
 		return FALSE
-
 	if(isAI(user))
 		return can_ai_target(target_turf)
 	if(ismob(user))
@@ -198,7 +197,7 @@
 
 /// Check whether a mob could take a picture of the target turf.
 /obj/item/camera/proc/can_mob_target(turf/target_turf, mob/user)
-	var/user_view = user.client ? user.client.view : CONFIG_GET(string/default_view)
+	var/user_view = user.client ? user.client.view : WIDESCREEN_VIEWPORT_SIZE
 	var/user_eye = user.client ? user.client.eye : user
 	if(!(target_turf in get_hear(user_view, user_eye)))
 		return FALSE
@@ -306,7 +305,9 @@
 		mobs_spotted += mob
 		if(mob.stat == DEAD)
 			dead_spotted += mob
-		desc += mob.get_photo_description(src)
+		var/info = mob.get_photo_description(src)
+		if(!isnull(info))
+			desc += info
 
 	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
 	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y

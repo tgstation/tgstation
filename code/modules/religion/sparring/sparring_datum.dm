@@ -287,7 +287,7 @@
 				to_chat(loser, span_userdanger("[GLOB.deity] is enraged by your lackluster sparring record!"))
 				lightningbolt(loser)
 				loser.add_mood_event("sparring", /datum/mood_event/banished)
-				loser.mind.holy_role = NONE
+				loser.mind.set_holy_role(NONE)
 				to_chat(loser, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		if(STAKES_MONEY_MATCH)
 			to_chat(loser, span_userdanger("You've lost all your money to [winner]!"))
