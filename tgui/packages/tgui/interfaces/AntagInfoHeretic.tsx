@@ -1,3 +1,5 @@
+import '../styles/interfaces/AntagInfoHeretic.scss';
+
 import { useState } from 'react';
 import {
   Box,
@@ -437,20 +439,12 @@ const ResearchInfo = () => {
   );
 };
 
-const PathInfo = () => {
+const PathInfo = ({ currentPath }: { currentPath?: HereticPath }) => {
   const { data } = useBackend<Info>();
-  const { paths, knowledge_tiers } = data;
-
-  const boughtPathKnowledge = knowledge_tiers
-    .flatMap((tier) => tier.nodes)
-    .find(
-      (node) =>
-        paths.some((path) => path.starting_knowledge.path === node.path) &&
-        node.done,
-    );
+  const { paths } = data;
 
   const pathBoughtIndex = paths.findIndex(
-    (path) => path.starting_knowledge.path === boughtPathKnowledge?.path,
+    (path) => currentPath && path.route === currentPath.route,
   );
 
   const [currentTab, setCurrentTab] = useState(
@@ -459,7 +453,7 @@ const PathInfo = () => {
 
   return (
     <Stack fill>
-      {!boughtPathKnowledge && (
+      {!currentPath && (
         <Stack.Item>
           <Tabs fluid vertical>
             {paths.map((path, index) => (
@@ -476,10 +470,7 @@ const PathInfo = () => {
         </Stack.Item>
       )}
       <Stack.Item grow>
-        <PathContent
-          path={paths[currentTab]}
-          isPathSelected={!!boughtPathKnowledge}
-        />
+        <PathContent path={paths[currentTab]} isPathSelected={!!currentPath} />
       </Stack.Item>
     </Stack>
   );
@@ -497,11 +488,7 @@ const PathContent = ({
   const { name, description } = path.passive;
   return (
     <Section
-      title={
-        <h1 style={{ padding: 0, margin: 0, textAlign: 'center' }}>
-          {path.route}
-        </h1>
-      }
+      title={<h1 className="PathTitle">{path.route}</h1>}
       textAlign="center"
       fill
       scrollable
@@ -531,16 +518,7 @@ const PathContent = ({
         {(!isPathSelected && (
           <Stack.Item style={{ justifyItems: 'center' }}>
             <b>Passive: {name}</b>
-            <p
-              style={{
-                margin: '0.5em 0',
-                backgroundColor: '#808080',
-                borderRadius: '5px',
-                width: '50%',
-              }}
-            >
-              {description[0]}
-            </p>
+            <p className="Passive">{description[0]}</p>
           </Stack.Item>
         )) || (
           <Stack.Item>
@@ -551,13 +529,7 @@ const PathContent = ({
               {description.map((line, index) => (
                 <Stack.Item
                   key={index}
-                  style={{
-                    margin: '0.5em 0',
-                    backgroundColor:
-                      passive_level >= index + 1 ? '#62cc67' : '#808080',
-                    borderRadius: '5px',
-                    padding: '0.5em',
-                  }}
+                  className={`Passive ${passive_level >= index + 1 ? 'Passive--Active' : ''}`}
                 >
                   Level {index + 1}
                   <br />
@@ -619,26 +591,42 @@ const PathContent = ({
 
 export const AntagInfoHeretic = () => {
   const { data } = useBackend<Info>();
-  const { ascended } = data;
+  const { ascended, knowledge_tiers, paths } = data;
 
   const [currentTab, setTab] = useState(1);
+  // only tiers has done variables set
+  const currentPath = paths.find((path) =>
+    knowledge_tiers.some((tier) =>
+      tier.nodes.some(
+        (node) => node.done && node.path === path.starting_knowledge.path,
+      ),
+    ),
+  );
 
   const tabs = [
     { label: 'Information', icon: 'info', content: <IntroductionSection /> },
-    { label: 'Path Info', icon: 'info', content: <PathInfo /> },
+    {
+      label: 'Path Info',
+      icon: 'info',
+      content: <PathInfo currentPath={currentPath} />,
+    },
     { label: 'Research', icon: 'book', content: <ResearchInfo /> },
   ];
 
+  const currentTheme = () => {
+    if (currentPath?.route) {
+      return `Heretic theme-Heretic--${currentPath.route.replace(' ', '')}`;
+    }
+    return 'Heretic';
+  };
+
   return (
-    <Window width={750} height={635}>
-      <Window.Content
-        style={{
-          backgroundImage: 'none',
-          background: ascended
-            ? 'radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);'
-            : 'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
-        }}
-      >
+    <Window
+      width={750}
+      height={635}
+      theme={`${currentTheme()}${ascended ? ' heretic-theme-ascended' : ''}`}
+    >
+      <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>
