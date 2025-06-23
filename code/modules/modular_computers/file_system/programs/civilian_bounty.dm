@@ -1,3 +1,5 @@
+///Everything within this file is an edited form from this file, stripping it of some various components because they are not needed for the PDA app: code/game/machinery/civilian_bounties.dm
+///Percentage of a civilian bounty the civilian will make.
 #define CIV_BOUNTY_SPLIT 30
 /datum/computer_file/program/civilianbounties
 	filename = "bountyapp"
@@ -50,6 +52,7 @@
 		if("bounty")
 			add_bounties(user, 0)
 
+///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 /datum/computer_file/program/civilianbounties/proc/add_bounties(mob/user, cooldown_reduction = 0)
 	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
 	if(!id_account)
@@ -66,6 +69,12 @@
 	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	id_account.bounties = crumbs
 
+/**
+ * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
+ * Available choices are assigned during add_bounties, and one is locked in here.
+ *
+ * @param choice The index of the bounty in the list of bounties that the player can choose from.
+ */
 /datum/computer_file/program/civilianbounties/proc/pick_bounty(datum/bounty/choice)
 	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
 	if(!id_account?.bounties?[choice])
@@ -76,6 +85,12 @@
 	SSblackbox.record_feedback("tally", "bounties_assigned", 1, id_account.civilian_bounty.type)
 	return id_account.civilian_bounty
 
+/**
+ * Generates a list of bounties for use with the civilian bounty pad, this is virtually identical to the stuff contained within: code/game/machinery/civilian_bounties.dm
+ * @param bounty_types the define taken from a job for selection of a random_bounty() proc.
+ * @param bounty_rolls the number of bounties to be selected from.
+ * @param assistant_failsafe Do we guarentee one assistant bounty per generated list? Used for non-assistant jobs to give an easier alternative to that job's default bounties.
+ */
 /datum/computer_file/program/civilianbounties/proc/generate_bounty_list(bounty_types, bounty_rolls = 3, assistant_failsafe = TRUE)
 	var/list/rolling_list = list()
 	if(assistant_failsafe)
