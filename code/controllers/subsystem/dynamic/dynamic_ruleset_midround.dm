@@ -270,7 +270,7 @@
 	candidate_role = "Wizard"
 	pref_flag = ROLE_WIZARD_MIDROUND
 	jobban_flag = ROLE_WIZARD
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
@@ -293,7 +293,7 @@
 	candidate_role = "Operative"
 	pref_flag = ROLE_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_OPERATIVE
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -1072,6 +1072,7 @@
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_MALF_MIDROUND
 	jobban_flag = ROLE_MALF
+	ruleset_flags = RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,

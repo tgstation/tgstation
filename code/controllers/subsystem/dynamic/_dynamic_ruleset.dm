@@ -186,7 +186,7 @@
 	for(var/datum/dynamic_ruleset/other_ruleset as anything in SSdynamic.executed_rulesets)
 		if(other_ruleset == src)
 			continue
-		if((ruleset_flags & RULESET_HIGH_IMPACT) && (other_ruleset.ruleset_flags & RULESET_HIGH_IMPACT))
+		if(tier != DYNAMIC_TIER_HIGH && (ruleset_flags & RULESET_HIGH_IMPACT) && (other_ruleset.ruleset_flags & RULESET_HIGH_IMPACT))
 			return 0
 		if(!istype(other_ruleset, type))
 			continue

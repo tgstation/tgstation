@@ -72,6 +72,7 @@
 	preview_antag_datum = /datum/antagonist/rev/head
 	pref_flag = ROLE_PROVOCATEUR
 	jobban_flag = ROLE_REV_HEAD
+	ruleset_flags = RULESET_HIGH_IMPACT
 	weight = 1
 	min_pop = 30
 	repeatable = FALSE
