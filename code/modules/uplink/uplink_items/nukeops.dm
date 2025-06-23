@@ -456,6 +456,12 @@
 	item = /obj/item/grenade/syndieminibomb
 	cost = 2
 
+/datum/uplink_item/explosives/military_grade/soap_clusterbang
+	name = "Slipocalypse Clusterbang"
+	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
+	item = /obj/item/grenade/clusterbuster/soap
+	cost = 1
+
 // ~~ Grenadier's Belt Kit ~~
 
 /datum/uplink_item/weapon_kits/high_cost/grenadier
