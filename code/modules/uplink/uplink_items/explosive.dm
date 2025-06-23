@@ -91,7 +91,7 @@
 	item = /obj/item/grenade/syndieminibomb
 	cost = 2
 	limited_stock = 2
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	urchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral Cat Grenade Box"

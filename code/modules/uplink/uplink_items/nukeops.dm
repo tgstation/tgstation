@@ -449,6 +449,13 @@
 	item = /obj/item/grenade/c4/x4
 	cost = 2
 
+/datum/uplink_item/explosives/military_grade/syndicate_minibomb
+	name = "Syndicate Minibomb"
+	desc = "The minibomb is a grenade with a five-second fuse. Upon detonation, it will create a small hull breach \
+			in addition to dealing high amounts of damage to nearby personnel."
+	item = /obj/item/grenade/syndieminibomb
+	cost = 2
+
 // ~~ Grenadier's Belt Kit ~~
 
 /datum/uplink_item/weapon_kits/high_cost/grenadier
