@@ -29,7 +29,7 @@
 	. = ..()
 	var/obj/item/circuitboard/board = build_path
 	var/obj/machinery/ai_law_rack/rack = board::build_path
-	desc += " Can hold [rack::law_slots] modules[rack::has_core_slot ? ", including a core module slot" : ""]."
+	desc += " Can hold [rack::law_slots] module\s[rack::has_core_slot ? ", including a core module slot" : ""]."
 
 /datum/design/board/ai_law_rack/portable
 	name = "Portable AI Module Rack Board"
