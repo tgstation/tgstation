@@ -1,4 +1,0 @@
-author: "Tostah"
-delete-after: True
-changes:
-  - bugfix: "Ninja Camera Vision module now correctly applies welding protection."

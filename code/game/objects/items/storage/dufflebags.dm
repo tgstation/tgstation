@@ -4,7 +4,6 @@
 	icon_state = "duffel"
 	inhand_icon_state = "duffel"
 	actions_types = list(/datum/action/item_action/zipper)
-	action_slots = ALL
 	storage_type = /datum/storage/duffel
 	// How much to slow you down if your bag isn't zipped up
 	var/zip_slowdown = 1
@@ -22,12 +21,13 @@
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
+	slowdown += zip_slowdown
 	set_zipper(TRUE)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
 
-/obj/item/storage/backpack/duffelbag/update_desc(updates)
+/obj/item/storage/backpack/duffelbag/examine(mob/user)
 	. = ..()
-	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
+	. += "[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
 	if(loc != user) // God fuck TK

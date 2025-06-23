@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Assistant-only clean toolbox now does 1 damage per TC again."

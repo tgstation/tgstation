@@ -120,7 +120,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "scrub_cap", initialize_directions)
 		add_overlay(cap)
 	else
@@ -183,7 +183,7 @@
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on || (!filter_types && scrubbing != ATMOS_DIRECTION_SIPHONING))
-		on = FALSE
+		set_on(FALSE)
 		return FALSE
 
 	var/list/changed_gas = air.gases
@@ -200,7 +200,7 @@
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
-		on = FALSE
+		set_on(FALSE)
 		return FALSE
 	var/turf/open/us = loc
 	if(!istype(us))
@@ -347,4 +347,4 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()
-	on = FALSE
+	set_on(FALSE)
