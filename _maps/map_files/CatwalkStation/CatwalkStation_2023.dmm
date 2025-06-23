@@ -14316,12 +14316,6 @@
 	},
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
-"ekp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "eku" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/iron{
@@ -54580,10 +54574,6 @@
 /obj/effect/spawner/random/trash/box,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"qmm" = (
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/closed/wall/r_wall,
-/area/station/security/brig)
 "qmB" = (
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark/textured_large,
@@ -115492,9 +115482,9 @@ mUi
 wKb
 wKb
 rdN
-ekp
-ekp
-ekp
+wKb
+wKb
+wKb
 jWB
 odZ
 nCo
@@ -115751,7 +115741,7 @@ uUX
 eEv
 eEv
 uWu
-ekp
+wKb
 fTM
 odZ
 nCo
@@ -116008,7 +115998,7 @@ ltC
 ltC
 byJ
 wLf
-ekp
+wKb
 wCv
 qEE
 nxh
@@ -116263,9 +116253,9 @@ qnM
 wKb
 wKb
 hGD
-ekp
-ekp
-ekp
+wKb
+wKb
+wKb
 wKb
 wKb
 wKb
@@ -168116,7 +168106,7 @@ oPP
 dnj
 hGg
 tXf
-qmm
+kTw
 lLV
 bOI
 dDS
@@ -168373,7 +168363,7 @@ bMg
 bOk
 kHU
 kTw
-qmm
+kTw
 mRs
 bOI
 oPa
