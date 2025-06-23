@@ -99,3 +99,5 @@
 	cost = 5
 	item = /obj/item/storage/box/syndie_kit/feral_cat_grenades
 	surplus = 30
+	limited_stock = 1
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
