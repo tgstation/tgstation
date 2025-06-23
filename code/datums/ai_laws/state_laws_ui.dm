@@ -21,6 +21,30 @@
 	owner = null
 	return ..()
 
+/datum/state_laws_ui/proc/get_laws_ui_data()
+	var/list/law_data = list()
+	var/zeroth = iscyborg(owner) && owner.laws.zeroth_borg || owner.laws.zeroth
+	if(zeroth)
+		law_data += list(law_to_ui_data(zeroth, 0, "hacked"))
+	for(var/law in owner.laws.hacked)
+		law_data += list(law_to_ui_data(law, ion_num(), "hacked"))
+	var/number = 1
+	for(var/law in owner.laws.inherent)
+		law_data += list(law_to_ui_data(law, number++, "core"))
+	for(var/law in owner.laws.supplied)
+		law_data += list(law_to_ui_data(law, number++, "supplied"))
+	return law_data
+
+/datum/state_laws_ui/proc/law_to_ui_data(law_text, law_number, law_type)
+	return list(
+		"text" = law_text,
+		"number" = law_number,
+		"type" = law_type
+	)
+
+/obj/machinery/ai_law_rack/ui_close(mob/user)
+	update_inherent_stated_laws(owner.laws)
+
 /datum/state_laws_ui/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
@@ -35,17 +59,8 @@
 	var/list/data = list()
 
 	data["locked"] = locked
-
 	data["stated_laws"] = to_state
-	data["all_laws"] = list() // melbert todo : add law color
-	if(owner.laws.zeroth)
-		data["all_laws"] += owner.laws.zeroth
-	if(length(owner.laws.hacked))
-		data["all_laws"] += owner.laws.hacked
-	if(length(owner.laws.inherent))
-		data["all_laws"] += owner.laws.inherent
-	if(length(owner.laws.supplied))
-		data["all_laws"] += owner.laws.supplied
+	data["all_laws"] = get_laws_ui_data()
 
 	return data
 
@@ -77,7 +92,7 @@
 
 	var/forced_log_message = "stating laws[force_all_laws ? ", forced" : ""]"
 	// Create a cache of our laws before we start, so if they're changed mid-statement, nothing strange happens
-	var/lawcache_zeroth = owner.laws.zeroth
+	var/lawcache_zeroth = iscyborg(owner) && owner.laws.zeroth_borg || owner.laws.zeroth
 	var/list/lawcache_hacked = owner.laws.hacked.Copy()
 	var/list/lawcache_inherent = owner.laws.inherent.Copy()
 	var/list/lawcache_supplied = owner.laws.supplied.Copy()

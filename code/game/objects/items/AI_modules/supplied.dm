@@ -11,7 +11,7 @@
 
 /obj/item/ai_module/law/supplied/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
 	for(var/law in laws)
-		combined_lawset.add_inherent_law(law)
+		combined_lawset.add_supplied_law(law)
 
 /obj/item/ai_module/law/supplied/safeguard
 	name = "'Safeguard' AI Module"

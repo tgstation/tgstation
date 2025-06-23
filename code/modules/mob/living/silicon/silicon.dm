@@ -199,19 +199,6 @@
 		return TRUE
 	return FALSE
 
-/**
- * Assembles all the zeroth, inherent and supplied laws into a single list.
- */
-/mob/living/silicon/proc/assemble_laws()
-	var/list/laws_to_return = list()
-	laws_to_return += laws.zeroth
-	for (var/law in laws.inherent)
-		laws_to_return += law
-	for (var/law in laws.supplied)
-		if (law != "") // supplied laws start off with 15 blank strings, so don't add any of those
-			laws_to_return += law
-	return laws_to_return
-
 /mob/living/silicon/Topic(href, href_list)
 	if (href_list["laws"])
 		statelaws()

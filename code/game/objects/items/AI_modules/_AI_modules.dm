@@ -150,6 +150,15 @@
 	for(var/law in laws)
 		combined_lawset.add_inherent_law(law)
 
+/obj/item/ai_module/law/core/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
+	if(isnull(rack.linked_ref))
+		return
+	// removing core laws temporarily stuns the silicon to let people swap cores without immediately getting blasted
+	if(rack.linked_ref.AmountStun() > 5 SECONDS)
+		return
+	rack.linked_ref.Stun(10 SECONDS, ignore_canstun = TRUE)
+	to_chat(rack.linked_ref, span_userdanger("Core module removed. Recalculating directives..."))
+
 /obj/item/ai_module/law/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 

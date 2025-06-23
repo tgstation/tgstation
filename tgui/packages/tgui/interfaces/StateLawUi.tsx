@@ -4,10 +4,28 @@ import { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+enum LawType {
+  HACKED = 'hacked',
+  CORE = 'core',
+  SUPPLIED = 'supplied',
+}
+
+const lawTypeColors = {
+  [LawType.HACKED]: 'red',
+  [LawType.CORE]: 'blue',
+  [LawType.SUPPLIED]: 'green',
+};
+
+type Law = {
+  text: string;
+  number: number;
+  type: LawType;
+};
+
 type Data = {
   locked: BooleanLike;
   stated_laws: string[];
-  all_laws: string[];
+  all_laws: Law[];
 };
 
 export const StateLawUi = () => {
@@ -42,12 +60,18 @@ export const StateLawUi = () => {
                       <Flex.Item mr={0.5}>
                         <Button.Checkbox
                           iconSize={2}
-                          checked={stated_laws.includes(law)}
-                          onClick={() => act('toggle_stated', { law: law })}
+                          checked={stated_laws.includes(law.text)}
+                          onClick={() =>
+                            act('toggle_stated', { law: law.text })
+                          }
                         />
                       </Flex.Item>
                       <Flex.Item grow={1}>
-                        <BlockQuote>{law}</BlockQuote>
+                        <BlockQuote
+                          textColor={lawTypeColors[law.type] || 'green'}
+                        >
+                          {law.number}. {law.text}
+                        </BlockQuote>
                       </Flex.Item>
                     </Flex>
                   </Stack.Item>
@@ -65,6 +89,7 @@ export const StateLawUi = () => {
             confirmColor="green"
             disabled={locked}
             onClick={() => act('state_laws')}
+            italic={!!locked}
           >
             {locked ? 'On Cooldown' : 'State Laws'}
           </Button.Confirm>

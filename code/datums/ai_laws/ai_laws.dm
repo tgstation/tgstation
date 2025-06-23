@@ -250,25 +250,11 @@ GLOBAL_VAR(round_default_lawset)
 /datum/ai_laws/proc/clear_hacked_laws()
 	hacked.Cut()
 
-/// Adds the passed law as a supplied law at the passed priority level.
-/// Will override any existing supplied laws at that priority level.
-/datum/ai_laws/proc/add_supplied_law(number, law)
-	while (supplied.len < number + 1)
-		supplied += ""
+/datum/ai_laws/proc/add_supplied_law(law)
+	supplied += law
 
-	supplied[number + 1] = law
-
-/// Removes the supplied law at the passed number.
-/datum/ai_laws/proc/remove_supplied_law_by_num(number)
-	supplied[number] = ""
-
-/// Removes the supplied law by law text, replacing it with a blank.
-/datum/ai_laws/proc/remove_supplied_law_by_law(law)
-	var/lawindex = supplied.Find(law)
-	if(!lawindex)
-		return
-
-	supplied[lawindex] = ""
+/datum/ai_laws/proc/remove_supplied_law(law)
+	supplied -= law
 
 /// Clears all supplied laws.
 /datum/ai_laws/proc/clear_supplied_laws()

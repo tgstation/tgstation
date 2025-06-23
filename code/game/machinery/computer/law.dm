@@ -87,6 +87,7 @@
 		return
 
 	var/old_zeroth = combined_lawset.zeroth
+	var/old_zeroth_borg = combined_lawset.zeroth_borg
 	var/old_hacked = combined_lawset.hacked.Copy()
 	var/old_inherent = combined_lawset.inherent.Copy()
 	var/old_supplied = combined_lawset.supplied.Copy()
@@ -102,12 +103,13 @@
 	if(isnull(linked_ref))
 		return
 
-	linked_ref.laws.set_zeroth_law(combined_lawset.zeroth)
+	linked_ref.laws.set_zeroth_law(combined_lawset.zeroth, combined_lawset.zeroth_borg)
 	linked_ref.laws.hacked = combined_lawset.hacked.Copy()
 	linked_ref.laws.inherent = combined_lawset.inherent.Copy()
 	linked_ref.laws.supplied = combined_lawset.supplied.Copy()
 	// avoid spamming the ai if nothing changed
 	if(old_zeroth == combined_lawset.zeroth \
+		&& old_zeroth_borg == combined_lawset.zeroth_borg \
 		&& old_hacked ~= combined_lawset.hacked \
 		&& old_inherent ~= combined_lawset.inherent \
 		&& old_supplied ~= combined_lawset.supplied \
@@ -460,7 +462,7 @@
 			if(isnull(module) || ai_modules[module])
 				// These have feedback in the UI, the checks are only for sanity
 				return TRUE
-			module.pre_user_uninstall_from_rack(src)
+			module.pre_user_uninstall_from_rack(user, src)
 			// calls exited which handles updating laws and such
 			try_put_in_hand(module, user)
 			balloon_alert_to_viewers("removed slot [index]")
