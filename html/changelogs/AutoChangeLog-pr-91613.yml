@@ -1,0 +1,6 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed being able to anchor multiple solar panel assemblies on a single tile (or any dense tile for that matter)"
+  - bugfix: "fixed solar trackers not absorbing the assembly upon construction, leading to assembly duplication"
+  - qol: "solar assemblies can be wrenched on catwalks"
