@@ -170,7 +170,7 @@
 	if(drowsy)
 		final_sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
 	if(caffeinated)
-		final_sleep_chance = final_sleep_chance / 2 //make it harder to fall asleep on caffeine
+		final_sleep_chance *= 0.5 //make it harder to fall asleep on caffeine
 
 	if(!SPT_PROB(final_sleep_chance, seconds_per_tick))
 		return
