@@ -462,6 +462,15 @@
 	item = /obj/item/grenade/clusterbuster/soap
 	cost = 1
 
+/datum/uplink_item/explosives/military_grade/pizza_bomb
+	name = "Pizza Bomb"
+	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
+			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!\
+			Cybersun Industries would like to remind you that eating pizza in the middle of a delicate infiltration operation is not recommened, \
+			and that there are no guarantees that the pizza is safe from any explosive contaminants."
+	item = /obj/item/pizzabox/bomb
+	cost = 2
+
 // ~~ Grenadier's Belt Kit ~~
 
 /datum/uplink_item/weapon_kits/high_cost/grenadier
