@@ -10,10 +10,6 @@
 /datum/saymode/proc/can_be_used_by(mob/living/user)
 	return TRUE
 
-//Return FALSE if you have handled the message. Otherwise, return TRUE and saycode will continue doing saycode things.
-//user = whoever said the message
-//message = the message
-//language = the language.
 /**
  * Handles actually modifying or forwarding our message.
  * Returns `SAYMODE_[X]` flags.
