@@ -629,7 +629,7 @@
 		new /obj/item/grenade/spawnergrenade/manhacks(src)
 
 /obj/item/storage/box/syndie_kit/feral_cat_grenades/PopulateContents()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 5)
 		new /obj/item/grenade/spawnergrenade/cat(src)
 
 /obj/item/storage/box/syndie_kit/frag_grenades/PopulateContents()
