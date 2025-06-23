@@ -14,12 +14,21 @@
  * Handles actually modifying or forwarding our message.
  * Returns `SAYMODE_[X]` flags.
  *
- * user - The living speaking using this say mode
- * message - The message to be said
- * language - The language the message was said in
- * message_mods - A list of message modifiers, i.e. whispering/singing
+ * user - The living speaking using this say mode.
+ * message - The message to be said.
+ * spans - A list of spans to attach to the message.
+ * language - The language the message was said in.
+ * message_range - The range of the message.
+ * message_mods - A list of message modifiers, i.e. whispering/singing.
  */
-/datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language, list/message_mods = list())
+/datum/saymode/proc/handle_message(
+	mob/living/user,
+	message,
+	list/spans = list(),
+	datum/language/language,
+	message_range,
+	list/message_mods = list()
+)
 	return NONE
 
 
@@ -41,7 +50,14 @@
 		return FALSE
 	return TRUE
 
-/datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language, list/message_mods = list())
+/datum/saymode/changeling/handle_message/handle_message(
+	mob/living/user,
+	message,
+	list/spans = list(),
+	datum/language/language,
+	message_range,
+	list/message_mods = list()
+)
 	var/datum/antagonist/changeling/ling_sender = IS_CHANGELING(user)
 	user.log_talk(message, LOG_SAY, tag = "changeling [ling_sender.changelingID]")
 	var/msg = span_changeling("<b>[ling_sender.changelingID]:</b> [message]")
@@ -74,7 +90,14 @@
 		return FALSE
 	return TRUE
 
-/datum/saymode/xeno/handle_message(mob/living/user, message, datum/language/language, list/message_mods = list())
+/datum/saymode/xeno/handle_message/handle_message(
+	mob/living/user,
+	message,
+	list/spans = list(),
+	datum/language/language,
+	message_range,
+	list/message_mods = list()
+)
 	user.alien_talk(message, message_mods)
 	return SAYMODE_MESSAGE_HANDLED
 
@@ -88,7 +111,14 @@
 		return FALSE
 	return TRUE
 
-/datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language, list/message_mods = list())
+/datum/saymode/vocalcords/handle_message/handle_message(
+	mob/living/user,
+	message,
+	list/spans = list(),
+	datum/language/language,
+	message_range,
+	list/message_mods = list()
+)
 	var/mob/living/carbon/carbon_user = user
 	var/obj/item/organ/vocal_cords/our_vocal_cords = carbon_user.get_organ_slot(ORGAN_SLOT_VOICE)
 	if(our_vocal_cords?.can_speak_with())
@@ -107,7 +137,14 @@
 		return FALSE
 	return TRUE
 
-/datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language, list/message_mods = list())
+/datum/saymode/binary/handle_message/handle_message(
+	mob/living/user,
+	message,
+	list/spans = list(),
+	datum/language/language,
+	message_range,
+	list/message_mods = list()
+)
 	if(isdrone(user))
 		var/mob/living/basic/drone/drone_user = user
 		drone_user.drone_chat(message, message_mods)
@@ -126,7 +163,14 @@
 		return FALSE
 	return TRUE
 
-/datum/saymode/holopad/handle_message(mob/living/user, message, datum/language/language, list/message_mods = list())
+/datum/saymode/holopad/handle_message/handle_message(
+	mob/living/user,
+	message,
+	list/spans = list(),
+	datum/language/language,
+	message_range,
+	list/message_mods = list()
+)
 	var/mob/living/silicon/ai/ai_user = user
-	ai_user.holopad_talk(message, language, message_mods)
+	ai_user.holopad_talk(message, spans, language, message_range, message_mods)
 	return SAYMODE_MESSAGE_HANDLED
