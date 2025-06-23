@@ -147,7 +147,7 @@
 /obj/machinery/ai_law_rack/proc/can_link_to(mob/living/silicon/new_bot)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(is_valid_z_level(get_turf(src), get_turf(new_bot)))
+	if(!is_valid_z_level(get_turf(src), get_turf(new_bot)))
 		return FALSE // Can't link to bots on different z-levels
 	if(new_bot.control_disabled)
 		return FALSE
@@ -213,6 +213,8 @@
 	return ..()
 
 /obj/machinery/ai_law_rack/wrench_act(mob/living/user, obj/item/tool)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return ITEM_INTERACT_BLOCKING
 	switch(default_unfasten_wrench(user, tool, 5 SECONDS))
 		if(CANT_UNFASTEN)
 			return NONE
@@ -234,7 +236,9 @@
 	return TRUE
 
 /obj/machinery/ai_law_rack/welder_act(mob/living/user, obj/item/tool)
-	if(!can_weld_check(user))
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return ITEM_INTERACT_BLOCKING
+	if(!can_weld_check(user) || !tool.tool_start_check(user, amount = 2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50, amount = 2, extra_checks = CALLBACK(src, PROC_REF(can_weld_check), user)) )
 		return ITEM_INTERACT_BLOCKING
@@ -471,6 +475,8 @@
 			var/obj/item/screwer = user.get_active_held_item()
 			if(screwer.tool_behaviour != TOOL_SCREWDRIVER || DOING_INTERACTION_WITH_TARGET(user, src))
 				return TRUE
+			if(!screwer.tool_start_check(user))
+				return TRUE
 			balloon_alert_to_viewers("[ai_modules[module] == MODULE_SCREWED ? "un":""]screwing slot [index]...")
 			if(!screwer.use_tool(src, user, 3 SECONDS, volume = 25))
 				return TRUE
@@ -488,10 +494,12 @@
 			if(isnull(module) || ai_modules[module] == MODULE_UNSECURED)
 				// These have feedback in the UI, the checks are only for sanity
 				return TRUE
-			balloon_alert_to_viewers("[ai_modules[module] == MODULE_WELDED ? "un":""]welding slot [index]...")
 			var/obj/item/welder = user.get_active_held_item()
 			if(welder.tool_behaviour != TOOL_WELDER || DOING_INTERACTION_WITH_TARGET(user, src))
 				return TRUE
+			if(!can_weld_check(user) || !welder.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+				return TRUE
+			balloon_alert_to_viewers("[ai_modules[module] == MODULE_WELDED ? "un":""]welding slot [index]...")
 			if(!welder.use_tool(src, user, 3 SECONDS, volume = 25, amount = 1))
 				return TRUE
 			module = ai_modules[index]
@@ -541,6 +549,7 @@
 			core_rack.link_child_law_rack(src)
 			balloon_alert_to_viewers("linked to [core_rack.name]")
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, TRUE)
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("unlink_rack")
 			if(!is_operational)
@@ -554,6 +563,7 @@
 			core_rack.unlink_child_law_rack(src)
 			balloon_alert_to_viewers("unlinked from [core_rack.name]")
 			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
+			update_static_data_for_all_viewers()
 			return TRUE
 
 /// When given a ref(), finds a silicon mob it belongs to
@@ -681,13 +691,24 @@
 	first_slot_offset = 34
 	/// List of law racks which are linked to this law rack, contributing to our lawset
 	VAR_FINAL/list/obj/machinery/ai_law_rack/linked_racks
+	/// Designations for the core law rack, used to name it
+	VAR_PRIVATE/static/list/core_designations
 
 /obj/machinery/ai_law_rack/core/Initialize(mapload)
 	. = ..()
+	if(!length(core_designations))
+		core_designations = GLOB.greek_letters.Copy()
+
+	var/designation
 	if(mapload)
 		anchored = TRUE
 		welded = TRUE
 		load_config_law()
+		designation = popleft(core_designations)
+	else
+		designation = pick_n_take(core_designations)
+
+	name = "[name] '[LOWER_TEXT(designation)]'"
 
 /obj/machinery/ai_law_rack/core/Destroy()
 	for(var/obj/machinery/ai_law_rack/linked_rack as anything in linked_racks)

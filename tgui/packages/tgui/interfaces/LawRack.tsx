@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  BlockQuote,
   Box,
   Button,
   Flex,
@@ -41,7 +42,7 @@ type Data = {
   depowered: BooleanLike;
   allowed: BooleanLike;
   linked_racks?: string[];
-  parent_rack?: string;
+  parent_rack?: Linkable;
   linkable_silicons: Linkable[];
   linkable_racks: Linkable[];
 };
@@ -58,13 +59,14 @@ function getSlotColor(
 }
 
 const LawSlotScrew = (props: {
-  noscrew: boolean;
-  disabled: boolean;
+  noscrew: BooleanLike;
+  disabled: BooleanLike;
+  tooltip?: string;
   handleScrew: () => void;
 }) => {
   return (
     <Button
-      width="25px"
+      tooltip={props.tooltip}
       className={props.noscrew ? 'LawRack__Screw Empty' : 'LawRack__Screw'}
       disabled={props.disabled}
       onClick={props.handleScrew}
@@ -86,13 +88,22 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
 
   return (
     <Box
+      height="33px"
       backgroundColor={getSlotColor(slot, index, has_core_slot)}
       p={1}
+      mb={-0.5}
       className="LawRack__Slot"
     >
-      <Flex>
-        <Flex.Item width="8%" mr={1}>
+      <Flex align="center">
+        <Flex.Item mr={1}>
           <LawSlotScrew
+            tooltip={
+              slot.security === SlotSecurity.SCREWED && !holding_screwdriver
+                ? 'You need a screwdriver to unscrew this module.'
+                : holding_screwdriver && slot.security === SlotSecurity.WELDED
+                  ? `You can't remove the screws before unwelding it.`
+                  : undefined
+            }
             noscrew={slot.empty || slot.security === SlotSecurity.NONE}
             disabled={
               !holding_screwdriver ||
@@ -102,22 +113,38 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
             handleScrew={() => act('screw_module', { slot: index + 1 })}
           />
         </Flex.Item>
-        <Flex.Item width="84%">
+        <Flex.Item width="85%">
           {(slot.security === SlotSecurity.WELDED || !!holding_welder) && (
             <Button
-              height="100%"
               textAlign="center"
               verticalAlignContent="middle"
               fluid
+              tooltip={
+                slot.security === SlotSecurity.WELDED && !holding_welder
+                  ? `You can't remove this module before unwelding it.`
+                  : holding_welder &&
+                      slot.security === SlotSecurity.NONE &&
+                      !slot.empty
+                    ? 'Screw this module in place before welding.'
+                    : undefined
+              }
               className={
                 slot.security === SlotSecurity.WELDED
                   ? 'LawRack__Welded'
                   : undefined
               }
-              disabled={!holding_welder || slot.empty}
+              disabled={
+                !holding_welder ||
+                slot.empty ||
+                slot.security === SlotSecurity.NONE
+              }
               onClick={() => act('weld_module', { slot: index + 1 })}
             >
-              {slot.security === SlotSecurity.WELDED ? 'Welded' : 'Weld Module'}
+              {slot.security === SlotSecurity.WELDED
+                ? 'Welded'
+                : slot.empty
+                  ? slot.name || 'Empty'
+                  : 'Weld Module'}
             </Button>
           )}
           {slot.security !== SlotSecurity.WELDED && !!holding_multitool && (
@@ -140,6 +167,11 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
                 textAlign="center"
                 verticalAlignContent="middle"
                 fluid
+                tooltip={
+                  slot.security === SlotSecurity.SCREWED
+                    ? `You can't remove this module before unscrewing it.`
+                    : undefined
+                }
                 disabled={
                   (!holding_module && slot.empty) ||
                   slot.security !== SlotSecurity.NONE
@@ -158,8 +190,15 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
               </Button>
             )}
         </Flex.Item>
-        <Flex.Item width="8%" ml={1}>
+        <Flex.Item ml={1}>
           <LawSlotScrew
+            tooltip={
+              slot.security === SlotSecurity.SCREWED && !holding_screwdriver
+                ? 'You need a screwdriver to unscrew this module.'
+                : holding_screwdriver && slot.security === SlotSecurity.WELDED
+                  ? `You can't remove the screws before unwelding it.`
+                  : undefined
+            }
             noscrew={slot.empty || slot.security === SlotSecurity.NONE}
             disabled={
               !holding_screwdriver ||
@@ -175,30 +214,46 @@ const LawSlot = (props: { slot: SlotData; index: number }) => {
 };
 
 const LinkableFloating = (props: {
+  show_floating: boolean;
   linkable: Linkable[];
   link_act: (ref: string) => void;
+  button: React.ReactNode;
 }) => {
-  const { linkable, link_act } = props;
+  const { show_floating, linkable, link_act, button } = props;
+
+  if (!show_floating) {
+    return button;
+  }
 
   return (
     <Floating
       stopChildPropagation
       placement="top-start"
       content={
-        <Stack vertical>
+        <Stack
+          vertical
+          backgroundColor="black"
+          p={1}
+          style={{
+            borderRadius: '4px',
+            boxShadow: '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
+          }}
+        >
           {linkable.map((item) => (
             <Stack.Item key={item.ref}>
               <Button
                 style={{ textTransform: 'capitalize' }}
                 onClick={() => link_act(item.ref)}
               >
-                {item.name}
+                Link to: <b>{item.name}</b>
               </Button>
             </Stack.Item>
           ))}
         </Stack>
       }
-    />
+    >
+      {button}
+    </Floating>
   );
 };
 
@@ -214,11 +269,11 @@ export const LawRack = () => {
     slots,
   } = data;
 
-  const [rackLink, setRackLink] = useState(false);
-  const [siliconLink, setSiliconLink] = useState(false);
+  const [rackLink, setRackLink] = useState(true);
+  const [siliconLink, setSiliconLink] = useState(true);
 
   return (
-    <Window title="Module Rack" width={350} height={600}>
+    <Window title="Module Rack" width={330} height={slots.length * 40 + 100}>
       <Window.Content>
         <Section>
           <Stack vertical>
@@ -230,66 +285,86 @@ export const LawRack = () => {
             <Stack.Divider />
             {linked || parent_rack ? (
               <Stack.Item align="center">
-                Linked to <b>{linked || parent_rack}</b>
-                <Button
-                  ml={1}
-                  disabled={!allowed || depowered}
-                  icon="link-slash"
-                  onClick={() => act(linked ? 'unlink_silicon' : 'unlink_rack')}
-                />
+                <Flex align="center">
+                  <Flex.Item>
+                    <Button
+                      mr={1}
+                      disabled={!allowed || depowered}
+                      tooltipPosition="right"
+                      tooltip={
+                        !allowed
+                          ? 'You are not allowed to unlink this rack.'
+                          : depowered
+                            ? 'No power!'
+                            : undefined
+                      }
+                      icon="link-slash"
+                      onClick={() =>
+                        act(linked ? 'unlink_silicon' : 'unlink_rack')
+                      }
+                    />
+                  </Flex.Item>
+                  <Flex.Item>
+                    <BlockQuote>
+                      Linked to <b>{linked || parent_rack?.name}</b>
+                    </BlockQuote>
+                  </Flex.Item>
+                </Flex>
               </Stack.Item>
             ) : (
               <Stack.Item align="center">
                 <Flex>
                   <Flex.Item>
-                    {rackLink && (
-                      <LinkableFloating
-                        linkable={data.linkable_racks}
-                        link_act={(ref) => act('link_rack', { rack_ref: ref })}
-                      />
-                    )}
-                    <Button
-                      fluid
-                      icon="link"
-                      disabled={!data.linkable_racks.length || depowered}
-                      tooltip={
-                        data.linkable_racks.length
-                          ? depowered
-                            ? 'No power!'
-                            : undefined
-                          : 'No linkable racks!'
+                    <LinkableFloating
+                      show_floating={rackLink}
+                      linkable={data.linkable_racks}
+                      link_act={(ref) => act('link_rack', { rack_ref: ref })}
+                      button={
+                        <Button
+                          fluid
+                          icon="link"
+                          disabled={!data.linkable_racks.length || depowered}
+                          tooltip={
+                            data.linkable_racks.length
+                              ? depowered
+                                ? 'No power!'
+                                : undefined
+                              : 'No linkable racks!'
+                          }
+                          onClick={() => setRackLink(!rackLink)}
+                          mr={0.5}
+                        >
+                          Link to Core Rack
+                        </Button>
                       }
-                      onClick={() => setRackLink(!rackLink)}
-                      mr={0.5}
-                    >
-                      Link to Core Rack
-                    </Button>
+                    />
                   </Flex.Item>
                   <Flex.Item>
-                    {siliconLink && (
-                      <LinkableFloating
-                        linkable={data.linkable_silicons}
-                        link_act={(ref) =>
-                          act('link_silicon', { silicon_ref: ref })
-                        }
-                      />
-                    )}
-                    <Button
-                      fluid
-                      icon="link"
-                      disabled={!data.linkable_silicons.length || depowered}
-                      tooltip={
-                        data.linkable_silicons.length
-                          ? depowered
-                            ? 'No power!'
-                            : undefined
-                          : 'No linkable silicons!'
+                    <LinkableFloating
+                      show_floating={siliconLink}
+                      linkable={data.linkable_silicons}
+                      link_act={(ref) =>
+                        act('link_silicon', { silicon_ref: ref })
                       }
-                      onClick={() => setSiliconLink(!siliconLink)}
-                      ml={0.5}
-                    >
-                      Link to Silicon
-                    </Button>
+                      button={
+                        <Button
+                          fluid
+                          icon="link"
+                          disabled={!data.linkable_silicons.length || depowered}
+                          tooltip={
+                            data.linkable_silicons.length
+                              ? depowered
+                                ? 'No power!'
+                                : undefined
+                              : 'No linkable silicons!'
+                          }
+                          onClick={() => setSiliconLink(!siliconLink)}
+                          ml={0.5}
+                        >
+                          Link to Silicon
+                        </Button>
+                      }
+                    />
                   </Flex.Item>
                 </Flex>
               </Stack.Item>
