@@ -134,7 +134,7 @@ export const ChemReactionChamber = (props) => {
               title="Settings"
               height="220px"
               maxHeight="220px"
-              overflow="hidden"
+              overflow="scroll"
               buttons={
                 (isReacting && (
                   <Box inline bold color={'purple'}>
@@ -270,7 +270,7 @@ export const ChemReactionChamber = (props) => {
               title="Catalysts"
               height="150px"
               maxHeight="150px"
-              overflow="hidden"
+              overflow="scroll"
             >
               <Stack.Item>
                 <Stack vertical fill>
