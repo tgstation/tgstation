@@ -29,7 +29,7 @@ function Get-Bun {
     # https://bun.sh/docs/installation#cpu-requirements-and-baseline-builds
     Get-CoreInfo
     Write-Output "Checking CPU for AVX2 support"
-    $avx2Supported = (& $CoreInfoExe -accepteula | Select-String "AVX2\s+\*") -ne $null
+    $avx2Supported = (& $CoreInfoExe -accepteula -f | Select-String "AVX2\s+\*") -ne $null
     $BunRelease= "$BunPlatform"
     $BunTag
     if (-not $avx2Supported) {
