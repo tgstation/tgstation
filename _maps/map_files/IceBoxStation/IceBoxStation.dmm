@@ -9516,6 +9516,14 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
+/obj/item/paper{
+	pixel_y = 1;
+	pixel_x = -3
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "cBY" = (
@@ -11638,9 +11646,6 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "dhL" = (
-/obj/machinery/computer/upload/ai{
-	dir = 1
-	},
 /obj/machinery/flasher/directional/south{
 	id = "AI"
 	},
@@ -24331,6 +24336,9 @@
 /obj/structure/table,
 /obj/item/circuitboard/aicore,
 /obj/machinery/airalarm/directional/west,
+/obj/item/circuitboard/machine/ai_law_rack/small{
+	pixel_y = -2
+	},
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/rd)
 "gSO" = (
@@ -33994,7 +34002,6 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
-/obj/structure/sign/plaques/kiddie,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "jKN" = (
@@ -41726,6 +41733,9 @@
 /area/station/maintenance/starboard/fore)
 "lRx" = (
 /obj/effect/turf_decal/tile/dark_green,
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "lRy" = (
@@ -45024,6 +45034,7 @@
 /area/station/engineering/storage/tech)
 "mVp" = (
 /obj/structure/cable,
+/obj/machinery/ai_law_rack/core,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mVw" = (
@@ -45242,12 +45253,19 @@
 	c_tag = "AI Upload West";
 	network = list("aiupload")
 	},
-/obj/item/ai_module/law/supplied/freeform,
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = 1;
+	pixel_x = -2
+	},
 /obj/effect/turf_decal/tile/dark_green,
 /obj/machinery/light/directional/west,
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = 6
+	},
+/obj/item/ai_module/law/supplied/freeform,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mYh" = (
@@ -51079,11 +51097,14 @@
 /area/station/commons/toilet)
 "ozn" = (
 /obj/structure/table,
-/obj/item/ai_module/law/reset,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/dark_green,
+/obj/structure/sign/plaques/kiddie{
+	pixel_y = 32
+	},
+/obj/effect/spawner/round_default_module,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "ozo" = (
@@ -54233,9 +54254,6 @@
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "High-Risk Modules";
 	req_access = list("captain")
-	},
-/obj/item/ai_module/law/reset/purge{
-	pixel_y = 11
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -61236,9 +61254,14 @@
 /area/station/science/breakroom)
 "rox" = (
 /obj/structure/table,
-/obj/effect/spawner/round_default_module,
 /obj/effect/turf_decal/tile/dark_green{
 	dir = 4
+	},
+/obj/structure/noticeboard/directional/north,
+/obj/item/storage/toolbox/electrical,
+/obj/item/assembly/flash/handheld{
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -63191,9 +63214,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/lobby)
 "rSN" = (
-/obj/machinery/computer/upload/borg{
-	dir = 1
-	},
 /obj/item/radio/intercom/directional/south{
 	broadcasting = 1;
 	frequency = 1447;
@@ -76954,6 +76974,15 @@
 	},
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/security/prison/work)
+"vTy" = (
+/obj/effect/turf_decal/tile/dark_green{
+	dir = 4
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/ai_upload)
 "vTJ" = (
 /obj/structure/table,
 /obj/item/toy/plush/slimeplushie{
@@ -77902,7 +77931,6 @@
 	},
 /obj/structure/rack,
 /obj/item/aicard,
-/obj/item/ai_module/law/reset,
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/dark_blue/full,
@@ -245656,7 +245684,7 @@ lhv
 hwC
 ybv
 vOD
-rOC
+vTy
 vzT
 cHO
 oYu

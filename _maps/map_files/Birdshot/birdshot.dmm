@@ -14141,6 +14141,9 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
+/obj/item/circuitboard/machine/ai_law_rack/small{
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "fca" = (
@@ -18140,7 +18143,6 @@
 /obj/structure/rack,
 /obj/item/aicard,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/ai_module/law/reset,
 /obj/effect/turf_decal/siding/dark,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -33280,13 +33282,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/server)
-"ldF" = (
-/obj/machinery/computer/upload/ai{
-	dir = 8
-	},
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/circuit/red,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "ldG" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "ATMOS PROJECT Airlock"
@@ -44167,10 +44162,6 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/storage_shared)
 "oPc" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/computer/upload/borg{
-	dir = 4
-	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "oPh" = (
@@ -50842,10 +50833,6 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/ai_module/law/reset/purge{
-	pixel_x = -4;
-	pixel_y = 7
-	},
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/camera/autoname/directional/south,
@@ -55437,7 +55424,6 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "sBc" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -56680,11 +56666,10 @@
 "sVH" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/west,
-/obj/item/ai_module/law/reset{
-	pixel_x = 2;
-	pixel_y = 8
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_x = -3;
+	pixel_y = 2
 	},
-/obj/item/ai_module/law/supplied/freeform,
 /obj/machinery/flasher/directional/north,
 /obj/item/radio/intercom/directional/north{
 	broadcasting = 1;
@@ -56692,6 +56677,10 @@
 	name = "Private Channel";
 	pixel_x = -26
 	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = 4
+	},
+/obj/item/ai_module/law/supplied/freeform,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "sVN" = (
@@ -67950,9 +67939,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
-"wtt" = (
-/turf/closed/wall,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "wtu" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
@@ -71126,7 +71112,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/science/xenobiology)
 "xoW" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -71354,12 +71339,9 @@
 	},
 /area/station/command/heads_quarters/ce)
 "xrX" = (
-/obj/machinery/door/window/right/directional/south{
-	name = "Upload Console Window";
-	req_access = list("ai_upload")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xrZ" = (
@@ -72094,7 +72076,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xBj" = (
-/obj/machinery/holopad,
+/obj/machinery/ai_law_rack/core,
+/obj/effect/turf_decal/stripes/red/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xBp" = (
@@ -73384,12 +73367,10 @@
 /obj/structure/rack,
 /obj/machinery/flasher/directional/west,
 /obj/item/storage/toolbox/electrical,
+/obj/structure/sign/plaques/kiddie{
+	pixel_y = -32
+	},
 /turf/open/floor/circuit/red,
-/area/station/ai_monitored/turret_protected/ai_upload)
-"xUt" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xUy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -73397,11 +73378,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "xUB" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/sign/plaques/kiddie{
-	pixel_y = -4
-	},
 /obj/structure/cable,
+/obj/machinery/ai_slipper,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xUK" = (
@@ -73428,13 +73406,14 @@
 /obj/structure/rack,
 /obj/machinery/flasher/directional/east,
 /obj/item/assembly/flash/handheld{
-	pixel_x = 6;
-	pixel_y = 13
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/item/assembly/flash/handheld{
 	pixel_x = -3;
 	pixel_y = 4
 	},
+/obj/structure/noticeboard/directional/south,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xUT" = (
@@ -113028,11 +113007,11 @@ ive
 ykL
 lJB
 oah
-wtt
+tjj
 fDQ
 sBc
 oPc
-xUt
+aau
 ygK
 tjj
 dDB
@@ -113542,11 +113521,11 @@ xRB
 ykL
 ipj
 jyw
-wtt
+tjj
 kSd
 xoW
-ldF
-xUt
+oPc
+aau
 qYB
 tjj
 dDB

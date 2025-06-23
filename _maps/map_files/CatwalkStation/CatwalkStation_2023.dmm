@@ -18762,29 +18762,6 @@
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table,
-/obj/item/clipboard{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/machinery/camera/motion/directional/south{
-	c_tag = "AI Upload Chamber - Lower";
-	network = list("aiupload")
-	},
-/obj/machinery/airalarm/directional/south,
-/obj/item/phone{
-	pixel_x = 9;
-	pixel_y = 9
-	},
-/obj/item/ai_module/toy_ai{
-	pixel_x = -13;
-	pixel_y = 9
-	},
 /turf/open/floor/carpet,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "fGA" = (
@@ -26063,10 +26040,10 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "hNb" = (
-/obj/machinery/computer/upload/borg{
-	dir = 4
-	},
 /obj/machinery/flasher/directional/west,
+/obj/machinery/ai_law_rack/core{
+	pixel_y = 12
+	},
 /turf/open/floor/carpet/purple,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "hNe" = (
@@ -32483,7 +32460,6 @@
 "jDN" = (
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/ai_module/law/reset,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/machinery/light/directional/east,
@@ -34885,6 +34861,9 @@
 /obj/item/circuitboard/aicore,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/circuitboard/machine/ai_law_rack/small{
+	pixel_y = -2
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "kpC" = (
@@ -42362,9 +42341,6 @@
 /obj/effect/spawner/random/aimodule/harmful{
 	pixel_y = 5
 	},
-/obj/item/ai_module/law/reset/purge{
-	pixel_y = -2
-	},
 /obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt,
@@ -45563,15 +45539,8 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/effect/spawner/random/aimodule/harmless{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/effect/spawner/random/aimodule/harmless{
-	pixel_x = -3;
-	pixel_y = -2
-	},
 /obj/effect/decal/cleanable/generic,
+/obj/effect/spawner/random/aimodule/harmless,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "nCx" = (
@@ -58136,20 +58105,16 @@
 /area/station/engineering/supermatter/room)
 "rpZ" = (
 /obj/structure/rack,
-/obj/item/ai_module/law/reset{
-	pixel_x = 2;
-	pixel_y = 4
-	},
 /obj/item/ai_module/law/supplied/freeform{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/multitool{
-	pixel_x = -4;
-	pixel_y = -2
-	},
 /obj/structure/railing/corner{
 	dir = 8
+	},
+/obj/item/ai_module/law/supplied/freeform,
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = -3
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -59015,9 +58980,13 @@
 /obj/machinery/airalarm/directional/east,
 /obj/structure/rack,
 /obj/effect/spawner/round_default_module,
-/obj/effect/spawner/random/aimodule/neutral{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/structure/sign/plaques/kiddie{
+	pixel_y = -32
+	},
+/obj/item/ai_module/law/supplied/protect_station,
+/obj/item/ai_module/law/supplied/quarantine{
+	pixel_y = 3;
+	pixel_x = 2
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -62840,9 +62809,6 @@
 /turf/open/floor/carpet/black,
 /area/station/maintenance/hallway/abandoned_recreation)
 "sKF" = (
-/obj/machinery/computer/upload/ai{
-	dir = 4
-	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet/purple,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -66523,6 +66489,11 @@
 	pixel_x = -5;
 	pixel_y = -15
 	},
+/obj/item/multitool{
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/obj/item/screwdriver,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tRY" = (
@@ -66662,12 +66633,7 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/effect/spawner/random/aimodule/harmless{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/ai_module/law/supplied/quarantine,
-/obj/item/screwdriver,
+/obj/effect/spawner/random/aimodule/neutral,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tTO" = (

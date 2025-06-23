@@ -1910,8 +1910,9 @@
 	name = "Shuttle Engine Propulsion"
 	build_path = /obj/machinery/power/shuttle_engine/propulsion
 
-/obj/item/circuitboard/ai_law_rack
-	name = "AI Module Rack"
+/obj/item/circuitboard/machine/ai_law_rack
+	name = "Standard Rack"
+	name_extension = "(Module Rack Board)"
 	build_path = /obj/machinery/ai_law_rack
 	req_components = list(
 		/datum/stock_part/amplifier = 1,
@@ -1919,10 +1920,10 @@
 		/obj/item/stack/cable_coil = 10,
 	)
 
-/obj/item/circuitboard/ai_law_rack/small
-	name = "Portable AI Module Rack"
+/obj/item/circuitboard/machine/ai_law_rack/small
+	name = "Portable Rack"
 	build_path = /obj/machinery/ai_law_rack/small
 
-/obj/item/circuitboard/ai_law_rack/core
-	name = "AI Core Module Rack"
+/obj/item/circuitboard/machine/ai_law_rack/core
+	name = "Core Rack"
 	build_path = /obj/machinery/ai_law_rack/core

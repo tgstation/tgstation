@@ -19949,10 +19949,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "fYw" = (
-/obj/machinery/computer/upload/borg{
-	dir = 8
-	},
 /obj/machinery/status_display/ai/directional/east,
+/obj/structure/table/wood/fancy/green,
+/obj/effect/spawner/random/aimodule/harmless,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "fYB" = (
@@ -20319,9 +20318,10 @@
 /turf/closed/wall/r_wall,
 /area/station/security/execution/education)
 "gfV" = (
-/obj/structure/table/wood/fancy/green,
-/obj/effect/spawner/round_default_module,
 /obj/machinery/camera/motion/directional/east,
+/obj/machinery/ai_law_rack/core{
+	pixel_y = 12
+	},
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "gfX" = (
@@ -26473,10 +26473,20 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
 "ixC" = (
-/obj/machinery/computer/upload/ai{
-	dir = 8
-	},
 /obj/machinery/status_display/evac/directional/east,
+/obj/structure/table/wood/fancy/green,
+/obj/effect/spawner/round_default_module,
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = 1;
+	pixel_x = -2
+	},
+/obj/item/ai_module/law/supplied/freeform{
+	pixel_y = 2
+	},
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "ixO" = (
@@ -39563,7 +39573,6 @@
 "mVg" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/wood/fancy/red,
-/obj/item/ai_module/law/reset/purge,
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/left/directional/east{
 	name = "Dangerous Modules";
@@ -39888,6 +39897,9 @@
 "nbF" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/ai_slipper{
+	uses = 8
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "nbI" = (
@@ -51750,7 +51762,6 @@
 "rkX" = (
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/ai_module/law/reset,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "rle" = (
@@ -54138,6 +54149,9 @@
 /obj/machinery/camera/motion/directional/west{
 	c_tag = "Secure - AI Upload"
 	},
+/obj/machinery/ai_slipper{
+	uses = 8
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "seR" = (
@@ -56196,13 +56210,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "sOH" = (
-/obj/structure/table/wood/fancy/green,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/item/ai_module/law/supplied/freeform{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/ai_module/law/reset,
 /obj/item/radio/intercom/directional/east{
 	name = "ai intercom";
 	frequency = 1447
@@ -56953,6 +56960,9 @@
 /obj/item/circuitboard/aicore,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/circuitboard/machine/ai_law_rack/small{
+	pixel_y = -2
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
