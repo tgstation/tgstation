@@ -13,11 +13,9 @@
  * * forced_by - source that forced the dialogue if any
  */
 /atom/proc/log_sayverb_talk(message, list/message_mods = list(), tag = null, log_globally = TRUE, forced_by = null)
-	// If there's a custom say emote, log it separately.
-	if(message_mods[MODE_CUSTOM_SAY_EMOTE])
-		log_talk(message_mods[MODE_CUSTOM_SAY_EMOTE], LOG_RADIO_EMOTE, tag, log_globally, forced_by)
-
+	// If it's just the custom say verb, log it to emotes.
 	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		log_talk(message_mods[MODE_CUSTOM_SAY_EMOTE], LOG_RADIO_EMOTE, tag, log_globally, forced_by)
 		return
 
 	if(message_mods[WHISPER_MODE])
