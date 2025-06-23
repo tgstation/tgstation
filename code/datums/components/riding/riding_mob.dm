@@ -634,7 +634,7 @@
 	if(hit_projectile.armor_flag == ENERGY)
 		freak_out()
 
-/datum/component/riding/creature/raptor/proc/on_attacked(mob/living/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+/datum/component/riding/creature/raptor/proc/on_attacked(mob/living/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(damagetype == STAMINA)

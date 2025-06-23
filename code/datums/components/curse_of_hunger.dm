@@ -150,7 +150,7 @@
 
 	///no food found: it bites you and regains some health.
 	cursed.visible_message(span_danger("[cursed_item] bites [cursed]!"), span_userdanger("[cursed_item] bites you to sate [cursed_item.p_their()] hunger!"))
-	cursed.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = -20, bare_wound_bonus = 20)
+	cursed.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = -20, exposed_wound_bonus = 20)
 	current_health = min(current_health + 1, max_health)
 
 #undef HUNGER_THRESHOLD_WARNING

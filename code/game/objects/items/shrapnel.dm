@@ -111,7 +111,7 @@
 	stamina = 8
 	sharpness = SHARP_EDGED
 	wound_bonus = 5
-	bare_wound_bonus = 5
+	exposed_wound_bonus = 5
 	ricochets_max = 2
 	ricochet_chance = 140
 	shrapnel_type = /obj/item/shrapnel/capmine

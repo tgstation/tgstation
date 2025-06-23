@@ -118,7 +118,7 @@
 	/// The port this is connected to.
 	var/obj/machinery/power/smes/connector/connected_port
 
-/obj/machinery/power/smesbank/on_construction(mob/user)
+/obj/machinery/power/smesbank/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	set_anchored(FALSE)
 
