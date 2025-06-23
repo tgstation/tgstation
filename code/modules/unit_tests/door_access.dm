@@ -40,3 +40,109 @@
 	door.bumpopen(subject)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_one_access!")
 	door.close()
+
+/// Tests that the AI can open doors
+/datum/unit_test/door_access_ai
+
+/datum/unit_test/door_access_ai/Run()
+	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__)
+	var/obj/machinery/door/airlock/instant/door = allocate(__IMPLIED_TYPE__)
+
+	door.AIShiftClick(subject)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "AI failed to open access-free airlock!")
+
+/// Tests that the AI can open windoors
+/datum/unit_test/windoor_access_ai
+
+/datum/unit_test/windoor_access_ai/Run()
+	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__)
+	var/obj/machinery/door/window/instant/door = allocate(__IMPLIED_TYPE__)
+
+	door.attack_ai(subject)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "AI failed to open access-free window door!")
+
+/// Tests that telekinesis can open airlocks without access set (and cannot open airlocks that have an access set)
+/datum/unit_test/door_access_telekinesis
+
+/datum/unit_test/door_access_telekinesis/Run()
+	var/mob/living/carbon/human/consistent/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right)
+	var/obj/machinery/door/airlock/instant/door = allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left)
+	subject.dna.add_mutation(/datum/mutation/telekinesis, list(INNATE_TRAIT))
+	subject.equipOutfit(/datum/outfit/job/assistant/consistent)
+
+	var/obj/item/card/id/advanced/keycard = subject.wear_id
+	door.req_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+	keycard.access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+
+	// Test TK on an access-free airlock
+	door.attack_tk(subject)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject with telekinesis failed to open access-free airlock at range!")
+	door.close()
+
+	// Test TK on an access-locked airlock while having valid access - this should fail
+	door.attack_tk(subject)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with telekinesis managed to open access-locked airlock at range (with access)!")
+	door.close()
+
+	// Test TK on an access-locked airlock without having valid access - this should also fail
+	keycard.access = list()
+	door.attack_tk(subject)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with telekinesis managed to open access-locked airlock at range (with no access)!")
+
+/// Tests that mechas can bump open airlocks
+/datum/unit_test/door_access_mecha
+
+/datum/unit_test/door_access_mecha/Run()
+	var/obj/vehicle/sealed/mecha/ripley/subject_mech = allocate(__IMPLIED_TYPE__)
+	var/mob/living/carbon/human/consistent/subject_pilot = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right)
+	var/obj/machinery/door/airlock/instant/door = allocate(__IMPLIED_TYPE__)
+	subject_pilot.equipOutfit(/datum/outfit/job/assistant/consistent)
+	subject_mech.accesses = list()
+	subject_mech.mob_enter(subject_pilot)
+
+	var/obj/item/card/id/advanced/keycard = subject_pilot.wear_id
+	keycard.access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+
+	// Test bumping an access-free airlock - this should open
+	door.Bumped(subject_mech)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Mecha failed to open access-free airlock!")
+	door.close()
+
+	// Setting an access on the door, this should open
+	door.req_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+	door.Bumped(subject_mech)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Mecha failed to open access-locked airlock with valid access!")
+	door.close()
+
+	// Now setting a different access on the door, this should not open
+	door.req_access = list(ACCESS_CARGO)
+	door.Bumped(subject_mech)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Mecha opened access-locked airlock with invalid access!")
+	door.close()
+
+/// Checks that hands_blocked mobs cannot open doors unless it's an access-free door.
+/datum/unit_test/door_access_handcuffs
+
+/datum/unit_test/door_access_handcuffs/Run()
+	var/mob/living/carbon/human/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left)
+	var/obj/machinery/door/airlock/instant/door = allocate(__IMPLIED_TYPE__)
+	subject.equipOutfit(/datum/outfit/job/assistant/consistent)
+	ADD_TRAIT(subject, TRAIT_HANDS_BLOCKED, INNATE_TRAIT)
+
+	var/obj/item/card/id/advanced/keycard = subject.wear_id
+	keycard.access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+
+	// Test that you can bump open an access-free airlock with hands blocked.
+	door.bumpopen(subject)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to bump open access-free airlock while hands blocked!")
+	door.close()
+
+	// Attack handing should fail though - because unarmed attack fails while hands are blocked.
+	door.attack_hand(subject)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject opened attack-handed open access-free airlock while hands blocked!")
+	door.close()
+
+	// Now adding an access, this should not open even though we have access.
+	door.req_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+	door.bumpopen(subject)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject opened access-locked airlock while hands blocked!")
