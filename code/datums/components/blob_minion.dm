@@ -141,7 +141,7 @@
 	SIGNAL_HANDLER
 	var/list/message_mods = list()
 	var/adjusted_message = minion.check_for_custom_say_emote(message, message_mods)
-	minion.log_talk(message, LOG_SAY, tag = "blob hivemind telepathy", custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
+	minion.log_sayverb_talk(message, message_mods, tag = "blob hivemind telepathy")
 	var/spanned_message = minion.generate_messagepart(adjusted_message, message_mods = message_mods)
 	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, minion, MESSAGE_TYPE_RADIO)

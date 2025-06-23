@@ -248,17 +248,13 @@
 
 	var/eavesdrop_range = 0
 
-	if(message_mods[MODE_CUSTOM_SAY_EMOTE])
-		log_message(message_mods[MODE_CUSTOM_SAY_EMOTE], LOG_RADIO_EMOTE)
-
 	if(!(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]))
 		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
-			log_talk(message, LOG_WHISPER, tag = "imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			spans |= SPAN_ITALICS
 			eavesdrop_range = EAVESDROP_EXTRA_RANGE
 			range = WHISPER_RANGE
-		else
-			log_talk(message, LOG_SAY, tag = "imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
+
+	log_sayverb_talk(message, message_mods, tag = "imaginary friend", forced_by = forced)
 
 	var/messagepart = generate_messagepart(message, spans, message_mods)
 	var/rendered = "[span_name("[name]")] [messagepart]"

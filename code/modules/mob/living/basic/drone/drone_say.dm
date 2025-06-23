@@ -40,6 +40,6 @@
  * Shares the same radio code with binary
  */
 /mob/living/basic/drone/proc/drone_chat(message, list/message_mods = list())
-	log_talk(message, LOG_SAY, tag = "drone chat", custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
+	log_sayverb_talk(message, message_mods, tag = "drone chat")
 	var/message_part = generate_messagepart(message, message_mods = message_mods)
 	alert_drones("<i>Drone Chat: [span_name("[name]")] <span class='message'>[message_part]</span></i>", TRUE)

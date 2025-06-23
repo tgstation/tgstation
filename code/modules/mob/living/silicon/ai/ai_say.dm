@@ -57,7 +57,7 @@
 			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
-		log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]", custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
+		log_sayverb_talk(message, message_mods, tag="HOLOPAD in [padloc]")
 		ai_holo.say(message, sanitize = FALSE, language = language, message_mods = message_mods)
 	else
 		to_chat(src, span_alert("No holopad connected."))
