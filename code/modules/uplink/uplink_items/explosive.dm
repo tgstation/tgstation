@@ -26,7 +26,7 @@
 		leaves a wider, deeper, hole."
 	item = /obj/item/grenade/c4/x4
 	cost = 2
-	limited_stock = 3
+	limited_stock = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 
 /datum/uplink_item/explosives/c4bag
