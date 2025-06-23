@@ -164,15 +164,15 @@
 
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
-	sleep_chance = initial(sleep_chance) //start from the beginning
+	var/final_sleep_chance = sleep_chance
 	if(owner.move_intent == MOVE_INTENT_RUN)
-		sleep_chance += sleep_chance_running
+		final_sleep_chance += sleep_chance_running
 	if(drowsy)
-		sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
+		final_sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
 	if(caffeinated)
-		sleep_chance = sleep_chance / 2 //make it harder to fall asleep on caffeine
+		final_sleep_chance = final_sleep_chance / 2 //make it harder to fall asleep on caffeine
 
-	if (!SPT_PROB(sleep_chance, seconds_per_tick))
+	if(!SPT_PROB(final_sleep_chance, seconds_per_tick))
 		return
 
 	//if not drowsy, don't fall asleep but make them drowsy
@@ -187,7 +187,6 @@
 	else
 		to_chat(owner, span_warning("You fall asleep."))
 		owner.Sleeping(rand(sleep_time_minimum, sleep_time_maximum))
-		owner.set_resting(TRUE) //so drowsiness decays quicker
 		if(prob(50) && owner.IsSleeping())
 			owner.emote("snore")
 
