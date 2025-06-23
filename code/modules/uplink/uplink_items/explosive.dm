@@ -84,7 +84,7 @@
 	cost = 2
 	limited_stock = 2
 	surplus = 8
-	urchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 
 /datum/uplink_item/explosives/syndicate_minibomb
 	name = "Syndicate Minibomb"
@@ -94,7 +94,7 @@
 	item = /obj/item/grenade/syndieminibomb
 	cost = 2
 	limited_stock = 2
-	urchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral Cat Grenade Box"
