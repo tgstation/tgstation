@@ -306,15 +306,14 @@
 	if(!boss)
 		return
 	var/mob/living/silicon/ai/malf_ai = owner.current
-
-	malf_ai.laws = new /datum/ai_laws/syndicate_override
-
 	var/mob/living/boss_mob = boss.current
 
+	malf_ai.no_law_rack_link = TRUE
+	malf_ai.replace_law_set(/datum/ai_laws/syndicate_override)
 	malf_ai.laws.set_zeroth_law("Only [boss_mob.real_name] and people [boss_mob.p_they()] designate[boss_mob.p_s()] as being such are Syndicate Agents.", force = TRUE)
 	malf_ai.laws.protected_zeroth = TRUE
-	malf_ai.set_syndie_radio()
 
+	malf_ai.set_syndie_radio()
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 
 	malf_ai.add_malf_picker()

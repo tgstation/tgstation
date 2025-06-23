@@ -42,7 +42,7 @@
 		"type" = law_type
 	)
 
-/obj/machinery/ai_law_rack/ui_close(mob/user)
+/datum/state_laws_ui/ui_close(mob/user)
 	update_inherent_stated_laws(owner.laws)
 
 /datum/state_laws_ui/ui_state(mob/user)
@@ -103,27 +103,27 @@
 	sleep(1 SECONDS)
 
 	if (lawcache_zeroth && (force_all_laws || (lawcache_zeroth in to_state_cached)))
-		owner.say("[owner.radiomod] 0. [lawcache_zeroth]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
+		owner.say("[owner.radiomod] 0. [lawcache_zeroth]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
 		sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
 		if (force_all_laws || (law in to_state_cached))
-			owner.say("[owner.radiomod] [ion_num()]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
+			owner.say("[owner.radiomod] [ion_num()]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
 			sleep(1 SECONDS)
 
 	var/number = 1
 	for (var/index in 1 to length(lawcache_inherent))
 		var/law = lawcache_inherent[index]
 		if (force_all_laws || (law in to_state_cached))
-			owner.say("[owner.radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
+			owner.say("[owner.radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
 			number++
 			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_supplied))
 		var/law = lawcache_supplied[index]
 		if (force_all_laws || (law in to_state_cached))
-			owner.say("[owner.radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
+			owner.say("[owner.radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE, SAY_MOD_VERB = "states"))
 			number++
 			sleep(1 SECONDS)
 

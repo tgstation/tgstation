@@ -44,7 +44,8 @@
 	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
-
+	/// If TRUE, the AI can't be linked to a law rack
+	var/no_law_rack_link = FALSE
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
@@ -369,9 +370,3 @@
 
 /mob/living/silicon/get_access()
 	return REGION_ACCESS_ALL_STATION
-
-/mob/living/silicon/proc/get_law_rack()
-	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
-		if(rack.linked_ref == src)
-			return rack
-	return null

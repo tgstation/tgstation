@@ -30,9 +30,10 @@
 
 /**
  * For AIs, iterates over connected cyborg and calls try_sync_laws
- * FOr cyborgs, checks if we have a master AI and, if lawupdate is set, syncs law and misc. with it
+ * For cyborgs, checks if we have a master AI and, if lawupdate is set, syncs law and misc. with it
  */
 /mob/living/silicon/proc/try_sync_laws()
+	return
 
 /mob/living/silicon/robot/try_sync_laws()
 	if(QDELETED(connected_ai) || !lawupdate)

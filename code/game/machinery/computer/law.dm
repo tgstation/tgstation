@@ -151,7 +151,7 @@
 
 	if(!is_valid_z_level(get_turf(src), get_turf(new_bot)))
 		return FALSE // Can't link to bots on different z-levels
-	if(new_bot.control_disabled)
+	if(new_bot.control_disabled || new_bot.no_law_rack_link)
 		return FALSE
 	if(iscyborg(new_bot))
 		var/mob/living/silicon/robot/new_borg = new_bot
@@ -200,6 +200,9 @@
 	linked_ref = null
 
 /obj/machinery/ai_law_rack/on_deconstruction(disassembled)
+	if(linked_ref)
+		linked_ref.Stun(10 SECONDS)
+		to_chat(linked_ref, span_userdanger("Rack connection lost. Recalculating directives..."))
 	if(linked)
 		unlink_silicon()
 

@@ -317,15 +317,15 @@ export const LawRack = () => {
                   <Flex.Item>
                     <LinkableFloating
                       show_floating={rackLink}
-                      linkable={data.linkable_racks}
+                      linkable={linkable_racks}
                       link_act={(ref) => act('link_rack', { rack_ref: ref })}
                       button={
                         <Button
                           fluid
                           icon="link"
-                          disabled={!data.linkable_racks.length || depowered}
+                          disabled={!linkable_racks.length || depowered}
                           tooltip={
-                            data.linkable_racks.length
+                            linkable_racks.length
                               ? depowered
                                 ? 'No power!'
                                 : undefined
@@ -342,7 +342,7 @@ export const LawRack = () => {
                   <Flex.Item>
                     <LinkableFloating
                       show_floating={siliconLink}
-                      linkable={data.linkable_silicons}
+                      linkable={linkable_silicons}
                       link_act={(ref) =>
                         act('link_silicon', { silicon_ref: ref })
                       }
@@ -350,9 +350,9 @@ export const LawRack = () => {
                         <Button
                           fluid
                           icon="link"
-                          disabled={!data.linkable_silicons.length || depowered}
+                          disabled={!linkable_silicons.length || depowered}
                           tooltip={
-                            data.linkable_silicons.length
+                            linkable_silicons.length
                               ? depowered
                                 ? 'No power!'
                                 : undefined

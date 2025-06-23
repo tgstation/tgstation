@@ -144,7 +144,7 @@
 	name = "Sentience Preservation Core AI Module"
 	law_id = "thinkermov"
 
-/obj/item/ai_module/law/core/full/united_nations // melbert todo : make it so you can't tamper with the law rack
+/obj/item/ai_module/law/core/full/united_nations
 	name = "'United Nations' Core AI Module"
 	law_id = "united_nations"
 	ion_storm_immune = TRUE

@@ -71,12 +71,6 @@
 
 	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = user.mind)
 	target_ai.mind.add_antag_datum(malf_datum)
-
-	for(var/mob/living/silicon/robot/robot in target_ai.connected_robots)
-		robot.try_sync_laws()
-		CHECK_TICK
-
-	target_ai.show_laws()
 	target_ai.malf_picker.processing_time += 50
 	to_chat(target_ai, span_notice("The virus has enhanced your system, overclocking your CPU 50-fold."))
 	to_chat(user, span_notice("You upload the virus to [target_ai] successfully."))
