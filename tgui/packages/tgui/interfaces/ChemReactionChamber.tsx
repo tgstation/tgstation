@@ -133,8 +133,8 @@ export const ChemReactionChamber = (props) => {
             <Section
               title="Settings"
               height="220px"
-              maxHeight="220px"
-              overflow="scroll"
+              fill
+              scrollable
               buttons={
                 (isReacting && (
                   <Box inline bold color={'purple'}>
@@ -266,12 +266,7 @@ export const ChemReactionChamber = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section
-              title="Catalysts"
-              height="150px"
-              maxHeight="150px"
-              overflow="scroll"
-            >
+            <Section title="Catalysts" height="150px" fill scrollable>
               <Stack.Item>
                 <Stack vertical fill>
                   {catalysts.map((reagent) => (
