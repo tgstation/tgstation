@@ -10,7 +10,6 @@
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
 	cost = 1
-	limited_stock = 1
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 
 /datum/uplink_item/explosives/c4
@@ -28,7 +27,7 @@
 		leaves a wider, deeper, hole."
 	item = /obj/item/grenade/c4/x4
 	cost = 2
-	limited_stock = 2
+	limited_stock = 5
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 
 /datum/uplink_item/explosives/c4bag
@@ -37,7 +36,7 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
 	cost = 5 // 50% discount!
 	cant_discount = TRUE
-	limited_stock = 1
+	limited_stock = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 
 /datum/uplink_item/explosives/frag
@@ -45,7 +44,7 @@
 	desc = "A frag grenade. Pop the pin. Throw towards enemy. Keep clear of the shrapnel. Easy!"
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
 	cost = 1
-	limited_stock = 4
+	limited_stock = 10
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get a whole box of these at once at a considerable discount.
 
 /datum/uplink_item/explosives/detomatix
@@ -82,7 +81,7 @@
 			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
 	item = /obj/item/pizzabox/bomb
 	cost = 2
-	limited_stock = 2
+	limited_stock = 4
 	surplus = 8
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 
@@ -93,7 +92,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/grenade/syndieminibomb
 	cost = 2
-	limited_stock = 2
+	limited_stock = 4
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 
 /datum/uplink_item/explosives/syndicate_bomb/emp
@@ -131,5 +130,5 @@
 	cost = 5
 	item = /obj/item/storage/box/syndie_kit/feral_cat_grenades
 	surplus = 30
-	limited_stock = 1
+	limited_stock = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
