@@ -29,7 +29,7 @@
 
 /datum/element/venue_price/proc/reagent_sold(datum/reagent/reagent_sold, mob/living/basic/robot_customer/sold_to, obj/item/container)
 	SIGNAL_HANDLER
-	venue_price = venue_price * CONFIG_GET(number/food_order_value_multiplier)
+
 	produce_cash(sold_to, container)
 	return TRANSACTION_SUCCESS
 

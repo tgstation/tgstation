@@ -500,6 +500,3 @@
 
 /datum/config_entry/number/max_shuttle_size
 	default = 250
-
-/datum/config_entry/number/food_order_value_multiplier
-	default = 5
