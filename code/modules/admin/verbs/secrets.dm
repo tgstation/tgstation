@@ -337,13 +337,14 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
 			for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
+				var/airlock_area = get_area(airlock)
 				if(
 					is_station_level(airlock.z) && \
-					!istype(get_area(airlock), /area/station/command) && \
-					!istype(get_area(airlock), /area/station/commons) && \
-					!istype(get_area(airlock), /area/station/service) && \
-					!istype(get_area(airlock), /area/station/command/heads_quarters) && \
-					!istype(get_area(airlock), /area/station/security/prison) \
+					!istype(airlock_area, /area/station/command) && \
+					!istype(airlock_area, /area/station/commons) && \
+					!istype(airlock_area, /area/station/service) && \
+					!istype(airlock_area, /area/station/command/heads_quarters) && \
+					!istype(airlock_area, /area/station/security/prison) \
 				)
 					airlock.req_access = list()
 					airlock.req_one_access = list()
