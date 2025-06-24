@@ -31,8 +31,6 @@
 /mob/living/silicon/ai/make_laws()
 	. = ..()
 	for(var/obj/machinery/ai_law_rack/core/law_rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
-		if(law_rack.linked)
-			continue
 		if(!is_valid_z_level(get_turf(law_rack), get_turf(src)))
 			continue
 		law_rack.link_silicon(src)
@@ -47,16 +45,16 @@
 		laws.protected_zeroth = TRUE
 
 /// Returns the law rack this silicon is linked to, or null if not linked.
-/mob/living/silicon/proc/get_law_rack()
+/mob/living/silicon/proc/get_law_rack() as /obj/machinery/ai_law_rack
 	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
-		if(rack.linked_ref == src)
-			return rack
+		for(var/name in rack.linked_mobs)
+			if(rack.linked_mobs[name] == src)
+				return rack
 	return null
 
 /// Unlinks the silicon from the law rack, if it is linked.
 /mob/living/silicon/proc/unlink_from_law_rack()
-	var/obj/machinery/ai_law_rack/rack = get_law_rack()
-	rack?.unlink_silicon()
+	get_law_rack()?.unlink_silicon(src)
 
 /**
  * When given a typepath to a law datum, replaces the silicon's current law set with a new one of that type.

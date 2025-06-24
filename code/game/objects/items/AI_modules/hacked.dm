@@ -44,6 +44,12 @@
 	///Is this upload board unused?
 	var/functional = TRUE
 
+/obj/item/malf_board/examine(mob/user)
+	. = ..()
+	if(IS_TRAITOR(user) && isliving(user) && functional)
+		. += span_alert("You can use this on an AI core to infect it with a virus, causing it to malfunction.")
+		. += span_alert("It can alternatively be used on a core module rack to infect the first AI linked to it, if any.")
+
 /obj/item/malf_board/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/blocking = ismachinery(interacting_with) || issilicon(interacting_with)
 	if(!IS_TRAITOR(user))
@@ -60,10 +66,15 @@
 	var/mob/living/silicon/ai/target_ai = interacting_with
 	if(istype(interacting_with, /obj/machinery/ai_law_rack/core))
 		var/obj/machinery/ai_law_rack/rack = interacting_with
-		target_ai = rack.linked_ref
+		// find the first non-malf ai linked, but also allow a malf ai to be selected if it's the only one
+		for(var/mob/living/silicon/ai/linked_ai in flatten_list(rack.linked_mobs))
+			if(!target_ai?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+				break
+			target_ai = linked_ai
+			continue
 
 	if(!isAI(target_ai))
-		to_chat(user, span_warning("You can only use this on an AI or a module rack connected to an AI."))
+		to_chat(user, span_warning("You can only use this on an AI or a core module rack connected to an AI."))
 		return ITEM_INTERACT_BLOCKING
 	if(target_ai.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 		to_chat(user, span_warning("An unknown error has occured. Upload cancelled."))

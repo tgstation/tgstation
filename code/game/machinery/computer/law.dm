@@ -47,14 +47,20 @@
 	/// If we are welded to the floor
 	var/welded = FALSE
 
-	/// The AI or cyborg that is linked to this law rack
-	VAR_FINAL/mob/living/silicon/linked_ref
-	/// The name of the AI or cyborg linked to this law rack
-	/// Tracked separate from linked - AIs remained linked even after deletion
-	VAR_FINAL/linked
+	/// List of all silicons linked to this rack
+	/// Assoc list of name of a mob to the mob itself
+	/// Note: This can be [name: null], if the mob is deleted, because deleted mobs aren't "unlinked"
+	VAR_FINAL/list/linked_mobs
 
 	/// The actual law set we are using, combining all the laws from the modules and linked racks
 	VAR_FINAL/datum/ai_laws/combined_lawset
+
+	/// Cooldown between allowing refreshes via ui
+	COOLDOWN_DECLARE(refresh_cooldown)
+	/// Tracks the list of linkable silicons passed to UI data for verification
+	VAR_FINAL/list/last_linkable_silicon_list
+	/// Tracks the list of linkable racks passed to UI data for verification
+	VAR_FINAL/list/last_linkable_rack_list
 
 /obj/machinery/ai_law_rack/Initialize(mapload)
 	. = ..()
@@ -66,17 +72,20 @@
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
 /obj/machinery/ai_law_rack/Destroy()
-	unlink_silicon()
+	for(var/mob/bot in flatten_list(linked_mobs))
+		unlink_silicon(bot)
+
 	QDEL_NULL(combined_lawset)
 	ai_modules = null
 	return ..()
 
 /// To be used in logging to specify the status of the law rack
 /obj/machinery/ai_law_rack/proc/log_status()
-	if(linked_ref)
-		return "linked to [key_name(linked_ref)]"
-	if(linked)
-		return "linked to [linked], no mob"
+	var/list/mob_names = list()
+	for(var/linked in linked_mobs)
+		mob_names += "[linked] ([isnull(linked_mobs[linked]) ? "no mob" : key_name(linked_mobs[linked])])"
+	if(length(mob_names))
+		return "linked to [english_list(mob_names)]"
 	return "unlinked"
 
 /obj/machinery/ai_law_rack/on_set_is_operational(old_value)
@@ -100,33 +109,33 @@
 	for(var/obj/item/ai_module/law/installed as anything in get_law_affecting_modules())
 		installed.apply_to_combined_lawset(combined_lawset)
 
-	if(isnull(linked_ref))
-		return
+	for(var/linked in linked_mobs)
+		var/mob/living/silicon/linked_ref = linked_mobs[linked]
+		if(!istype(linked_ref))
+			continue
 
-	linked_ref.laws.set_zeroth_law(combined_lawset.zeroth, combined_lawset.zeroth_borg)
-	linked_ref.laws.hacked = combined_lawset.hacked.Copy()
-	linked_ref.laws.inherent = combined_lawset.inherent.Copy()
-	linked_ref.laws.supplied = combined_lawset.supplied.Copy()
-	// avoid spamming the ai if nothing changed
-	if(old_zeroth == combined_lawset.zeroth \
-		&& old_zeroth_borg == combined_lawset.zeroth_borg \
-		&& old_hacked ~= combined_lawset.hacked \
-		&& old_inherent ~= combined_lawset.inherent \
-		&& old_supplied ~= combined_lawset.supplied \
-	)
-		return
+		linked_ref.laws.set_zeroth_law(combined_lawset.zeroth, combined_lawset.zeroth_borg)
+		linked_ref.laws.hacked = combined_lawset.hacked.Copy()
+		linked_ref.laws.inherent = combined_lawset.inherent.Copy()
+		linked_ref.laws.supplied = combined_lawset.supplied.Copy()
+		// avoid spamming the ai if nothing changed
+		if(old_zeroth == combined_lawset.zeroth \
+			&& old_zeroth_borg == combined_lawset.zeroth_borg \
+			&& old_hacked ~= combined_lawset.hacked \
+			&& old_inherent ~= combined_lawset.inherent \
+			&& old_supplied ~= combined_lawset.supplied \
+		)
+			continue
 
-	if(SSticker.HasRoundStarted())
-		linked_ref.announce_law_change()
-		linked_ref.law_change_counter++
+		if(SSticker.HasRoundStarted())
+			linked_ref.announce_law_change()
+			linked_ref.law_change_counter++
 
-	if(!isAI(linked_ref))
-		return
-
-	var/mob/living/silicon/ai/ai = linked_ref
-	for(var/mob/living/silicon/robot/bot as anything in ai?.connected_robots)
-		bot.try_sync_laws()
-		bot.law_change_counter++
+		if(isAI(linked_ref))
+			var/mob/living/silicon/ai/linked_ai = linked_ref
+			for(var/mob/living/silicon/robot/bot as anything in linked_ai?.connected_robots)
+				bot.try_sync_laws()
+				bot.law_change_counter++
 
 /// Returns a list of all modules that will contribute to the combined lawset
 /obj/machinery/ai_law_rack/proc/get_law_affecting_modules()
@@ -163,48 +172,42 @@
 	return FALSE
 
 /obj/machinery/ai_law_rack/proc/link_silicon(mob/living/silicon/new_bot)
-	if(linked)
-		return
 	if(!can_link_to(new_bot))
 		return
 
 	RegisterSignal(new_bot, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
-	linked_ref = new_bot
-	linked = new_bot.name
+	linked_mobs[new_bot.name] = new_bot
 	update_lawset()
 	for(var/obj/item/ai_module/installed in ai_modules)
-		installed.silicon_linked_to_installed(linked_ref)
+		installed.silicon_linked_to_installed(new_bot)
 	AddComponent(/datum/component/gps, "Active Module Rack")
 
-/obj/machinery/ai_law_rack/proc/unlink_silicon()
-	if(!linked)
-		return
+/obj/machinery/ai_law_rack/proc/unlink_silicon(mob/living/silicon/unlinked_bot)
+	if(!QDELING(unlinked_bot) && issilicon(unlinked_bot))
+		unlinked_bot.laws.set_zeroth_law(null, null)
+		unlinked_bot.laws.clear_hacked_laws()
+		unlinked_bot.laws.clear_inherent_laws()
+		unlinked_bot.laws.clear_supplied_laws()
+		unlinked_bot.announce_law_change()
+		for(var/obj/item/ai_module/installed in ai_modules)
+			installed.silicon_unlinked_from_installed(unlinked_bot)
+	clear_silicon_ref(unlinked_bot)
+	if(!length(linked_mobs))
+		qdel(GetComponent(/datum/component/gps))
 
-	if(!QDELING(linked_ref))
-		linked_ref.laws.set_zeroth_law(null, null)
-		linked_ref.laws.clear_hacked_laws()
-		linked_ref.laws.clear_inherent_laws()
-		linked_ref.laws.clear_supplied_laws()
-		linked_ref.announce_law_change()
-	clear_silicon_ref()
-	for(var/obj/item/ai_module/installed in ai_modules)
-		installed.silicon_unlinked_from_installed(linked_ref)
-	linked = null
-	qdel(GetComponent(/datum/component/gps))
-
-/obj/machinery/ai_law_rack/proc/clear_silicon_ref()
+/obj/machinery/ai_law_rack/proc/clear_silicon_ref(mob/source)
 	SIGNAL_HANDLER
-	if(!linked_ref)
-		return
-	UnregisterSignal(linked_ref, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
-	linked_ref = null
+	UnregisterSignal(source, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
+	for(var/name in linked_mobs)
+		if(linked_mobs[name] == source)
+			linked_mobs -= name
+			break
 
 /obj/machinery/ai_law_rack/on_deconstruction(disassembled)
-	if(linked_ref)
-		linked_ref.Stun(10 SECONDS)
-		to_chat(linked_ref, span_userdanger("Rack connection lost. Recalculating directives..."))
-	if(linked)
-		unlink_silicon()
+	for(var/mob/living/bot in flatten_list(linked_mobs))
+		bot.Stun(10 SECONDS)
+		to_chat(bot, span_userdanger("Rack connection lost. Recalculating directives..."))
+		unlink_silicon(bot)
 
 /obj/machinery/ai_law_rack/dump_inventory_contents()
 	. = ..()
@@ -274,8 +277,9 @@
 /obj/machinery/ai_law_rack/examine(mob/user)
 	. = ..()
 	if(isAI(user))
-		if(linked_ref == user)
-			. += span_notice("This is your module rack.")
+		for(var/name in linked_mobs)
+			if(linked_mobs[name] == user)
+				. += span_notice("This is <b>your</b> module rack.")
 		return
 	if(!isobserver(user) && get_dist(user, src) > LAW_EXAMINE_RANGE)
 		. += span_notice("If you got a bit closer, you could probably [EXAMINE_HINT("examine closer")] to see what modules are installed.")
@@ -336,7 +340,7 @@
 	if(slot < 1 || slot > length(ai_modules))
 		return FALSE
 	module.on_rack_install(src)
-	if(!QDELETED(linked_ref))
+	for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
 		module.silicon_linked_to_installed(linked_ref)
 	ai_modules[slot] = module
 	ai_modules[module] = security
@@ -351,7 +355,7 @@
 		return FALSE
 	ai_modules[index] = null
 	module.on_rack_uninstall(src)
-	if(!QDELETED(linked_ref))
+	for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
 		module.silicon_unlinked_from_installed(linked_ref)
 	if(!QDELING(src))
 		update_appearance()
@@ -382,10 +386,10 @@
 	data["holding_screwdriver"] = holding?.tool_behaviour == TOOL_SCREWDRIVER
 	data["holding_welder"] = holding?.tool_behaviour == TOOL_WELDER
 	data["holding_multitool"] = holding?.tool_behaviour == TOOL_MULTITOOL
-	data["linked"] = linked
 	data["has_core_slot"] = has_core_slot
 	data["depowered"] = !is_operational
 	data["allowed"] = allowed(user)
+	data["refresh_cooldown"] = COOLDOWN_TIMELEFT(src, refresh_cooldown)
 
 	data["slots"] = new /list(length(ai_modules))
 	for(var/i in 1 to length(ai_modules))
@@ -398,32 +402,45 @@
 			"ioned" = astype(module, /obj/item/ai_module/law)?.ioned || FALSE,
 		)
 
-	data["linkable_silicons"] = list()
-	if(!linked)
-		var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
-		if(core_rack)
-			data["parent_rack"] = list(
-				"name" = core_rack.name,
-				"ref" = REF(core_rack),
-			)
-		for(var/mob/living/silicon/linkable as anything in GLOB.silicon_mobs)
-			if(!can_link_to(linkable))
-				continue
-			data["linkable_silicons"] += list(list(
-				"name" = linkable.name,
-				"ref" = REF(linkable),
-			))
+	data["linked_mobs"] = list()
+	for(var/i in 1 to length(linked_mobs))
+		data["linked_mobs"][linked_mobs[i]] = i
 
-	data["linkable_racks"] = list()
+	return data
+
+/obj/machinery/ai_law_rack/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
+	if(core_rack)
+		data["parent_rack"] = list(
+			"name" = core_rack.name,
+			"ref" = REF(core_rack),
+		)
+
+	data["linkable_silicons"] = last_linkable_silicon_list || list()
+	data["linkable_racks"] = last_linkable_rack_list || list()
+
+	return data
+
+/obj/machinery/ai_law_rack/proc/refresh_linkable_lists()
+	last_linkable_silicon_list = list()
+	for(var/mob/living/silicon/linkable as anything in GLOB.silicon_mobs)
+		if(!can_link_to(linkable))
+			continue
+		last_linkable_silicon_list += list(list(
+			"name" = linkable.name,
+			"ref" = REF(linkable),
+		))
+
+	last_linkable_rack_list = list()
 	for(var/obj/machinery/ai_law_rack/core/core_rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
 		if(core_rack == src || !core_rack.is_operational)
 			continue
-		data["linkable_racks"] += list(list(
+		last_linkable_rack_list += list(list(
 			"name" = core_rack.name,
 			"ref" = REF(core_rack),
 		))
-
-	return data
 
 /obj/machinery/ai_law_rack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -523,27 +540,56 @@
 			module.multitool_act(user, user.get_inactive_hand())
 			return TRUE
 		if("unlink_silicon")
-			if(!linked || !is_operational)
+			if(!length(linked_mobs) || !is_operational)
+				return TRUE
+			var/index = clamp(text2num(params["silicon_index"]), 1, length(linked_mobs))
+			if(index < 1 || index > length(linked_mobs))
 				return TRUE
 			if(!allowed(user))
 				balloon_alert(user, "access denied!")
 				return TRUE
-			unlink_silicon()
-			balloon_alert_to_viewers("unlinked")
+			var/removed_name = linked_mobs[index]
+			var/removed_bot = linked_mobs[removed_name]
+			if(removed_bot)
+				unlink_silicon(removed_bot)
+			linked_mobs -= removed_name
+			balloon_alert_to_viewers("unlinked silicon", "unlinked [removed_name]")
 			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
 			return TRUE
 		if("link_silicon")
-			if(linked || !is_operational)
+			if(!is_operational)
 				return TRUE
 			var/mob/living/silicon/new_bot = find_silicon_by_ref(params["silicon_ref"])
-			if(!new_bot || !can_link_to(new_bot))
+			// Adding a qdeleted bot is valid (this is to prevent people from using law racks as a "dead ai radar")
+			// But we still need to verify it's a silicon they saw in the ui (to prevent href exploits)
+			if(QDELETED(new_bot))
+				for(var/list/linkable as anything in last_linkable_silicon_list)
+					if(linkable["name"] == params["silicon_name"])
+						linked_mobs[linkable["name"]] = null
+			// Otherwise we can just verify can_link_to (this was already ran in ui data)
+			else if(can_link_to(new_bot))
+				link_silicon(new_bot)
+				balloon_alert_to_viewers("linked silicon", "linked to [new_bot.name]")
+				playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, TRUE)
+			return TRUE
+		if("unlink_rack")
+			return FALSE // handled by subtypes
+		if("unlink_parent_rack")
+			if(!is_operational)
 				return TRUE
-			link_silicon(new_bot)
-			balloon_alert_to_viewers("linked to [new_bot.name]")
-			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, TRUE)
+			var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
+			if(!core_rack) // shouldn't happen
+				return TRUE
+			if(!core_rack.is_operational) // can happen
+				balloon_alert(user, "failed to unlink!")
+				return TRUE
+			core_rack.unlink_child_law_rack(src)
+			balloon_alert_to_viewers("unlinked from [core_rack.name]")
+			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("link_rack")
-			if(linked || !is_operational)
+			if(length(linked_mobs) || !is_operational)
 				return TRUE
 			var/obj/machinery/ai_law_rack/core/core_rack = find_parent_rack_by_ref(params["rack_ref"])
 			if(!core_rack || core_rack == src) // shouldn't happen
@@ -556,18 +602,11 @@
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, TRUE)
 			update_static_data_for_all_viewers()
 			return TRUE
-		if("unlink_rack")
-			if(!is_operational)
+		if("refresh")
+			if(!is_operational || !COOLDOWN_FINISHED(src, refresh_cooldown))
 				return TRUE
-			var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
-			if(!core_rack) // shouldn't happen
-				return TRUE
-			if(!core_rack.is_operational) // can happen
-				balloon_alert(user, "failed to unlink!")
-				return TRUE
-			core_rack.unlink_child_law_rack(src)
-			balloon_alert_to_viewers("unlinked from [core_rack.name]")
-			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
+			COOLDOWN_START(src, refresh_cooldown, 30 SECONDS)
+			refresh_linkable_lists()
 			update_static_data_for_all_viewers()
 			return TRUE
 
@@ -752,8 +791,33 @@
 /obj/machinery/ai_law_rack/core/ui_data(mob/user)
 	. = ..()
 	.["linked_racks"] = list()
-	for(var/obj/machinery/ai_law_rack/linked_rack as anything in linked_racks)
-		.["linked_racks"] += linked_rack.name
+	for(var/i in 1 to length(linked_racks))
+		.["linked_racks"][linked_racks[i]] = i
+
+/obj/machinery/ai_law_rack/core/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/user = ui.user
+	if(!istype(user) || issilicon(user))
+		return
+	switch(action)
+		if("unlink_rack")
+			if(!length(linked_racks) || !is_operational)
+				return TRUE
+			var/index = clamp(text2num(params["rack_index"]), 1, length(linked_racks))
+			if(index < 1 || index > length(linked_racks))
+				return TRUE
+			var/obj/machinery/ai_law_rack/removed_rack = linked_racks[index]
+			if(QDELETED(removed_rack))
+				return TRUE
+			if(!allowed(user))
+				balloon_alert(user, "access denied!")
+				return TRUE
+			unlink_child_law_rack(removed_rack)
+			balloon_alert_to_viewers("unlinked rack", "unlinked [removed_rack.name]")
+			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
+			return TRUE
 
 // Can be linked to a core law rack, and constructed anywhere - allowing traitors to subvert the AI or the crew to counter a subversion
 /obj/machinery/ai_law_rack/small
