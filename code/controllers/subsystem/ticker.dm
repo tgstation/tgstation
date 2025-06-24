@@ -471,7 +471,7 @@ SUBSYSTEM_DEF(ticker)
 			ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 			if(living.client)
 				var/atom/movable/screen/splash/fade_out = new(null, null, living.client, TRUE)
-				fade_out.Fade(TRUE)
+				fade_out.fade(TRUE)
 				living.client.init_verbs()
 			livings += living
 	if(livings.len)
