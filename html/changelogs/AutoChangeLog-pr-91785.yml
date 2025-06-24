@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - server: "TGS deployments should no longer fail to install unzip"
