@@ -161,6 +161,7 @@
 #include "ethereal_revival.dm"
 #include "explosion_action.dm"
 #include "fish_unit_tests.dm"
+#include "firedoor_regions.dm"
 #include "focus_only_tests.dm"
 #include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
