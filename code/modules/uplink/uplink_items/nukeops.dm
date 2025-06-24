@@ -456,12 +456,6 @@
 	item = /obj/item/grenade/syndieminibomb
 	cost = 2
 
-/datum/uplink_item/explosives/military_grade/soap_clusterbang
-	name = "Slipocalypse Clusterbang"
-	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
-	item = /obj/item/grenade/clusterbuster/soap
-	cost = 1
-
 /datum/uplink_item/explosives/military_grade/pizza_bomb
 	name = "Pizza Bomb"
 	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
