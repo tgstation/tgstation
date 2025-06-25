@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Fire alarms now has wires"
+  - rscadd: "Fire alarm trigger on damage now scales based on damage dealt, rather than being a flat 33%"
+  - qol: "Fire alarm screentips"
+  - refactor: "Refactored fire alarms de/assembly, report any oddities"
