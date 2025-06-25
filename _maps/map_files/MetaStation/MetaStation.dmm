@@ -8073,6 +8073,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
 "cTp" = (
@@ -28244,6 +28246,7 @@
 	dir = 5
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
 "jML" = (
@@ -32250,6 +32253,7 @@
 	dir = 8
 	},
 /obj/machinery/iv_drip,
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
 "lgl" = (
@@ -37274,6 +37278,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
 "mXb" = (
@@ -48295,7 +48300,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "qNj" = (
-/obj/machinery/light_switch/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58975,6 +58979,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "urs" = (
