@@ -319,8 +319,9 @@
 
 	switch(held_item.tool_behaviour)
 		if(TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Unexpose" : "Expose"] wires"
-			. = CONTEXTUAL_SCREENTIP_SET
+			if(buildstage == FIRE_ALARM_BUILD_SECURED)
+				context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Unexpose" : "Expose"] wires"
+				. = CONTEXTUAL_SCREENTIP_SET
 		if(TOOL_WELDER)
 			if(panel_open)
 				context[SCREENTIP_CONTEXT_LMB] = "Repair"
@@ -354,13 +355,13 @@
 	return .
 
 /obj/machinery/firealarm/screwdriver_act(mob/living/user, obj/item/tool)
-	if(buildstage == FIRE_ALARM_BUILD_SECURED)
-		toggle_panel_open()
-		tool.play_tool_sound(src)
-		balloon_alert(user, "wires [panel_open ? "exposed" : "unexposed"]")
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	if(buildstage != FIRE_ALARM_BUILD_SECURED)
+		return NONE
+	toggle_panel_open()
+	tool.play_tool_sound(src)
+	balloon_alert_to_viewers("wires [panel_open ? "exposed" : "unexposed"]")
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/firealarm/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return screwdriver_act(user, tool)
@@ -373,24 +374,24 @@
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 1))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "repairing...")
+	balloon_alert_to_viewers("repairing...")
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 1, volume = 50, extra_checks = CALLBACK(src, PROC_REF(state_callback), null, TRUE)))
 		return ITEM_INTERACT_BLOCKING
 	repair_damage(INFINITY)
-	balloon_alert(user, "repaired")
+	balloon_alert_to_viewers("repaired")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/firealarm/wirecutter_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		return NONE
 	if(buildstage != FIRE_ALARM_BUILD_SECURED)
-		balloon_alert(user, "expose the wires first!")
+		balloon_alert(user, "no wires to cut!")
 		return ITEM_INTERACT_BLOCKING
 
-	buildstage = FIRE_ALARM_BUILD_NO_WIRES
 	tool.play_tool_sound(src)
 	new /obj/item/stack/cable_coil(user.loc, 5)
-	balloon_alert(user, "wires removed")
+	balloon_alert_to_viewers("wires removed")
+	buildstage = FIRE_ALARM_BUILD_NO_WIRES
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -404,10 +405,10 @@
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(state_callback), FIRE_ALARM_BUILD_NO_WIRES, TRUE)))
 		return ITEM_INTERACT_BLOCKING
 	if(machine_stat & BROKEN)
-		balloon_alert(user, "broken circuit removed")
+		balloon_alert_to_viewers("broken circuit removed")
 		set_machine_stat(machine_stat & ~BROKEN)
 	else
-		balloon_alert(user, "circuit removed")
+		balloon_alert_to_viewers("circuit removed")
 		new /obj/item/electronics/firealarm(user.drop_location())
 	buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 	update_appearance()
@@ -420,7 +421,8 @@
 	if(!panel_open)
 		return NONE
 	if(buildstage != FIRE_ALARM_BUILD_NO_CIRCUIT)
-		return NONE
+		balloon_alert(user, "remove [buildstage == FIRE_ALARM_BUILD_SECURED ? "wires" : "circuit"] first!")
+		return ITEM_INTERACT_BLOCKING
 
 	loc.balloon_alert_to_viewers("[/obj/item/wallframe/firealarm::name] removed")
 	new /obj/item/wallframe/firealarm(user.drop_location())
@@ -435,46 +437,62 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-	if(is_wire_tool(tool))
-		if(panel_open)
-			wires.interact(user)
-			return ITEM_INTERACT_SUCCESS
-
-		balloon_alert(user, "expose the wires first!")
+	if(!is_wire_tool(tool))
+		return NONE
+	if(!panel_open)
+		balloon_alert(user, "expose wires first!")
 		return ITEM_INTERACT_BLOCKING
-	return NONE
+	wires.interact(user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/firealarm/proc/cable_act(mob/living/user, obj/item/stack/cable_coil/coil)
+	if(buildstage != FIRE_ALARM_BUILD_NO_WIRES)
+		return NONE
+	if(!coil.use(5))
+		balloon_alert(user, "need 5 cables!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert_to_viewers("wires installed")
+	buildstage = FIRE_ALARM_BUILD_SECURED
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/firealarm/proc/electronics_act(mob/living/user, obj/item/electronics/firealarm/circuit)
+	if(buildstage != FIRE_ALARM_BUILD_NO_CIRCUIT)
+		return NONE
+	if(!user.transferItemToLoc(circuit, src))
+		balloon_alert(user, "can't install!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert_to_viewers("circuit installed")
+	qdel(circuit)
+	buildstage = FIRE_ALARM_BUILD_NO_WIRES
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/firealarm/proc/pseudocircuit_act(mob/living/user, obj/item/electroadaptive_pseudocircuit/pseudocircuit)
+	if(buildstage != FIRE_ALARM_BUILD_NO_CIRCUIT)
+		return NONE
+	if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.015 * STANDARD_CELL_CHARGE))
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert_to_viewers("circuit installed")
+	buildstage = FIRE_ALARM_BUILD_NO_WIRES
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/firealarm/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!panel_open)
 		return NONE
 
-	if(buildstage == FIRE_ALARM_BUILD_NO_WIRES)
-		if(istype(tool, /obj/item/stack/cable_coil))
-			var/obj/item/stack/cable_coil/coil = tool
-			if(!coil.use(5))
-				balloon_alert(user, "need 5 cables!")
-				return ITEM_INTERACT_BLOCKING
-			buildstage = FIRE_ALARM_BUILD_SECURED
-			balloon_alert(user, "wires installed")
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/stack/cable_coil))
+		return cable_act(user, tool)
 
-	if(buildstage == FIRE_ALARM_BUILD_NO_CIRCUIT)
-		if(istype(tool, /obj/item/electronics/firealarm))
-			balloon_alert(user, "circuit installed")
-			qdel(tool)
-			buildstage = FIRE_ALARM_BUILD_NO_WIRES
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/electronics/firealarm))
+		return electronics_act(user, tool)
 
-		if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
-			var/obj/item/electroadaptive_pseudocircuit/pseudoc = tool
-			if(!pseudoc.adapt_circuit(user, circuit_cost = 0.015 * STANDARD_CELL_CHARGE))
-				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, "circuit installed")
-			buildstage = FIRE_ALARM_BUILD_NO_WIRES
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
+		return pseudocircuit_act(user, tool)
 
 	return NONE
 
@@ -490,7 +508,7 @@
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_WALLFRAME)
-			balloon_alert(user, "circuit installed")
+			balloon_alert_to_viewers("circuit installed")
 			buildstage = FIRE_ALARM_BUILD_NO_WIRES
 			update_appearance()
 			return TRUE
@@ -506,7 +524,7 @@
 // Taking any damage has a rng chance of triggering the alarm regardless of panel state
 /obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(!.) //damage received
+	if(!.) // no damage received
 		return
 	if(atom_integrity <= 0 || buildstage != FIRE_ALARM_BUILD_SECURED)
 		return
@@ -614,9 +632,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 /obj/machinery/firealarm/partyalarm/reset(mob/user, silent = FALSE)
 	if (!is_operational || !can_reset)
-		return
-	var/area/area = get_area(src)
-	if (!area || !area.party)
 		return
 	my_area.party = FALSE
 	my_area.cut_overlay(party_overlay)
