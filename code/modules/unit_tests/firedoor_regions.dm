@@ -31,6 +31,8 @@
 			continue
 		if(locate(/obj/machinery/door/firedoor) in nearby)
 			continue
+		if(locate(/obj/effect/landmark/firealarm_sanity) in nearby)
+			continue
 		if(nearby.is_blocked_turf(exclude_mobs = TRUE))
 			continue
 		var/list/detected_area = detect_room(nearby, null, null, room_cb)
