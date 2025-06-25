@@ -1312,7 +1312,6 @@
 	sleep(open_delay)
 	layer = OPEN_DOOR_LAYER
 	set_airlock_state(AIRLOCK_OPEN, animated = FALSE)
-	operating = FALSE
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
 		addtimer(CALLBACK(src, PROC_REF(close)), FORCING_DOOR_CHECKS)
