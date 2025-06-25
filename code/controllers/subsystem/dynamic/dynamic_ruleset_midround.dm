@@ -590,12 +590,12 @@
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/assign_role(datum/mind/candidate)
 	var/mob/living/carbon/human/new_ninja = candidate.current
 	new_ninja.forceMove(find_space_spawn()) // ninja antag datum needs the mob to be in place first
-	candidate.add_antag_datum(/datum/antagonist/ninja)
 	randomize_human_normie(new_ninja)
 	var/new_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 	new_ninja.name = new_name
 	new_ninja.real_name = new_name
-	new_ninja.dna.update_dna_identity()
+	new_ninja.dna.update_dna_identity() // ninja antag datum needs dna to be set first
+	candidate.add_antag_datum(/datum/antagonist/ninja)
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
