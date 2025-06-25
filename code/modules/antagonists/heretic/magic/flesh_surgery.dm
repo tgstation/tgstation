@@ -294,7 +294,7 @@
 
 	var/slot_organ_goes_in = inserted_organ.slot
 	var/obj/item/organ/organ_victim_already_has = victim.get_organ_slot(slot_organ_goes_in)
-	if(organ_victim_already_has?.organ_flags & ORGAN_VITAL)
+	if(organ_victim_already_has?.organ_flags & ORGAN_VITAL|ORGAN_UNREMOVABLE)
 		hand.balloon_alert(caster, "can't replace organ!")
 		return FALSE
 
@@ -384,7 +384,7 @@
 	if(QDELETED(src) || QDELETED(hand) || QDELETED(victim) || QDELETED(inserted_organ) || (held_organ != inserted_organ) || !IsAvailable())
 		return FALSE
 	var/obj/item/organ/organ_victim_already_has = victim.get_organ_slot(inserted_organ.slot)
-	if(organ_victim_already_has?.organ_flags & ORGAN_UNREMOVABLE)
+	if(organ_victim_already_has?.organ_flags & ORGAN_VITAL|ORGAN_UNREMOVABLE)
 		return FALSE
 
 	return TRUE
