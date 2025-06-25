@@ -2044,6 +2044,7 @@
 #include "code\datums\wires\emitter.dm"
 #include "code\datums\wires\explosive.dm"
 #include "code\datums\wires\fax.dm"
+#include "code\datums\wires\firealarm.dm"
 #include "code\datums\wires\holopad.dm"
 #include "code\datums\wires\mass_driver.dm"
 #include "code\datums\wires\mecha.dm"
