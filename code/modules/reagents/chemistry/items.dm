@@ -127,14 +127,13 @@
 	for(var/datum/reagent/reagent as anything in cont.reagents.reagent_list) // bloodtyping if blood present in container
 		var/blood_info = null
 		if(reagent.data)
-			if(istype(reagent.data["blood_type"], /datum/blood_type))
-				var/datum/blood_type/blood_type = reagent.data["blood_type"]
-				if (blood_type.get_type())
-					blood_info = "[blood_type.get_blood_name()] (type: [blood_type.get_type()])"
-				else
-					blood_info = "[blood_type.get_blood_name()]"
-			else if(reagent.data["blood_type"])
-				blood_info = "[reagent.name] (type: ["blood_type"])"
+			var/blood = reagent.data["blood_type"]
+			if(istype(blood, /datum/blood_type))
+				var/datum/blood_type/blood_type = blood
+				var/type = blood_type.get_type()
+				blood_info = "[blood_type.get_blood_name()] [type ? "(type: [type])" : ""]"
+			else if(blood)
+				blood_info = "[reagent.name] (type: [blood])"
 		if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //If the reagent is impure
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 			out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.000001)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
