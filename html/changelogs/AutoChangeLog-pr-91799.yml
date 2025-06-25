@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "AIs can open windoors"
+  - bugfix: "Mechas can open airlocks"
+  - bugfix: "Handcuffed people can open public airlocks"
+  - bugfix: "Telekinesis can open public airlocks"
