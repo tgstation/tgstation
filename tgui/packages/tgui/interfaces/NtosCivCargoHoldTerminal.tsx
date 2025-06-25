@@ -12,8 +12,7 @@ import { NtosWindow } from '../layouts';
 
 export const NtosCivCargoHoldTerminal = (props) => {
   const { act, data } = useBackend();
-  const { status_report, id_inserted, id_bounty_info, picking } =
-    data;
+  const { status_report, id_inserted, id_bounty_info, picking } = data;
   const in_text = 'Welcome valued employee.';
   const out_text = 'To begin, insert your ID into the console.';
   return (
