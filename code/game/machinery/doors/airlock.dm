@@ -503,6 +503,10 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
+/**
+ * Set the airlock state to a new value, change the icon state
+ * and run the associated animation if required.
+ */
 /obj/machinery/door/airlock/proc/set_airlock_state(new_state, animated = FALSE)
 	if(!new_state)
 		new_state = density ? AIRLOCK_CLOSED : AIRLOCK_OPEN
@@ -528,7 +532,7 @@
 
 	var/frame_state
 	var/light_state
-	if(machine_stat & MAINT)
+	if(machine_stat & MAINT) // in the process of being emagged
 		frame_state = AIRLOCK_FRAME_CLOSED
 	else switch(airlock_state)
 		if(AIRLOCK_CLOSED)
@@ -564,7 +568,7 @@
 	if(frame_state == AIRLOCK_FRAME_CLOSED && welded)
 		. += get_airlock_overlay("welded", overlays_file, src, em_block = TRUE)
 
-	if(machine_stat & MAINT)
+	if(machine_stat & MAINT) // in the process of being emagged
 		. += get_airlock_overlay("sparks", overlays_file, src, em_block = FALSE)
 
 	if(hasPower())
@@ -613,7 +617,7 @@
 
 /obj/machinery/door/airlock/animation_effects(animation)
 	if(animation == DOOR_DENY_ANIMATION)
-		playsound(src, doorDeni, 50, TRUE)
+		playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
 		addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/proc/handle_deny_end()
