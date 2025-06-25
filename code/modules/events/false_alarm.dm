@@ -29,6 +29,9 @@
 
 	var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 	var/picked_trigger = forced_type
+	if(ispath(forced_type, /datum/dynamic_ruleset/midround))
+		picked_trigger = new forced_type()
+
 	var/list/event_pool = get_potential_false_alarm()
 
 	while(length(event_pool) && isnull(picked_trigger))
