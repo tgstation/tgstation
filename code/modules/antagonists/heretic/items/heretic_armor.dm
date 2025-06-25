@@ -87,6 +87,10 @@
 	/// Cooldown before our robes will create new flames
 	COOLDOWN_DECLARE(flame_creation)
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/equipped(mob/living/user, slot)
 	. = ..()
 	if(!(slot_flags & slot))
@@ -144,8 +148,8 @@
 /datum/armor/eldritch_armor/ash
 	melee = 40
 	bullet = 60
-	laser = 40
-	energy = 40
+	laser = 50
+	energy = 50
 	bomb = 100
 	bio = 20
 	fire = 100
@@ -186,7 +190,7 @@
 	bio = 50
 	fire = 50
 	acid = 50
-	wound = 30
+	wound = 50
 
 // Cosmic
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic
@@ -268,7 +272,7 @@
 	armor_type = /datum/armor/eldritch_armor/flesh
 
 /datum/armor/eldritch_armor/flesh
-	melee = 60
+	melee = 70
 	bullet = 40
 	laser = 30
 	energy = 30
@@ -373,6 +377,7 @@
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
+	START_PROCESSING(SSobj, src)
 
 /// Gives the health HUD to the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
@@ -510,6 +515,24 @@
 	to_explode.drop_organs()
 	to_explode.dismember(dam_type = BRUTE, silent = TRUE)
 	qdel(to_explode)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/process(seconds_per_tick)
+	var/mob/living/carbon/human/wearer = loc
+	if(!istype(wearer))
+		return ..()
+	var/brain_damage = wearer.get_organ_loss(ORGAN_SLOT_BRAIN)
+	var/emote_rng = 0
+	switch(brain_damage)
+		if(0 to 30)
+			emote_rng = 0
+		if(31 to 60)
+			emote_rng = 0
+		if(61 to 100)
+			emote_rng = 0
+		if(101 to 150)
+			emote_rng = 0
+		if(151 to 200)
+			emote_rng = 0
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
 	name = "\improper Resplendant Hood"
@@ -726,8 +749,8 @@
 	energy = 30
 	bomb = 50
 	bio = 30
-	fire = 0
-	acid = 0
+	fire = 30
+	acid = 30
 	wound = 30
 
 /datum/armor/eldritch_armor/rust/on_rust
@@ -737,8 +760,8 @@
 	energy = 60
 	bomb = 100
 	bio = 60
-	fire = 0
-	acid = 0
+	fire = 60
+	acid = 60
 	wound = 60
 
 // Void

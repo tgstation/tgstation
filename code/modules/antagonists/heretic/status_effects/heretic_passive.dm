@@ -297,10 +297,10 @@
 		return
 	var/mob/living/carbon/human/heretic = owner
 	if(HAS_TRAIT(heretic, TRAIT_FAT))
-		heretic.physiology.damage_resistance += 15
+		heretic.physiology.damage_resistance += 25
 		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
 	else
-		heretic.physiology.damage_resistance -= 15
+		heretic.physiology.damage_resistance -= 25
 		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
 
 /datum/status_effect/heretic_passive/flesh/on_remove()
@@ -312,12 +312,12 @@
 	var/mob/living/carbon/human/heretic = owner
 	if(!HAS_TRAIT(heretic, TRAIT_FAT))
 		return
-	heretic.physiology.damage_resistance -= 15
+	heretic.physiology.damage_resistance -= 25
 	heretic.on_fat()
 
 //---- Lock Passive
 // On gain you can understand and speak every language
-// Level 1 Hand insulation + Side knowledge is cheaper
+// Level 1 Shock immunity + Side knowledge is cheaper
 // Level 2 Gains X-ray Vision
 // Level 3 your grasp no longer goes on cooldown when opening things
 /datum/status_effect/heretic_passive/lock
@@ -367,7 +367,7 @@
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + 5 SECONDS) ? 0 : -5 * passive_level * seconds_between_ticks))
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + 5 SECONDS) ? -2.5 * passive_level * seconds_between_ticks : -5 * passive_level * seconds_between_ticks))
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
@@ -451,11 +451,11 @@
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
 	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-	need_mob_update += source.adjustBruteLoss((-1) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss((-1) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss((-1) * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss((-1) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss((-5) * delta_time, updating_stamina = FALSE)
+	need_mob_update += source.adjustBruteLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss((-5 * (passive_level - 1)) * delta_time, updating_stamina = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 	// Reduces duration of stuns/etc
@@ -463,6 +463,8 @@
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
+	for(var/datum/reagent/reagent as anything in source.reagents.reagent_list)
+		source.reagents.remove_reagent(reagent.type, 2 * reagent.purge_multiplier * REM * seconds_per_tick)
 
 	if(!iscarbon(source))
 		return
@@ -472,6 +474,8 @@
 	for(var/obj/item/bodypart/wounded_limb as anything in carbon_owner.bodyparts)
 		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
 			to_cure.remove_wound()
+	for(var/obj/item/organ/internal as anything in carbon_owner.organs)
+		internal.apply_organ_damage(-2 * seconds_per_tick)
 	if(passive_level < HERETIC_LEVEL_FINAL)
 		return
 	if(length(carbon_owner.get_missing_limbs()))

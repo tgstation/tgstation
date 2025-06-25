@@ -275,12 +275,17 @@
 	add_ghost_version = TRUE
 
 /datum/proximity_monitor/influence_monitor
+	/// Cooldown before we can give another heretic xray
+	COOLDOWN_DECLARE(xray_cooldown)
 
 /datum/proximity_monitor/influence_monitor/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
 	. = ..()
 	if(!isliving(arrived))
 		return
+	if(!COOLDOWN_FINISHED(src, xray_cooldown))
+		return
 	var/mob/living/arrived_living = arrived
 	if(!IS_HERETIC(arrived_living))
 		return
 	arrived_living.apply_status_effect(/datum/status_effect/temporary_xray)
+	COOLDOWN_START(src, xray_cooldown, 3 MINUTES)

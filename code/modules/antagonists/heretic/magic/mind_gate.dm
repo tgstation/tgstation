@@ -43,7 +43,6 @@
 	/// The duration of these effects are based on sanity, mainly for flavor but also to make it a weaker alpha strike
 	var/maximum_duration = 15 SECONDS
 	var/mind_gate_duration = ((SANITY_MAXIMUM - cast_on.mob_mood.sanity) / (SANITY_MAXIMUM - SANITY_INSANE)) * maximum_duration
-	playsound(cast_on, 'sound/effects/hallucinations/i_see_you1.ogg', 50, 1)
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU!"))
 	cast_on.adjust_temp_blindness(mind_gate_duration + 1 SECONDS)
 	cast_on.set_eye_blur_if_lower(mind_gate_duration + 2 SECONDS)
