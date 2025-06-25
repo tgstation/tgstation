@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(dynamic)
 			qdel(ruleset)
 			continue
 
-		// Purely for logging
+		// Just logs who was selected at roundstart
 		for(var/datum/mind/selected as anything in ruleset.selected_minds)
 			log_dynamic("Roundstart: [key_name(selected)] has been selected for [ruleset.config_tag].")
 
@@ -344,16 +344,15 @@ SUBSYSTEM_DEF(dynamic)
 		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed!")
 		QDEL_LIST(rulesets_weighted)
 		return FALSE
-	// Purely for logging
-	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
-		message_admins("Midround ([range]): [ADMIN_LOOKUPFLW(selected.current)] has been selected for [picked_ruleset.config_tag].")
-		log_dynamic("Midround ([range]): [key_name(selected.current)] has been selected for [picked_ruleset.config_tag].")
-		notify_ghosts("[selected.name] has been picked for [picked_ruleset.config_tag]!", source = selected.current)
-
 	// Run the thing
 	executed_rulesets += picked_ruleset
 	rulesets_weighted -= picked_ruleset
 	picked_ruleset.execute()
+	// Post execute logging
+	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
+		message_admins("Midround ([range]): [ADMIN_LOOKUPFLW(selected.current)] has been selected for [picked_ruleset.config_tag].")
+		log_dynamic("Midround ([range]): [key_name(selected.current)] has been selected for [picked_ruleset.config_tag].")
+		notify_ghosts("[selected.name] has been picked for [picked_ruleset.config_tag]!", source = selected.current)
 	// Clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
 	rulesets_to_spawn[range] -= 1
@@ -409,14 +408,13 @@ SUBSYSTEM_DEF(dynamic)
 		qdel(running)
 		return FALSE
 
-	// Purely for logging
+	executed_rulesets += running
+	running.execute()
+	// Post execute logging
 	for(var/datum/mind/selected as anything in running.selected_minds)
 		message_admins("Midround (forced): [ADMIN_LOOKUPFLW(selected.current)] has been selected for [running.config_tag].")
 		log_dynamic("Midround (forced): [key_name(selected.current)] has been selected for [running.config_tag].")
 		notify_ghosts("[selected.name] has been picked for [running.config_tag]!", source = selected.current)
-
-	executed_rulesets += running
-	running.execute()
 	return TRUE
 
 /**
@@ -472,15 +470,15 @@ SUBSYSTEM_DEF(dynamic)
 		QDEL_LIST(rulesets_weighted)
 		failed_latejoins++
 		return FALSE
-	// Purely for logging
-	if(!(latejoiner.mind in picked_ruleset.selected_minds))
-		stack_trace("Dynamic: Latejoin [picked_ruleset.type] executed, but the latejoiner was not in its selected minds list!")
-	message_admins("Latejoin: [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [picked_ruleset.config_tag].")
-	log_dynamic("Latejoin: [key_name(latejoiner)] has been selected for [picked_ruleset.config_tag].")
 	// Run the thing
 	executed_rulesets += picked_ruleset
 	rulesets_weighted -= picked_ruleset
 	picked_ruleset.execute()
+	// Post execute logging
+	if(!(latejoiner.mind in picked_ruleset.selected_minds))
+		stack_trace("Dynamic: Latejoin [picked_ruleset.type] executed, but the latejoiner was not in its selected minds list!")
+	message_admins("Latejoin: [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [picked_ruleset.config_tag].")
+	log_dynamic("Latejoin: [key_name(latejoiner)] has been selected for [picked_ruleset.config_tag].")
 	// Clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
 	rulesets_to_spawn[LATEJOIN] -= 1
