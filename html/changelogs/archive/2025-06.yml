@@ -595,3 +595,11 @@
   TheBoondock:
   - qol: being blackout drunk will stop your liver from being hurt from alcohol for
       the duration of it
+2025-06-25:
+  Aliceee2ch:
+  - bugfix: Fixed things forgotten in walls of Catwalk Station
+  amylizzle:
+  - code_imp: removes an unnecessary static def in a unit test
+  grungussuss:
+  - spellcheck: fixes some examine text typos
+  - qol: you can now click on objects in the game when the lobby art starts to fade
