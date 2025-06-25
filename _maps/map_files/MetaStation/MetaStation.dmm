@@ -18491,6 +18491,7 @@
 "gAx" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gAB" = (
@@ -40986,7 +40987,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "omc" = (
@@ -47830,6 +47830,7 @@
 	dir = 5
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "qFP" = (

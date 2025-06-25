@@ -11,13 +11,20 @@
 
 /datum/unit_test/firedoor_regions/Run()
 	var/list/detected_turfs = list()
+	var/any_fail = FALSE
 	for(var/obj/machinery/door/firedoor/firedoor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/firedoor))
 		if(!is_station_level(firedoor.z))
 			continue
-		check_fire_area(firedoor, detected_turfs)
+		any_fail = check_fire_area(firedoor, detected_turfs) || any_fail
 		CHECK_TICK
 
+	if(!any_fail)
+		return
+	TEST_FAIL("Some regions of enclosed fire doors did not have a fire alarm within! \
+		Add a fire alarm, or mark the region as ignored with a firealarm_sanity landmark if intentional.")
+
 /datum/unit_test/firedoor_regions/proc/check_fire_area(obj/machinery/door/firedoor/firedoor, list/already_detected_turfs)
+	. = FALSE
 	var/datum/callback/room_cb = CALLBACK(src, PROC_REF(check_fire_area_callback))
 	for(var/turf/open/nearby as anything in get_adjacent_open_turfs(firedoor))
 		if(nearby in already_detected_turfs)
@@ -32,8 +39,10 @@
 
 		already_detected_turfs |= detected_area
 		if(!is_fire_alarm_in_list_of_turfs(detected_area))
-			TEST_FAIL("No fire alarm in region: [AREACOORD(nearby)]")
+			TEST_FAIL("No fire alarm in region: [AREACOORD(nearby)] (Region size: [length(detected_area)] turfs)")
+			. = TRUE
 		CHECK_TICK
+	return .
 
 /datum/unit_test/firedoor_regions/proc/is_fire_alarm_in_list_of_turfs(list/all_turfs)
 	for(var/turf/open/turf_to_check as anything in all_turfs)
