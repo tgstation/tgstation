@@ -3370,12 +3370,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/bridge)
-"bch" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/turf/open/floor/catwalk_floor,
-/area/station/engineering/main)
 "bcj" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/hangover,
@@ -16468,6 +16462,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical)
+"eTx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 10
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/engineering/main)
 "eTD" = (
 /obj/structure/closet/secure_closet/chief_medical,
 /turf/open/floor/wood,
@@ -54797,9 +54799,7 @@
 "qof" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "qom" = (
@@ -61975,12 +61975,6 @@
 	},
 /turf/open/floor/engine/hull/air,
 /area/station/medical/chemistry)
-"stX" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
-	dir = 9
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "stY" = (
 /obj/item/storage/box/lights/mixed,
 /obj/structure/cable,
@@ -75286,6 +75280,12 @@
 	dir = 1
 	},
 /area/station/science/ordnance/storage)
+"wrh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "wrs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
 /turf/open/floor/iron/dark,
@@ -75869,8 +75869,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "wAH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/supply/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
+	dir = 9
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -124002,12 +124002,12 @@ qiI
 cwT
 pvp
 xTK
+eTx
 qof
-bch
 qKJ
-bch
-bch
-bch
+qof
+qof
+qof
 sIP
 hBv
 bVt
@@ -125033,7 +125033,7 @@ uJw
 tEj
 tgX
 fBp
-stX
+wAH
 rxH
 mmN
 rxH
@@ -125287,7 +125287,7 @@ bww
 cTQ
 xdR
 dmq
-wAH
+wrh
 bAG
 ihQ
 rxH
