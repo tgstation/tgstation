@@ -36,17 +36,14 @@
 		CHECK_TICK
 
 /datum/unit_test/firedoor_regions/proc/is_fire_alarm_in_list_of_turfs(list/all_turfs)
-	. = FALSE
 	for(var/turf/open/turf_to_check as anything in all_turfs)
-		if(locate(/obj/effect/landmark/firealarm_sanity) in turf_to_check)
-			return FALSE
-		if(.)
-			continue
 		if(locate(/obj/machinery/firealarm) in turf_to_check)
-			. = TRUE
-	return .
+			return TRUE
+	return FALSE
 
 /datum/unit_test/firedoor_regions/proc/check_fire_area_callback(turf/checking)
+	if(locate(/obj/effect/landmark/firealarm_sanity) in checking)
+		return EXTRA_ROOM_CHECK_FAIL
 	if(locate(/obj/machinery/door/firedoor) in checking)
 		return EXTRA_ROOM_CHECK_SKIP
 	return null
