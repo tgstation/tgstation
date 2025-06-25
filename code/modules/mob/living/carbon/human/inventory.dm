@@ -410,11 +410,11 @@
 	else if(amt > old_limbs)
 		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
-			var/path = /obj/item/bodypart/arm/left
+			var/path = dna.species.bodypart_overrides[BODY_ZONE_L_ARM] || /obj/item/bodypart/arm/left
 			if(IS_RIGHT_INDEX(i))
-				path = /obj/item/bodypart/arm/right
+				path = dna.species.bodypart_overrides[BODY_ZONE_R_ARM] || /obj/item/bodypart/arm/right
 
-			var/obj/item/bodypart/BP = new path ()
+			var/obj/item/bodypart/BP = new path()
 			BP.held_index = i
 			BP.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = BP
