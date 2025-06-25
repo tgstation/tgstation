@@ -1469,7 +1469,7 @@
 		if(istype(emag_card, /obj/item/card/emag/doorjack))
 			var/obj/item/card/emag/doorjack/doorjack_card = emag_card
 			doorjack_card.use_charge(user)
-		set_machine_stat(machine_stat | MAINT)
+		set_machine_stat(machine_stat | MAINT) // flash the airlock lights and display some sparks
 		set_airlock_state(AIRLOCK_CLOSED)
 		operating = TRUE
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
