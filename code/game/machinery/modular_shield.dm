@@ -412,6 +412,7 @@
 	internal_penalty = FALSE
 	layer = GIB_LAYER
 	icon_type = "gate"
+	var/display_name = "Shield Gate"
 
 /obj/machinery/modular_shield_generator/gate/ui_interact(mob/user, datum/tgui/ui)
 	return
