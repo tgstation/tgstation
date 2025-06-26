@@ -67,15 +67,12 @@
 	///This is the lazy list of perimeter turfs that we grab when making large shields of 10 or more radius
 	var/list/list_of_turfs
 
-<<<<<<< shieldgatepr
 	///This decides if we get nerfed by projecting on internal turfs with floors and stuff
 	var/internal_penalty = TRUE
 
 	///What machine we are for the purpose of updating icon state
 	var/icon_type = "gen"
 
-=======
->>>>>>> master
 	///The name modular shield console tgui's see us as
 	var/display_name = "Shield Generator"
 
