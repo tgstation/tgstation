@@ -134,8 +134,8 @@
 	// MIND TRANSFER END
 
 	// only knock out the victim
-	//caster.Unconscious(unconscious_amount_caster)
-	to_swap.Unconscious(unconscious_amount_victim)
+	caster.Unconscious(unconscious_amount_caster)
+	//to_swap.Unconscious(unconscious_amount_victim)
 
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
