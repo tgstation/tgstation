@@ -135,7 +135,7 @@
 
 	// only knock out the victim
 	caster.Unconscious(unconscious_amount_caster)
-	to_swap.Unconscious(unconscious_amount_victim / (spell_level * 2))
+	to_swap.Unconscious(unconscious_amount_victim / (spell_level * spell_level))
 
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
