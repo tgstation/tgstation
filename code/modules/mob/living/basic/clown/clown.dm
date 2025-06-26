@@ -25,6 +25,7 @@
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = (T0C - 10)
 	maximum_survivable_temperature = (T0C + 100)
+	blood_volume = BLOOD_VOLUME_NORMAL
 	faction = list(FACTION_CLOWN)
 	ai_controller = /datum/ai_controller/basic_controller/clown
 	///list of stuff we drop on death
@@ -63,6 +64,11 @@
 	var/obj/item/food/grown/banana/bunch/unripe_bunch = target
 	unripe_bunch.start_ripening()
 	log_combat(src, target, "explosively ripened")
+
+/mob/living/basic/clown/get_bloodtype()
+	if (check_holidays(APRIL_FOOLS))
+		return get_blood_type(BLOOD_TYPE_CLOWN)
+	return ..()
 
 /mob/living/basic/clown/lube
 	name = "Living Lube"
@@ -414,20 +420,16 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 30, bonus_tame_chance = 0)
 	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
 
-/mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
-	if(!check_edible(item))
-		return ..()
-	eat_atom(item)
+/mob/living/basic/clown/mutant/glutton/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!check_edible(tool))
+		return NONE
+	eat_atom(tool)
+	return ITEM_INTERACT_SUCCESS
 
-/mob/living/basic/clown/mutant/glutton/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
-	if(!check_edible(target))
+/mob/living/basic/clown/mutant/glutton/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	if(!check_edible(attack_target))
 		return ..()
-	eat_atom(target)
-
-/mob/living/basic/clown/mutant/glutton/UnarmedAttack(atom/victim, proximity_flag, list/modifiers)
-	if(!check_edible(victim))
-		return ..()
-	eat_atom(victim)
+	eat_atom(attack_target)
 
 ///Returns whether or not the supplied movable atom is edible.
 /mob/living/basic/clown/mutant/glutton/proc/check_edible(atom/movable/potential_food)

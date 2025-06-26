@@ -214,7 +214,7 @@
 	on_amulet_deactivate(user)
 	return ..()
 
-/obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, list/modifiers)
+/obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(channel_amulet(user, target))
 		return
 	return ..()

@@ -10,6 +10,8 @@
 	icon = 'icons/mob/simple/pets.dmi'
 	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 1)
 	mob_biotypes = MOB_ORGANIC
+	density = FALSE
+	pass_flags = PASSTABLE | PASSMOB
 	health = 30
 	maxHealth = 30
 	speed = 6
@@ -44,6 +46,7 @@
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
 	create_reagents(100, REAGENT_HOLDER_ALIVE)
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagents_update))
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAIL, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 	if (minion_path)
 		AddElement(/datum/element/regal_rat_minion, converted_path = minion_path, success_balloon = "gurgle", pet_commands = GLOB.regal_rat_minion_commands)

@@ -110,7 +110,7 @@
 			else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 				mecha_attacker.melee_attack_effect(src, heavy = FALSE)
 			playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
-		if(FIRE)
+		if(BURN)
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		if(TOX)
 			playsound(src, mecha_attacker.tox_attack_sound, 50, TRUE)

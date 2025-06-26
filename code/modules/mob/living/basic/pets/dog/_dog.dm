@@ -67,6 +67,7 @@
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state)
 	ADD_TRAIT(src, TRAIT_WOUND_LICKER, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_COLORBLIND, INNATE_TRAIT)
 	AddElement(/datum/element/pet_bonus, "woof")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
@@ -104,7 +105,7 @@
 	attack_verb_continuous = list("attacks", "bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 
-/obj/item/dog_bone/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/dog_bone/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!isdog(target) || user.combat_mode)
 		return ..()
 	var/mob/living/basic/pet/dog/dog_target = target

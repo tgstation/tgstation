@@ -57,4 +57,4 @@
 /obj/machinery/power/manufacturing/router/proc/handle_stack(obj/item/stack/stack, direction)
 	if(stack.amount <= 1) // last implementation was just not good so lets cheap out
 		return stack
-	return stack.split_stack(amount = 1)
+	return stack.split_stack(1)

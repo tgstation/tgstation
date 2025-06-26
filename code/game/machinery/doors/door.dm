@@ -303,6 +303,12 @@
 	. = ..()
 	if(.)
 		return
+	// Stops people without +USE from being able to click-open airlocks
+	// Explicitly not a generic check - if you make this generic, AIs (and more) won't be able to open doors
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!(living_user.mobility_flags & MOBILITY_USE))
+			return
 	if(try_remove_seal(user))
 		return
 	if(try_safety_unlock(user))
@@ -314,7 +320,7 @@
 		return
 	return ..()
 
-/obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/proc/try_to_activate_door(mob/living/user, access_bypass = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
 		return
@@ -367,7 +373,7 @@
 	try_to_crowbar(tool, user, forced_open)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, list/modifiers)
+/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/access_key))
 		var/obj/item/access_key/key = weapon
 		return key.attempt_open_door(user, src)

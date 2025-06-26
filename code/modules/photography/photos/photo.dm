@@ -53,7 +53,7 @@
 		if(!seen)
 			P.mobs_seen -= seen_ref
 			continue
-		if(!isobserver(seen))
+		if(!isobserver(seen) && !isspirit(seen))
 			continue
 		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		grind_results = list(/datum/reagent/hauntium = 20)
@@ -78,7 +78,7 @@
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/photo/attackby(obj/item/P, mob/user, list/modifiers)
+/obj/item/photo/attackby(obj/item/P, mob/user, list/modifiers, list/attack_modifiers)
 	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return

@@ -248,8 +248,7 @@
 /// Checks a bunch of stuff to see if we can heal the patient, including can_heal
 /// Gives a feedback if we can't ultimatly heal the patient (unless silent is TRUE)
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
-	if(!(healed_zone in GLOB.all_body_zones))
-		stack_trace("Invalid zone ([healed_zone || "null"]) passed to try_heal_checks.")
+	if(!(healed_zone in patient.get_all_limbs()))
 		healed_zone = BODY_ZONE_CHEST
 
 	if(!can_heal(patient, user, healed_zone, silent))
@@ -393,6 +392,10 @@
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
 
+/obj/item/stack/medical/gauze/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	register_context()
+
 /obj/item/stack/medical/gauze/Destroy(force)
 	. = ..()
 
@@ -406,6 +409,14 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Apply Gauze"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/stack/medical/gauze/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isnull(held_item))
+		return
+	if(held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness())
+		context[SCREENTIP_CONTEXT_LMB] = "Shred Into Cloth"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
@@ -483,7 +494,7 @@
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
 
-/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if(get_amount() < 2)
 			balloon_alert(user, "not enough gauze!")
@@ -735,7 +746,7 @@
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
-	for(var/zone in GLOB.all_body_zones)
+	for(var/zone in patient.get_all_limbs())
 		patient.apply_damage(60, BRUTE, zone)
 	use(1)
 	return BRUTELOSS

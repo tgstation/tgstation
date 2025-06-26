@@ -69,7 +69,7 @@
 	diceroll(user, in_hand = TRUE)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/mob/thrown_by = throwingdatum.get_thrower()
+	var/mob/thrown_by = throwingdatum?.get_thrower()
 	if(thrown_by)
 		diceroll(thrown_by)
 	return ..()

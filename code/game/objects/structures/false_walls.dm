@@ -121,7 +121,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return
 
-/obj/structure/falsewall/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/structure/falsewall/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(!opening)
 		return ..()
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
@@ -202,7 +202,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, PROC_REF(radiate))
 
-/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	radiate()
 	return ..()
 

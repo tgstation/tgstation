@@ -1,6 +1,7 @@
 /datum/surgery/advanced/bioware/nerve_grounding
 	name = "Nerve Grounding"
 	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
+	surgery_flags = SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,

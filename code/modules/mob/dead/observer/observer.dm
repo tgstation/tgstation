@@ -22,20 +22,24 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_on = FALSE
 	shift_to_open_context_menu = FALSE
 	var/can_reenter_corpse
-	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghost - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/atom/movable/following = null
-	var/fun_verbs = 0
+
+	///The time between being able to use boo(), if fun_verbs is TRUE.
+	COOLDOWN_DECLARE(bootime)
+	///Boolean on whether this ghost has access to 'fun' verbs in the ghost menu.
+	var/fun_verbs = FALSE
+
 	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
-	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null //The target mob that the ghost is observing. Used as a reference in logout()
-	var/data_huds_on = 0 //Are data HUDs currently enabled?
-	var/health_scan = FALSE //Are health scans currently enabled?
-	var/chem_scan = FALSE //Are chem scans currently enabled?
-	var/gas_scan = FALSE //Are gas scans currently enabled?
+
+	///Flags of huds the ghost currently has enabled, data huds & ghost vision by default.
+	///Selection: GHOST_DATA_HUDS | GHOST_VISION | GHOST_HEALTH | GHOST_CHEM | GHOST_GAS
+	var/ghost_hud_flags = GHOST_DATA_HUDS | GHOST_VISION
+	///The shape the ghost will make while orbiting mobs.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -62,6 +66,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	/// The POI we're orbiting (orbit menu)
 	var/orbiting_ref
 
+	///The description camera obscuras have when they get a photo of us.
+	var/photo_description = "You can also see a g-g-g-g-ghooooost!"
 	var/static/list/observer_hud_traits = list(
 		TRAIT_SECURITY_HUD,
 		TRAIT_MEDICAL_HUD,
@@ -71,13 +77,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
-
-	add_verb(src, list(
-		/mob/dead/observer/proc/dead_tele,
-		/mob/dead/observer/proc/open_spawners_menu,
-		/mob/dead/observer/proc/tray_view,
-		/mob/dead/observer/proc/open_minigames_menu))
-
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
@@ -133,10 +132,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	name ||= generate_random_mob_name(FALSE)
 	real_name = name
 
-	if(!fun_verbs)
-		remove_verb(src, /mob/dead/observer/verb/boo)
-		remove_verb(src, /mob/dead/observer/verb/possess)
-
 	AddElement(/datum/element/movetype_handler)
 
 	add_to_dead_mob_list()
@@ -149,14 +144,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	grant_all_languages()
 	setup_hud_traits()
 	show_data_huds()
-	data_huds_on = 1
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
-		return "You can also see a g-g-g-g-ghooooost!"
+		return photo_description
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
@@ -165,7 +159,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 1 SECONDS)
 
 /mob/dead/observer/Destroy()
-	if(data_huds_on)
+	if(ghost_hud_flags & GHOST_DATA_HUDS)
 		remove_data_huds()
 
 	// Update our old body's medhud since we're abandoning it
@@ -266,7 +260,7 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(can_reenter_corpse = TRUE, admin_ghost = FALSE)
 	if(!key)
 		return
-	if(key[1] == "@") // Skip aghosts.
+	if(IS_FAKE_KEY(key)) // Skip aghosts.
 		return
 
 	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !admin_ghost)
@@ -369,8 +363,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		update_ambience_area(new_area)
 
 /mob/dead/observer/verb/reenter_corpse()
-	set category = "Ghost"
 	set name = "Re-enter Corpse"
+
 	if(!client)
 		return
 	if(!mind || QDELETED(mind.current))
@@ -379,10 +373,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!can_reenter_corpse)
 		to_chat(src, span_warning("You cannot re-enter your body."))
 		return
-	if(mind.current.key && mind.current.key[1] != "@") //makes sure we don't accidentally kick any clients
+	if(mind.current.key && !IS_FAKE_KEY(mind.current.key)) //makes sure we don't accidentally kick any clients
 		to_chat(usr, span_warning("Another consciousness is in your body...It is resisting you."))
 		return
-	client.view_size.setDefault(getScreenSize(client.prefs.read_preference(/datum/preference/toggle/widescreen)))//Let's reset so people can't become allseeing gods
+	client.view_size.resetToDefault()//Let's reset so people can't become allseeing gods
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
 		to_chat(src, span_warning("To leave your body again use the Ghost verb."))
@@ -390,18 +384,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.client.init_verbs()
 	return TRUE
 
-/mob/dead/observer/verb/stay_dead()
-	set category = "Ghost"
+/mob/dead/observer/verb/do_not_resuscitate()
 	set name = "Do Not Resuscitate"
-	if(!client)
-		return
+
 	if(!can_reenter_corpse)
 		to_chat(usr, span_warning("You're already stuck out of your body!"))
 		return FALSE
 
 	var/response = tgui_alert(usr, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone.", "Are you sure you want to stay dead?", list("DNR","Save Me"))
-	if(response != "DNR")
-		return
+	if(response == "DNR")
+		stay_dead()
+
+/mob/dead/observer/proc/stay_dead()
+	if(!can_reenter_corpse)
+		to_chat(usr, span_warning("You're already stuck out of your body!"))
+		return FALSE
 
 	can_reenter_corpse = FALSE
 	var/mob/living/current_mob = mind.current
@@ -440,10 +437,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
-/mob/dead/observer/proc/dead_tele()
-	set category = "Ghost"
+/mob/dead/observer/verb/dead_tele()
 	set name = "Teleport"
-	set desc= "Teleport to a location"
+
 	if(!isobserver(usr))
 		to_chat(usr, span_warning("Not when you're not dead!"))
 		return
@@ -470,11 +466,171 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.abstract_move(pick(L))
 
 /mob/dead/observer/verb/follow()
-	set category = "Ghost"
-	set name = "Orbit" // "Haunt"
-	set desc = "Follow and orbit a mob."
+	set name = "Orbit"
 
 	GLOB.orbit_menu.show(src)
+
+/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
+	set name = "Jump to Mob"
+
+	if(!isobserver(usr)) //Make sure they're an observer!
+		return
+
+	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/target = null
+
+	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
+	if(isnull(target))
+		return
+	if (!isobserver(usr))
+		return
+
+	var/mob/destination_mob = possible_destinations[target] //Destination mob
+
+	// During the break between opening the input menu and selecting our target, has this become an invalid option?
+	if(!SSpoints_of_interest.is_valid_poi(destination_mob))
+		return
+
+	var/mob/source_mob = src  //Source mob
+	var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
+
+	if(isturf(destination_turf))
+		source_mob.abstract_move(destination_turf)
+	else
+		to_chat(source_mob, span_danger("This mob is not located in the game world."))
+
+/mob/dead/observer/verb/change_view_range()
+	set name = "View Range"
+
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
+		to_chat(usr, span_notice("That verb is currently globally disabled."))
+		return
+
+	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
+	if(client.view_size.getView() == client.view_size.default)
+		var/list/views = list()
+		for(var/i in 7 to max_view)
+			views |= i
+		var/new_view = tgui_input_list(usr, "New view", "Modify view range", views)
+		if(new_view)
+			client.view_size.setTo(clamp(new_view, 7, max_view) - 7)
+	else
+		client.view_size.resetToDefault()
+
+/mob/dead/observer/verb/toggle_ghostsee()
+	set name = "Toggle Ghost Vision"
+
+	ghost_hud_flags ^= GHOST_VISION
+	update_sight()
+	to_chat(usr, span_boldnotice("You [(ghost_hud_flags & GHOST_VISION) ? "now" : "no longer"] have ghost vision."))
+
+/mob/dead/observer/verb/toggle_darkness()
+	set name = "Toggle Darkness"
+
+	switch(lighting_cutoff)
+		if (LIGHTING_CUTOFF_VISIBLE)
+			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+		if (LIGHTING_CUTOFF_MEDIUM)
+			lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		if (LIGHTING_CUTOFF_HIGH)
+			lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
+		else
+			lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+
+	update_sight()
+
+/mob/dead/observer/verb/view_manifest()
+	set name = "View Crew Manifest"
+
+	GLOB.manifest.ui_interact(src)
+
+/mob/dead/observer/verb/observe()
+	set name = "Observe"
+
+	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
+		return
+
+	reset_perspective(null)
+
+	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
+	var/target = null
+
+	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
+	if(isnull(target))
+		return
+	if (!isobserver(usr))
+		return
+
+	reset_perspective(null) // Reset again for sanity
+
+	var/mob/chosen_target = possible_destinations[target]
+
+	// During the break between opening the input menu and selecting our target, has this become an invalid option?
+	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
+		return
+
+	if (chosen_target == usr)
+		return
+
+	do_observe(chosen_target)
+
+/mob/dead/observer/verb/tray_view()
+	set name = "T-ray scan"
+
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
+		to_chat(usr, span_notice("That verb is currently globally disabled."))
+		return
+
+	t_ray_scan(src)
+
+/mob/dead/observer/verb/toggle_data_huds()
+	set name = "Toggle Sec/Med/Diag HUD"
+
+	ghost_hud_flags ^= GHOST_DATA_HUDS
+	if(ghost_hud_flags & GHOST_DATA_HUDS)
+		show_data_huds()
+		to_chat(src, span_notice("Data HUDs enabled."))
+	else
+		remove_data_huds()
+		to_chat(src, span_notice("Data HUDs disabled."))
+
+/mob/dead/observer/verb/toggle_health_scan()
+	set name = "Toggle Health Scan"
+
+	ghost_hud_flags ^= GHOST_HEALTH
+	if(ghost_hud_flags & GHOST_HEALTH)
+		to_chat(src, span_notice("Health scan enabled."))
+	else
+		to_chat(src, span_notice("Health scan disabled."))
+
+/mob/dead/observer/verb/toggle_chem_scan()
+	set name = "Toggle Chem Scan"
+
+	ghost_hud_flags ^= GHOST_CHEM
+	if(ghost_hud_flags & GHOST_CHEM)
+		to_chat(src, span_notice("Chem scan enabled."))
+	else
+		to_chat(src, span_notice("Chem scan disabled."))
+
+/mob/dead/observer/verb/toggle_gas_scan()
+	set name = "Toggle Gas Scan"
+
+	ghost_hud_flags ^= GHOST_GAS
+	if(ghost_hud_flags & GHOST_GAS)
+		to_chat(src, span_notice("Gas scan enabled."))
+	else
+		to_chat(src, span_notice("Gas scan disabled."))
+
+/mob/dead/observer/verb/restore_ghost_appearance()
+	set name = "Restore Ghost Character"
+
+	set_ghost_appearance()
+	if(client?.prefs)
+		var/real_name = client.prefs.read_preference(/datum/preference/name/real_name)
+		deadchat_name = real_name
+		if(mind)
+			mind.ghostname = real_name
+		name = real_name
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -513,57 +669,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!isnull(client) && !isnull(client.eye))
 		reset_perspective(null)
 
-/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
-	set category = "Ghost"
-	set name = "Jump to Mob"
-	set desc = "Teleport to a mob"
-
-	if(!isobserver(usr)) //Make sure they're an observer!
-		return
-
-	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-	var/target = null
-
-	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
-	if(isnull(target))
-		return
-	if (!isobserver(usr))
-		return
-
-	var/mob/destination_mob = possible_destinations[target] //Destination mob
-
-	// During the break between opening the input menu and selecting our target, has this become an invalid option?
-	if(!SSpoints_of_interest.is_valid_poi(destination_mob))
-		return
-
-	var/mob/source_mob = src  //Source mob
-	var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
-
-	if(isturf(destination_turf))
-		source_mob.abstract_move(destination_turf)
-	else
-		to_chat(source_mob, span_danger("This mob is not located in the game world."))
-
-/mob/dead/observer/verb/change_view_range()
-	set category = "Ghost"
-	set name = "View Range"
-	set desc = "Change your view range."
-
-	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
-		to_chat(usr, span_notice("That verb is currently globally disabled."))
-		return
-
-	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(client.view_size.getView() == client.view_size.default)
-		var/list/views = list()
-		for(var/i in 7 to max_view)
-			views |= i
-		var/new_view = tgui_input_list(usr, "New view", "Modify view range", views)
-		if(new_view)
-			client.view_size.setTo(clamp(new_view, 7, max_view) - 7)
-	else
-		client.view_size.resetToDefault()
-
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
 	set hidden = TRUE
@@ -574,49 +679,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.rescale_view(input, 0, ((max_view*2)+1) - 15)
+		client.rescale_view(input, 0, ((max_view * 2) + 1) - 15)
 
-/mob/dead/observer/verb/boo()
-	set category = "Ghost"
-	set name = "Boo!"
-	set desc= "Scare your crew members because of boredom!"
-
-	if(bootime > world.time)
+/mob/dead/observer/proc/boo()
+	if(!COOLDOWN_FINISHED(src, bootime))
 		return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
 	if(L?.flicker())
-		bootime = world.time + 600
+		COOLDOWN_START(src, bootime, 60 SECONDS)
 	//Maybe in the future we can add more <i>spooky</i> code here!
-
-
-/mob/dead/observer/verb/toggle_ghostsee()
-	set name = "Toggle Ghost Vision"
-	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"
-	set category = "Ghost"
-	ghostvision = !(ghostvision)
-	update_sight()
-	to_chat(usr, span_boldnotice("You [(ghostvision?"now":"no longer")] have ghost vision."))
-
-/mob/dead/observer/verb/toggle_darkness()
-	set name = "Toggle Darkness"
-	set category = "Ghost"
-	switch(lighting_cutoff)
-		if (LIGHTING_CUTOFF_VISIBLE)
-			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
-		if (LIGHTING_CUTOFF_MEDIUM)
-			lighting_cutoff = LIGHTING_CUTOFF_HIGH
-		if (LIGHTING_CUTOFF_HIGH)
-			lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
-		else
-			lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
-
-	update_sight()
 
 /mob/dead/observer/update_sight()
 	if(client)
 		ghost_others = client.prefs.read_preference(/datum/preference/choiced/ghost_others) //A quick update just in case this setting was changed right before calling the proc
 
-	if (!ghostvision)
+	if(!(ghost_hud_flags & GHOST_VISION))
 		set_invis_see(SEE_INVISIBLE_LIVING)
 	else
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
@@ -643,7 +720,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(GHOST_OTHERS_SIMPLE)
 				client?.images -= GLOB.ghost_images_simple
 	lastsetting = client?.prefs.read_preference(/datum/preference/choiced/ghost_others)
-	if(!ghostvision)
+	if(!(ghost_hud_flags & GHOST_VISION))
 		return
 	if(lastsetting != GHOST_OTHERS_THEIR_SETTING)
 		switch(lastsetting)
@@ -652,11 +729,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(GHOST_OTHERS_SIMPLE)
 				client?.images |= (GLOB.ghost_images_simple-ghostimage_simple)
 
-/mob/dead/observer/verb/possess()
-	set category = "Ghost"
-	set name = "Possess!"
-	set desc= "Take over the body of a mindless creature!"
-
+/mob/dead/observer/proc/possess()
 	var/list/possessible = list()
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(istype(L,/mob/living/carbon/human/dummy) || !get_turf(L)) //Haha no.
@@ -689,18 +762,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return FALSE
 
 	visible_message(span_deadsay("<b>[src]</b> points to [pointed_at]."))
-
-/mob/dead/observer/verb/view_manifest()
-	set name = "View Crew Manifest"
-	set category = "Ghost"
-
-	if(!client)
-		return
-	if(world.time < client.crew_manifest_delay)
-		return
-	client.crew_manifest_delay = world.time + (1 SECONDS)
-
-	GLOB.manifest.ui_interact(src)
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)
@@ -768,70 +829,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/remove_data_huds()
 	remove_traits(observer_hud_traits, REF(src))
 
-/mob/dead/observer/verb/toggle_data_huds()
-	set name = "Toggle Sec/Med/Diag HUD"
-	set desc = "Toggles whether you see medical/security/diagnostic HUDs"
-	set category = "Ghost"
-
-	if(data_huds_on) //remove old huds
-		remove_data_huds()
-		to_chat(src, span_notice("Data HUDs disabled."))
-		data_huds_on = 0
-	else
-		show_data_huds()
-		to_chat(src, span_notice("Data HUDs enabled."))
-		data_huds_on = 1
-
-/mob/dead/observer/verb/toggle_health_scan()
-	set name = "Toggle Health Scan"
-	set desc = "Toggles whether you health-scan living beings on click"
-	set category = "Ghost"
-
-	if(health_scan) //remove old huds
-		to_chat(src, span_notice("Health scan disabled."))
-		health_scan = FALSE
-	else
-		to_chat(src, span_notice("Health scan enabled."))
-		health_scan = TRUE
-
-/mob/dead/observer/verb/toggle_chem_scan()
-	set name = "Toggle Chem Scan"
-	set desc = "Toggles whether you scan living beings for chemicals and addictions on click"
-	set category = "Ghost"
-
-	if(chem_scan) //remove old huds
-		to_chat(src, span_notice("Chem scan disabled."))
-		chem_scan = FALSE
-	else
-		to_chat(src, span_notice("Chem scan enabled."))
-		chem_scan = TRUE
-
-/mob/dead/observer/verb/toggle_gas_scan()
-	set name = "Toggle Gas Scan"
-	set desc = "Toggles whether you analyze gas contents on click"
-	set category = "Ghost"
-
-	if(gas_scan)
-		to_chat(src, span_notice("Gas scan disabled."))
-		gas_scan = FALSE
-	else
-		to_chat(src, span_notice("Gas scan enabled."))
-		gas_scan = TRUE
-
-/mob/dead/observer/verb/restore_ghost_appearance()
-	set name = "Restore Ghost Character"
-	set desc = "Sets your deadchat name and ghost appearance to your \
-		roundstart character."
-	set category = "Ghost"
-
-	set_ghost_appearance()
-	if(client?.prefs)
-		var/real_name = client.prefs.read_preference(/datum/preference/name/real_name)
-		deadchat_name = real_name
-		if(mind)
-			mind.ghostname = real_name
-		name = real_name
-
 /mob/dead/observer/proc/set_ghost_appearance()
 	if(!client?.prefs)
 		return
@@ -868,13 +865,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(NAMEOF(src, icon_state))
 			ghostimage_default.icon_state = icon_state
 			ghostimage_simple.icon_state = icon_state
-		if(NAMEOF(src, fun_verbs))
-			if(fun_verbs)
-				add_verb(src, /mob/dead/observer/verb/boo)
-				add_verb(src, /mob/dead/observer/verb/possess)
-			else
-				remove_verb(src, /mob/dead/observer/verb/boo)
-				remove_verb(src, /mob/dead/observer/verb/possess)
+		if(NAMEOF(src, invisibility))
+			set_invisibility(invisibility) // updates light
 
 /mob/dead/observer/reset_perspective(atom/A)
 	if(client)
@@ -897,37 +889,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
 		hide_other_mob_action_buttons(target)
 		LAZYREMOVE(target.observers, src)
-
-/mob/dead/observer/verb/observe()
-	set name = "Observe"
-	set category = "Ghost"
-
-	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
-		return
-
-	reset_perspective(null)
-
-	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-	var/target = null
-
-	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
-	if(isnull(target))
-		return
-	if (!isobserver(usr))
-		return
-
-	reset_perspective(null) // Reset again for sanity
-
-	var/mob/chosen_target = possible_destinations[target]
-
-	// During the break between opening the input menu and selecting our target, has this become an invalid option?
-	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
-		return
-
-	if (chosen_target == usr)
-		return
-
-	do_observe(chosen_target)
 
 /mob/dead/observer/proc/do_observe(mob/mob_eye)
 	if(isnewplayer(mob_eye))
@@ -965,37 +926,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		set_sight(initial(sight))
 
-/mob/dead/observer/verb/register_pai_candidate()
-	set category = "Ghost"
-	set name = "pAI Setup"
-	set desc = "Upload a fragment of your personality to the global pAI databanks"
-
-	register_pai()
-
-/mob/dead/observer/proc/register_pai()
-	if(isobserver(src))
-		SSpai.recruit_window(src)
-	else
-		to_chat(usr, span_warning("Can't become a pAI candidate while not dead!"))
-
-/mob/dead/observer/verb/mafia_game_signup()
-	set category = "Ghost"
-	set name = "Signup for Mafia"
-	set desc = "Sign up for a game of Mafia to pass the time while dead."
-
-	mafia_signup()
-
-/mob/dead/observer/proc/mafia_signup()
-	if(!client)
-		return
-	if(!isobserver(src))
-		to_chat(usr, span_warning("You must be a ghost to join mafia!"))
-		return
-	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
-	if(!game)
-		game = create_mafia_game()
-	game.ui_interact(usr)
-
 /mob/dead/observer/AltClickOn(atom/target)
 	client.loot_panel.open(get_turf(target))
 
@@ -1030,11 +960,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Process_Spacemove(movement_dir, continuous_move = FALSE)
 	return TRUE
 
-/mob/dead/observer/vv_edit_var(var_name, var_value)
-	. = ..()
-	if(var_name == NAMEOF(src, invisibility))
-		set_invisibility(invisibility) // updates light
-
 /proc/set_observer_default_invisibility(amount, message=null)
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		G.set_invisibility(amount)
@@ -1044,8 +969,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/open_spawners_menu()
 	set name = "Spawners Menu"
-	set desc = "See all currently available spawners"
-	set category = "Ghost"
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
@@ -1053,8 +976,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/open_minigames_menu()
 	set name = "Minigames Menu"
-	set desc = "See all currently available minigames"
-	set category = "Ghost"
 	if(!client)
 		return
 	if(!isobserver(src))
@@ -1065,23 +986,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	minigames_menu.ui_interact(src)
 
-/mob/dead/observer/proc/tray_view()
-	set category = "Ghost"
-	set name = "T-ray scan"
-	set desc = "Perfom a scan to view sub-floor objects"
-
-	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
-		to_chat(usr, span_notice("That verb is currently globally disabled."))
-		return
-
-	t_ray_scan(src)
-
 /mob/dead/observer/default_lighting_cutoff()
 	var/datum/preferences/prefs = client?.prefs
 	if(!prefs || (client?.combo_hud_enabled && prefs.toggles & COMBOHUD_LIGHTING))
 		return ..()
-	return GLOB.ghost_lighting_options[prefs.read_preference(/datum/preference/choiced/ghost_lighting)]
-
+	return GLOB.ghost_lightings[prefs.read_preference(/datum/preference/choiced/ghost_lighting)]
 
 /// Called when we exit the orbiting state
 /mob/dead/observer/proc/on_deorbit(datum/source)

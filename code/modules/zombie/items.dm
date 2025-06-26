@@ -8,10 +8,10 @@
 	hitsound = 'sound/effects/hallucinations/growl1.ogg'
 	force = 21 // Just enough to break airlocks with melee attacks
 	wound_bonus = -30
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	sharpness = SHARP_EDGED
 
-/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(ishuman(target))
 		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))

@@ -33,10 +33,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/list/lobby_buttons = list()
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
-	/// If ran during dynamic, do we reduce the total threat? Will be overridden by config if set
-	var/threat_reduction = 0
-	/// Which ruleset flags to allow dynamic to use. NONE to disregard
-	var/dynamic_category = NONE
 	/// Trait should not be instantiated in a round if its type matches this type
 	var/abstract_type = /datum/station_trait
 
@@ -45,10 +41,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
-	if(threat_reduction)
-		GLOB.dynamic_station_traits[src] = threat_reduction
-	if(dynamic_category)
-		GLOB.dynamic_ruleset_categories = dynamic_category
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
 		if(SSstation.initialized)
@@ -62,7 +54,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	destroy_lobby_buttons()
 	SSstation.station_traits -= src
 	GLOB.lobby_station_traits -= src
-	GLOB.dynamic_station_traits -= src
 	REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 	return ..()
 

@@ -83,7 +83,7 @@
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!user.combat_mode)
 		return
 	return ..()
@@ -119,7 +119,7 @@
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 
-/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
 	if(!user.combat_mode)
@@ -210,7 +210,7 @@
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, datum/thrownthing/throwingdatum, override_spillable = FALSE)
 	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable) || reagent_flags & SMART_CAP)
 		return
-	var/mob/thrown_by = throwingdatum.get_thrower()
+	var/mob/thrown_by = throwingdatum?.get_thrower()
 
 	if(ismob(target) && target.reagents)
 		var/splash_multiplier = 1
@@ -229,7 +229,7 @@
 		reagents.expose(target, TOUCH, splash_multiplier)
 		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
 
-	else if(bartender_check(target, thrown_by) && throwingdatum)
+	else if(throwingdatum && bartender_check(target, thrown_by))
 		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
 		return
 
@@ -336,3 +336,9 @@
 	. = ..()
 	if(!initial && (slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
 		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+
+/obj/item/reagent_containers/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
+	. = ..()
+	// If consumed in crafting, we should dump contents out before qdeling them.
+	if(!is_type_in_list(src, current_recipe.parts))
+		reagents.expose(loc, TOUCH)

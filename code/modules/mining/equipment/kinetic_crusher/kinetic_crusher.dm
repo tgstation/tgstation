@@ -100,7 +100,7 @@
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/crusher_trophy))
 		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
 		crusher_trophy.add_to(src, user)
@@ -158,7 +158,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, list/modifiers)
+/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
@@ -171,7 +171,7 @@
 	target.apply_status_effect(/datum/status_effect/crusher_damage)
 	return ..()
 
-/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, list/modifiers)
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(target))
 		return
 	// Melee effect
@@ -346,4 +346,3 @@
 			used_crusher.attempt_recharge_projectile(used_crusher.charge_time * skill_modifier) //If you hit a mineral, you might get a quicker reload. epic gamer style.
 
 	return ..()
-

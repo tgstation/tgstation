@@ -65,7 +65,7 @@
 	neutral_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_grey")
 	combat_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_offense_grey")
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris/old)
+	var/static/list/death_drops = list(/obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
@@ -83,10 +83,7 @@
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)
 	comms.implant(src)
-	var/static/list/accesses = list(
-		/datum/id_trim/job/shaft_miner,
-	)
-	AddElement(/datum/element/mob_access, accesses)
+	assign_access()
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
@@ -126,7 +123,7 @@
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 
-/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers)
+/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
 	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
 		item_used.melee_attack_chain(user, stored_gun, modifiers)
 		return
@@ -273,3 +270,10 @@
 		return
 
 	. += combat_mode ? combat_overlay : neutral_overlay
+
+/mob/living/basic/mining_drone/proc/assign_access()
+	var/static/list/required_access
+	if(isnull(required_access))
+		var/datum/id_trim/access_card = SSid_access.trim_singletons_by_path[/datum/id_trim/job/shaft_miner]
+		required_access = access_card.access
+	AddElement(/datum/element/mob_access, required_access)

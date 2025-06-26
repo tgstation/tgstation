@@ -61,11 +61,9 @@
 		QDEL_NULL(radio)
 	connected_ai = null
 
-/obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
+/obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, antag_flag)
 	SIGNAL_HANDLER
-	if(ispath(antagonist, /datum/antagonist/malf_ai))
-		return
-	return CANCEL_ROLL
+	return antag_flag == ROLE_MALF ? NONE : CANCEL_ROLL
 
 /obj/item/organ/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER

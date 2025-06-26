@@ -6,6 +6,11 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
+	for(var/datum/wound/wound as anything in all_wounds)
+		if(!wound.processes) // meh
+			continue
+		wound.handle_process(seconds_per_tick, times_fired)
+
 	if(HAS_TRAIT(src, TRAIT_STASIS))
 		. = ..()
 		reagents?.handle_stasis_chems(src, seconds_per_tick, times_fired)
@@ -171,12 +176,7 @@
 
 	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	// Indicates if lungs can breathe without gas.
-	var/can_breathe_vacuum = FALSE
-	if(lungs)
-		// Breathing with lungs.
-		// Check for vacuum-adapted lungs.
-		can_breathe_vacuum = HAS_TRAIT(lungs, TRAIT_SPACEBREATHING)
-	else
+	if(!lungs)
 		// Lungs are missing! Can't breathe.
 		// Simulates breathing zero moles of gas.
 		has_moles = FALSE
@@ -208,6 +208,8 @@
 	var/n2o_pp = 0
 	var/nitrium_pp = 0
 	var/miasma_pp = 0
+
+	var/can_breathe_vacuum = HAS_TRAIT(src, TRAIT_NO_BREATHLESS_DAMAGE)
 
 	// Check for moles of gas and handle partial pressures / special conditions.
 	if(has_moles)
@@ -456,6 +458,42 @@
 /mob/living/carbon/proc/handle_blood(seconds_per_tick, times_fired)
 	return
 
+/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_TICK)
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(!blood_type)
+		return
+
+	if(chem.type == blood_type?.restoration_chem && blood_volume < BLOOD_VOLUME_NORMAL)
+		blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
+		reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_TICK
+
+/mob/living/carbon/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(!(methods & INJECT) && !((methods & INGEST) && HAS_TRAIT(src, TRAIT_DRINKS_BLOOD)))
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(blood_type.reagent_type != chem.type)
+		return
+
+	if(chem.data?["blood_type"])
+		var/datum/blood_type/donor_type = chem.data["blood_type"]
+		if(!(donor_type.type_key() in blood_type.compatible_types))
+			reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
+			return COMPONENT_NO_EXPOSE_REAGENTS
+
+	blood_volume = min(blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+	return COMPONENT_NO_EXPOSE_REAGENTS
+
 /mob/living/carbon/proc/handle_bodyparts(seconds_per_tick, times_fired)
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		. |= limb.on_life(seconds_per_tick, times_fired)
@@ -481,19 +519,12 @@
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 			organ.on_life(seconds_per_tick, times_fired)
 
-
 /mob/living/carbon/handle_diseases(seconds_per_tick, times_fired)
 	for(var/datum/disease/disease as anything in diseases)
 		if(QDELETED(disease)) //Got cured/deleted while the loop was still going.
 			continue
 		if(stat != DEAD || disease.process_dead)
 			disease.stage_act(seconds_per_tick, times_fired)
-
-/mob/living/carbon/handle_wounds(seconds_per_tick, times_fired)
-	for(var/datum/wound/wound as anything in all_wounds)
-		if(!wound.processes) // meh
-			continue
-		wound.handle_process(seconds_per_tick, times_fired)
 
 /mob/living/carbon/handle_mutations(time_since_irradiated, seconds_per_tick, times_fired)
 	if(!dna?.temporary_mutations.len)
@@ -528,9 +559,6 @@
 					dna.previous.Remove("blood_type")
 				dna.temporary_mutations.Remove(mut)
 				continue
-	for(var/datum/mutation/human/HM in dna.mutations)
-		if(HM?.timeout)
-			dna.remove_mutation(HM.type)
 
 /**
  * Handles calling metabolization for dead people.

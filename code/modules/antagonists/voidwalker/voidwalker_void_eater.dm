@@ -22,7 +22,7 @@
 	tool_behaviour = TOOL_MINING
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	wound_bonus = -30
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 
 	/// Damage we loss per hit
 	var/damage_loss_per_hit = 0.5
@@ -54,7 +54,7 @@
 	. += span_notice("Sharpness: [round(force)]/[initial(force)]")
 	. += span_notice("Wall Conversions remaining: [conversions_remaining ? conversions_remaining : "None! You must resharpen your blade!"]")
 
-/obj/item/void_eater/attack(mob/living/target_mob, mob/living/user, list/modifiers)
+/obj/item/void_eater/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!ishuman(target_mob))
 		return ..()
 

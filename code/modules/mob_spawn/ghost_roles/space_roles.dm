@@ -229,4 +229,4 @@
 	name = "Director"
 	id_trim = /datum/id_trim/away/director
 	uniform = /obj/item/clothing/under/suit/red
-	head = /obj/item/clothing/head/frenchberet
+	head = /obj/item/clothing/head/beret/frenchberet

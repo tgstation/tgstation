@@ -318,7 +318,7 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
-	default = "http://tgstation13.org/wiki"
+	default = "https://wiki.tgstation13.org"
 
 /datum/config_entry/string/forumurl
 	default = "http://tgstation13.org/phpBB/index.php"
@@ -630,12 +630,6 @@
 	default = -1
 	min_val = 0
 
-/datum/config_entry/string/default_view
-	default = "15x15"
-
-/datum/config_entry/string/default_view_square
-	default = "15x15"
-
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
@@ -785,3 +779,6 @@
 
 // If set, enables the "Link forum account" OOC verb
 /datum/config_entry/string/forum_link_uri
+
+/datum/config_entry/flag/generate_assets_in_init
+	default = FALSE
