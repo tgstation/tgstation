@@ -285,3 +285,31 @@
 	if(target.reagents)
 		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
 	return TRUE
+
+/datum/action/changeling/sting/identity_swap
+	name = "Identity Swap Sting"
+	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us while we take on their identity."
+	helptext = "Makes the victim appears like you while you take on their appearance, the disguise is just a fake outer flesh which will decay after a while."
+	button_icon_state
+	chemical_cost = 22
+	dna_cost = 2
+
+/datum/action/changeling/sting/identity_swap/sting_action(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(!ishuman(target))
+		return
+	var/list/body_overlay = user.overlays_standing[BODYPARTS_LAYER]
+	var/list/hair_overlay = user.overlays_standing[HAIR_LAYER]
+
+	user.overlays_standing[BODYPARTS_LAYER] = target.overlays_standing[BODYPARTS_LAYER]
+	user.overlays_standing[HAIR_LAYER] = target.overlays_standing[HAIR_LAYER]
+
+	target.overlays_standing[BODYPARTS_LAYER] = body_overlay
+	target.overlays_standing[HAIR_LAYER] = hair_overlay
+
+	user.apply_overlay(BODYPARTS_LAYER)
+	target.apply_overlay(BODYPARTS_LAYER)
+	user.apply_overlay(HAIR_LAYER)
+	target.apply_overlay(HAIR_LAYER)
