@@ -376,7 +376,7 @@
 	//of the max radius we can support we get a very small bonus multiplier
 	current_regeneration = (max_regeneration / (0.5 + (radius * 2)/max_radius))
 
-	if((!exterior_only) & internal_penalty)
+	if(!exterior_only && internal_penalty)
 		current_regeneration *= 0.5
 
 ///Reduces the strength of the shield based on the given integer
