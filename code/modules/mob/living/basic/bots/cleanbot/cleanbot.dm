@@ -83,9 +83,9 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/cleanable/molten_object,
-		/obj/effect/decal/cleanable/oil,
+		/obj/effect/decal/cleanable/blood/oil,
 		/obj/effect/decal/cleanable/food,
-		/obj/effect/decal/cleanable/robot_debris,
+		/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 		/obj/effect/decal/cleanable/shreds,
 		/obj/effect/decal/cleanable/glass,
 		/obj/effect/decal/cleanable/vomit,
@@ -93,7 +93,7 @@
 	))
 	///blood we can clean
 	var/static/list/cleanable_blood = typecacheof(list(
-		/obj/effect/decal/cleanable/xenoblood,
+		/obj/effect/decal/cleanable/blood/xeno,
 		/obj/effect/decal/cleanable/blood,
 	))
 	///pests we hunt

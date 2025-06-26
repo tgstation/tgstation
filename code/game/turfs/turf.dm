@@ -516,6 +516,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		qdel(L)
 
 /turf/proc/Bless()
+	if(locate(/obj/effect/blessing) in src)
+		return
 	new /obj/effect/blessing(src)
 
 //////////////////////////////
@@ -539,7 +541,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		for(var/obj/on_top in contents) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(on_top, TRAIT_T_RAY_VISIBLE))
+			if(HAS_TRAIT(on_top, TRAIT_UNDERFLOOR))
 				on_top.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
@@ -712,7 +714,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	for(var/atom/movable/to_clean as anything in src)
 		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
-			to_clean.wash(clean_types)
+			. |= to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density

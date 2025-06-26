@@ -15,14 +15,12 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TOXINLOVER,
-		TRAIT_NOBLOOD,
 	)
 	mutanttongue = /obj/item/organ/tongue/jelly
 	mutantlungs = /obj/item/organ/lungs/slime
 	mutanteyes = /obj/item/organ/eyes/jelly
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
-	exotic_blood = /datum/reagent/toxin/slimejelly
 	exotic_bloodtype = BLOOD_TYPE_TOX
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	coldmod = 6   // = 3x cold damage
@@ -114,16 +112,17 @@
 	human.hair_color = COLOR_PINK
 	human.update_body(is_creating = TRUE)
 
-// Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
+// Unique handling for slime blood here, it's got some unique properties that warrant a more detailed desc.
 // They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
 /datum/species/jelly/create_pref_blood_perks()
 	var/list/to_add = list()
+	var/datum/blood_type/blood_type = get_blood_type(exotic_bloodtype)
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "tint",
 		SPECIES_PERK_NAME = "Jelly Blood",
-		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(exotic_blood.name)]! \
+		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(blood_type.reagent_type.name)]! \
 			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
 	))
 
@@ -304,13 +303,12 @@
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
 
 	spare.underwear = "Nude"
-	H.dna.transfer_identity(spare, transfer_SE=1)
+	H.dna.copy_dna(spare.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
 	spare.dna.features["mcolor"] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
 	spare.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 	spare.real_name = spare.dna.real_name
 	spare.name = spare.dna.real_name
 	spare.updateappearance(mutcolor_update=1)
-	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
 	H.blood_volume *= 0.45

@@ -111,6 +111,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
     <Stack fill vertical>
       <Stack.Item>
         <SearchBar
+          expensive
           query={searchText}
           onSearch={(value) => {
             if (value === searchText) {

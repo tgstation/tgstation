@@ -205,6 +205,13 @@
 /datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return // We color base ears manually above in get_image
 
+/obj/item/organ/ears/ghost
+	name = "ghost ears"
+	desc = "All the more to hear you... though it can't hear through walls."
+	icon_state = "ears-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/ears/penguin
 	name = "penguin ears"
 	desc = "The source of a penguin's happy feet."

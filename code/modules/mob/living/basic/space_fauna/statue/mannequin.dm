@@ -25,9 +25,9 @@
 /mob/living/basic/statue/mannequin/update_overlays()
 	. = ..()
 	if(held_item)
-		. += mutable_appearance(initial(held_item.righthand_file), initial(held_item.inhand_icon_state))
+		. += mutable_appearance(held_item::righthand_file, held_item::inhand_icon_state)
 	if(hat)
-		. += mutable_appearance(initial(hat.worn_icon), initial(hat.worn_icon_state) || initial(hat.icon_state))
+		. += mutable_appearance(hat::worn_icon, hat::worn_icon_state || hat::post_init_icon_state || hat::icon_state)
 
 /datum/ai_controller/basic_controller/stares_at_people
 	blackboard = list(
@@ -84,6 +84,7 @@
 	ai_movement = /datum/ai_movement/jps //threat
 	idle_behavior = null
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/run_emote,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

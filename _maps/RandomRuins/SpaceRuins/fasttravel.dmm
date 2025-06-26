@@ -214,7 +214,7 @@
 	},
 /area/ruin/space/massdriverhub)
 "Fw" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "zaza"

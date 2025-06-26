@@ -112,7 +112,7 @@
 /area/ruin/comms_agent)
 "U" = (
 /obj/structure/closet/crate,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,

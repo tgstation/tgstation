@@ -11,7 +11,6 @@
 	objectives += hijack
 
 /datum/antagonist/wishgranter/on_gain()
-	owner.special_role = "Avatar of the Wish Granter"
 	forge_objectives()
 	. = ..()
 	give_powers()
@@ -25,7 +24,7 @@
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
-	H.dna.add_mutation(/datum/mutation/human/hulk)
-	H.dna.add_mutation(/datum/mutation/human/xray)
-	H.dna.add_mutation(/datum/mutation/human/adaptation/pressure)
-	H.dna.add_mutation(/datum/mutation/human/telekinesis)
+	H.dna.add_mutation(/datum/mutation/hulk, MUTATION_SOURCE_WISHGRANTER)
+	H.dna.add_mutation(/datum/mutation/xray, MUTATION_SOURCE_WISHGRANTER)
+	H.dna.add_mutation(/datum/mutation/adaptation/pressure, MUTATION_SOURCE_WISHGRANTER)
+	H.dna.add_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_WISHGRANTER)

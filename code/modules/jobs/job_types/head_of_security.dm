@@ -35,7 +35,7 @@
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
 	rpg_title = "Guard Leader"
-	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 

@@ -311,19 +311,24 @@
 /obj/item/clothing/under/costume/buttondown/slacks
 	name = "button-down shirt with slacks"
 	desc = "A fancy button-down shirt with slacks."
-	icon_state = "buttondown_slacks"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/buttondown/slacks"
+	post_init_icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
 	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/costume/buttondown/slacks/service //preset one to be a formal white shirt and black pants
+	icon_state = "/obj/item/clothing/under/costume/buttondown/slacks/service"
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
 /obj/item/clothing/under/costume/buttondown/shorts
 	name = "button-down shirt with shorts"
 	desc = "A fancy button-down shirt with shorts."
-	icon_state = "buttondown_shorts"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/buttondown/shorts"
+	post_init_icon_state = "buttondown_shorts"
 	greyscale_config = /datum/greyscale_config/buttondown_shorts
 	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
@@ -332,7 +337,9 @@
 /obj/item/clothing/under/costume/buttondown/skirt
 	name = "button-down shirt with skirt"
 	desc = "A fancy button-down shirt with skirt."
-	icon_state = "buttondown_skirt"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/buttondown/skirt"
+	post_init_icon_state = "buttondown_skirt"
 	greyscale_config = /datum/greyscale_config/buttondown_skirt
 	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
@@ -342,6 +349,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/costume/buttondown/skirt/service //preset one to be a formal white shirt and black skirt
+	icon_state = "/obj/item/clothing/under/costume/buttondown/skirt/service"
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
 /obj/item/clothing/under/costume/jackbros
@@ -359,7 +367,9 @@
 
 /obj/item/clothing/under/costume/football_suit
 	name = "football uniform"
-	icon_state = "football_suit"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/football_suit"
+	post_init_icon_state = "football_suit"
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/football_suit
 	greyscale_config_worn = /datum/greyscale_config/football_suit/worn
@@ -419,7 +429,9 @@
 /obj/item/clothing/under/costume/gi
 	name = "martial gi"
 	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
-	icon_state = "martial_arts_gi"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/gi"
+	post_init_icon_state = "martial_arts_gi"
 	greyscale_config = /datum/greyscale_config/gi
 	greyscale_config_worn = /datum/greyscale_config/gi/worn
 	greyscale_colors = "#f1eeee#000000"
@@ -436,7 +448,8 @@
 /obj/item/clothing/under/costume/gi/goku
 	name = "sacred gi"
 	desc = "Created by a man who touched the hearts and lives of many."
-	icon_state = "martial_arts_gi_goku"
+	icon_state = "/obj/item/clothing/under/costume/gi/goku"
+	post_init_icon_state = "martial_arts_gi_goku"
 	greyscale_colors = "#f89925#3e6dd7"
 
 /obj/item/clothing/under/costume/traditional
@@ -464,6 +477,7 @@
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	icon_state = "henchmen"
 	inhand_icon_state = null
+	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
 

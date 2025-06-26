@@ -69,8 +69,8 @@
 		return
 
 	var/picked_subtype = name2subtype[name_of_type]
-	on_picked_callback?.Invoke(picked_subtype)
 	picked_subtype = new picked_subtype(picker.drop_location())
+	on_picked_callback?.Invoke(picked_subtype, picker)
 
 	qdel(target)
 	picker.put_in_hands(picked_subtype)

@@ -5,13 +5,13 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 #define SCYTHE_SATED 1
 #define SCYTHE_EMPOWERED 2
 
-/obj/item/organ/cyberimp/arm/shard/scythe
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe
 	name = "sinister shard"
 	desc = "This shard seems to be directly linked to some sinister entity. It might be your god! It also gives you a really horrible rash when you hold onto it for too long."
 	items_to_create = list(/obj/item/vorpalscythe)
 	organ_traits = list(TRAIT_MORBID)
 
-/obj/item/organ/cyberimp/arm/shard/scythe/Retract()
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
 	if(!scythe)
 		return FALSE
@@ -44,7 +44,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	wound_bonus = 10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	/*What state is our scythe in?
 
 	If it is SCYTHE_WEAK, it will harm our reaper on being sheathed.
