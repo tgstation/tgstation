@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "When the ticker announces the end of a round on another server, it will include the shuttle call reason if the shuttle is hijacked."
