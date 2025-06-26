@@ -603,3 +603,19 @@
   grungussuss:
   - spellcheck: fixes some examine text typos
   - qol: you can now click on objects in the game when the lobby art starts to fade
+2025-06-26:
+  Aliceee2ch:
+  - map: removed medsci headset from MetaStation and CatwalkStation. Added one more
+      on DeltaStation and IceBox instead.
+  Melbert:
+  - rscadd: Fire alarms now has wires
+  - rscadd: Fire alarm trigger on damage now scales based on damage dealt, rather
+      than being a flat 33%
+  - qol: Fire alarm screentips
+  - refactor: Refactored fire alarms de/assembly, report any oddities
+  - bugfix: AIs can open windoors
+  - bugfix: Mechas can open airlocks
+  - bugfix: Handcuffed people can open public airlocks
+  - bugfix: Telekinesis can open public airlocks
+  carpotoxin:
+  - bugfix: Fixed narcolepsy's odds to put you to sleep scaling infinitely
