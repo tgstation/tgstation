@@ -292,11 +292,10 @@
 		)
 		carbon_view.adjust_temp_blindness(5 SECONDS)
 		if(HAS_TRAIT(carbon_view, TRAIT_MINDSHIELD))
-			var/obj/item/bodypart/head/head = locate() in carbon_view.bodyparts
 			to_chat(carbon_view, span_boldbig(span_red(\
-				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE \ATTEMPTING TO REWRITE YOUR VERY BEING. \
-				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT."\
-			)))
+				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
+				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
+			var/obj/item/bodypart/head/head = locate() in carbon_view.bodyparts
 			if(head)
 				head.dismember()
 			else

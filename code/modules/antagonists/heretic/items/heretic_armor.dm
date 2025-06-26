@@ -398,6 +398,7 @@
 	RegisterSignals(user, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE), PROC_REF(on_damage_adjust))
 	RegisterSignal(user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(user, COMSIG_SEND_ITEM_ATTACK_MESSAGE, PROC_REF(item_attack_response))
 	var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	START_PROCESSING(SSobj, src)
@@ -465,6 +466,10 @@
 		to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
 		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 	return SUCCESSFUL_BLOCK
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(datum/source, &signal_message, &signal_self, &signal_blind)
+	//XANTODO Figure this out
+	return SIGNAL_MESSAGE_MODIFIED
 
 /**
  * Handles anything that calls 'adjustBruteLoss()` or any of the other damage types.

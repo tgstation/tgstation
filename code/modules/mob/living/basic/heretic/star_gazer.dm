@@ -178,7 +178,7 @@
 	/// Tracks how many times the beam has processed, after the maximum amount of cycles it will forcibly end the beam
 	var/cycle_tracker = 0
 
-/datum/action/cooldown/spell/stargazer_laser/Activate(atom/target)
+/datum/action/cooldown/spell/stargazer_laser/cast(atom/target)
 	. = ..()
 
 	if(damage_timer)
