@@ -252,7 +252,7 @@
 
 /datum/design/limb_disk/felinid
 	name = "Felinid Organ Design Disk"
-	desc = "Contains designs for felinid organs for the limbgrower - Felinid ears and tail."
+	desc = "Contains designs for felinid organs for the limbgrower - Felinid ears and tail and tongue."
 	id = "limbdesign_felinid"
 	build_path = /obj/item/disk/design_disk/limbs/felinid
 
