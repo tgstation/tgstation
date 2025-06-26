@@ -339,7 +339,7 @@
 	if(!ishuman(loc))
 		return ..()
 	var/mob/living/carbon/human/wearer = loc
-	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM), REF(src))
+	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -352,7 +352,7 @@
 	if(!ishuman(user))
 		return
 	if(!(slot_flags & slot))
-		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM), REF(src))
+		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
 		user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 		UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
 		var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -370,7 +370,7 @@
 
 	// Gives the traits and effects
 	user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
-	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM), REF(src))
+	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_checked))
 	RegisterSignals(user, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE), PROC_REF(on_damage_adjust))
 	RegisterSignal(user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
@@ -484,7 +484,7 @@
 	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200 && !braindead)
 		braindead = TRUE
 		wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
-		playsound(wearer, 'sound/effects/pope_entry.ogg', 100)
+		playsound(wearer, 'sound/effects/pope_entry.ogg', 50)
 		to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
 		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 
@@ -518,21 +518,34 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/process(seconds_per_tick)
 	var/mob/living/carbon/human/wearer = loc
-	if(!istype(wearer))
+	if(!istype(wearer) || wearer.wear_suit != src || wearer.stat == DEAD)
 		return ..()
 	var/brain_damage = wearer.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/emote_rng = 0
+	var/list/emote_list = list()
 	switch(brain_damage)
-		if(0 to 30)
+		if(0)
 			emote_rng = 0
+			emote_list = list()
+		if(1 to 30)
+			emote_rng = 20
+			emote_list = list("laugh")
 		if(31 to 60)
-			emote_rng = 0
+			emote_rng = 40
+			emote_list = list("laugh", "smile")
 		if(61 to 100)
-			emote_rng = 0
+			emote_rng = 60
+			emote_list = list("laugh", "smile", "cough")
 		if(101 to 150)
-			emote_rng = 0
+			emote_rng = 80
+			emote_list = list("laugh", "smile", "cough", "gasp")
 		if(151 to 200)
-			emote_rng = 0
+			emote_rng = 100
+			emote_list = list("laugh", "smile", "cough", "gasp", "scream")
+	if(!prob(emote_rng))
+		return
+	for(var/perform as anything in emote_list)
+		wearer.emote("[perform]")
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
 	name = "\improper Resplendant Hood"
