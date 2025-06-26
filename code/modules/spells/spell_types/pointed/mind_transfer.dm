@@ -133,8 +133,8 @@
 
 	// MIND TRANSFER END
 
-	// Now we knock both mobs out for a time.
-	caster.Unconscious(unconscious_amount_caster)
+	// only knock out the victim
+	//caster.Unconscious(unconscious_amount_caster)
 	to_swap.Unconscious(unconscious_amount_victim)
 
 	// Only the caster and victim hear the sounds,
