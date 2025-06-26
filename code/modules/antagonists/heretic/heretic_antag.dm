@@ -44,6 +44,8 @@
 	var/knowledge_points = 1
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
+	/// Tracks how many knowledge points the heretic has aqcuired. Once you get enough points you lose the ability to blade break
+	var/knowledge_gained = 0
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
 	/// The organ slot we place our Living Heart in.
@@ -673,6 +675,10 @@
 
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
 	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
+	knowledge_gained += knowledge_points
+	if(knowledge_gained > 10)
+		to_chat(owner.current, span_boldwarning("You have gained a lot of power, the mansus will no longer allow you to break your blades."))
+		ADD_TRAIT(owner.current, TRAIT_UNLIMITED_BLADES, TRAIT_HELLA_KNOWLEDGE)
 	if(update)
 		update_data_for_all_viewers()
 

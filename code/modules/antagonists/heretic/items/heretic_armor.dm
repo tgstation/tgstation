@@ -266,10 +266,33 @@
 	icon_state = "flesh_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	armor_type = /datum/armor/eldritch_armor/flesh
+	/// The aura healing component. Used to delete it when taken off.
+	var/datum/component/healing_aura
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot_flags & slot))
+		QDEL_NULL(healing_aura)
+		return
+	healing_aura = user.AddComponent( \
+		/datum/component/aura_healing, \
+		range = 15, \
+		brute_heal = 3, \
+		burn_heal = 3, \
+		blood_heal = 3, \
+		suffocation_heal = 3, \
+		stamina_heal = 15, \
+		simple_heal = 3, \
+		requires_visibility = FALSE, \
+		limit_to_trait = TRAIT_HERETIC_SUMMON, \
+		healing_color = COLOR_RED, \
+		self_heal = FALSE, \
+	)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	icon_state = "flesh_armor"
 	armor_type = /datum/armor/eldritch_armor/flesh
+	clothing_traits = list(TRAIT_MEDICAL_HUD)
 
 /datum/armor/eldritch_armor/flesh
 	melee = 70
@@ -462,7 +485,7 @@
 	return COMPONENT_IGNORE_CHANGE
 
 /// Handles anything that calls `apply_damage()`, calculates the damage taken and converts it to brain damage
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_take_damage(mob/living/carbon/human/wearer, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_take_damage(mob/living/carbon/human/wearer, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
 	SIGNAL_HANDLER
 	if(!ishuman(wearer))
 		return

@@ -238,6 +238,7 @@
 	desc = "This one takes you back."
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/eighties/broken_states()
 	return list("eighties_damaged")

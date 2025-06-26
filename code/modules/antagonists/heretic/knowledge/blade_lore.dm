@@ -131,7 +131,10 @@
 /datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
 	if(in_duelist_stance)
-		user.remove_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_IGNORESLOWDOWN), type)
+		user.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
+		if(isliving(user))
+			var/mob/living/living_mob = user
+			living_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
 
 	UnregisterSignal(user, list(COMSIG_ATOM_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_HEALTH_UPDATE))
 
@@ -156,13 +159,15 @@
 	if(in_duelist_stance && source.health > source.maxHealth * 0.5)
 		source.balloon_alert(source, "exited duelist stance")
 		in_duelist_stance = FALSE
-		source.remove_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_IGNORESLOWDOWN), type)
+		source.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
+		source.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
 		return
 
 	if(!in_duelist_stance && source.health <= source.maxHealth * 0.5)
 		source.balloon_alert(source, "entered duelist stance")
 		in_duelist_stance = TRUE
-		source.add_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_IGNORESLOWDOWN), type)
+		ADD_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
+		source.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
 		return
 
 #undef BLOOD_FLOW_PER_SEVEIRTY
@@ -289,7 +294,7 @@
 /datum/heretic_knowledge/blade_upgrade/blade/proc/on_blade_equipped(mob/user, obj/item/equipped, slot)
 	SIGNAL_HANDLER
 	if(istype(equipped, /obj/item/melee/sickly_blade/dark))
-		equipped.demolition_mod = 1.5
+		equipped.demolition_mod = 2.5
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"
@@ -327,9 +332,9 @@
 
 /datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	user.add_traits(list(TRAIT_NEVER_WOUNDED, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), type)
+	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, type)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
-	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, /obj/effect/floating_blade, 1 MINUTES)
+	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, STATUS_EFFECT_PERMANENT, 8, 30, 0.25 SECONDS, /obj/effect/floating_blade, 40 SECONDS)
 	user.add_stun_absorption(
 		source = name,
 		message = span_warning("%EFFECT_OWNER throws off the stun!"),

@@ -238,7 +238,7 @@
 	if(IS_HERETIC_OR_MONSTER(human_target))
 		living_user.balloon_alert(living_user, "resists effects!")
 		return FALSE
-	if(human_target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+	if(human_target.can_block_magic(MAGIC_RESISTANCE_MIND))
 		return FALSE
 	if(!human_target.mob_mood)
 		return FALSE
@@ -260,12 +260,12 @@
 	if(slot & ITEM_SLOT_HANDS)
 		blade.force = 0
 		blade.wound_bonus = 0
-		blade.bare_wound_bonus = 0
+		blade.exposed_wound_bonus = 0
 		blade.armour_penetration = 200
 		return
 	blade.force = initial(blade.force)
 	blade.wound_bonus = initial(blade.wound_bonus)
-	blade.bare_wound_bonus = initial(blade.bare_wound_bonus)
+	blade.exposed_wound_bonus = initial(blade.exposed_wound_bonus)
 	blade.armour_penetration = initial(blade.armour_penetration)
 
 /// Modifies any blades that we drop while wearing the amulet
@@ -275,5 +275,5 @@
 		return // We only care about modifying blades
 	dropped_item.force = initial(dropped_item.force)
 	dropped_item.wound_bonus = initial(dropped_item.wound_bonus)
-	dropped_item.bare_wound_bonus = initial(dropped_item.bare_wound_bonus)
+	dropped_item.exposed_wound_bonus = initial(dropped_item.exposed_wound_bonus)
 	dropped_item.armour_penetration = initial(dropped_item.armour_penetration)

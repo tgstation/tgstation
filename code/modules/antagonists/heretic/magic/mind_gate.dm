@@ -1,7 +1,8 @@
 /datum/action/cooldown/spell/pointed/mind_gate
 	name = "Mind Gate"
 	desc = "Deals you 20 brain damage and the target suffers a hallucination, \
-			is left confused for 10 seconds, and suffers oxygen loss and brain damage."
+			is left confused for 10 seconds, and suffers oxygen loss and brain damage. \
+			It also blinds, mutes and deafens your target, if their sanity is low enough, they will be knocked down as well."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -17,6 +18,7 @@
 	cast_range = 6
 
 	active_msg = "You prepare to open your mind..."
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 /datum/action/cooldown/spell/pointed/mind_gate/can_cast_spell(feedback = TRUE)
 	return ..() && isliving(owner)

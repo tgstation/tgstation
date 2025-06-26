@@ -117,7 +117,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to people's organs through cosmic radiation. \
+	desc = "Your blade now star marks your victims, and allows you to attack star marked heathens from further away. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
 		or if you attack someone already marked. If you combo more than four attacks you will receive, \
@@ -223,7 +223,7 @@
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
 	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses a star mark to a transmutation rune to complete the ritual. \
+		Bring 3 corpses with a star mark to a transmutation rune to complete the ritual. \
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
 		You can also give it commands through speech. \

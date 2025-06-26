@@ -10,7 +10,7 @@
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES
-	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 	invocation = "R'S 'E!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
@@ -44,7 +44,7 @@
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/caster)
 	var/mob/living/simple_animal/hostile/illusion/fake_clone = new(pick(RANGE_TURFS(2, victim)))
 	fake_clone.faction = caster.faction.Copy()
-	fake_clone.Copy_Parent(caster, 30 SECONDS, caster.health, 1)
+	fake_clone.Copy_Parent(caster, 30 SECONDS, caster.health, 1, 0, "shove_mode")
 	fake_clone.GiveTarget(victim)
 	fake_clone.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(fake_clone, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
@@ -61,6 +61,8 @@
 
 	for(var/mob/living/mob in range(3, victim))
 		if(IS_HERETIC_OR_MONSTER(mob))
+			continue
+		if(mob.can_block_magic(antimagic_flags))
 			continue
 
 		//If our moon heretic has their level 3 passive, we channel the amulet effect

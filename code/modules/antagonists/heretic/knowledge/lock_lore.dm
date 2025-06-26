@@ -65,6 +65,9 @@
 /datum/heretic_knowledge/limited_amount/starting/base_knock/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
+	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp_spell = locate() in user.actions
+	grasp_spell?.invocation_type = INVOCATION_NONE
+	grasp_spell?.sound = null
 
 /datum/heretic_knowledge/limited_amount/starting/base_knock/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -100,7 +103,7 @@
 
 	var/turf/target_turf = get_turf(target)
 	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)
-	playsound(target, 'sound/effects/magic/hereticknock.ogg', 100, TRUE, -1)
+	SEND_SOUND(source, 'sound/effects/magic/hereticknock.ogg')
 
 	if(HAS_TRAIT(source, TRAIT_LOCK_GRASP_UPGRADED))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

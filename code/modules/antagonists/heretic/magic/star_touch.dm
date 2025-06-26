@@ -1,11 +1,9 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
-	// XANTODO DESC
-	//desc = "Manifests cosmic fields on tiles next to you while marking the victim with a star mark
-	//	or consuming an already present star mark to put them to sleep for 4 seconds.
-	//	They will then be linked to you with a cosmic ray, burning them for up to a minute, or
-	//	until they can escape your sight. Star Touch can also remove Cosmic Runes, or teleport you
-	//	to your Star Gazer when used on yourself."
+	desc = "Can be used to apply a star mark to a target. \
+		If your victim is already star marked, tethers you to your target with a cosmic ray. \
+		If the tether remains unbroken for 8 seconds, they will be put to sleep and teleported to you. \
+		Star Touch can also remove Cosmic Runes, or teleport you to your Star Gazer when used in hand."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

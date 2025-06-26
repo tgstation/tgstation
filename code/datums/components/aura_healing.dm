@@ -44,6 +44,9 @@
 	/// The color to give the healing visual
 	var/healing_color = COLOR_GREEN
 
+	/// If the aura also heals the owner of the component
+	var/self_heal = TRUE
+
 	/// A list of being healed to active alerts
 	var/list/mob/living/current_alerts = list()
 
@@ -64,6 +67,7 @@
 	simple_heal = 0,
 	limit_to_trait = null,
 	healing_color = COLOR_GREEN,
+	self_heal = TRUE,
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -83,6 +87,7 @@
 	src.simple_heal = simple_heal
 	src.limit_to_trait = limit_to_trait
 	src.healing_color = healing_color
+	src.self_heal = self_heal
 
 /datum/component/aura_healing/Destroy(force)
 	STOP_PROCESSING(SSaura, src)

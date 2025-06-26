@@ -52,7 +52,7 @@
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/expansion
 	var/datum/action/cooldown/spell/pointed/projectile/star_blast/blast
 	var/datum/action/cooldown/recall_stargazer/recall
-	var/datum/action/cooldown/stargazer_laser/giga_laser
+	var/datum/action/cooldown/spell/stargazer_laser/giga_laser
 
 /mob/living/basic/heretic_summon/star_gazer/Initialize(mapload)
 	. = ..()
@@ -145,15 +145,18 @@
 	StartCooldown()
 	return TRUE
 
-/datum/action/cooldown/stargazer_laser
-	name = "Activate laser"
-	desc = "Generates a massive death beam that destroys everything in it's path"
+/datum/action/cooldown/spell/stargazer_laser
+	name = "Star Gaze"
+	desc = "Generates a massive death beam that eradicates everything in it's path. \
+			Has it's own gravitational pull, sucking in new victims."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "gazer_beam_charge"
 	check_flags = NONE
 	cooldown_time = 30 SECONDS
+	invocation = "SH''P D' W''P"
+	invocation_type = INVOCATION_SHOUT
 	/// list of turfs we are hitting while shooting our beam
 	var/list/turf/targets
 	/// The laser beam we generate
@@ -175,7 +178,7 @@
 	/// Tracks how many times the beam has processed, after the maximum amount of cycles it will forcibly end the beam
 	var/cycle_tracker = 0
 
-/datum/action/cooldown/stargazer_laser/Activate(atom/target)
+/datum/action/cooldown/spell/stargazer_laser/Activate(atom/target)
 	. = ..()
 
 	if(damage_timer)
@@ -221,16 +224,16 @@
 	targets += targets_right
 	process_beam()
 
-/datum/action/cooldown/stargazer_laser/Destroy()
+/datum/action/cooldown/spell/stargazer_laser/Destroy()
 	QDEL_NULL(sound_loop)
 	return ..()
 
-/datum/action/cooldown/stargazer_laser/New(Target, original)
+/datum/action/cooldown/spell/stargazer_laser/New(Target, original)
 	. = ..()
 	sound_loop = new
 
 /// Spawns the beginning of the laser, uses `targets` to determine the rotation
-/datum/action/cooldown/stargazer_laser/proc/open_laser(mob/owner, list/turf/targets)
+/datum/action/cooldown/spell/stargazer_laser/proc/open_laser(mob/owner, list/turf/targets)
 	beam_visual = new(get_step(get_step(owner, owner.dir), owner.dir), targets[length(targets)])
 	end_visual = new(targets[length(targets)], owner)
 	for(var/turf/to_fill as anything in (get_line(targets[4], targets[length(targets)-2])))
@@ -313,7 +316,7 @@
 	transform = matrix(2, 2, MATRIX_SCALE)
 
 /// Recursive proc which affects whatever is caught within the beam
-/datum/action/cooldown/stargazer_laser/proc/process_beam()
+/datum/action/cooldown/spell/stargazer_laser/proc/process_beam()
 	if(cycle_tracker > 33)
 		stop_beaming()
 	for(var/obj/effect/abstract/gazer_beam_filling/fillings as anything in beam_fillings)
@@ -341,6 +344,14 @@
 				var/mob/living/living_victim = victim
 				if(living_victim.stat > CONSCIOUS)
 					playsound(living_victim, 'sound/effects/supermatter.ogg', 80, TRUE)
+					living_victim.visible_message(
+						span_danger("You see [living_victim] engulfed in the scorching wrath of the cosmos. \
+									For a moment, you see their silhouette flail in agony before fading to mere atoms."),
+						span_boldbig(span_hypnophrase("THE POWER OF THE COSMOS ITSELF POURS OUT OVER YOUR FORM. \
+						WAVES OF HEAT LATCH ONTO YOUR BODY, PULLING IT APART AT THE SEAMS. \
+						YOUR TOTAL ANNIHILATION TAKES ONLY A MOMENT BEFORE YOU ARE REDUCED BACK TO WHAT YOU ALWAYS WERE. \
+						MOTES OF MERE DUST..."))
+						)
 					living_victim.dust()
 				living_victim.emote("scream")
 				living_victim.apply_status_effect(/datum/status_effect/star_mark)
@@ -349,7 +360,7 @@
 	damage_timer = addtimer(CALLBACK(src, PROC_REF(process_beam)), 0.3 SECONDS, TIMER_STOPPABLE)
 
 /// Stops the beam after we cancel it
-/datum/action/cooldown/stargazer_laser/proc/stop_beaming()
+/datum/action/cooldown/spell/stargazer_laser/proc/stop_beaming()
 	SIGNAL_HANDLER
 	sound_loop.stop()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE))
