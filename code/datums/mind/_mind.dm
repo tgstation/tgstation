@@ -48,8 +48,6 @@
 
 	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
 	var/datum/job/assigned_role
-	var/special_role
-	var/list/restricted_roles = list()
 
 	/// List of antag datums on this mind
 	var/list/antag_datums
@@ -89,7 +87,9 @@
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
 
-	/// A lazy list of statuses to add next to this mind in the traitor panel
+	/// A lazy list of roles to display that this mind has, stuff like "Traitor" or "Special Creature"
+	var/list/special_roles
+	/// A lazy list of statuses to display that this mind has, stuff like "Infected" or "Mindshielded"
 	var/list/special_statuses
 
 	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
@@ -124,7 +124,7 @@
 	.["memories"] = memories
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
-	.["special_role"] = special_role
+	.["special_role"] = jointext(get_special_roles(), " | ")
 	.["assigned_role"] = assigned_role.title
 	.["current"] = current
 
@@ -484,16 +484,6 @@
 	LAZYSET(addiction_points, type, max(LAZYACCESS(addiction_points, type) - amount, 0))
 	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
 	return affected_addiction.on_lose_addiction_points(src)
-
-/// Whether or not we can roll for midrounds, specifically checking if we have any major antag datums that should block it
-/datum/mind/proc/can_roll_midround(datum/antagonist/antag_type)
-	if(SEND_SIGNAL(current, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, antag_type) & CANCEL_ROLL)
-		return FALSE
-	for(var/datum/antagonist/antag as anything in antag_datums)
-		if(antag.block_midrounds)
-			return FALSE
-
-	return TRUE
 
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)
