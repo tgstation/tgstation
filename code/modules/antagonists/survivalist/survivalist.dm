@@ -14,7 +14,6 @@
 	objectives += survive
 
 /datum/antagonist/survivalist/on_gain()
-	owner.special_role = "survivalist"
 	forge_objectives()
 	. = ..()
 

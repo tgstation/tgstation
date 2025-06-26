@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
 	antagpanel_category = ANTAG_GROUP_WIZARDS
-	job_rank = ROLE_WIZARD
+	pref_flag = ROLE_WIZARD
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
@@ -457,3 +457,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/wizard/on_respawn(mob/new_character)
+	new_character.forceMove(pick(GLOB.wizardstart))
+	equip_wizard()
+	return TRUE
