@@ -435,7 +435,7 @@
 	var/color_shield = cached_color_filter || color
 	var/turf/target_tile = src.loc
 	radius = 0
-	for(var/i in 1 to round(max_radius))
+	for(var/i in 1 to round(max_radius, 1))
 		if((!isopenturf(target_tile)) || (locate(/obj/structure/emergency_shield/modular) in target_tile))
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
