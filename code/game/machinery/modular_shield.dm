@@ -344,7 +344,7 @@
 /obj/machinery/modular_shield_generator/proc/calculate_radius()
 
 	max_radius = innate_radius + radius_boost
-	if((!exterior_only) & internal_penalty)
+	if(!exterior_only && internal_penalty)
 		max_radius = max(3,max_radius * 0.5)
 
 	if(radius > max_radius)//the generator can no longer function at this capacity
