@@ -73,6 +73,9 @@
 	///What machine we are for the purpose of updating icon state
 	var/icon_type = "gen"
 
+	///The name modular shield console tgui's see us as
+	var/display_name = "Shield Generator"
+
 /obj/machinery/modular_shield_generator/power_change()
 	. = ..()
 	if(!(machine_stat & NOPOWER))
