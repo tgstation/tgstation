@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	speed = 1
 	health = 210
 	maxHealth = 210
-	melee_attack_cooldown = 1 SECOND
+	melee_attack_cooldown = CLICK_CD_MELEE
 	layer = BELOW_MOB_LAYER
 	ai_controller = /datum/ai_controller/basic_controller/mimic_crate
 	/// are we open
@@ -79,8 +79,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/mob_storage_capacity = 10
 	///Nullspaced crate that we are pretending to be
 	var/atom/movable/crate = /obj/structure/closet/crate
-	///mimick overlay
-	var/static/mutable_appearance/mimic_overlay
 
 // Pickup loot
 /mob/living/basic/mimic/crate/Initialize(mapload)
@@ -93,6 +91,9 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		for(var/obj/item/item in loc)
 			item.forceMove(src)
 	crate = new crate(null) // Nullspaced so we don't accidentally spew it out when opening
+
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MIMIC, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
+	crate.AddElement(/datum/element/swabable, CELL_LINE_TABLE_MIMIC, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 
 /mob/living/basic/mimic/crate/Destroy()
 	QDEL_NULL(crate)
@@ -258,14 +259,19 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return TRUE
 
 /mob/living/basic/mimic/crate/proc/do_bite_animation()
-	flick(icon, "[base_icon_state]_mimic_bite")
+	flick(icon, "[base_icon_state]_bite")
 
 
 ///shitty slow type for ruins, 3 speed is still plenty slow.
 /mob/living/basic/mimic/crate/slow
 	health = 250
 	maxHealth = 250
+	melee_attack_cooldown = 2 SECONDS
 	speed = 3
+
+/mob/living/basic/mimic/crate/freezer
+	base_icon_state = "freeze_mimic"
+	crate = /obj/structure/closet/crate/freezer
 
 /datum/action/innate/mimic_lock
 	name = "Lock/Unlock"

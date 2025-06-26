@@ -55,6 +55,7 @@
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
 #define CELL_LINE_TABLE_BUTTERFLY "cell_line_butterfly_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
+#define CELL_LINE_TABLE_MIMIC "cell_line_table_mimic"
 
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"
