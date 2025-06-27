@@ -255,7 +255,7 @@
 	name = "Hallucination Sting"
 	desc = "We cause mass terror to our victim. Costs 10 chemicals."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
-			The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+			The target does not notice they have been stung, and they view everyone else as us."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
@@ -263,7 +263,17 @@
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	..()
 	log_combat(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
+	target.cause_hallucination(\
+		/datum/hallucination/delusion/changeling, \
+		"[user.name]", \
+		duration = 20 SECONDS, \
+		affects_us = TRUE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+		passed_appearance = user.appearance, \
+	)
+
 	return TRUE
 
 /datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
@@ -316,6 +326,7 @@
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, blade), 30 SECONDS)
+	return TRUE
 
 /datum/action/changeling/sting/fake_changeling/proc/remove_effect(mob/living/carbon/human/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
@@ -342,6 +353,7 @@
 	user.balloon_alert(user, "target injected!")
 	addtimer(CALLBACK(src, PROC_REF(revive), target), 10 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_revival), target), 30 SECONDS)
+	return TRUE
 
 /datum/action/changeling/sting/false_revival/proc/revive(mob/living/carbon/target)
 	// Heal all damage and some minor afflictions,

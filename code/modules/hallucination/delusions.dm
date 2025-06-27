@@ -325,3 +325,19 @@
 	delusion_name = "Mind Gate"
 	duration = 60 SECONDS
 	affects_us = TRUE
+
+/datum/hallucination/delusion/changeling
+	random_hallucination_weight = 0
+
+/datum/hallucination/delusion/changeling/New(
+	mob/living/hallucinator,
+	duration,
+	affects_us,
+	affects_others,
+	skip_nearby,
+	play_wabbajack,
+	passed_appearance
+)
+	src.delusion_appearance = passed_appearance
+	return ..()
+
