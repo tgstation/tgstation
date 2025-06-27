@@ -31,29 +31,34 @@
 	icon_state = "griffin"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/schoolgirl
+/obj/item/clothing/under/costume/seifuku
 	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
-	icon_state = "schoolgirl"
-	inhand_icon_state = null
+	greyscale_colors = "#942737#4A518D#EBEBEB"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/seifuku"
+	post_init_icon_state = "seifuku"
+	inhand_icon_state = "shrinehand"
+	greyscale_config = /datum/greyscale_config/seifuku
+	greyscale_config_worn = /datum/greyscale_config/seifuku/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/schoolgirl/red
+/obj/item/clothing/under/costume/seifuku/red
 	name = "red schoolgirl uniform"
-	icon_state = "schoolgirlred"
-	inhand_icon_state = null
+	icon_state = "/obj/item/clothing/under/costume/seifuku/red"
+	greyscale_colors = "#3F4453#BB2E2E#EBEBEB"
 
-/obj/item/clothing/under/costume/schoolgirl/green
-	name = "green schoolgirl uniform"
-	icon_state = "schoolgirlgreen"
-	inhand_icon_state = null
+/obj/item/clothing/under/costume/seifuku/teal
+	name = "teal schoolgirl uniform"
+	icon_state = "/obj/item/clothing/under/costume/seifuku/teal"
+	greyscale_colors = "#942737#2BA396#EBEBEB"
 
-/obj/item/clothing/under/costume/schoolgirl/orange
-	name = "orange schoolgirl uniform"
-	icon_state = "schoolgirlorange"
-	inhand_icon_state = null
+/obj/item/clothing/under/costume/seifuku/tan
+	name = "tan schoolgirl uniform"
+	icon_state = "/obj/item/clothing/under/costume/seifuku/tan"
+	greyscale_colors = "#87502E#EBD4B2#EBEBEB"
 
 /obj/item/clothing/under/costume/pirate
 	name = "pirate outfit"
