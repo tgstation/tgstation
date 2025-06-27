@@ -303,6 +303,12 @@
 	. = ..()
 	if(.)
 		return
+	// Stops people without +USE from being able to click-open airlocks
+	// Explicitly not a generic check - if you make this generic, AIs (and more) won't be able to open doors
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!(living_user.mobility_flags & MOBILITY_USE))
+			return
 	if(try_remove_seal(user))
 		return
 	if(try_safety_unlock(user))
@@ -328,10 +334,6 @@
 		run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/allowed(mob/M)
-	if(isliving(M))
-		var/mob/living/living_user = M
-		if(!(living_user.mobility_flags & MOBILITY_USE))
-			return FALSE
 	if(emergency)
 		return TRUE
 	if(unrestricted_side(M))

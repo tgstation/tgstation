@@ -126,7 +126,6 @@
 
 	generated_objectives_and_spells = TRUE
 	mind.set_assigned_role(SSjob.get_job_type(/datum/job/revenant))
-	mind.special_role = ROLE_REVENANT
 	SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
 	mind.add_antag_datum(/datum/antagonist/revenant)
 	return TRUE

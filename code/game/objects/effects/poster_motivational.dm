@@ -18,7 +18,7 @@
 
 /// You can use any spraypaint can on a quirk poster to turn it into a contraband poster from the traitor objective
 /obj/item/poster/quirk/attackby(obj/item/postertool, mob/user, list/modifiers, list/attack_modifiers)
-	if(!is_special_character(user) || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(postertool, /obj/item/toy/crayon))
+	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(postertool, /obj/item/toy/crayon))
 		return ..()
 	balloon_alert(user, "converting poster...")
 	if(!do_after(user, 5 SECONDS, user))
@@ -32,7 +32,7 @@
 /// Screentip for the above
 
 /obj/item/poster/quirk/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!is_special_character(user) || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(held_item, /obj/item/toy/crayon))
+	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(held_item, /obj/item/toy/crayon))
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = "Turn into Demoralizing Poster"
 	return CONTEXTUAL_SCREENTIP_SET

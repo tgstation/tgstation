@@ -583,3 +583,69 @@
   SmArtKar:
   - rscadd: Fish infusion now gives you scales, and tail color if you hit certain
       thresholds
+2025-06-24:
+  Sealed101:
+  - bugfix: fixed being able to anchor multiple solar panel assemblies on a single
+      tile (or any dense tile for that matter)
+  - bugfix: fixed solar trackers not absorbing the assembly upon construction, leading
+      to assembly duplication
+  - qol: solar assemblies can be wrenched on catwalks
+  TealSeer:
+  - server: TGS deployments should no longer fail to install unzip
+  TheBoondock:
+  - qol: being blackout drunk will stop your liver from being hurt from alcohol for
+      the duration of it
+2025-06-25:
+  Aliceee2ch:
+  - bugfix: Fixed things forgotten in walls of Catwalk Station
+  amylizzle:
+  - code_imp: removes an unnecessary static def in a unit test
+  grungussuss:
+  - spellcheck: fixes some examine text typos
+  - qol: you can now click on objects in the game when the lobby art starts to fade
+2025-06-26:
+  Aliceee2ch:
+  - map: removed medsci headset from MetaStation and CatwalkStation. Added one more
+      on DeltaStation and IceBox instead.
+  Melbert:
+  - rscadd: Fire alarms now has wires
+  - rscadd: Fire alarm trigger on damage now scales based on damage dealt, rather
+      than being a flat 33%
+  - qol: Fire alarm screentips
+  - refactor: Refactored fire alarms de/assembly, report any oddities
+  - bugfix: AIs can open windoors
+  - bugfix: Mechas can open airlocks
+  - bugfix: Handcuffed people can open public airlocks
+  - bugfix: Telekinesis can open public airlocks
+  carpotoxin:
+  - bugfix: Fixed narcolepsy's odds to put you to sleep scaling infinitely
+2025-06-27:
+  Melbert:
+  - refactor: Dynamic rewritten entirely, report any strange rounds
+  - config: Dynamic config reworked, it's now a TOML file
+  - refactor: Refactored antag roles somewhat, report any oddities
+  - refactor: Refactored Revolution entirely, report any oddities
+  - rscdel: Deleted most midround events that spawn antags - they use dynamic rulesets
+      now
+  - rscadd: Dynamic rulesets can now be false alarms
+  - rscadd: Adds a random event that gives dynamic the ability to run another ruleset
+      later
+  - admin: Adds a panel for messing around with dynamic
+  - admin: Adds a panel for chance for every dynamic ruleset to be selected
+  - admin: You can spawn revs without using dynamic now
+  - bugfix: Nuke team leaders get their fun title back
+  Rhials:
+  - qol: When the ticker announces the end of a round on another server, it will include
+      the shuttle call reason if the shuttle is hijacked.
+  SyncIt21:
+  - bugfix: plumbing reaction chamber UI is scrollable again
+  TealSeer:
+  - bugfix: fixed egalitarian station mode missing airlocks that use req_one_access
+  grungussuss:
+  - bugfix: fixed malf ais not being able to dominate mechs
+  - bugfix: borgs can no longer smell
+  - bugfix: fixed dunking giving you a permanent offset
+  - qol: fasten pipes now has a nicer look to it in visible text message
+  - bugfix: the message for putting dental implants in is now correct
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in the cooking menu.
