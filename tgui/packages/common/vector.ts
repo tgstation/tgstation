@@ -17,64 +17,23 @@ const DIV = (a: number, b: number): number => a / b;
 
 export type Vector = number[];
 
-export const vecAdd = (...vecs: Vector[]): Vector => {
-  if (vecs.length === 0) {
-    throw new Error('One or more vectors must be provided.');
-  } else {
-    const firstLength = vecs[0].length;
-    for (let i = 1; i < vecs.length; i++) {
-      if (vecs[i].length !== firstLength) {
-        throw new Error('All vectors must have the same number of dimensions.');
-      }
-    }
-  }
+// It's really not ideal to bypass the type system and use `as Vector`
+// however, there isn't a more eloquent way to type these
 
-  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, ADD));
+export const vecAdd = (...vecs: Vector[]): Vector => {
+  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, ADD)) as Vector;
 };
 
 export const vecSubtract = (...vecs: Vector[]): Vector => {
-  if (vecs.length === 0) {
-    throw new Error('One or more vectors must be provided.');
-  } else {
-    const firstLength = vecs[0].length;
-    for (let i = 1; i < vecs.length; i++) {
-      if (vecs[i].length !== firstLength) {
-        throw new Error('All vectors must have the same number of dimensions.');
-      }
-    }
-  }
-
-  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, SUB));
+  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, SUB)) as Vector;
 };
 
 export const vecMultiply = (...vecs: Vector[]): Vector => {
-  if (vecs.length === 0) {
-    throw new Error('One or more vectors must be provided.');
-  } else {
-    const firstLength = vecs[0].length;
-    for (let i = 1; i < vecs.length; i++) {
-      if (vecs[i].length !== firstLength) {
-        throw new Error('All vectors must have the same number of dimensions.');
-      }
-    }
-  }
-
-  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, MUL));
+  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, MUL)) as Vector;
 };
 
 export const vecDivide = (...vecs: Vector[]): Vector => {
-  if (vecs.length === 0) {
-    throw new Error('One or more vectors must be provided.');
-  } else {
-    const firstLength = vecs[0].length;
-    for (let i = 1; i < vecs.length; i++) {
-      if (vecs[i].length !== firstLength) {
-        throw new Error('All vectors must have the same number of dimensions.');
-      }
-    }
-  }
-
-  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, DIV));
+  return map(zip<number>(...vecs) as Vector[], (x) => reduce(x, DIV)) as Vector;
 };
 
 export const vecScale = (vec: Vector, n: number): Vector => {
