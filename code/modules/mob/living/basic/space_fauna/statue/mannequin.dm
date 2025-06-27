@@ -84,6 +84,7 @@
 	ai_movement = /datum/ai_movement/jps //threat
 	idle_behavior = null
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/run_emote,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

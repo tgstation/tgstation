@@ -478,20 +478,6 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
 #ROUNDS_UNTIL_HARD_RESTART 10
 
-
-##Default view size, in tiles.
-##	By default, this is 15x15, which gets simplified to 7 by byond
-##  15x15 would be the standard square view. 21x15 is what goonstation uses for widescreen.
-##  Setting this to something different from DEFAULT_VIEW_SQUARE will enable widescreen toggles
-##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
-DEFAULT_VIEW 19x15
-
-##Default view size, in tiles. Should *always* be square.
-## The alternative square viewport size if you're using a widescreen view size
-## You probably shouldn't ever be changing this, but it's here if you want to.
-DEFAULT_VIEW_SQUARE 15x15
-
-
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
 

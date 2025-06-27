@@ -95,7 +95,7 @@
 		tgui_alert(usr, "The game hasn't started yet!")
 		return
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>")
-	dat += "<a href='byond://?_src_=holder;[HrefToken()];gamemode_panel=1'>Game Mode Panel</a><br>"
+	dat += "<a href='byond://?_src_=holder;[HrefToken()];gamemode_panel=1'>Dynamic Panel</a><br>"
 	dat += "Round Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B><BR>"
 	dat += "<B>Emergency shuttle</B><BR>"
 	if(EMERGENCY_IDLE_OR_RECALLED)
@@ -152,7 +152,7 @@
 					if (checked_mob.client)
 						observers_connected++
 
-				if(checked_mob.mind.special_role)
+				if(checked_mob.is_antag())
 					antagonists++
 					if(checked_mob.stat == DEAD)
 						antagonists_dead++

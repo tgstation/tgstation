@@ -1,6 +1,7 @@
 /// Used for ghost poly.
 /datum/ai_controller/basic_controller/parrot/ghost
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/parrot_as_in_repeat,
 		/datum/ai_planning_subtree/possess_humans,
 		/datum/ai_planning_subtree/hoard_items,

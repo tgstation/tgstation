@@ -1100,6 +1100,14 @@
 	pupils_name = "sensor clusters"
 	penlight_message = "are two clustered hemispheres of thermal sensors"
 
+/obj/item/organ/eyes/ghost
+	name = "ghost eyes"
+	desc = "Despite lacking pupils, these can see pretty well."
+	icon_state = "eyes-ghost"
+	blink_animation = FALSE
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."

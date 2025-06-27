@@ -29,7 +29,7 @@ function Get-Bun {
     # https://bun.sh/docs/installation#cpu-requirements-and-baseline-builds
     Get-CoreInfo
     Write-Output "Checking CPU for AVX2 support"
-    $avx2Supported = (& $CoreInfoExe | Select-String "AVX2\s+\*") -ne $null
+    $avx2Supported = (& $CoreInfoExe -accepteula -f | Select-String "AVX2\s+\*") -ne $null
     $BunRelease= "$BunPlatform"
     $BunTag
     if (-not $avx2Supported) {
@@ -103,7 +103,7 @@ function Test-BunHash {
     Write-Output "Verifying Bun checksum"
     $FileHash = Get-FileHash $BunZip -Algorithm SHA256
     $ActualSha = $FileHash.Hash
-    $LoginResponse = Invoke-WebRequest "https://github.com/oven-sh/bun/releases/download/bun-v$BunVersion/SHASUMS256.txt"
+    $LoginResponse = Invoke-WebRequest "https://github.com/oven-sh/bun/releases/download/bun-v$BunVersion/SHASUMS256.txt" -UseBasicParsing
     $ContentString = [System.Text.Encoding]::UTF8.GetString($LoginResponse.Content)
     $ShaArray = $ContentString -split "`n"
     foreach ($ShaArrayEntry in $ShaArray) {

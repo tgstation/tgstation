@@ -33,6 +33,8 @@
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
+///Comes from a holy source.
+#define HOLY_TRAIT "holy"
 
 #define VENDING_MACHINE_TRAIT "vending_machine"
 

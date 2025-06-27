@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Fixes Phazon fire punches. For real this time. It was tested. It works."

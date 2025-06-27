@@ -59,6 +59,7 @@
 	)
 	ai_movement = /datum/ai_movement/jps/bot
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/exenterate,
 		/datum/ai_planning_subtree/respond_to_summon,

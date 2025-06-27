@@ -31,6 +31,7 @@
 #define ROLE_NINJA "Space Ninja"
 #define ROLE_OBSESSED "Obsessed"
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
+#define ROLE_CLOWN_OPERATIVE_MIDROUND "Clown Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
@@ -67,13 +68,13 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
+/// This flag specifically is used as a generic catch-all antag ban
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_EXPERIMENTAL_CLONER "Experimental Cloner"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
 #define ROLE_MORPH "Morph"
-#define ROLE_NUCLEAR_OPERATIVE "Nuclear Operative"
 #define ROLE_POSITRONIC_BRAIN "Positronic Brain"
 #define ROLE_SANTA "Santa"
 #define ROLE_SERVANT_GOLEM "Servant Golem"
@@ -122,57 +123,6 @@
 #define ROLE_CYBER_POLICE "Cyber Police"
 #define ROLE_CYBER_TAC "Cyber Tac"
 #define ROLE_NETGUARDIAN "NetGuardian Prime"
-
-/// This defines the antagonists you can operate with in the settings.
-/// Keys are the antagonist, values are the number of days since the player's
-/// first connection in order to play.
-GLOBAL_LIST_INIT(special_roles, list(
-	// Roundstart
-	ROLE_BROTHER = 0,
-	ROLE_CHANGELING = 0,
-	ROLE_CLOWN_OPERATIVE = 14,
-	ROLE_CULTIST = 14,
-	ROLE_HERETIC = 0,
-	ROLE_MALF = 0,
-	ROLE_OPERATIVE = 14,
-	ROLE_REV_HEAD = 14,
-	ROLE_TRAITOR = 0,
-	ROLE_WIZARD = 14,
-	ROLE_SPY = 0,
-
-	// Midround
-	ROLE_ABDUCTOR = 0,
-	ROLE_ALIEN = 0,
-	ROLE_BLOB = 0,
-	ROLE_BLOB_INFECTION = 0,
-	ROLE_CHANGELING_MIDROUND = 0,
-	ROLE_FUGITIVE = 0,
-	ROLE_LONE_OPERATIVE = 14,
-	ROLE_MALF_MIDROUND = 0,
-	ROLE_NIGHTMARE = 0,
-	ROLE_NINJA = 0,
-	ROLE_OBSESSED = 0,
-	ROLE_OPERATIVE_MIDROUND = 14,
-	ROLE_PARADOX_CLONE = 0,
-	ROLE_REVENANT = 0,
-	ROLE_SLEEPER_AGENT = 0,
-	ROLE_SPACE_DRAGON = 0,
-	ROLE_SPIDER = 0,
-	ROLE_WIZARD_MIDROUND = 14,
-	ROLE_VOIDWALKER = 0,
-
-	// Latejoin
-	ROLE_HERETIC_SMUGGLER = 0,
-	ROLE_PROVOCATEUR = 14,
-	ROLE_SYNDICATE_INFILTRATOR = 0,
-	ROLE_STOWAWAY_CHANGELING = 0,
-
-	// I'm not too sure why these are here, but they're not moving.
-	ROLE_GLITCH = 0,
-	ROLE_PAI = 0,
-	ROLE_SENTIENCE = 0,
-	ROLE_RECOVERED_CREW = 0,
-))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
 #define BEOVERFLOW 1

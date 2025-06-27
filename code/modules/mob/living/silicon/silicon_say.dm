@@ -92,7 +92,7 @@
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
 		return NOPASS
-	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return NOPASS

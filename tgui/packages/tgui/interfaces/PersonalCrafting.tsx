@@ -937,7 +937,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                       <Divider />
                       {item.foodtypes.map((foodtype) => (
                         <FoodtypeContent
-                          key={item.ref}
+                          key={item.ref + foodtype}
                           type={foodtype}
                           diet={diet}
                         />

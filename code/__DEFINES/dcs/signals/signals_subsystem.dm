@@ -26,3 +26,6 @@
 
 ///Sent after awards are saved in the database (/datum/controller/subsystem/achievements/save_achievements_to_db)
 #define COMSIG_ACHIEVEMENTS_SAVED_TO_DB "achievements_saved_to_db"
+
+/// Send after config is loaded but before picking roundstart rulesets
+#define COMSIG_DYNAMIC_PRE_ROUNDSTART "dynamic_pre_roundstart"

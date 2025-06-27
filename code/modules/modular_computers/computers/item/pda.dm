@@ -205,7 +205,7 @@
 	if(from_message_menu)
 		log_bomber(null, null, target, "'s tablet exploded as [target.p_they()] tried to open their tablet message menu because of a recent tablet bomb.")
 	else
-		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
+		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber?.is_antag() ? "" : "(SENT BY NON-ANTAG)"]")
 
 	if (ismob(loc))
 		var/mob/loc_mob = loc

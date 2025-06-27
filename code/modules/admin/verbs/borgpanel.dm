@@ -47,7 +47,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 		.["upgrades"] += list(list("name" = initial(upgrade.name), "installed" = installed, "type" = upgradetype))
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE) : list()
 	.["channels"] = list()
-	for (var/k in GLOB.radiochannels)
+	for (var/k in GLOB.default_radio_channels)
 		if (k == RADIO_CHANNEL_COMMON)
 			continue
 		.["channels"] += list(list("name" = k, "installed" = (k in borg.radio.channels)))

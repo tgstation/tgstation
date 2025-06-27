@@ -61,6 +61,13 @@
 #define PAUSE_DURING_DO_AFTER (1<<2)
 /// Continue processing while in stasis
 #define CAN_ACT_IN_STASIS (1<<3)
+/// Continue processing while aggressively grabbed
+#define CAN_ACT_WHILE_GRABBED (1<<4)
+
+/// Flags we expect for most AI controllers
+#define DEFAULT_AI_FLAGS (PAUSE_DURING_DO_AFTER | CAN_ACT_WHILE_GRABBED)
+/// Flags for passive mobs that are easy to push around
+#define PASSIVE_AI_FLAGS (PAUSE_DURING_DO_AFTER | STOP_MOVING_WHEN_PULLED)
 
 //Base Subtree defines
 

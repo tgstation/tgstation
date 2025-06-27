@@ -45,7 +45,7 @@
 	var/obj/item/book/bible/booze/holy_bible = new
 	if(GLOB.religion)
 		if(human_spawned.mind)
-			human_spawned.mind.holy_role = HOLY_ROLE_PRIEST
+			human_spawned.mind.set_holy_role(HOLY_ROLE_PRIEST)
 		holy_bible.deity_name = GLOB.deity
 		holy_bible.name = GLOB.bible_name
 		// These checks are important as there's no guarantee the "HOLY_ROLE_HIGHPRIEST" chaplain has selected a bible skin.
@@ -62,7 +62,7 @@
 			GLOB.religious_sect.on_conversion(human_spawned)
 		return
 	if(human_spawned.mind)
-		human_spawned.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+		human_spawned.mind.set_holy_role(HOLY_ROLE_HIGHPRIEST)
 
 	var/new_religion = player_client?.prefs?.read_preference(/datum/preference/name/religion) || DEFAULT_RELIGION
 	var/new_deity = player_client?.prefs?.read_preference(/datum/preference/name/deity) || DEFAULT_DEITY

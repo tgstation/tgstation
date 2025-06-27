@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
 	antagpanel_category = ANTAG_GROUP_WIZARDS
-	job_rank = ROLE_WIZARD
+	pref_flag = ROLE_WIZARD
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
@@ -59,10 +59,12 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(owner.current)
 
 /datum/antagonist/wizard_minion/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
 	return ..()
 
 /datum/antagonist/wizard_minion/proc/create_objectives()
@@ -90,7 +92,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	. = ..()
 	if(allow_rename)
 		rename_wizard()
-	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(owner.current)
 
 /datum/antagonist/wizard/Destroy()
 	QDEL_NULL(ritual)
@@ -184,7 +188,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			qdel(spell)
 			owner.current.actions -= spell
 
-	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()
@@ -453,3 +457,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/wizard/on_respawn(mob/new_character)
+	new_character.forceMove(pick(GLOB.wizardstart))
+	equip_wizard()
+	return TRUE

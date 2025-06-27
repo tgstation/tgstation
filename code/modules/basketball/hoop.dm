@@ -102,7 +102,7 @@
 	var/dunk_pixel_w = ((dunk_dir & EAST) && 16) || ((dunk_dir & WEST) && -16) || 0
 
 	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
-	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)

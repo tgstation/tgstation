@@ -23,7 +23,6 @@
 		possible_spawns += spawn_turf
 
 	if(!length(possible_spawns))
-		message_admins("No valid generic_maintenance_landmark landmarks found, aborting...")
 		return null
 
 	return pick(possible_spawns)
@@ -44,7 +43,6 @@
 		possible_spawns += get_turf(spawn_location)
 
 	if(!length(possible_spawns))
-		message_admins("No valid carpspawn landmarks found, aborting...")
 		return null
 
 	return pick(possible_spawns)

@@ -371,12 +371,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))
 		return
-	user.mind.holy_role = HOLY_ROLE_PRIEST
+	user.mind.set_holy_role(HOLY_ROLE_PRIEST)
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)

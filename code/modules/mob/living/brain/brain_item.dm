@@ -494,6 +494,13 @@
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
 	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
 
+/obj/item/organ/brain/ghost
+	name = "ghost brain"
+	desc = "How are you even able to hold this?"
+	icon_state = "brain-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/brain/abductor
 	name = "grey brain"
 	desc = "A piece of juicy meat found in an ayy lmao's head."

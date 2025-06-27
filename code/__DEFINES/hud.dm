@@ -15,6 +15,11 @@
 /// Used for HUD objects
 #define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
+//used to set the default viewport to the user's preference.
+#define VIEWPORT_USE_PREF "use_pref"
+#define WIDESCREEN_VIEWPORT_SIZE "19x15"
+#define SQUARE_VIEWPORT_SIZE "15x15"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 
@@ -191,8 +196,8 @@
 #define ui_ghost_teleport "SOUTH:6,CENTER:24"
 #define ui_ghost_settings "SOUTH: 6, CENTER+1:24"
 #define ui_ghost_minigames "SOUTH: 6, CENTER+2:24"
-#define ui_ghost_language_menu "SOUTH: 6, CENTER+3:24"
-#define ui_ghost_floor_changer "SOUTH: 6, CENTER+3:8"
+#define ui_ghost_language_menu "SOUTH: 6, CENTER+3:22"
+#define ui_ghost_floor_changer "SOUTH: 6, CENTER+3:7"
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"

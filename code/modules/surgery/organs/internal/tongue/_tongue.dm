@@ -355,6 +355,15 @@
 	bomb = 50
 	fire = 100
 
+/obj/item/organ/tongue/ghost
+	name = "ghost tongue"
+	desc = "You feel spooked even thinking about someone talking through this."
+	icon_state = "tongue-ghost"
+	movement_type = PHASING
+	say_mod = "boos"
+	sense_of_taste = FALSE
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/tongue/abductor
 	name = "superlingual matrix"
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."

@@ -10,7 +10,7 @@
 	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
 		return FALSE
 	if(isnull(accessor)) //likely a TK user.
-		return FALSE
+		return check_access(null)
 	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
 		return TRUE

@@ -5,7 +5,7 @@
 	name = "\improper Changeling"
 	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
-	job_rank = ROLE_CHANGELING
+	pref_flag = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
@@ -1023,7 +1023,7 @@
 	name = "\improper Headslug Changeling"
 	show_in_antagpanel = FALSE
 	give_objectives = FALSE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 
 	genetic_points = 5
 	total_genetic_points = 5
