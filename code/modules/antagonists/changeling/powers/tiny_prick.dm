@@ -286,13 +286,13 @@
 		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
 	return TRUE
 
-/datum/action/changeling/sting/identity_swap
-	name = "Identity Swap Sting"
-	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us while we take on their identity."
+/datum/action/changeling/sting/fake_changeling
+	name = "False Changeling Sting"
+	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us with an armblade while we take on their identity."
 	helptext = "Makes the victim appears like you while you take on their appearance, the disguise is just a fake outer flesh which will decay after a while."
 	button_icon_state
 	chemical_cost = 22
-	dna_cost = 2
+	dna_cost = 3
 
 /datum/action/changeling/sting/identity_swap/sting_action(mob/living/user, mob/living/target)
 	. = ..()
