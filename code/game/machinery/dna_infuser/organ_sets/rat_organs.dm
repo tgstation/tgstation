@@ -61,6 +61,7 @@
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+	beat_noise = "a fast-paced high-pitched pit-pat"
 
 /obj/item/organ/heart/rat/Initialize(mapload)
 	. = ..()
