@@ -737,26 +737,6 @@
 	candidate.current.forceMove(find_space_spawn())
 	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
-/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker
-	name = "Sunwalker"
-
-	midround_type = HEAVY_MIDROUND
-	pref_flag = ROLE_VOIDWALKER
-	ruleset_flags = RULESET_INVADER
-
-	weight = 0
-	min_pop = 50
-
-	ruleset_lazy_templates = null
-
-/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker/create_ruleset_body()
-	return new /mob/living/basic/voidwalker/sunwalker
-
-/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker/assign_role(datum/mind/candidate)
-	candidate.add_antag_datum(/datum/antagonist/sunwalker)
-	candidate.current.forceMove(find_space_spawn())
-	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
-
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives
 	name = "Fugitive"
 	config_tag = "Fugitives"
