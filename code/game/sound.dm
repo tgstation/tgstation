@@ -207,4 +207,4 @@
 	if(!istext(soundin))
 		return soundin
 	var/datum/sound_effect/sfx = GLOB.sfx_datum_by_key[soundin]
-	return sfx.return_sfx()
+	return sfx?.return_sfx() || soundin

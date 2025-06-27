@@ -227,7 +227,7 @@ SUBSYSTEM_DEF(sounds)
 	return as_num
 
 /datum/controller/subsystem/sounds/proc/init_sound_keys()
-	for(var/datum/sound_effect/sfx in subtypesof(/datum/sound_effect))
+	for(var/datum/sound_effect/sfx as anything in subtypesof(/datum/sound_effect))
 		// this is for the assoc subtype
 		if(!isnull(sfx.key))
 			GLOB.sfx_datum_by_key[sfx.key] = new sfx()
