@@ -162,9 +162,9 @@
 	RegisterSignal(src, COMSIG_MOB_ENSLAVED_TO, PROC_REF(link_master))
 
 /mob/living/basic/construct/harvester/heretic/proc/link_master(mob/self, mob/master)
+	SIGNAL_HANDLER
 	src.construct_master = master
 	RegisterSignal(construct_master, COMSIG_LIVING_DEATH, PROC_REF(on_master_death))
-	SIGNAL_HANDLER
 
 /mob/living/basic/construct/harvester/heretic/proc/on_master_death(mob/self, mob/master)
 	SIGNAL_HANDLER
