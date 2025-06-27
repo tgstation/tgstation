@@ -86,7 +86,7 @@
 /datum/action/innate/dash/ninja/proc/attack_teleport(mob/living/user, mob/living/stabbing)
 	var/list/turf/line = get_line(user, stabbing)
 	var/obj/item/sword = target
-	if(!teleport(user, line[length(line) - 1])) // teleports to the second last turf, should be adjacent to the target
+	if(length(line) <= 1 || !teleport(user, line[length(line) - 1])) // teleports to the second last turf, should be adjacent to the target
 		return
 	if(!user.CanReach(stabbing, target))
 		return
