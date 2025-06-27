@@ -45,7 +45,7 @@ export const vecInverse = (vec: Vector): Vector => {
 };
 
 export const vecLength = (vec: Vector): number => {
-  return Math.sqrt(reduce(vecMultiply(vec, vec), ADD));
+  return Math.sqrt(reduce(vecMultiply(vec, vec), ADD) as number);
 };
 
 export const vecNormalize = (vec: Vector): Vector => {
