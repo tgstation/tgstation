@@ -336,7 +336,8 @@
 	name = "Syndicate Shuttle"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/shuttle/syndicate
-	var/challenge = FALSE
+	/// If operatives declared war this will be the time challenge was started
+	var/challenge_start_time
 	var/moved = FALSE
 
 /obj/item/circuitboard/computer/syndicate_shuttle/Initialize(mapload)

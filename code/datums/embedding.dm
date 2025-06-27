@@ -142,7 +142,7 @@
 	if (pierce_hit)
 		return
 
-	if (blocked || !can_embed(source, hit))
+	if (blocked >= 100 || !can_embed(source, hit))
 		failed_embed(hit, hit_zone)
 		return
 

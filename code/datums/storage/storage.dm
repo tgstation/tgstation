@@ -921,12 +921,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
-/datum/storage/proc/open_storage(mob/to_show)
+/datum/storage/proc/open_storage(mob/living/to_show)
 	if(isobserver(to_show))
 		show_contents(to_show)
 		return FALSE
 
 	if(!isliving(to_show) || !to_show.can_perform_action(parent, ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
+		return FALSE
+
+	//because of the check above, it's safe to assume we're living now.
+	if(!(to_show.mobility_flags & MOBILITY_STORAGE))
 		return FALSE
 
 	if(locked)

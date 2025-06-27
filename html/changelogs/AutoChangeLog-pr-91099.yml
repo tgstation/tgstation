@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Wounds do not make you as vulnerable to suffering wounds of all types as before. Instead, wounds make you more vulnerable to suffering worse versions of themselves as a priority."
-  - balance: "Wound armor is now more impactful when protecting you from wounds when you have already been wounded."
-  - balance: "Your head and chest are more difficult to wound until they have been mangled; either from suffering from a weeping avulsion or a hairline fracture."
-  - code_imp: "Changed the variable for bare_wound_bonus to exposed_wound_bonus to better explain what that variable is doing."

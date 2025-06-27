@@ -159,26 +159,48 @@
 	disk = new_disk
 	return ITEM_INTERACT_SUCCESS
 
-//user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user)
+/// Attempt to take an image, optionally given a user.
+/obj/item/camera/proc/attempt_picture(atom/target, atom/user)
+	if(!can_target(target, user))
+		return FALSE
+	if(!photo_taken(target, user))
+		return FALSE
+	return TRUE
+
+/// Check whether we can take a picture of the target, optionally given a user.
+/obj/item/camera/proc/can_target(atom/target, atom/user)
 	if(!on || blending || !pictures_left)
 		return FALSE
-	var/turf/T = get_turf(target)
-	if(!T)
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
 		return FALSE
-	if(istype(user))
-		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
+	if(isAI(user))
+		return can_ai_target(target_turf)
+	if(ismob(user))
+		return can_mob_target(target_turf, user)
+
+	if(isliving(loc))
+		if(!(target_turf in view(world.view, loc)))
 			return FALSE
-		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
-			return FALSE
-		else if(!(get_turf(target) in get_hear(CONFIG_GET(string/default_view), user)))
-			return FALSE
-	else if(isliving(loc))
-		if(!(get_turf(target) in view(world.view, loc)))
-			return FALSE
-	else //user is an atom or null
-		if(!(get_turf(target) in view(world.view, user || src)))
-			return FALSE
+		return TRUE
+
+	// User is an atom or null
+	if(!(target_turf in view(world.view, user || src)))
+		return FALSE
+	return TRUE
+
+/// Check whether an AI could take a picture of the target turf.
+/obj/item/camera/proc/can_ai_target(turf/target_turf)
+	if(!GLOB.cameranet.checkTurfVis(target_turf))
+		return FALSE
+	return TRUE
+
+/// Check whether a mob could take a picture of the target turf.
+/obj/item/camera/proc/can_mob_target(turf/target_turf, mob/user)
+	var/user_view = user.client ? user.client.view : WIDESCREEN_VIEWPORT_SIZE
+	var/user_eye = user.client ? user.client.eye : user
+	if(!(target_turf in get_hear(user_view, user_eye)))
+		return FALSE
 	return TRUE
 
 /obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -201,11 +223,7 @@
 		disk.record.caller_name = recorded_mob.name
 		disk.record.set_caller_image(recorded_mob)
 
-	if(!can_target(interacting_with, user))
-		return ITEM_INTERACT_BLOCKING
-	if(!photo_taken(interacting_with, user))
-		return ITEM_INTERACT_BLOCKING
-	return ITEM_INTERACT_SUCCESS
+	return attempt_picture(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/camera/proc/photo_taken(atom/target, mob/user)
 
@@ -242,7 +260,6 @@
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
-	var/ai_user = isAI(user)
 	var/list/seen
 	var/list/viewlist = user?.client ? getviewsize(user.client.view) : getviewsize(world.view)
 	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
@@ -254,21 +271,32 @@
 	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
 	///list of human names taken on picture
 	var/list/names = list()
+	var/cameranet_user = isAI(user) || istype(viewc, /mob/eye/camera)
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
-	for(var/turf/placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
-		while(istype(placeholder, /turf/open/openspace)) //Multi-z photography
-			placeholder = GET_TURF_BELOW(placeholder)
-			if(!placeholder)
-				break
+	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
+		if(isnull(seen_placeholder))
+			continue
 
-		if(placeholder && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
-			turfs += placeholder
-			for(var/mob/M in placeholder)
-				mobs += M
-			if(locate(/obj/item/blueprints) in placeholder)
+		if(cameranet_user && !GLOB.cameranet.checkTurfVis(seen_placeholder))
+			continue
+		if(!cameranet_user && !(seen_placeholder in seen))
+			continue
+
+		//Multi-z photography
+		var/turf/target_placeholder = seen_placeholder
+		while(!isnull(target_placeholder))
+			turfs += target_placeholder
+			for(var/mob/mob_there in target_placeholder)
+				mobs += mob_there
+			if(locate(/obj/item/blueprints) in target_placeholder)
 				blueprints = TRUE
+
+			if(isopenspaceturf(target_placeholder) || istype(target_placeholder, /turf/open/floor/glass))
+				target_placeholder = GET_TURF_BELOW(target_placeholder)
+			else
+				break
 
 	// do this before picture is taken so we can reveal revenants for the photo
 	steal_souls(mobs)
@@ -277,7 +305,9 @@
 		mobs_spotted += mob
 		if(mob.stat == DEAD)
 			dead_spotted += mob
-		desc += mob.get_photo_description(src)
+		var/info = mob.get_photo_description(src)
+		if(!isnull(info))
+			desc += info
 
 	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
 	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y
@@ -398,8 +428,6 @@
 		target = locate(our_turf.x + picture_coord_x.value, our_turf.y + picture_coord_y.value, our_turf.z)
 		if(!target)
 			return
-	if(!camera.can_target(target))
-		return
-	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_x  - 1, camera.picture_size_y - 1)
+	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, attempt_picture), target)
 
 #undef CAMERA_PICTURE_SIZE_HARD_LIMIT

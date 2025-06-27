@@ -69,7 +69,7 @@
 	update_static_data(user)
 	return TRUE
 
-/obj/machinery/computer/cargo/on_construction(mob/user)
+/obj/machinery/computer/cargo/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	circuit.configure_machine(src)
 
