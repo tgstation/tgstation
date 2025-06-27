@@ -358,8 +358,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!istype(robot))
 		return INITIALIZE_HINT_QDEL
 
-/obj/item/claymore/highlander/robot/process()
-	loc.layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"
