@@ -58,7 +58,7 @@
 /obj/item/clothing/under/costume/seifuku/tan
 	name = "tan schoolgirl uniform"
 	icon_state = "/obj/item/clothing/under/costume/seifuku/tan"
-	greyscale_colors = "#87502E#EBD4B2#EBEBEB"
+	greyscale_colors = "#87502E#B9A56A#EBEBEB"
 
 /obj/item/clothing/under/costume/pirate
 	name = "pirate outfit"
