@@ -248,8 +248,7 @@
 /// Checks a bunch of stuff to see if we can heal the patient, including can_heal
 /// Gives a feedback if we can't ultimatly heal the patient (unless silent is TRUE)
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
-	if(!(healed_zone in GLOB.all_body_zones))
-		stack_trace("Invalid zone ([healed_zone || "null"]) passed to try_heal_checks.")
+	if(!(healed_zone in patient.get_all_limbs()))
 		healed_zone = BODY_ZONE_CHEST
 
 	if(!can_heal(patient, user, healed_zone, silent))
@@ -747,7 +746,7 @@
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
-	for(var/zone in GLOB.all_body_zones)
+	for(var/zone in patient.get_all_limbs())
 		patient.apply_damage(60, BRUTE, zone)
 	use(1)
 	return BRUTELOSS
