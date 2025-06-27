@@ -301,9 +301,7 @@ export function RecipeContent(props: FullProps) {
                             minWidth="30px"
                             lineHeight={2.5}
                             align="center"
-                            tooltip={
-                              'Repeat this craft until you run out of ingredients.'
-                            }
+                            tooltip="Repeat this craft until you run out of ingredients."
                             tooltipPosition="top"
                             disabled={!craftable || busy}
                             icon="repeat"

@@ -39,6 +39,7 @@ export function PersonalCrafting(props) {
 
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
+
   const [activeCategory, setCategory] = useState(
     Object.keys(craftability).length
       ? 'Can Make'
@@ -56,7 +57,8 @@ export function PersonalCrafting(props) {
   const [activeMaterial, setMaterial] = useState(
     material_occurences[0].atom_id,
   );
-  const [tabMode, setTabMode] = useState(0);
+  const [tabMode, setTabMode] = useState(TABS.category);
+
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
 
   let recipes = filter(
