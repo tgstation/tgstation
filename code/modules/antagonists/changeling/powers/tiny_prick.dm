@@ -315,7 +315,7 @@
 	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
-	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, blade), 2 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, blade), 30 SECONDS)
 
 /datum/action/changeling/sting/fake_changeling/proc/remove_effect(mob/living/carbon/human/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
@@ -324,5 +324,34 @@
 
 	qdel(blade)
 	target.update_held_items()
-	target.regenerate_icons()
+	target.updateappearance(mutcolor_update = TRUE)
+
+/datum/action/changeling/sting/false_revival
+	name = "False Revival"
+	desc = "We inject a significant amount of ourselves to jerry rig the dead body back to life, immitading our revival stasis"
+	helptext = "This will only work on dead bodies. The victim will be fully revived, be cautious with who you use it on"
+	chemical_cost = 40
+	dna_cost = 1
+
+/datum/action/changeling/sting/false_revival/sting_action(mob/living/user, mob/living/target)
+	. = ..()
+	if(target.stat != DEAD)
+		user.balloon_alert(user, "target is not dead!")
+		return
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	user.balloon_alert(user, "target injected!")
+	addtimer(CALLBACK(src, PROC_REF(revive), target), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(end_revival), target), 30 SECONDS)
+
+/datum/action/changeling/sting/false_revival/proc/revive(mob/living/carbon/target)
+	// Heal all damage and some minor afflictions,
+	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
+	// but leave out limbs so we can do it specially
+	target.revive(flags_to_heal & ~HEAL_LIMBS)
+	target.emote("gasp")
+	target.emote("scream")
+	target.apply_status_effect(/datum/status_effect/amok)
+
+/datum/action/changeling/sting/false_revival/proc/end_revival(mob/living/target)
+	target.death()
 
