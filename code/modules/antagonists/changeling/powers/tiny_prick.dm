@@ -294,7 +294,7 @@
 	chemical_cost = 22
 	dna_cost = 3
 
-/datum/action/changeling/sting/identity_swap/sting_action(mob/living/user, mob/living/target)
+/datum/action/changeling/sting/fake_changeling/sting_action(mob/living/user, mob/living/target)
 	. = ..()
 	if(!ishuman(user))
 		return
@@ -321,3 +321,20 @@
 	victim.remove_overlay(HAIR_LAYER)
 	changeling.apply_overlay(HAIR_LAYER)
 	victim.apply_overlay(HAIR_LAYER)
+
+	var/obj/item/melee/arm_blade/false/blade = new(target,1)
+	target.put_in_hands(blade)
+	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+
+	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, blade), 2 MINUTES)
+
+/datum/action/changeling/sting/fake_changeling/remove_effect(mob/living/carbon/human/target, obj/item/melee/arm_blade/false/blade)
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	target.visible_message(span_warning("With a sickening crunch, [target] reforms [target.p_their()] [blade.name] into an arm!"),
+	span_warning("[blade] reforms back to normal."), span_italics("You hear organic matter ripping and tearing!"))
+
+	qdel(blade)
+	target.update_held_items()
+	target.regenerate_icons()
+
