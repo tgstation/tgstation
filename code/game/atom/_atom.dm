@@ -121,7 +121,11 @@
 	var/datum/ai_controller/ai_controller
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
-	var/datum/forensics/forensics
+	var/datum/forensics/forensics = null
+	/// Cached color for all blood on us to avoid doing constant math
+	var/cached_blood_color = null
+	/// Cached emissive alpha for all blood on us to avoid doing constant math
+	var/cached_blood_emissive = null
 
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
@@ -330,33 +334,33 @@
 /**
  * Ensure a list of atoms/reagents exists inside this atom
  *
- * Goes throught he list of passed in parts, if they're reagents, adds them to our reagent holder
- * creating the reagent holder if it exists.
- *
- * If the part is a moveable atom and the  previous location of the item was a mob/living,
- * it calls the inventory handler transferItemToLoc for that mob/living and transfers the part
- * to this atom
- *
- * Otherwise it simply forceMoves the atom into this atom
+ * Cycles through the list of movables used up in the recipe and calls used_in_craft() for each of them
+ * then it either moves them inside the object or deletes
+ * them depending on whether they're in the list of parts for the recipe or not
  */
-/atom/proc/CheckParts(list/parts_list, datum/crafting_recipe/current_recipe)
-	SEND_SIGNAL(src, COMSIG_ATOM_CHECKPARTS, parts_list, current_recipe)
-	if(!parts_list)
-		return
-	for(var/part in parts_list)
-		if(istype(part, /datum/reagent))
-			if(!reagents)
-				reagents = new()
-			reagents.reagent_list.Add(part)
-		else if(ismovable(part))
-			var/atom/movable/object = part
-			if(isliving(object.loc))
-				var/mob/living/living = object.loc
-				living.transferItemToLoc(object, src)
-			else
-				object.forceMove(src)
-			SEND_SIGNAL(object, COMSIG_ATOM_USED_IN_CRAFT, src)
-	parts_list.Cut()
+/atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
+	var/list/remaining_parts = current_recipe?.parts?.Copy()
+	var/list/parts_by_type = remaining_parts?.Copy()
+	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
+		parts_by_type[parttype] = parttype
+	for(var/obj/item/item in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
+		item.used_in_craft(src, current_recipe)
+		var/matched_type = is_type_in_list(item, parts_by_type, zebra = TRUE)
+		if(!matched_type)
+			continue
+
+		if(isliving(item.loc))
+			var/mob/living/living = item.loc
+			living.transferItemToLoc(item, src)
+		else
+			item.forceMove(src)
+
+		if(matched_type)
+			remaining_parts[matched_type] -= 1
+			if(remaining_parts[matched_type] <= 0)
+				remaining_parts -= matched_type
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
@@ -488,21 +492,21 @@
 
 ///returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != /datum/reagent/blood)
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
 		return
-	return list("ANIMAL DNA" = get_blood_type(BLOOD_TYPE_ANIMAL))
+
+	return list(blood_type.dna_string = blood_type)
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	var/list/blood_dna = list()
-	if(dna)
-		blood_dna[dna.unique_enzymes] = dna.blood_type
-	else
-		blood_dna["UNKNOWN DNA"] = get_blood_type(BLOOD_TYPE_XENO)
-	return blood_dna
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
+		return
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = get_blood_type(BLOOD_TYPE_XENO))
+	if (dna?.unique_enzymes)
+		return list(dna.unique_enzymes = blood_type)
+	return list(blood_type.dna_string = blood_type)
 
 /mob/living/silicon/get_blood_dna_list()
 	return
@@ -563,17 +567,19 @@
  * Returns true if any washing was necessary and thus performed
  * Arguments:
  * * clean_types: any of the CLEAN_ constants
+ * Returns: A bitflag if it successfully cleaned something: e.g. COMPONENT_CLEANED, or NONE if not. COMPONENT_CLEANED_GAIN_XP being flipped on signals whether the cleaning should yield cleaning xp.
  */
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
-		return TRUE
+	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types)
+	if(.)
+		return
 
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		return TRUE
-	return FALSE
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
+	return NONE
 
 ///Where atoms should drop if taken from this atom
 /atom/proc/drop_location()
@@ -875,9 +881,6 @@
 
 			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
 				var/screentip_images = active_hud.screentip_images
-				// Disable screentip images for clients affected by https://www.byond.com/forum/post/2967731
-				if(ISINRANGE(client?.byond_build, MIN_BYOND_BUILD_DISABLE_SCREENTIP_ICONS, MAX_BYOND_BUILD_DISABLE_SCREENTIP_ICONS))
-					screentip_images = FALSE
 				// LMB and RMB on one line...
 				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
 				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)

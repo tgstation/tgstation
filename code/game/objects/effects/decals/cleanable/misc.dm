@@ -191,15 +191,15 @@
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !ishuman(user))
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
-			H.visible_message(span_alert("[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
-			reagents.trans_to(H, reagents.total_volume, transferred_by = user, methods = INGEST)
-			qdel(src)
+	var/mob/living/carbon/human/as_human = user
+	if(!isflyperson(as_human))
+		return
+	playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
+	as_human.visible_message(span_alert("[as_human] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
+	lazy_init_reagents()?.trans_to(as_human, reagents.total_volume, transferred_by = user, methods = INGEST)
+	qdel(src)
 
 /obj/effect/decal/cleanable/vomit/toxic // this has a more toned-down color palette, which may be why it's used as the default in so many spots
 	icon_state = "vomittox_1"
@@ -395,7 +395,7 @@
 
 /obj/effect/decal/cleanable/ants/proc/update_ant_damage(ant_min_damage, ant_max_damage)
 	if(!ant_max_damage)
-		ant_max_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
+		ant_max_damage = min(10, round((reagents ? reagents.get_reagent_amount(/datum/reagent/ants) : reagent_amount) * 0.1,0.1)) // 100u ants = 10 max_damage
 	if(!ant_min_damage)
 		ant_min_damage = 0.1
 	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN) /// Small amounts of ants won't be able to bite through shoes.
@@ -472,10 +472,11 @@
 
 /obj/effect/decal/cleanable/fuel_pool/Initialize(mapload, burn_stacks)
 	. = ..()
-	var/static/list/ignition_trigger_connections = list(
+	var/static/list/loc_connections = list(
 		COMSIG_TURF_MOVABLE_THROW_LANDED = PROC_REF(ignition_trigger),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
 	)
-	AddElement(/datum/element/connect_loc, ignition_trigger_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	for(var/obj/effect/decal/cleanable/fuel_pool/pool in get_turf(src)) //Can't use locate because we also belong to that turf
 		if(pool == src)
 			continue
@@ -537,17 +538,17 @@
 	ignite()
 	log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
-/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(item.ignition_effect(src, user))
 		ignite()
 		log_combat(user, src, "used [item] to ignite")
 	return ..()
 
-/obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/entered_atom)
-	. = ..()
-	if(entered_atom.throwing) // don't light from things being thrown over us, we handle that somewhere else
-		return
-	ignition_trigger(source = src, enflammable_atom = entered_atom)
+/obj/effect/decal/cleanable/fuel_pool/proc/on_entered(datum/source, atom/movable/entered_atom)
+	SIGNAL_HANDLER
+
+	if(!entered_atom.throwing) // don't light from things being thrown over us, we handle that somewhere else
+		ignition_trigger(source = src, enflammable_atom = entered_atom)
 
 /obj/effect/decal/cleanable/fuel_pool/proc/ignition_trigger(datum/source, atom/movable/enflammable_atom)
 	SIGNAL_HANDLER

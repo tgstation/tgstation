@@ -165,6 +165,64 @@
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
+///Exosuit thermal guns
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal
+	equip_cooldown = 20
+	name = "\improper Prototype -I 'Thermal Cannon'"
+	desc = "A special prototype of a heavy thermal weapon designed for use on exosuits. This one is debug-chambered."
+	icon_state = "mecha_laser"
+	energy_drain = 50
+	projectile = /obj/item/ammo_casing/energy/nanite
+	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
+	harmful = TRUE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo
+	name = "\improper Prototype I 'Cryo Thermal Cannon'"
+	desc = "A special prototype of a heavy thermal weapon designed for use on exosuits. This one is cryo-chambered."
+	icon_state = "mecha_cryogun"
+	projectile = /obj/projectile/energy/cryo
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno
+	name = "\improper Prototype II 'Pyro Thermal Cannon'"
+	desc = "A special prototype of a heavy thermal weapon designed for use on exosuits. This one is molten-chambered."
+	icon_state = "mecha_pyrogun"
+	projectile = /obj/projectile/energy/inferno
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo/try_attach_part(mob/user, obj/vehicle/sealed/mecha/themech, attach_right)
+	var/has_molten = FALSE
+	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
+			to_chat(user, span_warning("[themech] already has [thegun] installed!"))
+			return ITEM_INTERACT_BLOCKING
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
+			has_molten = TRUE
+	if (has_molten)
+		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+			if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
+				thegun.equip_cooldown = 8
+		equip_cooldown = 8
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, obj/vehicle/sealed/mecha/themech, attach_right)
+	var/has_cryo = FALSE
+	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
+			to_chat(user, span_warning("[themech] already has [thegun] installed!"))
+			return ITEM_INTERACT_BLOCKING
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
+			has_cryo = TRUE
+	if (has_cryo)
+		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+			if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
+				thegun.equip_cooldown = 8
+		equip_cooldown = 8
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/detach(atom/moveto)
+	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thermal_gun in chassis.flat_equipment)
+		thermal_gun.equip_cooldown = 20
+	. = ..()
+
 //Exosuit-mounted kinetic accelerator
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
 	name = "Exosuit Proto-kinetic Accelerator"

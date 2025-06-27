@@ -760,6 +760,19 @@
 	else
 		set_density(TRUE)
 
+/mob/living/update_rest_hud_icon()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!hud_used.sleep_icon || HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
+		return TRUE
+	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
+		hud_used.static_inventory |= hud_used.sleep_icon
+	else
+		hud_used.static_inventory -= hud_used.sleep_icon
+	hud_used.show_hud(hud_used.hud_version)
+	return TRUE
+
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
 	var/list/ret = list()
@@ -1018,10 +1031,6 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
-/// Proc that only really gets called for humans, to handle bleeding overlays.
-/mob/living/proc/update_wound_overlays()
-	return
-
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 	if(lying_angle != 0)
 		lying_angle_on_movement(direct)
@@ -1033,7 +1042,7 @@
 		return
 
 	var/old_direction = dir
-	var/turf/T = loc
+	var/turf/old_loc = loc
 
 	if(pulling)
 		update_pull_movespeed()
@@ -1041,8 +1050,8 @@
 	. = ..()
 
 	if(moving_diagonally != FIRST_DIAG_STEP && isliving(pulledby))
-		var/mob/living/L = pulledby
-		L.set_pull_offsets(src, pulledby.grab_state)
+		var/mob/living/puller = pulledby
+		puller.set_pull_offsets(src, puller.grab_state)
 
 	if(active_storage)
 		var/storage_is_important_recurisve = (active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE])
@@ -1050,8 +1059,12 @@
 		if(!storage_is_important_recurisve && !can_reach_active_storage)
 			active_storage.hide_contents(src)
 
-	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
-		makeTrail(newloc, T, old_direction)
+	if(!buckled && !moving_diagonally && loc != old_loc)
+		var/blood_flow = get_bleed_rate()
+		var/health_check = body_position == LYING_DOWN && prob(getBruteLoss() * 200 / maxHealth)
+		var/bleeding_check = blood_flow > 3 && prob(blood_flow * 16)
+		if(health_check || bleeding_check)
+			make_blood_trail(newloc, old_loc, old_direction, direct)
 
 ///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
 /mob/living/proc/lying_angle_on_movement(direct)
@@ -1062,85 +1075,6 @@
 
 /mob/living/carbon/alien/adult/lying_angle_on_movement(direct)
 	return
-
-/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity() || !isturf(start) || !blood_volume)
-		return
-
-	var/trail_type = getTrail()
-	var/trail_blood_type = get_trail_blood()
-	if(!trail_type || !trail_blood_type)
-		return
-
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-		return
-
-	var/bleed_amount = bleedDragAmount()
-	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
-	var/newdir = get_dir(target_turf, start)
-	if(newdir != direction)
-		newdir = newdir | direction
-		if(newdir == (NORTH|SOUTH))
-			newdir = NORTH
-		else if(newdir == (EAST|WEST))
-			newdir = EAST
-
-	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = REVERSE_DIR(get_dir(target_turf, start))
-
-	var/found_trail = FALSE
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail in start)
-		if (trail.blood_state != trail_blood_type)
-			continue
-
-		// Don't make double trails, even if they're of a different type
-		if(newdir in trail.existing_dirs)
-			found_trail = TRUE
-			break
-
-		trail.existing_dirs += newdir
-		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-		trail.add_mob_blood(src)
-		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
-		found_trail = TRUE
-		break
-
-	if (found_trail)
-		return
-
-	var/obj/effect/decal/cleanable/blood/trail_holder/trail = new(start, get_static_viruses())
-	trail.blood_state = trail_blood_type
-	trail.existing_dirs += newdir
-	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-	trail.add_mob_blood(src)
-	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
-
-/mob/living/proc/get_trail_blood()
-	return BLOOD_STATE_HUMAN
-
-/mob/living/carbon/human/makeTrail(turf/T)
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || dna.blood_type.no_bleed_overlays)
-		return
-	..()
-
-///Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]
-/mob/living/proc/bleedDragAmount()
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	return max(1, brute_ratio * 2)
-
-/mob/living/carbon/bleedDragAmount()
-	var/bleed_amount = 0
-	for(var/i in all_wounds)
-		var/datum/wound/iter_wound = i
-		bleed_amount += iter_wound.drag_bleed_amount()
-	return bleed_amount
-
-/mob/living/proc/getTrail()
-	if(getBruteLoss() < 300)
-		return pick("ltrails_1", "ltrails_2")
-	else
-		return pick("trails_1", "trails_2")
 
 /// Print a message about an annoying sensation you are feeling. Returns TRUE if successful.
 /mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
@@ -1446,7 +1380,7 @@
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
-			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
+			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/telekinesis) || !tkMaxRangeCheck(src, target))
 				if(!(action_bitflags & SILENT_ADJACENCY))
 					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
@@ -1483,6 +1417,7 @@
 	return TRUE
 
 /mob/living/proc/update_stamina()
+	SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_UPDATE)
 	update_stamina_hud()
 
 /mob/living/carbon/alien/update_stamina()
@@ -2636,6 +2571,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		on_lying_down()
 	else // From lying down to standing up.
 		on_standing_up()
+	update_rest_hud_icon()
 
 
 /// Proc to append behavior to the condition of being floored. Called when the condition starts.
@@ -2653,6 +2589,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Proc to append behavior to the condition of being handsblocked. Called when the condition starts.
 /mob/living/proc/on_handsblocked_start()
+	if(active_storage)
+		active_storage.hide_contents(src)
 	drop_all_held_items()
 	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_HANDS_BLOCKED)
 
@@ -2675,8 +2613,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/get_exp_list(minutes)
 	var/list/exp_list = list()
 
-	if(mind && mind.special_role && !(mind.datum_flags & DF_VAR_EDITED))
-		exp_list[mind.special_role] = minutes
+	if(!(mind.datum_flags & DF_VAR_EDITED))
+		for(var/datum/antagonist/antag as anything in mind?.antag_datums)
+			var/flag_to_check = antag.jobban_flag || antag.pref_flag
+			if(flag_to_check)
+				exp_list[flag_to_check] = minutes
 
 	if(mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])
 		exp_list[mind.assigned_role.title] = minutes
@@ -3053,8 +2994,3 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
-
-/// Setter for changing a mob's blood type
-/mob/living/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_LIVING_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)

@@ -5,9 +5,11 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 200
-	// Should we leave a brain behind when the statue is wrecked?
+	///Should we leave a brain behind when the statue is wrecked?
 	var/brain = TRUE
-	var/timer = 480 //eventually the person will be freed
+	///Time left before the petrification ends and we let the mob free
+	var/timer = 48 SECONDS
+	///The mob that got medusa'd
 	var/mob/living/petrified_mob
 
 /obj/structure/statue/petrified/relaymove()
@@ -36,7 +38,7 @@
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
 	timer -= seconds_per_tick
-	petrified_mob.Stun(40) //So they can't do anything while petrified
+	petrified_mob.Stun(4 SECONDS) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
@@ -48,26 +50,26 @@
 	. = ..()
 	if(gone == petrified_mob)
 		petrified_mob.remove_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
+		petrified_mob.Paralyze(10 SECONDS)
 		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
 		petrified_mob.faction -= FACTION_MIMIC
 		petrified_mob = null
 
 /obj/structure/statue/petrified/Destroy()
-
-	if(istype(src.loc, /mob/living/basic/statue))
-		var/mob/living/basic/statue/S = src.loc
-		forceMove(S.loc)
-		if(S.mind)
+	var/turf/dropoff_turf = drop_location()
+	if(istype(loc, /mob/living/basic/statue))
+		var/mob/living/basic/statue/statue_mob = loc
+		forceMove(dropoff_turf)
+		if(statue_mob.mind)
 			if(petrified_mob)
-				S.mind.transfer_to(petrified_mob)
-				petrified_mob.Paralyze(100)
+				statue_mob.mind.transfer_to(petrified_mob)
 				to_chat(petrified_mob, span_notice("You slowly come back to your senses. You are in control of yourself again!"))
-		qdel(S)
+		qdel(statue_mob)
 
-	for(var/obj/O in src)
-		O.forceMove(loc)
+	for(var/obj/statue_contents in src)
+		statue_contents.forceMove(dropoff_turf)
 
-	petrified_mob?.forceMove(loc)
+	petrified_mob?.forceMove(dropoff_turf)
 	return ..()
 
 /obj/structure/statue/petrified/atom_deconstruct(disassembled = TRUE)

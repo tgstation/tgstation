@@ -211,3 +211,12 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/standard, // Can mine walls
 		/mob/living/basic/guardian/support, // Heals and teleports you
 	)
+
+/obj/item/guardian_creator/miner/spawn_guardian(mob/living/user, mob/dead/candidate, guardian_path)
+	var/mob/living/basic/guardian/guardian = ..()
+	if (!guardian)
+		return
+	// Immune to planetary weather effects
+	ADD_TRAIT(guardian, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(guardian, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	return guardian

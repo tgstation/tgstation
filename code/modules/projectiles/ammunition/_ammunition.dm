@@ -42,6 +42,9 @@
 	///If set, this casing will damage any gun it's fired from by the specified amount
 	var/integrity_damage = 0
 
+	/// Set when this casing is fired. Only used for checking if it should burn a user's hand when caught from an ejection port.
+	var/shot_timestamp = 0
+
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
 	loaded_projectile = null
@@ -129,7 +132,7 @@
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/ammo_casing/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/ammo_box))
 		var/obj/item/ammo_box/box = I
 		if(isturf(loc))

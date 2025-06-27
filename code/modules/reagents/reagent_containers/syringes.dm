@@ -34,7 +34,7 @@
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
 
-/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
@@ -192,7 +192,7 @@
 		"embedding" = embed_data,
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
-		"bare_wound_bonus" = bare_wound_bonus,
+		"exposed_wound_bonus" = exposed_wound_bonus,
 		"demolition_mod" = demolition_mod,
 	)
 

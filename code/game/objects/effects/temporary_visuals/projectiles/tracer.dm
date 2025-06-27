@@ -60,3 +60,15 @@
 
 /obj/effect/projectile/tracer/sniper
 	icon_state = "sniper"
+
+/obj/effect/projectile/tracer/lightning
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "lightning2"
+
+/obj/effect/projectile/tracer/lightning/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/effect/projectile/tracer/lightning/update_icon_state()
+	. = ..()
+	icon_state = "lightning[rand(1, 12)]"

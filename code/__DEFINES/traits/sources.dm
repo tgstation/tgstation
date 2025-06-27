@@ -24,7 +24,6 @@
 /// cannot be removed without admin intervention
 #define ROUNDSTART_TRAIT "roundstart"
 #define JOB_TRAIT "job"
-#define CYBORG_ITEM_TRAIT "cyborg-item"
 /// Any traits granted by quirks.
 #define QUIRK_TRAIT "quirk_trait"
 /// (B)admins only.
@@ -34,6 +33,8 @@
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
+///Comes from a holy source.
+#define HOLY_TRAIT "holy"
 
 #define VENDING_MACHINE_TRAIT "vending_machine"
 

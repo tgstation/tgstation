@@ -229,7 +229,7 @@
 
 			if(mode == SCANNER_VERBOSE)
 				// Follow same body zone list every time so it's consistent across all humans
-				for(var/zone in GLOB.all_body_zones)
+				for(var/zone in carbontarget.get_all_limbs())
 					var/obj/item/bodypart/limb = carbontarget.get_bodypart(zone)
 					if(isnull(limb))
 						dmgreport += "<tr>"
@@ -373,26 +373,47 @@
 		render_list += "<span class='info ml-1'>[body_temperature_message]</span><br>"
 
 	// Blood Level
-	var/mob/living/carbon/carbontarget = target
-	var/blood_id = carbontarget.get_blood_id()
-	if(blood_id)
-		var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-		var/datum/blood_type/blood_type = carbontarget.dna.blood_type
-		if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type.name]")]<br>"
-			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
-		else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"
-			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
+	var/datum/blood_type/blood_type = target.get_bloodtype()
+	if(blood_type)
+		var/blood_percent = round((target.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/blood_type_format
+		var/level_format
+		if(target.blood_volume <= BLOOD_VOLUME_SAFE && target.blood_volume > BLOOD_VOLUME_OKAY)
+			level_format = "LOW [blood_percent]%, [target.blood_volume] cl"
+			if (blood_type.restoration_chem)
+				level_format = conditional_tooltip(level_format, "Recommendation: [blood_type.restoration_chem::name] supplement.", tochat)
+		else if(target.blood_volume <= BLOOD_VOLUME_OKAY)
+			level_format = "<b>CRITICAL [blood_percent]%</b>, [target.blood_volume] cl"
+			var/recommendation = list()
+			if (blood_type.restoration_chem)
+				recommendation += "[blood_type.restoration_chem::name] supplement"
+			if (blood_type.restoration_chem == /datum/reagent/iron)
+				recommendation += "[/datum/reagent/medicine/salglu_solution::name]"
+			if (length(recommendation))
+				recommendation += "[blood_type.get_blood_name()] transufion"
+			else
+				recommendation += "immediate [blood_type.get_blood_name()] transufion"
+			level_format = conditional_tooltip(level_format, "Recommendation: [english_list(recommendation, and_text = " or ")].", tochat)
 		else
-			render_list += "<span class='info ml-1'>Blood level: [blood_percent]%, [carbontarget.blood_volume] cl, type: [blood_type]</span><br>"
+			level_format = "[blood_percent]%, [target.blood_volume] cl"
+
+		if (blood_type.get_type())
+			blood_type_format = "type: [blood_type.get_type()]"
+			if(tochat && length(blood_type.compatible_types))
+				var/list/compatible_types_readable = list()
+				for(var/datum/blood_type/comp_blood_type as anything in blood_type.compatible_types)
+					compatible_types_readable |= initial(comp_blood_type.name)
+				blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
+
+		render_list += "<span class='[target.blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
 		if(blood_alcohol_content >= 0.24)
-			render_list += "<span class='alert ml-1'>Blood alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span><br>"
+			// "Oil alcohol content" is kinda funny if you think about it from a technical standpoint
+			render_list += "<span class='alert ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span><br>"
 		else
-			render_list += "<span class='info ml-1'>Blood alcohol content: [blood_alcohol_content]%</span><br>"
+			render_list += "<span class='info ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</span><br>"
 
 	//Diseases
 	var/disease_hr = FALSE
@@ -480,7 +501,7 @@
 	REMOVE_TRAIT(target, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
 	return TRUE
 
-/proc/chemscan(mob/living/user, mob/living/target)
+/proc/chemscan(mob/living/user, mob/living/target, reagent_types_to_check = null)
 	if(user.incapacitated)
 		return
 
@@ -494,12 +515,15 @@
 				var/datum/reagent/reagent = r
 				if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
 					continue
+				if(reagent_types_to_check)
+					if(!istype(reagent, reagent_types_to_check))
+						continue
 				render_block += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_bolddanger("OVERDOSING")]" : ".</span>"]<br>"
 
 		if(!length(render_block)) //If no VISIBLY DISPLAYED reagents are present, we report as if there is nothing.
-			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span><br>"
+			render_list += "<span class='notice ml-1'>Subject contains no reagents in their [LOWER_TEXT(target.get_bloodtype()?.get_blood_name()) || "blood"]stream.</span><br>"
 		else
-			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their blood:</span><br>"
+			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their [LOWER_TEXT(target.get_bloodtype()?.get_blood_name()) || "blood"]stream:</span><br>"
 			render_list += render_block //Otherwise, we add the header, reagent readouts, and clear the readout block for use on the stomach.
 			render_block.Cut()
 
@@ -511,6 +535,9 @@
 					var/datum/reagent/bit = bile
 					if(bit.chemical_flags & REAGENT_INVISIBLE)
 						continue
+					if(reagent_types_to_check)
+						if(!istype(bit, reagent_types_to_check))
+							continue
 					if(!belly.food_reagents[bit.type])
 						render_block += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_bolddanger("OVERDOSING")]" : ".</span>"]<br>"
 					else

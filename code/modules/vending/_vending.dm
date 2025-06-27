@@ -323,6 +323,19 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
 		restock(installed_refill)
 
+/obj/machinery/vending/on_construction(mob/user, from_flatpack = FALSE)
+	if (!from_flatpack)
+		return
+	// When built from a flatpack, empty our canister upon construction
+	for(var/obj/item/vending_refill/installed_refill in component_parts)
+		for (var/item_sold in installed_refill.products)
+			installed_refill.products[item_sold] = 0
+		for (var/item_sold in installed_refill.contraband)
+			installed_refill.contraband[item_sold] = 0
+		for (var/item_sold in installed_refill.premium)
+			installed_refill.premium[item_sold] = 0
+	RefreshParts()
+
 /obj/machinery/vending/on_deconstruction(disassembled)
 	if(refill_canister)
 		return ..()
@@ -710,7 +723,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/attack_item, mob/living/user, list/modifiers)
+/obj/machinery/vending/attackby(obj/item/attack_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(panel_open && is_wire_tool(attack_item))
 		wires.interact(user)
 		return
@@ -1460,6 +1473,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		vended_item.set_greyscale(colors=greyscale_colors)
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [item_record.name] out of the slot."))
+		vended_item.do_pickup_animation(usr, src)
 	else
 		to_chat(usr, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))
@@ -1790,7 +1804,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				vend_ready = TRUE
 			return TRUE
 
-/obj/machinery/vending/custom/attackby(obj/item/attack_item, mob/user, list/modifiers)
+/obj/machinery/vending/custom/attackby(obj/item/attack_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!linked_account && isliving(user))
 		var/mob/living/living_user = user
 		var/obj/item/card/id/card_used = living_user.get_idcard(TRUE)

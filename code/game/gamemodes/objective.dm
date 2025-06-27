@@ -179,16 +179,16 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/proc/give_special_equipment(special_equipment)
 	var/datum/mind/receiver = pick(get_owners())
-	if(receiver?.current)
-		if(ishuman(receiver.current))
-			var/mob/living/carbon/human/receiver_current = receiver.current
-			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
-			for(var/obj/equipment_path as anything in special_equipment)
-				var/obj/equipment_object = new equipment_path
-				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots, indirect_action = TRUE))
-					LAZYINITLIST(receiver.failed_special_equipment)
-					receiver.failed_special_equipment += equipment_path
-					receiver.try_give_equipment_fallback()
+	if(!ishuman(receiver?.current))
+		return
+	var/mob/living/carbon/human/receiver_current = receiver.current
+	for(var/obj/equipment_path as anything in special_equipment)
+		var/obj/equipment_object = new equipment_path
+		if(receiver_current.equip_to_storage(equipment_object, ITEM_SLOT_BACK, indirect_action = TRUE))
+			continue
+		LAZYINITLIST(receiver.failed_special_equipment)
+		receiver.failed_special_equipment += equipment_path
+		receiver.try_give_equipment_fallback()
 
 /datum/action/special_equipment_fallback
 	name = "Request Objective-specific Equipment"
@@ -230,7 +230,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
+		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
 	else
 		explanation_text = "Free objective."
 
@@ -280,7 +280,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
+		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
 	else
 		explanation_text = "Free objective."
 
@@ -302,7 +302,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/maroon/update_explanation_text()
 	if(target?.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role], from escaping alive."
+		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())], from escaping alive."
 	else
 		explanation_text = "Free objective."
 
@@ -333,7 +333,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/debrain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
+		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
 	else
 		explanation_text = "Free objective."
 
@@ -359,7 +359,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
+		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
 	else
 		explanation_text = "Free objective."
 
@@ -384,7 +384,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] escapes alive and out of custody."
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())] escapes alive and out of custody."
 	else
 		explanation_text = "Free objective."
 
@@ -400,7 +400,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/detain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered to Nanotrasen alive and in custody."
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())] is delivered to Nanotrasen alive and in custody."
 	else
 		explanation_text = "Free objective."
 

@@ -74,6 +74,8 @@ export class PrimaryView extends Component {
 
     const tooManyCharacters = usedCharacters > max_length;
 
+    const canEdit = interactMode === InteractionType.writing;
+
     return (
       <>
         <PaperSheetStamper scrollableRef={this.scrollableRef} />
@@ -86,9 +88,10 @@ export class PrimaryView extends Component {
               scrollableRef={this.scrollableRef}
               handleOnScroll={this.onScrollHandler}
               textArea={textAreaText}
+              canEdit={canEdit}
             />
           </Flex.Item>
-          {interactMode === InteractionType.writing && (
+          {canEdit && (
             <Flex.Item shrink={1} height={TEXTAREA_INPUT_HEIGHT + 'px'}>
               <Section
                 title="Insert Text"

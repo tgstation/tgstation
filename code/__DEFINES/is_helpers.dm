@@ -115,6 +115,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 //Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
+#define isspirit(A) (is_species(A, /datum/species/spirit))
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
@@ -321,6 +322,12 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
 	/obj/item/infuser_book,
+	/obj/item/storage/photo_album,
+	/obj/item/storage/card_binder,
+	/obj/item/codex_cicatrix,
+	/obj/item/toy/eldritch_book,
+	/obj/item/toy/talking/codex_gigas,
+	/obj/item/book_of_babel,
 )))
 
 // Jobs
@@ -339,3 +346,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 
 #define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))
 #define is_multi_tile_object(atom) (atom.bound_width > ICON_SIZE_X || atom.bound_height > ICON_SIZE_Y)
+
+#define is_area_nearby_station(checked_area) (istype(checked_area, /area/space) || istype(checked_area, /area/space/nearstation) || istype(checked_area, /area/station/asteroid))

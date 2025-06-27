@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - refactor: "Reworked a bit of how smoothing functions on the backend. Nothing should change, so if it does please yell at me"

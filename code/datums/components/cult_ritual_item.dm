@@ -181,7 +181,7 @@
 		span_warning("[cultist] strikes [cult_girder] with [parent]!"),
 		span_notice("You demolish [cult_girder].")
 		)
-	new /obj/item/stack/sheet/runed_metal(cult_girder.drop_location(), 1)
+	new /obj/item/stack/sheet/runed_metal(cult_girder.drop_location())
 	qdel(cult_girder)
 
 /*
@@ -380,7 +380,7 @@
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
 
 	notify_ghosts(
-		"[cultist] has begun scribing a Nar'Sie rune!",
+		"[cultist.real_name] has begun scribing a Nar'Sie rune!",
 		source = cultist,
 		header = "Maranax Infirmux!",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,

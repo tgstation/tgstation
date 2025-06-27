@@ -582,10 +582,13 @@
 		return
 	return attempt_pickup(user)
 
-/obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
+/obj/item/proc/attempt_pickup(mob/living/user, skip_grav = FALSE)
 	. = TRUE
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
+		return
+
+	if(!(user.mobility_flags & MOBILITY_PICKUP))
 		return
 
 	if(!skip_grav)
@@ -644,15 +647,12 @@
 		return
 	attack_paw(ayy, modifiers)
 
-/obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/robot_model))
-		//If the item is part of a cyborg module, equip it
-		if(!iscyborg(user))
-			return
-		var/mob/living/silicon/robot/R = user
-		if(!R.low_power_mode) //can't equip modules with an empty cell.
-			R.activate_module(src)
-			R.hud_used.update_robot_modules_display()
+/obj/item/attack_robot(mob/living/silicon/robot/user)
+	if(!istype(loc, /obj/item/robot_model))
+		return
+	if(user.low_power_mode) //can't equip modules with an empty cell.
+		return
+	user.activate_module(src)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -783,7 +783,9 @@
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/action)
-	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
+	if(!slot) // Equipped into storage
+		return FALSE
+	if(slot & (ITEM_SLOT_HANDCUFFED|ITEM_SLOT_LEGCUFFED)) // These aren't true slots, so avoid granting actions there
 		return FALSE
 	if(!isnull(action_slots))
 		return (slot & action_slots)
@@ -1429,6 +1431,8 @@
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
+	if(!.) // we don't need mob updates when the item was already clean
+		return
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.update_clothing(slot_flags)
@@ -1438,28 +1442,35 @@
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
 /**
- * * An interrupt for offering an item to other people, called mainly from [/mob/living/carbon/proc/give], in case you want to run your own offer behavior instead.
+ * * An interrupt for offering an item to other people, called mainly from [/mob/living/proc/give], in case you want to run your own offer behavior instead.
  *
  * * Return TRUE if you want to interrupt the offer.
  *
  * * Arguments:
- * * offerer - The person offering the item.
- * * offered - The person being offered the item.
+ * * offerer - The living mob offering the item.
+ * * offered - The living mob being offered the item.
  */
-/obj/item/proc/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
+/obj/item/proc/on_offered(mob/living/offerer, mob/living/offered)
+	if(!offered) // item has just been offered to anyone around
+		if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS)))
+			return TRUE
+	else if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(offered, TRAIT_CAN_HOLD_ITEMS)))
+		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
 /**
- * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/carbon/proc/take], in case you want to run your own take behavior instead.
+ * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/proc/take], in case you want to run your own take behavior instead.
  *
  * * Return TRUE if you want to interrupt the taking.
  *
  * * Arguments:
- * * offerer - the person offering the item
- * * taker - the person trying to accept the offer
+ * * offerer - the living mob offering the item
+ * * taker - the living mob trying to accept the offer
  */
-/obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+/obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)
+	if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS)))
+		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
@@ -1844,7 +1855,7 @@
 	force = modify_fantasy_variable("force", force, bonus)
 	throwforce = modify_fantasy_variable("throwforce", throwforce, bonus)
 	wound_bonus = modify_fantasy_variable("wound_bonus", wound_bonus, bonus)
-	bare_wound_bonus = modify_fantasy_variable("bare_wound_bonus", bare_wound_bonus, bonus)
+	exposed_wound_bonus = modify_fantasy_variable("exposed_wound_bonus", exposed_wound_bonus, bonus)
 	toolspeed = modify_fantasy_variable("toolspeed", toolspeed, -bonus/10, minimum = 0.1)
 
 /obj/item/proc/remove_fantasy_bonuses(bonus)
@@ -1852,7 +1863,7 @@
 	force = reset_fantasy_variable("force", force)
 	throwforce = reset_fantasy_variable("throwforce", throwforce)
 	wound_bonus = reset_fantasy_variable("wound_bonus", wound_bonus)
-	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
+	exposed_wound_bonus = reset_fantasy_variable("exposed_wound_bonus", exposed_wound_bonus)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
 
@@ -2005,7 +2016,7 @@
 			DAMTYPE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=damtype' id='damtype'>[uppertext(damtype)]</a>
 			FORCE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=force' id='force'>[force]</a>
 			WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=wound' id='wound'>[wound_bonus]</a>
-			BARE WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[bare_wound_bonus]</a>
+			BARE WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[exposed_wound_bonus]</a>
 		</font>
 	"}
 

@@ -125,7 +125,7 @@
 		def_zone = def_zone,
 		blocked = min(ARMOR_MAX_BLOCK, armor_check),  //cap damage reduction at 90%
 		wound_bonus = proj.wound_bonus,
-		bare_wound_bonus = proj.bare_wound_bonus,
+		exposed_wound_bonus = proj.exposed_wound_bonus,
 		sharpness = proj.sharpness,
 		attack_direction = get_dir(proj.starting, src),
 		attacking_item = proj,
@@ -219,7 +219,7 @@
 		return ..()
 
 	var/obj/item/thrown_item = AM
-	if(throwingdatum.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
+	if(throwingdatum?.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
 		if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
 			hitpush = FALSE
 			skipcatch = TRUE
@@ -234,27 +234,40 @@
 	if(blocked)
 		return SUCCESSFUL_BLOCK
 
-	var/mob/thrown_by = throwingdatum.get_thrower()
-	if(thrown_by)
-		log_combat(thrown_by, src, "threw and hit", thrown_item)
-	else
-		log_combat(thrown_item, src, "hit ")
 	if(nosell_hit)
+		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return ..()
-	visible_message(span_danger("[src] is hit by [thrown_item]!"), \
-					span_userdanger("You're hit by [thrown_item]!"))
+
+	visible_message(span_danger("[src] is hit by [thrown_item]!"),
+		span_userdanger("You're hit by [thrown_item]!"))
 	if(!thrown_item.throwforce)
+		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return
-	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone_with_bodypart(zone)].", "Your armor has softened hit to your [parse_zone_with_bodypart(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
+
+	var/armor = run_armor_check(
+		zone,
+		MELEE,
+		"Your armor has protected your [parse_zone_with_bodypart(zone)].",
+		"Your armor has softened hit to your [parse_zone_with_bodypart(zone)].",
+		thrown_item.armour_penetration,
+		"",
+		FALSE,
+		thrown_item.weak_against_armour,
+	)
 	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND), attacking_item = thrown_item)
+	log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
+
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
 	if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
 		hitpush = FALSE
+
 	return ..()
 
-/mob/living/proc/create_splatter(splatter_dir)
-	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir)
+/mob/living/proc/log_hit_combat(mob/thrown_by, obj/item/thrown_item)
+	if(thrown_by)
+		return log_combat(thrown_by, src, "threw and hit", thrown_item)
+	return log_combat(thrown_item, src, "hit ")
 
 ///The core of catching thrown items, which non-carbons cannot without the help of items or abilities yet, as they've no throw mode.
 /mob/living/proc/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
@@ -418,17 +431,17 @@
 	var/armor_block = run_armor_check(user.zone_selected, MELEE, armour_penetration = user.armour_penetration)
 
 	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
-	log_combat(user, src, "attacked")
 	var/damage_done = apply_damage(
 		damage = damage,
 		damagetype = user.melee_damage_type,
 		def_zone = user.zone_selected,
 		blocked = armor_block,
 		wound_bonus = user.wound_bonus,
-		bare_wound_bonus = user.bare_wound_bonus,
+		exposed_wound_bonus = user.exposed_wound_bonus,
 		sharpness = user.sharpness,
 		attack_direction = get_dir(user, src),
 	)
+	log_combat(user, src, "attacked")
 	return damage_done
 
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)

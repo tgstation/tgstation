@@ -34,6 +34,7 @@ export function ReverseMenu(props) {
             Afer landing, returns to
             dropoff turf (or bay
             if none specified).`}
+          tooltipPosition="bottom"
         />
       }
       fill

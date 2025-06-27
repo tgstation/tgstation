@@ -8,6 +8,7 @@
 
 	GLOB.carbon_list += src
 	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
+	ADD_TRAIT(src, TRAIT_CAN_THROW_ITEMS, INNATE_TRAIT) // same here
 	breathing_loop = new(src, _direct = TRUE)
 
 /mob/living/carbon/Destroy()
@@ -38,11 +39,6 @@
 		if(wound.try_treating(tool, user))
 			return ITEM_INTERACT_SUCCESS
 	return .
-
-/mob/living/carbon/click_ctrl_shift(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.give(src)
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -104,117 +100,6 @@
 
 	if(oof_noise)
 		playsound(src,'sound/items/weapons/punch1.ogg',50,TRUE)
-
-//Throwing stuff
-/mob/living/carbon/proc/toggle_throw_mode()
-	if(stat)
-		return
-	if(throw_mode)
-		throw_mode_off(THROW_MODE_TOGGLE)
-	else
-		throw_mode_on(THROW_MODE_TOGGLE)
-
-
-/mob/living/carbon/proc/throw_mode_off(method)
-	if(throw_mode > method) //A toggle doesnt affect a hold
-		return
-	throw_mode = THROW_MODE_DISABLED
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw"
-	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
-
-
-/mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
-	throw_mode = mode
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_on"
-	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
-
-/mob/proc/throw_item(atom/target)
-	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
-	return TRUE
-
-/mob/living/carbon/throw_item(atom/target)
-	. = ..()
-	throw_mode_off(THROW_MODE_TOGGLE)
-	if(!target || !isturf(loc))
-		return FALSE
-	if(istype(target, /atom/movable/screen))
-		return FALSE
-	var/atom/movable/thrown_thing
-	var/obj/item/held_item = get_active_held_item()
-	var/verb_text = pick("throw", "toss", "hurl", "chuck", "fling")
-	if(prob(0.5))
-		verb_text = "yeet"
-	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
-	var/frequency_number = 1 //We assign a default frequency number for the sound of the throw.
-	if(!held_item)
-		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
-			var/mob/living/throwable_mob = pulling
-			if(!throwable_mob.buckled)
-				thrown_thing = throwable_mob
-				if(grab_state >= GRAB_NECK)
-					neckgrab_throw = TRUE
-				stop_pulling()
-				if(HAS_TRAIT(src, TRAIT_PACIFISM) || HAS_TRAIT(src, TRAIT_NO_THROWING))
-					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
-					return FALSE
-	else
-		thrown_thing = held_item.on_thrown(src, target)
-	if(!thrown_thing)
-		return FALSE
-	if(isliving(thrown_thing))
-		var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-		var/turf/end_T = get_turf(target)
-		if(start_T && end_T)
-			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-	var/power_throw = 0
-	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
-
-	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
-	if(istype(potential_spine))
-		power_throw += potential_spine.added_throw_speed
-		extra_throw_range += potential_spine.added_throw_range
-
-	if(HAS_TRAIT(src, TRAIT_HULK))
-		power_throw++
-	if(HAS_TRAIT(src, TRAIT_DWARF))
-		power_throw--
-	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-		power_throw++
-	if(neckgrab_throw)
-		power_throw++
-	if(HAS_TRAIT(src, TRAIT_TOSS_GUN_HARD) && isgun(thrown_thing))
-		power_throw++
-	if(isitem(thrown_thing))
-		var/obj/item/thrown_item = thrown_thing
-		frequency_number = 1-(thrown_item.w_class-3)/8 //At normal weight, the frequency is at 1. For tiny, it is 1.25. For huge, it is 0.75.
-		if(thrown_item.throw_verb)
-			verb_text = thrown_item.throw_verb
-	do_attack_animation(target, no_effect = 1)
-	var/sound/throwsound = 'sound/items/weapons/throw.ogg'
-	var/power_throw_text = "."
-	if(power_throw > 0) //If we have anything that boosts our throw power like hulk, we use the rougher heavier variant.
-		throwsound = 'sound/items/weapons/throwhard.ogg'
-		power_throw_text = " really hard!"
-	if(power_throw < 0) //if we have anything that weakens our throw power like dward, we use a slower variant.
-		throwsound = 'sound/items/weapons/throwsoft.ogg'
-		power_throw_text = " flimsily."
-	frequency_number = frequency_number + (rand(-5,5)/100); //Adds a bit of randomness in the frequency to not sound exactly the same.
-	//The volume of the sound takes the minimum between the distance thrown or the max range an item, but no more than 50. Short throws are quieter. A fast throwing speed also makes the noise sharper.
-	playsound(src, throwsound, clamp(8*min(get_dist(loc,target),thrown_thing.throw_range), 10, 50), vary = TRUE, extrarange = -1, frequency = frequency_number)
-	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
-					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
-	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
-
-	var/drift_force = max(0.5 NEWTONS, 1 NEWTONS + power_throw)
-	if (isitem(thrown_thing))
-		var/obj/item/thrown_item = thrown_thing
-		drift_force *= WEIGHT_TO_NEWTONS(thrown_item.w_class)
-
-	newtonian_move(get_angle(target, src), drift_force = drift_force)
-	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -940,7 +825,7 @@
 		regenerate_limbs()
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
-		regenerate_organs(regenerate_existing = (heal_flags & HEAL_REFRESH_ORGANS))
+		regenerate_organs(remove_hazardous = !!(heal_flags & HEAL_REFRESH_ORGANS))
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
@@ -1000,7 +885,7 @@
 	if (current_brain.suicided || (current_brain.brainmob && HAS_TRAIT(current_brain.brainmob, TRAIT_SUICIDED)))
 		return DEFIB_FAIL_NO_INTELLIGENCE
 
-	if(key && key[1] == "@") // Adminghosts
+	if(IS_FAKE_KEY(key))
 		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
@@ -1024,7 +909,7 @@
 /// Creates body parts for this carbon completely from scratch.
 /// Optionally takes a map of body zones to what type to instantiate instead of them.
 /mob/living/carbon/proc/create_bodyparts(list/overrides)
-	var/list/bodyparts_paths = bodyparts.Copy()
+	var/list/bodyparts_paths = overrides?.Copy() || bodyparts.Copy()
 	bodyparts = list()
 	for(var/obj/item/bodypart/bodypart_path as anything in bodyparts_paths)
 		var/real_body_part_path = overrides?[initial(bodypart_path.body_zone)] || bodypart_path
@@ -1071,7 +956,6 @@
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
-
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -1240,47 +1124,20 @@
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()
-
 	// Wash equipped stuff that cannot be covered
 	for(var/obj/item/held_thing in held_items)
-		if(held_thing.wash(clean_types))
-			. = TRUE
+		. |= held_thing.wash(clean_types)
 
-	if(back?.wash(clean_types))
-		update_worn_back(0)
-		. = TRUE
-
-	// Check and wash stuff that can be covered
-	var/obscured = check_obscured_slots()
-
-	if(!(obscured & ITEM_SLOT_HEAD) && head?.wash(clean_types))
-		update_worn_head()
-		. = TRUE
-
-	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses?.wash(clean_types))
-		update_worn_glasses()
-		. = TRUE
-
-	if(!(obscured & ITEM_SLOT_MASK) && wear_mask?.wash(clean_types))
-		update_worn_mask()
-		. = TRUE
-
-	if(!(obscured & ITEM_SLOT_EARS) && ears?.wash(clean_types))
-		update_worn_ears()
-		. = TRUE
-
-	if(!(obscured & ITEM_SLOT_NECK) && wear_neck?.wash(clean_types))
-		update_worn_neck()
-		. = TRUE
-
-	if(!(obscured & ITEM_SLOT_FEET) && shoes?.wash(clean_types))
-		update_worn_shoes()
-		. = TRUE
-
-	if(!(obscured & ITEM_SLOT_GLOVES) && gloves?.wash(clean_types))
-		update_worn_gloves()
-		. = TRUE
+	// Check and wash stuff that isn't covered
+	var/covered = check_covered_slots()
+	for(var/obj/item/worn as anything in get_equipped_items())
+		var/slot = get_slot_by_item(worn)
+		// Don't wash glasses if something other than them is covering our eyes
+		if(slot == ITEM_SLOT_EYES && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD))
+			continue
+		if(!(covered & slot))
+			// /obj/item/wash() already updates our clothing slot
+			. = worn.wash(clean_types) || .
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
@@ -1418,6 +1275,13 @@
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
+/mob/living/carbon/get_photo_description(obj/item/camera/camera)
+	if(HAS_TRAIT(src, TRAIT_INVISIBLE_TO_CAMERA))
+		if(camera.see_ghosts)
+			return /mob/dead/observer::photo_description
+		return null
+	return ..()
+
 /**
  * This proc is used to determine whether or not the mob can handle touching an acid affected object.
  */
@@ -1444,27 +1308,6 @@
 		return TRUE
 	return FALSE
 
-/**
- * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
- *
- * The strength of the splatter in the second argument determines how much it can dirty and how far it can go
- *
- * Arguments:
- * * splatter_direction: Which direction the blood is flying
- * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
- */
-/mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
-	if(!isturf(loc))
-		return
-	if(dna.blood_type.no_bleed_overlays)
-		return
-	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
-	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
-	our_splatter.blood_dna_info = get_blood_dna_list()
-	our_splatter.color = get_blood_dna_color(our_splatter.blood_dna_info)
-	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
-	our_splatter.fly_towards(targ, splatter_strength)
-
 /// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
 /mob/living/carbon/proc/update_cached_blood_dna_info()
 	var/list/blood_dna_info = get_blood_dna_list()
@@ -1473,20 +1316,23 @@
 	for(var/obj/item/bodypart/bodypart in bodyparts)
 		bodypart.blood_dna_info = blood_dna_info
 
-/mob/living/carbon/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
+/// Setter for changing a mob's blood type
+/mob/living/carbon/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(isnull(dna))
 		return
-	if(dna.blood_type == new_blood_type) // already has this blood type, we don't need to do anything.
+
+	if(get_bloodtype() == new_blood_type) // already has this blood type, we don't need to do anything.
 		return
 
 	dna.blood_type = new_blood_type
 	if(update_cached_blood_dna_info)
 		update_cached_blood_dna_info()
+	SEND_SIGNAL(src, COMSIG_CARBON_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)
 
-	return ..()
-
-/mob/living/carbon/dropItemToGround(obj/item/item, force = FALSE, silent = FALSE, invdrop = TRUE)
-	if(item && ((item in organs) || (item in bodyparts))) //let's not do this, aight?
+/mob/living/carbon/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE, turf/newloc = null)
+	if(to_drop && (organs.Find(to_drop) || bodyparts.Find(to_drop))) //let's not do this, aight?
 		return FALSE
 	return ..()
 
@@ -1518,7 +1364,7 @@
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		return ..()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!can_bleed())
 		to_chat(src, span_notice("You get a headache."))
 		return
 	head.adjustBleedStacks(5)
@@ -1529,3 +1375,7 @@
 		return hit_zone
 	// When a limb is missing the damage is actually passed to the chest
 	return BODY_ZONE_CHEST
+
+/mob/living/carbon/get_bloodtype()
+	RETURN_TYPE(/datum/blood_type)
+	return dna?.blood_type
