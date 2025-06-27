@@ -15,6 +15,8 @@
 	/// If TRUE, gains TRAIT_MOPABLE on init - thus this cleanable will cleaned if its turf is cleaned
 	/// Set to FALSE for things that hang high on the walls or things which generally shouldn't be mopped up
 	var/is_mopped = TRUE
+	// overriden on blood, so it can be clicked.
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
