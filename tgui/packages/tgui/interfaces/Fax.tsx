@@ -1,6 +1,6 @@
+import { sortBy } from 'es-toolkit/compat';
 import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
 
-import { sortBy } from '../../common/collections';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
