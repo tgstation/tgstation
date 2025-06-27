@@ -303,24 +303,12 @@
 
 	var/mob/living/carbon/human/changeling = user
 	var/mob/living/carbon/human/victim = target
-	var/list/body_overlay = changeling.overlays_standing[BODYPARTS_LAYER]
-	var/list/hair_overlay = changeling.overlays_standing[HAIR_LAYER]
 
-	changeling.overlays_standing[BODYPARTS_LAYER] = victim.overlays_standing[BODYPARTS_LAYER]
-	changeling.overlays_standing[HAIR_LAYER] = victim.overlays_standing[HAIR_LAYER]
+	var/datum/dna/our_dna = changeling.dna
+	var/datum/dna/their_dna = victim.dna
 
-	victim.overlays_standing[BODYPARTS_LAYER] = body_overlay
-	victim.overlays_standing[HAIR_LAYER] = hair_overlay
-
-	changeling.remove_overlay(BODYPARTS_LAYER)
-	victim.remove_overlay(BODYPARTS_LAYER)
-	changeling.apply_overlay(BODYPARTS_LAYER)
-	victim.apply_overlay(BODYPARTS_LAYER)
-
-	changeling.remove_overlay(HAIR_LAYER)
-	victim.remove_overlay(HAIR_LAYER)
-	changeling.apply_overlay(HAIR_LAYER)
-	victim.apply_overlay(HAIR_LAYER)
+	victim.updateappearance(mutcolor_update = TRUE ,target_dna = our_dna)
+	changeling.updateappearance(mutcolor_update = TRUE ,target_dna = their_dna)
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
@@ -329,7 +317,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, blade), 2 MINUTES)
 
-/datum/action/changeling/sting/fake_changeling/remove_effect(mob/living/carbon/human/target, obj/item/melee/arm_blade/false/blade)
+/datum/action/changeling/sting/fake_changeling/proc/remove_effect(mob/living/carbon/human/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 	target.visible_message(span_warning("With a sickening crunch, [target] reforms [target.p_their()] [blade.name] into an arm!"),
 	span_warning("[blade] reforms back to normal."), span_italics("You hear organic matter ripping and tearing!"))
