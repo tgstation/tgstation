@@ -619,3 +619,33 @@
   - bugfix: Telekinesis can open public airlocks
   carpotoxin:
   - bugfix: Fixed narcolepsy's odds to put you to sleep scaling infinitely
+2025-06-27:
+  Melbert:
+  - refactor: Dynamic rewritten entirely, report any strange rounds
+  - config: Dynamic config reworked, it's now a TOML file
+  - refactor: Refactored antag roles somewhat, report any oddities
+  - refactor: Refactored Revolution entirely, report any oddities
+  - rscdel: Deleted most midround events that spawn antags - they use dynamic rulesets
+      now
+  - rscadd: Dynamic rulesets can now be false alarms
+  - rscadd: Adds a random event that gives dynamic the ability to run another ruleset
+      later
+  - admin: Adds a panel for messing around with dynamic
+  - admin: Adds a panel for chance for every dynamic ruleset to be selected
+  - admin: You can spawn revs without using dynamic now
+  - bugfix: Nuke team leaders get their fun title back
+  Rhials:
+  - qol: When the ticker announces the end of a round on another server, it will include
+      the shuttle call reason if the shuttle is hijacked.
+  SyncIt21:
+  - bugfix: plumbing reaction chamber UI is scrollable again
+  TealSeer:
+  - bugfix: fixed egalitarian station mode missing airlocks that use req_one_access
+  grungussuss:
+  - bugfix: fixed malf ais not being able to dominate mechs
+  - bugfix: borgs can no longer smell
+  - bugfix: fixed dunking giving you a permanent offset
+  - qol: fasten pipes now has a nicer look to it in visible text message
+  - bugfix: the message for putting dental implants in is now correct
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in the cooking menu.
