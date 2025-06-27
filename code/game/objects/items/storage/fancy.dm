@@ -214,7 +214,7 @@
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
 
-	playsound(src, rustle_sound, 50, TRUE)
+	playsound(src, atom_storage.rustle_sound, 50, TRUE)
 
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
