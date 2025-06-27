@@ -12,7 +12,7 @@ const noticestyle = {
 
 export const AntagInfoVoidwalker = (props) => {
   return (
-    <Window width={660} height={600}>
+    <Window width={660} height={660}>
       <Window.Content backgroundColor="#0d0d0d">
         <Stack fill>
           <Stack.Item width="50%">

@@ -740,7 +740,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker
 	name = "Sunwalker"
 	config_tag = "Sunwalker"
-	preview_antag_datum = /datum/antagonist/sunwalker
 
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_VOIDWALKER
@@ -752,7 +751,7 @@
 	ruleset_lazy_templates = null
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker/create_ruleset_body()
-	return new /mob/living/basic/sunwalker
+	return new /mob/living/basic/voidwalker/sunwalker
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/sunwalker)

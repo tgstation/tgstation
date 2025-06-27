@@ -20,8 +20,10 @@
 
 	charge = /datum/action/cooldown/mob_cooldown/charge/sunwalker
 	telepathy = /datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker
+	can_do_abductions = FALSE
 
 	regenerate_colour = COLOR_BLUE
+	light_range = 7
 
 	/// Temperature we move our surroundings towards
 	var/hotspot_temperature = 1000

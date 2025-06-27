@@ -76,6 +76,8 @@
 	var/home_turf = /turf/open/space
 	/// Decal that we can kidnap on
 	var/kidnapping_decal = /obj/effect/decal/cleanable/vomit/nebula
+	/// Toggle for abduction interactions, in-case we have non-kidnap subtypes ()
+	var/can_do_abductions = TRUE
 
 /mob/living/basic/voidwalker/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
@@ -134,7 +136,7 @@
 /mob/living/basic/voidwalker/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
 
-	if(!.)
+	if(!. || !can_do_abductions)
 		return
 
 	if(ishuman(target))

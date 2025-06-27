@@ -1,8 +1,9 @@
 /// Space antagonist that harasses people near space and cursed them if they get the chance
 /datum/antagonist/sunwalker
 	name = "\improper Sunwalker"
-	antagpanel_category = ANTAG_GROUP_HORRORS
-	job_rank = ROLE_VOIDWALKER
+	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
+	pref_flag = ROLE_VOIDWALKER
+
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Voidwalker"
 	show_name_in_check_antagonists = TRUE
