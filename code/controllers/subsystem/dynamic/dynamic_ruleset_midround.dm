@@ -739,7 +739,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker
 	name = "Sunwalker"
-	config_tag = "Sunwalker"
+	preview_antag_datum = /datum/antagonist/sunwalker
 
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_VOIDWALKER
