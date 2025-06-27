@@ -82,6 +82,6 @@
 
 /obj/item/ammo_box/magazine/m38/flare
 	name = "battle rifle magazine (.38 Flare)"
-	desc = parent_type::desc + " Flare casings launch a concentrated pparticle beam towards a target, lighting them up for everyone to see."
+	desc = parent_type::desc + " Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	ammo_type = /obj/item/ammo_casing/c38/flare
 	ammo_band_color = COLOR_AMMO_HELLFIRE

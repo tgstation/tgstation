@@ -199,7 +199,7 @@
 
 /datum/design/c38_flare_mag
 	name = "Magazine (.38 Flae) (VERY Lethal)"
-	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Flare casings launch a concentrated pparticle beam towards a target, lighting them up for everyone to see."
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	id = "c38_flare_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(

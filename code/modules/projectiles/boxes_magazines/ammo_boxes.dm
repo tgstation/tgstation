@@ -99,7 +99,7 @@
 
 /obj/item/ammo_box/c38/flare
 	name = "speed loader (.38 Flare)"
-	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated pparticle beam towards a target, lighting them up for everyone to see."
+	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	ammo_type = /obj/item/ammo_casing/c38/flare
 	ammo_band_color = COLOR_AMMO_HELLFIRE
 
