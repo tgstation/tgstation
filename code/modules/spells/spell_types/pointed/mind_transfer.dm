@@ -25,10 +25,8 @@
 	/// You may be wondering "What's the point of mindswap if the target has no mind"?
 	/// Primarily for debugging - targets hit with this set to FALSE will init a mind, then do the swap.
 	var/target_requires_mind = TRUE
-	/// For how long is the caster stunned for after the spell
-	var/unconscious_amount_caster = 40 SECONDS
-	/// For how long is the victim stunned for after the spell
-	var/unconscious_amount_victim = 40 SECONDS
+	/// For how long is the caster or victim stunned for after the spell
+	var/unconscious_amount_base = 20 SECONDS
 	/// List of mobs we cannot mindswap into.
 	var/static/list/mob/living/blacklisted_mobs = typecacheof(list(
 		/mob/living/basic/demon/slaughter,
@@ -133,9 +131,10 @@
 
 	// MIND TRANSFER END
 
-	// only knock out the victim
-	caster.Unconscious(unconscious_amount_caster)
-	to_swap.Unconscious(unconscious_amount_victim / (spell_level * spell_level))
+	// knocks out the victim, and the caster for a duration depending on spell level.
+	caster.Unconscious(unconscious_amount_base) //applied to the body the wizard is leaving behind
+	to_swap.Unconscious(unconscious_amount_base / (spell_level * spell_level)) //applied to the body the wizard is taking over
+	priority_announce("[unconscious_amount_base / (spell_level * spell_level)]")
 
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
