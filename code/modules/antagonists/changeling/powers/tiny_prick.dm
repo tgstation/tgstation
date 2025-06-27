@@ -294,22 +294,30 @@
 	chemical_cost = 22
 	dna_cost = 2
 
-/datum/action/changeling/sting/identity_swap/sting_action(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/action/changeling/sting/identity_swap/sting_action(mob/living/user, mob/living/target)
 	. = ..()
 	if(!ishuman(user))
 		return
 	if(!ishuman(target))
 		return
-	var/list/body_overlay = user.overlays_standing[BODYPARTS_LAYER]
-	var/list/hair_overlay = user.overlays_standing[HAIR_LAYER]
 
-	user.overlays_standing[BODYPARTS_LAYER] = target.overlays_standing[BODYPARTS_LAYER]
-	user.overlays_standing[HAIR_LAYER] = target.overlays_standing[HAIR_LAYER]
+	var/mob/living/carbon/human/changeling = user
+	var/mob/living/carbon/human/victim = target
+	var/list/body_overlay = changeling.overlays_standing[BODYPARTS_LAYER]
+	var/list/hair_overlay = changeling.overlays_standing[HAIR_LAYER]
 
-	target.overlays_standing[BODYPARTS_LAYER] = body_overlay
-	target.overlays_standing[HAIR_LAYER] = hair_overlay
+	changeling.overlays_standing[BODYPARTS_LAYER] = victim.overlays_standing[BODYPARTS_LAYER]
+	changeling.overlays_standing[HAIR_LAYER] = victim.overlays_standing[HAIR_LAYER]
 
-	user.apply_overlay(BODYPARTS_LAYER)
-	target.apply_overlay(BODYPARTS_LAYER)
-	user.apply_overlay(HAIR_LAYER)
-	target.apply_overlay(HAIR_LAYER)
+	victim.overlays_standing[BODYPARTS_LAYER] = body_overlay
+	victim.overlays_standing[HAIR_LAYER] = hair_overlay
+
+	changeling.remove_overlay(BODYPARTS_LAYER)
+	victim.remove_overlay(BODYPARTS_LAYER)
+	changeling.apply_overlay(BODYPARTS_LAYER)
+	victim.apply_overlay(BODYPARTS_LAYER)
+
+	changeling.remove_overlay(HAIR_LAYER)
+	victim.remove_overlay(HAIR_LAYER)
+	changeling.apply_overlay(HAIR_LAYER)
+	victim.apply_overlay(HAIR_LAYER)
