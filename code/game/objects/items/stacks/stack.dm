@@ -72,9 +72,11 @@
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
 
-/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-	if(new_amount != null)
-		amount = new_amount
+/obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+	amount = new_amount
+	if(amount <= 0)
+		stack_trace("invalid amount [amount]!")
+		return INITIALIZE_HINT_QDEL
 	while(amount > max_amount)
 		amount -= max_amount
 		new type(loc, max_amount, FALSE, mat_override, mat_amt)
@@ -129,7 +131,6 @@
 		if(item_stack == src || QDELING(item_stack) || (item_stack.amount >= item_stack.max_amount))
 			continue
 		if(!(item_stack.flags_1 & INITIALIZED_1))
-			stack_trace("find_other_stack found uninitialized stack in loc? skipping for now")
 			continue
 		var/stack_ref = REF(item_stack)
 		if(already_found[stack_ref])

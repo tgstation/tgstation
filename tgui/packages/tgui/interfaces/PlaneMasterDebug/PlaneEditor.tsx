@@ -129,9 +129,6 @@ export function PlaneEditor() {
             maxValue={255}
             step={1}
             stepPixelSize={1.9}
-            onDrag={(_event, value) =>
-              act('set_alpha', { edit: currentPlane.plane, alpha: value })
-            }
             onChange={(_event, value) =>
               act('set_alpha', { edit: currentPlane.plane, alpha: value })
             }

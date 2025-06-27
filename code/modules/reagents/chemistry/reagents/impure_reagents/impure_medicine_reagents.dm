@@ -9,14 +9,14 @@
 /datum/reagent/impurity/healing
 	name = "Healing Impure Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 	liver_damage = 0
 
 /datum/reagent/inverse/healing
 	name = "Healing Inverse Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	addiction_types = list(/datum/addiction/medicine = 3)
 	tox_damage = 0
 
@@ -125,7 +125,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/libitoil
 	name = "Libitoil"
 	description = "Temporarily interferes with a patient's ability to process alcohol."
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 4)
 	tox_damage = 0
@@ -277,7 +277,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "This will send the patient to sleep, adding a bonus to the efficacy of all reagents administered."
 	ph = 12.5 //sleeping is a basic need of all lifeformsa
 	self_consuming = TRUE //No pesky liver shenanigans
-	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_DEAD_PROCESS
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 5)
 
@@ -397,7 +397,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Technetium 99"
 	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.3 * REM
-	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
+	chemical_flags = NONE //Do show this on scanner
 	tox_damage = 0
 
 	var/time_until_next_poison = 0
@@ -417,7 +417,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Syrinifergus"
 	description = "This reagent reduces the impurity of all non medicines within the patient, reducing their negative effects."
 	self_consuming = TRUE //No pesky liver shenanigans
-	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_DEAD_PROCESS
 	///The list of reagents we've affected
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 1.75)
@@ -480,7 +480,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 12)
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
-	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_DEAD_PROCESS
 	affected_organ_flags = NONE
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
@@ -588,20 +588,20 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!affected_carbon.dna)
 		return
 	var/list/speech_options = list(
-		/datum/mutation/human/swedish,
-		/datum/mutation/human/unintelligible,
-		/datum/mutation/human/stoner,
-		/datum/mutation/human/medieval,
-		/datum/mutation/human/wacky,
-		/datum/mutation/human/piglatin,
-		/datum/mutation/human/nervousness,
-		/datum/mutation/human/mute,
+		/datum/mutation/swedish,
+		/datum/mutation/unintelligible,
+		/datum/mutation/stoner,
+		/datum/mutation/medieval,
+		/datum/mutation/wacky,
+		/datum/mutation/piglatin,
+		/datum/mutation/nervousness,
+		/datum/mutation/mute,
 		)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
-		if(affected_carbon.dna.get_mutation(option))
+		if(affected_carbon.dna.get_mutation(option, MUTATION_SOURCE_MANNITOIL))
 			continue
-		affected_carbon.dna.add_mutation(option)
+		affected_carbon.dna.add_mutation(option, MUTATION_SOURCE_MANNITOIL)
 		speech_option = option
 		return
 
@@ -610,7 +610,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/carbon = affected_mob
-	carbon.dna?.remove_mutation(speech_option)
+	carbon.dna?.remove_mutation(speech_option, MUTATION_SOURCE_MANNITOIL)
 
 /datum/reagent/inverse/neurine
 	name = "Neruwhine"
@@ -936,3 +936,412 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.1 * REM
 	tox_damage = 0
 	metabolized_traits = list(TRAIT_IMMUNODEFICIENCY)
+
+/datum/reagent/inverse/krokodil
+	name = "Permonid"
+	description = "Highly potent sedative that provides the best benefits for pain management and surgery. Extremely addictive."
+	color = "#15b5dd55"
+	metabolization_rate = 0.1 * REM
+	overdose_threshold = 20
+	ph = 2.5
+	addiction_types = list(/datum/addiction/opioids = 30)
+	metabolized_traits = list(TRAIT_ANALGESIA)
+	tox_damage = 0
+
+/datum/reagent/inverse/krokodil/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (TOUCH|VAPOR|PATCH)))
+		return
+
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
+		surgery.speed_modifier = max(0.3, surgery.speed_modifier)
+
+/datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy)
+
+/datum/reagent/inverse/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.set_jitter_if_lower(10 SECONDS)
+	affected_mob.set_dizzy_if_lower(5 SECONDS)
+	if(SPT_PROB(10, seconds_per_tick))
+		affected_mob.emote("drool")
+	if(SPT_PROB(5, seconds_per_tick))
+		to_chat(affected_mob, span_warning("You briefly lose control of your legs!"))
+		affected_mob.Knockdown(5 SECONDS)
+	if(SPT_PROB(5, seconds_per_tick))
+		to_chat(affected_mob, span_warning("The muscles in your arms give out!"))
+		affected_mob.drop_all_held_items()
+
+/datum/reagent/inverse/bath_salts
+	name = "Monkey Dust"
+	description = "Oop aak chee aak eek chee. Eek aak oop chee oop aak aak!!"
+	color = "#7e3900"
+	ph = 14
+	metabolization_rate = 0.2 * REM
+	tox_damage = 0
+	/// The martial art we teach (to monkies)
+	var/datum/martial_art/jungle_arts/jungle_arts
+
+/datum/reagent/inverse/bath_salts/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	if(is_simian(affected_mob))
+		affected_mob.gain_trauma(/datum/brain_trauma/special/primal_instincts, TRAUMA_RESILIENCE_ABSOLUTE)
+		affected_mob.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
+		jungle_arts = new(src)
+		jungle_arts.locked_to_use = TRUE
+		jungle_arts.teach(affected_mob)
+
+/datum/reagent/inverse/bath_salts/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	QDEL_NULL(jungle_arts)
+	if(is_simian(affected_mob))
+		affected_mob.cure_trauma_type(/datum/brain_trauma/special/primal_instincts, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+		affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
+		affected_mob.Sleeping(30 SECONDS)
+
+/datum/reagent/inverse/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(holder.has_reagent(/datum/reagent/drug/bath_salts))
+		holder.remove_reagent(type, volume)
+		return
+
+	if(is_simian(affected_mob))
+		var/need_mob_update
+		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+
+		if(holder.has_reagent(/datum/reagent/consumable/monkey_energy))
+			need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+
+		if(need_mob_update)
+			. = UPDATE_MOB_HEALTH
+
+	else if(SPT_PROB(10, seconds_per_tick))
+		affected_mob.emote(pick("screech","scratch","jump","look"))
+
+/datum/reagent/inverse/aranesp
+	name = "Epoetin Alfa"
+	description = "Synthetic medication that induces blood regeneration, liver healing and wound clotting in patients. Causes adverse side effects when excessively used over time."
+	color = "#dee4ff"
+	metabolization_rate = 0.25 * REM
+	overdose_threshold = 20
+	ph = 6.1
+	tox_damage = 0
+
+/datum/reagent/inverse/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(overdosed)
+		return
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -1 * REM * seconds_per_tick)
+	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
+		if(iter_wound.blood_flow)
+			if(holder.has_reagent(/datum/reagent/medicine/coagulant, 3))
+				return
+			else
+				holder.add_reagent(/datum/reagent/medicine/coagulant, 0.2 * REM * seconds_per_tick)
+
+	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
+		need_mob_update += affected_mob.blood_volume += min(3 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
+
+	switch(current_cycle)
+		if(10)
+			to_chat(affected_mob, span_warning("You feel a migraine coming on..."))
+			affected_mob.adjust_eye_blur(2 SECONDS * REM * seconds_per_tick)
+
+		if(15 to 30)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("Your head aches as your vision blurs."))
+				affected_mob.adjust_eye_blur(5 SECONDS * REM * seconds_per_tick)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("Your face contorts as a sudden pain forms in your head."))
+				affected_mob.Stun(1 SECONDS)
+
+		if(31 to 45)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("Intense pressure forms in your head, you can barely see!"))
+				affected_mob.adjust_eye_blur(10 SECONDS * REM * seconds_per_tick)
+				affected_mob.adjust_confusion_up_to(5 SECONDS, 20 SECONDS)
+				affected_mob.adjust_hallucinations(10 SECONDS)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("You lose focus and stare ahead."))
+				affected_mob.Stun(3 SECONDS)
+				affected_mob.emote(pick("stare","drool","moan","look"))
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("Your inhaling becomes more stressed, it's getting harder to breathe!"))
+				holder.add_reagent(/datum/reagent/toxin/histamine, 4 * REM * seconds_per_tick)
+
+		if(46 to INFINITY)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("It feels like your head is going to implode!"))
+				affected_mob.adjust_eye_blur(10 SECONDS * REM * seconds_per_tick)
+				affected_mob.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+				affected_mob.adjust_hallucinations(30 SECONDS)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("You can't bring yourself to focus at all!"))
+				affected_mob.Stun(5 SECONDS)
+				affected_mob.emote(pick("stare","drool","tremble","shake"))
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
+				holder.add_reagent(/datum/reagent/toxin/histamine, 6 * REM * seconds_per_tick)
+				affected_mob.losebreath += 3
+				need_mob_update = TRUE
+
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+
+/datum/reagent/inverse/aranesp/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_warning("It feels like your head is going to implode!"))
+		affected_mob.adjust_eye_blur(10 SECONDS * REM * seconds_per_tick)
+		affected_mob.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+		affected_mob.adjust_hallucinations(30 SECONDS)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_warning("You can't bring yourself to focus at all!"))
+		affected_mob.Stun(50)
+		affected_mob.emote(pick("stare","drool","tremble","shake"))
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
+		holder.add_reagent(/datum/reagent/toxin/histamine, 6 * REM * seconds_per_tick)
+		affected_mob.losebreath += 3
+		need_mob_update = TRUE
+
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+
+/datum/reagent/inverse/happiness
+	name = "Sadness"
+	description = "Causes severe depressive behavior in users, and actively purges other antidepressants."
+	color = "#0004ff"
+	ph = 12
+	metabolization_rate = 0.1 * REM
+	tox_damage = 0
+	penetrates_skin = TOUCH|VAPOR
+
+/datum/reagent/inverse/happiness/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.add_mood_event("sadness_inverse", /datum/mood_event/sadness_inverse)
+	switch(volume)
+		if(1 to INFINITY) // prevents microdosing from repeating this line
+			affected_mob.say("What?? No... NO...", forced = type)
+
+/datum/reagent/inverse/happiness/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.clear_mood_event("sadness_inverse")
+
+/datum/reagent/inverse/happiness/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(methods & (TOUCH|VAPOR))
+		exposed_mob.emote("cry")
+		return
+
+/datum/reagent/inverse/happiness/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.mob_mood?.has_mood_of_category("friendly_hug") && !HAS_TRAIT(affected_mob, TRAIT_BADTOUCH))
+		holder.remove_reagent(type, volume)
+		return
+
+	holder.remove_reagent(/datum/reagent/drug/happiness, 5 * REM * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/psicodine, 5 * REM * seconds_per_tick)
+
+	affected_mob.mob_mood.adjust_sanity(-7.5 * REM * seconds_per_tick, minimum = SANITY_INSANE)
+	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity < (SANITY_CRAZY))
+		affected_mob.adjust_drowsiness_up_to(5 SECONDS, 30 SECONDS)
+		if(SPT_PROB(25, seconds_per_tick))
+			affected_mob.emote(pick("cry","frown","pout","whimper","sigh"))
+		if(SPT_PROB(3, seconds_per_tick))
+			affected_mob.say(pick("Why are we still here? Just to suffer?","To live is to suffer!","Life is suffering. It is the nature of existence!","Each day we wake up is another day closer to death.","Sometimes I can hear my bones straining under the weight of all the lives I'm not living.","There are no beautiful surfaces without a terrible depth."), forced = type)
+
+/datum/reagent/inverse/baldium
+	name = "Maldium"
+	description = "Potent psychotropic that causes intense anger within users."
+	color = "#ff0000"
+	ph = 1
+	metabolization_rate = 0.4 * REM
+	tox_damage = 0
+	var/delayed_burn_damage = 0
+
+/datum/reagent/inverse/baldium/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.add_shared_particles(/particles/smoke/steam/mald)
+	affected_mob.manual_emote("inhales sharply.")
+	to_chat(affected_mob, span_warning("You can't help but find everything more irritating."))
+
+/datum/reagent/inverse/baldium/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#fe0000")
+	affected_mob.remove_shared_particles(/particles/smoke/steam/mald)
+	affected_mob.manual_emote("exhales sharply.")
+	to_chat(affected_mob, span_warning("You feel an intense burning sensation as your anger subsides!"))
+
+/datum/reagent/inverse/baldium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	delayed_burn_damage += (seconds_per_tick * 1)
+	if(holder.has_reagent(/datum/reagent/consumable/salt))
+		holder.remove_reagent(/datum/reagent/inverse/baldium, 3 * REM * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/consumable/salt, 1 * REM * seconds_per_tick)
+
+	switch(current_cycle)
+		if(5)
+			affected_mob.add_atom_colour("#fe0000", TEMPORARY_COLOUR_PRIORITY)
+			if(!HAS_TRAIT(affected_mob, TRAIT_PACIFISM))
+				var/turf/angery_blast = get_turf(affected_mob)
+				goonchem_vortex(angery_blast, 1, 4)
+				to_chat(affected_mob, span_warning("You can't control yourself as you yell out ANGRILY!!"))
+				affected_mob.emote("scream")
+				affected_mob.say(pick("RAGE!! UNLEASH THE RAGE!!","I'M SO ANGRY!!","WHY I OUGHTA...","AAARRRGGHH!!"), forced = type)
+			else
+				to_chat(affected_mob, span_warning("You calmly yet firmly state your discontent."))
+				affected_mob.say(pick("Aaahhhh...","Rage, woo yeah...","I'm slightly upset...",), forced = type)
+
+		if(6 to INFINITY)
+			if(SPT_PROB(10, seconds_per_tick))
+				affected_mob.manual_emote(pick("breathes rapidly!","huffs, and puffs...","stares MENACINGLY!","sighs AGGRESSIVELY!","sheds a tear ANGRILY!"))
+
+/datum/reagent/inverse/baldium/on_mob_delete(mob/living/affected_mob)
+	. = ..()
+	affected_mob.log_message("has taken [delayed_burn_damage] burn damage from maldium's aftereffects", LOG_ATTACK)
+	affected_mob.adjustFireLoss(delayed_burn_damage, updating_health = TRUE, required_bodytype = affected_bodytype)
+
+/datum/reagent/inverse/colorful_reagent
+	name = "Dulling Reagent"
+	description = "Extremely drab coloring pigment that is favored by corporations who wish to maximize suffering."
+	color = COLOR_GRAY
+	ph = 10
+	metabolization_rate = 0.4 * REM
+	tox_damage = 0
+	/// Whenever this reagent can color mob limbs and organs upon exposure
+	var/can_color_mobs = TRUE
+	/// Whenever this reagent can color mob equipment when they're exposed to it externally
+	var/can_color_clothing = TRUE
+	/// Whenever this reagent can color mob organs when taken internally, false by default as this would cause chaotic flickering of victim's eyes
+	var/can_color_organs = FALSE
+	/// Stores the original color after reagent wears off
+	var/datum/callback/color_callback
+	/// Used when applying colors on valid things
+	var/list/random_color_list = list("#1a1a1a","#2e2e2e","#424242","#565656","#6a6a6a","#7e7e7e","#929292","#a6a6a6","#bababa","#cecece")
+
+/datum/reagent/inverse/colorful_reagent/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.gain_trauma(/datum/brain_trauma/mild/color_blindness, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/inverse/colorful_reagent/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/color_blindness, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/inverse/colorful_reagent/overdose_start(mob/living/affected_mob)
+	. = ..()
+	metabolization_rate = 0.04 * REM
+
+/datum/reagent/inverse/colorful_reagent/New()
+	color_callback = CALLBACK(src, PROC_REF(UpdateColor))
+	SSticker.OnRoundstart(color_callback)
+	return ..()
+
+/datum/reagent/inverse/colorful_reagent/Destroy()
+	LAZYREMOVE(SSticker.round_end_events, color_callback)
+	color_callback = null
+	return ..()
+
+/datum/reagent/inverse/colorful_reagent/proc/UpdateColor()
+	color_callback = null
+	color = pick(random_color_list)
+
+/datum/reagent/inverse/colorful_reagent/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	var/picked_color = pick(random_color_list)
+	var/color_filter = color_transition_filter(picked_color, SATURATION_OVERRIDE)
+	if (can_color_clothing && (methods & (TOUCH|VAPOR|INHALE)))
+		var/include_flags = INCLUDE_HELD|INCLUDE_ACCESSORIES
+		if (methods & (VAPOR|INHALE) || touch_protection >= 1)
+			include_flags |= INCLUDE_POCKETS
+		for (var/obj/item/to_color in exposed_mob.get_equipped_items(include_flags))
+			to_color.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+
+	if (ishuman(exposed_mob))
+		var/mob/living/carbon/human/exposed_human = exposed_mob
+		exposed_human.set_facial_haircolor(picked_color, update = FALSE)
+		exposed_human.set_haircolor(picked_color)
+
+	if (!can_color_mobs)
+		return
+
+	if (!iscarbon(exposed_mob))
+		exposed_mob.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+
+	for (var/obj/item/organ/organ as anything in exposed_carbon.organs)
+		organ.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+
+	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
+		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+
+/datum/reagent/inverse/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
+	if (!iscarbon(affected_mob))
+		if (can_color_mobs)
+			affected_mob.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
+		return
+
+	if(!can_color_organs)
+		return
+
+	var/mob/living/carbon/carbon_mob = affected_mob
+	var/color_priority = WASHABLE_COLOUR_PRIORITY
+	if (current_cycle >= 30)
+		color_priority = FIXED_COLOUR_PRIORITY
+
+	for (var/obj/item/organ/organ as anything in carbon_mob.organs)
+		organ.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), color_priority)
+
+/datum/reagent/inverse/colorful_reagent/expose_atom(atom/exposed_atom, reac_volume)
+	. = ..()
+	if(!isliving(exposed_atom))
+		exposed_atom.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
+
+/datum/reagent/inverse/gravitum
+	name = "Newtonium"
+	description = "Experimental reagent that induces heavy gravokinetic effects on users."
+	color = "#4b0082"
+	ph = 2.3
+	metabolization_rate = 1 * REM
+	overdose_threshold = 30
+	tox_damage = 0
+
+/datum/reagent/inverse/gravitum/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.AddElement(/datum/element/forced_gravity, gravity = 5, ignore_turf_gravity = TRUE, can_override = FALSE)
+
+/datum/reagent/inverse/gravitum/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.RemoveElement(/datum/element/forced_gravity, gravity = 5, ignore_turf_gravity = TRUE, can_override = FALSE)
+
+/datum/reagent/inverse/gravitum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
+	switch(current_cycle)
+		if(10)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_MODERATE)
+			to_chat(affected_mob, span_warning("Your legs start to cave in to your overwhelming gravity!"))
+
+		if(20)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_SEVERE)
+			to_chat(affected_mob, span_warning("Your bones fragment horribly as the gravity pounds on you!"))
+
+		if(30)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_CRITICAL)
+			to_chat(affected_mob, span_warning("The gravity of this situation makes your bones snap like popsicle sticks!"))
+
+/datum/reagent/inverse/gravitum/overdose_start(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.AddElement(/datum/element/squish, 120 SECONDS)
+	for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+		affected_mob.cause_wound_of_type_and_severity(WOUND_SLASH, leg, WOUND_SEVERITY_SEVERE)

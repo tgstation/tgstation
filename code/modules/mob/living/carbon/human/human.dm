@@ -593,8 +593,7 @@
 		return FALSE
 
 	if(gloves)
-		if(gloves.wash(clean_types))
-			update_worn_gloves()
+		gloves.wash(clean_types)
 	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
 		blood_in_hands = 0
 		update_worn_gloves()
@@ -622,13 +621,13 @@
 /mob/living/carbon/human/wash(clean_types)
 	. = ..()
 	if(!is_mouth_covered() && clean_lips())
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 	// Wash hands if exposed
 	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(check_covered_slots() & ITEM_SLOT_GLOVES))
 		blood_in_hands = 0
 		update_worn_gloves()
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
@@ -693,13 +692,14 @@
 	// Updates the health bar, also sends signal
 	. = ..()
 	// Handles changing limb colors and stuff
-	hud_used.healthdoll?.update_appearance()
+	if(!(living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		hud_used.healthdoll?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
-		for(var/datum/mutation/human/existing_mutation in dna.mutations)
+		for(var/datum/mutation/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE && existing_mutation.remove_on_aheal)
-				dna.remove_mutation(existing_mutation)
+				dna.remove_mutation(existing_mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
 
 	if(heal_flags & HEAL_TEMP)
 		set_coretemperature(get_body_temp_normal(apply_change = FALSE))
@@ -759,20 +759,22 @@
 		if(!check_rights(R_SPAWN))
 			return
 		var/list/options = list("Clear"="Clear")
-		for(var/x in subtypesof(/datum/mutation/human))
-			var/datum/mutation/human/mut = x
+		for(var/x in subtypesof(/datum/mutation))
+			var/datum/mutation/mut = x
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
 		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sort_list(options)
 		if(result)
 			if(result == "Clear")
-				dna.remove_all_mutations()
+				for(var/datum/mutation/mutation as anything in dna.mutations)
+					dna.remove_mutation(mutation, mutation.sources)
 			else
 				var/mut = options[result]
 				if(dna.check_mutation(mut))
-					dna.remove_mutation(mut)
+					var/datum/mutation/mutation = dna.get_mutation(mut)
+					dna.remove_mutation(mut, mutation.sources)
 				else
-					dna.add_mutation(mut)
+					dna.add_mutation(mut, MUTATION_SOURCE_VV)
 
 	if(href_list[VV_HK_MOD_QUIRKS])
 		if(!check_rights(R_SPAWN))
@@ -966,10 +968,8 @@
 	var/health_deficiency = max((maxHealth - health), staminaloss)
 	if(health_deficiency >= 40)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_deficiency / 25)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
 /mob/living/carbon/human/is_bleeding()
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
@@ -983,7 +983,6 @@
 
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
-
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
 
@@ -1054,16 +1053,13 @@
 /mob/living/carbon/human/proc/crewlike_monkify()
 	if(!ismonkey(src))
 		set_species(/datum/species/monkey)
-	dna.add_mutation(/datum/mutation/human/clever)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
-	for(var/datum/mutation/human/mutation as anything in dna.mutations)
-		mutation.mutadone_proof = TRUE
-		mutation.instability = 0
-		mutation.class = MUT_OTHER
+	dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_CREW_MONKEY)
+	dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_CREW_MONKEY)
 
 	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 
-/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE, alt_flags = FALSE)
+/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE)
 	var/chest_covered = FALSE
 	var/head_covered = FALSE
 	var/hands_covered = FALSE
@@ -1071,11 +1067,9 @@
 		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
 		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
 			hands_covered = TRUE
-		if (!alt_flags && !isnull(additional_flags) && !(equipped.clothing_flags & additional_flags))
-			continue
-		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | (alt_flags ? additional_flags : NONE))) && (equipped.body_parts_covered & CHEST))
+		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & CHEST))
 			chest_covered = TRUE
-		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | (alt_flags ? additional_flags : NONE))) && (equipped.body_parts_covered & HEAD))
+		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & HEAD))
 			head_covered = TRUE
 	if (!chest_covered)
 		return FALSE
@@ -1121,6 +1115,12 @@
 
 /mob/living/carbon/human/species/lizard/silverscale
 	race = /datum/species/lizard/silverscale
+
+/mob/living/carbon/human/species/spirit
+	race = /datum/species/spirit
+
+/mob/living/carbon/human/species/ghost
+	race = /datum/species/spirit/ghost
 
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal

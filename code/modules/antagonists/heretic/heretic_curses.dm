@@ -272,12 +272,12 @@
 	curse_color = COLOR_MAROON
 
 /datum/heretic_knowledge/curse/indulgence/curse(mob/living/carbon/human/chosen_mob)
-	chosen_mob.gain_trauma(/datum/brain_trauma/severe/flesh_desire, TRAUMA_RESILIENCE_MAGIC)
+	chosen_mob.apply_status_effect(/datum/status_effect/eldritch_painting/desire/permanent)
 	chosen_mob.nutrition = NUTRITION_LEVEL_STARVING
 	return ..()
 
 /datum/heretic_knowledge/curse/indulgence/uncurse(mob/living/carbon/human/chosen_mob)
 	if(QDELETED(chosen_mob))
 		return
-	chosen_mob.cure_trauma_type(/datum/brain_trauma/severe/flesh_desire, TRAUMA_RESILIENCE_MAGIC)
+	chosen_mob.remove_status_effect(/datum/status_effect/eldritch_painting/desire/permanent)
 	return ..()

@@ -11,7 +11,6 @@ env:
   browser: true
   node: true
 plugins:
-  - sonarjs
   - react
   - unused-imports
   - simple-import-sort

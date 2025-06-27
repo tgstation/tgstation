@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
-	var/inert_mutation = /datum/mutation/human/dwarfism
+	var/inert_mutation = /datum/mutation/dwarfism
 	///Used to set the mob's death_sound upon species change
 	var/death_sound
 	///Special sound for grabbing
@@ -377,6 +377,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.mob_respiration_type = inherent_respiration_type
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
 
+	//update body zones to match what they are supposed to have
+	human_who_gained_species.hud_used?.healthdoll.update_body_zones()
+
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
 
@@ -424,6 +427,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human_who_gained_species.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
 
+	//we don't allow it to update during species transition, so update it now
+	human_who_gained_species.hud_used?.healthdoll.update_appearance()
+
 /**
  * Proc called when a carbon is no longer this species.
  *
@@ -444,7 +450,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(human.dna.mutation_index) && (inert_mutation in human.dna.mutation_index))
-		human.dna.remove_mutation(inert_mutation)
+		human.dna.remove_mutation(inert_mutation, MUTATION_SOURCE_ACTIVATED)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = human.dna.mutation_index.Find(inert_mutation)
 		human.dna.mutation_index[location] = new_species.inert_mutation
@@ -614,6 +620,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	switch(slot)
 		if(ITEM_SLOT_HANDS)
+			if(!(H.mobility_flags & MOBILITY_PICKUP))
+				return FALSE
 			if(H.get_empty_held_indexes())
 				return TRUE
 			return FALSE
@@ -1999,7 +2007,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
-	target.create_bodyparts(bodypart_overrides)
+	var/list/override_limbs = list()
+	for(var/bodypart in bodypart_overrides)
+		override_limbs += bodypart_overrides[bodypart]
+	target.create_bodyparts(override_limbs)
 
 /**
  * Checks if the species has a head with these head flags, by default.

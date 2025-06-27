@@ -112,7 +112,7 @@
 		. += observer_desc
 		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -344,7 +344,7 @@
 		valid_mobs += possible_mob
 
 	if (!length(valid_mobs)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
-		new /mob/living/basic/cockroach(get_step(src,dir))
+		new /mob/living/basic/cockroach/bloodroach(get_step(src,dir))
 		return
 
 	var/mob/living/picked_mob = pick(valid_mobs)

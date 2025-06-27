@@ -5,6 +5,7 @@
 	icon_state = "secbot"
 	light_color = "#f56275"
 	light_power = 0.8
+	gender = MALE
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -326,7 +327,7 @@
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(hitting_atom))
 		var/obj/item/item_hitby = hitting_atom
-		var/mob/thrown_by = throwingdatum.get_thrower()
+		var/mob/thrown_by = throwingdatum?.get_thrower()
 		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
 			var/mob/living/carbon/human/human_throwee = thrown_by
 			retaliate(human_throwee)

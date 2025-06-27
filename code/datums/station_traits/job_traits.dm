@@ -1,7 +1,3 @@
-#define CAN_ROLL_ALWAYS 1 //always can roll for antag
-#define CAN_ROLL_PROTECTED 2 //can roll if config lets protected roles roll
-#define CAN_ROLL_NEVER 3 //never roll antag
-
 /**
  * A station trait which enables a temporary job
  * Generally speaking these should always all be mutually exclusive, don't have too many at once
@@ -11,8 +7,6 @@
 	abstract_type = /datum/station_trait/job
 	/// What tooltip to show on the button
 	var/button_desc = "Sign up to gain some kind of unusual job, not available in most rounds."
-	/// Can this job roll antag?
-	var/can_roll_antag = CAN_ROLL_ALWAYS
 	/// How many positions to spawn?
 	var/position_amount = 1
 	/// Type of job to enable
@@ -22,11 +16,6 @@
 
 /datum/station_trait/job/New()
 	. = ..()
-	switch(can_roll_antag)
-		if(CAN_ROLL_PROTECTED)
-			SSstation.antag_protected_roles += job_to_add::title
-		if(CAN_ROLL_NEVER)
-			SSstation.antag_restricted_roles += job_to_add::title
 	blacklist += subtypesof(/datum/station_trait/job) - type // All but ourselves
 	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_JOBS_ASSIGNED, PROC_REF(pre_jobs_assigned))
 
@@ -86,7 +75,6 @@
 	button_desc = "Sign up to become the Cargo Gorilla, a peaceful shepherd of boxes."
 	weight = 1
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
-	can_roll_antag = CAN_ROLL_NEVER
 	job_to_add = /datum/job/cargo_gorilla
 
 /datum/station_trait/job/cargorilla/New()
@@ -119,7 +107,6 @@
 	weight = 2
 	report_message = "We have installed a Bridge Assistant on your station."
 	show_in_report = TRUE
-	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/bridge_assistant
 
 /datum/station_trait/job/bridge_assistant/New()
@@ -173,7 +160,6 @@
 	weight = 2
 	report_message = "Veteran Security Advisor has been assigned to your station to help with Security matters."
 	show_in_report = TRUE
-	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/veteran_advisor
 
 /datum/station_trait/job/veteran_advisor/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
@@ -187,7 +173,6 @@
 	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	report_message = "Our recent technological advancements in machine Artificial Intelligence has proven futile. In the meantime, we're sending an Intern to help out."
 	show_in_report = TRUE
-	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/human_ai
 	trait_to_give = STATION_TRAIT_HUMAN_AI
 
@@ -253,7 +238,6 @@
 	weight = 0 //Unrollable by default, available all day during monkey day.
 	report_message = "We've evaluated the bartender's monkey to have the mental capacity of the average crewmember. As such, we made them one."
 	show_in_report = TRUE
-	can_roll_antag = CAN_ROLL_ALWAYS
 	job_to_add = /datum/job/pun_pun
 
 /datum/station_trait/job/pun_pun/New()
@@ -267,7 +251,3 @@
 /datum/station_trait/job/pun_pun/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "pun_pun_on" : "pun_pun_off"
-
-#undef CAN_ROLL_ALWAYS
-#undef CAN_ROLL_PROTECTED
-#undef CAN_ROLL_NEVER

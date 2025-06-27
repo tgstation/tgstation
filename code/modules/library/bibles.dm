@@ -75,6 +75,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	force_string = "holy"
 	unique = TRUE
+	carved_storage_type = /datum/storage/carved_book/bible
+
 	/// Deity this bible is related to
 	var/deity_name = "Space Jesus"
 
@@ -114,6 +116,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		else
 			. += span_notice("[src] can be unpacked by hitting the floor of a holy area with it.")
 
+/obj/item/book/bible/get_attack_self_context(mob/living/user)
+	if(can_set_bible_skin(user))
+		return "Select bible skin"
+
 /obj/item/book/bible/proc/curse_heathen(datum/source, mob/living/user, obj/item/burning_tool)
 	SIGNAL_HANDLER
 
@@ -131,18 +137,19 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
 		user.AddComponent(/datum/component/omen/bible)
 
-/obj/item/book/bible/carve_out(obj/item/carving_item, mob/living/user)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-
 /obj/item/book/bible/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/book/bible/attack_self(mob/living/carbon/human/user)
+/obj/item/book/bible/proc/can_set_bible_skin(mob/living/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
 	if(user?.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
+		return FALSE
+	return TRUE
+
+/obj/item/book/bible/attack_self(mob/living/carbon/human/user)
+	if(!can_set_bible_skin(user))
 		return FALSE
 
 	var/list/skins = list()
@@ -161,10 +168,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	switch(icon_state)
 		if("honk1")
-			user.dna.add_mutation(/datum/mutation/human/clumsy)
+			user.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 		if("honk2")
-			user.dna.add_mutation(/datum/mutation/human/clumsy)
+			user.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 		if("insuls")
 			var/obj/item/clothing/gloves/color/fyellow/insuls = new
@@ -183,13 +190,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
  * * user The mob interacting with the menu
  */
 /obj/item/book/bible/proc/check_menu(mob/living/carbon/human/user)
-	if(GLOB.bible_icon_state)
-		return FALSE
 	if(!istype(user) || !user.is_holding(src))
 		return FALSE
 	if(user.incapacitated)
 		return FALSE
-	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
+	if(!can_set_bible_skin(user))
 		return FALSE
 	return TRUE
 
@@ -366,12 +371,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))
 		return
-	user.mind.holy_role = HOLY_ROLE_PRIEST
+	user.mind.set_holy_role(HOLY_ROLE_PRIEST)
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
@@ -383,6 +388,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	. = ..()
 	if(owner_name)
 		. += span_warning("The name [owner_name] is written in blood inside the cover.")
+
+/obj/item/book/bible/syndicate/get_attack_self_context(mob/living/user)
+	if(uses)
+		return "Read"
 
 /obj/item/book/bible/syndicate/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!user.combat_mode)

@@ -14,12 +14,11 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	action_slots = ALL
 	force = 10
 	throwforce = 7
 	demolition_mod = 0.25
 	wound_bonus = 15
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
@@ -83,7 +82,7 @@
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 10
-	bare_wound_bonus = 25
+	exposed_wound_bonus = 25
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
@@ -196,7 +195,7 @@
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	custom_materials = null
 	wound_bonus = 5
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 
 /obj/item/melee/parsnip_sabre/Initialize(mapload)
 	. = ..()

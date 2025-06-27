@@ -1,4 +1,4 @@
-/datum/mutation/human/farsight
+/datum/mutation/farsight
 	name = "Farsight"
 	desc = "The subject's eyes are able to see further than normal."
 	quality = POSITIVE
@@ -9,7 +9,7 @@
 	power_coeff = 1
 	power_path = /datum/action/cooldown/spell/farsight
 
-/datum/mutation/human/farsight/setup()
+/datum/mutation/farsight/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/farsight/to_modify = .
 	if(istype(to_modify))

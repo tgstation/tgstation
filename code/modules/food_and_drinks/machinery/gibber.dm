@@ -189,13 +189,20 @@
 		var/mob/living/carbon/human/gibee = occupant
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
-	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
+	var/gibtypes = null
 	var/typeofmeat = /obj/item/food/meat/slab/human
 	var/typeofskin
 
 	var/list/results = list()
 	var/obj/item/stack/sheet/animalhide/skin
 	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
+
+	// We cannot initial() lists on types, so we need to create in nullspace, take the list and then delete our mob's gibspawner
+	var/spawner_type = mob_occupant.get_gibs_type()
+	if (spawner_type)
+		// No need to handle cleanup as it returns INITIALIZE_HINT_QDEL by default
+		var/obj/effect/gibspawner/spawner = new spawner_type()
+		gibtypes = spawner.gibtypes
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
@@ -209,22 +216,22 @@
 	else if(iscarbon(occupant))
 		var/mob/living/carbon/carbon_occupant = occupant
 		typeofmeat = carbon_occupant.type_of_meat
-		gibtype = carbon_occupant.gib_type
 		if(isalien(carbon_occupant))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 		blood_dna_info = carbon_occupant.get_blood_dna_list()
 
-	for (var/i in 1 to meat_produced)
-		var/obj/item/food/meat/slab/newmeat = new typeofmeat(null, blood_dna_info)
-		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
-		if(!istype(newmeat))
-			continue
-		newmeat.subjectname = sourcename
-		if(sourcejob)
-			newmeat.subjectjob = sourcejob
+	if (typeofmeat)
+		for (var/i in 1 to meat_produced)
+			var/obj/item/food/meat/slab/newmeat = new typeofmeat(null, blood_dna_info)
+			newmeat.name = "[sourcename] [newmeat.name]"
+			newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
+			if(!istype(newmeat))
+				continue
+			newmeat.subjectname = sourcename
+			if(sourcejob)
+				newmeat.subjectjob = sourcejob
 
-		results += newmeat
+			results += newmeat
 
 	SEND_SIGNAL(occupant, COMSIG_LIVING_GIBBER_ACT, user, src, results)
 
@@ -247,20 +254,20 @@
 	mob_occupant.ghostize()
 	set_occupant(null)
 	qdel(mob_occupant)
-	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, results, meat_produced, gibtype, diseases, blood_dna_info), gibtime)
+	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, results, meat_produced, gibtypes, diseases, blood_dna_info), gibtime)
 
-/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/results, meat_produced, gibtype, list/datum/disease/diseases, blood_dna_info)
+/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/results, meat_produced, list/gibtypes, list/datum/disease/diseases, blood_dna_info)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	if (!dirty && prob(50))
 		dirty = TRUE
 	if(blood_dna_info)
 		add_blood_DNA(blood_dna_info)
-	var/turf/T = get_turf(src)
-	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
+	var/turf/our_turf = get_turf(src)
+	var/list/turf/nearby_turfs = RANGE_TURFS(3, our_turf) - our_turf
 	if(skin)
 		skin.forceMove(loc)
-		skin.throw_at(pick(nearby_turfs),meat_produced,3)
+		skin.throw_at(pick(nearby_turfs), meat_produced, 3)
 
 	var/iteration = 1
 	for (var/obj/item/meatslab in results)
@@ -274,17 +281,19 @@
 				diseases_to_add += disease
 			if(LAZYLEN(diseases_to_add))
 				meatslab.AddComponent(/datum/component/infective, diseases_to_add)
-		if(blood_dna_info)
-			meatslab.add_blood_DNA(blood_dna_info)
 		meatslab.forceMove(loc)
 		meatslab.throw_at(pick(nearby_turfs), iteration, 3)
 
 		iteration++
 
-	for (var/i in 1 to meat_produced**2) //2 slabs: 4 giblets, 3 slabs: 9, etc.
-		var/turf/gibturf = pick(nearby_turfs)
-		if (!gibturf.density && (src in view(gibturf)))
-			new gibtype(gibturf, diseases, blood_dna_info)
+	if (length(gibtypes))
+		for (var/i in 1 to meat_produced**2) //2 slabs: 4 giblets, 3 slabs: 9, etc.
+			var/gibdir = pick(GLOB.alldirs)
+			var/turf/gibturf = get_step(src, gibdir)
+			if (!gibturf.is_blocked_turf(exclude_mobs = TRUE))
+				var/list/gibtype = pick(gibtypes)
+				var/obj/effect/decal/cleanable/blood/gibs/gib = new gibtype(gibturf, diseases, blood_dna_info)
+				gib.streak(gibdir)
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
@@ -304,5 +313,10 @@
 			victim.gib(DROP_ALL_REMAINS)
 
 /obj/machinery/gibber/proc/on_cleaned(obj/source_component, obj/source)
+	SIGNAL_HANDLER
+
+	. = NONE
+
 	dirty = FALSE
 	update_appearance(UPDATE_OVERLAYS)
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
