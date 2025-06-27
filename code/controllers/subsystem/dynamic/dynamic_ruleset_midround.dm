@@ -715,11 +715,13 @@
 	name = "Voidwalker"
 	config_tag = "Voidwalker"
 	preview_antag_datum = /datum/antagonist/voidwalker
+
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_VOIDWALKER
 	ruleset_flags = RULESET_INVADER
+
 	weight = 5
-	min_pop = 30 // Ensures there's a lot of people near windows
+	min_pop = 40 // Ensures there's a lot of people near windows
 	max_antag_cap = 1
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	signup_atom_appearance = /obj/item/clothing/head/helmet/skull/cosmic
@@ -727,9 +729,33 @@
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/can_be_selected()
 	return ..() && !SSmapping.is_planetary() && !isnull(find_space_spawn())
 
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/create_ruleset_body()
+	return new /mob/living/basic/voidwalker
+
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/voidwalker)
-	candidate.current.set_species(/datum/species/voidwalker)
+	candidate.current.forceMove(find_space_spawn())
+	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
+
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker
+	name = "Sunwalker"
+	config_tag = "Sunwalker"
+	preview_antag_datum = /datum/antagonist/sunwalker
+
+	midround_type = HEAVY_MIDROUND
+	pref_flag = ROLE_VOIDWALKER
+	ruleset_flags = RULESET_INVADER
+
+	weight = 0
+	min_pop = 50
+
+	ruleset_lazy_templates = null
+
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker/create_ruleset_body()
+	return new /mob/living/basic/sunwalker
+
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker/assign_role(datum/mind/candidate)
+	candidate.add_antag_datum(/datum/antagonist/sunwalker)
 	candidate.current.forceMove(find_space_spawn())
 	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
