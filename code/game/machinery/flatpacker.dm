@@ -93,7 +93,7 @@
 				var/required = inserted_board.req_components[component]
 				if(inserted == required)
 					continue
-				LAZYADDASSOC(to_insert, component::name, "[inserted]/[required]")
+				LAZYADDASSOC(to_insert, get_flatpack_component_name(component), "[inserted]/[required]")
 			if(length(to_insert))
 				. += span_warning("The following components must be inserted by hand before packaging")
 				for(var/component_name in to_insert)
@@ -105,11 +105,27 @@
 	if(!QDELETED(inserted_board))
 		. += mutable_appearance(icon, "[base_icon_state]_c")
 
+/**
+ * Returns the name of this component. Vending canistors & maybe other types in the future require special parsing
+ *
+ * Arguments
+ * * obj/item/type - the component type we are trying to get the name
+ */
+/obj/machinery/flatpacker/proc/get_flatpack_component_name(obj/item/type)
+	PRIVATE_PROC(TRUE)
+
+	if(ispath(type, /obj/item/vending_refill))
+		var/obj/item/vending_refill/canister = type
+
+		return "\improper [canister::machine_name] restocking unit"
+
+	return type::name
 
 /**
  * Returns count of inserted flatpack component parts
+ *
  * Arguments
- * obj/item/type - the component type we are trying to count
+ * * obj/item/type - the component type we are trying to count
  */
 /obj/machinery/flatpacker/proc/get_flatpack_component_count(obj/item/type)
 	PRIVATE_PROC(TRUE)
@@ -296,7 +312,7 @@
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
 				var/diff = inserted_board.req_components[component] - get_flatpack_component_count(component)
 				if(diff)
-					disableReason = "Please insert [diff] [component::name]"
+					disableReason = "Please insert [diff] [get_flatpack_component_name(component)]"
 					break
 		design = list(
 			"name" = initial(build.name),
@@ -323,7 +339,7 @@
 				return
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
 				if(inserted_board.req_components[component] != get_flatpack_component_count(component))
-					say("Not enough [component::name].")
+					say("Not enough [get_flatpack_component_name(component)].")
 					return
 			if(!materials.has_materials(needed_mats, creation_efficiency))
 				say("Not enough materials to begin production.")
