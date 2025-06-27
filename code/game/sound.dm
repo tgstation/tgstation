@@ -867,4 +867,35 @@
 			)
 		if(SFX_REGEN_MESH_DROP)
 			soundin = 'sound/items/regenerative_mesh/regen_mesh_drop1.ogg'
+		if(SFX_CIG_PACK_DROP)
+			soundin = pick(
+				'sound/items/cigs/cig_pack_drop1.ogg',
+				'sound/items/cigs/cig_pack_drop2.ogg',
+			)
+		if(SFX_CIG_PACK_INSERT)
+			soundin = pick(
+				'sound/items/cigs/cig_pack_insert1.ogg',
+				'sound/items/cigs/cig_pack_insert2.ogg',
+				'sound/items/cigs/cig_pack_insert3.ogg',
+				'sound/items/cigs/cig_pack_insert4.ogg',
+			)
+		if(SFX_CIG_PACK_PICKUP)
+			soundin = pick(
+				'sound/items/cigs/cig_pack_pickup1.ogg',
+				'sound/items/cigs/cig_pack_pickup2.ogg',
+				'sound/items/cigs/cig_pack_pickup3.ogg',
+			)
+		if(SFX_CIG_PACK_RUSTLE)
+			soundin = pick(
+				'sound/items/cigs/cig_pack_rustle1.ogg',
+				'sound/items/cigs/cig_pack_rustle2.ogg',
+				'sound/items/cigs/cig_pack_rustle3.ogg',
+				'sound/items/cigs/cig_pack_rustle4.ogg',
+				'sound/items/cigs/cig_pack_rustle5.ogg',
+				'sound/items/cigs/cig_pack_rustle6.ogg',
+			)
+		if(SFX_CIG_PACK_THROW_DROP)
+			soundin = pick(
+				'sound/items/cigs/cig_pack_throw_drop1.ogg',
+			)
 	return soundin

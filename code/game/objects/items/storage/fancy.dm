@@ -196,6 +196,9 @@
 	age_restricted = TRUE
 	contents_tag = "cigarette"
 	storage_type = /datum/storage/cigarette_box
+	drop_sound = SFX_CIG_PACK_DROP
+	pickup_sound = SFX_CIG_PACK_PICKUP
+	throw_drop_sound = SFX_CIG_PACK_THROW_DROP
 
 	///for cigarette overlay
 	var/candy = FALSE
