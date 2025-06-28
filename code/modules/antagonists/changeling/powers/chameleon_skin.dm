@@ -1,6 +1,6 @@
 /datum/action/changeling/chameleon_skin
 	name = "Chameleon Skin"
-	desc = "Our skin pigmentation rapidly changes to suit our current environment, which allows us to become invisible when staying immobile. Costs 10 chemicals."
+	desc = "Our skin pigmentation rapidly changes to suit our current environment. Costs 10 chemicals."
 	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
 	button_icon_state = "chameleon_skin"
 	dna_cost = 1
