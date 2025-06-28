@@ -5,11 +5,17 @@ GLOBAL_LIST_EMPTY(protected_ranks) //admin ranks loaded from txt
 GLOBAL_PROTECT(protected_ranks)
 
 /datum/admin_rank
+	/// Rank name, key'd to the db
 	var/name = "NoRank"
+	/// Rank source, see RANK_SOURCE_TXT and friends
 	var/source = null
+	/// Our functional rights, these are what we actually use in game
 	var/rights = R_DEFAULT
-	var/exclude_rights = NONE
+	/// Rights we're allowed to use, pre filtering
 	var/include_rights = NONE
+	/// These are the rights of include_rights we aren't allowed to use. Frankly I have no idea why this exists
+	var/exclude_rights = NONE
+	/// Rights we're allowed to edit on other folks, impact of this is dependent on R_PERMISSIONS and R_DBRANKS
 	var/can_edit_rights = NONE
 
 /datum/admin_rank/New(init_name, init_source, init_rights, init_exclude_rights, init_edit_rights)
@@ -112,7 +118,7 @@ GLOBAL_PROTECT(protected_ranks)
 		if(RANK_SOURCE_LOCAL)
 			return "Localhost"
 		if(RANK_SOURCE_TXT)
-			return "admins.txt"
+			return "admin_ranks.txt"
 		if(RANK_SOURCE_DB)
 			return "Database"
 		if(RANK_SOURCE_BACKUP)
