@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/list/sources_to_add = sources.Copy() //make sure not to modify the original if it's stored in a variable outside this proc
 	if(!actual_mutation)
 		if(istype(mutation_to_add, /datum/mutation))
-			var/datum/mutation/mutation_instance
+			var/datum/mutation/mutation_instance = mutation_to_add
 			actual_mutation = mutation_instance.make_copy()
 		else
 			actual_mutation = new mutation_to_add
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/proc/remove_mutation_group(list/group, sources = GLOB.standard_mutation_sources)
 	if(!group)
 		return
-	for(var/datum/mutation/mutation in group)
+	for(var/mutation in group)
 		remove_mutation(mutation, sources)
 
 /datum/dna/proc/generate_unique_identity()
@@ -734,7 +734,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/datum/mutation/mutation = get_mutation(mutation_path)
 	if(check_block_string(mutation_path))
 		if(!mutation)
-			. = add_mutation(mutation_path, MUTATION_SOURCE_ACTIVATED)
+			add_mutation(mutation_path, MUTATION_SOURCE_ACTIVATED)
 		return
 	if(MUTATION_SOURCE_ACTIVATED in mutation?.sources)
 		remove_mutation(mutation, MUTATION_SOURCE_ACTIVATED)
@@ -816,11 +816,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if((!sequence || dna.mutation_in_sequence(mutation.type)) && !dna.get_mutation(mutation.type))
 			possible += mutation.type
 	possible -= excluded_mutations
-	return pick(possible)
+	return length(possible) ? pick(possible) : null //prevent runtimes from picking null
 
 ///Gives the mob a random mutation based on the given arguments.
 /mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
 	var/mutation_path = get_random_mutation_path(quality, scrambled, sequence, excluded_mutations)
+	if(!mutation_path)
+		return
 	dna.add_mutation(mutation_path, MUTATION_SOURCE_ACTIVATED)
 	if(!scrambled)
 		return

@@ -194,7 +194,6 @@
 	acid = 50
 	wound = 5
 
-
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
 
@@ -293,7 +292,7 @@
 		var/obj/item/found_item = items_by_regex[found_regex]
 		. += span_notice("[icon2html(found_item, user)] You can remove [found_item] by saying <b>\"[prefix] [found_phrase]\"</b>!")
 
-/obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer) || speaker != wearer) //if we are worn
@@ -479,7 +478,7 @@
 	bomb = 25
 	fire = 30
 	acid = 60
-	wound = 6
+	wound = 5
 
 /obj/item/clothing/head/hats/warden/police
 	name = "police officer's hat"
@@ -581,7 +580,7 @@
 	bomb = 25
 	fire = 20
 	acid = 50
-	wound = 4
+	wound = 5
 
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
@@ -798,7 +797,7 @@
 	bomb = 10
 	fire = 30
 	acid = 5
-	wound = 4
+	wound = 5
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"

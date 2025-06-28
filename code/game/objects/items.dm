@@ -582,10 +582,13 @@
 		return
 	return attempt_pickup(user)
 
-/obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
+/obj/item/proc/attempt_pickup(mob/living/user, skip_grav = FALSE)
 	. = TRUE
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
+		return
+
+	if(!(user.mobility_flags & MOBILITY_PICKUP))
 		return
 
 	if(!skip_grav)
@@ -1852,7 +1855,7 @@
 	force = modify_fantasy_variable("force", force, bonus)
 	throwforce = modify_fantasy_variable("throwforce", throwforce, bonus)
 	wound_bonus = modify_fantasy_variable("wound_bonus", wound_bonus, bonus)
-	bare_wound_bonus = modify_fantasy_variable("bare_wound_bonus", bare_wound_bonus, bonus)
+	exposed_wound_bonus = modify_fantasy_variable("exposed_wound_bonus", exposed_wound_bonus, bonus)
 	toolspeed = modify_fantasy_variable("toolspeed", toolspeed, -bonus/10, minimum = 0.1)
 
 /obj/item/proc/remove_fantasy_bonuses(bonus)
@@ -1860,7 +1863,7 @@
 	force = reset_fantasy_variable("force", force)
 	throwforce = reset_fantasy_variable("throwforce", throwforce)
 	wound_bonus = reset_fantasy_variable("wound_bonus", wound_bonus)
-	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
+	exposed_wound_bonus = reset_fantasy_variable("exposed_wound_bonus", exposed_wound_bonus)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
 
@@ -2013,7 +2016,7 @@
 			DAMTYPE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=damtype' id='damtype'>[uppertext(damtype)]</a>
 			FORCE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=force' id='force'>[force]</a>
 			WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=wound' id='wound'>[wound_bonus]</a>
-			BARE WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[bare_wound_bonus]</a>
+			BARE WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[exposed_wound_bonus]</a>
 		</font>
 	"}
 

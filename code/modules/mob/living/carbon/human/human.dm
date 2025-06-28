@@ -692,7 +692,8 @@
 	// Updates the health bar, also sends signal
 	. = ..()
 	// Handles changing limb colors and stuff
-	hud_used.healthdoll?.update_appearance()
+	if(!(living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		hud_used.healthdoll?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -967,10 +968,8 @@
 	var/health_deficiency = max((maxHealth - health), staminaloss)
 	if(health_deficiency >= 40)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_deficiency / 25)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
 /mob/living/carbon/human/is_bleeding()
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
@@ -984,7 +983,6 @@
 
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
-
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
 
@@ -1061,7 +1059,7 @@
 
 	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 
-/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE, alt_flags = FALSE)
+/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE)
 	var/chest_covered = FALSE
 	var/head_covered = FALSE
 	var/hands_covered = FALSE
@@ -1069,11 +1067,9 @@
 		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
 		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
 			hands_covered = TRUE
-		if (!alt_flags && !isnull(additional_flags) && !(equipped.clothing_flags & additional_flags))
-			continue
-		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | (alt_flags ? additional_flags : NONE))) && (equipped.body_parts_covered & CHEST))
+		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & CHEST))
 			chest_covered = TRUE
-		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | (alt_flags ? additional_flags : NONE))) && (equipped.body_parts_covered & HEAD))
+		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & HEAD))
 			head_covered = TRUE
 	if (!chest_covered)
 		return FALSE
@@ -1119,6 +1115,12 @@
 
 /mob/living/carbon/human/species/lizard/silverscale
 	race = /datum/species/lizard/silverscale
+
+/mob/living/carbon/human/species/spirit
+	race = /datum/species/spirit
+
+/mob/living/carbon/human/species/ghost
+	race = /datum/species/spirit/ghost
 
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
