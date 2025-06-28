@@ -649,3 +649,17 @@
   - bugfix: the message for putting dental implants in is now correct
   jlsnow301:
   - bugfix: Fixed a bluescreen in the cooking menu.
+2025-06-28:
+  FeudeyTF:
+  - rscadd: Added ability to change existing radio channels and create new
+  - qol: Added color for some buttons in Telecomms UI
+  LemonInTheDark:
+  - bugfix: Fixed your theme being used for ghost language/multiz buttons
+  - image: Updated multiz buttons very slightly
+  - image: Added ghost only language menu/multiz buttons
+  SmArtKar:
+  - bugfix: Fixed jaws of life losing hit sounds when swapped twice
+  carlarctg:
+  - sound: Adds glass sounds to heretic potions
+  necromanceranne:
+  - bugfix: Fixes Phazon fire punches. For real this time. It was tested. It works.

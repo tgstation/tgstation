@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Fixed your theme being used for ghost language/multiz buttons"
-  - image: "Updated multiz buttons very slightly"
-  - image: "Added ghost only language menu/multiz buttons"
