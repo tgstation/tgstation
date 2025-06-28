@@ -87,6 +87,3 @@
 	name = "Pride Pin"
 	item_path = /obj/item/clothing/accessory/pride
 	can_be_reskinned = TRUE
-
-/datum/loadout_item/accessory/borg_me_dogtag
-	item_path = /obj/item/clothing/accessory/dogtag/borg_ready
