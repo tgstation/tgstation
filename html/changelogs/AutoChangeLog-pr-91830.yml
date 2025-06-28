@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Cardboard boxes are no longer slowed down by speed potions. They are now sped up by them instead."
