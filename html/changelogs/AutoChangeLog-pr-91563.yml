@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Mech hydraulic clamps perform an attack animation and sound when attacking mobs."
+  - balance: "Mech hydraulic clamps can be blocked and respect armor."
+  - balance: "Mech hydraulic clamps do triple damage to xenomorphs."
