@@ -6459,7 +6459,7 @@
 "bVt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
@@ -43006,10 +43006,7 @@
 "mLW" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
@@ -75214,12 +75211,6 @@
 /obj/effect/turf_decal/trimline/green/filled/mid_joiner,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
-"wqw" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth,
-/area/station/engineering/main)
 "wqB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -124267,7 +124258,7 @@ wrQ
 wrQ
 beI
 wrQ
-wqw
+beI
 bdE
 beI
 wrQ
@@ -124524,7 +124515,7 @@ fKW
 wrQ
 beI
 uBp
-wqw
+beI
 bdE
 bdH
 qFt
