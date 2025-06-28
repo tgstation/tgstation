@@ -37,8 +37,8 @@
 	return TRUE
 
 /datum/action/changeling/dissonant_shriek
-	name = "Dissonant Shriek"
-	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Can disable headsets and can sometimes break laser weaponry, doors, and modsuits. Costs 20 chemicals."
+	name = "Technophagic Shriek"
+	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Breaks headsets and cameras, and can sometimes break laser weaponry, doors, and modsuits. Costs 20 chemicals."
 	button_icon_state = "dissonant_shriek"
 	chemical_cost = 20
 	dna_cost = 1
