@@ -228,12 +228,6 @@ GLOBAL_VAR(round_default_lawset)
 /datum/ai_laws/proc/remove_inherent_law(law)
 	inherent -= law
 
-/// Removes the inherent law at the passed number, replacing it with a blank.
-/datum/ai_laws/proc/remove_inherent_law_by_num(number)
-	if(number < 1 || number > inherent.len)
-		return
-	inherent[number] = "" //Replace with blank, so we don't have to worry about the list length changing
-
 /// Clears all inherent laws from this lawset.
 /datum/ai_laws/proc/clear_inherent_laws()
 	inherent.Cut()
