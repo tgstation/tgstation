@@ -1,3 +1,9 @@
+/// Blacklist of mapping objects we don't want saved
+GLOBAL_LIST_INIT(map_export_blacklist, typecacheof(list(
+	/obj/effect,
+	/obj/projectile,
+)))
+
 ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coordinates and download it.", ADMIN_CATEGORY_DEBUG)
 	var/user_x = user.mob.x
 	var/user_y = user.mob.y
@@ -202,7 +208,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	maxz,
 	save_flag = ALL,
 	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
-	list/obj_blacklist = typecacheof(/obj/effect),
+	list/obj_blacklist = GLOB.map_export_blacklist,
 )
 	var/width = maxx - minx
 	var/height = maxy - miny
@@ -215,6 +221,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	obj_blacklist -= typecacheof(/obj/effect/decal)
 	obj_blacklist -= typecacheof(/obj/effect/turf_decal)
 	obj_blacklist -= typecacheof(/obj/effect/landmark) // most landmarks get deleted except for latejoin arrivals shuttle
+
 
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
 	var/turfs_needed = width * height
