@@ -50,7 +50,7 @@
 	/// List of all silicons linked to this rack
 	/// Assoc list of name of a mob to the mob itself
 	/// Note: This can be [name: null], if the mob is deleted, because deleted mobs aren't "unlinked"
-	VAR_FINAL/list/linked_mobs
+	VAR_FINAL/list/linked_mobs = list()
 
 	/// The actual law set we are using, combining all the laws from the modules and linked racks
 	VAR_FINAL/datum/ai_laws/combined_lawset
@@ -158,6 +158,9 @@
 /obj/machinery/ai_law_rack/proc/can_link_to(mob/living/silicon/new_bot)
 	SHOULD_CALL_PARENT(TRUE)
 
+	for(var/name in linked_mobs)
+		if(linked_mobs[name] == new_bot)
+			return FALSE
 	if(!is_valid_z_level(get_turf(src), get_turf(new_bot)))
 		return FALSE // Can't link to bots on different z-levels
 	if(new_bot.control_disabled || new_bot.no_law_rack_link)
@@ -372,6 +375,8 @@
 	if(issilicon(user))
 		to_chat(user, span_warning("Your programming forbids you from using this."))
 		return
+	if(COOLDOWN_FINISHED(src, refresh_cooldown))
+		refresh_linkable_lists()
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -411,6 +416,7 @@
 /obj/machinery/ai_law_rack/ui_static_data(mob/user)
 	var/list/data = list()
 
+	data["parent_rack"] = null
 	var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
 	if(core_rack)
 		data["parent_rack"] = list(
@@ -586,7 +592,6 @@
 			core_rack.unlink_child_law_rack(src)
 			balloon_alert_to_viewers("unlinked from [core_rack.name]")
 			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
-			update_static_data_for_all_viewers()
 			return TRUE
 		if("link_rack")
 			if(length(linked_mobs) || !is_operational)
@@ -600,7 +605,6 @@
 			core_rack.link_child_law_rack(src)
 			balloon_alert_to_viewers("linked to [core_rack.name]")
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, TRUE)
-			update_static_data_for_all_viewers()
 			return TRUE
 		if("refresh")
 			if(!is_operational || !COOLDOWN_FINISHED(src, refresh_cooldown))
@@ -752,7 +756,7 @@
 	else
 		designation = pick_n_take(core_designations)
 
-	name = "[name] '[LOWER_TEXT(designation)]'"
+	name = "\proper [name] '[LOWER_TEXT(designation)]'"
 
 /obj/machinery/ai_law_rack/core/Destroy()
 	for(var/obj/machinery/ai_law_rack/linked_rack as anything in linked_racks)
@@ -777,7 +781,9 @@
 	LAZYADD(linked_racks, child)
 	RegisterSignal(child, COMSIG_QDELETING, PROC_REF(unlink_child_law_rack))
 	update_lawset()
+	update_static_data_for_all_viewers()
 	child.AddComponent(/datum/component/gps, "Active Submodule Rack")
+	child.update_static_data_for_all_viewers()
 
 /obj/machinery/ai_law_rack/core/proc/unlink_child_law_rack(obj/machinery/ai_law_rack/child)
 	SIGNAL_HANDLER
@@ -786,7 +792,10 @@
 	LAZYREMOVE(linked_racks, child)
 	if(!QDELING(src))
 		update_lawset()
-	qdel(child.GetComponent(/datum/component/gps))
+		update_static_data_for_all_viewers()
+	if(!QDELING(child))
+		qdel(child.GetComponent(/datum/component/gps))
+		child.update_static_data_for_all_viewers()
 
 /obj/machinery/ai_law_rack/core/ui_data(mob/user)
 	. = ..()

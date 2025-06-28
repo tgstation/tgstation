@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {
-  BlockQuote,
   Box,
   Button,
+  DmIcon,
   Flex,
   Floating,
   Section,
@@ -54,9 +54,9 @@ function getSlotColor(
   has_core_slot: BooleanLike,
 ): string {
   const is_core_slot = index === 0 && has_core_slot;
-  if (slot.empty) return is_core_slot ? 'lightsteelblue' : 'lightslategray';
-  if (slot.ioned) return 'darkred';
-  return is_core_slot ? 'navy' : 'green';
+  if (slot.empty) return is_core_slot ? '#5AA6FF' : '#83BFB1';
+  if (slot.ioned) return '#DD7973';
+  return is_core_slot ? '#4183CD' : '#14BB69';
 }
 
 const LawSlotScrew = (props: {
@@ -218,9 +218,10 @@ const LinkableFloating = (props: {
   show_floating: boolean;
   linkable: Linkable[];
   link_act: (ref: string, name: string) => void;
+  hide_floating: () => void;
   button: React.ReactNode;
 }) => {
-  const { show_floating, linkable, link_act, button } = props;
+  const { show_floating, linkable, link_act, button, hide_floating } = props;
 
   if (!show_floating) {
     return button;
@@ -232,21 +233,26 @@ const LinkableFloating = (props: {
       placement="top-start"
       content={
         <Stack
-          vertical
+          fill
           backgroundColor="black"
           p={1}
           style={{
             borderRadius: '4px',
             boxShadow: '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
+            flexDirection: 'column',
           }}
         >
           {linkable.map((item) => (
             <Stack.Item key={item.ref}>
               <Button
+                icon="link"
                 style={{ textTransform: 'capitalize' }}
-                onClick={() => link_act(item.ref, item.name)}
+                onClick={() => {
+                  link_act(item.ref, item.name);
+                  if (linkable.length === 1) hide_floating();
+                }}
               >
-                Link to: <b>{item.name}</b>
+                <b>{item.name}</b>
               </Button>
             </Stack.Item>
           ))}
@@ -255,6 +261,90 @@ const LinkableFloating = (props: {
     >
       {button}
     </Floating>
+  );
+};
+
+const UnlinkableFloating = (props: {
+  show_floating: boolean;
+  unlinkable: Record<string, number>;
+  unlink_act: (index: number, name: string) => void;
+  hide_floating: () => void;
+  button: React.ReactNode;
+  can_unlink: BooleanLike;
+  unlink_tooltip?: string;
+}) => {
+  const {
+    button,
+    can_unlink,
+    hide_floating,
+    show_floating,
+    unlink_act,
+    unlink_tooltip,
+    unlinkable,
+  } = props;
+
+  if (!show_floating) {
+    return button;
+  }
+
+  return (
+    <Floating
+      stopChildPropagation
+      placement="top-start"
+      content={
+        <Stack
+          fill
+          backgroundColor="black"
+          p={1}
+          style={{
+            borderRadius: '4px',
+            boxShadow: '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
+            flexDirection: 'column',
+          }}
+        >
+          {Object.entries(unlinkable).map(([name, list_index], index) => (
+            <Stack.Item key={name + list_index}>
+              <Button
+                icon="link-slash"
+                style={{ textTransform: 'capitalize' }}
+                disabled={!can_unlink}
+                tooltip={unlink_tooltip}
+                onClick={() => {
+                  unlink_act(list_index, name);
+                  if (Object.entries(unlinkable).length === 1) hide_floating();
+                }}
+              >
+                <b>{name}</b>
+              </Button>
+            </Stack.Item>
+          ))}
+        </Stack>
+      }
+    >
+      {button}
+    </Floating>
+  );
+};
+
+const AiFlavorDisplay = (props: { show_face: string }) => {
+  return (
+    <Box style={{ display: 'grid' }}>
+      <DmIcon
+        icon="icons/obj/machines/status_display.dmi"
+        icon_state="entertainment_frame"
+        height="90px"
+        width="80px"
+      />
+      {!!props.show_face && (
+        <DmIcon
+          icon="icons/obj/machines/status_display.dmi"
+          icon_state={props.show_face}
+          height="90px"
+          width="80px"
+          position="absolute"
+        />
+      )}
+    </Box>
   );
 };
 
@@ -275,8 +365,21 @@ export const LawRack = () => {
   const [rackLink, setRackLink] = useState(true);
   const [siliconLink, setSiliconLink] = useState(true);
 
+  const [rackUnlink, setRackUnlink] = useState(true);
+  const [siliconUnlink, setSiliconUnlink] = useState(true);
+
+  const screen_display = () => {
+    if (depowered) {
+      return 'off';
+    }
+    if (parent_rack || Object.entries(linked_mobs).length) {
+      return Math.round(Math.random() * 100) === 1 ? 'ai_hal' : 'ai_sal';
+    }
+    return 'ai_bsod';
+  };
+
   return (
-    <Window title="Module Rack" width={330} height={slots.length * 40 + 100}>
+    <Window title="Module Rack" width={400} height={slots.length * 36 + 250}>
       <Window.Content>
         <Section>
           <Stack vertical>
@@ -288,6 +391,7 @@ export const LawRack = () => {
           </Stack>
         </Section>
         <Section
+          title="Controls"
           buttons={
             <Button
               icon="refresh"
@@ -298,155 +402,218 @@ export const LawRack = () => {
                   ? 'No power!'
                   : refresh_cooldown > 0
                     ? `Cooldown: ${refresh_cooldown / 10}s`
-                    : undefined
+                    : 'Refreshes possible linkable racks and silicons.'
               }
               onClick={() => act('refresh')}
             />
           }
         >
-          <Stack.Item align="center">
-            <Flex align="center">
-              {!!linked_mobs.length && (
-                <Flex.Item>
-                  <Stack vertical>
-                    <Stack.Item>Linked Silicons:</Stack.Item>
-                    {Object.entries(linked_mobs).map(
-                      ([name, list_index], index) => (
-                        <Stack.Item key={index}>
-                          <Button
-                            fluid
-                            mr={1}
-                            icon="link-slash"
-                            disabled={!allowed || depowered}
-                            tooltipPosition="right"
-                            tooltip={
-                              !allowed
-                                ? `You lack the access to unlink silicons.`
-                                : depowered
-                                  ? 'No power!'
-                                  : undefined
-                            }
-                            onClick={() =>
-                              act('unlink_silicon', {
-                                silicon_index: list_index,
-                              })
-                            }
-                          />
-                          <BlockQuote>{name}</BlockQuote>
-                        </Stack.Item>
-                      ),
-                    )}
-                  </Stack>
-                </Flex.Item>
-              )}
-              {!!linked_racks?.length && (
-                <Flex.Item>
-                  <Stack vertical>
-                    <Stack.Item>Linked Racks:</Stack.Item>
-                    {Object.entries(linked_racks).map(
-                      ([name, list_index], index) => (
-                        <Stack.Item key={index}>
-                          <Button
-                            fluid
-                            mr={1}
-                            icon="link-slash"
-                            disabled={!allowed || depowered}
-                            tooltipPosition="right"
-                            tooltip={
-                              !allowed
-                                ? `You lack the access to unlink child racks.`
-                                : depowered
-                                  ? 'No power!'
-                                  : undefined
-                            }
-                            onClick={() =>
-                              act('unlink_rack', { rack_index: list_index })
-                            }
-                          />
-                          <BlockQuote>{name}</BlockQuote>
-                        </Stack.Item>
-                      ),
-                    )}
-                  </Stack>
-                </Flex.Item>
-              )}
-              {parent_rack ? (
-                <Flex.Item>
-                  <Button
-                    fluid
-                    icon="link-slash"
-                    disabled={depowered}
-                    tooltipPosition="right"
-                    tooltip={depowered ? 'No power!' : undefined}
-                    onClick={() => act('unlink_parent_rack')}
-                  />
-                  <BlockQuote>
-                    Linked to: <b>{parent_rack.name}</b>
-                  </BlockQuote>
-                </Flex.Item>
-              ) : (
-                <>
-                  <Flex.Item>
-                    <LinkableFloating
-                      show_floating={rackLink}
-                      linkable={linkable_racks}
-                      link_act={(ref, name) =>
-                        act('link_rack', { rack_ref: ref, rack_name: name })
+          <Flex>
+            <Flex.Item mr={1} width="39%">
+              <Stack vertical>
+                <Stack.Item align="center" bold>
+                  Rack Connections
+                </Stack.Item>
+                {linked_racks && !!Object.entries(linked_racks).length ? (
+                  <Stack.Item>
+                    <UnlinkableFloating
+                      show_floating={rackUnlink}
+                      unlinkable={linked_racks}
+                      can_unlink={!depowered && allowed}
+                      unlink_tooltip={
+                        depowered
+                          ? 'No power!'
+                          : allowed
+                            ? undefined
+                            : 'You lack sufficent access to unlink racks!'
                       }
-                      button={
-                        <Button
-                          fluid
-                          icon="link"
-                          disabled={!linkable_racks.length || depowered}
-                          tooltip={
-                            linkable_racks.length
-                              ? depowered
-                                ? 'No power!'
-                                : undefined
-                              : 'No linkable racks!'
-                          }
-                          onClick={() => setRackLink(!rackLink)}
-                          mr={0.5}
-                        >
-                          Link to Core Rack
-                        </Button>
-                      }
-                    />
-                  </Flex.Item>
-                  <Flex.Item>
-                    <LinkableFloating
-                      show_floating={siliconLink}
-                      linkable={linkable_silicons}
-                      link_act={(ref, name) =>
-                        act('link_silicon', {
-                          silicon_ref: ref,
-                          silicon_name: name,
+                      unlink_act={(index, name) =>
+                        act('unlink_rack', {
+                          rack_index: index,
+                          rack_name: name,
                         })
                       }
+                      hide_floating={() => setRackUnlink(false)}
                       button={
                         <Button
-                          fluid
-                          icon="link"
-                          disabled={!linkable_silicons.length || depowered}
-                          tooltip={
-                            linkable_silicons.length
-                              ? depowered
-                                ? 'No power!'
-                                : undefined
-                              : 'No linkable silicons!'
+                          align="center"
+                          width="100%"
+                          disabled={
+                            depowered || !Object.entries(linked_racks).length
                           }
-                          onClick={() => setSiliconLink(!siliconLink)}
-                          ml={0.5}
+                          tooltip={
+                            depowered
+                              ? 'No power!'
+                              : Object.entries(linked_racks).length
+                                ? undefined
+                                : 'No linked racks!'
+                          }
+                          onClick={() => setRackUnlink(!rackUnlink)}
                         >
-                          Link to Silicon
+                          View Linked Racks
                         </Button>
                       }
                     />
-                  </Flex.Item>
-                </>
-              )}
-            </Flex>
-          </Stack.Item>
+                  </Stack.Item>
+                ) : parent_rack ? (
+                  <Stack.Item>
+                    <UnlinkableFloating
+                      show_floating={rackUnlink}
+                      unlinkable={{ [parent_rack.name]: 0 }}
+                      can_unlink={!depowered && allowed}
+                      unlink_tooltip={
+                        depowered
+                          ? 'No power!'
+                          : allowed
+                            ? undefined
+                            : 'You lack sufficent access to unlink racks!'
+                      }
+                      unlink_act={() => act('unlink_parent_rack')}
+                      hide_floating={() => setRackUnlink(false)}
+                      button={
+                        <Button
+                          align="center"
+                          width="100%"
+                          disabled={depowered}
+                          tooltipPosition="right"
+                          tooltip={depowered ? 'No power!' : undefined}
+                          onClick={() => setRackUnlink(!rackUnlink)}
+                        >
+                          View Linked Racks
+                        </Button>
+                      }
+                    />
+                  </Stack.Item>
+                ) : (
+                  <Stack.Item>
+                    <Button
+                      align="center"
+                      width="100%"
+                      disabled
+                      tooltip={depowered ? 'No power!' : 'No linked racks!'}
+                    >
+                      View Linked Racks
+                    </Button>
+                  </Stack.Item>
+                )}
+                <Stack.Item>
+                  <LinkableFloating
+                    show_floating={rackLink}
+                    linkable={linkable_racks}
+                    link_act={(ref, name) =>
+                      act('link_rack', { rack_ref: ref, rack_name: name })
+                    }
+                    hide_floating={() => setRackLink(false)}
+                    button={
+                      <Button
+                        align="center"
+                        width="100%"
+                        disabled={
+                          !linkable_racks.length || depowered || !!parent_rack
+                        }
+                        tooltip={
+                          depowered
+                            ? 'No power!'
+                            : linkable_racks.length
+                              ? parent_rack
+                                ? 'Already linked!'
+                                : undefined
+                              : 'No linkable racks!'
+                        }
+                        onClick={() => setRackLink(!rackLink)}
+                      >
+                        New Link
+                      </Button>
+                    }
+                  />
+                </Stack.Item>
+              </Stack>
+            </Flex.Item>
+            <Flex.Item width="22%">
+              <AiFlavorDisplay show_face={screen_display()} />
+            </Flex.Item>
+            <Flex.Item ml={0.5} width="39%">
+              <Stack vertical>
+                <Stack.Item align="center" bold>
+                  Connected Silicons
+                </Stack.Item>
+                <UnlinkableFloating
+                  show_floating={siliconUnlink}
+                  unlinkable={linked_mobs}
+                  can_unlink={!depowered && allowed}
+                  unlink_tooltip={
+                    depowered
+                      ? 'No power!'
+                      : allowed
+                        ? undefined
+                        : 'You lack sufficent access to unlink silicons!'
+                  }
+                  unlink_act={(index, name) =>
+                    act('unlink_silicon', {
+                      silicon_index: index,
+                      silicon_name: name,
+                    })
+                  }
+                  hide_floating={() => setSiliconUnlink(false)}
+                  button={
+                    <Button
+                      align="center"
+                      width="100%"
+                      disabled={
+                        !Object.entries(linked_mobs).length || depowered
+                      }
+                      tooltip={
+                        depowered
+                          ? 'No power!'
+                          : Object.entries(linked_mobs).length
+                            ? undefined
+                            : 'No linked silicons!'
+                      }
+                      onClick={() => setSiliconUnlink(!siliconUnlink)}
+                    >
+                      View Connections
+                    </Button>
+                  }
+                />
+                <Stack.Item>
+                  <LinkableFloating
+                    show_floating={siliconLink}
+                    linkable={linkable_silicons}
+                    link_act={(ref, name) =>
+                      act('link_silicon', {
+                        silicon_ref: ref,
+                        silicon_name: name,
+                      })
+                    }
+                    hide_floating={() => setSiliconLink(false)}
+                    button={
+                      <Button
+                        align="center"
+                        width="100%"
+                        disabled={
+                          !linkable_silicons.length ||
+                          depowered ||
+                          !!parent_rack
+                        }
+                        tooltip={
+                          depowered
+                            ? 'No power!'
+                            : linkable_silicons.length
+                              ? parent_rack
+                                ? 'Linked to another rack!'
+                                : undefined
+                              : 'No linkable silicons!'
+                        }
+                        onClick={() => setSiliconLink(!siliconLink)}
+                      >
+                        New Connection
+                      </Button>
+                    }
+                  />
+                </Stack.Item>
+              </Stack>
+            </Flex.Item>
+          </Flex>
         </Section>
       </Window.Content>
     </Window>
