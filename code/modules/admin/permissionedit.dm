@@ -369,8 +369,8 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			if((usr.client.holder.can_edit_rights_flags() & rank_datum.rights) == rank_datum.rights)
 				delete_might_be_allowed = FALSE
 			output += {"
-				Rank [unused_rank] is not held by any admin |
-				[delete_might_be_allowed ? "<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserhousekeep=1;editrightsremoverank=[unused_rank]'>\[Delete\]</a>" : ""]
+				Rank [unused_rank] is not held by any admin
+				[delete_might_be_allowed ? " | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserhousekeep=1;editrightsremoverank=[unused_rank]'>\[Delete\]</a>" : ""]
 				<br>Source: [rank_datum.pretty_print_source()]
 				<br>Permissions: [permissions]
 				<br>Denied: [denied_permissions]
