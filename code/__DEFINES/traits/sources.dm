@@ -320,3 +320,4 @@
 
 /// Permanent trait from an overdose effect
 #define OVERDOSE_TRAIT "overdose"
+#define MEMENTO_MORI_TRAIT "memento_mori"

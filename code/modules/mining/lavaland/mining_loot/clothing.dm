@@ -26,18 +26,19 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
 	if (!do_after(user, 4 SECONDS, target = user))
-		return
+		return FALSE
 
 	to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
-	user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), CLOTHING_TRAIT)
+	user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), MEMENTO_MORI_TRAIT)
 	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 	icon_state = "memento_mori_active"
 	active_owner = user
+	return TRUE
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/mori()
 	icon_state = "memento_mori"
 	if (!active_owner)
-		return
+		returnssss
 	UnregisterSignal(active_owner, COMSIG_LIVING_HEALTH_UPDATE)
 	var/mob/living/carbon/human/stored_owner = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
@@ -47,6 +48,8 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT_NOT_FROM(source, TRAIT_NOSOFTCRIT, MEMENTO_MORI_TRAIT))
+		REMOVE_TRAIT_NOT_FROM(source, TRAIT_NOSOFTCRIT, MEMENTO_MORI_TRAIT)
 	var/list/guardians = source.get_all_linked_holoparasites()
 	if (!length(guardians))
 		return
@@ -83,7 +86,8 @@
 	var/obj/item/clothing/neck/necklace/memento_mori/memento = target
 	if(memento.active_owner || !ishuman(owner))
 		return FALSE
-	memento.memento(owner)
+	if(!memento.memento(owner))
+		return FALSE
 	Remove(memento.active_owner) //Remove the action button, since there's no real use in having it now.
 	return TRUE
 
