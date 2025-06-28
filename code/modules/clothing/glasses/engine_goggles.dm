@@ -62,7 +62,7 @@
 			change_glass_color(/datum/client_colour/glass_colour/red)
 
 		if(MODE_AREA_BLUEPRINTS)
-			change_glass_color(/datum/client_colour/glass_colour/lightgreen)
+			change_glass_color(/datum/client_colour/glass_colour/lightyellow)
 
 		if(MODE_NONE)
 			change_glass_color(initial(glass_colour_type))
