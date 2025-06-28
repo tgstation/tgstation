@@ -752,6 +752,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 
 #undef RANK_DONE
 
+/// Changes, for this round only, the flags a particular admin gets to use
 /datum/admins/proc/change_admin_flags(admin_ckey, admin_key, datum/admins/admin_holder)
 	if(!check_rights(R_PERMISSIONS))
 		return
@@ -800,6 +801,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	var/client/admin_client = GLOB.directory[admin_ckey]
 	admin_holder.associate(admin_client)
 
+/// Polls usr for a new rank to add to either JUST this round, or the DB
 /datum/admins/proc/add_rank()
 	if(!check_rights(R_PERMISSIONS))
 		to_chat(usr, "<span class='admin prefix'>You don't have the permissions for this.</span>", confidential = TRUE)
@@ -1008,6 +1010,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		return
 	QDEL_NULL(query_remove_rank_log)
 
+/// Changes the flags on either a DB or local rank
 /datum/admins/proc/change_rank(admin_rank)
 	if(!admin_rank)
 		return
