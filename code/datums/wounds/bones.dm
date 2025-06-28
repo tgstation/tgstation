@@ -17,6 +17,7 @@
 	wound_flags = (ACCEPTS_GAUZE)
 
 	default_scar_file = BONE_SCAR_FILE
+	threshold_penalty = 5
 
 	/// Have we been bone gel'd?
 	var/gelled
@@ -237,7 +238,7 @@
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
 	limp_chance = 50
-	threshold_penalty = 15
+	series_threshold_penalty = 15
 	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "dislocate"
@@ -378,7 +379,7 @@
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
 	limp_chance = 60
-	threshold_penalty = 30
+	series_threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/severe
 	scar_keyword = "bluntsevere"
@@ -418,7 +419,7 @@
 	limp_slowdown = 7
 	limp_chance = 70
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
-	threshold_penalty = 50
+	threshold_penalty = 15
 	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/critical

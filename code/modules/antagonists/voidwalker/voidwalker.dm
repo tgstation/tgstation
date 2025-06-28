@@ -2,7 +2,7 @@
 /datum/antagonist/voidwalker
 	name = "\improper Voidwalker"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
-	job_rank = ROLE_VOIDWALKER
+	pref_flag = ROLE_VOIDWALKER
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Voidwalker"
 	show_name_in_check_antagonists = TRUE
@@ -57,4 +57,4 @@
 	..()
 
 /datum/objective/voidwalker_objective/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD

@@ -58,6 +58,10 @@
 /obj/item/robot_model/Initialize(mapload)
 	. = ..()
 	robot = loc
+	if(!istype(robot))
+		stack_trace("Robot model ([src]) initialized outside of a robot at [AREACOORD(robot)]! \
+			This should never happen, make sure this item is not map-placed.")
+		return INITIALIZE_HINT_QDEL
 	create_storage(storage_type = /datum/storage/cyborg_internal_storage)
 	//src is what we store items visible to borgs, we'll store things in the bot itself otherwise.
 	for(var/path in basic_modules)
@@ -106,7 +110,7 @@
 		added_module.forceMove(src)
 	modules += added_module
 	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
-	added_module.obj_flags |= ABSTRACT
+	added_module.item_flags |= ABSTRACT
 	if(nonstandard)
 		added_modules += added_module
 	if(requires_rebuild)

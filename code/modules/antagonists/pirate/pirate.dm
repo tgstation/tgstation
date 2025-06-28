@@ -1,6 +1,6 @@
 /datum/antagonist/pirate
 	name = "\improper Space Pirate"
-	job_rank = ROLE_TRAITOR
+	pref_flag = ROLE_TRAITOR
 	roundend_category = "space pirates"
 	antagpanel_category = ANTAG_GROUP_PIRATES
 	show_in_antagpanel = FALSE
@@ -48,8 +48,8 @@
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
-	owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
-	return ..()
+	if (owner_mob)
+		owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
 
 /datum/team/pirate
 	name = "\improper Pirate crew"

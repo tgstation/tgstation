@@ -5,7 +5,7 @@
 	name = "\improper Malfunctioning AI"
 	roundend_category = "traitors"
 	antagpanel_category = "Malf AI"
-	job_rank = ROLE_MALF
+	pref_flag = ROLE_MALF
 	antag_hud_name = "traitor"
 	ui_name = "AntagInfoMalf"
 	can_assign_self_objectives = TRUE
@@ -32,7 +32,6 @@
 		stack_trace("Attempted to give malf AI antag datum to \[[owner]\], who did not meet the requirements.")
 		return ..()
 
-	owner.special_role = job_rank
 	if(give_objectives)
 		forge_ai_objectives()
 	if(!employer)
@@ -58,7 +57,6 @@
 		malf_ai.remove_malf_abilities()
 		QDEL_NULL(malf_ai.malf_picker)
 
-	owner.special_role = null
 	UnregisterSignal(owner, COMSIG_SILICON_AI_CORE_STATUS)
 	return ..()
 
@@ -126,8 +124,6 @@
 	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-
 	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
 
 	if(istype(datum_owner))
@@ -258,7 +254,8 @@
 		result += span_greentext("The [special_role_text] was successful!")
 	else
 		result += span_redtext("The [special_role_text] has failed!")
-		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
+		if(owner.current)
+			SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	return result.Join("<br>")
 
@@ -276,7 +273,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/silicon/ai/malf_owner = owner.current
-	if(malf_owner.linked_core)
+	if(malf_owner?.linked_core)
 		return COMPONENT_CORE_ALL_GOOD
 	return COMPONENT_CORE_DISCONNECTED
 
