@@ -404,7 +404,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	var/use_db
 	var/skip
 	var/legacy_only
-	if(task == "activate" || task == "deactivate" || task == "sync" || task == "verify")
+	if(task == "activate" || task == "deactivate" || task == "sync" || task == "verify" || task == "permissions")
 		skip = TRUE
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
 		if(admin_ckey in GLOB.protected_admins)
@@ -469,6 +469,8 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	edit_admin_permissions(PERMISSIONS_PAGE_PERMISSIONS)
 
 /datum/admins/proc/add_admin(admin_ckey, admin_key, use_db)
+	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
+		return
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Addition blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
 		return
@@ -482,42 +484,45 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!admin_ckey && (. in (GLOB.admin_datums+GLOB.deadmins)))
 		to_chat(usr, span_danger("[admin_key] is already an admin."), confidential = TRUE)
 		return FALSE
-	if(use_db)
-		//if an admin exists without a datum they won't be caught by the above
-		var/datum/db_query/query_admin_in_db = SSdbcore.NewQuery(
-			"SELECT 1 FROM [format_table_name("admin")] WHERE ckey = :ckey",
-			list("ckey" = .)
-		)
-		if(!query_admin_in_db.warn_execute())
-			qdel(query_admin_in_db)
-			return FALSE
-		if(query_admin_in_db.NextRow())
-			qdel(query_admin_in_db)
-			to_chat(usr, span_danger("[admin_key] already listed in admin database. Check the Housekeeping tab if they don't appear in the list of admins."), confidential = TRUE)
-			return FALSE
-		QDEL_NULL(query_admin_in_db)
-		var/datum/db_query/query_add_admin = SSdbcore.NewQuery(
-			"INSERT INTO [format_table_name("admin")] (ckey, `rank`) VALUES (:ckey, 'NEW ADMIN')",
-			list("ckey" = .)
-		)
-		if(!query_add_admin.warn_execute())
-			qdel(query_add_admin)
-			return FALSE
-		QDEL_NULL(query_add_admin)
-		var/datum/db_query/query_add_admin_log = SSdbcore.NewQuery({"
-			INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
-			VALUES (NOW(), :round_id, :adminckey, INET_ATON(:adminip), '[PERMISSIONS_ACTION_ADMIN_ADDED]', :target, CONCAT('New admin added: ', :target))
-		"}, list("round_id" = "[GLOB.round_id]",  "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = .))
-		if(!query_add_admin_log.warn_execute())
-			qdel(query_add_admin_log)
-			return
-		QDEL_NULL(query_add_admin_log)
+	if(!use_db)
+		return
+	//if an admin exists without a datum they won't be caught by the above
+	var/datum/db_query/query_admin_in_db = SSdbcore.NewQuery(
+		"SELECT 1 FROM [format_table_name("admin")] WHERE ckey = :ckey",
+		list("ckey" = .)
+	)
+	if(!query_admin_in_db.warn_execute())
+		qdel(query_admin_in_db)
+		return FALSE
+	if(query_admin_in_db.NextRow())
+		qdel(query_admin_in_db)
+		to_chat(usr, span_danger("[admin_key] already listed in admin database. Check the Housekeeping tab if they don't appear in the list of admins."), confidential = TRUE)
+		return FALSE
+	QDEL_NULL(query_admin_in_db)
+	var/datum/db_query/query_add_admin = SSdbcore.NewQuery(
+		"INSERT INTO [format_table_name("admin")] (ckey, `rank`) VALUES (:ckey, 'NEW ADMIN')",
+		list("ckey" = .)
+	)
+	if(!query_add_admin.warn_execute())
+		qdel(query_add_admin)
+		return FALSE
+	QDEL_NULL(query_add_admin)
+	var/datum/db_query/query_add_admin_log = SSdbcore.NewQuery({"
+		INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
+		VALUES (NOW(), :round_id, :adminckey, INET_ATON(:adminip), '[PERMISSIONS_ACTION_ADMIN_ADDED]', :target, CONCAT('New admin added: ', :target))
+	"}, list("round_id" = "[GLOB.round_id]",  "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = .))
+	if(!query_add_admin_log.warn_execute())
+		qdel(query_add_admin_log)
+		return
+	QDEL_NULL(query_add_admin_log)
 
 /datum/admins/proc/remove_admin(admin_ckey, admin_key, use_db, datum/admins/target_holder)
+	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
+		return
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Removal blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
 		return
-	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?", "Confirm Removal", list("Do it","Cancel")) != "Do it")
+	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?", "Confirm Removal", list("Do it", "Cancel")) != "Do it")
 		return
 	GLOB.admin_datums -= admin_ckey
 	GLOB.deadmins -= admin_ckey
@@ -580,7 +585,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 #define RANK_DONE ":) I'm Done"
 
 /datum/admins/proc/change_admin_rank(admin_ckey, admin_key, use_db, datum/admins/target_holder, legacy_only)
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
 		return
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Rank Modification blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
@@ -748,12 +753,14 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 #undef RANK_DONE
 
 /datum/admins/proc/change_admin_flags(admin_ckey, admin_key, datum/admins/admin_holder)
+	if(!check_rights(R_PERMISSIONS))
+		return
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Rank Modification blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
 		return
 	var/new_flags = input_bitfield(
 		usr,
-		"Admin rights<br>This will affect only the current admin ([admin_ckey])",
+		"Admin rights<br>This will affect only the current admin ([admin_ckey]), temporarially",
 		"admin_flags",
 		admin_holder.rank_flags(),
 		350,
