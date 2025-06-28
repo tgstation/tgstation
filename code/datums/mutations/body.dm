@@ -675,7 +675,7 @@
 	text_lose_indication = span_notice("You suddenly feel more human.")
 	difficulty = 24
 	synchronizer_coeff = 1
-	mutation_traits = list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA)
+	mutation_traits = list(TRAIT_ANALGESIA)
 
 /datum/mutation/inexorable/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -697,6 +697,14 @@
 		REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
 	else
 		ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+	if(owner.health <= owner.hardcrit_threshold)
+		if(HAS_TRAIT(owner, TRAIT_NOSOFTCRIT))
+			REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, REF(src))
+			owner.update_stat()
+	else
+		if(!HAS_TRAIT(owner, TRAIT_NOSOFTCRIT))
+			ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, REF(src))
+			owner.update_stat()
 
 /datum/mutation/inexorable/on_life(seconds_per_tick, times_fired)
 	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))

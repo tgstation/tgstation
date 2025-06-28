@@ -38,7 +38,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/mori()
 	icon_state = "memento_mori"
 	if (!active_owner)
-		returnssss
+		return
 	UnregisterSignal(active_owner, COMSIG_LIVING_HEALTH_UPDATE)
 	var/mob/living/carbon/human/stored_owner = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
@@ -48,8 +48,6 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT_NOT_FROM(source, TRAIT_NOSOFTCRIT, MEMENTO_MORI_TRAIT))
-		REMOVE_TRAIT_NOT_FROM(source, TRAIT_NOSOFTCRIT, MEMENTO_MORI_TRAIT)
 	var/list/guardians = source.get_all_linked_holoparasites()
 	if (!length(guardians))
 		return
