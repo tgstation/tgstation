@@ -2519,6 +2519,7 @@
 #include "code\game\objects\items\shrapnel.dm"
 #include "code\game\objects\items\signs.dm"
 #include "code\game\objects\items\skub.dm"
+#include "code\game\objects\items\soulscythe.dm"
 #include "code\game\objects\items\spear.dm"
 #include "code\game\objects\items\stickers.dm"
 #include "code\game\objects\items\surgery_tray.dm"
