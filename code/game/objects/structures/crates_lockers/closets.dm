@@ -433,6 +433,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return TRUE
 	if(welded || locked)
 		return FALSE
+	if(isliving(user))
+		if(!(user.mobility_flags & MOBILITY_USE))
+			return FALSE
 	if(strong_grab)
 		if(user)
 			to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))

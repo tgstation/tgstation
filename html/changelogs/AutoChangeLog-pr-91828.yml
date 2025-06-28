@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed incorrect opening case in variable door delay"
+  - code_imp: "Airlocks can have variable animation delay same as doors"

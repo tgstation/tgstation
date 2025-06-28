@@ -1,0 +1,9 @@
+author: "EuSouAFazer"
+delete-after: True
+changes:
+  - map: "The R&D Console and Department Protolathe have been moved from the back to the front desk in Catwalk"
+  - map: "A new broom closet was added to CatwalkScience, where the R&D console was. Don't get too attached!"
+  - map: "A new smoking room was added to better connect the lower-left region of Science with the rest of Science"
+  - map: "Many improvements in Catwalk Robotics - new mech bay power ports and a slightly more efficient layout for surgery"
+  - bugfix: "Removed a stray surgery tray on the floor in Robotics"
+  - map: "Removes fake stairs on the main hallways"

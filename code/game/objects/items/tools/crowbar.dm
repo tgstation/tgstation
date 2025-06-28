@@ -123,6 +123,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*1.75)
 	usesound = 'sound/items/tools/jaws_pry.ogg'
+	hitsound = SFX_SWING_HIT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
@@ -217,7 +218,7 @@
 	toolspeed = 1.25
 	armor_type = /datum/armor/crowbar_mechremoval
 	resistance_flags = FIRE_PROOF
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	wound_bonus = 10
 
 /datum/armor/crowbar_mechremoval
