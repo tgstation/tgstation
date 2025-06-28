@@ -91,3 +91,5 @@
 	if(!user.CanReach(stabbing, target))
 		return
 	sword.melee_attack_chain(user, stabbing)
+	if(prob(5) && check_holidays(APRIL_FOOLS))
+		user.say("Heh, nothin' personnel kid!", forced = "*teleports behind you**")
