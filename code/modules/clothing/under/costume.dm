@@ -32,13 +32,15 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/seifuku
-	name = "blue schoolgirl uniform"
+	name = "schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
 	greyscale_colors = "#942737#4A518D#EBEBEB"
 	icon = 'icons/map_icons/clothing/under/costume.dmi'
 	icon_state = "/obj/item/clothing/under/costume/seifuku"
 	post_init_icon_state = "seifuku"
-	inhand_icon_state = "shrinehand"
+	greyscale_config_inhand_left = /datum/greyscale_config/seifuku_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/seifuku_inhands_right
+	inhand_icon_state = "seifuku"
 	greyscale_config = /datum/greyscale_config/seifuku
 	greyscale_config_worn = /datum/greyscale_config/seifuku/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -46,17 +48,14 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/seifuku/red
-	name = "red schoolgirl uniform"
 	icon_state = "/obj/item/clothing/under/costume/seifuku/red"
 	greyscale_colors = "#3F4453#BB2E2E#EBEBEB"
 
 /obj/item/clothing/under/costume/seifuku/teal
-	name = "teal schoolgirl uniform"
 	icon_state = "/obj/item/clothing/under/costume/seifuku/teal"
 	greyscale_colors = "#942737#2BA396#EBEBEB"
 
 /obj/item/clothing/under/costume/seifuku/tan
-	name = "tan schoolgirl uniform"
 	icon_state = "/obj/item/clothing/under/costume/seifuku/tan"
 	greyscale_colors = "#87502E#B9A56A#EBEBEB"
 
