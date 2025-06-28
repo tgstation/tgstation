@@ -14,17 +14,7 @@
 	smoke_screen.set_up(2, holder = user, location = user.loc)
 	smoke_screen.start()
 	var/list/targets = oviewers(5, user.loc)
-	our_ling.cause_hallucination(\
-		/datum/hallucination/delusion/changeling, \
-		"[user.name]", \
-		duration = 20 SECONDS, \
-		affects_us = TRUE, \
-		affects_others = TRUE, \
-		skip_nearby = FALSE, \
-		play_wabbajack = FALSE, \
-		passed_appearance = user.appearance, \
-	)
-	/*
+
 	for(var/mob/confused_mob in targets)
 		if(!isliving(confused_mob))
 			continue
@@ -39,7 +29,7 @@
 		play_wabbajack = FALSE, \
 		passed_appearance = user.appearance, \
 	)
-	*/
+
 	return TRUE
 
 /datum/effect_system/fluid_spread/smoke/blood_smoke
