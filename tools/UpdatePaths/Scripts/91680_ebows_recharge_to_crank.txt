@@ -1,0 +1,3 @@
+/obj/item/gun/energy/ebow : /obj/item/gun/energy/recharge/ebow{@OLD}
+/obj/item/gun/energy/ebow/halloween : /obj/item/gun/energy/recharge/ebow/halloween{@OLD}
+/obj/item/gun/energy/ebow/large : /obj/item/gun/energy/recharge/ebow/large{@OLD}
