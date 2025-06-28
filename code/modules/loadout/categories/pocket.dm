@@ -333,7 +333,7 @@
 	mob/living/carbon/human/equipper,
 	visuals_only = FALSE,
 )
-	// Do this at the very end of the setup process so we can insert quirk items and such
+	// We're hooking this datum to add an extra bit of flavor to the dogtag - a pregenerated medical record
 	if(!visuals_only && !isdummy(equipper))
 		RegisterSignal(equipper, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED, PROC_REF(apply_after_setup), override = TRUE)
 	return NONE
