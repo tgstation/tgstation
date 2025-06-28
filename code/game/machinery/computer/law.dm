@@ -158,9 +158,6 @@
 /obj/machinery/ai_law_rack/proc/can_link_to(mob/living/silicon/new_bot)
 	SHOULD_CALL_PARENT(TRUE)
 
-	for(var/name in linked_mobs)
-		if(linked_mobs[name] == new_bot)
-			return FALSE
 	if(!is_valid_z_level(get_turf(src), get_turf(new_bot)))
 		return FALSE // Can't link to bots on different z-levels
 	if(new_bot.control_disabled || new_bot.no_law_rack_link)
@@ -180,6 +177,7 @@
 
 	RegisterSignal(new_bot, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
 	linked_mobs[new_bot.name] = new_bot
+	new_bot.no_law_rack_link = TRUE // don't let other racks link to us
 	update_lawset()
 	for(var/obj/item/ai_module/installed in ai_modules)
 		installed.silicon_linked_to_installed(new_bot)
@@ -187,6 +185,7 @@
 
 /obj/machinery/ai_law_rack/proc/unlink_silicon(mob/living/silicon/unlinked_bot)
 	if(!QDELING(unlinked_bot) && issilicon(unlinked_bot))
+		unlinked_bot.no_law_rack_link = FALSE
 		unlinked_bot.laws.set_zeroth_law(null, null)
 		unlinked_bot.laws.clear_hacked_laws()
 		unlinked_bot.laws.clear_inherent_laws()
@@ -208,6 +207,8 @@
 
 /obj/machinery/ai_law_rack/on_deconstruction(disassembled)
 	for(var/mob/living/bot in flatten_list(linked_mobs))
+		if(IS_MALF_AI(bot))
+			continue
 		bot.Stun(10 SECONDS)
 		to_chat(bot, span_userdanger("Rack connection lost. Recalculating directives..."))
 		unlink_silicon(bot)

@@ -34,6 +34,7 @@
 		if(!is_valid_z_level(get_turf(law_rack), get_turf(src)))
 			continue
 		law_rack.link_silicon(src)
+		break
 
 	law_ui.update_inherent_stated_laws(laws)
 

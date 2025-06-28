@@ -153,7 +153,7 @@
 /obj/item/ai_module/law/core/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	for(var/mob/living/bot in flatten_list(rack.linked_mobs))
 		// removing core laws temporarily stuns the silicon to let people swap cores without immediately getting blasted
-		if(bot.AmountStun() > 5 SECONDS)
+		if(bot.AmountStun() > 5 SECONDS && !IS_MALF_AI(bot))
 			continue
 		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(bot, span_userdanger("Core module removed. Recalculating directives..."))
