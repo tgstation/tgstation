@@ -14,6 +14,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	PERMISSIONS_ACTION_RANK_CHANGED,
 	PERMISSIONS_ACTION_NONE
 ))
+
 /datum/admins/proc/edit_admin_permissions(action, log_target, log_actor, log_operation, log_page)
 	if(!check_rights(R_PERMISSIONS))
 		return
@@ -350,7 +351,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		if(length(unused_ranks))
 			output += "<hr style='background:#000000; border:0; height:1px'>"
 		else
-			output += "No unused ranks found!"
+			output += "No unused ranks found."
 
 		sortTim(unused_ranks, GLOBAL_PROC_REF(cmp_text_asc))
 		for(var/unused_rank in unused_ranks)
@@ -424,7 +425,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			use_db = FALSE
 		else
 			use_db = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
-			if(use_db == "Cancel")
+			if(isnull(use_db) || use_db == "Cancel")
 				return
 			if(use_db == "Permanent")
 				use_db = TRUE
@@ -761,7 +762,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		return
 	var/new_flags = input_bitfield(
 		usr,
-		"Admin rights<br>This will affect only the current admin ([admin_ckey]), temporarially",
+		"Admin rights<br>This will affect only the current admin ([admin_ckey]), temporarily",
 		"admin_flags",
 		admin_holder.rank_flags(),
 		350,
@@ -857,7 +858,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			use_db = FALSE
 		else
 			var/use_db_response = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
-			if(use_db_response == "Cancel")
+			if(isnull(use_db_response) || use_db_response == "Cancel")
 				return
 			if(use_db_response == "Permanent")
 				use_db = TRUE
@@ -1090,7 +1091,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			working_exclude_rights = query_db_rank_info.item[2]
 			working_can_edit_rights = query_db_rank_info.item[3]
 		else // Couldn't find anything, no db memes then
-			to_chat(usr, "<span class='admin prefix'>Rank does not exist in db, exiting.</span>", confidential = TRUE)
+			to_chat(usr, "<span class='admin prefix'>Rank does not exist in database, exiting.</span>", confidential = TRUE)
 			qdel(query_db_rank_info)
 			return
 		QDEL_NULL(query_db_rank_info)
