@@ -5,7 +5,7 @@ type Category = {
   name: string;
   items: MalfItem[];
 };
-/*This is shitcode, but someone used normal uplink so i feel justified */
+/* This is shitcode, but someone used normal uplink so i feel justified */
 type MalfItem = Item & {
   minimum_apcs: number;
 };
