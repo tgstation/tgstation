@@ -61,6 +61,8 @@
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	box = /obj/item/storage/box/survival/prisoner
 
+	palette = COLOR_PRISONER_ORANGE
+
 /datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(prob(1)) // D BOYYYYSSSSS

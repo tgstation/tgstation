@@ -55,6 +55,8 @@
 
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
+	palette = COLOR_DARK_MODERATE_ORANGE
+
 /datum/outfit/job/curator/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(visuals_only)
 		return ..()

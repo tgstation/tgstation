@@ -129,3 +129,5 @@
 
 	chameleon_extras = /obj/item/stamp/chap
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	palette = "#303030"

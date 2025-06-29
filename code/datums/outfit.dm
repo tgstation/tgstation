@@ -24,7 +24,7 @@
 	var/id_trim = null
 
 	/// Type path of item to go in uniform slot
-	var/uniform = null
+	var/obj/item/uniform = null
 
 	/// Type path of item to go in suit slot
 	var/suit = null

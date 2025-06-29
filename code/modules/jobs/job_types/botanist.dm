@@ -55,3 +55,5 @@
 	satchel = /obj/item/storage/backpack/satchel/hyd
 	duffelbag = /obj/item/storage/backpack/duffelbag/hydroponics
 	messenger = /obj/item/storage/backpack/messenger/hyd
+
+	palette = "#313c6e"

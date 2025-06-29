@@ -347,6 +347,14 @@
 
 	var/pda_slot = ITEM_SLOT_BELT
 
+	/// Palette to be used when coloring generic gags items. One color
+	var/palette
+
+/datum/outfit/job/New()
+	. = ..()
+	if(!palette && uniform)
+		palette = uniform::greyscale_colors
+
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(ispath(back, /obj/item/storage/backpack))
 		switch(H.backpack)

@@ -69,3 +69,5 @@
 
 	box = /obj/item/storage/box/survival/security
 	implants = list(/obj/item/implant/mindshield)
+
+	palette = COLOR_SECURITY_RED

@@ -87,6 +87,8 @@
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	pda_slot = ITEM_SLOT_LPOCKET
 
+	palette = "#d0d0d0"
+
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"
 

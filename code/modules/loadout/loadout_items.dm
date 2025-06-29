@@ -228,26 +228,20 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
  *
  * Arguments:
  * * preference_source - the datum/preferences our loadout item originated from - cannot be null
+ * * item_details - the details of the item in the loadout preferences, such as greyscale, name, reskin, etc
  * * equipper - the mob we're equipping this item onto
+ * * outfit - the rest of the outfit being equipped
  * * visuals_only - whether or not this is only concerned with visual things (not backpack, not renaming, etc)
- * * preference_list - what the raw loadout list looks like in the preferences
  *
  * Return a bitflag of slot flags to update
  */
-/datum/loadout_item/proc/on_equip_item(
-	obj/item/equipped_item,
-	datum/preferences/preference_source,
-	list/preference_list,
-	mob/living/carbon/human/equipper,
-	visuals_only = FALSE,
-)
+/datum/loadout_item/proc/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only = FALSE)
 	if(isnull(equipped_item))
 		return NONE
 
 	if(!visuals_only)
 		ADD_TRAIT(equipped_item, TRAIT_ITEM_OBJECTIVE_BLOCKED, "Loadout")
 
-	var/list/item_details = preference_list[item_path]
 	var/update_flag = NONE
 
 	if(can_be_greyscale && item_details?[INFO_GREYSCALE])
@@ -271,11 +265,6 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 					update_flag |= (ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 			else
 				update_flag |= equipped_item.slot_flags
-
-		else
-			// Not valid, update the preference
-			item_details -= INFO_RESKIN
-			preference_source.write_preference(GLOB.preference_entries[/datum/preference/loadout], preference_list)
 
 	return update_flag
 

@@ -80,6 +80,8 @@
 
 	skillchips = list(/obj/item/skillchip/job/chef)
 
+	palette = "#d0d0d0"
+
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
 	var/datum/job/cook/other_chefs = SSjob.get_job_type(jobtype)

@@ -29,7 +29,6 @@
 
 	job_tone = "objection"
 
-
 /datum/outfit/job/lawyer
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
@@ -46,6 +45,8 @@
 	l_hand = /obj/item/storage/briefcase/lawyer
 
 	chameleon_extras = /obj/item/stamp/law
+
+	palette = COLOR_NAVY
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(visuals_only)

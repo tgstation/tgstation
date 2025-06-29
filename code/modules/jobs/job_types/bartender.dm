@@ -61,6 +61,8 @@
 
 	skillchips = list(/obj/item/skillchip/drunken_brawler)
 
+	palette = "#303030"
+
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
 

@@ -73,3 +73,5 @@
 	messenger = /obj/item/storage/backpack/messenger/coroner
 
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	palette = "#303030"

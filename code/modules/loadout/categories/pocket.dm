@@ -30,13 +30,7 @@
 /datum/loadout_item/pocket_items
 	abstract_type = /datum/loadout_item/pocket_items
 
-/datum/loadout_item/pocket_items/on_equip_item(
-	obj/item/equipped_item,
-	datum/preferences/preference_source,
-	list/preference_list,
-	mob/living/carbon/human/equipper,
-	visuals_only = FALSE,
-)
+/datum/loadout_item/pocket_items/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only = FALSE)
 	// Backpack items aren't created if it's a visual equipping, so don't do any on equip stuff. It doesn't exist.
 	if(visuals_only)
 		return NONE
@@ -180,19 +174,15 @@
 	. = ..()
 	.[FA_ICON_PALETTE] = "Recolorable"
 
-/datum/loadout_item/pocket_items/lipstick/on_equip_item(
-	obj/item/lipstick/equipped_item,
-	datum/preferences/preference_source,
-	list/preference_list,
-	mob/living/carbon/human/equipper,
-	visuals_only,
-)
+/datum/loadout_item/pocket_items/lipstick/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only = FALSE)
 	. = ..()
-	var/picked_style = style_to_style(preference_list[item_path]?[INFO_LAYER])
-	var/picked_color = preference_list[item_path]?[INFO_GREYSCALE] || /obj/item/lipstick::lipstick_color
-	if(istype(equipped_item)) // can be null for visuals_only
-		equipped_item.style = picked_style
-		equipped_item.lipstick_color = picked_color
+	if(isnull(equipped_item))
+		return
+	var/picked_style = style_to_style(item_details[INFO_LAYER])
+	var/picked_color = item_details[INFO_GREYSCALE] || /obj/item/lipstick::lipstick_color
+	var/obj/item/lipstick/lipstick_item = equipped_item
+	lipstick_item.style = picked_style
+	lipstick_item.lipstick_color = picked_color
 	equipper.update_lips(picked_style, picked_color)
 
 /// Converts style (readable) to style (internal)
@@ -281,13 +271,7 @@
 /datum/loadout_item/pocket_items/wallet/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	return
 
-/datum/loadout_item/pocket_items/wallet/on_equip_item(
-	obj/item/equipped_item,
-	datum/preferences/preference_source,
-	list/preference_list,
-	mob/living/carbon/human/equipper,
-	visuals_only = FALSE,
-)
+/datum/loadout_item/pocket_items/wallet/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only = FALSE)
 	// Do this at the very end of the setup process so we can insert quirk items and such
 	if(!visuals_only && !isdummy(equipper))
 		RegisterSignal(equipper, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED, PROC_REF(apply_after_setup), override = TRUE)

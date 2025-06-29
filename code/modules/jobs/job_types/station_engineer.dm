@@ -66,6 +66,8 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/engineer)
 
+	palette = COLOR_CRAYON_YELLOW
+
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"
 
