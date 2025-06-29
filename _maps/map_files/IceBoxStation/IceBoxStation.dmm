@@ -15591,6 +15591,7 @@
 /area/station/engineering/storage)
 "eqj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/cafeteria{
 	dir = 8
 	},
@@ -30638,6 +30639,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "iKQ" = (
@@ -66604,6 +66606,7 @@
 "sMs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -72724,6 +72727,12 @@
 "uBA" = (
 /turf/closed/wall,
 /area/station/engineering/atmos/project)
+"uBE" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/lesser)
 "uBP" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
@@ -73172,6 +73181,11 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"uIu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "uIx" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
@@ -179959,7 +179973,7 @@ wRa
 wRa
 wRa
 wRa
-wRa
+ntr
 wRa
 wRa
 wRa
@@ -192647,7 +192661,7 @@ oxO
 rUS
 tRd
 tRd
-nPI
+uBE
 nPI
 nPI
 nPI
@@ -201115,7 +201129,7 @@ eYY
 aUu
 oHo
 eVw
-rEU
+uIu
 vzD
 thA
 thA
