@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Mail is now shipped every 10 minutes rather than every 5 minutes. The amount of mail remains unchanged (so you get 1 crate with 6 mail instead of 2 crates with 3 mail each)."
-  - qol: "Mail is no longer shipped while the station is on red alert - mail held will be sent if the station returns to blue alert."
