@@ -929,7 +929,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		to_chat(usr, "<span class='admin prefix'>Rank Deletion blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
 		return
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		if(R.name == admin_rank && (!(R.rights & usr.client.holder.can_edit_rights_flags()) == R.rights))
+		if(R.name == admin_rank && ((R.rights & usr.client.holder.can_edit_rights_flags()) != R.rights))
 			to_chat(usr, "<span class='admin prefix'>You don't have edit rights to all the rights this rank has, rank deletion not permitted.</span>", confidential = TRUE)
 			return
 
