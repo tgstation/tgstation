@@ -46,4 +46,4 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	to_chat(client_source.mob, span_info("You are allergic to [what_are_we_actually_killed_by]. Watch what you eat!"))
 
 	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(quirk_holder, what_are_we_actually_killed_by)
-	give_item_to_holder(dogtag, list(LOCATION_BACKPACK, LOCATION_HANDS), flavour_text = "Keep it close around the kitchen.")
+	give_item_to_holder(dogtag, list(LOCATION_BACKPACK, LOCATION_HANDS), flavour_text = "Keep it close around the kitchen.", notify_player = TRUE)

@@ -1,0 +1,5 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - rscdel: "Del removed the emergency sutures."
+  - balance: "Emergency medkits now have a bandage instead of an emergency suture stack."

@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - refactor: "refactored how sfx with multiple variants are coded, report any issues with sounds not playing!"
