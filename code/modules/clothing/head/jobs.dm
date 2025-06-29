@@ -47,7 +47,7 @@
 /obj/item/clothing/head/utility/chefhat/proc/get_mouse(atom/possible_mouse)
 	if (!ispickedupmob(possible_mouse))
 		return
-	var/obj/item/clothing/head/mob_holder/mousey_holder = possible_mouse
+	var/obj/item/mob_holder/mousey_holder = possible_mouse
 	return locate(/mob/living/basic) in mousey_holder.contents
 
 /// Relays emotes emoted by your boss to the hat wearer for full immersion
