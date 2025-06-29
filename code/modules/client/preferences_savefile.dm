@@ -34,7 +34,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
-/datum/preferences/proc/save_data_needs_update(list/save_data)
+/datum/preferences/proc/check_savedata_version(list/save_data)
 	if(!save_data)
 		return SAVE_DATA_EMPTY
 	var/save_version = save_data["version"]
@@ -198,8 +198,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			stack_trace("Failed to load the savefile for [parent] after manually calling load_savefile; something is very wrong.")
 			return FALSE
 
-	var/needs_update = save_data_needs_update(savefile.get_entry())
-	if(load_and_save && (needs_update == SAVE_DATA_OBSOLETE)) //fatal, can't load any data
+	var/data_validity_integer = check_savedata_version(savefile.get_entry())
+	if(load_and_save && IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
@@ -234,12 +234,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
 	//try to fix any outdated data if necessary
-	if(needs_update >= SAVE_DATA_NO_ERROR)
+	if(SHOULD_UPDATE_DATA(data_validity_integer))
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
-		update_preferences(needs_update, savefile)
+		update_preferences(data_validity_integer, savefile)
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
@@ -252,7 +252,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
-	if(needs_update >= SAVE_DATA_NO_ERROR) //save the updated version
+	if(SHOULD_UPDATE_DATA(data_validity_integer)) //save the updated version
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
 
@@ -313,8 +313,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
-	var/needs_update = save_data_needs_update(save_data)
-	if(needs_update == SAVE_DATA_OBSOLETE) //fatal, can't load any data
+	var/data_validity_integer = check_savedata_version(save_data)
+	if(IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
 		return FALSE
 
 	// Read everything into cache
@@ -337,8 +337,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
-	if(needs_update >= SAVE_DATA_NO_ERROR)
-		update_character(needs_update, save_data)
+	if(SHOULD_UPDATE_DATA(data_validity_integer))
+		update_character(data_validity_integer, save_data)
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
@@ -450,3 +450,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
+#undef SAVE_DATA_NO_ERROR
+#undef SAVE_DATA_EMPTY
+#undef SAVE_DATA_OBSOLETE
+#undef IS_DATA_OBSOLETE
+#undef SHOULD_UPDATE_DATA
