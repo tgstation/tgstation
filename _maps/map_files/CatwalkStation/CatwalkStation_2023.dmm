@@ -15564,7 +15564,7 @@
 /area/station/hallway/primary/central)
 "eHz" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/clothing/under/costume/schoolgirl/green{
+/obj/item/clothing/under/costume/seifuku/teal{
 	pixel_x = -1;
 	pixel_y = -9
 	},
@@ -28512,7 +28512,7 @@
 /area/station/security/courtroom)
 "iyx" = (
 /obj/structure/chair/sofa/middle/brown,
-/obj/item/clothing/under/costume/schoolgirl/red{
+/obj/item/clothing/under/costume/seifuku/red{
 	pixel_y = -7
 	},
 /obj/item/clothing/head/costume/crown{
@@ -64667,7 +64667,7 @@
 /area/station/maintenance/starboard/aft)
 "tmq" = (
 /obj/structure/lattice/catwalk,
-/obj/item/clothing/under/costume/schoolgirl{
+/obj/item/clothing/under/costume/seifuku{
 	pixel_y = -1
 	},
 /obj/structure/table,
@@ -72891,7 +72891,7 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "vGQ" = (
 /obj/structure/table,
-/obj/item/clothing/under/costume/schoolgirl/orange{
+/obj/item/clothing/under/costume/seifuku/tan{
 	pixel_x = -14;
 	pixel_y = -2
 	},

@@ -369,6 +369,26 @@
 	name = "Sailor Dress(Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 
+/datum/greyscale_config/seifuku
+	name = "Seifuku"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku.json'
+
+/datum/greyscale_config/seifuku/worn
+	name = "Seifuku (Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_worn.json'
+
+/datum/greyscale_config/seifuku_inhands_left
+	name = "Seifuku Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_inhands.json'
+
+/datum/greyscale_config/seifuku_inhands_right
+	name = "Seifuku Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_inhands.json'
+
 // SHIRTS, PANTS AND SHORTS
 /datum/greyscale_config/slacks
 	name = "Slacks"
