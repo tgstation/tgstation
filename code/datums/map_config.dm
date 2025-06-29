@@ -29,6 +29,8 @@
 	var/space_empty_levels = DEFAULT_SPACE_EMPTY_LEVELS
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
+	/// How many z's to generate around a planetary station. must form a square (so 2x2=4, 3x3=9, 4x4=16, all -1 for the station z-level)
+	var/planetary_ring_levels = 8
 
 	///The type of mining Z-level that should be loaded.
 	var/minetype = MINETYPE_LAVALAND
@@ -187,6 +189,13 @@
 		space_empty_levels = temp
 	else if (!isnull(temp))
 		log_world("map_config space_empty_levels is not a number!")
+		return
+
+	temp = json["planetary_ring_levels"]
+	if (isnum(temp))
+		planetary_ring_levels = temp
+	else if (!isnull(temp))
+		log_world("map_config planetary_ring_levels is not a number!")
 		return
 
 	if ("minetype" in json)

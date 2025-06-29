@@ -110,7 +110,7 @@
 /turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 
-/turf/open/openspace/proc/CanBuildHere()
+/turf/open/openspace/CanBuildHere()
 	return can_build_on
 
 /turf/open/openspace/attackby(obj/item/attacking_item, mob/user, list/modifiers)

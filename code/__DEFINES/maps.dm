@@ -118,6 +118,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 	#define SELFLOOPING "Self"
 	// CROSSLINKED - mixed in with the cross-linked space pool
 	#define CROSSLINKED "Cross"
+	// GRIDLINKED - connected in a consistent grid
+	#define GRIDLINKED "Grid"
 
 // string - type path of the z-level's baseturf (defaults to space)
 #define ZTRAIT_BASETURF "Baseturf"
@@ -132,6 +134,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+///Z level traits for
+#define ZTRAITS_WILDS list(\
+	ZTRAIT_LINKAGE = GRIDLINKED, \
+	ZTRAIT_ICE_RUINS = TRUE, \
+	ZTRAIT_SNOWSTORM = TRUE, \
+	ZTRAIT_BASETURF = /turf/open/misc/asteroid/snow/icemoon)
+
 ///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
 	ZTRAIT_MINING = TRUE, \
@@ -175,6 +184,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 ///Map generation defines
 #define DEFAULT_SPACE_RUIN_LEVELS 7
 #define DEFAULT_SPACE_EMPTY_LEVELS 1
+#define DEFAULT_PLANETARY_RING_LEVELS 1
 
 #define BIOME_LOW_HEAT "low_heat"
 #define BIOME_LOWMEDIUM_HEAT "lowmedium_heat"
