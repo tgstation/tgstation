@@ -300,7 +300,7 @@
 	name = "False Changeling Sting"
 	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us with an armblade while we take on their identity."
 	helptext = "Makes the victim appears like you while you take on their appearance, the disguise is just a fake outer flesh which will decay after a while."
-	button_icon_state
+	button_icon_state = "false_ling"
 	chemical_cost = 22
 	dna_cost = 3
 
@@ -341,6 +341,7 @@
 	name = "False Revival"
 	desc = "We inject a significant amount of ourselves to jerry rig the dead body back to life, immitading our revival stasis"
 	helptext = "This will only work on dead bodies. The victim will be fully revived, be cautious with who you use it on"
+	button_icon_state = "fake_revival"
 	chemical_cost = 40
 	dna_cost = 1
 
