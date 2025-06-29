@@ -42,8 +42,8 @@
 	acid = 50
 
 /obj/item/clothing/shoes/jackboots
-	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	name = "boots"
+	desc = "Nanotrasen-issue boots for costumed scenarios or dress-up situations. All fashion, all the time."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
@@ -66,10 +66,12 @@
 	slowdown = -1
 
 /obj/item/clothing/shoes/jackboots/sec
+	name = "security boots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots_sec"
 
 /obj/item/clothing/shoes/jackboots/floortile
-	name = "floortile camouflage jackboots"
+	name = "floortile camouflage boots"
 	desc = "Is it just me or is there a pair of jackboots on the floor?"
 	icon_state = "ftc_boots"
 	inhand_icon_state = null
