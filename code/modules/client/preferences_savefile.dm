@@ -6,9 +6,6 @@
 /// The save data is below the accepted minimum and should be reset.
 #define SAVE_DATA_OBSOLETE -2
 
-#define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
-#define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
-
 /// This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
 #define SAVEFILE_VERSION_MIN 32
 
@@ -17,6 +14,9 @@
 /// Only raise this value when changing the meaning/format/name/layout of an existing value
 /// where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX 49
+
+#define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
+#define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
