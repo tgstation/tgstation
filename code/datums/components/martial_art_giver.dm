@@ -38,4 +38,4 @@
 
 /datum/component/martial_art_giver/proc/dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-	style.unlearn(user)
+	style?.unlearn(user)
