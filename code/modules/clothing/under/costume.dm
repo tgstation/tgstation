@@ -46,6 +46,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	alternate_worn_layer = UNDER_SUIT_LAYER
 
 /obj/item/clothing/under/costume/seifuku/red
 	icon_state = "/obj/item/clothing/under/costume/seifuku/red"
