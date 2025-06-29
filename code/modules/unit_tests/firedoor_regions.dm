@@ -29,11 +29,13 @@
 	for(var/turf/open/nearby as anything in get_adjacent_open_turfs(firedoor))
 		if(nearby in already_detected_turfs)
 			continue
-		if(locate(/obj/machinery/door/firedoor) in nearby)
+		if(!istype(get_area(nearby), /area/station)) // uhhhh icebox spawns ruins on the station z level
+			continue
+		if(locate(/obj/machinery/door/firedoor) in nearby) // firedoors adjacent to another firedoors
 			continue
 		if(locate(/obj/effect/landmark/firealarm_sanity) in nearby)
 			continue
-		if(nearby.is_blocked_turf(exclude_mobs = TRUE))
+		if(nearby.is_blocked_turf(exclude_mobs = TRUE)) // for windows, primarily.
 			continue
 		var/list/detected_area = detect_room(nearby, null, null, room_cb)
 		if(!detected_area)
