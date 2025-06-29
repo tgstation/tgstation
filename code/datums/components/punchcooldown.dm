@@ -1,6 +1,6 @@
 ///Your favourite Jojoke. Used for the gloves of the north star.
 /datum/component/wearertargeting/punchcooldown
-	signals = list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_SLAP_MOB)
+	signals = list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_HAND_ITEM_ATTACK)
 	mobtype = /mob/living/carbon
 	proctype = PROC_REF(reducecooldown)
 	valid_slots = list(ITEM_SLOT_GLOVES)
