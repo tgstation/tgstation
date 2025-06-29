@@ -66,7 +66,7 @@
 	slowdown = -1
 
 /obj/item/clothing/shoes/jackboots/sec
-	name = "security boots"
+	name = "security jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots_sec"
 
