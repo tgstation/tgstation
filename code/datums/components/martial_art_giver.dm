@@ -10,7 +10,8 @@
 	style = new style_type(src)
 
 /datum/component/martial_art_giver/Destroy()
-	var/mob/living/wearer = parent.loc
+	var/obj/item/item = parent
+	var/mob/living/wearer = item.loc
 	if(isliving(wearer))
 		style.unlearn(wearer)
 	QDEL_NULL(style)
