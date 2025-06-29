@@ -372,8 +372,7 @@
 //called when something steps onto a human
 /mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/atom_movable)
 	SIGNAL_HANDLER
-	if(get_turf(atom_movable) == get_turf(src))
-		spreadFire(atom_movable)
+	spreadFire(atom_movable)
 
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)
