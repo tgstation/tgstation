@@ -89,6 +89,10 @@
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
+	//mops don't clean anything unless they're dipped in cleaning reagents
+	var/callback_return = pre_clean_callback.Invoke(source, target, user)
+	if(callback_return & CLEAN_NO_CLEANER_REAGENTS)
+		clean_target = FALSE
 	//make sure we don't attempt to clean something while it's already being cleaned
 	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING) || (SEND_SIGNAL(target, COMSIG_ATOM_PRE_CLEAN, user) & COMSIG_ATOM_CANCEL_CLEAN))
 		return
