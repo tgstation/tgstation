@@ -1,4 +1,5 @@
-import { filter, uniqBy } from 'es-toolkit/compat';
+import { uniqBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import {
   Box,
   Button,

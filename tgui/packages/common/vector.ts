@@ -8,7 +8,8 @@
  * @license MIT
  */
 
-import { map, reduce, zip } from 'es-toolkit/compat';
+import { zip } from 'es-toolkit';
+import { map, reduce } from 'es-toolkit/compat';
 
 const ADD = (a: number, b: number): number => a + b;
 const SUB = (a: number, b: number): number => a - b;

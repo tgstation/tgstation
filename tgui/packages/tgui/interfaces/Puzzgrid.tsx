@@ -1,4 +1,4 @@
-import { range } from 'es-toolkit/compat';
+import { range } from 'es-toolkit';
 import { PropsWithChildren } from 'react';
 import { Box, Button, FitText, Stack } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';

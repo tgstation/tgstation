@@ -1,5 +1,5 @@
 import { binaryInsertWith } from 'common/collections';
-import { sortBy } from 'es-toolkit/compat';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -30,7 +30,7 @@ function binaryInsertName(
 }
 
 function sortNameWithKeyEntries(array: [string, NameWithKey[]][]) {
-  return sortBy(array, ([key]) => key);
+  return sortBy(array, [([key]) => key]);
 }
 
 type MultiNameProps = {
