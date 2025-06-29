@@ -130,7 +130,7 @@ GLOBAL_PROTECT(protected_ranks)
 ///	Return a list containing the backup data if they were loaded from the database backup json
 /proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Admin Reload blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	GLOB.admin_ranks.Cut()
 	GLOB.protected_ranks.Cut()
@@ -332,7 +332,7 @@ GLOBAL_PROTECT(protected_ranks)
 	set waitfor = FALSE
 
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Admin rank DB Sync blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 
 	var/list/sql_ranks = list()
@@ -376,7 +376,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /proc/sync_admins_with_db()
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		to_chat(usr, span_adminprefix("Admin rank DB Sync blocked: Advanced ProcCall detected."))
 		return
 
 	if(CONFIG_GET(flag/admin_legacy_system) || !SSdbcore.IsConnected()) //we're already using legacy system so there's nothing to save
@@ -394,7 +394,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /proc/save_admin_backup()
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		to_chat(usr, span_adminprefix("Admin rank DB Sync blocked: Advanced ProcCall detected."))
 		return
 
 	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save

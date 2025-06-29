@@ -335,7 +335,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		if(length(invalid_admin_ranks)) // Add a nice leader to the output
 			output += "<hr style='background:#000000; border:0; height:1px'>"
 		else
-			output += "No invalid ranks found!"
+			output += "No invalid ranks found."
 
 		for(var/illegal_rank in invalid_admin_ranks)
 			for(var/misapplied_admin in admins_by_rank[illegal_rank])
@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		log_admin("[key_name(usr)] attempted to edit admin permissions without sufficient rights.")
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Admin Edit blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	var/datum/asset/permissions_assets = get_asset_datum(/datum/asset/simple/namespaced/common)
 	permissions_assets.send(usr.client)
@@ -409,14 +409,14 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		skip = TRUE
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
 		if(admin_ckey in GLOB.protected_admins)
-			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Editing the rank of this admin is blocked by server configuration."), confidential = TRUE)
 			return
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
 		if((target_admin_datum.ranks & GLOB.protected_ranks).len > 0)
-			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Editing the flags of this rank is blocked by server configuration."), confidential = TRUE)
 			return
 	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "add" || task == "rank" || task == "permissions"))
-		to_chat(usr, "<span class='admin prefix'>Database rank loading is disabled, only temporary changes can be made to a rank's permissions and permanently creating a new rank is blocked.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Database rank loading is disabled, only temporary changes can be made to a rank's permissions and permanently creating a new rank is blocked."), confidential = TRUE)
 		legacy_only = TRUE
 
 	if(check_rights(R_DBRANKS, FALSE) && !skip)
@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Addition blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Admin Addition blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	if(admin_ckey)
 		. = admin_ckey
@@ -521,7 +521,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Removal blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Admin Removal blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?", "Confirm Removal", list("Do it", "Cancel")) != "Do it")
 		return
@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Rank Modification blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Rank Modification blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 
 	var/rank_type = RANK_SOURCE_TEMPORARY
@@ -744,8 +744,8 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		target_holder.disassociate() //existing admin needs to be disassociated
 		target_holder.ranks = new_ranks //set the admin_rank as our rank
 		target_holder.bypass_2fa = TRUE // Another admin has cleared us
-		var/client/C = GLOB.directory[admin_ckey]
-		target_holder.associate(C)
+		var/client/target_client = GLOB.directory[admin_ckey]
+		target_holder.associate(target_client)
 	else
 		target_holder = new(new_ranks, admin_ckey) //new admin
 		target_holder.bypass_2fa = TRUE // Another admin has cleared us
@@ -758,7 +758,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Rank Modification blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Rank Modification blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	var/new_flags = input_bitfield(
 		usr,
@@ -805,13 +805,13 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 /// Polls usr for a new rank to add to either JUST this round, or the DB
 /datum/admins/proc/add_rank()
 	if(!check_rights(R_PERMISSIONS))
-		to_chat(usr, "<span class='admin prefix'>You don't have the permissions for this.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("You don't have the permissions for this."), confidential = TRUE)
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Rank Addition blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Rank Addition blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	if(usr.client.holder.can_edit_rights_flags() == NONE)
-		to_chat(usr, "<span class='admin prefix'>You are not allowed to add any rights.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("You are not allowed to add any rights."), confidential = TRUE)
 		return
 
 	var/new_rank_name = input("Please input a new rank", "New custom rank") as text|null
@@ -820,7 +820,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 
 	var/list/datum/admin_rank/existing_ranks = ranks_from_rank_name(new_rank_name)
 	if (length(existing_ranks))
-		to_chat(usr, "<span class='admin prefix'>A rank by this name already exists, sorry!.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("A rank by this name already exists, sorry!."), confidential = TRUE)
 		return
 
 	var/rights = input_bitfield(
@@ -927,11 +927,11 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		log_admin("[key_name(usr)] attempted to remove a rank without sufficient rights.")
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Rank Deletion blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Rank Deletion blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		if(R.name == admin_rank && ((R.rights & usr.client.holder.can_edit_rights_flags()) != R.rights))
-			to_chat(usr, "<span class='admin prefix'>You don't have edit rights to all the rights this rank has, rank deletion not permitted.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("You don't have edit rights to all the rights this rank has, rank deletion not permitted."), confidential = TRUE)
 			return
 
 	var/list/datum/admin_rank/target_ranks = ranks_from_rank_name(admin_rank)
@@ -942,14 +942,14 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	var/local_only_deletion
 	switch(target_rank.source)
 		if(RANK_SOURCE_LOCAL)
-			to_chat(usr, "<span class='admin prefix'>Localhost rank cannot be deleted.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Localhost rank cannot be deleted."), confidential = TRUE)
 			return
 		// This handles protected ranks on its own
 		if(RANK_SOURCE_TXT)
-			to_chat(usr, "<span class='admin prefix'>Text ranks cannot be meaningfully deleted, go modify admin_ranks.txt</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Text ranks cannot be meaningfully deleted, go modify admin_ranks.txt"), confidential = TRUE)
 			return
 		if(RANK_SOURCE_BACKUP)
-			to_chat(usr, "<span class='admin prefix'>Backup ranks cannot usefully be deleted, as they are stored in a temp json, go uh... edit that? I guess?.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Backup ranks cannot usefully be deleted, as they are stored in a temp json, go uh... edit that? I guess?."), confidential = TRUE)
 			return
 		if(RANK_SOURCE_TEMPORARY)
 			local_only_deletion = TRUE
@@ -957,7 +957,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			local_only_deletion = FALSE
 
 	if(!local_only_deletion && CONFIG_GET(flag/load_legacy_ranks_only))
-		to_chat(usr, "<span class='admin prefix'>Database Rank deletion not permitted while database rank loading is disabled, deleting our local copy.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Database Rank deletion not permitted while database rank loading is disabled, deleting our local copy."), confidential = TRUE)
 		local_only_deletion = TRUE
 
 	if(!local_only_deletion)
@@ -1020,7 +1020,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		log_admin("[key_name(usr)] attempted to edit rank permissions without sufficient rights.")
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Rank Edit blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Rank Edit blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	var/datum/asset/permissions_assets = get_asset_datum(/datum/asset/simple/namespaced/common)
 	permissions_assets.send(usr.client)
@@ -1030,23 +1030,23 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		return
 	var/datum/admin_rank/target_rank = target_ranks[1]
 	if(target_rank.name != admin_rank) // Somehow
-		to_chat(usr, "<span class='admin prefix'>Passed rank does not match target, somehow.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Passed rank does not match target, somehow."), confidential = TRUE)
 		return
 	if((target_rank.rights & usr.client.holder.can_edit_rights_flags()) != target_rank.rights)
-		to_chat(usr, "<span class='admin prefix'>You don't have edit rights to all the rights this rank has, you aren't allowed to modify it.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("You don't have edit rights to all the rights this rank has, you aren't allowed to modify it."), confidential = TRUE)
 		return
 
 	var/attempt_db = FALSE
 	switch(target_rank.source)
 		if(RANK_SOURCE_LOCAL)
-			to_chat(usr, "<span class='admin prefix'>Localhost rank cannot be modified.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Localhost rank cannot be modified."), confidential = TRUE)
 			return
 		// This handles protected ranks on its own
 		if(RANK_SOURCE_TXT)
-			to_chat(usr, "<span class='admin prefix'>Text ranks cannot be meaningfully modified, go modify admin_ranks.txt</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Text ranks cannot be meaningfully modified, go modify admin_ranks.txt"), confidential = TRUE)
 			return
 		if(RANK_SOURCE_BACKUP)
-			to_chat(usr, "<span class='admin prefix'>Backup ranks cannot usefully be modified, as they are stored in a temp json, go uh... edit that? I guess?.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Backup ranks cannot usefully be modified, as they are stored in a temp json, go uh... edit that? I guess?."), confidential = TRUE)
 			return
 		// For completeness
 		if(RANK_SOURCE_TEMPORARY)
@@ -1062,7 +1062,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	// This means an admin could in theory bypass protections if they modified a linked rank (such as game admin) which is not also protected
 	// It might be wise to make the permissions afforded by protected ranks inviolable. I'm unsure.
 	if(CONFIG_GET(flag/load_legacy_ranks_only))
-		to_chat(usr, "<span class='admin prefix'>Database rank loading is disabled, only temporary changes can be made to a rank's permissions.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Database rank loading is disabled, only temporary changes can be made to a rank's permissions."), confidential = TRUE)
 		attempt_db = FALSE
 
 	var/use_db = FALSE
@@ -1091,7 +1091,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			working_exclude_rights = query_db_rank_info.item[2]
 			working_can_edit_rights = query_db_rank_info.item[3]
 		else // Couldn't find anything, no db memes then
-			to_chat(usr, "<span class='admin prefix'>Rank does not exist in database, exiting.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Rank does not exist in database, exiting."), confidential = TRUE)
 			qdel(query_db_rank_info)
 			return
 		QDEL_NULL(query_db_rank_info)
@@ -1126,7 +1126,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			allowed_edit_field = usr.client.holder.can_edit_rights_flags(),
 		)
 		if(isnull(new_flags))
-			to_chat(usr, "<span class='admin prefix'>Canceled editing rank.</span>", confidential = TRUE)
+			to_chat(usr, span_adminprefix("Canceled editing rank."), confidential = TRUE)
 			return
 
 		// Gotta turn it off and on again
