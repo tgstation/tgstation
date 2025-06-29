@@ -41,9 +41,9 @@ Key procs
 	/// Lazyassoclist of languages that can be spoken.
 	/// Tongue organ may also set limits beyond this list.
 	var/list/spoken_languages
-	/// Lazyassoclists of blocked languages.
-	/// Used to prevent understanding and speaking of certain languages, ie for certain mobs, mutations etc.
+	/// Lazyassoclist of languages we are blocked from understanding, used for certain mobs, mutations, quirks, etc.
 	var/list/blocked_understanding
+	/// Lazyassoclist of languages we are blocked from speaking, used for certain mobs, mutations, quirks, etc.
 	var/list/blocked_speaking
 	/// If true, overrides tongue aforementioned limitations.
 	var/omnitongue = FALSE
