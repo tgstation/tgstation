@@ -10,6 +10,11 @@
 	var/mob/living/held_mob
 	/// True if we've started being destroyed
 	var/destroying = FALSE
+	name = BODY_ZONE_HEAD
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	body_parts_covered = HEAD
+	slot_flags = ITEM_SLOT_HEAD
 
 /obj/item/mob_holder/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	if(head_icon)
