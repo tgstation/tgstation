@@ -299,10 +299,11 @@
 /datum/action/changeling/sting/fake_changeling
 	name = "False Changeling Sting"
 	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us with an armblade while we take on their identity."
-	helptext = "Makes the victim appears like you while you take on their appearance, the disguise is just a fake outer flesh which will decay after a while."
+	helptext = "Makes the victim appears like you while you take on their appearance, the disguise is just a fake outer flesh which will decay after a while. \
+	Gained once you obtained both false arm blade and transformation sting."
 	button_icon_state = "false_ling"
 	chemical_cost = 22
-	dna_cost = 3
+	dna_cost = 0
 
 /datum/action/changeling/sting/fake_changeling/sting_action(mob/living/user, mob/living/target)
 	. = ..()
