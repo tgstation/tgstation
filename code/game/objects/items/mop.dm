@@ -52,9 +52,7 @@
 		return CLEAN_BLOCKED
 	if(reagents.has_reagent(amount = 1, chemical_flags = REAGENT_CLEANS))
 		return CLEAN_ALLOWED
-	else
-		return CLEAN_ALLOWED|CLEAN_NO_XP
-	return CLEAN_BLOCKED|CLEAN_NO_XP
+	return CLEAN_ALLOWED|CLEAN_NO_XP
 
 /**
  * Applies reagents to the cleaned floor and removes them from the mop.
