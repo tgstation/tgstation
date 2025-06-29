@@ -1601,7 +1601,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "hx" = (
-/obj/machinery/photocopier/prebuilt,
+/obj/machinery/photocopier/gratis/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
 "hz" = (
