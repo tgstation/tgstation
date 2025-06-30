@@ -70,6 +70,7 @@
 /obj/item/weaponcrafting/gunkit/tesla
 	name = "tesla cannon parts kit (lethal)"
 	desc = "A suitcase containing the necessary gun parts to construct a tesla cannon around a stabilized flux anomaly. Handle with care."
+	icon_state = "weaponskit_tesla"
 
 /obj/item/weaponcrafting/gunkit/xray
 	name = "x-ray laser gun parts kit (lethal)"

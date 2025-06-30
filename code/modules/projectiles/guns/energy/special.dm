@@ -362,11 +362,15 @@
 
 /obj/item/gun/energy/tesla_cannon
 	name = "tesla cannon"
+	icon = 'icons/obj/weapons/guns/wideguns.dmi'
 	icon_state = "tesla"
+	lefthand_file = 'icons/mob/inhands/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/64x_guns_right.dmi'
 	inhand_icon_state = "tesla"
 	desc = "A gun powered by a flux anomaly that shoots lightning bolts. Electrically insulating clothing may protect from some of the damage."
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
 	shaded_charge = TRUE
+	charge_sections = 2
 	weapon_weight = WEAPON_HEAVY
 
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
