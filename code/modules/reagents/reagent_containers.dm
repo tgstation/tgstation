@@ -45,7 +45,7 @@
 	///The sound this container makes when there is an amount of liquid over a certain threshold inside on drop
 	var/filled_drop_sound
 	///The sound this container makes when there is an amount of liquid over a certain threshold inside on throw drop
-	var/filled_throw_drop
+	var/filled_throw_drop_sound
 	///The sound this container makes when there is an amount of liquid over a certain threshold inside on pickup
 	var/filled_pickup_sound
 	///The sound this container makes when there is an amount of liquid over a certain threshold inside on throw impact
