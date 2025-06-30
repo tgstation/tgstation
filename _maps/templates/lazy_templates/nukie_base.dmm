@@ -729,7 +729,7 @@
 /area/centcom/syndicate_mothership/control)
 "hL" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/syndicatebomb/empty,
+/obj/machinery/syndicatebomb/nukie/empty,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "hN" = (

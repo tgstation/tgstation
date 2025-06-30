@@ -599,6 +599,10 @@
 
 	return ..()
 
+/obj/item/bombcore/chemical/nukie
+	icon_state = "nukie_chemcore"
+	max_beakers = 5
+
 /obj/item/bombcore/emp
 	name = "EMP payload"
 	desc = "A set of superconducting electromagnetic coils designed to release a powerful pulse to destroy electronics and scramble circuits"
