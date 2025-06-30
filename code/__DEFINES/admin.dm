@@ -102,6 +102,28 @@
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
 
+// Page numbers for the Permission Panel
+#define PERMISSIONS_PAGE_PERMISSIONS 1
+#define PERMISSIONS_PAGE_RANKS 2
+#define PERMISSIONS_PAGE_LOGGING 3
+#define PERMISSIONS_PAGE_HOUSEKEEPING 4
+
+// Actions that can be logged in the admin_log table, excepting NONE
+#define PERMISSIONS_ACTION_ADMIN_ADDED "add admin"
+#define PERMISSIONS_ACTION_ADMIN_REMOVED "remove admin"
+#define PERMISSIONS_ACTION_ADMIN_RANK_CHANGED "change admin rank"
+#define PERMISSIONS_ACTION_RANK_ADDED "add rank"
+#define PERMISSIONS_ACTION_RANK_REMOVED "remove rank"
+#define PERMISSIONS_ACTION_RANK_CHANGED "change rank flags"
+#define PERMISSIONS_ACTION_NONE "none"
+
+// The types of ranks you can have
+#define RANK_SOURCE_LOCAL "rank_local"
+#define RANK_SOURCE_TXT "rank_txt"
+#define RANK_SOURCE_DB "rank_db"
+#define RANK_SOURCE_BACKUP "rank_backup"
+#define RANK_SOURCE_TEMPORARY "rank_temp"
+
 /// Amount of time after the round starts that the player disconnect report is issued.
 #define ROUNDSTART_LOGOUT_REPORT_TIME (10 MINUTES)
 

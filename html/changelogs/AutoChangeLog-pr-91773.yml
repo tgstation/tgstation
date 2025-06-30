@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "moving out of range of a target you are clamping while strafing will halt the do_after of mechs"
