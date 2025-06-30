@@ -196,8 +196,8 @@
 #define ui_ghost_teleport "SOUTH:6,CENTER:24"
 #define ui_ghost_settings "SOUTH: 6, CENTER+1:24"
 #define ui_ghost_minigames "SOUTH: 6, CENTER+2:24"
-#define ui_ghost_language_menu "SOUTH: 6, CENTER+3:24"
-#define ui_ghost_floor_changer "SOUTH: 6, CENTER+3:8"
+#define ui_ghost_language_menu "SOUTH: 6, CENTER+3:22"
+#define ui_ghost_floor_changer "SOUTH: 6, CENTER+3:7"
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"

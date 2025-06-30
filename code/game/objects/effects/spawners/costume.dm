@@ -47,7 +47,7 @@
 /obj/effect/spawner/costume/nyangirl
 	name = "nyangirl costume spawner"
 	items = list(
-		/obj/item/clothing/under/costume/schoolgirl,
+		/obj/item/clothing/under/costume/seifuku,
 		/obj/item/clothing/head/costume/kitty,
 		/obj/item/clothing/glasses/blindfold,
 	)
