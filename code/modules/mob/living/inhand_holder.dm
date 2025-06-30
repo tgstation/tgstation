@@ -10,7 +10,6 @@
 	var/mob/living/held_mob
 	/// True if we've started being destroyed
 	var/destroying = FALSE
-	name = BODY_ZONE_HEAD
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	body_parts_covered = HEAD
