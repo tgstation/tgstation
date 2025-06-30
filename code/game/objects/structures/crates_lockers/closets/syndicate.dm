@@ -57,7 +57,7 @@
 	new /obj/item/storage/box/medigels(src)
 	new /obj/item/ph_booklet(src)
 	new /obj/item/reagent_containers/dropper(src)
-	new /obj/item/reagent_containers/cup/bottle/acidic_buffer(src) //hopefully they get the hint
+	new /obj/item/reagent_containers/cup/bottle/acidic_buffer(src)
 
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
