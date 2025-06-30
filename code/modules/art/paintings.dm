@@ -233,6 +233,10 @@
 			show_grid = !show_grid
 		if("finalize")
 			. = TRUE
+			if(isobserver(user)) // Ghosts cant finalize
+				return FALSE
+			if(istype(user, /mob/living/silicon) && !Adjacent(user, src)) // Silicons cant finalize unless adjacent
+				return FALSE
 			finalize(user)
 		if("patronage")
 			. = TRUE
