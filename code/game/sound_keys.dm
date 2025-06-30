@@ -812,19 +812,6 @@
 	key = SFX_REGEN_MESH_DROP
 	file_paths = list('sound/items/regenerative_mesh/regen_mesh_drop1.ogg')
 
-/datum/sound_effect/soda_can_filled_drop
-	key = SFX_SODA_CAN_FILLED_DROP
-	file_paths = list(
-
-	)
-
-/datum/sound_effect/soda_can_filled_pickup
-	key = SFX_SODA_CAN_FILLED_DROP
-	file_paths = list(
-
-	)
-
-
 /* assoc lists go next */
 
 
