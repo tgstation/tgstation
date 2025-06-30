@@ -489,6 +489,39 @@
 			return quirk
 	return null
 
+/**
+ * Returns TRUE if a surgery datum is found to match the given search parameters or returns FALSE if the search failed.
+ *
+ * Arguments:
+ * * surgery_type - The type of /datum/surgery to search for.
+ * * step_type - Optional. The type of /datum/surgery_step to search for.
+ * * target_zone - Optional. The body zone to search within. See body zones in [code/__DEFINES/combat.dm]
+ */
+/mob/living/proc/has_surgery(datum/surgery/surgery_type, datum/surgery_step/step_type, target_zone)
+	if(isnull(get_surgery(surgery_type, step_type, target_zone)))
+		return FALSE
+	return TRUE
+
+/**
+ * Returns the first active surgery datum to match the given search parameters, or returns null if the search failed.
+ *
+ * Arguments:
+ * * surgery_type - The type of /datum/surgery to search for.
+ * * step_type - Optional. The type of /datum/surgery_step to search for.
+ * * target_zone - Optional. The body zone to search within. See body zones in [code/__DEFINES/combat.dm]
+ */
+/mob/living/proc/get_surgery(datum/surgery/surgery_type, datum/surgery_step/step_type, target_zone)
+	for(var/datum/surgery/surgery as anything in surgeries)
+		if(!istype(surgery, surgery_type))
+			continue
+		// Skip searching outside the targeted bodyzone
+		if(!isnull(target_zone) && (surgery.location != target_zone))
+			continue
+		// Ensure the surgery is on the given step_type
+		if(!isnull(step_type) && !ispath(surgery.steps[surgery.status], step_type))
+			continue
+		return surgery
+
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
 	if(HAS_TRAIT(src, TRAIT_HUSK))
