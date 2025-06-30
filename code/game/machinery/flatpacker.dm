@@ -109,17 +109,17 @@
  * Returns the name of this component. Vending canistors & maybe other types in the future require special parsing
  *
  * Arguments
- * * obj/item/type - the component type we are trying to get the name
+ * * obj/item/component - the component typepath we are trying to get the name
  */
-/obj/machinery/flatpacker/proc/get_flatpack_component_name(obj/item/type)
+/obj/machinery/flatpacker/proc/get_flatpack_component_name(obj/item/component)
 	PRIVATE_PROC(TRUE)
 
 	if(ispath(type, /obj/item/vending_refill))
-		var/obj/item/vending_refill/canister = type
+		var/obj/item/vending_refill/canister = component
 
 		return "\improper [canister::machine_name] restocking unit"
 
-	return type::name
+	return component::name
 
 /**
  * Returns count of inserted flatpack component parts
