@@ -1,0 +1,5 @@
+author: "Twaticus"
+delete-after: True
+changes:
+  - image: "resprites the maid uniform and headband using GAGs"
+  - rscdel: "removes standalone maid neckpiece, gloves, and corset"
