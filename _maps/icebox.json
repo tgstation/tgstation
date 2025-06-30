@@ -14,6 +14,11 @@
 		"whiteship": "whiteship_box",
 		"emergency": "emergency_box"
 	},
+	"wilderness": {
+		"directory": "map_files/IceWilderness",
+		"snow_planes.dmm": -1,
+		"ice_planes.dmm": 1
+	},
 	"traits": [
 		{
 			"Mining": true,

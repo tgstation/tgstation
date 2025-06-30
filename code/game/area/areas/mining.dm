@@ -217,8 +217,10 @@
 /// this is the area you use for stuff to not spawn, but if you still want weather.
 /area/icemoon/surface/outdoors/nospawn
 
-// unless you roll forested trait lol (fuck you time green)
-/area/icemoon/surface/outdoors/nospawn/New()
+/area/icemoon/surface/outdoors/less_spawns
+	icon_state = "less_spawns"
+
+/area/icemoon/surface/outdoors/less_spawns/New()
 	. = ..()
 	// this area SOMETIMES does map generation. Often it doesn't at all
 	// so it SHOULD NOT be used with the genturf turf type, as it is not always replaced

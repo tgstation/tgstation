@@ -27,10 +27,15 @@
 	var/traits = null
 	var/space_ruin_levels = DEFAULT_SPACE_RUIN_LEVELS
 	var/space_empty_levels = DEFAULT_SPACE_EMPTY_LEVELS
+
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
 	/// How many z's to generate around a planetary station. must form a square (so 2x2=4, 3x3=9, 4x4=16, all -1 for the station z-level)
 	var/planetary_ring_levels = 8
+	/// Directory to the wilderness area we can spawn in
+	var/wilderness_directory
+	/// Index of map names (inside wilderness_directory) with the amount to spawn. ("ice_planes" = 1) for one ice spawn
+	var/list/maps_to_spawn = list()
 
 	///The type of mining Z-level that should be loaded.
 	var/minetype = MINETYPE_LAVALAND
@@ -234,6 +239,27 @@
 
 	if ("height_autosetup" in json)
 		height_autosetup = json["height_autosetup"]
+
+	var/list/wilderness = json["wilderness"]
+	// If we got wilderness levels, fetch them from the config
+	if (islist(wilderness))
+		wilderness_directory = wilderness["directory"]
+		wilderness.Remove("directory")
+
+		// The map to default to when we've used all the maps_to_spawn maps
+		var/wilderness_default_map
+		for(var/key in wilderness)
+			var/value = wilderness[key]
+
+			if(value == -1)
+				wilderness_default_map = key
+				continue
+
+			for(var/i in 1 to value)
+				maps_to_spawn += key
+		for(var/i in 1 to planetary_ring_levels - maps_to_spawn.len)
+			maps_to_spawn += wilderness_default_map
+		shuffle(maps_to_spawn)
 
 #ifdef UNIT_TESTS
 	// Check for unit tests to skip, no reason to check these if we're not running tests

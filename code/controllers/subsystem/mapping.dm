@@ -140,11 +140,8 @@ SUBSYSTEM_DEF(mapping)
 
 	if(current_map.planetary_ring_levels)
 		var/list/FailedZs = list()
-		var/list/map_files = list()
-		for(var/i in 1 to current_map.planetary_ring_levels)
-			map_files += "snow_planes.dmm"
 
-		LoadGroup(FailedZs, "Wilderness Area", "map_files/IceWilderness", map_files, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
 
 		if(LAZYLEN(FailedZs))
 			CRASH("Ice wilds failed to load!")
@@ -286,8 +283,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		var/river_type = HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED) ? /turf/open/lava/plasma/ice_moon : /turf/open/openspace/icemoon
-		spawn_rivers(ice_z, 4, river_type, /area/icemoon/surface/outdoors/unexplored/rivers)
+		spawn_rivers(ice_z, 4, /turf/open/lava/plasma/ice_moon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)

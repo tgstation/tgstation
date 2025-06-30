@@ -35,12 +35,15 @@
 	)
 
 /datum/map_generator/cave_generator/icemoon/surface
+	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
 	flora_spawn_chance = 4
 	weighted_mob_spawn_list = null
 	initial_closed_chance = 0
 	birth_limit = 5
 	death_limit = 4
 	smoothing_iterations = 10
+
+	feature_spawn_chance = 0.05
 	weighted_feature_spawn_list = list(
 		/obj/structure/geyser/hollowwater = 10,
 		/obj/structure/geyser/plasma_oxide = 10,
@@ -49,9 +52,14 @@
 		/obj/structure/geyser/wittel = 10,
 	)
 
+	weighted_flora_spawn_list = list(
+		/obj/structure/flora/ash/chilly = 2,
+		/obj/structure/flora/grass/both/style_random = 6,
+//		/obj/structure/flora/tree/pine/style_random = 2,
+	)
+
 /// Surface snow generator variant for forested station trait, WITH FORESTSSSS
 /datum/map_generator/cave_generator/icemoon/surface/forested
-	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
 	initial_closed_chance = 10
 
 	flora_spawn_chance = 80

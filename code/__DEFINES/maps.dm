@@ -44,7 +44,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SPACERUIN_MAP_EDGE_PAD 15
 
 /// Distance from edge to move to another z-level
-#define TRANSITIONEDGE 7
+#define TRANSITIONEDGE 8
 
 // Maploader bounds indices
 /// The maploader index for the maps minimum x
@@ -138,7 +138,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_WILDS list(\
 	ZTRAIT_LINKAGE = GRIDLINKED, \
 	ZTRAIT_ICE_RUINS = TRUE, \
-	ZTRAIT_SNOWSTORM = TRUE, \
+	ZTRAIT_SNOWSTORM = FALSE, \
 	ZTRAIT_BASETURF = /turf/open/misc/asteroid/snow/icemoon)
 
 ///Z level traits for Lavaland
