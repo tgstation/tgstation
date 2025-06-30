@@ -367,10 +367,10 @@
 	return reagent_container_sound_chain(filled_throw_drop_sound, throw_drop_sound, src, volume)
 
 /obj/item/reagent_containers/play_mob_throw_hit_sound(target, volume = DROP_SOUND_VOLUME)
-	return reagent_container_sound_chain(filled_mob_throw_hit_sound, mob_throw_hit_sound, target, volume)
+	return reagent_container_sound_chain(filled_throw_hit_sound, mob_throw_hit_sound, target, volume)
 
 /obj/item/reagent_containers/play_hit_sound(target, volume = HALFWAY_SOUND_VOLUME)
-	return reagent_container_sound_chain(filled_hit_sound, hit_sound, target, volume)
+	return reagent_container_sound_chain(filled_hitsound, filled_hitsound, target, volume)
 
 /obj/item/reagent_containers/play_equip_sound(volume = EQUIP_SOUND_VOLUME)
 	return reagent_container_sound_chain(filled_equip_sound, equip_sound, src, volume)
