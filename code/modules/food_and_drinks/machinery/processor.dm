@@ -201,7 +201,7 @@
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime
 
-/obj/machinery/chem_dispenser/slime/fullupgrade //fully ugpraded stock parts
+/obj/machinery/processor/slime/fullupgrade //fully ugpraded stock parts
 	desc = "An industrial grinder with a sticker saying appropiated for bioterrorism department. keep hands clear of intake while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime/fullupgrade
 
