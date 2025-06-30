@@ -353,11 +353,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return FALSE
 
 	// So it doesn't trigger other zFall calls. Cleared on zMove.
-	spawn(0)
-		falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
+	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
 
-		falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
-		target.zImpact(falling, levels, src)
+	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
+	target.zImpact(falling, levels, src)
 
 	return TRUE
 
