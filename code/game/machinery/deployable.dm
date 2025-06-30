@@ -81,7 +81,6 @@
 	register_context()
 
 /obj/structure/barricade/wooden/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
