@@ -50,7 +50,7 @@
 /datum/element/door_pryer/proc/open_door(mob/living/basic/attacker, obj/machinery/door/airlock/airlock_target)
 	if (!airlock_target.hasPower())
 		attacker.visible_message(span_warning("[attacker] forces the [airlock_target] to open."))
-		user.log_game("Pried open [src], located at [loc_name(src)].")
+		attacker.log_game("Pried open [src], located at [loc_name(src)].")
 		airlock_target.open(FORCING_DOOR_CHECKS)
 		return
 
