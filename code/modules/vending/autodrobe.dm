@@ -144,10 +144,8 @@ GLOBAL_LIST_INIT(autodrobe_service_items, list(
 	/obj/item/clothing/under/suit/waiter = 4,
 	/obj/item/clothing/suit/apron = 3,
 	/obj/item/clothing/suit/apron/overalls = 3,
-	/obj/item/clothing/head/costume/maidheadband = 3,
+	/obj/item/clothing/head/costume/maid_headband = 3,
 	/obj/item/clothing/under/costume/maid = 3,
-	/obj/item/clothing/gloves/maid = 3,
-	/obj/item/clothing/neck/maid = 3,
 	/obj/item/clothing/under/rank/civilian/janitor/maid = 3,
 	/obj/item/clothing/accessory/maidapron = 3,
 ))

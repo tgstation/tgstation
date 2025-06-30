@@ -115,17 +115,20 @@
 /obj/item/clothing/under/costume/maid
 	name = "maid costume"
 	desc = "Maid in China."
-	icon_state = "maid"
+	greyscale_colors = "#494955#EEEEEE"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/maid"
+	post_init_icon_state = "maid"
+	greyscale_config = /datum/greyscale_config/maid
+	greyscale_config_worn = /datum/greyscale_config/maid/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/maid_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/maid_inhands_right
 	inhand_icon_state = "maid"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	alternate_worn_layer = UNDER_SUIT_LAYER
 	can_adjust = FALSE
-
-/obj/item/clothing/under/costume/maid/Initialize(mapload)
-	. = ..()
-	var/obj/item/clothing/accessory/maidcorset/A = new (src)
-	attach_accessory(A)
 
 /obj/item/clothing/under/costume/geisha
 	name = "geisha suit"
