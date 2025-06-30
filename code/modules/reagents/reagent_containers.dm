@@ -49,9 +49,11 @@
 	///The sound this container makes when there is an amount of liquid over a certain threshold inside on pickup
 	var/filled_pickup_sound
 	///The sound this container makes when there is an amount of liquid over a certain threshold inside on throw impact
-	var/filled_throw_impact
+	var/filled_throw_hit_sound
 	///The sound this container makes when there is an amount of liquid over a certain threshold inside on hit
 	var/filled_hitsound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on equip
+	var/filled_equip_sound
 	///If we want to the contrast of the reagent overlay if the reagent mix color is very dark.
 	var/adjust_color_contrast = FALSE
 
@@ -338,37 +340,40 @@
 
 	. += filling
 
-/obj/item/reagent_containers/play_drop_sound(volume = DROP_SOUND_VOLUME)
-	if(reagents.total_volume <= 5)
-		if(drop_sound)
-			playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+/obj/item/reagent_containers/proc/reagent_container_sound_chain(filled_sound, empty_sound, target, volume)
+	if(reagents.total_volume <= round(1, (reagents.maximum_volume * 0.2)))
+		if(empty_sound)
+			playsound(target, empty_sound, volume, vary = sound_vary, ignore_walls = FALSE)
 			return TRUE
 		return FALSE
 
 	if(reagent_container_liquid_sound)
-		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
-	if(filled_drop_sound)
-		playsound(src, filled_drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
-	else if(drop_sound)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+		playsound(target, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+	if(filled_sound)
+		playsound(target, filled_sound, volume, vary = sound_vary, ignore_walls = FALSE)
+		return TRUE
+	if(empty_sound)
+		playsound(target, empty_sound, volume, vary = sound_vary, ignore_walls = FALSE)
 		return TRUE
 	return FALSE
 
 /obj/item/reagent_containers/play_pickup_sound(volume = PICKUP_SOUND_VOLUME)
-	if(reagents.total_volume <= 5)
-		if(pickup_sound)
-			playsound(src, pickup_sound, volume, vary = sound_vary, ignore_walls = FALSE)
-			return TRUE
-		return FALSE
+	return reagent_container_sound_chain(filled_pickup_sound, pickup_sound, src, volume)
 
-	if(reagent_container_liquid_sound)
-		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
-	if(filled_pickup_sound)
-		playsound(src, filled_drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
-	else if(pickup_sound)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
-		return TRUE
-	return FALSE
+/obj/item/reagent_containers/play_drop_sound(volume = DROP_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_drop_sound, drop_sound, src, volume)
+
+/obj/item/reagent_containers/play_throw_drop_sound(volume = YEET_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_throw_drop_sound, throw_drop_sound, src, volume)
+
+/obj/item/reagent_containers/play_mob_throw_hit_sound(target, volume = DROP_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_mob_throw_hit_sound, mob_throw_hit_sound, target, volume)
+
+/obj/item/reagent_containers/play_hit_sound(target, volume = HALFWAY_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_hit_sound, hit_sound, target, volume)
+
+/obj/item/reagent_containers/play_equip_sound(volume = EQUIP_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_equip_sound, equip_sound, src, volume)
 
 /obj/item/reagent_containers/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()

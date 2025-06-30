@@ -704,46 +704,34 @@
 		return TRUE
 	return FALSE
 
-/// plays the pickup sound of this item.
-/obj/item/proc/play_pickup_sound(volume = PICKUP_SOUND_VOLUME)
-	if(pickup_sound)
-		playsound(src, pickup_sound, volume, sound_vary, ignore_walls = FALSE)
+/obj/item/proc/sound_chain(sound_to_play, volume = HALFWAY_SOUND_VOLUME, target = src)
+	if(sound_to_play)
+		playsound(target, sound_to_play, volume, sound_vary, ignore_walls = FALSE)
 		return TRUE
 	return FALSE
 
-/// plays the throw drop sound
-/obj/item/proc/play_throw_drop_sound(volume = YEET_SOUND_VOLUME)
-	if(throw_drop_sound)
-		playsound(src, throw_drop_sound, volume, ignore_walls = FALSE, vary = sound_vary)
-		return TRUE
-	return FALSE
+/// plays the pickup sound of this item.
+/obj/item/proc/play_pickup_sound(volume = PICKUP_SOUND_VOLUME)
+	return sound_chain(pickup_sound, volume)
 
 /// plays the drop sound
 /obj/item/proc/play_drop_sound(volume = DROP_SOUND_VOLUME)
-	if(drop_sound)
-		playsound(src, drop_sound, volume, vary = sound_vary, ignore_walls = FALSE)
-		return TRUE
-	return FALSE
+	return sound_chain(drop_sound, volume)
+
+/// plays the throw drop sound
+/obj/item/proc/play_throw_drop_sound(volume = YEET_SOUND_VOLUME)
+	return sound_chain(throw_drop_sound, volume)
 
 /// plays the mob throw hit sound
 /obj/item/proc/play_mob_throw_hit_sound(target, volume = DROP_SOUND_VOLUME)
-	if(mob_throw_hit_sound)
-		playsound(target, mob_throw_hit_sound, volume, TRUE, -1)
-		return TRUE
-	return FALSE
+	return sound_chain(mob_throw_hit_sound, volume, target)
 
 /// plays when a mob is hit with this item
 /obj/item/proc/play_hit_sound(target, volume = HALFWAY_SOUND_VOLUME)
-	if(hitsound)
-		playsound(target, hitsound, volume, TRUE, -1)
-		return TRUE
-	return FALSE
+	return sound_chain(hitsound, volume, target)
 
 /obj/item/proc/play_equip_sound(volume = EQUIP_SOUND_VOLUME)
-	if(equip_sound)
-		playsound(src, equip_sound, volume, TRUE, ignore_walls = FALSE)
-		return TRUE
-	return FALSE
+	return sound_chain(equip_sound, volume)
 
 /* sound procs over */
 
