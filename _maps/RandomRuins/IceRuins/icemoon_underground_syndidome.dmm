@@ -2473,7 +2473,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "DL" = (
@@ -3086,7 +3086,7 @@
 /obj/machinery/light/small/dim/directional/west,
 /obj/item/polymorph_belt/functioning,
 /obj/item/pen/edagger,
-/obj/item/clothing/under/costume/schoolgirl/red,
+/obj/item/clothing/under/costume/seifuku/red,
 /obj/structure/sign/poster/contraband/communist_state/directional/west,
 /turf/open/floor/carpet/green,
 /area/ruin/syndibiodome)
@@ -3310,7 +3310,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
 	},
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,

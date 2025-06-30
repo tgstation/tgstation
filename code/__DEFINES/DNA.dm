@@ -16,13 +16,31 @@
 #define MINOR_NEGATIVE 4
 
 
-//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you don't want people to fuck with like wizard mutate
-/// A mutation that can be activated and deactivated by completing a sequence
-#define MUT_NORMAL 1
-/// A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before its name in the mutation section of the dna console
-#define MUT_EXTRA 2
-/// Cannot be interacted with by players through normal means. I.E. wizards mutate
-#define MUT_OTHER 3
+//Mutation sources. As long as there is at least one, the mutation will stay up after a remove_mutation call
+///Source for mutations that have been activated by completing a sequence or using an activator
+#define MUTATION_SOURCE_ACTIVATED "activated"
+///Source for mutations that have been added via mutators
+#define MUTATION_SOURCE_MUTATOR "mutator"
+///From timed dna injectors.
+#define MUTATION_SOURCE_TIMED_INJECTOR "timed_injector"
+///From mob/living/carbon/human/proc/crewlike_monkify()
+#define MUTATION_SOURCE_CREW_MONKEY "crew_monkey"
+#define MUTATION_SOURCE_MEDIEVAL_CTF "medieval_ctf"
+#define MUTATION_SOURCE_DNA_VAULT "dna_vault"
+///From the /datum/action/cooldown/spell/apply_mutations spell
+#define MUTATION_SOURCE_SPELL "spell"
+///From the heart eater component
+#define MUTATION_SOURCE_HEART_EATER "heart_eater"
+#define MUTATION_SOURCE_RAT_HEART "rat_heart"
+#define MUTATION_SOURCE_CLOWN_CLUMSINESS "clown_clumsiness"
+#define MUTATION_SOURCE_CHANGELING "changeling"
+#define MUTATION_SOURCE_GHOST_ROLE "ghost_role"
+#define MUTATION_SOURCE_WISHGRANTER "wishgranter"
+#define MUTATION_SOURCE_VV "vv"
+#define MUTATION_SOURCE_MANNITOIL "mannitoil"
+#define MUTATION_SOURCE_MAINT_ADAPT "maint_adapt"
+#define MUTATION_SOURCE_BURDENED_TRAUMA "burdened_trauma"
+#define MUTATION_SOURCE_GENE_SYMPTOM "gene_symptom"
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
@@ -74,6 +92,14 @@
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
+
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
+#define COPY_DNA_SE (1<<0)
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the species.
+#define COPY_DNA_SPECIES (1<<1)
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the mutations.
+#define COPY_DNA_MUTATIONS (1<<2)
+
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -174,10 +200,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,))
-
-//Defines for Golem Species IDs
-#define SPECIES_GOLEM "golem"
+	ORGAN_SLOT_XENO_EGGSAC,
+))
 
 // Defines for used in creating "perks" for the species preference pages.
 /// A key that designates UI icon displayed on the perk.

@@ -4,7 +4,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/widescreen/apply_to_client(client/client, value)
-	client.view_size?.setDefault(getScreenSize(value))
+	client.view_size?.setDefault(VIEWPORT_USE_PREF)
 
 /datum/preference/toggle/fullscreen_mode
 	default_value = FALSE
@@ -13,4 +13,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/fullscreen_mode/apply_to_client(client/client, value)
+	//let's not apply unless the client is fully logged in, therefore manually triggering it.
+	if(!client.fully_created)
+		return
 	client.set_fullscreen()

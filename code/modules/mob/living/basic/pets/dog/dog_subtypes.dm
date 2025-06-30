@@ -57,7 +57,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	wound_bonus = -25
-	bare_wound_bonus = 45
+	exposed_wound_bonus = 45
 	sharpness = SHARP_EDGED
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list(FACTION_HOSTILE)
@@ -98,8 +98,10 @@
 	attacked_sound = 'sound/items/eatfood.ogg'
 	held_state = "breaddog"
 	worn_slot_flags = ITEM_SLOT_HEAD
+	//just ensuring the mats contained by the dog when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 3)
 
-/mob/living/basic/pet/dog/breaddog/CheckParts(list/parts)
+/mob/living/basic/pet/dog/breaddog/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
 	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)

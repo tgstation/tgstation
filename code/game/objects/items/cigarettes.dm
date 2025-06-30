@@ -199,6 +199,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = ITEM_SLOT_MASK
 	grind_results = list()
 	heat = 1000
+	light_range = 1
+	light_color = LIGHT_COLOR_FIRE
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
 	throw_verb = "flick"
 	/// Whether this cigarette has been lit.
 	VAR_FINAL/lit = FALSE
@@ -407,6 +411,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lit = TRUE
 	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
+	set_light_on(TRUE)
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
 		return
@@ -456,6 +461,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lit = FALSE
 	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
+	set_light_on(FALSE)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))
 	QDEL_NULL(cig_smoke)
@@ -637,6 +643,35 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigarette/robust
 	desc = "A Robust brand cigarette."
 
+/obj/item/cigarette/greytide
+	name = "grey mainthol"
+	desc = "Made by hand, has a funky smell."
+	chem_volume = 60
+	lung_harm = 2.5
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/consumable/menthol = 6, /datum/reagent/medicine/oculine = 1)
+	/// Weighted list of random reagents to add
+	var/static/list/possible_reagents = list(
+		/datum/reagent/toxin/fentanyl = 2,
+		/datum/reagent/glitter = 2,
+		/datum/reagent/drug/aranesp = 2,
+		/datum/reagent/consumable/laughter = 2,
+		/datum/reagent/medicine/insulin = 2,
+		/datum/reagent/drug/maint/powder = 2,
+		/datum/reagent/drug/maint/sludge = 2,
+		/datum/reagent/toxin/staminatoxin = 2,
+		/datum/reagent/toxin/leadacetate = 2,
+		/datum/reagent/drug/space_drugs = 2,
+		/datum/reagent/drug/pumpup = 2,
+		/datum/reagent/drug/kronkaine = 2,
+		/datum/reagent/consumable/mintextract = 2,
+		/datum/reagent/pax = 1,
+	)
+
+/obj/item/cigarette/greytide/Initialize(mapload)
+	. = ..()
+	if(prob(40))
+		reagents.add_reagent(pick_weight(possible_reagents), rand(10, 15))
+
 /obj/item/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/gold = 3) // Just enough to taste a hint of expensive metal.
@@ -772,6 +807,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old roach, or for non-stoners, a used rollup."
 	icon_state = "roach"
 
+/obj/item/cigbutt/greycigbutt
+	name = "butt"
+	desc = "It's low tide, now."
+	icon_state = "cigbutt"
+
 /obj/item/cigbutt/roach/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
@@ -894,6 +934,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(user, span_notice("Your [name] goes out."))
 		packeditem = null
 	update_appearance(UPDATE_ICON)
+	set_light_on(FALSE)
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
@@ -951,7 +992,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/rollingpaper/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/cigarette/rollie, CUSTOM_INGREDIENT_ICON_NOCHANGE, ingredient_type=CUSTOM_INGREDIENT_TYPE_DRYABLE, max_ingredients=2)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/cigarette/rollie, CUSTOM_INGREDIENT_ICON_NOCHANGE, ingredient_type=CUSTOM_INGREDIENT_TYPE_DRYABLE, max_ingredients=2)
 
 
 ///////////////
@@ -971,6 +1012,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
+	light_range = 1
+	light_color = LIGHT_COLOR_HALOGEN
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
 
 	/// The capacity of the vape.
 	var/chem_volume = 100
@@ -1070,12 +1115,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	to_chat(user, span_notice("You start puffing on the vape."))
 	reagents.flags &= ~(NO_REACT)
 	START_PROCESSING(SSobj, src)
+	set_light_on(TRUE)
 
 /obj/item/vape/dropped(mob/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
 		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
+		set_light_on(FALSE)
 
 /obj/item/vape/proc/handle_reagents()
 	if(!reagents.total_volume)
@@ -1170,9 +1217,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	flags_1 = NONE
 
 /obj/item/vape/black
-	icon_state = "/obj/item/vape/black"
 	greyscale_colors = "#2e2e2e"
-	flags_1 = NONE
+	flags_1 = NO_NEW_GAGS_PREVIEW_1 // same color as basetype
 
 /obj/item/vape/white
 	icon_state = "/obj/item/vape/white"

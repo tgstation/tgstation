@@ -79,7 +79,7 @@
 	QDEL_NULL(cell)
 	return..()
 
-/obj/machinery/space_heater/on_construction()
+/obj/machinery/space_heater/on_construction(mob/user, from_flatpack = FALSE)
 	set_panel_open(TRUE)
 	QDEL_NULL(cell)
 
@@ -337,6 +337,18 @@
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
 	QDEL_NULL(beaker)
+
+/obj/machinery/space_heater/improvised_chem_heater/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	if(!isliving(crafter))
+		return
+	var/mob/living/user = crafter
+	var/obj/item/stock_parts/power_store/cell/cell = (locate() in range(1)) || user.is_holding_item_of_type(/obj/item/stock_parts/power_store/cell)
+	if(!cell)
+		return
+	var/turf/turf = get_turf(cell)
+	forceMove(turf)
+	attackby(cell, user) //puts it into the heater
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()

@@ -340,7 +340,7 @@ Versioning
 		"name" = L.real_name,
 		"key" = L.ckey,
 		"job" = L.mind.assigned_role.title,
-		"special" = L.mind.special_role,
+		"special" = jointext(L.mind.get_special_roles(), " | "),
 		"pod" = get_area_name(L, TRUE),
 		"laname" = L.lastattacker,
 		"lakey" = L.lastattackerckey,
@@ -416,13 +416,30 @@ Versioning
 		query_report_citation.Execute(async = TRUE)
 		qdel(query_report_citation)
 
+/datum/controller/subsystem/blackbox/proc/ReportRoundstartManifest(list/characters)
+	var/list/query_rows = list()
+	var/list/special_columns = list("server_ip" = "INET_ATON(?)")
+	for(var/mob_ckey as anything in characters)
+		var/mob/living/new_character = characters[mob_ckey]
+		query_rows += list(list(
+			"server_ip" = world.internet_address || 0,
+			"server_port" = world.port,
+			"round_id" = GLOB.round_id,
+			"ckey" = mob_ckey,
+			"character_name" = new_character.real_name,
+			"job" = new_character.mind?.assigned_role?.title,
+			"special" = english_list(new_character.mind?.get_special_roles(), nothing_text = "NONE"),
+			"latejoin" = 0,
+		))
+	SSdbcore.MassInsert(format_table_name("manifest"), query_rows, special_columns = special_columns)
+
 /datum/controller/subsystem/blackbox/proc/ReportManifest(ckey, character, job, special, latejoin)
 	var/datum/db_query/query_report_manifest = SSdbcore.NewQuery({"INSERT INTO [format_table_name("manifest")]
 	(server_ip,
 	server_port,
 	round_id,
 	ckey,
-	character,
+	character_name,
 	job,
 	special,
 	latejoin) VALUES (
@@ -430,16 +447,16 @@ Versioning
 	:port,
 	:round_id,
 	:ckey,
-	:character,
+	:character_name,
 	:job,
 	:special,
 	:latejoin)
 	"}, list(
-		"server_ip" = world.internet_address || "0",
-		"port" = "[world.port]",
+		"server_ip" = world.internet_address || 0,
+		"port" = world.port,
 		"round_id" = GLOB.round_id,
 		"ckey" = ckey,
-		"character" = character,
+		"character_name" = character,
 		"job" = job,
 		"special" = special,
 		"latejoin" = latejoin

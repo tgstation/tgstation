@@ -13,19 +13,22 @@
 	/// list of emotes whose cd is overridden by this skillchip. can be edited in mapping or ingame
 	var/list/affected_emotes = list("spin", "flip")
 	var/datum/effect_system/spark_spread/sparks
-	// you can use this without lowering integrity! let's be honest. nobody's doing that
-	var/allowed_usage = 3
+	/// you can use this without lowering integrity! let's be honest. nobody's doing that
+	var/allowed_usage = 5
+	/// How many seconds does it take for it to recover one allowed usage
 	var/reload_charge = 10 SECONDS
-	// current particle effect used for smoking brain
+	/// current particle effect used for smoking brain
 	var/obj/effect/abstract/particle_holder/particle_effect
 
 /obj/item/skillchip/acrobatics/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_EMOTE_COOLDOWN_CHECK, PROC_REF(whowee))
+	AddElement(/datum/element/obj_regen, 0.01) // 1% regen per SSobj tick.
 
 /obj/item/skillchip/acrobatics/on_deactivate(mob/living/carbon/user, silent)
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOB_EMOTE_COOLDOWN_CHECK)
+	RemoveElement(/datum/element/obj_regen, 0.01)
 
 /obj/item/skillchip/acrobatics/Destroy(force)
 	QDEL_NULL(sparks)
@@ -41,8 +44,9 @@
 	if(allowed_usage)
 		allowed_usage--
 		addtimer(CALLBACK(src, PROC_REF(charge)), reload_charge)
-	else
-		take_damage(1, sound_effect = FALSE)
+		return COMPONENT_EMOTE_COOLDOWN_BYPASS
+
+	take_damage(1, sound_effect = FALSE)
 
 	if(!sparks)
 		sparks = new(src)

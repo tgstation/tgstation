@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/head/costume/kitty/genuine,
 		/obj/item/clothing/mask/gas/ninja,
 		/obj/item/clothing/under/syndicate/ninja,
-		/obj/item/clothing/under/costume/schoolgirl,
+		/obj/item/clothing/under/costume/seifuku,
 		/obj/item/energy_katana,
 		/obj/item/food/chawanmushi,
 		/obj/item/food/sashimi,

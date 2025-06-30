@@ -23,7 +23,7 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	/// For explosive spears, what we cry out when we use this to bap someone
 	var/war_cry = "AAAAARGH!!!"
 	/// The icon prefix for this flavor of spear
@@ -80,8 +80,8 @@
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/spear/CheckParts(list/parts_list)
-	var/obj/item/shard/tip = locate() in parts_list
+/obj/item/spear/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/shard/tip = locate() in components
 	if(!tip)
 		return ..()
 
@@ -112,15 +112,13 @@
 			throw_speed = 5
 			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plastitaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			wound_bonus = -10
-			bare_wound_bonus = 20
+			exposed_wound_bonus = 20
 			force_unwielded = 13
 			force_wielded = 20
 			icon_prefix = "spearplastitanium"
 			AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
 
 	update_appearance()
-	parts_list -= tip
-	qdel(tip)
 	return ..()
 
 /obj/item/spear/explosive
@@ -141,17 +139,14 @@
 	explosive = G
 	desc = "A makeshift spear with [G] attached to it"
 
-/obj/item/spear/explosive/CheckParts(list/parts_list)
-	var/obj/item/grenade/G = locate() in parts_list
-	if(G)
-		var/obj/item/spear/lancePart = locate() in parts_list
+/obj/item/spear/explosive/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/grenade/nade = locate() in components
+	if(nade)
+		var/obj/item/spear/lancePart = locate() in components
 		throwforce = lancePart.throwforce
 		icon_prefix = lancePart.icon_prefix
-		parts_list -= G
-		parts_list -= lancePart
-		set_explosive(G)
-		qdel(lancePart)
-	..()
+		set_explosive(nade)
+	return ..()
 
 /obj/item/spear/explosive/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -227,7 +222,7 @@
 	throwforce = 30
 	demolition_mod = 1
 	wound_bonus = 5
-	bare_wound_bonus = 25
+	exposed_wound_bonus = 25
 	throw_range = 9
 	throw_speed = 5
 	sharpness = NONE // we break bones instead of cutting flesh

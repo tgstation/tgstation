@@ -404,6 +404,22 @@
 		/obj/item/knife/combat/cyborg,
 	)
 
+/obj/item/organ/cyberimp/arm/toolkit/surgery/cruel
+	name = "morbid surgical toolset implant"
+	desc = "A modified set of surgical tools hidden behind a concealed panel on the user's arm. These tools seem twisted and cruel, designed to maximize pain while operating with incredible precision."
+	icon_state = "toolkit_surgical_cruel"
+	aug_overlay = "toolkit_med"
+	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
+	items_to_create = list(
+		/obj/item/retractor/cruel/augment,
+		/obj/item/hemostat/cruel/augment,
+		/obj/item/cautery/cruel/augment,
+		/obj/item/surgicaldrill/cruel/augment,
+		/obj/item/scalpel/cruel/augment,
+		/obj/item/circular_saw/cruel/augment,
+		/obj/item/surgical_drapes,
+	)
+
 #define DOAFTER_SOURCE_STRONGARM_INTERACTION "strongarm interaction"
 
 // Strong-Arm Implant //

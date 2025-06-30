@@ -11,6 +11,7 @@
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	//wow, lore
 	desc = "A hefty lead pipe.\nLead is an uncommon sight in this sector after being phased out due to employee health concerns. \
 	\nThose of a more cynical disposition have claimed that the NT lead ban is a scheme to prevent diversion to Syndicate ammunition factories."
@@ -61,7 +62,7 @@
 	if(!avatar.can_mutate())
 		return BITRUNNER_GEAR_LOAD_FAILED
 
-	if(avatar.dna.mutation_in_sequence(/datum/mutation/human/shock))
-		avatar.dna.activate_mutation(/datum/mutation/human/shock)
+	if(avatar.dna.mutation_in_sequence(/datum/mutation/shock))
+		avatar.dna.activate_mutation(/datum/mutation/shock)
 	else
-		avatar.dna.add_mutation(/datum/mutation/human/shock, MUT_EXTRA)
+		avatar.dna.add_mutation(/datum/mutation/shock, MUTATION_SOURCE_MUTATOR)
