@@ -32,8 +32,13 @@ type Ability = {
   genetic_point_required: number; // Checks against genetic_points_count
   absorbs_required: number; // Checks against absorb_count
   dna_required: number; // Checks against dna_count
+  prereq_ability: string[];
 };
 
+function compareArrays<t>(arr1: string[], arr2: string[]): boolean {
+  const set2 = new Set(arr2);
+  return arr1.some((item) => set2.has(item));
+}
 export const CellularEmporium = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
   const [searchAbilities, setSearchAbilities] = useState('');
@@ -153,7 +158,8 @@ const AbilityList = (props: { searchAbilities: string }) => {
                     owned_abilities.includes(ability.path) ||
                     ability.genetic_point_required > genetic_points_count ||
                     ability.absorbs_required > absorb_count ||
-                    ability.dna_required > dna_count
+                    ability.dna_required > dna_count ||
+                    compareArrays(ability.prereq_ability, owned_abilities)
                   }
                   onClick={() =>
                     act('evolve', {

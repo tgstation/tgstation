@@ -84,6 +84,13 @@
 	. = ..()
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 
+/datum/action/changeling/sting/transformation/on_purchase(mob/user, is_respec)
+	. = ..()
+	var/datum/antagonist/changeling/this_ling = user.mind.antag_datums[/datum/antagonist/changeling]
+	var/list/available_power = this_ling.purchased_powers
+	if(available_power[/datum/action/changeling/sting/false_armblade])
+		to_chat(user, span_notice("False ling sting is now available!"))
+
 /datum/action/changeling/sting/transformation/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	. = ..()
 	button.desc += " Lasts [DisplayTimeText(sting_duration)] for humans, but duration is paused while dead or in stasis."
@@ -146,6 +153,14 @@
 	button_icon_state = "sting_armblade"
 	chemical_cost = 20
 	dna_cost = 1
+
+/datum/action/changeling/sting/false_armblade/on_purchase(mob/user, is_respec)
+	. = ..()
+	var/datum/antagonist/changeling/this_ling = user.mind.antag_datums[/datum/antagonist/changeling]
+	var/list/available_power = this_ling.purchased_powers
+	if(available_power[/datum/action/changeling/sting/transformation])
+		to_chat(user, span_notice("False ling sting is now available!"))
+
 
 /obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
@@ -302,8 +317,11 @@
 	helptext = "Makes the victim appears like you while you take on their appearance, the disguise is just a fake outer flesh which will decay after a while. \
 	Gained once you obtained both false arm blade and transformation sting."
 	button_icon_state = "false_ling"
-	chemical_cost = 22
+	chemical_cost = 25
 	dna_cost = 0
+	prereq_ability = list(/datum/action/changeling/sting/transformation,
+	/datum/action/changeling/sting/false_armblade
+	)
 
 /datum/action/changeling/sting/fake_changeling/sting_action(mob/living/user, mob/living/target)
 	. = ..()

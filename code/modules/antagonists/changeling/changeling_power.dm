@@ -34,6 +34,8 @@
 	var/active = FALSE
 	/// Does this ability stop working if you are burning?
 	var/disabled_by_fire = TRUE
+	/// Ability that may need to be bought first
+	var/list/prereq_ability
 
 /*
 changeling code now relies on on_purchase to grant powers.
