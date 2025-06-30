@@ -39,7 +39,7 @@
 	for(var/key in debris_to_damage)
 		var/value = debris_to_damage[key]
 
-		if(value > amount)
+		if(value < amount)
 			new key ((get_turf(liver)))
 			if(sound && sound_threshold < amount)
 				playsound(liver, sound, 60)
