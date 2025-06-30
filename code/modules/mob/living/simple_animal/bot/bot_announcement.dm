@@ -122,7 +122,7 @@
 	var/datum/action/cooldown/bot_announcement_shortcut/shortcut = new(src)
 
 	shortcut.prefix = copytext(line, 1, 4)
-	var/color = GLOB.reserved_radio_colors["[channel]"]
+	var/color = GLOB.radiocolors["[channel]"]
 	if(color)
 		shortcut.prefix_color = color
 	shortcut.name = line
