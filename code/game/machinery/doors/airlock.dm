@@ -1499,13 +1499,13 @@
 		return ..()
 	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
 		to_chat(user, span_warning("[src] refuses to budge!"))
-		user.log_game("Tried to pry open [src], located at [loc_name(src)], but failed due to the airlock being sealed.")
+		user.log_message("Tried to pry open [src], located at [loc_name(src)], but failed due to the airlock being sealed.", LOG_GAME)
 		return
 	add_fingerprint(user)
 	user.visible_message(span_warning("[user] begins prying open [src]."),\
 						span_noticealien("You begin digging your claws into [src] with all your might!"),\
 						span_warning("You hear groaning metal..."))
-	user.log_game("Started prying open [src], located at [loc_name(src)].")
+	user.log_message("Started prying open [src], located at [loc_name(src)].", LOG_GAME)
 	var/time_to_open = 5 //half a second
 	if(hasPower())
 		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
@@ -1514,11 +1514,11 @@
 	if(do_after(user, time_to_open, src))
 		if(density && !open(BYPASS_DOOR_CHECKS)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
-			user.log_game("Tried and failed to pry open [src], located at [loc_name(src)], due to the airlock getting sealed during the do_after.")
+			user.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to the airlock getting sealed during the do_after.", LOG_GAME)
 			return
-		user.log_game("Successfully pried open [src], located at [loc_name(src)].")
+		user.log_message("Successfully pried open [src], located at [loc_name(src)].", LOG_GAME)
 		return
-	user.log_game("Tried and failed to pry open [src], located at [loc_name(src)], due to getting interrupted.")
+	user.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to getting interrupted.", LOG_GAME)
 
 /obj/machinery/door/airlock/hostile_lockdown(mob/origin)
 	// Must be powered and have working AI wire.
