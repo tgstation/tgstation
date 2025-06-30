@@ -95,10 +95,9 @@
 
 	AddElement(/datum/element/pick_and_drop_only)
 
-	AddElement(/datum/element/debris_bleeder, \
+	AddComponent(/datum/component/debris_bleeder, \
 		list(/obj/effect/spawner/random/glass_shards = 20, /obj/effect/spawner/random/glass_debris = 0), \
-		BRUTE, \
-		SFX_SHATTER, sound_threshold = 20)
+		BRUTE, SFX_SHATTER, sound_threshold = 20)
 
 	charge = new charge(src)
 	charge.Grant(src)
