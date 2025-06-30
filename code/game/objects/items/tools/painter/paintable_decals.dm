@@ -170,8 +170,8 @@
 	category = "Tiles"
 	default_alpha = /obj/effect/turf_decal/tile::alpha
 	possible_colors = list(
-		"Pure White" = "#FFFFFF",
 		"Neutral" = /obj/effect/turf_decal/tile/neutral::color,
+		"White" = "#FFFFFF",
 		"Dark" = /obj/effect/turf_decal/tile/dark::color,
 		"Bar Burgundy" = /obj/effect/turf_decal/tile/bar::color,
 		"Cargo Brown" = /obj/effect/turf_decal/tile/brown::color,
@@ -225,8 +225,8 @@
 	paintable_decal_type = /datum/paintable_decal/colored_siding
 	category = "Colored Sidings"
 	possible_colors = list(
-		"Pure White" = "#FFFFFF",
 		"Dim White" = /obj/effect/turf_decal/siding/white::color,
+		"White" = "#FFFFFF",
 		"Black" = /obj/effect/turf_decal/siding/dark::color,
 		"Cargo Brown" = /obj/effect/turf_decal/siding/brown::color,
 		"Dark Blue" = /obj/effect/turf_decal/siding/dark_blue::color,
@@ -253,8 +253,8 @@
 	paintable_decal_type = /datum/paintable_decal/plating
 	category = "Plating Sidings"
 	possible_colors = list(
-		"Pure White" = "#FFFFFF",
 		"Default" = "#949494",
+		"White" = "#FFFFFF",
 		"Terracotta" = "#b84221",
 		"Dark" = "#36373a",
 		"Light" = "#e2e2e2",
