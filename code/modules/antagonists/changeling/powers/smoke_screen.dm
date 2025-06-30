@@ -27,4 +27,7 @@
 
 /obj/effect/particle_effect/fluid/smoke/red/smoke_mob(mob/living/carbon/smoker, seconds_per_tick)
 	. = ..()
-
+	if(!ishuman(smoker))
+		return
+	var/mob/living/carbon/human/poor_sod = smoker
+	poor_sod.add_blood_DNA_to_items(poor_sod.get_blood_dna_list())
