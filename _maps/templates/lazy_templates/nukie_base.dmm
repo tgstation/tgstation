@@ -1659,9 +1659,12 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/bombcore/chemical{
+/obj/item/bombcore/chemical/nukie{
 	pixel_x = -8;
 	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/beaker/noreact{
+	pixel_x = -4
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
