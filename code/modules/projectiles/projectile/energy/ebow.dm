@@ -20,23 +20,19 @@
 	ignore_throwspeed_threshold = TRUE
 	rip_time = 1.5 SECONDS
 
-/datum/embedding/energy_bolt/process(seconds_per_tick)
-	. = ..()
-
+/datum/embedding/energy_bolt/process_effect(seconds_per_tick)
 	if(!isliving(owner))
 		return
 
-	var/mob/living/living_owner = owner
-
-	if(!(living_owner.mob_biotypes & MOB_ORGANIC))
+	if(!(owner.mob_biotypes & MOB_ORGANIC))
 		return
 
-	living_owner.set_silence_if_lower(2 SECONDS)
-	living_owner.adjust_drowsiness_up_to(1 SECONDS, 60 SECONDS)
-	if(HAS_TRAIT_FROM(living_owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(living_owner, TRAIT_KNOCKEDOUT))
-		living_owner.AdjustSleeping(10 SECONDS)
+	owner.set_silence_if_lower(2 SECONDS)
+	owner.adjust_drowsiness_up_to(1 SECONDS, 60 SECONDS)
+	if(HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA) && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+		owner.AdjustSleeping(10 SECONDS)
 
-	if(HAS_TRAIT(living_owner, TRAIT_KNOCKEDOUT))
+	if(HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		fall_chance = clamp(fall_chance + 30, 0, 100)
 
 /obj/projectile/energy/bolt/halloween
