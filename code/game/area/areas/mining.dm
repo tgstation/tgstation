@@ -229,6 +229,11 @@
 		// flip this on, the generator has already disabled dangerous fauna
 		area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED
 
+/area/icemoon/surface/outdoors/always_forested
+	icon_state = "forest"
+	map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+	area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED | CAVES_ALLOWED
+
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NOTELEPORT
 
