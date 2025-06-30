@@ -62,6 +62,11 @@
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	AddElement(/datum/element/ignites_matches)
 
+/obj/item/clothing/shoes/jackboots/laced
+	name = "tacboots"
+	desc = "Nanotrasen-issue tactical boots for hazardous scenarios or hazardous environments. They're tactical, and that's tacti-cool."
+	fastening_type = SHOES_LACED
+
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 
