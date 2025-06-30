@@ -71,12 +71,13 @@
 #define SOUND_MINIMUM_PRESSURE 10
 
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
-#define EQUIP_SOUND_VOLUME 30
 #define LIQUID_SLOSHING_SOUND_VOLUME 10
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
-#define YEET_SOUND_VOLUME 90
+#define EQUIP_SOUND_VOLUME 30
+#define HALFWAY_SOUND_VOLUME 50
 #define BLOCK_SOUND_VOLUME 70
+#define YEET_SOUND_VOLUME 90
 
 #define AMBIENCE_GENERIC "generic"
 #define AMBIENCE_HOLY "holy"
@@ -279,6 +280,16 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_REGEN_MESH_END "regen_mesh_end"
 #define SFX_REGEN_MESH_PICKUP "regen_mesh_pickup"
 #define SFX_REGEN_MESH_DROP "regen_mesh_drop"
+#define SFX_SODA_CAN_DROP "soda_can_drop"
+#define SFX_SODA_CAN_PICKUP "soda_can_pickup"
+#define SFX_SODA_CAN_THROW_HIT "soda_can_throw_hit"
+#define SFX_SODA_CAN_THROW_DROP "soda_can_throw_drop"
+#define SFX_SODA_CAN_HIT "soda_can_hit"
+#define SFX_SODA_CAN_FILLED_DROP "soda_can_filled_drop"
+#define SFX_SODA_CAN_FILLED_PICKUP "soda_can_filled_pickup"
+#define SFX_SODA_CAN_FILLED_THROW_HIT "soda_can_filled_throw_hit"
+#define SFX_SODA_CAN_FILLED_THROW_DROP "soda_can_filled_throw_drop"
+#define SFX_SODA_CAN_FILLED_HIT "soda_can_filled_hit"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000

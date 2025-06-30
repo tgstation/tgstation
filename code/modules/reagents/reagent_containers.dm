@@ -4,6 +4,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	sound_vary = TRUE
 	/// The maximum amount of reagents per transfer that will be moved out of this reagent container.
 	var/amount_per_transfer_from_this = 5
 	/// Does this container allow changing transfer amounts at all, the container can still have only one possible transfer value in possible_transfer_amounts at some point even if this is true
@@ -40,7 +41,17 @@
 	/// The icon file to take fill icon appearances from
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	///The sound this container makes when picked up, dropped if there is liquid inside.
-	var/reagent_container_liquid_sound = null
+	var/reagent_container_liquid_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on drop
+	var/filled_drop_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on throw drop
+	var/filled_throw_drop
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on pickup
+	var/filled_pickup_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on throw impact
+	var/filled_throw_impact
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on hit
+	var/filled_hitsound
 	///If we want to the contrast of the reagent overlay if the reagent mix color is very dark.
 	var/adjust_color_contrast = FALSE
 
@@ -327,15 +338,37 @@
 
 	. += filling
 
-/obj/item/reagent_containers/dropped(mob/user, silent)
-	. = ..()
-	if(reagent_container_liquid_sound && reagents.total_volume > 0)
-		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+/obj/item/reagent_containers/play_drop_sound(volume = DROP_SOUND_VOLUME)
+	if(reagents.total_volume <= 5)
+		if(drop_sound)
+			playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+			return TRUE
+		return FALSE
 
-/obj/item/reagent_containers/equipped(mob/user, slot, initial = FALSE)
-	. = ..()
-	if(!initial && (slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
+	if(reagent_container_liquid_sound)
 		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+	if(filled_drop_sound)
+		playsound(src, filled_drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+	else if(drop_sound)
+		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+		return TRUE
+	return FALSE
+
+/obj/item/reagent_containers/play_pickup_sound(volume = PICKUP_SOUND_VOLUME)
+	if(reagents.total_volume <= 5)
+		if(pickup_sound)
+			playsound(src, pickup_sound, volume, vary = sound_vary, ignore_walls = FALSE)
+			return TRUE
+		return FALSE
+
+	if(reagent_container_liquid_sound)
+		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+	if(filled_pickup_sound)
+		playsound(src, filled_drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+	else if(pickup_sound)
+		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+		return TRUE
+	return FALSE
 
 /obj/item/reagent_containers/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
