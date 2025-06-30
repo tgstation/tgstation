@@ -12,6 +12,7 @@
 	src.pass_time = pass_time
 	src.deform_glass = deform_glass
 
+/datum/component/glass_passer/RegisterWithParent()
 	if(!pass_time)
 		passwindow_on(parent, type)
 	else
@@ -24,8 +25,7 @@
 	if(deform_glass)
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
-/datum/component/glass_passer/Destroy()
-	. = ..()
+/datum/component/glass_passer/UnregisterFromParent()
 	if(parent)
 		passwindow_off(parent, type)
 

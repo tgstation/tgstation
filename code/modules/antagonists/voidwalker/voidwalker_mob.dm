@@ -95,7 +95,10 @@
 
 	AddElement(/datum/element/pick_and_drop_only)
 
-	AddElement(/datum/element/glass_bleeder)
+	AddElement(/datum/element/debris_bleeder, \
+		list(/obj/effect/spawner/random/glass_shards = 20, /obj/effect/spawner/random/glass_debris = 0), \
+		BRUTE, \
+		SFX_SHATTER, sound_threshold = 20)
 
 	charge = new charge(src)
 	charge.Grant(src)
@@ -149,6 +152,7 @@
 
 		if(hewmon.stat == HARD_CRIT && !hewmon.has_trauma_type(/datum/brain_trauma/voided))
 			hewmon.balloon_alert(src, "is in crit!")
+			hewmon.Stun(5 SECONDS) // blocks some crit movement mechanics from a bunch of sources
 			return FALSE
 
 	// left click
@@ -304,11 +308,17 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	playsound(our_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
 	new /obj/effect/temp_visual/transmute_tile_flash(our_wall)
+
+	var/obj/particles = new /obj/effect/abstract/particle_holder (our_wall, /particles/void_wall)
+
 	balloon_alert(src, "opening window...")
 	if(!do_after(src, 8 SECONDS, our_wall, hidden = TRUE))
+		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!conversions_remaining)
+		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+	qdel(particles)
 
 	var/list/target_walls = list()
 	target_walls += our_wall
@@ -316,12 +326,14 @@
 		if(check_wall_validity(adjacent_wall))
 			target_walls += adjacent_wall
 
+	playsound(our_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
+
 	for(var/turf/closed/wall/targeted_wall in target_walls)
-		playsound(targeted_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
 		new /obj/effect/temp_visual/transmute_tile_flash(targeted_wall)
 		targeted_wall.ScrapeAway()
 		new /obj/structure/window/fulltile/voidwalker(targeted_wall)
 		new /obj/structure/grille(targeted_wall)
+
 	conversions_remaining--
 	COOLDOWN_START(src, wall_conversion, 60 SECONDS)
 

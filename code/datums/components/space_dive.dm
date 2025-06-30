@@ -13,7 +13,7 @@
 	/// A decal we can dive from, and escape into (but only one enter)
 	var/diveable_decal = /obj/effect/decal/cleanable/vomit/nebula
 
-/datum/component/space_dive/Initialize(jaunt_type, ...)
+/datum/component/space_dive/Initialize(jaunt_type)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 

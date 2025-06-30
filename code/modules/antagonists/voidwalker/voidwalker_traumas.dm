@@ -36,7 +36,11 @@
 
 	if(!is_on_a_planet(owner))
 		owner.AddComponent(/datum/component/planet_allergy)
-	owner.AddElement(/datum/element/glass_bleeder)
+
+	owner.AddElement(/datum/element/debris_bleeder, \
+		list(/obj/effect/spawner/random/glass_shards = 20, /obj/effect/spawner/random/glass_debris = 0), \
+		BRUTE, \
+		SFX_SHATTER, sound_threshold = 20)
 
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb)) //also catch new limbs being attached
 	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb)) //and remove it from limbs if they go away
@@ -65,7 +69,7 @@
 	if(ban_from_space)
 		qdel(owner.GetComponent(/datum/component/banned_from_space))
 	qdel(owner.GetComponent(/datum/component/planet_allergy))
-	owner.RemoveElement(/datum/element/glass_bleeder)
+	owner.RemoveElement(/datum/element/debris_bleeder)
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner

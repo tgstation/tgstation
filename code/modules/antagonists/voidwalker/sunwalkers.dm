@@ -1,8 +1,8 @@
-/// Space antagonist that harasses people near space and cursed them if they get the chance
+/// Space antagonist that murders everyone in space and nearby it using the power of loads of fire
 /datum/antagonist/sunwalker
 	name = "\improper Sunwalker"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
-	pref_flag = ROLE_VOIDWALKER
+	pref_flag = ROLE_SUNWALKER
 
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Voidwalker"
