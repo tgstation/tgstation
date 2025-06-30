@@ -45,6 +45,7 @@
 /obj/structure/closet/syndicate/chemical
 	name = "chemical supplies closet"
 	desc = "full of omninous chemical supplies"
+	icon_state = "syndicate_chemical"
 
 /obj/structure/closet/syndicate/chemical/PopulateContents()
 	..()
