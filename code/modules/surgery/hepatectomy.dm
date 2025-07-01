@@ -2,6 +2,7 @@
 	name = "Hepatectomy"
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	organ_to_manipulate = ORGAN_SLOT_LIVER
+	requires_organ_flags = ORGAN_ORGANIC
 	requires_organ_damage = 50
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
@@ -17,6 +18,7 @@
 /datum/surgery/hepatectomy/mechanic
 	name = "Impurity Management System Diagnostic"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

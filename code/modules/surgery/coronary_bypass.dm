@@ -1,6 +1,7 @@
 /datum/surgery/coronary_bypass
 	name = "Coronary Bypass"
 	organ_to_manipulate = ORGAN_SLOT_HEART
+	requires_organ_flags = ORGAN_ORGANIC
 	requires_organ_damage = 60
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
@@ -16,6 +17,7 @@
 /datum/surgery/coronary_bypass/mechanic
 	name = "Engine Diagnostic"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

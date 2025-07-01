@@ -1,6 +1,6 @@
 /datum/surgery/eye_surgery
 	name = "Eye surgery"
-	requires_bodypart_type = NONE
+	requires_organ_flags = ORGAN_ORGANIC
 	organ_to_manipulate = ORGAN_SLOT_EYES
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	steps = list(

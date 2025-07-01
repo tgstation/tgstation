@@ -1,7 +1,7 @@
 //Head surgery to fix the ears organ
 /datum/surgery/ear_surgery
 	name = "Ear surgery"
-	requires_bodypart_type = NONE
+	requires_organ_flags = ORGAN_ORGANIC
 	organ_to_manipulate = ORGAN_SLOT_EARS
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(

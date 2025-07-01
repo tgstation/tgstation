@@ -1,6 +1,7 @@
 /datum/surgery/lobectomy
 	name = "Lobectomy" //not to be confused with lobotomy
 	organ_to_manipulate = ORGAN_SLOT_LUNGS
+	requires_organ_flags = ORGAN_ORGANIC
 	requires_organ_damage = 60
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
@@ -15,6 +16,7 @@
 /datum/surgery/lobectomy/mechanic
 	name = "Air Filtration Diagnostic"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

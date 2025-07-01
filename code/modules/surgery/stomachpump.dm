@@ -1,6 +1,7 @@
 /datum/surgery/stomach_pump
 	name = "Stomach Pump"
 	organ_to_manipulate = ORGAN_SLOT_STOMACH
+	requires_organ_flags = ORGAN_ORGANIC
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -14,6 +15,7 @@
 /datum/surgery/stomach_pump/mechanic
 	name = "Nutrient Processing Purge"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
