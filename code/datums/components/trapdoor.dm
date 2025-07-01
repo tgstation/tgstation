@@ -342,7 +342,7 @@
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "added")
 	internals = assembly
-	assembly.forceMove(src)
+	user.transferItemToLoc(assembly, src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/trapdoor_remote/attack_self(mob/user, modifiers)
