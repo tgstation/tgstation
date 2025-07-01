@@ -18,7 +18,6 @@
 	. += span_boldnotice("You can use a toner cartridge to refill this.")
 
 /obj/item/tattoo_kit/item_interaction(mob/living/user, obj/item/toner/ink_cart, list/modifiers)
-	. = ..()
 	if(!istype(ink_cart))
 		return NONE
 	var/added_amount = round(ink_cart.charges / 5)
