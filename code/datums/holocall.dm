@@ -232,21 +232,25 @@
 	QDEL_NULL(record)
 	return ..()
 
-/obj/item/disk/holodisk/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/disk/holodisk))
-		var/obj/item/disk/holodisk/holodiskOriginal = item
-		if (holodiskOriginal.record)
-			if (!record)
-				record = new
-			record.caller_name = holodiskOriginal.record.caller_name
-			record.caller_image = holodiskOriginal.record.caller_image
-			record.entries = holodiskOriginal.record.entries.Copy()
-			record.language = holodiskOriginal.record.language
-			to_chat(user, span_notice("You copy the record from [holodiskOriginal] to [src] by connecting the ports!"))
-			name = holodiskOriginal.name
-		else
-			to_chat(user, span_warning("[holodiskOriginal] has no record on it!"))
-	..()
+/obj/item/disk/holodisk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(!istype(tool, /obj/item/disk/holodisk))
+		return NONE
+
+	var/obj/item/disk/holodisk/holodiskOriginal = item
+	if (holodiskOriginal.record)
+		if (!record)
+			record = new
+		record.caller_name = holodiskOriginal.record.caller_name
+		record.caller_image = holodiskOriginal.record.caller_image
+		record.entries = holodiskOriginal.record.entries.Copy()
+		record.language = holodiskOriginal.record.language
+		to_chat(user, span_notice("You copy the record from [holodiskOriginal] to [src] by connecting the ports!"))
+		name = holodiskOriginal.name
+	else
+		to_chat(user, span_warning("[holodiskOriginal] has no record on it!"))
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/holodisk/proc/build_record()
 	record = new
