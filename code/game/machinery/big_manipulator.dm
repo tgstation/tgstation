@@ -243,7 +243,7 @@
 		if(!isnull(locked_by_this_id))
 			var/obj/item/card/id/resolve_id = locked_by_this_id.resolve()
 			if(clicked_by_this_id != resolve_id)
-				balloon_alert(user, "locked by another id")
+				balloon_alert(user, "locked by another id!")
 				return ITEM_INTERACT_BLOCKING
 			locked_by_this_id = null
 			change_id_locked_status(user)
