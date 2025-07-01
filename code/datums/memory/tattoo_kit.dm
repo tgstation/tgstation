@@ -20,15 +20,16 @@
 /obj/item/tattoo_kit/item_interaction(mob/living/user, obj/item/toner/ink_cart, list/modifiers)
 	. = ..()
 	if(!istype(ink_cart))
-		return
+		return NONE
 	var/added_amount = round(ink_cart.charges / 5)
 	if(added_amount == 0)
-		balloon_alert(tattoo_artist, "none left!")
-		return
+		balloon_alert(user, "none left!")
+		return ITEM_INTERACT_BLOCKING
 	added_amount = min(uses + added_amount, max_uses)
 	uses += min(max_uses, added_amount)
 	qdel(ink_cart)
-	balloon_alert(tattoo_artist, "added tattoo ink")
+	balloon_alert(user, "added tattoo ink")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/tattoo_kit/attack(mob/living/tattoo_holder, mob/living/tattoo_artist, list/modifiers, list/attack_modifiers)
 	. = ..()
