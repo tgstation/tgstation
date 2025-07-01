@@ -15,7 +15,7 @@
 
 /obj/item/tattoo_kit/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(istype(held_item, obj/item/toner))
+	if(istype(held_item, /obj/item/toner))
 		context[SCREENTIP_CONTEXT_LMB] = "Refill"
 		return CONTEXTUAL_SCREENTIP_SET
 
