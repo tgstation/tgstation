@@ -46,6 +46,7 @@
 	bar = image('icons/effects/progressbar.dmi', bar_loc, "prog_bar_0", pixel_x = offset_x)
 	SET_PLANE_EXPLICIT(bar, ABOVE_HUD_PLANE, User)
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	bar.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	user = User
 
 	LAZYADDASSOCLIST(user.progressbars, bar_loc, src)
