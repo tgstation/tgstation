@@ -91,7 +91,7 @@ GLOBAL_LIST(heretic_research_tree)
 	var/list/heretic_research_tree = list()
 	//Initialize the data structure
 	var/list/tree_paths = list()
-	for(var/datum/heretic_knowledge/knowledge in subtypesof(/datum/heretic_knowledge))
+	for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
 		if(!knowledge::is_starting_knowledge)
 			continue
 		tree_paths += knowledge
@@ -117,6 +117,7 @@ GLOBAL_LIST(heretic_research_tree)
 			HKT_DEPTH = 1,
 			HKT_UI_BGR = "node_side",
 			HKT_COST = type::cost,
+			HKT_ROUTE = null
 		)
 
 
