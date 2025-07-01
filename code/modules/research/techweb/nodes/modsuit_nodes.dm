@@ -122,7 +122,6 @@
 	description = "Advanced Engineering suits, for advanced powered engineers."
 	prereq_ids = list(TECHWEB_NODE_MOD_ENGI)
 	design_ids = list(
-		"mod_plating_atmospheric",
 		"mod_jetpack",
 		"mod_rad_protection",
 		"mod_emp_shield",

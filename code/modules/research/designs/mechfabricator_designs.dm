@@ -2068,19 +2068,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 	research_icon_state = "engineering-plating"
 
-/datum/design/mod_plating/atmospheric
-	name = "MOD Atmospheric Plating"
-	id = "mod_plating_atmospheric"
-	build_path = /obj/item/mod/construction/plating/atmospheric
-	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT*3,
-		/datum/material/titanium =SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-	research_icon_state = "atmospheric-plating"
-
 /datum/design/mod_plating/medical
 	name = "MOD Medical Plating"
 	id = "mod_plating_medical"

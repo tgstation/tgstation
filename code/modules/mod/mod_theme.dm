@@ -242,13 +242,17 @@
 	default_skin = "engineering"
 	armor_type = /datum/armor/mod_theme_engineering
 	resistance_flags = FIRE_PROOF
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_deployed = 1
 	allowed_suit_storage = list(
 		/obj/item/construction/rcd,
-		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/storage/bag/construction,
+		/obj/item/analyzer,
+		/obj/item/extinguisher,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
 	)
 	variants = list(
 		"engineering" = list(
@@ -284,40 +288,6 @@
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
-	)
-
-/datum/armor/mod_theme_engineering
-	melee = 10
-	bullet = 5
-	laser = 20
-	energy = 10
-	bomb = 10
-	bio = 100
-	fire = 100
-	acid = 25
-	wound = 10
-
-/datum/mod_theme/atmospheric
-	name = "atmospheric"
-	desc = "An atmospheric-resistant suit by Nakamura Engineering, offering extreme heat resistance compared to the engineer suit."
-	extended_desc = "A modified version of the Nakamura Engineering industrial model. This one has been \
-		augmented with the latest in heat-resistant alloys, paired with a series of advanced heatsinks. \
-		Additionally, the materials used to construct this suit have rendered it extremely hardy against \
-		corrosive gasses and liquids, useful in the world of pipes. \
-		However, the capacity for modification remains the same as civilian-grade suits."
-	default_skin = "atmospheric"
-	armor_type = /datum/armor/mod_theme_atmospheric
-	resistance_flags = FIRE_PROOF
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	slowdown_deployed = 1
-	allowed_suit_storage = list(
-		/obj/item/analyzer,
-		/obj/item/extinguisher,
-		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
-	)
-	variants = list(
 		"atmospheric" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = NECK_LAYER,
@@ -354,10 +324,10 @@
 		),
 	)
 
-/datum/armor/mod_theme_atmospheric
+/datum/armor/mod_theme_engineering
 	melee = 10
 	bullet = 5
-	laser = 10
+	laser = 20
 	energy = 15
 	bomb = 10
 	bio = 100
@@ -382,6 +352,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
+		/obj/item/extinguisher,
 		/obj/item/construction/rcd,
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/melee/baton/telescopic,

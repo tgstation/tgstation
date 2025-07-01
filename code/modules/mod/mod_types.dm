@@ -72,7 +72,8 @@
 	)
 
 /obj/item/mod/control/pre_equipped/atmospheric
-	theme = /datum/mod_theme/atmospheric
+	theme = /datum/mod_theme/engineering
+	applied_skin = "atmospheric"
 	applied_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/welding,

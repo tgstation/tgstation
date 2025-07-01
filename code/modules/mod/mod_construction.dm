@@ -98,9 +98,6 @@
 /obj/item/mod/construction/plating/engineering
 	theme = /datum/mod_theme/engineering
 
-/obj/item/mod/construction/plating/atmospheric
-	theme = /datum/mod_theme/atmospheric
-
 /obj/item/mod/construction/plating/medical
 	theme = /datum/mod_theme/medical
 
