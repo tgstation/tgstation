@@ -1,0 +1,7 @@
+2025-07-01:
+  Twaticus:
+  - image: resprites the maid uniform and headband using GAGs
+  - rscdel: removes standalone maid neckpiece, gloves, and corset
+  grungussuss:
+  - bugfix: moving out of range of a target you are clamping while strafing will halt
+      the do_after of mechs
