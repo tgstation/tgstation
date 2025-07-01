@@ -43,7 +43,7 @@
 	death_limit = 4
 	smoothing_iterations = 10
 
-	feature_spawn_chance = 0.05
+	feature_spawn_chance = 0.15
 	weighted_feature_spawn_list = list(
 		/obj/structure/geyser/hollowwater = 10,
 		/obj/structure/geyser/plasma_oxide = 10,
@@ -55,7 +55,7 @@
 	weighted_flora_spawn_list = list(
 		/obj/structure/flora/ash/chilly = 2,
 		/obj/structure/flora/grass/both/style_random = 6,
-//		/obj/structure/flora/tree/pine/style_random = 2,
+		/obj/structure/flora/tree/pine/style_random = 2,
 	)
 
 /// Surface snow generator variant for forested station trait, WITH FORESTSSSS
