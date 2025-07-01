@@ -1049,7 +1049,8 @@
 		// (All the main paths are (should be) the same length, so it doesn't matter.)
 		var/rust_paths_found = 0
 		for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
-			if(heretic_research_tree[knowledge][HKT_ROUTE] == PATH_RUST)
+			var/list/knowledge_data = heretic_research_tree[knowledge]
+			if(knowledge_data && knowledge_data[HKT_ROUTE] == PATH_RUST)
 				rust_paths_found++
 
 		main_path_length = rust_paths_found

@@ -30,7 +30,7 @@ GLOBAL_LIST(heretic_research_tree)
 	///Used to determine if this is a side path or a main path
 	var/abstract_parent_type = /datum/heretic_knowledge_tree_column
 	///UI background
-	var/ui_bgr = "node_side"
+	var/ui_bgr = BGR_SIDE
 
 	//-- Knowledge in order of unlocking
 	///Starting knowledge - first thing you pick. Gives you access to blades, grasp, mark and passive
@@ -115,7 +115,7 @@ GLOBAL_LIST(heretic_research_tree)
 			HKT_NEXT = list(),
 			HKT_BAN = list(),
 			HKT_DEPTH = 1,
-			HKT_UI_BGR = "node_side",
+			HKT_UI_BGR = BGR_SIDE,
 			HKT_COST = type::cost,
 			HKT_ROUTE = null
 		)
@@ -354,25 +354,25 @@ GLOBAL_LIST(heretic_research_tree)
 		)
 
 	// Snowflake handling
-	var/gun_path = /datum/heretic_knowledge/rifle
-	var/ammo_path = /datum/heretic_knowledge/rifle_ammo
-	//TODO proc for generating this shite
+	var/datum/heretic_knowledge/gun_path = /datum/heretic_knowledge/rifle
+	var/datum/heretic_knowledge/ammo_path = /datum/heretic_knowledge/rifle_ammo
+	//TODO proc for generating knowledge data
 	shop[gun_path] = list(
-		HKT_NEXT = list(),
+		HKT_NEXT = list(ammo_path),
 		HKT_BAN = list(),
-		HKT_COST = 0,
-		HKT_ROUTE = heretic_path,
-		HKT_UI_BGR = current_path.ui_bgr,
-		HKT_DEPTH = heretic_research_tree[gun_path][HKT_DEPTH],
+		HKT_COST = initial(gun_path.cost),
+		HKT_ROUTE = PATH_SIDE,
+		HKT_UI_BGR = BGR_SIDE,
+		HKT_DEPTH = 8,
 	)
 	// shop[gun_path][HKT_CATEGORY] = HERETIC_KNOWLEDGE_DRAFT
 	shop[ammo_path] = list(
 		HKT_NEXT = list(),
 		HKT_BAN = list(),
-		HKT_COST = 0,
-		HKT_ROUTE = heretic_path,
-		HKT_UI_BGR = current_path.ui_bgr,
-		HKT_DEPTH = heretic_research_tree[gun_path][HKT_DEPTH],
+		HKT_COST = initial(ammo_path.cost),
+		HKT_ROUTE = PATH_SIDE,
+		HKT_UI_BGR = BGR_SIDE,
+		HKT_DEPTH = 8,
 	)
 	// shop[ammo_path][HKT_CATEGORY] = HERETIC_KNOWLEDGE_DRAFT
 

@@ -107,6 +107,7 @@
 /// Only present for already researched knowledge.
 #define HKT_INSTANCE "instance"
 
+#define BGR_SIDE "node_side"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
