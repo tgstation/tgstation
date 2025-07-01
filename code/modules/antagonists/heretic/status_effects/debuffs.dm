@@ -177,8 +177,6 @@
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
 
-
-
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
 	id = "moon converted"
@@ -256,3 +254,138 @@
 	name = "Moon Converted"
 	desc = "They LIE, SLAY ALL OF THE THEM!!! THE LIARS OF THE SUN MUST FALL!!!"
 	icon_state = "moon_insanity"
+
+// Status effects that eldritch paintings apply
+//The debug painting status effect. To make sure this isn't applying to heretics.
+/datum/status_effect/eldritch_painting
+	id = "eldritch_painting"
+	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting
+	duration = 10 MINUTES
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/eldritch_painting/on_apply()
+	if(IS_HERETIC_OR_MONSTER(owner))
+		return FALSE
+	if(!ishuman(owner))
+		return FALSE
+	if(owner.reagents.has_reagent(/datum/reagent/water/holywater))
+		return FALSE
+	return TRUE
+
+/atom/movable/screen/alert/status_effect/eldritch_painting
+	name = "Rick Roll'd"
+	desc = "Fucking coders are at it again."
+	icon_state = "eldritch_painting_debug"
+
+//"The Sister and He Who Wept": /obj/structure/sign/painting/eldritch
+/datum/status_effect/eldritch_painting/weeping
+	id = "painting_weeping"
+	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting/weeping
+	tick_interval = 10 SECONDS
+
+/datum/status_effect/eldritch_painting/weeping/tick(seconds_between_ticks)
+	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+		return
+	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping status effect")
+	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
+
+/atom/movable/screen/alert/status_effect/eldritch_painting/weeping
+	name = "The Sister and He Who Wept"
+	desc = "The weeping echos through your mind like an echo, undoing your psyche! Maybe if you look at the painting again, it won't hurt so badly..."
+	icon_state = "eldritch_painting_weeping"
+
+//"The First Desire": /obj/structure/sign/painting/eldritch/desire
+/datum/status_effect/eldritch_painting/desire
+	id = "painting_desire"
+	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting/desire
+	/// How much faster we loose hunger
+	var/hunger_rate = 15
+
+/datum/status_effect/eldritch_painting/desire/on_apply()
+	if(IS_HERETIC_OR_MONSTER(owner))
+		return FALSE
+	if(!ishuman(owner))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_NOHUNGER))
+		return FALSE
+
+	// Allows them to eat faster, mainly for flavor
+	ADD_TRAIT(owner, TRAIT_VORACIOUS, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/eldritch_painting/desire/tick(seconds_between_ticks)
+	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+	// Causes them to need to eat at 10x the normal rate
+	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
+	if(SPT_PROB(10, seconds_between_ticks))
+		to_chat(owner, span_notice(pick("You can't stop thinking about raw meat...", "You **NEED** to eat someone.", "The hunger pangs are back...", "You hunger for flesh.", "You are starving!")))
+	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
+
+/datum/status_effect/eldritch_painting/desire/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_FLESH_DESIRE, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
+/atom/movable/screen/alert/status_effect/eldritch_painting/desire
+	name = "The First Desire"
+	desc = "Your are struck with a ravenous hunger! SATIATE IT AT ANY COST! Or maybe just go stare at the painting and long for the excellent meal it promises..."
+	icon_state = "eldritch_painting_desire"
+
+/datum/status_effect/eldritch_painting/desire/permanent
+	duration = STATUS_EFFECT_PERMANENT
+
+// "Lady out of gates": /obj/item/wallframe/painting/eldritch/beauty
+/datum/status_effect/eldritch_painting/beauty
+	id = "painting_beauty"
+	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting/beauty
+	tick_interval = 3 SECONDS
+	/// How much damage we deal with each scratch
+	var/scratch_damage = 3
+
+/datum/status_effect/eldritch_painting/beauty/tick(seconds_between_ticks)
+	if(owner.incapacitated)
+		return
+
+	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+
+	// Scratching code
+	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
+	if(!bodypart || !IS_ORGANIC_LIMB(bodypart) || (bodypart.bodypart_flags & BODYPART_PSEUDOPART))
+		return
+	// Jumpsuits ruin the "perfection" of the body
+	var/mob/living/carbon/human/scratcher = owner
+	if(!length(scratcher.get_clothing_on_part(bodypart)))
+		return
+
+	owner.apply_damage(scratch_damage, BRUTE, bodypart)
+	to_chat(owner, span_notice("You scratch furiously at your clothed [bodypart.plaintext_zone]!"))
+
+/atom/movable/screen/alert/status_effect/eldritch_painting/beauty
+	name = "Lady Out of Gates"
+	desc = "Your clothing obscures the beauty beneath. Remove it, and reach perfection. Or behold perfect for a brief moment of clarity in the painting you saw your ideal image in."
+	icon_state = "eldritch_painting_beauty"
+
+// "Climb over the rusted mountain": /obj/structure/sign/painting/eldritch/rust
+/datum/status_effect/eldritch_painting/rusting
+	id = "painting_rusting"
+	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting/rusting
+	tick_interval = 3 SECONDS
+
+/datum/status_effect/eldritch_painting/rusting/tick(seconds_between_ticks)
+	var/atom/tile = get_turf(owner)
+	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+
+	to_chat(owner, span_notice("You feel the decay..."))
+	tile.rust_heretic_act()
+
+/atom/movable/screen/alert/status_effect/eldritch_painting/rusting
+	name = "Climb Over the Rusted Mountain"
+	desc = "Your every footfall erodes the ground beneath you! Everything crumbles away! Maybe if you looked closer at the mountain in that painting, the path might be clearer..."
+	icon_state = "eldritch_painting_rust"

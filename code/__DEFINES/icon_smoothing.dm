@@ -209,6 +209,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_GRAV_FIELD S_OBJ(75)
 #define SMOOTH_GROUP_GIRDER S_OBJ(76)
 #define SMOOTH_GROUP_TEST_WALL S_OBJ(77) // I'm a lazy bum who doesn't want to increment all of these up by 1 ~Lemon
+#define SMOOTH_GROUP_ATMOS_SHIELD S_OBJ(78)
 
 #define SMOOTH_GROUP_PLATFORMS S_OBJ(80) ///obj/structure/platform & rusty
 #define SMOOTH_GROUP_PLATFORMS_SHUTTLE S_OBJ(81) ///obj/structure/platform/titanium & plastitanium
