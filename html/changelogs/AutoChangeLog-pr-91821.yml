@@ -1,0 +1,4 @@
+author: "Kubisopplay"
+delete-after: True
+changes:
+  - bugfix: "Emag stun is long enough to not let a cyborg act before they see their new laws"
