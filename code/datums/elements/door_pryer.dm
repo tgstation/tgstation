@@ -73,6 +73,7 @@
 	if(airlock_target.locked)
 		attacker.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to the airlock getting bolted during the do_after.", LOG_GAME)
 		return
+	attacker.visible_message(span_warning("[attacker] forces the [airlock_target] to open."))
 	attacker.log_message("Successfully pried open [src], located at [loc_name(src)].", LOG_GAME)
 	airlock_target.open(BYPASS_DOOR_CHECKS)
 	airlock_target.take_damage(AIRLOCK_PRY_DAMAGE, BRUTE, sound_effect = FALSE)
