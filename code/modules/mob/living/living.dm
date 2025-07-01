@@ -1359,7 +1359,7 @@
 		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 			to_chat(src, span_warning("You hands are blocked for this action!"))
 			return FALSE
-		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
+		if(!can_hold_items(astype(target, /obj/item))) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
 
