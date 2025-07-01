@@ -28,9 +28,6 @@
 		reagents.clear_reagents()
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	if(default_unfasten_wrench(user, tool) != SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_BLOCKING
 	if(anchored)

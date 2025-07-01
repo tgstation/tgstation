@@ -77,7 +77,7 @@
 		else if(reagent_container && !use_internal_storage)
 			context[SCREENTIP_CONTEXT_RMB] = "Eject container"
 		else if(!inject_only)
-			context[SCREENTIP_CONTEXT_RMB] = "Change direction"
+			context[SCREENTIP_CONTEXT_RMB] = "Set to [mode == IV_INJECTING ? "take blood" : "inject"]"
 	else
 		if(is_type_in_typecache(held_item, drip_containers) || IS_EDIBLE(held_item))
 			context[SCREENTIP_CONTEXT_LMB] = "Load container"
