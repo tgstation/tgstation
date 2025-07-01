@@ -279,6 +279,11 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_REGEN_MESH_END "regen_mesh_end"
 #define SFX_REGEN_MESH_PICKUP "regen_mesh_pickup"
 #define SFX_REGEN_MESH_DROP "regen_mesh_drop"
+#define SFX_CIG_PACK_DROP "cig_pack_drop"
+#define SFX_CIG_PACK_INSERT "cig_pack_insert"
+#define SFX_CIG_PACK_PICKUP "cig_pack_pickup"
+#define SFX_CIG_PACK_RUSTLE "cig_pack_rustle"
+#define SFX_CIG_PACK_THROW_DROP "cig_pack_throw_drop"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
