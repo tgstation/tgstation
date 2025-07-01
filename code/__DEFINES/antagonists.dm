@@ -104,8 +104,10 @@
 #define HKT_ROUTE "route"
 #define HKT_UI_BGR "ui_bgr"
 #define HKT_COST "cost"
-#define HKT_CATEGORY "category"
+/// Only present for already researched knowledge.
+#define HKT_INSTANCE "instance"
 
+#define BGR_SIDE "node_side"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -116,6 +118,7 @@
 #define HERETIC_KNOWLEDGE_TREE "tree"
 #define HERETIC_KNOWLEDGE_SHOP "shop"
 #define HERETIC_KNOWLEDGE_DRAFT "draft"
+#define HERETIC_KNOWLEDGE_START "start"
 
 /// A define used in ritual priority for heretics.
 #define MAX_KNOWLEDGE_PRIORITY 100

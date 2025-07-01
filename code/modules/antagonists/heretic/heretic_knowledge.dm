@@ -272,7 +272,7 @@
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	our_heretic.heretic_path = our_heretic.heretic_knowledge_tree[type][HKT_ROUTE]
+	our_heretic.heretic_path = our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path)
 	determine_drafted_knowledge(user, our_heretic, our_heretic.heretic_path)
 
@@ -616,7 +616,7 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
-	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_knowledge_tree[type][HKT_ROUTE])
+	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE])
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [gameTimestamp()].")
 	notify_ghosts(
 		"[user.real_name] has completed an ascension ritual!",

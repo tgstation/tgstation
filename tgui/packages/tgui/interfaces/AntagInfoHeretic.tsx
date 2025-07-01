@@ -60,7 +60,8 @@ type Knowledge = {
   gainFlavor: string;
   cost: number;
   bgr: string;
-  category?: ShopCategory;
+  // category?: ShopCategory;
+  depth: number;
   done: BooleanLike;
   ascension: BooleanLike;
 };
@@ -100,7 +101,7 @@ type Info = {
   objectives: Objective[];
   can_change_objective: BooleanLike;
   paths: HereticPath[];
-  knowledge_shop: Knowledge[][];
+  knowledge_shop: Knowledge[];
   knowledge_tiers: KnowledgeTier[];
   passive_level: number;
 };
@@ -289,7 +290,11 @@ const KnowledgeTree = () => {
                   wrap="wrap"
                 >
                   {tier.nodes.map((node) => (
-                    <KnowledgeNode key={node.path} node={node} />
+                    <KnowledgeNode
+                      key={node.path}
+                      node={node}
+                      purchaseCategory={ShopCategory.Tree}
+                    />
                   ))}
                 </Stack>
                 <hr />
@@ -302,10 +307,12 @@ const KnowledgeTree = () => {
 
 type KnowledgeNodeProps = {
   node: Knowledge;
+  purchaseCategory?: ShopCategory;
   can_buy?: BooleanLike;
 };
 
-const KnowledgeNode = ({ node, can_buy = true }: KnowledgeNodeProps) => {
+const KnowledgeNode = (props: KnowledgeNodeProps) => {
+  const { node, can_buy = true, purchaseCategory } = props;
   const { data, act } = useBackend<Info>();
   const { charges } = data;
 
@@ -333,7 +340,8 @@ const KnowledgeNode = ({ node, can_buy = true }: KnowledgeNodeProps) => {
         onClick={
           !isBuyable
             ? () => logger.warn(`Cannot buy ${node.name}`)
-            : () => act('research', { path: node.path })
+            : () =>
+                act('research', { path: node.path, category: purchaseCategory })
         }
         width={node.ascension ? '192px' : '64px'}
         height={node.ascension ? '192px' : '64px'}
@@ -370,8 +378,10 @@ const KnowledgeNode = ({ node, can_buy = true }: KnowledgeNodeProps) => {
           backgroundColor="black"
           textColor="white"
           bold
+          style={{ margin: '2px', borderRadius: '100%' }}
         >
-          {isBuyable && (node.cost > 0 ? node.cost : 'FREE')}
+          {/* {isBuyable && (node.cost > 0 ? node.cost : 'FREE')} */}
+          {node.depth}
         </Box>
       </Button>
       {!!node.ascension && (
@@ -387,6 +397,10 @@ const KnowledgeShop = () => {
   const { data } = useBackend<Info>();
   const { knowledge_shop } = data;
 
+  if (!knowledge_shop || knowledge_shop.length === 0) {
+    return null;
+  }
+
   return (
     <Section title="Knowledge Shop" fill scrollable>
       <Stack vertical fill>
@@ -396,13 +410,27 @@ const KnowledgeShop = () => {
   );
 
   function Knowledges() {
-    return knowledge_shop?.map((tier, index) => (
+    // filter the list into being indexed by tier
+    const tiers: Knowledge[][] = [];
+    knowledge_shop?.forEach((knowledge) => {
+      const tierIndex = knowledge.depth; // depth starts at 1, so
+      // we subtract 1 to get the correct index
+      if (!tiers[tierIndex]) {
+        tiers[tierIndex] = [];
+      }
+      tiers[tierIndex].push(knowledge);
+    });
+
+    return tiers?.map((tier, index) => (
       <Stack.Item key={`tier-${index}`}>
         Tier {index + 1}
         <Stack fill scrollable wrap="wrap">
           {tier.map((knowledge) => (
             <Stack.Item key={`knowledge-${knowledge.path}`}>
-              <KnowledgeNode node={knowledge} />
+              <KnowledgeNode
+                node={knowledge}
+                purchaseCategory={ShopCategory.Shop}
+              />
             </Stack.Item>
           ))}
         </Stack>
@@ -497,7 +525,10 @@ const PathContent = ({
         {!isPathSelected && (
           <Stack.Item verticalAlign="center" textAlign="center">
             <h1>Choose Path:</h1>{' '}
-            <KnowledgeNode node={path.starting_knowledge} />
+            <KnowledgeNode
+              node={path.starting_knowledge}
+              purchaseCategory={ShopCategory.Tree}
+            />
             <div>
               <h3>
                 Complexity:{' '}
