@@ -261,6 +261,9 @@ GLOBAL_LIST(heretic_research_tree)
 	var/list/shop = our_heretic.heretic_shops[HERETIC_KNOWLEDGE_SHOP]
 	var/list/final_draft = our_heretic.heretic_shops[HERETIC_KNOWLEDGE_DRAFT]
 
+	/// costs by index mapped to depth
+	var/list/shop_costs = list(1, 2, 2, 2, 3)
+
 	// Gets our current path
 	var/datum/heretic_knowledge_tree_column/current_path
 	for(var/datum/heretic_knowledge_tree_column/column_path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
@@ -274,12 +277,14 @@ GLOBAL_LIST(heretic_research_tree)
 	var/knowledge_tier3 = current_path.knowledge_tier3
 	var/knowledge_tier4 = current_path.knowledge_tier4
 
+
 	var/list/path_knowledges = list(
 		knowledge_tier1,
 		knowledge_tier2,
 		knowledge_tier3,
 		knowledge_tier4
 	)
+
 	// Every path can have a guaranteed option that will show up in the first 3 drafts (Otherwise we just run as normal)
 	var/datum/heretic_knowledge/guaranteed_draft_t1 = current_path.guaranteed_side_tier1
 	var/datum/heretic_knowledge/guaranteed_draft_t2 = current_path.guaranteed_side_tier2
@@ -291,20 +296,14 @@ GLOBAL_LIST(heretic_research_tree)
 		guaranteed_draft_t3
 	)
 
-	var/list/draft_ineligible = list(
-		knowledge_tier1,
-		knowledge_tier2,
-		knowledge_tier3,
-		knowledge_tier4,
-	)
-
+	var/list/draft_ineligible = path_knowledges.Copy()
 	draft_ineligible += guaranteed_drafts
 
 	var/list/elligible_knowledge = list()
-	for(var/tier in 1 to 5)
+	for(var/tier in 1 to HERETIC_DRAFT_TIER_MAX)
 		elligible_knowledge += list(list())
 
-	for(var/datum/heretic_knowledge/potential_type as anything in heretic_research_tree)
+	for(var/datum/heretic_knowledge/potential_type as anything in subtypesof(/datum/heretic_knowledge))
 		if(potential_type::drafting_tier == 0)
 			continue
 		// Don't add the knowledge if it's obtainable later in the path
@@ -320,38 +319,34 @@ GLOBAL_LIST(heretic_research_tree)
 				HKT_BAN = list(),
 				HKT_ROUTE = heretic_path,
 				HKT_DEPTH = drafting_tier,
-				HKT_UI_BGR = current_path.ui_bgr,
-				HKT_COST = 0,
+				HKT_UI_BGR = BGR_SIDE,
+				HKT_COST = shop_costs[drafting_tier],
 				// HKT_CATEGORY = HERETIC_KNOWLEDGE_DRAFT
 			)
-			heretic_research_tree[knowledge_type][HKT_NEXT] += list(knowledge_type)
-	// Once we've selected the path, let's let them know what to put in the knowledge shop
-	// // TODO super broke <--->
-	// for(var/tier_index in 1 to length(path_knowledges))
-	// 	var/list/tier_list = elligible_knowledge[tier_index]
-	// 	for(var/datum/heretic_knowledge/knowledge_type as anything in tier_list)
-	// 		var/list/drafting_tier = elligible_knowledge[knowledge_type::drafting_tier]
-	// 		if(!drafting_tier)
-	// 			drafting_tier = list()
-	// 		// add HKT_NEXT based on the path
-	// 		// TODO: make a proc that generates the assoc values
-	// 		var/list/draft = tier_list[knowledge_type]
+			var/unlocked_by
+			if(drafting_tier > 1)
+				unlocked_by = path_knowledges[drafting_tier]
+			else
+				unlocked_by = current_path.start
+			heretic_research_tree[unlocked_by][HKT_NEXT] += knowledge_type
 
-	// 		draft[HKT_NEXT] = list(path_knowledges[tier_index])
-	// 		// draft[HKT_CATEGORY] = HERETIC_KNOWLEDGE_DRAFT
-	// 		draft[HKT_DEPTH] = 0
+	// for(var/knowledge_path in guaranteed_drafts)
+	// 	shop[knowledge_path] = list(
+	// 		HKT_NEXT = list(),
+	// 		HKT_BAN = list(),
+	// 		HKT_ROUTE = heretic_path,
+	// 		HKT_DEPTH = 0,
+	// 		HKT_UI_BGR = BGR_SIDE,
+	// 		HKT_COST = 0,
+	// 		// HKT_CATEGORY = HERETIC_KNOWLEDGE_DRAFT
+	// 	)
+	// 	var/unlocked_by
+	// 	if(drafting_tier > 1)
+	// 		unlocked_by = path_knowledges[drafting_tier - 1]
+	// 	else
+	// 		unlocked_by = current_path.start
+	// 	heretic_research_tree[unlocked_by][HKT_NEXT] += knowledge_path
 
-
-	for(var/knowledge_path in guaranteed_drafts)
-		shop[knowledge_path] = list(
-			HKT_NEXT = list(),
-			HKT_BAN = list(),
-			HKT_ROUTE = heretic_path,
-			HKT_DEPTH = 0,
-			HKT_UI_BGR = current_path.ui_bgr,
-			HKT_COST = 0,
-			// HKT_CATEGORY = HERETIC_KNOWLEDGE_DRAFT
-		)
 
 	// Snowflake handling
 	var/datum/heretic_knowledge/gun_path = /datum/heretic_knowledge/rifle

@@ -293,7 +293,10 @@ const KnowledgeTree = () => {
                     <KnowledgeNode
                       key={node.path}
                       node={node}
-                      purchaseCategory={ShopCategory.Tree}
+                      // hack, free nodes are draft nodes
+                      purchaseCategory={
+                        node.cost > 0 ? ShopCategory.Tree : ShopCategory.Draft
+                      }
                     />
                   ))}
                 </Stack>
@@ -380,8 +383,7 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
           bold
           style={{ margin: '2px', borderRadius: '100%' }}
         >
-          {/* {isBuyable && (node.cost > 0 ? node.cost : 'FREE')} */}
-          {node.depth}
+          {isBuyable && (node.cost > 0 ? node.cost : 'FREE')}
         </Box>
       </Button>
       {!!node.ascension && (

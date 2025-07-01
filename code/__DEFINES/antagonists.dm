@@ -114,6 +114,8 @@
 #define HERETIC_NO_LIVING_HEART 0
 #define HERETIC_HAS_LIVING_HEART 1
 
+#define HERETIC_DRAFT_TIER_MAX 5
+
 /// Sources of knowledge purchased for heretics, used for positioning in the UI
 #define HERETIC_KNOWLEDGE_TREE "tree"
 #define HERETIC_KNOWLEDGE_SHOP "shop"
