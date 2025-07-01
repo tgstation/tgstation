@@ -17,12 +17,13 @@
 		. += span_notice("This kit has enough ink for [uses] use\s.")
 	. += span_boldnotice("You can use a toner cartridge to refill this.")
 
-/obj/item/tattoo_kit/attackby(obj/item/toner/ink_cart, mob/living/tattoo_artist, list/modifiers, list/attack_modifiers)
+/obj/item/tattoo_kit/item_interaction(mob/living/user, obj/item/toner/ink_cart, list/modifiers)
 	. = ..()
 	if(!istype(ink_cart))
 		return
 	var/added_amount = round(ink_cart.charges / 5)
 	if(added_amount == 0)
+		balloon_alert(tattoo_artist, "none left!")
 		return
 	added_amount = min(uses + added_amount, max_uses)
 	uses += min(max_uses, added_amount)
