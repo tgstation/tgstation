@@ -58,7 +58,7 @@
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
 	desc = "Allows you to transmute a piece of wood, with hide \
-		from any animal,and a camera to create the Lionhunter's rifle. \
+		from any animal, and a camera to create the Lionhunter's rifle. \
 		The Lionhunter's Rifle is a long ranged ballistic weapon with three shots. \
 		These shots function as normal, albeit weak high-caliber munitions when fired from \
 		close range or at inanimate objects. You can aim the rifle at distant foes, \

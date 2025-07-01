@@ -30,10 +30,14 @@
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 
-	/// Heretic knowledge tree
-	var/list/heretic_knowledge_tree
-	/// List of side-knowledge, used for the UI
-	var/list/side_knowledges = null
+	/// Contains multiple separate heretic shops so you can choose between multiple when buying. Tree contains all knowledges.
+	var/list/heretic_shops = list(
+		HERETIC_KNOWLEDGE_TREE = list(),
+		HERETIC_KNOWLEDGE_SHOP = list(),
+		HERETIC_KNOWLEDGE_DRAFT = list(),
+		HERETIC_KNOWLEDGE_START = list()
+	)
+
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -132,23 +136,26 @@
 	result_parameters["moving"] = icon_moving
 	return result_parameters
 
-/datum/antagonist/heretic/proc/get_knowledge_data(datum/heretic_knowledge/knowledge, done = FALSE)
-
+/datum/antagonist/heretic/proc/get_knowledge_data(datum/heretic_knowledge/knowledge, list/source_list, done = FALSE)
+	if(!length(source_list))
+		CRASH("get_knowledge_data called without source_list! (Got: [source_list || "empty list"])")
 	var/list/knowledge_data = list()
 
 	knowledge_data["path"] = knowledge
 	knowledge_data["icon_params"] = get_icon_of_knowledge(knowledge)
 	knowledge_data["name"] = initial(knowledge.name)
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
-	knowledge_data["cost"] = heretic_knowledge_tree[knowledge][HKT_COST]
-	knowledge_data["bgr"] = heretic_knowledge_tree[knowledge][HKT_UI_BGR]
+	knowledge_data["cost"] = source_list[knowledge][HKT_COST]
+	knowledge_data["depth"] = source_list[knowledge][HKT_DEPTH]
+	knowledge_data["bgr"] = source_list[knowledge][HKT_UI_BGR]
 	knowledge_data["ascension"] = ispath(knowledge, /datum/heretic_knowledge/ultimate)
 
 	knowledge_data["done"] = done
-	knowledge_data["category"] = heretic_knowledge_tree[knowledge][HKT_CATEGORY]
 	//description of a knowledge might change, make sure we are not shown the initial() value in that case
-	if(done)
-		var/datum/heretic_knowledge/knowledge_instance = researched_knowledge[knowledge]
+	var/list/knowledge_info = researched_knowledge[knowledge]
+	if(islist(knowledge_info))
+		var/datum/heretic_knowledge/knowledge_instance = knowledge_info[HKT_INSTANCE]
+
 		knowledge_data["desc"] = knowledge_instance.desc
 	else
 		knowledge_data["desc"] = initial(knowledge.desc)
@@ -171,46 +178,75 @@
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
-	var/list/tiers = list()
+	var/list/tree_data = list()
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
 	// makes this very difficult. I'll figure it out one day maybe
-	for(var/datum/heretic_knowledge/knowledge as anything in researched_knowledge)
+	for(var/knowledge_path in researched_knowledge)
+		var/list/knowledge_info = researched_knowledge[knowledge_path]
 		/// draft knowledges are only shown post-research
-		if(heretic_knowledge_tree[knowledge][HKT_CATEGORY] == HERETIC_KNOWLEDGE_DRAFT)
-			continue
-		var/list/knowledge_data = get_knowledge_data(knowledge, TRUE)
+		var/list/knowledge_data = get_knowledge_data(knowledge_path, researched_knowledge, TRUE)
 
-		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
-			tiers += list(list("nodes" = list()))
+		var/depth = knowledge_info[HKT_DEPTH]
+		while(depth > length(tree_data))
+			tree_data += list(list("nodes" = list()))
 
-		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
+		tree_data[depth]["nodes"] += list(knowledge_data)
 
-	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
+	var/list/heretic_tree = heretic_shops[HERETIC_KNOWLEDGE_TREE]
+	var/list/researchable_knowledge = get_researchable_knowledge()
+	for(var/datum/heretic_knowledge/knowledge as anything in heretic_tree)
 		if(ispath(knowledge, /datum/heretic_knowledge/limited_amount/starting))
 			continue
-		var/list/knowledge_data = get_knowledge_data(knowledge, FALSE)
+		if(!(knowledge in researchable_knowledge))
+			continue
+		var/list/knowledge_data = get_knowledge_data(knowledge, heretic_tree, FALSE)
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
 			knowledge_data["disabled"] ||= !can_ascend()
 
-		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
-			tiers += list(list("nodes" = list()))
+		var/depth = knowledge_data[HKT_DEPTH]
 
-		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
+		while(depth > length(tree_data))
+			tree_data += list(list("nodes" = list()))
 
-	data["knowledge_tiers"] = tiers
+		tree_data[depth]["nodes"] += list(knowledge_data)
 
+	var/list/heretic_drafts = heretic_shops[HERETIC_KNOWLEDGE_DRAFT]
+	for(var/datum/heretic_knowledge/knowledge as anything in heretic_drafts)
+		if(!(knowledge in researchable_knowledge))
+			continue
+		var/list/knowledge_data = get_knowledge_data(knowledge, heretic_drafts, FALSE)
+
+		var/depth = knowledge_data[HKT_DEPTH]
+
+		while(depth > length(tree_data))
+			tree_data += list(list("nodes" = list()))
+
+		tree_data[depth]["nodes"] += list(knowledge_data)
+
+	data["knowledge_tiers"] = tree_data
 	var/list/shop_knowledge = list()
-	// this means that using a for loop gives us the value, instead, no key, that means, the listnowledges)
-	for(var/index in 1 to length(side_knowledges))
-		shop_knowledge += list(list())
-		for(var/datum/heretic_knowledge/knowledge as anything in side_knowledges[index])
-			var/is_researched = !!researched_knowledge[knowledge]
-			var/list/knowledge_data = get_knowledge_data(knowledge, is_researched)
-			shop_knowledge[index] += list(knowledge_data)
+	var/list/shop = heretic_shops[HERETIC_KNOWLEDGE_SHOP]
+	// for(var/knowledge_path in shop)
+	// 	var/list/knowledge_info = shop[knowledge_path]
+	// 	var/is_researched = !!researched_knowledge[knowledge_path]
+	// 	var/list/knowledge_data = get_knowledge_data(knowledge_path, shop, is_researched)
+	// 	var/knowledge_tier = knowledge_info[HKT_DEPTH]
+	// 	var/list/target_tier = shop_knowledge[knowledge_tier]
+
+	// 	if(!islist(target_tier))
+	// 		target_tier = list()
+	// 	target_tier += list(knowledge_data)
+
+	for(var/knowledge_path as anything in shop)
+		if(!(knowledge_path in researchable_knowledge))
+			continue
+		var/is_researched = !!researched_knowledge[knowledge_path]
+		var/list/knowledge_data = get_knowledge_data(knowledge_path, shop, is_researched)
+		shop_knowledge += list(knowledge_data)
 
 	data["knowledge_shop"] = shop_knowledge
 
@@ -233,14 +269,10 @@
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
 				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 
-			// Check the discounted cost for the knowledge if it's a side knowledge.
-			var/cost = heretic_knowledge_tree[researched_path][HKT_COST]
-			if(cost > knowledge_points)
-				return FALSE
+			var/shop_category = params["category"]
 
-			if(!gain_knowledge(researched_path))
+			if(!purchase_knowledge(researched_path, shop_category))
 				return FALSE
-			adjust_knowledge_points(-cost, FALSE)
 			update_data_for_all_viewers()
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			return TRUE
@@ -248,9 +280,9 @@
 /datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path)
 	if(knowledge_path in get_researchable_knowledge())
 		return TRUE
-	for(var/list/tier in side_knowledges)
-		if(knowledge_path in tier)
-			return TRUE
+	// for(var/list/tier in heretic_knowledge_shop)
+	// 	if(knowledge_path in tier)
+	// 		return TRUE
 	return FALSE
 
 /datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
@@ -274,7 +306,7 @@
 /datum/antagonist/heretic/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
 
-	// MOTHBLOCKS TOOD: Copied and pasted from cult, make this its own proc
+	// MOTHBLOCKS TODO: Copied and pasted from cult, make this its own proc
 
 	// The sickly blade is 64x64, but getFlatIcon crunches to 32x32.
 	// So I'm just going to add it in post, screw it.
@@ -298,15 +330,15 @@
 	return ..()
 
 /datum/antagonist/heretic/on_gain()
-	heretic_knowledge_tree = generate_heretic_research_tree()
+	heretic_shops[HERETIC_KNOWLEDGE_TREE] = generate_heretic_research_tree(src)
 	if(!length(path_info))
 		for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
 			path = new path()
-			path_info += list(path.get_ui_data(src))
+			path_info += list(path.get_ui_data(src, heretic_shops[HERETIC_KNOWLEDGE_TREE]))
 			qdel(path)
 
 	if(give_objectives)
-		forge_primary_objectives(heretic_knowledge_tree)
+		forge_primary_objectives(heretic_shops[HERETIC_KNOWLEDGE_TREE])
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge, update = FALSE)
@@ -319,14 +351,14 @@
 
 /datum/antagonist/heretic/on_removal()
 	if(owner.current)
-		for(var/knowledge_index in researched_knowledge)
-			var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+		for(var/knowledge_path in researched_knowledge)
+			var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 			knowledge.on_lose(owner.current, src)
+			QDEL_NULL(researched_knowledge[knowledge_path][HKT_INSTANCE])
 
 	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	owner.current.RemoveElement(/datum/element/leeching_walk/minor)
 
-	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
@@ -365,8 +397,8 @@
 	if(old_body == new_body) // if they were using a temporary body
 		return
 
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+	for(var/knowledge_path in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path]
 		knowledge.on_lose(old_body, src)
 		knowledge.on_gain(new_body, src)
 
@@ -712,8 +744,8 @@
 
 	var/list/string_of_knowledge = list()
 
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+	for(var/knowledge_path in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path]
 		string_of_knowledge += knowledge.name
 
 	parts += english_list(string_of_knowledge)
@@ -822,8 +854,8 @@
 /datum/antagonist/heretic/antag_panel_data()
 	var/list/string_of_knowledge = list()
 
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+	for(var/knowledge_path in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		if(istype(knowledge, /datum/heretic_knowledge/ultimate))
 			string_of_knowledge += span_bold(knowledge.name)
 		else
@@ -844,26 +876,45 @@
 		. += "<i>None!</i><br>"
 	. += "<br>"
 
+/datum/antagonist/heretic/proc/purchase_knowledge(datum/heretic_knowledge/knowledge_type, category = HERETIC_KNOWLEDGE_TREE, update = TRUE)
+	var/list/shop_list = heretic_shops[category]
+	if(!shop_list)
+		stack_trace("Heretic attempted to learn knowledge from a non-existent category! (Got: [category])")
+		return FALSE
+
+	var/list/knowledge_data = shop_list[knowledge_type]
+	if(!knowledge_data)
+		stack_trace("[type] purchase_knowledge was given a path that doesn't exist in the heretic [category] knowledge list! (Got: [knowledge_type])")
+		return FALSE
+
+	var/cost = knowledge_data[HKT_COST]
+	if(cost > knowledge_points)
+		return FALSE
+	if(!gain_knowledge(knowledge_type, shop_list, update))
+		return FALSE
+	adjust_knowledge_points(-cost, FALSE)
+	return TRUE
 /**
  * Learns the passed [typepath] of knowledge, creating a knowledge datum
  * and adding it to our researched knowledge list.
  *
  * Returns TRUE if the knowledge was added successfully. FALSE otherwise.
  */
-/datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type, update = TRUE)
+/datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type, list/knowledge_list = heretic_shops[HERETIC_KNOWLEDGE_TREE], update = TRUE)
 	if(!ispath(knowledge_type))
 		stack_trace("[type] gain_knowledge was given an invalid path! (Got: [knowledge_type])")
 		return FALSE
-	if(!heretic_knowledge_tree[knowledge_type])
-		stack_trace("[type] gain_knowledge was given a path that doesn't exist in the heretic knowledge tree! (Got: [knowledge_type])")
+	var/list/knowledge_data = knowledge_list[knowledge_type]
+	if(!islist(knowledge_data))
+		stack_trace("[type] gain_knowledge was given a list with no [knowledge_type] entry! (Got: [knowledge_data])")
 		return FALSE
 	if(get_knowledge(knowledge_type))
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
 	if(!initialized_knowledge.pre_research(owner.current, src))
 		return FALSE
-	initialized_knowledge.bought_category = heretic_knowledge_tree[knowledge_type][HKT_CATEGORY]
-	researched_knowledge[knowledge_type] = initialized_knowledge
+	researched_knowledge[knowledge_type] = knowledge_data.Copy()
+	researched_knowledge[knowledge_type][HKT_INSTANCE] = initialized_knowledge
 	initialized_knowledge.on_research(owner.current, src)
 	if(update)
 		update_data_for_all_viewers()
@@ -876,11 +927,11 @@
 /datum/antagonist/heretic/proc/get_researchable_knowledge()
 	var/list/researchable_knowledge = list()
 	var/list/banned_knowledge = list()
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		researchable_knowledge |= heretic_knowledge_tree[knowledge_index][HKT_NEXT]
-		banned_knowledge |= heretic_knowledge_tree[knowledge_index][HKT_BAN]
-		banned_knowledge |= knowledge.type
+	for(var/knowledge_type in researched_knowledge)
+		var/list/knowledge_info = researched_knowledge[knowledge_type]
+		researchable_knowledge |= knowledge_info[HKT_NEXT]
+		banned_knowledge |= knowledge_info[HKT_BAN]
+		banned_knowledge |= knowledge_type
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
@@ -888,7 +939,10 @@
  * Check if the wanted type-path is in the list of research knowledge.
  */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
-	return researched_knowledge[wanted]
+	var/list/knowledge_data = researched_knowledge[wanted]
+	if(knowledge_data)
+		return knowledge_data[HKT_INSTANCE]
+	return null
 
 /// Makes our heretic more able to rust things.
 /// if side_path_only is set to TRUE, this function does nothing for rust heretics.
@@ -907,8 +961,8 @@
 /datum/antagonist/heretic/proc/get_rituals()
 	var/list/rituals = list()
 
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+	for(var/knowledge_path in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path]
 		if(!knowledge.can_be_invoked(src))
 			continue
 		rituals[knowledge.name] = knowledge

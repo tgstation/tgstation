@@ -467,7 +467,7 @@
 		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 	return SUCCESSFUL_BLOCK
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(datum/source, &signal_message, &signal_self, &signal_blind)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(datum/source, signal_message, signal_self, signal_blind)
 	//XANTODO Figure this out
 	return SIGNAL_MESSAGE_MODIFIED
 
