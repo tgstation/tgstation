@@ -307,7 +307,7 @@ SUBSYSTEM_DEF(polling)
 	var/length_pre_trim = length(finishing_poll.signed_up)
 	finishing_poll.trim_candidates()
 
-	log_ghost_poll("Candidate poll completed." data = list(
+	log_ghost_poll("Candidate poll completed.", data = list(
 		"role name" = finishing_poll.role,
 		"poll question" = finishing_poll.question,
 		"signed up count" = length_pre_trim,
