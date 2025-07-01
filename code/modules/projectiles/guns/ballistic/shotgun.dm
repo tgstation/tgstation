@@ -52,11 +52,11 @@
 	can_be_sawn_off = TRUE
 	//component for seclight attachment
 /obj/item/gun/ballistic/shotgun/riot/add_seclight_point()
-    AddComponent(/datum/component/seclite_attachable, \
-        light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
-        light_overlay = "flight", \
-        overlay_x = 18, \
-        overlay_y = 13)
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 18, \
+		overlay_y = 13)
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
@@ -73,11 +73,11 @@
 	w_class = WEIGHT_CLASS_HUGE
 //component for seclight attachment
 /obj/item/gun/ballistic/shotgun/automatic/combat/add_seclight_point()
-    AddComponent(/datum/component/seclite_attachable, \
-        light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
-        light_overlay = "flight", \
-        overlay_x = 18, \
-        overlay_y = 13)
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 18, \
+		overlay_y = 13)
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact combat shotgun"
 	desc = "A compact version of the semi automatic combat shotgun. Lower magazine capacity, but more easily carried."
@@ -87,11 +87,11 @@
 	weapon_weight = WEAPON_MEDIUM
 //component for seclight attachment
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/add_seclight_point()
-    AddComponent(/datum/component/seclite_attachable, \
-        light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
-        light_overlay = "flight", \
-        overlay_x = 17, \
-        overlay_y = 13)
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 17, \
+		overlay_y = 13)
 //Dual Feed Shotgun
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube

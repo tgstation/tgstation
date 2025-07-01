@@ -21,11 +21,11 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 /obj/item/gun/energy/laser/add_seclight_point()
-    AddComponent(/datum/component/seclite_attachable, \
-        light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
-        light_overlay = "flight", \
-        overlay_x = 18, \
-        overlay_y = 12)
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 18, \
+		overlay_y = 12)
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
