@@ -1,0 +1,6 @@
+author: "Webcomicartist"
+delete-after: True
+changes:
+  - qol: "A handful of Changeling abilities have more detailed shop descriptions."
+  - qol: "Changeling \"Dissonant Shriek\" renamed to \"Technophagic Shriek\" to emphasize its use against all computers and avoid confusion with the anti-human \"Resonant Shriek\""
+  - bugfix: "Changeling Tentacle now informs you it pierces armor and impale works with armblade."
