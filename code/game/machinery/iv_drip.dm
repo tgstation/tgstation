@@ -79,8 +79,9 @@
 		else if(!inject_only)
 			context[SCREENTIP_CONTEXT_RMB] = "Set to [mode == IV_INJECTING ? "take blood" : "inject"]"
 	else
-		if(is_type_in_typecache(held_item, drip_containers) || IS_EDIBLE(held_item))
-			context[SCREENTIP_CONTEXT_LMB] = "Load container"
+		if(!use_internal_storage)
+			if(is_type_in_typecache(held_item, drip_containers) || IS_EDIBLE(held_item))
+				context[SCREENTIP_CONTEXT_LMB] = "Load container"
 
 	if(transfer_rate > MIN_IV_TRANSFER_RATE)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set flow to min"
