@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Energy Katana is now a bit more consistent about what you can and cannot teleport to, now abiding by the same rules as the heirophant staff. IE, you can now teleport onto tables."
+  - rscadd: "Energy Katana now has a \"teleport attack\" - if you click on a mob, you will teleport adjacent to them and immediately perform an attack!"
+  - rscadd: "Energy Katana is now considered a threatening weapon by secbots. Ninjas will be unaffected, but if you loot one off a dead ninja and don't have a weapons permit, it might chase after you."
