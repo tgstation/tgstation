@@ -475,11 +475,7 @@
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
-	var/signal_message
-	var/signal_self
-	var/signal_blind
-	if(SEND_SIGNAL(user, COMSIG_SEND_ITEM_ATTACK_MESSAGE, &signal_message, &signal_self, &signal_blind) & SIGNAL_MESSAGE_MODIFIED)
-		visible_message(signal_message, signal_self, signal_blind) // XANTODO Unshittify this
+	if(SEND_SIGNAL(user, COMSIG_SEND_ITEM_ATTACK_MESSAGE) & SIGNAL_MESSAGE_MODIFIED)
 		return TRUE
 
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))

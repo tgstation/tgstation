@@ -357,6 +357,32 @@
 	var/atom/movable/screen/moon_health/health_hud
 	/// Boolean if you are brain dead so the sound doesn't spam during the delay
 	var/braindead = FALSE
+	//---- Messages that get sent when someone wearing the moon robes is attacked
+	/// Visible message that nearby people see
+	var/static/list/visible_message_list = list(
+		"%USER seems to hardly register that they have been harmed by %ATTACKER, not even flinching naturally.",
+		"Though wounded, %USER seems oblivious to %ATTACKER.",
+		"You hear %USER laughing. But they have not made a single sound, even when struck by %ATTACKER.",
+	)
+	/// Message sent to the wearer who got attacked
+	var/static/list/self_message_list = list(
+		"Your body ripples as still water freshly disturbed. The sensation is exquisite, and you have %ATTACKER to thank.",
+		"A bell tolls. %ATTACKER has struck the hour and you tick to that tune.",
+		//"You are needed in [area name]. You need to be there. %ATTACKER might want you to stay, but you are needed in [area name].",
+		//"You see %ATTACKER strike a [name of animal]. The face of the beast is a mirror of your own. How strange.",
+		"%ATTACKER bumps you and you spill your tea. It's fine. You've plenty of cups.",
+		"You hear a roaring crash. The waves hit the boat. The is sea vast and dark. You see %ATTACKER striking the water, cursing its master.",
+		"Sequins scatter into the air around %ATTACKER. The sequins...",
+		"You notice that a button has popped off your collar. How did that happen? Maybe %ATTACKER is to blame.",
+		"%ATTACKER isn't very funny, and you're struggling to see the punchline.",
+	)
+	/// Message sent to blind people nearyb
+	var/static/list/blind_message_list = list(
+		"You hear echoing laughter.",
+		"You hear a distance chorus.",
+		"You hear the sound of bells and whistles.",
+		"You hear the clack of a tambourine.",
+	)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/Destroy()
 	if(!ishuman(loc))
@@ -467,7 +493,11 @@
 		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 	return SUCCESSFUL_BLOCK
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(datum/source, &signal_message, &signal_self, &signal_blind)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(mob/living/user)
+	var/visible_message = pick(visible_message_list)
+	var/self_message = pick(self_message_list)
+	var/blind_message = pick(blind_message_list)
+	user.visible_message(visible_message, self_message, blind_message)
 	//XANTODO Figure this out
 	return SIGNAL_MESSAGE_MODIFIED
 
