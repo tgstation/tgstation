@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import {
   Box,
   Button,
@@ -43,7 +44,7 @@ export const BluespaceSender = (props) => {
 
   const gases: Gas[] = sortBy(
     filter(bluespace_network_gases, (gas) => gas.amount >= 0.01),
-    (gas) => -gas.amount,
+    [(gas) => -gas.amount],
   );
 
   const gasMax = Math.max(1, ...gases.map((gas) => gas.amount));
