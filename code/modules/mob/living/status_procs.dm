@@ -511,6 +511,8 @@
  * * target_zone - Optional. The body zone to search within. See body zones in [code/__DEFINES/combat.dm]
  */
 /mob/living/proc/get_surgery(datum/surgery/surgery_type, datum/surgery_step/step_type, target_zone)
+	if(!length(surgeries))
+		return null
 	for(var/datum/surgery/surgery as anything in surgeries)
 		if(!istype(surgery, surgery_type))
 			continue
@@ -521,6 +523,16 @@
 		if(!isnull(step_type) && !ispath(surgery.steps[surgery.status], step_type))
 			continue
 		return surgery
+
+/**
+ * Increase the speed modifier of all active surgeries by a specific amount.
+ *
+ * Arguments:
+ * * amount - A number to set each surgery's speed_modifier to.
+ */
+/mob/living/proc/adjust_surgery_speed(amount = 0)
+	for(var/datum/surgery/surgery as anything in surgeries)
+		surgery.speed_modifier = max(amount, surgery.speed_modifier)
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
