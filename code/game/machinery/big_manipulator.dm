@@ -324,7 +324,7 @@
 		return ITEM_INTERACT_SUCCESS
 	locked_by_this_id = WEAKREF(clicked_by_this_id)
 	change_id_locked_status(user)
-	ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/big_manipulator/proc/change_id_locked_status(mob/user)
 	id_locked = !id_locked
