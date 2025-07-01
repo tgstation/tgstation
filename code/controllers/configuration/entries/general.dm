@@ -123,6 +123,7 @@
 
 /// log ghost polling
 /datum/config_entry/flag/log_ghost_poll
+	default = TRUE
 
 /// log economy actions
 /datum/config_entry/flag/log_econ

@@ -79,7 +79,11 @@
 
 	signed_up += candidate
 
-	log_ghost_poll("[candidate.key] signed candidate poll [role ? "for [role]" : "\"[question]\""]")
+	log_ghost_poll("Player signed candidate poll", data = list(
+		"player key" = candidate.key,
+		"role name" = role,
+		"poll question" = question,
+	))
 
 	if(!silent)
 		to_chat(candidate, span_notice(response_messages[POLL_RESPONSE_SIGNUP]))
@@ -106,7 +110,11 @@
 
 	signed_up -= candidate
 
-	log_ghost_poll("[candidate.key] removed their candidacy for candidate poll [role ? "for [role]" : "\"[question]\""]")
+	log_ghost_poll("Player removed from poll candidacy", data = list(
+		"player key" = candidate.key,
+		"role name" = role,
+		"poll question" = question,
+	))
 
 	if(!silent)
 		to_chat(candidate, span_danger(response_messages[POLL_RESPONSE_UNREGISTERED]))
