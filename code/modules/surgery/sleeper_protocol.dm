@@ -10,6 +10,7 @@
 	name = "Sleeper Agent Surgery"
 	desc = "A surgical procedure which implants the sleeper protocol into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	requires_bodypart_type = NONE
+	organ_to_manipulate = ORGAN_SLOT_BRAIN
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -32,15 +33,6 @@
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close,
 	)
-
-/datum/surgery/advanced/brainwashing_sleeper/can_start(mob/user, mob/living/carbon/target)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/item/organ/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(!target_brain)
-		return FALSE
-	return TRUE
 
 /datum/surgery_step/brainwash/sleeper_agent
 	time = 25 SECONDS

@@ -22,9 +22,6 @@
 		/obj/item/pen = 25)
 	time = 64
 
-/datum/surgery/ear_surgery/can_start(mob/user, mob/living/carbon/target)
-	return target.get_organ_slot(ORGAN_SLOT_EARS) && ..()
-
 /datum/surgery_step/fix_ears/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,

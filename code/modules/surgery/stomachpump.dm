@@ -1,5 +1,6 @@
 /datum/surgery/stomach_pump
 	name = "Stomach Pump"
+	organ_to_manipulate = ORGAN_SLOT_STOMACH
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -23,10 +24,7 @@
 	)
 
 /datum/surgery/stomach_pump/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(HAS_TRAIT(target, TRAIT_HUSK))
-		return FALSE
-	if(!target_stomach)
 		return FALSE
 	return ..()
 

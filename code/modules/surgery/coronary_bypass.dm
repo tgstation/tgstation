@@ -1,6 +1,7 @@
 /datum/surgery/coronary_bypass
 	name = "Coronary Bypass"
 	organ_to_manipulate = ORGAN_SLOT_HEART
+	requires_organ_damage = 60
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -24,13 +25,6 @@
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close,
 	)
-
-/datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
-	if(isnull(target_heart) || target_heart.damage < 60 || target_heart.operated)
-		return FALSE
-	return ..()
-
 
 //an incision but with greater bleed, and a 90% base success chance
 /datum/surgery_step/incise_heart
