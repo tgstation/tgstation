@@ -277,7 +277,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//The abstract grown item expects a seed, but doesn't have one
 		/obj/item/food/grown,
 		///Single use case holder atom requiring a user
-		/atom/movable/looking_holder
+		/atom/movable/looking_holder,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -356,6 +356,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
+	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
 
 	return returnable_list
 

@@ -49,7 +49,7 @@
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
 			if(has_job_loyalties && (H.mind.assigned_role.departments_bitflags & job_loyalties))
 				inspired += H
-			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
+			else if(has_role_loyalties && length(H.mind.get_special_roles() & role_loyalties))
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
