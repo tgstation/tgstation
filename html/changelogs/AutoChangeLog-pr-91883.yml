@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Multiple high impact rulesets will no longer roll simultaneously unless dynamic picks \"high chaos\""
