@@ -233,11 +233,10 @@
 	return ..()
 
 /obj/item/disk/holodisk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(!istype(tool, /obj/item/disk/holodisk))
 		return NONE
 
-	var/obj/item/disk/holodisk/holodiskOriginal = item
+	var/obj/item/disk/holodisk/holodiskOriginal = tool
 	if (holodiskOriginal.record)
 		if (!record)
 			record = new
