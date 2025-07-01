@@ -37,6 +37,13 @@
 	spawning = 2
 	velocity = list(0, 0.25, 0)
 
+/particles/smoke/steam/mald
+	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
+	velocity = list(0, 0.25, 0)
+	lifespan = 1 SECONDS
+	fade = 0.5 SECONDS
+	position = list(-1, 12, 0)
+
 /particles/smoke/cig
 	icon_state = list("steam_1" = 2, "steam_2" = 1, "steam_3" = 1)
 	count = 1

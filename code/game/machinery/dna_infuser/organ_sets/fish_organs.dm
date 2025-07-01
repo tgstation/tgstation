@@ -2,6 +2,9 @@
 #define FISH_SCLERA_COLOR COLOR_WHITE
 #define FISH_PUPIL_COLOR COLOR_BLUE
 #define FISH_COLORS FISH_ORGAN_COLOR + FISH_SCLERA_COLOR + FISH_PUPIL_COLOR
+/// How many fishy organs can you have at once, requirement to get the tail color
+/// Currently liver, stomach, lungs and tail plus tongue
+#define FISH_INFUSION_ALL_ORGANS 4
 
 ///bonus of the observing gondola: you can ignore environmental hazards
 /datum/status_effect/organ_set_bonus/fish
@@ -24,6 +27,9 @@
 		TRAIT_WATER_ADAPTATION,
 		)
 	bonus_biotype = MOB_AQUATIC
+	limb_overlay = /datum/bodypart_overlay/texture/fishscale
+	/// Are we at all five organs?
+	var/color_active = FALSE
 
 /datum/status_effect/organ_set_bonus/fish/enable_bonus()
 	. = ..()
@@ -73,6 +79,46 @@
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.remove_language(/datum/language/carptongue, ALL, type)
+
+/datum/status_effect/organ_set_bonus/fish/set_organs(new_value)
+	. = ..()
+	if (!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
+	var/tail_color = tail?.bodypart_overlay?.draw_color
+	// We need to snowflake the tongue because it doesn't count towards the set bonus
+	if (carbon_owner.get_organ_by_type(/obj/item/organ/tongue/inky))
+		new_value += 1
+
+	if (new_value >= FISH_INFUSION_ALL_ORGANS && tail_color)
+		if (!color_active)
+			for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+				limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+			color_active = TRUE
+		return
+
+	if (!color_active)
+		return
+
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		limb.remove_color_override(LIMB_COLOR_FISH_INFUSION)
+	color_active = FALSE
+
+/datum/status_effect/organ_set_bonus/fish/texture_limb(atom/source, obj/item/bodypart/limb)
+	. = ..()
+	if (!color_active || !iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
+	var/tail_color = tail?.bodypart_overlay?.draw_color
+	if (tail_color)
+		limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+
+/datum/status_effect/organ_set_bonus/fish/untexture_limb(atom/source, obj/item/bodypart/limb)
+	. = ..()
+	if (color_active)
+		limb.remove_color_override(LIMB_COLOR_FISH_INFUSION)
 
 /datum/status_effect/organ_set_bonus/fish/proc/get_perceived_food_quality(datum/source, datum/component/edible/edible, list/extra_quality)
 	SIGNAL_HANDLER
@@ -133,6 +179,10 @@
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER
+	// We need to snowflake the tongue because it doesn't count towards the set bonus
+	if (istype(organ, /obj/item/organ/tongue/inky))
+		set_organs(organs)
+		return
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET) || !istype(organ, /obj/item/organ/tail/fish))
 		return
 	var/obj/item/organ/tail = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -254,6 +304,14 @@
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return SSaccessories.tails_list_fish
 
+/datum/bodypart_overlay/mutant/tail/fish/get_image(image_layer, obj/item/bodypart/limb)
+	var/mutable_appearance/appearance = ..()
+	// We add all appearances the parent bodypart has to the tail to inherit scales and fancy effects
+	// but most other organs don't want to inherit those so we do it here and not on parent
+	for (var/datum/bodypart_overlay/texture/texture in limb.bodypart_overlays)
+		if(texture.can_draw_on_bodypart(limb, limb.owner))
+			texture.modify_bodypart_appearance(appearance)
+	return appearance
 
 ///Lungs that replace the need of oxygen with water vapor or being wet
 /obj/item/organ/lungs/fish
@@ -261,7 +319,7 @@
 	desc = "Fish DNA infused on what once was a normal pair of lungs that now require spacemen to breathe water vapor, or keep themselves covered in water."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "gills"
-
+	breath_noise = "the dribbling of water"
 	organ_traits = list(TRAIT_NODROWN)
 	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
@@ -306,7 +364,7 @@
 
 /// Requires the spaceman to have either water vapor or be wet.
 /obj/item/organ/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
-	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
+	var/need_to_breathe = !HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE) && !HAS_TRAIT(breather, TRAIT_IS_WET)
 	if(water_pp < safe_water_level && need_to_breathe)
 		on_low_water(breather, breath, water_pp)
 		return
@@ -457,3 +515,4 @@
 #undef FISH_SCLERA_COLOR
 #undef FISH_PUPIL_COLOR
 #undef FISH_COLORS
+#undef FISH_INFUSION_ALL_ORGANS
