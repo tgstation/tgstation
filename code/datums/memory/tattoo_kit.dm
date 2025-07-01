@@ -9,6 +9,16 @@
 	///how many uses can be stored
 	var/max_uses = 5
 
+/obj/item/tattoo_kit/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/tattoo_kit/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(istype(held_item, obj/item/toner))
+		context[SCREENTIP_CONTEXT_LMB] = "Refill"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/tattoo_kit/examine(mob/tattoo_artist)
 	. = ..()
 	if(!uses)
