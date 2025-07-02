@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed borgs being able to shatter glass into shards when there's no glass in the synthesizer"
-  - bugfix: "shattering sheets into shards with telekinesis will place the shards at the stack, not at the user's feet"

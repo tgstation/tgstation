@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - code_imp: "mob holders are no longer subtypes of clothes, report any issues"
