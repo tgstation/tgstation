@@ -136,6 +136,8 @@
 	var/charge_recovery = 1
 	/// Whether or not this shield can lose multiple charges.
 	var/lose_multiple_charges = FALSE
+	/// The item path to recharge this shielkd.
+	var/recharge_path = null
 	/// The icon file of the shield.
 	var/shield_icon_file = 'icons/effects/effects.dmi'
 	/// The icon_state of the shield.
@@ -148,16 +150,8 @@
 	charges = max_charges
 
 /obj/item/mod/module/energy_shield/on_part_activation()
-	mod.AddComponent(\
-		/datum/component/shielded, \
-		max_charges = max_charges, \
-		recharge_start_delay = recharge_start_delay, \
-		charge_increment_delay = charge_increment_delay, \
-		charge_recovery = charge_recovery, \
-		lose_multiple_charges = lose_multiple_charges, \
-		starting_charges = charges, \
-		shield_icon_file = shield_icon_file, \
-		shield_icon = shield_icon)
+	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
+	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_part_deactivation(deleting = FALSE)
@@ -190,9 +184,12 @@
 	icon_state = "battlemage_shield"
 	idle_power_cost = 0 //magic
 	use_energy_cost = 0 //magic too
-	max_charges = 5
+	max_charges = 15
+	recharge_start_delay = 0 SECONDS
+	charge_recovery = 8
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
+	recharge_path = /obj/item/wizard_armour_charge
 	required_slots = list()
 
 ///Magic Nullifier - Protects you from magic.
@@ -215,31 +212,19 @@
 	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), REF(src))
 
 /obj/item/mod/module/anti_magic/wizard
-	name = "MOD magical hazard protection module"
+	name = "MOD magic neutralizer module"
 	desc = "The caster wielding this spell gains an invisible barrier around them, channeling arcane power through \
 		specialized runes engraved onto the surface of the suit to generate anti-magic field. \
 		The field will neutralize all magic that comes into contact with the user. \
-		It will not protect the caster from social ridicule, but it will protect from environmental hazards."
+		It will not protect the caster from social ridicule."
 	icon_state = "magic_neutralizer"
 	required_slots = list()
 
 /obj/item/mod/module/anti_magic/wizard/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK, TRAIT_NO_SLIP_WATER, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK), REF(src))
-	// Welding protection
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
-	// Radiation protection
-	for(var/obj/item/part in mod.get_parts(all = TRUE))
-		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), REF(src))
 
 /obj/item/mod/module/anti_magic/wizard/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK, TRAIT_NO_SLIP_WATER, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK), REF(src))
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.flash_protect = initial(head_cover.flash_protect)
-	for(var/obj/item/part in mod.get_parts(all = TRUE))
-		REMOVE_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), REF(src))
 
 ///Insignia - Gives you a skin specific stripe.
 /obj/item/mod/module/insignia
