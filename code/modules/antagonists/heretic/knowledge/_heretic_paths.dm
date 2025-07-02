@@ -296,13 +296,14 @@ GLOBAL_LIST(heretic_research_tree)
 		guaranteed_draft_t3
 	)
 
-	var/list/shop_unlock_order = list(
-		knowledge_tier1,
-		knowledge_tier2,
-		current_path.robes,
-		knowledge_tier3,
-		knowledge_tier4
-	)
+	// todo put this somewhere more shared
+	// var/list/shop_unlock_order = list(
+	// 	knowledge_tier1,
+	// 	knowledge_tier2,
+	// 	current_path.robes,
+	// 	knowledge_tier3,
+	// 	knowledge_tier4
+	// )
 
 	var/list/draft_ineligible = path_knowledges.Copy()
 	draft_ineligible += guaranteed_drafts
@@ -319,20 +320,8 @@ GLOBAL_LIST(heretic_research_tree)
 			continue
 		elligible_knowledge[potential_type::drafting_tier] += potential_type
 
-	for(var/drafting_tier in 1 to length(elligible_knowledge))
-		var/list/eligible_tier = elligible_knowledge[drafting_tier]
-		for(var/knowledge_type in eligible_tier)
-			shop[knowledge_type] = list(
-				HKT_NEXT = list(),
-				HKT_BAN = list(),
-				HKT_ROUTE = heretic_path,
-				HKT_DEPTH = drafting_tier,
-				HKT_UI_BGR = BGR_SIDE,
-				HKT_COST = shop_costs[drafting_tier],
-				// HKT_CATEGORY = HERETIC_KNOWLEDGE_DRAFT
-			)
-			var/unlocked_by = shop_unlock_order[drafting_tier]
-			heretic_research_tree[unlocked_by][HKT_NEXT] += knowledge_type
+	// var/list/shop_knowledge = elligible_knowledge.Copy()
+
 
 	// for(var/knowledge_path in guaranteed_drafts)
 	// 	shop[knowledge_path] = list(
@@ -440,14 +429,24 @@ GLOBAL_LIST(heretic_research_tree)
 
 			for(var/blacklist as anything in draft_blacklist)
 				final_draft[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
-	// Snowflake handling
-	// var/gun_path = /datum/heretic_knowledge/rifle
-	// var/ammo_path = /datum/heretic_knowledge/rifle_ammo
-	// heretic_research_tree[gun_path][HKT_NEXT] += ammo_path
-	// heretic_research_tree[ammo_path][HKT_ROUTE] = heretic_path
-	// heretic_research_tree[ammo_path][HKT_DEPTH] = heretic_research_tree[gun_path][HKT_DEPTH]
-	// heretic_research_tree[ammo_path][HKT_UI_BGR] = current_path.ui_bgr
-	// heretic_research_tree[gun_path][HKT_CATEGORY] = HERETIC_KNOWLEDGE_DRAFT
-	// heretic_research_tree[ammo_path][HKT_CATEGORY] = HERETIC_KNOWLEDGE_DRAFT
 
+	for(var/drafting_tier in 1 to length(elligible_knowledge))
+		var/list/eligible_tier = elligible_knowledge[drafting_tier]
+		for(var/knowledge_type in eligible_tier)
+			shop[knowledge_type] = list(
+				HKT_NEXT = list(),
+				HKT_BAN = list(),
+				HKT_ROUTE = heretic_path,
+				HKT_DEPTH = drafting_tier,
+				HKT_UI_BGR = BGR_SIDE,
+				HKT_COST = shop_costs[drafting_tier],
+				// HKT_CATEGORY = HERETIC_KNOWLEDGE_DRAFT
+			)
+			// var/unlocked_by = shop_unlock_order[drafting_tier]
+			// unlocking one of the draft knowledges will unlock this
+		for(var/datum/heretic_knowledge/knowledge_type as anything in final_draft)
+			if(knowledge_type::drafting_tier != drafting_tier)
+				continue
+			final_draft[knowledge_type][HKT_NEXT] += eligible_tier
+		// heretic_research_tree[unlocked_by][HKT_NEXT] += knowledge_type
 	qdel(current_path)

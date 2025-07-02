@@ -214,9 +214,32 @@
 
 		tree_data[depth]["nodes"] += list(knowledge_data)
 
+
+	if(heretic_path == PATH_START)
+		data["knowledge_tiers"] = tree_data
+		return data
+	var/datum/heretic_knowledge_tree_column/current_path
+	for(var/datum/heretic_knowledge_tree_column/column_path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
+		if(initial(column_path.route) != heretic_path)
+			continue
+		current_path = new column_path()
+	// todo put this somewhere more shared
+	var/list/draft_unlock_order = list(
+		current_path.knowledge_tier1,
+		current_path.knowledge_tier2,
+		current_path.robes,
+		current_path.knowledge_tier3,
+		current_path.knowledge_tier4
+	)
+
 	var/list/heretic_drafts = heretic_shops[HERETIC_KNOWLEDGE_DRAFT]
 	for(var/datum/heretic_knowledge/knowledge as anything in heretic_drafts)
 		if(!(knowledge in researchable_knowledge))
+			continue
+		if(knowledge::drafting_tier == 0)
+			continue
+		var/required_unlock = draft_unlock_order[knowledge::drafting_tier]
+		if(!(required_unlock in researched_knowledge))
 			continue
 		var/list/knowledge_data = get_knowledge_data(knowledge, heretic_drafts, FALSE)
 
@@ -230,17 +253,6 @@
 	data["knowledge_tiers"] = tree_data
 	var/list/shop_knowledge = list()
 	var/list/shop = heretic_shops[HERETIC_KNOWLEDGE_SHOP]
-	// for(var/knowledge_path in shop)
-	// 	var/list/knowledge_info = shop[knowledge_path]
-	// 	var/is_researched = !!researched_knowledge[knowledge_path]
-	// 	var/list/knowledge_data = get_knowledge_data(knowledge_path, shop, is_researched)
-	// 	var/knowledge_tier = knowledge_info[HKT_DEPTH]
-	// 	var/list/target_tier = shop_knowledge[knowledge_tier]
-
-	// 	if(!islist(target_tier))
-	// 		target_tier = list()
-	// 	target_tier += list(knowledge_data)
-
 	for(var/knowledge_path as anything in shop)
 		if(!(knowledge_path in researchable_knowledge))
 			continue
