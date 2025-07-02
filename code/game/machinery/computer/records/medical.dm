@@ -99,7 +99,7 @@
 			if(!content)
 				return FALSE
 
-			var/datum/medical_note/new_note = new(usr.name, content)
+			var/datum/medical_note/new_note = new(usr.name, content, station_time_timestamp())
 			while(length(target.medical_notes) > 2)
 				target.medical_notes.Cut(1, 2)
 
