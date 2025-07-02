@@ -1,6 +1,6 @@
 //Antag modules for MODsuits
 
-///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection. Also acts as a welding screen.
+/// Toggleable visor. Used to toggle the visor overlay. Also acts as a welding screen.
 /obj/item/mod/module/toggleable_visor
 	name = "MOD Visor module"
 	desc = "A module specifically added to make your visor cooler. Can be toggled to change the apperance"
@@ -9,11 +9,21 @@
 	active_power_cost = 0
 	complexity = 0
 	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/toggleable_visor)
+	incompatible_modules = list(/obj/item/mod/module/toggleable_visor, /obj/item/mod/module/welding)
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
 	use_mod_colors = TRUE
 	mask_worn_overlay = TRUE
+
+/obj/item/mod/module/toggleable_visor/on_part_activation()
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
+
+/obj/item/mod/module/toggleable_visor/on_part_deactivation(deleting = FALSE)
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/toggleable_visor/on_activation()
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
