@@ -65,6 +65,8 @@ SUBSYSTEM_DEF(economy)
 	/// Tracks a temporary sum of all money in the system
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
+	/// Determines how many ticks it takes to restock mail
+	var/ticks_per_mail = 2
 
 /datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
@@ -90,7 +92,6 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/seconds_per_tick = wait / (5 MINUTES)
-
 	if(!resumed)
 		temporary_total = 0
 		processing_part = ECON_DEPARTMENT_STEP
@@ -116,8 +117,9 @@ SUBSYSTEM_DEF(economy)
 		if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) && !price_update())
 			return
 
-	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * seconds_per_tick)
+	if(times_fired % ticks_per_mail == 0)
+		var/effective_mailcount = round(living_player_count() / (inflation_value - 0.5)) //More mail at low inflation, and vis versa.
+		mail_waiting += clamp(effective_mailcount, 1, ticks_per_mail * MAX_MAIL_PER_MINUTE * seconds_per_tick)
 
 	SSstock_market.news_string = ""
 

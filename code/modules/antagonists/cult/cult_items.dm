@@ -25,7 +25,7 @@
 	throwforce = 25
 	block_chance = 25
 	wound_bonus = -10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
 	///Reference to a boomerang component we add when a non-cultist throws us.
@@ -55,7 +55,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(owner.get_active_held_item() != src)
 		block_message = "[owner] parries [attack_text] with [src] in their offhand"
 
-	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != PROJECTILE_ATTACK)
+	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != (PROJECTILE_ATTACK || OVERWHELMING_ATTACK))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[block_message]"))
 		return TRUE
@@ -101,7 +101,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 10
 	block_chance = 50 // now it's officially a cult esword
 	wound_bonus = -50
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	block_sound = 'sound/items/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
@@ -123,6 +123,9 @@ Striking a noncultist, however, will tear their flesh."}
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
@@ -158,7 +161,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 25
 	block_chance = 55
 	wound_bonus = -25
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 3
@@ -940,6 +943,8 @@ Striking a noncultist, however, will tear their flesh."}
 	qdel(src)
 
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))

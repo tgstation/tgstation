@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Maps with a large amount of Z levels should no longer randomly display space parallax to players with low multi-z culling settings."

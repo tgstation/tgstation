@@ -142,8 +142,8 @@
 	if(!gibbed)
 		var/make_a_corpse = TRUE
 		var/place_to_make_corpse = loc
-		if(istype(loc, /obj/item/clothing/head/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
-			var/obj/item/clothing/head/mob_holder/found_holder = loc
+		if(istype(loc, /obj/item/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
+			var/obj/item/mob_holder/found_holder = loc
 			place_to_make_corpse = found_holder.loc
 			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
 				make_a_corpse = FALSE
@@ -412,7 +412,7 @@
 		BB_SONG_LINES = MOUSE_SONG,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
@@ -458,10 +458,11 @@
 		)
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
