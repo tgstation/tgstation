@@ -8,7 +8,7 @@
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
@@ -396,7 +396,7 @@
 		relatively easy to install into most other suits."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
+	incompatible_modules = list(/obj/item/mod/module/infiltrator)
 	required_slots = list(ITEM_SLOT_HEAD)
 
 /obj/item/mod/module/headprotector/on_part_activation()

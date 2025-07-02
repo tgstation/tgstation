@@ -1199,7 +1199,7 @@
 	slowdown_deployed = 0
 	ui_theme = "syndicate"
 	resistance_flags = FIRE_PROOF
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/night)
+	inbuilt_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/night)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1308,7 +1308,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	inbuilt_modules = list(/obj/item/mod/module/welding)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1756,7 +1756,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "ntos_terminal"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	inbuilt_modules = list(/obj/item/mod/module/welding)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1924,7 +1924,7 @@
 	armor_type = /datum/armor/mod_theme_elite
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster/no_speedbost)
+	inbuilt_modules = list(/obj/item/mod/module/welding)
 
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
