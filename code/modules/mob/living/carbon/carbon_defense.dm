@@ -23,10 +23,8 @@
 	var/obj/item/organ/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
-	for(var/obj/item/worn_item in get_equipped_items())
-		if(worn_item.item_flags & SOUND_PROTECTION)
-			return INFINITY
-	. += E.bang_protect
+	else
+		. += E.bang_protect
 
 /mob/living/carbon/is_mouth_covered(check_flags = ALL)
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
@@ -301,7 +299,7 @@
 
 	for(var/obj/item/thing as anything in who_touched_us.get_equipped_items())
 		if((thing.body_parts_covered & HANDS) && prob(GET_ATOM_BLOOD_DNA_LENGTH(thing) * 25))
-			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(who_touched_us.wear_suit), messy_slots)
+			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(thing), messy_slots)
 			return
 
 	if(prob(blood_in_hands * GET_ATOM_BLOOD_DNA_LENGTH(who_touched_us) * 10))

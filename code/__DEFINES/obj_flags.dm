@@ -51,8 +51,6 @@
 #define NO_BLOOD_ON_ITEM (1 << 19)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
 #define SKIP_FANTASY_ON_SPAWN (1<<20)
-/// Provides protection from loud sounds (flashbangs)
-#define SOUND_PROTECTION (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

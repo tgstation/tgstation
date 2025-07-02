@@ -110,6 +110,7 @@
 		if(!ispath(path))
 			continue
 		var/obj/item/mod_part = new path(mod)
+		apply_to_part(mod_part)
 		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
 			var/obj/item/clothing/chestplate = mod_part
 			chestplate.allowed |= allowed_suit_storage
@@ -163,6 +164,31 @@
 		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 		part.icon_state = "[skin]-[part.base_icon_state][mod.get_part_datum(part).sealed ? "-sealed" : ""]"
 		mod.wearer?.update_clothing(part.slot_flags)
+
+/datum/mod_theme/proc/apply_to_part(obj/item/mod_part)
+	if(!isclothing(mod_part))
+		return
+	switch(mod_part.slot_flags)
+		if(ITEM_SLOT_OCLOTHING)
+			apply_to_suit(mod_part)
+		if(ITEM_SLOT_GLOVES)
+			apply_to_gloves(mod_part)
+		if(ITEM_SLOT_HEAD)
+			apply_to_helmet(mod_part)
+		if(ITEM_SLOT_FEET)
+			apply_to_shoes(mod_part)
+
+/datum/mod_theme/proc/apply_to_suit(obj/item/mod_part)
+	SHOULD_CALL_PARENT(FALSE)
+
+/datum/mod_theme/proc/apply_to_gloves(obj/item/mod_part)
+	SHOULD_CALL_PARENT(FALSE)
+
+/datum/mod_theme/proc/apply_to_helmet(obj/item/mod_part)
+	SHOULD_CALL_PARENT(FALSE)
+
+/datum/mod_theme/proc/apply_to_shoes(obj/item/mod_part)
+	SHOULD_CALL_PARENT(FALSE)
 
 /datum/armor/mod_theme
 	melee = 10
@@ -807,7 +833,7 @@
 		"research" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
@@ -834,6 +860,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/research/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_research
 	melee = 20
@@ -869,7 +898,7 @@
 		"security" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE,
 				UNSEALED_COVER = HEADCOVERSMOUTH,
@@ -898,6 +927,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/security/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_security
 	melee = 35
@@ -935,7 +967,7 @@
 		"safeguard" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
@@ -962,6 +994,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/safeguard/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_safeguard
 	melee = 45
@@ -1032,6 +1067,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/magnate/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_magnate
 	melee = 40
@@ -1141,7 +1179,7 @@
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1172,7 +1210,7 @@
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1200,6 +1238,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/syndicate/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_syndicate
 	melee = 40
@@ -1226,11 +1267,11 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/night)
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1242,7 +1283,7 @@
 		"elite" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1270,6 +1311,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/elite/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_elite
 	melee = 60
@@ -1302,7 +1346,7 @@
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.5
 	ui_theme = "syndicate"
 	slot_flags = ITEM_SLOT_BELT
-	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer, /obj/item/mod/module/night)
+	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1314,7 +1358,6 @@
 		"infiltrator" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = SOUND_PROTECTION,
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
 				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT|HIDEANTENNAE,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1339,6 +1382,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/infiltrator/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_infiltrator
 	melee = 50
@@ -1395,7 +1441,7 @@
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1424,6 +1470,9 @@
 		),
 	)
 
+/datum/mod_theme/interdyne/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
+
 /datum/armor/mod_theme_interdyne
 	melee = 30
 	bullet = 30
@@ -1451,6 +1500,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	slowdown_deployed = 0.25
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
 	allowed_suit_storage = list(
@@ -1462,7 +1512,7 @@
 		"enchanted" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|CASTING_CLOTHES,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
@@ -1489,6 +1539,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/enchanted/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_enchanted
 	melee = 40
@@ -1527,7 +1580,7 @@
 		"ninja" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
 				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1555,6 +1608,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/ninja/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_ninja
 	melee = 40
@@ -1649,7 +1705,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "ntos_terminal"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/night)
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1660,7 +1716,7 @@
 		"glitch" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1688,6 +1744,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/glitch/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_glitch
 	melee = 40
@@ -1725,7 +1784,7 @@
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1755,7 +1814,7 @@
 		"inquisitory" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
@@ -1783,6 +1842,9 @@
 		),
 	)
 
+/datum/mod_theme/responsory/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
+
 /datum/armor/mod_theme_responsory
 	melee = 50
 	bullet = 40
@@ -1805,7 +1867,7 @@
 	armor_type = /datum/armor/mod_theme_elite
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster/no_speedbost, /obj/item/mod/module/night)
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster/no_speedbost)
 
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
@@ -1834,7 +1896,7 @@
 		"apocryphal" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
 				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1862,6 +1924,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/apocryphal/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_apocryphal
 	melee = 80
@@ -1900,7 +1965,7 @@
 		"corporate" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1928,6 +1993,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/corporate/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_corporate
 	melee = 65
@@ -1961,7 +2029,7 @@
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -1989,6 +2057,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/chrono/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_chrono
 	melee = 60
@@ -2023,7 +2094,7 @@
 		"debug" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE,
 				UNSEALED_COVER = HEADCOVERSMOUTH,
@@ -2052,6 +2123,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/debug/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_debug
 	melee = 50
@@ -2086,7 +2160,7 @@
 	variants = list(
 		"debug" = list(
 			/obj/item/clothing/head/mod = list(
-				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS|SOUND_PROTECTION,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -2111,6 +2185,9 @@
 			),
 		),
 	)
+
+/datum/mod_theme/administrative/apply_to_helmet(obj/item/mod_part)
+	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_administrative
 	melee = 100

@@ -21,12 +21,12 @@
 	resistance_flags = FLAMMABLE
 	custom_price = PAYCHECK_COMMAND * 1.5
 	flags_cover = EARS_COVERED
-	item_flags = SOUND_PROTECTION
 
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/earhealing)
 	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/clothing/ears/earmuffs/debug
 	name = "debug earmuffs"

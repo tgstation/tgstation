@@ -517,10 +517,10 @@ Return to step 11 of normal process."}
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "abductor_headset"
 	keyslot2 = /obj/item/encryptionkey/heads/captain
-	item_flags = SOUND_PROTECTION
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 	make_syndie()
 
 // Stops humans from disassembling abductor headsets.
