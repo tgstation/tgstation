@@ -42,6 +42,7 @@
 
 /datum/reagent/consumable/ethanol/New(list/data)
 	if(LAZYLEN(data))
+		data["timecreated"] = world.time
 		if(!isnull(data["quality"]))
 			quality = data["quality"]
 			name = "Natural " + name
