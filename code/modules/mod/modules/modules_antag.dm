@@ -1,55 +1,5 @@
 //Antag modules for MODsuits
 
-/// Toggleable visor. Used to toggle the visor overlay. Also acts as a welding screen.
-/obj/item/mod/module/toggleable_visor
-	name = "MOD Visor module"
-	desc = "A module specifically added to make your visor cooler. Can be toggled to change the apperance"
-	icon_state = "armor_booster"
-	module_type = MODULE_TOGGLE
-	active_power_cost = 0
-	complexity = 0
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/toggleable_visor, /obj/item/mod/module/welding)
-	overlay_state_inactive = "module_armorbooster_off"
-	overlay_state_active = "module_armorbooster_on"
-	use_mod_colors = TRUE
-	mask_worn_overlay = TRUE
-
-/obj/item/mod/module/toggleable_visor/on_part_activation()
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
-
-/obj/item/mod/module/toggleable_visor/on_part_deactivation(deleting = FALSE)
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.flash_protect = initial(head_cover.flash_protect)
-
-/obj/item/mod/module/toggleable_visor/on_activation()
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-
-/obj/item/mod/module/toggleable_visor/on_deactivation(display_message = TRUE, deleting = FALSE)
-	if(!deleting)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-
-/obj/item/mod/module/toggleable_visor/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
-	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-	return ..()
-
-/obj/item/mod/module/toggleable_visor/on_install()
-	. = ..()
-	RegisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY, PROC_REF(on_visor_overlay))
-
-/obj/item/mod/module/toggleable_visor/on_uninstall(deleting = FALSE)
-	. = ..()
-	UnregisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY)
-
-/obj/item/mod/module/toggleable_visor/proc/on_visor_overlay(datum/source,  mutable_appearance/standing, list/overrides)
-	SIGNAL_HANDLER
-	if (active)
-		overrides += mutable_appearance(overlay_icon_file, "module_armorbooster_visor-[mod.skin]", layer = standing.layer + 0.1)
-
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"

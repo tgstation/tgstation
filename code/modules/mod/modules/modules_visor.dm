@@ -68,16 +68,27 @@
 	visor_traits = list(TRAIT_THERMAL_VISION)
 
 //Night Visor - Gives you night vision.
-/obj/item/mod/module/night // Not Visor type so that it remains compatible with other visors
+/obj/item/mod/module/visor/night
 	name = "MOD night visor module"
 	desc = "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, \
 		this allows the user to perceive their surroundings while in complete darkness, enhancing the view by tenfold; \
 		yet brightening everything into a spooky green glow. They say these also let you see behind you."
 	icon_state = "night_visor"
+	incompatible_modules = list(/obj/item/mod/module/visor, /obj/item/mod/module/night)
+	visor_traits = list(TRAIT_TRUE_NIGHT_VISION)
+
+/obj/item/mod/module/night // Not Visor type so that it remains compatible with other visors
+	name = "MOD night vision module"
+	desc = "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, \
+		this allows the user to perceive their surroundings while in complete darkness, enhancing the view by tenfold; \
+		yet brightening everything into a spooky green glow. They say these also let you see behind you. \
+		These ones are a special version which remain compatible with the other visor modules."
+	icon_state = "night_visor"
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	complexity = 0
+	removable = FALSE
 	module_type = MODULE_TOGGLE
-	incompatible_modules = list(/obj/item/mod/module/night)
+	incompatible_modules = list(/obj/item/mod/module/night, /obj/item/mod/module/visor/night)
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
 /obj/item/mod/module/night/on_activation()

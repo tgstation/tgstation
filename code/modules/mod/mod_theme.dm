@@ -112,7 +112,6 @@
 		if(!ispath(path))
 			continue
 		var/obj/item/mod_part = new path(mod)
-		apply_to_part(mod_part)
 		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
 			var/obj/item/clothing/chestplate = mod_part
 			chestplate.allowed |= allowed_suit_storage
@@ -168,31 +167,6 @@
 		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 		part.icon_state = "[skin]-[part.base_icon_state][mod.get_part_datum(part).sealed ? "-sealed" : ""]"
 		mod.wearer?.update_clothing(part.slot_flags)
-
-/datum/mod_theme/proc/apply_to_part(obj/item/mod_part)
-	if(!isclothing(mod_part))
-		return
-	switch(mod_part.slot_flags)
-		if(ITEM_SLOT_OCLOTHING)
-			apply_to_suit(mod_part)
-		if(ITEM_SLOT_GLOVES)
-			apply_to_gloves(mod_part)
-		if(ITEM_SLOT_HEAD)
-			apply_to_helmet(mod_part)
-		if(ITEM_SLOT_FEET)
-			apply_to_shoes(mod_part)
-
-/datum/mod_theme/proc/apply_to_suit(obj/item/mod_part)
-	SHOULD_CALL_PARENT(FALSE)
-
-/datum/mod_theme/proc/apply_to_gloves(obj/item/mod_part)
-	SHOULD_CALL_PARENT(FALSE)
-
-/datum/mod_theme/proc/apply_to_helmet(obj/item/mod_part)
-	SHOULD_CALL_PARENT(FALSE)
-
-/datum/mod_theme/proc/apply_to_shoes(obj/item/mod_part)
-	SHOULD_CALL_PARENT(FALSE)
 
 /datum/armor/mod_theme
 	melee = 10
@@ -843,7 +817,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_deployed = 1.25
-	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
+	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
 		/obj/item/dnainjector,
@@ -886,9 +860,6 @@
 		),
 	)
 
-/datum/mod_theme/research/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_research
 	melee = 20
 	bullet = 15
@@ -913,6 +884,7 @@
 	armor_type = /datum/armor/mod_theme_security
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	slowdown_deployed = 0.5
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
@@ -955,9 +927,6 @@
 		),
 	)
 
-/datum/mod_theme/security/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_security
 	melee = 35
 	bullet = 15
@@ -982,7 +951,7 @@
 	armor_type = /datum/armor/mod_theme_safeguard
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked)
+	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked, /obj/item/mod/module/hearing_protection)
 	slowdown_deployed = 0.25
 	allowed_suit_storage = list(
 		/obj/item/reagent_containers/spray/pepper,
@@ -1024,9 +993,6 @@
 		),
 	)
 
-/datum/mod_theme/safeguard/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_safeguard
 	melee = 45
 	bullet = 25
@@ -1058,6 +1024,7 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_deployed = 0.25
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1098,9 +1065,6 @@
 			),
 		),
 	)
-
-/datum/mod_theme/magnate/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_magnate
 	melee = 40
@@ -1199,7 +1163,7 @@
 	slowdown_deployed = 0
 	ui_theme = "syndicate"
 	resistance_flags = FIRE_PROOF
-	inbuilt_modules = list(/obj/item/mod/module/toggleable_visor, /obj/item/mod/module/night)
+	inbuilt_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/night, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1276,9 +1240,6 @@
 		),
 	)
 
-/datum/mod_theme/syndicate/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_syndicate
 	melee = 40
 	bullet = 50
@@ -1308,7 +1269,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/toggleable_visor)
+	inbuilt_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/night, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1351,9 +1312,6 @@
 		),
 	)
 
-/datum/mod_theme/elite/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_elite
 	melee = 60
 	bullet = 60
@@ -1385,7 +1343,7 @@
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.5
 	ui_theme = "syndicate"
 	slot_flags = ITEM_SLOT_BELT
-	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer)
+	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer, /obj/item/mod/module/hearing_protection, /obj/item/mod/module/night)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1426,9 +1384,6 @@
 		),
 	)
 
-/datum/mod_theme/infiltrator/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_infiltrator
 	melee = 50
 	bullet = 50
@@ -1457,7 +1412,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_deployed = -0.5
-	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
+	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/assembly/flash,
 		/obj/item/healthanalyzer,
@@ -1515,9 +1470,6 @@
 		),
 	)
 
-/datum/mod_theme/interdyne/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_interdyne
 	melee = 30
 	bullet = 30
@@ -1547,7 +1499,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_deployed = 0.25
 	ui_theme = "wizard"
-	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
+	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
@@ -1587,9 +1539,6 @@
 		),
 	)
 
-/datum/mod_theme/enchanted/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_enchanted
 	melee = 40
 	bullet = 40
@@ -1617,7 +1566,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "hackerman"
-	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
+	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/gun,
 		/obj/item/melee/baton,
@@ -1657,9 +1606,6 @@
 			),
 		),
 	)
-
-/datum/mod_theme/ninja/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_ninja
 	melee = 40
@@ -1756,7 +1702,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "ntos_terminal"
-	inbuilt_modules = list(/obj/item/mod/module/toggleable_visor)
+	inbuilt_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1798,9 +1744,6 @@
 		),
 	)
 
-/datum/mod_theme/glitch/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_glitch
 	melee = 40
 	bullet = 50
@@ -1827,6 +1770,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_deployed = 0
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1899,9 +1843,6 @@
 		),
 	)
 
-/datum/mod_theme/responsory/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_responsory
 	melee = 50
 	bullet = 40
@@ -1924,7 +1865,7 @@
 	armor_type = /datum/armor/mod_theme_elite
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	inbuilt_modules = list(/obj/item/mod/module/toggleable_visor)
+	inbuilt_modules = list(/obj/item/mod/module/welding)
 
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
@@ -1942,6 +1883,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1984,9 +1926,6 @@
 		),
 	)
 
-/datum/mod_theme/apocryphal/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_apocryphal
 	melee = 80
 	bullet = 80
@@ -2015,6 +1954,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_deployed = 0
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -2055,9 +1995,6 @@
 		),
 	)
 
-/datum/mod_theme/corporate/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_corporate
 	melee = 65
 	bullet = 65
@@ -2082,6 +2019,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
 	slowdown_deployed = 0
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 	)
@@ -2121,9 +2059,6 @@
 		),
 	)
 
-/datum/mod_theme/chrono/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_chrono
 	melee = 60
 	bullet = 60
@@ -2150,6 +2085,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.2
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -2189,9 +2125,6 @@
 		),
 	)
 
-/datum/mod_theme/debug/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-
 /datum/armor/mod_theme_debug
 	melee = 50
 	bullet = 50
@@ -2219,6 +2152,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.01
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -2252,9 +2186,6 @@
 			),
 		),
 	)
-
-/datum/mod_theme/administrative/apply_to_helmet(obj/item/mod_part)
-	mod_part.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/mod_theme_administrative
 	melee = 100
