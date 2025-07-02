@@ -296,6 +296,14 @@ GLOBAL_LIST(heretic_research_tree)
 		guaranteed_draft_t3
 	)
 
+	var/list/shop_unlock_order = list(
+		knowledge_tier1,
+		knowledge_tier2,
+		current_path.robes,
+		knowledge_tier3,
+		knowledge_tier4
+	)
+
 	var/list/draft_ineligible = path_knowledges.Copy()
 	draft_ineligible += guaranteed_drafts
 
@@ -323,11 +331,7 @@ GLOBAL_LIST(heretic_research_tree)
 				HKT_COST = shop_costs[drafting_tier],
 				// HKT_CATEGORY = HERETIC_KNOWLEDGE_DRAFT
 			)
-			var/unlocked_by
-			if(drafting_tier > 1)
-				unlocked_by = path_knowledges[drafting_tier]
-			else
-				unlocked_by = current_path.start
+			var/unlocked_by = shop_unlock_order[drafting_tier]
 			heretic_research_tree[unlocked_by][HKT_NEXT] += knowledge_type
 
 	// for(var/knowledge_path in guaranteed_drafts)
@@ -351,7 +355,7 @@ GLOBAL_LIST(heretic_research_tree)
 	// Snowflake handling
 	var/datum/heretic_knowledge/gun_path = /datum/heretic_knowledge/rifle
 	var/datum/heretic_knowledge/ammo_path = /datum/heretic_knowledge/rifle_ammo
-	//TODO proc for generating knowledge data
+	//TODO proc for generating knowledge data?
 	shop[gun_path] = list(
 		HKT_NEXT = list(ammo_path),
 		HKT_BAN = list(),
@@ -360,7 +364,7 @@ GLOBAL_LIST(heretic_research_tree)
 		HKT_UI_BGR = BGR_SIDE,
 		HKT_DEPTH = 8,
 	)
-	// shop[gun_path][HKT_CATEGORY] = HERETIC_KNOWLEDGE_DRAFT
+	heretic_research_tree[current_path.blade][HKT_NEXT] += gun_path
 	shop[ammo_path] = list(
 		HKT_NEXT = list(),
 		HKT_BAN = list(),
@@ -369,7 +373,6 @@ GLOBAL_LIST(heretic_research_tree)
 		HKT_UI_BGR = BGR_SIDE,
 		HKT_DEPTH = 8,
 	)
-	// shop[ammo_path][HKT_CATEGORY] = HERETIC_KNOWLEDGE_DRAFT
 
 	var/list/drafts = list(
 		list(
