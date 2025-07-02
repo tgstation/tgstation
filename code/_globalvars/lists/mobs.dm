@@ -8,31 +8,31 @@ GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for 
 
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
+	/mob/living/basic,
 	/mob/living/basic/blob_minion,
 	/mob/living/basic/bot,
 	/mob/living/basic/construct,
 	/mob/living/basic/guardian,
 	/mob/living/basic/heretic_summon,
+	/mob/living/basic/mimic, // Cannot exist if spawned without being passed an item reference
 	/mob/living/basic/mining,
 	/mob/living/basic/pet,
-	/mob/living/basic,
+	/mob/living/basic/soulscythe, // This is just a way for players to control the soulscythe item
 	/mob/living/basic/spider,
-	/mob/living/carbon/alien/adult,
-	/mob/living/carbon/alien,
-	/mob/living/carbon/human/consistent,
-	/mob/living/carbon/human/dummy/consistent,
-	/mob/living/carbon/human/dummy,
-	/mob/living/carbon/human/species,
 	/mob/living/carbon,
+	/mob/living/carbon/alien,
+	/mob/living/carbon/alien/adult,
+	/mob/living/carbon/human/consistent,
+	/mob/living/carbon/human/dummy,
+	/mob/living/carbon/human/dummy/consistent,
+	/mob/living/carbon/human/species,
 	/mob/living/silicon,
-	/mob/living/simple_animal/bot,
-	/mob/living/simple_animal/hostile/asteroid/elite,
-	/mob/living/simple_animal/hostile/asteroid,
-	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/basic/mimic, // Cannot exist if spawned without being passed an item reference
-	/mob/living/simple_animal/hostile,
-	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
 	/mob/living/simple_animal,
+	/mob/living/simple_animal/bot,
+	/mob/living/simple_animal/hostile,
+	/mob/living/simple_animal/hostile/asteroid,
+	/mob/living/simple_animal/hostile/asteroid/elite,
+	/mob/living/simple_animal/hostile/megafauna,
 ))
 
 
@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(narcd_underages)
 GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
 /// List if all language typepaths learnable, IE, those with keys
 GLOBAL_LIST_INIT(all_languages, init_all_languages())
-// /List of language prototypes to reference, assoc "name" = typepath
+/// /List of language prototypes to reference, assoc "name" = typepath
 GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 
 /proc/init_language_prototypes()
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
 
-// A list of all the possible blood types, keyed by id (which is just the name in most cases)
+/// A list of all the possible blood types, keyed by id (which is just the name in most cases)
 GLOBAL_LIST_INIT(blood_types, init_blood_types())
 
 /// Initializes the list of blood type singletons

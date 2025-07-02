@@ -155,8 +155,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return BRUTELOSS
 
 /obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
 //statistically similar to e-cutlasses
@@ -474,6 +474,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/carpenter_hammer/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/kneejerk)
 	AddComponent(/datum/component/item_killsound, \
 	allowed_mobs = list(/mob/living/carbon/human), \
 	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
@@ -918,7 +919,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 	effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/melee/skateboard/holyboard/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
 	SIGNAL_HANDLER
@@ -1005,7 +1006,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	thrown_datums.Cut()
 	return ..()
 
-/obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, list/modifiers)
+/obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		return ..()
@@ -1120,6 +1121,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			/mob/living/basic/ant,
 			/mob/living/basic/butterfly,
 			/mob/living/basic/cockroach,
+			/mob/living/basic/cockroach/bloodroach,
 			/mob/living/basic/spider/growing/spiderling,
 			/mob/living/basic/bee,
 			/obj/effect/decal/cleanable/ants,
@@ -1131,7 +1133,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
@@ -1168,7 +1170,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
-/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers)
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	var/dist = get_dist(M, user)
 	if(dist < min_reach)
 		to_chat(user, span_warning("[M] is too close to use [src] on."))
@@ -1234,7 +1236,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 10
 	wound_bonus = 25
-	bare_wound_bonus = 50
+	exposed_wound_bonus = 50
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
@@ -1280,7 +1282,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return TRUE
 	return FALSE
 
-/obj/item/highfrequencyblade/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/highfrequencyblade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return .
@@ -1316,7 +1318,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(src, 'sound/items/weapons/zapbang.ogg', 50, vary = TRUE)
 	if(isliving(target))
 		var/mob/living/living_target = target
-		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, def_zone = user.zone_selected)
+		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, def_zone = user.zone_selected)
 		log_combat(user, living_target, "slashed", src)
 		if(living_target.stat == DEAD && prob(force*damage_mod*0.5))
 			living_target.visible_message(span_danger("[living_target] explodes in a shower of gore!"), blind_message = span_hear("You hear organic matter ripping and tearing!"))
@@ -1366,7 +1368,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 8
 	throwforce = 20
 	wound_bonus = 20
-	bare_wound_bonus = 25
+	exposed_wound_bonus = 25
 
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
 	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))

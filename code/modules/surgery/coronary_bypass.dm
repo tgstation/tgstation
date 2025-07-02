@@ -70,13 +70,14 @@
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		if (!HAS_TRAIT(target_human, TRAIT_NOBLOOD))
+		if (target_human.can_bleed())
+			var/blood_name = target_human.get_bloodtype()?.get_blood_name() || "Blood"
 			display_results(
 				user,
 				target,
-				span_notice("Blood pools around the incision in [target_human]'s heart."),
-				span_notice("Blood pools around the incision in [target_human]'s heart."),
-				span_notice("Blood pools around the incision in [target_human]'s heart."),
+				span_notice("[blood_name] pools around the incision in [target_human]'s heart."),
+				span_notice("[blood_name] pools around the incision in [target_human]'s heart."),
+				span_notice("[blood_name] pools around the incision in [target_human]'s heart."),
 			)
 			var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 			target_bodypart.adjustBleedStacks(10)
@@ -86,12 +87,13 @@
 /datum/surgery_step/incise_heart/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
+		var/blood_name = LOWER_TEXT(target_human.get_bloodtype()?.get_blood_name()) || "blood"
 		display_results(
 			user,
 			target,
 			span_warning("You screw up, cutting too deeply into the heart!"),
-			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
-			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
+			span_warning("[user] screws up, causing [blood_name] to spurt out of [target_human]'s chest!"),
+			span_warning("[user] screws up, causing [blood_name] to spurt out of [target_human]'s chest!"),
 		)
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 		target_bodypart.adjustBleedStacks(10)

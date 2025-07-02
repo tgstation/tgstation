@@ -35,7 +35,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 	if((!GLOB.holy_weapon_type || !station_holy_item) && type == /obj/item/nullrod)
 		var/list/rods = list()
@@ -45,7 +45,7 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		//special non-nullrod subtyped shit
 		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-		rods[/obj/item/organ/cyberimp/arm/shard/scythe] = "A shard that implants itself into your arm, \
+		rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
 									allowing you to conjure forth a vorpal scythe. \
 									Allows you to behead targets for empowered strikes. \
 									Harms you if you dismiss the scythe without first causing harm to a creature. \
@@ -53,13 +53,21 @@
 		rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
-/obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
+/// Callback for subtype picker, invoked when the chaplain picks a new nullrod
+/obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/new_holy_weapon, mob/living/picker)
+	new_holy_weapon.on_selected(src, picker)
 	if(!station_holy_item)
 		return
-	GLOB.holy_weapon_type = holy_weapon_type
+	GLOB.holy_weapon_type = new_holy_weapon.type
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NULLROD_PICKED)
-	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[initial(holy_weapon_type.name)]")
+	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[new_holy_weapon.name]")
 
+/// Called on a new instance of a nullrod when selected
+/// Override this to add behavior when a nullrod is picked
+/obj/item/nullrod/proc/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
+	return
+
+/// Callback for effect remover, invoked when a cult rune is cleared
 /obj/item/nullrod/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
 	if(!istype(target, /obj/effect/rune))
 		return
@@ -73,7 +81,7 @@
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, list/modifiers)
+/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!user.mind?.holy_role)
 		return ..()
 	if(!IS_CULTIST(target_mob) || istype(target_mob, /mob/living/carbon/human/cult_ghost))
@@ -130,8 +138,8 @@
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/nullrod/claymore/darkblade
@@ -189,11 +197,9 @@
 	force = 15
 	menu_description = "An odd sharp blade which provides a low chance of blocking incoming melee attacks and deals a random amount of damage, which can range from almost nothing to very high. Can be worn on the back."
 
-/obj/item/nullrod/claymore/multiverse/melee_attack_chain(mob/user, atom/target, list/modifiers)
-	var/force_mod = rand(-14, 15)
-	force += force_mod
-	. = ..()
-	force -= force_mod
+/obj/item/nullrod/claymore/multiverse/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	SET_ATTACK_FORCE(attack_modifiers, rand(max(force - 15, 1), force + 15))
+	return ..()
 
 /obj/item/nullrod/claymore/saber
 	name = "light energy sword"
@@ -418,7 +424,7 @@
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
 	icon = 'icons/obj/weapons/chainsaw.dmi'
 	icon_state = "chainsaw_on"
-	inhand_icon_state = "mounted_chainsaw"
+	base_icon_state = "chainsaw_on"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -435,13 +441,30 @@
 
 /obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	AddElement(/datum/element/prosthetic_icon, "mounted", 180)
 	AddComponent(/datum/component/butchering, \
-	speed = 3 SECONDS, \
-	effectiveness = 100, \
-	bonus_modifier = 0, \
-	butcher_sound = hitsound, \
+		speed = 3 SECONDS, \
+		effectiveness = 100, \
+		bonus_modifier = 0, \
+		butcher_sound = hitsound, \
 	)
+
+/obj/item/nullrod/chainsaw/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
+	if(!iscarbon(picker))
+		return
+	var/obj/item/bodypart/active = picker.get_active_hand()
+	var/mob/living/carbon/new_hero = picker
+	new_hero.make_item_prosthetic(src, active.body_zone)
+
+/obj/item/nullrod/chainsaw/equipped(mob/living/carbon/user, slot, initial)
+	. = ..()
+	if(!iscarbon(user))
+		return
+	if(!(slot & ITEM_SLOT_HANDS))
+		return
+	to_chat(user, span_warning("As you lay your hands on [src], it latches onto your arm!"))
+	var/obj/item/bodypart/active = user.get_active_hand()
+	user.make_item_prosthetic(src, active.body_zone)
 
 // Clown Dagger - Nothing special, just honks.
 
@@ -556,7 +579,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
-	bare_wound_bonus = 25
+	exposed_wound_bonus = 25
 	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/armblade/Initialize(mapload)
@@ -580,8 +603,9 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/nullrod/carp"
+	post_init_icon_state = "map_plushie_carp"
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
@@ -633,8 +657,8 @@
 	return ..()
 
 /obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+		final_block_chance = 0 //Don't bring a stick to a gunfight, and also you aren't going to really block someone full body tackling you with a stick. Or a road roller, if one happened to hit you.
 	return ..()
 
 // Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
@@ -796,7 +820,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 12
 	wound_bonus = 10
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -816,36 +840,20 @@
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
-/obj/item/nullrod/nullblade/melee_attack_chain(mob/user, atom/target, list/modifiers)
-	//Track our actual force separately
-	var/old_force = force
-	force = 0
-	//Potential dice roll for our baseline force
-	force += roll("1d6")
-
-	//Now we can check for our user's potential 'strength' value. As a baseline, we'll use a default value of 4 for the sake of nonhuman users.
+/obj/item/nullrod/nullblade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	//Check for our user's potential 'strength' value. As a baseline, we'll use a default value of 4 for the sake of nonhuman users.
 	var/strength_value = 4
-
-	//We can use our human wielder's arm strength to determine their 'strength'. We add unarmed lower and upper, then divide by four.
-	//This isn't how strength works in dnd but who fucking cares.
+	// We can use our human wielder's arm strength to determine their 'strength'. We add unarmed lower and upper, then divide by four.
+	// This isn't how strength works in dnd but who fucking cares.
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/bodypart/wielding_bodypart = human_user.get_active_hand()
 		strength_value = round((wielding_bodypart.unarmed_damage_low + wielding_bodypart.unarmed_damage_high) * 0.25, 1)
+	// Our force becomes 1d6 + strength + some modifier (based on force - base force) to account for whetstones and other things.
+	SET_ATTACK_FORCE(attack_modifiers, roll("1d6") + strength_value + (force - initial(force)))
+	return ..()
 
-	force += strength_value
-
-	//If our old_force is higher than our initial force, add the difference to this calculation.
-	//We do this because our force could have been changed by things like whetstones and RPG stats.
-	force += old_force - initial(force)
-
-	//Record change to our force in case something modifies it down the chain
-	var/force_diff = force - old_force
-	. = ..()
-	//Reapply our old force.
-	force -= force_diff
-
-/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(target))
 		return
 
@@ -951,6 +959,6 @@
 	var/armor_block = living_target.run_armor_check(affecting, MELEE, armour_penetration = armour_penetration)
 
 	// We got a sneak attack!
-	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
+	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = exposed_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
 	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 50, TRUE)

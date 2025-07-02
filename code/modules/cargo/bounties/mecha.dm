@@ -9,6 +9,9 @@
 
 /datum/bounty/item/mech/applies_to(obj/shipped)
 	. = ..()
+	if(!.)
+		return
+
 	if(istype(shipped, /obj/vehicle/sealed/mecha))
 		shipped.balloon_alert_to_viewers("make diagnostic from inside!")
 

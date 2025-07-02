@@ -1,4 +1,4 @@
-import { filter } from 'common/collections';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import {
@@ -418,7 +418,6 @@ export function QuirksPage(props) {
               width="200px"
               value={searchQuery}
               onChange={setSearchQuery}
-              expensive
             />
           </Stack.Item>
           <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">

@@ -6,6 +6,7 @@
 	icon_state = "blob_head"
 	base_icon_state = "blob_head"
 	unique_name = TRUE
+	status_flags = CANPUSH
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	combat_mode = TRUE
@@ -19,6 +20,7 @@
 	lighting_cutoff_blue = 30
 	initial_language_holder = /datum/language_holder/empty
 	can_buckle_to = FALSE
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	/// Size of cloud produced from a dying spore
 	var/death_cloud_size = BLOBMOB_CLOUD_NONE
 	var/list/loot = list(/obj/item/food/spore_sack)

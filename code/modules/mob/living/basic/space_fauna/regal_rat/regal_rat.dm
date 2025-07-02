@@ -11,6 +11,7 @@
 
 	maxHealth = 70
 	health = 70
+	max_stamina = 120
 
 	butcher_results = list(/obj/item/food/meat/slab/mouse = 2, /obj/item/clothing/head/costume/crown = 1)
 

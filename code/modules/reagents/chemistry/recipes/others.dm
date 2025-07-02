@@ -537,6 +537,7 @@
 /datum/chemical_reaction/colorful_reagent
 	results = list(/datum/reagent/colorful_reagent = 5)
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1, /datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/triple_citrus = 1)
+	reaction_flags = REACTION_CLEAR_INVERSE
 
 /datum/chemical_reaction/life
 	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
@@ -602,17 +603,36 @@
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
-	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!.")
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!")
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/mob/living/carbon/M = holder.my_atom
-	var/location = get_turf(M)
-	if(iscarbon(M))
-		if(ismonkey(M))
-			M.gib(DROP_ALL_REMAINS)
+	var/mob/living/carbon/maybe_monkey = holder.my_atom
+	var/location = maybe_monkey.drop_location()
+	if(iscarbon(maybe_monkey))
+		if(ismonkey(maybe_monkey))
+			maybe_monkey.gib(DROP_ALL_REMAINS)
+			to_chat(maybe_monkey, span_danger("You body is torn to shreds as a monkey bursts out of you!"))
 		else
-			M.vomit(VOMIT_CATEGORY_BLOOD)
+			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
+			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
 	new /mob/living/carbon/human/species/monkey(location, TRUE)
+
+/datum/chemical_reaction/angry_monkey
+	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
+	reaction_flags = REACTION_INSTANT
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a pissed off monkey!")
+
+/datum/chemical_reaction/angry_monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/mob/living/carbon/maybe_monkey = holder.my_atom
+	var/location = maybe_monkey.drop_location()
+	if(iscarbon(maybe_monkey))
+		if(ismonkey(maybe_monkey))
+			maybe_monkey.gib(DROP_ALL_REMAINS)
+			to_chat(maybe_monkey, span_danger("You body is torn to shreds as a pissed off monkey bursts out of you!"))
+		else
+			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
+			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
+	new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis

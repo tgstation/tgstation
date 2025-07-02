@@ -102,7 +102,7 @@
 	DropFuel()
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/on_construction(mob/user)
+/obj/machinery/power/port_gen/pacman/on_construction(mob/user, from_flatpack = FALSE)
 	var/obj/item/circuitboard/machine/pacman/our_board = circuit
 	if(our_board.high_production_profile)
 		icon_state = "portgen1_0"
@@ -175,7 +175,7 @@
 	else
 		disconnect_from_network()
 
-/obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, list/modifiers)
+/obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, sheet_path))
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)

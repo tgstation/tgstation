@@ -59,7 +59,7 @@
 	var/static/items_inside = list(
 		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/suture/emergency = 1,
+		/obj/item/stack/medical/bandage = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
 		/obj/item/storage/pill_bottle/iron = 1,
@@ -88,6 +88,36 @@
 		/obj/item/cautery = 1,
 	)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/surgery_syndie
+	name = "suspicous surgical medkit"
+	desc = "An suspicous coloured medkit full of advanced medical equipment."
+	icon_state = "medkit_tactical_lite"
+	inhand_icon_state = "medkit-tactical-lite"
+	damagetype_healed = HEAL_ALL_DAMAGE
+	storage_type = /datum/storage/medkit/surgery
+
+/obj/item/storage/medkit/surgery_syndie/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/cautery/advanced = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/stack/medical/gauze/twelve = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/blood_filter = 1,
+		/obj/item/stack/medical/bone_gel = 1,
+		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/cup/bottle/sodium_thiopental = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/surgery_syndie/get_medbot_skin()
+	return "bezerk"
 
 /obj/item/storage/medkit/ancient
 	icon_state = "oldfirstaid"
@@ -256,6 +286,9 @@
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE
 	storage_type = /datum/storage/medkit/tactical
+
+/obj/item/storage/medkit/tactical/get_medbot_skin()
+	return "bezerk"
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)

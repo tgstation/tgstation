@@ -57,7 +57,7 @@
 		GLOB.navbeacons["[new_turf?.z]"] += src
 	return ..()
 
-/obj/machinery/navbeacon/on_construction(mob/user)
+/obj/machinery/navbeacon/on_construction(mob/user, from_flatpack = FALSE)
 	var/turf/our_turf = loc
 	if(!isfloorturf(our_turf))
 		return
@@ -115,7 +115,7 @@
 		return TRUE
 	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
 
-/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/turf/our_turf = loc
 	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed

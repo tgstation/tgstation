@@ -1,4 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - bugfix: "Barometers now properly report if the weather is dangerous or not."

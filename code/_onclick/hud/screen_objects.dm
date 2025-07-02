@@ -165,6 +165,9 @@
 /atom/movable/screen/language_menu/Click()
 	usr.get_language_holder().open_language_menu(usr)
 
+/atom/movable/screen/language_menu/ghost
+	icon = 'icons/hud/screen_ghost.dmi'
+
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
 	var/slot_id
@@ -390,6 +393,9 @@
 	icon_state = "floor_change_v"
 	vertical = TRUE
 
+/atom/movable/screen/floor_changer/vertical/ghost
+	icon = 'icons/hud/screen_ghost.dmi'
+
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"
 	icon_state = "spacesuit_0"
@@ -470,6 +476,32 @@
 	icon_state = "[base_icon_state][user.resting ? "_on" : null]"
 	return ..()
 
+/atom/movable/screen/sleep
+	name = "sleep"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "act_sleep"
+	base_icon_state = "act_sleep"
+	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
+
+/atom/movable/screen/sleep/Click()
+	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+		return
+	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
+		var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
+		if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+			var/mob/living/L = usr
+			L.SetSleeping(400)
+	else
+		flick("[base_icon_state]_flick", src)
+
+/atom/movable/screen/sleep/DblClick(location, control, params)
+	if(!isliving(usr) || usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
+		return
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.SetSleeping(400)
+
 /atom/movable/screen/storage
 	name = "storage"
 	icon = 'icons/hud/screen_midnight.dmi'
@@ -544,9 +576,9 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/throw_catch/Click()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
+	if(isliving(usr))
+		var/mob/living/user = usr
+		user.toggle_throw_mode()
 
 /atom/movable/screen/zone_sel
 	name = "damage zone"
@@ -737,6 +769,9 @@
 		var/mob/living/carbon/C = usr
 		C.check_self_for_injuries()
 
+/atom/movable/screen/healthdoll/proc/update_body_zones()
+	return
+
 /atom/movable/screen/healthdoll/living
 	icon_state = "fullhealth0"
 	screen_loc = ui_living_healthdoll
@@ -751,15 +786,22 @@
 
 /atom/movable/screen/healthdoll/human/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
+	if(isnull(hud_owner)) //we require a hud owner to work properly, so return out.
+		return
+	update_body_zones()
+	update_appearance()
+
+/atom/movable/screen/healthdoll/human/update_body_zones()
 	limbs = list()
-	for(var/i in GLOB.all_body_zones)
+	vis_contents.Cut()
+	var/mob/living/carbon/human/owner = hud.mymob
+	for(var/body_zone in owner.get_all_limbs())
 		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
 		// layer chest above other limbs, it's the center after all
-		limb.layer = i == BODY_ZONE_CHEST ? layer + 0.05 : layer
-		limbs[i] = limb
+		limb.layer = body_zone == BODY_ZONE_CHEST ? layer + 0.05 : layer
+		limbs[body_zone] = limb
 		// why viscontents? why not overlays? - because i want to animate filters
 		vis_contents += limb
-	update_appearance()
 
 /atom/movable/screen/healthdoll/human/Destroy()
 	QDEL_LIST_ASSOC_VAL(limbs)
@@ -859,10 +901,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 	holder.screen += src
 
-/atom/movable/screen/splash/proc/Fade(out, qdel_after = TRUE)
+/atom/movable/screen/splash/proc/fade(out, qdel_after = TRUE)
 	if(QDELETED(src))
 		return
 	if(out)
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		animate(src, alpha = 0, time = 30)
 	else
 		alpha = 0

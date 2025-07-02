@@ -34,7 +34,7 @@
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	initial_language_holder = /datum/language_holder/lightbringer
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 1, OXY = 0)
 	light_range = 4
 	faction = list(FACTION_NEUTRAL)
 	unsuitable_atmos_damage = 0
@@ -81,7 +81,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/lightgeist,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 

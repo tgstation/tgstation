@@ -27,6 +27,7 @@ In brief:
 Holder.dm now sets up reactions, while equilibrium.dm runs them. Holder itself is processed when there is a list of reactions, but the equilibrium does the calculating. In essence, it holds onto a list of objects to run. Handle_reactions() is used to update the reaction list, with a few checks at the start to prevent any unnecessary updates.
 
 #### When a reaction is detected:
+
 - If it’s REACTION_INSTANT then it’ll use a method similar to the old mechanics.
 - If not then it’ll set up an equilibrium, which checks to see if the reaction is valid on creation.
 - If it’s valid, then on_reaction is called.
@@ -35,6 +36,7 @@ Holder.dm now sets up reactions, while equilibrium.dm runs them. Holder itself i
 - If there’s a list of reactions, then the holder starts processing.
 
 #### When holder is processing:
+
 - Each equilibrium is processed, and it handles it’s own reaction. For each step it handles every reaction.
 - At the start, the equilibrium checks it’s conditions and calculates how much it can make in this step.
 - It checks the temp, reagents and catalyst.
@@ -43,11 +45,13 @@ Holder.dm now sets up reactions, while equilibrium.dm runs them. Holder itself i
 - The offset of optimal pH and temp is calculated, and these correlate with purity and yield.
 
 #### How a holder stops reacting:
+
 When one of the checks fails in the equilibrium object, it is flagged for deletion. The holder will detect this and call reaction_finish() and delete the equilibrium object – ending that reaction.
 
 ## Recipe and processing mechanics
 
 Lets go over the reaction vars below. These can be edited and set on a per chemical_reaction basis
+
 ```dm
 /datum/chemical_reaction
 	...
@@ -89,6 +93,7 @@ the y axis is the normalised value of growth, which is then muliplied by the rat
 Optimal pH ranges are set on a per recipe basis - though at the moment all recipes use a default recipe, so they all have the same window (except for the buffers). Hopefully either as a community effort/or in future PRs we can create unique profiles for the present reactions in the game.
 
 As for how you define the reaction variables for a reaction, there are a few new variables for the chemical_recipe datum. I'll go over specifically how pH works for the default reaction.
+
 ```dm
 /datum/chemical_reaction
 	...
@@ -107,7 +112,6 @@ The y axis is the purity of the product made for that time step. This is recalcu
 If you're designing a reaction you can define an optimal range between the OptimalpHMin to OptimalpHMax (5 - 7 in this case) and a deterministic region set by the ReactpHLim (5 - 4, 9 + 4 aka between 1 to 5 and 9 to 13). This deterministic region is exponential, so if you set it to 2 then it’ll exponentially grow, but since our CurveSharpph = 1, it’s linear (basically normalise the range in the determinsitic region, then put that to the power of CurveSharppH). Finally values outside of these ranges will prevent reactions from starting, but if a reaction drifts out during a reaction, the purity of volume created for each step will be 0 (It does not stop ongoing reactions). It’s entirely possible to design a reaction without a deterministic or optimal phase if you wanted.
 
 Though to note; if your purity dips below the PurityMin of a reaction it’ll call the overly_impure() function – which by default reduces the purity of all reagents in the beaker. Additionally, if the purity at the end of a reaction is below the PurityMin, it’ll convert into the failed chem defined by the product’s failed_chem defined in its reagent datum. For default the PurityMin is 0.15, and is pretty difficult to fail. This is all customisable however, if you wanted to use these hooks to design a even more unique reaction, just don’t call the parent proc when using methods.
-
 
 ### Conditional changes in reagents datum per timestep
 
@@ -140,6 +144,7 @@ For REACTION_CLEAR – this causes the purity mechanics to resolve in the beaker
 
 Is_cold_recipie requires you to set your overheat_temp and optimal_temp descend instead.
 Eg:
+
 ```dm
 /datum/chemical_reaction
 	...
@@ -149,7 +154,9 @@ Eg:
 ```
 
 # Reagents
+
 The new vars that are introduced are below:
+
 ```dm
 /datum/reagent
 	/// pH of the reagent
@@ -171,7 +178,7 @@ The new vars that are introduced are below:
 - `creation_purity` is the purity of the reagent on creation. This won't change. If you want to write code that checks the purity in any of the methods, use this.
 - `impure_chem` is the datum type that is created provided that its `creation_purity` is above the `inverse_chem_val`. When the reagent is consumed it will split into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_IMPURE flag it will split at the end of the reaction in the `datum/reagents` holder
 - `inverse_chem_val` if a reagent's purity is below this value it will 100% convert into `inverse_chem`. If above it will split into `impure_chem`. See the note on purity effects above
-- `inverse_chem` is the datum type that is created provided that its `creation_purity` is below the `inverse_chem_val`. When the reagent is consumed it will 100% convert into this OR if the associated  `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will 100% convert at the end of the reaction in the `datum/reagents` holder
+- `inverse_chem` is the datum type that is created provided that its `creation_purity` is below the `inverse_chem_val`. When the reagent is consumed it will 100% convert into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will 100% convert at the end of the reaction in the `datum/reagents` holder
 - `failed_chem` is the chem that the product is 100% converted into if the purity is below the associated `datum/chemical_recipies`' `PurityMin` AT THE END OF A REACTION.
 
 When writing any reagent code ALWAYS use creation_purity. Purity is kept for internal mechanics only and won’t reflect the purity on creation.
@@ -179,9 +186,9 @@ When writing any reagent code ALWAYS use creation_purity. Purity is kept for int
 See above for purity mechanics, but this is where you set the reagents that are created. If you’re making an impure reagent I recommend looking at impure_reagents.dm to see how they’re set up and consider using the `datum/reagents/impure` as a parent.
 
 The flags you can set for `var/chemical_flags` are:
+
 ```dm
-#define REAGENT_DEAD_PROCESS		(1<<0)	//allows on_mob_dead() if present in a dead body
-#define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing - ignores all purity effects
+#define REAGENT_DEAD_PROCESS		(1<<0)	//allows on_mob_dead() if present in a dead body effects
 #define REAGENT_INVISIBLE			(1<<2)	//Doesn't appear on handheld health analyzers.
 #define REAGENT_SNEAKYNAME          (1<<3)  //When inverted, the inverted chem uses the name of the original chem
 #define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting for purity effects
@@ -195,6 +202,7 @@ While you might think reagent_flags is a more sensible name - it is already used
 # Relivant vars from the holder.dm / reagents datum
 
 There are a few variables that are useful to know about
+
 ```dm
 /datum/reagents
 	/// Current temp of the holder volume
@@ -206,6 +214,7 @@ There are a few variables that are useful to know about
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 ```
+
 - chem_temp is the temperature used in the `datum/chemical_recipe`
 - pH is a result of the sum of all reagents, as well as any changes from buffers and reactions. This is the pH used in `datum/chemical_recipe`.
 - isReacting is a bool that can be used outside to ensure that you don't touch a reagents that is reacting.

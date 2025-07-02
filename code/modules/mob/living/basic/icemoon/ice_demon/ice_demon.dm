@@ -5,7 +5,6 @@
 	icon_state = "ice_demon"
 	icon_living = "ice_demon"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	basic_mob_flags = DEL_ON_DEATH
 	speed = 2
@@ -56,7 +55,6 @@
 	icon_state = "ice_demon"
 	icon_living = "ice_demon"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	basic_mob_flags = DEL_ON_DEATH
 	speed = 5

@@ -241,12 +241,11 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 				else
 					//putting more money in
 					if(text2num(existing_bets[2]) < money_betting)
-						if(better.account_balance < money_betting)
-							return
 						var/money_adding_in = money_betting - text2num(existing_bets[2])
+						if(!better.adjust_money(-money_adding_in, "Gambling on [name]."))
+							return
 						total_amount_bet += money_adding_in
 						better.bank_card_talk("Additional [money_adding_in]cr deducted for your bet on [name].")
-						better.adjust_money(-money_adding_in, "Gambling on [name].")
 						existing_bets[2] = "[money_betting]"
 						return
 					//taking it all out, we remove them from the list so they aren't a winner with bets of 0.
@@ -265,9 +264,10 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 						existing_bets[2] = "[money_betting]"
 						return
 
+	if(!better.adjust_money(-money_betting, "Gambling on [name]"))
+		return
 	total_amount_bet += money_betting
 	options[option_betting] += list(list(better, "[money_betting]"))
-	better.adjust_money(-money_betting, "Gambling on [name]")
 	better.bank_card_talk("Deducted [money_betting]cr for your bet on [name].")
 
 ///Cancels your bet, removing your bet and refunding your money.

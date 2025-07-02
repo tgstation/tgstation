@@ -118,7 +118,9 @@
 	if(user.mind) //higher cleaning skill can make the duration shorter
 		//offsets the multiplier you get from cleaning skill, but doesn't allow the duration to be longer than the base duration
 		cleaning_duration = (cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset, 1))
-
+	// Assoc list, collects all items being cleaned with its value being any blood on it
+	var/list/all_cleaned = list()
+	all_cleaned[target] = GET_ATOM_BLOOD_DNA(target) || list()
 	//do the cleaning
 	var/clean_succeeded = FALSE
 	if(do_after(user, cleaning_duration, target = target))
@@ -126,10 +128,11 @@
 		if(clean_target)
 			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
+				all_cleaned[cleanable_decal] = GET_ATOM_BLOOD_DNA(cleanable_decal)
 			if(target.wash(cleaning_strength))
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
 
-	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded)
+	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded, all_cleaned)
 	//remove the cleaning overlay
 	target.cut_overlay(low_bubble)
 	target.cut_overlay(high_bubble)

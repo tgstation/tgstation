@@ -1,6 +1,18 @@
 /datum/escape_menu/proc/show_leave_body_page()
 	PRIVATE_PROC(TRUE)
 
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/lobby_button/small(
+			null,
+			/* hud_owner = */ null,
+			"Back",
+			/* tooltip_text = */ null,
+			/* pixel_offset = */ list(-260, 190),
+			CALLBACK(src, PROC_REF(open_home_page)),
+			/* button_overlay = */ "back",
+		)
+	)
+
 	var/static/dead_clown
 	if (isnull(dead_clown))
 		if (MC_RUNNING(SSatoms.init_stage)) // We're about to create a bunch of atoms for a human
@@ -8,37 +20,25 @@
 		else
 			stack_trace("The leave body menu was opened before the atoms SS. This shouldn't be possible, as the leave body menu should only be accessible when you have a body.")
 
-	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/leave_body_button(
+	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button(
 		null,
 		/* hud_owner = */ null,
 		"Suicide",
 		"Perform a dramatic suicide in game",
-		/* pixel_offset = */ -105,
+		/* pixel_offset = */ list(-55, -1),
 		CALLBACK(src, PROC_REF(leave_suicide)),
 		/* button_overlay = */ dead_clown,
 	))
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/leave_body_button(
+		new /atom/movable/screen/escape_menu/lobby_button(
 			null,
 			/* hud_owner = */ null,
 			"Ghost",
 			"Exit quietly, leaving your body",
-			/* pixel_offset = */ 0,
+			/* pixel_offset = */ list(55, -1),
 			CALLBACK(src, PROC_REF(leave_ghost)),
 			/* button_overlay = */ "ghost",
-		)
-	)
-
-	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/leave_body_button(
-			null,
-			/* hud_owner = */ null,
-			"Back",
-			/* tooltip_text = */ null,
-			/* pixel_offset = */ 105,
-			CALLBACK(src, PROC_REF(open_home_page)),
-			/* button_overlay = */ "back",
 		)
 	)
 
@@ -73,58 +73,3 @@
 	// Not guaranteed to be human. Everything defines verb/suicide separately. Fuck you, still.
 	var/mob/living/carbon/human/human_user = client?.mob
 	human_user?.suicide()
-
-/atom/movable/screen/escape_menu/leave_body_button
-	icon = 'icons/hud/escape_menu_leave_body.dmi'
-	icon_state = "template"
-	maptext_width = 96
-	maptext_y = -32
-
-	VAR_PRIVATE
-		datum/callback/on_click_callback
-		hovered = FALSE
-		tooltip_text
-
-/atom/movable/screen/escape_menu/leave_body_button/Initialize(
-	mapload,
-	datum/hud/hud_owner,
-	button_text,
-	tooltip_text,
-	pixel_offset,
-	on_click_callback,
-	button_overlay,
-)
-	. = ..()
-
-	src.on_click_callback = on_click_callback
-	src.tooltip_text = tooltip_text
-
-	add_overlay(button_overlay)
-
-	maptext = MAPTEXT_VCR_OSD_MONO("<b style='font-size: 16px; text-align: center'>[button_text]</b>")
-	screen_loc = "CENTER:[pixel_offset],CENTER-1"
-
-/atom/movable/screen/escape_menu/leave_body_button/Destroy()
-	on_click_callback = null
-
-	return ..()
-
-/atom/movable/screen/escape_menu/leave_body_button/Click(location, control, params)
-	on_click_callback?.InvokeAsync()
-
-/atom/movable/screen/escape_menu/leave_body_button/MouseEntered(location, control, params)
-	if (hovered)
-		return
-
-	hovered = TRUE
-
-	// The UX on this is pretty shit, but it's okay enough for now.
-	// Regularly goes way too far from your cursor. Not designed for large icons.
-	openToolTip(usr, src, params, content = tooltip_text)
-
-/atom/movable/screen/escape_menu/leave_body_button/MouseExited(location, control, params)
-	if (!hovered)
-		return
-
-	hovered = FALSE
-	closeToolTip(usr)

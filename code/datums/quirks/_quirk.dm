@@ -66,7 +66,7 @@
  * * new_holder - The mob to add this quirk to.
  * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
  */
-/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE)
+/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE, announce = TRUE)
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
 
@@ -98,7 +98,7 @@
 			START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
-		if(gain_text)
+		if(gain_text && announce)
 			to_chat(quirk_holder, gain_text)
 		if (unique)
 			add_unique(client_source)
@@ -217,12 +217,12 @@
  * If no valid slot is available for an item, the item is left at the mob's feet.
  * Arguments:
  * * quirk_item - The item to give to the quirk holder. If the item is a path, the item will be spawned in first on the player's turf.
- * * valid_slots - Assoc list of descriptive location strings to item slots that is fed into [/mob/living/carbon/proc/equip_in_one_of_slots]. list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK)
+ * * valid_slots - List of LOCATION_X that is fed into [/mob/living/carbon/proc/equip_in_one_of_slots].
  * * flavour_text - Optional flavour text to append to the where_items_spawned string after the item's location.
  * * default_location - If the item isn't possible to equip in a valid slot, this is a description of where the item was spawned.
  * * notify_player - If TRUE, adds strings to where_items_spawned list to be output to the player in [/datum/quirk/item_quirk/post_add()]
  */
-/datum/quirk/item_quirk/proc/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "at your feet", notify_player = TRUE)
+/datum/quirk/item_quirk/proc/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "at your feet", notify_player = FALSE)
 	if(ispath(quirk_item))
 		quirk_item = new quirk_item(get_turf(quirk_holder))
 

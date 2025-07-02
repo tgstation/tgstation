@@ -62,7 +62,7 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	item_flags = DROPDEL
+	item_flags = DROPDEL | ABSTRACT
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 	activated = TRUE
 	update_appearance()

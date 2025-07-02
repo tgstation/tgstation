@@ -14,13 +14,13 @@
 		control_tracker = B
 		break
 
-	if(!data_tracker)
+	if(!data_tracker && !user.can_dominate_mechs)
 		to_chat(user, span_warning("You cannot interface this exosuit without tracking beacons installed."))
 		return
 
 	if(data_tracker || user.can_dominate_mechs)
 		output += span_notice("[icon2html(src, user)] [name] Exosuit Status Report\n")
-		output += data_tracker.get_mecha_info()
+		output += data_tracker?.get_mecha_info()
 
 	if(user.can_dominate_mechs)
 		if(data_tracker)
@@ -92,6 +92,9 @@
 			AI = card.AI
 			if(!AI)
 				to_chat(user, span_warning("There is no AI currently installed on this device."))
+				return
+			if(!(mecha_flags & AI_COMPATIBLE)) //If the mech isn't compatible with an AI transfer, early return.
+				to_chat(user, span_warning("An AI cannot be installed into [src]."))
 				return
 			if(AI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				AI.disconnect_shell()

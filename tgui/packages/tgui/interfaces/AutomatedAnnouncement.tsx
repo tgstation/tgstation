@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Button,
@@ -60,7 +61,7 @@ export const AutomatedAnnouncement = (props) => {
 
   const sorted = sortBy(
     filter(config_entries, (entry) => isEntryMatch(entry, search)),
-    (entry) => entry.name,
+    [(entry) => entry.name],
   );
   return (
     <Window title="Automated Announcement System" width={500} height={280}>
@@ -69,12 +70,7 @@ export const AutomatedAnnouncement = (props) => {
           <Stack.Item>
             <LabeledList>
               <LabeledList.Item label="Search">
-                <Input
-                  fluid
-                  placeholder="Name/Line/Var"
-                  onChange={setSearch}
-                  expensive
-                />
+                <Input fluid placeholder="Name/Line/Var" onChange={setSearch} />
               </LabeledList.Item>
             </LabeledList>
           </Stack.Item>
@@ -132,10 +128,9 @@ export const AutomatedAnnouncement = (props) => {
                             <Table.Cell>
                               <Input
                                 fluid
-                                expensive
                                 value={announcementLine}
                                 disabled={!entry.modifiable}
-                                onChange={(value) =>
+                                onBlur={(value) =>
                                   act('Text', {
                                     entryRef: entry.entryRef,
                                     lineKey,

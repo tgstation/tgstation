@@ -50,10 +50,19 @@
 	inhand_icon_state = null
 	flags_inv = HIDEHAIR
 
-/obj/item/clothing/head/costume/maidheadband
+/obj/item/clothing/head/costume/maid_headband
 	name = "maid headband"
 	desc = "Just like from one of those chinese cartoons!"
-	icon_state = "maid_headband"
+	greyscale_colors = "#494955#EEEEEE"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/maid"
+	post_init_icon_state = "maid"
+	greyscale_config = /datum/greyscale_config/maid_headband
+	greyscale_config_worn = /datum/greyscale_config/maid_headband/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/maid_headband_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/maid_headband_inhands_right
+	inhand_icon_state = "maid"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/chicken
 	name = "chicken suit head"
@@ -134,18 +143,22 @@
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
-	icon_state = "fancy_hat"
-	greyscale_colors = "#E3C937#782A81"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/fancy"
+	post_init_icon_state = "fancy_hat"
 	greyscale_config = /datum/greyscale_config/fancy_hat
 	greyscale_config_worn = /datum/greyscale_config/fancy_hat/worn
+	greyscale_colors = "#E3C937#782A81"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/football_helmet
 	name = "football helmet"
-	icon_state = "football_helmet"
-	greyscale_colors = "#D74722"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/football_helmet"
+	post_init_icon_state = "football_helmet"
 	greyscale_config = /datum/greyscale_config/football_helmet
 	greyscale_config_worn = /datum/greyscale_config/football_helmet/worn
+	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/tv_head

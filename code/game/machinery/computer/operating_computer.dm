@@ -50,7 +50,7 @@
 		linked_techweb = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/operating/attackby(obj/item/O, mob/user, list/modifiers)
+/obj/machinery/computer/operating/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/disk/surgery))
 		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."), \
 			span_notice("You begin to load a surgery protocol from \the [O]..."), \
@@ -123,7 +123,7 @@
 			data["patient"]["stat"] = "Dead"
 			data["patient"]["statstate"] = "bad"
 	data["patient"]["health"] = patient.health
-	data["patient"]["blood_type"] = patient.dna?.blood_type.name
+	data["patient"]["blood_type"] = patient.get_bloodtype()?.name || "UNKNOWN"
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()

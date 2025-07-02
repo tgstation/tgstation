@@ -11,10 +11,10 @@
 #define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
-///from base of mob/reagent_check(): (datum/reagent/chem, seconds_per_tick, times_fired)
-#define COMSIG_MOB_REAGENT_CHECK "mob_reagent_check"
+///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick, times_fired)
+#define COMSIG_MOB_REAGENT_TICK "mob_reagent_tick"
 	///stops the reagent check call
-	#define COMSIG_MOB_STOP_REAGENT_CHECK (1<<0)
+	#define COMSIG_MOB_STOP_REAGENT_TICK (1<<0)
 ///from base of mob/clickon(): (atom/A, list/modifiers)
 #define COMSIG_MOB_CLICKON "mob_clickon"
 ///from base of mob/MiddleClickOn(): (atom/A)
@@ -77,8 +77,11 @@
 /// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 /// can_roll_midround(datum/antagonist/antag_type) from certain midround rulesets, (mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
-#define COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL "mob_mind_transferred_out_of"
+#define COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL "mob_mind_before_midround_roll"
 	#define CANCEL_ROLL (1<<1)
+
+///signal sent when a mob has their holy role set. Sent to the mob having their role changed.
+#define COMSIG_MOB_MIND_SET_HOLY_ROLE "mob_mind_set_holy_role"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
@@ -109,9 +112,9 @@
 /// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage
 /// not sent if the apply damage call was forced
 #define COMSIG_MOB_APPLY_DAMAGE_MODIFIERS "mob_apply_damage_modifiers"
-/// from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
-/// from /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 /// works like above but after the damage is actually inflicted
 #define COMSIG_MOB_AFTER_APPLY_DAMAGE "mob_after_apply_damage"
 
@@ -194,7 +197,7 @@
 #define COMSIG_TABLE_SLAMMED "table_slammed"
 ///from base of atom/attack_hand(): (mob/user, modifiers)
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
-///from base of /obj/item/attack(): (mob/M, mob/user, list/modifiers)
+///from base of /obj/item/attack(): (mob/M, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
@@ -276,3 +279,6 @@
 
 ///from /obj/item/crusher_trophy/on_mark_activate(): (trophy, user)
 #define COMSIG_MOB_TROPHY_ACTIVATED(identifier) "COMSIG_MOB_TROPHY_ACTIVATED[identifier]"
+
+/// from /mob/eye/camera/remote/assign_user(): (mob/living/new_user, mob/living/old_user)
+#define COMSIG_REMOTE_CAMERA_ASSIGN_USER "remote_camera_assign_user"

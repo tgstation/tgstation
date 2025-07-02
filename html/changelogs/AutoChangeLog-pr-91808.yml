@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - code_imp: "Materials bitflags should now show the bitflag interface in VV."
+  - bugfix: "Food items now pass down their intrinsic materials during crafting/processing/microwaving/etc. etc."

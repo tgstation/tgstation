@@ -21,7 +21,6 @@
 	if(.)
 		last_fire = world.time
 
-
 /obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
 		CRASH("revolver tried to chamber a round without a magazine!")
@@ -57,7 +56,6 @@
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(play_click)
 			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
-
 
 /obj/item/gun/ballistic/revolver/verb/spin()
 	set name = "Spin Chamber"
