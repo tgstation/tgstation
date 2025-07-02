@@ -9313,6 +9313,7 @@
 	c_tag = "Atmospherics - Central Aft"
 	},
 /obj/machinery/light/no_nightlight/directional/south,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "dqc" = (
@@ -42504,6 +42505,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible{
 	dir = 8
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "oLZ" = (
