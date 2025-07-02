@@ -36,7 +36,7 @@
 	)
 
 	refill_canister = /obj/item/vending_refill/assist
-	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
+	product_slogans = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	default_price = PAYCHECK_CREW * 0.7 //Default of 35.
 	extra_price = PAYCHECK_CREW
 	payment_department = NO_FREEBIES

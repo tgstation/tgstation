@@ -131,8 +131,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	///String of slogans separated by semicolons, optional
 	var/product_slogans = ""
-	///String of small ad messages in the vending screen - random chance
-	var/product_ads = ""
 
 	///List of standard product records
 	var/list/product_records = list()
@@ -166,10 +164,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/extended_inventory = FALSE
 	///Are we checking the users ID
 	var/scan_id = TRUE
-	///Coins that we accept?
-	var/obj/item/coin/coin
-	///Bills we accept?
-	var/obj/item/stack/spacecash/bill
 	///Default price of items if not overridden
 	var/default_price = 25
 	///Default price of premium items if not overridden
@@ -280,49 +274,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(fish_source_path)
 		AddComponent(/datum/component/fishing_spot, fish_source_path)
 
-/obj/machinery/vending/Destroy()
-	QDEL_NULL(coin)
-	QDEL_NULL(bill)
-	GLOB.vending_machines_to_restock -= src
-	return ..()
-
-/obj/machinery/vending/vv_edit_var(vname, vval)
-	. = ..()
-	if (vname == NAMEOF(src, all_products_free))
-		if (all_products_free)
-			qdel(GetComponent(/datum/component/payment))
-			GLOB.vending_machines_to_restock -= src
-		else
-			AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
-			GLOB.vending_machines_to_restock += src
-
-/obj/machinery/vending/can_speak(allow_mimes)
-	return is_operational && !shut_up && ..()
-
-/obj/machinery/vending/emp_act(severity)
-	. = ..()
-	var/datum/language_holder/vending_languages = get_language_holder()
-	var/datum/wires/vending/vending_wires = wires
-	// if the language wire got pulsed during an EMP, this will make sure the language_iterator is synched correctly
-	vending_languages.selected_language = vending_languages.spoken_languages[vending_wires.language_iterator]
-
-//Better would be to make constructable child
-/obj/machinery/vending/RefreshParts()
-	SHOULD_CALL_PARENT(FALSE)
-	if(!component_parts)
-		return
-
-	build_products_from_categories()
-
-	product_records = list()
-	hidden_records = list()
-	coin_records = list()
-
-	build_inventories(start_empty = TRUE)
-
-	for(var/obj/item/vending_refill/installed_refill in component_parts)
-		restock(installed_refill)
-
 /obj/machinery/vending/on_construction(mob/user, from_flatpack = FALSE)
 	if (!from_flatpack)
 		return
@@ -336,10 +287,119 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			installed_refill.premium[item_sold] = 0
 	RefreshParts()
 
+
+/**
+ * Given a record list, go through and return a list of products in format of type -> amount
+ * Arguments:
+ * recordlist - list of records to unbuild products from
+ */
+/obj/machinery/vending/proc/_unbuild_inventory(list/recordlist)
+	PRIVATE_PROC(TRUE)
+
+	. = list()
+	for(var/datum/data/vending_product/record as anything in recordlist)
+		.[record.product_path] += record.amount
+
 /obj/machinery/vending/on_deconstruction(disassembled)
-	if(refill_canister)
-		return ..()
+	if (!component_parts)
+		return
+
+	var/obj/item/vending_refill/installed_refill = locate() in component_parts
+	if (!installed_refill)
+		CRASH("Constructible vending machine did not have a refill canister")
+
+	//unbuild regular products into canister
+	installed_refill.products?.Cut()
+	installed_refill.product_categories?.Cut()
+	var/others_have_category = null
+	var/list/categories_to_index = list()
+	for (var/datum/data/vending_product/record as anything in product_records)
+		var/list/category = record.category
+		var/has_category = !isnull(category)
+		//check if there're any uncategorized products
+		if (isnull(others_have_category))
+			others_have_category = has_category
+		else if (others_have_category != has_category)
+			if (has_category)
+				WARNING("[record.product_path] in [type] has a category, but other products don't")
+			else
+				WARNING("[record.product_path] in [type] does not have a category, but other products do")
+
+			continue
+
+		if (has_category)
+			var/index = categories_to_index.Find(category)
+
+			if (index) //if we've already established a category, add the product there
+				var/list/category_in_list = installed_refill.product_categories[index]
+				var/list/products_in_category = category_in_list["products"]
+				products_in_category[record.product_path] += record.amount
+			else //create a category that the product is supposed to have and put it there
+				categories_to_index += list(category)
+				index = categories_to_index.len
+
+				var/list/category_clone = category.Copy()
+
+				var/list/initial_product_list = list()
+				initial_product_list[record.product_path] = record.amount
+				category_clone["products"] = initial_product_list
+
+				installed_refill.product_categories += list(category_clone)
+		else //no category found - dump it into standard stock
+			installed_refill.products[record.product_path] = record.amount
+
+	//unbuild contrabrand & premium into canister
+	installed_refill.contraband = _unbuild_inventory(hidden_records)
+	installed_refill.premium = _unbuild_inventory(coin_records)
 	new /obj/item/stack/sheet/iron(loc, 3)
+
+/obj/machinery/vending/Destroy()
+	GLOB.vending_machines_to_restock -= src
+	return ..()
+
+/obj/machinery/vending/examine(mob/user)
+	. = ..()
+	if(isnull(refill_canister))
+		return // you can add the comment here instead
+	if(total_max_stock())
+		if(total_loaded_stock() < total_max_stock())
+			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
+		else
+			. += span_notice("\The [src] is fully stocked.")
+	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
+		. += span_notice("It should have a handfull of credits stored based on the missing items.")
+	else if (credits_contained > PAYCHECK_CREW)
+		. += span_notice("It should have at least a full paycheck worth of credits inside!")
+		/**
+		 * Intentionally leaving out a case for zero credits as it should be covered by the vending machine's stock being full,
+		 * or covered by first case if items were returned.
+		 */
+
+/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(tilted && !held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(!isnull(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE)))
+		context[SCREENTIP_CONTEXT_LMB] = "Load item"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && istype(held_item, refill_canister))
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
+		return TRUE
+	return NONE
 
 /obj/machinery/vending/update_appearance(updates=ALL)
 	. = ..()
@@ -362,24 +422,43 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(light_mask && !(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask, src)
 
-/obj/machinery/vending/examine(mob/user)
-	. = ..()
-	if(isnull(refill_canister))
-		return // you can add the comment here instead
-	if(total_max_stock())
-		if(total_loaded_stock() < total_max_stock())
-			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
-		else
-			. += span_notice("\The [src] is fully stocked.")
-	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
-		. += span_notice("It should have a handfull of credits stored based on the missing items.")
-	else if (credits_contained > PAYCHECK_CREW)
-		. += span_notice("It should have at least a full paycheck worth of credits inside!")
-		/**
-		 * Intentionally leaving out a case for zero credits as it should be covered by the vending machine's stock being full,
-		 * or covered by first case if items were returned.
-		 */
+/**
+ * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
+ */
+/obj/machinery/vending/proc/total_loaded_stock()
+	var/total = 0
+	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
+		total += record.amount
+	return total
 
+/**
+ * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
+ */
+/obj/machinery/vending/proc/total_max_stock()
+	var/total_max = 0
+	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
+		total_max += record.max_amount
+	return total_max
+
+/obj/machinery/vending/vv_edit_var(vname, vval)
+	. = ..()
+	if (vname == NAMEOF(src, all_products_free))
+		if (all_products_free)
+			qdel(GetComponent(/datum/component/payment))
+			GLOB.vending_machines_to_restock -= src
+		else
+			AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
+			GLOB.vending_machines_to_restock += src
+
+/obj/machinery/vending/can_speak(allow_mimes)
+	return is_operational && !shut_up && ..()
+
+/obj/machinery/vending/emp_act(severity)
+	. = ..()
+	var/datum/language_holder/vending_languages = get_language_holder()
+	var/datum/wires/vending/vending_wires = wires
+	// if the language wire got pulsed during an EMP, this will make sure the language_iterator is synched correctly
+	vending_languages.selected_language = vending_languages.spoken_languages[vending_wires.language_iterator]
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
@@ -413,6 +492,25 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if (dump_amount >= 16)
 				return
 
+//Better would be to make constructable child
+/obj/machinery/vending/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
+	if(!component_parts)
+		return
+
+	if(product_categories)
+		products = list()
+		for(var/list/category as anything in product_categories)
+			products |= category["products"]
+
+	product_records = list()
+	hidden_records = list()
+	coin_records = list()
+
+	build_inventories(start_empty = TRUE)
+	for(var/obj/item/vending_refill/installed_refill in component_parts)
+		restock(installed_refill)
+
 /**
  * Build the inventory of the vending machine from its product and record lists
  *
@@ -424,7 +522,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  * * premium - Whether the ending products shall have premium or default prices
  */
-/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
+/obj/machinery/vending/proc/_build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
+	PRIVATE_PROC(TRUE)
+
 	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
 	default_price = round(initial(default_price) * inflation_value)
 	extra_price = round(initial(extra_price) * inflation_value)
@@ -469,23 +569,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * start_empty - bool to pass into build_inventory that determines whether a product entry starts with available stock or not
 */
 /obj/machinery/vending/proc/build_inventories(start_empty)
-	build_inventory(products, product_records, product_categories, start_empty)
-	build_inventory(contraband, hidden_records, create_categories_from("Contraband", "mask", contraband), start_empty, premium = TRUE)
-	build_inventory(premium, coin_records, create_categories_from("Premium", "coins", premium), start_empty, premium = TRUE)
-
-/**
- * Returns a list of data about the category
- * Arguments:
- * name - string for the name of the category
- * icon - string for the fontawesome icon to use in the UI for the category
- * products - list of products available in the category
-*/
-/obj/machinery/vending/proc/create_categories_from(name, icon, products)
-	return list(list(
-		"name" = name,
-		"icon" = icon,
-		"products" = products,
-	))
+	_build_inventory(products, product_records, product_categories, start_empty)
+	_build_inventory(contraband, hidden_records, list(list("name" = "Contraband", "icon" = "mask", "products" = contraband)), start_empty, premium = TRUE)
+	_build_inventory(premium, coin_records, list(list("name" = "Premium", "icon" = "coins", "products" = premium)), start_empty, premium = TRUE)
 
 ///Populates list of products with categorized products
 /obj/machinery/vending/proc/build_products_from_categories()
@@ -525,6 +611,50 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		else
 			premium_record.price = premium_custom_price || extra_price
 
+/obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
+	if(!component_parts)
+		return FALSE
+	default_deconstruction_crowbar(attack_item)
+	return TRUE
+
+/obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!panel_open)
+		return FALSE
+	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
+		unbuckle_all_mobs(TRUE)
+		return ITEM_INTERACT_SUCCESS
+	return FALSE
+
+/obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/attack_item)
+	if(..())
+		return TRUE
+	if(anchored)
+		default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item)
+		update_appearance()
+	else
+		to_chat(user, span_warning("You must first secure [src]."))
+	return TRUE
+
+//================================RESTOCKING THE MACHINE==============================
+/**
+ * Refill our inventory from the passed in product list into the record list
+ *
+ * Arguments:
+ * * productlist - list of types -> amount
+ * * recordlist - existing record datums
+ */
+/obj/machinery/vending/proc/_refill_inventory(list/productlist, list/recordlist)
+	PRIVATE_PROC(TRUE)
+
+	. = 0
+	for(var/datum/data/vending_product/record as anything in recordlist)
+		var/diff = min(record.max_amount - record.amount, productlist[record.product_path])
+		if (diff)
+			productlist[record.product_path] -= diff
+			record.amount += diff
+			. += diff
+
 /**
  * Refill a vending machine from a refill canister
  *
@@ -553,175 +683,12 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			for (var/product_key in products)
 				products_unwrapped[product_key] += products[product_key]
 
-		. += refill_inventory(products_unwrapped, product_records)
+		. += _refill_inventory(products_unwrapped, product_records)
 	else
-		. += refill_inventory(canister.products, product_records)
+		. += _refill_inventory(canister.products, product_records)
 
-	. += refill_inventory(canister.contraband, hidden_records)
-	. += refill_inventory(canister.premium, coin_records)
-
-	return .
-
-/**
- * After-effects of refilling a vending machine from a refill canister
- *
- * This takes the amount of products restocked and gives the user our contained credits if needed,
- * sending the user a fitting message.
- *
- * Arguments:
- * * user - the user restocking us
- * * restocked - the amount of items we've been refilled with
- */
-/obj/machinery/vending/proc/post_restock(mob/living/user, restocked)
-	if(!restocked)
-		to_chat(user, span_warning("There's nothing to restock!"))
-		return
-
-	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] credits." : "."]"))
-	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
-	var/obj/item/holochip/payday = new(src, credits_contained)
-	try_put_in_hand(payday, user)
-	credits_contained = 0
-
-/**
- * Refill our inventory from the passed in product list into the record list
- *
- * Arguments:
- * * productlist - list of types -> amount
- * * recordlist - existing record datums
- */
-/obj/machinery/vending/proc/refill_inventory(list/productlist, list/recordlist)
-	. = 0
-	for(var/datum/data/vending_product/record as anything in recordlist)
-		var/diff = min(record.max_amount - record.amount, productlist[record.product_path])
-		if (diff)
-			productlist[record.product_path] -= diff
-			record.amount += diff
-			. += diff
-
-/**
- * Set up a refill canister that matches this machine's products
- *
- * This is used when the machine is deconstructed, so the items aren't "lost"
- */
-/obj/machinery/vending/proc/update_canister()
-	if (!component_parts)
-		return
-
-	var/obj/item/vending_refill/installed_refill = locate() in component_parts
-	if (!installed_refill)
-		CRASH("Constructible vending machine did not have a refill canister")
-
-	unbuild_inventory_into(product_records, installed_refill.products, installed_refill.product_categories)
-
-	installed_refill.contraband = unbuild_inventory(hidden_records)
-	installed_refill.premium = unbuild_inventory(coin_records)
-
-/**
- * Given a record list, go through and return a list of products in format of type -> amount
- * Arguments:
- * recordlist - list of records to unbuild products from
- */
-/obj/machinery/vending/proc/unbuild_inventory(list/recordlist)
-	. = list()
-	for(var/datum/data/vending_product/record as anything in recordlist)
-		.[record.product_path] += record.amount
-
-/**
- * Unbuild product_records into categorized product lists to the machine's refill canister.
- * Does not handle contraband/premium products, only standard stock and any other categories used by the vendor(see: ClothesMate).
- * If a product has no category, puts it into standard stock category.
- * Arguments:
- * product_records - list of products of the vendor
- * products - list of products of the refill canister
- * product_categories - list of product categories of the refill canister
-*/
-/obj/machinery/vending/proc/unbuild_inventory_into(list/product_records, list/products, list/product_categories)
-	products?.Cut()
-	product_categories?.Cut()
-
-	var/others_have_category = null
-
-	var/list/categories_to_index = list()
-
-	for (var/datum/data/vending_product/record as anything in product_records)
-		var/list/category = record.category
-		var/has_category = !isnull(category)
-		//check if there're any uncategorized products
-		if (isnull(others_have_category))
-			others_have_category = has_category
-		else if (others_have_category != has_category)
-			if (has_category)
-				WARNING("[record.product_path] in [type] has a category, but other products don't")
-			else
-				WARNING("[record.product_path] in [type] does not have a category, but other products do")
-
-			continue
-
-		if (has_category)
-			var/index = categories_to_index.Find(category)
-
-			if (index) //if we've already established a category, add the product there
-				var/list/category_in_list = product_categories[index]
-				var/list/products_in_category = category_in_list["products"]
-				products_in_category[record.product_path] += record.amount
-			else //create a category that the product is supposed to have and put it there
-				categories_to_index += list(category)
-				index = categories_to_index.len
-
-				var/list/category_clone = category.Copy()
-
-				var/list/initial_product_list = list()
-				initial_product_list[record.product_path] = record.amount
-				category_clone["products"] = initial_product_list
-
-				product_categories += list(category_clone)
-		else //no category found - dump it into standard stock
-			products[record.product_path] = record.amount
-
-/**
- * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
- */
-/obj/machinery/vending/proc/total_loaded_stock()
-	var/total = 0
-	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
-		total += record.amount
-	return total
-
-/**
- * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
- */
-/obj/machinery/vending/proc/total_max_stock()
-	var/total_max = 0
-	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
-		total_max += record.max_amount
-	return total_max
-
-/obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
-	if(!component_parts)
-		return FALSE
-	default_deconstruction_crowbar(attack_item)
-	return TRUE
-
-/obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!panel_open)
-		return FALSE
-	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
-		unbuckle_all_mobs(TRUE)
-		return ITEM_INTERACT_SUCCESS
-	return FALSE
-
-/obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/attack_item)
-	if(..())
-		return TRUE
-	if(anchored)
-		default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item)
-		update_appearance()
-	else
-		to_chat(user, span_warning("You must first secure [src]."))
-	return TRUE
+	. += _refill_inventory(canister.contraband, hidden_records)
+	. += _refill_inventory(canister.premium, coin_records)
 
 /obj/machinery/vending/attackby(obj/item/attack_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(panel_open && is_wire_tool(attack_item))
@@ -784,6 +751,52 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					return
 				if(76 to 100)
 					tilt(user)
+
+
+/**
+ * After-effects of refilling a vending machine from a refill canister
+ *
+ * This takes the amount of products restocked and gives the user our contained credits if needed,
+ * sending the user a fitting message.
+ *
+ * Arguments:
+ * * user - the user restocking us
+ * * restocked - the amount of items we've been refilled with
+ */
+/obj/machinery/vending/proc/post_restock(mob/living/user, restocked)
+	if(!restocked)
+		to_chat(user, span_warning("There's nothing to restock!"))
+		return
+
+	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] credits." : "."]"))
+	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
+	var/obj/item/holochip/payday = new(src, credits_contained)
+	try_put_in_hand(payday, user)
+	credits_contained = 0
+
+/obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
+	if(!istype(replacer) || !component_parts || !refill_canister)
+		return FALSE
+
+	var/works_from_distance = istype(replacer, /obj/item/storage/part_replacer/bluespace)
+
+	if(!panel_open || works_from_distance)
+		to_chat(user, display_parts(user))
+
+	if(!panel_open && !works_from_distance)
+		return FALSE
+
+	var/restocked = 0
+	for(var/replacer_item in replacer)
+		if(istype(replacer_item, refill_canister))
+			restocked += restock(replacer_item)
+	post_restock(user, restocked)
+	if(restocked > 0)
+		replacer.play_rped_sound()
+	return TRUE
+
+//==================================================================
 
 /**
  * Dispenses free items from the standard stock.
@@ -1163,31 +1176,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	to_chat(user, span_warning("[src]'s input compartment blinks red: Access denied."))
 	return FALSE
-
-/obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
-	if(!istype(replacer) || !component_parts || !refill_canister)
-		return FALSE
-
-	var/works_from_distance = istype(replacer, /obj/item/storage/part_replacer/bluespace)
-
-	if(!panel_open || works_from_distance)
-		to_chat(user, display_parts(user))
-
-	if(!panel_open && !works_from_distance)
-		return FALSE
-
-	var/restocked = 0
-	for(var/replacer_item in replacer)
-		if(istype(replacer_item, refill_canister))
-			restocked += restock(replacer_item)
-	post_restock(user, restocked)
-	if(restocked > 0)
-		replacer.play_rped_sound()
-	return TRUE
-
-/obj/machinery/vending/on_deconstruction(disassembled)
-	update_canister()
-	. = ..()
 
 /obj/machinery/vending/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -1687,32 +1675,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
-
-/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(tilted && !held_item)
-		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(panel_open && held_item?.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(panel_open && held_item?.tool_behaviour == TOOL_CROWBAR)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(!isnull(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE)))
-		context[SCREENTIP_CONTEXT_LMB] = "Load item"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(panel_open && istype(held_item, refill_canister))
-		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
-		return TRUE
-	return NONE
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"

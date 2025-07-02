@@ -1,8 +1,7 @@
 /obj/machinery/vending/cytopro
 	name = "\improper CytoPro"
 	desc = "For all your cytology needs!"
-	product_slogans = "Cloning? Don't be ridiculous.;Don't be uncultured, get some cells growing!;Who needs farms when we got vats?"
-	product_ads = "Grow your own little creatures!;Biology, at your fingertips!"
+	product_slogans = "Cloning? Don't be ridiculous.;Don't be uncultured, get some cells growing!;Who needs farms when we got vats?;Grow your own little creatures!;Biology, at your fingertips!"
 	icon_state = "cytopro"
 	icon_deny = "cytopro-deny"
 	panel_type = "panel2"
