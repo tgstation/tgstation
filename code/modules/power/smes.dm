@@ -56,9 +56,13 @@
 		return
 	terminal.master = src
 
+	///Initial charge
 	if(charge)
-		adjust_charge(-total_capacity) //drain existing charge if the cells have any
-		adjust_charge(charge) //now put the new charge
+		var/charge_adjust = charge
+		for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
+			power_cell.use(power_cell.charge())
+			if(charge_adjust)
+				charge_adjust -= power_cell.give(charge_adjust)
 
 	update_appearance(UPDATE_OVERLAYS)
 
