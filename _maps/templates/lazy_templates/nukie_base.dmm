@@ -410,10 +410,6 @@
 /area/centcom/syndicate_mothership/control)
 "eu" = (
 /obj/structure/table/glass/plasmaglass,
-/obj/item/stack/sheet/mineral/plasma/fifty{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /obj/item/screwdriver{
 	pixel_x = 1;
 	pixel_y = 23
@@ -590,10 +586,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
-"gv" = (
-/obj/machinery/smartfridge/chemistry,
-/turf/closed/indestructible/opsglass,
-/area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "gw" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium,
@@ -730,6 +722,7 @@
 "hL" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/syndicatebomb/nukie/empty,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "hN" = (
@@ -2012,6 +2005,7 @@
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "vV" = (
 /obj/machinery/chem_heater/withbuffer,
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/north,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "vX" = (
@@ -2439,7 +2433,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "Bm" = (
@@ -2775,6 +2768,10 @@
 /obj/structure/barricade/sandbags,
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
+"EU" = (
+/obj/machinery/smartfridge/chemistry,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "EV" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -3223,6 +3220,10 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/control)
+"IZ" = (
+/obj/machinery/processor/slime/fullupgrade,
+/turf/closed/indestructible/opsglass,
 /area/centcom/syndicate_mothership/control)
 "Jc" = (
 /obj/structure/table/wood,
@@ -5791,14 +5792,14 @@ Ox
 nQ
 nQ
 nQ
-nQ
+EU
 Bg
 yf
 yf
 yf
 yf
 na
-gv
+PD
 OM
 Hm
 DM
@@ -7934,7 +7935,7 @@ uT
 VK
 VK
 DZ
-VK
+IZ
 VK
 VK
 VK
