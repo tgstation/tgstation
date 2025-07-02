@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import {
   Button,
   Collapsible,
@@ -119,7 +119,7 @@ export const MatMarket = (props) => {
             </Stack>
           </Section>
         </Section>
-        {sortBy(materials, (tempmat: Material) => tempmat.rarity).map(
+        {sortBy(materials, [(tempmat: Material) => tempmat.rarity]).map(
           (material, i) => (
             <Section key={i}>
               <Stack fill>

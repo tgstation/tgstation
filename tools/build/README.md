@@ -9,7 +9,7 @@ This build script is the recommended way to compile the game, including not only
   a) Double-click `BUILD.bat` in the repository root to build (will wait for a key press before it closes).
   b) Double-click `tools/build/build.bat` to build (will exit as soon as it finishes building).
 - Linux:
-  a) Run `tools/build/build` from the repository root.
+  a) Run `tools/build/build.sh` from the repository root.
 
 The script will skip build steps whose inputs have not changed since the last run.
 
@@ -18,7 +18,7 @@ The script will skip build steps whose inputs have not changed since the last ru
 You can get a list of all targets that you can build by running the following command:
 
 ```
-tools/build/build --help
+tools/build/build.sh --help
 ```
 
 ## Dependencies
