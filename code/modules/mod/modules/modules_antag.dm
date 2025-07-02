@@ -9,7 +9,7 @@
 	active_power_cost = 0
 	complexity = 0
 	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/toggleable_visor, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
+	incompatible_modules = list(/obj/item/mod/module/toggleable_visor)
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
 	use_mod_colors = TRUE
