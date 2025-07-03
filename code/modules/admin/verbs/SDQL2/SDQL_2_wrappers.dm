@@ -286,7 +286,7 @@
 /proc/_viewers(Dist, Center = usr)
 	return viewers(Dist, Center)
 
-/proc/_generator(type = num, A = 0, B = 1, rand = UNIFORM_RAND)
+/proc/_generator(type = "num", A = 0, B = 1, rand = UNIFORM_RAND)
 	return generator(type, A, B, rand)
 
 /// Auxtools REALLY doesn't know how to handle filters as values;
