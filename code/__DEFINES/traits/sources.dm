@@ -106,7 +106,7 @@
 /// Trait given by researching any final knowledge before ascension
 #define FINAL_KNOWLEDGE_TRAIT "final_knowledge"
 /// Trait given by getting too many knowledge points
-#define TRAIT_HELLA_KNOWLEDGE "hella_knowledge"
+#define HELLA_KNOWLEDGE_TRAIT "hella_knowledge"
 
 /// Trait given to you by shapeshifting
 #define SHAPESHIFT_TRAIT "shapeshift_trait"
