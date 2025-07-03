@@ -15,7 +15,6 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 const lawtype_to_color = {
   inherent: 'white',
@@ -96,8 +95,6 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
   const num_of_each_lawtype = useMemo(() => {
     return countBy(lawset, (law) => law.lawtype);
   }, [lawset]);
-
-  logger.log(num_of_each_lawtype);
 
   return (
     <LabeledList>
