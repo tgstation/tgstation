@@ -73,6 +73,8 @@
 #define MECH_EMP_DAMAGE_LOWER 100
 #define MECH_EMP_DAMAGE_UPPER 180
 
+#define MECH_EMP_BEACON_DESTRUCTION_PROB 40
+
 /// bitflags for do_after checks on mechs
 #define MECH_DO_AFTER_DIR_CHANGE_FLAG (1 << 0)
 #define MECH_DO_AFTER_ADJACENCY_FLAG (1 << 1)
