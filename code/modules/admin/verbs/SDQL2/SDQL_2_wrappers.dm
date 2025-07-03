@@ -302,3 +302,14 @@
 
 /proc/_is_type_in_typecache(thing_to_check, typecache)
 	return is_type_in_typecache(thing_to_check, typecache)
+
+/proc/_floor(a)
+	return floor(a)
+
+/proc/_ceil(a)
+	return ceil(a)
+
+/proc/_typesof(a, subtypes_only = FALSE)
+	. = typesof(a)
+	if(subtypes_only)
+		. -= a
