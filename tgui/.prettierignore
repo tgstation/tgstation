@@ -1,6 +1,10 @@
-.pnp.*
-.yarn
 node_modules
+*.js
+*.ts
+*.tsx
+*.css
+*.jsx
+*.json
 
 # Avoid running on any bundles.
 /public/**/*
