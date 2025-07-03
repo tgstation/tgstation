@@ -37,7 +37,7 @@ export function AirAlarmControlThresholds(props) {
                 setActiveModal({
                   id: tlv.id,
                   name: tlv.name,
-                  type: thresholdTypeMap['hazard_min'],
+                  type: thresholdTypeMap.hazard_min,
                   typeVar: 'hazard_min',
                   typeName: 'Minimum Hazard',
                   unit: tlv.unit,
@@ -57,7 +57,7 @@ export function AirAlarmControlThresholds(props) {
                 setActiveModal({
                   id: tlv.id,
                   name: tlv.name,
-                  type: thresholdTypeMap['warning_min'],
+                  type: thresholdTypeMap.warning_min,
                   typeVar: 'warning_min',
                   typeName: 'Minimum Warning',
                   unit: tlv.unit,
@@ -77,7 +77,7 @@ export function AirAlarmControlThresholds(props) {
                 setActiveModal({
                   id: tlv.id,
                   name: tlv.name,
-                  type: thresholdTypeMap['warning_max'],
+                  type: thresholdTypeMap.warning_max,
                   typeVar: 'warning_max',
                   typeName: 'Maximum Warning',
                   unit: tlv.unit,
@@ -97,7 +97,7 @@ export function AirAlarmControlThresholds(props) {
                 setActiveModal({
                   id: tlv.id,
                   name: tlv.name,
-                  type: thresholdTypeMap['hazard_max'],
+                  type: thresholdTypeMap.hazard_max,
                   typeVar: 'hazard_max',
                   typeName: 'Maximum Hazard',
                   unit: tlv.unit,
@@ -118,7 +118,7 @@ export function AirAlarmControlThresholds(props) {
                 onClick={() =>
                   act('reset_threshold', {
                     threshold: tlv.id,
-                    threshold_type: thresholdTypeMap['all'],
+                    threshold_type: thresholdTypeMap.all,
                   })
                 }
               />
@@ -128,7 +128,7 @@ export function AirAlarmControlThresholds(props) {
                 onClick={() =>
                   act('set_threshold', {
                     threshold: tlv.id,
-                    threshold_type: thresholdTypeMap['all'],
+                    threshold_type: thresholdTypeMap.all,
                     value: -1,
                   })
                 }

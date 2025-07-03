@@ -115,11 +115,13 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, gradient } = props;
   const isLooping = gradient?.find((x) => x === 'loop');
+  // TODO: Fix this logic
   const space_type = gradient?.includes('space')
     ? Object.keys(SpaceToNum).find(
-        (space) => SpaceToNum[space] === gradient['space'],
+        (space) => SpaceToNum[space] === gradient[space],
       )
     : 'COLORSPACE_RGB';
+
   return (
     <LabeledList.Item label={name}>
       <Stack>

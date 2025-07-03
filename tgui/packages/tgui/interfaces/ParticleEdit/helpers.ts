@@ -39,6 +39,6 @@ export const setGradientSpace = (
   gradient: (number | string)[],
   space: number,
 ) => {
-  gradient['space'] = space;
+  gradient.space = space;
   return gradient;
 };

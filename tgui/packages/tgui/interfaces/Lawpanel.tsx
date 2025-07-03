@@ -1,3 +1,5 @@
+import { countBy } from 'es-toolkit';
+import { useMemo } from 'react';
 import {
   Button,
   Collapsible,
@@ -13,6 +15,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 
 const lawtype_to_color = {
   inherent: 'white',
@@ -87,17 +90,14 @@ const SyncedBorgDimmer = (props: { master: string }) => {
 };
 
 export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
-  const { data, act } = useBackend<Law>();
+  const { act } = useBackend<Law>();
   const { cyborg_ref, lawset } = props;
 
-  let num_of_each_lawtype = [];
+  const num_of_each_lawtype = useMemo(() => {
+    return countBy(lawset, (law) => law.lawtype);
+  }, [lawset]);
 
-  lawset.forEach((law) => {
-    if (!num_of_each_lawtype[law.lawtype]) {
-      num_of_each_lawtype[law.lawtype] = 0;
-    }
-    num_of_each_lawtype[law.lawtype] += 1;
-  });
+  logger.log(num_of_each_lawtype);
 
   return (
     <LabeledList>
@@ -172,7 +172,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                       <Button
                         icon="arrow-down"
                         color={'green'}
-                        disabled={law.num === num_of_each_lawtype['inherent']}
+                        disabled={law.num === num_of_each_lawtype.inherent}
                         onClick={() =>
                           act('move_law', {
                             ref: cyborg_ref,

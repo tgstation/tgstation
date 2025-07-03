@@ -11,6 +11,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 
+import { logger } from '../../../../logging';
 import { FAIcon, LoadoutItem, LoadoutManagerData, ReskinOption } from './base';
 import { ItemIcon } from './ItemDisplay';
 
@@ -85,8 +86,10 @@ function LoadoutModifyButtons(props: ButtonsProps) {
   const { loadout_list } = data.character_preferences.misc;
   const { modifyItemDimmer } = props;
 
+  // TODO: Fix this logic
   function isActive(item: LoadoutItem, reskin: ReskinOption) {
-    return loadout_list && loadout_list[item.path]['reskin']
+    logger.log(loadout_list[item.path]);
+    return loadout_list?.[item.path]['reskin']
       ? loadout_list[item.path]['reskin'] === reskin.name
       : item.icon_state === reskin.skin_icon_state;
   }
