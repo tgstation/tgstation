@@ -184,9 +184,7 @@
 
 /// Connect the z-levels in a non-randomized grid
 /datum/controller/subsystem/mapping/proc/set_grid_linkages(list/transition_levels)
-	var/grid_diameter = sqrt(length(transition_levels))
-	if(abs(grid_diameter - round(grid_diameter) > 0.00001))
-		CRASH("Non square grid count for z-level linkage: [grid_diameter]")
+	var/grid_diameter = ceil(sqrt(length(transition_levels)))
 	var/list/grid = new /list(grid_diameter ** 2)
 
 	// Construct an imaginary grid with the right neighbours etc for our grid
@@ -198,7 +196,7 @@
 
 	// Translate the grid we made to the z-levels
 	var/list/used_points = list()
-	for(var/i in 1 to grid.len)
+	for(var/i in 1 to transition_levels.len)
 		var/datum/space_level/level = transition_levels[i]
 		point = grid[i]
 		level.xi = point.x

@@ -30,9 +30,9 @@
 
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
-	/// How many z's to generate around a planetary station. must form a square (so 2x2=4, 3x3=9, 4x4=16, all -1 for the station z-level)
-	var/planetary_ring_levels = 8
-	/// Directory to the wilderness area we can spawn in
+	/// How many z's to generate around a planetary station
+	var/wilderness_levels = 0
+	/// Directory to the wilderness 0rea we can spawn in
 	var/wilderness_directory
 	/// Index of map names (inside wilderness_directory) with the amount to spawn. ("ice_planes" = 1) for one ice spawn
 	var/list/maps_to_spawn = list()
@@ -196,11 +196,11 @@
 		log_world("map_config space_empty_levels is not a number!")
 		return
 
-	temp = json["planetary_ring_levels"]
+	temp = json["wilderness_levels"]
 	if (isnum(temp))
-		planetary_ring_levels = temp
+		wilderness_levels = temp
 	else if (!isnull(temp))
-		log_world("map_config planetary_ring_levels is not a number!")
+		log_world("map_config wilderness_levels is not a number!")
 		return
 
 	if ("minetype" in json)
@@ -246,19 +246,9 @@
 		wilderness_directory = wilderness["directory"]
 		wilderness.Remove("directory")
 
-		// The map to default to when we've used all the maps_to_spawn maps
-		var/wilderness_default_map
-		for(var/key in wilderness)
-			var/value = wilderness[key]
-
-			if(value == -1)
-				wilderness_default_map = key
-				continue
-
-			for(var/i in 1 to value)
-				maps_to_spawn += key
-		for(var/i in 1 to planetary_ring_levels - maps_to_spawn.len)
-			maps_to_spawn += wilderness_default_map
+		// Just pick and take based on weight
+		for(var/i in 1 to wilderness_levels)
+			maps_to_spawn += pick_weight_take(wilderness)
 		shuffle(maps_to_spawn)
 
 #ifdef UNIT_TESTS

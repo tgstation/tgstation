@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(mapping)
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
 
-	if(current_map.planetary_ring_levels)
+	if(current_map.wilderness_levels)
 		var/list/FailedZs = list()
 
 		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
