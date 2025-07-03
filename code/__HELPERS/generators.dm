@@ -13,9 +13,10 @@
 /generator/proc/RandList()
 	. = list()
 	var/possible_vector = Rand()
-	if(length(possible_vector) == 0)
+	var/vector_length = length(possible_vector)
+	if(vector_length == 0)
 		. += possible_vector
 		return .
-	for(var/value in possible_vector)
-		. += value
+	for(var/i in 1 to vector_length)
+		. += possible_vector[i]
 	return .
