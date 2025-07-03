@@ -682,6 +682,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that determines whether our mob gains more strength from drinking during a fist fight
 #define TRAIT_DRUNKEN_BRAWLER "drunken brawler"
 
+/// Trait that makes you bite when attacking with an unarmed strike.
+#define TRAIT_FERAL_BITER "feral biter"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic

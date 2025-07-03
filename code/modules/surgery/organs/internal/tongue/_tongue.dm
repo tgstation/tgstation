@@ -625,6 +625,8 @@
 	disliked_foodtypes = GROSS | CLOTH | RAW
 	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	languages_native = list(/datum/language/nekomimetic)
+	actions_types = list(/datum/action/item_action/organ_action/go_feral)
+	var/feral_mode = FALSE
 
 /obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
 	. = ..()
@@ -633,6 +635,8 @@
 	head.unarmed_effectiveness += 10
 	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
 	head.unarmed_sharpness = SHARP_EDGED
+	if(feral_mode)
+		ADD_TRAIT(owner, TRAIT_FERAL_BITER, ORGAN_TRAIT)
 
 /obj/item/organ/tongue/cat/on_bodypart_remove(obj/item/bodypart/head)
 	. = ..()
@@ -641,6 +645,14 @@
 	head.unarmed_effectiveness -= 10
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
 	head.unarmed_sharpness = initial(head.unarmed_sharpness)
+	REMOVE_TRAIT(owner, TRAIT_FERAL_BITER, ORGAN_TRAIT)
+
+/obj/item/organ/tongue/cat/proc/toggle_feral()
+	feral_mode = !feral_mode
+	if(feral_mode)
+		ADD_TRAIT(owner, TRAIT_FERAL_BITER, ORGAN_TRAIT)
+	else
+		REMOVE_TRAIT(owner, TRAIT_FERAL_BITER, ORGAN_TRAIT)
 
 /obj/item/organ/tongue/jelly
 	name = "jelly tongue"
