@@ -380,12 +380,9 @@
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()
-	var/smes_charge = total_charge()
-
-	var/list/data = list(
+	. = list(
 		"capacity" = total_capacity,
-		"capacityPercent" = round(100 * (smes_charge / total_capacity), 0.1),
-		"charge" = smes_charge,
+		"charge" = total_charge(),
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
@@ -399,8 +396,6 @@
 		"outputLevelMax" = output_level_max,
 		"outputUsed" = energy_to_power(output_used),
 	)
-
-	return data
 
 /obj/machinery/power/smes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
