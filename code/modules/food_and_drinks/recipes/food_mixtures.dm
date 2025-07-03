@@ -327,3 +327,9 @@
 	required_reagents = list(/datum/reagent/consumable/grapejuice = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mix_message = "The smell of the mixture reminds you of how you lost access to the country club..."
+
+/datum/chemical_reaction/food/spore_detoxification
+	results = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	required_reagents = list(/datum/reagent/toxin/spore = 1, /datum/reagent/consumable/eggwhite = 0.5)
+	required_temp = 350
+	optimal_temp = 420

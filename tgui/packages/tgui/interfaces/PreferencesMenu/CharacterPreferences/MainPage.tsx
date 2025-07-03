@@ -1,4 +1,5 @@
-import { filter, map, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter, map } from 'es-toolkit/compat';
 import { ReactNode, useState } from 'react';
 import { sendAct, useBackend } from 'tgui/backend';
 import {
@@ -344,10 +345,7 @@ const createSetRandomization =
   };
 
 function sortPreferences(array: [string, unknown][]) {
-  return sortBy(array, ([featureId, _]) => {
-    const feature = features[featureId];
-    return feature?.name;
-  });
+  return sortBy(array, [([featureId]) => features[featureId]?.name]);
 }
 
 type PreferenceListProps = {

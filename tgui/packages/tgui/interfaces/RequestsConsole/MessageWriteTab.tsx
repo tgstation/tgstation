@@ -1,4 +1,3 @@
-import { sort } from 'common/collections';
 import { useState } from 'react';
 import {
   Box,
@@ -22,9 +21,9 @@ export const MessageWriteTab = (props) => {
     information_consoles = [],
   } = data;
 
-  const sorted_assistance = sort(assistance_consoles);
-  const sorted_supply = sort(supply_consoles);
-  const sorted_information = sort(information_consoles);
+  const sorted_assistance = assistance_consoles.sort();
+  const sorted_supply = supply_consoles.sort();
+  const sorted_information = information_consoles.sort();
 
   const resetMessage = () => {
     setMessageText('');

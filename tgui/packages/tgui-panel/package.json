@@ -4,6 +4,7 @@
 	"dependencies": {
 		"common": "workspace:*",
 		"dompurify": "^3.2.5",
+		"es-toolkit": "^1.39.3",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"tgui": "workspace:*",
