@@ -299,7 +299,7 @@
 
 	for(var/obj/item/thing as anything in who_touched_us.get_equipped_items())
 		if((thing.body_parts_covered & HANDS) && prob(GET_ATOM_BLOOD_DNA_LENGTH(thing) * 25))
-			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(who_touched_us.wear_suit), messy_slots)
+			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(thing), messy_slots)
 			return
 
 	if(prob(blood_in_hands * GET_ATOM_BLOOD_DNA_LENGTH(who_touched_us) * 10))

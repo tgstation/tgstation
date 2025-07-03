@@ -11,9 +11,8 @@
 	antag_moodlet = /datum/mood_event/focused
 	antagpanel_category = ANTAG_GROUP_ERT
 	suicide_cry = "FOR NANOTRASEN!!"
-	count_against_dynamic_roll_chance = FALSE
 	// Not 'true' antags, this disables certain interactions that assume the owner is a baddie
-	antag_flags = FLAG_FAKE_ANTAG
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
@@ -130,14 +129,14 @@
 
 /datum/antagonist/ert/medic/inquisitor/on_gain()
 	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+	owner.set_holy_role(HOLY_ROLE_PRIEST)
 
 /datum/antagonist/ert/security/inquisitor
 	outfit = /datum/outfit/centcom/ert/security/inquisitor
 
 /datum/antagonist/ert/security/inquisitor/on_gain()
 	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+	owner.set_holy_role(HOLY_ROLE_PRIEST)
 
 /datum/antagonist/ert/chaplain
 	role = "Chaplain"
@@ -148,14 +147,14 @@
 
 /datum/antagonist/ert/chaplain/on_gain()
 	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+	owner.set_holy_role(HOLY_ROLE_PRIEST)
 
 /datum/antagonist/ert/commander/inquisitor
 	outfit = /datum/outfit/centcom/ert/commander/inquisitor
 
 /datum/antagonist/ert/commander/inquisitor/on_gain()
 	. = ..()
-	owner.holy_role = HOLY_ROLE_PRIEST
+	owner.set_holy_role(HOLY_ROLE_PRIEST)
 
 /datum/antagonist/ert/intern
 	name = "CentCom Intern"

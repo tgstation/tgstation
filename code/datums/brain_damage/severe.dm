@@ -164,14 +164,15 @@
 
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
+	var/final_sleep_chance = sleep_chance
 	if(owner.move_intent == MOVE_INTENT_RUN)
-		sleep_chance += sleep_chance_running
+		final_sleep_chance += sleep_chance_running
 	if(drowsy)
-		sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
+		final_sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
 	if(caffeinated)
-		sleep_chance = sleep_chance / 2 //make it harder to fall asleep on caffeine
+		final_sleep_chance *= 0.5 //make it harder to fall asleep on caffeine
 
-	if (!SPT_PROB(sleep_chance, seconds_per_tick))
+	if(!SPT_PROB(final_sleep_chance, seconds_per_tick))
 		return
 
 	//if not drowsy, don't fall asleep but make them drowsy
@@ -305,111 +306,6 @@
 /datum/brain_trauma/severe/dyslexia/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()
-
-/*
- * Brain traumas that eldritch paintings apply
- * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
- */
-/datum/brain_trauma/severe/weeping
-	name = "Psychotic Depression"
-	desc = "Patient is suffering from severe depressive episodes. Patient sometimes hallucinates during these episodes."
-	scan_desc = "depression"
-	gain_text = span_warning("The weeping... It haunts my mind...")
-	lose_text = span_notice("Your fixation ends. You feel significantly less stressed.")
-	random_gain = FALSE
-	/// Our cooldown declare for causing hallucinations
-	COOLDOWN_DECLARE(weeping_hallucinations)
-
-/datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
-		return
-	// If they have examined a painting recently
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
-		return
-	if(!COOLDOWN_FINISHED(src, weeping_hallucinations))
-		return
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
-	COOLDOWN_START(src, weeping_hallucinations, 10 SECONDS)
-	return ..()
-
-//This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
-/datum/brain_trauma/severe/flesh_desire
-	name = "Bean's Disorder"
-	desc = "Patient has a fixation on consuming raw flesh, particularly that of the same species. Patient also suffers from psychosomatic hunger pangs."
-	scan_desc = "moderate eating disorder"
-	gain_text = span_warning("You feel a hunger, for organs and raw meat...")
-	lose_text = span_notice("Your appetite returns to normal.")
-	random_gain = FALSE
-	/// How much faster we loose hunger
-	var/hunger_rate = 15
-
-/datum/brain_trauma/severe/flesh_desire/on_gain()
-	// Allows them to eat faster, mainly for flavor
-	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	return ..()
-
-/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
-	// Causes them to need to eat at 10x the normal rate
-	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
-	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(owner, span_notice(pick("You can't stop thinking about raw meat...", "You **NEED** to eat someone.", "The hunger pangs are back...", "You hunger for flesh.", "You are starving!")))
-	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
-
-/datum/brain_trauma/severe/flesh_desire/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	REMOVE_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	return ..()
-
-// This one is for "Lady out of gates" or /obj/item/wallframe/painting/eldritch/beauty
-/datum/brain_trauma/severe/eldritch_beauty
-	name = "Obsessive Perfectionism"
-	desc = "Patient is fixated on the perceived 'imperfection' of objects around them. Patient is agitated by the feeling of clothing on their body."
-	scan_desc = "obsessive personality disorder"
-	gain_text = span_warning("It's all *imperfect*! I can't stand any of it touching me!")
-	lose_text = span_notice("Your mind calms.")
-	random_gain = FALSE
-	/// How much damage we deal with each scratch
-	var/scratch_damage = 0.5
-
-/datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
-	if(owner.incapacitated)
-		return
-
-	// Scratching code
-	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
-	if(!bodypart || !IS_ORGANIC_LIMB(bodypart) || (bodypart.bodypart_flags & BODYPART_PSEUDOPART))
-		return
-	if(!ishuman(owner))
-		return
-	// Jumpsuits ruin the "perfection" of the body
-	var/mob/living/carbon/human/scratcher = owner
-	if(!length(scratcher.get_clothing_on_part(bodypart)))
-		return
-
-	owner.apply_damage(scratch_damage, BRUTE, bodypart)
-	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at your clothed [bodypart.plaintext_zone]!"))
-
-// This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
-/datum/brain_trauma/severe/rusting
-	name = "Intermittent Psychic Manifestation Syndrome"
-	desc = "Patient suffers from a rare psychic disorder, and may manifest or amplify psychic phenomena in the area. Patient has no control over these phenomena."
-	scan_desc = "dangerous psi-wave activity"
-	gain_text = span_warning("Climb the rust. Master entropy.")
-	lose_text = span_notice("You feel like you just woke up from a bad dream.")
-	random_gain = FALSE
-
-/datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
-	var/atom/tile = get_turf(owner)
-	// Examining a painting should stop this effect to give counterplay
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
-		return
-
-	if(SPT_PROB(50, seconds_per_tick))
-		to_chat(owner, span_notice("You feel the decay..."))
-		tile.rust_heretic_act()
 
 /datum/brain_trauma/severe/kleptomaniac
 	name = "Kleptomania"

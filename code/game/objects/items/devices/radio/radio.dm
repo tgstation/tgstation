@@ -102,7 +102,7 @@
 	if(ispath(keyslot))
 		keyslot = new keyslot()
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.default_radio_channels[ch_name])
 
 	perform_update_icon = FALSE
 	set_listening(listening)
@@ -155,7 +155,7 @@
 		special_channels = keyslot.special_channels
 
 	for(var/channel_name in channels)
-		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
+		secure_radio_connections[channel_name] = add_radio(src, GLOB.default_radio_channels[channel_name])
 
 	if(!listening)
 		remove_radio_all(src)
@@ -169,7 +169,7 @@
 ///goes through all radio channels we should be listening for and readds them to the global list
 /obj/item/radio/proc/readd_listening_radio_channels()
 	for(var/channel_name in channels)
-		add_radio(src, GLOB.radiochannels[channel_name])
+		add_radio(src, GLOB.default_radio_channels[channel_name])
 
 	add_radio(src, frequency)
 
@@ -381,7 +381,7 @@
 	signal.levels = SSmapping.get_connected_levels(T)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range || message_mods[MODE_RELAY])
 		return
@@ -422,7 +422,7 @@
 		return TRUE
 	for(var/ch_name in channels)
 		if(channels[ch_name] & FREQ_LISTENING)
-			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || special_channels & RADIO_SPECIAL_SYNDIE)
+			if(GLOB.default_radio_channels[ch_name] == text2num(input_frequency) || special_channels & RADIO_SPECIAL_SYNDIE)
 				return TRUE
 	return FALSE
 
@@ -635,7 +635,7 @@
 		return
 
 	for(var/ch_name in channels)
-		SSradio.remove_object(src, GLOB.radiochannels[ch_name])
+		SSradio.remove_object(src, GLOB.default_radio_channels[ch_name])
 		secure_radio_connections[ch_name] = null
 
 	if (!user.put_in_hands(keyslot))

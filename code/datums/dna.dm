@@ -816,11 +816,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if((!sequence || dna.mutation_in_sequence(mutation.type)) && !dna.get_mutation(mutation.type))
 			possible += mutation.type
 	possible -= excluded_mutations
-	return pick(possible)
+	return length(possible) ? pick(possible) : null //prevent runtimes from picking null
 
 ///Gives the mob a random mutation based on the given arguments.
 /mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
 	var/mutation_path = get_random_mutation_path(quality, scrambled, sequence, excluded_mutations)
+	if(!mutation_path)
+		return
 	dna.add_mutation(mutation_path, MUTATION_SOURCE_ACTIVATED)
 	if(!scrambled)
 		return
