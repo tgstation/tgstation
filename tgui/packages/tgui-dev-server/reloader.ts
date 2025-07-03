@@ -56,7 +56,10 @@ export async function findCacheRoot(): Promise<string | undefined> {
   // Query the Windows Registry
   if (process.platform === 'win32') {
     logger.log('querying windows registry');
-    const userpath = await regQuery('HKCU\\Software\\Dantom\\BYOND', 'userpath');
+    const userpath = await regQuery(
+      'HKCU\\Software\\Dantom\\BYOND',
+      'userpath',
+    );
     if (userpath) {
       cacheRoot = userpath.replace(/\\$/, '').replace(/\\/g, '/') + '/cache';
       await onCacheRootFound(cacheRoot);
