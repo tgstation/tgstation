@@ -3,9 +3,13 @@ import { Box, Button, Icon, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { Connection, Connections, Position } from '../common/Connections';
+import {
+  type Connection,
+  Connections,
+  type Position,
+} from '../common/Connections';
 import { BoardTabs } from './BoardTabs';
-import { DataCase, DataEvidence } from './DataTypes';
+import type { DataCase, DataEvidence } from './DataTypes';
 import { Evidence } from './Evidence';
 
 type Data = {

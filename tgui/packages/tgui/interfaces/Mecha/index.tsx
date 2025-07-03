@@ -13,7 +13,7 @@ import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { AccessConfig } from '../common/AccessConfig';
 import { AlertPane } from './AlertPane';
-import { MainData } from './data';
+import type { MainData } from './data';
 import { ModulesPane } from './ModulesPane';
 
 export const Mecha = (props) => {

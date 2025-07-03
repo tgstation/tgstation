@@ -9,14 +9,14 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialIcon } from './Fabrication/MaterialIcon';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type Data = {
   SHEET_MATERIAL_AMOUNT: number;

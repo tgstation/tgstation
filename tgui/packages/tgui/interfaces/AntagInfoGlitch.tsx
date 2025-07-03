@@ -2,7 +2,7 @@ import { Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Objective } from './common/Objectives';
+import type { Objective } from './common/Objectives';
 
 type Data = {
   antag_name: string;

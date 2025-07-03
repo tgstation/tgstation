@@ -1,7 +1,7 @@
 import { useBackend } from 'tgui/backend';
 import { Button, Table } from 'tgui-core/components';
 
-import { AirAlarmData } from '../types';
+import type { AirAlarmData } from '../types';
 import { useAlarmModal } from '../useModal';
 
 export function AirAlarmControlThresholds(props) {

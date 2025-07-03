@@ -12,11 +12,11 @@ import {
 import { useBackend } from '../../backend';
 import { ParticleContext } from '.';
 import {
-  EntryGeneratorNumbersListProps,
-  FloatGeneratorColorProps,
-  FloatGeneratorProps,
+  type EntryGeneratorNumbersListProps,
+  type FloatGeneratorColorProps,
+  type FloatGeneratorProps,
   P_DATA_GENERATOR,
-  ParticleUIData,
+  type ParticleUIData,
   RandToNumber,
 } from './data';
 import { GeneratorListEntry } from './Generators';

@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject, useState } from 'react';
+import { Component, createRef, type RefObject, useState } from 'react';
 import { Color } from 'tgui-core/color';
 import {
   Box,
