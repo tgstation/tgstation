@@ -110,16 +110,16 @@ export const Smes = () => {
                 </Stack.Item>
                 <Stack.Item grow={1} mx={1}>
                   <Slider
-                    value={inputLevel}
-                    fillValue={inputAvailable}
+                    value={inputLevel / POWER_MUL}
+                    fillValue={inputAvailable / POWER_MUL}
                     minValue={0}
-                    maxValue={inputLevelMax}
+                    maxValue={inputLevelMax / POWER_MUL}
                     step={5}
                     stepPixelSize={4}
-                    format={(value) => formatPower(value, 1)}
+                    format={(value) => formatPower(value * POWER_MUL, 1)}
                     onChange={(e, value) =>
                       act('input', {
-                        target: value,
+                        target: value * POWER_MUL,
                       })
                     }
                   />
@@ -197,15 +197,15 @@ export const Smes = () => {
                 </Stack.Item>
                 <Stack.Item grow={1} mx={1}>
                   <Slider
-                    value={outputLevel}
+                    value={outputLevel / POWER_MUL}
                     minValue={0}
-                    maxValue={outputLevelMax}
+                    maxValue={outputLevelMax / POWER_MUL}
                     step={5}
                     stepPixelSize={4}
-                    format={(value) => formatPower(value, 1)}
+                    format={(value) => formatPower(value * POWER_MUL, 1)}
                     onChange={(e, value) =>
                       act('output', {
-                        target: value,
+                        target: value * POWER_MUL,
                       })
                     }
                   />
