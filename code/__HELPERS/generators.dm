@@ -11,12 +11,11 @@
 	return splittext(string_repr, ", ")
 
 /generator/proc/RandList()
-	. = list()
 	var/possible_vector = Rand()
 	var/vector_length = length(possible_vector)
 	if(vector_length == 0)
-		. += possible_vector
-		return .
+		return possible_vector
+	. = list()
 	for(var/i in 1 to vector_length)
 		. += possible_vector[i]
 	return .
