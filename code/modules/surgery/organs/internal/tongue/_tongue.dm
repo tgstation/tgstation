@@ -630,9 +630,10 @@
 
 /obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
 	. = ..()
-	head.unarmed_damage_low += 5
-	head.unarmed_damage_high += 10
+	head.unarmed_damage_low += 4
+	head.unarmed_damage_high += 7
 	head.unarmed_effectiveness += 10
+	head.unarmed_pummeling_bonus += 0.5
 	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
 	head.unarmed_sharpness = SHARP_EDGED
 	if(feral_mode)
@@ -640,9 +641,10 @@
 
 /obj/item/organ/tongue/cat/on_bodypart_remove(obj/item/bodypart/head)
 	. = ..()
-	head.unarmed_damage_low -= 5
-	head.unarmed_damage_high -= 10
+	head.unarmed_damage_low -= 4
+	head.unarmed_damage_high -= 7
 	head.unarmed_effectiveness -= 10
+	head.unarmed_pummeling_bonus -= 0.5
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
 	head.unarmed_sharpness = initial(head.unarmed_sharpness)
 	REMOVE_TRAIT(owner, TRAIT_FERAL_BITER, ORGAN_TRAIT)
