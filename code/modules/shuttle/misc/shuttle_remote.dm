@@ -7,13 +7,20 @@
 	///if the docks may be changed
 	var/may_change_docks = TRUE //if this is set to FALSE make sure the shuttle it will be linked to does NOT get to have multiple instances of itself
 	///the port where the shuttle leaves to
-	var/shuttle_away_id = "whiteship_away"
+	var/shuttle_away_id = "whiteship_lavaland"
 	///the port where the shuttle returns to
 	var/shuttle_home_id = "whiteship_home"
 	///var which will hold the nav computer
 	var/datum/weakref/computer_ref
 	///var which will hold the mobile port
 	var/obj/docking_port/mobile/our_port
+
+/obj/item/shuttle_remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
+	if(may_change_docks && our_computer)
+		context[SCREENTIP_CONTEXT_LMB] = "Use"
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Change Shuttle Docks"
 
 /obj/item/shuttle_remote/examine(mob/user)
 	. = ..()
@@ -43,8 +50,10 @@
 		balloon_alert(user, "occupied signal!")
 		return ITEM_INTERACT_BLOCKING
 	new_computer.remote_ref = WEAKREF(src)
-	our_computer = WEAKREF(new_computer)
-	our_port = SSshuttle.getShuttle(our_computer.shuttleId)
+	computer_ref = WEAKREF(new_computer)
+	our_port = SSshuttle.getShuttle(new_computer.shuttleId)
+	playsound(src, 'sound/machines/beep/beep.ogg', 30)
+	balloon_alert(user, "linked")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shuttle_remote/attack_self(mob/user)
@@ -111,9 +120,7 @@
 
 /obj/item/shuttle_remote/proc/can_use(mob/user)
 	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
-	if(user.stat != CONSCIOUS)
-		return FALSE
-	if(user.get_active_held_item() != src)
+	if(!user.can_perform_action(src))
 		return FALSE
 	if(is_reserved_level(loc.z))
 		balloon_alert(user, "can't use here!")
