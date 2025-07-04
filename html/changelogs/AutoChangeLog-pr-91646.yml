@@ -1,8 +1,0 @@
-author: "Time-Green, INFRARED_BACON"
-delete-after: True
-changes:
-  - rscadd: "Voidwalker has been throughly reworked! Now you are even less safe!"
-  - admin: "Adds admin-only Sunwalker mob"
-  - bugfix: "Unsettle doesnt work on yourself anymore"
-  - bugfix: "Space camo doesnt stop bobbing anymore"
-  - bugfix: "Voidwalker windows now recharge on kidnap"
