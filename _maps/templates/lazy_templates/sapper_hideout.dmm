@@ -2,12 +2,12 @@
 "aR" = (
 /obj/effect/turf_decal/siding/dark/corner,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "aY" = (
 /obj/item/stack/rods/ten,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "bd" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
@@ -16,13 +16,13 @@
 /area/space)
 "bz" = (
 /turf/closed/wall,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "bN" = (
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "bP" = (
 /turf/closed/wall,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "bR" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
@@ -32,11 +32,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "co" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "cq" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/trimline/red/line{
@@ -50,20 +50,20 @@
 "cw" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "cN" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "cQ" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /obj/structure/railing,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "df" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
@@ -80,7 +80,7 @@
 	},
 /obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "dJ" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/iron/five,
@@ -107,7 +107,7 @@
 /area/space)
 "em" = (
 /turf/closed/mineral/plasma,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "er" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/closet/crate/cardboard{
@@ -118,7 +118,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "et" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
@@ -135,7 +135,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "fa" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/trimline/red/line{
@@ -158,11 +158,11 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "fG" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "fO" = (
 /obj/effect/landmark/start/sapper,
 /obj/structure/cable/layer3,
@@ -170,47 +170,47 @@
 /obj/item/trash/flare,
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/iron/smooth_large,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "fT" = (
 /obj/item/trash/flare,
 /obj/effect/decal/cleanable/ash,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "fY" = (
 /obj/effect/turf_decal/tile/red/half,
 /turf/open/floor/iron/smooth_edge,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "gf" = (
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/smooth_large,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "gg" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "gt" = (
 /obj/item/seeds/potato,
 /obj/structure/closet/crate/hydroponics,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "gv" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "gz" = (
 /obj/structure/minecart_rail{
 	dir = 4
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "gC" = (
 /obj/structure/fluff/minepost,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "hp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -223,46 +223,46 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "hT" = (
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "in" = (
 /obj/structure/frame,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "iF" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "iK" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "iS" = (
 /obj/effect/landmark/start/sapper,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "jd" = (
 /turf/closed/mineral/titanium,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "jk" = (
 /obj/structure/cable/layer3,
 /obj/effect/turf_decal/tile/red/half,
 /turf/open/floor/iron/smooth_edge,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "kk" = (
 /obj/structure/cable/layer3,
 /obj/effect/landmark/start/sapper,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "kl" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 9
@@ -272,7 +272,7 @@
 	start_on = 1
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "ku" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -281,7 +281,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "kB" = (
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
@@ -293,7 +293,7 @@
 	},
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "kH" = (
 /obj/structure/railing/corner/end,
 /obj/effect/turf_decal/tile/red{
@@ -307,21 +307,21 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "la" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "lc" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "lh" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
@@ -332,11 +332,11 @@
 "li" = (
 /obj/structure/cable/layer3,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "ll" = (
 /obj/structure/railing/corner,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "lp" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
@@ -352,32 +352,32 @@
 /obj/effect/turf_decal/siding/dark/corner,
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "mE" = (
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "mV" = (
 /obj/structure/glowshroom/single,
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "nK" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
 /obj/structure/mecha_wreckage/clarke,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "nO" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "nT" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 4
@@ -385,18 +385,18 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "nX" = (
 /obj/effect/turf_decal/sand,
 /obj/item/stack/rods/ten,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "oq" = (
 /obj/structure/railing{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "oz" = (
 /obj/effect/turf_decal/trimline/red/corner,
 /turf/open/floor/iron/smooth,
@@ -407,7 +407,7 @@
 	start_on = 1
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "oH" = (
 /turf/open/floor/iron/smooth_edge,
 /area/space)
@@ -418,21 +418,21 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "pi" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "po" = (
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "pz" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
@@ -450,19 +450,19 @@
 	pixel_y = -6
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "pN" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "pZ" = (
 /obj/effect/turf_decal/stripes/white,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "qn" = (
 /obj/effect/turf_decal/sand,
 /obj/item/plate,
@@ -471,44 +471,44 @@
 	},
 /obj/structure/closet/crate/preopen,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "qo" = (
 /obj/item/stack/rods/two,
 /obj/structure/cable/layer3,
 /turf/open/floor/plating,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "qB" = (
 /turf/closed/mineral/silver,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "qK" = (
 /obj/structure/glowshroom/single,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "qN" = (
 /turf/closed/indestructible/rock,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "qZ" = (
 /obj/effect/decal/remains/xeno/larva,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "rb" = (
 /obj/structure/railing/corner{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "rh" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "rp" = (
 /turf/closed/indestructible/wood,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "rw" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "rC" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
@@ -526,12 +526,12 @@
 "rE" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "rQ" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "rX" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
@@ -557,7 +557,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "sK" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
@@ -573,25 +573,25 @@
 "ti" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "tq" = (
 /turf/closed/mineral/uranium,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "tw" = (
 /obj/machinery/atmospherics/components/tank/air/layer2,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "tD" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "tK" = (
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/simple/green/hidden/layer2,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "tN" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 10
@@ -603,14 +603,14 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "tW" = (
 /turf/closed/indestructible/rock,
 /area/space)
 "tZ" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "us" = (
 /obj/structure/sign/warning/doors/directional/east,
 /turf/open/floor/iron/smooth_large,
@@ -619,12 +619,12 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "uS" = (
 /obj/structure/fluff/minepost,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "uW" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 8
@@ -632,17 +632,17 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "vb" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "ve" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "vg" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 8
@@ -651,30 +651,30 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "vw" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "vz" = (
 /obj/effect/decal/cleanable/ants{
 	pixel_x = 5;
 	pixel_y = -3
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "vG" = (
 /turf/open/space/basic,
 /area/space)
 "vM" = (
 /obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "vN" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/indestructible/rock,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "vR" = (
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
@@ -688,7 +688,7 @@
 /area/space)
 "wc" = (
 /obj/docking_port/stationary{
-	area_type = /area/sapper_hideout;
+	area_type = /area/misc/sapper_hideout;
 	roundstart_template = /datum/map_template/shuttle/sapper/default;
 	shuttle_id = "sapper_hideout";
 	height = 11;
@@ -703,11 +703,11 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "wf" = (
 /obj/structure/cable/layer3,
 /turf/open/floor/iron/smooth_large,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "wl" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
@@ -730,7 +730,7 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "xc" = (
 /obj/structure/sign/poster/official/enlist/directional/north,
 /obj/structure/railing{
@@ -738,7 +738,7 @@
 	},
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "xg" = (
 /obj/structure/frame/computer{
 	anchored = 1
@@ -751,27 +751,27 @@
 /obj/item/shard,
 /obj/item/shard,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "xi" = (
 /obj/structure/cable/layer3,
 /obj/effect/light_emitter/space{
 	set_luminosity = 5
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "xl" = (
 /obj/structure/minecart_rail{
 	dir = 6
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "xs" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 1
 	},
 /obj/item/rag,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "xF" = (
 /obj/effect/turf_decal/tile/red/half,
 /turf/open/floor/iron/smooth_edge,
@@ -780,25 +780,25 @@
 /obj/structure/rack,
 /obj/item/clothing/head/utility/welding,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "xK" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "xN" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 1
 	},
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "xP" = (
 /obj/structure/railing/corner{
 	dir = 4
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "xT" = (
 /obj/effect/turf_decal/trimline/red/arrow_ccw{
 	dir = 4
@@ -831,7 +831,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "yi" = (
 /obj/effect/turf_decal/tile/red/anticorner,
 /obj/structure/chair{
@@ -846,25 +846,25 @@
 /obj/effect/turf_decal/sand,
 /obj/structure/firelock_frame,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "yv" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "yx" = (
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 1
 	},
 /obj/structure/cable/layer3,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "yR" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "ze" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 9
@@ -874,7 +874,7 @@
 	pixel_x = 8
 	},
 /turf/open/floor/iron/smooth_corner,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "zp" = (
 /obj/item/light/bulb/broken,
 /obj/machinery/light/small/built/directional/east,
@@ -883,7 +883,7 @@
 	icon_state = "coil2"
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "zB" = (
 /obj/structure/cable/layer3,
 /obj/effect/baseturf_helper{
@@ -891,7 +891,7 @@
 	},
 /obj/structure/sign/warning/doors/directional/west,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "zG" = (
 /obj/structure/marker_beacon/bronze{
 	pixel_y = -8;
@@ -901,7 +901,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/smooth_corner,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "zV" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
@@ -920,11 +920,11 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Ak" = (
 /obj/item/pickaxe,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Aq" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -947,22 +947,22 @@
 /obj/effect/landmark/start/sapper,
 /obj/structure/cable/layer3,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "AL" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "AW" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Bd" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Bo" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red/half,
@@ -971,11 +971,11 @@
 "Bp" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Bx" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "BI" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/machinery/light/small/directional/west,
@@ -983,20 +983,20 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "BL" = (
 /obj/effect/decal/cleanable/ants{
 	pixel_x = 13;
 	pixel_y = 12
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Cc" = (
 /obj/structure/frame/computer{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Cd" = (
 /obj/effect/light_emitter/space{
 	set_luminosity = 5
@@ -1004,7 +1004,7 @@
 /obj/effect/turf_decal/sand,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Cr" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1013,7 +1013,7 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Cy" = (
 /obj/structure/cable/layer3,
 /obj/effect/turf_decal/sand,
@@ -1021,13 +1021,13 @@
 	start_on = 1
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "CA" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/sand,
 /obj/item/storage/cans/sixbeer,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "CR" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 4
@@ -1036,7 +1036,7 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "CU" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -1044,27 +1044,27 @@
 /obj/structure/cable/layer3,
 /mob/living/basic/mouse/white,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Dd" = (
 /turf/cordon/secret,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Dh" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/iron/five,
 /turf/open/floor/plating,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Dk" = (
 /obj/item/wallframe/airalarm,
 /obj/item/electronics/airalarm,
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "DA" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/fluff/broken_canister_frame,
 /obj/item/stock_parts/power_store/cell/empty,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "DE" = (
 /obj/structure/cable/layer3,
 /obj/effect/turf_decal/tile/red/half{
@@ -1073,15 +1073,15 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "DL" = (
 /obj/structure/cable/layer3,
 /obj/effect/turf_decal/tile/red/half,
 /turf/open/floor/iron/smooth_edge,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Ea" = (
 /turf/closed/mineral,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Ec" = (
 /obj/effect/turf_decal/tile/red/anticorner,
 /turf/open/floor/iron/smooth_corner{
@@ -1091,18 +1091,18 @@
 "Ef" = (
 /obj/machinery/light/small/broken/directional/east,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "EB" = (
 /obj/effect/light_emitter/space{
 	set_luminosity = 5
 	},
 /obj/structure/tank_frame,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "ED" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "EJ" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
@@ -1115,7 +1115,7 @@
 "EZ" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Fj" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
@@ -1125,7 +1125,7 @@
 /area/space)
 "Fm" = (
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "FA" = (
 /obj/item/stock_parts/power_store/battery/empty{
 	pixel_y = 6;
@@ -1136,11 +1136,11 @@
 	pixel_x = -5
 	},
 /turf/open/floor/iron/smooth_large,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "FS" = (
 /obj/structure/railing,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "FY" = (
 /obj/structure/marker_beacon/bronze{
 	pixel_y = 8;
@@ -1152,18 +1152,18 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Gl" = (
 /obj/effect/turf_decal/stripes/white,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Gm" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Gy" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
@@ -1181,21 +1181,21 @@
 /obj/effect/landmark/start/sapper,
 /obj/structure/cable/layer3,
 /turf/open/floor/iron/smooth_large,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "GT" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "GV" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "GX" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1209,30 +1209,30 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "He" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "HT" = (
 /obj/structure/glowshroom/single,
 /obj/machinery/light/small/broken/directional/east,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "HU" = (
 /obj/effect/light_emitter/space{
 	set_luminosity = 5
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "ID" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
 /obj/structure/cable/layer3,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Ji" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/red/anticorner{
@@ -1252,13 +1252,13 @@
 	set_luminosity = 5
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Jr" = (
 /obj/effect/decal/cleanable/plasma,
 /obj/machinery/reagentgrinder,
 /obj/effect/mapping_helpers/broken_machine,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "JW" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
@@ -1272,7 +1272,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "KA" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -1286,13 +1286,13 @@
 /obj/structure/cable/layer3,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "La" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Ls" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -1302,12 +1302,12 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "LF" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "LO" = (
 /obj/structure/cable/layer3,
 /obj/effect/turf_decal/tile/red/half{
@@ -1316,7 +1316,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "LV" = (
 /obj/effect/turf_decal/trimline/red/arrow_ccw,
 /turf/open/floor/iron/smooth,
@@ -1326,7 +1326,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Nb" = (
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/smooth,
@@ -1340,14 +1340,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Nf" = (
 /obj/effect/landmark/start/sapper,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Ni" = (
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/simple/green/hidden/layer2,
@@ -1355,7 +1355,7 @@
 	set_luminosity = 5
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Nk" = (
 /obj/effect/turf_decal/stripes/white{
 	dir = 4
@@ -1364,7 +1364,7 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Nu" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1373,25 +1373,25 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/railing/corner,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Nz" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "NH" = (
 /turf/open/floor/plating/reinforced,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "NK" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "NZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible/layer2,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Oc" = (
 /obj/structure/minecart_rail/railbreak{
 	dir = 8
@@ -1402,7 +1402,7 @@
 	},
 /mob/living/basic/mining/goldgrub/baby,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Oi" = (
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
@@ -1413,12 +1413,12 @@
 /area/space)
 "On" = (
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Oo" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Or" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -1430,7 +1430,7 @@
 "Os" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth_large,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "OF" = (
 /obj/effect/turf_decal/trimline/red/line,
 /turf/open/floor/iron/smooth,
@@ -1456,7 +1456,7 @@
 	pixel_x = -8
 	},
 /turf/open/floor/iron/smooth_half,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Pb" = (
 /obj/structure/frame/computer,
 /obj/effect/turf_decal/tile/red/anticorner{
@@ -1477,29 +1477,29 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 8
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Pg" = (
 /turf/closed/mineral/gold,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "PA" = (
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "PM" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "PS" = (
 /obj/machinery/atmospherics/components/tank/air/layer2{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "PV" = (
 /obj/structure/tank_frame,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Qa" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
@@ -1508,13 +1508,13 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Qr" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/layer2{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Qv" = (
 /obj/structure/marker_beacon/bronze{
 	pixel_y = 8;
@@ -1526,49 +1526,49 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
 	},
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "RI" = (
 /obj/item/stack/sheet/iron/five,
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "RK" = (
 /obj/structure/tank_holder,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "RM" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "RV" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Sl" = (
 /obj/effect/gibspawner/human/bodypartless,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "SL" = (
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 8
 	},
 /obj/structure/cable/layer3,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Ta" = (
 /obj/effect/light_emitter/space{
 	set_luminosity = 5
 	},
 /obj/structure/lattice,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Tf" = (
 /obj/structure/railing/corner{
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "Th" = (
 /obj/effect/turf_decal/trimline/red/arrow_ccw{
 	dir = 4
@@ -1583,11 +1583,11 @@
 /area/space)
 "TG" = (
 /turf/open/misc/asteroid,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "TM" = (
 /obj/structure/fluff/minepost,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "TT" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
@@ -1596,7 +1596,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "TU" = (
 /obj/structure/railing{
 	dir = 8
@@ -1620,16 +1620,16 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "UP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/layer3,
 /turf/open/floor/plating,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "Vc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "Vh" = (
 /obj/effect/turf_decal/sand,
 /obj/item/mecha_parts/chassis/ripley{
@@ -1653,7 +1653,7 @@
 	},
 /obj/item/stack/cable_coil/thirty,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Vj" = (
 /obj/machinery/power/apc/auto_name/directional/west{
 	cable_layer = 4
@@ -1665,11 +1665,11 @@
 /obj/structure/cable/layer3,
 /obj/effect/mapping_helpers/apc,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Vv" = (
 /obj/structure/minecart_rail,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "VA" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 4
@@ -1683,11 +1683,11 @@
 /obj/item/shard,
 /obj/item/shard,
 /turf/open/floor/plating,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "VF" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "VM" = (
 /obj/item/emptysandbag,
 /obj/item/emptysandbag,
@@ -1695,7 +1695,7 @@
 /obj/item/emptysandbag,
 /obj/item/emptysandbag,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "VN" = (
 /obj/structure/floodlight_frame,
 /obj/item/light/tube/broken,
@@ -1705,7 +1705,7 @@
 	icon_state = "coil2"
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "We" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
@@ -1721,17 +1721,17 @@
 	cycle_id = "sapperhideout_entrance"
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/sapper_hideout/main)
+/area/misc/sapper_hideout/main)
 "WB" = (
 /turf/closed/wall,
 /area/space)
 "WG" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid/dug,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "WQ" = (
 /turf/closed/wall,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "WY" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -1758,10 +1758,10 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Yz" = (
 /turf/closed/mineral/iron,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "YB" = (
 /turf/open/floor/iron/smooth_large,
 /area/space)
@@ -1771,12 +1771,12 @@
 	},
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/misc/asteroid,
-/area/sapper_hideout)
+/area/misc/sapper_hideout)
 "YP" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/extinguisher/empty,
 /turf/open/floor/plating,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "Zf" = (
 /obj/item/cardboard_cutout,
 /obj/effect/turf_decal/tile/red/half{
@@ -1791,7 +1791,7 @@
 /area/space)
 "ZD" = (
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/sapper_hideout/hangar)
+/area/misc/sapper_hideout/hangar)
 "ZF" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
