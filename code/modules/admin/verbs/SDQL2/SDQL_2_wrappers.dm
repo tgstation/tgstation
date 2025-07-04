@@ -86,6 +86,9 @@
 /proc/_log(X, Y)
 	return log(X, Y)
 
+/proc/_uppertext(T)
+	return uppertext(T)
+
 /proc/_LOWER_TEXT(T)
 	return LOWER_TEXT(T)
 
@@ -302,3 +305,26 @@
 
 /proc/_is_type_in_typecache(thing_to_check, typecache)
 	return is_type_in_typecache(thing_to_check, typecache)
+
+/proc/_floor(a)
+	return floor(a)
+
+/proc/_ceil(a)
+	return ceil(a)
+
+/proc/_typesof(a, subtypes_only = FALSE)
+	. = typesof(a)
+	if(subtypes_only)
+		. -= a
+
+/proc/_html_encode(text)
+	return html_encode(text)
+
+/proc/_html_decode(text)
+	return html_decode(text)
+
+/proc/_url_encode(text)
+	return url_encode(text)
+
+/proc/_url_decode(text)
+	return url_decode(text)
