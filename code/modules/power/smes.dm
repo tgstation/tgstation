@@ -44,6 +44,19 @@
 
 /obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
+
+	//screentips
+	register_context()
+
+	///initial charge
+	if(charge)
+		for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
+			power_cell.use(power_cell.charge())
+			if(charge)
+				charge -= power_cell.give(charge)
+		charge = 0
+
+	//locate terminal
 	dir_loop:
 		for(var/direction in GLOB.cardinals)
 			var/turf/turf = get_step(src, direction)
@@ -55,16 +68,13 @@
 		atom_break()
 		return
 	terminal.master = src
-
-	///Initial charge
-	if(charge)
-		var/charge_adjust = charge
-		for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
-			power_cell.use(power_cell.charge())
-			if(charge_adjust)
-				charge_adjust -= power_cell.give(charge_adjust)
-
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/power/smes/disconnect_terminal()
+	if(terminal)
+		terminal.master = null
+		terminal = null
+		atom_break()
 
 /obj/machinery/power/smes/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -72,14 +82,44 @@
 		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(turf)]")
 		log_game("[src] deleted at [AREACOORD(turf)]")
 		investigate_log("deleted at [AREACOORD(turf)]", INVESTIGATE_ENGINE)
-	if(terminal)
-		disconnect_terminal()
+	disconnect_terminal()
 	return ..()
+
+/obj/machinery/power/smes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		return
+
+	if(istype(held_item, /obj/item/stack/cable_coil) && !terminal && can_place_terminal(user, held_item, silent = TRUE))
+		context[SCREENTIP_CONTEXT_LMB] = "Install terminal"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(held_item.tool_behaviour == TOOL_WIRECUTTER && terminal && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut terminal"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(held_item.tool_behaviour == TOOL_CROWBAR && !terminal && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/power/smes/examine(user)
 	. = ..()
+
+	. += span_notice("it's maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"]")
+	if(panel_open)
+		if(!terminal)
+			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice("It can [EXAMINE_HINT("wrenched")] to rotate.")
+
 	if(!terminal)
-		. += span_warning("This [src] has no power terminal!")
+		. += span_warning("A terminal that requires [EXAMINE_HINT("10 cable pieces")] needs to be installed!.")
+	else if(panel_open)
+		. += span_notice("The terminal can be [EXAMINE_HINT("cut")] apart.")
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
@@ -104,6 +144,7 @@
 /// Returns the total charge of this smes
 /obj/machinery/power/smes/proc/total_charge()
 	PROTECTED_PROC(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 		. += power_cell.charge()
@@ -142,103 +183,19 @@
 	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 		total_capacity += power_cell.max_charge()
 
+	update_static_data_for_all_viewers()
+
 /obj/machinery/power/smes/should_have_node()
 	return TRUE
 
-// adapted from APC item interacts for cable act handling
-/obj/machinery/power/smes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
-	if(istype(tool, /obj/item/stack/cable_coil))
-		. = cable_act(user, tool, LAZYACCESS(modifiers, RIGHT_CLICK))
-
-/obj/machinery/power/smes/cable_layer_act(mob/living/user, obj/item/tool)
-	if(!QDELETED(terminal))
-		balloon_alert(user, "cut the terminal first!")
-		return ITEM_INTERACT_BLOCKING
-	return ..()
-
-//opening using screwdriver
-/obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
-
-//changing direction using wrench
-/obj/machinery/power/smes/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_change_direction_wrench(user, tool))
-		terminal = null
-		var/turf/turf = get_step(src, dir)
-		for(var/obj/machinery/power/terminal/term in turf)
-			if(term && term.dir == REVERSE_DIR(dir))
-				terminal = term
-				terminal.master = src
-				to_chat(user, span_notice("Terminal found."))
-				break
-		if(!terminal)
-			to_chat(user, span_alert("No power terminal found."))
-			return ITEM_INTERACT_SUCCESS
-		set_machine_stat(machine_stat & ~BROKEN)
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
-
-//building and linking a terminal
-/obj/machinery/power/smes/proc/cable_act(mob/living/user, obj/item/stack/cable_coil/installing_cable, is_right_clicking)
-	. = ITEM_INTERACT_BLOCKING
-	if(!can_place_terminal(user, installing_cable, silent = FALSE))
-		return ITEM_INTERACT_BLOCKING
-	var/terminal_cable_layer
-	if(is_right_clicking)
-		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
-		if(isnull(choice) \
-			|| !user.is_holding(installing_cable) \
-			|| !user.Adjacent(src) \
-			|| user.incapacitated \
-			|| !can_place_terminal(user, installing_cable, silent = TRUE) \
-		)
-			return ITEM_INTERACT_BLOCKING
-		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
-	user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
-	balloon_alert(user, "adding cables...")
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-
-	if(!do_after(user, 2 SECONDS, target = src))
-		return ITEM_INTERACT_BLOCKING
-	if(!can_place_terminal(user, installing_cable, silent = TRUE))
-		return ITEM_INTERACT_BLOCKING
-	var/obj/item/stack/cable_coil/cable = installing_cable
-	var/turf/turf = get_turf(user)
-	var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
-	if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
-		do_sparks(5, TRUE, src)
-		return ITEM_INTERACT_BLOCKING
-	cable.use(10)
-	user.visible_message(span_notice("[user.name] adds cables to [src]."))
-	balloon_alert(user, "cables added")
-	//build the terminal and link it to the network
-	terminal = new/obj/machinery/power/terminal(turf)
-	terminal.cable_layer = terminal_cable_layer
-	terminal.setDir(get_dir(turf,src))
-	terminal.master = src
-	terminal.connect_to_network()
-	set_machine_stat(machine_stat & ~BROKEN)
-	return ITEM_INTERACT_SUCCESS
-
-//crowbarring it!
-/obj/machinery/power/smes/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(!panel_open)
-		return
-
-	var/turf/turf = get_turf(src)
-	if(default_deconstruction_crowbar(tool))
-		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(turf)].")
-		user.log_message("deconstructed [src]", LOG_GAME)
-		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
-		return ITEM_INTERACT_SUCCESS
-
-/// Checks if we're in a valid state to place a terminal
+/**
+ * Can we place the terminal based on the players position
+ *
+ * Arguments
+ * * mob/living/user - the player attempting to install the cable
+ * * obj/item/stack/cable_coil/installing_cable - the cable coil used to install the terminal
+ * * silent - should we display error messages
+*/
 /obj/machinery/power/smes/proc/can_place_terminal(mob/living/user, obj/item/stack/cable_coil/installing_cable, silent = TRUE)
 	PRIVATE_PROC(TRUE)
 
@@ -265,26 +222,101 @@
 		return FALSE
 	return TRUE
 
+// adapted from APC item interacts for cable act handling
+/obj/machinery/power/smes/item_interaction(mob/living/user, obj/item/stack/cable_coil/installing_cable, list/modifiers)
+	. = NONE
+	if(istype(installing_cable))
+		. = ITEM_INTERACT_BLOCKING
+		if(!can_place_terminal(user, installing_cable, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+
+		//select cable layer
+		var/terminal_cable_layer
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			if(isnull(choice) \
+				|| !user.is_holding(installing_cable) \
+				|| !user.Adjacent(src) \
+				|| user.incapacitated \
+				|| !can_place_terminal(user, installing_cable, silent = TRUE) \
+			)
+				return ITEM_INTERACT_BLOCKING
+			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+		user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
+		balloon_alert(user, "adding cables...")
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+
+		//use cable
+		if(!do_after(user, 2 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		if(!can_place_terminal(user, installing_cable, silent = TRUE))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/cable_coil/cable = installing_cable
+		var/turf/turf = get_turf(user)
+		var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
+		if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
+			do_sparks(5, TRUE, src)
+			return ITEM_INTERACT_BLOCKING
+		cable.use(10)
+		user.visible_message(span_notice("[user.name] adds cables to [src]."))
+		balloon_alert(user, "cables added")
+
+		//build the terminal and link it to the network
+		terminal = new(turf)
+		terminal.master = src
+		terminal.cable_layer = terminal_cable_layer
+		terminal.setDir(get_dir(turf, src))
+		terminal.connect_to_network()
+		set_machine_stat(machine_stat & ~BROKEN)
+		return ITEM_INTERACT_SUCCESS
+
+//opening using screwdriver
+/obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
+		update_appearance(UPDATE_OVERLAYS)
+		return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/item)
-	//disassembling the terminal
-	. = ..()
+	. = ITEM_INTERACT_FAILURE
 	if(terminal && panel_open)
 		terminal.dismantle(user, item)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-
-/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/crowbar)
-	if(istype(crowbar) && terminal)
-		balloon_alert(usr, "remove the power terminal!")
-		return FALSE
-
-	return ..()
-
-/obj/machinery/power/smes/disconnect_terminal()
+//crowbarring it!
+/obj/machinery/power/smes/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_FAILURE
 	if(terminal)
-		terminal.master = null
-		terminal = null
-		atom_break()
+		balloon_alert(user, "remove the power terminal!")
+		return
+
+	if(default_deconstruction_crowbar(tool))
+		var/turf/ground = get_turf(src)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(ground)].")
+		user.log_message("deconstructed [src]", LOG_GAME)
+		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
+		return ITEM_INTERACT_SUCCESS
+
+//changing direction using wrench
+/obj/machinery/power/smes/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_FAILURE
+	if(default_change_direction_wrench(user, tool))
+		disconnect_terminal()
+		for(var/obj/machinery/power/terminal/term in get_step(src, dir))
+			if(term && term.dir == REVERSE_DIR(dir))
+				terminal = term
+				terminal.master = src
+				to_chat(user, span_notice("Terminal found."))
+				set_machine_stat(machine_stat & ~BROKEN)
+				update_appearance(UPDATE_OVERLAYS)
+				return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_alert("No power terminal found."))
+
+/obj/machinery/power/smes/cable_layer_act(mob/living/user, obj/item/tool)
+	if(!QDELETED(terminal))
+		balloon_alert(user, "cut the terminal first!")
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 ///Returns the charge level this smes is at 0->5 for display purposes
 /obj/machinery/power/smes/proc/chargedisplay()
@@ -370,8 +402,6 @@
 
 	if(clev != chargedisplay()) //if needed updates the icons overlay
 		update_appearance(UPDATE_OVERLAYS)
-	return
-
 
 /obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -379,22 +409,24 @@
 		ui = new(user, src, "Smes", name)
 		ui.open()
 
-/obj/machinery/power/smes/ui_data()
+/obj/machinery/power/smes/ui_static_data(mob/user)
 	. = list(
 		"capacity" = total_capacity,
+		"inputLevelMax" = input_level_max,
+		"outputLevelMax" = output_level_max,
+	)
+
+/obj/machinery/power/smes/ui_data()
+	. = list(
 		"charge" = total_charge(),
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
-		"inputLevel_text" = display_power(input_level, convert = FALSE),
-		"inputLevelMax" = input_level_max,
 		"inputAvailable" = energy_to_power(input_available),
 		"outputAttempt" = output_attempt,
-		"outputting" = energy_to_power(outputting),
 		"outputLevel" = output_level,
-		"outputLevel_text" = display_power(output_level, convert = FALSE),
-		"outputLevelMax" = output_level_max,
 		"outputUsed" = energy_to_power(output_used),
+		"outputting" = outputting,
 	)
 
 /obj/machinery/power/smes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -407,12 +439,14 @@
 			input_attempt = !input_attempt
 			log_smes(ui.user)
 			update_appearance(UPDATE_OVERLAYS)
-			. = TRUE
+			return TRUE
+
 		if("tryoutput")
 			output_attempt = !output_attempt
 			log_smes(ui.user)
 			update_appearance(UPDATE_OVERLAYS)
-			. = TRUE
+			return TRUE
+
 		if("input")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
@@ -431,6 +465,8 @@
 			if(.)
 				input_level = clamp(target, 0, input_level_max)
 				log_smes(ui.user)
+				return
+
 		if("output")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
@@ -460,9 +496,9 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	input_attempt = rand(0,1)
+	input_attempt = rand(0, 1)
 	inputting = input_attempt
-	output_attempt = rand(0,1)
+	output_attempt = rand(0, 1)
 	outputting = output_attempt
 	output_level = rand(0, output_level_max)
 	input_level = rand(0, input_level_max)

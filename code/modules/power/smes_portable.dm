@@ -126,11 +126,11 @@
 
 	///Initial charge
 	if(charge)
-		var/charge_adjust = charge
 		for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 			power_cell.use(power_cell.charge())
-			if(charge_adjust)
-				charge_adjust -= power_cell.give(charge_adjust)
+			if(charge)
+				charge -= power_cell.give(charge)
+		charge = 0
 
 /obj/machinery/power/smesbank/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
