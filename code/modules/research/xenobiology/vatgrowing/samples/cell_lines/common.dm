@@ -730,4 +730,27 @@
 	virus_suspectibility = 0
 	resulting_atom = /mob/living/basic/snail
 
+/datum/micro_organism/cell_line/mimic
+	desc = "rectangular mantle cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/ethanol/moonshine,
+	)
+
+	supplementary_reagents = list(
+		/datum/reagent/consumable/ethanol/salt_and_swell = 7,
+		/datum/reagent/consumable/peachjuice = 5,
+		/datum/reagent/consumable/ethanol/blank_paper = 5,
+		/datum/reagent/consumable/grey_bull = 2,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -2,
+		/datum/reagent/consumable/salt = -3,
+		/datum/reagent/consumable/ethanol/bug_spray = -1,
+	)
+	virus_suspectibility = 0
+	resulting_atom = /mob/living/basic/mimic/crate
+
+
 #undef VAT_GROWTH_RATE

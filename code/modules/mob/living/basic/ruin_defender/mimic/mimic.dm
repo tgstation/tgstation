@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(opened)
 		icon_state = "[base_icon_state]open"
 	else
-		icon_state = crate.
+		icon_state = crate.base_icon_state
 
 /**
 * Used to open and close the mimic
@@ -290,7 +290,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		to_chat(mimic, span_warning("You stiffen up, preventing anyone from opening or closing you."))
 
 ///A version that can be used for crate types that don't have bespoke sprites yet.
-/datum/action/innate/mimic/crate/omni
+/mob/living/basic/mimic/crate/omni
 	///mimick graphic to overlay on the open crate.
 	var/static/mutable_appearance/mimic_overlay
 
