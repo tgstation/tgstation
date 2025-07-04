@@ -60,7 +60,7 @@ const MasterControls = () => {
           minValue={min_delay}
           maxValue={max_delay}
           unit="sec."
-          onDrag={(e, value) =>
+          onChange={(e, value) =>
             act('changeDelay', {
               new_delay: value,
             })

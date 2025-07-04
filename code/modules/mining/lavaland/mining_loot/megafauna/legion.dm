@@ -15,7 +15,7 @@
 	damtype = BURN
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	wound_bonus = -30
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/max_thunder_charges = 3
 	var/thunder_charges = 3
