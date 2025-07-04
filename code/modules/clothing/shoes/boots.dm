@@ -62,11 +62,6 @@
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	AddElement(/datum/element/ignites_matches)
 
-/obj/item/clothing/shoes/jackboots/laced
-	name = "tacboots"
-	desc = "Nanotrasen-issue tactical boots for hazardous scenarios or hazardous environments. They're tactical, and that's tacti-cool."
-	fastening_type = SHOES_LACED
-
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 
@@ -158,6 +153,11 @@
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/shoes/workboots/black
+	name = "tactical work boots"
+	desc = "Lace-up work boots to protect the average grey-collar worker from stepping on hazards, from broken glass to dropped pens."
+	icon_state = "workboots_black"
 
 /obj/item/clothing/shoes/russian
 	name = "russian boots"
