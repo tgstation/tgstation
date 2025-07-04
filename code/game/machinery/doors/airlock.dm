@@ -624,7 +624,9 @@
 /obj/machinery/door/airlock/animation_effects(animation, force_type = DEFAULT_DOOR_CHECKS)
 	if(force_type == BYPASS_DOOR_CHECKS)
 		playsound(src, soundin = 'sound/machines/airlock/airlockforced.ogg', vol = 30, vary = TRUE)
-	else switch(animation)
+		return
+
+	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
 			use_energy(50 JOULES)
 			playsound(src, soundin = doorOpen, vol = 30, vary = TRUE)
