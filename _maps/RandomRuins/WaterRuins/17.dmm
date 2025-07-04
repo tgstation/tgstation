@@ -225,7 +225,7 @@
 "eo" = (
 /obj/structure/marker_beacon/olive,
 /obj/structure/lattice/catwalk,
-/turf/template_noop,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "er" = (
 /turf/open/floor/iron/dark,
@@ -779,7 +779,7 @@
 /area/ruin/space/has_grav/waystation/dorms)
 "no" = (
 /obj/structure/lattice/catwalk,
-/turf/template_noop,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "nu" = (
 /obj/machinery/processor,
@@ -2440,7 +2440,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Sj" = (
 /obj/structure/lattice,
-/turf/template_noop,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "Sm" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{

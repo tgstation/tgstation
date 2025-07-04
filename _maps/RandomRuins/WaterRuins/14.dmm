@@ -8,6 +8,22 @@
 "c" = (
 /turf/closed/mineral/random/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
+"u" = (
+/obj/effect/spawner/message_in_a_bottle,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors/noruinsnomonsters)
+"C" = (
+/obj/effect/spawner/random/decoration/glowstick/on,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors/noruinsnomonsters)
+"Q" = (
+/obj/item/clothing/gloves/fishing,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors/noruinsnomonsters)
+"V" = (
+/obj/effect/spawner/random/chance_for_freedom,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors/noruinsnomonsters)
 
 (1,1,1) = {"
 a
@@ -102,7 +118,7 @@ b
 b
 b
 b
-b
+Q
 c
 "}
 (4,1,1) = {"
@@ -568,7 +584,7 @@ b
 c
 c
 c
-b
+V
 c
 b
 b
@@ -599,9 +615,9 @@ a
 b
 c
 b
-b
-b
-b
+c
+c
+c
 b
 b
 a
@@ -698,7 +714,7 @@ b
 b
 a
 a
-b
+C
 a
 a
 a
@@ -852,7 +868,7 @@ b
 a
 a
 a
-a
+u
 b
 b
 b

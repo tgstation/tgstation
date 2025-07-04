@@ -56,6 +56,7 @@
 /area/rainworld/surface)
 "p" = (
 /obj/structure/table,
+/obj/effect/spawner/random/animalhide,
 /turf/open/floor/mineral/titanium/blue,
 /area/rainworld/surface)
 "q" = (
@@ -73,24 +74,51 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/rainworld/surface)
 "s" = (
-/obj/structure/chair{
-	dir = 1
-	},
+/obj/effect/spawner/random/structure/chair_flipped,
 /turf/open/floor/plating,
 /area/rainworld/surface)
 "t" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/rainworld/surface)
+"v" = (
+/obj/effect/spawner/random/structure/shipping_container/blank,
+/turf/template_noop,
+/area/template_noop)
+"y" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors/noruinsnomonsters)
+"G" = (
+/obj/structure/closet,
+/obj/item/borg/upgrade/modkit/lifesteal,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
 "O" = (
 /obj/item/wallframe/apc,
+/turf/open/floor/plating,
+/area/rainworld/surface)
+"P" = (
+/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/rainworld/surface)
 "Q" = (
 /turf/closed/mineral/random/rainworld,
 /area/rainworld/surface)
+"R" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+"S" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
+/area/rainworld/surface)
 "U" = (
 /turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+"X" = (
+/obj/effect/spawner/random/environmentally_safe_anomaly,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface)
 
 (1,1,1) = {"
@@ -550,7 +578,7 @@ d
 d
 Q
 Q
-d
+X
 d
 Q
 Q
@@ -626,8 +654,8 @@ d
 Q
 Q
 Q
-g
-g
+P
+S
 o
 Q
 Q
@@ -666,7 +694,7 @@ e
 g
 m
 p
-g
+S
 e
 c
 Q
@@ -700,10 +728,10 @@ Q
 Q
 U
 e
-g
+S
 n
 q
-h
+k
 e
 c
 Q
@@ -740,7 +768,7 @@ e
 O
 h
 h
-h
+k
 e
 c
 c
@@ -774,10 +802,10 @@ Q
 U
 U
 e
+k
 h
 h
-h
-h
+k
 e
 c
 c
@@ -808,7 +836,7 @@ a
 a
 Q
 Q
-U
+G
 U
 f
 h
@@ -819,7 +847,7 @@ f
 c
 c
 c
-c
+y
 Q
 a
 Q
@@ -1039,7 +1067,7 @@ U
 U
 U
 c
-c
+y
 a
 a
 a
@@ -1107,7 +1135,7 @@ Q
 Q
 U
 U
-U
+R
 U
 U
 a
@@ -1149,7 +1177,7 @@ a
 a
 a
 a
-a
+v
 a
 a
 a
@@ -1255,7 +1283,7 @@ a
 a
 a
 a
-a
+v
 a
 a
 a

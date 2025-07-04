@@ -64,11 +64,12 @@
 /area/rainworld/surface/outdoors)
 "o" = (
 /obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/corpse/goliath,
+/obj/effect/mob_spawn/corpse/watcher,
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors)
 "p" = (
 /obj/structure/table/survival_pod,
+/obj/effect/spawner/random/contraband/narcotics,
 /obj/item/knife/combat/survival,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
@@ -86,7 +87,6 @@
 /area/ruin/powered)
 "r" = (
 /obj/structure/tubes,
-/obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
@@ -145,6 +145,18 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors)
+"E" = (
+/obj/effect/spawner/random/decoration/glowstick/on,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors)
+"S" = (
+/obj/item/oar,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors)
+"Y" = (
+/obj/vehicle/ridden/lavaboat,
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -174,20 +186,20 @@ a
 "}
 (3,1,1) = {"
 a
-a
+Y
 b
 d
 d
 i
 d
 d
-b
+E
 a
 a
 "}
 (4,1,1) = {"
 a
-b
+S
 b
 d
 f
