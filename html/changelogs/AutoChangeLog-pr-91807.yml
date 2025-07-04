@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Adds a DNR button at the button of the ghost screen"
-  - qol: "The \"You have died\" text has now been updated to reflect this"

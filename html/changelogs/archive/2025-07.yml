@@ -77,3 +77,18 @@
   Time-Green:
   - balance: Regenerative black extract can no longer be used to create infinite voidwalker
       loot skulls
+2025-07-04:
+  KingMapache:
+  - rscadd: Added felinid tongue to the felinid disk from research of the limbgrower
+  Melbert:
+  - qol: Adds a DNR button at the button of the ghost screen
+  - qol: The "You have died" text has now been updated to reflect this
+  grungussuss:
+  - bugfix: fixed a client login runtime
+  necromanceranne:
+  - balance: Mecha that are EMP'd properly delete their tracking beacons after many
+      years where they haven't. There is a probability for whether or not the beacon
+      is destroyed from an EMP.
+  - bugfix: ' You cannot stack multiple of the same beacon onto a single mech.'
+  twilightwanderer:
+  - bugfix: Fixing print request issues
