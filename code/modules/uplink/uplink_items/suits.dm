@@ -18,7 +18,7 @@
 			The suit does come pre-equipped with a special psi-emitter stealth module that makes it impossible to recognize the wearer \
 			as well as causing significant demoralization amongst Nanotrasen crew."
 	item = /obj/item/mod/control/pre_equipped/infiltrator
-	cost = 4
+	cost = 6
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/suits/space_suit
@@ -33,7 +33,7 @@
 	name = "Syndicate MODsuit"
 	desc = "The feared MODsuit of a Syndicate agent. Features armoring and a set of inbuilt modules."
 	item = /obj/item/mod/control/pre_equipped/traitor
-	cost = 6
+	cost = 8
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //you can't buy it in nuke, because the elite modsuit costs the same while being better
 
 //---- MODULES
