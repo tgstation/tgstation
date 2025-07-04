@@ -104,7 +104,7 @@
 		stop_sound_channel(CHANNEL_AMBIENCE)
 
 	if(client)
-		client.view_size.resetToDefault() // Resets the client.view in case it was changed.
+		client.view_size?.resetToDefault() // Resets the client.view in case it was changed.
 
 		for(var/datum/action/A as anything in persistent_client.player_actions)
 			A.Grant(src)

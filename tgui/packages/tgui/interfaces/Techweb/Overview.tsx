@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import { Flex, Input, Section, Tabs, VirtualList } from 'tgui-core/components';
 
@@ -37,7 +37,7 @@ export function TechwebOverview(props) {
       tabIndex < 2
         ? nodes.filter((x) => x.tier === tabIndex)
         : nodes.filter((x) => x.tier >= tabIndex),
-      (x) => node_cache[x.id].name,
+      [(x) => node_cache[x.id].name],
     );
   }
 

@@ -32,8 +32,8 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	var/show_result_on_wiki = TRUE
 
 /datum/fish_evolution/New()
-	..()
 	SHOULD_CALL_PARENT(TRUE)
+	..()
 	if(!ispath(new_fish_type, /obj/item/fish))
 		stack_trace("[type] instantiated with a new fish type of [new_fish_type]. That's not a fish, hun, things will break.")
 	if(!name)

@@ -64,14 +64,14 @@
 )
 	. = ..()
 	set_holdable(list(
-		/obj/item/clothing/head/mob_holder,
+		/obj/item/mob_holder,
 		/obj/item/food/deadmouse
 	))
 
 /datum/storage/pockets/chefhat/can_insert(obj/item/to_insert, mob/user, messages, force)
 	. = ..()
 	if(ispickedupmob(to_insert))
-		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
+		var/obj/item/mob_holder/mausholder = to_insert
 		if(locate(/mob/living/basic/mouse) in mausholder.contents)
 			return
 		return FALSE

@@ -37,6 +37,11 @@ function Get-Bun {
         $BunTag = " (baseline)"
     }
 
+    if (Test-Path $BunTargetDir -PathType Container) {
+        Write-Output "Bun target directory exists but bun.exe is missing. Re-downloading."
+        Remove-Item $BunTargetDir -Recurse -Force
+    }
+
     $BunSource = "https://github.com/oven-sh/bun/releases/download/bun-v$BunVersion/$BunRelease.zip"
 
     Write-Output "Downloading Bun v$BunVersion$BunTag"

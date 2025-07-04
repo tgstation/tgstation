@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
 	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
-	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked)
+	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked || SSsecurity_level.current_security_level.disables_mail)
 		return
 
 	//spawn crate

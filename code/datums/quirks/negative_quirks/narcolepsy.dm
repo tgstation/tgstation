@@ -24,6 +24,7 @@
 			LOCATION_HANDS,
 		),
 		flavour_text = "Given to you to aid in staying awake this shift...",
+		notify_player = TRUE,
 	)
 
 /datum/quirk/item_quirk/narcolepsy/remove()

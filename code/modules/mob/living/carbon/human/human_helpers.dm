@@ -299,7 +299,7 @@
 	clone.dress_up_as_job(SSjob.get_job(job))
 
 	for(var/datum/quirk/original_quircks as anything in quirks)
-		clone.add_quirk(original_quircks.type, override_client = client)
+		clone.add_quirk(original_quircks.type, override_client = client, announce = FALSE)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 

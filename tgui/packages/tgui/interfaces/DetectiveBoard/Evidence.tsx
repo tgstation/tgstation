@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Flex, Stack } from 'tgui-core/components';
 
 import { DataEvidence } from './DataTypes';
@@ -38,7 +38,7 @@ export function Evidence(props: EvidenceProps) {
     null,
   );
 
-  const randomRotation = Math.random() * 2 - 1;
+  const randomRotation = useMemo(() => Math.random() * 2 - 1, []);
 
   function handleMouseDown(args) {
     if (canDrag) {

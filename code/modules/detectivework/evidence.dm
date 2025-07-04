@@ -17,13 +17,13 @@
 	create_storage(
 		max_slots = 1,
 		max_specific_storage = WEIGHT_CLASS_NORMAL,
+		rustle_sound = 'sound/items/evidence_bag/evidence_bag_zip.ogg',
+		remove_rustle_sound = 'sound/items/evidence_bag/evidence_bag_unzip.ogg',
 	)
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.collection_mode = COLLECT_ONE
 	RegisterSignal(atom_storage, COMSIG_STORAGE_STORED_ITEM, PROC_REF(on_insert))
 	RegisterSignal(atom_storage, COMSIG_STORAGE_REMOVED_ITEM, PROC_REF(on_remove))
-	atom_storage.rustle_sound = 'sound/items/evidence_bag/evidence_bag_zip.ogg'
-	atom_storage.remove_rustle_sound = 'sound/items/evidence_bag/evidence_bag_unzip.ogg'
 
 /obj/item/evidencebag/update_desc(updates)
 	. = ..()

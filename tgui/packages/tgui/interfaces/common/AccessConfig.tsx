@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import { Button, Section, Stack, Tabs } from 'tgui-core/components';
 
@@ -71,10 +71,9 @@ export function AccessConfig(props: ConfigProps) {
     accesses.find((access) => access.name === selectedAccessName) ||
     accesses[0];
 
-  const selectedAccessEntries = sortBy(
-    selectedAccess?.accesses || [],
+  const selectedAccessEntries = sortBy(selectedAccess?.accesses || [], [
     (entry: Area) => entry.desc,
-  );
+  ]);
 
   function checkAccessIcon(accesses: Area[]) {
     let oneAccess = false;

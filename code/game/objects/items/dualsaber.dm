@@ -168,6 +168,9 @@
 	if(attack_type == LEAP_ATTACK)
 		final_block_chance -= 50 //We are particularly bad at blocking someone JUMPING at us..
 
+	if(attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Far too small to block these kinds of attacks.
+
 	return ..()
 
 /obj/item/dualsaber/process()

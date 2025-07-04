@@ -3,7 +3,7 @@ import { mkdirSync } from "node:fs";
 
 let hasInstallFolder = false;
 
-export function bun(...args) {
+export function bun(...args: any[]): Promise<Juke.ExecReturn> {
   if (!hasInstallFolder) {
     mkdirSync("./tgui/node_modules/", { recursive: true });
     hasInstallFolder = true;

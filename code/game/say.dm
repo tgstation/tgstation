@@ -4,6 +4,7 @@ This file has the basic atom/movable level speech procs.
 And the base of the send_speech() proc, which is the core of saycode.
 */
 GLOBAL_LIST_INIT(freqtospan, list(
+	"[FREQ_COMMON]" = "radio",
 	"[FREQ_SCIENCE]" = "sciradio",
 	"[FREQ_MEDICAL]" = "medradio",
 	"[FREQ_ENGINEERING]" = "engradio",
@@ -296,6 +297,12 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /proc/get_radio_color(freq, freq_color)
 	if(freq)
+		// No custom colors for channels with theme settings
+		if(GLOB.freqtospan["[freq]"])
+			return ""
+		// No color overrides for commonn channel color (for freqs like 145.3)
+		if(freq_color == RADIO_COLOR_COMMON)
+			return ""
 		if(freq_color)
 			return freq_color
 		var/color = GLOB.reserved_radio_colors[get_radio_name(freq, null)]

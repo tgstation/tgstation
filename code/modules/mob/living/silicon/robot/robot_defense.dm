@@ -436,7 +436,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return TRUE
 
 	SetEmagged(1)
-	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetStun(10 SECONDS) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = FALSE
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")

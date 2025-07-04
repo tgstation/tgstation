@@ -6,7 +6,7 @@
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	icon_state = "shade_cult"
 	icon_living = "shade_cult"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	maxHealth = 40
 	health = 40
 	status_flags = CANPUSH

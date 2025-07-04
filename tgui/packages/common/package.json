@@ -1,5 +1,8 @@
 {
 	"name": "common",
 	"version": "4.3.1",
+	"dependencies": {
+		"es-toolkit": "^1.39.3"
+	},
 	"private": true
 }

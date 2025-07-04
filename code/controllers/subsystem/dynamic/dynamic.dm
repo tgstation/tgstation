@@ -260,6 +260,12 @@ SUBSYSTEM_DEF(dynamic)
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset
 			break
+		if(current_tier.tier != DYNAMIC_TIER_HIGH && (picked_ruleset.ruleset_flags & RULESET_HIGH_IMPACT))
+			for(var/datum/dynamic_ruleset/roundstart/high_impact_ruleset as anything in rulesets_weighted)
+				if(!(high_impact_ruleset.ruleset_flags & RULESET_HIGH_IMPACT))
+					continue
+				total_weight -= rulesets_weighted[high_impact_ruleset]
+				rulesets_weighted -= high_impact_ruleset
 		if(!picked_ruleset.repeatable)
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset

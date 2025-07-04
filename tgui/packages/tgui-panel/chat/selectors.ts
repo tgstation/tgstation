@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 
 export const selectChat = (state) => state.chat;
 

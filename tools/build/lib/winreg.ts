@@ -8,12 +8,15 @@
  * @license MIT
  */
 
-import { exec } from "child_process";
-import { promisify } from "util";
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
 
-export const regQuery = async (path, key) => {
+export async function regQuery(
+  path: string,
+  key: string,
+): Promise<string | string[] | undefined> {
   if (process.platform !== "win32") {
-    return null;
+    return;
   }
   try {
     const command = `reg query "${path}" /v ${key}`;
@@ -21,19 +24,19 @@ export const regQuery = async (path, key) => {
     const keyPattern = `    ${key}    `;
     const indexOfKey = stdout.indexOf(keyPattern);
     if (indexOfKey === -1) {
-      return null;
+      return;
     }
     const indexOfEol = stdout.indexOf("\r\n", indexOfKey);
     if (indexOfEol === -1) {
-      return null;
+      return;
     }
     const indexOfValue = stdout.indexOf("    ", indexOfKey + keyPattern.length);
     if (indexOfValue === -1) {
-      return null;
+      return;
     }
     const value = stdout.substring(indexOfValue + 4, indexOfEol);
     return value;
   } catch (err) {
-    return null;
+    return;
   }
-};
+}

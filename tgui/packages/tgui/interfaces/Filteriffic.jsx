@@ -1,4 +1,4 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Box,

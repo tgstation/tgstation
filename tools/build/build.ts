@@ -6,38 +6,40 @@
  * https://github.com/stylemistake/juke-build
  */
 
+import Bun from "bun";
 import fs from "node:fs";
-import https from "node:https";
 import Juke from "./juke/index.js";
-import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond.js";
-import { bun } from "./lib/bun.js";
+import { bun } from "./lib/bun";
+import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond";
+import { downloadFile } from "./lib/download";
+import { formatDeps } from "./lib/helpers";
+import { prependDefines } from "./lib/tgs";
 
-const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
+export const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
+
+export const DME_NAME = "tgstation";
 
 Juke.chdir("../..", import.meta.url);
 
-const DME_NAME = "tgstation";
-
-// Stores the contents of dependencies.sh as a key value pair
-// Best way I could figure to get ahold of this stuff
-const dependencies = fs
-  .readFileSync("dependencies.sh", "utf8")
-  .split("\n")
-  .map((statement) => statement.replace("export", "").trim())
-  .filter((value) => !(value == "" || value.startsWith("#")))
-  .map((statement) => statement.split("="))
-  .reduce((acc, kv_pair) => {
-    acc[kv_pair[0]] = kv_pair[1];
-    return acc;
-  }, {});
+const dependencies: Record<string, any> = await Bun.file("dependencies.sh")
+  .text()
+  .then(formatDeps)
+  .catch((err) => {
+    Juke.logger.error(
+      "Failed to read dependencies.sh, please ensure it exists and is formatted correctly."
+    );
+    Juke.logger.error(err);
+    throw new Juke.ExitCode(1);
+  });
 
 // Canonical path for the cutter exe at this moment
-const getCutterPath = () => {
+function getCutterPath() {
   const ver = dependencies.CUTTER_VERSION;
   const suffix = process.platform === "win32" ? ".exe" : "";
   const file_ver = ver.split(".").join("-");
+
   return `tools/icon_cutter/cache/hypnagogic${file_ver}${suffix}`;
-};
+}
 
 const cutter_path = getCutterPath();
 
@@ -87,54 +89,17 @@ export const CutterTarget = new Juke.Target({
     const ver = dependencies.CUTTER_VERSION;
     const suffix = process.platform === "win32" ? ".exe" : "";
     const download_from = `https://github.com/${repo}/releases/download/${ver}/hypnagogic${suffix}`;
-    await download_file(download_from, cutter_path);
+    await downloadFile(download_from, cutter_path);
     if (process.platform !== "win32") {
       await Juke.exec("chmod", ["+x", cutter_path]);
     }
   },
 });
 
-async function download_file(url, file) {
-  return new Promise((resolve, reject) => {
-    let file_stream = fs.createWriteStream(file);
-    https
-      .get(url, function (response) {
-        if (response.statusCode === 302) {
-          file_stream.close();
-          download_file(response.headers.location, file).then((value) =>
-            resolve()
-          );
-          return;
-        }
-        if (response.statusCode !== 200) {
-          Juke.logger.error(
-            `Failed to download ${url}: Status ${response.statusCode}`
-          );
-          file_stream.close();
-          reject();
-          return;
-        }
-        response.pipe(file_stream);
-
-        // after download completed close filestream
-        file_stream.on("finish", () => {
-          file_stream.close();
-          resolve();
-        });
-      })
-      .on("error", (err) => {
-        file_stream.close();
-        Juke.rm(download_into);
-        Juke.logger.error(`Failed to download ${url}: ${err.message}`);
-        reject();
-      });
-  });
-}
-
 export const IconCutterTarget = new Juke.Target({
   parameters: [ForceRecutParameter],
   dependsOn: () => [CutterTarget],
-  inputs: ({ get }) => {
+  inputs: () => {
     const standard_inputs = [
       `icons/**/*.png.toml`,
       `icons/**/*.dmi.toml`,
@@ -470,17 +435,6 @@ export const CleanAllTarget = new Juke.Target({
     Juke.rm("data/logs", { recursive: true });
   },
 });
-
-/**
- * Prepends the defines to the .dme.
- * Does not clean them up, as this is intended for TGS which
- * clones new copies anyway.
- */
-const prependDefines = (...defines) => {
-  const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
-  const textToWrite = defines.map((define) => `#define ${define}\n`);
-  fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
-};
 
 export const TgsTarget = new Juke.Target({
   dependsOn: [TguiTarget],

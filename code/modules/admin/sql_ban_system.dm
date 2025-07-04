@@ -177,7 +177,7 @@
 		if(is_admin && !text2num(query_build_ban_cache.item[2]))
 			continue
 		ban_cache[query_build_ban_cache.item[1]] = TRUE
-	qdel(query_build_ban_cache)
+	QDEL_NULL(query_build_ban_cache)
 	if(QDELETED(player_client)) // Disconnected while working with the DB.
 		return
 	player_client.ban_cache = ban_cache

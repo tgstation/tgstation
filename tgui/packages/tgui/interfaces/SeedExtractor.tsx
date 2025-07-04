@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -67,10 +67,9 @@ export const SeedExtractor = (props) => {
   const search = createSearch(searchText, (item: SeedData) => item.name);
   const seeds_filtered =
     searchText.length > 0 ? data.seeds.filter(search) : data.seeds;
-  const seeds = sortBy(
-    seeds_filtered || [],
+  const seeds = sortBy(seeds_filtered || [], [
     (item: SeedData) => item[sortField as keyof SeedData],
-  );
+  ]);
   sortField !== 'name' && seeds.reverse();
 
   return (

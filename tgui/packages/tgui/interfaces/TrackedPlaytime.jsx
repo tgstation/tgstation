@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import {
   Box,
   Button,
@@ -14,7 +14,7 @@ import { Window } from '../layouts';
 const JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED = 1;
 const JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS = 2;
 
-const sortByPlaytime = (array) => sortBy(array, ([_, playtime]) => -playtime);
+const sortByPlaytime = (array) => sortBy(array, [([_, playtime]) => -playtime]);
 
 const PlaytimeSection = (props) => {
   const { playtimes } = props;

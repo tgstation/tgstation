@@ -3706,7 +3706,7 @@
 /area/virtual_domain)
 "Fd" = (
 /turf/open/space/basic,
-/area/space)
+/area/space/virtual_domain)
 "Ff" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/railing{

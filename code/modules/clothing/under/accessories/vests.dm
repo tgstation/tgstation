@@ -25,16 +25,6 @@
 	minimize_when_attached = TRUE
 	attachment_slot = NONE
 
-/obj/item/clothing/accessory/maidcorset
-	name = "maid corset"
-	desc = "The final touch that holds it all together."
-	icon_state = "maidcorset"
-	inhand_icon_state = "maidapron"
-	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
-	minimize_when_attached = FALSE
-	attachment_slot = NONE
-
 /obj/item/clothing/accessory/maidapron
 	name = "maid apron"
 	desc = "The best part of a maid costume."

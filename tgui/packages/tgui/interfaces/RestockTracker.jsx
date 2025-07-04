@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { ColorBox, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
 
@@ -17,10 +17,9 @@ export const Restock = (props) => {
 
 export const RestockTracker = (props) => {
   const { data } = useBackend();
-  const vending_list = sortBy(
-    data.vending_list ?? [],
+  const vending_list = sortBy(data.vending_list ?? [], [
     (vend) => vend.percentage,
-  );
+  ]);
   return (
     <Section fill title="Vendor Stocking Status">
       <Stack vertical>

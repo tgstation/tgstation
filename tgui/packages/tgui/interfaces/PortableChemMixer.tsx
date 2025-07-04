@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { Box, Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -26,10 +26,9 @@ export const PortableChemMixer = (props) => {
   const { act, data } = useBackend<Data>();
   const { beaker } = data;
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
-  const chemicals = sortBy(
-    data.chemicals,
+  const chemicals = sortBy(data.chemicals, [
     (chem: DispensableReagent) => chem.id,
-  );
+  ]);
   return (
     <Window width={500} height={500}>
       <Window.Content scrollable>

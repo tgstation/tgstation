@@ -135,7 +135,10 @@
 	max_slots = src.max_slots,
 	max_specific_storage = src.max_specific_storage,
 	max_total_storage = src.max_total_storage,
-)
+	rustle_sound = src.rustle_sound,
+	remove_rustle_sound = src.remove_rustle_sound,
+	)
+
 	if(!istype(parent))
 		stack_trace("Storage datum ([type]) created without a [isnull(parent) ? "null parent" : "invalid parent ([parent.type])"]!")
 		qdel(src)
@@ -147,6 +150,8 @@
 	src.max_slots = max_slots
 	src.max_specific_storage = max_specific_storage
 	src.max_total_storage = max_total_storage
+	src.rustle_sound = rustle_sound
+	src.remove_rustle_sound = remove_rustle_sound
 
 /datum/storage/Destroy()
 
@@ -827,7 +832,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
 		if(do_rustle)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, rustle_sound, 50, TRUE, -5)
 
 		for(var/obj/item/to_dump in real_location)
 			dest_object.atom_storage.attempt_insert(to_dump, user)

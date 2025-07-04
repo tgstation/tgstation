@@ -342,7 +342,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Needs a linked mecha
 	returnable_list += typesof(/obj/effect/skyfall_landingzone)
 	//Expects a mob to holderize, we have nothing to give
-	returnable_list += typesof(/obj/item/clothing/head/mob_holder)
+	returnable_list += typesof(/obj/item/mob_holder)
 	//Needs cards passed into the initilazation args
 	returnable_list += typesof(/obj/item/toy/cards/cardhand)
 	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.

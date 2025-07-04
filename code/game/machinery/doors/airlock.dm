@@ -76,6 +76,7 @@
 	name = "Airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
+	base_icon_state = null
 	max_integrity = 300
 	var/normal_integrity = AIRLOCK_INTEGRITY_N
 	integrity_failure = 0.25
@@ -502,30 +503,44 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
-/obj/machinery/door/airlock/update_icon(updates=ALL, state=0, override=FALSE)
-	if(operating && !override)
+/**
+ * Set the airlock state to a new value, change the icon state
+ * and run the associated animation if required.
+ */
+/obj/machinery/door/airlock/proc/set_airlock_state(new_state, animated = FALSE)
+	if(!new_state)
+		new_state = density ? AIRLOCK_CLOSED : AIRLOCK_OPEN
+	airlock_state = new_state
+	if(animated)
+		operating = TRUE
+		run_animation(airlock_state)
 		return
+	operating = FALSE
+	set_animation()
 
-	if(!state)
-		state = density ? AIRLOCK_CLOSED : AIRLOCK_OPEN
-	airlock_state = state
+/obj/machinery/door/airlock/update_icon(updates = ALL)
+	if(!airlock_state)
+		airlock_state = icon_state
 
-	. = ..()
+	return ..()
 
 /obj/machinery/door/airlock/update_icon_state()
 	. = ..()
-	switch(airlock_state)
-		if(AIRLOCK_OPEN, AIRLOCK_CLOSED)
-			icon_state = ""
-		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
-			icon_state = "nonexistenticonstate" //MADNESS
+	if(animation)
+		icon_state = "[base_icon_state][animation]"
+	else if(airlock_state == AIRLOCK_OPEN)
+		icon_state = "[base_icon_state]open"
+	else
+		icon_state = "[base_icon_state]closed"
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
 
 	var/frame_state
 	var/light_state
-	switch(airlock_state)
+	if(machine_stat & MAINT) // in the process of being emagged
+		frame_state = AIRLOCK_FRAME_CLOSED
+	else switch(airlock_state)
 		if(AIRLOCK_CLOSED)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			if(locked)
@@ -535,8 +550,6 @@
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED
-		if(AIRLOCK_EMAG)
-			frame_state = AIRLOCK_FRAME_CLOSED
 		if(AIRLOCK_CLOSING)
 			frame_state = AIRLOCK_FRAME_CLOSING
 			light_state = AIRLOCK_LIGHT_CLOSING
@@ -557,10 +570,11 @@
 
 	if(panel_open)
 		. += get_airlock_overlay("panel_[frame_state][security_level ? "_protected" : null]", overlays_file, src, em_block = TRUE)
+
 	if(frame_state == AIRLOCK_FRAME_CLOSED && welded)
 		. += get_airlock_overlay("welded", overlays_file, src, em_block = TRUE)
 
-	if(airlock_state == AIRLOCK_EMAG)
+	if(machine_stat & MAINT) // in the process of being emagged
 		. += get_airlock_overlay("sparks", overlays_file, src, em_block = FALSE)
 
 	if(hasPower())
@@ -600,20 +614,21 @@
 			. += floorlight
 
 /obj/machinery/door/airlock/run_animation(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			update_icon(ALL, AIRLOCK_OPENING)
-		if(DOOR_OPENING_ANIMATION)
-			update_icon(ALL, AIRLOCK_CLOSING)
-		if(DOOR_DENY_ANIMATION)
-			if(!machine_stat)
-				update_icon(ALL, AIRLOCK_DENY)
-				playsound(src,doorDeni,50,FALSE,3)
-				addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
+	if(animation == DOOR_DENY_ANIMATION)
+		if(machine_stat)
+			return
+		set_airlock_state(AIRLOCK_DENY, animated = FALSE)
+
+	return ..()
+
+/obj/machinery/door/airlock/animation_effects(animation)
+	if(animation == DOOR_DENY_ANIMATION)
+		playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
+		addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/proc/handle_deny_end()
 	if(airlock_state == AIRLOCK_DENY)
-		update_icon(ALL, AIRLOCK_CLOSED)
+		set_airlock_state(AIRLOCK_CLOSED, animated = FALSE)
 
 /obj/machinery/door/airlock/animation_length(animation)
 	switch(animation)
@@ -1279,8 +1294,7 @@
 				addtimer(CALLBACK(cyclelinkedairlock, PROC_REF(close)), BYPASS_DOOR_CHECKS)
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
-	operating = TRUE
-	update_icon(ALL, AIRLOCK_OPENING, TRUE)
+	set_airlock_state(AIRLOCK_OPENING, animated = TRUE)
 	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
 	sleep(transparent_delay)
 	set_opacity(0)
@@ -1297,8 +1311,7 @@
 	var/open_delay = animation_segment_delay(AIRLOCK_OPENING_FINISHED) - transparent_delay - passable_delay
 	sleep(open_delay)
 	layer = OPEN_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_OPEN, TRUE)
-	operating = FALSE
+	set_airlock_state(AIRLOCK_OPEN, animated = FALSE)
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
 		addtimer(CALLBACK(src, PROC_REF(close)), FORCING_DOOR_CHECKS)
@@ -1355,8 +1368,7 @@
 	if(killthis)
 		SSexplosions.med_mov_atom += killthis
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
-	operating = TRUE
-	update_icon(ALL, AIRLOCK_CLOSING, 1)
+	set_airlock_state(AIRLOCK_CLOSING, animated = TRUE)
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		set_density(TRUE)
@@ -1383,8 +1395,7 @@
 	update_freelook_sight()
 	var/close_delay = animation_segment_delay(AIRLOCK_CLOSING_FINISHED) - unpassable_delay - opaque_delay
 	sleep(close_delay)
-	update_icon(ALL, AIRLOCK_CLOSED, 1)
-	operating = FALSE
+	set_airlock_state(AIRLOCK_CLOSED, animated = FALSE)
 	delayed_close_requested = FALSE
 	if(!dangerous_close)
 		CheckForMobs()
@@ -1457,8 +1468,9 @@
 		if(istype(emag_card, /obj/item/card/emag/doorjack))
 			var/obj/item/card/emag/doorjack/doorjack_card = emag_card
 			doorjack_card.use_charge(user)
+		set_machine_stat(machine_stat | MAINT) // flash the airlock lights and display some sparks
+		set_airlock_state(AIRLOCK_CLOSED)
 		operating = TRUE
-		update_icon(ALL, AIRLOCK_EMAG, 1)
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
@@ -1467,9 +1479,10 @@
 /obj/machinery/door/airlock/proc/finish_emag_act()
 	if(QDELETED(src))
 		return FALSE
+	set_machine_stat(machine_stat & ~MAINT)
 	operating = FALSE
 	if(!open())
-		update_icon(ALL, AIRLOCK_CLOSED, 1)
+		set_airlock_state(AIRLOCK_CLOSED)
 	obj_flags |= EMAGGED
 	lights = FALSE
 	locked = TRUE
@@ -2529,19 +2542,17 @@
 // set_density on both open and close procs has a check and return builtin.
 
 /obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS)
-	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	operating = TRUE
 	set_density(FALSE)
-	operating = FALSE
-	update_appearance()
+	set_airlock_state(AIRLOCK_OPEN, animated = FALSE)
 	return TRUE
 
 /obj/machinery/door/airlock/instant/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
-	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
+	operating = TRUE
 	set_density(TRUE)
-	operating = FALSE
-	update_appearance()
+	set_airlock_state(AIRLOCK_CLOSED, animated = FALSE)
 	return TRUE
 
 /obj/machinery/door/airlock/instant/glass

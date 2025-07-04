@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Button,
@@ -60,7 +61,7 @@ export const AutomatedAnnouncement = (props) => {
 
   const sorted = sortBy(
     filter(config_entries, (entry) => isEntryMatch(entry, search)),
-    (entry) => entry.name,
+    [(entry) => entry.name],
   );
   return (
     <Window title="Automated Announcement System" width={500} height={280}>

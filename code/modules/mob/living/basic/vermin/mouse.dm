@@ -142,8 +142,8 @@
 	if(!gibbed)
 		var/make_a_corpse = TRUE
 		var/place_to_make_corpse = loc
-		if(istype(loc, /obj/item/clothing/head/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
-			var/obj/item/clothing/head/mob_holder/found_holder = loc
+		if(istype(loc, /obj/item/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
+			var/obj/item/mob_holder/found_holder = loc
 			place_to_make_corpse = found_holder.loc
 			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
 				make_a_corpse = FALSE

@@ -4,7 +4,7 @@
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	speak_emote = list("wails", "weeps")
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"

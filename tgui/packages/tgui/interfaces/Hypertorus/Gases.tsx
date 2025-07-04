@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useBackend } from 'tgui/backend';
 import { getGasColor, getGasLabel } from 'tgui/constants';
 import {
@@ -91,7 +92,7 @@ const GasList = (props: GasListProps) => {
 
   const gases: HypertorusGas[] = sortBy(
     filter(raw_gases, (gas) => gas.amount >= 0.01),
-    (gas) => -gas.amount,
+    [(gas) => -gas.amount],
   );
 
   if (stickyGases) {

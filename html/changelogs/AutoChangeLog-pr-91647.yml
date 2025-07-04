@@ -1,5 +1,0 @@
-author: "FeudeyTF"
-delete-after: True
-changes:
-  - rscadd: "Added ability to change existing radio channels and create new"
-  - qol: "Added color for some buttons in Telecomms UI"

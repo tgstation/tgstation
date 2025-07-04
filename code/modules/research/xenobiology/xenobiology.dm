@@ -42,7 +42,7 @@
 
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()
-	create_reagents(100, INJECTABLE | DRAWABLE)
+	create_reagents(100, INJECTABLE | DRAWABLE | SEALED_CONTAINER)
 
 /**
 * Effect when activated by a Luminescent.

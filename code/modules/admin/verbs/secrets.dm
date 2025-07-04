@@ -590,8 +590,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					H.fully_replace_character_name(H.real_name,newname)
 					H.update_body_parts()
 					if(animetype == "Yes")
-						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/schoolgirl))
-						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
+						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/seifuku))
+						var/obj/item/clothing/under/costume/seifuku/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
 						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)

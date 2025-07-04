@@ -124,6 +124,6 @@
 			var/datum/quirk/quirk_type = SSquirks.quirks[quirk_name]
 			if(!(initial(quirk_type.quirk_flags) & QUIRK_CHANGES_APPEARANCE))
 				continue
-			mannequin.add_quirk(quirk_type, parent)
+			mannequin.add_quirk(quirk_type, parent, announce = FALSE)
 
 	return mannequin.appearance

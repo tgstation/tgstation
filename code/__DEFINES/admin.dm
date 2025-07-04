@@ -74,7 +74,7 @@
 /// Displays "(SHOW)" in the chat, when clicked it tries to show atom(paper). First you need to set the request_state variable to TRUE for the paper.
 #define ADMIN_SHOW_PAPER(atom) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];show_paper=[REF(atom)]'>SHOW</a>)"
 /// Displays "(PRINT)" in the chat, when clicked it will try to print the atom(paper) on the CentCom/Syndicate fax machine.
-#define ADMIN_PRINT_FAX(atom, sender, destination) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];print_fax=[REF(atom)];sender_name=[sender];destination=[destination]'>PRINT</a>)"
+#define ADMIN_PRINT_FAX(atom, sender, destination) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];print_fax=[REF(atom)];sender_name=[url_encode(sender)];destination=[url_encode(destination)]'>PRINT</a>)"
 /// Displays "(PLAY)" in the chat, when clicked it tries to play internet sounds from the request.
 #define ADMIN_PLAY_INTERNET(text, credit) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];play_internet=[url_encode(text)];credit=[credit]'>PLAY</a>)"
 /// Displays "(SEE Z-LEVEL LAYOUT)" in the chat, when clicked it shows the z-level layouts for the current world state.
@@ -101,6 +101,28 @@
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
+
+// Page numbers for the Permission Panel
+#define PERMISSIONS_PAGE_PERMISSIONS 1
+#define PERMISSIONS_PAGE_RANKS 2
+#define PERMISSIONS_PAGE_LOGGING 3
+#define PERMISSIONS_PAGE_HOUSEKEEPING 4
+
+// Actions that can be logged in the admin_log table, excepting NONE
+#define PERMISSIONS_ACTION_ADMIN_ADDED "add admin"
+#define PERMISSIONS_ACTION_ADMIN_REMOVED "remove admin"
+#define PERMISSIONS_ACTION_ADMIN_RANK_CHANGED "change admin rank"
+#define PERMISSIONS_ACTION_RANK_ADDED "add rank"
+#define PERMISSIONS_ACTION_RANK_REMOVED "remove rank"
+#define PERMISSIONS_ACTION_RANK_CHANGED "change rank flags"
+#define PERMISSIONS_ACTION_NONE "none"
+
+// The types of ranks you can have
+#define RANK_SOURCE_LOCAL "rank_local"
+#define RANK_SOURCE_TXT "rank_txt"
+#define RANK_SOURCE_DB "rank_db"
+#define RANK_SOURCE_BACKUP "rank_backup"
+#define RANK_SOURCE_TEMPORARY "rank_temp"
 
 /// Amount of time after the round starts that the player disconnect report is issued.
 #define ROUNDSTART_LOGOUT_REPORT_TIME (10 MINUTES)

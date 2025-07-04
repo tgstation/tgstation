@@ -40,6 +40,7 @@
 			LOCATION_HANDS,
 		),
 		flavour_text = "This is a precious family heirloom, passed down from generation to generation. Keep it safe!",
+		notify_player = TRUE,
 	)
 
 /datum/quirk/item_quirk/family_heirloom/post_add()

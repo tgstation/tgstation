@@ -1,4 +1,4 @@
-import { filter } from 'common/collections';
+import { filter } from 'es-toolkit/compat';
 import { flow } from 'tgui-core/fp';
 
 import { Supply, SupplyCategory } from './types';

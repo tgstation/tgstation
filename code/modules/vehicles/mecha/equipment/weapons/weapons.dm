@@ -658,7 +658,7 @@
 
 		playsound(chassis, clampsound, 50, FALSE, -6)
 		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [secmech.cargo_hold]!"))
-		if(!do_after_cooldown(mobtarget, source))
+		if(!do_after_cooldown(mobtarget, source, flags = MECH_DO_AFTER_DIR_CHANGE_FLAG|MECH_DO_AFTER_ADJACENCY_FLAG))
 			return
 		mobtarget.forceMove(secmech.cargo_hold)
 		log_message("Loaded [mobtarget]. Cargo compartment capacity: [secmech.cargo_hold.cargo_capacity - secmech.cargo_hold.contents.len]", LOG_MECHA)

@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import {
   BlockQuote,
@@ -47,7 +47,7 @@ export function CargoCatalog(props: Props) {
 
     if (!fetched) return [];
 
-    fetched = sortBy(fetched, (pack: Supply) => pack.name);
+    fetched = sortBy(fetched, [(pack: Supply) => pack.name]);
 
     return fetched;
   }, [activeSupplyName, supplies, searchText]);
@@ -105,7 +105,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
   } = props;
   const { self_paid } = data;
 
-  const sorted = sortBy(categories, (supply) => supply.name);
+  const sorted = sortBy(categories, [(supply) => supply.name]);
 
   return (
     <Stack fill vertical>

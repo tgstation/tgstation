@@ -14,7 +14,7 @@
 		TRAIT_NO_FLOATING_ANIM,
 		TRAIT_MOVE_FLYING,
 	)
-	inherent_biotypes = MOB_SPIRIT
+	inherent_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	no_equip_flags = ITEM_SLOT_FEET
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | SLIME_EXTRACT
 	sexes = FALSE

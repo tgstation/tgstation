@@ -446,7 +446,28 @@
 	color = "#9ACD32"
 	toxpwr = 1
 	ph = 11
+	liver_damage_multiplier = 0.7
+	taste_description = "spores"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/toxin/spore/on_transfer(atom/A, methods, trans_volume)
+	. = ..()
+	if(!isliving(A))
+		return
+
+	if(!(methods & INHALE))
+		return
+
+	var/mob/living/spore_lung_victim = A
+
+	if(!(spore_lung_victim.mob_biotypes & (MOB_HUMANOID | MOB_BEAST)))
+		return
+
+	if(prob(min(trans_volume * 10, 80)))
+		to_chat(spore_lung_victim, span_danger("[pick("You have a coughing fit!", "You hack and cough!", "Your lungs burn!")]"))
+		spore_lung_victim.Stun(1 SECONDS)
+		spore_lung_victim.emote("cough")
+
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
