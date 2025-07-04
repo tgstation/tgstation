@@ -5,6 +5,7 @@
 #If SQL-based admin loading is enabled, admins listed here will always be loaded first and will override any duplicate entries in the database.
 
 Optimumtact = Host
+LemonInTheDark = Host
 CitrusGender = Game Master
 NewSta = Game Master
 Expletives = Game Master
