@@ -59,3 +59,33 @@
 	name = "Water-Ruin 11"
 	id = "waterruin11"
 	suffix = "11.dmm"
+
+/datum/map_template/ruin/rainworld/twelve
+	name = "Water-Ruin 12"
+	id = "waterruin12"
+	suffix = "12.dmm"
+
+// /datum/map_template/ruin/rainworld/thirteen
+// 	name = "Water-Ruin 13"
+// 	id = "waterruin13"
+// 	suffix = "13_maybe.dmm"
+
+/datum/map_template/ruin/rainworld/fourteen
+	name = "Water-Ruin 14"
+	id = "waterruin14"
+	suffix = "14.dmm"
+
+/datum/map_template/ruin/rainworld/fifteen
+	name = "Water-Ruin 15"
+	id = "waterruin15"
+	suffix = "15.dmm"
+
+/datum/map_template/ruin/rainworld/sixteen
+	name = "Water-Ruin 16"
+	id = "waterruin16"
+	suffix = "16.dmm"
+
+/datum/map_template/ruin/rainworld/seventeen
+	name = "Water-Ruin 17"
+	id = "waterruin17"
+	suffix = "17.dmm"

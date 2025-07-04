@@ -861,7 +861,7 @@
 /area/ruin/syndielab)
 "Xt" = (
 /turf/closed/mineral/random/rainworld,
-/area/icemoon/underground/explored)
+/area/rainworld/surface)
 "YH" = (
 /obj/item/storage/medkit,
 /obj/structure/sign/poster/contraband/free_key/directional/south,
