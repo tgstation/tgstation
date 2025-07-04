@@ -158,8 +158,14 @@
 	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/lock
+	desc = "Allows you to transmute a table (or a suit), a mask and a crowbar to create a shifting guise. \
+		It grants you camoflage from cameras, hides your identity, voice and muffles your footsteps. \
+		Acts as a focus while hooded."
+	gain_text = "While stewards are known to the Concierge, \
+				they still consort between one another and with outsiders under shaded cloaks and drawn hoods. \
+				Familiarity is treachery, even to oneself."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock)
-	research_tree_icon_state = "eldritch_armor"
+	research_tree_icon_state = "lock_armor"
 	required_atoms = list(
 		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,

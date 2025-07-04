@@ -222,8 +222,13 @@
 	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/flesh
+	desc = "Allows you to transmute a table (or a suit), a mask and a pool of blood to create a writhing embrace. \
+		It grants you camoflage from cameras, hides your identity, voice and muffles your footsteps. \
+		Acts as a focus while hooded."
+	gain_text = "I tugged these wretched, slothing things about me, like one might a warm blanket. \
+				With eyes-not-mine, they will witness. With teeth-not-mine, they will clench. With limbs-not-mine, they will break."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh)
-	research_tree_icon_state = "eldritch_armor"
+	research_tree_icon_state = "flesh_armor"
 	required_atoms = list(
 		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,

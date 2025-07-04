@@ -263,6 +263,9 @@
 
 // Flesh
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh
+	name = "Writhing Embrace"
+	desc = "A rotten carcass, or perhaps several, twisted into fleshy polyps, knotted intestines and cracked bone. \
+			How one 'wears' this baffles reasonable understanding. It moves when it believes itself unobserved."
 	icon_state = "flesh_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	armor_type = /datum/armor/eldritch_armor/flesh
@@ -307,6 +310,7 @@
 
 // Lock
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock
+	name = "Shifting Guise"
 	icon_state = "lock_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	armor_type = /datum/armor/eldritch_armor/lock
