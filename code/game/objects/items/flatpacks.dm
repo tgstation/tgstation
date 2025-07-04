@@ -74,7 +74,7 @@
 	var/obj/machinery/new_machine = new board.build_path(loc)
 	loc.visible_message(span_warning("[src] deploys!"))
 	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
-	new_machine.on_construction(user)
+	new_machine.on_construction(user, from_flatpack = TRUE)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

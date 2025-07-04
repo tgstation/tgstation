@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 48
+#define SAVEFILE_VERSION_MAX 49
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -118,6 +118,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		migrate_quirk_to_loadout(
 			quirk_to_migrate = "Colorist",
 			new_typepath = /obj/item/dyespray,
+		)
+	if(current_version < 49)
+		migrate_quirk_to_loadout(
+			quirk_to_migrate = "Cyborg Pre-screened dogtag",
+			new_typepath = /obj/item/clothing/accessory/dogtag/borg_ready,
 		)
 
 /// checks through keybindings for outdated unbound keys and updates them
@@ -418,7 +423,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/output = list()
 
 	for (var/role in input_be_special)
-		if (role in GLOB.special_roles)
+		if (role in get_all_antag_flags())
 			output += role
 
 	return output.len == input_be_special.len ? input_be_special : output

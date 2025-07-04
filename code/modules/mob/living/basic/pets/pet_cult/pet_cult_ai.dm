@@ -8,6 +8,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/befriend_cultists,
 		/datum/ai_planning_subtree/find_occupied_rune,
 		/datum/ai_planning_subtree/find_dead_cultist,
@@ -16,7 +17,6 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 ///if target gets pulled away, unset him
 /datum/ai_controller/basic_controller/pet_cult/proc/delete_pull_target(datum/source, atom/movable/was_pulling)

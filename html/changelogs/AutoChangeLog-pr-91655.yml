@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "fixed ashen passage unjaunt using the wrong vfx"

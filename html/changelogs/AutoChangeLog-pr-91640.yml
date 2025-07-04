@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed flypeople not being able to drink vomit"
-  - bugfix: "Random blood decals no longer claim to be trails, only actual trails do."
