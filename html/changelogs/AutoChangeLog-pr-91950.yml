@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - admin: "Added some more Lua/SDQL2 wrappers: _floor(), _ceil(), _typesof(), _uppertext(), _html_encode(), _html_decode(), _url_encode(), and _url_decode()"

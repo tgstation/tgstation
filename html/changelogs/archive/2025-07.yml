@@ -55,3 +55,40 @@
   - bugfix: sparks will no longer ignite reagents in enclosed containers
   timothymtorres:
   - bugfix: Fix martial arts gloves runtiming when destroyed while equip
+2025-07-03:
+  0-ERRORNAME-0:
+  - image: New sprites for High-frequency blade
+  Hatterhat:
+  - code_imp: Materials bitflags should now show the bitflag interface in VV.
+  - bugfix: Food items now pass down their intrinsic materials during crafting/processing/microwaving/etc.
+      etc.
+  Krysonism:
+  - image: blob mobs have been respectfully resprited.
+  - rscadd: vat grown blob mobs can sometimes get born with a blob strain.
+  - rscadd: blob spores drop spore sacks, crack them on the griddle.
+  - rscadd: debris devourer mobs can now eat trash, sending it to the core, if there
+      is one.
+  - rscadd: vat grown blob spores are now sentient and evil.
+  - balance: blob spores now have much more concentrated smoke.
+  - balance: blob spores can ventcrawl.
+  - bugfix: regenerative materia and cryogenic poison strain blob tiles & nauts now
+      inject chems again.
+  - sound: blob spores & blobbernaut now have death sound effects.
+  Time-Green:
+  - balance: Regenerative black extract can no longer be used to create infinite voidwalker
+      loot skulls
+2025-07-04:
+  KingMapache:
+  - rscadd: Added felinid tongue to the felinid disk from research of the limbgrower
+  Melbert:
+  - qol: Adds a DNR button at the button of the ghost screen
+  - qol: The "You have died" text has now been updated to reflect this
+  grungussuss:
+  - bugfix: fixed a client login runtime
+  necromanceranne:
+  - balance: Mecha that are EMP'd properly delete their tracking beacons after many
+      years where they haven't. There is a probability for whether or not the beacon
+      is destroyed from an EMP.
+  - bugfix: ' You cannot stack multiple of the same beacon onto a single mech.'
+  twilightwanderer:
+  - bugfix: Fixing print request issues
