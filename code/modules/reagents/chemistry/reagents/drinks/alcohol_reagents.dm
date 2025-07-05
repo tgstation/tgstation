@@ -44,7 +44,6 @@
 	if(LAZYLEN(data))
 		if(!isnull(data["timecreated"]))
 			data["timecreated"] = world.time
-			var/time_created = data["timecreated"]
 		if(!isnull(data["quality"]))
 			quality = data["quality"]
 			name = "Natural " + name
@@ -113,8 +112,8 @@
 /datum/reagent/consumable/ethanol/proc/get_staleness() // for decrease in power after time
 	if(!data?["timecreated"])
 		return 1 // admin spawned reagent or something
-	var/staletime = time_created + 15 MINUTES // time before alcohol gets stale is 15 min
-	var/stalezero = time_created + 30 MINUTES // time before alcohol loses effect is 30 min
+	var/staletime = data["timecreated"] + 15 MINUTES // time before alcohol gets stale is 15 min
+	var/stalezero = data["timecreated"] + 30 MINUTES // time before alcohol loses effect is 30 min
 	if(world.time >= staletime)
 		var/time_until_staled = stalezero - world.time
 		var/degreeofstale = clamp(time_until_staled / 15 MINUTES, 0, 1)
@@ -122,6 +121,15 @@
 	if(world.time >= stalezero)
 		return 0
 	return 1
+
+/datum/reagent/consumable/ethanol/get_taste_description(mob/living/taster)
+      if(getstaleness() > 1)
+            return list("a fading taste of [taste_description]" = 1)
+      if(getstaleness() >= 0.5)
+            return list("a flattened hint of [taste_description]" = 1)
+      if(getstaleness() == 0)
+            return list("a muddied mess of [taste_description]" = 1)
+      return list("[taste_description]" = 1)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
