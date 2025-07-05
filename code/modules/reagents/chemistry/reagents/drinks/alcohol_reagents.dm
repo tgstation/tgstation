@@ -114,7 +114,9 @@
 	var/staletime = data["timecreated"] + 15 MINUTES // time before alcohol gets stale is 15 min
 	var/stalezero = data["timecreated"] + 30 MINUTES // time before alcohol loses effect is 30 min
 	if(world.time >= staletime)
-		return 0.5
+		var/time_until_staled = stalezero - world.time
+                var/degreeofstale = clamp(time_until_staled / 15 MINUTES, 0, 1)
+                return degreeofstale
 	if(world.time >= stalezero)
         	return 0
 	return 1
