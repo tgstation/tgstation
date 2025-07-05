@@ -14,13 +14,13 @@
 		control_tracker = B
 		break
 
-	if(!data_tracker)
+	if(!data_tracker && !user.can_dominate_mechs)
 		to_chat(user, span_warning("You cannot interface this exosuit without tracking beacons installed."))
 		return
 
 	if(data_tracker || user.can_dominate_mechs)
 		output += span_notice("[icon2html(src, user)] [name] Exosuit Status Report\n")
-		output += data_tracker.get_mecha_info()
+		output += data_tracker?.get_mecha_info()
 
 	if(user.can_dominate_mechs)
 		if(data_tracker)

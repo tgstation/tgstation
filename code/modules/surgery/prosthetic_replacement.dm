@@ -22,7 +22,7 @@
 	if(!iscarbon(target))
 		return FALSE
 	var/mob/living/carbon/carbon_target = target
-	if(!carbon_target.get_bodypart(user.zone_selected)) //can only start if limb is missing
+	if(!carbon_target.get_bodypart(user.zone_selected) && carbon_target.should_have_limb(user.zone_selected)) //can only start if limb is missing
 		return TRUE
 	return FALSE
 
@@ -33,10 +33,34 @@
 	implements = list(
 		/obj/item/bodypart = 100,
 		/obj/item/borg/apparatus/organ_storage = 100,
-		/obj/item/chainsaw = 100,
-		/obj/item/melee/synthetic_arm_blade = 100)
-	time = 32
-	var/organ_rejection_dam = 0
+		/obj/item = 100,
+	)
+	time = 3.2 SECONDS
+	/// Toxin damage incurred by the target if an organic limb is attached
+	VAR_FINAL/organ_rejection_dam = 0
+	/// List of items that are always allowed to be an arm replacement, even if they fail another requirement.
+	var/list/always_accepted_prosthetics = list(
+		/obj/item/chainsaw, // the OG, too large otherwise
+		/obj/item/melee/synthetic_arm_blade, // also too large otherwise
+		/obj/item/food/pizzaslice, // he's turning her into a papa john's
+	)
+
+/datum/surgery_step/add_prosthetic/tool_check(mob/user, obj/item/tool)
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
+		if(!length(tool.contents))
+			return FALSE
+		tool = tool.contents[1]
+	if(tool.item_flags & (ABSTRACT|HAND_ITEM|DROPDEL))
+		return FALSE
+	if(isbodypart(tool))
+		return TRUE // auto pass - "intended" use case
+	if(is_type_in_list(tool, always_accepted_prosthetics))
+		return TRUE // auto pass - soulful prosthetics
+	if(tool.w_class < WEIGHT_CLASS_NORMAL || tool.w_class > WEIGHT_CLASS_BULKY)
+		return FALSE // too large or too small items don't make sense as a limb replacement
+	if(HAS_TRAIT(tool, TRAIT_WIELDED))
+		return FALSE // prevents exploits from weird edge cases - either unwield or get out
+	return TRUE
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
@@ -85,52 +109,80 @@
 			span_notice("[user] begins to attach something onto [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		)
 	else
-		to_chat(user, span_warning("[tool] must be installed onto an arm."))
+		to_chat(user, span_warning("[tool] must be attached to an arm socket."))
 		return SURGERY_STEP_FAIL
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	. = ..()
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 		tool.icon_state = initial(tool.icon_state)
 		tool.desc = initial(tool.desc)
 		tool.cut_overlays()
 		tool = tool.contents[1]
-	if(isbodypart(tool) && user.temporarilyRemoveItemFromInventory(tool))
-		var/obj/item/bodypart/bodypart_to_attach = tool
-		bodypart_to_attach.try_attach_limb(target)
-		if(bodypart_to_attach.check_for_frankenstein(target))
-			bodypart_to_attach.bodypart_flags |= BODYPART_IMPLANTED
-		if(organ_rejection_dam)
-			target.adjustToxLoss(organ_rejection_dam)
-		display_results(
-			user,
-			target,
-			span_notice("You succeed in replacing [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
-			span_notice("[user] successfully replaces [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
-			span_notice("[user] successfully replaces [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
-		)
-		display_pain(target, "You feel synthetic sensation wash from your [target.parse_zone_with_bodypart(target_zone)], which you can feel again!", TRUE)
+	else if(!user.temporarilyRemoveItemFromInventory(tool))
+		to_chat(user, span_warning("You can't seem to part with [tool]!"))
+		return FALSE
+
+	. = ..()
+	if(isbodypart(tool))
+		handle_bodypart(user, target, tool, target_zone)
 		return
-	else
-		var/obj/item/bodypart/bodypart_to_attach = target.newBodyPart(target_zone, FALSE, FALSE)
-		bodypart_to_attach.try_attach_limb(target)
-		bodypart_to_attach.bodypart_flags |= BODYPART_PSEUDOPART | BODYPART_IMPLANTED
-		user.visible_message(span_notice("[user] finishes attaching [tool]!"), span_notice("You attach [tool]."))
-		display_results(
-			user,
-			target,
-			span_notice("You attach [tool]."),
-			span_notice("[user] finishes attaching [tool]!"),
-			span_notice("[user] finishes the attachment procedure!"),
-		)
-		display_pain(target, "You feel a strange sensation from your new [target.parse_zone_with_bodypart(target_zone)].", TRUE)
-		if(istype(tool, /obj/item/chainsaw))
-			qdel(tool)
-			var/obj/item/chainsaw/mounted_chainsaw/new_arm = new(target)
-			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
-			return
-		else if(istype(tool, /obj/item/melee/synthetic_arm_blade))
-			qdel(tool)
-			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
-			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
-			return
+	handle_arbitrary_prosthetic(user, target, tool, target_zone)
+	surgery.steps += /datum/surgery_step/secure_arbitrary_prosthetic
+
+/datum/surgery_step/add_prosthetic/proc/handle_bodypart(mob/user, mob/living/carbon/target, obj/item/bodypart/bodypart_to_attach, target_zone)
+	bodypart_to_attach.try_attach_limb(target)
+	if(bodypart_to_attach.check_for_frankenstein(target))
+		bodypart_to_attach.bodypart_flags |= BODYPART_IMPLANTED
+	if(organ_rejection_dam)
+		target.adjustToxLoss(organ_rejection_dam)
+	display_results(
+		user, target,
+		span_notice("You succeed in replacing [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] successfully replaces [target]'s [target.parse_zone_with_bodypart(target_zone)] with [bodypart_to_attach]!"),
+		span_notice("[user] successfully replaces [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+	)
+	display_pain(target, "You feel synthetic sensation wash from your [target.parse_zone_with_bodypart(target_zone)], which you can feel again!", TRUE)
+
+/datum/surgery_step/add_prosthetic/proc/handle_arbitrary_prosthetic(mob/user, mob/living/carbon/target, obj/item/thing_to_attach, target_zone)
+	target.make_item_prosthetic(thing_to_attach, target_zone, 80)
+	display_results(
+		user, target,
+		span_notice("You attach [thing_to_attach]."),
+		span_notice("[user] finishes attaching [thing_to_attach]!"),
+		span_notice("[user] finishes the attachment procedure!"),
+	)
+	display_pain(target, "You feel a strange sensation as [thing_to_attach] takes place of an arm!", TRUE)
+
+/datum/surgery_step/secure_arbitrary_prosthetic
+	name = "secure prosthetic (suture/tape)"
+	implements = list(
+		/obj/item/stack/medical/suture = 100,
+		/obj/item/stack/sticky_tape/surgical = 80,
+		/obj/item/stack/sticky_tape = 50,
+	)
+	time = 4.8 SECONDS
+
+/datum/surgery_step/secure_arbitrary_prosthetic/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	var/obj/limb = target.get_bodypart(target_zone)
+	var/obj/item/stack/thing = tool
+	display_results(
+		user, target,
+		span_notice("You begin to [thing.singular_name] [limb] to [target]'s body."),
+		span_notice("[user] begins to [thing.singular_name] [limb] to [target]'s body."),
+		span_notice("[user] begins to [thing.singular_name] something to [target]'s body."),
+	)
+	display_pain(target, "[user] begins to [thing.singular_name] [limb] to your body!", TRUE)
+
+/datum/surgery_step/secure_arbitrary_prosthetic/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	var/obj/limb = target.get_bodypart(target_zone)
+	var/obj/item/stack/thing = tool
+	thing.use(1)
+	limb.AddComponent(/datum/component/item_as_prosthetic_limb, null, 0) // updates drop probability to zero
+	display_results(
+		user, target,
+		span_notice("You [thing.singular_name] [limb] to [target]'s body."),
+		span_notice("[user] [thing.singular_name] [limb] to [target]'s body!"),
+		span_notice("[user] [thing.singular_name][plural_s(thing.singular_name)] something to [target]'s body!"),
+	)
+	display_pain(target, "[user] [thing.singular_name][plural_s(thing.singular_name)] [limb] to your body!", TRUE)
+	return TRUE

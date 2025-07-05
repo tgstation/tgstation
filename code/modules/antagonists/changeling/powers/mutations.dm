@@ -202,7 +202,7 @@
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	wound_bonus = 10
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	armour_penetration = 35
 	var/can_drop = FALSE
 	var/fake = FALSE
@@ -266,7 +266,7 @@
 	desc = "We ready a tentacle to grab items or victims with. Costs 10 chemicals."
 	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on our combat mode: \
 	In our neutral stance, we will simply drag them closer; if we try to shove, we will grab whatever they're holding in their active hand instead of them; \
-	in our combat stance, we will put the victim in our hold after catching them, and we will pull them in and stab them if we're also holding a sharp weapon. \
+	In our combat stance, we will put the victim in our hold after catching them, and we will pull them in and impale them if we're also holding a sharp weapon, or have an armblade. This pierces armor. \
 	Cannot be used while in lesser form."
 	button_icon_state = "tentacle"
 	chemical_cost = 10

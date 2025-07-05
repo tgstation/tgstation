@@ -358,14 +358,14 @@
 
 	return ..()
 
-/mob/living/silicon/robot/proc/self_destruct(mob/usr)
+/mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
-	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
-	usr.log_message("detonated [key_name(src)]!", LOG_ATTACK)
-	log_message("was detonated by [key_name(usr)]!", LOG_ATTACK, log_globally = FALSE)
+	message_admins(span_notice("[ADMIN_LOOKUPFLW(user)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
+	user.log_message("detonated [key_name(src)]!", LOG_ATTACK)
+	log_message("was detonated by [key_name(user)]!", LOG_ATTACK, log_globally = FALSE)
 
-	log_combat(usr, src, "detonated cyborg")
-	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
+	log_combat(user, src, "detonated cyborg")
+	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(user)].")
 	if(connected_ai)
 		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
 
@@ -897,7 +897,7 @@
 		radio.command = TRUE
 		radio.channels = AI.radio.channels
 		for(var/chan in radio.channels)
-			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.radiochannels[chan])
+			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.default_radio_channels[chan])
 
 	diag_hud_set_aishell()
 	undeployment_action.Grant(src)
@@ -1031,10 +1031,7 @@
 
 /mob/living/silicon/robot/get_exp_list(minutes)
 	. = ..()
-
-	var/datum/job/cyborg/cyborg_job_ref = SSjob.get_job_type(/datum/job/cyborg)
-
-	.[cyborg_job_ref.title] = minutes
+	.[/datum/job/cyborg::title] = minutes
 
 /mob/living/silicon/robot/proc/untip_roleplay()
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))

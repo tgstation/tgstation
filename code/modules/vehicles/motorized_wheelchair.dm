@@ -41,12 +41,15 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
 /obj/vehicle/ridden/wheelchair/motorized/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
-	// This wheelchair was crafted, so clean out default parts
-	qdel(power_cell)
-	component_parts = list()
+	. = ..()
 
+	// This wheelchair was crafted, so clean out default parts
+	QDEL_NULL(power_cell)
+
+	component_parts = list()
 	for(var/obj/item/stock_parts/part in contents)
-		if(istype(part, /obj/item/stock_parts/power_store/cell)) // power cell, physically moves into the wheelchair
+		// power cell, physically moves into the wheelchair
+		if(istype(part, /obj/item/stock_parts/power_store/cell))
 			power_cell = part
 			continue
 
@@ -55,9 +58,8 @@
 		if(isnull(newstockpart))
 			CRASH("No corresponding datum/stock_part for [part.type]")
 		component_parts += newstockpart
+		qdel(part)
 	refresh_parts()
-
-	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
@@ -138,12 +140,14 @@
 	. = ..()
 	if (!disassembled)
 		return
-	new /obj/item/stack/rods(drop_location(), 2)
-	new /obj/item/stack/sheet/iron(drop_location(), 6)
+
+	var/atom/drop = drop_location()
+	new /obj/item/stack/rods(drop, 2)
+	new /obj/item/stack/sheet/iron(drop, 6)
 	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
+		new part.physical_object_type(drop)
 	if(!isnull(power_cell))
-		power_cell.forceMove(drop_location())
+		power_cell.forceMove(drop)
 		power_cell = null
 
 /obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)
@@ -161,7 +165,7 @@
 		return
 	. += "Speed: [speed]"
 	. += "Energy efficiency: [power_efficiency]"
-	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
+	. += "Power: [display_energy(power_cell.charge)] out of [display_energy(power_cell.maxcharge)]"
 
 /obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
 	. = ..()

@@ -356,7 +356,7 @@
 		def_zone = targeting,
 		blocked = armor_block,
 		wound_bonus = wounding,
-		bare_wound_bonus = attacking_item.bare_wound_bonus,
+		exposed_wound_bonus = attacking_item.exposed_wound_bonus,
 		sharpness = attacking_item.get_sharpness(),
 		attack_direction = get_dir(user, src),
 		attacking_item = attacking_item,
@@ -380,7 +380,7 @@
 	if(get_dist(attacker, src) > 1)
 		return TRUE
 
-	if(ishuman(attacker))
+	if(!ishuman(attacker))
 		attacker.add_mob_blood(src)
 		return TRUE
 

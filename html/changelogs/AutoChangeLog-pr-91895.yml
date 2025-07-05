@@ -1,0 +1,7 @@
+author: "Kubisopplay"
+delete-after: True
+changes:
+  - rscadd: "Malfunctioning AI gets constant influx of processing time from hacked APCs"
+  - rscadd: "Delta and robot factory are now locked behind a minimum amount of hacked APCs"
+  - refactor: "Malf AI modules can now be locked behind a certain minimum number of hacked APCs"
+  - balance: "Lowers the cost of voicechanger to make it less punishing at the beginning of the round"

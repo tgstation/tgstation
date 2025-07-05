@@ -1,0 +1,94 @@
+2025-07-01:
+  Twaticus:
+  - image: resprites the maid uniform and headband using GAGs
+  - rscdel: removes standalone maid neckpiece, gloves, and corset
+  grungussuss:
+  - bugfix: moving out of range of a target you are clamping while strafing will halt
+      the do_after of mechs
+2025-07-02:
+  FeudeyTF:
+  - bugfix: added light theme support for standard radio channels
+  - bugfix: fixed evidences twitching on the detective's board
+  Krysonism:
+  - balance: Morbid people, like the coroner now amputate 30% faster using the amputation
+      shears.
+  - balance: Morbid people dig graves 30% faster.
+  - balance: ' Better shovels dig graves faster.'
+  Kubisopplay:
+  - bugfix: Emag stun is long enough to not let a cyborg act before they see their
+      new laws
+  Melbert:
+  - qol: Energy Katana is now a bit more consistent about what you can and cannot
+      teleport to, now abiding by the same rules as the heirophant staff. IE, you
+      can now teleport onto tables.
+  - rscadd: Energy Katana now has a "teleport attack" - if you click on a mob, you
+      will teleport adjacent to them and immediately perform an attack!
+  - rscadd: Energy Katana is now considered a threatening weapon by secbots. Ninjas
+      will be unaffected, but if you loot one off a dead ninja and don't have a weapons
+      permit, it might chase after you.
+  Sealed101:
+  - bugfix: fixed borgs being able to shatter glass into shards when there's no glass
+      in the synthesizer
+  - bugfix: shattering sheets into shards with telekinesis will place the shards at
+      the stack, not at the user's feet
+  SyncIt21:
+  - bugfix: motorized wheelchairs can be upgraded again
+  Time-Green, INFRARED_BACON:
+  - rscadd: Voidwalker has been throughly reworked! Now you are even less safe!
+  - admin: Adds admin-only Sunwalker mob
+  - bugfix: Unsettle doesnt work on yourself anymore
+  - bugfix: Space camo doesnt stop bobbing anymore
+  - bugfix: Voidwalker windows now recharge on kidnap
+  Webcomicartist:
+  - qol: A handful of Changeling abilities have more detailed shop descriptions.
+  - qol: Changeling "Dissonant Shriek" renamed to "Technophagic Shriek" to emphasize
+      its use against all computers and avoid confusion with the anti-human "Resonant
+      Shriek"
+  - bugfix: Changeling Tentacle now informs you it pierces armor and impale works
+      with armblade.
+  grungussuss:
+  - code_imp: mob holders are no longer subtypes of clothes, report any issues
+  - bugfix: canister shots are no longer always "spent"
+  - bugfix: portable grav gen effects can't be moved by tram
+  - code_imp: portable grav gen effects are actually a subtype of effect now
+  - sound: cigarette packs now have more sfx
+  - bugfix: sparks will no longer ignite reagents in enclosed containers
+  timothymtorres:
+  - bugfix: Fix martial arts gloves runtiming when destroyed while equip
+2025-07-03:
+  0-ERRORNAME-0:
+  - image: New sprites for High-frequency blade
+  Hatterhat:
+  - code_imp: Materials bitflags should now show the bitflag interface in VV.
+  - bugfix: Food items now pass down their intrinsic materials during crafting/processing/microwaving/etc.
+      etc.
+  Krysonism:
+  - image: blob mobs have been respectfully resprited.
+  - rscadd: vat grown blob mobs can sometimes get born with a blob strain.
+  - rscadd: blob spores drop spore sacks, crack them on the griddle.
+  - rscadd: debris devourer mobs can now eat trash, sending it to the core, if there
+      is one.
+  - rscadd: vat grown blob spores are now sentient and evil.
+  - balance: blob spores now have much more concentrated smoke.
+  - balance: blob spores can ventcrawl.
+  - bugfix: regenerative materia and cryogenic poison strain blob tiles & nauts now
+      inject chems again.
+  - sound: blob spores & blobbernaut now have death sound effects.
+  Time-Green:
+  - balance: Regenerative black extract can no longer be used to create infinite voidwalker
+      loot skulls
+2025-07-04:
+  KingMapache:
+  - rscadd: Added felinid tongue to the felinid disk from research of the limbgrower
+  Melbert:
+  - qol: Adds a DNR button at the button of the ghost screen
+  - qol: The "You have died" text has now been updated to reflect this
+  grungussuss:
+  - bugfix: fixed a client login runtime
+  necromanceranne:
+  - balance: Mecha that are EMP'd properly delete their tracking beacons after many
+      years where they haven't. There is a probability for whether or not the beacon
+      is destroyed from an EMP.
+  - bugfix: ' You cannot stack multiple of the same beacon onto a single mech.'
+  twilightwanderer:
+  - bugfix: Fixing print request issues

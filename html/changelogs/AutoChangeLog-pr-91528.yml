@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - code_imp: "the russian derelict vault computer now uses a variable for the door id"
