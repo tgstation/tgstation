@@ -3266,9 +3266,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
-"Jv" = (
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/control)
 "Jx" = (
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/mineral/plastitanium/red,
@@ -9497,7 +9494,7 @@ Ox
 xv
 um
 xv
-Jv
+To
 zT
 Ox
 "}
