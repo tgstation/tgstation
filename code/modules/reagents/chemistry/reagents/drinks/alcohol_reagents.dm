@@ -108,17 +108,17 @@
 		for(var/datum/surgery/surgery as anything in exposed_mob.surgeries)
 			surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
 
-/datum/reagent/ethanol/proc/get_staleness() // for decrease in power after time
+/datum/reagent/consumable/ethanol/proc/get_staleness() // for decrease in power after time
 	if(!data?["timecreated"])
 		return 1 // admin spawned reagent or something
 	var/staletime = data["timecreated"] + 15 MINUTES // time before alcohol gets stale is 15 min
 	var/stalezero = data["timecreated"] + 30 MINUTES // time before alcohol loses effect is 30 min
 	if(world.time >= staletime)
 		var/time_until_staled = stalezero - world.time
-                var/degreeofstale = clamp(time_until_staled / 15 MINUTES, 0, 1)
-                return degreeofstale
+		var/degreeofstale = clamp(time_until_staled / 15 MINUTES, 0, 1)
+		return degreeofstale
 	if(world.time >= stalezero)
-        	return 0
+		return 0
 	return 1
 
 /datum/reagent/consumable/ethanol/beer
