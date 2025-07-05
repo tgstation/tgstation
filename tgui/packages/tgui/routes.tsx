@@ -9,27 +9,28 @@ import { useDebug } from './debug';
 import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
 
+const UI_MISSING_EXPORT = 'missingExport';
+const UI_NOT_FOUND = 'notFound';
 const requireInterface = require.context('./interfaces');
 
-const routingError =
-  (type: 'notFound' | 'missingExport', name: string) => () => {
-    return (
-      <Window>
-        <Window.Content scrollable>
-          {type === 'notFound' && (
-            <div>
-              Interface <b>{name}</b> was not found.
-            </div>
-          )}
-          {type === 'missingExport' && (
-            <div>
-              Interface <b>{name}</b> is missing an export.
-            </div>
-          )}
-        </Window.Content>
-      </Window>
-    );
-  };
+type UIErrorType = typeof UI_NOT_FOUND | typeof UI_MISSING_EXPORT;
+function routingError(errorType: UIErrorType, name: string) {
+  let errorMessage;
+  switch (errorType) {
+    case UI_MISSING_EXPORT:
+      errorMessage = `Interface ${name} is missing an export.`;
+      break;
+    case UI_NOT_FOUND:
+      errorMessage = `Interface ${name} was not found.`;
+      break;
+  }
+
+  return (
+    <Window>
+      <Window.Content scrollable>{errorMessage}</Window.Content>
+    </Window>
+  );
+}
 
 // Displays an empty Window with scrollable content
 function SuspendedWindow() {
@@ -57,17 +58,15 @@ export function getRoutedComponent() {
   const { kitchenSink = false } = useDebug();
 
   if (suspended) {
-    return SuspendedWindow;
-  }
-  if (config?.refreshing) {
-    return RefreshingWindow;
+    return <SuspendedWindow />;
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    // Show a kitchen sink
-    if (kitchenSink) {
-      return require('./debug').KitchenSink;
-    }
+  if (config?.refreshing) {
+    return <RefreshingWindow />;
+  }
+
+  if (process.env.NODE_ENV !== 'production' && kitchenSink) {
+    return require('./debug').KitchenSink;
   }
 
   const name = config?.interface?.name;
@@ -92,12 +91,12 @@ export function getRoutedComponent() {
   }
 
   if (!esModule) {
-    return routingError('notFound', name);
+    return routingError(UI_NOT_FOUND, name);
   }
 
   const Component = esModule[name];
   if (!Component) {
-    return routingError('missingExport', name);
+    return routingError(UI_MISSING_EXPORT, name);
   }
 
   return Component;
