@@ -43,7 +43,7 @@
   })();
 
   // Basic checks to detect whether this page runs in BYOND
-  var isByond =
+  const isByond =
     (Byond.BLINK !== null || window.cef_to_byond) &&
     location.hostname === '127.0.0.1' &&
     location.search !== '?external';
@@ -52,9 +52,6 @@
 
   // Version constants
   Byond.IS_BYOND = isByond;
-
-  // Strict mode flag
-  Byond.strictMode = Boolean(Number(parseMetaTag('tgui:strictMode')));
 
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
@@ -378,80 +375,83 @@
   Byond.iconRefMap = {};
 })();
 
-// Error handling
-// ------------------------------------------------------
+// MARK: Error handling
+const ERROR_THRESHOLD = 10;
+const ERROR_TIMEOUT = 10000;
 
+let errorTimeout;
+let errorsCount = 0;
 window.onerror = function (msg, url, line, col, error) {
-  window.onerror.errorCount = (window.onerror.errorCount || 0) + 1;
   // Proper stacktrace
-  var stack = error && error.stack;
-  // Ghetto stacktrace
-  if (!stack) {
-    stack = msg + '\n   at ' + url + ':' + line;
-    if (col) {
-      stack += ':' + col;
-    }
-  }
+  let stack = error && error.stack;
   // Augment the stack
   stack = window.__augmentStack__(stack, error);
-  // Print error to the page
-  if (Byond.strictMode) {
-    var errorRoot = document.getElementById('FatalError');
-    var errorStack = document.getElementById('FatalError__stack');
-    if (errorRoot) {
-      errorRoot.className = 'FatalError FatalError--visible';
-      if (window.onerror.__stack__) {
-        window.onerror.__stack__ += '\n\n' + stack;
-      } else {
-        window.onerror.__stack__ = stack;
-      }
-      var textProp = 'textContent';
-      errorStack[textProp] = window.onerror.__stack__;
+
+  // Let user try to use UI if there is not much errors
+  // But notify coders/admins by throwing runtime
+  errorsCount++;
+  if (errorsCount <= ERROR_THRESHOLD) {
+    // Prevent runtime spam
+    if (errorsCount === 1) {
+      Byond.sendMessage({ type: 'error', message: stack });
     }
-    // Set window geometry
-    var setFatalErrorGeometry = function () {
-      Byond.winset(Byond.windowId, {
-        titlebar: true,
-        'is-visible': true,
-        'can-resize': true,
-      });
-    };
-    setFatalErrorGeometry();
-    setInterval(setFatalErrorGeometry, 1000);
+
+    clearTimeout(errorTimeout);
+    errorTimeout = setTimeout(() => {
+      errorsCount = 0;
+    }, ERROR_TIMEOUT);
+    return;
   }
+
+  // Clean UI
+  const deadUIRoot = document.getElementById('react-root');
+  if (deadUIRoot) {
+    deadUIRoot.remove();
+  }
+
+  // Print error to the page
+  const errorRoot = document.getElementById('FatalError');
+  const errorStack = document.getElementById('FatalError__stack');
+  if (errorRoot) {
+    errorRoot.className = 'FatalError FatalError--visible';
+    errorStack.textContent = stack;
+  }
+
+  // Set window geometry
+  function setFatalErrorGeometry() {
+    const pixelRatio = window.devicePixelRatio ?? 1;
+    const size = 500 * pixelRatio;
+    Byond.winset(Byond.windowId, {
+      size: `${size}x${size}`,
+      titlebar: true,
+      'is-visible': true,
+      'can-resize': true,
+    });
+  }
+  setFatalErrorGeometry();
+  setInterval(setFatalErrorGeometry, 1000);
+
   // Send logs to the game server
-  if (Byond.strictMode) {
-    Byond.sendMessage({
-      type: 'log',
-      fatal: 1,
-      message: stack,
-    });
-  } else if (window.onerror.errorCount <= 1) {
-    stack += '\nWindow is in non-strict mode, future errors are suppressed.';
-    Byond.sendMessage({
-      type: 'log',
-      message: stack,
-    });
-  }
-  // Short-circuit further updates
-  if (Byond.strictMode) {
-    window.update = function () {};
-    window.update.queue = [];
-  }
+  Byond.sendMessage({ type: 'crash', message: stack });
+
+  // Prevent any updates by killing store
+  delete window.__store__;
+
   // Prevent default action
   return true;
 };
 
 // Catch unhandled promise rejections
 window.onunhandledrejection = function (e) {
-  var msg = 'UnhandledRejection';
-  if (e.reason) {
-    msg += ': ' + (e.reason.message || e.reason.description || e.reason);
-    if (e.reason.stack) {
-      e.reason.stack = 'UnhandledRejection: ' + e.reason.stack;
+  const reason = e.reason;
+  let msg = 'UnhandledRejection';
+  if (reason) {
+    msg += `: ${reason.message || reason.description || reason}`;
+    if (reason.stack) {
+      reason.stack = `UnhandledRejection: ${reason.stack}`;
     }
   }
-  window.onerror(msg, null, null, null, e.reason);
+  window.onerror(msg, null, null, null, reason);
 };
 
 // Helper for augmenting stack traces on fatal errors

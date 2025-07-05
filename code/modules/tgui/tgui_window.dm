@@ -87,7 +87,6 @@
 	// Generate page html
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
-	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
 	// Inject assets
 	var/inline_assets_str = ""
 	for(var/datum/asset/asset in assets)
@@ -345,19 +344,27 @@
 		// Resend the assets
 		for(var/asset in sent_assets)
 			send_asset(asset)
-	// Mark this window as fatally errored which prevents it from
-	// being suspended.
-	if(type == "log" && href_list["fatal"])
+
+	// Make a runtime from UI error
+	if(type == "error" && href_list["message"])
+		CRASH(href_list["message"])
+
+	// Mark this window as fatally errored which prevents it from being suspended.
+	if(type == "crash" && href_list["message"])
 		fatally_errored = TRUE
+		CRASH(href_list["message"])
+
 	// Mark window as ready since we received this message from somewhere
 	if(status != TGUI_WINDOW_READY)
 		status = TGUI_WINDOW_READY
 		flush_message_queue()
+
 	// Pass message to UI that requested the lock
 	if(locked && locked_by)
 		var/prevent_default = locked_by.on_message(type, payload, href_list)
 		if(prevent_default)
 			return
+
 	// Pass message to the subscriber
 	else if(subscriber_object)
 		var/prevent_default = call(
@@ -365,6 +372,7 @@
 			subscriber_delegate)(type, payload, href_list)
 		if(prevent_default)
 			return
+
 	// If not locked, handle these message types
 	switch(type)
 		if("ping")
