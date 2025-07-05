@@ -123,11 +123,11 @@
 	return 1
 
 /datum/reagent/consumable/ethanol/get_taste_description(mob/living/taster)
-      if(getstaleness() < 1)
+      if(get_staleness() < 1)
             return list("a fading taste of [taste_description]" = 1)
-      if(getstaleness() <= 0.5)
+      if(get_staleness() <= 0.5)
             return list("a flattened hint of [taste_description]" = 1)
-      if(getstaleness() == 0)
+      if(get_staleness() == 0)
             return list("a muddied mess of [taste_description]" = 1)
       return list("[taste_description]" = 1)
 
