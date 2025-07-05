@@ -244,11 +244,10 @@ const Product = (props: ProductProps) => {
   const remaining = productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled =
+    !access ||
     remaining === 0 ||
     (!all_products_free && !user) ||
-    (!all_products_free &&
-      !access &&
-      (discount ? redPrice : product.price) > user?.cash);
+    (!free && (discount ? redPrice : product.price) > user?.cash);
 
   const baseProps = {
     base64: product.image,
