@@ -1528,4 +1528,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
 #define TRAIT_UNCOVERED_TURF "uncovered_turf"
 
+/// A trait that blocks the metabolism of formaldehyde
+#define TRAIT_BLOCK_FORMALDEHYDE_METABOLISM "block_formaldehyde_metabolism"
+
 // END TRAIT DEFINES
