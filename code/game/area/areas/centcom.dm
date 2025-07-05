@@ -182,35 +182,8 @@
 	icon_state = "syndie-control"
 	static_lighting = TRUE
 
-/area/centcom/syndicate_mothership/expansion_bombthreat
-	name = "Syndicate Ordnance Laboratory"
-	icon_state = "syndie-elite"
-	static_lighting = TRUE
-	ambience_index = AMBIENCE_ENGI
-
-/area/centcom/syndicate_mothership/expansion_bioterrorism
-	name = "Syndicate Bio-Weapon Laboratory"
-	icon_state = "syndie-elite"
-	static_lighting = TRUE
-	ambience_index = AMBIENCE_MEDICAL
-
-/area/centcom/syndicate_mothership/expansion_chemicalwarfare
-	name = "Syndicate Chemical Weapon Manufacturing Plant"
-	icon_state = "syndie-elite"
-	static_lighting = TRUE
-	ambience_index = AMBIENCE_REEBE
-
-/area/centcom/syndicate_mothership/expansion_fridgerummage
-	name = "Syndicate Perishables and Foodstuffs Storage"
-	icon_state = "syndie-elite"
-	static_lighting = TRUE
-
 /area/centcom/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
-	icon_state = "syndie-elite"
-
-/area/centcom/syndicate_mothership/expansion_custodialcloset
-	name = "Syndicate Custodial Closet"
 	icon_state = "syndie-elite"
 
 //MAFIA

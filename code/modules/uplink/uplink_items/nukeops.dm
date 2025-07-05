@@ -808,60 +808,6 @@
 	cost = 4
 	cant_discount = TRUE
 
-// Base Keys
-
-/datum/uplink_category/base_keys
-	name = "Base Keys"
-	weight = 27
-
-/datum/uplink_item/base_keys
-	category = /datum/uplink_category/base_keys
-	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS
-	cost = 5
-	cant_discount = TRUE
-
-/datum/uplink_item/base_keys/bomb_key
-	name = "Syndicate Ordnance Laboratory Access Card"
-	desc = "Do you fancy yourself an explosives expert? If so, then consider yourself lucky! With this special Authorization Key, \
-		you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
-		very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
-	cost = 30
-	item = /obj/item/keycard/syndicate_bomb
-
-/datum/uplink_item/base_keys/bio_key
-	name = "Syndicate Bio-Weapon Laboratory Access Card"
-	desc = "In the right hands, even vile corpo technology can be turned into a vast arsenal of liberation and justice. From \
-		micro-organism symbiosis to slime-core weaponization, this special Authorization Key can let you push past the boundaries \
-		of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with natural life support! *Plants not included."
-	item = /obj/item/keycard/syndicate_bio
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
-
-/datum/uplink_item/base_keys/chem_key
-	name = "Syndicate Chemical Plant Access Card"
-	desc = "For some of our best Operatives, watching corpo space stations blow up with a flash of retribution just isn't enough. \
-		Folks like those prefer a more personal touch to their artistry. For those interested, a special Authorization Key \
-		can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
-		and listen to the best classic music today!"
-	item = /obj/item/keycard/syndicate_chem
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
-
-/datum/uplink_item/base_keys/fridge_key
-	name = "Lopez's Access Card"
-	desc = "Hungry? So is everyone in Firebase Balthazord. Lopez is a great cook, don't get me wrong, but he's stubborn when it \
-		comes to the meal plans. Sometimes you just want to pig out. Listen, don't tell anyone, ok? I picked this out of his \
-		pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
-		you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
-	item = /obj/item/keycard/syndicate_fridge
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
-
-/datum/uplink_item/base_keys/custodial_key
-	name = "Syndicate Custodial Access Card"
-	desc = "Your workplace dirty? No problem! with this card you gain access to the custodial. Containing a janitorial cart \
-	with some janitorial supplies and an canister of water vapour."
-	item = /obj/item/keycard/syndicate_custodial
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
-
 // Hats
 // It is fundamental for the game's health for there to be a hat crate for nuclear operatives.
 
