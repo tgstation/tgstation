@@ -42,7 +42,9 @@
 
 /datum/reagent/consumable/ethanol/New(list/data)
 	if(LAZYLEN(data))
-		data["timecreated"] = world.time
+		if(!isnull(data["timecreated"]))
+			data["timecreated"] = world.time
+			var/time_created = data["timecreated"]
 		if(!isnull(data["quality"]))
 			quality = data["quality"]
 			name = "Natural " + name
@@ -111,8 +113,8 @@
 /datum/reagent/consumable/ethanol/proc/get_staleness() // for decrease in power after time
 	if(!data?["timecreated"])
 		return 1 // admin spawned reagent or something
-	var/staletime = data["timecreated"] + 15 MINUTES // time before alcohol gets stale is 15 min
-	var/stalezero = data["timecreated"] + 30 MINUTES // time before alcohol loses effect is 30 min
+	var/staletime = time_created + 15 MINUTES // time before alcohol gets stale is 15 min
+	var/stalezero = time_created + 30 MINUTES // time before alcohol loses effect is 30 min
 	if(world.time >= staletime)
 		var/time_until_staled = stalezero - world.time
 		var/degreeofstale = clamp(time_until_staled / 15 MINUTES, 0, 1)
