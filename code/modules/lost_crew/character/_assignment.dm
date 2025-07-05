@@ -29,7 +29,7 @@
 		card.registered_name = working_dead.name
 		card.registered_age = working_dead.age
 		SSid_access.apply_trim_to_card(card, trim)
-		job_gear += card
+		protected_job_gear += card
 
 /datum/corpse_assignment/proc/assign_job(mob/living/carbon/human/working_undead)
 	working_undead.mind.set_assigned_role_with_greeting(new job_datum (), working_undead.client)
