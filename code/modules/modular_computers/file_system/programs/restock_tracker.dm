@@ -15,7 +15,7 @@
 	var/list/vending_list = list()
 	var/id_increment = 1
 	for(var/obj/machinery/vending/vendor as anything in GLOB.vending_machines_to_restock)
-		var/list/total_legal_stock = vendor.total_legal_stock()
+		var/list/total_legal_stock = vendor.total_stock(contrabrand = FALSE)
 		if((!total_legal_stock[2] || (total_legal_stock[1] >= total_legal_stock[2])) && vendor.credits_contained == 0)
 			continue
 		vending_list += list(list(

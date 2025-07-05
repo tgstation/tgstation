@@ -300,7 +300,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Arguments:
  * recordlist - list of records to unbuild products from
  */
-/obj/machinery/vending/proc/_unbuild_inventory(list/recordlist)
+/obj/machinery/vending/proc/unbuild_inventory(list/recordlist)
 	PRIVATE_PROC(TRUE)
 
 	. = list()
@@ -356,8 +356,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			installed_refill.products[record.product_path] = record.amount
 
 	//unbuild contrabrand & premium into canister
-	installed_refill.contraband = _unbuild_inventory(hidden_records)
-	installed_refill.premium = _unbuild_inventory(coin_records)
+	installed_refill.contraband = unbuild_inventory(hidden_records)
+	installed_refill.premium = unbuild_inventory(coin_records)
 
 	//sheets
 	new /obj/item/stack/sheet/iron(loc, 3)
@@ -392,15 +392,23 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return TRUE
 	return NONE
 
-///Returns the total loaded & max amount of items i.e list(total_loaded, total_maximum) in the vending machine based on the product records and premium records, but not contraband
-/obj/machinery/vending/proc/total_legal_stock()
+/**
+ * Returns the total loaded & max amount of items i.e list(total_loaded, total_maximum) in the vending machine based on the product records and premium records
+ *
+ * Arguments
+ * * contraband - should we count contrabrand as well
+*/
+/obj/machinery/vending/proc/total_stock(contrabrand = TRUE)
 	SHOULD_BE_PURE(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	RETURN_TYPE(/list)
 
 	var/total_loaded = 0
 	var/total_max = 0
-	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
+	var/list/stock = product_records + coin_records
+	if(contrabrand)
+		stock += hidden_records
+	for(var/datum/data/vending_product/record as anything in stock)
 		total_loaded += record.amount
 		total_max += record.max_amount
 	return list(total_loaded, total_max)
@@ -414,9 +422,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(panel_open)
 		. += span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
 
-	var/list/total_legal_stock = total_legal_stock()
-	if(total_legal_stock[2])
-		if(total_legal_stock[1] < total_legal_stock[2])
+	var/list/total_stock = total_stock()
+	if(total_stock[2])
+		if(total_stock[1] < total_stock[2])
 			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
 		else
 			. += span_notice("\The [src] is fully stocked.")
@@ -450,7 +458,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	. = ..()
 	if (vname == NAMEOF(src, all_products_free))
 		if (all_products_free)
-			qdel(GetComponent(/datum/component/payment))
+			RemoveComponentSource(src, /datum/component/payment)
 			GLOB.vending_machines_to_restock -= src
 		else
 			AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
@@ -489,7 +497,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && SPT_PROB(2.5, seconds_per_tick))
+	if(last_slogan + slogan_delay <= world.time && slogan_list.len && !shut_up && SPT_PROB(2.5, seconds_per_tick))
 		say(pick(slogan_list))
 		last_slogan = world.time
 

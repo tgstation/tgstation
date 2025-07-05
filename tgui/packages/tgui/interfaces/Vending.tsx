@@ -26,17 +26,10 @@ type ProductRecord = {
   ref: string;
   category: string;
   colorable: boolean;
+  premium: boolean;
   image?: string;
   icon?: string;
   icon_state?: string;
-};
-
-type CoinRecord = ProductRecord & {
-  premium: boolean;
-};
-
-type HiddenRecord = ProductRecord & {
-  premium: boolean;
 };
 
 type UserData = {
@@ -58,8 +51,8 @@ type VendingData = {
   displayed_currency_icon: string;
   displayed_currency_name: string;
   product_records: ProductRecord[];
-  coin_records: CoinRecord[];
-  hidden_records: HiddenRecord[];
+  coin_records: ProductRecord[];
+  hidden_records: ProductRecord[];
   user: UserData;
   stock: Record<string, StockItem>[];
   extended_inventory: boolean;
@@ -147,7 +140,7 @@ export const Vending = () => {
 };
 
 /** Displays user details if an ID is present and the user is on the station */
-export const UserDetails = (props) => {
+export const UserDetails = () => {
   const { data } = useBackend<VendingData>();
   const { user } = data;
 
@@ -231,10 +224,16 @@ const ProductDisplay = (props: {
   );
 };
 
+type ProductProps = {
+  product: ProductRecord;
+  productStock: StockItem;
+  fluid: boolean;
+};
+
 /**
  * An individual listing for an item.
  */
-const Product = (props) => {
+const Product = (props: ProductProps) => {
   const { act, data } = useBackend<VendingData>();
   const { product, productStock, fluid } = props;
   const { access, department, jobDiscount, all_products_free, user } = data;
@@ -286,7 +285,7 @@ const Product = (props) => {
   );
 };
 
-const ProductGrid = (props) => {
+const ProductGrid = (props: any) => {
   const { product, remaining, ...baseProps } = props;
   const { ...priceProps } = props;
 
@@ -308,7 +307,7 @@ const ProductGrid = (props) => {
   );
 };
 
-const ProductList = (props) => {
+const ProductList = (props: any) => {
   const { colorable, product, remaining, ...baseProps } = props;
   const { ...priceProps } = props;
 

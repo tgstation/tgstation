@@ -105,8 +105,7 @@
 				to_chat(user, span_warning("[canister] is empty!"))
 			else
 				// instantiate canister if needed
-				var/restocked = restock(canister)
-				_post_restock(user, restocked)
+				post_restock(user, restock(canister))
 			return ITEM_INTERACT_SUCCESS
 
 	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
@@ -119,7 +118,6 @@
 					to_chat(user, span_warning("[src]'s compartment is full."))
 					break
 				if(loadingAttempt(the_item, user))
-					storage_item.atom_storage?.attempt_remove(the_item, src)
 					loaded++
 				else
 					denied_items++
@@ -187,7 +185,7 @@
  * * user - the user restocking us
  * * restocked - the amount of items we've been refilled with
  */
-/obj/machinery/vending/proc/_post_restock(mob/living/user, restocked)
+/obj/machinery/vending/proc/post_restock(mob/living/user, restocked)
 	PRIVATE_PROC(TRUE)
 
 	if(!restocked)
@@ -218,7 +216,7 @@
 	for(var/replacer_item in replacer)
 		if(istype(replacer_item, refill_canister))
 			restocked += restock(replacer_item)
-	_post_restock(user, restocked)
+	post_restock(user, restocked)
 	if(restocked > 0)
 		replacer.play_rped_sound()
 	return TRUE
