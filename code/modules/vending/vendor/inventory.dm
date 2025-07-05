@@ -11,17 +11,20 @@
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  * * premium - Whether the ending products shall have premium or default prices
  */
-/obj/machinery/vending/proc/_build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
+/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
 	PRIVATE_PROC(TRUE)
 
 	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
 	default_price = round(initial(default_price) * inflation_value)
 	extra_price = round(initial(extra_price) * inflation_value)
 
+	for(var/datum/data/vending_product/record in recordlist)
+		recordlist -= record
+		qdel(record)
+
 	var/list/product_to_category = list()
 	for (var/list/category as anything in categories)
-		var/list/products = category["products"]
-		for (var/product_key in products)
+		for (var/product_key in category["products"])
 			product_to_category[product_key] = category
 
 	for(var/typepath in productlist)
@@ -30,7 +33,7 @@
 			amount = 0
 
 		var/obj/item/temp = typepath
-		var/datum/data/vending_product/new_record = new /datum/data/vending_product()
+		var/datum/data/vending_product/new_record = new
 		new_record.name = initial(temp.name)
 		new_record.product_path = typepath
 		if(!start_empty)
@@ -53,29 +56,25 @@
 		new_record.category = product_to_category[typepath]
 		recordlist += new_record
 
-/**Builds all available inventories for the vendor - standard, contraband and premium
- * Arguments:
+/**
+ * Builds all available inventories for the vendor - standard, contraband and premium
+ *
+ * Arguments
  * start_empty - bool to pass into build_inventory that determines whether a product entry starts with available stock or not
 */
 /obj/machinery/vending/proc/build_inventories(start_empty)
-	_build_inventory(products, product_records, product_categories, start_empty)
-	_build_inventory(contraband, hidden_records, list(list("name" = "Contraband", "icon" = "mask", "products" = contraband)), start_empty, premium = TRUE)
-	_build_inventory(premium, coin_records, list(list("name" = "Premium", "icon" = "coins", "products" = premium)), start_empty, premium = TRUE)
+	build_inventory(products, product_records, product_categories, start_empty)
+	build_inventory(contraband, hidden_records, list(list("name" = "Contraband", "icon" = "mask", "products" = contraband)), start_empty, premium = TRUE)
+	build_inventory(premium, coin_records, list(list("name" = "Premium", "icon" = "coins", "products" = premium)), start_empty, premium = TRUE)
 
 //Better would be to make constructable child
 /obj/machinery/vending/RefreshParts()
 	SHOULD_CALL_PARENT(FALSE)
-	if(!component_parts)
-		return
 
 	if(product_categories)
-		products = list()
+		products.Cut()
 		for(var/list/category as anything in product_categories)
 			products |= category["products"]
-
-	product_records = list()
-	hidden_records = list()
-	coin_records = list()
 
 	build_inventories(start_empty = TRUE)
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
@@ -88,7 +87,7 @@
  * * list/productlist - the product list from the canister tor ead from
  * * list/recordlist - the record list to write into
  */
-/obj/machinery/vending/proc/_refill_inventory(list/productlist, list/recordlist)
+/obj/machinery/vending/proc/refill_inventory(list/productlist, list/recordlist)
 	PRIVATE_PROC(TRUE)
 
 	. = 0
@@ -127,15 +126,22 @@
 			for (var/product_key in products)
 				products_unwrapped[product_key] += products[product_key]
 
-		. += _refill_inventory(products_unwrapped, product_records)
+		. += refill_inventory(products_unwrapped, product_records)
 	else
-		. += _refill_inventory(canister.products, product_records)
+		. += refill_inventory(canister.products, product_records)
 
-	. += _refill_inventory(canister.contraband, hidden_records)
-	. += _refill_inventory(canister.premium, coin_records)
+	. += refill_inventory(canister.contraband, hidden_records)
+	. += refill_inventory(canister.premium, coin_records)
 
 
 //===========================VENDING OUT ITEMS================================
+/obj/machinery/vending/Exited(atom/movable/gone, direction)
+	. = ..()
+	for(var/datum/data/vending_product/record in product_records + coin_records + hidden_records)
+		if(gone in record.returned_products)
+			record.returned_products -= gone
+			record.amount -= 1
+			break
 
 /**
  * Whether this vendor can vend items or not.
@@ -146,7 +152,7 @@
 	PROTECTED_PROC(TRUE)
 
 	. = FALSE
-	if(!vend_ready || !is_operational)
+	if(!is_operational)
 		return
 	if(panel_open)
 		to_chat(user, span_warning("The vending machine cannot dispense products while its service panel is open!"))
@@ -159,30 +165,27 @@
  * greyscale_colors - greyscale config for the item we're about to vend, if any
  */
 /obj/machinery/vending/proc/vend(list/params, mob/user, list/greyscale_colors)
+	PROTECTED_PROC(TRUE)
+
 	. = TRUE
 	if(!can_vend(user))
 		return
-	vend_ready = FALSE //One thing at a time!!
 	var/datum/data/vending_product/item_record = locate(params["ref"])
 	var/list/record_to_check = product_records + coin_records
 	if(extended_inventory)
 		record_to_check = product_records + coin_records + hidden_records
 	if(!item_record || !istype(item_record) || !item_record.product_path)
-		vend_ready = TRUE
 		return
 	var/price_to_use = item_record.price
 	if(item_record in hidden_records)
 		if(!extended_inventory)
-			vend_ready = TRUE
 			return
 	else if (!(item_record in record_to_check))
-		vend_ready = TRUE
 		message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(user)]!")
 		return
 	if (item_record.amount <= 0)
 		speak("Sold out of [item_record.name].")
 		flick(icon_deny, src)
-		vend_ready = TRUE
 		return
 	if(onstation)
 		// Here we do additional handing ahead of the payment component's logic, such as age restrictions and additional logging
@@ -202,11 +205,9 @@
 				), src, list(RADIO_CHANNEL_SECURITY))
 				GLOB.narcd_underages += user
 			flick(icon_deny, src)
-			vend_ready = TRUE
 			return
 
 		if(!proceed_payment(card_used, living_user, item_record, price_to_use, params["discountless"]))
-			vend_ready = TRUE
 			return
 
 	if(last_shopper != REF(user) || purchase_message_cooldown < world.time)
@@ -230,7 +231,6 @@
 	else
 		to_chat(user, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))
-	vend_ready = TRUE
 
 /**
  * Common proc that dispenses an item. Called when the item is vended, or gotten some other way.
@@ -241,24 +241,23 @@
  * * silent - should we play the vending sound
  * * dispense_returned - are we vending out an returned item
 */
-///
 /obj/machinery/vending/proc/dispense(datum/data/vending_product/item_record, atom/spawn_location, silent = FALSE, dispense_returned = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(!silent)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 
 	var/obj/item/vended_item
 	if(dispense_returned)
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
-		LAZYREMOVE(item_record.returned_products, vended_item)
 		vended_item.forceMove(spawn_location)
 	else
 		vended_item = new item_record.product_path(spawn_location)
 		if(vended_item.type in contraband)
 			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
+		item_record.amount--
 
 	on_dispense(vended_item, dispense_returned)
-	item_record.amount--
 	return vended_item
 
 /**
@@ -296,7 +295,6 @@
 	if(price_to_use && (attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE))
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
-		vend_ready = TRUE
 		return FALSE
 	//actual payment here
 	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)

@@ -1,3 +1,6 @@
+///Helper to create a typepath to be used in the UI
+#define SANITIZED_PATH(path)(replacetext(replacetext("[path]", "/obj/item/", ""), "/", "-"))
+
 /obj/machinery/vending/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet_batched/vending),
@@ -9,25 +12,6 @@
 		ui = new(user, src, "Vending", name)
 		ui.open()
 
-/obj/machinery/vending/ui_static_data(mob/user)
-	var/list/data = list()
-	data["onstation"] = onstation
-	data["all_products_free"] = all_products_free
-	data["department"] = payment_department
-	data["jobDiscount"] = DEPARTMENT_DISCOUNT
-	data["product_records"] = list()
-	data["displayed_currency_icon"] = displayed_currency_icon
-	data["displayed_currency_name"] = displayed_currency_name
-
-	var/list/categories = list()
-
-	data["product_records"] = collect_records_for_static_data(product_records, categories)
-	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
-	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
-
-	data["categories"] = categories
-
-	return data
 
 /**
  * Returns a list of given product records of the vendor to be used in UI.
@@ -37,6 +21,8 @@
  * premium - bool of whether a record should be priced by a custom/premium price or not
  */
 /obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
+	PROTECTED_PROC(TRUE)
+
 	var/static/list/default_category = list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
@@ -46,11 +32,11 @@
 
 	for (var/datum/data/vending_product/record as anything in records)
 		var/list/static_record = list(
-			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
+			path = SANITIZED_PATH(record.product_path),
 			name = record.name,
 			price = record.price,
-			max_amount = record.max_amount,
 			ref = REF(record),
+			colorable = record.colorable,
 		)
 
 		var/atom/printed = record.product_path
@@ -76,6 +62,26 @@
 
 	return out_records
 
+/obj/machinery/vending/ui_static_data(mob/user)
+	var/list/data = list()
+	data["onstation"] = onstation
+	data["all_products_free"] = all_products_free
+	data["department"] = payment_department
+	data["jobDiscount"] = DEPARTMENT_DISCOUNT
+	data["product_records"] = list()
+	data["displayed_currency_icon"] = displayed_currency_icon
+	data["displayed_currency_name"] = displayed_currency_name
+
+	var/list/categories = list()
+
+	data["product_records"] = collect_records_for_static_data(product_records, categories)
+	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
+	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
+
+	data["categories"] = categories
+
+	return data
+
 
 /**
  * Returns the balance that the vendor will use for proceeding payment. Most vendors would want to use the user's
@@ -90,6 +96,8 @@
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
+	.["access"] = !!isliving(user)
+
 	var/obj/item/card/id/card_used
 	var/held_cash = 0
 	if(isliving(user))
@@ -111,16 +119,11 @@
 	.["user"] = user_data
 
 	.["stock"] = list()
-
 	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
-		var/list/product_data = list(
-			name = product_record.name,
-			path = replacetext(replacetext("[product_record.product_path]", "/obj/item/", ""), "/", "-"),
+		.["stock"][SANITIZED_PATH(product_record.product_path)] = list(
 			amount = product_record.amount,
-			colorable = product_record.colorable,
+			free = length(product_record.returned_products)
 		)
-
-		.["stock"][product_data["path"]] = product_data
 
 	.["extended_inventory"] = extended_inventory
 
@@ -172,3 +175,5 @@
 	if(user != menu.user)
 		return
 	vend(params, user, menu.split_colors)
+
+#undef SANITIZED_PATH

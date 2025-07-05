@@ -14,35 +14,19 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
-type VendingData = {
-  all_products_free: boolean;
-  onstation: boolean;
-  department: string;
-  jobDiscount: number;
-  displayed_currency_icon: string;
-  displayed_currency_name: string;
-  product_records: ProductRecord[];
-  coin_records: CoinRecord[];
-  hidden_records: HiddenRecord[];
-  user: UserData;
-  stock: Record<string, StockItem>[];
-  extended_inventory: boolean;
-  access: boolean;
-  vending_machine_input: CustomInput[];
-  categories: Record<string, Category>;
-};
-
-type Category = {
-  icon: string;
+type StockItem = {
+  amount: number;
+  free: boolean;
 };
 
 type ProductRecord = {
   path: string;
   name: string;
   price: number;
-  max_amount: number;
   ref: string;
   category: string;
+  colorable: boolean;
+  image?: string;
   icon?: string;
   icon_state?: string;
 };
@@ -62,21 +46,28 @@ type UserData = {
   department: string;
 };
 
-type StockItem = {
-  name: string;
-  path: string;
-  amount: number;
-  colorable: boolean;
+type Category = {
+  icon: string;
 };
 
-type CustomInput = {
-  path: string;
-  name: string;
-  price: number;
-  img: string;
+type VendingData = {
+  all_products_free: boolean;
+  onstation: boolean;
+  department: string;
+  jobDiscount: number;
+  displayed_currency_icon: string;
+  displayed_currency_name: string;
+  product_records: ProductRecord[];
+  coin_records: CoinRecord[];
+  hidden_records: HiddenRecord[];
+  user: UserData;
+  stock: Record<string, StockItem>[];
+  extended_inventory: boolean;
+  access: boolean;
+  categories: Record<string, Category>;
 };
 
-export const Vending = (props) => {
+export const Vending = () => {
   const { data } = useBackend<VendingData>();
 
   const {
@@ -94,19 +85,12 @@ export const Vending = (props) => {
   const [stockSearch, setStockSearch] = useState('');
   const stockSearchFn = createSearch(
     stockSearch,
-    (item: ProductRecord | CustomInput) => item.name,
+    (item: ProductRecord) => item.name,
   );
 
-  let inventory: (ProductRecord | CustomInput)[];
-  let custom = false;
-  if (data.vending_machine_input) {
-    inventory = data.vending_machine_input;
-    custom = true;
-  } else {
-    inventory = [...product_records, ...coin_records];
-    if (data.extended_inventory) {
-      inventory = [...inventory, ...hidden_records];
-    }
+  let inventory: ProductRecord[] = [...product_records, ...coin_records];
+  if (data.extended_inventory) {
+    inventory = [...inventory, ...hidden_records];
   }
 
   // Just in case we still have undefined values in the list
@@ -139,7 +123,6 @@ export const Vending = (props) => {
           )}
           <Stack.Item grow>
             <ProductDisplay
-              custom={custom}
               inventory={inventory}
               stockSearch={stockSearch}
               setStockSearch={setStockSearch}
@@ -186,15 +169,13 @@ export const UserDetails = (props) => {
 
 /** Displays  products in a section, with user balance at top */
 const ProductDisplay = (props: {
-  custom: boolean;
-  inventory: (ProductRecord | CustomInput)[];
+  inventory: ProductRecord[];
   stockSearch: string;
   setStockSearch: (search: string) => void;
   selectedCategory: string | null;
 }) => {
   const { data } = useBackend<VendingData>();
-  const { custom, inventory, stockSearch, setStockSearch, selectedCategory } =
-    props;
+  const { inventory, stockSearch, setStockSearch, selectedCategory } = props;
   const {
     stock,
     all_products_free,
@@ -242,7 +223,6 @@ const ProductDisplay = (props: {
           <Product
             key={product.path}
             fluid={toggleLayout === LAYOUT.List}
-            custom={custom}
             product={product}
             productStock={stock[product.path]}
           />
@@ -256,13 +236,13 @@ const ProductDisplay = (props: {
  */
 const Product = (props) => {
   const { act, data } = useBackend<VendingData>();
-  const { custom, product, productStock, fluid } = props;
+  const { product, productStock, fluid } = props;
   const { access, department, jobDiscount, all_products_free, user } = data;
 
-  const colorable = !!productStock?.colorable;
-  const free = all_products_free || product.price === 0;
+  const colorable = !!product.colorable;
+  const free = all_products_free || productStock.free || product.price === 0;
   const discount = !product.premium && department === user?.department;
-  const remaining = custom ? product.amount : productStock.amount;
+  const remaining = productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled =
     remaining === 0 ||
@@ -285,19 +265,14 @@ const Product = (props) => {
     colorable: colorable,
     remaining: remaining,
     onClick: () => {
-      custom
-        ? act('dispense', {
-            item: product.path,
-          })
-        : act('vend', {
-            ref: product.ref,
-            discountless: !!product.premium,
-          });
+      act('vend', {
+        ref: product.ref,
+        discountless: !!product.premium,
+      });
     },
   };
 
   const priceProps = {
-    custom: custom,
     discount: discount,
     free: free,
     product: product,
@@ -365,7 +340,14 @@ const ProductList = (props) => {
  * In the case of customizable items, ie: shoes,
  * this displays a color wheel button that opens another window.
  */
-const ProductColorSelect = (props) => {
+
+type ProductColorSelectProps = {
+  disabled: boolean;
+  product: ProductRecord;
+  fluid: boolean;
+};
+
+const ProductColorSelect = (props: ProductColorSelectProps) => {
   const { act } = useBackend<VendingData>();
   const { disabled, product, fluid } = props;
 
@@ -375,37 +357,34 @@ const ProductColorSelect = (props) => {
       icon={'palette'}
       color={'transparent'}
       tooltip={'Change color'}
-      style={disabled && { pointerEvents: 'none', opacity: 0.5 }}
+      style={disabled ? { pointerEvents: 'none', opacity: 0.5 } : {}}
       onClick={() => act('select_colors', { ref: product.ref })}
     />
   );
 };
 
+type ProductPriceProps = {
+  discount: boolean;
+  free: boolean;
+  product: ProductRecord;
+  redPrice: number;
+};
+
 /** The main button to purchase an item. */
-const ProductPrice = (props) => {
-  const { act, data } = useBackend<VendingData>();
-  const { access, displayed_currency_name } = data;
-  const { custom, discount, free, product, redPrice } = props;
-  const customPrice = access ? 'Free' : product.price;
-  let standardPrice = product.price;
+const ProductPrice = (props: ProductPriceProps) => {
+  const { data } = useBackend<VendingData>();
+  const { displayed_currency_name } = data;
+  const { discount, free, product, redPrice } = props;
+  let standardPrice = product.price + '';
   if (free) {
     standardPrice = 'Free';
   } else if (discount) {
-    standardPrice = redPrice;
+    standardPrice = redPrice + '';
   }
   return (
     <Stack.Item fontSize={0.85} color={'gold'}>
-      {custom ? (
-        <>
-          {customPrice}
-          {!access && displayed_currency_name}
-        </>
-      ) : (
-        <>
-          {standardPrice}
-          {!free && displayed_currency_name}
-        </>
-      )}
+      {standardPrice}
+      {!free && displayed_currency_name}
     </Stack.Item>
   );
 };

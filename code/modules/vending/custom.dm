@@ -1,3 +1,6 @@
+///Helper to create a typepath to be used in the UI
+#define SANITIZED_PATH(path)(replacetext(replacetext("[path]", "/obj/item/", ""), "/", "-"))
+
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
 	icon_state = "custom"
@@ -9,12 +12,122 @@
 	refill_canister = /obj/item/vending_refill/custom
 	fish_source_path = /datum/fish_source/vending/custom
 
-	/// where the money is sent
-	var/datum/bank_account/linked_account
 	/// max number of items that the custom vendor can hold
-	var/max_loaded_items = 20
+	VAR_PROTECTED/max_loaded_items = 20
+	/// where the money is sent
+	VAR_PRIVATE/datum/bank_account/linked_account
 	/// Base64 cache of custom icons.
-	var/list/base64_cache = list()
+	VAR_PRIVATE/static/list/base64_cache = list()
+	///Items that the players have loaded into the vendor
+	VAR_FINAL/list/vending_machine_input = list()
+
+/obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+
+	if(!isnull(held_item))
+		if(held_item.tool_behaviour == TOOL_CROWBAR) //cannot deconstruct
+			return NONE
+
+		if(vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE))
+			context[SCREENTIP_CONTEXT_LMB] = "Load item"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	return ..()
+
+/obj/machinery/vending/custom/examine(mob/user)
+	. = ..()
+	if(panel_open) //you cant
+		. -= span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
+
+/obj/machinery/vending/custom/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(vending_machine_input[gone.type])
+		var/new_amount = vending_machine_input[gone.type] - 1
+		if(!new_amount)
+			vending_machine_input -= gone.type
+		else
+			vending_machine_input[gone.type] = new_amount
+		update_static_data_for_all_viewers()
+
+/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
+	. = TRUE
+	if(loaded_item.flags_1 & HOLOGRAM_1)
+		if(send_message)
+			speak("This vendor cannot accept nonexistent items.")
+		return FALSE
+	if(isstack(loaded_item))
+		if(send_message)
+			speak("Loose items may cause problems, try to use it inside wrapping paper.")
+		return FALSE
+	if(!loaded_item.custom_price)
+		if(send_message)
+			speak("Item needs to have a custom price set.")
+		return FALSE
+
+/obj/machinery/vending/custom/loadingAttempt(obj/item/inserted_item, mob/user)
+	. = TRUE
+	if(!canLoadItem(inserted_item, user))
+		return FALSE
+
+	var/loaded_items = 0
+	for(var/input in vending_machine_input)
+		loaded_items += vending_machine_input[input]
+	if(loaded_items == max_loaded_items)
+		speak("There are too many items in stock.")
+		return FALSE
+
+	if(!user.transferItemToLoc(inserted_item, src))
+		to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
+		return FALSE
+
+	if(vending_machine_input[inserted_item.type])
+		vending_machine_input[inserted_item.type]++
+	else
+		vending_machine_input[inserted_item.type] = 1
+		update_static_data_for_all_viewers()
+
+/obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
+	if(!linked_account)
+		balloon_alert(user, "no registered owner!")
+		return FALSE
+	return ..()
+
+/obj/machinery/vending/custom/collect_records_for_static_data(list/records, list/categories, premium)
+	. = list()
+	if(records != product_records) //no coin or hidden stuff only product records
+		return
+
+	categories["Products"] = list("icon" = "cart-shopping")
+	for(var/obj/item/stocked_item as anything in vending_machine_input)
+		var/base64 = ""
+		var/obj/item/target = null
+		for(var/obj/item/stored_item in contents)
+			if(stored_item.type == stocked_item)
+				base64 = base64_cache[stocked_item]
+				if(!base64) //generate an icon of the item to use in UI
+					base64 = icon2base64(getFlatIcon(stored_item, no_anim = TRUE))
+					base64_cache[stocked_item] = base64
+				target = stored_item
+				break
+
+		. += list(list(
+			path = SANITIZED_PATH(stocked_item),
+			name = target.name,
+			price = target.custom_price,
+			category = "Products",
+			ref = REF(target),
+			colorable = FALSE,
+			image = base64
+		))
+
+/obj/machinery/vending/custom/ui_data(mob/user)
+	. = ..()
+
+	.["stock"] = list()
+	for(var/obj/item/stocked_item as anything in vending_machine_input)
+		.["stock"][SANITIZED_PATH(stocked_item)] = list(
+			amount = vending_machine_input[stocked_item],
+			free = FALSE
+		)
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
@@ -25,70 +138,6 @@
 	if(id_card?.registered_account && id_card.registered_account == linked_account)
 		return TRUE
 
-/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
-	. = FALSE
-	if(loaded_item.flags_1 & HOLOGRAM_1)
-		if(send_message)
-			speak("This vendor cannot accept nonexistent items.")
-		return
-	if(loaded_items >= max_loaded_items)
-		if(send_message)
-			speak("There are too many items in stock.")
-		return
-	if(isstack(loaded_item))
-		if(send_message)
-			speak("Loose items may cause problems, try to use it inside wrapping paper.")
-		return
-	if(loaded_item.custom_price)
-		return TRUE
-
-/obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
-	if(!linked_account)
-		balloon_alert(user, "no registered owner!")
-		return FALSE
-	return ..()
-
-/obj/machinery/vending/custom/ui_data(mob/user)
-	. = ..()
-	.["access"] = compartmentLoadAccessCheck(user)
-	.["vending_machine_input"] = list()
-	for (var/obj/item/stocked_item as anything in vending_machine_input)
-		if(vending_machine_input[stocked_item] > 0)
-			var/base64
-			var/price = 0
-			var/itemname = initial(stocked_item.name)
-			for(var/obj/item/stored_item in contents)
-				if(stored_item.type == stocked_item)
-					price = stored_item.custom_price
-					itemname = stored_item.name
-					if(!base64) //generate an icon of the item to use in UI
-						if(base64_cache[stored_item.type])
-							base64 = base64_cache[stored_item.type]
-						else
-							base64 = icon2base64(getFlatIcon(stored_item, no_anim=TRUE))
-							base64_cache[stored_item.type] = base64
-					break
-			var/list/data = list(
-				path = stocked_item,
-				name = itemname,
-				price = price,
-				img = base64,
-				amount = vending_machine_input[stocked_item],
-				colorable = FALSE
-			)
-			.["vending_machine_input"] += list(data)
-
-/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("dispense")
-			if(isliving(usr))
-				vend_act(usr, params)
-				vend_ready = TRUE
-			return TRUE
-
 /obj/machinery/vending/custom/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
 	if(!linked_account && isliving(user))
 		var/mob/living/living_user = user
@@ -96,6 +145,7 @@
 		if(card_used?.registered_account)
 			linked_account = card_used.registered_account
 			speak("\The [src] has been linked to [card_used].")
+			return ITEM_INTERACT_SUCCESS
 
 	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
 		return ..()
@@ -110,11 +160,11 @@
 	if (new_slogan)
 		slogan_list += new_slogan
 		last_slogan = world.time + rand(0, slogan_delay)
-
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
-	return FALSE
+	balloon_alert(user, "cannot deconstruct!")
+	return ITEM_INTERACT_FAILURE
 
 /obj/machinery/vending/custom/on_deconstruction(disassembled)
 	unbuckle_all_mobs(TRUE)
@@ -124,34 +174,26 @@
 			stored_item.forceMove(current_turf)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
 
-/**
- * Vends an item to the user. Handles all the logic:
- * Updating stock, account transactions, alerting users.
- * @return -- TRUE if a valid condition was met, FALSE otherwise.
- */
-/obj/machinery/vending/custom/proc/vend_act(mob/living/user, list/params)
-	if(!vend_ready)
+/obj/machinery/vending/custom/vend(list/params, mob/living/user, list/greyscale_colors)
+	. = FALSE
+	if(!isliving(user))
 		return
-	var/obj/item/choice = text2path(params["item"]) // typepath is a string coming from javascript, we need to convert it back
-	var/obj/item/dispensed_item
-	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	vend_ready = FALSE
-	if(!id_card || !id_card.registered_account || !id_card.registered_account.account_job)
-		balloon_alert(usr, "no card found!")
-		flick(icon_deny, src)
-		return TRUE
-	var/datum/bank_account/payee = id_card.registered_account
-	for(var/obj/item/stock in contents)
-		if(istype(stock, choice))
-			dispensed_item = stock
-			break
+	var/obj/item/dispensed_item = locate(params["ref"])
 	if(!dispensed_item)
-		return FALSE
+		return
+
+	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+	if(!id_card || !id_card.registered_account || !id_card.registered_account.account_job)
+		balloon_alert(user, "no card found!")
+		flick(icon_deny, src)
+		return
+
 	/// Charges the user if its not the owner
+	var/datum/bank_account/payee = id_card.registered_account
 	if(!compartmentLoadAccessCheck(user))
 		if(!payee.has_money(dispensed_item.custom_price))
 			balloon_alert(user, "insufficient funds!")
-			return TRUE
+			return
 		/// Make the transaction
 		payee.adjust_money(-dispensed_item.custom_price, , "Vending: [dispensed_item]")
 		linked_account.adjust_money(dispensed_item.custom_price, "Vending: [dispensed_item] Bought")
@@ -162,14 +204,13 @@
 		log_econ("[dispensed_item.custom_price] credits were spent on [src] buying a \
 		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
 		/// Make an alert
-		if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
+		if(last_shopper != REF(user) || purchase_message_cooldown < world.time)
 			speak("Thank you for your patronage [user]!")
 			purchase_message_cooldown = world.time + 5 SECONDS
-			last_shopper = REF(usr)
+			last_shopper = REF(user)
+
 	/// Remove the item
-	loaded_items--
 	use_energy(active_power_usage)
-	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
 	else
@@ -206,3 +247,5 @@
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+
+#undef SANITIZED_PATH

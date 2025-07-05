@@ -47,17 +47,15 @@
 			return
 	return ..()
 
-/obj/machinery/vending/sustenance/labor_camp/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
-	if(!istype(paying_id_card, /obj/item/card/id/advanced/prisoner))
+/obj/machinery/vending/sustenance/labor_camp/proceed_payment(obj/item/card/id/advanced/prisoner/paying_scum_id, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
+	if(!istype(paying_scum_id))
 		speak("I don't take bribes! Pay with labor points!")
 		return FALSE
-	var/obj/item/card/id/advanced/prisoner/paying_scum_id = paying_id_card
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
 	if(price_to_use && !(paying_scum_id.points >= price_to_use)) //not enough good prisoner points
 		speak("You do not possess enough points to purchase [product_to_vend.name].")
 		flick(icon_deny, src)
-		vend_ready = TRUE
 		return FALSE
 
 	paying_scum_id.points -= price_to_use

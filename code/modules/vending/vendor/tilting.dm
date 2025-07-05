@@ -67,7 +67,7 @@
 			if (isliving(atom_target))
 				crushed = TRUE
 				var/mob/living/carbon/living_target = atom_target
-				var/was_alive = (living_target.stat != DEAD)
+				var/was_alive = living_target.stat != DEAD
 				var/blocked = living_target.run_armor_check(attack_flag = damage_flag)
 				if (iscarbon(living_target))
 					var/mob/living/carbon/carbon_target = living_target
@@ -111,7 +111,6 @@
 	Move(target, crush_dir) // we still TRY to move onto it for shit like teleporters
 	return flags_to_return
 
-
 /**
  * Returns a assoc list of (critcase -> num), where critcase is a critical define in crushing.dm and num is a weight.
  * Use with pickweight to acquire a random critcase.
@@ -119,14 +118,12 @@
 /atom/movable/proc/get_crit_crush_chances()
 	RETURN_TYPE(/list)
 
-	var/list/weighted_crits = list()
-
-	weighted_crits[CRUSH_CRIT_SHATTER_LEGS] = 100
-	weighted_crits[CRUSH_CRIT_PARAPLEGIC] = 80
-	weighted_crits[CRUSH_CRIT_HEADGIB] = 20
-	weighted_crits[CRUSH_CRIT_SQUISH_LIMB] = 100
-
-	return weighted_crits
+	return list(
+		CRUSH_CRIT_SHATTER_LEGS = 100,
+		CRUSH_CRIT_PARAPLEGIC = 80,
+		CRUSH_CRIT_HEADGIB = 20,
+		CRUSH_CRIT_SQUISH_LIMB = 100
+	)
 
 /**
  * Exists for the purposes of custom behavior.
@@ -212,7 +209,7 @@
  * forced_crit - specific critical hit case to use, if any
  * range - the range of the machine when thrown if not adjacent
 */
-/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit, range = 1)
+/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit, range = 1)
 	if(QDELETED(src) || !has_gravity(src))
 		return
 
@@ -246,7 +243,6 @@
  * * crit_case: The critical case chosen.
  */
 /atom/movable/proc/fall_and_crush_crit_rebate_table(crit_case)
-
 	ASSERT(!isnull(crit_case))
 
 	switch(crit_case)
@@ -256,23 +252,16 @@
 			return 1
 
 /obj/machinery/vending/fall_and_crush_crit_rebate_table(crit_case)
-
-	if (crit_case == VENDOR_CRUSH_CRIT_GLASSCANDY)
-		return 0.33
-
-	return ..()
+	return crit_case == VENDOR_CRUSH_CRIT_GLASSCANDY ? 0.33 : ..()
 
 /obj/machinery/vending/get_crit_crush_chances()
-	var/list/weighted_crits = ..()
-
-	weighted_crits[VENDOR_CRUSH_CRIT_GLASSCANDY] = 100
-	weighted_crits[VENDOR_CRUSH_CRIT_PIN] = 100
-
-	return weighted_crits
+	return list(
+		VENDOR_CRUSH_CRIT_GLASSCANDY = 100,
+		VENDOR_CRUSH_CRIT_PIN = 100
+	)
 
 /obj/machinery/vending/apply_crit_crush(crit_case, atom_target)
 	. = ..()
-
 	if (.)
 		return TRUE
 
@@ -281,7 +270,7 @@
 			if (!iscarbon(atom_target))
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
-			for(var/i in 1 to num_shards)
+			for(var/i in 1 to 7)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
 				var/datum/embedding/embed = shard.get_embed()
 				embed.embed_chance = 100

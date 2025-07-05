@@ -385,7 +385,7 @@
 /datum/fish_source/vending/custom
 	catalog_description = null //no duplicate entries on autowiki or catalog
 
-/datum/fish_source/vending/custom/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/location)
+/datum/fish_source/vending/custom/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/custom/location)
 	var/list/table = list()
 	///Create a list of products, ordered by price from highest to lowest
 	var/list/products = location.vending_machine_input.Copy()

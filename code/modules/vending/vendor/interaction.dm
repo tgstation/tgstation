@@ -65,27 +65,27 @@
  * user - mob who's trying to insert the item
  */
 /obj/machinery/vending/proc/loadingAttempt(obj/item/inserted_item, mob/user)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	. = TRUE
 	if(!canLoadItem(inserted_item, user))
 		to_chat(user, span_warning("[src] does not accept [inserted_item]!"))
 		return FALSE
-	if(!user.transferItemToLoc(inserted_item, src))
-		return FALSE
 
 	to_chat(user, span_notice("You insert [inserted_item] into [src]'s input compartment."))
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
 		if(inserted_item.type == product_datum.product_path)
+			if(product_datum.amount == product_datum.max_amount)
+				to_chat(user, span_warning("no space for any more [product_datum.category || "Products"]!"))
+				return FALSE
+
+			if(!user.transferItemToLoc(inserted_item, src))
+				to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
+				return FALSE
+
 			product_datum.amount++
 			LAZYADD(product_datum.returned_products, inserted_item)
-			return
-
-	if(vending_machine_input[inserted_item.type])
-		vending_machine_input[inserted_item.type]++
-	else
-		vending_machine_input[inserted_item.type] = 1
-	loaded_items++
+			break
 
 /obj/machinery/vending/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
 	. = NONE

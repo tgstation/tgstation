@@ -68,10 +68,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
-	/// Is the machine active (No sales pitches if off)!
-	var/active = 1
-	///Are we ready to vend?? Is it time??
-	var/vend_ready = TRUE
 	///Next world time to send a purchase message
 	var/purchase_message_cooldown
 	///The ref of the last mob to shop with us
@@ -86,10 +82,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/squish_damage = 75
 	/// The chance, in percent, of this vendor performing a critical hit on anything it crushes via [tilt].
 	var/crit_chance = 15
-	/// If set to a critical define in crushing.dm, anything this vendor crushes will always be hit with that effect.
-	var/forcecrit = null
-	///Number of glass shards the vendor creates and tries to embed into an atom it tilted onto
-	var/num_shards = 7
 	///List of mobs stuck under the vendor
 	var/list/pinned_mobs = list()
 	///Icon for the maintenance panel overlay
@@ -196,14 +188,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	 */
 	var/all_products_free
 
-	///Items that the players have loaded into the vendor
-	var/list/vending_machine_input = list()
-
 	//The type of refill canisters used by this machine.
 	var/obj/item/vending_refill/refill_canister = null
-
-	/// how many items have been inserted in a vendor
-	var/loaded_items = 0
 
 	///Name of lighting mask for the vending machine
 	var/light_mask
@@ -226,10 +212,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * * TRUE - all other cases
  */
 /obj/machinery/vending/Initialize(mapload)
-	var/build_inv = FALSE
 	if(!refill_canister)
 		circuit = null
-		build_inv = TRUE
+		RefreshParts()
 	. = ..()
 	set_wires(new /datum/wires/vending(src))
 
@@ -238,14 +223,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(!vendor_voice_by_type[type])
 			vendor_voice_by_type[type] = pick(SStts.available_speakers)
 		voice = vendor_voice_by_type[type]
-
-	if(build_inv) //non-constructable vending machine
-		///Non-constructible vending machines do not have a refill canister to populate its products list from,
-		///Which apparently is still needed in the case we use product categories instead.
-		if(product_categories)
-			for(var/list/category as anything in product_categories)
-				products |= category["products"]
-		build_inventories()
 
 	slogan_list = splittext(product_slogans, ";")
 	// So not all machines speak at the exact same time.
@@ -389,31 +366,13 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	GLOB.vending_machines_to_restock -= src
 	return ..()
 
-/obj/machinery/vending/examine(mob/user)
-	. = ..()
-	if(isnull(refill_canister))
-		return // you can add the comment here instead
-	if(total_max_stock())
-		if(total_loaded_stock() < total_max_stock())
-			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
-		else
-			. += span_notice("\The [src] is fully stocked.")
-	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
-		. += span_notice("It should have a handfull of credits stored based on the missing items.")
-	else if (credits_contained > PAYCHECK_CREW)
-		. += span_notice("It should have at least a full paycheck worth of credits inside!")
-		/**
-		 * Intentionally leaving out a case for zero credits as it should be covered by the vending machine's stock being full,
-		 * or covered by first case if items were returned.
-		 */
-
 /obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(tilted && !held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(panel_open && held_item?.tool_behaviour == TOOL_WRENCH)
@@ -424,7 +383,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(!isnull(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE)))
+	if(!isnull(held_item) && canLoadItem(held_item, user, send_message = FALSE))
 		context[SCREENTIP_CONTEXT_LMB] = "Load item"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -432,6 +391,39 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
 		return TRUE
 	return NONE
+
+///Returns the total loaded & max amount of items i.e list(total_loaded, total_maximum) in the vending machine based on the product records and premium records, but not contraband
+/obj/machinery/vending/proc/total_legal_stock()
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	RETURN_TYPE(/list)
+
+	var/total_loaded = 0
+	var/total_max = 0
+	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
+		total_loaded += record.amount
+		total_max += record.max_amount
+	return list(total_loaded, total_max)
+
+/obj/machinery/vending/examine(mob/user)
+	. = ..()
+	if(isnull(refill_canister))
+		return // you can add the comment here instead
+
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"]")
+	if(panel_open)
+		. += span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
+
+	var/list/total_legal_stock = total_legal_stock()
+	if(total_legal_stock[2])
+		if(total_legal_stock[1] < total_legal_stock[2])
+			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
+		else
+			. += span_notice("\The [src] is fully stocked.")
+	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
+		. += span_notice("It should have a handfull of credits stored based on the missing items.")
+	else if (credits_contained > PAYCHECK_CREW)
+		. += span_notice("It should have at least a full paycheck worth of credits inside!")
 
 /obj/machinery/vending/update_appearance(updates = ALL)
 	. = ..()
@@ -453,24 +445,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		. += panel_type
 	if(light_mask && !(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask, src)
-
-/**
- * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
- */
-/obj/machinery/vending/proc/total_loaded_stock()
-	var/total = 0
-	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
-		total += record.amount
-	return total
-
-/**
- * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
- */
-/obj/machinery/vending/proc/total_max_stock()
-	var/total_max = 0
-	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
-		total_max += record.max_amount
-	return total_max
 
 /obj/machinery/vending/vv_edit_var(vname, vval)
 	. = ..()
@@ -510,8 +484,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 /obj/machinery/vending/process(seconds_per_tick)
 	if(!is_operational)
 		return PROCESS_KILL
-	if(!active)
-		return
 
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--

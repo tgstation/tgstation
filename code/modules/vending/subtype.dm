@@ -15,15 +15,13 @@
 	var/type_to_vend = /obj/item/food/grown/citrus
 
 /obj/machinery/vending/subtype_vendor/Initialize(mapload, type_to_vend)
-	. = ..()
 	if(type_to_vend)
 		src.type_to_vend = type_to_vend
-	load_subtypes()
+	return ..()
 
-/obj/machinery/vending/subtype_vendor/proc/load_subtypes()
-	products = list()
-	product_records = list()
-
+///Adds the subtype to the product list
+/obj/machinery/vending/subtype_vendor/RefreshParts()
+	products.Cut()
 	for(var/type in typesof(type_to_vend))
 		LAZYADDASSOC(products, type, 50)
 
@@ -48,5 +46,5 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	type_to_vend = type_to_vend_now
-	load_subtypes()
+	RefreshParts()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
