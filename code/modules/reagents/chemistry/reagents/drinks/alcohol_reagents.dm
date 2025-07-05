@@ -74,6 +74,13 @@
 		if(combined_dilute_volume) // safety check to prevent division by zero
 			booze_power *= (total_alcohol_volume / combined_dilute_volume)
 
+                var/staletime = data["timecreated"] + 900 SECONDS // time before alcohol gets stale is 15 min
+                var/stalezero = data["timecreated"] + 1800 SECONDS // time before alcohol loses effect is 30 min
+                var/stale_power = 1
+                if(world.time >= staletime)
+			stale_power *= 0.5
+                if(world.time >= stalezero)
+			stale_power = 0
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
 		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		if(boozepwr > 0)
