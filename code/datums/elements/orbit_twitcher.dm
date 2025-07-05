@@ -19,6 +19,7 @@
 /datum/element/orbit_twitcher/Detach(datum/source, ...)
 	. = ..()
 
+	twitchers.Remove(source)
 	UnregisterSignal(source, list(COMSIG_ATOM_ORBIT_BEGIN, COMSIG_ATOM_ORBIT_STOP))
 
 /datum/element/orbit_twitcher/process(seconds_per_tick)
