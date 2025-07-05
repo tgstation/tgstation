@@ -4,7 +4,7 @@ import { TguiSay } from './TguiSay';
 
 let reactRoot: Root | null = null;
 
-document.onreadystatechange = function () {
+document.onreadystatechange = () => {
   if (document.readyState !== 'complete') return;
 
   if (!reactRoot) {

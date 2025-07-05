@@ -5,7 +5,7 @@
  */
 
 const webpack = require('webpack');
-const path = require('path');
+const path = require('node:path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 
 const createStats = (verbose) => ({

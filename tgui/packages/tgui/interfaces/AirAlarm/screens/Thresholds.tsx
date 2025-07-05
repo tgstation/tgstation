@@ -111,29 +111,27 @@ export function AirAlarmControlThresholds(props) {
             </Button>
           </Table.Cell>
           <Table.Cell>
-            <>
-              <Button
-                color="green"
-                icon="sync"
-                onClick={() =>
-                  act('reset_threshold', {
-                    threshold: tlv.id,
-                    threshold_type: thresholdTypeMap['all'],
-                  })
-                }
-              />
-              <Button
-                color="red"
-                icon="times"
-                onClick={() =>
-                  act('set_threshold', {
-                    threshold: tlv.id,
-                    threshold_type: thresholdTypeMap['all'],
-                    value: -1,
-                  })
-                }
-              />
-            </>
+            <Button
+              color="green"
+              icon="sync"
+              onClick={() =>
+                act('reset_threshold', {
+                  threshold: tlv.id,
+                  threshold_type: thresholdTypeMap['all'],
+                })
+              }
+            />
+            <Button
+              color="red"
+              icon="times"
+              onClick={() =>
+                act('set_threshold', {
+                  threshold: tlv.id,
+                  threshold_type: thresholdTypeMap['all'],
+                  value: -1,
+                })
+              }
+            />
           </Table.Cell>
         </Table.Row>
       ))}
