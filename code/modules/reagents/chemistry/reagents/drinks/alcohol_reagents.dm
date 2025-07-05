@@ -74,13 +74,6 @@
 		if(combined_dilute_volume) // safety check to prevent division by zero
 			booze_power *= (total_alcohol_volume / combined_dilute_volume)
 
-                var/staletime = data["timecreated"] + 900 SECONDS // time before alcohol gets stale is 15 min
-                var/stalezero = data["timecreated"] + 1800 SECONDS // time before alcohol loses effect is 30 min
-                var/stale_power = 1
-                if(world.time >= staletime)
-			stale_power *= 0.5
-                if(world.time >= stalezero)
-			stale_power = 0
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
 		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		if(boozepwr > 0)
@@ -114,6 +107,17 @@
 		var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
 		for(var/datum/surgery/surgery as anything in exposed_mob.surgeries)
 			surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
+
+/datum/reagent/ethanol/proc/get_staleness() // for decrease in power after time
+	if(!data?["timecreated"])
+		return 1 // admin spawned reagent or something
+	var/staletime = data["timecreated"] + 15 MINUTES // time before alcohol gets stale is 15 min
+	var/stalezero = data["timecreated"] + 30 MINUTES // time before alcohol loses effect is 30 min
+	if(world.time >= staletime)
+		return 0.5
+	if(world.time >= stalezero)
+        	return 0
+	return 1
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
