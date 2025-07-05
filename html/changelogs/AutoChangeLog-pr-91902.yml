@@ -1,6 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - balance: "Jackboots available in the autodrobe have been changed to Tactical Work Boots, a black version of shoelaced work boots."
-  - rscadd: "Paramedics are now issued Tactical Work Boots as standard workwear."
-  - image: "Paramedic Jackets now match in color to the rest of the Paramedic's gear."

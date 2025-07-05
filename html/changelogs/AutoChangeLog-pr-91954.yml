@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - admin: "_generator wrapper for sdql, RandList proc for generators"
