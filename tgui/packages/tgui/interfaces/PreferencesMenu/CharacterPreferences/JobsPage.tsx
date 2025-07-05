@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { PropsWithChildren, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
@@ -14,11 +14,10 @@ import {
 import { useServerPrefs } from '../useServerPrefs';
 
 function sortJobs(entries: [string, Job][], head?: string) {
-  return sortBy(
-    entries,
+  return sortBy(entries, [
     ([key, _]) => (key === head ? -1 : 1),
     ([key, _]) => key,
-  );
+  ]);
 }
 
 const PRIORITY_BUTTON_SIZE = '18px';
