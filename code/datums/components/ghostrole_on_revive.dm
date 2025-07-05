@@ -30,6 +30,11 @@
 /datum/component/ghostrole_on_revive/proc/prepare_mob(mob/living/liver)
 	RegisterSignal(liver, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 	ADD_TRAIT(liver, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+	liver.AddElement(/datum/element/orbit_twitcher, 30)
+
+	// Add it to the ghostrole spawner menu. Note that we can't directly spawn from it, but we can make it twitch to alert bystanders to defib it
+	LAZYADD(GLOB.joinable_mobs[format_text("Recovered Crew")], liver)
+
 	liver.med_hud_set_status()
 
 	if(iscarbon(liver))
@@ -42,6 +47,16 @@
 	SIGNAL_HANDLER
 
 	REMOVE_TRAIT(old_owner, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+	old_owner.RemoveElement(/datum/element/orbit_twitcher)
+
+	// Remove from the ghostrole spawning menu
+	var/list/spawners = GLOB.joinable_mobs[format_text("Recovered Crew")]
+	LAZYREMOVE(spawners, old_owner)
+	old_owner.desc = initial(old_owner.desc)
+
+	if(!LAZYLEN(spawners))
+		GLOB.joinable_mobs -= format_text("Recovered Crew")
+
 	// we might have some lingering blinking eyes
 	var/obj/item/bodypart/head/head = old_owner?.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
