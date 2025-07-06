@@ -360,3 +360,370 @@
   plsleavemealon:
   - rscadd: Adds new morbid themed tools for the coroners enjoyment. Coroners now
       perform autopsies slightly faster.
+2025-06-17:
+  Absolucy:
+  - bugfix: The lobby art properly fades out during roundstart, latejoin, and server
+      restart again.
+  Ghommie:
+  - bugfix: Sundered blade ritual shouldn't delete more than one sheet of silver or
+      titanium.
+  Justice12354:
+  - bugfix: henchmen jumpsuit no longer turns pink and black when u try to adjust
+      it (you can't adjust it now)
+  MGO:
+  - rscadd: Introduces new inverse reagents for Krokodil, Bath Salts, Aranesp, Happiness,
+      Baldium, Colorful Reagent and Gravitum!
+  - rscadd: An alternate reaction output has been added for Monkey Powder. Instead
+      of 1u Water, add 10u Monkey Dust to make an angry monkey!
+  - rscadd: 'Adds a medicine: Naloxone! Requires equal parts Morphine, Hydrogen Peroxide,
+      Bromine and Ethanol to be made. Purges opioid-class reagents, can also help
+      with mitigating drowsiness and breath loss. Also purges good moodlets associated
+      with opiates and replaces them with negative moodlets, so don''t expect your
+      patient to be happy about losing their high!'
+  MiraHell:
+  - bugfix: Empty revolvers can now be reloaded
+  SmArtKar:
+  - bugfix: Fixed holobarriers going invisible after being spraypainted
+  - bugfix: Fixed some edge cases where antagonist datums would "stick" and not get
+      removed if your body got destroyed.
+  TealSeer:
+  - bugfix: fixed being unable to attack suit storage units
+  Y0SH1M4S73R:
+  - bugfix: You can no longer deploy flatpacks in places that aren't turfs.
+  jlsnow301:
+  - bugfix: Tgui core v4.2 brings more stylized components, fixes for stuck movement
+      keys, and more
+  - bugfix: Draggable tgui components (like slider) will let you type numbers again
+  necromanceranne:
+  - bugfix: Malfunctioning AI's can once again dominate mechs without a beacon.
+  - qol: Eldritch paintings no longer inflict brain traumas on you that need surgery
+      to remove. Instead, they inflict a status effect that can be protected from
+      and removed using large doses of holy water.
+2025-06-18:
+  TealSeer:
+  - code_imp: examine text for dufflebag zipper status uses examine proc instead of
+      update_desc
+  plsleavemealon:
+  - rscadd: Adds a brand new morbid themed surgical toolset, along with a way to craft
+      it from a normal surgical toolset! These tools, much like their non-augmented
+      counterparts are faster at certain surgeries when used by someone that is morbidly
+      inclined.
+  vinylspiders:
+  - qol: '"Spawners Menu" and "Minigames Menu" are back as chat verbs for power users'
+  - qol: report-issue is now a verb that can be used in chat to open the issue report
+      prompt for power users
+2025-06-19:
+  Sealed101:
+  - bugfix: fixed petrified statues dropping victims into nullspace if they somehow
+      ended up in a jaunt
+  - bugfix: mobs exiting petrification actually get paralyzed for 10 seconds now as
+      intended
+  SmArtKar:
+  - bugfix: Maps with a large amount of Z levels should no longer randomly display
+      space parallax to players with low multi-z culling settings.
+  SyncIt21:
+  - code_imp: stacks error on invalid amounts, removed manual passing of number `1`
+      when creating a single stack in many cases
+  TealSeer:
+  - code_imp: Autochangelog no longer cares if your changelog entry tag has capital
+      letters in it
+  Y0SH1M4S73R:
+  - rscadd: Why would you ever make chocolate pudding at 04:00 station time? Have
+      you lost control of your life?
+  - admin: Adding reagents to a beaker from a chem dispenser adds a hidden fingerprint
+      to the beaker.
+  timothymtorres:
+  - bugfix: Fix water vapor making water tiles and no slip turfs wet
+  - bugfix: Fix admin immersion buttons scaling incorrectly when UI is stretched.
+2025-06-20:
+  00-Steven:
+  - rscadd: You can take pictures over advanced camera consoles.
+  - rscadd: You can take pictures while looking up or down.
+  - bugfix: AIs taking pictures in multi-z shows the objects of your floor and the
+      ones below, instead of just the ones below.
+  - bugfix: Humans taking pictures through holes in multi-z actually shows the floor
+      below, instead of pitch-black nothingness.
+  - bugfix: Taking pictures of glass floors in multi-z actually shows the floor below.
+  Absolucy:
+  - bugfix: Fixed lobby art not fading in when server hopping.
+  Hatterhat:
+  - qol: Having throw mode enabled while racking the slide on a gun has you catch
+      the ejected casing. Unless your hands are full, your hands are unprotected and
+      the casing is recently fired, or you are clumsy (e.g. a clown), in which case
+      you drop the casing and look silly.
+  Jacquerel:
+  - bugfix: Changelings with Void Adaption can once again breathe in space
+  JohnFulpWillard:
+  - balance: Assistant-only clean toolbox now does 1 damage per TC again.
+  Melbert:
+  - rscadd: Any normal or bulky sized item can be used as a prosthetic arm, instead
+      of just chainsaws.
+  Sealed101:
+  - bugfix: fixed certain pirate spawners having broken Jump to/Spawn buttons in the
+      ghost spawners menu (greytide, space IRS, Interdyne)
+  - bugfix: fixed equipping straight jackets onto people with attack-equip then equipping
+      another jacket through the equip window causing magical jacket consumption into
+      the recipient's contents
+  SmArtKar:
+  - bugfix: Fixed flypeople not being able to drink vomit
+  - bugfix: Random blood decals no longer claim to be trails, only actual trails do.
+  - bugfix: Ambient Occlusion pref should now update immediately upon being changed,
+      instead of having to swap bodies or waiting for server restart to get it updated.
+  - code_imp: Slightly improved rendering code/performance just a tiny bit.
+  - bugfix: Fixed rolling paper runtiming when trying to stuff a blunt
+  SyncIt21:
+  - code_imp: removes un-needed calls to `RefreshParts()`
+  grungussuss:
+  - bugfix: fixed ashen passage unjaunt using the wrong vfx
+  moocowswag:
+  - rscadd: You can now remotely monitor and control modular shield generators using
+      modular shield generator consoles.
+  necromanceranne:
+  - balance: Wounds do not make you as vulnerable to suffering wounds of all types
+      as before. Instead, wounds make you more vulnerable to suffering worse versions
+      of themselves as a priority.
+  - balance: Wound armor is now more impactful when protecting you from wounds when
+      you have already been wounded.
+  - balance: Your head and chest are more difficult to wound until they have been
+      mangled; either from suffering from a weeping avulsion or a hairline fracture.
+  - code_imp: Changed the variable for bare_wound_bonus to exposed_wound_bonus to
+      better explain what that variable is doing.
+  throwawayuseless:
+  - rscadd: Vaguely estimate what kinds of hearts and lungs people have from a variety
+      of weird stethoscope noises! (Or just look it up on the pr, I won't judge.)
+  - rscadd: Using analog diagnostic tools on eldritch organs from beyond the waking
+      world or people whose hearts cause their skin to arc like a tesla coil is a
+      bad idea. Examine people, ya goof.
+  - rscadd: 'You can see if someone has an actively damaging (read: contracted straight
+      from the groaning hungry source) zombie infection by using a penlight. Act out
+      highly emotional headshot hesitation scenes today!'
+  - rscadd: 'New Hemoanalytic Scanner (read: really shitty but roundstart printable
+      chem scanner), which tells you all about someone''s blood, and can also detect
+      medicines in their bloodstream! Not toxins or miscellaneous reagents though.'
+  - refactor: Refactored and added some penlight, stethoscope, and organ code. If
+      shit is fucked, please report it on the github issue tracker ASAP.
+  - bugfix: X-Ray vision generically causes eyes to glow under penlight, not just
+      specifically the mutation X-Ray vision.
+  - bugfix: Reflex Hammers now fit in medical storage items, IE. medbelts and medkits.
+  - balance: People with welding-eyes or similar will not have their pupils react
+      to penlight examination.
+2025-06-21:
+  DATA-xPUNGED:
+  - qol: "With Nanotrasen's brand new Auto-Seats\u2122, late crew members will now\
+      \ automatically unbuckle from their seats when the arrival shuttle arrives at\
+      \ the destination!"
+  - bugfix: Leaving your seat too early on a shuttle with a knockdown force will now
+      properly immobilize and knockdown you as intended.
+  EnterTheJake:
+  - rscdel: Flying mobs no longer have 3x worse damage slowdown
+  Melbert:
+  - rscadd: If a cable is destroyed by an explosion, all rooms within 64-100 (it's
+      a probability) tiles AND which are connected to the same powernet as the split
+      cable will have their lights flicker 1-3 times.
+  - balance: Cable integrity has been reduced from 300 to 50
+  - balance: Cables have an innate 75% bomb resistance while under floor tiles
+  - bugfix: Glass shards from colliding with vendors or glass table hurt you again.
+  Sealed101:
+  - bugfix: killed the impostor infinite pizza
+  - bugfix: the One True infinite pizza no longer gets stuck on a single pizza type
+      if the pizza conjured by the box gets sliced
+  - bugfix: the cargo pizza order now pre-slices the pizza, because that's what all
+      pizza places have been doing since the dawn of time and our favorite supplier
+      PizzNTe has been forcefully convinced to not break this sacred tradition
+  SmArtKar:
+  - bugfix: Flatpacked vendors start empty to prevent duping
+  kittysmooch:
+  - rscadd: 'Lit smokables now act as a weak lightsource.
+
+      :cl:'
+  necromanceranne:
+  - bugfix: Projectiles can once again embed targets that are armoured.
+2025-06-22:
+  Ben10Omintrix:
+  - bugfix: 50 minebots no longer crash the server
+  Ghommie:
+  - bugfix: You can nullify mutations that are either scrambled (mutagen etc.) or
+      from a mutator (not activator) again.
+  - bugfix: Mutations with applied chromosomes won't display "no chromosome applied"
+      when saved or have zero instability among other things.
+  Iamgoofball:
+  - admin: Makes mushroom people available to admins via config.
+  Jacquerel:
+  - balance: Many kinds of mob will now more aggressively attempt to escape being
+      confined or restricted by obstacles such as chairs, lockers, or human arms.
+  KazooBard:
+  - bugfix: Rust Spirit -> Rust Walker in ghost poll menu
+  Rhials:
+  - qol: Supermatter hallucinatory anomalies no longer spawn decoys.
+  Y0SH1M4S73R:
+  - sound: Clown Operatives will now broadcast their declarations of war with a fitting
+      auditory cue.
+  necromanceranne:
+  - bugfix: Phazon fire punches now properly deal damage, rather than make a funny
+      fire special effect and doing literally nothing at all.
+  - qol: Nuclear Operatives can now purchase support bags for their specific kind
+      of mech; Dark Gygax or Mauler. No need to buy useless amoo just to get a toolbelt!
+2025-06-23:
+  JohnFulpWillard:
+  - bugfix: Observers can no longer finalize unfinished canvas paintings.
+  - bugfix: Borgs can't put their models in other storage items.
+  - rscadd: 'Added a new halloween species: Spirits, a species without legs and instead
+      floats.'
+  - rscadd: 'Added a new magic mirror species: Ghosts, like spirits but with the ability
+      to become incorporeal, traversing through solid wall.'
+  - bugfix: Mobs unable to use storage items now can't use storage items.
+  - bugfix: Mobs unable to use items can now not open airlocks & closets
+  - bugfix: Mobs unable to pick items up can no longer pick items up and immediately
+      drop, moving one tile at a time.
+  - bugfix: Mobs with intentional missing limbs (Alien larva) no longer show their
+      limbs as missing on examine (again)
+  - bugfix: Golems' pref page had a missing icon, it now has one.
+  Krysonism:
+  - image: The perceptomatrix helmet has a new anomalous look.
+  SmArtKar:
+  - rscadd: Fish infusion now gives you scales, and tail color if you hit certain
+      thresholds
+2025-06-24:
+  Sealed101:
+  - bugfix: fixed being able to anchor multiple solar panel assemblies on a single
+      tile (or any dense tile for that matter)
+  - bugfix: fixed solar trackers not absorbing the assembly upon construction, leading
+      to assembly duplication
+  - qol: solar assemblies can be wrenched on catwalks
+  TealSeer:
+  - server: TGS deployments should no longer fail to install unzip
+  TheBoondock:
+  - qol: being blackout drunk will stop your liver from being hurt from alcohol for
+      the duration of it
+2025-06-25:
+  Aliceee2ch:
+  - bugfix: Fixed things forgotten in walls of Catwalk Station
+  amylizzle:
+  - code_imp: removes an unnecessary static def in a unit test
+  grungussuss:
+  - spellcheck: fixes some examine text typos
+  - qol: you can now click on objects in the game when the lobby art starts to fade
+2025-06-26:
+  Aliceee2ch:
+  - map: removed medsci headset from MetaStation and CatwalkStation. Added one more
+      on DeltaStation and IceBox instead.
+  Melbert:
+  - rscadd: Fire alarms now has wires
+  - rscadd: Fire alarm trigger on damage now scales based on damage dealt, rather
+      than being a flat 33%
+  - qol: Fire alarm screentips
+  - refactor: Refactored fire alarms de/assembly, report any oddities
+  - bugfix: AIs can open windoors
+  - bugfix: Mechas can open airlocks
+  - bugfix: Handcuffed people can open public airlocks
+  - bugfix: Telekinesis can open public airlocks
+  carpotoxin:
+  - bugfix: Fixed narcolepsy's odds to put you to sleep scaling infinitely
+2025-06-27:
+  Melbert:
+  - refactor: Dynamic rewritten entirely, report any strange rounds
+  - config: Dynamic config reworked, it's now a TOML file
+  - refactor: Refactored antag roles somewhat, report any oddities
+  - refactor: Refactored Revolution entirely, report any oddities
+  - rscdel: Deleted most midround events that spawn antags - they use dynamic rulesets
+      now
+  - rscadd: Dynamic rulesets can now be false alarms
+  - rscadd: Adds a random event that gives dynamic the ability to run another ruleset
+      later
+  - admin: Adds a panel for messing around with dynamic
+  - admin: Adds a panel for chance for every dynamic ruleset to be selected
+  - admin: You can spawn revs without using dynamic now
+  - bugfix: Nuke team leaders get their fun title back
+  Rhials:
+  - qol: When the ticker announces the end of a round on another server, it will include
+      the shuttle call reason if the shuttle is hijacked.
+  SyncIt21:
+  - bugfix: plumbing reaction chamber UI is scrollable again
+  TealSeer:
+  - bugfix: fixed egalitarian station mode missing airlocks that use req_one_access
+  grungussuss:
+  - bugfix: fixed malf ais not being able to dominate mechs
+  - bugfix: borgs can no longer smell
+  - bugfix: fixed dunking giving you a permanent offset
+  - qol: fasten pipes now has a nicer look to it in visible text message
+  - bugfix: the message for putting dental implants in is now correct
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in the cooking menu.
+2025-06-28:
+  FeudeyTF:
+  - rscadd: Added ability to change existing radio channels and create new
+  - qol: Added color for some buttons in Telecomms UI
+  LemonInTheDark:
+  - bugfix: Fixed your theme being used for ghost language/multiz buttons
+  - image: Updated multiz buttons very slightly
+  - image: Added ghost only language menu/multiz buttons
+  SmArtKar:
+  - bugfix: Fixed jaws of life losing hit sounds when swapped twice
+  carlarctg:
+  - sound: Adds glass sounds to heretic potions
+  necromanceranne:
+  - bugfix: Fixes Phazon fire punches. For real this time. It was tested. It works.
+2025-06-29:
+  EuSouAFazer:
+  - map: The R&D Console and Department Protolathe have been moved from the back to
+      the front desk in Catwalk
+  - map: A new broom closet was added to CatwalkScience, where the R&D console was.
+      Don't get too attached!
+  - map: A new smoking room was added to better connect the lower-left region of Science
+      with the rest of Science
+  - map: Many improvements in Catwalk Robotics - new mech bay power ports and a slightly
+      more efficient layout for surgery
+  - bugfix: Removed a stray surgery tray on the floor in Robotics
+  - map: Removes fake stairs on the main hallways
+  LT3:
+  - bugfix: Fixed incorrect opening case in variable door delay
+  - code_imp: Airlocks can have variable animation delay same as doors
+  Melbert:
+  - qol: Mail is now shipped every 10 minutes rather than every 5 minutes. The amount
+      of mail remains unchanged (so you get 1 crate with 6 mail instead of 2 crates
+      with 3 mail each).
+  - qol: Mail is no longer shipped while the station is on red alert - mail held will
+      be sent if the station returns to blue alert.
+  Rhials:
+  - bugfix: Cardboard boxes are no longer slowed down by speed potions. They are now
+      sped up by them instead.
+  necromanceranne:
+  - balance: Mech hydraulic clamps perform an attack animation and sound when attacking
+      mobs.
+  - balance: Mech hydraulic clamps can be blocked and respect armor.
+  - balance: Mech hydraulic clamps do triple damage to xenomorphs.
+  - bugfix: Some undead spirit mobs are actually undead.
+  san7890:
+  - refactor: Soulscythes have undergone a mild refactor, but everything should work
+      as it should. Report any issues.
+2025-06-30:
+  Krysonism:
+  - rscdel: Del removed the emergency sutures.
+  - balance: Emergency medkits now have a bandage instead of an emergency suture stack.
+  - balance: the lead pipe is now fire and acid proof.
+  LemonInTheDark:
+  - refactor: Fucked with admin rank setup very slightly, please yell at me if anything
+      is wrong.
+  - admin: Updated the permissions panel to be a good bit more user friendly, added
+      rank management support to it.
+  - server: I've added code that gives the game modification/deletion perms for the
+      rank table, be made aware.
+  Melbert:
+  - qol: Quirks spam you less on roundstart or latejoin
+  - bugfix: Multiple high impact rulesets will no longer roll simultaneously unless
+      dynamic picks "high chaos"
+  - rscdel: '"Cyborg Pre-screened dogtag" quirk. It''s a loadout item now.'
+  SmArtKar:
+  - balance: Healium bolts now heal and knock out overtime while being embedded instead
+      of being instant.
+  - balance: Healium bolts dissolve after being embedded for 6 seconds and don't work
+      on corpses
+  - bugfix: Healium bolts no longer ignore being blocked/parried/reflected
+  - bugfix: Fixed space in Meta Central virtual domain not having teleport prevention
+  Twaticus:
+  - image: resprites the schoolgirl outfit using GAGs
+  grungussuss:
+  - refactor: refactored how sfx with multiple variants are coded, report any issues
+      with sounds not playing!
+  lelandkemble:
+  - bugfix: makes raw meatpizza appear correctly in cooking menu

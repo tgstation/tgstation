@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "The lobby art properly fades out during roundstart, latejoin, and server restart again."

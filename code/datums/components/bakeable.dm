@@ -79,6 +79,10 @@
 		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
 		if(added_reagents) // Add any new reagents that should be added
 			baked_result.reagents.add_reagent_list(added_reagents)
+		if(istype(original_object, /obj/item/food) && istype(baked_result, /obj/item/food))
+			var/obj/item/food/original_food = original_object
+			var/obj/item/food/baked_food = baked_result
+			LAZYADD(baked_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)

@@ -79,8 +79,19 @@
 
 /atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), blend_override = BLEND_MULTIPLY)
+	RegisterSignal(GLOB, SIGNAL_ADDTRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_enabled))
+	RegisterSignal(GLOB, SIGNAL_REMOVETRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_disabled))
+	if(HAS_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset)))
+		distortion_enabled()
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/distortion_enabled(datum/source)
+	SIGNAL_HANDLER
+	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/distortion_disabled(datum/source)
+	SIGNAL_HANDLER
+	remove_filter("displacer")
 
 /atom/movable/screen/plane_master/rendering_plate/game_plate/show_to(mob/mymob)
 	. = ..()

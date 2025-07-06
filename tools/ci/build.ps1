@@ -4,6 +4,6 @@ if(!(Test-Path -Path "C:/byond")){
     Remove-Item C:/byond.zip
 }
 
-bash tools/build/build -Werror
+bash tools/build/build.sh -Werror
 
 exit $LASTEXITCODE

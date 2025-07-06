@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -29,7 +30,7 @@ export const MedicalRecordTabs = (props) => {
 
   const sorted: MedicalRecord[] = sortBy(
     filter(records, (record) => isRecordMatch(record, search)),
-    (record) => record.name?.toLowerCase(),
+    [(record) => record.name?.toLowerCase()],
   );
 
   return (
