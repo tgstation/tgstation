@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Getting extra arms attached now gives you your species arms rather than human ones."

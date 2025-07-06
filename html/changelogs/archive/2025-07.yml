@@ -77,3 +77,53 @@
   Time-Green:
   - balance: Regenerative black extract can no longer be used to create infinite voidwalker
       loot skulls
+2025-07-04:
+  KingMapache:
+  - rscadd: Added felinid tongue to the felinid disk from research of the limbgrower
+  Melbert:
+  - qol: Adds a DNR button at the button of the ghost screen
+  - qol: The "You have died" text has now been updated to reflect this
+  grungussuss:
+  - bugfix: fixed a client login runtime
+  necromanceranne:
+  - balance: Mecha that are EMP'd properly delete their tracking beacons after many
+      years where they haven't. There is a probability for whether or not the beacon
+      is destroyed from an EMP.
+  - bugfix: ' You cannot stack multiple of the same beacon onto a single mech.'
+  twilightwanderer:
+  - bugfix: Fixing print request issues
+2025-07-05:
+  Absolucy:
+  - admin: 'Added some more Lua/SDQL2 wrappers: _floor(), _ceil(), _typesof(), _uppertext(),
+      _html_encode(), _html_decode(), _url_encode(), and _url_decode()'
+  Fikou:
+  - admin: _generator wrapper for sdql, RandList proc for generators
+  Kocma-san:
+  - qol: Centcom station has received funding from the NT and can now use the photocopier
+      for free.
+  Kubisopplay:
+  - rscadd: Malfunctioning AI gets constant influx of processing time from hacked
+      APCs
+  - rscadd: Delta and robot factory are now locked behind a minimum amount of hacked
+      APCs
+  - refactor: Malf AI modules can now be locked behind a certain minimum number of
+      hacked APCs
+  - balance: Lowers the cost of voicechanger to make it less punishing at the beginning
+      of the round
+  OrionTheFox:
+  - balance: Jackboots available in the autodrobe have been changed to Tactical Work
+      Boots, a black version of shoelaced work boots.
+  - rscadd: Paramedics are now issued Tactical Work Boots as standard workwear.
+  - image: Paramedic Jackets now match in color to the rest of the Paramedic's gear.
+  TealSeer:
+  - bugfix: fixed crude shuttle blueprints being uncraftable
+  Y0SH1M4S73R:
+  - rscadd: The Knit Flesh spell can now be used to insert organs into people. Left-click
+      an organ with the hand, or use an organ on it, to put the organ in the grasp.
+2025-07-06:
+  Y0SH1M4S73R:
+  - rscadd: The Centcom Department of Import Control has become aware of the use of
+      highly-illegal and medically dubious self-surgery skillchips aboard company
+      stations. We suspect they are being sold to the station through the black market.
+  grungussuss:
+  - admin: added missing logs for prying

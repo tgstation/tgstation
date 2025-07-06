@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Mecha that are EMP'd properly delete their tracking beacons after many years where they haven't. There is a probability for whether or not the beacon is destroyed from an EMP."
-  - bugfix: " You cannot stack multiple of the same beacon onto a single mech."

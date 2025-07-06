@@ -140,7 +140,7 @@ export class PrimaryView extends Component {
                     setTextAreaText(value);
 
                     if (this.scrollableRef.current) {
-                      let thisDistFromBottom =
+                      const thisDistFromBottom =
                         this.scrollableRef.current.scrollHeight -
                         this.scrollableRef.current.scrollTop;
                       this.scrollableRef.current.scrollTop +=
