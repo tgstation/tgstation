@@ -20,8 +20,10 @@ export function createStats(verbose: boolean): StatsOptions {
   };
 }
 
+const dirname = path.resolve();
+
 export default defineConfig({
-  context: __dirname,
+  context: dirname,
   devtool: false,
   entry: {
     tgui: './packages/tgui',
@@ -119,10 +121,10 @@ export default defineConfig({
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
-      tgui: path.resolve(__dirname, './packages/tgui'),
-      'tgui-panel': path.resolve(__dirname, './packages/tgui-panel'),
-      'tgui-say': path.resolve(__dirname, './packages/tgui-say'),
-      'tgui-dev-server': path.resolve(__dirname, './packages/tgui-dev-server'),
+      tgui: path.resolve(dirname, './packages/tgui'),
+      'tgui-panel': path.resolve(dirname, './packages/tgui-panel'),
+      'tgui-say': path.resolve(dirname, './packages/tgui-say'),
+      'tgui-dev-server': path.resolve(dirname, './packages/tgui-dev-server'),
     },
   },
   stats: createStats(true),
