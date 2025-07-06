@@ -153,10 +153,49 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
 	var/map_save_directory = get_current_persistence_map_directory()
 
-	//for(var/z in 2 to world.maxz) // try to disable centcomm (z_level = 1) but ignore it for now
-	var/map = write_map(1, 1, 2, world.maxx, world.maxy, 4) // keep in mind, multi-z maps like planets need to save their map from start_z to end_z
-	var/file_path = "[map_save_directory]/2.dmm"
-	rustg_file_write(map, file_path)
+	for(var/z in 2 to world.maxz) // ignore centcomm which is always 1st z level
+		var/map
+		var/list/level_traits = list()
+		var/datum/space_level/level_to_check = SSmapping.z_list[z]
+		level_traits += list(level_to_check.traits)
+
+		if(SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN)) // multi-z maps
+			if(!SSmapping.level_trait(z, ZTRAIT_UP) && SSmapping.level_trait(z, ZTRAIT_DOWN))
+				continue // skip all the other z levels if they aren't a bottom
+
+			var/bottom_z = z
+			var/top_z
+			for(var/above_z in (bottom_z + 1) to world.maxz)
+				var/datum/space_level/above_level_to_check = SSmapping.z_list[above_z]
+				level_traits += list(above_level_to_check.traits)
+
+				if(!SSmapping.level_trait(above_z, ZTRAIT_UP) && SSmapping.level_trait(above_z, ZTRAIT_DOWN))
+					top_z = above_z
+					break
+
+			map = write_map(1, 1, bottom_z, world.maxx, world.maxy, top_z)
+		else // single z maps
+			map = write_map(1, 1, z, world.maxx, world.maxy, z)
+
+		var/file_path = "[map_save_directory]/[z].dmm"
+		rustg_file_write(map, file_path)
+
+
+		// consider adding ZTRAIT_SECRET to prevent ghosts observing z-levels
+		// is_mining_level(what_turf.z)
+
+		var/json_data = list(
+			"version" = MAP_CURRENT_VERSION,
+			"map_name" = CUSTOM_MAP_PATH,
+			"map_path" = map_save_directory,
+			"map_file" = "[z].dmm",
+			// "planetary" we use mining level trait instead ?! double check bc idk how lavaland is setting gravity
+			"traits" = level_traits,
+			"minetype" = MINETYPE_NONE, // set this to "ice" ?! looks like we can ignore it honestly
+
+		)
+
+		rustg_file_write(json_encode(json_data, JSON_PRETTY_PRINT), "[map_save_directory]/[z].json")
 
 ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Select a part of the map by coordinates and download it.", ADMIN_CATEGORY_DEBUG)
 	SSpersistence.save_persistent_maps()
