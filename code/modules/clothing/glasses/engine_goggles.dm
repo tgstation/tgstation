@@ -180,8 +180,11 @@
 /proc/show_blueprints(mob/viewer, range = 7, duration = 10)
 	if(!ismob(viewer) || !viewer.client)
 		return
-	for(var/area/selected_area in view(range, viewer))
-		var/image/area_overlay = image(selected_area.icon, selected_area, initial(selected_area.icon_state), TOPDOWN_ABOVE_WATER_LAYER)
+	for(var/turf/viewable_turf in view(range, viewer))
+		var/area/selected_area = get_area(viewable_turf)
+		var/obj/area_overlay = image(selected_area.icon, viewable_turf, initial(selected_area.icon_state), TOPDOWN_ABOVE_WATER_LAYER)
+		SET_PLANE_EXPLICIT(area_overlay, ABOVE_GAME_PLANE, viewable_turf)
+		area_overlay.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		area_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		area_overlay.alpha = 255
 		flick_overlay_global(area_overlay, list(viewer.client), duration)
