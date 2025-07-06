@@ -199,8 +199,7 @@
 					continue
 				if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 					continue
-				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-				deploying_shield.shield_generator = src
+				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 				LAZYADD(deployed_shields, deploying_shield)
 				if(color_shield)
 					deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -211,8 +210,7 @@
 		for(var/turf/open/target_tile in list_of_turfs)
 			if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 				continue
-			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-			deploying_shield.shield_generator = src
+			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 			LAZYADD(deployed_shields, deploying_shield)
 			if(color_shield)
 				deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -231,8 +229,7 @@
 				continue
 			if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 				continue
-			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-			deploying_shield.shield_generator = src
+			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 			LAZYADD(deployed_shields, deploying_shield)
 			if(color_shield)
 				deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -246,8 +243,7 @@
 			continue
 		if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 			continue
-		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-		deploying_shield.shield_generator = src
+		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 		LAZYADD(deployed_shields, deploying_shield)
 		if(color_shield)
 			deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -442,8 +438,7 @@
 			if(radius == 0)//we couldnt even generate a single tile somehow
 				deactivate_shields()
 			return
-		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-		deploying_shield.shield_generator = (src)
+		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 		LAZYADD(deployed_shields, deploying_shield)
 		if(color_shield)
 			deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -809,9 +804,12 @@
 	var/obj/machinery/modular_shield_generator/shield_generator
 
 
-/obj/structure/emergency_shield/modular/Initialize(mapload)
+/obj/structure/emergency_shield/modular/Initialize(mapload, connected_to_generator)
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
+	if(!connected_to_generator)
+		return INITIALIZE_HINT_QDEL
+	shield_generator = connected_to_generator
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
