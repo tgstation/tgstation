@@ -21,34 +21,17 @@
 	///Items that the players have loaded into the vendor
 	VAR_FINAL/list/vending_machine_input = list()
 
-/obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-
-	if(!isnull(held_item))
-		if(held_item.tool_behaviour == TOOL_CROWBAR) //cannot deconstruct
-			return NONE
-
-		if(vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE))
-			context[SCREENTIP_CONTEXT_LMB] = "Load item"
-			return CONTEXTUAL_SCREENTIP_SET
-
-	return ..()
-
-/obj/machinery/vending/custom/examine(mob/user)
-	. = ..()
-	if(panel_open) //you cant
-		. -= span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
-
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
-	if(istype(gone))
-		var/hash_key = ITEM_HASH(gone)
-		if(vending_machine_input[hash_key])
-			var/new_amount = vending_machine_input[hash_key] - 1
-			if(!new_amount)
-				vending_machine_input -= hash_key
-				update_static_data_for_all_viewers()
-			else
-				vending_machine_input[hash_key] = new_amount
+
+	var/hash_key = ITEM_HASH(gone)
+	if(vending_machine_input[hash_key])
+		var/new_amount = vending_machine_input[hash_key] - 1
+		if(!new_amount)
+			vending_machine_input -= hash_key
+		else
+			vending_machine_input[hash_key] = new_amount
+		update_static_data_for_all_viewers()
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	. = TRUE
@@ -104,7 +87,7 @@
 	for(var/stocked_hash in vending_machine_input)
 		var/base64 = ""
 		var/obj/item/target = null
-		for(var/obj/item/stored_item in contents)
+		for(var/obj/item/stored_item in contents - component_parts)
 			if(ITEM_HASH(stored_item) == stocked_hash)
 				base64 = base64_cache[stocked_hash]
 				if(!base64) //generate an icon of the item to use in UI
@@ -168,16 +151,10 @@
 		last_slogan = world.time + rand(0, slogan_delay)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
-	balloon_alert(user, "cannot deconstruct!")
-	return ITEM_INTERACT_FAILURE
-
 /obj/machinery/vending/custom/on_deconstruction(disassembled)
 	unbuckle_all_mobs(TRUE)
 	var/turf/current_turf = get_turf(src)
 	if(current_turf)
-		for(var/obj/item/stored_item in contents)
-			stored_item.forceMove(current_turf)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
 
 /obj/machinery/vending/custom/vend(list/params, mob/living/user, list/greyscale_colors)
@@ -210,10 +187,11 @@
 		log_econ("[dispensed_item.custom_price] credits were spent on [src] buying a \
 		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
 		/// Make an alert
-		if(last_shopper != REF(user) || purchase_message_cooldown < world.time)
+		var/ref = REF(user)
+		if(last_shopper != ref || purchase_message_cooldown < world.time)
 			speak("Thank you for your patronage [user]!")
 			purchase_message_cooldown = world.time + 5 SECONDS
-			last_shopper = REF(user)
+			last_shopper = ref
 
 	/// Remove the item
 	use_energy(active_power_usage)
