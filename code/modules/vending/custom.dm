@@ -13,13 +13,13 @@
 	fish_source_path = /datum/fish_source/vending/custom
 
 	/// max number of items that the custom vendor can hold
-	VAR_PROTECTED/max_loaded_items = 20
+	var/max_loaded_items = 20
 	/// where the money is sent
 	VAR_PRIVATE/datum/bank_account/linked_account
 	/// Base64 cache of custom icons.
 	VAR_PRIVATE/static/list/base64_cache = list()
 	///Items that the players have loaded into the vendor
-	VAR_FINAL/list/vending_machine_input = list()
+	VAR_PRIVATE/list/vending_machine_input = list()
 
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
