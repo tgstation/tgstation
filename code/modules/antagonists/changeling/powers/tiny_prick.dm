@@ -255,7 +255,7 @@
 	name = "Hallucination Sting"
 	desc = "We cause mass terror to our victim. Costs 10 chemicals."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
-			The target does not notice they have been stung, and they view everyone else as us."
+			The target does not notice they have been stung, and they view everyone else as a random passerby."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
