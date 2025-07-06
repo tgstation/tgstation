@@ -315,7 +315,7 @@
 /obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/launch = item
-		if(launch.pad == WEAKREF(src)) //do not attempt to link when already linked
+		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
 			return ..()
 		launch.pad = WEAKREF(src)
 		to_chat(user, span_notice("You link [src] to [launch]."))
