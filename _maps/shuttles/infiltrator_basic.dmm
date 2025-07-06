@@ -693,6 +693,7 @@
 /obj/machinery/computer/operating{
 	dir = 1
 	},
+/obj/item/disk/surgery/forgottenship,
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "pd" = (
