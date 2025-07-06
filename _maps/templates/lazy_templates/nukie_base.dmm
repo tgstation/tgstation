@@ -794,6 +794,8 @@
 	},
 /obj/structure/table/optable,
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
 "iG" = (
