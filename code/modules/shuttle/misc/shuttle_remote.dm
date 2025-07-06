@@ -4,15 +4,15 @@
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "shuttleremote"
 	w_class = WEIGHT_CLASS_SMALL
-	///if the docks may be changed
+	/// if the docks may be changed
 	var/may_change_docks = TRUE //if this is set to FALSE make sure the shuttle it will be linked to does NOT get to have multiple instances of itself
-	///the port where the shuttle leaves to
+	/// the port where the shuttle leaves to
 	var/shuttle_away_id = "whiteship_lavaland"
-	///the port where the shuttle returns to
+	/// the port where the shuttle returns to
 	var/shuttle_home_id = "whiteship_home"
-	///var which will hold the nav computer
+	/// var which will hold the nav computer
 	var/datum/weakref/computer_ref
-	///var which will hold the mobile port
+	/// var which will hold the mobile port
 	var/obj/docking_port/mobile/our_port
 
 /obj/item/shuttle_remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -103,8 +103,10 @@
 	var/list/destination_names = list()
 	var/list/destination_ids = list()
 	for(var/list/destination_data in destinations_list)
+		if((destination_data["id"] == shuttle_away_id) || (destination_data["id"] == shuttle_home_id))
+			continue //don't display ports that are already designated
 		if(destination_data["id"] == "[our_computer.shuttleId]_custom")
-			continue // we already handle custom docking
+			continue //we already handle custom docking
 		LAZYADD(destination_names, destination_data["name"])
 		LAZYADDASSOC(destination_ids, destination_data["name"], destination_data["id"])
 	if(destination_names.len < 1)
