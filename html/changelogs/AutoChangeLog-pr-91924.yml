@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - refactor: "big manipulator ID card locking has been refactored, report any strangeness with these!"
