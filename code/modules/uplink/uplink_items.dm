@@ -30,14 +30,14 @@
 			"16% sales tax will be charged for orders originating within Space Nebraska.",
 		)
 
-		//override the item stock limit passed into the function
-		if (limited_stock > 0) {
-			uplink_item.limited_stock = limited_stock
-		}
-
 		//We want to limit the purchase amount of some items without adjusting the pricing.
 		if (uplink_item.limited_discount_stock > 0) {
 			uplink_item.limited_stock = uplink_item.limited_discount_stock
+		}
+
+		//if stock limited is passed into the function, we'll override whatever is set
+		if (limited_stock > 0) {
+			uplink_item.limited_stock = limited_stock
 		}
 
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
