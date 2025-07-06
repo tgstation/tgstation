@@ -353,7 +353,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/robot/Initialize(mapload)
 	. = ..()
-	if(!istype(robot))
+	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/katana
