@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import rspack, { Configuration } from '@rspack/core';
 
-import oldConfig, { createStats } from './rspack.config';
+import oldConfig, { createStats } from './rspack.config.mjs';
 
 export const config = {
   ...oldConfig,
@@ -13,7 +13,7 @@ export const config = {
   mode: 'development',
   output: {
     ...oldConfig.output,
-    path: path.resolve(__dirname, './public/.tmp'),
+    path: path.resolve(import.meta.dirname, './public/.tmp'),
   },
   plugins: [
     new rspack.CssExtractRspackPlugin({

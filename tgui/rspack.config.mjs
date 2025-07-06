@@ -3,7 +3,11 @@ import path from 'node:path';
 import { defineConfig } from '@rspack/cli';
 import rspack from '@rspack/core';
 
-export function createStats(verbose: boolean): Record<string, boolean> {
+/**
+ * @param {boolean} verbose
+ * @returns  {import('@rspack/core').StatsOptions}
+ */
+export function createStats(verbose) {
   return {
     assets: verbose,
     builtAt: verbose,
@@ -20,8 +24,10 @@ export function createStats(verbose: boolean): Record<string, boolean> {
   };
 }
 
-const config = defineConfig({
-  context: import.meta.dirname,
+const dir = import.meta.dirname;
+
+export default defineConfig({
+  context: dir,
   devtool: false,
   entry: {
     tgui: './packages/tgui',
@@ -63,7 +69,7 @@ const config = defineConfig({
             loader: 'sass-loader',
             options: {
               api: 'modern-compiler',
-              implementation: require.resolve('sass-embedded'),
+              implementation: 'sass-embedded',
             },
           },
         ],
@@ -97,7 +103,7 @@ const config = defineConfig({
     emitOnErrors: false,
   },
   output: {
-    path: path.resolve(__dirname, './public'),
+    path: 'public',
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js',
     chunkLoadTimeout: 15000,
@@ -119,14 +125,12 @@ const config = defineConfig({
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
-      tgui: path.resolve(__dirname, './packages/tgui'),
-      'tgui-panel': path.resolve(__dirname, './packages/tgui-panel'),
-      'tgui-say': path.resolve(__dirname, './packages/tgui-say'),
-      'tgui-dev-server': path.resolve(__dirname, './packages/tgui-dev-server'),
+      tgui: path.resolve(dir, './packages/tgui'),
+      'tgui-panel': path.resolve(dir, './packages/tgui-panel'),
+      'tgui-say': path.resolve(dir, './packages/tgui-say'),
+      'tgui-dev-server': path.resolve(dir, './packages/tgui-dev-server'),
     },
   },
   stats: createStats(true),
   target: ['web', 'browserslist:edge >= 123'],
 });
-
-export default config;

@@ -1,7 +1,5 @@
 import { createRequire } from 'node:module';
 
-import rspack, { Configuration } from '@rspack/core';
-
 import { config } from '../../rspack.config-dev';
 import { loadSourceMaps } from './link/retrace';
 import { broadcastMessage, setupLink } from './link/server';
@@ -9,20 +7,18 @@ import { createLogger } from './logging';
 import { reloadByondCache } from './reloader';
 import { resolveGlob } from './util';
 
-type RsPack = typeof rspack;
-
 const logger = createLogger('rspack');
 
 export class RspackCompiler {
-  rspack: RsPack;
-  config: Configuration;
+  rspack: any;
+  config: any;
   bundleDir: string;
 
   async setup() {
     // Create a require context that is relative to project root
     // and retrieve all necessary dependencies.
-    const requireFromRoot = createRequire(import.meta.dirname + '/../../..');
-    const rspack: RsPack = await requireFromRoot('@rspack/core');
+    const requireFromRoot = createRequire(`${import.meta.dirname}/../../..`);
+    const rspack = await requireFromRoot('@rspack/core');
 
     this.rspack = rspack;
     this.config = config;
@@ -31,8 +27,7 @@ export class RspackCompiler {
 
   async watch() {
     logger.log('setting up');
-    // Setup link
-    const link = setupLink();
+    setupLink();
     // Instantiate the compiler
     const compiler = this.rspack.rspack(this.config);
 
@@ -46,7 +41,7 @@ export class RspackCompiler {
     });
 
     // Start reloading when it's finished
-    compiler.hooks.done.tap('tgui-dev-server', async (stats) => {
+    compiler.hooks.done.tap('tgui-dev-server', async () => {
       // Load source maps
       await loadSourceMaps(this.bundleDir);
       // Reload cache
