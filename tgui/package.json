@@ -2,7 +2,6 @@
 	"private": true,
 	"name": "tgui-workspace",
 	"version": "6.0.0",
-	"type": "module",
 	"packageManager": "bun@1.2.16",
 	"workspaces": [
 		"packages/*"

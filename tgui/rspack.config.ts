@@ -1,13 +1,9 @@
 import path from 'node:path';
 
 import { defineConfig } from '@rspack/cli';
-import rspack from '@rspack/core';
+import rspack, { type StatsOptions } from '@rspack/core';
 
-/**
- * @param {boolean} verbose
- * @returns  {import('@rspack/core').StatsOptions}
- */
-export function createStats(verbose) {
+export function createStats(verbose: boolean): StatsOptions {
   return {
     assets: verbose,
     builtAt: verbose,
@@ -24,10 +20,8 @@ export function createStats(verbose) {
   };
 }
 
-const dir = import.meta.dirname;
-
 export default defineConfig({
-  context: dir,
+  context: __dirname,
   devtool: false,
   entry: {
     tgui: './packages/tgui',
@@ -125,10 +119,10 @@ export default defineConfig({
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
-      tgui: path.resolve(dir, './packages/tgui'),
-      'tgui-panel': path.resolve(dir, './packages/tgui-panel'),
-      'tgui-say': path.resolve(dir, './packages/tgui-say'),
-      'tgui-dev-server': path.resolve(dir, './packages/tgui-dev-server'),
+      tgui: path.resolve(__dirname, './packages/tgui'),
+      'tgui-panel': path.resolve(__dirname, './packages/tgui-panel'),
+      'tgui-say': path.resolve(__dirname, './packages/tgui-say'),
+      'tgui-dev-server': path.resolve(__dirname, './packages/tgui-dev-server'),
     },
   },
   stats: createStats(true),

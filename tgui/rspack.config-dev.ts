@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import rspack, { Configuration } from '@rspack/core';
 
-import oldConfig, { createStats } from './rspack.config.mjs';
+import oldConfig, { createStats } from './rspack.config';
 
 export const config = {
   ...oldConfig,
