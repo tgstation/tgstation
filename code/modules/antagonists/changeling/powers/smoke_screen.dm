@@ -16,12 +16,13 @@
 	for(var/turf/open/spray_blood_targeted in spray_turfs)
 		if(prob(30)) //prevent machine gun blood spraying
 			our_ling.spray_blood_targeted(spray_blood_targeted)
-	/*
+
+
 	var/datum/effect_system/fluid_spread/smoke/blood_smoke/smoke_screen = new()
 	smoke_screen.set_up(8, holder = user, location = user.loc)
 	smoke_screen.start()
 	return TRUE
-	*/
+
 /datum/effect_system/fluid_spread/smoke/blood_smoke
 	effect_type = /obj/effect/particle_effect/fluid/smoke/red
 

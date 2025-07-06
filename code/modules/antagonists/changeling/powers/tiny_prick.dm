@@ -263,15 +263,16 @@
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	..()
 	log_combat(user, target, "stung", "LSD sting")
+	var/mob/random_guy = pick(oviewers(8, user))
 	target.cause_hallucination(\
 		/datum/hallucination/delusion/changeling, \
 		"[user.name]", \
 		duration = 20 SECONDS, \
-		affects_us = TRUE, \
+		affects_us = FALSE, \
 		affects_others = TRUE, \
 		skip_nearby = FALSE, \
 		play_wabbajack = FALSE, \
-		passed_appearance = user.appearance, \
+		passed_appearance = random_guy.appearance, \
 	)
 
 	return TRUE
