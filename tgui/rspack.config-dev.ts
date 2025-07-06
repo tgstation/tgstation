@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import rspack, { Configuration } from '@rspack/core';
+import rspack, { type Configuration } from '@rspack/core';
 
 import oldConfig, { createStats } from './rspack.config';
 
