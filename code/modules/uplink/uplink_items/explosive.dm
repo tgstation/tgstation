@@ -85,20 +85,12 @@
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
 	item = /obj/item/sbeacondrop/emp
 	cost = 7
+	limited_discount_stock = 4
 
 /datum/uplink_item/explosives/syndicate_bomb/emp/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		cost *= 2
-
-/datum/uplink_item/explosives/syndicate_bomb/emp/get_discount_value(discount_type)
-	switch(discount_type)
-		if(TRAITOR_DISCOUNT_BIG)
-			return 0.4	//4 TC
-		if(TRAITOR_DISCOUNT_AVERAGE)
-			return 0.25	//5 TC
-		else
-			return 0.1	//6 TC
 
 /datum/uplink_item/explosives/syndicate_bomb
 	name = "Syndicate Bomb"
@@ -111,16 +103,8 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+	limited_discount_stock = 4
 
 /datum/uplink_item/explosives/syndicate_bomb/New()
 	. = ..()
 	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
-
-/datum/uplink_item/explosives/syndicate_bomb/get_discount_value(discount_type)
-	switch(discount_type)
-		if(TRAITOR_DISCOUNT_BIG)
-			return 0.5	//5 TC
-		if(TRAITOR_DISCOUNT_AVERAGE)
-			return 0.35	//7 TC
-		else
-			return 0.15	//9 TC
