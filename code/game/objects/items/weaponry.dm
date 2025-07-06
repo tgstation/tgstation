@@ -356,6 +356,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
 
+/obj/item/claymore/highlander/robot/process()
+	loc.layer = ABOVE_ALL_MOB_LAYER
+
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
