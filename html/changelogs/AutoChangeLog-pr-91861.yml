@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - balance: "sterilizing reagents like sterilizine, honey and alcohols now improve surgery speed more."
