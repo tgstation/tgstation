@@ -1,5 +1,5 @@
-///Helper to create a typepath to be used in the UI
-#define SANITIZED_PATH(path)(replacetext(replacetext("[path]", "/obj/item/", ""), "/", "-"))
+///This unique key decides how items are stacked on the UI. We separate them based on name,price & type
+#define ITEM_HASH(item)("[item.name][item.custom_price][item.type]")
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
@@ -38,15 +38,17 @@
 	if(panel_open) //you cant
 		. -= span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
 
-/obj/machinery/vending/custom/Exited(atom/movable/gone, direction)
+/obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
-	if(vending_machine_input[gone.type])
-		var/new_amount = vending_machine_input[gone.type] - 1
-		if(!new_amount)
-			vending_machine_input -= gone.type
-		else
-			vending_machine_input[gone.type] = new_amount
-		update_static_data_for_all_viewers()
+	if(istype(gone))
+		var/hash_key = ITEM_HASH(gone)
+		if(vending_machine_input[hash_key])
+			var/new_amount = vending_machine_input[hash_key] - 1
+			if(!new_amount)
+				vending_machine_input -= hash_key
+				update_static_data_for_all_viewers()
+			else
+				vending_machine_input[hash_key] = new_amount
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	. = TRUE
@@ -79,10 +81,12 @@
 		to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
 		return FALSE
 
-	if(vending_machine_input[inserted_item.type])
-		vending_machine_input[inserted_item.type]++
+	//the hash key decides how items stack in the UI. We diffrentiate them based on name & price
+	var/hash_key = ITEM_HASH(inserted_item)
+	if(vending_machine_input[hash_key])
+		vending_machine_input[hash_key]++
 	else
-		vending_machine_input[inserted_item.type] = 1
+		vending_machine_input[hash_key] = 1
 		update_static_data_for_all_viewers()
 
 /obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
@@ -97,20 +101,20 @@
 		return
 
 	categories["Products"] = list("icon" = "cart-shopping")
-	for(var/obj/item/stocked_item as anything in vending_machine_input)
+	for(var/stocked_hash in vending_machine_input)
 		var/base64 = ""
 		var/obj/item/target = null
 		for(var/obj/item/stored_item in contents)
-			if(stored_item.type == stocked_item)
-				base64 = base64_cache[stocked_item]
+			if(ITEM_HASH(stored_item) == stocked_hash)
+				base64 = base64_cache[stocked_hash]
 				if(!base64) //generate an icon of the item to use in UI
 					base64 = icon2base64(getFlatIcon(stored_item, no_anim = TRUE))
-					base64_cache[stocked_item] = base64
+					base64_cache[stocked_hash] = base64
 				target = stored_item
 				break
 
 		. += list(list(
-			path = SANITIZED_PATH(stocked_item),
+			path = stocked_hash,
 			name = target.name,
 			price = target.custom_price,
 			category = "Products",
@@ -122,11 +126,13 @@
 /obj/machinery/vending/custom/ui_data(mob/user)
 	. = ..()
 
+	var/is_owner = compartmentLoadAccessCheck(user)
+
 	.["stock"] = list()
-	for(var/obj/item/stocked_item as anything in vending_machine_input)
-		.["stock"][SANITIZED_PATH(stocked_item)] = list(
-			amount = vending_machine_input[stocked_item],
-			free = FALSE
+	for(var/stocked_hash in vending_machine_input)
+		.["stock"][stocked_hash] = list(
+			amount = vending_machine_input[stocked_hash],
+			free = is_owner
 		)
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
@@ -248,4 +254,4 @@
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
-#undef SANITIZED_PATH
+#undef ITEM_HASH

@@ -236,7 +236,7 @@ type ProductProps = {
 const Product = (props: ProductProps) => {
   const { act, data } = useBackend<VendingData>();
   const { product, productStock, fluid } = props;
-  const { access, department, jobDiscount, all_products_free, user } = data;
+  const { department, jobDiscount, all_products_free, user } = data;
 
   const colorable = !!product.colorable;
   const free = all_products_free || productStock.free || product.price === 0;
@@ -244,7 +244,6 @@ const Product = (props: ProductProps) => {
   const remaining = productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled =
-    !access ||
     remaining === 0 ||
     (!all_products_free && !user) ||
     (!free && (discount ? redPrice : product.price) > user?.cash);

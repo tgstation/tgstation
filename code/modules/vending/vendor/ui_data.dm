@@ -96,7 +96,6 @@
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
-	.["access"] = !!isliving(user)
 
 	var/obj/item/card/id/card_used
 	var/held_cash = 0
