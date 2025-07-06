@@ -20,7 +20,7 @@
 	///Reference to the connected device
 	var/obj/machinery/portable_atmospherics/connected_device
 
-/obj/machinery/atmospherics/components/unary/portables_connector/New()
+/obj/machinery/atmospherics/components/unary/portables_connector/Initialize(mapload)
 	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 0
