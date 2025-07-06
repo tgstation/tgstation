@@ -35,7 +35,7 @@
 			uplink_item.limited_stock = uplink_item.limited_discount_stock
 		}
 
-		//if stock limited is passed into the function, we'll override whatever is set
+		//if stock limited is passed into the function, we'll override everything
 		if (limited_stock > 0) {
 			uplink_item.limited_stock = limited_stock
 		}
