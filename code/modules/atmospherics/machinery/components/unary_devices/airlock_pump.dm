@@ -153,7 +153,7 @@
 			tile_air_pressure = max(0, local_turf.return_air().return_pressure())
 		on_dock_request(tile_air_pressure)
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/New()
+/obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
 	. = ..()
 	var/datum/gas_mixture/distro_air = airs[1]
 	var/datum/gas_mixture/waste_air = airs[2]

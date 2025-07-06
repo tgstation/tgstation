@@ -26,7 +26,7 @@
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
-	var/initialize_directions = NONE
+	var/initialize_directions = ALL_CARDINALS
 	///The color of the pipe
 	var/pipe_color = ATMOS_COLOR_OMNI
 	///What layer the pipe is in (from 1 to 5, default 3)
@@ -81,29 +81,15 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/post_machine_initialize()
-	. = ..()
-	update_name()
-
-/obj/machinery/atmospherics/examine(mob/user)
-	. = ..()
-	. += span_notice("[src] is on layer [piping_layer].")
-	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
-		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
-			. += span_notice("Alt-click to crawl through it.")
-
-/obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
+/obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir, init_dir = initialize_directions)
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
 		normalize_cardinal_directions()
 	nodes = new(device_type)
 	init_processing = process
-	..()
 	set_init_directions(init_dir)
 
-/obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
 		override_naming = TRUE
 	var/turf/turf_loc = null
@@ -120,6 +106,10 @@
 		SSair.start_processing_machine(src)
 	return ..()
 
+/obj/machinery/atmospherics/post_machine_initialize()
+	. = ..()
+	update_name()
+
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
 		nullify_node(i)
@@ -131,6 +121,14 @@
 	QDEL_NULL(cap_overlay)
 
 	return ..()
+
+/obj/machinery/atmospherics/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] is on layer [piping_layer].")
+	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
+		var/mob/living/L = user
+		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
+			. += span_notice("Alt-click to crawl through it.")
 
 /**
  * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
