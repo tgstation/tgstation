@@ -34,6 +34,10 @@
 	if(added_amount == 0)
 		balloon_alert(user, "none left!")
 		return ITEM_INTERACT_BLOCKING
+	if(uses >= max_uses)
+		balloon_alert(user, "already full!")
+		return ITEM_INTERACT_BLOCKING
+
 	added_amount = min(uses + added_amount, max_uses)
 	uses += min(max_uses, added_amount)
 	qdel(ink_cart)
