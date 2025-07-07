@@ -59,6 +59,9 @@
 	/// The action used to allow a connected AI to disconnect
 	var/datum/action/innate/mmi_comp_disconnect/disconnect_action
 
+	/// The connect_containers component used to track the movement of a boris shell or its containers
+	var/datum/component/connect_containers/connection_comp
+
 	/// Maximum length of the message that can be sent to the MMI
 	var/max_length = 300
 
@@ -110,14 +113,12 @@
 			to_chat(occupant, "[span_bold("You hear a message: ")][msg_str]")
 		COOLDOWN_START(src, message_cooldown, MMI_MESSAGE_COOLDOWN)
 
-
 /obj/item/circuit_component/mmi/register_shell(atom/movable/shell)
 	. = ..()
 	RegisterSignal(shell, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(handle_interaction))
-	RegisterSignal(shell, COMSIG_ATOM_ATTACK_AI, PROC_REF(shell_attack_ai))
 
 /obj/item/circuit_component/mmi/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_CLICK))
+	UnregisterSignal(shell, list(COMSIG_ATOM_ITEM_INTERACTION))
 	remove_occupant_item()
 	return ..()
 
@@ -150,9 +151,31 @@
 		set_occupant(new_occupant)
 	if(target_boris)
 		boris = target_boris
+		register_boris_circuit(shell)
 	RegisterSignal(item, COMSIG_QDELETING, PROC_REF(remove_occupant_item))
 	RegisterSignal(item, COMSIG_MOVABLE_MOVED, PROC_REF(occupant_item_moved))
 
+/obj/item/circuit_component/mmi/proc/register_boris_circuit(atom/movable/shell)
+	var/static/list/connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(boris_shell_or_container_moved))
+	connection_comp = AddComponent(/datum/component/connect_containers, shell, connections)
+	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
+		location.AddComponentFrom(src, /datum/component/boris_circuit_container)
+
+/obj/item/circuit_component/mmi/proc/unregister_boris_circuit(atom/movable/shell)
+	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
+		location.RemoveComponentSource(src, /datum/component/boris_circuit_container)
+	QDEL_NULL(connection_comp)
+
+/obj/item/circuit_component/mmi/proc/boris_shell_or_container_moved(atom/movable/shell_or_container, atom/old_loc)
+	SIGNAL_HANDLER
+	if(isturf(old_loc) && isturf(shell_or_container.loc))
+		return
+	var/list/old_locs = ismovable(old_loc) ? (get_nested_locs(old_loc) + old_loc) : list()
+	var/list/new_locs = get_nested_locs(shell_or_container)
+	for(var/atom/movable/loc_exited as anything in old_locs - new_locs)
+		loc_exited.RemoveComponentSource(src, /datum/component/boris_circuit_container)
+	for(var/atom/movable/loc_entered as anything in new_locs - old_locs)
+		loc_entered.AddComponentFrom(src, /datum/component/boris_circuit_container)
 
 /obj/item/circuit_component/mmi/proc/occupant_item_moved(atom/movable/occupant_item)
 	SIGNAL_HANDLER
@@ -169,6 +192,7 @@
 		brain = null
 	if(istype(removing, /obj/item/borg/upgrade/ai))
 		boris = null
+		unregister_boris_circuit(parent.shell)
 	remove_occupant()
 
 	UnregisterSignal(removing, list(
@@ -178,29 +202,15 @@
 	if(removing.loc == src)
 		removing.forceMove(drop_location())
 
-
-/obj/item/circuit_component/mmi/proc/shell_attack_ai(atom/movable/source, mob/user)
-	SIGNAL_HANDLER
-	if(!boris)
-		return
-	if(!isAI(user))
-		return
-	var/mob/living/silicon/ai/ai = user
-	if(!ai.can_perform_action(source, ALLOW_SILICON_REACH))
-		return
-	if(occupant)
-		if(occupant != user)
-			source.balloon_alert(user, "occupied!")
-		return
-	INVOKE_ASYNC(src, PROC_REF(try_ai_connect), user, source)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/obj/item/circuit_component/mmi/proc/try_ai_connect(mob/living/silicon/ai/user, atom/movable/shell)
+/obj/item/circuit_component/mmi/proc/confirm_ai_connect(mob/living/silicon/ai/user, atom/movable/shell)
 	var/confirmation = tgui_alert(user, "Connect to [shell]?", buttons = list("Yes", "No"))
 	if(confirmation != "Yes")
 		return
 	if(QDELETED(src) || QDELETED(user) || QDELETED(shell) || !parent?.shell || !user.can_interact_with(shell) || !boris)
 		return
+	do_ai_connect(user, shell)
+
+/obj/item/circuit_component/mmi/proc/do_ai_connect(mob/living/silicon/ai/user, atom/movable/shell)
 	if(occupant)
 		if(occupant != user)
 			shell.balloon_alert(user, "occupied!")

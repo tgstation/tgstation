@@ -6630,6 +6630,7 @@
 #include "code\modules\wiremod\datatypes\composite\composite.dm"
 #include "code\modules\wiremod\datatypes\composite\list.dm"
 #include "code\modules\wiremod\dcs_components\component_add_port.dm"
+#include "code\modules\wiremod\dcs_components\component_boris_circuit_container.dm"
 #include "code\modules\wiremod\dcs_components\component_wirenet_connection.dm"
 #include "code\modules\wiremod\preset\hello_world.dm"
 #include "code\modules\wiremod\preset\speech_relay.dm"

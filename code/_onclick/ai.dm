@@ -78,7 +78,7 @@
 		set_waypoint(A)
 		return
 
-	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 	A.attack_ai(src)
 

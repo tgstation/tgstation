@@ -51,7 +51,7 @@
 #define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 /// from base of atom/attack_robot_secondary(): (mob/user)
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
-/// from base of atom/attack_ai(): (mob/user)
+/// from base of atom/attack_ai(): (mob/user, params)
 #define COMSIG_ATOM_ATTACK_AI "atom_attack_ai"
 ///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
