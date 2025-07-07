@@ -1,8 +1,7 @@
 /// Maximum amount of items in a storage bag that we're transferring items to the vendor from.
 #define MAX_VENDING_INPUT_AMOUNT 30
 
-//=====================TOOL ACTS===========================================
-
+//TOOL ACTS
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
 		return ITEM_INTERACT_FAILURE
@@ -20,16 +19,15 @@
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/attack_item)
 	if(anchored)
 		default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item)
-		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	else
 		to_chat(user, span_warning("You must first secure [src]."))
 		return ITEM_INTERACT_FAILURE
 
-//=============================================================================
+/obj/machinery/vending/on_set_panel_open(old_value)
+	update_appearance(UPDATE_OVERLAYS)
 
-
-//============================================RESTOCKING==================================
+//RESTOCKING
 /**
  * Is the passed in user allowed to load this vending machines compartments? This only is ran if we are using a /obj/item/storage/bag to load the vending machine, and not a dedicated restocker.
  *
@@ -96,18 +94,17 @@
 	if(refill_canister && istype(attack_item, refill_canister))
 		if (!panel_open)
 			to_chat(user, span_warning("You should probably unscrew the service panel first!"))
-			return ITEM_INTERACT_BLOCKING
-		if (!is_operational)
+		else if (!is_operational)
 			to_chat(user, span_notice("[src] does not respond."))
-			return ITEM_INTERACT_BLOCKING
-		//if the panel is open we attempt to refill the machine
-		var/obj/item/vending_refill/canister = attack_item
-		if(canister.get_part_rating() == 0)
-			to_chat(user, span_warning("[canister] is empty!"))
-			return ITEM_INTERACT_BLOCKING
-		// instantiate canister if needed
-		post_restock(user, restock(canister))
-		return ITEM_INTERACT_SUCCESS
+		else
+			//if the panel is open we attempt to refill the machine
+			var/obj/item/vending_refill/canister = attack_item
+			if(canister.get_part_rating() == 0)
+				to_chat(user, span_warning("[canister] is empty!"))
+			else
+				// instantiate canister if needed
+				post_restock(user, restock(canister))
+			return ITEM_INTERACT_SUCCESS
 
 	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
 		if(istype(attack_item, /obj/item/storage/bag)) //trays USUALLY
@@ -127,26 +124,8 @@
 			if(loaded)
 				to_chat(user, span_notice("You insert [loaded] dishes into [src]'s compartment."))
 			return ITEM_INTERACT_SUCCESS
-		return loadingAttempt(attack_item, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
-
-	if(tiltable && !tilted && attack_item.force)
-		if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
-			tilt(get_turf(get_step(src, REVERSE_DIR(get_dir(src, user)))))
-			return ITEM_INTERACT_SUCCESS
-
-		switch(rand(1, 100))
-			if(1 to 5)
-				freebie(3)
-			if(6 to 15)
-				freebie(2)
-			if(16 to 25)
-				freebie(1)
-			if(26 to 75)
-				return
-			if(76 to 100)
-				tilt(user)
-		return ITEM_INTERACT_SUCCESS
-
+		else
+			return loadingAttempt(attack_item, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
 /**
  * Dispenses free items from the standard stock.
@@ -220,9 +199,28 @@
 	if(restocked > 0)
 		replacer.play_rped_sound()
 	return TRUE
-//============================================================================
 
-//=========================ATTACKS============================================
+//ATTACKS
+/obj/machinery/vending/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	if(tiltable && !tilted && weapon.force)
+		if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
+			tilt(get_turf(get_step(src, REVERSE_DIR(get_dir(src, user)))))
+			return TRUE
+
+		switch(rand(1, 100))
+			if(1 to 5)
+				freebie(3)
+			if(6 to 15)
+				freebie(2)
+			if(16 to 25)
+				freebie(1)
+			if(26 to 75)
+				return
+			if(76 to 100)
+				tilt(user)
+		return TRUE
+	return ..()
+
 /obj/machinery/vending/attack_tk_grab(mob/user)
 	to_chat(user, span_warning("[src] seems to resist your mental grasp!"))
 

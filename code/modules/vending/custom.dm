@@ -34,7 +34,6 @@
 		update_static_data_for_all_viewers()
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
-	. = TRUE
 	if(loaded_item.flags_1 & HOLOGRAM_1)
 		if(send_message)
 			speak("This vendor cannot accept nonexistent items.")
@@ -47,9 +46,9 @@
 		if(send_message)
 			speak("Item needs to have a custom price set.")
 		return FALSE
+	return TRUE
 
 /obj/machinery/vending/custom/loadingAttempt(obj/item/inserted_item, mob/user)
-	. = TRUE
 	if(!canLoadItem(inserted_item, user))
 		return FALSE
 
@@ -71,6 +70,7 @@
 	else
 		vending_machine_input[hash_key] = 1
 		update_static_data_for_all_viewers()
+	return TRUE
 
 /obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
 	if(!linked_account)
@@ -128,9 +128,8 @@
 		return TRUE
 
 /obj/machinery/vending/custom/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
-	if(!linked_account && isliving(user))
-		var/mob/living/living_user = user
-		var/obj/item/card/id/card_used = living_user.get_idcard(TRUE)
+	if(isliving(user) && !linked_account && istype(attack_item, /obj/item/card/id))
+		var/obj/item/card/id/card_used = attack_item
 		if(card_used?.registered_account)
 			linked_account = card_used.registered_account
 			speak("\The [src] has been linked to [card_used].")
@@ -139,13 +138,20 @@
 	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
 		return ..()
 
+	. ITEM_INTERACT_FAILURE
 	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
 	if (new_name)
 		name = new_name
 	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
 	if (new_desc)
 		desc = new_desc
 	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
 	if (new_slogan)
 		slogan_list += new_slogan
 		last_slogan = world.time + rand(0, slogan_delay)
@@ -222,9 +228,8 @@
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()
 	//starts in a state where you can move it
-	set_panel_open(TRUE)
 	set_anchored(FALSE)
-	add_overlay(panel_type)
+	set_panel_open(TRUE)
 	//and references the deity
 	name = "[GLOB.deity]'s Consecrated Vendor"
 	desc = "A vending machine created by [GLOB.deity]."
