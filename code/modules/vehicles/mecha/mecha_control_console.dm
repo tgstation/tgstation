@@ -121,7 +121,7 @@
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
 	if(!(mecha_to_attach.mecha_flags & flag_to_check))
 		return
-	for(var/obj/item/mecha_parts/mecha_tracking/tracker in chassis.trackers)
+	for(var/obj/item/mecha_parts/mecha_tracking/tracker in mecha_to_attach.trackers)
 		if(tracker.flag_to_check == flag_to_check)
 			return //there can only be one...type of this tracker
 	if(!..())
