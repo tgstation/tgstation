@@ -812,6 +812,42 @@
 	key = SFX_REGEN_MESH_DROP
 	file_paths = list('sound/items/regenerative_mesh/regen_mesh_drop1.ogg')
 
+/datum/sound_effect/cig_pack_drop
+	key = SFX_CIG_PACK_DROP
+	file_paths = list(
+		'sound/items/cigs/cig_pack_drop1.ogg',
+		'sound/items/cigs/cig_pack_drop2.ogg',
+	)
+
+/datum/sound_effect/cig_pack_insert
+	key = SFX_CIG_PACK_INSERT
+	file_paths = list(
+		'sound/items/cigs/cig_pack_insert1.ogg',
+		'sound/items/cigs/cig_pack_insert2.ogg',
+		'sound/items/cigs/cig_pack_insert3.ogg',
+		'sound/items/cigs/cig_pack_insert4.ogg',
+	)
+
+/datum/sound_effect/cig_pack_pickup
+	key = SFX_CIG_PACK_PICKUP
+	file_paths = list(
+		'sound/items/cigs/cig_pack_pickup1.ogg',
+		'sound/items/cigs/cig_pack_pickup2.ogg',
+		'sound/items/cigs/cig_pack_pickup3.ogg',
+	)
+
+/datum/sound_effect/cig_pack_rustle
+	key = SFX_CIG_PACK_RUSTLE
+	file_paths = list(
+		'sound/items/handling/regenerative_mesh/regen_mesh_pickup1.ogg',
+		'sound/items/handling/regenerative_mesh/regen_mesh_pickup2.ogg',
+		'sound/items/handling/regenerative_mesh/regen_mesh_pickup3.ogg',
+	)
+
+/datum/sound_effect/cig_pack_throw_drop
+	key = SFX_CIG_PACK_THROW_DROP
+	file_paths = list('sound/items/cigs/cig_pack_throw_drop1.ogg')
+
 
 /* assoc lists go next */
 

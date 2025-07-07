@@ -7,7 +7,7 @@ export const editKeyOf = (
   let returnval = {};
   Object.keys(icon_state).forEach((key) => {
     if (key === old_key) {
-      let newPair = { [new_key]: icon_state[old_key] };
+      const newPair = { [new_key]: icon_state[old_key] };
       returnval = { ...returnval, ...newPair };
     } else {
       returnval = { ...returnval, [key]: icon_state[key] };

@@ -90,7 +90,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
   const { data, act } = useBackend<Law>();
   const { cyborg_ref, lawset } = props;
 
-  let num_of_each_lawtype = [];
+  const num_of_each_lawtype = [];
 
   lawset.forEach((law) => {
     if (!num_of_each_lawtype[law.lawtype]) {
