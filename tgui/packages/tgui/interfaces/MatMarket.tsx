@@ -23,6 +23,7 @@ type Material = {
   threshold: number;
   color: string;
   requested: number;
+  elastic: number;
 };
 
 type Data = {
@@ -132,6 +133,13 @@ export const MatMarket = (props) => {
                       pr="3%"
                     >
                       {toTitleCase(material.name)}
+                    </Stack.Item>
+                    <Stack.Item
+                      width="10%"
+                      pr="2%"
+                      textColor={material.elastic < 0.33 ? 'red' : material.elastic < 0.66 ? 'orange' : 'green'}
+                    >
+                      Elasticity: <b>{Math.round(material.elastic * 100)}</b>%
                     </Stack.Item>
 
                     <Stack.Item width="15%" pr="2%">
