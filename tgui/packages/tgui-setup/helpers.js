@@ -24,9 +24,7 @@
     return content;
   };
 
-  // BYOND API object
-  // ------------------------------------------------------
-
+  // MARK: BYOND API object
   var Byond = (window.Byond = {});
 
   // Expose inlined metadata
@@ -43,12 +41,10 @@
   })();
 
   // Basic checks to detect whether this page runs in BYOND
-  const isByond =
+  var isByond =
     (Byond.BLINK !== null || window.cef_to_byond) &&
     location.hostname === '127.0.0.1' &&
     location.search !== '?external';
-  //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
-  //&& location.pathname.indexOf('/tmp') === 0
 
   // Version constants
   Byond.IS_BYOND = isByond;
@@ -211,9 +207,7 @@
     window.update.listeners.push(_listener);
   };
 
-  // Asset loaders
-  // ------------------------------------------------------
-
+  // MARK: Asset loaders
   var RETRY_ATTEMPTS = 5;
   var RETRY_WAIT_INITIAL = 500;
   var RETRY_WAIT_INCREMENT = 500;
@@ -479,15 +473,7 @@ window.onunhandledrejection = function (e) {
   window.onerror(msg, null, null, null, reason);
 };
 
-// Helper for augmenting stack traces on fatal errors
-window.__augmentStack__ = function (stack, error) {
-  return stack + '\nUser Agent: ' + navigator.userAgent;
-};
-
-// Incoming message handling
-// ------------------------------------------------------
-
-// Message handler
+// MARK: Message handler
 window.update = function (rawMessage) {
   // Push onto the queue (active during initialization)
   if (window.update.queueActive) {
