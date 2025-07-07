@@ -86,7 +86,7 @@
 	var/data
 
 	if(welded)
-		data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded::type]"
+		data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded]"
 
 	return data
 
