@@ -1,4 +1,0 @@
-author: "theOOZ, kittysmooch"
-delete-after: True
-changes:
-  - rscadd: "Adds the shuttle remote item unlocked with shuttle engineering research, it lets you remote control the whiteship or custom shuttles."

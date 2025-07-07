@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Borg modules no longer fail to break if they were holding an item."

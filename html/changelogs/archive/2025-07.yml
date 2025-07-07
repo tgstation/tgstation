@@ -127,3 +127,38 @@
       stations. We suspect they are being sold to the station through the black market.
   grungussuss:
   - admin: added missing logs for prying
+2025-07-07:
+  EmptyLullaby:
+  - bugfix: The maid costume will no longer summon interdimensional pants onto your
+      digitigrade legs.
+  EnterTheJake:
+  - bugfix: the infiltrator suit  can overslot once more
+  JohnFulpWillard:
+  - bugfix: Getting extra arms attached now gives you your species arms rather than
+      human ones.
+  Krysonism:
+  - balance: sterilizing reagents like sterilizine, honey and alcohols now improve
+      surgery speed more.
+  RealWinterFrost:
+  - image: updates medalbox sprites.
+  - image: adds variants to medal box sprites.
+  SyncIt21:
+  - code_imp: merged New() & Initialize() for atmos machines
+  Time-Green:
+  - bugfix: Fixes inserting nightmare brains implanting the organ into their ???
+  grungussuss:
+  - refactor: refactored trapdoor remote interaction code
+  - qol: added some context tips for tattoo kit
+  - refactor: refactored tattoo kit attackby to item_interactioon
+  - bugfix: highlander cyborgs will get their sword again
+  - refactor: big manipulator ID card locking has been refactored, report any strangeness
+      with these!
+  theOOZ, kittysmooch:
+  - rscadd: Adds the shuttle remote item unlocked with shuttle engineering research,
+      it lets you remote control the whiteship or custom shuttles.
+  throwawayuseless:
+  - bugfix: Hemoanalytic Scanner description is no longer half-complete.
+  timothymtorres:
+  - bugfix: Fix map export including projectiles in saved maps
+  zxaber:
+  - bugfix: Borg modules no longer fail to break if they were holding an item.

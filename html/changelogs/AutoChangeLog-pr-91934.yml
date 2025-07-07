@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - qol: "added some context tips for tattoo kit"
-  - refactor: "refactored tattoo kit attackby to item_interactioon"
