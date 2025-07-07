@@ -1,12 +1,15 @@
-// The organ jar - a 150u bottle that can hold a single organ
+// The organ jar - a 120u beaker that can hold a single organ
 /obj/item/reagent_containers/cup/beaker/organ_jar
 	name = "organ jar"
-	desc = "A jar large enough to put an organ inside it."
-	possible_transfer_amounts = list(10, 20, 30, 50, 150)
-	// It's pretty big
-	volume = 150
+	desc = "A large shatter-resistant jar, unwieldy for the sake of chemistry, but big enough to put an organ inside of."
 	icon_state = "organ_jar"
 	fill_icon_state = "organ_jar"
+	// The plastic makes it more shatter-proof!
+	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
+	volume = 120
+	// Difficult to transfer from in small amounts (to discourage using it for things besides organs)
+	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(20, 40, 60, 120)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 	w_class = WEIGHT_CLASS_SMALL // Organs are small by default, so the jar should be at least small as well
 	/// The organ that is currently inside the jar
