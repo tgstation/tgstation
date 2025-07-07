@@ -597,10 +597,19 @@
 	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 	var/choice = get_zone_at(icon_x, icon_y)
-	if (!choice)
-		return 1
 
-	return set_selected_zone(choice, usr)
+	if(!choice)
+		return TRUE
+
+	set_selected_zone(choice, usr)
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		var/list/new_params = modifiers.Copy()
+		new_params -= RIGHT_CLICK
+		new_params[LEFT_CLICK] = "1"
+		return usr.ClickOn(usr, list2params(new_params))
+
+	return TRUE
 
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
 	. = ..()
