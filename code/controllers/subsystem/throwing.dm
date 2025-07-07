@@ -232,6 +232,9 @@ SUBSYSTEM_DEF(throwing)
 
 	if (callback)
 		callback.Invoke()
+		// Same can happen in the callback
+		if(QDELETED(thrownthing))
+			return
 
 	if(!thrownthing.currently_z_moving) // I don't think you can zfall while thrown but hey, just in case.
 		var/turf/T = get_turf(thrownthing)

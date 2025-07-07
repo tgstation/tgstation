@@ -39,8 +39,14 @@
 	return ..()
 
 /obj/item/boulder/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(held_item?.tool_behaviour == TOOL_MINING || HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
+	if(held_item && (held_item.tool_behaviour == TOOL_MINING || HAS_TRAIT(held_item, TRAIT_BOULDER_BREAKER)))
+		context[SCREENTIP_CONTEXT_LMB] = "Crush boulder into ore"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		if(isbasicmob(user))
+			context[SCREENTIP_CONTEXT_LMB] = "Crush boulder into ore"
+		else
+			context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/boulder/examine(mob/user)
@@ -80,21 +86,20 @@
 
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
-		manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(weapon.tool_behaviour == TOOL_MINING)
-		manual_process(weapon, user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
+/obj/item/boulder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (HAS_TRAIT(tool, TRAIT_BOULDER_BREAKER))
+		manual_process(tool, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		return ITEM_INTERACT_SUCCESS
+	if (tool.tool_behaviour == TOOL_MINING)
+		manual_process(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/boulder/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
@@ -102,7 +107,6 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.

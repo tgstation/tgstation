@@ -334,26 +334,14 @@ world
 /proc/RotateHue(rgb, angle)
 	var/list/HSV = rgb2hsv(rgb)
 
-	// normalize hsv in case anything is screwy
-	if(HSV[1] >= 1536)
-		HSV[1] %= 1536
+	angle %= 360
+
+	HSV[1] = round(HSV[1] + angle)
+
+	HSV[1] %= 360
+
 	if(HSV[1] < 0)
-		HSV[1] += 1536
-
-	// Compress hue into easier-to-manage range
-	HSV[1] -= HSV[1] >> 8
-
-	if(angle < 0 || angle >= 360)
-		angle -= 360 * round(angle / 360)
-	HSV[1] = round(HSV[1] + angle * (1530/360), 1)
-
-	// normalize hue
-	if(HSV[1] < 0 || HSV[1] >= 1530)
-		HSV[1] %= 1530
-	if(HSV[1] < 0)
-		HSV[1] += 1530
-	// decompress hue
-	HSV[1] += round(HSV[1] / 255)
+		HSV[1] += 360
 
 	return hsv2rgb(HSV)
 
@@ -995,9 +983,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			icon_state = thing.icon_state
 			//Despite casting to atom, this code path supports mutable appearances, so let's be nice to them
 			if(isnull(icon_state) || (isatom(thing) && thing.flags_1 & HTML_USE_INITAL_ICON_1))
-				icon_state = initial(thing.icon_state)
+				icon_state = thing::post_init_icon_state || thing::icon_state
 				if (isnull(dir))
-					dir = initial(thing.dir)
+					dir = thing::dir
 
 		if (isnull(dir))
 			dir = thing.dir

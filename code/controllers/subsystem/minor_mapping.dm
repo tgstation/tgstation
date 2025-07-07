@@ -1,10 +1,19 @@
-#define PROB_MOUSE_SPAWN 98
 #define PROB_SPIDER_REPLACEMENT 50
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
-	init_order = INIT_ORDER_MINOR_MAPPING
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
 	flags = SS_NO_FIRE
+	///a list of vermin we pick from to spawn.
+	var/list/vermin_chances = list(
+		/mob/living/basic/mouse = 72,
+		/mob/living/basic/snail = 16,
+		/mob/living/basic/stoat = 10,
+		/mob/living/basic/regal_rat/controlled = 2,
+	)
 
 /datum/controller/subsystem/minor_mapping/Initialize()
 // This whole subsystem just introduces a lot of odd confounding variables into unit test situations,
@@ -27,14 +36,14 @@ SUBSYSTEM_DEF(minor_mapping)
 			continue
 
 		to_spawn--
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_SPIDER_INFESTATION) && prob(PROB_SPIDER_REPLACEMENT))
-			new /mob/living/basic/spider/maintenance(proposed_turf)
-			return
 
-		if (prob(PROB_MOUSE_SPAWN))
-			new /mob/living/basic/mouse(proposed_turf)
+		var/picked_path
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_SPIDER_INFESTATION) && prob(PROB_SPIDER_REPLACEMENT))
+			picked_path = /mob/living/basic/spider/maintenance
 		else
-			new /mob/living/basic/regal_rat/controlled(proposed_turf)
+			picked_path = pick_weight(vermin_chances)
+
+		new picked_path(proposed_turf)
 
 /// Returns true if a mouse won't die if spawned on this turf
 /datum/controller/subsystem/minor_mapping/proc/valid_mouse_turf(turf/open/proposed_turf)
@@ -88,5 +97,4 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	return shuffle(suitable)
 
-#undef PROB_MOUSE_SPAWN
 #undef PROB_SPIDER_REPLACEMENT

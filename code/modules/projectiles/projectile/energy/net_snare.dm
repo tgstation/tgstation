@@ -1,28 +1,32 @@
-/obj/projectile/energy/net
-	name = "energy netting"
+/obj/projectile/energy/snare
+	name = "energy snare"
 	icon_state = "e_netting"
-	damage = 10
+	damage = 30
 	damage_type = STAMINA
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 10
 
-/obj/projectile/energy/net/Initialize(mapload)
+/obj/projectile/energy/snare/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
 
-/obj/projectile/energy/net/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/energy/snare/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/obj/item/dragnet_beacon/destination_beacon = null
 	var/obj/item/gun/energy/e_gun/dragnet/our_dragnet = fired_from
 	if(our_dragnet && istype(our_dragnet))
 		destination_beacon = our_dragnet.linked_beacon
 
 	if(isliving(target))
-		var/turf/Tloc = get_turf(target)
-		if(!locate(/obj/effect/nettingportal) in Tloc)
-			new /obj/effect/nettingportal(Tloc, destination_beacon)
+		var/mob/living/living_target = target
+		living_target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 0.5, 5 SECONDS)
+		for(var/turf/trapped_turf in range(1, get_turf(living_target)))
+			if(trapped_turf.density)
+				continue
+			new /obj/effect/nettingportal(trapped_turf, destination_beacon)
+
 	. = ..()
 
-/obj/projectile/energy/net/on_range()
+/obj/projectile/energy/snare/on_range()
 	do_sparks(1, TRUE, src)
 	. = ..()
 
@@ -114,41 +118,3 @@
 	do_sparks(3, TRUE, src)
 	balloon_alert(user, "beacon unlocked")
 	return TRUE
-
-/obj/projectile/energy/trap
-	name = "energy snare"
-	icon_state = "e_snare"
-	hitsound = 'sound/items/weapons/taserhit.ogg'
-	range = 4
-
-/obj/projectile/energy/trap/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
-		new/obj/item/restraints/legcuffs/beartrap/energy(get_turf(loc))
-	else if(iscarbon(target))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(target))
-		B.spring_trap(target)
-	. = ..()
-
-/obj/projectile/energy/trap/on_range()
-	new /obj/item/restraints/legcuffs/beartrap/energy(loc)
-	..()
-
-/obj/projectile/energy/trap/cyborg
-	name = "Energy Bola"
-	icon_state = "e_snare"
-	hitsound = 'sound/items/weapons/taserhit.ogg'
-	range = 10
-
-/obj/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(!ismob(target) || blocked >= 100)
-		do_sparks(1, TRUE, src)
-		qdel(src)
-	if(iscarbon(target))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
-		B.spring_trap(target)
-	QDEL_IN(src, 10)
-	. = ..()
-
-/obj/projectile/energy/trap/cyborg/on_range()
-	do_sparks(1, TRUE, src)
-	qdel(src)

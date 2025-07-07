@@ -47,6 +47,8 @@
 	callout_type = /datum/callout_option/move
 	///the behavior we use to follow
 	var/follow_behavior = /datum/ai_behavior/pet_follow_friend
+	///should we activate immediately if we're doing nothing else and gain a friend?
+	var/activate_on_befriend = FALSE
 
 /datum/pet_command/follow/set_command_active(mob/living/parent, mob/living/commander)
 	. = ..()
@@ -58,6 +60,18 @@
 /datum/pet_command/follow/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(follow_behavior, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/pet_command/follow/add_new_friend(mob/living/tamer)
+	. = ..()
+	var/mob/living/parent = weak_parent.resolve()
+	if (!parent)
+		return
+	if (activate_on_befriend && !parent.ai_controller.blackboard_key_exists(BB_ACTIVE_PET_COMMAND))
+		try_activate_command(tamer)
+
+/// Like follow but start active
+/datum/pet_command/follow/start_active
+	activate_on_befriend = TRUE
 
 /**
  * # Pet Command: Play Dead

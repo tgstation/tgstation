@@ -31,6 +31,9 @@
 /datum/ai_behavior/travel_towards/stop_on_arrival
 	clear_target = TRUE
 
+/datum/ai_behavior/travel_towards/adjacent
+	required_distance = 1
+
 /**
  * # Travel Towards Atom
  * Travel towards an atom you pass directly from the controller rather than a blackboard key.

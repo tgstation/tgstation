@@ -98,7 +98,7 @@
 
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
+/obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/stack/cable_coil) && state == FLOODLIGHT_NEEDS_WIRES)
 		var/obj/item/stack/S = O
 		if(S.use(5))

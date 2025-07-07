@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT_TYPED(quirk_blacklist, /list/datum/quirk, list(
 	list(/datum/quirk/social_anxiety, /datum/quirk/mute),
 	list(/datum/quirk/mute, /datum/quirk/softspoken),
 	list(/datum/quirk/poor_aim, /datum/quirk/bighands),
-	list(/datum/quirk/bilingual, /datum/quirk/foreigner),
+	list(/datum/quirk/bilingual, /datum/quirk/foreigner, /datum/quirk/csl),
 	list(/datum/quirk/spacer_born, /datum/quirk/item_quirk/settler),
 	list(/datum/quirk/photophobia, /datum/quirk/nyctophobia),
 	list(/datum/quirk/item_quirk/settler, /datum/quirk/freerunning),
@@ -47,12 +47,12 @@ GLOBAL_LIST_INIT(quirk_string_blacklist, generate_quirk_string_blacklist())
 // - Quirk datums are stored and hold different effects, as well as being a vector for applying trait string
 PROCESSING_SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
-	init_order = INIT_ORDER_QUIRKS
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME
 	wait = 1 SECONDS
 
 	var/list/quirks = list() //Assoc. list of all roundstart quirk datum types; "name" = /path/
+	var/list/datum/quirk/quirk_prototypes = list()
 	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
@@ -79,6 +79,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if(initial(quirk_type.abstract_parent_type) == type)
 			continue
 
+		quirk_prototypes[type] = new type
 		quirks[initial(quirk_type.name)] = quirk_type
 		quirk_points[initial(quirk_type.name)] = initial(quirk_type.value)
 
@@ -93,7 +94,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	for(var/quirk_name in applied_client.prefs.all_quirks)
 		var/datum/quirk/quirk_type = quirks[quirk_name]
 		if(ispath(quirk_type))
-			if(user.add_quirk(quirk_type, override_client = applied_client))
+			if(user.add_quirk(quirk_type, override_client = applied_client, announce = FALSE))
 				SSblackbox.record_feedback("tally", "quirks_taken", 1, "[quirk_name]")
 		else
 			stack_trace("Invalid quirk \"[quirk_name]\" in client [applied_client.ckey] preferences")

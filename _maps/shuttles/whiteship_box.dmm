@@ -32,7 +32,7 @@
 /area/shuttle/abandoned/medbay)
 "ah" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -45,7 +45,7 @@
 /area/shuttle/abandoned/crew)
 "ak" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -486,7 +486,7 @@
 /area/shuttle/abandoned/bridge)
 "bf" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge"
 	},
 /turf/open/floor/plating,

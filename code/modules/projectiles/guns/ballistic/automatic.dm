@@ -182,8 +182,7 @@
 /obj/item/gun/ballistic/automatic/m90/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isammocasing(tool))
 		if(istype(tool, underbarrel.magazine.ammo_type))
-			underbarrel.attack_self(user)
-			underbarrel.attackby(tool, user, list2params(modifiers))
+			underbarrel.item_interaction(user, tool, modifiers)
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
@@ -312,7 +311,7 @@
 		return
 	..()
 
-/obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, list/modifiers, list/attack_modifiers)
 	if(!cover_open && istype(A, accepted_magazine_type))
 		balloon_alert(user, "open the cover!")
 		return
@@ -360,7 +359,6 @@
 	fire_delay = 2
 	burst_size = 1
 	actions_types = list()
-	spread = 10 //slightly inaccurate in burst fire mode, mostly important for long range shooting
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	suppressor_x_offset = 8
 

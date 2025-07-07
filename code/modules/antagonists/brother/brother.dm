@@ -1,7 +1,7 @@
 /datum/antagonist/brother
 	name = "\improper Brother"
 	antagpanel_category = "Brother"
-	job_rank = ROLE_BROTHER
+	pref_flag = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
 	antag_hud_name = "brother"
 	hijack_speed = 0.5
@@ -15,6 +15,7 @@
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
+		team = new()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
@@ -25,7 +26,6 @@
 
 /datum/antagonist/brother/on_gain()
 	objectives += team.objectives
-	owner.special_role = special_role
 	finalize_brother()
 
 	if (team.brothers_left <= 0)
@@ -45,7 +45,6 @@
 	return ..()
 
 /datum/antagonist/brother/on_removal()
-	owner.special_role = null
 	remove_conversion_skills()
 	return ..()
 
@@ -143,11 +142,15 @@
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
-	brother1_icon.Blend(icon('icons/effects/blood.dmi', "maskblood"), ICON_OVERLAY)
+	var/icon/brother1_blood_icon = icon('icons/effects/blood.dmi', "maskblood")
+	brother1_blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	brother1_icon.Blend(brother1_blood_icon, ICON_OVERLAY)
 	brother1_icon.Shift(WEST, 8)
 
 	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist/consistent, brother2)
-	brother2_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/brother2_blood_icon = icon('icons/effects/blood.dmi', "uniformblood")
+	brother2_blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	brother2_icon.Blend(brother2_blood_icon, ICON_OVERLAY)
 	brother2_icon.Shift(EAST, 8)
 
 	var/icon/final_icon = brother1_icon
@@ -174,7 +177,7 @@
 	return brother_text
 
 /datum/antagonist/brother/greet()
-	to_chat(owner.current, span_alertsyndie("You are the [owner.special_role]."))
+	to_chat(owner.current, span_alertsyndie("You are a Blood Brother."))
 	owner.announce_objectives()
 
 /datum/antagonist/brother/proc/finalize_brother()

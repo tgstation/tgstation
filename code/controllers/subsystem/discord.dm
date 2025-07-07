@@ -31,7 +31,7 @@
 SUBSYSTEM_DEF(discord)
 	name = "Discord"
 	wait = 3000
-	init_order = INIT_ORDER_DISCORD
+	init_stage = INITSTAGE_EARLY
 
 	/// People to save to notify file
 	var/list/notify_members = list()
@@ -43,9 +43,6 @@ SUBSYSTEM_DEF(discord)
 	/// People who have tried to verify this round already
 	var/list/reverify_cache
 
-	/// Common words list, used to generate one time tokens
-	var/list/common_words
-
 	/// The file where notification status is saved
 	var/notify_file = file("data/notify.json")
 
@@ -53,7 +50,6 @@ SUBSYSTEM_DEF(discord)
 	var/enabled = FALSE
 
 /datum/controller/subsystem/discord/Initialize()
-	common_words = world.file2list("strings/1000_most_common.txt")
 	reverify_cache = list()
 	// Check for if we are using TGS, otherwise return and disables firing
 	if(world.TgsAvailable())
@@ -158,7 +154,7 @@ SUBSYSTEM_DEF(discord)
 	// While there's a collision in the token, generate a new one (should rarely happen)
 	while(not_unique)
 		//Column is varchar 100, so we trim just in case someone does us the dirty later
-		one_time_token = trim("[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]", 100)
+		one_time_token = trim("[pick(GLOB.most_common_words)]-[pick(GLOB.most_common_words)]-[pick(GLOB.most_common_words)]-[pick(GLOB.most_common_words)]-[pick(GLOB.most_common_words)]-[pick(GLOB.most_common_words)]", 100)
 
 		not_unique = find_discord_link_by_token(one_time_token, timebound = TRUE)
 
@@ -300,4 +296,3 @@ SUBSYSTEM_DEF(discord)
 	if (length(discord_mention_extraction_regex.group) == 1)
 		return discord_mention_extraction_regex.group[1]
 	return null
-

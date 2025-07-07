@@ -10,7 +10,7 @@
 	/// Cooldown for how often we can pull rabbits out of here
 	COOLDOWN_DECLARE(rabbit_cooldown)
 
-/obj/item/clothing/head/hats/tophat/attackby(obj/item/hitby_item, mob/user, params)
+/obj/item/clothing/head/hats/tophat/attackby(obj/item/hitby_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(istype(hitby_item, /obj/item/gun/magic/wand))
 		abracadabra(hitby_item, user)

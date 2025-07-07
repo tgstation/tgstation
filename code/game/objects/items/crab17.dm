@@ -64,7 +64,7 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!canwalk)
 		balloon_alert(user, "not ready to accept transactions!")
 		return

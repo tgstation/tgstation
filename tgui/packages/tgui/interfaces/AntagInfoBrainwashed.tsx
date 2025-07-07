@@ -23,14 +23,12 @@ export const AntagInfoBrainwashed = (porps) => {
           left="26%"
         />
         <Section fill>
-          <Stack vertical fill textAlign="center">
+          <Stack fill vertical g={0} textAlign="center">
             <Stack.Item fontFamily="Wingdings">
               Hey, no! Stop translating this!
             </Stack.Item>
-            <Stack.Item mt={-0.25} fontSize="20px">
-              Your mind reels...
-            </Stack.Item>
-            <Stack.Item mt={-0.25} fontSize="20px">
+            <Stack.Item fontSize="20px">Your mind reels...</Stack.Item>
+            <Stack.Item fontSize="20px">
               It is focusing on a single purpose...
             </Stack.Item>
             <Stack.Item mt={3.5} grow>
@@ -44,7 +42,7 @@ export const AntagInfoBrainwashed = (porps) => {
                 }
               />
             </Stack.Item>
-            <Stack.Item fontSize="20px" textColor="#61e4b9">
+            <Stack.Item mb={0.5} fontSize="20px" textColor="#61e4b9">
               Follow the directives at any cost!
             </Stack.Item>
             <Stack.Item fontFamily="Wingdings">

@@ -27,7 +27,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	melee_damage_lower = 25
 	melee_damage_upper = 30
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, STAMINA = 0, OXY = 1.5)
+	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, STAMINA = 1, OXY = 1.5)
 	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
@@ -57,7 +57,7 @@
 	. = ..()
 	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
-	AddElement(/datum/element/dextrous)
+	AddElement(/datum/element/dextrous, can_throw = TRUE)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
 	AddComponent(

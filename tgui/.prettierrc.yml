@@ -1,6 +1,6 @@
 singleQuote: true
 overrides:
-  - files: 'public/tgui.html'
+  - files: 'packages/tgui-setup/helpers.js'
     options:
       trailingComma: es5
       arrowParens: always

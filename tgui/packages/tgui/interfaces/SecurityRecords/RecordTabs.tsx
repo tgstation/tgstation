@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -30,7 +31,7 @@ export const SecurityRecordTabs = (props) => {
 
   const sorted = sortBy(
     filter(records, (record) => isRecordMatch(record, search)),
-    (record) => record.name,
+    [(record) => record.name],
   );
 
   return (
@@ -39,7 +40,8 @@ export const SecurityRecordTabs = (props) => {
         <Input
           fluid
           placeholder="Name/Job/Fingerprints"
-          onInput={(event, value) => setSearch(value)}
+          onChange={setSearch}
+          expensive
         />
       </Stack.Item>
       <Stack.Item grow>

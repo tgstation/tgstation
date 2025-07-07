@@ -519,7 +519,7 @@
 
 ///Bleed and make blood splatters at tele start and end points
 /obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_NOBLOOD))
+	if(!user.can_bleed(BLOOD_COVER_TURFS) != BLEED_SPLATTER)
 		return FALSE
 	user.add_splatter_floor(old_location)
 	user.add_splatter_floor(new_location)
@@ -570,13 +570,6 @@
 		<br>
 		Final word of caution: the technology involved is experimental in nature. Although many years of research have allowed us to prevent leaving your organs behind, it simply cannot account for all of the liquid in your body.
 		"}
-
-/obj/item/storage/box/syndie_kit/syndicate_teleporter
-	name = "syndicate teleporter kit"
-
-/obj/item/storage/box/syndie_kit/syndicate_teleporter/PopulateContents()
-	new /obj/item/syndicate_teleporter(src)
-	new /obj/item/paper/syndicate_teleporter(src)
 
 /obj/effect/temp_visual/teleport_abductor/syndi_teleporter
 	duration = 5

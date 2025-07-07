@@ -324,14 +324,23 @@
 
 	. = buckle_mob(M, check_loc = check_loc)
 	if(.)
-		if(M == user)
-			M.visible_message(span_notice("[M] buckles [M.p_them()]self to [src]."),\
-				span_notice("You buckle yourself to [src]."),\
-				span_hear("You hear metal clanking."))
-		else
-			M.visible_message(span_warning("[user] buckles [M] to [src]!"),\
-				span_warning("[user] buckles you to [src]!"),\
-				span_hear("You hear metal clanking."))
+		buckle_feedback(M, user)
+
+/// Feedback displayed to nearby players after a mob is buckled to src.
+/atom/movable/proc/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(being_buckled == buckler)
+		buckler.visible_message(
+			span_notice("[buckler] buckles [buckler.p_them()]self to [src]."),
+			span_notice("You buckle yourself to [src]."),
+			span_hear("You hear metal clanking."),
+		)
+	else
+		buckler.visible_message(
+			span_warning("[buckler] buckles [being_buckled] to [src]!"),
+			span_warning("[buckler] buckles you to [src]!"),
+			span_hear("You hear metal clanking."),
+		)
+
 /**
  * Handles a user unbuckling a mob from src and sends a visible_message
  *
@@ -346,16 +355,24 @@
 		return
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
-		if(M != user)
-			M.visible_message(span_notice("[user] unbuckles [M] from [src]."),\
-				span_notice("[user] unbuckles you from [src]."),\
-				span_hear("You hear metal clanking."))
-		else
-			M.visible_message(span_notice("[M] unbuckles [M.p_them()]self from [src]."),\
-				span_notice("You unbuckle yourself from [src]."),\
-				span_hear("You hear metal clanking."))
+		unbuckle_feedback(M, user)
 		add_fingerprint(user)
 		if(isliving(M.pulledby))
 			var/mob/living/L = M.pulledby
 			L.set_pull_offsets(M, L.grab_state)
 	return M
+
+/// Feedback displayed to nearby players after a mob is unbuckled from src.
+/atom/movable/proc/unbuckle_feedback(mob/living/unbuckled_mob, mob/unbuckler)
+	if(unbuckled_mob == unbuckler)
+		unbuckler.visible_message(
+			span_notice("[unbuckler] unbuckles [unbuckler.p_them()]self from [src]."),
+			span_notice("You unbuckle yourself from [src]."),
+			span_hear("You hear metal clanking."),
+		)
+	else
+		unbuckler.visible_message(
+			span_notice("[unbuckler] unbuckles [unbuckled_mob] from [src]."),
+			span_notice("[unbuckler] unbuckles you from [src]."),
+			span_hear("You hear metal clanking."),
+		)

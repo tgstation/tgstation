@@ -26,6 +26,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
 	register_context()
+	register_item_context()
 
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
@@ -42,6 +43,14 @@
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return . || NONE
+
+/obj/item/transfer_valve/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+	if(istype(target, /obj/vehicle/ridden/wheelchair))
+		var/obj/vehicle/ridden/wheelchair/chair = target
+		if(!chair.bell_attached)
+			context[SCREENTIP_CONTEXT_LMB] = "Attach TTV to wheelchair."
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/transfer_valve/click_alt(mob/user)
 	if(tank_one)
@@ -66,6 +75,23 @@
 	else if(gone == tank_two)
 		tank_two = null
 		update_appearance()
+
+/obj/item/transfer_valve/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if (!istype(interacting_with, /obj/vehicle/ridden/wheelchair))
+		return NONE
+	var/obj/vehicle/ridden/wheelchair/chair = interacting_with
+
+	if (chair.bomb_attached)
+		user.balloon_alert(user, "already has a TTV!")
+		return ITEM_INTERACT_FAILURE
+	user.balloon_alert(user, "attaching TTV...")
+	if (!do_after(user, 0.5 SECONDS, chair))
+		return ITEM_INTERACT_FAILURE
+
+	chair.attach_bomb(src)
+	user.log_message("attached [src] to [chair]", LOG_GAME)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))

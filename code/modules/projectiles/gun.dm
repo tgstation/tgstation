@@ -53,6 +53,9 @@
 	var/dual_wield_spread = 24 //additional spread when dual wielding
 	///Can we hold up our target with this? Default to yes
 	var/can_hold_up = TRUE
+	/// If TRUE, and we aim at ourselves, it will initiate a do after to fire at ourselves.
+	/// If FALSE it will just try to fire at ourselves straight up.
+	var/doafter_self_shoot = TRUE
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
@@ -61,7 +64,7 @@
 	var/projectile_wound_bonus = 0
 
 	/// The most reasonable way to modify projectile speed values for projectile fired from this gun. Honest.
-	/// Lower values are better, higher values are worse.
+	/// Lower values are worse, higher values are better.
 	var/projectile_speed_multiplier = 1
 
 	var/spread = 0 //Spread induced by the gun itself.
@@ -209,27 +212,41 @@
 		return FALSE
 	if(tk_firing(user))
 		visible_message(
-				span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
-				blind_message = span_hear("You hear a gunshot!"),
-				vision_distance = COMBAT_MESSAGE_RANGE
+			span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
+			blind_message = span_hear("You hear a gunshot!"),
+			vision_distance = COMBAT_MESSAGE_RANGE
 		)
 	else if(pointblank)
-		user.visible_message(
+		if(user == pbtarget)
+			user.visible_message(
+				span_danger("[user] fires [src] point blank at [user.p_them()]self!"),
+				span_userdanger("You fire [src] point blank at yourself!"),
+				span_hear("You hear a gunshot!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+		else
+			user.visible_message(
 				span_danger("[user] fires [src] point blank at [pbtarget]!"),
 				span_danger("You fire [src] point blank at [pbtarget]!"),
-				span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget
-		)
-		to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
+				span_hear("You hear a gunshot!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				ignored_mobs = pbtarget,
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+			to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
 		if(pb_knockback > 0 && ismob(pbtarget))
 			var/mob/PBT = pbtarget
 			var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
 			PBT.throw_at(throw_target, pb_knockback, 2)
 	else if(!tk_firing(user))
 		user.visible_message(
-				span_danger("[user] fires [src]!"),
-				blind_message = span_hear("You hear a gunshot!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = user
+			span_danger("[user] fires [src]!"),
+			span_danger("You fire [src]!"),
+			span_hear("You hear a gunshot!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
 	if(chambered?.integrity_damage)
@@ -338,7 +355,7 @@
 			return
 		if(!ismob(target)) //melee attack
 			return
-		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
+		if(target == user && (user.zone_selected != BODY_ZONE_PRECISE_MOUTH && doafter_self_shoot)) //so we can't shoot ourselves (unless mouth selected)
 			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -352,10 +369,9 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(flag)
-		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-			handle_suicide(user, target, params)
-			return
+	if(flag && doafter_self_shoot && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		handle_suicide(user, target, params)
+		return
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)

@@ -141,6 +141,14 @@
 	build_path = /obj/item/organ/ears/cat
 	category = list(SPECIES_HUMAN)
 
+/datum/design/cat_tongue
+	name = "Cat Tongue"
+	id = "cattongue"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/tongue/cat
+	category = list(SPECIES_HUMAN)
+
 /datum/design/plasmaman_lungs
 	name = "Plasma Filter"
 	id = "plasmamanlungs"
@@ -200,7 +208,6 @@
 // Intentionally not growable by normal means - for balance conerns.
 /datum/design/ethereal_heart
 	name = "Crystal Core"
-	id = "etherealheart"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
 	build_path = /obj/item/organ/heart/ethereal
@@ -231,7 +238,6 @@
 /datum/design/limb_disk
 	name = "Limb Design Disk"
 	desc = "Contains designs for various limbs."
-	id = "limbdesign_parent"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/design_disk/limbs
@@ -242,11 +248,11 @@
 
 /obj/item/disk/design_disk/limbs/felinid
 	name = "Felinid Organ Design Disk"
-	limb_designs = list(/datum/design/cat_tail, /datum/design/cat_ears)
+	limb_designs = list(/datum/design/cat_tail, /datum/design/cat_ears, /datum/design/cat_tongue)
 
 /datum/design/limb_disk/felinid
 	name = "Felinid Organ Design Disk"
-	desc = "Contains designs for felinid organs for the limbgrower - Felinid ears and tail."
+	desc = "Contains designs for felinid organs for the limbgrower - Felinid ears, tail and tongue."
 	id = "limbdesign_felinid"
 	build_path = /obj/item/disk/design_disk/limbs/felinid
 

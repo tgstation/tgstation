@@ -24,6 +24,7 @@
 	target_trait = ZTRAIT_STATION
 
 	immunity_type = TRAIT_RADSTORM_IMMUNE
+	weather_flags = (WEATHER_MOBS | WEATHER_INDOORS)
 	/// Chance we get a negative mutation, if we fail we get a positive one
 	var/negative_mutation_chance = 90
 	/// Chance we mutate
@@ -34,7 +35,7 @@
 	status_alarm(TRUE)
 
 
-/datum/weather/rad_storm/weather_act(mob/living/living)
+/datum/weather/rad_storm/weather_act_mob(mob/living/living)
 	if(!prob(mutate_chance))
 		return
 
@@ -56,6 +57,8 @@
 
 	if(prob(50))
 		do_mutate(human)
+
+	return ..()
 
 /datum/weather/rad_storm/end()
 	if(..())
@@ -90,17 +93,14 @@
 	protected_areas = list(/area/shuttle, /area/station/maintenance/radshelter)
 
 	weather_overlay = "nebula_radstorm"
-	weather_duration_lower = 100 HOURS
-	weather_duration_upper = 100 HOURS
-
 	end_message = null
+	weather_flags = parent_type::weather_flags | WEATHER_ENDLESS
 
 	mutate_chance = 0.1
-
 	///Chance we pulse a living during the storm
 	var/radiation_chance = 5
 
-/datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+/datum/weather/rad_storm/nebula/weather_act_mob(mob/living/living)
 	..()
 
 	if(!prob(radiation_chance))

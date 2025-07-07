@@ -24,6 +24,7 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../backend';
 import { processedText } from '../process';
 import { BountyBoardContent } from './BountyBoard';
+import { LoadingScreen } from './common/LoadingScreen';
 import { UserDetails } from './Vending';
 
 const CENSOR_MESSAGE =
@@ -76,7 +77,13 @@ export const Newscaster = (props) => {
 const NewscasterChannelCreation = (props) => {
   const { act, data } = useBackend();
   const [lockedmode, setLockedmode] = useState(true);
-  const { creating_channel, name, desc } = data;
+  const [cross_sector, setcross_sector] = useState(false);
+  const { creating_channel, awaiting_approval, name, desc } = data;
+
+  if (awaiting_approval) {
+    return <LoadingScreen label="Awaiting Central Command approval..." />;
+  }
+
   if (!creating_channel) {
     return null;
   }
@@ -98,15 +105,14 @@ const NewscasterChannelCreation = (props) => {
               />
             </Box>
             <TextArea
-              fluid
               height="40px"
               width="240px"
               backgroundColor="black"
               textColor="white"
               maxLength={42}
-              onChange={(e, name) =>
+              onBlur={(value) =>
                 act('setChannelName', {
-                  channeltext: name,
+                  channeltext: value,
                 })
               }
             >
@@ -116,15 +122,14 @@ const NewscasterChannelCreation = (props) => {
           <Stack.Item>
             <Box pb={1}>Enter channel description here:</Box>
             <TextArea
-              fluid
               height="150px"
               width="240px"
               backgroundColor="black"
               textColor="white"
               maxLength={512}
-              onChange={(e, desc) =>
+              onBlur={(value) =>
                 act('setChannelDesc', {
-                  channeldesc: desc,
+                  channeldesc: value,
                 })
               }
             >
@@ -137,12 +142,14 @@ const NewscasterChannelCreation = (props) => {
               <Box pt={1}>
                 <Button
                   selected={!lockedmode}
+                  disabled={cross_sector}
                   onClick={() => setLockedmode(false)}
                 >
                   Public
                 </Button>
                 <Button
                   selected={!!lockedmode}
+                  disabled={cross_sector}
                   onClick={() => setLockedmode(true)}
                 >
                   Private
@@ -151,10 +158,25 @@ const NewscasterChannelCreation = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
+            <Button.Checkbox
+              fluid
+              checked={cross_sector}
+              onClick={() => {
+                setcross_sector(!cross_sector);
+                setLockedmode(true);
+              }}
+              tooltip="Cross-sector newscaster messaging will require Central Command approval for each article. Cross-sector channels are automatically locked."
+              tooltipPosition="bottom-start"
+            >
+              Make cross-sector?
+            </Button.Checkbox>
+          </Stack.Item>
+          <Stack.Item>
             <Box>
               <Button
                 onClick={() =>
                   act('createChannel', {
+                    cross_sector: cross_sector,
                     lockedmode: lockedmode,
                   })
                 }
@@ -192,15 +214,14 @@ const NewscasterCommentCreation = (props) => {
             />
           </Box>
           <TextArea
-            fluid
             height="120px"
             width="240px"
             backgroundColor="black"
             textColor="white"
             maxLength={512}
-            onChange={(e, comment) =>
+            onBlur={(value) =>
               act('setCommentBody', {
-                commenttext: comment,
+                commenttext: value,
               })
             }
           >
@@ -379,6 +400,7 @@ const NewscasterChannelBox = (props) => {
     channelLocked,
     channelAuthor,
     channelCensored,
+    receivingCrossSector,
     viewing_channel,
     admin_mode,
     photo_data,
@@ -409,7 +431,8 @@ const NewscasterChannelBox = (props) => {
               icon="print"
               disabled={
                 (channelLocked && channelAuthor !== user.name) ||
-                channelCensored
+                channelCensored ||
+                receivingCrossSector
               }
               onClick={() => act('createStory', { current: viewing_channel })}
               mt={1}
@@ -421,7 +444,8 @@ const NewscasterChannelBox = (props) => {
               selected={photo_data}
               disabled={
                 (channelLocked && channelAuthor !== user.name) ||
-                channelCensored
+                channelCensored ||
+                receivingCrossSector
               }
               onClick={() => act('togglePhoto')}
             >
@@ -521,6 +545,7 @@ const NewscasterChannelMessages = (props) => {
     viewing_channel,
     admin_mode,
     channelCensored,
+    receivingCrossSector,
     channelLocked,
     channelAuthor,
     user,

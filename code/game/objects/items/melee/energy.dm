@@ -10,7 +10,7 @@
 	light_range = 3
 	light_power = 1
 	light_on = FALSE
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
@@ -91,6 +91,9 @@
 	. = span_rose("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
+
+/obj/item/melee/energy/get_demolition_modifier(obj/target)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? demolition_mod : 1
 
 /obj/item/melee/energy/update_icon_state()
 	. = ..()

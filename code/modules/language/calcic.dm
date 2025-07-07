@@ -3,6 +3,11 @@
 	desc = "The disjointed and staccato language of plasmamen. Also understood by skeletons."
 	key = "b"
 	space_chance = 10
+	sentence_chance = 2
+	between_word_sentence_chance = 10
+	between_word_space_chance = 75
+	additional_syllable_low = 0
+	additional_syllable_high = 1
 	syllables = list(
 		"k", "ck", "ack", "ick", "cl", "tk", "sk", "isk", "tak",
 		"kl", "hs", "ss", "ks", "lk", "dk", "gk", "ka", "ska", "la", "pk",

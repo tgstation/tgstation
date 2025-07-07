@@ -1,263 +1,262 @@
 .light:root {
-	--scrollbar-base: #f2f2f2;
-	--scrollbar-thumb: #a7a7a7;
+  --scrollbar-base: #f2f2f2;
+  --scrollbar-thumb: #a7a7a7;
 }
 
 html,
 body {
-	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-base);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-base);
 }
 
 body {
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	font-size: 12px;
-	margin: 0 !important;
-	padding: 0 !important;
-	overflow: hidden;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
 }
 
 a {
-	color: #003399;
-	text-decoration: none;
+  color: #003399;
+  text-decoration: none;
 }
 
 a:hover {
-	color: #007fff;
+  color: #007fff;
 }
 
 h3 {
-	margin: 0 -0.5em 0.5em;
-	padding: 1em 0.66em 0.5em;
-	border-bottom: 0.1667em solid;
+  margin: 0 -0.5em 0.5em;
+  padding: 1em 0.66em 0.5em;
+  border-bottom: 0.1667em solid;
 }
 
-
 img {
-	-ms-interpolation-mode: nearest-neighbor;
-	image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: pixelated;
 }
 
 .stat-container {
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 #menu {
-	display: flex;
-	overflow-x: auto;
-	overflow-y: hidden;
-	padding: 0.25em 0.25em 0;
-	background-color: #ffffff;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25em 0.25em 0;
+  background-color: #ffffff;
 }
 
 .menu-wrap {
-	flex-wrap: wrap-reverse;
+  flex-wrap: wrap-reverse;
 }
 
 #menu.tabs-classic {
-	padding: 0.15em;
+  padding: 0.15em;
 }
 
 #menu.tabs-classic .button {
-	min-width: 2em;
-	margin: 0.1em;
-	padding: 0.25em 0.4em;
-	border: 0;
-	border-radius: 0.25em;
+  min-width: 2em;
+  margin: 0.1em;
+  padding: 0.25em 0.4em;
+  border: 0;
+  border-radius: 0.25em;
 }
 
 #menu.tabs-classic .button.active {
-	background-color: #0668b8;
-	color: white;
+  background-color: #0668b8;
+  color: white;
 }
 
 .button {
-	display: inline-table;
-	cursor: pointer;
-	user-select: none;
-	-ms-user-select: none; /* Remove after Byond 516 */
-	text-align: center;
-	font-size: 1em;
-	min-width: 2.9em;
-	padding: 0.5em 0.5em 0.4em;
-	background-color: transparent;
-	color: rgba(0, 0, 0, 0.5);
-	border: 0;
-	border-bottom: 0.1667em solid transparent;
-	border-radius: 0.25em 0.25em 0 0;
+  display: inline-table;
+  cursor: pointer;
+  user-select: none;
+  -ms-user-select: none; /* Remove after Byond 516 */
+  text-align: center;
+  font-size: 1em;
+  min-width: 2.9em;
+  padding: 0.5em 0.5em 0.4em;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.5);
+  border: 0;
+  border-bottom: 0.1667em solid transparent;
+  border-radius: 0.25em 0.25em 0 0;
 }
 
 .button:hover {
-	background-color: #ececec;
+  background-color: #ececec;
 }
 
 .button.active {
-	cursor: default;
-	background-color: #dfdfdf;
-	color: black;
-	border-bottom-color: #000000;
+  cursor: default;
+  background-color: #dfdfdf;
+  color: black;
+  border-bottom-color: #000000;
 }
 
 #under-menu {
-	height: 0.5em;
-	background-color: #eeeeee;
+  height: 0.5em;
+  background-color: #eeeeee;
 }
 
 #under-content {
-	height: calc(0.5em - 4px);
-	background-color: #eeeeee;
+  height: calc(0.5em - 4px);
+  background-color: #eeeeee;
 }
 
 #statcontent {
-	flex: 1;
-	padding: 0.75em 0.5em;
-	overflow-y: scroll;
-	overflow-x: hidden;
+  flex: 1;
+  padding: 0.75em 0.5em;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .grid-container {
-	margin: -0.25em;
+  margin: -0.25em;
 }
 
 .grid-item {
-	display: inline-flex;
-	position: relative;
-	user-select: none;
-	-ms-user-select: none; /* Remove after Byond 516 */
-	width: 100%;
-	max-height: 1.85em;
-	text-decoration: none;
-	background-color: transparent;
-	color: black;
+  display: inline-flex;
+  position: relative;
+  user-select: none;
+  -ms-user-select: none; /* Remove after Byond 516 */
+  width: 100%;
+  max-height: 1.85em;
+  text-decoration: none;
+  background-color: transparent;
+  color: black;
 }
 
 .grid-item:hover,
 .grid-item:active {
-	color: #003399;
-	z-index: 1;
+  color: #003399;
+  z-index: 1;
 }
 
 .grid-item-text {
-	display: inline-block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	pointer-events: none;
-	width: 100%;
-	padding: 0.33em 0.5em;
-	border-radius: 0.25em;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  width: 100%;
+  padding: 0.33em 0.5em;
+  border-radius: 0.25em;
 }
 
 .grid-item:hover .grid-item-text {
-	height: 100%;
-	overflow: visible;
-	white-space: normal;
-	background-color: #ececec;
+  height: 100%;
+  overflow: visible;
+  white-space: normal;
+  background-color: #ececec;
 }
 
-.grid-item:active .grid-item-text  {
-	background-color: #dfdfdf;
+.grid-item:active .grid-item-text {
+  background-color: #dfdfdf;
 }
 
 @media only screen and (min-width: 300px) {
-	.grid-item {
-		width: 50%;
-	}
+  .grid-item {
+    width: 50%;
+  }
 }
 
 @media only screen and (min-width: 430px) {
-	.grid-item {
-		width: 33%;
-	}
+  .grid-item {
+    width: 33%;
+  }
 }
 
 @media only screen and (min-width: 560px) {
-	.grid-item {
-		width: 25%;
-	}
+  .grid-item {
+    width: 25%;
+  }
 }
 
 @media only screen and (min-width: 770px) {
-	.grid-item {
-		width: 20%;
-	}
+  .grid-item {
+    width: 20%;
+  }
 }
 
 .status-info {
-	margin: 0 0.33em 0.25em;
+  margin: 0 0.33em 0.25em;
 }
 
 .interview_panel_stats,
 .interview_panel_controls {
-	margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 /**
  * MARK: Dark theme colors
  */
 .dark:root {
-	--scrollbar-base: #151515;
-	--scrollbar-thumb: #363636;
+  --scrollbar-base: #151515;
+  --scrollbar-thumb: #363636;
 }
 
 body.dark {
-	background-color: #151515;
-	color: #b2c4dd;
-	scrollbar-base-color: #1c1c1c;
-	scrollbar-face-color: #3b3b3b;
-	scrollbar-3dlight-color: #252525;
-	scrollbar-highlight-color: #252525;
-	scrollbar-track-color: #1c1c1c;
-	scrollbar-arrow-color: #929292;
-	scrollbar-shadow-color: #3b3b3b;
+  background-color: #151515;
+  color: #b2c4dd;
+  scrollbar-base-color: #1c1c1c;
+  scrollbar-face-color: #3b3b3b;
+  scrollbar-3dlight-color: #252525;
+  scrollbar-highlight-color: #252525;
+  scrollbar-track-color: #1c1c1c;
+  scrollbar-arrow-color: #929292;
+  scrollbar-shadow-color: #3b3b3b;
 }
 
 .dark a {
-	color: #6699ff;
+  color: #6699ff;
 }
 
 .dark a:hover,
 .dark .grid-item:hover,
 .dark .grid-item:active {
-	color: #80bfff;
+  color: #80bfff;
 }
 
 .dark #menu {
-	background-color: #151515;
+  background-color: #151515;
 }
 
 .dark #menu.tabs-classic .button.active {
-	background-color: #20b142;
+  background-color: #20b142;
 }
 
 .dark .button {
-	color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .dark .button:hover {
-	background-color: #252525;
+  background-color: #252525;
 }
 
-.dark .button.active  {
-	background-color: #313131;
-	color: #d4dfec;
-	border-bottom-color: #d4dfec;
+.dark .button.active {
+  background-color: #313131;
+  color: #d4dfec;
+  border-bottom-color: #d4dfec;
 }
 
 .dark #under-menu,
 .dark #under-content {
-	background-color: #202020;
+  background-color: #202020;
 }
 
-.dark .grid-item{
-	color: #b2c4dd;
+.dark .grid-item {
+  color: #b2c4dd;
 }
 
 .dark .grid-item:hover .grid-item-text {
-	background-color: #252525;
+  background-color: #252525;
 }
 
 .dark .grid-item:active .grid-item-text {
-	background-color: #313131;
+  background-color: #313131;
 }

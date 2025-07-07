@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			data["x"] = disk_turf.x
 			data["y"] = disk_turf.y
 			data["z"] = disk_turf.z
-		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living)
+		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living, TRUE)
 		if(outer != nuke_disk)
 			if(isliving(outer))
 				var/mob/living/disk_holder = outer
@@ -341,6 +341,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
+	parts += "[FOURSPACES]Map: [SSmapping.current_map?.return_map_name()]"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
@@ -358,15 +359,9 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 
-	parts += "[FOURSPACES]Threat level: [SSdynamic.threat_level]"
-	parts += "[FOURSPACES]Threat left: [SSdynamic.mid_round_budget]"
-	if(SSdynamic.roundend_threat_log.len)
-		parts += "[FOURSPACES]Threat edits:"
-		for(var/entry as anything in SSdynamic.roundend_threat_log)
-			parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
-	parts += "[FOURSPACES]Executed rules:"
-	for(var/datum/dynamic_ruleset/rule in SSdynamic.executed_rules)
-		parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+	parts += "[FOURSPACES]Round: [SSdynamic.current_tier.name]"
+	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
+		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b> ([rule.config_tag])"
 
 	return parts.Join("<br>")
 

@@ -20,7 +20,7 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/food/deadmouse = 1,
 		/obj/item/trash/candle = 1,
-		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/rag = 1,
 		/obj/item/trash/flare = 1,
 		/obj/item/popsicle_stick = 1,
 		/obj/item/reagent_containers/syringe = 1,
@@ -45,8 +45,9 @@
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 		/obj/effect/spawner/random/engineering/tool = 1,
 		/mob/living/basic/mouse = 1,
+		/mob/living/basic/snail = 1,
 		/obj/item/food/grown/cannabis = 1,
-		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/rag = 1,
 		/obj/effect/spawner/random/entertainment/drugs= 1,
 		/obj/item/modular_computer/pda = 1,
 		/obj/item/reagent_containers/syringe = 1,
@@ -58,6 +59,7 @@
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
 			loot -= /mob/living/basic/mouse
+			loot -= /mob/living/basic/snail
 	return ..()
 
 /obj/effect/spawner/random/trash/cigbutt
@@ -160,6 +162,7 @@
 	loot = list( // This spawner will scatter garbage around a dirty site.
 		/obj/effect/spawner/random/trash/garbage = 6,
 		/mob/living/basic/cockroach = 5,
+		/mob/living/basic/cockroach/bloodroach = 1,
 		/obj/effect/decal/cleanable/garbage = 4,
 		/obj/effect/decal/cleanable/vomit/old = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 2,
@@ -169,7 +172,7 @@
 	if(mapload)
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
-			loot -= /mob/living/basic/cockroach
+			loot -= list(/mob/living/basic/cockroach, /mob/living/basic/cockroach/bloodroach)
 	return ..()
 
 /obj/effect/spawner/random/trash/moisture
@@ -180,8 +183,8 @@
 	loot = list( // This spawner will scatter water related items around a moist site.
 		/obj/item/clothing/head/cone = 7,
 		/obj/item/clothing/suit/caution = 3,
-		/mob/living/basic/frog = 2,
-		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/effect/spawner/random/frog = 2,
+		/obj/item/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
 		/obj/structure/mop_bucket = 2,
@@ -192,8 +195,18 @@
 	if(mapload)
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
-			loot -= list(/mob/living/basic/frog, /mob/living/basic/axolotl)
+			loot -= list(/obj/effect/spawner/random/frog, /mob/living/basic/axolotl)
 	return ..()
+
+/obj/effect/spawner/random/frog
+	name = "random frog"
+	desc = "Spawns a frog, or sometimes a RARE frog."
+	icon = 'icons/mob/simple/animal.dmi'
+	icon_state = "frog"
+	loot = list(
+		/mob/living/basic/frog = 99,
+		/mob/living/basic/frog/rare = 1,
+	)
 
 /obj/effect/spawner/random/trash/graffiti
 	name = "random graffiti spawner"

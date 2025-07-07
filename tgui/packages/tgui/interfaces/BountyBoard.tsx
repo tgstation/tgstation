@@ -161,12 +161,9 @@ export const BountyBoardContent = (props) => {
           <Collapsible title="New Bounty" width="220px" color="green">
             <Section>
               <TextArea
-                fluid
                 height="150px"
                 width="200px"
-                backgroundColor="black"
-                textColor="white"
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('bountyText', {
                     bountytext: value,
                   })

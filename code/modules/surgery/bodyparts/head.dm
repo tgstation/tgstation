@@ -43,7 +43,7 @@
 	var/hair_alpha = 255
 	/// Is the hair currently hidden by something?
 	var/hair_hidden = FALSE
-	/// Lazy initialized hashset of all hair masks that should be applied
+	/// Lazy initialized hashset of all hair mask types that should be applied
 	var/list/hair_masks
 
 	///Facial hair style
@@ -170,7 +170,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/bodypart/head/get_limb_icon(dropped)
+/obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
 
 	. += get_hair_and_lips_icon(dropped)
@@ -224,6 +224,19 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	is_dimorphic = FALSE
 	head_flags = HEAD_LIPS|HEAD_DEBRAIN
+
+/obj/item/bodypart/head/monkey/Initialize(mapload)
+	worn_head_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_HEAD,
+		offset_y = list("south" = 1),
+	)
+	worn_glasses_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_GLASSES,
+		offset_y = list("south" = 1),
+	)
+	return ..()
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'

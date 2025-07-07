@@ -333,7 +333,10 @@
 		owner.visible_message(span_userdanger("[owner]'s brain falls off the back of [owner.p_their()] head!!!"), span_boldwarning("You feel like you're missing something."))
 		return chippy_brain
 
-	new /obj/effect/decal/cleanable/blood/gibs/up(get_turf(owner))
+	var/gib_type = /obj/effect/decal/cleanable/blood/gibs/up
+	if (IS_ROBOTIC_ORGAN(chippy_brain))
+		gib_type = /obj/effect/decal/cleanable/blood/gibs/robot_debris/up
+	new gib_type(get_turf(owner), owner.get_static_viruses(), owner.get_blood_dna_list())
 	return FALSE
 
 /obj/item/organ/cyberimp/brain/connector/proc/reboot()
@@ -358,15 +361,3 @@
 	if(prob(60/severity))
 		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
-
-//BOX O' IMPLANTS
-
-/obj/item/storage/box/cyber_implants
-	name = "boxed cybernetic implants"
-	desc = "A sleek, sturdy box."
-	icon_state = "cyber_implants"
-
-/obj/item/storage/box/cyber_implants/PopulateContents()
-	new /obj/item/autosurgeon/syndicate/xray_eyes(src)
-	new /obj/item/autosurgeon/syndicate/anti_stun(src)
-	new /obj/item/autosurgeon/syndicate/reviver(src)

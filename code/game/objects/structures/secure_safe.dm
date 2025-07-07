@@ -13,7 +13,7 @@
 		max_specific_storage = WEIGHT_CLASS_GIGANTIC,
 		max_total_storage = 20,
 	)
-	atom_storage.locked = STORAGE_FULLY_LOCKED
+	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 /obj/item/wallframe/secure_safe/after_attach(obj/attached_to)
 	. = ..()

@@ -57,13 +57,14 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_cleaned(obj/source_component, obj/source)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_WAS_RENAMED))
-		return
+		return NONE
 
 	qdel(GetComponent(/datum/component/rename))
 	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
 	name = initial(name)
 	desc = initial(desc)
 	update_appearance(UPDATE_NAME | UPDATE_DESC)
+	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -132,3 +133,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full/Initialize(mapload, vol)
 	. = ..()
 	name = "[pick("half full", "half empty")] glass of water"
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/irish_cream
+	name = "Irish Cream"
+	list_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 50)

@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(server_maint)
 	wait = 6
 	flags = SS_POST_FIRE_TIMING
 	priority = FIRE_PRIORITY_SERVER_MAINT
-	init_order = INIT_ORDER_SERVER_MAINT
 	init_stage = INITSTAGE_EARLY
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
@@ -34,11 +33,11 @@ SUBSYSTEM_DEF(server_maint)
 		"dead_mob_list" = GLOB.dead_mob_list,
 		"keyloop_list" = GLOB.keyloop_list, //A null here will cause new clients to be unable to move. totally unacceptable
 	)
-	
+
 	var/datum/tgs_version/tgsversion = world.TgsVersion()
 	if(tgsversion)
 		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
-	
+
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)

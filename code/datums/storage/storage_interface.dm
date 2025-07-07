@@ -13,25 +13,27 @@
 	/// Storage that owns us
 	var/datum/storage/parent_storage
 
-/datum/storage_interface/New(ui_style, parent_storage)
+/datum/storage_interface/New(ui_style, datum/storage/parent_storage, mob/user)
 	..()
 	src.parent_storage = parent_storage
-	closer = new(null, null, parent_storage)
-	cells = new(null, null, parent_storage)
-	corner_top_left = new(null, null, parent_storage)
-	corner_top_right = new(null, null, parent_storage)
-	corner_bottom_left = new(null, null, parent_storage)
-	corner_bottom_right = new(null, null, parent_storage)
-	rowjoin_left = new(null, null, parent_storage)
-	rowjoin_right = new(null, null, parent_storage)
-	for (var/atom/movable/screen/ui_elem as anything in list_ui_elements())
+	var/datum/hud/owner_hud = user.hud_used
+	closer = new(null, owner_hud, parent_storage)
+	cells = new(null, owner_hud, parent_storage)
+	corner_top_left = new(null, owner_hud, parent_storage)
+	corner_top_right = new(null, owner_hud, parent_storage)
+	corner_bottom_left = new(null, owner_hud, parent_storage)
+	corner_bottom_right = new(null, owner_hud, parent_storage)
+	rowjoin_left = new(null, owner_hud, parent_storage)
+	rowjoin_right = new(null, owner_hud, parent_storage)
+	for (var/atom/movable/screen/ui_elem as anything in list_ui_elements(initializing = TRUE))
 		ui_elem.icon = ui_style
 
 /// Returns all UI elements under this theme
-/datum/storage_interface/proc/list_ui_elements()
+/datum/storage_interface/proc/list_ui_elements(initializing = FALSE)
 	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, closer)
 
 /datum/storage_interface/Destroy(force)
+	QDEL_NULL(closer)
 	QDEL_NULL(cells)
 	QDEL_NULL(corner_top_left)
 	QDEL_NULL(corner_top_right)
@@ -43,7 +45,21 @@
 	return ..()
 
 /// Updates position of all UI elements
-/datum/storage_interface/proc/update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
+/datum/storage_interface/proc/update_position(
+	screen_start_x,
+	screen_pixel_x,
+	screen_start_y,
+	screen_pixel_y,
+	columns,
+	rows,
+	mob/user_looking,
+	atom/real_location,
+	list/datum/numbered_display/numbered_contents,
+)
+	var/number_of_hands = user_looking.held_items.len
+	while(number_of_hands > user_looking.default_hand_amount)
+		number_of_hands /= user_looking.default_hand_amount
+		screen_start_y++
 	var/start_pixel_x = screen_start_x * 32 + screen_pixel_x
 	var/start_pixel_y = screen_start_y * 32 + screen_pixel_y
 	var/end_pixel_x = start_pixel_x + (columns - 1) * 32
@@ -66,3 +82,108 @@
 	rowjoin_right.alpha = (rows > 1) * 255
 
 	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
+
+	add_items(arglist(args))
+
+/datum/storage_interface/proc/add_items(
+	screen_start_x,
+	screen_pixel_x,
+	screen_start_y,
+	screen_pixel_y,
+	columns,
+	rows,
+	mob/user_looking,
+	atom/real_location,
+	list/datum/numbered_display/numbered_contents,
+)
+
+	var/current_x = screen_start_x
+	var/current_y = screen_start_y
+	var/turf/our_turf = get_turf(real_location)
+
+	var/list/obj/storage_contents = list()
+	if (islist(numbered_contents))
+		for(var/content_type in numbered_contents)
+			var/datum/numbered_display/numberdisplay = numbered_contents[content_type]
+			storage_contents[numberdisplay.sample_object] = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
+	else
+		for(var/obj/item as anything in real_location)
+			storage_contents[item] = ""
+
+	for(var/obj/item as anything in storage_contents)
+		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+		item.maptext = storage_contents[item]
+		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
+		current_x++
+		if(current_x - screen_start_x < columns)
+			continue
+		current_x = screen_start_x
+
+		current_y++
+		if(current_y - screen_start_y >= rows)
+			break
+
+///Silicon subtype of storage interface used by their model storage.
+/datum/storage_interface/silicon
+	var/atom/movable/screen/robot/store/store
+	var/obj/item/robot_model/robot_model
+
+/datum/storage_interface/silicon/New(ui_style, datum/storage/parent_storage, mob/user)
+	. = ..()
+	robot_model = parent_storage.real_location
+	if(iscyborg(user))
+		store = new(null, user.hud_used)
+
+/datum/storage_interface/silicon/Destroy(force)
+	QDEL_NULL(store)
+	return ..()
+
+/datum/storage_interface/silicon/list_ui_elements(initializing = FALSE)
+	if(initializing || isnull(store))
+		return ..()
+	//we're purposely excluding 'store' from having its icon changed from initialization.
+	return ..() + store
+
+/datum/storage_interface/silicon/add_items(
+	screen_start_x,
+	screen_pixel_x,
+	screen_start_y,
+	screen_pixel_y,
+	columns,
+	rows,
+	mob/user_looking,
+	atom/real_location,
+	list/datum/numbered_display/numbered_contents,
+)
+	var/list/usable_modules = robot_model.get_usable_modules()
+
+	var/current_x = screen_start_x
+	var/current_y = screen_start_y
+	var/turf/our_turf = get_turf(real_location)
+
+	for(var/i in 1 to length(usable_modules))
+		var/atom/movable/item = usable_modules[i]
+		if(item in robot_model.robot.held_items)
+			current_x++
+			if(current_x - screen_start_x < columns)
+				continue
+			current_x = screen_start_x
+
+			current_y++
+			if(current_y - screen_start_y >= rows)
+				break
+			//Module is currently active
+			continue
+
+		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
+		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+
+		current_x++
+		if(current_x - screen_start_x < columns)
+			continue
+		current_x = screen_start_x
+		current_y++
+		if(current_y - screen_start_y >= rows)
+			break

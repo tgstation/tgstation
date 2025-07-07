@@ -5,6 +5,12 @@
 	key = "0"
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_UNDERSTOOD
 	default_priority = 100
+	space_chance = 20
+	sentence_chance = 0
+	between_word_sentence_chance = 10
+	between_word_space_chance = 75
+	additional_syllable_low = 0
+	additional_syllable_high = 0
 
 	icon_state = "galcom"
 	// Default namelist is the human namelist, and common is the human language, so might as well.
@@ -54,4 +60,9 @@
 			"ve", "wa", "all", "and", "are", "but", "ent", "era", "ere", "eve", "for", "had", "hat", "hen", "her", "hin",
 			"his", "ing", "ion", "ith", "not", "ome", "oul", "our", "sho", "ted", "ter", "tha", "the", "thi",
 		),
+	)
+
+	mutual_understanding = list(
+		/datum/language/beachbum = 33,
+		/datum/language/uncommon = 20,
 	)

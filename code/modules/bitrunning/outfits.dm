@@ -7,13 +7,13 @@
 	uniform = /obj/item/clothing/under/abductor
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
 	id = /obj/item/card/id/advanced
 
 
 /datum/outfit/echolocator/post_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
-	user.psykerize()
+	user.psykerize(is_blinding = TRUE)
 
 
 /datum/outfit/bitductor

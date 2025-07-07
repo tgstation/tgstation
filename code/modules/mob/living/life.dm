@@ -61,7 +61,10 @@
 
 		handle_gravity(seconds_per_tick, times_fired)
 
-	handle_wounds(seconds_per_tick, times_fired)
+	if(living_flags & QUEUE_NUTRITION_UPDATE)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
 	if(stat != DEAD)
 		return 1
@@ -74,9 +77,6 @@
 	return
 
 /mob/living/proc/handle_diseases(seconds_per_tick, times_fired)
-	return
-
-/mob/living/proc/handle_wounds(seconds_per_tick, times_fired)
 	return
 
 // Base mob environment handler for body temperature
@@ -97,18 +97,19 @@
 /**
  * Get the fullness of the mob
  *
- * This returns a value form 0 upwards to represent how full the mob is.
- * The value is a total amount of consumable reagents in the body combined
- * with the total amount of nutrition they have.
- * This does not have an upper limit.
+ * Fullness is a representation of how much nutrition the mob has,
+ * including the nutrition of stuff yet to be digested (reagents in blood / stomach)
+ *
+ * * only_consumable - if TRUE, only consumable reagents are counted.
+ * Otherwise, all reagents contribute to fullness, despite not adding nutrition as they process.
+ *
+ * Returns a number representing fullness, scaled similarly to nutrition.
  */
-/mob/living/proc/get_fullness()
+/mob/living/proc/get_fullness(only_consumable)
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
-	for(var/bile in reagents.reagent_list)
-		var/datum/reagent/consumable/bits = bile
-		if(bits)
-			fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
+	for(var/datum/reagent/consumable/bits in reagents.reagent_list)
+		fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**
@@ -121,7 +122,7 @@
  * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
  */
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
-	return reagents.has_reagent(reagent, amount, needs_metabolizing)
+	return reagents?.has_reagent(reagent, amount, needs_metabolizing)
 
 /mob/living/proc/update_damage_hud()
 	return
@@ -142,5 +143,14 @@
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
 	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
+
+/// Proc used for custom metabolization of reagents, if any
+/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick, times_fired)
+
+/// Proc used for custom reagent exposure effects, if any
+/mob/living/proc/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	return
 
 #undef BODYTEMP_DIVISOR

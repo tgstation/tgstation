@@ -205,7 +205,7 @@
 
 	return data
 
-/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (user.combat_mode)
 		return ..()
 
@@ -431,7 +431,7 @@
 	created_atom.pixel_x = created_atom.base_pixel_x + rand(-5, 5)
 	created_atom.pixel_y = created_atom.base_pixel_y + rand(-5, 5)
 
-/obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	var/list/data = list()
 
 	if(istype(weapon, /obj/item/circuit_component/module))

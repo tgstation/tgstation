@@ -26,7 +26,7 @@
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
-	var/initialize_directions = NONE
+	var/initialize_directions = ALL_CARDINALS
 	///The color of the pipe
 	var/pipe_color = ATMOS_COLOR_OMNI
 	///What layer the pipe is in (from 1 to 5, default 3)
@@ -81,29 +81,15 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/post_machine_initialize()
-	. = ..()
-	update_name()
-
-/obj/machinery/atmospherics/examine(mob/user)
-	. = ..()
-	. += span_notice("[src] is on layer [piping_layer].")
-	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
-		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
-			. += span_notice("Alt-click to crawl through it.")
-
-/obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
+/obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir, init_dir = initialize_directions)
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
 		normalize_cardinal_directions()
 	nodes = new(device_type)
 	init_processing = process
-	..()
 	set_init_directions(init_dir)
 
-/obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
 		override_naming = TRUE
 	var/turf/turf_loc = null
@@ -120,6 +106,10 @@
 		SSair.start_processing_machine(src)
 	return ..()
 
+/obj/machinery/atmospherics/post_machine_initialize()
+	. = ..()
+	update_name()
+
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
 		nullify_node(i)
@@ -131,6 +121,14 @@
 	QDEL_NULL(cap_overlay)
 
 	return ..()
+
+/obj/machinery/atmospherics/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] is on layer [piping_layer].")
+	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
+		var/mob/living/L = user
+		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
+			. += span_notice("Alt-click to crawl through it.")
 
 /**
  * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
@@ -179,8 +177,20 @@
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
 
+/**
+ * Turns the machine on/off
+ * Arguments
+ *
+ * * active - the state of the machine
+ */
 /obj/machinery/atmospherics/proc/set_on(active)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(active == on)
+		return
+
 	on = active
+	update_appearance(UPDATE_ICON)
 	SEND_SIGNAL(src, COMSIG_ATMOS_MACHINE_SET_ON, on)
 
 /// This should only be called by SSair as part of the rebuild queue.
@@ -403,7 +413,7 @@
 	nodes[nodes.Find(reference)] = null
 	update_appearance()
 
-/obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
+/obj/machinery/atmospherics/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
 		var/obj/item/pipe/pipe = W
 		if(user.dropItemToGround(pipe))
@@ -531,7 +541,7 @@
 		PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 	return pipe_overlay
 
-/obj/machinery/atmospherics/on_construction(mob/user, obj_color, set_layer = PIPING_LAYER_DEFAULT)
+/obj/machinery/atmospherics/on_construction(mob/user, obj_color, set_layer = PIPING_LAYER_DEFAULT, from_flatpack = FALSE)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		set_pipe_color(obj_color)

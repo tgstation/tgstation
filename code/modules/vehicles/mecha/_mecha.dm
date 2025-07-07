@@ -56,7 +56,7 @@
 	/// Keeps track of the mech's servo motor
 	var/obj/item/stock_parts/servo/servo
 	///Contains flags for the mecha
-	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 
 	///Spark effects are handled by this datum
 	var/datum/effect_system/spark_spread/spark_system
@@ -90,8 +90,6 @@
 
 	///Bitflags for internal damage
 	var/internal_damage = NONE
-	/// damage amount above which we can take internal damages
-	var/internal_damage_threshold = 15
 	/// % chance for internal damage to occur
 	var/internal_damage_probability = 20
 	/// list of possibly dealt internal damage for this mech type
@@ -319,8 +317,7 @@
 	servo = new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
-/obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
-	. = ..()
+/obj/vehicle/sealed/mecha/proc/locate_parts()
 	cell = locate(/obj/item/stock_parts/power_store) in contents
 	diag_hud_set_mechcell()
 	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
@@ -454,9 +451,6 @@
 	update_energy_drain()
 
 	if(capacitor)
-		var/datum/armor/stock_armor = get_armor_by_type(armor_type)
-		var/initial_energy = stock_armor.get_rating(ENERGY)
-		set_armor_rating(ENERGY, initial_energy + (capacitor.rating * 5))
 		overclock_temp_danger = initial(overclock_temp_danger) * capacitor.rating
 	else
 		overclock_temp_danger = initial(overclock_temp_danger)

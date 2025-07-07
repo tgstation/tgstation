@@ -2,6 +2,8 @@
 	return TRUE
 
 /datum/proc/can_vv_get(var_name)
+	if(var_name == NAMEOF(src, vars))
+		return FALSE
 	return TRUE
 
 /// Called when a var is edited with the new value to change to
@@ -47,7 +49,7 @@
  * This proc is for "high level" actions like admin heal/set species/etc/etc. The low level debugging things should go in admin/view_variables/topic_basic.dm in case this runtimes.
  */
 /datum/proc/vv_do_topic(list/href_list)
-	if(!usr || !usr.client || !usr.client.holder || !check_rights(NONE))
+	if(!usr || !usr.client || !usr.client.holder || !check_rights(R_VAREDIT))
 		return FALSE //This is VV, not to be called by anything else.
 	if(SEND_SIGNAL(src, COMSIG_VV_TOPIC, usr, href_list) & COMPONENT_VV_HANDLED)
 		return FALSE

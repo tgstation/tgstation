@@ -46,11 +46,11 @@ export function CargoExpress(props) {
             </Stack>
           </Section>
         ) : (
-          <Stack fill vertical>
+          <Stack fill vertical g={0}>
             <NoticeBox color={beaconError || !canBeacon ? 'red' : 'blue'}>
               {message}
             </NoticeBox>
-            <Stack.Item grow m={0}>
+            <Stack.Item grow>
               <CargoExpressContent />
             </Stack.Item>
           </Stack>
@@ -73,7 +73,7 @@ function CargoExpressContent(props) {
   } = data;
 
   return (
-    <Stack fill vertical>
+    <Stack fill vertical g={0}>
       <Stack.Item>
         <Section
           title="Cargo Express"
@@ -107,7 +107,7 @@ function CargoExpressContent(props) {
           </LabeledList>
         </Section>
       </Stack.Item>
-      <Stack.Item grow m={0}>
+      <Stack.Item grow>
         <CargoCatalog express />
       </Stack.Item>
     </Stack>

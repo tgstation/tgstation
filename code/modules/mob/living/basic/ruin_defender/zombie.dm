@@ -15,7 +15,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	combat_mode = TRUE
 	speed = 4
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 	death_message = "rapidly decays into a pile of bones!"
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
@@ -79,6 +79,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/zombie,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

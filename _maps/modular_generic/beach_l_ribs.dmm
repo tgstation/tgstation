@@ -37,7 +37,7 @@
 "fi" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/beach/sand,
 /area/template_noop)
 "fw" = (
@@ -372,8 +372,8 @@
 /obj/structure/statue/bone/rib{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/xenoblood{
-	icon_state = "xfloor4"
+/obj/effect/decal/cleanable/blood/xeno{
+	icon_state = "floor4"
 	},
 /turf/open/misc/asteroid{
 	icon_state = "asteroid3"
@@ -522,8 +522,8 @@
 /area/template_noop)
 "OJ" = (
 /obj/structure/statue/bone/rib,
-/obj/effect/decal/cleanable/xenoblood{
-	icon_state = "xfloor5"
+/obj/effect/decal/cleanable/blood/xeno{
+	icon_state = "floor5"
 	},
 /turf/open/misc/asteroid{
 	icon_state = "asteroid0"
@@ -540,8 +540,8 @@
 /area/template_noop)
 "PS" = (
 /obj/structure/statue/bone/rib,
-/obj/effect/decal/cleanable/xenoblood{
-	icon_state = "xfloor7"
+/obj/effect/decal/cleanable/blood/xeno{
+	icon_state = "floor7"
 	},
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 1
@@ -669,8 +669,8 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/xenoblood{
-	icon_state = "xfloor5"
+/obj/effect/decal/cleanable/blood/xeno{
+	icon_state = "floor5"
 	},
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 6

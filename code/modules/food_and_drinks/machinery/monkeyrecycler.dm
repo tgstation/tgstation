@@ -18,6 +18,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	. = ..()
 	if (mapload)
 		GLOB.monkey_recyclers += src
+	add_overlay("grinder_monkey")
 
 /obj/machinery/monkey_recycler/Destroy()
 	GLOB.monkey_recyclers -= src
@@ -46,7 +47,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		power_change()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
+/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 

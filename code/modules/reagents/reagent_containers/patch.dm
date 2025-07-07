@@ -170,6 +170,10 @@
 
 	parent.reagents.trans_to(owner, transfer_per_second, methods = PATCH, show_message = show_message)
 
+// delivers all of the patch's contents at once
+/datum/embedding/med_patch/instant
+	transfer_per_second = /obj/item/reagent_containers/applicator/patch::volume
+
 /obj/item/reagent_containers/applicator/patch/libital
 	name = "libital patch (brute)"
 	desc = "A pain reliever. Does minor liver damage. Diluted with Granibitaluri."
@@ -184,9 +188,24 @@
 
 /obj/item/reagent_containers/applicator/patch/synthflesh
 	name = "synthflesh patch"
-	desc = "Helps with brute and burn injuries. Slightly toxic."
+	desc = "Helps with brute and burn injuries. Slightly toxic. Three patches applied can restore a corpse husked by burns."
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20)
+	list_reagents_purity = 1
 	icon_state = "bandaid_both"
+	embed_type = /datum/embedding/med_patch/instant //synthflesh effects occur on the initial apply only, so we need to apply it all at once
+
+/obj/item/reagent_containers/applicator/patch/canconsume(mob/eater, mob/user)
+	. = ..()
+	if(!iscarbon(eater))
+		return
+	var/datum/reagent/medicine/c2/synthflesh/synthflesh_patch = reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh)
+	if(!synthflesh_patch)
+		return
+	// Check mob damage for synthflesh unhusking
+	var/mob/living/carbon/carbies = eater
+	if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
+		// give them a warning if the mob is a husk but synthflesh won't unhusk yet
+		carbies.visible_message(span_boldwarning("[carbies]'s burns need to be repaired first before synthflesh will unhusk it!"))
 
 /obj/item/reagent_containers/applicator/patch/ondansetron
 	name = "ondansetron patch"

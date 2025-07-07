@@ -38,9 +38,16 @@
 	savefile_key = "sound_instruments"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/datum/preference/numeric/volume/sound_instruments/apply_to_client_updated(client/client, value)
-	if (!value)
-		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
+/// Controls jukebox track volume
+/datum/preference/numeric/volume/sound_jukebox
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_jukebox"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/numeric/volume/sound_jukebox/apply_to_client_updated(client/client, value)
+	var/mob/client_mob = client.mob
+	if(!isnull(client_mob))
+		SEND_SIGNAL(client_mob, COMSIG_MOB_JUKEBOX_PREFERENCE_APPLIED)
 
 /datum/preference/choiced/sound_tts
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -103,7 +110,6 @@
 
 /// Controls radio noise volume
 /datum/preference/numeric/volume/sound_radio_noise
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_radio_noise"
 	savefile_identifier = PREFERENCE_PLAYER
 

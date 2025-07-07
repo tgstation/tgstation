@@ -31,7 +31,7 @@
 /area/shuttle/abandoned/bar)
 "af" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -510,7 +510,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -706,7 +706,7 @@
 /area/shuttle/abandoned/crew)
 "bI" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -814,7 +814,7 @@
 "bT" = (
 /obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge"
 	},
 /turf/open/floor/plating,
@@ -1136,7 +1136,7 @@
 /area/shuttle/abandoned/cargo)
 "cz" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -1157,7 +1157,7 @@
 /area/shuttle/abandoned/engine)
 "cC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1930,7 +1930,7 @@
 /area/shuttle/abandoned/cargo)
 "SY" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,

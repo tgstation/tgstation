@@ -18,6 +18,7 @@
 	health_doll_icon = "spacedragon"
 	faction = list(FACTION_CARP)
 	mob_biotypes = MOB_SPECIAL
+	status_flags = CANPUSH
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
 	maxHealth = 400
@@ -51,6 +52,10 @@
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 34
+	max_stamina = 200
+	stamina_crit_threshold = BASIC_MOB_NO_STAMCRIT
+	stamina_recovery = 5
+	max_stamina_slowdown = 12
 
 	/// The colour of the space dragon
 	var/chosen_colour
@@ -75,7 +80,7 @@
 	AddElement(/datum/element/content_barfer)
 	AddElement(/datum/element/wall_tearer, tear_time = 4 SECONDS, reinforced_multiplier = 3, do_after_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
 	AddElement(/datum/element/door_pryer, pry_time = 4 SECONDS, interaction_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
-	AddComponent(/datum/component/seethrough_mob, keep_color = TRUE)
+	AddComponent(/datum/component/seethrough_mob)
 	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/dragon(src))
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))

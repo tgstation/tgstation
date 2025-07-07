@@ -103,7 +103,7 @@ export function CargoContent(props) {
           </Tabs>
         </Section>
       </Stack.Item>
-      <Stack.Item grow m={0}>
+      <Stack.Item grow mt={-1}>
         {tab === TAB.Catalog && <CargoCatalog />}
         {tab === TAB.Requests && <CargoRequests />}
         {tab === TAB.Cart && <CargoCart />}

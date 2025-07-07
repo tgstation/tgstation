@@ -96,7 +96,6 @@ export class Port extends Component {
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
-            textAlign="center"
           >
             <svg
               style={{

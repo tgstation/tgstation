@@ -157,4 +157,4 @@
 	var/area/fluid_area = get_area(location)
 	if(!istype(holder, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) //excludes standard plumbing equipment as well as deathmatch from spamming admins with this shit
 		message_admins("\A [flood] flood started at [ADMIN_VERBOSEJMP(location)] [source_msg][blame_msg].")
-	log_game("\A [flood] flood started at [location || "nonexistant location"] [holder ? "from [holder] last touched by [holder || "N/A"]" : "with no known source"].")
+	log_game("\A [flood] flood started at [AREACOORD(location)] [source_msg][blame_msg].")

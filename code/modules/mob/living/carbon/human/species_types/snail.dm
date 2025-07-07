@@ -15,7 +15,8 @@
 
 	mutanteyes = /obj/item/organ/eyes/snail
 	mutanttongue = /obj/item/organ/tongue/snail
-	exotic_blood = /datum/reagent/lube
+	mutantliver = /obj/item/organ/liver/snail
+	exotic_bloodtype = BLOOD_TYPE_SNAIL
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/snail,
@@ -25,9 +26,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/snail,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/snail
 	)
-
-	///Multiplier for the speed we give them. Positive numbers make it move slower, negative numbers make it move faster.
-	var/snail_speed_mod = 6
 
 /datum/species/snail/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.dna.features["mcolor"] = COLOR_BEIGE
@@ -75,28 +73,14 @@
 	))
 	return to_add
 
-/datum/species/snail/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(istype(chem,/datum/reagent/consumable/salt))
-		playsound(affected, SFX_SEAR, 30, TRUE)
-		affected.adjustFireLoss(2 * REM * seconds_per_tick)
-		affected.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return COMSIG_MOB_STOP_REAGENT_CHECK
-
 /datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	var/obj/item/storage/backpack/bag = new_snailperson.get_item_by_slot(ITEM_SLOT_BACK)
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		new_snailperson.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(new_snailperson), ITEM_SLOT_BACK)
-	new_snailperson.AddElement(/datum/element/lube_walking, require_resting = TRUE)
-	new_snailperson.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/snail, multiplicative_slowdown = snail_speed_mod)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/former_snailperson, datum/species/new_species, pref_load)
 	. = ..()
-	former_snailperson.remove_movespeed_modifier(/datum/movespeed_modifier/snail)
-	former_snailperson.RemoveElement(/datum/element/lube_walking, require_resting = TRUE)
 	var/obj/item/storage/backpack/bag = former_snailperson.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()

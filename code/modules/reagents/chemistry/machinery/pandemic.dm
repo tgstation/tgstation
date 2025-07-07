@@ -80,13 +80,12 @@
 		update_appearance()
 		SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
+/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, list/modifiers, list/attack_modifiers)
 	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
 			return ..()
-		var/list/modifiers = params2list(params)
 		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
 			held_item.interact_with_atom_secondary(beaker, user)
 		else
@@ -142,7 +141,7 @@
 		"volume" = round(beaker.reagents?.total_volume, 0.01) || 0,
 		"capacity" = beaker.volume,
 	)
-	var/datum/reagent/blood/blood = locate() in beaker.reagents.reagent_list
+	var/datum/reagent/blood = get_blood_reagent()
 	if(!blood)
 		data["has_blood"] = FALSE
 		return data
@@ -200,11 +199,11 @@
 	if(!beaker)
 		return cures
 
-	var/datum/reagent/blood/blood = beaker.reagents.has_reagent(/datum/reagent/blood)
+	var/datum/reagent/blood = get_blood_reagent()
 	if(!blood)
 		return cures
 
-	var/list/viruses = blood.get_diseases()
+	var/list/viruses = blood.data["viruses"]
 	if(!length(viruses))
 		return cures
 
@@ -251,6 +250,12 @@
 	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
+
+/// Tries to locate a reagent with valid blood_type data
+/obj/machinery/computer/pandemic/proc/get_blood_reagent()
+	for (var/datum/reagent/reagent as anything in beaker?.reagents?.reagent_list)
+		if (reagent.data?["blood_type"])
+			return reagent
 
 /**
  * Creates a vaccine bottle for the specified disease.
@@ -335,9 +340,9 @@
  *
  * @returns {list} - A list of virus info present in the sample.
  */
-/obj/machinery/computer/pandemic/proc/get_viruses_data(datum/reagent/blood/blood)
+/obj/machinery/computer/pandemic/proc/get_viruses_data(datum/reagent/blood)
 	var/list/data = list()
-	var/list/viruses = blood.get_diseases()
+	var/list/viruses = blood.data?["viruses"]
 	var/index = 1
 	for(var/datum/disease/disease as anything in viruses)
 		if(!istype(disease) || disease.visibility_flags & HIDDEN_PANDEMIC)

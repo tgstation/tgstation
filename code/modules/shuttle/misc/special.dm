@@ -62,7 +62,7 @@
 		active = FALSE
 	update_appearance()
 
-/obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
@@ -185,7 +185,7 @@
 /obj/structure/table/wood/shuttle_bar/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_climbed),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -195,7 +195,7 @@
 /obj/structure/table/wood/shuttle_bar/wrench_act(mob/living/user, obj/item/tool)
 	return NONE
 
-/obj/structure/table/wood/shuttle_bar/proc/on_entered(datum/source, atom/movable/AM)
+/obj/structure/table/wood/shuttle_bar/proc/on_climbed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	var/mob/living/M = AM
 	if(istype(M) && !M.incorporeal_move && !is_barstaff(M))
@@ -259,7 +259,7 @@
 /obj/machinery/scanner_gate/luxury_shuttle/auto_scan(atom/movable/AM)
 	return
 
-/obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)
+/obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)

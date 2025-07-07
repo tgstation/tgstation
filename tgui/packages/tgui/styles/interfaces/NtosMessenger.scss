@@ -1,59 +1,35 @@
-@use 'sass:color';
-@use 'sass:math';
-@use '../base';
-@use '../functions';
-@use '../colors';
-
-$msgcolor-outgoing: hsl(213, 50%, 35%);
-$msgcolor-incoming: hsl(213, 0%, 20%);
-
-$msgpadding: 0.7rem;
-
-// very nasty theme hacks inbound
-
-.theme-ntOS95 {
-  .NtosChatMessage {
-    color: white !important;
-
-    padding: $msgpadding - base.rem(2px);
-
-    border-radius: 0;
-
-    background-color: color.adjust($msgcolor-incoming, $lightness: 10%);
-    &_outgoing {
-      border-color: color.adjust($msgcolor-outgoing, $lightness: 20%);
-      background-color: color.adjust($msgcolor-outgoing, $lightness: 30%);
-    }
+/* Some themes have bad contrast on primary color */
+.NtosChatMessage {
+  .theme-ntOS95 & {
+    --color-primary: var(--color-section);
+    border: var(--border-thickness-small) outset var(--95-outline);
   }
 
-  .NtosChatLog {
-    background-color: white;
+  .theme-ntos_terminal & {
+    --color-primary: hsl(from var(--terminal-color) h s calc(l - 40));
   }
 }
 
 .NtosChatMessage {
   display: inline-flex;
   flex-direction: column;
-
   max-width: 25rem;
   margin: 0;
-
-  padding: $msgpadding;
-
-  border-radius: 3px;
-  background-color: $msgcolor-incoming;
+  padding: var(--space-sm) var(--space-ml);
+  border-radius: var(--border-radius-small);
+  background-color: hsl(from var(--color-primary) h s calc(l - 12.5));
 
   &_outgoing {
     @extend .NtosChatMessage;
-    background-color: $msgcolor-outgoing;
+    background-color: hsl(from var(--color-primary) h s calc(l + 7.5));
     text-align: right;
     float: right;
   }
 
   &__timestamp {
     height: 0.9rem;
-    margin-top: 0.2rem;
-    margin-left: 0.5rem;
+    margin-top: var(--space-sm);
+    margin-left: var(--space-m);
   }
 
   &__content {
@@ -66,22 +42,21 @@ $msgpadding: 0.7rem;
   }
 
   &__everyone {
-    margin-top: 0.5rem;
+    margin-top: var(--space-m);
     font-size: 0.8rem;
     color: lightgrey;
   }
 
   &__image {
+    image-rendering: pixelated;
     align-self: flex-start;
-    margin-top: 0.5rem;
-    margin-right: 3rem;
+    margin-top: var(--space-m);
     max-width: 25rem;
-    -ms-interpolation-mode: nearest-neighbor;
   }
 }
 
 .NtosChatLog {
-  padding: 1rem;
+  padding: var(--space-l);
   min-height: 99.5%;
   margin: 0;
 }
@@ -89,13 +64,13 @@ $msgpadding: 0.7rem;
 .NtosChatLog__ImagePreview {
   width: fit-content;
   height: fit-content;
+
   & img {
+    image-rendering: pixelated;
     height: auto;
     width: 30rem;
-    margin-right: 1rem;
     justify-self: center;
     align-self: center;
-    -ms-interpolation-mode: nearest-neighbor;
   }
 }
 
@@ -106,13 +81,13 @@ $msgpadding: 0.7rem;
   text-align: center;
 
   & > span {
-    color: colors.$red;
+    color: var(--color-red);
   }
 
   & > div {
     display: inline-flex;
     flex: 1;
-    border-bottom: 2px solid colors.$red;
+    border-bottom: var(--border-thickness-small) solid var(--color-red);
     height: 50%;
 
     &:last-child {

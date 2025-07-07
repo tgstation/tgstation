@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMemo } from 'react';
-import { Box, Button, Input, Section } from 'tgui-core/components';
+import { Button, Input, Section, Stack } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
 import { clamp } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
@@ -58,12 +58,14 @@ export function LootPanel(props) {
       width={300}
       height={height}
       buttons={
-        <Box align={'left'}>
+        <Stack align="center">
           <Input
-            onInput={(event, value) => setSearchText(value)}
-            placeholder={`Search items...`}
+            onChange={setSearchText}
+            placeholder="Search items..."
+            value={searchText}
           />
           <Button
+            m={0}
             icon={grouping ? 'layer-group' : 'object-ungroup'}
             selected={grouping}
             onClick={() => setGrouping(!grouping)}
@@ -74,7 +76,7 @@ export function LootPanel(props) {
             onClick={() => act('refresh')}
             tooltip="Refresh"
           />
-        </Box>
+        </Stack>
       }
     >
       <Window.Content

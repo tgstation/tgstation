@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import {
   Button,
   Icon,
-  Input,
   NoticeBox,
   RestrictedInput,
   Section,
@@ -20,14 +20,14 @@ export function CargoCart(props) {
   const sendable = !!away && !!docked;
 
   return (
-    <Stack fill vertical>
+    <Stack fill vertical g={0}>
       <Stack.Item grow>
         <Section fill scrollable>
           <CheckoutItems />
         </Section>
       </Stack.Item>
       {cart.length > 0 && !!can_send && (
-        <Stack.Item m={0}>
+        <Stack.Item>
           <Section textAlign="right">
             <Stack fill align="center">
               <Stack.Item grow>
@@ -63,6 +63,8 @@ function CheckoutItems(props) {
     return <NoticeBox>Nothing in cart</NoticeBox>;
   }
 
+  const [isValid, setIsValid] = useState(true);
+
   return (
     <Table>
       <Table.Row header color="gray">
@@ -94,12 +96,14 @@ function CheckoutItems(props) {
                   minValue={0}
                   maxValue={max_order}
                   value={entry.amount}
-                  onEnter={(e, value) =>
+                  onEnter={(value) =>
+                    isValid &&
                     act('modify', {
                       order_name: entry.object,
                       amount: value,
                     })
                   }
+                  onValidationChange={setIsValid}
                 />
                 <Button
                   icon="plus"
@@ -110,7 +114,7 @@ function CheckoutItems(props) {
                 />
               </>
             ) : (
-              <Input width="40px" value={entry.amount} disabled />
+              <RestrictedInput width="40px" value={entry.amount} disabled />
             )}
           </Table.Cell>
 

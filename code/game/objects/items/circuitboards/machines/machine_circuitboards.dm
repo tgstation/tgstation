@@ -193,6 +193,14 @@
 		/obj/item/stack/sheet/plasteel = 2,
 	)
 
+/obj/item/circuitboard/machine/modular_shield_cable
+	name = "Modular Shield Cable"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/node/cable
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 1,
+	)
+
 /obj/item/circuitboard/machine/modular_shield_well
 	name = "Modular Shield Well"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -772,6 +780,16 @@
 		/datum/stock_part/scanning_module = 1,
 	)
 
+/obj/item/circuitboard/machine/photocopier
+	name = "Photocopier"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/photocopier
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1
+	)
+
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -1137,6 +1155,28 @@
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/cable_coil = 2,
+	)
+
+/obj/item/circuitboard/machine/experimental_cloner_scanner
+	name = "Experimental Cloning Scanner"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/experimental_cloner_scanner
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/micro_laser = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/cable_coil = 2
+	)
+
+/obj/item/circuitboard/machine/experimental_cloner
+	name = "Experimental Cloning Pod"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/experimental_cloner
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 4
 	)
 
 /obj/item/circuitboard/machine/mechpad
@@ -1505,7 +1545,42 @@
 	name = "Restaurant Portal"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/restaurant_portal
+	req_components = list(
+		/datum/stock_part/scanning_module = 2,
+		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = TRUE
+	/// Type of the venue that we're linked to
+	var/venue_type = /datum/venue/restaurant
+
+/obj/item/circuitboard/machine/restaurant_portal/multitool_act(mob/living/user)
+	var/list/radial_items = list()
+	var/list/radial_results = list()
+
+	for(var/type_key in SSrestaurant.all_venues)
+		var/datum/venue/venue = SSrestaurant.all_venues[type_key]
+		radial_items[venue.name] = image('icons/obj/machines/restaurant_portal.dmi', venue.name)
+		radial_results[venue.name] = type_key
+
+	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
+
+	if(!choice)
+		return ITEM_INTERACT_BLOCKING
+
+	venue_type = radial_results[choice]
+	to_chat(user, span_notice("You change [src]'s linked venue."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/machine/restaurant_portal/examine(mob/user)
+	. = ..()
+	if (venue_type)
+		var/datum/venue/as_venue = venue_type
+		. += span_notice("[src] is linked to \a [initial(as_venue.name)] venue.")
+
+/obj/item/circuitboard/machine/restaurant_portal/configure_machine(obj/machinery/restaurant_portal/machine)
+	if(!istype(machine))
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+	machine.linked_venue = SSrestaurant.all_venues[venue_type]
+	machine.linked_venue.restaurant_portals += machine
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
@@ -1807,3 +1882,30 @@
 	req_components = list(
 		/obj/item/stack/sheet/iron = 5,
 	)
+
+/obj/item/circuitboard/machine/atmos_shield_gen
+	name = /obj/machinery/atmos_shield_gen::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/atmos_shield_gen
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1,
+	)
+
+/obj/item/circuitboard/machine/engine
+	name = "Shuttle Engine"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/shuttle_engine
+	needs_anchored = FALSE
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+	)
+
+/obj/item/circuitboard/machine/engine/heater
+	name = "Shuttle Engine Heater"
+	build_path = /obj/machinery/power/shuttle_engine/heater
+
+/obj/item/circuitboard/machine/engine/propulsion
+	name = "Shuttle Engine Propulsion"
+	build_path = /obj/machinery/power/shuttle_engine/propulsion

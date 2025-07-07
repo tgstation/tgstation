@@ -15,6 +15,11 @@
 /// Used for HUD objects
 #define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
+//used to set the default viewport to the user's preference.
+#define VIEWPORT_USE_PREF "use_pref"
+#define WIDESCREEN_VIEWPORT_SIZE "19x15"
+#define SQUARE_VIEWPORT_SIZE "15x15"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 
@@ -43,6 +48,8 @@
 //Middle left indicators
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
+#define ui_blooddisplay "WEST:6,CENTER:-2"
+#define ui_xenobiodisplay "WEST:6,CENTER:-4"
 
 //Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
@@ -56,6 +63,7 @@
 //Lower right, persistent menu
 #define ui_rest "EAST-1:28,SOUTH+1:7"
 #define ui_drop_throw "EAST-1:28,SOUTH+1:24"
+#define ui_above_throw "EAST-1:28,SOUTH+1:41"
 #define ui_above_movement "EAST-2:26,SOUTH+1:7"
 #define ui_above_movement_top "EAST-2:26, SOUTH+1:24"
 #define ui_above_intent "EAST-3:24, SOUTH+1:7"
@@ -138,6 +146,7 @@
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
 #define ui_alien_language_menu "EAST-4:20,SOUTH:5"
 #define ui_alien_navigate_menu "EAST-4:4,SOUTH:5"
+#define ui_alien_floor_change "EAST-3:24, SOUTH:24"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
@@ -184,11 +193,12 @@
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
 #define ui_ghost_orbit "SOUTH:6,CENTER-2:24"
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER-1:24"
-#define ui_ghost_teleport "SOUTH:6,CENTER:24"
-#define ui_ghost_pai "SOUTH: 6, CENTER+1:24"
-#define ui_ghost_minigames "SOUTH: 6, CENTER+2:24"
-#define ui_ghost_language_menu "SOUTH: 6, CENTER+3:24"
-#define ui_ghost_floor_changer "SOUTH: 6, CENTER+3:8"
+#define ui_dnr "SOUTH:6,CENTER:24"
+#define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
+#define ui_ghost_settings "SOUTH: 6, CENTER+2:24"
+#define ui_ghost_minigames "SOUTH: 6, CENTER+3:24"
+#define ui_ghost_language_menu "SOUTH: 6, CENTER+4:22"
+#define ui_ghost_floor_changer "SOUTH: 6, CENTER+4:7"
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"

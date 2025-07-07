@@ -109,7 +109,7 @@
 	///How much progression should be shown in the uplink, set on purchase of the item.
 	var/current_progression = 0
 
-/obj/item/computer_disk/virus/frame/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/computer_disk/virus/frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/stack/telecrystal))
 		return

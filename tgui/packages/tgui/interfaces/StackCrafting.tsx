@@ -125,6 +125,7 @@ export const StackCrafting = (_props) => {
           title={'Amount: ' + amount}
           buttons={
             <SearchBar
+              expensive
               style={{ width: '15em' }}
               query={searchText}
               onSearch={(value) => setSearchText(value)}
@@ -194,7 +195,7 @@ const Multipliers = (props: MultiplierProps) => {
 
   const multipliers = [5, 10, 25];
 
-  const finalResult: JSX.Element[] = [];
+  const finalResult: React.JSX.Element[] = [];
 
   for (const multiplier of multipliers) {
     if (maxM >= multiplier) {

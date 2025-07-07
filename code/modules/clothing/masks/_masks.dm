@@ -35,10 +35,11 @@
 
 /obj/item/clothing/mask/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	. = ..()
-	if(isinhands || !(body_parts_covered & HEAD))
+	if (isinhands || !(body_parts_covered & HEAD))
 		return
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+	var/blood_overlay = get_blood_overlay("mask")
+	if (blood_overlay)
+		. += blood_overlay
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -57,7 +58,7 @@
 
 /obj/item/clothing/mask/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state || initial(icon_state)][up ? "_up" : ""]"
+	icon_state = "[base_icon_state || initial(post_init_icon_state) || initial(icon_state)][up ? "_up" : ""]"
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

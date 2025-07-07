@@ -173,10 +173,10 @@
 	if(visuals_only)
 		return
 
-	var/obj/item/card/id/W = H.wear_id
 	var/obj/item/modular_computer/pda/heads/pda = H.r_store
-	pda.imprint_id(H.real_name, "CentCom Official", W)
+	pda.imprint_id(H.real_name, "CentCom Official")
 
+	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
@@ -289,9 +289,7 @@
 	if(visuals_only)
 		return
 	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
-	H.dna.add_mutation(/datum/mutation/human/clumsy)
-	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
-		M.mutadone_proof = TRUE
+	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 
 /datum/outfit/centcom/centcom_intern
 	name = "CentCom Intern"

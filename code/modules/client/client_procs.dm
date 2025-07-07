@@ -114,6 +114,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			list("id" = message_id, "player_key" = usr.ckey)
 		)
 		query_message_read.warn_execute()
+		QDEL_NULL(query_message_read)
 		return
 
 	// TGUIless adminhelp
@@ -135,6 +136,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
+		if("openWebMap")
+			if(!SSmapping.current_map.mapping_url)
+				return
+			if(is_station_level(mob.z))
+				src << link("[SSmapping.current_map.mapping_url]/?x=[mob.x]&y=[mob.y]&zoom=6")
+			else
+				src << link("[SSmapping.current_map.mapping_url]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
@@ -253,12 +261,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(GLOB.persistent_clients_by_ckey[ckey])
 		reconnecting = TRUE
 		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
 	else
 		persistent_client = new(ckey)
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
+	persistent_client.set_client(src)
 
 	if(byond_version >= 516)
 		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
@@ -361,7 +366,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				new /datum/admins(autoadmin_ranks, ckey)
 
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
-		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		var/datum/admin_rank/localhost_rank = new("!localhost!", RANK_SOURCE_LOCAL, R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		if(QDELETED(localhost_rank))
+			to_chat(world, "Local admin rank creation failed, somehow?")
+			return
 		new /datum/admins(list(localhost_rank), ckey, 1, 1)
 
 	if (length(GLOB.stickybanadminexemptions))
@@ -397,6 +405,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		inline_css = file("html/statbrowser.css"),
 	)
 	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
+
+	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -527,7 +537,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
 		else
-			winset(src, "infowindow.changelog", "font-style=bold")
+			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])
@@ -552,7 +562,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	loot_panel = new(src)
 
-	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
+	view_size = new(src)
+	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	Master.UpdateTickRate()
@@ -585,7 +596,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client.client = null
+	persistent_client.set_client(null)
 
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
@@ -1191,8 +1202,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set name = "Toggle Fullscreen"
 	set category = "OOC"
 
-	fullscreen = !fullscreen
+	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)
+	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)
+	set_fullscreen()
 
+/client/proc/set_fullscreen(logging_in = FALSE)
+	var/fullscreen = prefs?.read_preference(/datum/preference/toggle/fullscreen_mode)
+	//no need to set every login to not fullscreen, they already aren't.
+	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
+	if(logging_in)
+		if(fullscreen)
+			winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+		return
 	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
@@ -1246,6 +1267,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	message_to_send += "(No admins online)"
 
 	send2adminchat("Server", jointext(message_to_send, " "))
+
+/// This grabs the DPI of the user per their skin
+/client/proc/acquire_dpi()
+	window_scaling = text2num(winget(src, null, "dpi"))
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE

@@ -8,6 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
+	item_flags = CRUEL_IMPLEMENT
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
@@ -89,15 +90,12 @@
 		else
 			autopsy_information += "Unknown causes.</br>"
 	else
-		var/blood_id = scanned.get_blood_id()
-		if(blood_id)
+		var/datum/blood_type/blood_type = scanned.get_bloodtype()
+		if(blood_type)
 			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type = scanned.dna.blood_type
-			if(blood_id != /datum/reagent/blood)
-				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
-				blood_type = reagents?.name || blood_id
-			autopsy_information += "Blood Type: [blood_type]<br>"
-			autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
+			if (blood_type.get_type())
+				autopsy_information += "[blood_type.get_blood_name()] Type: [blood_type.get_type()]<br>"
+			autopsy_information += "[blood_type.get_blood_name()] Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"

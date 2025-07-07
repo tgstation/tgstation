@@ -1,4 +1,4 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Box,
@@ -87,7 +87,7 @@ const FilterTextEntry = (props) => {
     <Input
       value={value}
       width="250px"
-      onChange={(e, value) =>
+      onBlur={(value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {
@@ -116,7 +116,7 @@ const FilterColorEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onChange={(e, value) =>
+        onBlur={(value) =>
           act('transition_filter_value', {
             name: filterName,
             new_data: {
@@ -243,12 +243,11 @@ const FilterEntry = (props) => {
             }
           />
           <Button.Input
-            content="Rename"
-            placeholder={name}
-            onCommit={(e, new_name) =>
+            buttonText="Rename"
+            onCommit={(value) =>
               act('rename_filter', {
-                name: name,
-                new_name: new_name,
+                name,
+                new_name: value,
               })
             }
             width="90px"
@@ -309,7 +308,7 @@ export const Filteriffic = (props) => {
                 <Input
                   value={massApplyPath}
                   width="100px"
-                  onChange={(e, value) => setMassApplyPath(value)}
+                  onChange={setMassApplyPath}
                 />
                 <Button.Confirm
                   content="Apply"

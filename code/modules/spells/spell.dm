@@ -404,7 +404,11 @@
 				invoker.whisper(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
-			invoker.visible_message(used_invocation_message, invocation_self_message)
+			invoker.visible_message(
+				capitalize(REPLACE_PRONOUNS(replacetext(used_invocation_message, "%CASTER", invoker.name), invoker)),
+				capitalize(REPLACE_PRONOUNS(replacetext(invocation_self_message, "%CASTER", invoker.name), invoker)),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/try_invoke(mob/living/invoker, feedback = TRUE)

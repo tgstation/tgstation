@@ -41,11 +41,13 @@
 	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /obj/item/mod/module/circuit/on_install()
+	. = ..()
 	if(!shell?.attached_circuit)
 		return
 	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_power_usage))
 
 /obj/item/mod/module/circuit/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(!shell?.attached_circuit)
 		return
 	for(var/obj/item/circuit_component/equipment_action/action_comp in action_comps)

@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(stickyban)
 	name = "PRISM"
-	init_order = INIT_ORDER_STICKY_BAN
 	flags = SS_NO_FIRE
 
 	var/list/cache = list()

@@ -509,3 +509,168 @@
 	var/flower_boots = new chosen_type(get_turf(mod.wearer))
 	animate(flower_boots, alpha = 0, 1 SECONDS)
 	QDEL_IN(flower_boots, 1 SECONDS)
+
+/obj/item/mod/core/soul
+	name = "MOD soul shard core"
+	desc = "A soul shard haphazardly jammed into a hand-crafted MOD core frame."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/mod/core/soul"
+	post_init_icon_state = "mod-core-soul"
+	var/base_desc
+	var/theme = THEME_CULT
+	greyscale_config = /datum/greyscale_config/mod_core_soul
+	greyscale_colors = "#ff0000"
+
+/obj/item/mod/core/soul/Initialize(mapload)
+	. = ..()
+	base_desc = desc
+	update_appearance(UPDATE_DESC)
+
+/obj/item/mod/core/soul/update_desc(updates)
+	. = ..()
+	desc = base_desc
+	switch(theme)
+		if(THEME_CULT)
+			desc += " You can feel unholy energies trying to tear something away from you."
+		if(THEME_HOLY)
+			desc += " It emanates a divine aura that defies souls tainted by darker forces."
+		if(THEME_WIZARD)
+			desc += " Yet another foray by the Wizard Federation into the dangerous field of soul magic."
+		if(THEME_HERETIC)
+			desc += " The surface of the shard shines with glimpses of things which never were, yet have always been."
+		else
+			desc += " Or at least, that's what it should be. <i>Somebody</i> must have set a variable incorrectly."
+
+/obj/item/mod/core/soul/update_greyscale()
+	switch(theme)
+		if(THEME_CULT)
+			greyscale_colors = "#ff0000"
+		if(THEME_HOLY)
+			greyscale_colors = "#0000ff"
+		if(THEME_WIZARD)
+			greyscale_colors = "#ff00ff"
+		if(THEME_HERETIC)
+			greyscale_colors = "#00ff00"
+	return ..()
+
+/obj/item/mod/core/soul/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/soulstone/stone = locate() in components
+	set_theme(stone.theme)
+	for(var/mob/living/basic/shade/shade in stone)
+		shade.forceMove(get_turf(src))
+		shade.visible_message(span_warning("[shade] is ejected from [stone] as it is inserted into [src]!"), span_warning("You are ejected from [stone] as it is inserted into [src]!"))
+	return ..()
+
+/obj/item/mod/core/soul/proc/set_theme(new_theme)
+	theme = new_theme
+	update_appearance(UPDATE_DESC)
+	update_greyscale()
+
+/obj/item/mod/core/soul/charge_source()
+	return CONFIG_GET(flag/disable_human_mood) ? src : mod.wearer?.mob_mood
+
+/obj/item/mod/core/soul/max_charge_amount()
+	return CONFIG_GET(flag/disable_human_mood) ? INFINITY : SANITY_MAXIMUM
+
+/obj/item/mod/core/soul/charge_amount()
+	var/mob/living/wearer = mod.wearer
+	if(!wearer)
+		return 0
+	if(HAS_TRAIT(wearer, TRAIT_NO_SOUL))
+		return 0 // Can't draw from something that isn't there.
+	if(CONFIG_GET(flag/disable_human_mood))
+		return INFINITY
+	var/datum/mood/source = charge_source()
+	return source?.sanity
+
+/obj/item/mod/core/soul/check_charge(amount)
+	if(CONFIG_GET(flag/disable_human_mood))
+		return !!mod.wearer
+	return charge_amount() >= amount * 10 / STANDARD_CELL_CHARGE
+
+/obj/item/mod/core/soul/subtract_charge(amount)
+	var/mob/living/wearer = mod.wearer
+	if(CONFIG_GET(flag/disable_human_mood))
+		return !!wearer
+	var/datum/mood/source = charge_source()
+	source.adjust_sanity(-amount * 10 / STANDARD_CELL_CHARGE)
+	var/backlash_type = get_backlash_type(wearer)
+	if(backlash_type)
+		wearer.add_mood_event("soul_core", backlash_type)
+	else
+		wearer.add_mood_event("soul_core", /datum/mood_event/soul_core_warning)
+	return TRUE
+
+/obj/item/mod/core/soul/get_chargebar_string()
+	var/mob/living/wearer = mod.wearer
+	if(!wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
+		return "No power source detected."
+	if(CONFIG_GET(flag/disable_human_mood))
+		return "Infinite"
+	return "[round(charge_amount() / max_charge_amount() * 100, 0.1)]%"
+
+/obj/item/mod/core/soul/get_chargebar_color()
+	switch(theme)
+		if(THEME_CULT)
+			return "red"
+		if(THEME_HOLY)
+			return "blue"
+		if(THEME_WIZARD)
+			return "purple"
+		if(THEME_HERETIC)
+			return "green"
+
+/obj/item/mod/core/soul/proc/get_backlash_type(mob/living/checked)
+	switch(theme)
+		if(THEME_CULT)
+			if(!(IS_CULTIST(checked) || IS_HERETIC(checked) || HAS_MIND_TRAIT(checked, TRAIT_MAGICALLY_GIFTED)))
+				return /datum/mood_event/soul_core_torment
+		if(THEME_HERETIC)
+			if(!(IS_CULTIST(checked) || IS_HERETIC(checked) || HAS_MIND_TRAIT(checked, TRAIT_MAGICALLY_GIFTED)))
+				return /datum/mood_event/soul_core_torment/heretic
+		if(THEME_HOLY)
+			if(IS_CULTIST(checked) || IS_HERETIC(checked))
+				return /datum/mood_event/soul_core_torment
+			if(IS_WIZARD(checked))
+				return /datum/mood_event/soul_core_discomfort
+
+/obj/item/mod/core/soul/get_charge_icon_state()
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(0.75 to INFINITY)
+			return "high"
+		if(0.5 to 0.75)
+			return "mid"
+		if(0.25 to 0.5)
+			return "low"
+		if(0.02 to 0.25)
+			return "very_low"
+
+	return "empty"
+
+/obj/item/mod/core/soul/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, theme))
+		update_appearance(UPDATE_DESC)
+		update_greyscale()
+
+/datum/mood_event/soul_core_torment
+	description = "IT BURNS!! IT BURNS!! THE DEEPEST DEPTHS OF MY BEING!! IT BURNS!!"
+	mood_change = -20
+	timeout = 10 SECONDS
+
+/datum/mood_event/soul_core_torment/heretic
+	description = "GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD!!"
+
+/datum/mood_event/soul_core_discomfort
+	description = "I'm no fan of these divine powers breathing down my neck."
+	mood_change = -3
+	timeout = 10 SECONDS
+
+/datum/mood_event/soul_core_warning
+	description = "I can feel my modsuit siphoning my energy. I'd better keep my spirits high."
+	mood_change = 0
+	timeout = 10 SECONDS
+
+/obj/item/mod/core/soul/wizard
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+	theme = THEME_WIZARD

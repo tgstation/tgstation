@@ -1,16 +1,18 @@
 SUBSYSTEM_DEF(security_level)
 	name = "Security Level"
 	can_fire = FALSE // We will control when we fire in this subsystem
-	init_order = INIT_ORDER_SECURITY_LEVEL
 	/// Currently set security level
 	var/datum/security_level/current_security_level
 	/// A list of initialised security level datums.
 	var/list/available_levels = list()
+	/// A list of alert icon states for use in [/obj/machinery/status_display/evac] (to differentiate them from other display images)
+	var/list/alert_level_icons = list()
 
 /datum/controller/subsystem/security_level/Initialize()
 	for(var/iterating_security_level_type in subtypesof(/datum/security_level))
 		var/datum/security_level/new_security_level = new iterating_security_level_type
 		available_levels[new_security_level.name] = new_security_level
+		alert_level_icons += new_security_level.status_display_icon_state
 	current_security_level = available_levels[number_level_to_text(SEC_LEVEL_GREEN)]
 	return SS_INIT_SUCCESS
 

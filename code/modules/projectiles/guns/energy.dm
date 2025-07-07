@@ -29,6 +29,8 @@
 	var/single_shot_type_overlay = TRUE
 	///Should we give an overlay to empty guns?
 	var/display_empty = TRUE
+	///If we have an additional overlay based on our shot type while active
+	var/shot_type_fluff_overlay = FALSE
 
 	///whether the gun's cell drains the cyborg user's cell to recharge
 	var/use_cyborg_cell = FALSE
@@ -91,6 +93,9 @@
 		cell = new(src)
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
+	if(cell && resistance_flags & INDESTRUCTIBLE)
+		cell.resistance_flags |= INDESTRUCTIBLE
+	cell.resistance_flags |= BOMB_PROOF
 	update_ammo_types()
 	recharge_newshot(TRUE)
 	if(selfcharge)
@@ -256,8 +261,9 @@
 		return
 
 	var/overlay_icon_state = "[icon_state]_charge"
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+
 	if(modifystate)
-		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		if(single_shot_type_overlay)
 			. += "[icon_state]_[initial(shot.select_name)]"
 		overlay_icon_state += "_[initial(shot.select_name)]"
@@ -266,6 +272,10 @@
 	if(ratio == 0 && display_empty)
 		. += "[icon_state]_empty"
 		return
+
+	if(shot_type_fluff_overlay)
+		. += "[icon_state]_[initial(shot.select_name)]_extra"
+
 	if(shaded_charge)
 		. += "[icon_state]_charge[ratio]"
 		return

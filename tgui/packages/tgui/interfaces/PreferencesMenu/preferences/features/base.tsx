@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import {
   ComponentType,
   createElement,
@@ -22,7 +22,7 @@ import { createSetPreference, PreferencesMenuData } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
 
 export function sortChoices(array: [string, ReactNode][]) {
-  return sortBy(array, ([name]) => name);
+  return sortBy(array, [([name]) => name]);
 }
 
 export type Feature<
@@ -252,11 +252,10 @@ export function FeatureShortTextInput(
   return (
     <Input
       disabled={!serverData}
-      width="100%"
+      fluid
       value={value}
       maxLength={serverData?.maximum_length}
-      updateOnPropsChange
-      onChange={(_, value) => handleSetValue(value)}
+      onBlur={handleSetValue}
     />
   );
 }

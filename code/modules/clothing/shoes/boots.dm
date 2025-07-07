@@ -117,7 +117,7 @@
 	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = parent_type::clothing_flags | THICKMATERIAL
 	body_parts_covered = FEET|LEGS
 	resistance_flags = NONE
 
@@ -153,6 +153,11 @@
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/shoes/workboots/black
+	name = "tactical work boots"
+	desc = "Lace-up work boots to protect the average grey-collar worker from stepping on hazards, from broken glass to dropped pens."
+	icon_state = "workboots_black"
 
 /obj/item/clothing/shoes/russian
 	name = "russian boots"

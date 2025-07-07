@@ -33,11 +33,8 @@
 	))
 	return ..()
 
-/datum/element/on_hit_effect/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/element/on_hit_effect/proc/item_afterattack(obj/item/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
 
 	on_hit(source, user, target, user.zone_selected)
 

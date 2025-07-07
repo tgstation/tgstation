@@ -27,7 +27,7 @@
 	icon_state = "swapper[linked_swapper ? "-linked" : null]"
 	return ..()
 
-/obj/item/swapper/attackby(obj/item/I, mob/user, params)
+/obj/item/swapper/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/swapper))
 		var/obj/item/swapper/other_swapper = I
 		if(other_swapper.linked_swapper)

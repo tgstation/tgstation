@@ -42,16 +42,17 @@
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
+	if (pref_load)
+		ADD_TRAIT(human_who_gained_species, TRAIT_BORN_MONKEY, INNATE_TRAIT) // Not a species trait, you cannot escape your genetic destiny
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
-	human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-	human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	human_who_gained_species.AddElement(/datum/element/human_biter)
 	human_who_gained_species.update_mob_height()
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	passtable_off(C, SPECIES_TRAIT)
-	C.dna.remove_mutation(/datum/mutation/human/race)
+	C.dna.remove_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	C.RemoveElement(/datum/element/human_biter)
 	C.update_mob_height()
 
@@ -111,12 +112,6 @@
 			SPECIES_PERK_NAME = "Primal Primate",
 			SPECIES_PERK_DESC = "Monkeys are primitive humans, and can't do most things a human can do. Computers are impossible, \
 				complex machines are right out, and most clothes don't fit your smaller form.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "capsules",
-			SPECIES_PERK_NAME = "Mutadone Averse",
-			SPECIES_PERK_DESC = "Monkeys are reverted into normal humans upon being exposed to Mutadone.",
 		),
 	)
 

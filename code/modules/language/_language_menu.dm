@@ -24,6 +24,7 @@
 	var/list/data = list()
 
 	var/atom/movable/speaker = language_holder.owner
+	var/list/partial_languages = speaker?.get_partially_understood_languages()
 	data["languages"] = list()
 	for(var/datum/language/language as anything in GLOB.all_languages)
 		var/list/lang_data = list()
@@ -38,6 +39,7 @@
 			lang_data["can_speak"] = !!speaker.has_language(language, SPOKEN_LANGUAGE)
 			lang_data["could_speak"] = !!(language_holder.omnitongue || speaker.could_speak_language(language))
 			lang_data["can_understand"] = !!speaker.has_language(language, UNDERSTOOD_LANGUAGE)
+			lang_data["partial_understanding"] = partial_languages?[language] || 0
 
 		UNTYPED_LIST_ADD(data["languages"], lang_data)
 
@@ -81,10 +83,16 @@
 					if("Both")
 						adding_flags |= ALL
 
-				if(LAZYACCESS(language_holder.blocked_languages, language_datum))
-					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", list("Yes", "No"))
+				var/ask_to_remove_block
+				var/list/block_being_removed_on = list()
+				if(adding_flags & SPOKEN_LANGUAGE && LAZYACCESS(language_holder.blocked_speaking, language_datum))
+					ask_to_remove_block = TRUE
+					block_being_removed_on += "spoken"
+
+				if(ask_to_remove_block)
+					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be [block_being_removed_on.Join(" or ")]?", "[language_datum]", list("Yes", "No"))
 					if(choice == "Yes")
-						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
+						language_holder.remove_blocked_language(language_datum, adding_flags, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, adding_flags)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(speaker)].")

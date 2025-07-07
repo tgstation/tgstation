@@ -221,12 +221,12 @@
 	crate_name = "combat shotguns crate"
 
 /datum/supply_pack/security/armory/dragnet
-	name = "DRAGnet Crate"
-	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
+	name = "DRAGnet Translocation Shotgun Crate"
+	desc = "Contains two \"Dynamic Rapid-Apprehension of the Guilty Network\" translocation shotguns, \
 		a recent breakthrough in law enforcement prisoner management technology. Includes a DRAGnet beacon."
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 18
 	contains = list(
-		/obj/item/gun/energy/e_gun/dragnet = 3,
+		/obj/item/gun/energy/e_gun/dragnet = 2,
 		/obj/item/dragnet_beacon = 1
 	)
 	crate_name = "\improper DRAGnet crate"
@@ -379,3 +379,15 @@
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/glasses/sunglasses = 1)
 	crate_name = "sunglasses crate"
+
+/datum/supply_pack/security/armory/mechthermal
+	name = "Heavy Thermal Guns Crate"
+	desc = "Contains two experimental thermal cannons for use by mechs. \
+		When used simultaneously, their excess power used to heat and cool the opposing weapon, \
+		increasing the reload speed."
+	cost = CARGO_CRATE_VALUE * 25
+	contains = list(
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo,
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno,
+	)
+	crate_name = "thermal cannons crate"

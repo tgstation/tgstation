@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
-	invocation = "ST'R R'N'"
+	invocation = "ST'R R'N."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

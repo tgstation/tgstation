@@ -15,6 +15,9 @@
 	var/datum/picture/picture
 	var/scribble //Scribble on the back.
 
+/obj/item/photo/get_save_vars()
+	return ..() - NAMEOF(src, icon)
+
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
 	//Photos are quite rarer than papers, so they're more likely to be added to the queue to make things even.
@@ -50,7 +53,7 @@
 		if(!seen)
 			P.mobs_seen -= seen_ref
 			continue
-		if(!isobserver(seen))
+		if(!isobserver(seen) && !isspirit(seen))
 			continue
 		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		grind_results = list(/datum/reagent/hauntium = 20)
@@ -75,7 +78,7 @@
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/photo/attackby(obj/item/P, mob/user, params)
+/obj/item/photo/attackby(obj/item/P, mob/user, list/modifiers, list/attack_modifiers)
 	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return
@@ -98,10 +101,14 @@
 	if(!istype(picture) || !picture.picture_image)
 		to_chat(user, span_warning("[src] seems to be blank..."))
 		return
+	var/width_height = "width"
+	if(picture.psize_y > picture.psize_x)
+		// if we're a tall picture, swap our focus to height to stay in frame
+		width_height = "height"
 	user << browse_rsc(picture.picture_image, "tmp_photo.png")
 	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='tmp_photo.png' width='480' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "<img src='tmp_photo.png' [width_height]='480' style='image-rendering:pixelated' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
 		+ "</body></html>", "window=photo_showing;size=480x608")
 	onclose(user, "[name]")

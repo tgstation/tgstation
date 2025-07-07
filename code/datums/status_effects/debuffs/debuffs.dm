@@ -725,22 +725,36 @@
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
+	owner.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id)) //I believe I can fly!
 
 /datum/status_effect/go_away/tick(seconds_between_ticks)
 	owner.AdjustStun(1, ignore_canstun = TRUE)
-	var/turf/T = get_step(owner, direction)
-	owner.forceMove(T)
+	var/turf/turf = get_step(owner, direction)
+	if(!turf)
+		qdel(src)
+		return
+	owner.forceMove(turf)
 
+/datum/status_effect/go_away/on_remove()
+	. = ..()
+	owner.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id))
+
+///Subtype of the go away effect (phases the mob in one direction) that deletes the owner on z-level change or when the time's up.
 /datum/status_effect/go_away/deletes_mob
 	id = "go_away_deletes_mob"
-	duration = INFINITY
+	duration = 30 SECONDS
 
-/datum/status_effect/go_away/deluxe/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/go_away/deletes_mob/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
 
-/datum/status_effect/go_away/deluxe/proc/wipe_bozo()
-	qdel(owner)
+/datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
+	qdel(src)
+
+/datum/status_effect/go_away/deletes_mob/on_remove()
+	. = ..()
+	if(!QDELETED(owner))
+		qdel(owner)
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"
@@ -851,8 +865,11 @@
 
 /datum/status_effect/ants/proc/ants_washed()
 	SIGNAL_HANDLER
-	owner.remove_status_effect(/datum/status_effect/ants)
-	return COMPONENT_CLEANED
+
+	. = NONE
+
+	if(owner.remove_status_effect(/datum/status_effect/ants))
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /datum/status_effect/ants/get_examine_text()
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")

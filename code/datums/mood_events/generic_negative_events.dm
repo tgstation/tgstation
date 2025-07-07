@@ -434,6 +434,11 @@
 	mood_change = -3
 	timeout = 3 MINUTES
 
+/datum/mood_event/russian_roulette_lose_cheater
+	description = "I gambled and lost! Good thing I wasn't aiming for my head..."
+	mood_change = -10
+	timeout = 10 MINUTES
+
 /datum/mood_event/russian_roulette_lose
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
@@ -529,3 +534,8 @@
 	if(HAS_TRAIT(owner, TRAIT_SMOKER))
 		description = "Blowing smoke in my face, really?"
 		mood_change = 0
+
+/datum/mood_event/lost_control_of_life
+	description = "I've lost control of my life."
+	mood_change = -5
+	timeout = 5 MINUTES

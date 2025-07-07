@@ -39,7 +39,7 @@
 	else
 		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
 
-/obj/structure/spawner/attackby(obj/item/item, mob/user, params)
+/obj/structure/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE

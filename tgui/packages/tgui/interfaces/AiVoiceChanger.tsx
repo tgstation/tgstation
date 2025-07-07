@@ -50,7 +50,7 @@ export function AiVoiceChanger(props) {
           <LabeledList.Item label="Verb">
             <Input
               value={say_verb}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('verb', {
                   verb: value,
                 })
@@ -69,7 +69,7 @@ export function AiVoiceChanger(props) {
           <LabeledList.Item label="Fake name">
             <Input
               value={name}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('name', {
                   name: value,
                 })

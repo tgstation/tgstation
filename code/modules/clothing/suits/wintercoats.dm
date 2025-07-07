@@ -50,7 +50,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
 	zipped = !zipped
 	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
-	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
+	worn_icon_state = "[initial(post_init_icon_state) || initial(icon_state)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 
 	if(ishuman(loc))
@@ -68,7 +68,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEEARS
-	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	hair_mask = /datum/hair_mask/winterhood
 	armor_type = /datum/armor/hooded_winterhood
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
@@ -214,8 +214,13 @@
 	bomb = 10
 	acid = 35
 
+/obj/item/clothing/suit/hooded/wintercoat/hop/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_wintercoat_allowed
+
 /obj/item/clothing/head/hooded/winterhood/hop
 	icon_state = "hood_hop"
+	armor_type =/datum/armor/wintercoat_hop
 
 // Botanist
 /obj/item/clothing/suit/hooded/wintercoat/hydro
@@ -651,10 +656,13 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/custom"
+	post_init_icon_state = "coatwinter"
 	hood_down_overlay_suffix = ""
-	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
+	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
 	flags_1 = IS_PLAYER_COLORABLE_1
 

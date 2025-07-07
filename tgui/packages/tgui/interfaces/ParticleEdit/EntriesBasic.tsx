@@ -170,8 +170,8 @@ export const EntryGradient = (props: EntryGradientProps) => {
                 <Input
                   key={index}
                   maxWidth={'70px'}
-                  value={entry}
-                  onChange={(e, value) =>
+                  value={entry.toString()}
+                  onBlur={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: gradient!.map((x, i) =>
@@ -181,8 +181,8 @@ export const EntryGradient = (props: EntryGradientProps) => {
                   }
                 />
                 <Button
-                  icon={'minus'}
-                  tooltip={'Remove entry'}
+                  icon="minus"
+                  tooltip="Remove entry"
                   onClick={() =>
                     act('edit', {
                       var: var_name,
@@ -364,9 +364,9 @@ export const EntryIconState = (props: EntryIconStateProps) => {
             <>
               <Stack.Item>
                 <Input
-                  width={'70px'}
+                  width="70px"
                   value={iconstate}
-                  onChange={(e, value) =>
+                  onBlur={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: editKeyOf(icon_state, iconstate, value),
@@ -413,7 +413,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
           <>
             <Input
               value={icon_state ? icon_state : 'None'}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,

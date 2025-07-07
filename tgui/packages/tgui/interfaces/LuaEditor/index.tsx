@@ -1,5 +1,3 @@
-import 'blob-polyfill';
-
 import hljs from 'highlight.js/lib/core';
 import lua from 'highlight.js/lib/languages/lua';
 import {
@@ -211,12 +209,11 @@ export const LuaEditor = () => {
                     <Stack fill vertical>
                       <Stack.Item grow>
                         <TextArea
-                          fluid
                           width="100%"
                           height="100%"
                           value={scriptInput}
                           fontFamily="Consolas"
-                          onChange={(_, value) => setScriptInput(value)}
+                          onChange={setScriptInput}
                           /* displayedValue={
                           <Box
                             style={{

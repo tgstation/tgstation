@@ -7,7 +7,7 @@
 	school = SCHOOL_EVOCATION
 	cooldown_time = 6 SECONDS
 
-	invocation = "FI'RAN DADISKO"
+	invocation = "FI'RAN DADISKO!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 

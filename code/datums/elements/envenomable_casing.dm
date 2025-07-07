@@ -20,10 +20,10 @@
 
 /datum/element/envenomable_casing/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ITEM_INTERACTING_WITH_ATOM, COMSIG_ATOM_EXAMINE))
 
 ///signal called on the parent attacking an item
-/datum/element/envenomable_casing/proc/handle_interaction(obj/item/ammo_casing/casing, mob/user, atom/target, click_parameters)
+/datum/element/envenomable_casing/proc/handle_interaction(obj/item/ammo_casing/casing, mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 	if(!is_reagent_container(target))
 		return NONE

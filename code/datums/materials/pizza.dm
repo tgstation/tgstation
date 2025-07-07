@@ -27,8 +27,7 @@
 
 /datum/material/pizza/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(!IS_EDIBLE(source))
-		make_edible(source, mat_amount, multiplier)
+	make_edible(source, mat_amount)
 	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //the fishing rod itself is the bait... sorta.
 
 /datum/material/pizza/on_applied(atom/source, mat_amount, multiplier)
@@ -36,16 +35,31 @@
 	if(IS_EDIBLE(source))
 		make_edible(source, mat_amount, multiplier)
 
-/datum/material/pizza/proc/make_edible(atom/source, mat_amount, multiplier)
-	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT) * multiplier
-	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT) * multiplier
-	source.AddComponentFrom(
-		SOURCE_EDIBLE_PIZZA_MAT, \
+/datum/material/pizza/on_edible_applied(atom/source, datum/component/edible/edible)
+	for(var/datum/reagent/consumable/nutriment/foodchem in source.reagents.reagent_list)
+		var/list/margherita_tastes = /obj/item/food/pizza/margherita::tastes
+		for(var/taste in margherita_tastes)
+			LAZYSET(foodchem.data, taste, 1)
+	source.AddComponentFrom(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible, foodtypes = GRAIN | DAIRY | VEGETABLES)
+
+/datum/material/pizza/on_edible_removed(atom/source, datum/component/edible/edible)
+	for(var/datum/reagent/consumable/nutriment/foodchem in source.reagents.reagent_list)
+		var/list/margherita_tastes = /obj/item/food/pizza/margherita::tastes
+		for(var/taste in margherita_tastes)
+			LAZYREMOVE(foodchem.data, taste)
+	//the edible source is removed by on_removed()
+
+/datum/material/pizza/proc/make_edible(atom/source, mat_amount)
+	if(source.material_flags & MATERIAL_NO_EDIBILITY)
+		return
+	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT)
+	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT)
+	source.AddComponentFrom(SOURCE_EDIBLE_PIZZA_MAT, \
 		/datum/component/edible, \
 		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/nutriment/fat/oil = oil_count), \
 		foodtypes = GRAIN | DAIRY | VEGETABLES, \
 		eat_time = 3 SECONDS, \
-		tastes = list("crust", "tomato", "cheese"))
+		tastes = /obj/item/food/pizza/margherita::tastes)
 
 /datum/material/pizza/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()

@@ -3,7 +3,9 @@ SUBSYSTEM_DEF(ai_controllers)
 	name = "AI Controller Ticker"
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
-	init_order = INIT_ORDER_AI_CONTROLLERS
+	dependencies = list(
+		/datum/controller/subsystem/movement/ai_movement,
+	)
 	wait = 0.5 SECONDS //Plan every half second if required, not great not terrible.
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	///type of status we are interested in running

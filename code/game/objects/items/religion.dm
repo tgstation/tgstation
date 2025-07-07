@@ -49,7 +49,7 @@
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
 			if(has_job_loyalties && (H.mind.assigned_role.departments_bitflags & job_loyalties))
 				inspired += H
-			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
+			else if(has_role_loyalties && length(H.mind.get_special_roles() & role_loyalties))
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
@@ -410,18 +410,6 @@
 
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
-
-/obj/item/storage/box/itemset/crusader/blue/PopulateContents()
-	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)
-	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
-	new /obj/item/clothing/gloves/plate/blue(src)
-	new /obj/item/clothing/shoes/plate/blue(src)
-
-/obj/item/storage/box/itemset/crusader/red/PopulateContents()
-	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/red(src)
-	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
-	new /obj/item/clothing/gloves/plate/red(src)
-	new /obj/item/clothing/shoes/plate/red(src)
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."

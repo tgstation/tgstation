@@ -180,7 +180,7 @@
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 
 /datum/action/innate/cult/blood_spell/emp/Activate()
-	owner.whisper(invocation, language = /datum/language/common)
+	owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 	owner.visible_message(span_warning("[owner]'s hand flashes a bright blue!"), \
 		span_cult_italic("You speak the cursed words, emitting an EMP blast from your hand."))
 	empulse(owner, 2, 5)
@@ -219,7 +219,7 @@
 
 /datum/action/innate/cult/blood_spell/dagger/Activate()
 	var/turf/owner_turf = get_turf(owner)
-	owner.whisper(invocation, language = /datum/language/common)
+	owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 	owner.visible_message(span_warning("[owner]'s hand glows red for a moment."), \
 		span_cult_italic("Your plea for aid is answered, and light begins to shimmer and take form within your hand!"))
 	var/obj/item/summoned_blade = new summoned_type(owner_turf)
@@ -293,7 +293,7 @@
 			span_cult_italic("You invoke the veiling spell, hiding nearby runes."))
 		charges--
 		SEND_SOUND(owner, sound('sound/effects/magic/smoke.ogg',0,1,25))
-		owner.whisper(invocation, language = /datum/language/common)
+		owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 		for(var/obj/effect/rune/R in range(5,owner))
 			R.conceal()
 		for(var/obj/structure/destructible/cult/S in range(5,owner))
@@ -311,7 +311,7 @@
 		owner.visible_message(span_warning("A flash of light shines from [owner]'s hand!"), \
 			span_cult_italic("You invoke the counterspell, revealing nearby runes."))
 		charges--
-		owner.whisper(invocation, language = /datum/language/common)
+		owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 		SEND_SOUND(owner, sound('sound/effects/magic/enter_blood.ogg',0,1,25))
 		for(var/obj/effect/rune/R in range(7,owner)) //More range in case you weren't standing in exactly the same spot
 			R.reveal()
@@ -413,7 +413,7 @@
 
 /obj/item/melee/blood_magic/proc/cast_spell(atom/target, mob/living/carbon/user)
 	if(invocation)
-		user.whisper(invocation, language = /datum/language/common)
+		user.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 	if(health_cost)
 		if(user.active_hand_index == 1)
 			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM, wound_bonus = CANT_WOUND)
@@ -892,15 +892,11 @@
 	var/turf/our_turf = get_turf(target)
 	if(!our_turf)
 		return
-	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf,2))
-		if(blood_around_us.blood_state != BLOOD_STATE_HUMAN)
-			continue
-		if(blood_around_us.bloodiness == 100) // Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
-			blood_to_gain += 30
-		else
-			blood_to_gain += max((blood_around_us.bloodiness**2)/800,1)
-		new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
-		qdel(blood_around_us)
+	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf, 2))
+		if(blood_around_us.decal_reagent == /datum/reagent/blood || blood_around_us.reagents?.has_reagent(/datum/reagent/blood))
+			blood_to_gain += max(blood_around_us.bloodiness * 0.6 * BLOOD_TO_UNITS_MULTIPLIER, 1)
+			new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
+			qdel(blood_around_us)
 
 	if(!blood_to_gain)
 		return

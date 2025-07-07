@@ -19,30 +19,20 @@
 		if(src == carbon_user.wear_mask)
 			to_chat(user, span_warning("You need help taking this off!"))
 			return
-	..()
-
-/obj/item/clothing/mask/muzzle/breath
-	name = "surgery mask"
-	desc = "To silence those pesky patients before putting them under."
-	icon_state = "breathmuzzle"
-	inhand_icon_state = "breathmuzzle"
-	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
-	body_parts_covered = NONE
-	clothing_flags = MASKINTERNALS
-	armor_type = /datum/armor/muzzle_breath
-	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+	return ..()
 
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
 	desc = "A piece of tape that can be put over someone's mouth."
-	icon_state = "tape_piece"
 	worn_icon_state = "tape_piece_worn"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
 	clothing_flags = INEDIBLE_CLOTHING
 	equip_delay_other = 40
 	strip_delay = 40
+	icon = 'icons/map_icons/clothing/mask.dmi'
+	icon_state = "/obj/item/clothing/mask/muzzle/tape"
+	post_init_icon_state = "tape_piece"
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
@@ -50,9 +40,6 @@
 	var/harmful_strip = FALSE
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
-
-/datum/armor/muzzle_breath
-	bio = 100
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
@@ -68,7 +55,7 @@
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 		to_chat(user, span_userdanger("You feel a massive pain as hundreds of tiny spikes tear free from your face!"))
 
-/obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
+/obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, list/modifiers, list/attack_modifiers)
 	if(attacker.combat_mode)
 		return ..()
 	if(victim.is_mouth_covered(ITEM_SLOT_HEAD))
@@ -87,12 +74,14 @@
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. This one has extra strength."
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/super"
 	greyscale_colors = "#4D4D4D"
 	strip_delay = 80
 
 /obj/item/clothing/mask/muzzle/tape/surgical
 	name = "surgical tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. As long as you apply this to your patient, you won't hear their screams of pain!"
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/surgical"
 	greyscale_colors = "#70BAE7"
 	equip_delay_other = 30
 	strip_delay = 30
@@ -100,8 +89,10 @@
 /obj/item/clothing/mask/muzzle/tape/pointy
 	name = "pointy tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. Looks like it will hurt if this is ripped off."
-	icon_state = "tape_piece_spikes"
 	worn_icon_state = "tape_piece_spikes_worn"
+	icon = 'icons/map_icons/clothing/mask.dmi'
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/pointy"
+	post_init_icon_state = "tape_piece_spikes"
 	greyscale_config = /datum/greyscale_config/tape_piece/spikes
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn/spikes
 	greyscale_colors = "#E64539#AD2F45"
@@ -111,6 +102,7 @@
 /obj/item/clothing/mask/muzzle/tape/pointy/super
 	name = "super pointy tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. This thing could rip your face into a thousand pieces if ripped off."
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/pointy/super"
 	greyscale_colors = "#8C0A00#300008"
 	strip_delay = 60
 	stripping_damage = 20

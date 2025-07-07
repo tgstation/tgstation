@@ -278,6 +278,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
+
 /obj/item/vending_refill/wardrobe/science_wardrobe
 	machine_name = "SciDrobe"
 
@@ -363,6 +364,10 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/hemostat/cruel = 1,
 		/obj/item/retractor/cruel = 1,
 		/obj/item/scalpel/cruel = 1,
+		/obj/item/surgicaldrill/cruel = 1,
+		/obj/item/circular_saw/cruel = 1,
+		/obj/item/bonesetter/cruel = 1,
+		/obj/item/blood_filter/cruel = 1,
 		/obj/item/storage/backpack/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
 		/obj/item/storage/backpack/messenger/coroner = 1,
@@ -411,7 +416,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/dice/hazard = 1,
 		/obj/item/storage/box/beanbag = 1,
 		/obj/item/circuitboard/machine/dish_drive = 1,
-		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/item/rag = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	premium = list(
@@ -444,7 +449,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/shoes/sneakers/black = 2,
 		/obj/item/storage/box/mousetraps = 2,
 		/obj/item/circuitboard/machine/dish_drive = 1,
-		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/item/rag = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -673,8 +678,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/head/fedora/det_hat = 2,
 		/obj/item/clothing/under/rank/security/detective = 2,
 		/obj/item/clothing/under/rank/security/detective/skirt = 2,
+		/obj/item/clothing/suit/toggle/jacket/det_trench = 2,
 		/obj/item/clothing/suit/jacket/det_suit = 2,
-		/obj/item/clothing/suit/jacket/det_suit/brown = 2,
 		/obj/item/clothing/shoes/sneakers/brown = 2,
 		/obj/item/clothing/gloves/latex = 2,
 		/obj/item/clothing/gloves/color/black = 2,
@@ -683,7 +688,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/under/rank/security/detective/noir/skirt = 2,
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/clothing/head/fedora = 2,
-		/obj/item/clothing/suit/jacket/det_suit/dark = 1,
+		/obj/item/clothing/suit/toggle/jacket/det_trench/noir = 1,
 		/obj/item/clothing/suit/jacket/det_suit/noir = 1,
 		/obj/item/clothing/neck/tie/disco = 1,
 		/obj/item/clothing/under/rank/security/detective/disco = 1,

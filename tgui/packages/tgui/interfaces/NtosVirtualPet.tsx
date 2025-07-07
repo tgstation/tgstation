@@ -256,11 +256,10 @@ const PetTricks = (props) => {
       title={capitalize(TrickName)}
       buttons={
         <Button.Input
+          buttonText="Rename Trick"
           color="transparent"
-          onCommit={(_, value) => setTrickName(value)}
-        >
-          Rename Trick
-        </Button.Input>
+          onCommit={setTrickName}
+        />
       }
     >
       <LabeledList>
@@ -347,7 +346,7 @@ const Customization = (props) => {
               fluid
               maxLength={30}
               value={selectedName}
-              onInput={(_, value) => setSelectedName(value)}
+              onChange={setSelectedName}
             />
           </Section>
         </Stack.Item>
@@ -498,7 +497,7 @@ const PetIcon = (props) => {
   const { pet_state_icons = [] } = data;
   const { our_pet_state } = props;
 
-  let icon_display = pet_state_icons.find(
+  const icon_display = pet_state_icons.find(
     (pet_icon) => pet_icon.name === our_pet_state,
   );
 

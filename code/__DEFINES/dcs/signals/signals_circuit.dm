@@ -92,3 +92,9 @@
 #define COMSIG_SHELL_CIRCUIT_ATTACHED "shell_circuit_attached"
 ///Sent to the shell component when a circuit is removed.
 #define COMSIG_SHELL_CIRCUIT_REMOVED "shell_circuit_removed"
+
+/// Called when a usb port registers signals on a circuit or shell (atom/movable/new_physical_object)
+#define COMSIG_USB_PORT_REGISTER_PHYSICAL_OBJECT "usb_port_register_physical_object"
+
+/// Called when a usb port unregisters signals from a circuit or shell (atom/movable/old_physical_object)
+#define COMSIG_USB_PORT_UNREGISTER_PHYSICAL_OBJECT "usb_port_unregister_physical_object"

@@ -1,12 +1,13 @@
 #define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
-	icon = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
-	icon_state = "canister-0"
-	base_icon_state = "canister"
-
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
+
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/atmospherics/components/tank"
+	post_init_icon_state = "canister-0"
+	base_icon_state = "canister"
 
 	max_integrity = 800
 	integrity_failure = 0.2
@@ -275,7 +276,7 @@
 		var/datum/gas_mixture/gas_share = air_contents.remove_ratio(1 / shares--)
 		air_contents.volume -= leaver.volume
 		leaver.air_contents = gas_share
-		leaver.update_appearance()
+		leaver.update_appearance(UPDATE_ICON)
 
 	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
 		if(joiner == src)
@@ -285,7 +286,7 @@
 			air_contents.merge(joiner_share)
 		joiner.air_contents = air_contents
 		air_contents.volume += joiner.volume
-		joiner.update_appearance()
+		joiner.update_appearance(UPDATE_ICON)
 
 	for(var/dir in GLOB.cardinals)
 		if(dir & initialize_directions & merger.members[src])
@@ -414,13 +415,14 @@
 			break
 		else
 			frame.material_end_product = material
-	frame.update_appearance()
+	frame.update_appearance(UPDATE_ICON)
 
 ///////////////////////////////////////////////////////////////////
 // Gas tank variants
 
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/air/layer1
 	piping_layer = 1
@@ -441,63 +443,83 @@
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/plasma
 	gas_type = /datum/gas/plasma
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/nitrogen
 	gas_type = /datum/gas/nitrogen
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/oxygen
 	gas_type = /datum/gas/oxygen
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/nitrous
 	gas_type = /datum/gas/nitrous_oxide
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/bz
 	gas_type = /datum/gas/bz
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/freon
 	gas_type = /datum/gas/freon
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/halon
 	gas_type = /datum/gas/halon
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/healium
 	gas_type = /datum/gas/healium
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/hydrogen
 	gas_type = /datum/gas/hydrogen
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/hypernoblium
 	gas_type = /datum/gas/hypernoblium
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/miasma
 	gas_type = /datum/gas/miasma
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/nitrium
 	gas_type = /datum/gas/nitrium
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/pluoxium
 	gas_type = /datum/gas/pluoxium
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/proto_nitrate
 	gas_type = /datum/gas/proto_nitrate
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/tritium
 	gas_type = /datum/gas/tritium
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/water_vapor
 	gas_type = /datum/gas/water_vapor
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/zauker
 	gas_type = /datum/gas/zauker
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/helium
 	gas_type = /datum/gas/helium
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/atmospherics/components/tank/antinoblium
 	gas_type = /datum/gas/antinoblium
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 ///////////////////////////////////////////////////////////////////
 // Tank Frame Structure
@@ -543,7 +565,7 @@
 		if(TANK_PLATING_UNSECURED)
 			icon_state = "plated_frame"
 
-/obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, params)
+/obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
 		return
 	return ..()
@@ -597,7 +619,7 @@
 
 	material_end_product = stack_mat
 	construction_state = TANK_PLATING_UNSECURED
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	to_chat(user, span_notice("You finish attaching [stack] to [src]."))
 
 /obj/structure/tank_frame/crowbar_act_secondary(mob/living/user, obj/item/tool)
@@ -611,7 +633,7 @@
 	construction_state = TANK_FRAME
 	new material_end_product.sheet_type(drop_location(), TANK_PLATING_SHEETS)
 	material_end_product = null
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/tank_frame/welder_act(mob/living/user, obj/item/tool)
 	. = ..()

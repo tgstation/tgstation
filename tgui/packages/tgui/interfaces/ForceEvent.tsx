@@ -1,4 +1,4 @@
-import { paginate } from 'common/collections';
+import { chunk } from 'es-toolkit';
 import { createContext, useContext, useState } from 'react';
 import {
   Button,
@@ -117,7 +117,7 @@ function PanelOptions(props) {
         <Input
           autoFocus
           fluid
-          onInput={(e, value) => setSearchQuery(value)}
+          onChange={setSearchQuery}
           placeholder="Search..."
           value={searchQuery}
         />
@@ -215,7 +215,7 @@ function EventTabs(props) {
   const { categoryState } = useForceEventContext();
   const [category, setCategory] = categoryState;
 
-  const layerCats = paginate(categories, CATEGORY_PAGE_ITEMS);
+  const layerCats = chunk(categories, CATEGORY_PAGE_ITEMS);
 
   return (
     <Section mb="-6px">

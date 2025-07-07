@@ -42,8 +42,7 @@
 	for(var/obj/item/obj in src)
 		obj.forceMove(loc)
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
-	var/list/modifiers = params2list(params)
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
 		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
 		if(P.use_tool(src, user, 20, volume=50))

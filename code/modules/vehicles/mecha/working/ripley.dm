@@ -17,7 +17,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | BEACON_TRACKABLE
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	mech_type = EXOSUIT_MODULE_RIPLEY
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
@@ -75,7 +75,7 @@
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_CABIN_AIR_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	armor_type = /datum/armor/mecha_ripley_mk2
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
@@ -96,6 +96,9 @@
 	name = "\improper APLU \"Paddy\""
 	icon_state = "paddy"
 	base_icon_state = "paddy"
+	movedelay = 5
+	slow_pressure_step_in = 5
+	fast_pressure_step_in = 3
 	max_temperature = 20000
 	max_integrity = 250
 	mech_type = EXOSUIT_MODULE_PADDY
@@ -188,7 +191,7 @@
 
 /obj/vehicle/sealed/mecha/ripley/paddy/preset
 	accesses = list(ACCESS_SECURITY)
-	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | ID_LOCK_ON
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | ID_LOCK_ON
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw,
@@ -208,7 +211,7 @@
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	enter_delay = 40
 	silicon_icon_state = null
 	equip_by_category = list(
@@ -276,6 +279,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
 	if(!GLOB.cargo_ripley && mapload)
 		GLOB.cargo_ripley = src
+	ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src)) //It was built *long* before the shift started.
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Destroy()
 	if(GLOB.cargo_ripley == src)
@@ -304,22 +308,35 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
 	workmech.cargo_hold = src
 
-/obj/item/mecha_parts/mecha_equipment/ejector/detach()
+/obj/item/mecha_parts/mecha_equipment/ejector/detach(atom/moveto)
 	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
 	workmech.cargo_hold = null
+	drop_contents(isturf(moveto) ? moveto : moveto?.drop_location())
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/Destroy()
-	for(var/atom/stored in contents)
-		forceMove(stored, drop_location())
-		step_rand(stored)
+	// Failsafe so we don't delete players
+	var/atom/droploc = drop_location() || get_turf(src)
+	for(var/mob/stored in get_all_contents())
+		if(stored.client)
+			stack_trace("[stored] was in [src] when it was deleted! We skipped deconstruct(), or something.")
+			stored.forceMove(droploc)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/atom_deconstruct(damage_flag)
+	drop_contents()
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/contents_explosion(severity, target)
-	for(var/obj/stored in contents)
-		if(prob(10 * severity))
-			stored.forceMove(drop_location())
+	drop_contents(drop_prob = 10 * severity)
 	return ..()
+
+/// Spit out everything in our storage
+/obj/item/mecha_parts/mecha_equipment/ejector/proc/drop_contents(atom/drop_loc = drop_location(), drop_prob = 100)
+	for(var/atom/movable/stored in src)
+		if(prob(drop_prob))
+			stored.forceMove(drop_loc || get_turf(src))
+			step_rand(stored)
 
 /obj/item/mecha_parts/mecha_equipment/ejector/relay_container_resist_act(mob/living/user, obj/container)
 	to_chat(user, span_notice("You lean on the back of [container] and start pushing so it falls out of [src]."))

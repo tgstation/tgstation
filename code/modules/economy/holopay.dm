@@ -31,6 +31,7 @@
 
 /obj/structure/holopay/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 	register_context()
 
 /obj/structure/holopay/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -73,7 +74,7 @@
 	linked_card = null
 	return ..()
 
-/obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, params)
+/obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, list/modifiers, list/attack_modifiers)
 	var/mob/living/user = item_holder
 	if(!isliving(user))
 		return ..()
@@ -114,7 +115,7 @@
 		return TRUE
 	return ..()
 
-/obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	/// Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least
 	if(!isidcard(weapon))
 		return ..()

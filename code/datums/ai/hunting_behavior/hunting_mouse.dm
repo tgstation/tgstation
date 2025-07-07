@@ -30,3 +30,26 @@
 // Our hunts have a decent cooldown.
 /datum/ai_behavior/hunt_target/interact_with_target/mouse
 	hunt_cooldown = 20 SECONDS
+
+/datum/ai_planning_subtree/approach_synthesizer
+
+/datum/ai_planning_subtree/approach_synthesizer/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/pawn = controller.pawn
+	var/atom/instrument = controller.blackboard[BB_SONG_INSTRUMENT]
+	if(!isnull(instrument))
+		if (!isturf(instrument.loc) || !can_see(pawn, instrument))
+			controller.clear_blackboard_key(BB_SONG_INSTRUMENT)
+			return
+		if (pawn.CanReach(instrument))
+			return
+		controller.queue_behavior(/datum/ai_behavior/travel_towards/adjacent, BB_SONG_INSTRUMENT)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/piano_synth, BB_SONG_INSTRUMENT, /obj/item/instrument/piano_synth)
+
+/datum/ai_behavior/find_and_set/piano_synth // Disinclude subtypes
+
+/datum/ai_behavior/find_and_set/piano_synth/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	for(var/obj/item/instrument/piano_synth/synth in oview(search_range, controller.pawn))
+		if(synth.type == /obj/item/instrument/piano_synth)
+			return synth

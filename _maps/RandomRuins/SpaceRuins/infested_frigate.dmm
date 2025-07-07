@@ -203,10 +203,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "cX" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/up{
+/obj/effect/decal/cleanable/blood/gibs/xeno/up{
 	icon_state = "xgibbl4"
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs/up{
+/obj/effect/decal/cleanable/blood/gibs/xeno/up{
 	icon_state = "xgibleg";
 	dir = 4
 	},
@@ -615,7 +615,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "iS" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/up{
+/obj/effect/decal/cleanable/blood/gibs/xeno/up{
 	icon_state = "xgib1"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -655,7 +655,7 @@
 /obj/effect/turf_decal{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/structure/fluff/broken_canister_frame,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
@@ -872,7 +872,7 @@
 	icon_state = "arrows_red";
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil/slippery{
+/obj/effect/decal/cleanable/blood/oil/slippery{
 	icon_state = "floor7"
 	},
 /obj/effect/turf_decal{
@@ -891,7 +891,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "oV" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/up{
+/obj/effect/decal/cleanable/blood/gibs/xeno/up{
 	icon_state = "xltrails_2";
 	dir = 8
 	},
@@ -1284,7 +1284,7 @@
 "vM" = (
 /obj/item/ammo_casing/spent,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/xenoblood{
+/obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "xltrails_1";
 	dir = 8
 	},
@@ -1353,7 +1353,7 @@
 	icon_state = "caution_red";
 	dir = 1
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs{
+/obj/effect/decal/cleanable/blood/gibs/xeno{
 	icon_state = "xltrails_1";
 	dir = 4
 	},
@@ -1576,7 +1576,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "yG" = (
-/obj/effect/decal/cleanable/robot_debris{
+/obj/effect/decal/cleanable/blood/gibs/robot_debris{
 	icon_state = "gib4"
 	},
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1737,8 +1737,8 @@
 	dir = 8
 	},
 /obj/item/ammo_casing/spent,
-/obj/effect/decal/cleanable/xenoblood/xgibs{
-	icon_state = "xtracks";
+/obj/effect/decal/cleanable/blood/gibs/xeno{
+	icon_state = "tracks";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1746,7 +1746,7 @@
 "Bw" = (
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
-/obj/effect/decal/cleanable/xenoblood/xgibs/up{
+/obj/effect/decal/cleanable/blood/gibs/xeno/up{
 	icon_state = "xgibtorso";
 	dir = 4
 	},
@@ -2074,7 +2074,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "HA" = (
 /obj/item/ammo_casing/spent,
-/obj/effect/decal/cleanable/xenoblood/xgibs/up{
+/obj/effect/decal/cleanable/blood/gibs/xeno/up{
 	icon_state = "xgibhead";
 	dir = 4
 	},
@@ -2145,7 +2145,7 @@
 /obj/effect/turf_decal{
 	icon_state = "bot_red"
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs{
+/obj/effect/decal/cleanable/blood/gibs/xeno{
 	icon_state = "xgibup1"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -2340,7 +2340,7 @@
 /obj/effect/turf_decal{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs{
+/obj/effect/decal/cleanable/blood/gibs/xeno{
 	icon_state = "xgibmid1"
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -2378,7 +2378,7 @@
 /obj/effect/turf_decal{
 	icon_state = "bot_right_red"
 	},
-/obj/effect/decal/cleanable/xenoblood/xgibs{
+/obj/effect/decal/cleanable/blood/gibs/xeno{
 	icon_state = "xgibtorso"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -3015,7 +3015,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "Xm" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs{
+/obj/effect/decal/cleanable/blood/gibs/xeno{
 	icon_state = "xgibbl3"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -3157,7 +3157,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "ZN" = (
-/obj/effect/decal/cleanable/robot_debris{
+/obj/effect/decal/cleanable/blood/gibs/robot_debris{
 	icon_state = "gibup"
 	},
 /obj/effect/decal/cleanable/blood/gibs{

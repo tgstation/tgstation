@@ -483,7 +483,7 @@
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
-	if(ascii && is_alpha(drawing))
+	if(ascii && is_lowercase_character(drawing))
 		temp = "letter"
 	else if(ascii && is_digit(drawing))
 		temp = "number"
@@ -725,17 +725,7 @@
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
-
-/obj/item/storage/crayons/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(
-		can_hold_list = /obj/item/toy/crayon,
-		cant_hold_list = list(
-			/obj/item/toy/crayon/spraycan,
-			/obj/item/toy/crayon/mime,
-			/obj/item/toy/crayon/rainbow,
-		),
-	)
+	storage_type = /datum/storage/crayons
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -760,7 +750,7 @@
 	if(flags_1 & HOLOGRAM_1)
 		return
 
-	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
+	var/obj/item/stack/sheet/cardboard/cardboard = new (user.drop_location())
 	to_chat(user, span_notice("You fold the [src] into cardboard."))
 	user.put_in_active_hand(cardboard)
 	qdel(src)

@@ -5,7 +5,7 @@
 /datum/ai_behavior/targeted_mob_ability
 
 /datum/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
-	var/datum/action/cooldown/ability = get_ability_to_use(controller, ability_key)
+	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(ability) || QDELETED(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -15,9 +15,6 @@
 	if(result)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-
-/datum/ai_behavior/targeted_mob_ability/proc/get_ability_to_use(datum/ai_controller/controller, ability_key)
-	return controller.blackboard[ability_key]
 
 /**
  * # Try Mob Ability and plan execute

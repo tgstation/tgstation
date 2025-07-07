@@ -14,6 +14,9 @@
 	/// The currently connected circuit
 	var/obj/item/integrated_circuit/attached_circuit
 
+	/// Used to prevent range checking during shuttle movement, which moves atoms en-masse.
+	var/defer_range_checks = FALSE
+
 /obj/item/usb_cable/Destroy()
 	attached_circuit = null
 	STOP_PROCESSING(SSobj, src)
@@ -22,6 +25,12 @@
 /obj/item/usb_cable/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	var/static/list/connections = list(
+		COMSIG_MOVABLE_MOVED = PROC_REF(on_moved),
+		COMSIG_ATOM_BEFORE_SHUTTLE_MOVE = PROC_REF(before_shuttle_move),
+		COMSIG_ATOM_AFTER_SHUTTLE_MOVE = PROC_REF(after_shuttle_move),
+	)
+	AddComponent(/datum/component/connect_containers, src, connections)
 
 /obj/item/usb_cable/examine(mob/user)
 	. = ..()
@@ -29,14 +38,7 @@
 	if (!isnull(attached_circuit))
 		. += span_notice("It is attached to [attached_circuit.shell || attached_circuit].")
 
-// Look, I'm not happy about this either, but moving an object doesn't call Moved if it's inside something else.
-// There's good reason for this, but there's no element or similar yet to track it as far as I know.
-// SSobj runs infrequently, this is only ran while there's an attached circuit, its performance cost is negligible.
-/obj/item/usb_cable/process(seconds_per_tick)
-	if (!check_in_range())
-		return PROCESS_KILL
-
-/obj/item/usb_cable/pre_attack(atom/target, mob/living/user, params)
+/obj/item/usb_cable/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (.)
 		return
@@ -47,20 +49,12 @@
 
 	var/signal_result = SEND_SIGNAL(target, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, src, user)
 
-	var/last_attached_circuit = attached_circuit
 	if (signal_result & COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT)
 		if (isnull(attached_circuit))
 			CRASH("Producers of COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT must set attached_circuit")
 		balloon_alert(user, "connected to circuit\nconnect to a port")
 
 		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 20, TRUE)
-
-		if (last_attached_circuit != attached_circuit)
-			if (!isnull(last_attached_circuit))
-				unregister_circuit_signals(last_attached_circuit)
-			register_circuit_signals()
-
-		START_PROCESSING(SSobj, src)
 
 		return TRUE
 
@@ -86,34 +80,39 @@
 	user.visible_message(span_suicide("[user] is wrapping [src] around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/usb_cable/proc/register_circuit_signals()
-	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(attached_circuit, COMSIG_QDELETING, PROC_REF(on_circuit_qdeling))
-	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-
-/obj/item/usb_cable/proc/unregister_circuit_signals(obj/item/integrated_circuit/old_circuit)
-	UnregisterSignal(attached_circuit, list(
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_QDELETING,
-	))
-
-	UnregisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED)
-
 /obj/item/usb_cable/proc/on_moved()
 	SIGNAL_HANDLER
 
+	if(defer_range_checks)
+		return
+	check_in_range()
+
+/obj/item/usb_cable/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	before_shuttle_move()
+
+/obj/item/usb_cable/proc/before_shuttle_move()
+	SIGNAL_HANDLER
+
+	defer_range_checks = TRUE
+
+/obj/item/usb_cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	. = ..()
+	after_shuttle_move()
+
+/obj/item/usb_cable/proc/after_shuttle_move()
+	SIGNAL_HANDLER
+
+	defer_range_checks = FALSE
 	check_in_range()
 
 /obj/item/usb_cable/proc/check_in_range()
 	if (isnull(attached_circuit))
-		STOP_PROCESSING(SSobj, src)
 		return FALSE
 
 	if (!IN_GIVEN_RANGE(attached_circuit, src, USB_CABLE_MAX_RANGE))
 		balloon_alert_to_viewers("detached, too far away")
-		unregister_circuit_signals(attached_circuit)
 		attached_circuit = null
-		STOP_PROCESSING(SSobj, src)
 		return FALSE
 
 	return TRUE
@@ -122,4 +121,3 @@
 	SIGNAL_HANDLER
 
 	attached_circuit = null
-	STOP_PROCESSING(SSobj, src)

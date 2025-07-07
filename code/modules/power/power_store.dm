@@ -38,6 +38,12 @@
 /obj/item/stock_parts/power_store/get_cell()
 	return src
 
+/obj/item/stock_parts/power_store/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, charge)
+	. += NAMEOF(src, rigged)
+	return .
+
 /obj/item/stock_parts/power_store/Initialize(mapload, override_maxcharge)
 	. = ..()
 	create_reagents(5, INJECTABLE | DRAINABLE)

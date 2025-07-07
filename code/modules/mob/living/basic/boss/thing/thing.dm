@@ -54,7 +54,6 @@
 		/datum/action/cooldown/mob_cooldown/the_thing/acid_spit = BB_THETHING_ACIDSPIT,
 	)
 	grant_actions_by_list(innate_actions)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.4 SECONDS)
 	AddElement(/datum/element/relay_attackers) // used to immediately aggro if shot from outside aggro range
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(immediate_aggro))
 	maploaded = mapload

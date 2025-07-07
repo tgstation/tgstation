@@ -7,11 +7,18 @@
 	allowed_instrument_ids = "piano"
 	var/circuit_type = /obj/item/circuit_component/synth
 	var/shell_capacity = SHELL_CAPACITY_SMALL
+	/// Can a mouse play this instrument?
+	var/mouse_playable = TRUE
 
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
 	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
 	AddComponent(/datum/component/shell, list(new circuit_type), shell_capacity)
+
+/obj/item/instrument/piano_synth/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if (!mouse_playable || !ismouse(user))
+		return ..()
+	song.ui_interact(user)
 
 /obj/item/instrument/piano_synth/headphones
 	name = "headphones"
@@ -32,6 +39,7 @@
 	instrument_range = 1
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY
+	mouse_playable = FALSE
 
 /obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()

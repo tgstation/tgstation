@@ -78,7 +78,7 @@
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 		if(A == loc || (A in loc) || (A in contents))
-			W.melee_attack_chain(src, A, params)
+			W.melee_attack_chain(src, A, modifiers)
 			return
 
 		if(!isturf(loc))
@@ -86,7 +86,7 @@
 
 		// cyborg rightclick code, allowing borgos to use weapons at range
 		if(CanReach(A,W))
-			W.melee_attack_chain(src, A, params)
+			W.melee_attack_chain(src, A, modifiers)
 			return
 		else if(isturf(A) || isturf(A.loc))
 			A.base_ranged_item_interaction(src, W, modifiers)

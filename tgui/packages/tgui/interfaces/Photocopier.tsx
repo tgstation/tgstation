@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Button,
+  ImageButton,
   Input,
   LabeledList,
   ProgressBar,
@@ -30,6 +31,16 @@ type Data = {
   paper_count: number;
   max_paper_count: number;
   blanks: Blank[];
+  paper_types: Paper[];
+  created_paper: string;
+};
+
+type Paper = {
+  name: string;
+  icon: string;
+  icon_state: string;
+  amount: number;
+  type: string;
 };
 
 type Blank = {
@@ -45,7 +56,7 @@ export const Photocopier = (props) => {
   return (
     <Window
       title="Photocopier"
-      width={selectedCategory ? 550 : 225}
+      width={selectedCategory ? 550 : 325}
       height={525}
     >
       <Window.Content>
@@ -100,6 +111,8 @@ const Status = (props: StatusProps) => {
     max_toner,
     paper_count,
     max_paper_count,
+    paper_types,
+    created_paper,
   } = data;
 
   const average_toner = max_toner * 0.66;
@@ -165,6 +178,29 @@ const Status = (props: StatusProps) => {
         </LabeledList.Item>
         <LabeledList.Item label="Blank" textAlign="center">
           <b>{selectedBlank ? selectedBlank : 'Not Selected'}</b>
+        </LabeledList.Item>
+
+        <LabeledList.Item label="Paper Type">
+          <Stack align="center">
+            {paper_types.map((paper) => (
+              <Stack.Item grow key={paper.type}>
+                <ImageButton
+                  fluid
+                  dmIcon={paper.icon}
+                  dmIconState={paper.icon_state}
+                  tooltip={paper.name + ' amount is ' + paper.amount}
+                  imageSize={32}
+                  disabled={!paper.amount}
+                  selected={created_paper === paper.type && paper.amount}
+                  onClick={() =>
+                    act('select_paper_type', {
+                      created_paper: paper.type,
+                    })
+                  }
+                />
+              </Stack.Item>
+            ))}
+          </Stack>
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -322,7 +358,7 @@ const Categories = (props: CategoriesProps) => {
         />
       }
     >
-      <Stack fill vertical zebra>
+      <Stack fill vertical zebra g={0.2}>
         <Stack.Item>
           <Button
             fluid
@@ -337,7 +373,7 @@ const Categories = (props: CategoriesProps) => {
           </Button>
         </Stack.Item>
         {data.categories.map((category) => (
-          <Stack.Item mt={0.25} key={category}>
+          <Stack.Item key={category}>
             <Button
               fluid
               icon="chevron-right"
@@ -386,13 +422,13 @@ const Blanks = (props: BlanksProps) => {
           width={8.75}
           value={searchText}
           placeholder="Search blank..."
-          onInput={(e, value) => setSearchText(value)}
+          onChange={setSearchText}
         />
       }
     >
-      <Stack fill vertical zebra>
+      <Stack fill vertical zebra g={0.5}>
         {visibleBlanks.map((blank) => (
-          <Stack.Item key={blank.code} mt={0.5}>
+          <Stack.Item key={blank.code}>
             <Button
               fluid
               ellipsis

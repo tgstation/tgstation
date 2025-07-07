@@ -137,6 +137,7 @@
 	if (isliving(entered_atom))
 		var/mob/living/teleported_mob = entered_atom
 		teleported_mob.changeNext_move(disorient_time)
+		teleported_mob.ai_controller?.CancelActions()
 
 	var/turf/destination = pick(exit_locs)
 	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)

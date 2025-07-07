@@ -62,7 +62,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 // Represents holding a paper over a cigarette like a badass
-/datum/element/burn_on_item_ignition/proc/try_hold_burn(atom/source, mob/living/user, atom/interacting_with, list/modifiers)
+/datum/element/burn_on_item_ignition/proc/try_hold_burn(obj/item/source, mob/living/user, atom/interacting_with, list/modifiers)
 	SIGNAL_HANDLER
 
-	return try_burn(source, user, interacting_with, modifiers)
+	return try_burn(interacting_with, user, source, modifiers)

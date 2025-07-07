@@ -1,4 +1,5 @@
-import { filter, sort } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Button,
@@ -75,7 +76,7 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
     );
     queriedCameras = filter(queriedCameras, testSearch);
   }
-  queriedCameras = sort(queriedCameras);
+  queriedCameras = sortBy(queriedCameras, [(c) => c.name]);
 
   return queriedCameras;
 };
@@ -116,11 +117,10 @@ const CameraSelector = (props) => {
       <Stack.Item>
         <Input
           autoFocus
-          expensive
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onInput={(e, value) => setSearchText(value)}
+          onChange={setSearchText}
           value={searchText}
         />
       </Stack.Item>

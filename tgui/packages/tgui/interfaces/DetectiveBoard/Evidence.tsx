@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Flex, Stack } from 'tgui-core/components';
 
 import { DataEvidence } from './DataTypes';
@@ -38,6 +38,8 @@ export function Evidence(props: EvidenceProps) {
     null,
   );
 
+  const randomRotation = useMemo(() => Math.random() * 2 - 1, []);
+
   function handleMouseDown(args) {
     if (canDrag) {
       setDragging(true);
@@ -74,9 +76,6 @@ export function Evidence(props: EvidenceProps) {
     };
   }, [dragging]);
 
-  function getPinPositionByPosition(evidence: Position) {
-    return { x: evidence.x + 15, y: evidence.y + 45 };
-  }
   useEffect(() => {
     if (!dragging) {
       return;
@@ -85,13 +84,16 @@ export function Evidence(props: EvidenceProps) {
     const onMouseMove = (args: MouseEvent) => {
       if (canDrag) {
         if (lastMousePosition) {
+          const newX = dragPosition.x - (lastMousePosition.x - args.screenX);
+          const newY = dragPosition.y - (lastMousePosition.y - args.screenY);
+
           setDragPosition({
-            x: dragPosition.x - (lastMousePosition.x - args.screenX),
-            y: dragPosition.y - (lastMousePosition.y - args.screenY),
+            x: newX,
+            y: newY,
           });
           props.onMoving(evidence, {
-            x: dragPosition.x - (lastMousePosition.x - args.screenX),
-            y: dragPosition.y - (lastMousePosition.y - args.screenY),
+            x: newX,
+            y: newY,
           });
         }
 
@@ -107,10 +109,15 @@ export function Evidence(props: EvidenceProps) {
 
   return (
     <Box
+      className={dragging && 'Evidence--dragging'}
       position="absolute"
       left={`${dragPosition.x}px`}
       top={`${dragPosition.y}px`}
       onMouseDown={handleMouseDown}
+      style={{
+        transform: !dragging ? `rotate(${randomRotation}deg)` : undefined,
+        zIndex: 1,
+      }}
     >
       <Stack vertical>
         <Stack.Item>

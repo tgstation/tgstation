@@ -171,7 +171,7 @@
 		var/obj/item/focused_item = focus
 		apply_focus_overlay()
 		if(interacting_with.Adjacent(focus))
-			. = focused_item.melee_attack_chain(user, interacting_with, list2params(modifiers)) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+			. = focused_item.melee_attack_chain(user, interacting_with, modifiers) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 			if(check_if_focusable(focus))
 				focus.do_attack_animation(interacting_with, null, focus)
 
@@ -231,7 +231,7 @@
 	return TRUE
 
 /obj/item/tk_grab/proc/check_if_focusable(obj/target)
-	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(/datum/mutation/human/telekinesis))
+	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(/datum/mutation/telekinesis))
 		qdel(src)
 		return
 	if(!tkMaxRangeCheck(tk_user, target) || target.anchored || !isturf(target.loc))

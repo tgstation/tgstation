@@ -83,7 +83,7 @@
 	else
 		toggle_open()
 
-/obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I,/obj/item/skillchip))
 		if(inserted_skillchip)
 			to_chat(user,span_notice("There's already a skillchip inside."))

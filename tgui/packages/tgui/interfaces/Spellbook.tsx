@@ -648,7 +648,7 @@ export const Spellbook = (props) => {
 
   // Has a chance of selecting a random funny verb instead of "Searching"
   const SelectSearchVerb = () => {
-    let found = Math.random();
+    const found = Math.random();
     if (found <= 0.03) {
       return 'Seeking';
     }
@@ -779,7 +779,7 @@ export const Spellbook = (props) => {
                   <Input
                     width={15}
                     placeholder="Search for a spell..."
-                    onInput={(e, val) => setSpellSearch(val)}
+                    onChange={setSpellSearch}
                   />
                 </Stack.Item>
               </Stack>

@@ -50,7 +50,7 @@ const LightColorDisplay = (props) => {
         value={lightColor}
         width={6}
         maxLength={7}
-        onChange={(_, value) =>
+        onBlur={(value) =>
           act('enter_color', {
             new_color: value,
             to_update: ToUpdate.LightColor,
@@ -126,7 +126,7 @@ const EyeColorDisplay = (props) => {
               value={eyeColor.left}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onBlur={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.LeftEye,
@@ -154,7 +154,7 @@ const EyeColorDisplay = (props) => {
               value={eyeColor.right}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onBlur={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.RightEye,

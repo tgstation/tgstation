@@ -384,7 +384,7 @@
 
 /obj/item/organ/stomach/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	receiver.hud_used?.hunger?.update_appearance()
+	receiver.hud_used?.hunger?.update_hunger_bar()
 	RegisterSignal(receiver, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
 	RegisterSignal(receiver, COMSIG_HUMAN_GOT_PUNCHED, PROC_REF(on_punched))
 
@@ -393,7 +393,7 @@
 		var/mob/living/carbon/human/human_owner = stomach_owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
-	stomach_owner.hud_used?.hunger?.update_appearance()
+	stomach_owner.hud_used?.hunger?.update_hunger_bar()
 	UnregisterSignal(stomach_owner, list(COMSIG_CARBON_VOMITED, COMSIG_HUMAN_GOT_PUNCHED))
 	return ..()
 
@@ -405,7 +405,7 @@
 	return span_boldwarning("Your stomach cramps in pain!")
 
 /// If damage is high enough, we may end up vomiting out whatever we had stored
-/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
 	SIGNAL_HANDLER
 	if (!length(stomach_contents) || damage < 9 || final_armor_block || kicking)
 		return
@@ -557,5 +557,12 @@
 	desc = "A green plant-like organ that functions similarly to a human stomach."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+
+/obj/item/organ/stomach/ghost
+	name = "ghost stomach"
+	desc = "Ghosts eat plenty, you know? And it's not just your life, I swear!"
+	icon_state = "stomach-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 #undef STOMACH_METABOLISM_CONSTANT

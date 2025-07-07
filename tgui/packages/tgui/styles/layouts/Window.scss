@@ -3,22 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
 @use '../base';
-@use '../functions' as *;
 
 .Window {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  color: base.$color-fg;
-  background-color: base.$color-bg;
+  inset: 0;
+  color: var(--color-text);
+  background-color: var(--color-base);
   background-image: linear-gradient(
     to bottom,
-    base.$color-bg-start 0%,
-    base.$color-bg-end 100%
+    var(--color-base-start) 0%,
+    var(--color-base-end) 100%
   );
 }
 
@@ -34,11 +29,7 @@
 
 .Window__contentPadding {
   margin: 0.5rem;
-  // IE8: Calc not supported
-  height: 100%;
-  // 0.01 is needed to make the scrollbar not appear
-  // due to rem rendering inaccuracies in IE11.
-  height: calc(100% - 1.01rem);
+  height: calc(100% - 1rem);
 }
 
 .Window__contentPadding:after {
@@ -46,48 +37,41 @@
 }
 
 .Layout__content--scrollable .Window__contentPadding:after {
-  display: block;
   content: '';
+  display: block;
   height: 0.5rem;
 }
 
 .Window__dimmer {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(color.adjust(base.$color-bg, $lightness: 30%), 0.25);
   pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-color: hsl(from var(--color-base) h s calc(l + 15) / 0.25);
 }
 
 .Window__resizeHandle__se {
+  cursor: var(--cursor-se-resize);
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 20px;
   width: base.rem(20px);
-  height: 20px;
   height: base.rem(20px);
-  cursor: se-resize;
 }
 
 .Window__resizeHandle__s {
+  cursor: var(--cursor-s-resize);
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 6px;
   height: base.rem(6px);
-  cursor: s-resize;
 }
 
 .Window__resizeHandle__e {
+  cursor: var(--cursor-e-resize);
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
-  width: 3px;
   width: base.rem(3px);
-  cursor: e-resize;
 }

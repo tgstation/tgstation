@@ -16,7 +16,7 @@
 	heatmod = 1.5
 	payday_modifier = 1.0
 	meat = /obj/item/food/meat/slab/human/mutant/plant
-	exotic_blood = /datum/reagent/water
+	exotic_bloodtype = BLOOD_TYPE_H2O
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
 
@@ -38,13 +38,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/pod,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
 	)
-
-/datum/species/pod/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/plantbgone)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/pod/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.dna.features["mcolor"] = "#886600"

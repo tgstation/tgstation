@@ -314,7 +314,7 @@
 	desc = "Ring the bell."
 	button_icon = 'icons/obj/service/bureaucracy.dmi'
 	button_icon_state = "desk_bell"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	var/bell_cooldown
 
 /datum/action/vehicle/ridden/wheelchair/bell/Trigger(trigger_flags)
@@ -322,6 +322,7 @@
 		return
 	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
 	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
+	SEND_SIGNAL(vehicle_ridden_target, COMSIG_WHEELCHAIR_BELL_RANG, owner)
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
 	name = "Ollie"

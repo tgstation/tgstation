@@ -45,14 +45,14 @@
 "cd" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -256,7 +256,7 @@
 /area/shuttle/abandoned/medbay)
 "nw" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -463,7 +463,7 @@
 /area/template_noop)
 "Bl" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridgewindows"
 	},
 /turf/open/floor/mineral/titanium,
@@ -476,7 +476,7 @@
 /area/shuttle/abandoned)
 "BH" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -494,7 +494,7 @@
 "DE" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -508,7 +508,7 @@
 /area/shuttle/abandoned/engine)
 "EJ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -810,7 +810,7 @@
 "WX" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridgewindows"
 	},
 /turf/open/floor/mineral/titanium,

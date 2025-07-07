@@ -39,8 +39,11 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
+	if(!mapload)
+		engine_state = ENGINE_UNWRENCHED
+		anchored = FALSE
 
-/obj/machinery/power/shuttle_engine/on_construction(mob/user)
+/obj/machinery/power/shuttle_engine/on_construction(mob/user, from_flatpack = FALSE)
 	. = ..()
 	if(anchored)
 		connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
@@ -190,10 +193,6 @@
 /obj/machinery/power/shuttle_engine/propulsion/burst
 	name = "burst engine"
 	desc = "An engine that releases a large bluespace burst to propel it."
-
-/obj/machinery/power/shuttle_engine/propulsion/burst/cargo
-	engine_state = ENGINE_UNWRENCHED
-	anchored = FALSE
 
 /obj/machinery/power/shuttle_engine/propulsion/burst/left
 	name = "left burst engine"

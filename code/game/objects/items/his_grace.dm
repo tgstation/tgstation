@@ -9,7 +9,7 @@
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
-	inhand_icon_state = "artistic_toolbox"
+	inhand_icon_state = "toolbox_green"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
@@ -43,7 +43,7 @@
 
 /obj/item/his_grace/update_icon_state()
 	icon_state = ascended ? "gold" : "green"
-	inhand_icon_state = ascended ? "toolbox_gold" : "artistic_toolbox"
+	inhand_icon_state = ascended ? "toolbox_gold" : "toolbox_green"
 	return ..()
 
 /obj/item/his_grace/update_overlays()
@@ -102,7 +102,7 @@
 	else
 		adjust_bloodthirst(1 * seconds_per_tick) //don't cool off rapidly once we're at the point where His Grace consumes all.
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
-	if(istype(master) && (src in master.held_items))
+	if(!isnull(master) && (src in master.held_items))
 		switch(bloodthirst)
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 				master.visible_message(span_boldwarning("[src] turns on [master]!"), "<span class='his_grace big bold'>[src] turns on you!</span>")
@@ -151,7 +151,7 @@
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	notify_ghosts(
-		"[user] has awoken His Grace!",
+		"[user.real_name] has awoken His Grace!",
 		source = src,
 		header = "All Hail His Grace!",
 	)
@@ -216,6 +216,8 @@
 /obj/item/his_grace/proc/update_stats()
 	REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
+	if (isnull(master))
+		return
 	switch(bloodthirst)
 		if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 			if(HIS_GRACE_CONSUME_OWNER > prev_bloodthirst)

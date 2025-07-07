@@ -135,6 +135,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// I'm making the assumption that ui close will be called whenever a user logs out, or loses a window
 	// If this isn't the case, kill me and restore the code, thanks
 
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized != INITIALIZATION_INNEW_REGULAR)
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
@@ -231,6 +235,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
 
+			for(var/datum/preference_middleware/preference_middleware as anything in middleware)
+				preference_middleware.post_set_preference(ui.user, requested_preference_key, value)
 			return TRUE
 		if ("set_color_preference")
 			var/requested_preference_key = params["preference"]
@@ -419,10 +425,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			.++
 
 /datum/preferences/proc/validate_quirks()
-	if(CONFIG_GET(flag/disable_quirk_points))
-		return
-	if(GetQuirkBalance() < 0)
+	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)
+	var/list/quirks_removed
+	for(var/quirk_name in all_quirks)
+		var/quirk_path = SSquirks.quirks[quirk_name]
+		var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk_path]
+		if(!quirk_prototype.is_species_appropriate(species_type))
+			all_quirks -= quirk_name
+			LAZYADD(quirks_removed, quirk_name)
+	var/list/feedback
+	if(LAZYLEN(quirks_removed))
+		LAZYADD(feedback, "The following quirks are incompatible with your species:")
+		LAZYADD(feedback, quirks_removed)
+	if(!CONFIG_GET(flag/disable_quirk_points) && GetQuirkBalance() < 0)
+		LAZYADD(feedback, "Your quirks have been reset.")
 		all_quirks = list()
+	if(LAZYLEN(feedback))
+		to_chat(parent, boxed_message(span_greentext(feedback.Join("\n"))))
+
 
 /**
  * Safely read a given preference datum from a given client.
