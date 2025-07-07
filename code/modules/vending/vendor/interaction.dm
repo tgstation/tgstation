@@ -128,33 +128,6 @@
 			return loadingAttempt(attack_item, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
 /**
- * Dispenses free items from the standard stock.
- * Arguments:
- * freebies - number of free items to vend
- */
-/obj/machinery/vending/proc/freebie(freebies)
-	PRIVATE_PROC(TRUE)
-
-	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some credits" : ""]!"))
-
-	for(var/i in 1 to freebies)
-		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-		for(var/datum/data/vending_product/record in shuffle(product_records))
-			if(record.amount <= 0) //Try to use a record that actually has something to dump.
-				continue
-			// Always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-			var/only_returned_left = (record.amount <= LAZYLEN(record.returned_products))
-			dispense(record, get_turf(src), silent = TRUE, dispense_returned = only_returned_left)
-			break
-
-	if(credits_contained > 0)
-		var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
-		var/obj/item/holochip/holochip = new(loc, credits_to_remove)
-		playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
-		credits_contained = max(0, credits_contained - credits_to_remove)
-		SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
-
-/**
  * After-effects of refilling a vending machine from a refill canister
  *
  * This takes the amount of products restocked and gives the user our contained credits if needed,
@@ -201,6 +174,33 @@
 	return TRUE
 
 //ATTACKS
+/**
+ * Dispenses free items from the standard stock.
+ * Arguments:
+ * freebies - number of free items to vend
+ */
+/obj/machinery/vending/proc/freebie(freebies)
+	PRIVATE_PROC(TRUE)
+
+	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some credits" : ""]!"))
+
+	for(var/i in 1 to freebies)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		for(var/datum/data/vending_product/record in shuffle(product_records))
+			if(record.amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			// Always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
+			var/only_returned_left = (record.amount <= LAZYLEN(record.returned_products))
+			dispense(record, get_turf(src), silent = TRUE, dispense_returned = only_returned_left)
+			break
+
+	if(credits_contained > 0)
+		var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
+		var/obj/item/holochip/holochip = new(loc, credits_to_remove)
+		playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+		credits_contained = max(0, credits_contained - credits_to_remove)
+		SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
+
 /obj/machinery/vending/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(tiltable && !tilted && weapon.force)
 		if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
