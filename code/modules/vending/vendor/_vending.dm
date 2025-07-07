@@ -122,6 +122,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	///String of slogans separated by semicolons, optional
 	var/product_slogans = ""
+	///String of small ad messages in the vending screen - random chance
+	var/product_ads = ""
 
 	///List of standard product records
 	var/list/product_records = list()
@@ -131,6 +133,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/list/coin_records = list()
 	///List of slogans to scream at potential customers; built upon Iniitialize() of the vendor from product_slogans
 	var/list/slogan_list = list()
+	///List of ads built from product_ads upon Iniitialize()
+	var/list/ad_list = list()
 	///Message sent post vend (Thank you for shopping!)
 	var/vend_reply
 	///Last world tick we sent a vent reply
@@ -225,6 +229,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		voice = vendor_voice_by_type[type]
 
 	slogan_list = splittext(product_slogans, ";")
+	ad_list = splittext(product_ads, ";")
 	// So not all machines speak at the exact same time.
 	// The first time this machine says something will be at slogantime + this random value,
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.

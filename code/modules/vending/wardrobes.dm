@@ -41,7 +41,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "\improper SecDrobe"
 	desc = "A vending machine for security and security-related clothing!"
 	icon_state = "secdrobe"
-	product_slogans = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
+	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
 	products = list(
 		/obj/item/clothing/head/beret/sec = 3,
@@ -79,7 +79,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "\improper MediDrobe"
 	desc = "A vending machine rumoured to be capable of dispensing clothing for medical personnel."
 	icon_state = "medidrobe"
-	product_slogans = "Make those blood stains look fashionable!!"
+	product_ads = "Make those blood stains look fashionable!!"
 	vend_reply = "Thank you for using the MediDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 4,
@@ -125,7 +125,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "EngiDrobe"
 	desc = "A vending machine renowned for vending industrial grade clothing."
 	icon_state = "engidrobe"
-	product_slogans = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
+	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
 	vend_reply = "Thank you for using the EngiDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 3,
@@ -180,7 +180,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "CargoDrobe"
 	desc = "A highly advanced vending machine for buying cargo related clothing for free."
 	icon_state = "cargodrobe"
-	product_slogans = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
+	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
 	vend_reply = "Thank you for using the CargoDrobe!"
 	products = list(
 		/obj/item/clothing/head/beret/cargo = 3,
@@ -223,7 +223,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "RoboDrobe"
 	desc = "A vending machine designed to dispense clothing known only to roboticists."
 	icon_state = "robodrobe"
-	product_slogans = "You turn me TRUE, use defines!;0110001101101100011011110111010001101000011001010111001101101000011001010111001001100101"
+	product_ads = "You turn me TRUE, use defines!;0110001101101100011011110111010001101000011001010111001101101000011001010111001001100101"
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(
 		/obj/item/clothing/glasses/hud/diagnostic = 2,
@@ -257,7 +257,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "SciDrobe"
 	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Space Cubans."
 	icon_state = "scidrobe"
-	product_slogans = "Longing for the smell of plasma burnt flesh? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry about losing your arm!"
+	product_ads = "Longing for the smell of plasma burnt flesh? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry about losing your arm!"
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 3,
@@ -286,7 +286,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "Hydrobe"
 	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
 	icon_state = "hydrobe"
-	product_slogans = "Do you love soil? Then buy our clothes!;Get outfits to match your green thumb here!"
+	product_ads = "Do you love soil? Then buy our clothes!;Get outfits to match your green thumb here!"
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(
 		/obj/item/clothing/accessory/armband/hydro = 3,
@@ -347,6 +347,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "MortiDrobe"
 	desc = "A favorite among nihilists."
 	icon_state = "coroner_drobe"
+	product_ads = "Any day above ground is a good one!;My day starts when yours ends!;And they call this a dying business!;See you when you're dead!"
 	vend_reply = "Don't forget your \"Buy one get one free\" burial deal!"
 	products = list(
 		/obj/item/clothing/head/utility/surgerycap/black = 1,
@@ -395,7 +396,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "BarDrobe"
 	desc = "A stylish vendor to dispense the most stylish bar clothing!"
 	icon_state = "bardrobe"
-	product_slogans = "Guaranteed to prevent stains from spilled drinks!"
+	product_ads = "Guaranteed to prevent stains from spilled drinks!"
 	vend_reply = "Thank you for using the BarDrobe!"
 	products = list(
 		/obj/item/clothing/glasses/sunglasses/reagent = 1,
@@ -431,6 +432,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "ChefDrobe"
 	desc = "This vending machine might not dispense meat, but it certainly dispenses chef related clothing."
 	icon_state = "chefdrobe"
+	product_ads = "Our clothes are guaranteed to protect you from food splatters!"
 	vend_reply = "Thank you for using the ChefDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/waistcoat = 2,
@@ -460,7 +462,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "JaniDrobe"
 	desc = "A self cleaning vending machine capable of dispensing clothing for janitors."
 	icon_state = "janidrobe"
-	product_slogans = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
+	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(
 		/obj/item/clothing/head/soft/purple = 2,
@@ -499,7 +501,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "LawDrobe"
 	desc = "Objection! This wardrobe dispenses the rule of law... and lawyer clothing."
 	icon_state = "lawdrobe"
-	product_slogans = "OBJECTION! Get the rule of law for yourself!"
+	product_ads = "OBJECTION! Get the rule of law for yourself!"
 	vend_reply = "Thank you for using the LawDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/lawyers_badge = 2,
@@ -541,7 +543,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "DeusVend"
 	desc = "God wills your purchase."
 	icon_state = "chapdrobe"
-	product_slogans = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
+	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the DeusVend!"
 	products = list(
 		/obj/item/choice_beacon/holy = 1,
@@ -587,7 +589,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "ChemDrobe"
 	desc = "A vending machine for dispensing chemistry related clothing."
 	icon_state = "chemdrobe"
-	product_slogans = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
+	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(
 		/obj/item/clothing/head/beret/medical = 2,
@@ -618,6 +620,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "GeneDrobe"
 	desc = "A machine for dispensing clothing related to genetics."
 	icon_state = "genedrobe"
+	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
 	products = list(
 		/obj/item/clothing/under/rank/rnd/geneticist = 2,
@@ -669,7 +672,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "\improper DetDrobe"
 	desc = "A machine for all your detective needs, as long as you need clothes."
 	icon_state = "detdrobe"
-	product_slogans = "Apply your brilliant deductive methods in style!"
+	product_ads = "Apply your brilliant deductive methods in style!"
 	vend_reply = "Thank you for using the DetDrobe!"
 	products = list(
 		/obj/item/clothing/head/fedora/det_hat = 2,
@@ -715,7 +718,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "\improper CentDrobe"
 	desc = "A one-of-a-kind vending machine for all your centcom aesthetic needs!"
 	icon_state = "centdrobe"
-	product_slogans = "Show those ERTs who's the most stylish in the briefing room!"
+	product_ads = "Show those ERTs who's the most stylish in the briefing room!"
 	vend_reply = "Thank you for using the CentDrobe!"
 	products = list(
 		/obj/item/clothing/glasses/sunglasses = 3,

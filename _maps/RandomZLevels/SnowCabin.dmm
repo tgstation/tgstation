@@ -967,7 +967,8 @@
 /obj/machinery/vending/sustenance{
 	desc = "A vending machine which vends food.";
 	name = "\improper Snack Machine";
-	product_slogans = "Sufficiently healthy.;Mmm! So good!;Have a meal.;You need food to live!;Enjoy your meal."
+	product_ads = "Sufficiently healthy.;Mmm! So good!;Have a meal.;You need food to live!";
+	product_slogans = "Enjoy your meal."
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4

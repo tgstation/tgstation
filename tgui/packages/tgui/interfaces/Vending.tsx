@@ -46,6 +46,8 @@ type Category = {
 type VendingData = {
   all_products_free: boolean;
   onstation: boolean;
+  hasAds: boolean;
+  ad: string;
   department: string;
   jobDiscount: number;
   displayed_currency_icon: string;
@@ -65,6 +67,8 @@ export const Vending = () => {
 
   const {
     onstation,
+    hasAds,
+    ad,
     product_records = [],
     coin_records = [],
     hidden_records = [],
@@ -114,6 +118,11 @@ export const Vending = () => {
               <UserDetails />
             </Stack.Item>
           )}
+          {!!hasAds && (
+            <Stack.Item>
+              <AdSection AdDisplay={ad} />
+            </Stack.Item>
+          )}
           <Stack.Item grow>
             <ProductDisplay
               inventory={inventory}
@@ -155,6 +164,18 @@ export const UserDetails = () => {
             ? `${user.name || 'Unknown'} | ${user.job}`
             : 'No ID detected! Contact the Head of Personnel.'}
         </Stack.Item>
+      </Stack>
+    </NoticeBox>
+  );
+};
+
+const AdSection = (props: { AdDisplay: string }) => {
+  const { AdDisplay } = props;
+
+  return (
+    <NoticeBox m={0} color={'yellow'}>
+      <Stack align="center">
+        <Stack.Item>{AdDisplay}</Stack.Item>
       </Stack>
     </NoticeBox>
   );
