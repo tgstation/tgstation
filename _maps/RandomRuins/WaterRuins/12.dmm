@@ -729,7 +729,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "zd" = (
@@ -1367,7 +1366,7 @@
 	amount = 2
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface)
+/area/rainworld/surface/outdoors)
 "UR" = (
 /obj/structure/window/reinforced/shuttle/survival_pod{
 	atom_integrity = 92.5
@@ -2144,7 +2143,7 @@ da
 xZ
 ba
 da
-ZD
+SQ
 ZD
 ZD
 HB
@@ -2185,8 +2184,8 @@ GE
 da
 SQ
 Ko
-ZD
-ZD
+SQ
+SQ
 ZD
 ZD
 Im

@@ -5990,9 +5990,7 @@
 /turf/closed/wall,
 /area/station/maintenance/department/electrical)
 "asC" = (
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "asE" = (
 /turf/closed/wall,
@@ -17279,9 +17277,7 @@
 /area/station/cargo/warehouse)
 "bdV" = (
 /obj/item/stack/sheet/iron,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bdW" = (
 /obj/item/clothing/gloves/color/rainbow,
@@ -25532,9 +25528,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bHy" = (
 /obj/structure/closet/crate,
@@ -25910,26 +25904,20 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bIZ" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bJa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bJb" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -26152,17 +26140,13 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "bKg" = (
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bKh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bKi" = (
 /obj/structure/chair{
@@ -26171,9 +26155,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bKj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -26524,23 +26506,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bLo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bLp" = (
 /obj/item/beacon,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bLq" = (
 /turf/closed/indestructible{
@@ -26555,9 +26531,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/preset/ordnance,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bLu" = (
 /obj/structure/rack,
@@ -26917,9 +26891,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bME" = (
 /obj/structure/chair{
@@ -26928,9 +26900,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bMH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -27202,9 +27172,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bNE" = (
 /obj/structure/chair{
@@ -27213,15 +27181,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bNF" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bNG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -27489,9 +27453,7 @@
 /obj/item/target,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "bOK" = (
 /obj/effect/turf_decal/stripes/line,
@@ -28458,9 +28420,7 @@
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bSv" = (
 /obj/machinery/camera/directional/south{
@@ -29179,9 +29139,7 @@
 /area/rainworld/surface/outdoors/nospawn)
 "bVx" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/maintenance/port/aft)
 "bVy" = (
 /obj/structure/disposalpipe/segment{
@@ -30212,9 +30170,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bZr" = (
 /obj/machinery/status_display/evac,
@@ -32417,9 +32373,7 @@
 /area/station/command/heads_quarters/ce)
 "cjn" = (
 /obj/item/weldingtool,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cjo" = (
 /obj/structure/closet/toolcloset,
@@ -34437,9 +34391,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "czU" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "czX" = (
 /obj/machinery/door/airlock/maintenance,
@@ -34980,9 +34932,7 @@
 /area/station/service/chapel/office)
 "cCa" = (
 /obj/item/clothing/head/utility/hardhat,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cCb" = (
 /obj/structure/table,
@@ -35756,9 +35706,7 @@
 /area/station/engineering/supermatter/room)
 "cGM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cGS" = (
 /obj/structure/cable,
@@ -39101,9 +39049,7 @@
 /area/station/cargo/bitrunning/den)
 "fai" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "fav" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39115,9 +39061,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "faI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
@@ -44839,9 +44783,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "jYM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -46697,9 +46639,7 @@
 /area/station/maintenance/aft)
 "lwj" = (
 /obj/structure/grille,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "lwx" = (
 /obj/machinery/light/small/directional/south,
@@ -52183,9 +52123,7 @@
 /area/station/commons/vacant_room/commissary)
 "pUw" = (
 /obj/structure/window/spawner/directional/west,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "pUW" = (
 /obj/structure/closet/emcloset,
@@ -56524,9 +56462,7 @@
 /obj/structure/transit_tube/curved/flipped{
 	dir = 1
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "tGz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -60358,9 +60294,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/station/maintenance/port/aft)
 "xbN" = (
 /obj/structure/disposalpipe/segment{
@@ -61706,9 +61640,7 @@
 /area/station/maintenance/starboard/fore)
 "yiW" = (
 /obj/item/toy/plush/shark,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "yjd" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,

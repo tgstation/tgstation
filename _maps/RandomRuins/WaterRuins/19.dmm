@@ -22,7 +22,7 @@
 "k" = (
 /obj/item/aiupgrade/power_transfer,
 /obj/item/aiupgrade/surveillance_upgrade,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/self,
 /turf/open/floor/plating,
 /area/rainworld/surface)
 "m" = (
@@ -45,6 +45,10 @@
 /obj/item/clothing/gloves/combat,
 /turf/open/floor/plating,
 /area/rainworld/surface)
+"u" = (
+/obj/structure/marker_beacon/violet,
+/turf/template_noop,
+/area/template_noop)
 "w" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -170,7 +174,7 @@ z
 U
 U
 U
-U
+u
 U
 "}
 (3,1,1) = {"

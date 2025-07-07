@@ -214,7 +214,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "C" = (
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "D" = (
 /obj/structure/chair/comfy{
@@ -314,7 +314,7 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "X" = (
 /obj/item/gps/spaceruin,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 
 (1,1,1) = {"
@@ -552,7 +552,7 @@ a
 a
 a
 b
-E
+C
 a
 a
 a

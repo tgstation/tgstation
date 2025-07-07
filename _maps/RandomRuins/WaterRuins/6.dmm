@@ -176,12 +176,12 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bB" = (
 /obj/structure/alien/weeds,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "bD" = (
 /obj/item/clothing/mask/facehugger/dead,
 /obj/structure/alien/weeds,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "bE" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -193,7 +193,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bH" = (
 /obj/structure/alien/resin/wall,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "bI" = (
 /obj/structure/flora/bush/reed/style_random,
@@ -201,7 +201,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bK" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/template_noop)
 "bN" = (
 /obj/structure/grille/broken,
@@ -209,11 +209,11 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "bO" = (
 /obj/item/shard,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "bP" = (
 /obj/structure/lattice,
@@ -224,7 +224,7 @@
 	dir = 1
 	},
 /obj/structure/disposaloutlet,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/template_noop)
 "bT" = (
 /obj/structure/grille,
@@ -235,14 +235,14 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bU" = (
 /obj/structure/grille/broken,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "bW" = (
 /obj/item/shard,
 /turf/template_noop,
 /area/template_noop)
 "bX" = (
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "cf" = (
 /obj/structure/frame/machine,
@@ -279,7 +279,7 @@
 "ix" = (
 /obj/structure/cable,
 /obj/machinery/power/shieldwallgen/unlocked/anchored,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "iX" = (
 /obj/machinery/door/airlock/hatch{
@@ -314,7 +314,7 @@
 "nI" = (
 /obj/structure/alien/resin/wall,
 /obj/machinery/light/floor/broken,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "nY" = (
 /obj/structure/flora/bush/leavy/style_random,
@@ -395,7 +395,7 @@
 "Gh" = (
 /obj/machinery/power/shieldwallgen/unlocked/anchored,
 /obj/structure/cable,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "HI" = (
 /obj/structure/table/reinforced,
@@ -414,7 +414,7 @@
 /obj/structure/cable,
 /obj/machinery/power/shieldwallgen/unlocked/anchored,
 /obj/machinery/light/broken/directional/north,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "Mb" = (
 /mob/living/basic/bee,
@@ -428,7 +428,7 @@
 "Ng" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "Ni" = (
 /obj/effect/turf_decal/tile/green/fourcorners,
@@ -436,7 +436,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "Qz" = (
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "Rc" = (
 /obj/structure/flora/bush/lavendergrass/style_random,

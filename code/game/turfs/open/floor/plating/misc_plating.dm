@@ -6,6 +6,9 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/floor/plating/lowpressure
 
+/turf/open/floor/plating/rainworld
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+
 /turf/open/floor/plating/dumpsterair
 	initial_gas_mix = OPENTURF_DIRTY_ATMOS
 	temperature = 309

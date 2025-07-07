@@ -1,0 +1,112 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/obj/item/flashlight/lantern/jade/on,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"y" = (
+/obj/structure/closet/crate/silvercrate,
+/obj/item/clothing/neck/fake_heretic_amulet,
+/obj/item/ether,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"C" = (
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"P" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+C
+P
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+C
+P
+y
+C
+s
+a
+"}
+(5,1,1) = {"
+a
+C
+C
+C
+C
+P
+C
+a
+"}
+(6,1,1) = {"
+a
+C
+a
+a
+P
+C
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+C
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}

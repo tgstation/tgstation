@@ -8,9 +8,7 @@
 	shuttle_id = "lavaland_common_away";
 	width = 7
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "ak" = (
 /obj/effect/decal/cleanable/dirt,
@@ -200,9 +198,7 @@
 	name = "infinite-capacity power cell"
 	},
 /obj/structure/rack,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "eq" = (
 /obj/effect/turf_decal/siding/white{
@@ -349,7 +345,8 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "gL" = (
-/turf/open/floor/plating/lavaland_atmos,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/noslip,
 /area/mine/production)
 "gM" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -987,9 +984,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "rX" = (
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "sg" = (
 /obj/structure/cable,
@@ -1020,9 +1015,7 @@
 /area/mine/production)
 "sR" = (
 /obj/machinery/light/floor,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "tg" = (
 /obj/structure/table,
@@ -1241,7 +1234,7 @@
 /obj/machinery/camera/autoname/directional/south{
 	network = list("mine")
 	},
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "xm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1322,9 +1315,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "zd" = (
 /turf/open/floor/iron/dark/smooth_large,
@@ -1402,7 +1393,7 @@
 "Bs" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/ore_box,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "Bx" = (
 /obj/machinery/hydroponics/constructable,
@@ -1856,9 +1847,7 @@
 "JU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/toolcloset,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "Kd" = (
 /obj/machinery/conveyor{
@@ -1902,7 +1891,6 @@
 	name = "Mining Mechbay Control"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron/dark/textured_half,
 /area/mine/mechbay)
 "Lf" = (
@@ -2010,7 +1998,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "NO" = (
@@ -2078,7 +2065,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "OY" = (
@@ -2289,9 +2275,7 @@
 /area/mine/mechbay)
 "Th" = (
 /obj/structure/cable,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "Tj" = (
 /obj/structure/ore_box,
@@ -2341,7 +2325,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "TV" = (
@@ -2407,13 +2390,11 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "Vo" = (
 /obj/effect/spawner/structure/window/survival_pod,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "Vq" = (
 /obj/structure/rack,
@@ -2570,9 +2551,7 @@
 	shuttle_id = "mining_away";
 	width = 7
 	},
-/turf/open/floor/plating/lowpressure{
-	initial_gas_mix = "RAINWORLD_ATMOS"
-	},
+/turf/open/floor/plating/rainworld,
 /area/mine/production)
 "Yu" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
@@ -41865,11 +41844,11 @@ zg
 zg
 zg
 wd
-BN
-BN
-BN
-BN
-BN
+gL
+gL
+gL
+gL
+gL
 wd
 zg
 zg
@@ -43408,8 +43387,8 @@ zg
 gf
 gs
 Bz
-gL
-gL
+rX
+rX
 wT
 gs
 gs
