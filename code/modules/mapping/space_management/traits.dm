@@ -53,7 +53,3 @@
 /datum/controller/subsystem/mapping/proc/get_station_center()
 	var/station_z = levels_by_trait(ZTRAIT_STATION)[1]
 	return locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), station_z)
-
-/// Determines if a z level is multi-z
-/datum/controller/subsystem/mapping/proc/is_multi_z_level(z)
-	return level_trait(z, ZTRAIT_UP) || level_trait(z, ZTRAIT_DOWN)

@@ -159,7 +159,7 @@ SUBSYSTEM_DEF(persistence)
 		var/datum/space_level/level_to_check = SSmapping.z_list[z]
 		level_traits += list(level_to_check.traits)
 
-		if(SSmapping.is_multi_z_level(z))
+		if(is_multi_z_level(z))
 			if(!SSmapping.level_trait(z, ZTRAIT_UP) && SSmapping.level_trait(z, ZTRAIT_DOWN))
 				continue // skip all the other z levels if they aren't a bottom
 
