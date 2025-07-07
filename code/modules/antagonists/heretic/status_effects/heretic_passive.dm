@@ -8,6 +8,8 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
+	/// Reference to the owning heretic datum
+	var/datum/antagonist/heretic/heretic_datum
 	///What level is our passive currently on
 	var/passive_level = HERETIC_LEVEL_START
 	/// Name of the passive, used by the UI
@@ -20,9 +22,10 @@
 
 /datum/status_effect/heretic_passive/on_apply()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
+	heretic_datum = GET_HERETIC(owner)
 	if(!heretic_datum)
 		return FALSE
+
 	// Just in case of shenanigans, assume the antag datum is correct about our level
 	if(heretic_datum.passive_level == 3)
 		heretic_level_final()
@@ -34,18 +37,18 @@
 /// Gives our first upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_upgrade()
 	SHOULD_CALL_PARENT(TRUE)
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
+	heretic_datum.update_data_for_all_viewers()
 
 /// Gives our final upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_final()
 	SHOULD_CALL_PARENT(TRUE)
 	if(passive_level == HERETIC_LEVEL_START)
 		heretic_level_upgrade()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	passive_level = HERETIC_LEVEL_FINAL
 	heretic_datum.passive_level = HERETIC_LEVEL_FINAL
+	heretic_datum.update_data_for_all_viewers()
 
 //---- Ash Passive
 // Level 1 grants heat and ash storm immunity
@@ -53,6 +56,11 @@
 // Level 3 grants resistance to high pressure
 /datum/status_effect/heretic_passive/ash
 	name = "Vow of Destruction"
+	passive_descriptions = list(
+		"Heat and ash storm immunity.",
+		"Lava immunity.",
+		"Resistance to high and low pressure."
+	)
 
 /datum/status_effect/heretic_passive/ash/on_apply()
 	. = ..()
@@ -78,6 +86,11 @@
 // Level 3 only has the cooldown reduction (nothing else added)
 /datum/status_effect/heretic_passive/blade
 	name = "Dance of the Brand"
+	passive_descriptions = list(
+		"Riposte with a 20 seconds cooldown, it now counts as a block.",
+		"Immunity to fall damage.",
+		"Cooldown of the riposte reduced to 10 seconds."
+	)
 	/// The cooldown before we can riposte again
 	var/base_cooldown = 20 SECONDS
 	/// The cooldown reduction gained from upgrading
@@ -103,6 +116,8 @@
 	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	owner.visible_message(span_notice("[owner] lands on [fell_on] safely, and quite stylishly on [p_their()] feet"))
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/atom, SpinAnimation), 0.5 SECONDS, 0)
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/, emote), "flip")
 	return ZIMPACT_CANCEL_DAMAGE | ZIMPACT_NO_MESSAGE | ZIMPACT_NO_SPIN
 
 /// Checks if we can counter-attack
@@ -184,6 +199,11 @@
 // Level 3 Cosmic fields will temporarily slow down bullets that pass through them
 /datum/status_effect/heretic_passive/cosmic
 	name = "Chosen of the Stars"
+	passive_descriptions = list(
+		"Cosmic fields speed you up and regenerate stamina.",
+		"Cosmic fields disrupt grenades or signalers from being activated and turn off already primed grenades.",
+		"Cosmic fields slow projectiles down."
+	)
 
 /datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
 	. = ..()
@@ -223,6 +243,11 @@
 // Level 3, being fat gives damage resistance
 /datum/status_effect/heretic_passive/flesh
 	name = "Ravenous Hunger"
+	passive_descriptions = list(
+		"Immunity to Diseases, Disgust and space ants.",
+		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
+		"Gain a flat 25% damage and stamina damage reduction when fat and baton resistance as well."
+	)
 
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
@@ -241,49 +266,37 @@
 	var/mob/living/carbon/human/fat_human = owner
 	fat_human.on_fat() // Make sure to update the movespeed modifier in case we gain the trait while already fat
 	var/obj/item/organ/tongue/tongue = fat_human.get_organ_slot(ORGAN_SLOT_TONGUE)
-	tongue.liked_foodtypes = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | GROSS | TOXIC | PINEAPPLE | BREAKFAST | CLOTH | NUTS | SEAFOOD | ORANGES | BUGS | GORE | STONE
+	tongue.liked_foodtypes = ALL
 	tongue.disliked_foodtypes = NONE
 	tongue.toxic_foodtypes = NONE
 
 /// Any time you take a bite of something, if it's meat or an organ you will heal some damage
 /datum/status_effect/heretic_passive/flesh/proc/on_eat(mob/eater, atom/food)
 	SIGNAL_HANDLER
-	if(istype(food, /obj/item/organ))
-		var/obj/item/organ/consumed_organ = food
-		if(!(consumed_organ.foodtype_flags & MEAT))
-			return
-		owner.adjustBruteLoss(-2)
-		owner.adjustFireLoss(-2)
-		owner.adjustOxyLoss(-2)
-		owner.adjustToxLoss(-2, forced = TRUE)
-		if(owner?.blood_volume)
-			owner.blood_volume += 2.5
-		if(!iscarbon(eater))
-			return
-		var/mob/living/carbon/carbon_eater = eater
-		for(var/obj/item/bodypart/wounded_limb as anything in carbon_eater.bodyparts)
-			for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
-				to_cure.remove_wound()
-		return
-
-	if(!istype(food, /obj/item/food))
+	var/obj/item/organ/consumed_organ = food
+	if(istype(consumed_organ) && consumed_organ.foodtype_flags & MEAT)
+		heal_glutton() // Heal the owner if they eat meat
 		return
 	var/obj/item/food/consumed_food = food
-	if(!(consumed_food.foodtypes & MEAT))
-		return
+	if(istype(consumed_food) && consumed_food.foodtypes & MEAT)
+		heal_glutton() // Heal the owner if they eat meat
 
-	owner.adjustBruteLoss(-2)
-	owner.adjustFireLoss(-2)
-	owner.adjustOxyLoss(-2)
-	owner.adjustToxLoss(-2, forced = TRUE)
-	if(owner?.blood_volume)
+/datum/status_effect/heretic_passive/flesh/proc/heal_glutton()
+	var/healed_amount = owner.heal_overall_damage(2, 2, updating_health = FALSE)
+	healed_amount += owner.adjustOxyLoss(-2, FALSE)
+	healed_amount += owner.adjustToxLoss(-2, FALSE, TRUE)
+	if(!HAS_TRAIT(owner, TRAIT_NOBLOOD))
 		owner.blood_volume += 2.5
-	if(!iscarbon(eater))
+	if(!iscarbon(owner))
 		return
-	var/mob/living/carbon/carbon_eater = eater
+	var/mob/living/carbon/carbon_eater = owner
 	for(var/obj/item/bodypart/wounded_limb as anything in carbon_eater.bodyparts)
 		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
 			to_cure.remove_wound()
+			break
+	if(healed_amount > 0)
+		owner.updatehealth()
+		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_RED)
 
 /datum/status_effect/heretic_passive/flesh/heretic_level_final()
 	. = ..()
@@ -324,10 +337,17 @@
 // Level 3 your grasp no longer goes on cooldown when opening things
 /datum/status_effect/heretic_passive/lock
 	name = "Open Invitation"
+	passive_descriptions = list(
+		"Shock insulation, all knowledges researched from the shop are cheaper",
+		"X-ray vision, you can see through walls and objects.",
+		"Grasp no longer goes on cooldown when used to open a door or locker."
+	)
 
 /datum/status_effect/heretic_passive/lock/on_apply()
 	. = ..()
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, REF(src))
+	RegisterSignal(heretic_datum, COMSIG_HERETIC_SHOP_SETUP, PROC_REF(on_shop_setup)) // Just in case we are applying this after the shop was set up
 
 /datum/status_effect/heretic_passive/lock/heretic_level_upgrade()
 	. = ..()
@@ -336,12 +356,22 @@
 
 /datum/status_effect/heretic_passive/lock/heretic_level_final()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
+	ADD_TRAIT(heretic_datum, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
 
 /datum/status_effect/heretic_passive/lock/on_remove()
+	UnregisterSignal(owner, COMSIG_HERETIC_SHOP_SETUP)
 	owner.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_XRAY_VISION, TRAIT_LOCK_GRASP_UPGRADED), REF(src))
 	owner.update_sight()
 	return ..()
+
+/datum/status_effect/heretic_passive/lock/proc/on_shop_setup(datum/antagonist/heretic/heretic_datum)
+	SIGNAL_HANDLER
+	var/list/shop = heretic_datum.heretic_shops[HERETIC_KNOWLEDGE_SHOP]
+	for(var/knowledge_type in shop)
+		var/datum/heretic_knowledge/heretic_knowledge = shop[knowledge_type]
+		if(heretic_knowledge)
+			heretic_knowledge[HKT_COST] = max(1, heretic_knowledge[HKT_COST] - 1) // Reduce cost by 1, minimum of 1
 
 //---- Moon Passive
 // Heals 5 brain damage per level
@@ -350,6 +380,11 @@
 // Level 3, Mind gate + Ringleader's rise will channel the moon amulet effects
 /datum/status_effect/heretic_passive/moon
 	name = "Do You Hear The Voices Too?"
+	passive_descriptions = list(
+		"Can no longer develop brain traumas except for special ones, passively regenerates brain health, (this bonus is halved in combat).",
+		"Sleep immunity, increases the ratio at which your brain damage regenerates.",
+		"Mind gate and Ringleader's rise will channel the moon amulet effects."
+	)
 	/// Built-in moon amulet which channels through your spells
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
 	/// When were we last attacked?
@@ -384,14 +419,14 @@
 
 /datum/status_effect/heretic_passive/moon/heretic_level_final()
 	. = ..()
-	amulet = new(owner) // Yeah just shove an amulet up his ass, he'll be fine
+	amulet = new()
 
 /datum/status_effect/heretic_passive/moon/on_remove()
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, REF(src))
 	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
-	qdel(amulet)
+	QDEL_NULL(amulet)
 	return ..()
 
 //---- Rust Passive
@@ -401,6 +436,11 @@
 // Level 3 will restore lost limbs when standing on rust
 /datum/status_effect/heretic_passive/rust
 	name = "Leeching Walk"
+	passive_descriptions = list(
+		"Standing on Rusted tiles heals and purge chems off your body.",
+		"Standing on Rusted tiles closes up your wounds and heals your organs, you may now rust reinforced floors and walls.",
+		"Standing on Rusted tiles regenerates your limbs, you may now rust titanium and plastitanium walls."
+	)
 
 /datum/status_effect/heretic_passive/rust/on_apply()
 	. = ..()
@@ -453,15 +493,17 @@
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
 	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-	need_mob_update += source.adjustBruteLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss((-1 * (passive_level - 1)) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss((-5 * (passive_level - 1)) * delta_time, updating_stamina = FALSE)
+	var/main_healing = 1 + 1 * passive_level * delta_time
+	var/stam_healing = 5 + 5 * passive_level * delta_time
+	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, -stam_healing, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(main_healing, updating_health = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
+		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_BROWN)
 	// Reduces duration of stuns/etc
-	source.AdjustAllImmobility((-0.5 SECONDS) * delta_time)
+	var/stun_reduction = 0.5 * passive_level * delta_time
+	source.AdjustAllImmobility(stun_reduction)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
@@ -489,6 +531,11 @@
 // Level 3 No slip on water/ice
 /datum/status_effect/heretic_passive/void
 	name = "Aristocrat's Way"
+	passive_descriptions = list(
+		"Cold and low pressure immunity.",
+		"You no longer need to breathe.",
+		"Water, ice and slippery surfaces no longer slow you down."
+	)
 
 /datum/status_effect/heretic_passive/void/on_apply()
 	. = ..()

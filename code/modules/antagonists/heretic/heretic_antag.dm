@@ -200,6 +200,7 @@
 			continue
 
 		tree_data[depth]["nodes"] += list(knowledge_data)
+
 	// TODO: sanity for purchasing categories as bypasses are likely rn
 	var/list/heretic_tree = heretic_shops[HERETIC_KNOWLEDGE_TREE]
 	var/list/tree_researchable = get_researchable_knowledge(list(HERETIC_KNOWLEDGE_START, HERETIC_KNOWLEDGE_TREE))
@@ -225,33 +226,14 @@
 	if(!heretic_path)
 		data["knowledge_tiers"] = tree_data
 		return data
-	// var/datum/heretic_knowledge_tree_column/current_path
-	// for(var/datum/heretic_knowledge_tree_column/column_path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
-	// 	if(initial(column_path.route) != heretic_path)
-	// 		continue
-	// 	current_path = new column_path()
-	// todo put this somewhere more shared
-	// var/list/draft_unlock_order = list(
-	// 	current_path.knowledge_tier1,
-	// 	current_path.knowledge_tier2,
-	// 	current_path.robes,
-	// 	current_path.knowledge_tier3,
-	// 	current_path.knowledge_tier4
-	// )
 
 	var/list/heretic_drafts = heretic_shops[HERETIC_KNOWLEDGE_DRAFT]
 	for(var/datum/heretic_knowledge/knowledge as anything in heretic_drafts)
 		if(!(knowledge in tree_researchable))
 			continue
-		// if(knowledge::drafting_tier == 0)
-		// 	continue
-		// var/required_unlock = draft_unlock_order[knowledge::drafting_tier]
-		// if(!(required_unlock in researched_knowledge))
-		// 	continue
 		var/list/knowledge_data = get_knowledge_data(knowledge, heretic_drafts, FALSE, HERETIC_KNOWLEDGE_DRAFT)
 
 		var/depth = knowledge_data[HKT_DEPTH]
-
 		while(depth > length(tree_data))
 			tree_data += list(list("nodes" = list()))
 
@@ -263,6 +245,7 @@
 	for(var/knowledge_path as anything in shop)
 		if(!(knowledge_path in draft_researchable))
 			continue
+
 		var/list/knowledge_data = get_knowledge_data(knowledge_path, shop, FALSE, HERETIC_KNOWLEDGE_SHOP)
 		shop_knowledge += list(knowledge_data)
 
@@ -927,8 +910,8 @@
 		return FALSE
 	var/list/knowledge_data = knowledge_list[knowledge_type]
 	if(!islist(knowledge_data))
-		stack_trace("[type] gain_knowledge was given a list with no [knowledge_type] entry! (Got: [knowledge_data])")
-		return FALSE
+		knowledge_data = make_knowledge_entry(knowledge_type, category)
+		heretic_shops[category][knowledge_type] = knowledge_data
 	if(get_knowledge(knowledge_type))
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
@@ -937,6 +920,7 @@
 	researched_knowledge[knowledge_type] = knowledge_data.Copy()
 	researched_knowledge[knowledge_type][HKT_INSTANCE] = initialized_knowledge
 	researched_knowledge[knowledge_type][HKT_CATEGORY] = category
+
 	if(category == HERETIC_KNOWLEDGE_DRAFT)
 		// get the index of the found depth
 		var/new_depth = knowledge_type::drafting_tier
@@ -950,10 +934,6 @@
 			draft -= knowledge_path
 
 	knowledge_list -= knowledge_type
-
-	var/list/next = researched_knowledge[knowledge_type][HKT_NEXT]
-	for(var/thing in next)
-		to_chat(owner.current, span_hypnophrase("You can now research [thing] from the [category] tree."))
 
 	initialized_knowledge.on_research(owner.current, src)
 	if(update)
@@ -1006,7 +986,7 @@
 	var/list/rituals = list()
 
 	for(var/knowledge_path in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path]
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		if(!knowledge.can_be_invoked(src))
 			continue
 		rituals[knowledge.name] = knowledge

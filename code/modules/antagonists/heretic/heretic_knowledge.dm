@@ -44,8 +44,6 @@
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft)
 	var/drafting_tier = 0
-	/// Used for determining from which category in the UI this was bought in.
-	var/bought_category = null
 
 /**
  * Called before the knowledge is researched,
@@ -573,8 +571,9 @@
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	var/total_points = 0
-	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(our_heretic.researched_knowledge))
-		total_points += knowledge.cost
+	for(var/datum/heretic_knowledge/knowledge as anything in our_heretic.researched_knowledge)
+		var/list/cost = our_heretic.researched_knowledge[knowledge][HKT_COST]
+		total_points += cost
 
 	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [gameTimestamp()]. \
 		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \

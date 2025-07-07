@@ -356,7 +356,7 @@ GLOBAL_LIST(heretic_research_tree)
 				HKT_NEXT = list(),
 				HKT_ROUTE = heretic_path.route,
 				HKT_DEPTH = depth,
-				HKT_UI_BGR = heretic_path.ui_bgr,
+				HKT_UI_BGR = BGR_SIDE,
 				HKT_COST = 0
 			)
 
@@ -385,12 +385,13 @@ GLOBAL_LIST(heretic_research_tree)
 
 	var/gun_path = /datum/heretic_knowledge/rifle
 	var/ammo_path = /datum/heretic_knowledge/rifle_ammo
-	shop[gun_path] = make_knowledge_entry(gun_path, heretic_path, 4)
+	shop[gun_path] = make_knowledge_entry(gun_path, null, 4)
 	shop[gun_path][HKT_NEXT] += ammo_path
 
 	var/already_in = final_draft[gun_path]
 	if(already_in)
 		already_in[HKT_NEXT] += ammo_path
 
-	shop[ammo_path] = make_knowledge_entry(ammo_path, heretic_path, 4)
+	shop[ammo_path] = make_knowledge_entry(ammo_path, null, 4)
+	SEND_SIGNAL(src, COMSIG_HERETIC_SHOP_SETUP)
 
