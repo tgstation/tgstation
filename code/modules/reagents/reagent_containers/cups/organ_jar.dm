@@ -11,14 +11,14 @@
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 	w_class = WEIGHT_CLASS_SMALL // Organs are small by default, so the jar should be at least small as well
-	// The organ that is currently inside the jar
+	/// The organ that is currently inside the jar
 	var/obj/item/organ/held_organ = null
-	// Whether the jar should preserve the organ inside (which would only happen if it's full of formaldehyde)
+	/// Whether the jar is filled to capacity with formaldehyde, preserving any organ inside
 	var/full_of_formaldehyde = FALSE
 
 /obj/item/reagent_containers/cup/organ_jar/examine(mob/user)
 	. = ..()
-	. += span_info("Any organ inside the jar will be preserved if it is filled with formaldehyde.")
+	. += span_info("Any organ inside the jar will be preserved if it is entirely filled with formaldehyde.")
 	if(held_organ && held_organ.GetComponent(/datum/component/ghostrole_on_revive))
 		. += span_smallnoticeital("The brain is twitching...") // Guaranteed to be a brain if it has that component
 
