@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - qol: "The volume of all airlock pumps are now doubled resulting in faster cycling"
