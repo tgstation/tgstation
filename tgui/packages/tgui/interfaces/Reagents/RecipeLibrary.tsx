@@ -35,7 +35,7 @@ export function RecipeLibrary(props: ReagentsProps) {
     if (!reagentFilter || currentReagents === null) {
       return true;
     }
-    let matches = reaction.reactants.filter((reactant) =>
+    const matches = reaction.reactants.filter((reactant) =>
       currentReagents.includes(reactant.id),
     ).length;
     return matches === currentReagents.length;

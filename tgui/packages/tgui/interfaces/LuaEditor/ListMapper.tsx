@@ -192,9 +192,9 @@ export const ListMapper = (props: ListMapperProps) => {
   const ListMapperInner = (element: ListElement, i: number) => {
     const { key, value } = element;
     const basePath: ListPath = path ? path : [];
-    let keyPath: ListPath = [...basePath, { index: i + 1, type: 'key' }];
-    let valuePath: ListPath = [...basePath, { index: i + 1, type: 'value' }];
-    let entryPath: ListPath = [...basePath, { index: i + 1, type: 'entry' }];
+    const keyPath: ListPath = [...basePath, { index: i + 1, type: 'key' }];
+    const valuePath: ListPath = [...basePath, { index: i + 1, type: 'value' }];
+    const entryPath: ListPath = [...basePath, { index: i + 1, type: 'entry' }];
 
     if (key === null && skipNulls) {
       return;
@@ -204,7 +204,7 @@ export const ListMapper = (props: ListMapperProps) => {
      * Finding a function only accessible as a table's key is too awkward to
      * deal with for now
      */
-    let keyNode = ThingNode(key, keyPath, false);
+    const keyNode = ThingNode(key, keyPath, false);
 
     /*
      * Likewise, since table, thread, and userdata equality is tested by
@@ -215,7 +215,7 @@ export const ListMapper = (props: ListMapperProps) => {
       typeof key === 'string' ||
       typeof key === 'number' ||
       (React.isValidElement(key) && key.key === 'ref');
-    let valueNode = ThingNode(
+    const valueNode = ThingNode(
       value,
       typeof key === 'number' ? keyPath : valuePath,
       uniquelyIndexable,
