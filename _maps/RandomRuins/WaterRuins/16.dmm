@@ -56,6 +56,7 @@
 /obj/item/bedsheet/black,
 /obj/structure/tubes,
 /obj/machinery/light/small/broken/directional/east,
+/obj/item/crusher_trophy/goliath_tentacle,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "n" = (

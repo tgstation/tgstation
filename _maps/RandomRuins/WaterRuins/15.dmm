@@ -56,7 +56,9 @@
 /area/rainworld/surface)
 "p" = (
 /obj/structure/table,
-/obj/effect/spawner/random/animalhide,
+/obj/item/stack/sheet/mineral/mythril{
+	amount = 2
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/rainworld/surface)
 "q" = (

@@ -1688,6 +1688,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "iN" = (
 /obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "iO" = (
@@ -2471,6 +2472,10 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
+"nG" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/cargobay)
 "nI" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L5"
@@ -2711,6 +2716,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
+/area/ruin/space/has_grav/waystation/cargobay)
+"pe" = (
+/obj/structure/table,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "pf" = (
 /obj/structure/sign/warning/fire,
@@ -4824,6 +4834,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
+/obj/effect/spawner/random/exotic/tool,
+/obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ax" = (
@@ -5577,6 +5589,11 @@
 /obj/structure/table/wood,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/carpet,
+/area/ruin/space/has_grav/waystation/cargobay)
+"Et" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "EA" = (
 /obj/machinery/power/terminal{
@@ -7116,6 +7133,16 @@
 "MU" = (
 /obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
+"MW" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/spawner/random/frog,
+/turf/open/floor/carpet,
 /area/ruin/space/has_grav/waystation/cargobay)
 "MX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -12135,7 +12162,7 @@ YA
 wb
 QN
 KO
-wb
+MW
 QN
 QN
 wE
@@ -14892,9 +14919,9 @@ Gz
 QN
 lk
 QE
-iz
+nG
 jB
-Pa
+Et
 WN
 XT
 QD
@@ -15188,7 +15215,7 @@ bD
 OR
 ZF
 Bx
-rI
+pe
 xH
 tk
 xH

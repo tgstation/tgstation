@@ -8,6 +8,13 @@
 "d" = (
 /turf/closed/wall/mineral/abductor,
 /area/rainworld/surface)
+"h" = (
+/obj/structure/closet/abductor,
+/obj/item/crusher_trophy/bileworm_spewlet,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/rainworld/surface)
 "j" = (
 /obj/machinery/abductor/experiment{
 	team_number = 100
@@ -185,7 +192,7 @@ a
 c
 d
 d
-q
+h
 t
 q
 d

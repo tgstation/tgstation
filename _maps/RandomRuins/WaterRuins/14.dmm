@@ -8,6 +8,10 @@
 "c" = (
 /turf/closed/mineral/random/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
+"d" = (
+/obj/item/crusher_trophy/bear_paw,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors/noruinsnomonsters)
 "u" = (
 /obj/effect/spawner/message_in_a_bottle,
 /turf/open/water/no_planet_atmos/deep/rainworld,
@@ -935,7 +939,7 @@ a
 b
 b
 b
-b
+c
 c
 c
 c
@@ -968,7 +972,7 @@ b
 b
 c
 c
-b
+d
 c
 b
 b
@@ -999,8 +1003,8 @@ a
 b
 b
 b
-b
-b
+c
+c
 c
 b
 b

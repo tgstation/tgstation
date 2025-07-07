@@ -3,8 +3,8 @@
 /turf/closed/mineral/random/rainworld,
 /area/rainworld/surface/outdoors)
 "b" = (
-/obj/structure/mineral_door/wood,
 /obj/effect/spawner/random/contraband/landmine,
+/obj/structure/mineral_door/iron,
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface)
 "c" = (
@@ -23,14 +23,16 @@
 /obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
 /obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
 /obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/item/crusher_trophy/wolf_ear,
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface)
 "n" = (
 /turf/template_noop,
 /area/template_noop)
 "t" = (
-/obj/item/bedsheet/pirate,
 /obj/structure/bed/maint,
+/obj/item/bedsheet/runtime,
+/obj/item/clothing/neck/cloak/wolf_coat,
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface)
 "z" = (
