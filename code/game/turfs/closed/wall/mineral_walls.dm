@@ -281,13 +281,13 @@
 	return ..()
 
 /turf/closed/wall/mineral/titanium/nodiagonal
-	icon = 'icons/turf/walls/shuttle_wall.dmi'
-	icon_state = "map-shuttle_nd"
+	icon = MAP_SWITCH('icons/turf/walls/shuttle_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("shuttle_wall-0", "shuttle_nd")
 	base_icon_state = "shuttle_wall"
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/wall/mineral/titanium/overspace
-	icon_state = "map-overspace"
+	icon_state = MAP_SWITCH("shuttle_wall-0", "map-overspace")
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
