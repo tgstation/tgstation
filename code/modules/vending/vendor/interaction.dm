@@ -96,17 +96,18 @@
 	if(refill_canister && istype(attack_item, refill_canister))
 		if (!panel_open)
 			to_chat(user, span_warning("You should probably unscrew the service panel first!"))
-		else if (!is_operational)
+			return ITEM_INTERACT_BLOCKING
+		if (!is_operational)
 			to_chat(user, span_notice("[src] does not respond."))
-		else
-			//if the panel is open we attempt to refill the machine
-			var/obj/item/vending_refill/canister = attack_item
-			if(canister.get_part_rating() == 0)
-				to_chat(user, span_warning("[canister] is empty!"))
-			else
-				// instantiate canister if needed
-				post_restock(user, restock(canister))
-			return ITEM_INTERACT_SUCCESS
+			return ITEM_INTERACT_BLOCKING
+		//if the panel is open we attempt to refill the machine
+		var/obj/item/vending_refill/canister = attack_item
+		if(canister.get_part_rating() == 0)
+			to_chat(user, span_warning("[canister] is empty!"))
+			return ITEM_INTERACT_BLOCKING
+		// instantiate canister if needed
+		post_restock(user, restock(canister))
+		return ITEM_INTERACT_SUCCESS
 
 	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
 		if(istype(attack_item, /obj/item/storage/bag)) //trays USUALLY
@@ -126,8 +127,7 @@
 			if(loaded)
 				to_chat(user, span_notice("You insert [loaded] dishes into [src]'s compartment."))
 			return ITEM_INTERACT_SUCCESS
-		else
-			return loadingAttempt(attack_item, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+		return loadingAttempt(attack_item, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
 	if(tiltable && !tilted && attack_item.force)
 		if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.

@@ -113,3 +113,4 @@
 	do_sparks(5, TRUE, src)
 	if(electrocute_mob(user, get_area(src), src, 0.7, dist_check = TRUE))
 		return TRUE
+	return FALSE
