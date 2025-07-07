@@ -60,16 +60,18 @@ type Knowledge = {
   gainFlavor: string;
   cost: number;
   bgr: string;
-  // category?: ShopCategory;
+  category?: ShopCategory;
   depth: number;
   done: BooleanLike;
   ascension: BooleanLike;
+  disabled: BooleanLike;
 };
 
 enum ShopCategory {
   Tree = 'tree',
   Shop = 'shop',
   Draft = 'draft',
+  Start = 'start',
 }
 
 type KnowledgeTier = {
@@ -294,9 +296,7 @@ const KnowledgeTree = () => {
                       key={node.path}
                       node={node}
                       // hack, free nodes are draft nodes
-                      purchaseCategory={
-                        node.cost > 0 ? ShopCategory.Tree : ShopCategory.Draft
-                      }
+                      purchaseCategory={node.category}
                     />
                   ))}
                 </Stack>
@@ -319,7 +319,7 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
   const { data, act } = useBackend<Info>();
   const { charges } = data;
 
-  const isBuyable = can_buy && !node.done;
+  const isBuyable = can_buy && !node.done && !node.disabled;
 
   const iconState = () => {
     if (!can_buy) {
@@ -328,7 +328,7 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
     if (node.done) {
       return 'node_finished';
     }
-    if (charges < node.cost) {
+    if (charges < node.cost || node.disabled) {
       return 'node_locked';
     }
     return node.bgr;
@@ -413,15 +413,14 @@ const KnowledgeShop = () => {
 
   function Knowledges() {
     // filter the list into being indexed by tier
-    const tiers: Knowledge[][] = [];
-    knowledge_shop?.forEach((knowledge) => {
-      const tierIndex = knowledge.depth; // depth starts at 1, so
-      // we subtract 1 to get the correct index
-      if (!tiers[tierIndex]) {
-        tiers[tierIndex] = [];
+    const tiers: Knowledge[][] = knowledge_shop.reduce((acc, knowledge) => {
+      const tierIndex = knowledge.depth - 1; // depth starts at 1, so
+      if (!acc[tierIndex]) {
+        acc[tierIndex] = [];
       }
-      tiers[tierIndex].push(knowledge);
-    });
+      acc[tierIndex].push(knowledge);
+      return acc;
+    }, [] as Knowledge[][]);
 
     return tiers?.map((tier, index) => (
       <Stack.Item key={`tier-${index}`}>
@@ -431,7 +430,7 @@ const KnowledgeShop = () => {
             <Stack.Item key={`knowledge-${knowledge.path}`}>
               <KnowledgeNode
                 node={knowledge}
-                purchaseCategory={ShopCategory.Shop}
+                purchaseCategory={knowledge.category}
               />
             </Stack.Item>
           ))}
@@ -529,7 +528,7 @@ const PathContent = ({
             <h1>Choose Path:</h1>{' '}
             <KnowledgeNode
               node={path.starting_knowledge}
-              purchaseCategory={ShopCategory.Tree}
+              purchaseCategory={ShopCategory.Start}
             />
             <div>
               <h3>

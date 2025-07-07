@@ -409,7 +409,7 @@ Striking a noncultist, however, will tear their flesh."}
 	fling_act.Grant(trapped_entity)
 
 	// Set the sword's path for spell selection.
-	heretic_path = heretic_holder.heretic_path
+	heretic_path = heretic_holder.heretic_path.route || PATH_START
 
 	// Copy the objectives to keep for roundend, remove the datum as neither us nor the heretic need it anymore
 	var/list/copied_objectives = heretic_holder.objectives.Copy()

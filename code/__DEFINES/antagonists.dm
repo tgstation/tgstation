@@ -106,6 +106,7 @@
 #define HKT_COST "cost"
 /// Only present for already researched knowledge.
 #define HKT_INSTANCE "instance"
+#define HKT_CATEGORY "category"
 
 #define BGR_SIDE "node_side"
 

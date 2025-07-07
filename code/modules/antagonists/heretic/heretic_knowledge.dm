@@ -272,9 +272,18 @@
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	our_heretic.heretic_path = our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]
-	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path)
-	determine_drafted_knowledge(user, our_heretic, our_heretic.heretic_path)
+	for(var/datum/heretic_knowledge_tree_column/column_path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
+		if(column_path::route != our_heretic.researched_knowledge[type][HKT_ROUTE])
+			continue
+		our_heretic.heretic_path = new column_path()
+	if(!our_heretic.heretic_path)
+		// If we don't have a path, we can't continue.
+		to_chat(user, span_warning("Oh shit, something broke, no path found!"))
+		stack_trace("failed to find valid path [our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]] from researching [src]")
+		return
+	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path.route)
+	our_heretic.generate_heretic_research_tree()
+	our_heretic.determine_drafted_knowledge(user, our_heretic.heretic_path)
 
 /datum/heretic_knowledge/limited_amount/starting/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
