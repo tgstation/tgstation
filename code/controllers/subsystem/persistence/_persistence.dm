@@ -157,7 +157,11 @@ SUBSYSTEM_DEF(persistence)
 		var/map
 		var/list/level_traits = list()
 		var/datum/space_level/level_to_check = SSmapping.z_list[z]
-		level_traits += list(level_to_check.traits)
+		var/list/z_traits = level_to_check.traits
+		if(level_to_check.xi || level_to_check.yi)
+			z_traits["xi"] = level_to_check.xi
+			z_traits["yi"] = level_to_check.yi
+		level_traits += list(z_traits)
 
 		if(is_multi_z_level(z))
 			if(!SSmapping.level_trait(z, ZTRAIT_UP) && SSmapping.level_trait(z, ZTRAIT_DOWN))
@@ -167,7 +171,11 @@ SUBSYSTEM_DEF(persistence)
 			var/top_z
 			for(var/above_z in (bottom_z + 1) to world.maxz)
 				var/datum/space_level/above_level_to_check = SSmapping.z_list[above_z]
-				level_traits += list(above_level_to_check.traits)
+				var/list/above_z_traits = above_level_to_check.traits
+				if(above_level_to_check.xi || above_level_to_check.yi)
+					above_z_traits["xi"] = above_level_to_check.xi
+					above_z_traits["yi"] = above_level_to_check.yi
+				level_traits += list(above_z_traits)
 
 				if(!SSmapping.level_trait(above_z, ZTRAIT_UP) && SSmapping.level_trait(above_z, ZTRAIT_DOWN))
 					top_z = above_z
@@ -186,7 +194,7 @@ SUBSYSTEM_DEF(persistence)
 
 		var/json_data = list(
 			"version" = MAP_CURRENT_VERSION,
-			"map_name" = CUSTOM_MAP_PATH,
+			"map_name" = level_to_check.name || CUSTOM_MAP_PATH,
 			"map_path" = map_save_directory,
 			"map_file" = "[z].dmm",
 			// "planetary" we use mining level trait instead ?! double check bc idk how lavaland is setting gravity
