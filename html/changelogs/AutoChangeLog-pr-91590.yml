@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "Additional logging for when people sign up for ghost roles."
