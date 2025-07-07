@@ -80,13 +80,7 @@
  */
 /datum/beam/proc/Start()
 	visuals = new beam_type()
-	visuals.icon = icon
-	visuals.icon_state = icon_state
-	visuals.color = beam_color
-	visuals.vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
-	visuals.emissive = emissive
-	visuals.layer = beam_layer
-	visuals.update_appearance()
+	set_up_effect(visuals, icon_state)
 	Draw()
 	RegisterSignals(origin, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(redrawing))
 	RegisterSignals(target, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(redrawing))
@@ -146,15 +140,14 @@
 		var/obj/effect/ebeam/segment = new beam_type(origin_turf, src)
 		elements += segment
 
-		//Assign our single visual ebeam to each ebeam's vis_contents
 		//ends are cropped by a transparent box icon of length-N pixel size laid over the visuals obj
 		if(N+32>length) //went past the target, we draw a box of space to cut away from the beam sprite so the icon actually ends at the center of the target sprite
-			var/icon/II = new(icon, icon_state)//this means we exclude the overshooting object from the visual contents which does mean those visuals don't show up for the final bit of the beam...
-			II.DrawBox(null,1,(length-N),32,32)//in the future if you want to improve this, remove the drawbox and instead use a 513 filter to cut away at the final object's icon
-			segment.icon = II
+			var/icon/terminal_icon = new(icon, icon_state)//this means we exclude the overshooting object from the visual contents which does mean those visuals don't show up for the final bit of the beam...
+			terminal_icon.DrawBox(null,1,(length-N),32,32)//in the future if you want to improve this, remove the drawbox and instead use a 513 filter to cut away at the final object's icon
+			segment.icon = terminal_icon
 			segment.color = beam_color
 		else
-			segment.vis_contents += visuals
+			set_subsegment_appearance(segment)
 		segment.transform = rot_matrix
 
 		//Calculate pixel offsets (If necessary)
@@ -183,6 +176,50 @@
 		segment.pixel_x = origin_px + Pixel_x
 		segment.pixel_y = origin_py + Pixel_y
 		CHECK_TICK
+
+/datum/beam/proc/set_up_effect(obj/effect/ebeam/beam_effect, effect_icon_state)
+	beam_effect.icon = icon
+	beam_effect.icon_state = effect_icon_state
+	beam_effect.color = beam_color
+	beam_effect.vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
+	beam_effect.emissive = emissive
+	beam_effect.layer = beam_layer
+	beam_effect.update_appearance()
+
+///sets the sprite of the segment, using the more performant viscontents by default
+/datum/beam/proc/set_subsegment_appearance(obj/effect/ebeam/segment)
+	//Assign our single visual ebeam to each ebeam's vis_contents
+	segment.vis_contents += visuals
+
+//for when you don't want each segment to look identital
+/datum/beam/varied
+	//how many variants do we have in addition to the unnumbered state we use as a base icon state and terminal segment
+	var/icon_state_variants = 1
+
+/datum/beam/varied/New(
+	origin,
+	target,
+	icon = 'icons/effects/beam.dmi',
+	icon_state = "b_beam",
+	time = INFINITY,
+	max_distance = INFINITY,
+	beam_type = /obj/effect/ebeam,
+	beam_color = null,
+	emissive = TRUE,
+	override_origin_pixel_x = null,
+	override_origin_pixel_y = null,
+	override_target_pixel_x = null,
+	override_target_pixel_y = null,
+	beam_layer = ABOVE_ALL_MOB_LAYER,
+	icon_state_variants = 1
+	)
+	. = ..()
+
+	src.icon_state_variants = icon_state_variants
+
+/datum/beam/varied/set_subsegment_appearance(obj/effect/ebeam/segment)
+	//we use reall ass icon states here.
+	set_up_effect(segment, "[icon_state][rand(1, icon_state_variants)]")
 
 /obj/effect/ebeam
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -298,8 +335,14 @@
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = ABOVE_ALL_MOB_LAYER,
+	icon_state_variants = 0,
 )
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
+	var/datum/beam/newbeam
+
+	if(icon_state_variants <= 0)
+		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
+	else
+		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_variants)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam

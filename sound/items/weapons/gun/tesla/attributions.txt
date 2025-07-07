@@ -1,0 +1,4 @@
+{
+	tesla_loop.ogg - https://freesound.org/people/Department64/sounds/554749/, License: CC BY 4.0
+	tesla_start.ogg - https://freesound.org/people/Department64/sounds/554749/, License: CC BY 4.0
+}

@@ -47,3 +47,13 @@
 /datum/looping_sound/zipline
 	mid_sounds = list('sound/items/weapons/zipline_mid.ogg' = 1)
 	volume = 5
+
+/datum/looping_sound/tesla_cannon
+	start_sound = list('sound/items/weapons/gun/tesla/tesla_start.ogg' = 1)
+	start_volume = 100
+	mid_sounds = list('sound/items/weapons/gun/tesla/tesla_loop.ogg' = 1)
+	volume = 60
+	end_sound = list('sound/items/weapons/gun/tesla/power_breaker.ogg' = 1)
+	end_volume = 50
+	ignore_walls = FALSE
+	sound_channel = CHANNEL_FULLAUTO //maybe this is improper, but I need the sound to end somehow
