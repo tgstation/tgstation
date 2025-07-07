@@ -222,6 +222,7 @@
 	RegisterSignal(new_occupant, COMSIG_MOB_CLICKON, PROC_REF(handle_occupant_attack))
 	RegisterSignal(new_occupant, COMSIG_QDELETING, PROC_REF(remove_occupant))
 	if(isAI(new_occupant))
+		ADD_TRAIT(new_occupant, TRAIT_CONNECTED_TO_CIRCUIT, REF(src))
 		var/mob/living/silicon/ai = new_occupant
 		ai.reset_perspective(src)
 		// Perspective gets reset whenever multicam is ended.
@@ -245,6 +246,7 @@
 	if(!occupant)
 		return
 	if(isAI(occupant))
+		REMOVE_TRAIT(occupant, TRAIT_CONNECTED_TO_CIRCUIT, REF(src))
 		var/mob/living/silicon/ai/ai = occupant
 		if(!ai.eyeobj)
 			ai.create_eye()

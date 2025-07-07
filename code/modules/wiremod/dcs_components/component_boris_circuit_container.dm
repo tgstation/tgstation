@@ -39,6 +39,8 @@
 	SIGNAL_HANDLER
 	if(!length(mmi_components))
 		return
+	if(HAS_TRAIT(user, TRAIT_CONNECTED_TO_CIRCUIT))
+		return
 	if(length(mmi_components) == 1)
 		var/obj/item/circuit_component/mmi/mmi_comp = mmi_components[1]
 		if(mmi_comp.parent.shell == source)
