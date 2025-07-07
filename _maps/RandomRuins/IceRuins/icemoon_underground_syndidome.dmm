@@ -2193,7 +2193,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "zM" = (
-/turf/closed/indestructible/syndicate/nodiagonal,
+/turf/closed/indestructible/syndicate,
 /area/ruin/syndibiodome)
 "zP" = (
 /obj/machinery/door/airlock/hatch{
@@ -3413,7 +3413,7 @@
 /area/ruin/syndibiodome)
 "Os" = (
 /obj/effect/turf_decal/trimline/tram/filled,
-/turf/closed/indestructible/syndicate/nodiagonal,
+/turf/closed/indestructible/syndicate,
 /area/ruin/syndibiodome)
 "Oy" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
