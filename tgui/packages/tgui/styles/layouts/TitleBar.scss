@@ -52,16 +52,7 @@
   }
 
   &__KitchenSink {
-    background-color: hsl(
-      from var(--color-green) h s calc(l - var(--adjust-hover))
-    );
-    color: var(--color-text-fixed-white);
-    text-align: center;
     border-radius: 0;
-
-    &:hover {
-      background-color: var(--color-green) !important;
-    }
   }
 
   &__close {

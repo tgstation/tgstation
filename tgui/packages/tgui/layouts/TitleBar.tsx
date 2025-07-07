@@ -69,6 +69,7 @@ export function TitleBar(props: TitleBarProps) {
       {process.env.NODE_ENV !== 'production' && (
         <Button
           className="TitleBar__buttons TitleBar__KitchenSink"
+          color="green"
           icon="bug"
           onClick={() => dispatch(toggleKitchenSink())}
         />

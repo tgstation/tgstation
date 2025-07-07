@@ -21,6 +21,33 @@
     <!-- Root element for tgui interfaces -->
     <div id="react-root"></div>
 
+    <!-- Error container -->
+    <div id="Error">
+      <div class="Error__modal">
+        <div class="Section Section--fill">
+          <div class="Error__section--title">
+            <div>NTOS Error Handler</div>
+            <button id="Error__copy" class="Button">Copy</button>
+            <button id="Error__close" class="Button">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="Error__content--wrapper">
+            <div class="Error__content">
+              <div>
+                An error occurred in TGUI. You can try to continue, but stability
+                may be compromised! If something doesn't work, send the copy of the
+                following stack trace to an
+                <a href="https://github.com/tgstation/tgstation">authorized Nanotrasen incident handler</a>.
+                Thank you for your cooperation.
+              </div>
+              <div id="Error__stack"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Fatal error container -->
     <div id="FatalError" class="FatalError">
       <!-- prettier-ignore -->
@@ -36,21 +63,15 @@ o8o        `8    "888"  `Y8bood8P'  8""88888P'
       <p class="FatalError__header">
         A fatal exception has occurred at 002B:C562F1B7 in TGUI. The current
         application will be terminated. Send the copy of the following stack
-        trace to an authorized Nanotrasen incident handler at
-        https://github.com/tgstation/tgstation. Thank you for your cooperation.
+        trace to an <a href="https://github.com/tgstation/tgstation">authorized Nanotrasen incident handler</a>.
+        <br>
+        Thank you for your cooperation.
       </p>
       <div id="FatalError__stack" class="FatalError__stack"></div>
       <div class="FatalError__footer">
         <!-- tgui:nt-copyright -->
       </div>
     </div>
-
-    <noscript>
-      <div class="NoticeBox">
-        <div>Javascript is required in order to use this interface.</div>
-        <div>Please enable Javascript and restart the game.</div>
-      </div>
-    </noscript>
 
     <script>
       // Signal tgui that we're ready to receive updates

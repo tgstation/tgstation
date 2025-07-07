@@ -378,6 +378,7 @@
 // MARK: Error handling
 const ERROR_THRESHOLD = 10;
 const ERROR_TIMEOUT = 10000;
+const ERROR_SHOW_TIMEOUT = 500;
 
 let errorTimeout;
 let errorsCount = 0;
@@ -400,6 +401,34 @@ window.onerror = function (msg, url, line, col, error) {
     errorTimeout = setTimeout(() => {
       errorsCount = 0;
     }, ERROR_TIMEOUT);
+
+    const errorRoot = document.getElementById('Error');
+    const errorStack = document.getElementById('Error__stack');
+    const closeErrorButton = document.getElementById('Error__close');
+    const copyErrorButton = document.getElementById('Error__copy');
+    if (closeErrorButton) {
+      closeErrorButton.addEventListener('click', () => {
+        errorRoot.className = '';
+      });
+    }
+
+    if (copyErrorButton) {
+      copyErrorButton.addEventListener('click', () => {
+        navigator.clipboard.writeText(stack);
+        copyErrorButton.classList.add('copied');
+        copyErrorButton.textContent = 'Copied!';
+
+        setTimeout(() => {
+          copyErrorButton.classList.remove('copied');
+          copyErrorButton.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+
+    if (errorRoot) {
+      errorRoot.className = 'Error--visible';
+      errorStack.textContent = stack;
+    }
     return;
   }
 
@@ -410,26 +439,22 @@ window.onerror = function (msg, url, line, col, error) {
   }
 
   // Print error to the page
-  const errorRoot = document.getElementById('FatalError');
-  const errorStack = document.getElementById('FatalError__stack');
-  if (errorRoot) {
-    errorRoot.className = 'FatalError FatalError--visible';
-    errorStack.textContent = stack;
+  const fatalErrorRoot = document.getElementById('FatalError');
+  const fatalErrorStack = document.getElementById('FatalError__stack');
+  if (fatalErrorRoot) {
+    fatalErrorRoot.className = 'FatalError FatalError--visible';
+    fatalErrorStack.textContent = stack;
   }
 
   // Set window geometry
-  function setFatalErrorGeometry() {
-    const pixelRatio = window.devicePixelRatio ?? 1;
-    const size = 500 * pixelRatio;
-    Byond.winset(Byond.windowId, {
-      size: `${size}x${size}`,
-      titlebar: true,
-      'is-visible': true,
-      'can-resize': true,
-    });
-  }
-  setFatalErrorGeometry();
-  setInterval(setFatalErrorGeometry, 1000);
+  const pixelRatio = window.devicePixelRatio ?? 1;
+  const size = 500 * pixelRatio;
+  Byond.winset(Byond.windowId, {
+    size: `${size}x${size}`,
+    titlebar: true,
+    'is-visible': true,
+    'can-resize': true,
+  });
 
   // Send logs to the game server
   Byond.sendMessage({ type: 'crash', message: stack });

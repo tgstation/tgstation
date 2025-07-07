@@ -99,13 +99,11 @@ const createStackAugmentor =
 
     return (
       stack +
-      '\nUser Agent: ' +
+      '\n\nUser Agent: ' +
       navigator.userAgent +
-      '\nState: ' +
-      JSON.stringify({
-        ckey: config?.client?.ckey,
-        interface: config?.interface,
-        window: config?.window,
-      })
+      '\nInterface: ' +
+      JSON.stringify(config?.interface) +
+      '\nWindow: ' +
+      JSON.stringify(config?.window)
     );
   };
