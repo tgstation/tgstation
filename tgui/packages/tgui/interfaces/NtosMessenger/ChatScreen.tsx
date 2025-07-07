@@ -146,7 +146,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     const { act } = useBackend();
     const { chatRef, recipient } = this.props;
 
-    let ref = chatRef ? chatRef : recipient.ref;
+    const ref = chatRef ? chatRef : recipient.ref;
 
     act('PDA_sendMessage', {
       ref: ref,
@@ -175,7 +175,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     } = this.props;
     const { message, canSend, previewingImage, selectingPhoto } = this.state;
 
-    let filteredMessages: React.JSX.Element[] = [];
+    const filteredMessages: React.JSX.Element[] = [];
 
     for (let index = 0; index < messages.length; index++) {
       const message = messages[index];

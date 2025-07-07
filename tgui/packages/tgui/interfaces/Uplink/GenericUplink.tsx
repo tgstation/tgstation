@@ -33,7 +33,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [compactMode, setCompactMode] = useState(false);
-  let items = props.items.filter((value) => {
+  const items = props.items.filter((value) => {
     if (searchText.length === 0) {
       return value.category === selectedCategory;
     }
