@@ -66,6 +66,14 @@ export function TitleBar(props: TitleBarProps) {
       )}
       <div className="TitleBar__title">{finalTitle}</div>
       {!!children && <div className="TitleBar__buttons">{children}</div>}
+      <Button
+        className="TitleBar__buttons TitleBar__KitchenSink"
+        color="red"
+        icon="bomb"
+        onClick={() => {
+          throw new Error('Manual error thrown.');
+        }}
+      />
       {process.env.NODE_ENV !== 'production' && (
         <Button
           className="TitleBar__buttons TitleBar__KitchenSink"

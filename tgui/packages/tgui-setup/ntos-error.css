@@ -118,7 +118,7 @@
 #Error.Error--visible {
   pointer-events: all;
   background-color: var(--dimmer-background);
-  backdrop-filter: var(--blur-medium);
+  backdrop-filter: var(--blur-small);
 }
 
 #Error.Error--visible .Error__modal {
@@ -130,8 +130,8 @@
 .Error__modal {
   opacity: 0;
   position: relative;
-  width: min(75%, 500px);
-  height: min(75%, 500px);
+  width: min(90%, 500px);
+  height: min(90%, 500px);
   padding: 0.5rem;
   background: var(--color-base);
   transform: translateY(-10%);
@@ -142,18 +142,22 @@
 .Error__section--title {
   display: flex;
   align-items: center;
-  line-height: 1px;
   padding: 0.33rem 0.5rem;
   border-bottom: 2px solid var(--color-primary);
 }
 
 .Error__section--title div {
   flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: bold;
   font-size: 16px;
 }
 
 .Error__content {
+  overflow: auto;
+  scrollbar-width: thin;
   position: absolute;
   inset: 0;
   display: flex;
@@ -162,7 +166,7 @@
   padding: 0.5rem;
 }
 
-.Error__content div {
+.Error__content span {
   text-align: center;
 }
 
@@ -189,9 +193,11 @@
 
 #Error__stack {
   flex: 1;
+  min-height: 100px;
   overflow: hidden scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--color-scrollbar-thumb) transparent;
+  overflow-wrap: break-word;
   white-space: pre-wrap;
   padding: 0.5rem;
   background-color: var(--color-base);

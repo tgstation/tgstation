@@ -58,11 +58,11 @@ export function getRoutedComponent() {
   const { kitchenSink = false } = useDebug();
 
   if (suspended) {
-    return <SuspendedWindow />;
+    return SuspendedWindow;
   }
 
   if (config?.refreshing) {
-    return <RefreshingWindow />;
+    return RefreshingWindow;
   }
 
   if (process.env.NODE_ENV !== 'production' && kitchenSink) {
