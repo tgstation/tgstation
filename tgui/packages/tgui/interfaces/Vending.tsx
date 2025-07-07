@@ -46,7 +46,6 @@ type Category = {
 type VendingData = {
   all_products_free: boolean;
   onstation: boolean;
-  hasAds: boolean;
   ad: string;
   department: string;
   jobDiscount: number;
@@ -67,7 +66,6 @@ export const Vending = () => {
 
   const {
     onstation,
-    hasAds,
     ad,
     product_records = [],
     coin_records = [],
@@ -118,7 +116,7 @@ export const Vending = () => {
               <UserDetails />
             </Stack.Item>
           )}
-          {!!hasAds && (
+          {ad && (
             <Stack.Item>
               <AdSection AdDisplay={ad} />
             </Stack.Item>

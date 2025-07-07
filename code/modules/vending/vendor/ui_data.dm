@@ -65,7 +65,8 @@
 /obj/machinery/vending/ui_static_data(mob/user)
 	var/list/data = list()
 	data["onstation"] = onstation
-	data["hasAds"] = !!ad_list.len
+	if(ad_list.len)
+		data["ad"] = ad_list[rand(1, ad_list.len)]
 	data["all_products_free"] = all_products_free
 	data["department"] = payment_department
 	data["jobDiscount"] = DEPARTMENT_DISCOUNT
@@ -125,7 +126,7 @@
 			free = length(product_record.returned_products)
 		)
 
-	if(prob(10))
+	if(prob(10) && ad_list.len)
 		.["ad"] = ad_list[rand(1, ad_list.len)]
 
 	.["extended_inventory"] = extended_inventory
