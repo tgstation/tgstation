@@ -21,6 +21,23 @@
 	///Items that the players have loaded into the vendor
 	VAR_PRIVATE/list/vending_machine_input = list()
 
+/obj/machinery/vending/custom/on_deconstruction(disassembled)
+	unbuckle_all_mobs(TRUE)
+	var/turf/current_turf = get_turf(src)
+	if(current_turf)
+		explosion(src, devastation_range = -1, light_impact_range = 3)
+
+/obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item?.tool_behaviour == TOOL_CROWBAR)
+		return NONE
+
+	return ..()
+
+/obj/machinery/vending/custom/examine(mob/user)
+	. = ..()
+	if(panel_open)
+		. -= span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
+
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
 
@@ -32,6 +49,9 @@
 		else
 			vending_machine_input[hash_key] = new_amount
 		update_static_data_for_all_viewers()
+
+/obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
+	return ITEM_INTERACT_FAILURE
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	if(loaded_item.flags_1 & HOLOGRAM_1)
@@ -156,12 +176,6 @@
 		slogan_list += new_slogan
 		last_slogan = world.time + rand(0, slogan_delay)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/vending/custom/on_deconstruction(disassembled)
-	unbuckle_all_mobs(TRUE)
-	var/turf/current_turf = get_turf(src)
-	if(current_turf)
-		explosion(src, devastation_range = -1, light_impact_range = 3)
 
 /obj/machinery/vending/custom/vend(list/params, mob/living/user, list/greyscale_colors)
 	. = FALSE
