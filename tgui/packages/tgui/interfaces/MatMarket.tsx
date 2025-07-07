@@ -88,6 +88,9 @@ export const MatMarket = (props) => {
               time. To prevent market manipulation, all registered traders can
               buy a total of 10 full stacks of materials at a time.
               <br /> <br />
+              When selling materials, prices will be decreased based on the
+              elastic modifier of the material, which will recover over time.
+              <br /> <br />
               All new purchases will include the cost of the shipped crate,
               which may be recycled afterwards.
             </Collapsible>
