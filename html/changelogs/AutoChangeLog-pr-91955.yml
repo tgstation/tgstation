@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Felinids can choose to bite at will, rather than needing to be starving and insane. They will still randomly bite still if they are starving and insane; because they're mentally unstable freaks."
+  - balance: "As a consequence, felinid bites are a smidge less potent and do a bit less damage."
