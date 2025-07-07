@@ -159,7 +159,7 @@ SUBSYSTEM_DEF(persistence)
 		var/datum/space_level/level_to_check = SSmapping.z_list[z]
 		level_traits += list(level_to_check.traits)
 
-		if(SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN)) // multi-z maps
+		if(SSmapping.is_multi_z_level(z))
 			if(!SSmapping.level_trait(z, ZTRAIT_UP) && SSmapping.level_trait(z, ZTRAIT_DOWN))
 				continue // skip all the other z levels if they aren't a bottom
 
@@ -174,7 +174,7 @@ SUBSYSTEM_DEF(persistence)
 					break
 
 			map = write_map(1, 1, bottom_z, world.maxx, world.maxy, top_z)
-		else // single z maps
+		else
 			map = write_map(1, 1, z, world.maxx, world.maxy, z)
 
 		var/file_path = "[map_save_directory]/[z].dmm"
