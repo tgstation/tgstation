@@ -12,8 +12,8 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_AI, PROC_REF(on_ai_click))
 	var/atom/parent_atom = parent
-	var/image/indicator_image = image('icons/mob/huds/hud.dmi', parent, "hudtracking", pixel_x = 8)
-	SET_PLANE_EXPLICIT(indicator_image, ABOVE_GAME_PLANE, parent)
+	var/image/indicator_image = image('icons/mob/huds/hud.dmi', parent_atom, "hudtracking", pixel_x = 8)
+	SET_PLANE_EXPLICIT(indicator_image, ABOVE_LIGHTING_PLANE, parent_atom)
 	indicator_weakref = WEAKREF(parent_atom.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/ais,
 		"boris_circuit_container_[REF(src)]",
