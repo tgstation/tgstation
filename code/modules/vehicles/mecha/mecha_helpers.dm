@@ -29,13 +29,3 @@
 		if(istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic))
 			var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun = I
 			gun.projectiles_cache = gun.projectiles_cache_max
-
-/////////////////////////////
-///// Tracker Blocking /////
-///////////////////////////
-
-/obj/vehicle/sealed/mecha/proc/check_tracker(flag_to_check)
-	for(var/obj/item/mecha_parts/mecha_tracking/tracker in trackers)
-		if(tracker.flag_to_check == flag_to_check)
-			return FALSE //there can only be one...type of this tracker
-	return TRUE
