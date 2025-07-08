@@ -144,7 +144,7 @@
 	for(var/obj/item/stuff in container.contents - manifest_paper)
 		if(isstack(stuff))
 			var/obj/item/stack/thing = stuff
-			container_contents[thing.singular_name] = thing.amount
+			container_contents[thing.singular_name] += thing.amount
 			continue
 		container_contents[stuff.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
