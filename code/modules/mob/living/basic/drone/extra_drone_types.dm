@@ -23,7 +23,6 @@
 	default_headwear = /obj/item/clothing/head/helmet/swat
 	hacked = TRUE
 	can_unhack = FALSE
-	shy = FALSE
 	flavortext = null
 
 	/// The number of telecrystals to put in the drone's uplink
@@ -101,10 +100,9 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearance]_dead"
 
-/// "Classic" drones, which are not shy and get a duffelbag of tools instead of built-in tools.
+/// "Classic" drones, which get a duffelbag of tools instead of built-in tools.
 /mob/living/basic/drone/classic
 	name = "classic drone shell"
-	shy = FALSE
 	default_storage = /obj/item/storage/backpack/duffelbag/drone
 
 /obj/effect/mob_spawn/ghost_role/drone/classic
@@ -127,7 +125,6 @@
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	span_warning("<u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u>")
-	shy = FALSE
 
 /mob/living/basic/drone/derelict/Initialize(mapload)
 	. = ..()

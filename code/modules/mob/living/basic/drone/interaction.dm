@@ -113,9 +113,6 @@
 		update_drone_hack(FALSE)
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/basic/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
-	return !(item.type in drone_item_whitelist_flat) && ..()
-
 /mob/living/basic/drone/getarmor(def_zone, type)
 	var/armorval = 0
 
@@ -156,7 +153,6 @@
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
-		set_shy(FALSE)
 		LAZYADD(mind.special_roles, "Hacked Drone")
 		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 		speed = 1 //gotta go slow
@@ -172,7 +168,6 @@
 		to_chat(src, laws)
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
-		set_shy(initial(shy))
 		LAZYREMOVE(mind.special_roles, "Hacked Drone")
 		ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 		speed = initial(speed)
@@ -185,7 +180,6 @@
  */
 /mob/living/basic/drone/proc/liberate()
 	laws = "1. You are a Free Drone."
-	set_shy(FALSE)
 	to_chat(src, laws)
 
 /**
