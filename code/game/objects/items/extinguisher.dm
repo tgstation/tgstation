@@ -10,11 +10,11 @@
 	pickup_sound = 'sound/items/handling/gas_tank/gas_tank_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gas_tank/gas_tank_drop.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
-	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	throwforce = 13
+	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 7
-	force = 10
+	force = 13
 	demolition_mod = 1.25
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.9)
 	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
@@ -82,6 +82,50 @@
 	if((slot & ITEM_SLOT_HANDS) && fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
 		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
 
+// A secondary attack letting you wind up the extinguisher for a real wallopping to your targets head
+/obj/item/extinguisher/attack_secondary(mob/living/victim, mob/living/user, params)
+	// This only makes sense for heavier extinguishers
+	if(w_class < WEIGHT_CLASS_BULKY)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(!iscarbon(victim) || user.combat_mode)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(user.zone_selected != BODY_ZONE_HEAD)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	var/mob/living/carbon/wallopee = victim
+	var/obj/item/bodypart/head/head_to_bash = wallopee.get_bodypart(check_zone(user.zone_selected))
+	var/head_name = head_to_bash.name
+
+	if(!head_to_bash)
+		to_chat(user, span_warning("There is no head to bash."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
+		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+
+	log_combat(user, wallopee, "prepared to use [src] to bash [wallopee]'s [head_name]")
+
+	wallopee.visible_message(span_danger("[user] begins to raise [src] above [wallopee]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to cave in your [head_name]!"))
+
+	if(do_after(user,  2 SECONDS, target = wallopee))
+		wallopee.visible_message(span_danger("[user] brings [src] heavily down on [wallopee]'s [head_name]."), span_userdanger("[user] brings [src] heavily down on your [head_name]!"))
+
+		var/min_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 20, wound_source = src)
+		var/max_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 40, wound_source = src)
+
+		wallopee.apply_damage(src.force * 2, src.damtype, head_to_bash, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
+		wallopee.emote("scream")
+		log_combat(user, wallopee, "bashed [wallopee]'s [head_name]")
+		user.do_attack_animation(wallopee, used_item = src)
+
+		if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
+			playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+
+		playsound(source = src, soundin = src.hitsound, vol = src.get_clamped_volume(), vary = TRUE)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/extinguisher/empty
 	starting_water = FALSE
