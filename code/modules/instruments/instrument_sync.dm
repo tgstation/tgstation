@@ -218,11 +218,12 @@
 	target.start_playing(user)
 
 /obj/item/instrument_syncer/radio
-	name = "radio music transmitter"
-	desc = "A radio that can be used to sync multiple instruments together, regardless of distance."
+	name = "radio star's baton"
+	desc = "A baton shaped radio that can be used to sync multiple instruments together, regardless of distance."
 	icon_state = "music_baton_radio"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_COMMAND * 3
+	force = 6
 
 /obj/item/instrument_syncer/radio/can_play(mob/living/user, obj/item/thing)
 	return TRUE // Can play from anywhere, no need to be adjacent
