@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"insects" = construct_phobia_regex("insects"),
 	"lizards" = construct_phobia_regex("lizards"),
 	"ocky icky" = construct_phobia_regex("ocky icky"),
+	"power gaming" = construct_phobia_regex("power gaming"),
 	"robots" = construct_phobia_regex("robots"),
 	"security" = construct_phobia_regex("security"),
 	"skeletons" = construct_phobia_regex("skeletons"),
@@ -448,6 +449,17 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/banhammer,
 		/obj/item/toy/plush/awakenedplushie,
 	)),
+	"power gaming" = typecacheof(list(
+		/obj/item/extinguisher/mini,
+		/obj/item/clothing/glasses/meson,
+		/obj/item/soap,
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/crowbar,
+		/obj/item/wirecutters,
+		/obj/item/weldingtool,
+		/obj/item/multitool,
+	)),
 	"robots" = typecacheof(list(
 		/obj/item/ai_module,
 		/obj/item/aicard,
@@ -578,6 +590,12 @@ GLOBAL_LIST_INIT(phobia_species, list(
 	"skeletons" = typecacheof(list(
 		/datum/species/plasmaman,
 		/datum/species/skeleton,
+	)),
+))
+GLOBAL_LIST_INIT(phobia_reagents, list(
+	"power gaming" = typecacheof(list(
+		/datum/reagent/consumable/ethanol/quadruple_sec,
+		/datum/reagent/medicine/c2/multiver,
 	)),
 ))
 

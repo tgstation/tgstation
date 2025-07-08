@@ -19,6 +19,7 @@
 	var/list/trigger_objs //also checked in mob equipment
 	var/list/trigger_turfs
 	var/list/trigger_species
+	var/list/trigger_reagents
 
 /datum/brain_trauma/mild/phobia/New(new_phobia_type)
 	if(new_phobia_type)
@@ -35,6 +36,7 @@
 	trigger_objs = GLOB.phobia_objs[phobia_type]
 	trigger_turfs = GLOB.phobia_turfs[phobia_type]
 	trigger_species = GLOB.phobia_species[phobia_type]
+	trigger_reagents = GLOB.phobia_reagents[phobia_type]
 	..()
 
 /datum/brain_trauma/mild/phobia/on_lose(silent)
@@ -65,6 +67,13 @@
 				freak_out(checked)
 				return
 
+	if(LAZYLEN(trigger_reagents))
+		for(var/obj/item/reagent_containers/seen_container in seen_atoms)
+			for(var/datum/reagent/seen_reagent in seen_container.reagents.reagent_list)
+				if(is_scary_reagent(seen_reagent))
+					freak_out(seen_reagent)
+					return
+
 	seen_atoms -= owner //make sure they aren't afraid of themselves.
 	if(LAZYLEN(trigger_mobs) || LAZYLEN(trigger_species) || LAZYLEN(trigger_objs))
 		for(var/mob/living/checked in seen_atoms)
@@ -80,6 +89,14 @@
 		return TRUE
 	var/obj/item/checked_item = checked
 	return !HAS_TRAIT(checked_item, TRAIT_EXAMINE_SKIP)
+
+/datum/brain_trauma/mild/phobia/proc/is_scary_reagent(datum/checked)
+	if (QDELETED(checked) || !is_type_in_typecache(checked, trigger_reagents))
+		return FALSE
+	if (!isdatum(checked))
+		return TRUE
+	var/datum/reagent/checked_reagent = checked
+	return !HAS_TRAIT(checked_reagent, TRAIT_EXAMINE_SKIP)
 
 /datum/brain_trauma/mild/phobia/proc/is_scary_mob(mob/living/checked)
 	if(is_type_in_typecache(checked, trigger_mobs))
@@ -222,6 +239,10 @@
 
 /datum/brain_trauma/mild/phobia/ocky_icky
 	phobia_type = "ocky icky"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/power_gaming
+	phobia_type = "power gaming"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/robots
