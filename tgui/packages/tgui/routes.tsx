@@ -14,9 +14,9 @@ const UI_NOT_FOUND = 'notFound';
 const requireInterface = require.context('./interfaces');
 
 type UIErrorType = typeof UI_NOT_FOUND | typeof UI_MISSING_EXPORT;
-function routingError(errorType: UIErrorType, name: string) {
+const routingError = (type: UIErrorType, name: string) => () => {
   let errorMessage;
-  switch (errorType) {
+  switch (type) {
     case UI_MISSING_EXPORT:
       errorMessage = `Interface ${name} is missing an export.`;
       break;
@@ -30,7 +30,7 @@ function routingError(errorType: UIErrorType, name: string) {
       <Window.Content scrollable>{errorMessage}</Window.Content>
     </Window>
   );
-}
+};
 
 // Displays an empty Window with scrollable content
 function SuspendedWindow() {
