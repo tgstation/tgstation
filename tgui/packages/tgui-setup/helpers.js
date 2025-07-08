@@ -371,7 +371,7 @@
 
 // MARK: Error handling
 const ERROR_THRESHOLD = 10;
-const ERROR_TIMEOUT = 10000;
+const ERROR_TIMEOUT = 30000;
 const ERROR_SHOW_TIMEOUT = 500;
 
 let errorTimeout;
