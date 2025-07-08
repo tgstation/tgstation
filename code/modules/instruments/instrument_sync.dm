@@ -109,7 +109,7 @@
 
 	// Promotes the next instrument in the list to be the leading instrument
 	// Handles removing the existing image, the next instrument's image, and replacing it with the new leading image
-	if(length(linked_instruments) >= 2)
+	if(length(linked_instruments) >= 2 && thing == linked_instruments[1])
 		var/next_prime_instrument = linked_instruments[2]
 		var/cleared_image = linked_instruments[next_prime_instrument]
 		var/image/new_leading_image = image(
@@ -120,11 +120,12 @@
 		new_leading_image.alpha = 160
 		linked_instruments[next_prime_instrument] = new_leading_image
 
-		var/mob/living/user = loc
-		if(istype(user) && (user.get_slot_by_item(src) & ITEM_SLOT_HANDS))
+		if(isliving(loc))
+			var/mob/living/user = loc
 			user.client?.images -= cleared_image
 			user.client?.images -= linked_instruments[thing]
-			user.client?.images |= new_leading_image
+			if(user.get_slot_by_item(src) & ITEM_SLOT_HANDS)
+				user.client?.images |= new_leading_image
 
 	// Otherwise just clear images
 	else if(isliving(loc))
@@ -222,3 +223,9 @@
 
 /obj/item/instrument_syncer/radio/can_play(mob/living/user, obj/item/thing)
 	return TRUE // Can play from anywhere, no need to be adjacent
+
+/obj/item/instrument_syncer/radio/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/instrument_syncer/radio/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)

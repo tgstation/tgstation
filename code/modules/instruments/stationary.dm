@@ -17,13 +17,18 @@
 	return ..()
 
 /obj/structure/musician/proc/should_stop_playing(atom/music_player)
-	if(!(anchored || can_play_unanchored) || !ismob(music_player))
+	if(!anchored && !can_play_unanchored)
+		return STOP_PLAYING
+	if(!ismob(music_player))
 		return STOP_PLAYING
 	var/mob/user = music_player
-
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(src, span_warning("You don't have the dexterity to do this!"))
 		return STOP_PLAYING
+	if(user.incapacitated)
+		return STOP_PLAYING
+	if(!Adjacent(user))
+		return STOP_PLAYING
+	return NONE
 
 /obj/structure/musician/ui_interact(mob/user)
 	. = ..()
