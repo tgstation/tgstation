@@ -1,4 +1,0 @@
-author: "kuricityy"
-delete-after: True
-changes:
-  - bugfix: "Fixes CatwalkStation's armory not having eguns in the gunlocker."

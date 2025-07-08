@@ -1,5 +1,0 @@
-author: "Deadgebert"
-delete-after: True
-changes:
-  - balance: "Removes buy limit on traitor discounts"
-  - balance: "Purchase limit was added to powersink"
