@@ -87,6 +87,8 @@
 	var/hacked = FALSE
 	/// Whether this drone can be un-hacked. Used for subtypes that cannot be meaningfully "fixed".
 	var/can_unhack = TRUE
+	/// If we have laws to minimize bothering others. Enables or disables drone laws enforcement components (use [/mob/living/basic/drone/proc/set_shy] to set)
+	var/shy = TRUE
 	/// Flavor text announced to drones on [/mob/proc/Login]
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
@@ -199,7 +201,6 @@
 
 	alert_drones(DRONE_NET_DISCONNECT)
 
-
 /mob/living/basic/drone/gib()
 	dust()
 
@@ -248,7 +249,6 @@
 /mob/living/basic/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
 	return -10
 
-
 /mob/living/basic/drone/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -266,6 +266,18 @@
 /mob/living/basic/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER
 	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
+
+/mob/living/basic/drone/proc/set_shy(new_shy)
+	shy = new_shy
+	shy_update()
+
+/mob/living/basic/drone/proc/shy_update()
+	if(shy)
+		REMOVE_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // To shy to touch someone elses hat
+		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
+	else
+		ADD_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // ...I wonder if I can ware pants like a hat
+		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 
 /mob/living/basic/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)

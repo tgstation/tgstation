@@ -37,7 +37,7 @@
 
 /obj/effect/mob_spawn/ghost_role/drone/allow_spawn(mob/user, silent = FALSE)
 	var/client/user_client = user.client
-	if(isnull(user_client) || !CONFIG_GET(flag/use_exp_restrictions_other))
+	if(!initial(drone_type.shy) || isnull(user_client) || !CONFIG_GET(flag/use_exp_restrictions_other))
 		return ..()
 	var/required_role = CONFIG_GET(string/drone_required_role)
 	var/required_playtime = CONFIG_GET(number/drone_role_playtime) * 60
