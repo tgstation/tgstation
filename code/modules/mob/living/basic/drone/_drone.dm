@@ -130,6 +130,7 @@
 		var/obj/item/new_hat = new default_headwear(src)
 		equip_to_slot_or_del(new_hat, ITEM_SLOT_HEAD)
 
+	shy_update()
 	alert_drones(DRONE_NET_CONNECT)
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
