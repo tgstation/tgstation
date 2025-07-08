@@ -833,7 +833,7 @@
 	if(!iscarbon(exposed_mob) || !(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	exposed_mob.adjust_surgery_speed(0.6)
+	exposed_mob.adjust_surgery_speed(0.4)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"

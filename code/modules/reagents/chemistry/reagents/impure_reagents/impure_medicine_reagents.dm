@@ -952,7 +952,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
-	exposed_carbon.adjust_surgery_speed(0.3)
+	exposed_carbon.adjust_surgery_speed(0.7)
 
 /datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
