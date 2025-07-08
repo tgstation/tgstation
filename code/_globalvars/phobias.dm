@@ -459,6 +459,13 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/wirecutters,
 		/obj/item/weldingtool,
 		/obj/item/multitool,
+		/obj/item/clothing/gloves/color/yellow,
+		/obj/item/storage/box/papersack,
+		/obj/item/reagent_containers/cup/glass/sillycup,
+		/obj/item/storage/wallet,
+		/obj/item/storage/backpack/satchel/flat,
+		/obj/item/food/powercrepe,
+
 	)),
 	"robots" = typecacheof(list(
 		/obj/item/ai_module,
@@ -596,6 +603,7 @@ GLOBAL_LIST_INIT(phobia_reagents, list(
 	"power gaming" = typecacheof(list(
 		/datum/reagent/consumable/ethanol/quadruple_sec,
 		/datum/reagent/medicine/c2/multiver,
+		/datum/reagent/consumable/pwr_game,
 	)),
 ))
 

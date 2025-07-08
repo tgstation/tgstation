@@ -71,7 +71,7 @@
 		for(var/obj/item/reagent_containers/seen_container in seen_atoms)
 			for(var/datum/reagent/seen_reagent in seen_container.reagents.reagent_list)
 				if(is_scary_reagent(seen_reagent))
-					freak_out(seen_reagent)
+					freak_out(seen_container)
 					return
 
 	seen_atoms -= owner //make sure they aren't afraid of themselves.
