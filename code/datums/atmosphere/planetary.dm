@@ -63,7 +63,7 @@
 	)
 	restricted_gases = list(
 		/datum/gas/hydrogen=0.3,
-		/datum/gas/water_vapor=0.6,
+		/datum/gas/water_vapor=0.1,
 	)
 	restricted_chance = 30
 

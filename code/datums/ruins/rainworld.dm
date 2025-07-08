@@ -119,3 +119,8 @@
 	name = "Water-Ruin 23"
 	id = "waterruin23"
 	suffix = "23.dmm"
+
+/datum/map_template/ruin/rainworld/twentyfour
+	name = "Water-Ruin 24"
+	id = "waterruin24"
+	suffix = "24.dmm"

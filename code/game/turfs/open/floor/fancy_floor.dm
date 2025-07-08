@@ -186,10 +186,6 @@
 	light_power = 0.80
 	light_color = COLOR_BLUE_LIGHT
 
-/turf/open/floor/grass/fairy/rainworld
-	planetary_atmos = TRUE
-	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
-
 /turf/open/floor/grass/fairy/spawniconchange()
 	icon_state = "fairygrass[rand(0,3)]"
 

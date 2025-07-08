@@ -391,3 +391,13 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_WALLS
+
+/turf/closed/indestructible/temple
+	name = "ancient temple wall"
+	desc = "Feels rough to touch. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/temple.dmi'
+	icon_state = "temple_wall-0"
+	base_icon_state = "temple_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS

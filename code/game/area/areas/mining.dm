@@ -237,6 +237,25 @@
 	icon_state = "danger"
 	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
+/area/rainworld/surface/misty_island
+	name = "Misty Island"
+	icon_state = "explored"
+	area_flags = UNIQUE_AREA
+	map_generator = /datum/map_generator/cave_generator/rainworld/surface/misty_island
+
+/area/rainworld/surface/misty_island/unexplored
+	icon_state = "unexplored"
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+
+/area/rainworld/surface/misty_island/temple
+	name = "Ancient Temple"
+	area_flags = UNIQUE_AREA | NOTELEPORT | MOB_SPAWN_ALLOWED
+
+/area/rainworld/surface/misty_island/temple/inside
+	name = "Ancient Temple"
+	area_has_base_lighting = 0
+	base_lighting_alpha = 0
+
 /**********************Ice Moon Areas**************************/
 
 /area/icemoon
