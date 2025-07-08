@@ -388,7 +388,7 @@ window.onerror = function (msg, url, line, col, error) {
   if (errorsCount <= ERROR_THRESHOLD) {
     // Prevent runtime spam
     if (errorsCount === 1) {
-      Byond.sendMessage({ type: 'error', message: stack });
+      Byond.sendMessage({ type: 'log', error: true, message: stack });
     }
 
     clearTimeout(errorTimeout);
@@ -451,7 +451,7 @@ window.onerror = function (msg, url, line, col, error) {
   });
 
   // Send logs to the game server
-  Byond.sendMessage({ type: 'crash', message: stack });
+  Byond.sendMessage({ type: 'log', fatal: true, message: stack });
 
   // Prevent any updates by killing store
   delete window.__store__;

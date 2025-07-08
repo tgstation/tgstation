@@ -346,11 +346,11 @@
 			send_asset(asset)
 
 	// Make a runtime from UI error
-	if(type == "error" && href_list["message"])
+	if(type == "log" && href_list["error"])
 		CRASH(href_list["message"])
 
 	// Mark this window as fatally errored which prevents it from being suspended.
-	if(type == "crash" && href_list["message"])
+	if(type == "log" && href_list["fatal"])
 		fatally_errored = TRUE
 		CRASH(href_list["message"])
 
