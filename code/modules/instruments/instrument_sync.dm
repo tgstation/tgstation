@@ -16,6 +16,7 @@
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("beats", "conducts", "orchestrates", "directs", "leads", "symphonizes", "syncronizes")
 	attack_verb_simple = list("beat", "conduct", "orchestrate", "direct", "lead", "symphonize", "syncronize")
+	custom_price = PAYCHECK_COMMAND
 	/// Assoc list of instruments linked to this syncer to an image that can be used to display linked instruments on the user's screen.
 	var/list/obj/item/linked_instruments = list()
 
@@ -38,9 +39,9 @@
 
 /obj/item/instrument_syncer/examine(mob/user)
 	. = ..()
-	. += span_info("&bull;Click on an instrument to link it. Right click on an instrument to unlink it.")
-	. += span_info("&bull;Use in hand to start conducting all linked instruments, causing them to simultaneously play the first instrument's song.")
-	. += span_info("&bull;Right click on it while in hand to unlink all instruments.")
+	. += span_info("&bull; Click on an instrument to link it. Right click on an instrument to unlink it.")
+	. += span_info("&bull; Use in hand to start conducting all linked instruments, causing them to simultaneously play the first instrument's song.")
+	. += span_info("&bull; Right click on it while in hand to unlink all instruments.")
 
 /obj/item/instrument_syncer/Destroy()
 	for(var/obj/item/thing as anything in linked_instruments)
@@ -221,6 +222,7 @@
 	desc = "A radio that can be used to sync multiple instruments together, regardless of distance."
 	icon_state = "music_baton_radio"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	custom_price = PAYCHECK_COMMAND * 3
 
 /obj/item/instrument_syncer/radio/can_play(mob/living/user, obj/item/thing)
 	return TRUE // Can play from anywhere, no need to be adjacent
