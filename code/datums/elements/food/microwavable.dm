@@ -54,6 +54,11 @@
 		if(added_reagents) // Add any new reagents that should be added
 			result.reagents.add_reagent_list(added_reagents)
 
+		if(istype(source, /obj/item/food) && istype(result, /obj/item/food))
+			var/obj/item/food/original_food = source
+			var/obj/item/food/microwaved_food = result
+			LAZYADD(microwaved_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
+
 		if(microwaver && microwaver.mind)
 			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))
 

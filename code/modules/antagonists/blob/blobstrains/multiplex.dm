@@ -4,6 +4,8 @@
 
 /datum/blobstrain/multiplex/New(mob/eye/blob/new_overmind, list/blobstrains)
 	. = ..()
+	if(!overmind)
+		return
 	for (var/bt in blobstrains)
 		if (ispath(bt, /datum/blobstrain))
 			src.blobstrains += new bt(overmind)

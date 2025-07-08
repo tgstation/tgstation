@@ -259,7 +259,6 @@
 	SIGNAL_HANDLER
 	source.adjustOrganLoss(ORGAN_SLOT_BRAIN, -30)
 
-	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,
@@ -274,7 +273,7 @@
 			continue
 		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MIND)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
-		new moon_effect(get_turf(carbon_view))
+		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
 		if(carbon_view.has_status_effect(/datum/status_effect/confusion))
 			to_chat(carbon_view, span_big(span_hypnophrase("YOUR HEAD RATTLES WITH A THOUSAND VOICES JOINED IN A MADDENING CACOPHONY OF SOUND AND MUSIC. EVERY FIBER OF YOUR BEING SAYS 'RUN'.")))
 		carbon_view.adjust_confusion(2 SECONDS)
