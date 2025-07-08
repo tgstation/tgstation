@@ -815,10 +815,8 @@
 
 	user.update_equipment_speed_mods()
 
-	if(!initial)
-		if(slot_flags & slot)
-			if(play_equip_sound())
-				return
+	if(!initial && (slot_flags & slot) && (play_equip_sound()))
+		return
 
 	if(slot & ITEM_SLOT_HANDS)
 		play_pickup_sound()
