@@ -109,21 +109,23 @@
 
 	wallopee.visible_message(span_danger("[user] begins to raise [src] above [wallopee]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to cave in your [head_name]!"))
 
-	if(do_after(user,  2 SECONDS, target = wallopee))
-		wallopee.visible_message(span_danger("[user] brings [src] heavily down on [wallopee]'s [head_name]."), span_userdanger("[user] brings [src] heavily down on your [head_name]!"))
+	if(!do_after(user,  2 SECONDS, target = wallopee))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		var/min_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 20, wound_source = src)
-		var/max_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 40, wound_source = src)
+	wallopee.visible_message(span_danger("[user] brings [src] heavily down on [wallopee]'s [head_name]."), span_userdanger("[user] brings [src] heavily down on your [head_name]!"))
 
-		wallopee.apply_damage(src.force * 2, src.damtype, head_to_bash, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
-		wallopee.emote("scream")
-		log_combat(user, wallopee, "bashed [wallopee]'s [head_name]")
-		user.do_attack_animation(wallopee, used_item = src)
+	var/min_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = src)
+	var/max_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = src)
 
-		if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
-			playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+	wallopee.apply_damage(src.force * 2, src.damtype, head_to_bash, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
+	wallopee.emote("scream")
+	log_combat(user, wallopee, "bashed [wallopee]'s [head_name]")
+	user.do_attack_animation(wallopee, used_item = src)
 
-		playsound(source = src, soundin = src.hitsound, vol = src.get_clamped_volume(), vary = TRUE)
+	if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
+		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+
+	playsound(source = src, soundin = src.hitsound, vol = src.get_clamped_volume(), vary = TRUE)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
