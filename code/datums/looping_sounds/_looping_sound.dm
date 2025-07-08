@@ -165,7 +165,8 @@
 			pressure_affected = pressure_affected,
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
-			use_reverb = use_reverb
+			use_reverb = use_reverb,
+			channel = sound_channel || SSsounds.random_available_channel()
 		)
 
 /// Returns the sound we should now be playing.

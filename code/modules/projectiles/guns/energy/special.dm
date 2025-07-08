@@ -392,7 +392,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, autofire_shot_delay =  0.1 SECONDS, firing_sound_loop = /datum/looping_sound/tesla_cannon)
+	AddComponent(/datum/component/automatic_fire, autofire_shot_delay =  100 MILLISECONDS, firing_sound_loop = /datum/looping_sound/tesla_cannon)
 
 /obj/item/gun/energy/tesla_cannon/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(ready_to_fire)
