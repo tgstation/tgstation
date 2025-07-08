@@ -165,5 +165,5 @@
 	. = ..()
 	add_atom_colour(COLOR_MATRIX_INVERT, FIXED_COLOUR_PRIORITY)
 	transform = transform.Turn(180)
-	if(prob(1))
+	if(prob(0.05))
 		name = "evil cannabis leaf"
