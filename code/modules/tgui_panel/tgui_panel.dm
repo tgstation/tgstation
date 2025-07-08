@@ -45,7 +45,6 @@
 	initialized_at = world.time
 	// Perform a clean initialization
 	window.initialize(
-		strict_mode = TRUE,
 		assets = list(
 			get_asset_datum(/datum/asset/simple/tgui_panel),
 		))

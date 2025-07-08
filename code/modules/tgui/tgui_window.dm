@@ -19,7 +19,6 @@
 	var/message_queue
 	var/sent_assets = list()
 	// Vars passed to initialize proc (and saved for later)
-	var/initial_strict_mode
 	var/initial_fancy
 	var/initial_assets
 	var/initial_inline_html
@@ -51,7 +50,6 @@
  * state. You can begin sending messages right after initializing. Messages
  * will be put into the queue until the window finishes loading.
  *
- * optional strict_mode bool - Enables strict error handling and BSOD.
  * optional fancy bool - If TRUE and if this is NOT a panel, will hide the window titlebar.
  * optional assets list - List of assets to load during initialization.
  * optional inline_html string - Custom HTML to inject.
@@ -59,7 +57,6 @@
  * optional inline_css string - Custom CSS to inject.
  */
 /datum/tgui_window/proc/initialize(
-		strict_mode = FALSE,
 		fancy = FALSE,
 		assets = list(),
 		inline_html = "",
@@ -128,7 +125,6 @@
  */
 /datum/tgui_window/proc/reinitialize()
 	initialize(
-		strict_mode = initial_strict_mode,
 		fancy = initial_fancy,
 		assets = initial_assets,
 		inline_html = initial_inline_html,
