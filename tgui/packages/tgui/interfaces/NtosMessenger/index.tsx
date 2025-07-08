@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -141,7 +141,7 @@ const ContactsScreen = (props: any) => {
   const [searchUser, setSearchUser] = useState('');
 
   const sortByUnreads = (array: NtChat[]) =>
-    sortBy(array, (chat) => chat.unread_messages);
+    sortBy(array, [(chat) => chat.unread_messages]);
 
   const searchChatByName = createSearch(
     searchUser,

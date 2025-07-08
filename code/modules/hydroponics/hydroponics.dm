@@ -214,9 +214,9 @@
 	. = ..()
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
-	if(!istype(gone, /obj/item/clothing/head/mob_holder/snail))
+	if(!istype(gone, /obj/item/mob_holder/snail))
 		return
-	var/obj/item/clothing/head/mob_holder/snail_object = gone
+	var/obj/item/mob_holder/snail_object = gone
 	if(snail_object.held_mob)
 		UnregisterSignal(snail_object.held_mob, list(
 			COMSIG_LIVING_DEATH,
@@ -1140,7 +1140,7 @@
 
 /obj/machinery/hydroponics/proc/empty_tray(mob/user)
 	reagents.clear_reagents()
-	for(var/obj/item/clothing/head/mob_holder/snail/possible_snail in contents)
+	for(var/obj/item/mob_holder/snail/possible_snail in contents)
 		possible_snail.forceMove(drop_location())
 	to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 
@@ -1274,12 +1274,12 @@
 
 /obj/machinery/hydroponics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(!istype(arrived, /obj/item/clothing/head/mob_holder/snail))
+	if(!istype(arrived, /obj/item/mob_holder/snail))
 		return
 	our_snail = new
 	vis_contents += our_snail
 	our_snail.layer = layer + 0.01
-	var/obj/item/clothing/head/mob_holder/snail = arrived
+	var/obj/item/mob_holder/snail = arrived
 	RegisterSignals(snail.held_mob, list(COMSIG_MOVABLE_ATTEMPTED_MOVE, COMSIG_LIVING_DEATH), PROC_REF(remove_snail)) //rip
 
 
