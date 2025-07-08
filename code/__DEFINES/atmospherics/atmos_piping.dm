@@ -44,6 +44,7 @@
 //TANKS
 /// The volume of the standard handheld gas tanks on the station.
 #define TANK_STANDARD_VOLUME 70
+#define TANK_EMERGENCY_STANDARD_VOLUME 1
 /// The minimum pressure an gas tanks release valve can be set to.
 #define TANK_MIN_RELEASE_PRESSURE 0
 /// The maximum pressure an gas tanks release valve can be set to.
