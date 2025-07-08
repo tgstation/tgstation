@@ -1,4 +1,4 @@
-/*
+/**
 # sound_effect datum
 * use for when you need multiple sound files to play at random in a playsound
 * see var documentation below
