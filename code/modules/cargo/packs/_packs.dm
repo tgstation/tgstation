@@ -159,10 +159,10 @@
 		var/market_quantity = SSstock_market.materials_quantity[material_type]
 		var/available_quantity = contains[possible_stack]
 		if(available_quantity > market_quantity)
-			var/message = "[possible_stack::singular_name]:requested=[available_quantity],available=[market_quantity],-[available_quantity - market_quantity] sheets."
+			var/message = "[possible_stack::singular_name]: requested=[available_quantity] sheets, available=[market_quantity] sheets, adjusted=[market_quantity - available_quantity] sheets."
 			available_quantity = market_quantity
 			if(!available_quantity)
-				. += "[possible_stack::singular_name]:order cancelled."
+				. += "[possible_stack::singular_name]: order cancelled due to insufficient sheets in the market."
 				contains -= possible_stack
 				continue
 			. += message
