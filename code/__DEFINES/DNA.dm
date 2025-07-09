@@ -51,8 +51,7 @@
 
 #define DNA_UI_GENDER "gender"
 #define DNA_UI_SKIN_TONE "s_tone"
-#define DNA_UI_EYE_COLOR_LEFT "eyeleft"
-#define DNA_UI_EYE_COLOR_RIGHT "eyeright"
+#define DNA_UI_EYE_COLORS "eyecolors"
 #define DNA_UI_HAIR "hair"
 #define DNA_UI_HAIR_COLOR "haircolor"
 #define DNA_UI_FACIALSTYLE "facialstyle"

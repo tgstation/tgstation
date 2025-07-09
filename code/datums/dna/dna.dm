@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/list/identity_list = new
 	for(var/block_id as anything in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
-		identity_list[block_id] = block.get_unique_block(holder)
+		identity_list[block_id] = block.unique_block(holder)
 
 	for(var/block_id as anything in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(!ishuman(holder))
 		CRASH("Non-human mobs shouldn't have DNA")
 	var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[blockid]
-	unique_identity = block.modified_hash(unique_identity, block.get_unique_block(holder))
+	unique_identity = block.modified_hash(unique_identity, block.unique_block(holder))
 
 /datum/dna/proc/update_uf_block(blocknumber)
 	if(!blocknumber)
@@ -551,48 +551,17 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed
-/mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
+//2025: Im unsure if dna is meant to be living, carbon, or human level.. there's contradicting stuff and bugfixes going back 8 years
+//If youre reading this, and you know for sure, update this, or maybe remove the carbon part entirely
+/mob/living/carbon/proc/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
 	if(!has_dna())
 		return
 
-	//Always plural gender if agender
-	if(HAS_TRAIT(src, TRAIT_AGENDER))
-		gender = PLURAL
-		return
-
-	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_UI_GENDER), GENDERS))
-		if(G_MALE)
-			gender = MALE
-		if(G_FEMALE)
-			gender = FEMALE
-		if(G_NEUTER)
-			gender = NEUTER
-		else
-			gender = PLURAL
-
 /mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
-	..()
-	var/structure = dna.unique_identity
-	skin_tone = GLOB.skin_tones[deconstruct_block(get_uni_identity_block(structure, DNA_UI_SKIN_TONE), GLOB.skin_tones.len)]
-	set_eye_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_EYE_COLOR_LEFT)), sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_EYE_COLOR_RIGHT)))
-	set_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_HAIR_COLOR)), update = FALSE)
-	set_facial_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_FACIAL_COLOR)), update = FALSE)
-	set_hair_gradient_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_HAIR_GRADIENT_COLOR)), update = FALSE)
-	set_facial_hair_gradient_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_FACIAL_GRADIENT_COLOR)), update = FALSE)
-	if(HAS_TRAIT(src, TRAIT_SHAVED))
-		set_facial_hairstyle("Shaved", update = FALSE)
-	else
-		var/style = SSaccessories.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_FACIALSTYLE), length(SSaccessories.facial_hairstyles_list))]
-		var/gradient_style = SSaccessories.facial_hair_gradients_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_FACIAL_GRADIENT), length(SSaccessories.facial_hair_gradients_list))]
-		set_facial_hairstyle(style, update = FALSE)
-		set_facial_hair_gradient_style(gradient_style, update = FALSE)
-	if(HAS_TRAIT(src, TRAIT_BALD))
-		set_hairstyle("Bald", update = FALSE)
-	else
-		var/style = SSaccessories.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_HAIR), length(SSaccessories.hairstyles_list))]
-		var/gradient_style = SSaccessories.hair_gradients_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_HAIR_GRADIENT), length(SSaccessories.hair_gradients_list))]
-		set_hairstyle(style, update = FALSE)
-		set_hair_gradient_style(gradient_style, update = FALSE)
+	. = ..()
+	for(var/block_id as anything in GLOB.dna_identity_blocks)
+		var/datum/dna_block/identity/block_to_apply = GLOB.dna_identity_blocks[block_id]
+		block_to_apply.apply_to_mob(src, dna.unique_identity)
 	var/features = dna.unique_features
 	if(dna.features["mcolor"])
 		dna.features["mcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
@@ -813,11 +782,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(value > values)
 		value = values
 	return value
-
-/proc/get_uni_identity_block(identity, blockid)
-	var/blockstart = GLOB.total_ui_len_by_block[blockid]
-	var/datum/dna_block/block = GLOB.dna_identity_blocks[blockid]
-	return copytext(identity, blockstart, blockstart+block.block_length)
 
 /proc/get_uni_feature_block(features, blocknum)
 	return copytext(features, GLOB.total_uf_len_by_block[blocknum], LAZYACCESS(GLOB.total_uf_len_by_block, blocknum+1))

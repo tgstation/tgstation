@@ -6,15 +6,17 @@
 	/// The length of this block when converted to ascii
 	var/block_length = DNA_BLOCK_SIZE
 
-/// Used to generate a unique block for set target.
-/datum/dna_block/proc/get_unique_block(var/mob/living/carbon/human/target)
+/// Used to generate a unique block from the target.
+/datum/dna_block/proc/unique_block(var/mob/living/carbon/human/target)
 	if(!ishuman(target))
 		CRASH("Non-human mobs shouldn't have DNA")
 
-/// The position of this block in its respec
+/// The position of this block's string in its hash type
 /datum/dna_block/proc/position_in_hash()
 	return null
 
+/// Takes in the old hash and a string value to change this block to inside the hash.
+/// Returns a new hash with block's value updated
 /datum/dna_block/proc/modified_hash(old_hash, value)
 	var/block_pos = position_in_hash()
 	if(isnull(block_pos))
@@ -23,11 +25,13 @@
 	var/succeeding_blocks = copytext(old_hash, block_pos + block_length)
 	return (preceding_blocks + value + succeeding_blocks)
 
-/datum/dna_block/proc/get_block(identity)
+/// Gets the block string from the hash inserted
+/datum/dna_block/proc/get_block(from_hash)
 	var/block_pos = position_in_hash()
-	return copytext(identity, block_pos, block_pos + block_length)
+	return copytext(from_hash, block_pos, block_pos + block_length)
 
-/datum/dna_block/proc/update_mob_appearance(var/mob/living/carbon/target)
+/// Applies the DNA effects/appearance that this block's string encodes
+/datum/dna_block/proc/apply_to_mob(var/mob/living/carbon/human/target, dna_hash)
 	return
 
 /// Blocks for unique identities (skin tones, hair style, and gender)

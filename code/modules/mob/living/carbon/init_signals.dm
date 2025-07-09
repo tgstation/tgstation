@@ -31,14 +31,8 @@
 /mob/living/carbon/proc/on_agender_trait_loss(datum/source)
 	SIGNAL_HANDLER
 
-	//updates our gender to be whatever our DNA wants it to be
-	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_UI_GENDER), 3) || pick(G_MALE, G_FEMALE))
-		if(G_MALE)
-			gender = MALE
-		if(G_FEMALE)
-			gender = FEMALE
-		else
-			gender = PLURAL
+	var/datum/dna_block/identity/to_update = GLOB.dna_identity_blocks[DNA_UI_GENDER]
+	to_update.apply_to_mob(src)
 
 /**
  * On gain of TRAIT_NOBREATH

@@ -251,8 +251,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(isnull(new_eye_color))
 		return TRUE
 	user.set_eye_color(sanitize_hexcolor(new_eye_color))
-	user.dna.update_ui_block(DNA_UI_EYE_COLOR_LEFT)
-	user.dna.update_ui_block(DNA_UI_EYE_COLOR_RIGHT)
+	user.dna.update_ui_block(DNA_UI_EYE_COLORS)
 	user.update_body()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
