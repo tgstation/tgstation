@@ -1,3 +1,14 @@
+
+
+// XANTODO, add side effects
+// XANTODO, add side effects
+// XANTODO, add side effects
+// XANTODO, add side effects
+// XANTODO, add side effects
+// DONT FORGET :)
+
+
+
 /*!
  * Contains the eldritch robes for heretics, a suit of armor that they can make via a ritual
  */
@@ -21,7 +32,7 @@
 	/// Whether the hood is flipped up
 	var/hood_up = FALSE
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/equipped(mob/user, slot, initial) // XANTODO, finish converting all the equipped procs and add side effects
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot_flags & slot))
 		on_robes_lost(user, src)
@@ -101,7 +112,9 @@
 	wound = 20
 
 //---- Path-Specific Eldritch Robes, First is robes, then is hood
+
 // Ash
+// Prevents fire from decaying while worn, also passively generates fire via the toggle
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash
 	name = "\improper Scorched Mantle"
 	desc = "Left to burn to tatters, what remains is naught but a blackened echo of the mantle of the Watch. \
@@ -126,15 +139,20 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-// Ash robes prevent fire from decaying while worn. They also passively generate fire via their toggleable effect
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/on_robes_gained(mob/user)
-	user.fire_stack_decay_rate = 0
+	if(!isliving(user))
+		return
+	var/mob/living/wearer = user
+	wearer.fire_stack_decay_rate = 0
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
-	user.fire_stack_decay_rate = initial(user.fire_stack_decay_rate)
+	if(!isliving(user))
+		return
+	var/mob/living/wearer = user
+	wearer.fire_stack_decay_rate = initial(wearer.fire_stack_decay_rate)
 	if(flame_generation)
-		toggle_flames(user)
+		toggle_flames(wearer)
 
 /datum/action/item_action/toggle/flames
 	button_icon = 'icons/effects/magic.dmi'
@@ -151,15 +169,18 @@
 	if(!flame_generation)
 		START_PROCESSING(SSobj, src)
 		user.balloon_alert(user, "enabled")
-	else
-		STOP_PROCESSING(SSobj, src)
-		user.balloon_alert(user, "disabled")
-		if(!isliving(user))
-			user.extinguish()
-		else
-			var/mob/living/living_mob = user
-			living_mob.extinguish_mob()
+		flame_generation = !flame_generation
+		return
+
+	STOP_PROCESSING(SSobj, src)
+	user.balloon_alert(user, "disabled")
 	flame_generation = !flame_generation
+	// Extinguishes the wearer after they disable the flames
+	if(!isliving(user))
+		user.extinguish()
+		return
+	var/mob/living/living_mob = user
+	living_mob.extinguish_mob()
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, flame_creation))
@@ -193,6 +214,7 @@
 	wound = 20
 
 // Blade
+// Is shock-proof and gives you baton resistance
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade
 	name = "\improper Shattered Panoply"
 	desc = "The sharpened edges of this ancient suit of armor assert a revelation known to aspirants of battle; \
@@ -202,12 +224,13 @@
 	armor_type = /datum/armor/eldritch_armor/blade
 	siemens_coefficient = 0
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/on_robes_gained(mob/user)
 	. = ..()
-	if(!(slot_flags & slot))
-		user.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
-		return
 	user.add_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
+	. = ..()
+	user.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
 	name = "\improper Shattered Panoply"
@@ -229,6 +252,7 @@
 	wound = 50
 
 // Cosmic
+// Allows you to toggle gravity for yourself at will
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic
 	name = "\improper Starwoven Cloak"
 	desc = "Gleaming gems conjure forth wisps of power, turning about to illuminate the wearer in a dim radiance. \
@@ -247,9 +271,10 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic/equipped(mob/living/user, slot)
+// Removes your antigravity if you lose the robes
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
-	if(!(slot_flags & slot) && weightless_enabled)
+	if(weightless_enabled)
 		toggle_gravity(user)
 
 /datum/action/item_action/toggle/gravity
@@ -298,6 +323,7 @@
 	wound = 20
 
 // Flesh
+// Emits a healing aura that affects any heretic summons (excluding the heretic himself)
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh
 	name = "Writhing Embrace"
 	desc = "A rotten carcass, or perhaps several, twisted into fleshy polyps, knotted intestines and cracked bone. \
@@ -308,11 +334,8 @@
 	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/healing_aura
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/on_robes_gained(mob/user)
 	. = ..()
-	if(!(slot_flags & slot))
-		QDEL_NULL(healing_aura)
-		return
 	healing_aura = user.AddComponent( \
 		/datum/component/aura_healing, \
 		range = 15, \
@@ -327,6 +350,10 @@
 		healing_color = COLOR_RED, \
 		self_heal = FALSE, \
 	)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
+	. = ..()
+	QDEL_NULL(healing_aura)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	icon_state = "flesh_armor"
@@ -345,28 +372,22 @@
 	wound = 20
 
 // Lock
+// Gives you digital camo, silences your footsteps and makes you un-examineable
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock
 	name = "Shifting Guise"
 	icon_state = "lock_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	armor_type = /datum/armor/eldritch_armor/lock
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_gained(mob/user)
 	. = ..()
-	if(!(slot_flags & slot))
-		user.RemoveElement(/datum/element/digitalcamo)
-		user.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
-		return
 	user.AddElement(/datum/element/digitalcamo)
 	user.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/Destroy()
-	if(!ismob(loc))
-		return ..()
-	var/mob/wearer = loc
-	wearer.RemoveElement(/datum/element/digitalcamo)
-	wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
-	return ..()
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
+	. = ..()
+	user.RemoveElement(/datum/element/digitalcamo)
+	user.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	icon_state = "lock_armor"
@@ -384,6 +405,7 @@
 	wound = 40
 
 // Moon
+// Converts all damage into brain damage, nullifying the attack in the process
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon
 	name = "\improper Resplendant Regalia"
 	desc = "The confounding nature of this opulent garb turns and twists the sight. \
@@ -424,33 +446,10 @@
 		"You hear the clack of a tambourine.",
 	)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/Destroy()
-	if(!ishuman(loc))
-		return ..()
-	var/mob/living/carbon/human/wearer = loc
-	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
-	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
-	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
-	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
-	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
-	on_hud_remove(wearer)
-	return ..()
-
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_gained(mob/living/carbon/human/user)
 	. = ..()
 	if(!ishuman(user))
 		return
-	if(!(slot_flags & slot))
-		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
-		user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
-		UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
-		var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
-		braindead = FALSE
-		if(health_hud in user.hud_used.infodisplay)
-			on_hud_remove(user)
-		return
-
 	// Gives the hud to the wearer, if there's no hud, register the signal to be given on creation
 	if(user.hud_used)
 		on_hud_created(user)
@@ -468,6 +467,21 @@
 	var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_lost(mob/living/carbon/human/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
+	. = ..()
+	if(!ishuman(user))
+		return
+	user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
+	UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
+	var/mob/living/carbon/human/wearer = user
+	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
+	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
+	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
+	on_hud_remove(wearer)
+	braindead = FALSE
+	if(health_hud in user.hud_used.infodisplay)
+		on_hud_remove(user)
 
 /// Gives the health HUD to the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
@@ -595,6 +609,7 @@
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	wearer.death()
 
+/// Blows up your head when you die
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_death(mob/wearer)
 	SIGNAL_HANDLER
 	if(!ishuman(wearer))
@@ -700,6 +715,7 @@
 			icon_state = base_icon_state + "_6"
 
 // Rust
+// Gains more armor while standing on top of rust. Has an animated overlay
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
 	name = "\improper Salvaged Remains"
 	desc = "Touching the folds of this plain robe seem to fill you with unease. \
@@ -731,18 +747,8 @@
 	if(!hood_object_overlay)
 		hood_object_overlay = image('icons/obj/clothing/head/helmet.dmi', icon_state = "rust_armor_overlay")
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_gained(mob/user)
 	. = ..()
-	if(!(slot_flags & slot))
-		UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
-		user.vis_contents -= rust_overlay
-		rusted = FALSE
-		armor_type = /datum/armor/eldritch_armor/rust
-		REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, REF(src))
-		cut_overlay(object_overlay)
-		QDEL_NULL(rust_overlay)
-		QDEL_NULL(rust_appearance)
-		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	rust_overlay = new()
 	rust_overlay.icon = 'icons/mob/clothing/suits/armor.dmi'
@@ -754,17 +760,16 @@
 	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
 	update_appearance(UPDATE_ICON)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Destroy(force)
-	if(!ismob(loc))
-		return ..()
-	var/mob/wearer = loc
-	UnregisterSignal(wearer, list(COMSIG_MOVABLE_MOVED))
-	wearer.vis_contents -= rust_overlay
-	REMOVE_TRAIT(wearer, TRAIT_PIERCEIMMUNE, REF(src))
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
+	user.vis_contents -= rust_overlay
+	rusted = FALSE
+	armor_type = /datum/armor/eldritch_armor/rust
+	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, REF(src))
+	cut_overlay(object_overlay)
 	QDEL_NULL(rust_overlay)
 	QDEL_NULL(rust_appearance)
-	rusted = FALSE
-	return ..()
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -804,16 +809,16 @@
 /// Updates the icon of our overlay and applies the animation
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/update_rust()
 	// Animation + Update the overlay sprite on our armor
-	if(rusted)
-		rust_overlay?.icon_state = "[worn_icon_state]" + "_overlay"
-		flick("[worn_icon_state]"+"_on", rust_overlay)
-		add_overlay(object_overlay)
-		hood?.add_overlay(hood_object_overlay)
-	else
+	if(!rusted)
 		rust_overlay?.icon_state = null
 		flick("[worn_icon_state]"+"_off", rust_overlay)
 		cut_overlay(object_overlay)
 		hood?.cut_overlay(hood_object_overlay)
+		return
+	rust_overlay?.icon_state = "[worn_icon_state]" + "_overlay"
+	flick("[worn_icon_state]"+"_on", rust_overlay)
+	add_overlay(object_overlay)
+	hood?.add_overlay(hood_object_overlay)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -876,6 +881,7 @@
 	wound = 60
 
 // Void
+// Gives you a short stealth when you are hit
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/void
 	name = "\improper Hollow Weave"
 	desc = "At first, the empty canvas of this robe seems to shimmer with a faint, cold light. \
@@ -889,10 +895,11 @@
 	/// Timer before our stealth runs out
 	var/stealth_timer
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/void/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/void/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
-	if((slot_flags & slot) || !timeleft(stealth_timer))
+	if(!timeleft(stealth_timer))
 		return
+	// Remove from stealth when you lose the robes
 	deltimer(stealth_timer)
 	end_stealth(user)
 
