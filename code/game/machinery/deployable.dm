@@ -36,7 +36,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "[src] doesn't need repairs!")
+		balloon_alert(user, "already full integrity!")
 		return ITEM_INTERACT_BLOCKING
 
 	user.balloon_alert_to_viewers("repairing [src]...", "repairing...")
@@ -70,7 +70,7 @@
 	icon_state = "woodenbarricade"
 	resistance_flags = FLAMMABLE
 	bar_material = WOOD
-	// When destroyed or deconstructed, how many planks of wood does our barricade drop? Also determines how many it takes to repair the barricade and by how much.
+	/// When destroyed or deconstructed, how many planks of wood does our barricade drop? Also determines how many it takes to repair the barricade and by how much.
 	var/drop_amount = 3
 
 /obj/structure/barricade/wooden/Initialize(mapload)
@@ -80,26 +80,26 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
 
-/obj/structure/barricade/wooden/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/structure/barricade/wooden/item_interaction(mob/living/user, obj/item/stack/sheet/mineral/wood/our_wood, list/modifiers)
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	if(!istype(tool,/obj/item/stack/sheet/mineral/wood))
+	if(!istype(our_wood,/obj/item/stack/sheet/mineral/wood))
 		return NONE
 
-	var/obj/item/stack/sheet/mineral/wood/wood = tool
-	if(!wood.amount < 5)
-		balloon_alert(user, "need at least 5 planks of wood!")
+	if(!our_wood.amount < 5)
+		balloon_alert(user, "not enough wood!")
+		to_chat(user, span_warning("You need at least five wooden planks to make a barricade!"))
 		return ITEM_INTERACT_BLOCKING
 
 
-	to_chat(user, span_notice("You start adding [tool] to [src]..."))
+	to_chat(user, span_notice("You start adding [our_wood] to [src]..."))
 	playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
 	if(!do_after(user, 5 SECONDS, target=src))
 		balloon_alert(user, "interrupted!")
 		return ITEM_INTERACT_BLOCKING
 
-	wood.use(drop_amount)
+	our_wood.use(drop_amount)
 	repair_damage(20 * drop_amount)
 	return ITEM_INTERACT_SUCCESS
 
