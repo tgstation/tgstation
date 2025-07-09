@@ -557,10 +557,34 @@
 		var/datum/action/innate/seek_master/seek_master = new
 		seek_master.Grant(newstruct)
 
-	if (isnull(target.mind))
-		newstruct.PossessByPlayer(target.key)
+	if (!target.ckey || isnull(target.mind) || is_banned_from(target.ckey, ROLE_CULTIST))
+		to_chat(stoner, "[span_userdanger("Shell imbuement failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
+		target = SSpolling.poll_ghosts_for_target(
+			"Do you want to play as [span_danger(newstruct.real_name)]?",
+			check_jobban = ROLE_CULTIST,
+			role = ROLE_CULTIST,
+			poll_time = 10 SECONDS,
+			checked_target = newstruct,
+			alert_pic = newstruct,
+			role_name_text = "inactive construct",
+			ignore_category = POLL_IGNORE_SHADE
+		)
+
+		if (QDELETED(newstruct))
+			return
+
+		if (!target?.client)
+			to_chat(stoner, span_danger("There were no spirits willing to become a construct."))
+			new /obj/structure/constructshell(newstruct.drop_location())
+			qdel(newstruct)
+			return
+
+		if (!QDELETED(master))
+			to_chat(stoner, span_notice("A new soul has possessed [newstruct]!"))
+		newstruct.PossessByPlayer(target.ckey)
 	else
 		target.mind.transfer_to(newstruct, force_key_move = TRUE)
+
 	var/atom/movable/screen/alert/bloodsense/sense_alert
 	if(newstruct.mind && !IS_CULTIST(newstruct) && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)
