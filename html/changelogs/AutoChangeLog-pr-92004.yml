@@ -1,0 +1,4 @@
+author: "ZeWaka"
+delete-after: True
+changes:
+  - bugfix: "white TGUI window flashing should be less present"

@@ -139,7 +139,7 @@ function getErrorText(
   message: string,
   target: boolean,
 ) {
-  let reasonList: string[] = [];
+  const reasonList: string[] = [];
   if (!target) reasonList.push('target');
   if (!name) reasonList.push('name');
   if (!job) reasonList.push('job');

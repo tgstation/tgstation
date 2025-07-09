@@ -73,7 +73,7 @@ export const random_species: Feature<RandomSetting> = {
   component: (props) => {
     const { act, data } = useBackend<PreferencesMenuData>();
 
-    const species = data.character_preferences.randomization['species'];
+    const species = data.character_preferences.randomization.species;
 
     return (
       <RandomizationButton
