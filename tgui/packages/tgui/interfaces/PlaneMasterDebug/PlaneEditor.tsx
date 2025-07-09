@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
-import { Plane } from './types';
+import type { Plane } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneEditor() {
