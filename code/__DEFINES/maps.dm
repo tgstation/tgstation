@@ -44,7 +44,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SPACERUIN_MAP_EDGE_PAD 15
 
 /// Distance from edge to move to another z-level
-#define TRANSITIONEDGE 7
+#define TRANSITIONEDGE 8
 
 // Maploader bounds indices
 /// The maploader index for the maps minimum x
@@ -119,6 +119,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 	#define SELFLOOPING "Self"
 	// CROSSLINKED - mixed in with the cross-linked space pool
 	#define CROSSLINKED "Cross"
+	// GRIDLINKED - connected in a consistent grid
+	#define GRIDLINKED "Grid"
 
 // string - type path of the z-level's baseturf (defaults to space)
 #define ZTRAIT_BASETURF "Baseturf"
@@ -133,8 +135,16 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+
+#define ZTRAITS_WILDS list(\
+	ZTRAIT_LINKAGE = GRIDLINKED, \
+	ZTRAIT_ICE_RUINS = TRUE, \
+	ZTRAIT_SNOWSTORM = FALSE, \
+	ZTRAIT_BASETURF = /turf/open/misc/asteroid/snow/icemoon)
+
 ///Z level traits for Deep Ocean
 #define ZTRAITS_OCEAN list(ZTRAIT_LINKAGE = SELFLOOPING, ZTRAIT_OCEAN_RUINS = TRUE, ZTRAIT_NOPARALLAX = TRUE, ZTRAIT_RAINSTORM = TRUE, ZTRAIT_BASETURF = /turf/open/water/no_planet_atmos/deep/rainworld)
+
 ///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
 	ZTRAIT_MINING = TRUE, \
