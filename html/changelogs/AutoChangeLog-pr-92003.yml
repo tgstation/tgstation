@@ -1,0 +1,5 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - rscadd: "Medical (and Science) can now print Organ Jars from their protolathes! Their shatter-proofing requires some plastic, though."
+  - balance: "Organ Jar capacity lowered to 120u, and they can only pour in large quantities (have you ever tried pouring out of a jar with a lip like that? Disaster. Such a mess.)."
