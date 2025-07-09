@@ -21,6 +21,41 @@
 	/// Whether the hood is flipped up
 	var/hood_up = FALSE
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/equipped(mob/user, slot, initial) // XANTODO, finish converting all the equipped procs and add side effects
+	. = ..()
+	if(!(slot_flags & slot))
+		on_robes_lost(user, src)
+		return
+	if(!IS_HERETIC(user))
+		robes_side_effect(user)
+		return
+	// Heretic equipped the robes? Grant them the effects
+	on_robes_gained(user)
+	RegisterSignal(user, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
+	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_robes_lost))
+
+/// Adds effects to the user when they equip their robes
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_gained(mob/user)
+	SHOULD_CALL_PARENT(FALSE) // Base robes have no effects
+
+/// Removes any effects that our robes have
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(user, list(COMSIG_PREQDELETED, COMSIG_MOB_DROPPED_ITEM))
+
+/// Applies a punishment to the user when the robes are equipped
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/robes_side_effect(mob/user)
+	SHOULD_CALL_PARENT(FALSE) // Base robes have no side effect
+
+/// Removes any effects if the robes are deleted
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_deleted()
+	SIGNAL_HANDLER
+	if(!ismob(loc))
+		return
+	var/mob/wearer = loc
+	on_robes_lost(wearer, src)
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_up(obj/item/clothing/head/hooded/hood)
 	hood_up = TRUE
 
@@ -91,14 +126,15 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/equipped(mob/living/user, slot)
-	. = ..()
-	if(!(slot_flags & slot))
-		user.fire_stack_decay_rate = initial(user.fire_stack_decay_rate)
-		if(flame_generation)
-			toggle_flames(user)
-		return
+// Ash robes prevent fire from decaying while worn. They also passively generate fire via their toggleable effect
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/on_robes_gained(mob/user)
 	user.fire_stack_decay_rate = 0
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
+	. = ..()
+	user.fire_stack_decay_rate = initial(user.fire_stack_decay_rate)
+	if(flame_generation)
+		toggle_flames(user)
 
 /datum/action/item_action/toggle/flames
 	button_icon = 'icons/effects/magic.dmi'
