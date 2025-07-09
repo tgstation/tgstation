@@ -131,3 +131,26 @@
 	basic_brute_heal.success(user, clothed_patient, BODY_ZONE_CHEST)
 
 	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
+
+/datum/unit_test/organ_manipulation/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+
+	var/datum/surgery/organ_manipulation/surgery = new(patient, BODY_ZONE_CHEST, patient.get_bodypart(BODY_ZONE_CHEST))
+	var/datum/surgery_step/manipulate_organs/manipulate_organs = new
+
+	// Extract the stomach organ
+	surgery.current_type = "extract"
+	surgery.target_organ = patient.get_organ_slot(ORGAN_SLOT_STOMACH)
+	manipulate_organs.implement_type = TOOL_HEMOSTAT
+	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
+	manipulate_organs.success(user, patient, BODY_ZONE_CHEST, hemostat, surgery)
+	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), null, "Organ manipulation failed to extract stomach organ from patient")
+
+	// Insert a new stomach organ
+	var/obj/item/organ/stomach/stomach = allocate(/obj/item/organ/stomach)
+	surgery.current_type = "insert"
+	surgery.target_organ = stomach
+	manipulate_organs.success(user, patient, BODY_ZONE_CHEST, stomach, surgery)
+
+	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), stomach, "Organ manipulation failed to insert stomach organ into patient")
