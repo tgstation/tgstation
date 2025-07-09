@@ -543,8 +543,7 @@ const TravelTargetSelectionScreen = (props: {
     return Object.keys(all_bands).filter(band_check);
   };
   const valid_destinations =
-    sites &&
-    sites.filter((destination) => !site || destination.ref !== site.ref);
+    sites?.filter((destination) => !site || destination.ref !== site.ref);
   return (
     (drone.drone_status === DroneStatusEnum.Travel && (
       <TravelDimmer drone={drone} />

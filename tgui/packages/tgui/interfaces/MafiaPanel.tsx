@@ -166,7 +166,7 @@ export const MafiaPanel = (props) => {
   return (
     <Window
       title="Mafia"
-      theme={roleinfo && roleinfo.role_theme}
+      theme={roleinfo?.role_theme}
       width={900}
       height={600}
     >
