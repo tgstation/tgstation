@@ -112,9 +112,11 @@
 /turf/open/floor/temple,
 /area/rainworld/surface/misty_island/temple/inside)
 "zI" = (
-/obj/structure/atlantis/statue,
+/obj/structure/atlantis/statue{
+	light_range = 2
+	},
 /turf/open/floor/temple,
-/area/rainworld/surface/misty_island/temple)
+/area/rainworld/surface/misty_island/temple/inside)
 "zY" = (
 /obj/structure/atlantis/column/broken_2,
 /obj/structure/atlantis/column/lantern,
@@ -143,10 +145,11 @@
 /area/rainworld/surface/misty_island/temple/inside)
 "Fk" = (
 /obj/structure/atlantis/statue{
-	dir = 1
+	dir = 1;
+	light_range = 2
 	},
 /turf/open/floor/temple,
-/area/rainworld/surface/misty_island/temple)
+/area/rainworld/surface/misty_island/temple/inside)
 "Gd" = (
 /obj/structure/table/bronze,
 /obj/item/claymore/shortsword{
@@ -211,9 +214,6 @@
 	},
 /turf/open/floor/temple,
 /area/rainworld/surface/misty_island/temple/inside)
-"Qt" = (
-/turf/open/floor/temple,
-/area/rainworld/surface/misty_island/temple)
 "RQ" = (
 /obj/effect/spawner/random/trash/deluxe_garbage,
 /turf/open/floor/temple,
@@ -775,7 +775,7 @@ Tr
 Tr
 Tr
 Tr
-Qt
+Tr
 bX
 bX
 bX
@@ -809,7 +809,7 @@ Tr
 Ek
 Tr
 Tr
-Qt
+Tr
 bX
 bX
 bX
@@ -843,7 +843,7 @@ Tr
 Tr
 Tr
 Tr
-Qt
+Tr
 bX
 bX
 bX

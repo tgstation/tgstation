@@ -49,6 +49,7 @@
 		/mob/living/basic/mining/hivelord = 60,
 		/mob/living/basic/mining/basilisk = 80,
 		/mob/living/basic/lightgeist = 10,
+		/mob/living/basic/mining/faithless_mining = 12,
 
 		/obj/structure/spawner/ice_moon/demonic_portal/lobstrocity = 4,
 		/obj/structure/spawner/ice_moon/demonic_portal/hivelord = 4,
@@ -60,8 +61,8 @@
 
 /datum/map_generator/cave_generator/rainworld/surface/misty_island
 	flora_spawn_chance = 3
-	mob_spawn_chance = 4
-	feature_spawn_chance = 100
+	mob_spawn_chance = 8
+	feature_spawn_chance = 80
 	initial_closed_chance = 50
 	birth_limit = 6
 	death_limit = 4

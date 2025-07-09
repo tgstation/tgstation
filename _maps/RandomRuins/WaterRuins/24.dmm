@@ -4,7 +4,7 @@
 /area/template_noop)
 "e" = (
 /obj/structure/window/reinforced/shuttle/survival_pod,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/rainworld/surface)
 "n" = (
 /obj/machinery/door/airlock/hatch,

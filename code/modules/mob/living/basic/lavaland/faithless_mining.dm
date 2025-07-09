@@ -38,7 +38,7 @@
 
 /mob/living/basic/mining/faithless_mining/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)
 	AddElement(/datum/element/door_pryer)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/mob_grabber, steal_from_others = FALSE)

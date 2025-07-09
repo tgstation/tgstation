@@ -817,6 +817,17 @@
 	attack_verb_continuous = list("donks")
 	attack_verb_simple = list("donk")
 
+/obj/item/toy/plush/wet_owl
+	name = "Wet owl plush"
+	desc = "Was it made this way, or is it the result of a regular owl plush being left out in the rain?"
+	lefthand_file = 'icons/mob/inhands/items/zorp_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/zorp_righthand.dmi'
+	icon = 'icons/obj/toys/zorp.dmi'
+	icon_state = "zorp"
+	inhand_icon_state = "zorp"
+	attack_verb_continuous = list("hoo", "who-who", "toot")
+	attack_verb_simple = list("hoo", "who-who", "toot")
+
 /obj/item/toy/plush/human
 	name = "human plushie"
 	desc = "This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is crying. The human is screaming."

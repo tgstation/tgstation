@@ -4,10 +4,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "c" = (
 /turf/closed/wall,
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "e" = (
 /obj/structure/lattice,
 /turf/open/water/no_planet_atmos/deep/rainworld,
@@ -21,7 +25,9 @@
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "q" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
@@ -37,14 +43,18 @@
 	gpstag = "Public Holophone"
 	},
 /turf/open/floor/plating/icemoon,
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "z" = (
 /obj/machinery/door/window/left/directional/north,
 /obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "J" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -54,13 +64,17 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/icemoon,
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "R" = (
 /obj/machinery/holopad,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/dark/smooth_large,
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "V" = (
 /obj/machinery/vending/coffee,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -68,7 +82,9 @@
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
-/area/rainworld/surface/outdoors/nospawn)
+/area/rainworld/surface/outdoors/nospawn,
+/area/ruin/powered/lavaland_phone_booth,
+/area/ruin/powered/icemoon_phone_booth)
 "W" = (
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)

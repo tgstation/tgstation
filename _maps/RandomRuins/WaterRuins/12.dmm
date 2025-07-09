@@ -42,6 +42,7 @@
 	atom_integrity = 43
 	},
 /obj/item/storage/lockbox/dueling,
+/mob/living/basic/parrot/headsetted,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "cq" = (
