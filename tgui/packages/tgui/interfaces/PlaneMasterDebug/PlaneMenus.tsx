@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Dropdown, Modal, Section, Stack } from 'tgui-core/components';
 
-import { BlendModes, Plane } from './types';
+import { BlendModes, type Plane } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneMenus() {

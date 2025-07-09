@@ -222,39 +222,22 @@
 		return " \[[real_name]\]"
 	return ""
 
-// moved out of admins.dm because things other than admin procs were calling this.
 /**
- * Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
- * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with FLAG_FAKE_ANTAG won't pass.
-*/
-/proc/is_special_character(mob/M, allow_fake_antags = FALSE)
-	if(!SSticker.HasRoundStarted())
-		return FALSE
-	if(!istype(M))
-		return FALSE
-	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext
-		return FALSE
-
-
-	// Returns TRUE if AI has a zeroth law *and* either has a special role *or* an antag datum.
-	if(isAI(M))
-		var/mob/living/silicon/ai/A = M
-		return (A.laws?.zeroth && (A.mind?.special_role || !isnull(M.mind?.antag_datums)))
-
-	if(M.mind?.special_role)
-		return TRUE
-
-	// Turns 'faker' to TRUE if the antag datum is fake. If it's not fake, returns TRUE directly.
-	var/faker = FALSE
-	for(var/datum/antagonist/antag_datum as anything in M.mind?.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
-			faker = TRUE
-		else
+ * Checks if this mob is an antag
+ * By default excludes antags like Valentines, which are "fake antags"
+ */
+/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE)
+	for(var/datum/antagonist/antag_datum as anything in mind?.antag_datums)
+		if(!blacklisted_antag_flags || !(antag_datum.antag_flags & blacklisted_antag_flags))
 			return TRUE
 
-	// If 'faker' was assigned TRUE in the above loop and the argument 'allow_fake_antags' is set to TRUE, this passes.
-	// Else, return FALSE.
-	return (faker && allow_fake_antags)
+	return FALSE
+
+/mob/living/silicon/robot/is_antag(blacklisted_antag_flags)
+	return FALSE
+
+/mob/living/silicon/ai/is_antag(blacklisted_antag_flags)
+	return ..() && !!(laws?.zeroth) // AIs only count as antags if they have a zeroth law (apparently)
 
 /**
  * Fancy notifications for ghosts
@@ -365,16 +348,12 @@
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
-	var/poll_message = "Do you want to play as [span_danger(M.real_name)]?"
-	if(M.mind)
-		poll_message = "[poll_message] Job: [span_notice(M.mind.assigned_role.title)]."
-		if(M.mind.special_role)
-			poll_message = "[poll_message] Status: [span_boldnotice(M.mind.special_role)]."
-		else
-			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
-			if(A)
-				poll_message = "[poll_message] Status: [span_boldnotice(A.name)]."
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
+	var/whomst = span_danger(M.real_name)
+	if(M.mind && !is_unassigned_job(M.mind?.assigned_role))
+		whomst += "Job: [span_notice(M.mind.assigned_role.title)]."
+	if(length(M.mind?.get_special_roles()))
+		whomst += "Status: [span_boldnotice(english_list(M.mind?.get_special_roles()))]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [whomst]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
 
 	if(chosen_one)
 		to_chat(M, "Your mob has been taken over by a ghost!")
@@ -411,13 +390,17 @@
 /mob/proc/get_policy_keywords()
 	. = list()
 	. += "[type]"
-	if(mind)
-		if(mind.assigned_role.policy_index)
-			. += mind.assigned_role.policy_index
-		. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
-		. += mind.special_role //In case there's something special leftover, try to avoid
-		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
-			. += "[antag_datum.type]"
+	if(isnull(mind))
+		return
+	if(mind.assigned_role.policy_index)
+		. += mind.assigned_role.policy_index
+	. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
+	for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+		. += "[antag_datum.type]"
+		if(antag_datum.pref_flag)
+			. += antag_datum.pref_flag
+		if(antag_datum.jobban_flag)
+			. += antag_datum.jobban_flag
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
@@ -429,7 +412,7 @@
 
 /// Returns this mob's default lighting alpha
 /mob/proc/default_lighting_cutoff()
-	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
+	if(client?.combo_hud_enabled && (client?.prefs?.toggles & COMBOHUD_LIGHTING))
 		return LIGHTING_CUTOFF_FULLBRIGHT
 	return initial(lighting_cutoff)
 

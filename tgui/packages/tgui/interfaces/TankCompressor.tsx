@@ -12,7 +12,7 @@ import {
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
@@ -175,7 +175,7 @@ const TankCompressorControls = (props) => {
                 maxValue={maxTransfer}
                 step={1}
                 stepPixelSize={8}
-                onDrag={(e, value) =>
+                onChange={(e, value) =>
                   act('change_rate', {
                     target: value,
                   })

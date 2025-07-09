@@ -1,5 +1,5 @@
-import { sortBy } from 'common/collections';
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { sortBy } from 'es-toolkit';
+import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
 import {
   BlockQuote,
   Button,
@@ -16,7 +16,7 @@ import { formatMoney } from 'tgui-core/format';
 import { useBackend, useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
-import { CargoData, Supply, SupplyCategory } from './types';
+import type { CargoData, Supply, SupplyCategory } from './types';
 
 type Props = {
   express?: boolean;
@@ -47,7 +47,7 @@ export function CargoCatalog(props: Props) {
 
     if (!fetched) return [];
 
-    fetched = sortBy(fetched, (pack: Supply) => pack.name);
+    fetched = sortBy(fetched, [(pack: Supply) => pack.name]);
 
     return fetched;
   }, [activeSupplyName, supplies, searchText]);
@@ -105,7 +105,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
   } = props;
   const { self_paid } = data;
 
-  const sorted = sortBy(categories, (supply) => supply.name);
+  const sorted = sortBy(categories, [(supply) => supply.name]);
 
   return (
     <Stack fill vertical>
