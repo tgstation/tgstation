@@ -76,6 +76,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(area.area_flags & NOTELEPORT)
 		balloon_alert("unable to activate!")
 		return
+	var/area/target_area = get_area(beacon)
+	if(area != target_area && ((area.area_flags & LOCAL_TELEPORT) || (target_area.area_flags & LOCAL_TELEPORT)))
+		balloon_alert("unable to activate!")
+		return
 	if(!safe_for_living_creatures && check_for_living_mobs(thing))
 		to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 		balloon_alert(user, "not safe!")
