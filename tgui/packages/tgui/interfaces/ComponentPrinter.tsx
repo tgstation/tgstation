@@ -6,9 +6,9 @@ import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Material } from './Fabrication/Types';
-import { Design } from './Fabrication/Types';
-import { MaterialMap } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
+import type { Design } from './Fabrication/Types';
+import type { MaterialMap } from './Fabrication/Types';
 
 type Data = {
   debug: BooleanLike;

@@ -1,6 +1,6 @@
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { Region } from '../common/AccessConfig';
+import type { Region } from '../common/AccessConfig';
 
 export type AccessData = {
   name: string;

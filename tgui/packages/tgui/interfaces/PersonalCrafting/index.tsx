@@ -21,7 +21,7 @@ import { CATEGORY_ICONS_COOKING, CATEGORY_ICONS_CRAFTING } from './constants';
 import { FoodtypeContent } from './content/FoodtypeContent';
 import { MaterialContent } from './content/MaterialContent';
 import { RecipeContent, RecipeContentCompact } from './content/RecipeContent';
-import { CraftingData, MODE, Recipe, TABS } from './types';
+import { type CraftingData, MODE, type Recipe, TABS } from './types';
 
 export function PersonalCrafting(props) {
   const { act, data } = useBackend<CraftingData>();

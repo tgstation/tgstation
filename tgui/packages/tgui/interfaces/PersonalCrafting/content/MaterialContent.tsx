@@ -2,7 +2,7 @@ import { useBackend } from 'tgui/backend';
 import { Box, Stack } from 'tgui-core/components';
 
 import { findIcon } from '../helpers';
-import { CraftingData } from '../types';
+import type { CraftingData } from '../types';
 
 type Props = {
   atom_id: string;

@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -20,7 +20,7 @@ import {
   calculateProgression,
   dangerLevelsTooltip,
 } from './calculateDangerLevel';
-import { GenericUplink, Item } from './GenericUplink';
+import { GenericUplink, type Item } from './GenericUplink';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {

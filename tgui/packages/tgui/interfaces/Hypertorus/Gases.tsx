@@ -12,7 +12,7 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
-import { HypertorusFuel, HypertorusGas } from '.';
+import type { HypertorusFuel, HypertorusGas } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {

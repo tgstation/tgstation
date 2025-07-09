@@ -11,7 +11,12 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { FAIcon, LoadoutItem, LoadoutManagerData, ReskinOption } from './base';
+import type {
+  FAIcon,
+  LoadoutItem,
+  LoadoutManagerData,
+  ReskinOption,
+} from './base';
 import { ItemIcon } from './ItemDisplay';
 
 // Used in LoadoutItem to make buttons relating to how an item can be edited

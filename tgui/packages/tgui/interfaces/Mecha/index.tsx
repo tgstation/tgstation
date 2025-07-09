@@ -14,7 +14,7 @@ import { Window } from '../../layouts';
 import { logger } from '../../logging';
 import { AccessConfig } from '../common/AccessConfig';
 import { AlertPane } from './AlertPane';
-import { MainData } from './data';
+import type { MainData } from './data';
 import { ModulesPane } from './ModulesPane';
 
 export const Mecha = (props) => {
