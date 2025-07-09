@@ -9,8 +9,8 @@ import {
   type Position,
 } from '../common/Connections';
 import { BoardTabs } from './BoardTabs';
-import type { DataCase, DataEvidence } from './DataTypes';
 import { Evidence } from './Evidence';
+import type { DataCase, DataEvidence } from './types';
 
 type Data = {
   cases: DataCase[];
@@ -315,13 +315,12 @@ export function DetectiveBoard(props) {
                         key={evidence.ref}
                         evidence={evidence}
                         case_ref={item.ref}
-                        act={act}
-                        onPinStartConnecting={handlePinStartConnecting}
+                        onEvidenceRemoved={handleEvidenceRemoved}
+                        onMoving={handleEvidenceMoving}
                         onPinConnected={handlePinConnected}
                         onPinMouseUp={handleMouseUpOnPin}
-                        onEvidenceRemoved={handleEvidenceRemoved}
+                        onPinStartConnecting={handlePinStartConnecting}
                         onStartMoving={handleEvidenceStartMoving}
-                        onMoving={handleEvidenceMoving}
                         onStopMoving={handleEvidenceStopMoving}
                       />
                     ))}
@@ -343,11 +342,9 @@ export function DetectiveBoard(props) {
                   </Box>
                 </Stack.Item>
                 <Stack.Item align="center" grow={3}>
-                  <Button
-                    icon="plus"
-                    content="Create case"
-                    onClick={() => act('add_case')}
-                  />
+                  <Button icon="plus" onClick={() => act('add_case')}>
+                    Create case
+                  </Button>
                 </Stack.Item>
               </Stack>
             </Stack.Item>

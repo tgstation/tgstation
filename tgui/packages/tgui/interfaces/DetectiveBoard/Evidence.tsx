@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Flex, Stack } from 'tgui-core/components';
 
-import type { DataEvidence } from './DataTypes';
+import { useBackend } from '../../backend';
 import { Pin } from './Pin';
+import type { DataEvidence, EvidenceFn, XYCoords } from './types';
 
 type EvidenceProps = {
   case_ref: string;
   evidence: DataEvidence;
-  act: Function;
-  onPinStartConnecting: Function;
-  onPinConnected: Function;
-  onPinMouseUp: Function;
-  onEvidenceRemoved: Function;
-  onStartMoving: Function;
-  onStopMoving: Function;
-  onMoving: Function;
+  onEvidenceRemoved: EvidenceFn;
+  onMoving: (evidence: DataEvidence, position: XYCoords) => void;
+  onPinConnected: EvidenceFn;
+  onPinMouseUp: (evidence: DataEvidence, event: any) => void;
+  onPinStartConnecting: (evidence: DataEvidence, mousePos: XYCoords) => void;
+  onStartMoving: EvidenceFn;
+  onStopMoving: EvidenceFn;
 };
 
 type Position = {
@@ -23,7 +23,8 @@ type Position = {
 };
 
 export function Evidence(props: EvidenceProps) {
-  const { evidence, case_ref, act } = props;
+  const { act } = useBackend();
+  const { evidence, case_ref } = props;
 
   const [dragging, setDragging] = useState(false);
 

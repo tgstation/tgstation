@@ -19,3 +19,10 @@ export type DataEvidence = {
   text: string;
   connections: string[];
 };
+
+export type XYCoords = {
+  x: number;
+  y: number;
+};
+
+export type EvidenceFn = (evidence: DataEvidence) => void;

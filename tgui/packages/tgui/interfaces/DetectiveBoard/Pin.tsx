@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react';
 import { Box, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import type { DataEvidence } from './DataTypes';
+import type { DataEvidence, XYCoords } from './types';
 
 type PinProps = {
   evidence: DataEvidence;
-  onStartConnecting: Function;
-  onConnected: Function;
-  onMouseUp: Function;
+  onStartConnecting: (evidence: DataEvidence, mousePos: XYCoords) => void;
+  onConnected: (evidence: DataEvidence) => void;
+  onMouseUp: (evidence: DataEvidence, args: any) => void;
 };
 
 export function Pin(props: PinProps) {
-  const { evidence, onStartConnecting, onConnected, onMouseUp } = props;
+  const { evidence } = props;
   const [creatingRope, setCreatingRope] = useState(false);
 
   function handleMouseDown(args) {
     setCreatingRope(true);
-    onStartConnecting(evidence, {
+    props.onStartConnecting(evidence, {
       x: args.clientX,
       y: args.clientY,
     });
@@ -27,16 +27,10 @@ export function Pin(props: PinProps) {
     if (!creatingRope) {
       return;
     }
-    const handleMouseUp = (args: MouseEvent) => {
+    const handleMouseUp = () => {
       if (creatingRope) {
         setCreatingRope(false);
-        onConnected(evidence, {
-          evidence_ref: 'not used',
-          position: {
-            x: args.clientX,
-            y: args.clientY,
-          },
-        });
+        props.onConnected(evidence);
       }
     };
     window.addEventListener('mouseup', handleMouseUp);
@@ -55,7 +49,7 @@ export function Pin(props: PinProps) {
           ])}
           textAlign="center"
           onMouseDown={handleMouseDown}
-          onMouseUp={(args) => onMouseUp(evidence, args)}
+          onMouseUp={(args) => props.onMouseUp(evidence, args)}
         />
       </Stack.Item>
     </Stack>
