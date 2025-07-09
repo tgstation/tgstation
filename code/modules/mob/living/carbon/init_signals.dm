@@ -32,7 +32,7 @@
 	SIGNAL_HANDLER
 
 	//updates our gender to be whatever our DNA wants it to be
-	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3) || pick(G_MALE, G_FEMALE))
+	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_UI_GENDER), 3) || pick(G_MALE, G_FEMALE))
 		if(G_MALE)
 			gender = MALE
 		if(G_FEMALE)

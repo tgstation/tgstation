@@ -1,22 +1,3 @@
-
-/**
- * Some identity blocks (basically pieces of the unique_identity string variable of the dna datum, commonly abbreviated with ui)
- * may have a length that differ from standard length of 3 ASCII characters. This list is necessary
- * for these non-standard blocks to work, as well as the entire unique identity string.
- * Should you add a new ui block which size differ from the standard (again, 3 ASCII characters), like for example, a color,
- * please do not forget to also include it in this list in the following format:
- *  "[dna block number]" = dna block size,
- * Failure to do that may result in bugs. Thanks.
- */
-GLOBAL_LIST_INIT(identity_block_lengths, list(
-		"[DNA_HAIR_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
-		"[DNA_FACIAL_HAIR_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
-		"[DNA_EYE_COLOR_LEFT_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
-		"[DNA_EYE_COLOR_RIGHT_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
-		"[DNA_HAIR_COLOR_GRADIENT_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
-		"[DNA_FACIAL_HAIR_COLOR_GRADIENT_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
-	))
-
 /**
  * The same rules of the above also apply here, with the exception that this is for the unique_features string variable
  * (commonly abbreviated with uf) and its blocks. Both ui and uf have a standard block length of 3 ASCII characters.
@@ -37,9 +18,10 @@ GLOBAL_LIST_INIT(standard_mutation_sources, list(MUTATION_SOURCE_ACTIVATED, MUTA
 /proc/populate_total_ui_len_by_block()
 	. = list()
 	var/total_block_len = 1
-	for(var/blocknumber in 1 to DNA_UNI_IDENTITY_BLOCKS)
+	for(var/block_id as anything in GLOB.dna_identity_blocks)
+		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
 		. += total_block_len
-		total_block_len += GET_UI_BLOCK_LEN(blocknumber)
+		total_block_len += block.block_length
 
 ///Ditto but for unique features. Used by the datum/dna/set_uni_feature_block and datum/dna/get_uni_feature_block procs.
 GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
@@ -211,37 +193,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /datum/dna/proc/generate_unique_identity()
 	. = ""
-	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
+	var/list/identity_list = new
+	for(var/block_id as anything in GLOB.dna_identity_blocks)
+		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
+		identity_list[block_id] = block.get_unique_block(holder)
 
-	//ignores TRAIT_AGENDER so that a "real" gender can be stored in the DNA if later use is needed
-	switch(holder.gender)
-		if(MALE)
-			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, GENDERS)
-		if(FEMALE)
-			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, GENDERS)
-		if(NEUTER)
-			L[DNA_GENDER_BLOCK] = construct_block(G_NEUTER, GENDERS)
-		else
-			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, GENDERS)
-	if(ishuman(holder))
-		var/mob/living/carbon/human/H = holder
-		if(length(SSaccessories.hairstyles_list) == 0 || length(SSaccessories.facial_hairstyles_list) == 0)
-			CRASH("SSaccessories lists are empty, this is bad!")
-
-		L[DNA_HAIRSTYLE_BLOCK] = construct_block(SSaccessories.hairstyles_list.Find(H.hairstyle), length(SSaccessories.hairstyles_list))
-		L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color, include_crunch = FALSE)
-		L[DNA_FACIAL_HAIRSTYLE_BLOCK] = construct_block(SSaccessories.facial_hairstyles_list.Find(H.facial_hairstyle), length(SSaccessories.facial_hairstyles_list))
-		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color, include_crunch = FALSE)
-		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
-		L[DNA_EYE_COLOR_LEFT_BLOCK] = sanitize_hexcolor(H.eye_color_left, include_crunch = FALSE)
-		L[DNA_EYE_COLOR_RIGHT_BLOCK] = sanitize_hexcolor(H.eye_color_right, include_crunch = FALSE)
-		L[DNA_HAIRSTYLE_GRADIENT_BLOCK] = construct_block(SSaccessories.hair_gradients_list.Find(H.grad_style[GRADIENT_HAIR_KEY]), length(SSaccessories.hair_gradients_list))
-		L[DNA_HAIR_COLOR_GRADIENT_BLOCK] = sanitize_hexcolor(H.grad_color[GRADIENT_HAIR_KEY], include_crunch = FALSE)
-		L[DNA_FACIAL_HAIRSTYLE_GRADIENT_BLOCK] = construct_block(SSaccessories.facial_hair_gradients_list.Find(H.grad_style[GRADIENT_FACIAL_HAIR_KEY]), length(SSaccessories.facial_hair_gradients_list))
-		L[DNA_FACIAL_HAIR_COLOR_GRADIENT_BLOCK] = sanitize_hexcolor(H.grad_color[GRADIENT_FACIAL_HAIR_KEY], include_crunch = FALSE)
-
-	for(var/blocknum in 1 to DNA_UNI_IDENTITY_BLOCKS)
-		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
+	for(var/block_id as anything in GLOB.dna_identity_blocks)
+		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
+		. += identity_list[block.block_id] || random_string(block.block_length, GLOB.hex_characters)
 
 /datum/dna/proc/generate_unique_features()
 	. = ""
@@ -281,7 +240,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_FISH_TAIL_BLOCK] = construct_block(SSaccessories.tails_list_fish.Find(features["fish_tail"]), length(SSaccessories.tails_list_fish))
 
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
-		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
+		. += L[blocknum] || random_string(GET_UF_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
@@ -347,45 +306,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/succeeding_blocks = blocknum < GLOB.total_uf_len_by_block.len ? copytext(unique_features, GLOB.total_uf_len_by_block[blocknum+1]) : ""
 	unique_features = precesing_blocks + input + succeeding_blocks
 
-/datum/dna/proc/update_ui_block(blocknumber)
-	if(!blocknumber)
-		CRASH("UI block index is null")
+/datum/dna/proc/update_ui_block(blockid)
+	if(!blockid)
+		CRASH("UI block identifier is null")
 	if(!ishuman(holder))
 		CRASH("Non-human mobs shouldn't have DNA")
-	var/mob/living/carbon/human/H = holder
-	switch(blocknumber)
-		if(DNA_HAIR_COLOR_BLOCK)
-			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.hair_color, include_crunch = FALSE))
-		if(DNA_FACIAL_HAIR_COLOR_BLOCK)
-			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.facial_hair_color, include_crunch = FALSE))
-		if(DNA_SKIN_TONE_BLOCK)
-			set_uni_identity_block(blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
-		if(DNA_EYE_COLOR_LEFT_BLOCK)
-			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.eye_color_left, include_crunch = FALSE))
-		if(DNA_EYE_COLOR_RIGHT_BLOCK)
-			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.eye_color_right, include_crunch = FALSE))
-		if(DNA_GENDER_BLOCK)
-			switch(H.gender)
-				if(MALE)
-					set_uni_identity_block(blocknumber, construct_block(G_MALE, GENDERS))
-				if(FEMALE)
-					set_uni_identity_block(blocknumber, construct_block(G_FEMALE, GENDERS))
-				if(NEUTER)
-					set_uni_identity_block(blocknumber, construct_block(G_NEUTER, GENDERS))
-				else
-					set_uni_identity_block(blocknumber, construct_block(G_PLURAL, GENDERS))
-		if(DNA_FACIAL_HAIRSTYLE_BLOCK)
-			set_uni_identity_block(blocknumber, construct_block(SSaccessories.facial_hairstyles_list.Find(H.facial_hairstyle), length(SSaccessories.facial_hairstyles_list)))
-		if(DNA_HAIRSTYLE_BLOCK)
-			set_uni_identity_block(blocknumber, construct_block(SSaccessories.hairstyles_list.Find(H.hairstyle), length(SSaccessories.hairstyles_list)))
-		if(DNA_HAIRSTYLE_GRADIENT_BLOCK)
-			set_uni_identity_block(blocknumber, construct_block(SSaccessories.hair_gradients_list.Find(H.grad_style[GRADIENT_HAIR_KEY]), length(SSaccessories.hair_gradients_list)))
-		if(DNA_FACIAL_HAIRSTYLE_GRADIENT_BLOCK)
-			set_uni_identity_block(blocknumber, construct_block(SSaccessories.facial_hair_gradients_list.Find(H.grad_style[GRADIENT_FACIAL_HAIR_KEY]), length(SSaccessories.facial_hair_gradients_list)))
-		if(DNA_HAIR_COLOR_GRADIENT_BLOCK)
-			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.grad_color[GRADIENT_HAIR_KEY], include_crunch = FALSE))
-		if(DNA_FACIAL_HAIR_COLOR_GRADIENT_BLOCK)
-			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.grad_color[GRADIENT_FACIAL_HAIR_KEY], include_crunch = FALSE))
+	var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[blockid]
+	unique_identity = block.get_modified_block(unique_identity, block.get_unique_block(holder))
 
 /datum/dna/proc/update_uf_block(blocknumber)
 	if(!blocknumber)
@@ -639,7 +566,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		gender = PLURAL
 		return
 
-	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), GENDERS))
+	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_UI_GENDER), GENDERS))
 		if(G_MALE)
 			gender = MALE
 		if(G_FEMALE)
@@ -652,24 +579,24 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
 	..()
 	var/structure = dna.unique_identity
-	skin_tone = GLOB.skin_tones[deconstruct_block(get_uni_identity_block(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
-	set_eye_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_LEFT_BLOCK)), sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_RIGHT_BLOCK)))
-	set_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_HAIR_COLOR_BLOCK)), update = FALSE)
-	set_facial_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_BLOCK)), update = FALSE)
-	set_hair_gradient_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_HAIR_COLOR_GRADIENT_BLOCK)), update = FALSE)
-	set_facial_hair_gradient_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_GRADIENT_BLOCK)), update = FALSE)
+	skin_tone = GLOB.skin_tones[deconstruct_block(get_uni_identity_block(structure, DNA_UI_SKIN_TONE), GLOB.skin_tones.len)]
+	set_eye_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_EYE_COLOR_LEFT)), sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_EYE_COLOR_RIGHT)))
+	set_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_HAIR_COLOR)), update = FALSE)
+	set_facial_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_FACIAL_COLOR)), update = FALSE)
+	set_hair_gradient_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_HAIR_GRADIENT_COLOR)), update = FALSE)
+	set_facial_hair_gradient_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_UI_FACIAL_GRADIENT_COLOR)), update = FALSE)
 	if(HAS_TRAIT(src, TRAIT_SHAVED))
 		set_facial_hairstyle("Shaved", update = FALSE)
 	else
-		var/style = SSaccessories.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), length(SSaccessories.facial_hairstyles_list))]
-		var/gradient_style = SSaccessories.facial_hair_gradients_list[deconstruct_block(get_uni_identity_block(structure, DNA_FACIAL_HAIRSTYLE_GRADIENT_BLOCK), length(SSaccessories.facial_hair_gradients_list))]
+		var/style = SSaccessories.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_FACIALSTYLE), length(SSaccessories.facial_hairstyles_list))]
+		var/gradient_style = SSaccessories.facial_hair_gradients_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_FACIAL_GRADIENT), length(SSaccessories.facial_hair_gradients_list))]
 		set_facial_hairstyle(style, update = FALSE)
 		set_facial_hair_gradient_style(gradient_style, update = FALSE)
 	if(HAS_TRAIT(src, TRAIT_BALD))
 		set_hairstyle("Bald", update = FALSE)
 	else
-		var/style = SSaccessories.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_BLOCK), length(SSaccessories.hairstyles_list))]
-		var/gradient_style = SSaccessories.hair_gradients_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_GRADIENT_BLOCK), length(SSaccessories.hair_gradients_list))]
+		var/style = SSaccessories.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_HAIR), length(SSaccessories.hairstyles_list))]
+		var/gradient_style = SSaccessories.hair_gradients_list[deconstruct_block(get_uni_identity_block(structure, DNA_UI_HAIR_GRADIENT), length(SSaccessories.hair_gradients_list))]
 		set_hairstyle(style, update = FALSE)
 		set_hair_gradient_style(gradient_style, update = FALSE)
 	var/features = dna.unique_features
@@ -833,8 +760,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
 		CRASH("[src] does not have DNA")
-	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
-	dna.set_uni_feature_block(num, random_string(GET_UI_BLOCK_LEN(num), GLOB.hex_characters))
+	var/mutblock_id = pick(GLOB.dna_identity_blocks)
+	var/datum/dna_block/identity/mutblock = GLOB.dna_identity_blocks[mutblock_id]
+	dna.set_uni_feature_block(mutblock.block_id, random_string(mutblock.block_length, GLOB.hex_characters))
 	updateappearance(mutations_overlay_update=1)
 
 /mob/living/carbon/proc/random_mutate_unique_features()
@@ -853,7 +781,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	clean_dna()
 	random_mutate(candidates, difficulty)
 
-/proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, uf=FALSE, probability)
+/proc/scramble_dna(mob/living/carbon/M, ui = FALSE, se = FALSE, uf = FALSE, probability = 100)
 	if(!M.has_dna())
 		CRASH("[M] does not have DNA")
 	if(HAS_TRAIT(M, TRAIT_NO_DNA_SCRAMBLE))
@@ -864,9 +792,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				M.dna.generate_dna_blocks()
 		M.domutcheck()
 	if(ui)
-		for(var/blocknum in 1 to DNA_UNI_IDENTITY_BLOCKS)
+		for(var/block_id as anything in GLOB.dna_identity_blocks)
+			var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
 			if(prob(probability))
-				M.dna.set_uni_feature_block(blocknum, random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters))
+				M.dna.unique_identity = block.get_modified_block(M.dna.unique_identity, random_string(block.block_length, GLOB.hex_characters))
 	if(uf)
 		for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 			if(prob(probability))
@@ -891,8 +820,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		value = values
 	return value
 
-/proc/get_uni_identity_block(identity, blocknum)
-	return copytext(identity, GLOB.total_ui_len_by_block[blocknum], LAZYACCESS(GLOB.total_ui_len_by_block, blocknum+1))
+/proc/get_uni_identity_block(identity, blockid)
+	var/blockstart = GLOB.total_ui_len_by_block[blockid]
+	var/datum/dna_block/block = GLOB.dna_identity_blocks[blockid]
+	return copytext(identity, blockstart, blockstart+block.block_length)
 
 /proc/get_uni_feature_block(features, blocknum)
 	return copytext(features, GLOB.total_uf_len_by_block[blocknum], LAZYACCESS(GLOB.total_uf_len_by_block, blocknum+1))
