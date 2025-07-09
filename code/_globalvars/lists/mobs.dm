@@ -197,3 +197,19 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 		if(mind)
 			minds += mind
 	return minds
+
+GLOBAL_LIST_INIT(dna_identity_blocks, init_identity_block_types())
+
+/proc/init_identity_block_types()
+	. = list()
+	for(var/datum/dna_block/identity/block_path as anything in subtypesof(/datum/dna_block/identity))
+		var/datum/dna_block/identity/new_block = new block_path()
+		.[block_path.block_id] = new_block
+
+GLOBAL_LIST_INIT(dna_feature_blocks, init_feature_block_types())
+
+/proc/init_feature_block_types()
+	. = list()
+	for(var/datum/dna_block/feature/block_path as anything in subtypesof(/datum/dna_block/feature))
+		var/datum/dna_block/feature/new_block = new block_path()
+		.[block_path.block_id] = new_block

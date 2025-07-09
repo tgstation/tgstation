@@ -62,6 +62,19 @@
 
 #define DNA_UNI_IDENTITY_BLOCKS 12
 
+#define DNA_UI_GENDER "gender"
+#define DNA_UI_SKIN_TONE "s_tone"
+#define DNA_UI_EYE_COLOR_LEFT "eyeleft"
+#define DNA_UI_EYE_COLOR_RIGHT "eyeright"
+#define DNA_UI_HAIR "hair"
+#define DNA_UI_HAIR_COLOR "haircolor"
+#define DNA_UI_FACIALSTYLE "facialstyle"
+#define DNA_UI_FACIAL_COLOR "facialcolor"
+#define DNA_UI_HAIR_GRADIENT "hairgradient"
+#define DNA_UI_HAIR_GRADIENT_COLOR "hairgradientcolor"
+#define DNA_UI_FACIAL_GRADIENT "facialgradient"
+#define DNA_UI_FACIAL_GRADIENT_COLOR "facialgradientcolor"
+
 /// This number needs to equal the total number of DNA blocks
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
@@ -79,6 +92,9 @@
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
 #define DNA_FISH_TAIL_BLOCK 16
+
+#define DNA_UF_MUTANT_COLOR "mcolor"
+
 
 // Hey! Listen up if you're here because you're adding a species feature!
 //
