@@ -230,4 +230,4 @@
 
 /obj/item/air_sensor/atom_deconstruct(disassembled)
 	new /obj/item/analyzer(loc)
-	new /obj/item/stack/sheet/iron(loc, 1)
+	new /obj/item/stack/sheet/iron(loc)

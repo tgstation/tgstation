@@ -2,7 +2,7 @@ import { Box, Button, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function StylePage(props) {
   const { act, data } = useBackend<PodLauncherData>();

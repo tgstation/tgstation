@@ -1,8 +1,8 @@
 {
-	"private": true,
 	"name": "common",
 	"version": "4.3.1",
-	"devDependencies": {
-		"vitest": "^3.1.1"
-	}
+	"dependencies": {
+		"es-toolkit": "^1.39.3"
+	},
+	"private": true
 }

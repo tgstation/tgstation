@@ -151,7 +151,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find vents to run away from
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = null
 	planning_subtrees = list(
