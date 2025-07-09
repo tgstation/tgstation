@@ -42,6 +42,7 @@
 	desc = "A .38 bullet casing."
 	caliber = CALIBER_38
 	projectile_type = /obj/projectile/bullet/c38
+	/// Used for icon building for things like speedloaders and the like to determine what kind of sprite this casing uses. Actually accepts any string, just make sure there is a matching positional sprite in _/icons/obj/weapons/guns/ammo.dmi.
 	var/lead_or_laser = "lead"
 
 /obj/item/ammo_casing/c38/trac
