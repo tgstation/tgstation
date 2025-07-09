@@ -9,7 +9,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

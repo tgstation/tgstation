@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { GenericUplink, Item } from '../Uplink/GenericUplink';
+import { GenericUplink, type Item } from '../Uplink/GenericUplink';
 
 type Category = {
   name: string;

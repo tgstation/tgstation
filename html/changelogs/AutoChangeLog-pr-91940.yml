@@ -1,0 +1,7 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Refactored IV drip item interactions. Please report any issues."
+  - sound: "IV drip alt-click flow minimization/maximization makes the click sound."
+  - qol: "IV drip alt-click flow minimization/maximization gives feedback."
+  - qol: "Updated IV drip screentips."
