@@ -50,7 +50,7 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <Stack.Item>
               <span style={textStyles.variable}>system.</span>
-              <span style={textStyles.danger}>INTRUDERS</span>;
+              <span style={textStyles.danger}>INTRUDERS</span>
             </Stack.Item>
             <Stack.Item>
               while <span style={textStyles.variable}>TARGETS</span>.LIFE !={' '}
