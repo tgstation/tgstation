@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(standard_mutation_sources, list(MUTATION_SOURCE_ACTIVATED, MUTA
 	var/total_block_len = 1
 	for(var/block_id as anything in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
-		. += total_block_len
+		.[block_id] += total_block_len
 		total_block_len += block.block_length
 
 ///Ditto but for unique features. Used by the datum/dna/set_uni_feature_block and datum/dna/get_uni_feature_block procs.
@@ -294,12 +294,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		. += random_string(DNA_UNIQUE_ENZYMES_LEN, GLOB.hex_characters)
 	return .
 
-///Setter macro used to modify unique identity blocks.
-/datum/dna/proc/set_uni_identity_block(blocknum, input)
-	var/precesing_blocks = copytext(unique_identity, 1, GLOB.total_ui_len_by_block[blocknum])
-	var/succeeding_blocks = blocknum < GLOB.total_ui_len_by_block.len ? copytext(unique_identity, GLOB.total_ui_len_by_block[blocknum+1]) : ""
-	unique_identity = precesing_blocks + input + succeeding_blocks
-
 ///Setter macro used to modify unique features blocks.
 /datum/dna/proc/set_uni_feature_block(blocknum, input)
 	var/precesing_blocks = copytext(unique_features, 1, GLOB.total_uf_len_by_block[blocknum])
@@ -312,7 +306,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(!ishuman(holder))
 		CRASH("Non-human mobs shouldn't have DNA")
 	var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[blockid]
-	unique_identity = block.get_modified_block(unique_identity, block.get_unique_block(holder))
+	unique_identity = block.modified_hash(unique_identity, block.get_unique_block(holder))
 
 /datum/dna/proc/update_uf_block(blocknumber)
 	if(!blocknumber)
@@ -795,7 +789,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		for(var/block_id as anything in GLOB.dna_identity_blocks)
 			var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
 			if(prob(probability))
-				M.dna.unique_identity = block.get_modified_block(M.dna.unique_identity, random_string(block.block_length, GLOB.hex_characters))
+				M.dna.unique_identity = block.modified_hash(M.dna.unique_identity, random_string(block.block_length, GLOB.hex_characters))
 	if(uf)
 		for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 			if(prob(probability))

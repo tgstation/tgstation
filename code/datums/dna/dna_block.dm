@@ -12,16 +12,20 @@
 		CRASH("Non-human mobs shouldn't have DNA")
 
 /// The position of this block in its respec
-/datum/dna_block/proc/hash_position()
+/datum/dna_block/proc/position_in_hash()
 	return null
 
-/datum/dna_block/proc/get_modified_block(old_hash, value)
-	var/block_pos = hash_position()
+/datum/dna_block/proc/modified_hash(old_hash, value)
+	var/block_pos = position_in_hash()
 	if(isnull(block_pos))
 		return old_hash
 	var/preceding_blocks = copytext(old_hash, 1, block_pos)
 	var/succeeding_blocks = copytext(old_hash, block_pos + block_length)
 	return (preceding_blocks + value + succeeding_blocks)
+
+/datum/dna_block/proc/get_block(identity)
+	var/block_pos = position_in_hash()
+	return copytext(identity, block_pos, block_pos + block_length)
 
 /datum/dna_block/proc/update_mob_appearance(var/mob/living/carbon/target)
 	return
@@ -29,13 +33,13 @@
 /// Blocks for unique identities (skin tones, hair style, and gender)
 /datum/dna_block/identity
 
-/datum/dna_block/identity/hash_position()
+/datum/dna_block/identity/position_in_hash()
 	return GLOB.total_ui_len_by_block[block_id]
 
 /// Blocks for unique features (mutant color, mutant bodyparts)
 /datum/dna_block/feature
 
-/datum/dna_block/feature/hash_position()
+/datum/dna_block/feature/position_in_hash()
 	return GLOB.total_uf_len_by_block[block_id]
 
 /datum/dna_block/feature/mutant_color
