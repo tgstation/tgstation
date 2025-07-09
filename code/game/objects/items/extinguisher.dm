@@ -194,6 +194,9 @@
 	inhand_icon_state = "foam_extinguisher"
 	tank_holder_icon_state = "holder_foam_extinguisher"
 	dog_fashion = null
+	throwforce = 10
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 10
 	chem = /datum/reagent/firefighting_foam
 	tanktypes = list(
 		/obj/structure/reagent_dispensers/foamtank,
