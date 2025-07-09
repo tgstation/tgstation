@@ -60,7 +60,7 @@ jobs:
         run: ":"
       - name: Ensure genesis_call.dme is unchanged
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: sha256sum -c tools/ci/genesis_call.dme.sha256sum
+        run: sha256sum -c bash tools/ci/check_genesis.sh
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh
