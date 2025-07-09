@@ -86,7 +86,7 @@
 
 /datum/design/c38_flare
 	name = "Speedloader (.38 Flare) (VERY Lethal)"
-	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated pparticle beam towards a target, lighting them up for everyone to see."
+	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	id = "c38_flare"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
