@@ -166,11 +166,6 @@
 	disconnect_port()
 	return ..()
 
-/obj/machinery/smesbank/examine(user)
-	. = ..()
-	if(!connected_port)
-		. += span_warning("This SMES has no connector port!")
-
 /obj/machinery/smesbank/update_overlays()
 	. = ..()
 	if(panel_open || !is_operational)
