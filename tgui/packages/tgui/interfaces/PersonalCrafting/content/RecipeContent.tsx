@@ -8,11 +8,11 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { GroupTitle } from '../GroupTitle';
 import { findIcon } from '../helpers';
-import { CraftingData, Diet, MODE, Recipe } from '../types';
+import { type CraftingData, type Diet, MODE, type Recipe } from '../types';
 import { AtomContent } from './AtomContent';
 import { FoodtypeContent } from './FoodtypeContent';
 import { ToolContent } from './ToolContent';

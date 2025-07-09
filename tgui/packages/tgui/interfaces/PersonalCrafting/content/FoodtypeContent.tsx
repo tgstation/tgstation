@@ -1,7 +1,7 @@
 import { Icon, Stack } from 'tgui-core/components';
 
 import { TYPE_ICONS } from '../constants';
-import { Diet } from '../types';
+import type { Diet } from '../types';
 
 type Props = {
   craftableCount?: number;

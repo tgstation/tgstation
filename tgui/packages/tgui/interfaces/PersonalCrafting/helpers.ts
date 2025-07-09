@@ -1,4 +1,4 @@
-import { CraftingData } from './types';
+import type { CraftingData } from './types';
 
 export function findIcon(atom_id: number, data: CraftingData): string {
   let icon: string = data.icon_data[atom_id];
