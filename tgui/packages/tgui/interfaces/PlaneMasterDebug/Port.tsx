@@ -1,7 +1,7 @@
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { BlendColors, Filter, Plane, Relay } from './types';
+import { BlendColors, type Filter, type Plane, type Relay } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
 export type PortProps = {
