@@ -180,7 +180,7 @@ export const recallWindowGeometry = async (
 // Setup draggable window
 export const setupDrag = async () => {
   // Calculate screen offset caused by the windows taskbar
-  let windowPosition = getWindowPosition();
+  const windowPosition = getWindowPosition();
 
   screenOffsetPromise = Byond.winget(Byond.windowId, 'pos').then((pos) => [
     pos.x - windowPosition[0],

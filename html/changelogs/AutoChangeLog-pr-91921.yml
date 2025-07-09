@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - refactor: "changed how sound handling for item sounds works, report any sounds not making any sounds!"
+  - sound: "handling reagent containers around will play their reagent sloshing sounds more often"

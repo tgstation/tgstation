@@ -42,11 +42,11 @@ export const chatReducer = (state = initialState, action) => {
     // Enable any filters that are not explicitly set, that are
     // enabled by default on the main page.
     // NOTE: This mutates acceptedTypes on the state.
-    for (let id of Object.keys(payload.pageById)) {
+    for (const id of Object.keys(payload.pageById)) {
       const page = payload.pageById[id];
       const filters = page.acceptedTypes;
       const defaultFilters = mainPage.acceptedTypes;
-      for (let type of Object.keys(defaultFilters)) {
+      for (const type of Object.keys(defaultFilters)) {
         if (filters[type] === undefined) {
           filters[type] = defaultFilters[type];
         }
@@ -55,7 +55,7 @@ export const chatReducer = (state = initialState, action) => {
     // Reset page message counts
     // NOTE: We are mutably changing the payload on the assumption
     // that it is a copy that comes straight from the web storage.
-    for (let id of Object.keys(payload.pageById)) {
+    for (const id of Object.keys(payload.pageById)) {
       const page = payload.pageById[id];
       page.unreadCount = 0;
     }
@@ -88,9 +88,9 @@ export const chatReducer = (state = initialState, action) => {
     const pages = state.pages.map((id) => state.pageById[id]);
     const currentPage = state.pageById[state.currentPageId];
     const nextPageById = { ...state.pageById };
-    for (let page of pages) {
+    for (const page of pages) {
       let unreadCount = 0;
-      for (let type of Object.keys(countByType)) {
+      for (const type of Object.keys(countByType)) {
         // Message does not belong here
         if (!canPageAcceptType(page, type)) {
           continue;

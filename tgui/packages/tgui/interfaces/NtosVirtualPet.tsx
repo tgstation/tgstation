@@ -497,7 +497,7 @@ const PetIcon = (props) => {
   const { pet_state_icons = [] } = data;
   const { our_pet_state } = props;
 
-  let icon_display = pet_state_icons.find(
+  const icon_display = pet_state_icons.find(
     (pet_icon) => pet_icon.name === our_pet_state,
   );
 

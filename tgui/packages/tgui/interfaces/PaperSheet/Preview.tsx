@@ -187,7 +187,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     this.lastReadOnly = readOnly;
 
     raw_text_input?.forEach((value) => {
-      let rawText = value.raw_text.trim();
+      const rawText = value.raw_text.trim();
       if (!rawText.length) {
         return;
       }
@@ -197,7 +197,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       const fontBold = value.bold || false;
       const advancedHtml = value.advanced_html || false;
 
-      let processingOutput = this.formatAndProcessRawText(
+      const processingOutput = this.formatAndProcessRawText(
         rawText,
         fontFace,
         fontColor,
@@ -244,7 +244,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     const fontFace = held_item_details?.font || default_pen_font;
     const fontBold = held_item_details?.use_bold || false;
 
-    let processingOutput = this.formatAndProcessRawText(
+    const processingOutput = this.formatAndProcessRawText(
       textArea,
       fontFace,
       fontColor,
@@ -480,7 +480,7 @@ export class PreviewView extends Component<PreviewViewProps> {
 
     const fieldData = field.field_data;
 
-    let input = document.createElement('input');
+    const input = document.createElement('input');
     input.setAttribute('type', 'text');
 
     input.style.fontSize = field.is_signature ? '15px' : `${fontSize}px`;

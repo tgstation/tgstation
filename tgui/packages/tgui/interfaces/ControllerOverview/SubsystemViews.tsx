@@ -54,7 +54,7 @@ export function SubsystemViews(props: Props) {
   let currentMax = 0;
   if (inDeciseconds) {
     for (let i = 0; i < sorted.length; i++) {
-      let value = sorted[i][propName];
+      const value = sorted[i][propName];
       if (typeof value !== 'number') {
         continue;
       }

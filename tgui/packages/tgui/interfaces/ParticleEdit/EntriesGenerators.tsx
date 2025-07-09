@@ -45,7 +45,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
                 var: var_name,
                 var_mod: !Array.isArray(float) ? P_DATA_GENERATOR : null,
                 new_value: !Array.isArray(float)
-                  ? ['num', 0, 1, RandToNumber['UNIFORM_RAND']]
+                  ? ['num', 0, 1, RandToNumber.UNIFORM_RAND]
                   : 0,
               })
             }
@@ -98,7 +98,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
                 var: var_name,
                 var_mod: !Array.isArray(float) ? P_DATA_GENERATOR : null,
                 new_value: !Array.isArray(float)
-                  ? ['num', 0, 1, RandToNumber['UNIFORM_RAND']]
+                  ? ['num', 0, 1, RandToNumber.UNIFORM_RAND]
                   : '#FFFFFF',
               })
             }
@@ -154,12 +154,7 @@ export const EntryGeneratorNumbersList = (
                 var: var_name,
                 var_mod: !isStringArray(input) ? P_DATA_GENERATOR : null,
                 new_value: !isStringArray(input)
-                  ? [
-                      'sphere',
-                      [0, 0, 0],
-                      [1, 1, 1],
-                      RandToNumber['UNIFORM_RAND'],
-                    ]
+                  ? ['sphere', [0, 0, 0], [1, 1, 1], RandToNumber.UNIFORM_RAND]
                   : [1, 1, 1],
               })
             }

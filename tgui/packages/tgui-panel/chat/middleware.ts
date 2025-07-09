@@ -63,7 +63,7 @@ const loadChatFromStorage = async (store: Store) => {
     return;
   }
   if (messages) {
-    for (let message of messages) {
+    for (const message of messages) {
       if (message.html) {
         message.html = DOMPurify.sanitize(message.html, {
           FORBID_TAGS,
