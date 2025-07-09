@@ -18,7 +18,7 @@
 	base_pixel_z = z;
 
 #define _SET_BASE_PIXEL_VISUAL_NO_OFFSET(w, z) \
-	base_pixel_z = w; \
+	base_pixel_w = w; \
 	base_pixel_z = z;
 
 /// Much like [SET_BASE_PIXEL], except it will not effect pixel offsets in mapping programs
