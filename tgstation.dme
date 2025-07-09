@@ -6093,6 +6093,7 @@
 #include "code\modules\shuttle\misc\manipulator.dm"
 #include "code\modules\shuttle\misc\medisim.dm"
 #include "code\modules\shuttle\misc\ripple.dm"
+#include "code\modules\shuttle\misc\shuttle_remote.dm"
 #include "code\modules\shuttle\misc\spaceship_navigation_beacon.dm"
 #include "code\modules\shuttle\misc\special.dm"
 #include "code\modules\shuttle\mobile_port\mobile_port.dm"

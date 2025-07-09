@@ -127,3 +127,81 @@
       stations. We suspect they are being sold to the station through the black market.
   grungussuss:
   - admin: added missing logs for prying
+2025-07-07:
+  EmptyLullaby:
+  - bugfix: The maid costume will no longer summon interdimensional pants onto your
+      digitigrade legs.
+  EnterTheJake:
+  - bugfix: the infiltrator suit  can overslot once more
+  JohnFulpWillard:
+  - bugfix: Getting extra arms attached now gives you your species arms rather than
+      human ones.
+  Krysonism:
+  - balance: sterilizing reagents like sterilizine, honey and alcohols now improve
+      surgery speed more.
+  RealWinterFrost:
+  - image: updates medalbox sprites.
+  - image: adds variants to medal box sprites.
+  SyncIt21:
+  - code_imp: merged New() & Initialize() for atmos machines
+  Time-Green:
+  - bugfix: Fixes inserting nightmare brains implanting the organ into their ???
+  grungussuss:
+  - refactor: refactored trapdoor remote interaction code
+  - qol: added some context tips for tattoo kit
+  - refactor: refactored tattoo kit attackby to item_interactioon
+  - bugfix: highlander cyborgs will get their sword again
+  - refactor: big manipulator ID card locking has been refactored, report any strangeness
+      with these!
+  theOOZ, kittysmooch:
+  - rscadd: Adds the shuttle remote item unlocked with shuttle engineering research,
+      it lets you remote control the whiteship or custom shuttles.
+  throwawayuseless:
+  - bugfix: Hemoanalytic Scanner description is no longer half-complete.
+  timothymtorres:
+  - bugfix: Fix map export including projectiles in saved maps
+  zxaber:
+  - bugfix: Borg modules no longer fail to break if they were holding an item.
+2025-07-08:
+  Deadgebert:
+  - balance: Removes buy limit on traitor discounts
+  - balance: Purchase limit was added to powersink
+  Ezel:
+  - qol: The volume of all airlock pumps are now doubled resulting in faster cycling
+  Jacquerel:
+  - admin: Additional logging for when people sign up for ghost roles.
+  TealSeer:
+  - bugfix: fixed icon preview for maid headband
+  grungussuss:
+  - refactor: refactored how holodisk to holodisk interactions work, report any issues!
+  kuricityy:
+  - bugfix: Fixes CatwalkStation's armory not having eguns in the gunlocker.
+  necromanceranne:
+  - bugfix: Mech beacons actually attach again.
+  - bugfix: You'll get a message about why a beacon failed to attach, if it failed
+      to attach
+  - bugfix: Cryo cannons can not be attached to mechs.
+  - rscadd: Felinids can choose to bite at will, rather than needing to be starving
+      and insane. They will still randomly bite still if they are starving and insane;
+      because they're mentally unstable freaks.
+  - balance: As a consequence, felinid bites are a smidge less potent and do a bit
+      less damage.
+  san7890:
+  - server: Savefile migration has been tweaked a bit, though there realistically
+      shouldn't be any issues with this. Keep a wary eye out though.
+2025-07-09:
+  Maurukas:
+  - map: Birdshot has been moved to the Map Depot
+  Melbert:
+  - bugfix: Fixes some storage items having potentially broken holdable selections
+  ZeWaka:
+  - bugfix: white TGUI window flashing should be less present
+  grungussuss:
+  - refactor: changed how sound handling for item sounds works, report any sounds
+      not making any sounds!
+  - sound: handling reagent containers around will play their reagent sloshing sounds
+      more often
+  jlsnow301:
+  - admin: The admin spawned component printer UI functions again
+  timothymtorres:
+  - code_imp: Add multi-z helper function
