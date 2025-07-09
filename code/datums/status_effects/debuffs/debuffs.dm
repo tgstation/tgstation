@@ -1105,8 +1105,10 @@
 	duration = 2 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/designated_target
 	status_type = STATUS_EFFECT_REFRESH
+	var/obj/effect/dummy/lighting_obj/moblight/mob_flare
 
 /datum/status_effect/designated_target/on_apply()
+	mob_flare = owner.mob_light(3, 15, LIGHT_COLOR_FLARE)
 	ADD_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
 	owner.add_filter("designated_target", 3, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
 	return TRUE
@@ -1118,6 +1120,7 @@
 		qdel(src)
 
 /datum/status_effect/designated_target/on_remove()
+	QDEL_NULL(mob_flare)
 	owner.remove_filter("designated_target")
 	REMOVE_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
 
