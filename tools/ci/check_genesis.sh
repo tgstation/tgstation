@@ -7,7 +7,7 @@ GREEN="\033[0;32m"
 BLUE="\033[0;34m"
 NC="\033[0m" # No Color
 
-if sha256sum -c tools/ci/genesis_call.dme.sha256sum >/dev/null 2>&1; then
+if sha256sum -c tools/ci/genesis_call.dme.sha256sum ; then
     echo -e "${GREEN}code/genesis_call.dme is unchanged.${NC}"
 else
     echo -e "${RED}code/genesis_call.dme has been changed!${NC}"
