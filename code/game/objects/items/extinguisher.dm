@@ -117,7 +117,7 @@
 	var/min_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = src)
 	var/max_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = src)
 
-	wallopee.apply_damage(src.force * 2, src.damtype, head_to_bash, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
+	wallopee.apply_damage(src.force * 3, src.damtype, head_to_bash, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
 	wallopee.emote("scream")
 	log_combat(user, wallopee, "bashed [wallopee]'s [head_name]")
 	user.do_attack_animation(wallopee, used_item = src)
