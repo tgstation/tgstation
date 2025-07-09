@@ -16,17 +16,9 @@
 		"tgui:tsc": "tsc"
 	},
 	"dependencies": {
-		"@rspack/cli": "^1.4.3",
-		"@rspack/core": "^1.4.3",
-		"@typescript-eslint/parser": "^8.13.0",
-		"@typescript-eslint/utils": "^8.13.0",
+		"@rspack/cli": "^1.4.5",
+		"@rspack/core": "^1.4.5",
 		"css-loader": "^7.1.2",
-		"eslint": "^8.57.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-react": "^7.34.1",
-		"eslint-plugin-simple-import-sort": "^12.0.0",
-		"eslint-plugin-unused-imports": "^3.1.0",
-		"prettier": "^3.5.3",
 		"sass-embedded": "^1.89.2",
 		"sass-loader": "^16.0.5",
 		"typescript": "^5.8.3"
