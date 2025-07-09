@@ -11,7 +11,7 @@
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/eye_color_right
-	block_id = DNA_UI_EYE_COLOR_LEFT
+	block_id = DNA_UI_EYE_COLOR_RIGHT
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/hair_style
