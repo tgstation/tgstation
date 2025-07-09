@@ -88,24 +88,21 @@
 	if(w_class < WEIGHT_CLASS_BULKY)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	if(!iscarbon(victim) || user.combat_mode)
-		return SECONDARY_ATTACK_CALL_NORMAL
-
-	if(user.zone_selected != BODY_ZONE_HEAD)
+	if(!iscarbon(victim))
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	var/mob/living/carbon/wallopee = victim
-	var/obj/item/bodypart/head/head_to_bash = wallopee.get_bodypart(check_zone(user.zone_selected))
-	var/head_name = head_to_bash.name
+	var/obj/item/bodypart/head/head_to_bash = wallopee.get_bodypart(BODY_ZONE_HEAD)
 
 	if(!head_to_bash)
-		to_chat(user, span_warning("There is no head to bash."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	var/head_name = head_to_bash.name
 
 	if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
 		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
 
-	log_combat(user, wallopee, "prepared to use [src] to bash [wallopee]'s [head_name]")
+	log_combat(user, wallopee, "prepared to use a bash attack with a [src] against [wallopee]")
 
 	wallopee.visible_message(span_danger("[user] begins to raise [src] above [wallopee]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to cave in your [head_name]!"))
 
@@ -119,7 +116,7 @@
 
 	wallopee.apply_damage(src.force * 3, src.damtype, head_to_bash, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
 	wallopee.emote("scream")
-	log_combat(user, wallopee, "bashed [wallopee]'s [head_name]")
+	log_combat(user, wallopee, "used a bash attack with a [src] against [wallopee]")
 	user.do_attack_animation(wallopee, used_item = src)
 
 	if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
