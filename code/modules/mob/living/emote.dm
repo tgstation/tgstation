@@ -567,7 +567,6 @@
 	key = "twitch"
 	key_third_person = "twitches"
 	message = "twitches violently."
-	stat_allowed = DEAD
 
 /datum/emote/living/twitch/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -582,7 +581,6 @@
 	key = "twitch_s"
 	name = "twitch (Slight)"
 	message = "twitches."
-	stat_allowed = DEAD
 
 /datum/emote/living/twitch_s/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
