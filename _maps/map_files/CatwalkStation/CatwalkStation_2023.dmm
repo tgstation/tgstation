@@ -24779,7 +24779,14 @@
 "hsZ" = (
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/small/directional/west,
-/obj/structure/guncase/ecase,
+/obj/structure/guncase/ecase{
+	open = 0;
+	anchored = 1
+	},
+/obj/item/gun/energy/e_gun,
+/obj/item/gun/energy/e_gun,
+/obj/item/gun/energy/e_gun,
+/obj/item/gun/energy/e_gun,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "htb" = (
@@ -163972,8 +163979,8 @@ nlm
 nlm
 awR
 nlm
-nlm
-nlm
+dcE
+dcE
 mae
 mae
 iin
