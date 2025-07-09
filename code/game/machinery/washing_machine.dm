@@ -241,21 +241,30 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
 	if(!target_type)
 		return FALSE
-	if(initial(target_type.greyscale_config) && initial(target_type.greyscale_colors))
-		set_greyscale(
-			colors=initial(target_type.greyscale_colors),
-			new_config=initial(target_type.greyscale_config),
-			new_worn_config=initial(target_type.greyscale_config_worn),
-			new_inhand_left=initial(target_type.greyscale_config_inhand_left),
-			new_inhand_right=initial(target_type.greyscale_config_inhand_right)
-		)
+
+	var/list/greyscale_args = list()
+
+	if(initial(target_type.greyscale_config))
+		greyscale_args["new_config"] = initial(target_type.greyscale_config)
 	else
 		icon = initial(target_type.icon)
-		lefthand_file = initial(target_type.lefthand_file)
-		righthand_file = initial(target_type.righthand_file)
+	if(initial(target_type.greyscale_config_worn))
+		greyscale_args["new_worn_config"] = initial(target_type.greyscale_config_worn)
+	else
 		worn_icon = initial(target_type.worn_icon)
+	if(initial(target_type.greyscale_config_inhand_left))
+		greyscale_args["new_inhand_left"] = initial(target_type.greyscale_config_inhand_left)
+	else
+		lefthand_file = initial(target_type.lefthand_file)
+	if(initial(target_type.greyscale_config_inhand_right))
+		greyscale_args["new_inhand_right"] = initial(target_type.greyscale_config_inhand_right)
+	else
+		righthand_file = initial(target_type.righthand_file)
+	if(length(greyscale_args))
+		greyscale_args["colors"] = initial(target_type.greyscale_colors) || greyscale_colors || COLOR_WHITE
+		set_greyscale(arglist(greyscale_args))
 
-	icon_state = initial(target_type.icon_state)
+	icon_state = initial(target_type.post_init_icon_state) || initial(target_type.icon_state)
 	inhand_icon_state = initial(target_type.inhand_icon_state)
 	worn_icon_state = initial(target_type.worn_icon_state)
 	inhand_x_dimension = initial(target_type.inhand_x_dimension)

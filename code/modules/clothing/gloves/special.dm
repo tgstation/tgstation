@@ -54,7 +54,6 @@
 	name = "Gloves of the North Star"
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
-	inhand_icon_state = null
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/rapid/Initialize(mapload)
@@ -66,7 +65,6 @@
 	name = "translation gloves"
 	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."
 	icon_state = "radio_g"
-	inhand_icon_state = null
 	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS)
 
 /obj/item/clothing/gloves/race
@@ -84,8 +82,6 @@
 	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
 	name = "captain's gloves"
 	icon_state = "captain"
-	inhand_icon_state = null
-	greyscale_colors = null
 	siemens_coefficient = 0
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -110,7 +106,6 @@
 	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
 	icon_state = "latex"
 	inhand_icon_state = "latex_gloves"
-	greyscale_colors = null
 	siemens_coefficient = 0.3
 	armor_type = /datum/armor/latex_gloves
 	clothing_traits = list(TRAIT_QUICK_CARRY)
@@ -124,7 +119,6 @@
 	name = "nitrile gloves"
 	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
 	icon_state = "nitrile"
-	inhand_icon_state = "greyscale_gloves"
 	greyscale_colors = "#99eeff"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 
@@ -136,7 +130,6 @@
 	name = "coroner's gloves"
 	desc = "Black gloves made from latex with a superhydrophobic coating. Useful for picking bodies up instead of dragging blood behind."
 	icon_state = "latex_black"
-	inhand_icon_state = "greyscale_gloves"
 	greyscale_colors = "#15191a"
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FASTMED)
 
@@ -146,7 +139,6 @@
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
-	inhand_icon_state = "greyscale_gloves"
 	icon_state = "clockwork_gauntlets"
 	greyscale_colors = "#996e23"
 	siemens_coefficient = 0.8

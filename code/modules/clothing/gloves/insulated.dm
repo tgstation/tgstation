@@ -143,7 +143,6 @@
 	desc = "These gloves provide excellent heat and electric insulation."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
-	inhand_icon_state = null
 	greyscale_colors = null
 	siemens_coefficient = 0
 	cold_protection = HANDS
