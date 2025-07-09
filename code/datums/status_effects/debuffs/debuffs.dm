@@ -1105,6 +1105,7 @@
 	duration = 2 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/designated_target
 	status_type = STATUS_EFFECT_REFRESH
+	/// Dummy lighting object for our flare attached to our mob
 	var/obj/effect/dummy/lighting_obj/moblight/mob_flare
 
 /datum/status_effect/designated_target/on_apply()
