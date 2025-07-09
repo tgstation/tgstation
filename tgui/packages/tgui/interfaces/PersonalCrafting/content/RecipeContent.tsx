@@ -230,11 +230,11 @@ export function RecipeContent(props: FullProps) {
                   <Box>
                     <GroupTitle title="Tools" />
                     {item.tool_paths?.map((tool) => (
-                        <AtomContent key={tool} atom_id={tool} amount={1} />
-                      ))}
+                      <AtomContent key={tool} atom_id={tool} amount={1} />
+                    ))}
                     {item.tool_behaviors?.map((tool) => (
-                        <ToolContent key={tool} tool={tool} />
-                      ))}
+                      <ToolContent key={tool} tool={tool} />
+                    ))}
                   </Box>
                 )}
                 {item.machinery && (
