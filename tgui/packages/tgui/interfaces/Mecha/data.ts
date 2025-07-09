@@ -18,7 +18,7 @@ export type MainData = {
   mecha_flags: number;
   internal_damage: number;
   internal_damage_keys: string[];
-  mechflag_keys: string[];
+  mechflag_keys: Record<string, number>;
 
   can_use_overclock: BooleanLike;
   overclock_safety_available: BooleanLike;

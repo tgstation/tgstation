@@ -1,4 +1,4 @@
-import { range } from 'common/collections';
+import { range } from 'es-toolkit';
 import { CSSProperties } from 'react';
 import { Box, Button, Icon, Image, Stack } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';

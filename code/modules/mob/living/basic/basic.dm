@@ -341,3 +341,12 @@
 	Move(get_step(src, dir), dir)
 	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+
+///ovverride to add mob specific cytology mutation effects, returns TRUE if we added a mob specific mutation
+/mob/living/basic/proc/mutate()
+	if(SEND_SIGNAL(src, COMSIG_BASICMOB_MUTATED) & MUTATED_NO_FURTHER_MUTATIONS)
+		//Tells the vat our mob has been mutated by another source and we don't want to add potentially incompatible mutations such as shiny mutation.
+		return TRUE
+	else
+		return FALSE
+

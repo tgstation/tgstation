@@ -35,10 +35,10 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
 
     const { choices = [] } = serverData;
 
-    let newOptions: DropdownOptions = [];
+    const newOptions: DropdownOptions = [];
 
     for (const choice of choices) {
-      let displayText: ReactNode = serverData.display_names
+      const displayText: ReactNode = serverData.display_names
         ? serverData.display_names[choice]
         : capitalizeFirst(choice);
 
@@ -81,7 +81,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     if (!serverData) return;
     const { icons = {}, choices = [] } = serverData;
 
-    let newOptions: DropdownOptions = [];
+    const newOptions: DropdownOptions = [];
 
     for (const choice of choices) {
       let displayText: ReactNode = serverData.display_names?.[choice]

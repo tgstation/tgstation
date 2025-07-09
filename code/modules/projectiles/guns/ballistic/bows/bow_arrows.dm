@@ -117,7 +117,7 @@
 /obj/projectile/bullet/arrow/holy/Initialize(mapload)
 	. = ..()
 	//50 damage to revenants
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 30)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 30)
 
 /// plastic arrows
 // completely dogshit quality and they break when they hit something.
