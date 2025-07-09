@@ -7,7 +7,7 @@
 	var/block_length = DNA_BLOCK_SIZE
 
 /// Used to generate a unique block from the target.
-/datum/dna_block/proc/unique_block(var/mob/living/carbon/human/target)
+/datum/dna_block/proc/unique_block(mob/living/carbon/human/target)
 	if(!ishuman(target))
 		CRASH("Non-human mobs shouldn't have DNA")
 
@@ -31,7 +31,7 @@
 	return copytext(from_hash, block_pos, block_pos + block_length)
 
 /// Applies the DNA effects/appearance that this block's string encodes
-/datum/dna_block/proc/apply_to_mob(var/mob/living/carbon/human/target, dna_hash)
+/datum/dna_block/proc/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	return
 
 /// Blocks for unique identities (skin tones, hair style, and gender)

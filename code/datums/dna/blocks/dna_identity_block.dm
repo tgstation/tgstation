@@ -15,7 +15,7 @@
 			. = construct_block(G_PLURAL, GENDERS)
 	return .
 
-/datum/dna_block/identity/gender/apply_to_mob(var/mob/living/carbon/human/target, dna_hash)
+/datum/dna_block/identity/gender/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	//Always plural gender if agender
 	if(HAS_TRAIT(target, TRAIT_AGENDER))
 		target.gender = PLURAL
@@ -37,7 +37,7 @@
 	. = ..()
 	return construct_block(GLOB.skin_tones.Find(target.skin_tone), GLOB.skin_tones.len)
 
-/datum/dna_block/identity/skin_tone/apply_to_mob(var/mob/living/carbon/human/target, dna_hash)
+/datum/dna_block/identity/skin_tone/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	target.skin_tone = GLOB.skin_tones[deconstruct_block(get_block(dna_hash), GLOB.skin_tones.len)]
 
 /// Holds both the left and right eye color at once
