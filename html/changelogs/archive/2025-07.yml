@@ -189,3 +189,19 @@
   san7890:
   - server: Savefile migration has been tweaked a bit, though there realistically
       shouldn't be any issues with this. Keep a wary eye out though.
+2025-07-09:
+  Maurukas:
+  - map: Birdshot has been moved to the Map Depot
+  Melbert:
+  - bugfix: Fixes some storage items having potentially broken holdable selections
+  ZeWaka:
+  - bugfix: white TGUI window flashing should be less present
+  grungussuss:
+  - refactor: changed how sound handling for item sounds works, report any sounds
+      not making any sounds!
+  - sound: handling reagent containers around will play their reagent sloshing sounds
+      more often
+  jlsnow301:
+  - admin: The admin spawned component printer UI functions again
+  timothymtorres:
+  - code_imp: Add multi-z helper function

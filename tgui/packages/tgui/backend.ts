@@ -13,7 +13,7 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { setupDrag } from './drag';
 import { focusMap } from './focus';
