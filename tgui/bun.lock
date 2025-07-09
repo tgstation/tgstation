@@ -3,21 +3,19 @@
   "workspaces": {
     "": {
       "name": "tgui-workspace",
-      "dependencies": {
-        "@rspack/cli": "^1.4.5",
-        "@rspack/core": "^1.4.5",
-        "css-loader": "^7.1.2",
-        "sass-embedded": "^1.89.2",
-        "sass-loader": "^16.0.5",
-        "typescript": "^5.8.3",
-      },
       "devDependencies": {
         "@happy-dom/global-registrator": "^17.4.7",
+        "@rspack/cli": "^1.4.5",
+        "@rspack/core": "^1.4.5",
         "@types/bun": "^1.2.14",
         "@types/react": "^19.1.5",
         "@types/react-dom": "^19.1.5",
         "@types/webpack-env": "^1.18.8",
         "@types/wicg-file-system-access": "^2023.10.6",
+        "css-loader": "^7.1.2",
+        "sass-embedded": "^1.89.2",
+        "sass-loader": "^16.0.5",
+        "typescript": "^5.8.3",
       },
     },
     "packages/common": {

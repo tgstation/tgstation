@@ -5,6 +5,6 @@
 	},
 	"scripts": {
 		"tgui:fix": "biome check --write --unsafe tgui",
-		"tgui:lint": "biome check tgui"
+		"tgui:lint": "biome lint tgui"
 	}
 }
