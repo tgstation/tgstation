@@ -89,13 +89,13 @@
 	graft_gene = /datum/plant_gene/trait/glow/green
 
 /obj/item/seeds/cannabis/anti
-	name = "anti cannabis seed pack"
-	desc = "These seeds grow into anti cannabis."
+	name = "anti weed seed pack"
+	desc = "These seeds grow into anti weed."
 	icon_state = "seed-ocannabis"
 	plant_icon_offset = 0
 	icon_grow = "ocannabis-grow"
 	species = "ocannabis"
-	plantname = "Anti Cannabis"
+	plantname = "Anti Weed"
 	product = /obj/item/food/grown/cannabis/anti
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/shadow)
 	mutatelist = null
