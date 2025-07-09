@@ -388,7 +388,7 @@
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
 	if(!cast_spell(M, user))
 		return
-	log_combat(user, M, "used a cult spell on", source.name, "")
+	log_combat(user, M, "used a cult spell on", src, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
