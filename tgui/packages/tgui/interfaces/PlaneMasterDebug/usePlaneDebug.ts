@@ -1,6 +1,11 @@
-import { createContext, Dispatch, SetStateAction, useContext } from 'react';
+import {
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+} from 'react';
 
-import { PlaneHighlight, PlaneMap } from './types';
+import type { PlaneHighlight, PlaneMap } from './types';
 
 type PlaneDebug = {
   connectionHighlight: PlaneHighlight | undefined;
