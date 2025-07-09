@@ -162,8 +162,7 @@
 /// Handles inserting a monkey cube into the console.
 /obj/machinery/computer/camera_advanced/xenobio/proc/monkeycube_act(mob/living/user, obj/item/food/monkeycube/used_cube)
 	stored_monkeys += 1
-	balloon_alert(user, "inserted")
-	to_chat(user, span_notice("You feed [used_cube] to [src]. It now has [stored_monkeys] monkey cubes stored."))
+	balloon_alert(user, "[stored_monkeys] cube\s stored")
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	qdel(used_cube)
 	return ITEM_INTERACT_SUCCESS
@@ -180,14 +179,13 @@
 		balloon_alert(user, "no monkey cubes!")
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "loaded monkey cubes")
-	to_chat(user, span_notice("You fill [src] with the monkey cubes stored in [tool]. [src] now has [stored_monkeys] monkey cubes stored."))
+	balloon_alert(user, "[stored_monkeys] cube\s stored")
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!istype(tool)) // Needed as long as this uses a var on the multitool.
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(QDELETED(tool.buffer))
 		balloon_alert(user, "buffer empty!")
 		return ITEM_INTERACT_BLOCKING
@@ -286,7 +284,7 @@
 		return FALSE
 	if(target_human.stat < DEAD)
 		if(user)
-			target_human.balloon_alert(user, "isn't dead!")
+			target_human.balloon_alert(user, "not dead!")
 		return FALSE
 	return TRUE
 
@@ -321,7 +319,7 @@
 		return
 
 	suck_up(target_monkey)
-	target_monkey.visible_message(span_notice("The monkey shoots up as [p_theyre()] reclaimed for recycling!"))
+	target_monkey.visible_message(span_notice("The monkey shoots up as [target_monkey.p_theyre()] reclaimed for recycling!"))
 	connected_recycler.use_energy(500 JOULES)
 	stored_monkeys += connected_recycler.cube_production
 	stored_monkeys = round(stored_monkeys, 0.1) //Prevents rounding errors
