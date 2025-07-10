@@ -260,7 +260,7 @@
 	emote_type = EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!is_species(user, /datum/species/ethereal))
+	if(!isethereal(user))
 		return FALSE
 	return ..()
 
@@ -278,7 +278,7 @@
 	sound = "sound/mobs/humanoids/ethereal/ethereal_hiss.ogg"
 
 /datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!is_species(user, /datum/species/ethereal))
+	if(!isethereal(user))
 		return FALSE
 	return ..()
 
@@ -295,7 +295,7 @@
 	sound = "sound/effects/sparks/sparks4.ogg"
 
 /datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!is_species(user, /datum/species/ethereal))
+	if(!isethereal(user))
 		return FALSE
 	return ..()
 
