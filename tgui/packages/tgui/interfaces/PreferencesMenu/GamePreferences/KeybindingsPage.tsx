@@ -1,5 +1,4 @@
-import { range } from 'es-toolkit';
-import { sortBy } from 'es-toolkit';
+import { range, sortBy } from 'es-toolkit';
 import { Component } from 'react';
 import { resolveAsset } from 'tgui/assets';
 import { useBackend } from 'tgui/backend';
