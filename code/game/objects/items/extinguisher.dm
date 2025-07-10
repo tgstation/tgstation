@@ -88,6 +88,9 @@
 	if(w_class < WEIGHT_CLASS_BULKY)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
+	if(issilicon(user))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
 	if(!iscarbon(victim))
 		return SECONDARY_ATTACK_CALL_NORMAL
 
