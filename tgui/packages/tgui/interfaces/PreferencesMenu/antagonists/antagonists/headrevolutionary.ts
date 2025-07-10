@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 
 export const REVOLUTIONARY_MECHANICAL_DESCRIPTION = `
       Armed with a flash, convert as many people to the revolution as you can.

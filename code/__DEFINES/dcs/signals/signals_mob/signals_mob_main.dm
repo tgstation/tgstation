@@ -77,8 +77,11 @@
 /// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 /// can_roll_midround(datum/antagonist/antag_type) from certain midround rulesets, (mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
-#define COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL "mob_mind_transferred_out_of"
+#define COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL "mob_mind_before_midround_roll"
 	#define CANCEL_ROLL (1<<1)
+
+///signal sent when a mob has their holy role set. Sent to the mob having their role changed.
+#define COMSIG_MOB_MIND_SET_HOLY_ROLE "mob_mind_set_holy_role"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
@@ -250,7 +253,7 @@
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
 
 /// from /mob/proc/change_mob_type() : ()
-#define COMSIG_PRE_MOB_CHANGED_TYPE "mob_changed_type"
+#define COMSIG_PRE_MOB_CHANGED_TYPE "pre_mob_changed_type"
 	#define COMPONENT_BLOCK_MOB_CHANGE (1<<0)
 /// from /mob/proc/change_mob_type_unchecked() : ()
 #define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"

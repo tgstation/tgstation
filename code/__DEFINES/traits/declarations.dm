@@ -682,6 +682,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that determines whether our mob gains more strength from drinking during a fist fight
 #define TRAIT_DRUNKEN_BRAWLER "drunken brawler"
 
+/// Trait that ensures that a shot with a projectile always lands exactly where it was aimed at. Or the head.alist
+#define TRAIT_DESIGNATED_TARGET "designated_target"
+
+/// Trait that makes you bite when attacking with an unarmed strike.
+#define TRAIT_FERAL_BITER "feral biter"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -747,6 +753,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Cannot be turned into a funny skeleton by the plasma river
 #define TRAIT_NO_PLASMA_TRANSFORM "no_plasma_transform"
+
+/// Mind trait that allows you to see blessed tiles.
+#define TRAIT_SEE_BLESSED_TILES "sees_blessed_tiles"
 
 /// Weather immunities, also protect mobs inside them.
 #define TRAIT_LAVA_IMMUNE "lava_immune" //Used by lava turfs and The Floor Is Lava.
@@ -973,6 +982,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
+
+///Won't show up on cameras when they snap a photo.
+#define TRAIT_INVISIBLE_TO_CAMERA "invisible_to_camera"
 
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
@@ -1519,7 +1531,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to colorblind mobs
 #define TRAIT_COLORBLIND "colorblind"
 
+/// Trait that blocks invisibility (uh as of writing only the space camo but might expand later idk)
+#define TRAIT_INVISIBILITY_BLOCKED "invisibility_blocked"
+
 /// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
 #define TRAIT_UNCOVERED_TURF "uncovered_turf"
+
+/// Trait that allows mobs to perform surgery on themselves
+#define TRAIT_SELF_SURGERY "self_surgery"
 
 // END TRAIT DEFINES

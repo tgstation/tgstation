@@ -176,7 +176,7 @@
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-/datum/wires/proc/cut(wire, source)
+/datum/wires/proc/cut(wire, mob/living/source)
 	if(is_cut(wire))
 		cut_wires -= wire
 		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
@@ -186,7 +186,7 @@
 		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
 		on_cut(wire, mend = FALSE, source = source)
 
-/datum/wires/proc/cut_color(color, source)
+/datum/wires/proc/cut_color(color, mob/living/source)
 	cut(get_wire(color), source)
 
 /datum/wires/proc/cut_random(source)
@@ -196,7 +196,7 @@
 	for(var/wire in wires)
 		cut(wire, source)
 
-/datum/wires/proc/pulse(wire, user, force=FALSE)
+/datum/wires/proc/pulse(wire, mob/living/user, force=FALSE)
 	if(!force && is_cut(wire))
 		return
 	SEND_SIGNAL(src, COMSIG_PULSE_WIRE, wire, user)
@@ -248,10 +248,10 @@
 /datum/wires/proc/get_status()
 	return list()
 
-/datum/wires/proc/on_cut(wire, mend = FALSE, source = null)
+/datum/wires/proc/on_cut(wire, mend = FALSE, mob/living/source = null)
 	return
 
-/datum/wires/proc/on_pulse(wire, user)
+/datum/wires/proc/on_pulse(wire, mob/living/user)
 	return
 // End Overridable Procs
 

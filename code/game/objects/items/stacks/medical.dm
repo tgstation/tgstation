@@ -248,8 +248,7 @@
 /// Checks a bunch of stuff to see if we can heal the patient, including can_heal
 /// Gives a feedback if we can't ultimatly heal the patient (unless silent is TRUE)
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
-	if(!(healed_zone in GLOB.all_body_zones))
-		stack_trace("Invalid zone ([healed_zone || "null"]) passed to try_heal_checks.")
+	if(!(healed_zone in patient.get_all_limbs()))
 		healed_zone = BODY_ZONE_CHEST
 
 	if(!can_heal(patient, user, healed_zone, silent))
@@ -559,14 +558,6 @@
 	heal_continuous_sound = SFX_SUTURE_CONTINUOUS
 	heal_end_sound = SFX_SUTURE_END
 
-/obj/item/stack/medical/suture/emergency
-	name = "emergency suture"
-	desc = "A value pack of cheap sutures, not very good at repairing damage, but still decent at stopping bleeding."
-	heal_brute = 5
-	amount = 5
-	max_amount = 5
-	merge_type = /obj/item/stack/medical/suture/emergency
-
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
 	icon_state = "suture_purp"
@@ -747,7 +738,7 @@
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
-	for(var/zone in GLOB.all_body_zones)
+	for(var/zone in patient.get_all_limbs())
 		patient.apply_damage(60, BRUTE, zone)
 	use(1)
 	return BRUTELOSS
