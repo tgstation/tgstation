@@ -3,7 +3,7 @@
 #define CURSE_ORB "Shuttle Curse"
 #define VEIL_WALKER "Veil Walker"
 #define CRIMSON_MEDALLION "Crimson Medallion"
-#define VOID_TORCH "Void Torch"
+#define VOID_TORCH "Two Void Torches"
 
 // Cult archives. Gives out utility items.
 /obj/structure/destructible/cult/item_dispenser/archives
@@ -32,7 +32,7 @@
 			),
 		VOID_TORCH = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/lighting.dmi', icon_state = "torch"),
-			OUTPUT_ITEMS = list(/obj/item/flashlight/flare/culttorch),
+			OUTPUT_ITEMS = list(/obj/item/flashlight/flare/culttorch, /obj/item/flashlight/flare/culttorch),
 			),
 	)
 
