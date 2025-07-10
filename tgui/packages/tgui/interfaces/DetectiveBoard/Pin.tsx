@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import { Box, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import type { DataEvidence, XYCoords } from './types';
+import type { Coordinates } from '../common/Connections';
+import type { DataEvidence } from './types';
 
-type PinProps = {
+type Props = {
   evidence: DataEvidence;
-  onStartConnecting: (evidence: DataEvidence, mousePos: XYCoords) => void;
+  onStartConnecting: (evidence: DataEvidence, mousePos: Coordinates) => void;
   onConnected: (evidence: DataEvidence) => void;
-  onMouseUp: (evidence: DataEvidence, args: any) => void;
+  onPinMouseUp: (evidence: DataEvidence, args: any) => void;
 };
 
-export function Pin(props: PinProps) {
+export function Pin(props: Props) {
   const { evidence } = props;
   const [creatingRope, setCreatingRope] = useState(false);
 
@@ -49,7 +50,7 @@ export function Pin(props: PinProps) {
           ])}
           textAlign="center"
           onMouseDown={handleMouseDown}
-          onMouseUp={(args) => props.onMouseUp(evidence, args)}
+          onMouseUp={(args) => props.onPinMouseUp(evidence, args)}
         />
       </Stack.Item>
     </Stack>

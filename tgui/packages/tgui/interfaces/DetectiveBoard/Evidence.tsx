@@ -2,27 +2,23 @@ import { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Flex, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import type { Coordinates } from '../common/Connections';
 import { Pin } from './Pin';
-import type { DataEvidence, EvidenceFn, XYCoords } from './types';
+import type { DataEvidence, EvidenceFn } from './types';
 
-type EvidenceProps = {
+type Props = {
   case_ref: string;
   evidence: DataEvidence;
   onEvidenceRemoved: EvidenceFn;
-  onMoving: (evidence: DataEvidence, position: XYCoords) => void;
+  onMoving: (evidence: DataEvidence, position: Coordinates) => void;
   onPinConnected: EvidenceFn;
   onPinMouseUp: (evidence: DataEvidence, event: any) => void;
-  onPinStartConnecting: (evidence: DataEvidence, mousePos: XYCoords) => void;
+  onPinStartConnecting: (evidence: DataEvidence, mousePos: Coordinates) => void;
   onStartMoving: EvidenceFn;
   onStopMoving: EvidenceFn;
 };
 
-type Position = {
-  x: number;
-  y: number;
-};
-
-export function Evidence(props: EvidenceProps) {
+export function Evidence(props: Props) {
   const { act } = useBackend();
   const { evidence, case_ref } = props;
 
@@ -30,18 +26,17 @@ export function Evidence(props: EvidenceProps) {
 
   const [canDrag, setCanDrag] = useState(true);
 
-  const [dragPosition, setDragPosition] = useState<Position>({
+  const [dragPosition, setDragPosition] = useState<Coordinates>({
     x: evidence.x,
     y: evidence.y,
   });
 
-  const [lastMousePosition, setLastMousePosition] = useState<Position | null>(
-    null,
-  );
+  const [lastMousePosition, setLastMousePosition] =
+    useState<Coordinates | null>(null);
 
   const randomRotation = useMemo(() => Math.random() * 2 - 1, []);
 
-  function handleMouseDown(args) {
+  function handleMouseDown(args: React.MouseEvent<HTMLDivElement>) {
     if (canDrag) {
       setDragging(true);
       props.onStartMoving(evidence);
@@ -129,7 +124,7 @@ export function Evidence(props: EvidenceProps) {
                   evidence={evidence}
                   onStartConnecting={(
                     evidence: DataEvidence,
-                    mousePos: Position,
+                    mousePos: Coordinates,
                   ) => {
                     setCanDrag(false);
                     props.onPinStartConnecting(evidence, mousePos);
@@ -138,7 +133,7 @@ export function Evidence(props: EvidenceProps) {
                     setCanDrag(true);
                     props.onPinConnected(evidence);
                   }}
-                  onMouseUp={(evidence: DataEvidence, args) => {
+                  onPinMouseUp={(evidence: DataEvidence, args) => {
                     setCanDrag(true);
                     props.onPinMouseUp(evidence, args);
                   }}

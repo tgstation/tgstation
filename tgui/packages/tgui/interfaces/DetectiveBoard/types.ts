@@ -20,9 +20,4 @@ export type DataEvidence = {
   connections: string[];
 };
 
-export type XYCoords = {
-  x: number;
-  y: number;
-};
-
 export type EvidenceFn = (evidence: DataEvidence) => void;

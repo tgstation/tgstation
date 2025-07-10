@@ -4,7 +4,7 @@ import { classes } from 'tgui-core/react';
 import { useBackend } from '../../backend';
 import type { DataCase } from './types';
 
-type BoardTabsData = {
+type Data = {
   cases: DataCase[];
   current_case: number;
 };
@@ -27,7 +27,7 @@ function BoardTab(props) {
 }
 
 export function BoardTabs(props) {
-  const { act, data } = useBackend<BoardTabsData>();
+  const { act, data } = useBackend<Data>();
   const { cases, current_case } = data;
 
   return (
