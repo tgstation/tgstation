@@ -395,6 +395,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /// Updates the UI, UE, and UF of the DNA according to the features, appearance, name, etc. of the DNA / holder.
 /datum/dna/proc/update_dna_identity()
+	if(!holder.has_dna())
+		return
 	unique_identity = generate_unique_identity()
 	unique_enzymes = generate_unique_enzymes()
 	unique_features = generate_unique_features()
