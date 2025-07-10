@@ -181,9 +181,10 @@
 		powermult = 1
 		rangemult = 1
 	if(flare)
-		start_flicker(ethereal, duration = 1.5 SECONDS, min = 1, max = 2)
 		powermult = 0.5
 		rangemult = 0.75
+		refresh_light_color(ethereal)
+		start_flicker(ethereal, duration = 1.5 SECONDS, min = 1, max = 2)
 		sleep(1.5 SECONDS)
 		powermult = 1
 		rangemult = 1
