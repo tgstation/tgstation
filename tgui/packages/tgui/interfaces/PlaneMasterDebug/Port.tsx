@@ -1,6 +1,7 @@
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
+import { useBackend } from '../../backend';
 import { BlendColors, type Filter, type Plane, type Relay } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
@@ -12,7 +13,8 @@ export type PortProps = {
 
 export function Port(props: PortProps) {
   const { connection, source, target_ref } = props;
-  const { setConnectionHighlight, act } = usePlaneDebugContext();
+  const { act } = useBackend();
+  const { setConnectionHighlight } = usePlaneDebugContext();
   const sourcePlane: Plane = (
     source ? connection.source : connection.target
   ) as Plane;

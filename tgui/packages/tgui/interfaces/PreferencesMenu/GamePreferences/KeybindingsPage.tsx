@@ -205,7 +205,7 @@ function ResetToDefaultButton(props: ResetToDefaultButtonProps) {
   );
 }
 
-export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
+export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   cancelNextKeyUp?: number;
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData['keybindings'];
