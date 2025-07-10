@@ -154,6 +154,17 @@
 	if(flame_generation)
 		toggle_flames(wearer)
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/robes_side_effect(mob/user)
+	. = ..()
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/victim = user
+	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+		if(istype(limb, /obj/item/bodypart/head) || istype(limb, /obj/item/bodypart/chest))
+			continue
+		limb.drop_limb()
+		limb.dust()
+
 /datum/action/item_action/toggle/flames
 	button_icon = 'icons/effects/magic.dmi'
 	button_icon_state = "fireball"
@@ -232,6 +243,17 @@
 	. = ..()
 	user.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/robes_side_effect(mob/user)
+	. = ..()
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/victim = user
+	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+		if(istype(limb, /obj/item/bodypart/chest))
+			continue
+		sleep(5) // XANTODO remove this with a timer setup instead https://discord.com/channels/326822144233439242/326831214667235328/1392911944771702928
+		limb.dismember()
+
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
 	name = "\improper Shattered Panoply"
 	desc = "The sharpened edges of this ancient suit of armor assert a revelation known to aspirants of battle; \
@@ -276,6 +298,14 @@
 	. = ..()
 	if(weightless_enabled)
 		toggle_gravity(user)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic/robes_side_effect(mob/user)
+	. = ..()
+	var/obj/item/organ/brain/victim_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(!victim_brain)
+		return
+
+	victim_brain.gain_trauma(/datum/brain_trauma/magic/stalker/cosmic, TRAUMA_RESILIENCE_MAGIC)
 
 /datum/action/item_action/toggle/gravity
 	button_icon = 'icons/effects/magic.dmi'
@@ -355,6 +385,17 @@
 	. = ..()
 	QDEL_NULL(healing_aura)
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/robes_side_effect(mob/user)
+	. = ..()
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/victim = user
+	for(var/_limb in victim.bodyparts)
+		var/obj/item/bodypart/limb = _limb
+		limb.force_wound_upwards(/datum/wound/slash/flesh/critical)
+	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+		victim.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, WOUND_SEVERITY_CRITICAL)
+
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	icon_state = "flesh_armor"
 	armor_type = /datum/armor/eldritch_armor/flesh
@@ -389,6 +430,17 @@
 	user.RemoveElement(/datum/element/digitalcamo)
 	user.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/robes_side_effect(mob/user)
+	. = ..()
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/victim = user
+	var/list/things = victim.get_all_contents_ignoring((typecacheof(/obj/item/organ) + typecacheof(/obj/item/bodypart)))
+	things -= src
+	things -= victim
+	for(var/obj/item/to_delete in things)
+		qdel(to_delete)
+
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	icon_state = "lock_armor"
 	armor_type = /datum/armor/eldritch_armor/lock
@@ -419,6 +471,8 @@
 	var/atom/movable/screen/moon_health/health_hud
 	/// Boolean if you are brain dead so the sound doesn't spam during the delay
 	var/braindead = FALSE
+	/// Boolean, if the robes are worn by a non-heretic, we will kill them
+	var/brain_poison = FALSE
 	//---- Messages that get sent when someone wearing the moon robes is attacked
 	/// Visible message that nearby people see
 	var/static/list/visible_message_list = list(
@@ -446,6 +500,19 @@
 		"You hear the clack of a tambourine.",
 	)
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/user, slot, initial) // Special handling, because non-heretics also gain the effects
+	. = ..()
+	if(IS_HERETIC(user))
+		return
+	if(!(slot_flags & slot))
+		on_robes_lost(user, src)
+		return
+
+	// Non-Heretic equipped the robes? Grant them the effects :)
+	on_robes_gained(user)
+	RegisterSignal(user, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
+	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_robes_lost))
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_gained(mob/living/carbon/human/user)
 	. = ..()
 	if(!ishuman(user))
@@ -472,16 +539,27 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
-	UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
 	var/mob/living/carbon/human/wearer = user
+	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
+	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
-	on_hud_remove(wearer)
 	braindead = FALSE
 	if(health_hud in user.hud_used.infodisplay)
 		on_hud_remove(user)
+	brain_poison = FALSE
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/robes_side_effect(mob/user)
+	. = ..()
+	brain_poison = TRUE // This will rapidly kill you in /process()
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/victim = user
+	var/obj/item/organ/brain/our_brain = victim.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(!our_brain)
+		return
+	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10) // Give them a jumpstart so they can't undo
 
 /// Gives the health HUD to the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
@@ -633,6 +711,8 @@
 	var/mob/living/carbon/human/wearer = loc
 	if(!istype(wearer) || wearer.wear_suit != src || wearer.stat == DEAD)
 		return ..()
+	if(brain_poison)
+		wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 	var/brain_damage = wearer.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/emote_rng = 0
 	var/list/emote_list = list()
@@ -771,6 +851,20 @@
 	QDEL_NULL(rust_overlay)
 	QDEL_NULL(rust_appearance)
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/robes_side_effect(mob/user)
+	. = ..()
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/victim = user
+	var/list/organ_list = victim.organs
+	if(!length(organ_list))
+		return
+
+	for(var/obj/item/organ/to_puke as anything in organ_list)
+		sleep(5) // XANTODO, timer system to make this not cringe
+		victim.vomit()
+		victim.spew_organ(rand(4, 6))
+
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
  *
@@ -902,6 +996,15 @@
 	// Remove from stealth when you lose the robes
 	deltimer(stealth_timer)
 	end_stealth(user)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/void/robes_side_effect(mob/user)
+	. = ..()
+	user.adjust_bodytemperature(-INFINITY)
+	ADD_TRAIT(user, TRAIT_HYPOTHERMIC, REF(src))
+	if(!isliving(user))
+		return
+	var/mob/living/victim = user
+	victim.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/void/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 	. = ..()
