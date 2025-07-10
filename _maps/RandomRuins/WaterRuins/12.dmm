@@ -1,9 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
-/obj/structure/light_construct{
-	dir = 4;
-	atom_integrity = 100
-	},
 /obj/item/light/tube/broken,
 /obj/item/stack/cable_coil/cut,
 /obj/item/flashlight/flare/torch{
@@ -15,11 +11,11 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
+/obj/structure/light_construct/directional/east,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "bf" = (
 /obj/structure/chair/comfy/shuttle{
-	color = null;
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
@@ -36,15 +32,8 @@
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "dW" = (
-/obj/item/storage/backpack/satchel{
-	dir = 1;
-	atom_integrity = 135
-	},
-/obj/item/binoculars{
-	dir = 1;
-	pixel_y = -6;
-	atom_integrity = 23
-	},
+/obj/item/storage/backpack/satchel,
+/obj/item/binoculars,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
@@ -84,14 +73,6 @@
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"eR" = (
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=19.05n2=71TEMP=285.82"
-	},
-/area/rainworld/surface/outdoors)
 "eY" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
@@ -109,9 +90,7 @@
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "fQ" = (
-/obj/item/wallframe/light_fixture/small{
-	atom_integrity = 120
-	},
+/obj/item/wallframe/light_fixture/small,
 /obj/item/stack/cable_coil/cut,
 /obj/item/light/bulb/broken,
 /turf/open/floor/wood,
@@ -126,10 +105,9 @@
 /area/rainworld/surface/outdoors)
 "gN" = (
 /obj/structure/chair/comfy/shuttle{
-	color = null;
-	dir = 8;
-	atom_integrity = 57
+	dir = 8
 	},
+/mob/living/basic/trooper/pirate/ranged,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "hy" = (
@@ -156,10 +134,7 @@
 /area/rainworld/surface/outdoors)
 "iJ" = (
 /obj/structure/lattice,
-/obj/item/wallframe/light_fixture{
-	dir = 1;
-	atom_integrity = 172
-	},
+/obj/item/wallframe/light_fixture,
 /obj/item/stack/cable_coil/cut,
 /obj/item/light/tube/broken,
 /turf/open/water/no_planet_atmos/deep/rainworld,
@@ -167,11 +142,7 @@
 "jm" = (
 /obj/item/stack/rods,
 /obj/item/light/bulb/broken,
-/obj/item/wallframe/light_fixture/small{
-	dir = 4;
-	pixel_x = 7;
-	atom_integrity = 133
-	},
+/obj/item/wallframe/light_fixture/small,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "jy" = (
@@ -195,10 +166,7 @@
 /area/rainworld/surface/outdoors)
 "mh" = (
 /obj/item/stack/cable_coil/cut,
-/obj/item/wallframe/light_fixture/small{
-	pixel_x = -4;
-	pixel_y = 5
-	},
+/obj/item/wallframe/light_fixture/small,
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = 2;
 	pixel_y = 2;
@@ -208,11 +176,7 @@
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "ml" = (
-/obj/item/wallframe/light_fixture{
-	pixel_x = 2;
-	pixel_y = -7;
-	atom_integrity = 173
-	},
+/obj/item/wallframe/light_fixture,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
@@ -230,21 +194,13 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "mF" = (
-/obj/structure/table/wood{
-	atom_integrity = 43
-	},
+/obj/structure/table/wood,
 /obj/item/storage/lockbox/dueling,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "mX" = (
-/obj/machinery/light/small/directional/north{
-	icon_state = "bulb-broken";
-	atom_integrity = 67
-	},
-/obj/item/binoculars{
-	dir = 8;
-	pixel_y = -6
-	},
+/obj/item/binoculars,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "nc" = (
@@ -259,21 +215,9 @@
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"nN" = (
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=19.1n2=71.21TEMP=286.16"
-	},
-/area/rainworld/surface/outdoors)
 "nT" = (
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=2.42n2=9.01TEMP=101.05"
-	},
+/obj/structure/fake_stairs/wood,
+/turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "nX" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -282,19 +226,13 @@
 	},
 /area/rainworld/surface/outdoors)
 "oc" = (
-/obj/machinery/recharger{
-	pixel_y = 2
-	},
-/obj/item/binoculars{
-	pixel_y = -6
-	},
+/obj/machinery/recharger,
+/obj/item/binoculars,
 /obj/structure/table/wood,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "ox" = (
-/obj/structure/chair/comfy/shuttle{
-	color = null
-	},
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "oA" = (
@@ -395,8 +333,7 @@
 "xK" = (
 /obj/structure/railing/corner{
 	color = "#4c3117";
-	name = "wooden railing";
-	atom_integrity = 15.1
+	name = "wooden railing"
 	},
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
@@ -405,12 +342,7 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "yw" = (
-/obj/item/wallframe/light_fixture/small{
-	dir = 8;
-	pixel_x = -2;
-	pixel_y = -6;
-	atom_integrity = 20
-	},
+/obj/item/wallframe/light_fixture/small,
 /obj/item/rack_parts,
 /obj/item/stack/sheet/mineral/wood{
 	dir = 8;
@@ -471,9 +403,7 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "Bn" = (
-/obj/machinery/loot_locator{
-	atom_integrity = 194.9
-	},
+/obj/machinery/loot_locator,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "Bv" = (
@@ -494,11 +424,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table_frame/wood,
-/obj/item/circuitboard/machine/recharger{
-	dir = 8;
-	icon = 'tmp/gags/icons/gags-circuit-#9A151E.dmi';
-	name = "Weapon Recharger (Machine Board)"
-	},
+/obj/item/circuitboard/machine/recharger,
 /obj/item/stock_parts/capacitor{
 	dir = 8;
 	pixel_x = 3;
@@ -515,12 +441,7 @@
 /area/rainworld/surface/outdoors)
 "CA" = (
 /obj/item/rack_parts,
-/obj/item/wallframe/light_fixture{
-	dir = 4;
-	pixel_x = -1;
-	pixel_y = -1;
-	atom_integrity = 17
-	},
+/obj/item/wallframe/light_fixture,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "CC" = (
@@ -544,14 +465,6 @@
 	name = "Ye Olde Strong Door"
 	},
 /turf/open/floor/wood,
-/area/rainworld/surface/outdoors)
-"DL" = (
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=16.26n2=60.6TEMP=279.91"
-	},
 /area/rainworld/surface/outdoors)
 "DT" = (
 /obj/structure/rack/skeletal,
@@ -581,10 +494,6 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "FY" = (
-/obj/structure/light_construct{
-	dir = 4;
-	atom_integrity = 100
-	},
 /obj/item/light/tube/broken,
 /obj/item/stack/cable_coil/cut,
 /obj/item/stack/sheet/iron{
@@ -603,13 +512,8 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "HV" = (
-/obj/structure/table/wood{
-	atom_integrity = 56
-	},
-/obj/machinery/recharger{
-	pixel_y = 2;
-	atom_integrity = 157
-	},
+/obj/structure/table/wood,
+/obj/machinery/recharger,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "If" = (
@@ -748,26 +652,18 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "Mw" = (
-/obj/item/restraints/legcuffs/bola{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = -3;
-	atom_integrity = 185
-	},
+/obj/item/restraints/legcuffs/bola,
 /obj/item/megaphone{
 	dir = 1;
 	pixel_x = 7;
-	pixel_y = 1;
-	atom_integrity = 179
+	pixel_y = 1
 	},
 /obj/item/melee/chainofcommand/tailwhip/kitty{
 	dir = 1;
 	pixel_x = 5;
-	pixel_y = 7;
-	atom_integrity = 135
+	pixel_y = 7
 	},
 /obj/item/clothing/suit/costume/pirate/captain/armored,
-/mob/living/basic/trooper/pirate/ranged,
 /obj/structure/closet/cabinet,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
@@ -781,9 +677,7 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "NI" = (
-/obj/structure/window/plasma/spawner/directional/east{
-	atom_integrity = 147.2
-	},
+/obj/structure/window/plasma/spawner/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/carpet{
 	initial_gas_mix = "o2=0.94n2=3.57pluoxium=0.02helium=0.03TEMP=45.15"
@@ -816,35 +710,11 @@
 "PX" = (
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"Rg" = (
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=6.15n2=22.92TEMP=281.9"
-	},
-/area/rainworld/surface/outdoors)
-"RP" = (
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=1.11n2=4.15TEMP=46.22"
-	},
-/area/rainworld/surface/outdoors)
 "Ts" = (
 /obj/effect/mob_spawn/corpse/human/pirate/melee,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"Ty" = (
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=18.77n2=69.95TEMP=285.1"
-	},
 /area/rainworld/surface/outdoors)
 "Tz" = (
 /obj/item/wallframe/light_fixture,
@@ -893,15 +763,11 @@
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "VR" = (
-/obj/machinery/light/small/directional/north{
-	icon_state = "bulb_emergency"
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "Wm" = (
-/obj/structure/window/plasma/spawner/directional/east{
-	atom_integrity = 21.8
-	},
+/obj/structure/window/plasma/spawner/directional/east,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "Wq" = (
@@ -918,12 +784,8 @@
 	pixel_y = 3;
 	amount = 5
 	},
-/turf/open/floor/iron/stairs/old{
-	dir = 1;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood";
-	initial_gas_mix = "o2=1.75n2=6.54TEMP=65.38"
-	},
+/obj/structure/fake_stairs/wood,
+/turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "WU" = (
 /obj/item/shard/titanium,
@@ -951,10 +813,7 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "Yh" = (
-/obj/item/wallframe/light_fixture/small{
-	dir = 8;
-	atom_integrity = 144
-	},
+/obj/item/wallframe/light_fixture/small,
 /obj/item/stack/cable_coil/cut,
 /obj/item/light/bulb/broken,
 /obj/item/light/bulb/broken,
@@ -973,8 +832,6 @@
 /area/rainworld/surface/outdoors)
 "Zv" = (
 /obj/structure/frame/machine{
-	icon_state = "box_1";
-	atom_integrity = 125;
 	anchored = 1
 	},
 /turf/open/floor/wood,
@@ -1157,10 +1014,10 @@ eY
 pV
 Eh
 Eh
-Rg
+nT
 nT
 WP
-RP
+nT
 oA
 ml
 PX
@@ -1577,10 +1434,10 @@ eY
 pV
 Eh
 Eh
-eR
-nN
-Ty
-DL
+nT
+nT
+nT
+nT
 Xq
 CA
 nc
