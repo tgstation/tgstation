@@ -4,16 +4,8 @@
 	dir = 4;
 	atom_integrity = 100
 	},
-/obj/item/light/tube{
-	icon_state = "ltube-broken"
-	},
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_y = -1;
-	amount = 1
-	},
+/obj/item/light/tube/broken,
+/obj/item/stack/cable_coil/cut,
 /obj/item/flashlight/flare/torch{
 	dir = 2;
 	pixel_x = -6;
@@ -32,55 +24,14 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
-"bW" = (
-/obj/structure/lattice,
-/obj/item/stack/sheet/iron{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
 "cf" = (
 /obj/structure/window/reinforced/shuttle/survival_pod,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"cE" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 134.5
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"dr" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 114.2
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "dT" = (
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_x = 2;
-	pixel_y = -2;
-	atom_integrity = 34;
-	amount = 1
-	},
-/obj/item/light/tube{
-	icon_state = "ltube-broken";
-	pixel_x = 3;
-	pixel_y = -4;
-	atom_integrity = 51
-	},
-/obj/structure/table_frame/wood{
-	atom_integrity = 24
-	},
-/obj/item/stack/sheet/mineral/wood{
-	pixel_x = 2;
-	pixel_y = 4;
-	atom_integrity = 64;
-	amount = 3
-	},
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/tube/broken,
+/obj/structure/table_frame/wood,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
@@ -110,32 +61,20 @@
 "ey" = (
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/rainworld/surface/outdoors)
-"eA" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 60
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "eH" = (
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "Ye Olde Strong Door";
-	max_integrity = 600;
-	damage_deflection = 30
+	name = "Ye Olde Strong Door"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "eP" = (
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	pixel_x = -2;
-	amount = 5
-	},
+/obj/item/stack/cable_coil/cut,
 /obj/item/stack/sheet/iron{
-	pixel_x = -4;
-	pixel_y = 2;
+	pixel_x = 4;
+	pixel_y = 3;
 	amount = 5
 	},
 /obj/item/stack/sheet/mineral/wood{
@@ -159,12 +98,6 @@
 	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"fy" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 25
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "fE" = (
 /obj/structure/cannon{
 	dir = 8
@@ -179,19 +112,8 @@
 /obj/item/wallframe/light_fixture/small{
 	atom_integrity = 120
 	},
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_x = -2;
-	pixel_y = -2;
-	atom_integrity = 78;
-	amount = 1
-	},
-/obj/item/light/bulb{
-	icon_state = "lbulb-broken";
-	atom_integrity = 160
-	},
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/bulb/broken,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "gn" = (
@@ -210,12 +132,6 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
-"gP" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 108.5
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "hy" = (
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = 2;
@@ -225,15 +141,6 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "iC" = (
-/obj/structure/frame/machine{
-	icon_state = "box_1";
-	atom_integrity = 125;
-	anchored = 1
-	},
-/obj/item/circuitboard/machine/recharger{
-	icon = 'tmp/gags/icons/gags-circuit-#9A151E.dmi';
-	name = "Weapon Recharger (Machine Board)"
-	},
 /obj/item/stock_parts/capacitor{
 	pixel_x = 4;
 	pixel_y = 3
@@ -243,6 +150,8 @@
 	pixel_y = 1;
 	amount = 2
 	},
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/recharger,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "iJ" = (
@@ -251,53 +160,13 @@
 	dir = 1;
 	atom_integrity = 172
 	},
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	dir = 1;
-	icon_state = "coil1";
-	name = "cable piece";
-	atom_integrity = 74;
-	amount = 1
-	},
-/obj/item/light/tube{
-	dir = 1;
-	icon_state = "ltube-broken";
-	atom_integrity = 114
-	},
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/tube/broken,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"iP" = (
-/obj/item/shard/titanium{
-	icon_state = "titaniumsmall";
-	pixel_x = 10;
-	pixel_y = -1
-	},
-/obj/item/shard/titanium{
-	icon_state = "titaniummedium";
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/obj/effect/decal/cleanable/glass/titanium{
-	dir = 1
-	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "jm" = (
-/obj/item/stack/rods{
-	dir = 4;
-	icon_state = "rods-1"
-	},
-/obj/item/light/bulb{
-	dir = 4;
-	icon_state = "lbulb-broken";
-	pixel_x = -3;
-	pixel_y = 6;
-	atom_integrity = 138
-	},
+/obj/item/stack/rods,
+/obj/item/light/bulb/broken,
 /obj/item/wallframe/light_fixture/small{
 	dir = 4;
 	pixel_x = 7;
@@ -306,61 +175,26 @@
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "jy" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 35
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"kw" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 144.5
-	},
+/obj/structure/window/reinforced/shuttle/survival_pod,
+/obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "kO" = (
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/stack/rods,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"kS" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 10
-	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "kT" = (
 /obj/item/stack/sheet/iron{
-	pixel_x = 1;
-	pixel_y = -2;
-	atom_integrity = 25;
-	amount = 3
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
-"lw" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 52
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"lx" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 136
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "mh" = (
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_x = 1;
-	amount = 1
-	},
+/obj/item/stack/cable_coil/cut,
 /obj/item/wallframe/light_fixture/small{
 	pixel_x = -4;
 	pixel_y = 5
@@ -368,7 +202,6 @@
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = 2;
 	pixel_y = 2;
-	atom_integrity = 33;
 	amount = 2
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -396,25 +229,12 @@
 /obj/effect/decal/cleanable/glass/titanium,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"mD" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 111.5
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "mF" = (
 /obj/structure/table/wood{
 	atom_integrity = 43
 	},
 /obj/item/storage/lockbox/dueling,
-/mob/living/basic/parrot/headsetted,
 /turf/open/floor/carpet/royalblack,
-/area/rainworld/surface/outdoors)
-"mI" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 90
-	},
-/turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "mX" = (
 /obj/machinery/light/small/directional/north{
@@ -482,27 +302,13 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "oM" = (
-/obj/item/shard/titanium{
-	dir = 1;
-	icon_state = "titaniummedium";
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/shard/titanium{
-	dir = 1;
-	icon_state = "titaniummedium";
-	pixel_x = 3
-	},
-/obj/item/stack/rods{
-	dir = 1;
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/item/stack/rods,
 /obj/item/stack/sheet/iron{
-	dir = 1;
-	pixel_x = -2;
-	pixel_y = -1;
-	amount = 2
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /obj/item/stack/sheet/mineral/wood{
 	dir = 1;
@@ -510,34 +316,14 @@
 	pixel_y = -2;
 	amount = 4
 	},
-/obj/structure/table_frame/wood{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"pm" = (
-/obj/item/shard/titanium{
-	icon_state = "titaniummedium";
-	pixel_x = 8;
-	pixel_y = -6
-	},
-/obj/item/shard/titanium{
-	pixel_x = 1;
-	pixel_y = -5
-	},
-/obj/effect/decal/cleanable/glass/titanium{
-	dir = 8
-	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/structure/table_frame/wood,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "pI" = (
 /obj/item/stack/sheet/iron{
-	dir = 4;
-	pixel_y = -2
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
@@ -549,22 +335,8 @@
 /obj/structure/lattice,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"qZ" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 85.5
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"tr" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 73
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "tx" = (
-/obj/item/stack/rods{
-	icon_state = "rods-1"
-	},
+/obj/item/stack/rods,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "tP" = (
@@ -581,9 +353,7 @@
 	pixel_y = -2;
 	amount = 2
 	},
-/obj/structure/barricade/wooden{
-	atom_integrity = 95
-	},
+/obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "up" = (
@@ -596,68 +366,31 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "uN" = (
-/obj/item/shard/titanium{
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/shard/titanium{
-	pixel_x = -4;
-	pixel_y = -3
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
 /obj/effect/decal/cleanable/glass/titanium{
 	dir = 1
 	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/stack/rods,
 /obj/item/stack/sheet/iron{
-	dir = 4;
 	pixel_x = 4;
-	pixel_y = -1
+	pixel_y = 3;
+	amount = 5
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"uY" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 8;
-	icon_state = "standard_off";
-	atom_integrity = 146;
-	req_access = list("syndicate")
-	},
-/obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "vh" = (
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "vl" = (
-/obj/item/shard/titanium{
-	icon_state = "titaniumsmall";
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/shard/titanium{
-	icon_state = "titaniumsmall";
-	pixel_x = -12;
-	pixel_y = 12
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
 /obj/effect/decal/cleanable/glass/titanium{
 	dir = 1
 	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/stack/rods,
 /turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"wl" = (
-/obj/item/stack/sheet/iron{
-	dir = 1;
-	pixel_x = -2
-	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "xK" = (
 /obj/structure/railing/corner{
@@ -671,12 +404,6 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"xW" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 122
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "yw" = (
 /obj/item/wallframe/light_fixture/small{
 	dir = 8;
@@ -684,12 +411,7 @@
 	pixel_y = -6;
 	atom_integrity = 20
 	},
-/obj/item/rack_parts{
-	dir = 8;
-	pixel_x = -1;
-	pixel_y = -6;
-	atom_integrity = 36
-	},
+/obj/item/rack_parts,
 /obj/item/stack/sheet/mineral/wood{
 	dir = 8;
 	pixel_x = -2;
@@ -697,12 +419,6 @@
 	amount = 3
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"yL" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 124
-	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "yX" = (
@@ -723,17 +439,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
-"yY" = (
-/obj/item/stack/sheet/mineral/wood{
-	dir = 8;
-	pixel_x = -3;
-	pixel_y = -3;
-	atom_integrity = 56;
-	amount = 2
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "zE" = (
 /obj/item/stack/sheet/mineral/wood{
 	dir = 8;
@@ -744,11 +449,7 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "zI" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 4;
-	icon_state = "standard_off";
-	req_access = list("syndicate")
-	},
+/obj/machinery/porta_turret/syndicate/energy,
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/rainworld/surface/outdoors)
 "zM" = (
@@ -792,9 +493,7 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/structure/table_frame/wood{
-	dir = 8
-	},
+/obj/structure/table_frame/wood,
 /obj/item/circuitboard/machine/recharger{
 	dir = 8;
 	icon = 'tmp/gags/icons/gags-circuit-#9A151E.dmi';
@@ -810,26 +509,12 @@
 "BU" = (
 /obj/item/stack/sheet/mineral/wood{
 	pixel_y = -2;
-	atom_integrity = 29;
 	amount = 2
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"Cu" = (
-/obj/structure/lattice,
-/obj/item/stack/sheet/iron{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
 "CA" = (
-/obj/item/rack_parts{
-	dir = 4;
-	pixel_x = -7;
-	pixel_y = -4;
-	atom_integrity = 10
-	},
+/obj/item/rack_parts,
 /obj/item/wallframe/light_fixture{
 	dir = 4;
 	pixel_x = -1;
@@ -839,10 +524,8 @@
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "CC" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 24.5
-	},
-/turf/open/floor/plating,
+/obj/structure/frame/computer,
+/turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "CN" = (
 /obj/item/paper/fluff/old_pirate_note,
@@ -855,14 +538,11 @@
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "DA" = (
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "Ye Olde Strong Door";
-	atom_integrity = 323.7;
-	max_integrity = 600;
-	damage_deflection = 30
+	name = "Ye Olde Strong Door"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "DL" = (
@@ -881,45 +561,13 @@
 "Eh" = (
 /turf/open/floor/carpet/red,
 /area/rainworld/surface/outdoors)
-"Ej" = (
-/obj/item/stack/sheet/iron{
-	dir = 4;
-	pixel_x = 2;
-	pixel_y = -4;
-	amount = 2
-	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
-"EJ" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 33
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "ER" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/book/granter/crafting_recipe/trash_cannon,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
-"Fd" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 81
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"Fi" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 19
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "FQ" = (
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	pixel_x = -1;
-	pixel_y = -2;
-	amount = 5
-	},
+/obj/item/stack/cable_coil/cut,
 /obj/item/stack/sheet/iron{
 	pixel_x = 4;
 	pixel_y = 3;
@@ -937,19 +585,12 @@
 	dir = 4;
 	atom_integrity = 100
 	},
-/obj/item/light/tube{
-	icon_state = "ltube-broken"
-	},
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_y = -2;
-	amount = 1
-	},
+/obj/item/light/tube/broken,
+/obj/item/stack/cable_coil/cut,
 /obj/item/stack/sheet/iron{
-	pixel_x = -2;
-	pixel_y = -3
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
@@ -958,24 +599,6 @@
 	color = "#4c3117";
 	dir = 8;
 	name = "wooden railing"
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"GD" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 49
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"GN" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 105
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"HF" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 28
 	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
@@ -992,10 +615,7 @@
 "If" = (
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "Ye Olde Strong Door";
-	atom_integrity = 483.9;
-	max_integrity = 600;
-	damage_deflection = 30
+	name = "Ye Olde Strong Door"
 	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
@@ -1008,14 +628,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"Iq" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 1;
-	icon_state = "standard_off";
-	req_access = list("syndicate")
-	},
-/turf/closed/wall/mineral/wood/nonmetal,
-/area/rainworld/surface/outdoors)
 "Ix" = (
 /obj/machinery/computer/monitor{
 	dir = 8
@@ -1025,9 +637,7 @@
 "IC" = (
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "Ye Olde Strong Door";
-	max_integrity = 600;
-	damage_deflection = 30
+	name = "Ye Olde Strong Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -1035,16 +645,7 @@
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "IN" = (
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"Jm" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 85
-	},
+/obj/item/stack/rods,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "Jp" = (
@@ -1055,22 +656,18 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "Jx" = (
-/obj/item/stack/rods{
-	icon_state = "rods-1"
-	},
+/obj/item/stack/rods,
 /obj/item/stack/sheet/iron{
-	dir = 8;
-	pixel_y = 4;
-	amount = 2
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "Jz" = (
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "Ye Olde Strong Door";
-	max_integrity = 600;
-	damage_deflection = 30
+	name = "Ye Olde Strong Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
 /turf/open/floor/wood,
@@ -1091,7 +688,9 @@
 "Ky" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/iron{
-	pixel_y = 1
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
@@ -1100,53 +699,19 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"KO" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 120.5
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"KR" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 69
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "LF" = (
-/obj/item/shard/titanium{
-	icon_state = "titaniummedium";
-	pixel_x = -2;
-	pixel_y = -4
-	},
-/obj/item/shard/titanium{
-	icon_state = "titaniummedium";
-	pixel_x = -4;
-	pixel_y = 8
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
 /obj/effect/decal/cleanable/glass/titanium{
 	dir = 8
 	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/stack/rods,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "LU" = (
-/obj/item/shard/titanium{
-	icon_state = "titaniumsmall";
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/shard/titanium{
-	icon_state = "titaniummedium";
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/stack/rods{
-	icon_state = "rods-4";
-	amount = 4
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/item/stack/rods,
 /obj/item/shard{
 	dir = 8;
 	pixel_x = 1;
@@ -1158,35 +723,18 @@
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	dir = 8;
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_x = -2;
-	pixel_y = -1;
-	amount = 1
-	},
+/obj/item/stack/cable_coil/cut,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "Mk" = (
-/obj/item/shard/titanium{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/shard/titanium{
-	pixel_x = 2;
-	pixel_y = 4
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
 /obj/effect/decal/cleanable/glass/titanium,
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/stack/rods,
 /obj/item/stack/sheet/iron{
-	dir = 4;
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -1199,20 +747,7 @@
 /obj/structure/table_frame/wood,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"Ms" = (
-/obj/structure/barricade/wooden{
-	atom_integrity = 15
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "Mw" = (
-/obj/structure/closet/cabinet{
-	name = "Davy Jones' Locker";
-	density = 0;
-	atom_integrity = 6.1;
-	anchored = 1;
-	opened = 1
-	},
 /obj/item/restraints/legcuffs/bola{
 	dir = 8;
 	pixel_x = 3;
@@ -1233,6 +768,7 @@
 	},
 /obj/item/clothing/suit/costume/pirate/captain/armored,
 /mob/living/basic/trooper/pirate/ranged,
+/obj/structure/closet/cabinet,
 /turf/open/floor/carpet/royalblack,
 /area/rainworld/surface/outdoors)
 "Nt" = (
@@ -1244,13 +780,6 @@
 	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"NH" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	icon_state = "standard_off";
-	req_access = list("syndicate")
-	},
-/turf/closed/wall/mineral/wood/nonmetal,
-/area/rainworld/surface/outdoors)
 "NI" = (
 /obj/structure/window/plasma/spawner/directional/east{
 	atom_integrity = 147.2
@@ -1261,26 +790,7 @@
 	},
 /area/rainworld/surface/outdoors)
 "Oh" = (
-/obj/item/stack/sheet/mineral/wood{
-	dir = 8;
-	pixel_x = -3;
-	pixel_y = 2;
-	atom_integrity = 16;
-	amount = 2
-	},
 /obj/effect/mob_spawn/corpse/human/pirate/ranged,
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"Op" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 92.5
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
-"OO" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 5.5
-	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "Pf" = (
@@ -1322,26 +832,6 @@
 	initial_gas_mix = "o2=1.11n2=4.15TEMP=46.22"
 	},
 /area/rainworld/surface/outdoors)
-"Ta" = (
-/obj/item/shard/titanium{
-	icon_state = "titaniumsmall";
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/item/shard/titanium{
-	icon_state = "titaniumsmall";
-	pixel_x = 8;
-	pixel_y = 7
-	},
-/obj/effect/decal/cleanable/glass/titanium{
-	dir = 1
-	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "Ts" = (
 /obj/effect/mob_spawn/corpse/human/pirate/melee,
 /obj/effect/mapping_helpers/broken_floor,
@@ -1358,36 +848,17 @@
 /area/rainworld/surface/outdoors)
 "Tz" = (
 /obj/item/wallframe/light_fixture,
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_x = -1;
-	pixel_y = -2;
-	amount = 1
-	},
-/obj/item/light/tube{
-	icon_state = "ltube-broken"
-	},
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/tube/broken,
 /obj/item/stack/sheet/mineral/wood{
 	dir = 4;
 	pixel_x = 4;
 	pixel_y = -1;
-	atom_integrity = 9;
 	amount = 5
 	},
 /turf/open/floor/carpet/red,
 /area/rainworld/surface/outdoors)
 "TM" = (
-/obj/structure/frame/machine{
-	icon_state = "box_1";
-	atom_integrity = 125;
-	anchored = 1
-	},
-/obj/item/circuitboard/machine/recharger{
-	icon = 'tmp/gags/icons/gags-circuit-#9A151E.dmi';
-	name = "Weapon Recharger (Machine Board)"
-	},
 /obj/item/stock_parts/capacitor{
 	pixel_x = -1;
 	pixel_y = 4
@@ -1396,6 +867,8 @@
 	pixel_y = -4;
 	amount = 2
 	},
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/recharger,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "Un" = (
@@ -1404,39 +877,14 @@
 	},
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"Uo" = (
-/obj/item/stack/sheet/iron{
-	pixel_x = -1;
-	pixel_y = -4;
-	amount = 3
-	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
 "Vb" = (
 /mob/living/basic/trooper/pirate/melee,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
-"Vx" = (
-/obj/structure/lattice,
-/obj/item/stack/sheet/iron{
-	pixel_y = -3
-	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
 "Vz" = (
-/obj/item/shard/titanium{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/shard/titanium{
-	icon_state = "titaniumsmall";
-	pixel_x = -9;
-	pixel_y = -6
-	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/item/stack/rods,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "VE" = (
@@ -1461,14 +909,14 @@
 /obj/item/statuebust/hippocratic/evil{
 	name = "Solemn Vow"
 	},
+/mob/living/basic/parrot/headsetted,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "WP" = (
 /obj/item/stack/sheet/iron{
-	dir = 8;
 	pixel_x = 4;
-	pixel_y = 4;
-	atom_integrity = 26
+	pixel_y = 3;
+	amount = 5
 	},
 /turf/open/floor/iron/stairs/old{
 	dir = 1;
@@ -1478,30 +926,20 @@
 	},
 /area/rainworld/surface/outdoors)
 "WU" = (
-/obj/item/shard/titanium{
-	icon_state = "titaniummedium";
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/shard/titanium{
-	pixel_x = 3;
-	pixel_y = 1
-	},
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
 /obj/effect/decal/cleanable/glass/titanium{
 	dir = 8
 	},
-/obj/item/stack/rods{
-	icon_state = "rods-2";
-	amount = 2
-	},
+/obj/item/stack/rods,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "WV" = (
 /obj/item/stack/sheet/iron{
-	pixel_x = -3;
-	pixel_y = -3;
-	amount = 7
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
 	},
 /obj/item/electronics/airlock{
 	dir = 8;
@@ -1512,37 +950,14 @@
 "Xq" = (
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
-"XD" = (
-/obj/structure/window/reinforced/shuttle/survival_pod{
-	atom_integrity = 99.2
-	},
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "Yh" = (
 /obj/item/wallframe/light_fixture/small{
 	dir = 8;
 	atom_integrity = 144
 	},
-/obj/item/stack/cable_coil{
-	color = "#ffff00";
-	dir = 8;
-	icon_state = "coil1";
-	name = "cable piece";
-	pixel_y = -2;
-	atom_integrity = 40;
-	amount = 1
-	},
-/obj/item/light/bulb{
-	dir = 8;
-	icon_state = "lbulb-broken";
-	atom_integrity = 174
-	},
-/obj/item/light/bulb{
-	dir = 4;
-	icon_state = "lbulb-broken";
-	pixel_x = 6;
-	pixel_y = -5
-	},
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/bulb/broken,
+/obj/item/light/bulb/broken,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/carpet/red,
 /area/rainworld/surface/outdoors)
@@ -1699,14 +1114,14 @@ ui
 ey
 cf
 Gm
-cf
+jy
 ey
 xT
-mI
-Fd
+xT
+xT
 DA
 oA
-OO
+jy
 PX
 PX
 PX
@@ -1714,17 +1129,17 @@ PX
 PX
 LF
 PX
-iP
+vl
 qm
-Ta
+vl
 PX
 vl
 PX
-kS
+jy
 oA
-GD
+jy
 xT
-uY
+xT
 ui
 ui
 ui
@@ -1762,7 +1177,7 @@ PX
 tx
 PX
 PX
-wl
+pI
 oA
 PX
 fN
@@ -1785,8 +1200,8 @@ pV
 Eh
 ey
 ey
-cE
-KO
+cf
+jy
 ey
 Ts
 oA
@@ -1805,11 +1220,11 @@ tx
 PX
 PX
 PX
-Cu
+Ky
 qm
 iJ
 fN
-Fi
+xT
 BU
 ui
 ui
@@ -1830,7 +1245,7 @@ Bn
 mF
 YD
 ey
-lw
+xT
 YU
 dT
 PX
@@ -1872,7 +1287,7 @@ ey
 mX
 gN
 Mw
-qZ
+jy
 oA
 mh
 Zv
@@ -1891,7 +1306,7 @@ Vz
 LU
 jy
 Oh
-Zv
+CC
 fN
 fN
 fN
@@ -1914,10 +1329,10 @@ ey
 CN
 vh
 oc
-tr
+jy
 oA
 fN
-yY
+oA
 yw
 Wm
 WV
@@ -1932,20 +1347,20 @@ hy
 Jp
 nX
 NI
-KR
+xT
 Nt
 vh
 fN
 fN
 fN
 fN
-yL
+cf
 ui
 ui
 "}
 (10,1,1) = {"
 ui
-Iq
+zI
 VE
 vh
 IC
@@ -1956,7 +1371,7 @@ eH
 Vb
 ox
 Ds
-Jm
+cf
 oA
 Yh
 tx
@@ -1982,7 +1397,7 @@ vh
 fN
 fN
 ul
-NH
+zI
 ui
 "}
 (11,1,1) = {"
@@ -1998,10 +1413,10 @@ ey
 vh
 vh
 yX
-gP
+cf
 Eh
 fN
-Ms
+xT
 oA
 fN
 fN
@@ -2014,7 +1429,7 @@ PX
 PX
 qm
 dW
-Uo
+pI
 Bv
 xT
 xT
@@ -2023,7 +1438,7 @@ vh
 vh
 vh
 vh
-lx
+cf
 ui
 ui
 "}
@@ -2040,7 +1455,7 @@ ey
 VR
 bf
 Ds
-xW
+cf
 Eh
 fN
 fN
@@ -2056,9 +1471,9 @@ PX
 iC
 oM
 mt
-pm
-fy
-HF
+LF
+jy
+xT
 HV
 vh
 vh
@@ -2088,7 +1503,7 @@ fN
 fN
 fN
 fN
-Vx
+Ky
 fN
 PX
 PX
@@ -2105,7 +1520,7 @@ vh
 vh
 vh
 xT
-kw
+cf
 ui
 ui
 ui
@@ -2134,7 +1549,7 @@ fN
 Io
 qm
 PX
-bW
+Ky
 oA
 qm
 PX
@@ -2173,7 +1588,7 @@ fN
 fN
 fN
 fN
-Ej
+pI
 qm
 PX
 qm
@@ -2187,7 +1602,7 @@ fN
 vh
 vh
 ey
-eA
+xT
 ui
 ui
 ui
@@ -2209,24 +1624,24 @@ ey
 ey
 ey
 Jz
-EJ
-dr
+xT
+jy
 oA
-XD
+jy
 oA
-mD
+jy
 kO
 WU
 kO
-CC
+jy
 pI
 uN
 kO
 Mk
 kO
-Op
+cf
 IN
-GN
+cf
 ey
 zI
 ui
