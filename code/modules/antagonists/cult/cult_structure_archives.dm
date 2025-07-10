@@ -1,7 +1,7 @@
 /// Some defines for items the cult archives can create.
 #define CULT_BLINDFOLD "Zealot's Blindfold"
 #define CURSE_ORB "Shuttle Curse"
-#define VEIL_WALKER "Veil Walker Set"
+#define VEIL_WALKER "Veil Walker"
 #define CRIMSON_MEDALLION "Crimson Medallion"
 
 // Cult archives. Gives out utility items.
