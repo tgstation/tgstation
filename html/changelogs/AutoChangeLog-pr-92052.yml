@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - bugfix: "Stat panel background no longer be... dark in both themes"

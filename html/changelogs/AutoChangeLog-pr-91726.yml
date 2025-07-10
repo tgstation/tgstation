@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: ".38 Flare, a laser bullet! Available in both .38 speedloader and BR-38 magazine once Advanced Beam Weaponry is researched."
-  - rscadd: ".38 Flare highlights the target in an outline and makes sure your bullets never accidentally hit any limb except the one you are aiming at. Never accidentally hit someone in the arm when you were going for a headshot."
-  - balance: "Reduces the printing costs of several ammunition types from the autolathe and security lathe. Reduces the overall material contents of said printed ammo/magazines. If you find a material dupe, let a coder know."

@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - map: "Expand Catwalk dorms hallway that connects to holodeck to be 2 tiles wide. The middle dorm room was squished by 1 tile. The ladder in the dorms top/bottom area was slightly shifted. One of the top dorm rooms had a single tile of reinforced wall that was hidden behind a poster that has been fixed to be regular."
