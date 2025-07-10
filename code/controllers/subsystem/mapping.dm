@@ -146,6 +146,13 @@ SUBSYSTEM_DEF(mapping)
 		if(LAZYLEN(FailedZs))
 			CRASH("Ice wilds failed to load!")
 
+	if(current_map.ocean_levels)
+		var/list/FailedZs = list()
+		LoadGroup(FailedZs, "Deep Ocean", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_OCEAN, height_autosetup = FALSE)
+
+		if(LAZYLEN(FailedZs))
+			CRASH("Ocean failed to load!")
+
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
@@ -275,7 +282,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ocean_ruins = levels_by_trait(ZTRAIT_OCEAN_RUINS)
 	if (ocean_ruins.len)
-		seedRuins(ocean_ruins, 110, list(/area/rainworld/surface/outdoors/unexplored), themed_ruins[ZTRAIT_OCEAN_RUINS], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_LAVALAND, ruins_type = ZTRAIT_OCEAN_RUINS)
+		seedRuins(ocean_ruins, 125, list(/area/rainworld/surface/outdoors/unexplored), themed_ruins[ZTRAIT_OCEAN_RUINS], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_LAVALAND, ruins_type = ZTRAIT_OCEAN_RUINS)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
@@ -461,8 +468,6 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	if(current_map.minetype == MINETYPE_LAVALAND)
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	if(current_map.minetype == MINETYPE_OCEAN)
-		LoadGroup(FailedZs, "Ocean", "map_files/Mining", "Ocean.dmm", default_traits = ZTRAITS_OCEAN)
 	else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE && current_map.minetype != MINETYPE_LAVALAND)
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif

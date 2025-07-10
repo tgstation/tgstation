@@ -6,27 +6,37 @@
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
 	"planetary": 1,
+	"minetype": "none",
+	"ocean_levels": 4,
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
 		"whiteship": "whiteship_meta",
 		"emergency": "emergency_meta"
 	},
+	"ocean_wilderness": {
+		"directory": "map_files/RainworldOcean",
+		"misc_ocean1.dmm": 1,
+		"misc_ocean2.dmm": 1,
+		"misc_ocean3.dmm": 1,
+		"mining_ocean.dmm": 1
+	},
 	"traits": [
 		{
-			"Mining": false,
-			"Linkage": "Self",
+			"Mining": true,
+			"Linkage": "Grid",
 			"Gravity": true,
-			"Ocean Ruins": true,
 			"Weather_Rainstorm": true,
 			"Baseturf": "/turf/open/water/no_planet_atmos/deep/rainworld",
 			"No Parallax": true
 		}
 	],
-	"minetype": "ocean",
 	"job_changes": {
 		"Cook": {
-			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]
+			"additional_cqc_areas": [
+				"/area/station/service/bar",
+				"/area/station/commons/lounge"
+			]
 		}
 	}
 }

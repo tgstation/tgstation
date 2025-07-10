@@ -44,12 +44,12 @@
 /datum/map_generator/cave_generator/rainworld/surface/mining
 	mob_spawn_chance = 6
 	weighted_mob_spawn_list = list(
-		SPAWN_MEGAFAUNA = 1,
+		SPAWN_MEGAFAUNA = 2,
 		/mob/living/basic/mining/lobstrosity = 100,
 		/mob/living/basic/mining/hivelord = 60,
 		/mob/living/basic/mining/basilisk = 80,
 		/mob/living/basic/lightgeist = 10,
-		/mob/living/basic/mining/faithless_mining = 12,
+		/mob/living/basic/mining/faithless_mining = 15,
 
 		/obj/structure/spawner/ice_moon/demonic_portal/lobstrocity = 4,
 		/obj/structure/spawner/ice_moon/demonic_portal/hivelord = 4,
@@ -72,7 +72,6 @@
 		/turf/closed/mineral/random/rainworld = 1,
 	)
 	weighted_mob_spawn_list = list(
-		SPAWN_MEGAFAUNA = 1,
 		/mob/living/basic/mining/faithless_mining = 300,
 		/mob/living/basic/lightgeist = 10,
 	)

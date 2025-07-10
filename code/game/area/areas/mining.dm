@@ -255,6 +255,7 @@
 	name = "Ancient Temple"
 	area_has_base_lighting = 0
 	base_lighting_alpha = 0
+	area_flags = UNIQUE_AREA | NOTELEPORT
 
 /**********************Ice Moon Areas**************************/
 

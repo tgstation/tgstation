@@ -143,7 +143,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 	ZTRAIT_BASETURF = /turf/open/misc/asteroid/snow/icemoon)
 
 ///Z level traits for Deep Ocean
-#define ZTRAITS_OCEAN list(ZTRAIT_LINKAGE = SELFLOOPING, ZTRAIT_OCEAN_RUINS = TRUE, ZTRAIT_NOPARALLAX = TRUE, ZTRAIT_RAINSTORM = TRUE, ZTRAIT_BASETURF = /turf/open/water/no_planet_atmos/deep/rainworld)
+#define ZTRAITS_OCEAN list(ZTRAIT_LINKAGE = GRIDLINKED, ZTRAIT_OCEAN_RUINS = TRUE, ZTRAIT_NOPARALLAX = TRUE, ZTRAIT_BASETURF = /turf/open/water/no_planet_atmos/deep/rainworld)
 
 ///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
@@ -260,4 +260,3 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define MINETYPE_NONE "none"
 #define MINETYPE_LAVALAND "lavaland"
 #define MINETYPE_ICE "ice"
-#define MINETYPE_OCEAN "ocean"
