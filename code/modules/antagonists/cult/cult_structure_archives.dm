@@ -63,3 +63,4 @@
 #undef CURSE_ORB
 #undef VEIL_WALKER
 #undef CRIMSON_MEDALLION
+#undef VOID_TORCH
