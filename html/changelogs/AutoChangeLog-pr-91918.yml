@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - qol: "Security barrier grenades no longer have an arbitrary 4 second delay on becoming tangible."
-  - refactor: "Barricades now use tool act and item interactions, and behave sanely. Looking at you wooden barricade."
