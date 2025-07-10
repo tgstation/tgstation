@@ -55,8 +55,8 @@
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
-		overlay_x = 18, \
-		overlay_y = 13)
+		overlay_x = 20, \
+		overlay_y = 11)
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
@@ -76,8 +76,8 @@
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
-		overlay_x = 18, \
-		overlay_y = 13)
+		overlay_x = 20, \
+		overlay_y = 11)
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact combat shotgun"
 	desc = "A compact version of the semi automatic combat shotgun. Lower magazine capacity, but more easily carried."
@@ -90,8 +90,8 @@
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
-		overlay_x = 17, \
-		overlay_y = 13)
+		overlay_x = 16, \
+		overlay_y = 11)
 //Dual Feed Shotgun
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube
