@@ -9,12 +9,12 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { ActiveReaction, ReactionDisplay } from './ChemHeater';
-import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
+import { type ActiveReaction, ReactionDisplay } from './ChemHeater';
+import { type Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 
 const TEMP_MODES = [
   'Reaction Temp',

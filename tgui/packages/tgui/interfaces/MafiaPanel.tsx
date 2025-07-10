@@ -11,7 +11,7 @@ import {
   TextArea,
 } from 'tgui-core/components';
 import { formatTime } from 'tgui-core/format';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
