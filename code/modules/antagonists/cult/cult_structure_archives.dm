@@ -27,7 +27,7 @@
 			),
 		VEIL_WALKER = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "shifter"),
-			OUTPUT_ITEMS = list(/obj/item/cult_shift, /obj/item/flashlight/flare/culttorch),
+			OUTPUT_ITEMS = list(/obj/item/cult_shift),
 			),
 	)
 
