@@ -25,6 +25,18 @@
 	if(istype(head_cover))
 		head_cover.flash_protect = initial(head_cover.flash_protect)
 
+/obj/item/mod/module/welding/syndicate
+	complexity = 0
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/stealth/wraith)
+	overlay_state_inactive = "module_armorbooster_on"
+	use_mod_colors = TRUE
+	mask_worn_overlay = TRUE
+
+/obj/item/mod/module/welding/syndicate/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	return ..()
+
 ///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray
 	name = "MOD t-ray scan module"
@@ -396,7 +408,7 @@
 		relatively easy to install into most other suits."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/infiltrator)
+	incompatible_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/infiltrator)
 	required_slots = list(ITEM_SLOT_HEAD)
 
 /obj/item/mod/module/headprotector/on_part_activation()
