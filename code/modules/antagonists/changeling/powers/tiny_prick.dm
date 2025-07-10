@@ -253,9 +253,8 @@
 
 /datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
-	desc = "We cause mass terror to our victim. Costs 10 chemicals."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
-			The target does not notice they have been stung, and they view everyone else as a random passerby."
+	desc = "We inject the target with a powerful hallucinogen causing them to see others as a random nearby passerby."
+	helptext = "The target does not notice they have been stung."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
@@ -277,11 +276,6 @@
 
 	return TRUE
 
-/datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
-	if(QDELETED(src) || QDELETED(target))
-		return
-	target.adjust_hallucinations(180 SECONDS)
-
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"
 	desc = "We silently sting our victim with a cocktail of chemicals that freezes them from the inside. Costs 15 chemicals."
@@ -299,14 +293,14 @@
 
 /datum/action/changeling/sting/fake_changeling
 	name = "False Changeling Sting"
-	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us with an armblade while we take on their identity."
-	helptext = "Makes the victim appears like you while you take on their appearance, the disguise is just a fake outer flesh which will decay after a while. \
-	Gained once you obtained both false arm blade and transformation sting."
+	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us with an armblade while we take on their identity. Costs 25 chemicals."
+	helptext = "The victim will swap appearance with you, not including clothes. Lasts for only a short time."
 	button_icon_state = "false_ling"
 	chemical_cost = 25
 	dna_cost = 0
-	prereq_ability = list(/datum/action/changeling/sting/transformation,
-	/datum/action/changeling/sting/false_armblade
+	prereq_ability = list(
+		/datum/action/changeling/sting/transformation,
+		/datum/action/changeling/sting/false_armblade,
 	)
 
 /datum/action/changeling/sting/fake_changeling/sting_action(mob/living/user, mob/living/target)
@@ -344,8 +338,8 @@
 
 /datum/action/changeling/sting/false_revival
 	name = "False Revival"
-	desc = "We inject a significant amount of ourselves to jerry rig the dead body back to life, immitading our revival stasis"
-	helptext = "This will only work on dead bodies. The victim will be fully revived, be cautious with who you use it on"
+	desc = "We inject a significant amount of ourselves to bring the dead body back to life, imitating our revival stasis while also making them hostile. Costs 40 chemicals"
+	helptext = "This will only work on dead bodies. The victim will be fully revived and forced to attack nearby targets - be cautious with who you use it on."
 	button_icon_state = "fake_revival"
 	chemical_cost = 40
 	dna_cost = 1
@@ -372,4 +366,5 @@
 
 /datum/action/changeling/sting/false_revival/proc/end_revival(mob/living/target)
 	target.death()
+	target.investigate_log("died to false revival sting.", INVESTIGATE_DEATHS)
 

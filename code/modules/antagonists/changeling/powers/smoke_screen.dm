@@ -1,7 +1,7 @@
 /datum/action/changeling/smoke_screen
 	name = "Smoke Screen"
-	desc = "We vaporize some of our blood to create a smoke cloud while steahlthy injecting hallucination reagents into nearby humans."
-	helptext = "Create a smoke cloud and confuses nearby people, causing them to see everyone to have the same appearance as you"
+	desc = "We vaporize some of our blood to create a smoke cloud. Costs 20 chemicals"
+	helptext = "The smoke blocks regular vission and spreads out as far as 8 tiles away."
 	button_icon_state = "smoke_screen"
 	chemical_cost = 20
 	dna_cost = 1

@@ -638,7 +638,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(HAS_TRAIT(src, TRAIT_AGENDER))
 		gender = PLURAL
 		return
-	target_dna = target_dna ? target_dna : dna //if we passed in a set dna datum the use that instead else default of mob's dna
+	target_dna ||= dna //if we passed in a set dna datum the use that instead else default of mob's dna
 
 	switch(deconstruct_block(get_uni_identity_block(target_dna.unique_identity, DNA_GENDER_BLOCK), GENDERS))
 		if(G_MALE)
@@ -652,7 +652,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE, datum/dna/target_dna)
 	..()
-	target_dna = target_dna ? target_dna : dna
+	target_dna ||= dna
 	var/structure = target_dna.unique_identity
 	skin_tone = GLOB.skin_tones[deconstruct_block(get_uni_identity_block(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
 	set_eye_color(sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_LEFT_BLOCK)), sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_RIGHT_BLOCK)))
