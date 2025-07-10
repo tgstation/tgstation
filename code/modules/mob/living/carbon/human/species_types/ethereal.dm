@@ -41,6 +41,9 @@
 	var/default_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
+	var/powermult = 1
+	var/rangemult = 1
+	var/flickering = FALSE
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 
 /datum/species/ethereal/Destroy(force)
@@ -97,7 +100,7 @@
 				built_color += skin_color[i] + ((colors[i] - skin_color[i]) * healthpercent)
 			current_color = rgb(built_color[1], built_color[2], built_color[3])
 
-		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
+		ethereal_light.set_light_range_power_color(((1 + (2 * healthpercent)) * rangemult), ((1 + (1 * healthpercent)) * powermult), current_color)
 		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
 		ethereal.update_body()
@@ -166,6 +169,50 @@
 	emageffect = FALSE
 	refresh_light_color(ethereal)
 	ethereal.visible_message(span_danger("[ethereal] stops flickering and goes back to their normal state!"))
+
+/datum/species/ethereal/proc/handle_glow_emote(mob/living/carbon/human/ethereal, power, range, flare = FALSE, duration = 5 SECONDS, flare_time = 0)
+	powermult = power
+	rangemult = range
+	refresh_light_color(ethereal)
+	addtimer(CALLBACK(src, PROC_REF(stop_glow_emote), ethereal, flare, flare_time), duration)
+
+/datum/species/ethereal/proc/stop_glow_emote(mob/living/carbon/human/ethereal, flare, flare_time)
+	if(!flare)
+		powermult = 1
+		rangemult = 1
+	if(flare)
+		start_flicker(ethereal, duration = 1.5 SECONDS, min = 1, max = 2)
+		powermult = 0.5
+		rangemult = 0.75
+		sleep(1.5 SECONDS)
+		powermult = 1
+		rangemult = 1
+		EMPeffect = TRUE
+		to_chat(ethereal, span_warning("Your shine flickers and fades."))
+		addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
+	refresh_light_color(ethereal)
+
+
+/datum/species/ethereal/proc/start_flicker(mob/living/carbon/human/ethereal, duration = 6 SECONDS, min = 1, max = 4)
+	flickering = TRUE
+	handle_flicker(ethereal, min, max)
+	addtimer(CALLBACK(src, PROC_REF(stop_flicker), ethereal), duration)
+
+/datum/species/ethereal/proc/handle_flicker(mob/living/carbon/human/ethereal, flickmin = 1, flickmax = 4)
+	if(!flickering || EMPeffect)
+		if(!EMPeffect)
+			ethereal_light.set_light_on(TRUE)
+		return
+	if(ethereal_light.light_on)
+		ethereal_light.set_light_on(FALSE)
+	else
+		ethereal_light.set_light_on(TRUE)
+	addtimer(CALLBACK(src, PROC_REF(handle_flicker), ethereal), rand(1, 4))
+
+/datum/species/ethereal/proc/stop_flicker(mob/living/carbon/human/ethereal)
+	flickering = FALSE
+	if(!EMPeffect)
+		ethereal_light.set_light_on(TRUE)
 
 /datum/species/ethereal/get_features()
 	var/list/features = ..()
