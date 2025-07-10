@@ -16,7 +16,7 @@
 	var/static/list/pinup_posters = list(
 		/obj/structure/sign/poster/contraband/lizard,
 		/obj/structure/sign/poster/contraband/lusty_xenomorph,
-		/obj/structure/sign/poster/contraband/double_rainbow
+		/obj/structure/sign/poster/contraband/double_rainbow,
 	)
 
 /obj/item/poster/random_contraband/pinup/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
