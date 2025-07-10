@@ -1,14 +1,15 @@
 /// Some defines for items the cult archives can create.
 #define CULT_BLINDFOLD "Zealot's Blindfold"
 #define CURSE_ORB "Shuttle Curse"
-#define VEIL_WALKER "Veil Walker Set"
+#define VEIL_WALKER "Veil Walker"
 #define CRIMSON_MEDALLION "Crimson Medallion"
+#define VOID_TORCH "Void Torch"
 
 // Cult archives. Gives out utility items.
 /obj/structure/destructible/cult/item_dispenser/archives
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
-	cult_examine_tip = "Can be used to create zealot's blindfolds, shuttle curse orbs, and veil walker equipment."
+	cult_examine_tip = "Can be used to create zealot's blindfolds, shuttle curse orbs, and teleportation equipment."
 	icon_state = "tomealtar"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_FIRE
@@ -27,7 +28,11 @@
 			),
 		VEIL_WALKER = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "shifter"),
-			OUTPUT_ITEMS = list(/obj/item/cult_shift, /obj/item/flashlight/flare/culttorch),
+			OUTPUT_ITEMS = list(/obj/item/cult_shift),
+			),
+		VOID_TORCH = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/lighting.dmi', icon_state = "torch"),
+			OUTPUT_ITEMS = list(/obj/item/flashlight/flare/culttorch),
 			),
 	)
 
