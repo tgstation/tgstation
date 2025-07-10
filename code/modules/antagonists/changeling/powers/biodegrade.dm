@@ -10,35 +10,35 @@
 
 /datum/action/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	. = NONE
-	. |= dissolve_handcuffs(user)
-	. |= dissolve_legcuffs(user)
-	. |= dissolve_straightjacket(user)
-	. |= open_closet(user)
-	. |= dissolve_cocoon(user)
+	. |= dissolve_restraints(user)
+	. |= (user)
+	..()
 	if(!.)
+		user.balloon_alert("not restrained")
+		. = FALSE
+	else
+		. = TRUE
+	return .
 
-/datum/action/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user)
-	if(!user.handcuffed)
-		returwn NONE
-	user.visible_message(span_warning("[user.handcuffed] dissolve[O.gender == PLURAL?"":"s"] into a puddle of sizzling goop."))
-	new /obj/effect/decal/cleanable/greenglow(O.drop_location())
-	qdel(O)
-	return COMPONENT_CHANGELING_DISSOLVED_HANDCUFFS
+/datum/action/changeling/biodegrade/proc/dissolve_restraints(mob/living/carbon/human/user)
+	var/list/restraints = list()
+	if(istype(user.handcuffed))
+		restraints.Add(user.handcuffed)
+	if(istype(user.legcuffed))
+		restraints.Add(user.legcuffed)
+	if(istype(user.wear_suit) && user.wear_suit?.breakouttime)
+		restraints.Add(user.wear_suit)
+	if(!length(restraints))
+		return NONE
+	for(var/obj/item/restraining in restraints)
+		user.visible_message(span_danger("[user] spews globs of corrosive fluid onto [restraining], destroying it!"))
+		addtimer(CALLBACK(src, PROC_REF(biodegrade_breakout), user, restraining), (3 + restraints.Find(restraining)) SECONDS)
+	return COMPONENT_DISSOLVED_RESTRAINTS
 
-
-/datum/action/changeling/biodegrade/proc/dissolve_legcuffs(mob/living/carbon/human/user)
-	if(O && user.legcuffed == O)
-		user.visible_message(span_warning("[O] dissolve[O.gender == PLURAL?"":"s"] into a puddle of sizzling goop."))
-		new /obj/effect/decal/cleanable/greenglow(O.drop_location())
-		qdel(O)
-	return COMPONENT_CHANGELING_DISSOLVED_LEGCUFFS
-
-/datum/action/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user)
-	if(S && user.wear_suit == S)
-		user.visible_message(span_warning("[S] dissolves into a puddle of sizzling goop."))
-		new /obj/effect/decal/cleanable/greenglow(S.drop_location())
-		qdel(S)
-	return COMPONENT_CHANGLEING_DISSOLVED_STRAIGHTJACKET
+/datum/aciton/changeling/biodegrade/proc/biodegrade_breakout(mob/living/carbon/human/user, obj/item/dissolved_restraint)\
+	new /obj/effect/decal/cleanable/greenglow(dissolved_item.drop_location())
+	log_combat(user, dissolved_restraint, "melted [dissolved_restraint]", addition = "(biodegrade)")
+	dissolved_item.atom_break()
 
 /datum/action/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user)
 	if(C && user.loc == C)
@@ -48,12 +48,5 @@
 		C.locked = FALSE
 		C.broken = TRUE
 		C.open()
-		to_chat(user, span_warning("We open the container restraining us!"))
+		to_chat(user, span_changeling("We open the container restraining us!"))
 	return COMPONENT_CHANGELING_DISSOLVED_CLOSET
-
-/datum/action/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user)
-	if(C && user.loc == C)
-		new /obj/effect/decal/cleanable/greenglow(C.drop_location())
-		qdel(C) //The cocoon's destroy will move the changeling outside of it without interference
-		to_chat(user, span_warning("We dissolve the cocoon!"))
-	return COMPONENT_CHANGELING_DISSOLVED_COCOON
