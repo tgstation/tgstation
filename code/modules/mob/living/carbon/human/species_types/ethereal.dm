@@ -100,7 +100,7 @@
 				built_color += skin_color[i] + ((colors[i] - skin_color[i]) * healthpercent)
 			current_color = rgb(built_color[1], built_color[2], built_color[3])
 
-		ethereal_light.set_light_range_power_color(((1 + (2 * healthpercent)) * rangemult), ((1 + (1 * healthpercent)) * powermult), current_color)
+		ethereal_light.set_light_range_power_color((1 + (2 * healthpercent)) * rangemult, (1 + (1 * healthpercent) * powermult), current_color)
 		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
 		ethereal.update_body()
@@ -180,6 +180,8 @@
 	if(!flare)
 		powermult = 1
 		rangemult = 1
+		refresh_light_color(ethereal)
+		return
 	if(flare)
 		powermult = 0.5
 		rangemult = 0.75
@@ -191,7 +193,6 @@
 		EMPeffect = TRUE
 		to_chat(ethereal, span_warning("Your shine flickers and fades."))
 		addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
-	refresh_light_color(ethereal)
 
 
 /datum/species/ethereal/proc/start_flicker(mob/living/carbon/human/ethereal, duration = 6 SECONDS, min = 1, max = 4)
@@ -203,7 +204,9 @@
 	if(!flickering || EMPeffect)
 		if(!EMPeffect)
 			ethereal_light.set_light_on(TRUE)
-		return
+			return
+		else
+			return
 	if(ethereal_light.light_on)
 		ethereal_light.set_light_on(FALSE)
 	else
