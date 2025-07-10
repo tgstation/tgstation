@@ -172,7 +172,12 @@
 
 	var/list/choices = list()
 	for(var/item in options)
-		choices[item] = options[item][PREVIEW_IMAGE]
+		var/datum/radial_menu_choice/cultitem = new()
+		cultitem.name = item
+		// cultitem.info = span_cult_italic(options[item][RADIAL_DESC])
+		cultitem.image = options[item][PREVIEW_IMAGE]
+		cultitem.tooltip_theme = "cult"
+		choices[item] = cultitem
 
 	var/picked_choice = show_radial_menu(
 		user,
