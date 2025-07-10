@@ -1,5 +1,4 @@
 /datum/dna_block/identity/gender
-	block_id = DNA_UI_GENDER
 
 /datum/dna_block/identity/gender/unique_block(mob/living/carbon/human/target)
 	. = ..()
@@ -31,7 +30,6 @@
 			target.gender = PLURAL
 
 /datum/dna_block/identity/skin_tone
-	block_id = DNA_UI_SKIN_TONE
 
 /datum/dna_block/identity/skin_tone/unique_block(mob/living/carbon/human/target)
 	. = ..()
@@ -42,7 +40,6 @@
 
 /// Holds both the left and right eye color at once
 /datum/dna_block/identity/eye_colors
-	block_id = DNA_UI_EYE_COLORS
 	block_length = DNA_BLOCK_SIZE_COLOR * 2 // Left eye color, then right eye color
 
 /datum/dna_block/identity/eye_colors/unique_block(mob/living/carbon/human/target)
@@ -56,7 +53,6 @@
 	target.set_eye_color(sanitize_hexcolor(copytext(colors, 1, 4)), sanitize_hexcolor(copytext(colors, 4, 7)))
 
 /datum/dna_block/identity/hair_style
-	block_id = DNA_UI_HAIR
 
 /datum/dna_block/identity/hair_style/unique_block(mob/living/carbon/human/target)
 	. = ..()
@@ -70,7 +66,6 @@
 	target.set_hairstyle(style, update = FALSE)
 
 /datum/dna_block/identity/hair_color
-	block_id = DNA_UI_HAIR_COLOR
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/hair_color/unique_block(mob/living/carbon/human/target)
@@ -81,7 +76,6 @@
 	target.set_haircolor(sanitize_hexcolor(get_block(dna_hash)), update = FALSE)
 
 /datum/dna_block/identity/facial_style
-	block_id = DNA_UI_FACIALSTYLE
 
 /datum/dna_block/identity/facial_style/unique_block(mob/living/carbon/human/target)
 	. = ..()
@@ -95,7 +89,6 @@
 	target.set_facial_hairstyle(style, update = FALSE)
 
 /datum/dna_block/identity/facial_color
-	block_id = DNA_UI_FACIAL_COLOR
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/facial_color/unique_block(mob/living/carbon/human/target)
@@ -106,7 +99,6 @@
 	target.set_facial_haircolor(sanitize_hexcolor(get_block(dna_hash)), update = FALSE)
 
 /datum/dna_block/identity/hair_gradient
-	block_id = DNA_UI_HAIR_GRADIENT
 
 /datum/dna_block/identity/hair_gradient/unique_block(mob/living/carbon/human/target)
 	. = ..()
@@ -117,7 +109,6 @@
 	target.set_hair_gradient_style(gradient_style, update = FALSE)
 
 /datum/dna_block/identity/hair_gradient_color
-	block_id = DNA_UI_HAIR_GRADIENT_COLOR
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/hair_gradient_color/unique_block(mob/living/carbon/human/target)
@@ -128,7 +119,6 @@
 	target.set_hair_gradient_color(sanitize_hexcolor(get_block(dna_hash)), update = FALSE)
 
 /datum/dna_block/identity/facial_gradient
-	block_id = DNA_UI_FACIAL_GRADIENT
 
 /datum/dna_block/identity/facial_gradient/unique_block(mob/living/carbon/human/target)
 	. = ..()
@@ -139,7 +129,6 @@
 	target.set_facial_hair_gradient_style(gradient_style, update = FALSE)
 
 /datum/dna_block/identity/facial_gradient_color
-	block_id = DNA_UI_FACIAL_GRADIENT_COLOR
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/facial_gradient_color/unique_block(mob/living/carbon/human/target)

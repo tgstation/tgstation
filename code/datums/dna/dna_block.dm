@@ -1,8 +1,5 @@
 /// A singleton for handling block-unique functions called by the DNA datum.
 /datum/dna_block
-	/// The unique identifier of a block used for looking it up on a global list.
-	/// Try to use strings inside defines for these
-	var/block_id
 	/// The length of this block when converted to ascii
 	var/block_length = DNA_BLOCK_SIZE
 
@@ -38,13 +35,12 @@
 /datum/dna_block/identity
 
 /datum/dna_block/identity/position_in_hash()
-	return GLOB.total_ui_len_by_block[block_id]
+	return GLOB.total_ui_len_by_block[type]
 
 /// Blocks for unique features (mutant color, mutant bodyparts)
 /datum/dna_block/feature
 
 /datum/dna_block/feature/position_in_hash()
-	return GLOB.total_uf_len_by_block[block_id]
+	return GLOB.total_uf_len_by_block[type]
 
 /datum/dna_block/feature/mutant_color
-	block_id = DNA_UF_MUTANT_COLOR

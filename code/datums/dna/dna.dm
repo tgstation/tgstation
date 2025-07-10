@@ -194,13 +194,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/proc/generate_unique_identity()
 	. = ""
 	var/list/identity_list = new
-	for(var/block_id as anything in GLOB.dna_identity_blocks)
-		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
-		identity_list[block_id] = block.unique_block(holder)
+	for(var/block_type as anything in GLOB.dna_identity_blocks)
+		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_type]
+		identity_list[block_type] = block.unique_block(holder)
 
-	for(var/block_id as anything in GLOB.dna_identity_blocks)
-		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
-		. += identity_list[block.block_id] || random_string(block.block_length, GLOB.hex_characters)
+	for(var/block_type as anything in GLOB.dna_identity_blocks)
+		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_type]
+		. += identity_list[block.type] || random_string(block.block_length, GLOB.hex_characters)
 
 /datum/dna/proc/generate_unique_features()
 	. = ""
@@ -300,12 +300,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/succeeding_blocks = blocknum < GLOB.total_uf_len_by_block.len ? copytext(unique_features, GLOB.total_uf_len_by_block[blocknum+1]) : ""
 	unique_features = precesing_blocks + input + succeeding_blocks
 
-/datum/dna/proc/update_ui_block(blockid)
-	if(!blockid)
-		CRASH("UI block identifier is null")
+/datum/dna/proc/update_ui_block(blocktype)
+	if(isnull(blocktype))
+		CRASH("UI block type is null")
 	if(!ishuman(holder))
 		CRASH("Non-human mobs shouldn't have DNA")
-	var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[blockid]
+	var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[blocktype]
 	unique_identity = block.modified_hash(unique_identity, block.unique_block(holder))
 
 /datum/dna/proc/update_uf_block(blocknumber)
@@ -559,8 +559,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
 	. = ..()
-	for(var/block_id as anything in GLOB.dna_identity_blocks)
-		var/datum/dna_block/identity/block_to_apply = GLOB.dna_identity_blocks[block_id]
+	for(var/block_type as anything in GLOB.dna_identity_blocks)
+		var/datum/dna_block/identity/block_to_apply = GLOB.dna_identity_blocks[block_type]
 		block_to_apply.apply_to_mob(src, dna.unique_identity)
 	var/features = dna.unique_features
 	if(dna.features["mcolor"])
@@ -605,8 +605,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if(icon_update)
 		update_body(is_creating = mutcolor_update)
-		if(mutations_overlay_update)
-			update_mutations_overlay()
+	if(mutations_overlay_update)
+		update_mutations_overlay()
 
 /mob/proc/domutcheck()
 	return
@@ -723,10 +723,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
 		CRASH("[src] does not have DNA")
-	var/mutblock_id = pick(GLOB.dna_identity_blocks)
-	var/datum/dna_block/identity/mutblock = GLOB.dna_identity_blocks[mutblock_id]
-	dna.set_uni_feature_block(mutblock.block_id, random_string(mutblock.block_length, GLOB.hex_characters))
-	updateappearance(mutations_overlay_update=1)
+	var/mutblock_path = pick(GLOB.dna_identity_blocks)
+	var/datum/dna_block/identity/mutblock = GLOB.dna_identity_blocks[mutblock_path]
+	dna.unique_identity = mutblock.modified_hash(dna.unique_identity, random_string(mutblock.block_length, GLOB.hex_characters))
+	updateappearance(mutations_overlay_update = TRUE)
 
 /mob/living/carbon/proc/random_mutate_unique_features()
 	if(!has_dna())

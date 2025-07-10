@@ -31,7 +31,7 @@
 /mob/living/carbon/proc/on_agender_trait_loss(datum/source)
 	SIGNAL_HANDLER
 
-	var/datum/dna_block/identity/to_update = GLOB.dna_identity_blocks[DNA_UI_GENDER]
+	var/datum/dna_block/identity/gender/to_update = GLOB.dna_identity_blocks[/datum/dna_block/identity/gender]
 	to_update.apply_to_mob(src)
 
 /**

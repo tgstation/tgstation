@@ -199,7 +199,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
 		if(new_s_tone)
 			race_changer.skin_tone = new_s_tone
-			race_changer.dna.update_ui_block(DNA_UI_SKIN_TONE)
+			race_changer.dna.update_ui_block(/datum/dna_block/identity/skin_tone)
 	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
 		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features["mcolor"]) as color|null
 		if(new_mutantcolor)
@@ -241,7 +241,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(chosen_physique && chosen_physique != "Wizards Don't Need Gender")
 		sexy.physique = (chosen_physique == "Warlock Physique") ? MALE : FEMALE
 
-	sexy.dna.update_ui_block(DNA_UI_GENDER)
+	sexy.dna.update_ui_block(/datum/dna_block/identity/gender)
 	sexy.update_body(is_creating = TRUE) // or else physique won't change properly
 	sexy.update_mutations_overlay() //(hulk male/female)
 	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender shaped clothing
@@ -251,7 +251,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(isnull(new_eye_color))
 		return TRUE
 	user.set_eye_color(sanitize_hexcolor(new_eye_color))
-	user.dna.update_ui_block(DNA_UI_EYE_COLORS)
+	user.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
 	user.update_body()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
@@ -382,12 +382,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	if(new_hair_color)
 		user.set_haircolor(sanitize_hexcolor(new_hair_color))
-		user.dna.update_ui_block(DNA_UI_HAIR_COLOR)
+		user.dna.update_ui_block(/datum/dna_block/identity/hair_color)
 	if(user.physique == MALE)
 		var/new_face_color = input(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color) as color|null
 		if(new_face_color)
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color))
-			user.dna.update_ui_block(DNA_UI_FACIAL_COLOR)
+			user.dna.update_ui_block(/datum/dna_block/identity/facial_color)
 
 /obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
 	. = ..()
