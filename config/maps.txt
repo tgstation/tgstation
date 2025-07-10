@@ -55,7 +55,7 @@ map wawastation
 	minplayers 40
 endmap
 
-map rainstation
+map eventmap
 endmap
 
 # Debug-only maps.
