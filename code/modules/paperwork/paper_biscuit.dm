@@ -113,11 +113,11 @@
 
 /obj/item/folder/biscuit/confidential/spare_id_safe_code
 	name = "spare ID safe code biscuit card"
-	contained_slip = /obj/item/paper/paperslip/corporate/fluff/spare_id_safe_code
+	contained_slip = /obj/item/paper/paperslip/corporate/spare_id_safe_code
 
 /obj/item/folder/biscuit/confidential/emergency_spare_id_safe_code
 	name = "spare emergency ID safe code biscuit card"
-	contained_slip = /obj/item/paper/paperslip/corporate/fluff/emergency_spare_id_safe_code
+	contained_slip = /obj/item/paper/paperslip/corporate/emergency_spare_id_safe_code
 
 //Biscuits which start open. Used for crafting, printing, and such
 /obj/item/folder/biscuit/unsealed

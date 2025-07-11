@@ -208,7 +208,11 @@
 /obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
 	name = "corporate plastic card"
 	desc = "A plastic card for confidential corporate matters. Can be written on with pen somehow."
-	icon_state = "corppaperslip"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/paper/paperslip/corporate"
+	post_init_icon_state = "corp_slip"
+	greyscale_config = /datum/greyscale_config/corporate_slip
+	greyscale_colors = COLOR_COMMAND_BLUE
 	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
 	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
@@ -216,8 +220,16 @@
 	throw_range = 6
 	throw_speed = 2
 
+/obj/item/paper/paperslip/corporate/update_icon_state()
+	. = ..()
+	if(LAZYLEN(raw_text_inputs) && show_written_words)
+		icon_state = "[post_init_icon_state]_words"
+	else
+		icon_state = post_init_icon_state
+
 /obj/item/paper/paperslip/corporate/syndicate
-	icon_state = "corppaperslip_syndi"
+	icon_state = "/obj/item/paper/paperslip/corporate/syndicate"
+	greyscale_colors = COLOR_SYNDIE_RED
 
 /obj/item/hatchet/cutterblade
 	name = "paper cutter blade"

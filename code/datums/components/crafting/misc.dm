@@ -24,8 +24,8 @@
 	)
 	category = CAT_MISC
 
-/datum/crafting_recipe/corporate_paper_slip
-	name = "Corporate Plastic Card"
+/datum/crafting_recipe/corporate_slip
+	name = "Corporate Plastic Card - NT"
 	result = /obj/item/paper/paperslip/corporate
 	time = 3 SECONDS
 	reqs = list(
@@ -33,6 +33,17 @@
 		/obj/item/stack/sheet/plastic = 3,
 	)
 	tool_paths = list(/obj/item/stamp/head/captain)
+	category = CAT_MISC
+
+/datum/crafting_recipe/corporate_slip_syndicate
+	name = "Corporate Plastic Card - Syndicate"
+	result = /obj/item/paper/paperslip/corporate/syndicate
+	time = 3 SECONDS
+	reqs = list(
+		/obj/item/paper/paperslip = 1,
+		/obj/item/stack/sheet/plastic = 3,
+	)
+	tool_paths = list(/obj/item/stamp/syndicate)
 	category = CAT_MISC
 
 /datum/crafting_recipe/clipboard
