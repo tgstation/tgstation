@@ -111,6 +111,8 @@
 	. = ..()
 	breath_out = new(BREATH_VOLUME)
 
+	AddElement(/datum/element/swabable, CELL_LINE_ORGAN_LUNGS, cell_line_amount = 1)
+
 	if(safe_nitro_min)
 		respiration_type |= RESPIRATION_N2
 	if(safe_oxygen_min)

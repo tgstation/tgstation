@@ -33,6 +33,10 @@
 	var/operated = FALSE
 	var/beat_noise = "a rhythmic thumping"
 
+/obj/item/organ/heart/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_ORGAN_HEART, cell_line_amount = 1)
+
 /obj/item/organ/heart/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"

@@ -85,7 +85,11 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/snake = 1,
 		/datum/micro_organism/cell_line/walking_mushroom = 2,
 		/datum/micro_organism/cell_line/axolotl = 1,
-	)
+	),
+	CELL_LINE_ORGAN_HEART = list(/datum/micro_organism/cell_line/organs/heart = 1),
+	CELL_LINE_ORGAN_LUNGS = list(/datum/micro_organism/cell_line/organs/lungs = 1),
+	CELL_LINE_ORGAN_LIVER = list(/datum/micro_organism/cell_line/organs/liver = 1),
+	CELL_LINE_ORGAN_STOMACH = list(/datum/micro_organism/cell_line/organs/stomach = 1),
 ))
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus

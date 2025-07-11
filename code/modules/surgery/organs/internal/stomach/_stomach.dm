@@ -42,6 +42,7 @@
 
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_ORGAN_STOMACH, cell_line_amount = 1)
 	//None edible organs do not get a reagent holder by default
 	if(!reagents)
 		create_reagents(reagent_vol, REAGENT_HOLDER_ALIVE)

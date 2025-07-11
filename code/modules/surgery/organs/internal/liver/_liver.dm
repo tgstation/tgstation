@@ -31,6 +31,7 @@
 	. = ..()
 	// If the liver handles foods like a clown, it honks like a bike horn
 	// Don't think about it too much.
+	AddElement(/datum/element/swabable, CELL_LINE_ORGAN_LIVER, cell_line_amount = 1)
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_add_comedy_metabolism))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_remove_comedy_metabolism))
 

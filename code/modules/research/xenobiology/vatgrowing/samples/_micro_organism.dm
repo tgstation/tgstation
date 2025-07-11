@@ -112,6 +112,7 @@
 				if(vat_creature.mutate())
 					return
 			mutate_color(thing)
+		SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_DEPOSITED, thing)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)
@@ -137,23 +138,30 @@
 	var/hue_shift = 1
 	//This affix is added to the name of the atom, to help players understand and converse about the different rarity levels.
 	var/rarity_affix = "glitched"
+	// for adding some unique effects for subtypes, should you wish to do so
+	var/strength_factor = 1
 
 	switch(rand(1, 100))
 		if(1 to 35) //35% chance : painted
 			hue_shift = 0.15
 			rarity_affix = "painted"
+			strength_factor = 1.2
 		if(36 to 70) //35% chance : mutant
 			hue_shift = 0.85 //this value is equivalent in distance as the painted tier, just in the other direction.
 			rarity_affix = "mutant"
+			strength_factor = 1.4
 		if(71 to 83) //13% chance : rare
 			hue_shift = 0.3
 			rarity_affix = "rare"
+			strength_factor = 1.6
 		if(84 to 95) //12% chance : shiny
 			hue_shift = 0.7
 			rarity_affix = "shiny"
+			strength_factor = 2
 		if(96 to 100) //5% chance : mutant king
 			hue_shift = 0.5 //Best in show, most extreme color change.
 			rarity_affix = "mutant king" //The name is up to debate, since cyto is all about freaky creatures I thought it was good choice over something like "cosmic" or "regal".
+			strength_factor = 2.5
 
 	var/list/mutant_shift_matrix = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, hue_shift,0,0,0) //matrix for our colour shifting.
 
@@ -163,3 +171,5 @@
 	if(isliving(beautiful_mutant)) //update the real name var if it's actually a living mob
 		var/mob/living/living_mutie = beautiful_mutant
 		living_mutie.real_name = living_mutie.name
+
+	return strength_factor
