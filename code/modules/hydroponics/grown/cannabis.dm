@@ -15,10 +15,12 @@
 	icon_grow = "cannabis-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "cannabis-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/cannabis/rainbow,
+	mutatelist = list(
+		/obj/item/seeds/cannabis/anti,
 		/obj/item/seeds/cannabis/death,
-		/obj/item/seeds/cannabis/white,
+		/obj/item/seeds/cannabis/rainbow,
 		/obj/item/seeds/cannabis/ultimate,
+		/obj/item/seeds/cannabis/white,
 	)
 	reagents_add = list(/datum/reagent/drug/cannabis = 0.15)
 
@@ -86,6 +88,30 @@
 	rarity = 69
 	graft_gene = /datum/plant_gene/trait/glow/green
 
+/obj/item/seeds/cannabis/anti
+	name = "anti weed seed pack"
+	desc = "These seeds grow into anti weed."
+	icon_state = "seed-ocannabis"
+	plant_icon_offset = 0
+	icon_grow = "ocannabis-grow"
+	species = "ocannabis"
+	plantname = "Anti Weed"
+	product = /obj/item/food/grown/cannabis/anti
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/shadow)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/medicine/naloxone = 0.3, /datum/reagent/medicine/antihol = 0.2, /datum/reagent/medicine/synaphydramine = 0.1)
+	rarity = 40
+	instability = 0
+
+/obj/item/seeds/cannabis/anti/Initialize(mapload, nogenes)
+	. = ..()
+	add_atom_colour(COLOR_MATRIX_INVERT, FIXED_COLOUR_PRIORITY)
+	transform = transform.Turn(180)
+
+/obj/item/seeds/cannabis/anti/get_tray_overlay(age, status)
+	var/mutable_appearance/plant = ..()
+	plant.color = COLOR_MATRIX_INVERT
+	return plant
 
 // ---------------------------------------------------------------
 
@@ -128,3 +154,16 @@
 	icon_state = "ocannabis"
 	bite_consumption_mod = 2 // Ingesting like 40 units of drugs in 1 bite at 100 potency
 	wine_power = 90
+
+/obj/item/food/grown/cannabis/anti
+	seed = /obj/item/seeds/cannabis/anti
+	name = "anti cannabis leaf"
+	desc = "You feel normal looking at it. What the fuck?"
+	icon_state = "ocannabis"
+
+/obj/item/food/grown/cannabis/anti/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	add_atom_colour(COLOR_MATRIX_INVERT, FIXED_COLOUR_PRIORITY)
+	transform = transform.Turn(180)
+	if(prob(0.05))
+		name = "evil cannabis leaf"
