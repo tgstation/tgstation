@@ -51,7 +51,7 @@
 	. = ..()
 	if(!ishuman(new_ethereal))
 		return
-	default_color = new_ethereal.dna.features["ethcolor"]
+	default_color = new_ethereal.dna.features[/datum/dna_block/feature/ethereal_color]
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(new_ethereal, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(hit_by_saboteur))
@@ -80,7 +80,7 @@
 
 /datum/species/ethereal/randomize_features()
 	var/list/features = ..()
-	features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
+	features[/datum/dna_block/feature/ethereal_color] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 	return features
 
 /datum/species/ethereal/proc/refresh_light_color(mob/living/carbon/human/ethereal)
@@ -91,7 +91,7 @@
 		var/healthpercent = max(ethereal.health, 0) / 100
 		if(!emageffect)
 			var/static/list/skin_color = rgb2num("#eda495")
-			var/list/colors = rgb2num(ethereal.dna.features["ethcolor"])
+			var/list/colors = rgb2num(ethereal.dna.features[/datum/dna_block/feature/ethereal_color])
 			var/list/built_color = list()
 			for(var/i in 1 to 3)
 				built_color += skin_color[i] + ((colors[i] - skin_color[i]) * healthpercent)
@@ -277,5 +277,5 @@
 
 /datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load, regenerate_icons)
 	..()
-	default_color = new_lustrous.dna.features["ethcolor"]
-	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.
+	default_color = new_lustrous.dna.features[/datum/dna_block/feature/ethereal_color]
+	new_lustrous.dna.features[/datum/dna_block/feature/ethereal_color] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.

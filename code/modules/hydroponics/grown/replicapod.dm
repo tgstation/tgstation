@@ -199,8 +199,8 @@
 
 	podman.gender = blood_gender
 	podman.faction |= factions
-	if(!features["mcolor"])
-		features["mcolor"] = "#59CE00"
+	if(!features[/datum/dna_block/feature/mutant_color])
+		features[/datum/dna_block/feature/mutant_color] = "#59CE00"
 	if(!features["pod_hair"])
 		features["pod_hair"] = pick(SSaccessories.pod_hair_list)
 

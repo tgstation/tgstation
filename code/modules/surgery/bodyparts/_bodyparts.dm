@@ -982,7 +982,7 @@
 		if(owner_species.fixed_mut_color)
 			species_color = owner_species.fixed_mut_color
 		else
-			species_color = human_owner.dna.features["mcolor"]
+			species_color = human_owner.dna.features[/datum/dna_block/feature/mutant_color]
 	else
 		skin_tone = ""
 		species_color = ""

@@ -28,7 +28,7 @@
 	)
 
 /datum/species/snail/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.dna.features["mcolor"] = COLOR_BEIGE
+	human.dna.features[/datum/dna_block/feature/mutant_color] = COLOR_BEIGE
 	human.update_body(is_creating = TRUE)
 
 /datum/species/snail/get_physical_attributes()

@@ -168,7 +168,7 @@
 	if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 		affected_human.skin_tone = "green"
 	else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Code stolen from spraytan overdose
-		affected_human.dna.features["mcolor"] = "#a8e61d"
+		affected_human.dna.features[/datum/dna_block/feature/mutant_color] = "#a8e61d"
 	affected_human.update_body(is_creating = TRUE)
 
 /datum/reagent/consumable/ethanol/kahlua
