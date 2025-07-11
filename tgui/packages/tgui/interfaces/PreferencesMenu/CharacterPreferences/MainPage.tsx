@@ -463,7 +463,7 @@ export function MainPage(props: MainPageProps) {
   const serverData = useServerPrefs();
 
   const currentSpeciesData =
-    serverData && serverData.species[data.character_preferences.misc.species];
+    serverData?.species[data.character_preferences.misc.species];
 
   const contextualPreferences =
     data.character_preferences.secondary_features || [];
