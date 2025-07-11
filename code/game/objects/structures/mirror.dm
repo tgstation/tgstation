@@ -201,12 +201,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			race_changer.skin_tone = new_s_tone
 			race_changer.dna.update_ui_block(/datum/dna_block/identity/skin_tone)
 	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
-		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features["mcolor"]) as color|null
+		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features[/datum/dna_block/feature/mutant_color]) as color|null
 		if(new_mutantcolor)
 			var/list/mutant_hsv = rgb2hsv(new_mutantcolor)
 
 			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
-				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+				race_changer.dna.features[/datum/dna_block/feature/mutant_color] = sanitize_hexcolor(new_mutantcolor)
 				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))

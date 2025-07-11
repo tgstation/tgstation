@@ -47,36 +47,6 @@
 
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
-/// This number needs to equal the total number of DNA blocks
-#define DNA_MUTANT_COLOR_BLOCK 1
-#define DNA_ETHEREAL_COLOR_BLOCK 2
-#define DNA_LIZARD_MARKINGS_BLOCK 3
-#define DNA_TAIL_BLOCK 4
-#define DNA_LIZARD_TAIL_BLOCK 5
-#define DNA_SNOUT_BLOCK 6
-#define DNA_HORNS_BLOCK 7
-#define DNA_FRILLS_BLOCK 8
-#define DNA_SPINES_BLOCK 9
-#define DNA_EARS_BLOCK 10
-#define DNA_MOTH_WINGS_BLOCK 11
-#define DNA_MOTH_ANTENNAE_BLOCK 12
-#define DNA_MOTH_MARKINGS_BLOCK 13
-#define DNA_MUSHROOM_CAPS_BLOCK 14
-#define DNA_POD_HAIR_BLOCK 15
-#define DNA_FISH_TAIL_BLOCK 16
-
-#define DNA_UF_MUTANT_COLOR "mcolor"
-
-
-// Hey! Listen up if you're here because you're adding a species feature!
-//
-// You don't need to add a DNA block for EVERY species feature!
-// You ONLY need DNA blocks if you intend to allow players to change it via GENETICS!
-// (Which means having a DNA block for a feature tied to a mob without DNA is entirely pointless.)
-
-/// Total amount of DNA blocks, must be equal to the highest DNA block number
-#define DNA_FEATURE_BLOCKS 16
-
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
