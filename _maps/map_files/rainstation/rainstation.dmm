@@ -6436,7 +6436,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/fore)
 "auj" = (
@@ -11170,10 +11170,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/service/general,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aJE" = (
@@ -14080,13 +14080,6 @@
 	},
 /turf/open/floor/stone,
 /area/station/service/bar)
-"aSI" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/closed/wall,
-/area/station/service/kitchen)
 "aSL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31410,7 +31403,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Testing Lab Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "ceR" = (
@@ -40524,6 +40517,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
+"gqf" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/curtain/bounty,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "gqB" = (
@@ -51509,6 +51507,11 @@
 /obj/machinery/light/floor,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
+"pye" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "pyr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55078,7 +55081,7 @@
 /area/station/commons/vacant_room/commissary)
 "swS" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "swY" = (
@@ -55196,10 +55199,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/fore)
 "sBl" = (
@@ -56170,6 +56173,10 @@
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"ttp" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "tty" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow{
@@ -60949,6 +60956,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"xzz" = (
+/obj/structure/closet/crate/silvercrate,
+/obj/effect/spawner/random/peel_or_nana,
+/obj/effect/spawner/random/special_lighter,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "xzN" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -99158,7 +99171,7 @@ aJC
 aJC
 aum
 aum
-aSI
+aum
 aum
 aum
 aum
@@ -112561,7 +112574,7 @@ cgo
 cNW
 bNC
 cae
-cOe
+mWu
 cNW
 cqq
 cqq
@@ -112817,8 +112830,8 @@ bKf
 bLk
 cNW
 bNB
-cOe
-mWu
+cmn
+xzz
 cNW
 cqq
 cqq
@@ -113073,9 +113086,9 @@ kVu
 rAv
 bLj
 cNW
-cNW
-cNW
-cNW
+pye
+cmn
+ttp
 cNW
 cqq
 cqq
@@ -113330,9 +113343,9 @@ uzl
 rAv
 bLm
 cNW
-jPY
-jPY
-jPY
+cNW
+gqf
+cNW
 cNW
 cqq
 cqq
@@ -113589,7 +113602,7 @@ bbx
 cNW
 jPY
 jPY
-cqq
+jPY
 cqq
 cqq
 cqq
@@ -113844,8 +113857,8 @@ cqq
 jPY
 cqq
 jPY
-cqq
-cqq
+jPY
+jPY
 cqq
 cqq
 cqq
