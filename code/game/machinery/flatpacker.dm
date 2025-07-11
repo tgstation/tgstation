@@ -114,7 +114,7 @@
 /obj/machinery/flatpacker/proc/get_flatpack_component_name(obj/item/component)
 	PRIVATE_PROC(TRUE)
 
-	if(ispath(type, /obj/item/vending_refill))
+	if(ispath(component, /obj/item/vending_refill))
 		var/obj/item/vending_refill/canister = component
 
 		return "\improper [canister::machine_name] restocking unit"
