@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "ordering materials from the GMM won't result in empty crates & will display detailed feedback if there weren't enough sheets in the market"
