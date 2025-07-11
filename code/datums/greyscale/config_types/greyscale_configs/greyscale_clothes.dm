@@ -879,3 +879,41 @@
 /datum/greyscale_config/fedora/worn
 	name = "Fedora (Worn)"
 	icon_file = 'icons/mob/clothing/head/hats.dmi'
+
+/datum/greyscale_config/maid
+	name = "Maid Uniform"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid/worn
+	name = "Maid Uniform(Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+
+/datum/greyscale_config/maid_inhands_left
+	name = "Maid Uniform Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_inhands_right
+	name = "Maid Uniform Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband
+	name = "Maid Headband"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband/worn
+	name = "Maid Headband(Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+/datum/greyscale_config/maid_headband_inhands_left
+	name = "Maid Headband Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband_inhands_right
+	name = "Maid Headband Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'

@@ -1,7 +1,7 @@
 import { Button, LabeledList } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { ReagentsData, ReagentsProps } from './types';
+import type { ReagentsData, ReagentsProps } from './types';
 
 export function TagBox(props: ReagentsProps) {
   const { act, data } = useBackend<ReagentsData>();
