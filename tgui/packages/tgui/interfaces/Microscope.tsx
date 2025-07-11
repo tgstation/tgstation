@@ -118,9 +118,7 @@ const CellList = (props) => {
                     fluid
                     color="good"
                     key={reagent}
-                    tooltip={
-                      `+${cell_line.supplementaries[reagent]}% growth/sec.`
-                    }
+                    tooltip={`+${cell_line.supplementaries[reagent]}% growth/sec.`}
                   >
                     {reagent}
                   </Button>

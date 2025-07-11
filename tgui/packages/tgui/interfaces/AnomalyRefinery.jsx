@@ -140,9 +140,11 @@ const CoreCompressorContent = (props) => {
                   ' Kelvin'}
               </Box>
               <Box height={2} width="100%">
-                {`${gasList[1].total_moles
-                  ? String(gasList[1].pressure.toFixed(2))
-                  : '-'} kPa`}
+                {`${
+                  gasList[1].total_moles
+                    ? String(gasList[1].pressure.toFixed(2))
+                    : '-'
+                } kPa`}
               </Box>
             </Stack.Item>
             <Stack.Item>
@@ -165,9 +167,11 @@ const CoreCompressorContent = (props) => {
                   ' Kelvin'}
               </Box>
               <Box height={2} width="100%">
-                {`${gasList[1].total_moles
-                  ? String(gasList[0].pressure.toFixed(2))
-                  : '-'} kPa`}
+                {`${
+                  gasList[1].total_moles
+                    ? String(gasList[0].pressure.toFixed(2))
+                    : '-'
+                } kPa`}
               </Box>
             </Stack.Item>
           </Stack>

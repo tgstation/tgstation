@@ -73,9 +73,7 @@ export class Changelog extends Component {
     const maxAttempts = 6;
 
     if (attemptNumber > maxAttempts) {
-      return this.setData(
-        `Failed to load data after ${maxAttempts} attempts`,
-      );
+      return this.setData(`Failed to load data after ${maxAttempts} attempts`);
     }
 
     act('get_month', { date });
