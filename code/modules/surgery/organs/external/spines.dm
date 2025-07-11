@@ -31,7 +31,7 @@
 ///Bodypart overlay for spines
 /datum/bodypart_overlay/mutant/spines
 	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND
-	feature_key = "spines"
+	feature_key = /datum/dna_block/feature/spine
 	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/spines/get_global_feature_list()

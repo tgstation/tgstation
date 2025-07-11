@@ -65,7 +65,7 @@
 
 	tail_spines_overlay = new
 	tail_spines_overlay.tail_spine_key = tail_spine_key
-	var/feature_name = bodypart.owner.dna.features["spines"] //tail spines don't live in DNA, but share feature names with regular spines
+	var/feature_name = bodypart.owner.dna.features[/datum/dna_block/feature/spine] //tail spines don't live in DNA, but share feature names with regular spines
 	tail_spines_overlay.set_appearance_from_name(feature_name)
 	bodypart.add_bodypart_overlay(tail_spines_overlay)
 
@@ -169,7 +169,7 @@
 
 ///Cat tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/cat
-	feature_key = "tail_cat"
+	feature_key = /datum/dna_block/feature/tail
 	color_source = ORGAN_COLOR_HAIR
 
 /datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
@@ -258,7 +258,7 @@
 
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard
-	feature_key = "tail_lizard"
+	feature_key = /datum/dna_block/feature/tail_lizard
 
 /datum/bodypart_overlay/mutant/tail/lizard/get_global_feature_list()
 	return SSaccessories.tails_list_lizard

@@ -138,7 +138,7 @@
 
 	brother2.dna.features["moth_antennae"] = "Plain"
 	brother2.dna.features["moth_markings"] = "None"
-	brother2.dna.features["moth_wings"] = "Plain"
+	brother2.dna.features[/datum/dna_block/feature/moth_wing] = "Plain"
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)

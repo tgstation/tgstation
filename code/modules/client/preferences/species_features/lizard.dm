@@ -55,7 +55,7 @@
 	return final_icon
 
 /datum/preference/choiced/lizard_body_markings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["lizard_markings"] = value
+	target.dna.features[/datum/dna_block/feature/lizard_marking] = value
 
 /datum/preference/choiced/lizard_frills
 	savefile_key = "feature_lizard_frills"
@@ -72,7 +72,7 @@
 	return generate_lizard_side_shot(SSaccessories.frills_list[value], "frills")
 
 /datum/preference/choiced/lizard_frills/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["frills"] = value
+	target.dna.features[/datum/dna_block/feature/frill] = value
 
 /datum/preference/choiced/lizard_horns
 	savefile_key = "feature_lizard_horns"
@@ -89,7 +89,7 @@
 	return generate_lizard_side_shot(SSaccessories.horns_list[value], "horns")
 
 /datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["horns"] = value
+	target.dna.features[/datum/dna_block/feature/horn] = value
 
 /datum/preference/choiced/lizard_legs
 	savefile_key = "feature_lizard_legs"
@@ -145,7 +145,7 @@
 	return generate_lizard_side_shot(SSaccessories.snouts_list[value], "snout", include_snout = FALSE)
 
 /datum/preference/choiced/lizard_snout/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["snout"] = value
+	target.dna.features[/datum/dna_block/feature/snout] = value
 
 /datum/preference/choiced/lizard_spines
 	savefile_key = "feature_lizard_spines"
@@ -157,7 +157,7 @@
 	return assoc_to_keys_features(SSaccessories.spines_list)
 
 /datum/preference/choiced/lizard_spines/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["spines"] = value
+	target.dna.features[/datum/dna_block/feature/spine] = value
 
 /datum/preference/choiced/lizard_tail
 	savefile_key = "feature_lizard_tail"
@@ -169,7 +169,7 @@
 	return assoc_to_keys_features(SSaccessories.tails_list_lizard)
 
 /datum/preference/choiced/lizard_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["tail_lizard"] = value
+	target.dna.features[/datum/dna_block/feature/tail_lizard] = value
 
 /datum/preference/choiced/lizard_tail/create_default_value()
 	return /datum/sprite_accessory/tails/lizard/smooth::name

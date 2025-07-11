@@ -510,10 +510,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features[/datum/dna_block/feature/tail_lizard] = SSaccessories.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), length(SSaccessories.tails_list_lizard))]
 	if(dna.features[/datum/dna_block/feature/ears])
 		dna.features[/datum/dna_block/feature/ears] = SSaccessories.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), length(SSaccessories.ears_list))]
-	if(dna.features["moth_wings"])
+	if(dna.features[/datum/dna_block/feature/moth_wing])
 		var/genetic_value = SSaccessories.moth_wings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_WINGS_BLOCK), length(SSaccessories.moth_wings_list))]
 		dna.features["original_moth_wings"] = genetic_value
-		dna.features["moth_wings"] = genetic_value
+		dna.features[/datum/dna_block/feature/moth_wing] = genetic_value
 	if(dna.features["moth_antennae"])
 		var/genetic_value = SSaccessories.moth_antennae_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_ANTENNAE_BLOCK), length(SSaccessories.moth_antennae_list))]
 		dna.features["original_moth_antennae"] = genetic_value

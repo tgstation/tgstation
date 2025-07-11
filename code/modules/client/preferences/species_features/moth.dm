@@ -95,4 +95,4 @@
 	return uni_icon(moth_wings.icon, "m_moth_wings_[moth_wings.icon_state]_BEHIND")
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["moth_wings"] = value
+	target.dna.features[/datum/dna_block/feature/moth_wing] = value

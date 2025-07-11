@@ -13,6 +13,7 @@
 	return sanitize_hexcolor(target.dna.features[/datum/dna_block/feature/ethereal_color], include_crunch = FALSE)
 
 // One day, someone should consider merging all tails into one, this is stupid
+// No I don't care that it will "Create situations where a felinid grows a lizard tail" that makes it more fun
 /datum/dna_block/feature/tail
 
 /datum/dna_block/feature/tail/unique_block(mob/living/carbon/human/target)
@@ -71,15 +72,15 @@
 
 /datum/dna_block/feature/moth_wing/unique_block(mob/living/carbon/human/target)
 	. = ..()
-	if(target.features["moth_wings"] != "Burnt Off") // Why is this a thing. Please fix this later
+	if(target.dna.features[/datum/dna_block/feature/moth_wing] != "Burnt Off") // Why is this a thing. Please fix this later
 		return get_block(target.dna.feature_key)
-	return construct_block(SSaccessories.moth_wings_list.Find(target.dna.features["moth_wings"]), length(SSaccessories.moth_wings_list))
+	return construct_block(SSaccessories.moth_wings_list.Find(target.dna.features[/datum/dna_block/feature/moth_wing]), length(SSaccessories.moth_wings_list))
 
 /datum/dna_block/feature/moth_antenna
 
 /datum/dna_block/feature/moth_antenna/unique_block(mob/living/carbon/human/target)
 	. = ..()
-	if(target.features["moth_antennae"] != "Burnt Off")
+	if(target.dna.features["moth_antennae"] != "Burnt Off")
 		return get_block(target.dna.feature_key)
 	return construct_block(SSaccessories.moth_antennae_list.Find(target.dna.features["moth_antennae"]), length(SSaccessories.moth_antennae_list))
 

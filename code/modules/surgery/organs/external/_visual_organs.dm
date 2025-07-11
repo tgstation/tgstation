@@ -118,7 +118,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 /datum/bodypart_overlay/mutant/horns
 	layers = EXTERNAL_ADJACENT
-	feature_key = "horns"
+	feature_key = /datum/dna_block/feature/horn
 	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
@@ -151,7 +151,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 /datum/bodypart_overlay/mutant/frills
 	layers = EXTERNAL_ADJACENT
-	feature_key = "frills"
+	feature_key = /datum/dna_block/feature/frill
 
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner
@@ -185,7 +185,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
-	feature_key = "snout"
+	feature_key = /datum/dna_block/feature/snout
 
 /datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner

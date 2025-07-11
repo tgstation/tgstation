@@ -105,21 +105,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return consistent_entry
 
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
-	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
-	target.dna.features["ethcolor"] = COLOR_WHITE
-	target.dna.features["lizard_markings"] = get_consistent_feature_entry(SSaccessories.lizard_markings_list)
-	target.dna.features["ears"] = get_consistent_feature_entry(SSaccessories.ears_list)
+	target.dna.features[/datum/dna_block/feature/mutant_color] = COLOR_VIBRANT_LIME
+	target.dna.features[/datum/dna_block/feature/ethereal_color] = COLOR_WHITE
+	target.dna.features[/datum/dna_block/feature/lizard_marking] = get_consistent_feature_entry(SSaccessories.lizard_markings_list)
+	target.dna.features[/datum/dna_block/feature/ears] = get_consistent_feature_entry(SSaccessories.ears_list)
 	target.dna.features["frills"] = get_consistent_feature_entry(SSaccessories.frills_list)
-	target.dna.features["horns"] = get_consistent_feature_entry(SSaccessories.horns_list)
+	target.dna.features[/datum/dna_block/feature/horn] = get_consistent_feature_entry(SSaccessories.horns_list)
 	target.dna.features["moth_antennae"] = get_consistent_feature_entry(SSaccessories.moth_antennae_list)
 	target.dna.features["moth_markings"] = get_consistent_feature_entry(SSaccessories.moth_markings_list)
-	target.dna.features["moth_wings"] = get_consistent_feature_entry(SSaccessories.moth_wings_list)
-	target.dna.features["snout"] = get_consistent_feature_entry(SSaccessories.snouts_list)
-	target.dna.features["spines"] = get_consistent_feature_entry(SSaccessories.spines_list)
-	target.dna.features["tail_cat"] = get_consistent_feature_entry(SSaccessories.tails_list_felinid) // it's a lie
-	target.dna.features["tail_lizard"] = get_consistent_feature_entry(SSaccessories.tails_list_lizard)
+	target.dna.features[/datum/dna_block/feature/moth_wing] = get_consistent_feature_entry(SSaccessories.moth_wings_list)
+	target.dna.features[/datum/dna_block/feature/snout] = get_consistent_feature_entry(SSaccessories.snouts_list)
+	target.dna.features[/datum/dna_block/feature/spine] = get_consistent_feature_entry(SSaccessories.spines_list)
+	target.dna.features[/datum/dna_block/feature/tail] = get_consistent_feature_entry(SSaccessories.tails_list_felinid) // it's a lie
+	target.dna.features[/datum/dna_block/feature/tail_lizard] = get_consistent_feature_entry(SSaccessories.tails_list_lizard)
 	target.dna.features["tail_monkey"] = get_consistent_feature_entry(SSaccessories.tails_list_monkey)
-	target.dna.features["fish_tail"] = get_consistent_feature_entry(SSaccessories.tails_list_fish)
+	target.dna.features[/datum/dna_block/feature/tail_fish] = get_consistent_feature_entry(SSaccessories.tails_list_fish)
 	target.dna.features["pod_hair"] = get_consistent_feature_entry(SSaccessories.pod_hair_list)
 	target.dna.features["caps"] = get_consistent_feature_entry(SSaccessories.caps_list)
 	target.dna.initialize_dna(newblood_type = get_blood_type(BLOOD_TYPE_O_MINUS), create_mutation_blocks = FALSE, randomize_features = FALSE)
