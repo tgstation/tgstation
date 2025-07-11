@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - config: "Adds \"roundstart_blue_alert\", allowing you to disable roundstart blue alert. Defaults to \"on\"."

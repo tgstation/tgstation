@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Removing plasmaman limbs now doesnt leave you burning for eternity"

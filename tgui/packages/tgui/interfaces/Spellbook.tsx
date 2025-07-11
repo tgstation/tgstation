@@ -626,7 +626,7 @@ const CategoryDisplay = (props: { ActiveCat: TabType }) => {
           </Stack.Item>
         )}
         <Stack.Item>
-          {(ActiveCat.component && ActiveCat.component()) || (
+          {ActiveCat.component?.() || (
             <SpellTabDisplay TabSpells={TabSpells} PointOffset={38} />
           )}
         </Stack.Item>
