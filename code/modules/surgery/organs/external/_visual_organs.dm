@@ -262,7 +262,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 ///Moth antennae datum, with full burning functionality
 /datum/bodypart_overlay/mutant/antennae
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
-	feature_key = "moth_antennae"
+	feature_key = /datum/dna_block/feature/moth_antenna
 	dyable = TRUE
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
@@ -309,7 +309,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 ///Podperson bodypart overlay, with special coloring functionality to render the flowers in the inverse color
 /datum/bodypart_overlay/mutant/pod_hair
 	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
-	feature_key = "pod_hair"
+	feature_key = /datum/dna_block/feature/pod_hair
 	dyable = TRUE
 
 	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something

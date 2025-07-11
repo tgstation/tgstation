@@ -71,7 +71,7 @@
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
 	layers = EXTERNAL_ADJACENT
-	feature_key = "caps"
+	feature_key = /datum/dna_block/feature/mush_cap
 	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()

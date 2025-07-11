@@ -136,8 +136,8 @@
 	brother1.dna.features[/datum/dna_block/feature/ethereal_color] = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
-	brother2.dna.features["moth_antennae"] = "Plain"
-	brother2.dna.features["moth_markings"] = "None"
+	brother2.dna.features[/datum/dna_block/feature/moth_antenna] = "Plain"
+	brother2.dna.features[/datum/dna_block/feature/moth_marking] = "None"
 	brother2.dna.features[/datum/dna_block/feature/moth_wing] = "Plain"
 	brother2.set_species(/datum/species/moth)
 

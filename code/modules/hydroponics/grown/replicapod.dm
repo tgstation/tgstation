@@ -201,8 +201,8 @@
 	podman.faction |= factions
 	if(!features[/datum/dna_block/feature/mutant_color])
 		features[/datum/dna_block/feature/mutant_color] = "#59CE00"
-	if(!features["pod_hair"])
-		features["pod_hair"] = pick(SSaccessories.pod_hair_list)
+	if(!features[/datum/dna_block/feature/pod_hair])
+		features[/datum/dna_block/feature/pod_hair] = pick(SSaccessories.pod_hair_list)
 
 	for(var/V in quirks)
 		new V(podman)

@@ -80,24 +80,24 @@
 
 /datum/dna_block/feature/moth_antenna/unique_block(mob/living/carbon/human/target)
 	. = ..()
-	if(target.dna.features["moth_antennae"] != "Burnt Off")
+	if(target.dna.features[/datum/dna_block/feature/moth_antenna] != "Burnt Off")
 		return get_block(target.dna.feature_key)
-	return construct_block(SSaccessories.moth_antennae_list.Find(target.dna.features["moth_antennae"]), length(SSaccessories.moth_antennae_list))
+	return construct_block(SSaccessories.moth_antennae_list.Find(target.dna.features[/datum/dna_block/feature/moth_antenna]), length(SSaccessories.moth_antennae_list))
 
 /datum/dna_block/feature/moth_marking
 
 /datum/dna_block/feature/moth_marking/unique_block(mob/living/carbon/human/target)
 	. = ..()
-	return construct_block(SSaccessories.moth_markings_list.Find(target.dna.features["moth_markings"]), length(SSaccessories.moth_markings_list))
+	return construct_block(SSaccessories.moth_markings_list.Find(target.dna.features[/datum/dna_block/feature/moth_marking]), length(SSaccessories.moth_markings_list))
 
 /datum/dna_block/feature/mush_cap
 
 /datum/dna_block/feature/mush_cap/unique_block(mob/living/carbon/human/target)
 	. = ..()
-	return construct_block(SSaccessories.caps_list.Find(target.dna.features["caps"]), length(SSaccessories.caps_list))
+	return construct_block(SSaccessories.caps_list.Find(target.dna.features[/datum/dna_block/feature/mush_cap]), length(SSaccessories.caps_list))
 
 /datum/dna_block/feature/pod_hair
 
 /datum/dna_block/feature/pod_hair/unique_block(mob/living/carbon/human/target)
 	. = ..()
-	return construct_block(SSaccessories.pod_hair_list.Find(target.dna.features["pod_hair"]), length(SSaccessories.pod_hair_list))
+	return construct_block(SSaccessories.pod_hair_list.Find(target.dna.features[/datum/dna_block/feature/pod_hair]), length(SSaccessories.pod_hair_list))

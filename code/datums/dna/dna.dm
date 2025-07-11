@@ -514,16 +514,16 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		var/genetic_value = SSaccessories.moth_wings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_WINGS_BLOCK), length(SSaccessories.moth_wings_list))]
 		dna.features["original_moth_wings"] = genetic_value
 		dna.features[/datum/dna_block/feature/moth_wing] = genetic_value
-	if(dna.features["moth_antennae"])
+	if(dna.features[/datum/dna_block/feature/moth_antenna])
 		var/genetic_value = SSaccessories.moth_antennae_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_ANTENNAE_BLOCK), length(SSaccessories.moth_antennae_list))]
 		dna.features["original_moth_antennae"] = genetic_value
-		dna.features["moth_antennae"] = genetic_value
-	if(dna.features["moth_markings"])
-		dna.features["moth_markings"] = SSaccessories.moth_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_MARKINGS_BLOCK), length(SSaccessories.moth_markings_list))]
-	if(dna.features["caps"])
-		dna.features["caps"] = SSaccessories.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), length(SSaccessories.caps_list))]
-	if(dna.features["pod_hair"])
-		dna.features["pod_hair"] = SSaccessories.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), length(SSaccessories.pod_hair_list))]
+		dna.features[/datum/dna_block/feature/moth_antenna] = genetic_value
+	if(dna.features[/datum/dna_block/feature/moth_marking])
+		dna.features[/datum/dna_block/feature/moth_marking] = SSaccessories.moth_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_MARKINGS_BLOCK), length(SSaccessories.moth_markings_list))]
+	if(dna.features[/datum/dna_block/feature/mush_cap])
+		dna.features[/datum/dna_block/feature/mush_cap] = SSaccessories.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), length(SSaccessories.caps_list))]
+	if(dna.features[/datum/dna_block/feature/pod_hair])
+		dna.features[/datum/dna_block/feature/pod_hair] = SSaccessories.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), length(SSaccessories.pod_hair_list))]
 	if(dna.features[/datum/dna_block/feature/tail_fish])
 		dna.features[/datum/dna_block/feature/tail_fish] = SSaccessories.tails_list_fish[deconstruct_block(get_uni_feature_block(features, DNA_FISH_TAIL_BLOCK), length(SSaccessories.tails_list_fish))]
 
