@@ -145,6 +145,7 @@
 	manipulate_organs.implement_type = TOOL_HEMOSTAT
 	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
 	manipulate_organs.success(user, patient, BODY_ZONE_CHEST, hemostat, surgery)
+
 	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), null, "Organ manipulation failed to extract stomach organ from patient")
 
 	// Insert a new stomach organ
