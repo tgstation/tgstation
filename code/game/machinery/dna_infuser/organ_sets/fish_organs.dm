@@ -220,7 +220,7 @@
 	greyscale_colors = FISH_ORGAN_COLOR
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
-	dna_block = DNA_FISH_TAIL_BLOCK
+	dna_block = /datum/dna_block/feature/tail_fish
 	wag_flags = NONE
 	organ_traits = list(TRAIT_FLOPPING, TRAIT_SWIMMER)
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -290,7 +290,7 @@
 	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
 	if(imprint_on_next_insertion && !receiver.dna.features[/datum/dna_block/feature/tail_fish])
 		receiver.dna.features[/datum/dna_block/feature/tail_fish] = pick(SSaccessories.tails_list_fish)
-		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
+		receiver.dna.update_uf_block(/datum/dna_block/feature/tail_fish)
 
 	return ..()
 

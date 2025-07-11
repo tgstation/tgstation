@@ -9,7 +9,7 @@
 
 	preference = "feature_lizard_spines"
 
-	dna_block = DNA_SPINES_BLOCK
+	dna_block = /datum/dna_block/feature/spine
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/spines

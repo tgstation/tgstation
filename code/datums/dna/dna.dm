@@ -185,7 +185,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /datum/dna/proc/generate_unique_identity()
 	. = ""
-	var/list/identity_list = new
 	for(var/block_type as anything in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_type]
 		. += block.unique_block(holder)

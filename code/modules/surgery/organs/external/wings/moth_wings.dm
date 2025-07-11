@@ -7,7 +7,7 @@
 
 	preference = "feature_moth_wings"
 
-	dna_block = DNA_MOTH_WINGS_BLOCK
+	dna_block = /datum/dna_block/feature/moth_wing
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/moth
 	restyle_flags = EXTERNAL_RESTYLE_FLESH

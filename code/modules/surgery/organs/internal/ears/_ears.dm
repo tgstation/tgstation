@@ -160,7 +160,7 @@
 	preference = "feature_human_ears"
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
-	dna_block = DNA_EARS_BLOCK
+	dna_block = /datum/dna_block/feature/ears
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears
 

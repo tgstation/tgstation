@@ -10,7 +10,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	/// The savefile_key of the preference this relates to. Used for the preferences UI.
 	var/preference
 	///With what DNA block do we mutate in mutate_feature() ? For genetics
-	var/dna_block
+	var/datum/dna_block/dna_block
 
 	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
 	///This will not work if it doesn't have a limb to generate its icon with
@@ -109,7 +109,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	slot = ORGAN_SLOT_EXTERNAL_HORNS
 
 	preference = "feature_lizard_horns"
-	dna_block = DNA_HORNS_BLOCK
+	dna_block = /datum/dna_block/feature/horn
 	restyle_flags = EXTERNAL_RESTYLE_ENAMEL
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/horns
@@ -142,7 +142,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	slot = ORGAN_SLOT_EXTERNAL_FRILLS
 
 	preference = "feature_lizard_frills"
-	dna_block = DNA_FRILLS_BLOCK
+	dna_block = /datum/dna_block/feature/frill
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/frills
@@ -176,7 +176,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	preference = "feature_lizard_snout"
 	external_bodyshapes = BODYSHAPE_SNOUTED
 
-	dna_block = DNA_SNOUT_BLOCK
+	dna_block = /datum/dna_block/feature/snout
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
@@ -208,7 +208,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	slot = ORGAN_SLOT_EXTERNAL_ANTENNAE
 
 	preference = "feature_moth_antennae"
-	dna_block = DNA_MOTH_ANTENNAE_BLOCK
+	dna_block = /datum/dna_block/feature/moth_antenna
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/antennae
@@ -299,7 +299,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	preference = "feature_pod_hair"
 	use_mob_sprite_as_obj_sprite = TRUE
 
-	dna_block = DNA_POD_HAIR_BLOCK
+	dna_block = /datum/dna_block/feature/pod_hair
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pod_hair
