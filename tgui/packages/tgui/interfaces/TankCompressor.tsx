@@ -27,7 +27,7 @@ type Data = {
   lastPressure: number;
   disk: string;
   storage: string;
-  records: Record[];
+  records: GasRecord[];
   // Static
   maxTransfer: number;
   leakPressure: number;
@@ -35,16 +35,12 @@ type Data = {
   ejectPressure: number;
 };
 
-type Record = {
+type GasRecord = {
   ref: string;
   name: string;
   timestamp: string;
   source: string;
-  gases: GasMoles[];
-};
-
-type GasMoles = {
-  [key: string]: number;
+  gases: Record<string, number>[];
 };
 
 const formatPressure = (value) => {
