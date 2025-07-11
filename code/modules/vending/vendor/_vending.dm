@@ -255,19 +255,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(fish_source_path)
 		AddComponent(/datum/component/fishing_spot, fish_source_path)
 
-/obj/machinery/vending/on_construction(mob/user, from_flatpack = FALSE)
-	if (!from_flatpack)
-		return
-	// When built from a flatpack, empty our canister upon construction
-	for(var/obj/item/vending_refill/installed_refill in component_parts)
-		for (var/item_sold in installed_refill.products)
-			installed_refill.products[item_sold] = 0
-		for (var/item_sold in installed_refill.contraband)
-			installed_refill.contraband[item_sold] = 0
-		for (var/item_sold in installed_refill.premium)
-			installed_refill.premium[item_sold] = 0
-	RefreshParts()
-
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
 	if(!.)
