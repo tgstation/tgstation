@@ -525,14 +525,34 @@
 		return surgery
 
 /**
- * Increase the speed modifier of all active surgeries by a specific amount.
+ * Adjusts the speed_modifier of all active surgeries by the given amount.
  *
  * Arguments:
- * * amount - A number to set each surgery's speed_modifier to.
+ * * amount - The number which will be added to each surgery's speed_modifier.
+ * * maximum - The maximum number each surgery's speed_modifier will set adjusted to, if they are above this number.
  */
-/mob/living/proc/adjust_surgery_speed(amount = 0)
+/mob/living/proc/adjust_surgery_speeds(amount = 0, maximum)
+	for(var/datum/surgery/surgery as anything in surgeries)
+		surgery.speed_modifier = min(surgery.speed_modifier + amount, maximum)
+/**
+ * Sets the minimum speed_modifier of all active surgeries to the given amount.
+ *
+ * Arguments:
+ * * amount - The minimum number each surgery's speed_modifier should be increased to, if they are below this number.
+ */
+/mob/living/proc/set_minimum_surgery_speeds(amount = 0)
 	for(var/datum/surgery/surgery as anything in surgeries)
 		surgery.speed_modifier = max(amount, surgery.speed_modifier)
+
+/**
+ * Sets the maximum speed_modifier of all active surgeries to the given amount.
+ *
+ * Arguments:
+ * * amount - The maximum number each surgery's speed_modifier should be reduced to, if they are above this number.
+ */
+/mob/living/proc/set_maximum_surgery_speeds(amount = 0)
+	for(var/datum/surgery/surgery as anything in surgeries)
+		surgery.speed_modifier = min(amount, surgery.speed_modifier)
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)

@@ -1086,8 +1086,8 @@
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
-
-	exposed_carbon.adjust_surgery_speed(0.2)
+	// Increase the speeds of any active surgeries
+	exposed_carbon.set_minimum_surgery_speeds(0.2)
 
 /datum/reagent/space_cleaner/sterilizine/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	burn_wound.sanitization += 0.9

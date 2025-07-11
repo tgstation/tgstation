@@ -832,8 +832,8 @@
 	. = ..()
 	if(!iscarbon(exposed_mob) || !(methods & (TOUCH|VAPOR|PATCH)))
 		return
-
-	exposed_mob.adjust_surgery_speed(0.4)
+	// Slows down any active surgeries
+	exposed_mob.set_maximum_surgery_speeds(0.4)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"

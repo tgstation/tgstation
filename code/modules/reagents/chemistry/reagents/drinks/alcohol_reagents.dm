@@ -104,7 +104,8 @@
 	if(methods & (TOUCH|VAPOR|PATCH))
 		exposed_mob.adjust_fire_stacks(reac_volume / 15)
 		var/sterilizing_power = boozepwr / 650 // Weak alcohol has less sterilizing power
-		exposed_mob.adjust_surgery_speed(1 - sterilizing_power)
+		// Slows down any active surgeries by a limited amount
+		exposed_mob.set_maximum_surgery_speeds(1 - sterilizing_power)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
