@@ -25,6 +25,7 @@
 	fishing_deceleration_mult = 0.9
 	fishing_bounciness_mult = 0.9
 	fishing_gravity_mult = 0.85
+	var/list/blood_dna
 
 /datum/material/meat/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -74,6 +75,7 @@
 	source.AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
+		blood_dna = blood_dna,\
 	)
 
 	// Turfs can't handle the meaty goodness of blood walk.
@@ -85,6 +87,7 @@
 		blood_type = /obj/effect/decal/cleanable/blood,\
 		blood_spawn_chance = 35,\
 		max_blood = (protein_count + fat_count) * 0.3 * multiplier,\
+		blood_dna_info = blood_dna,\
 	)
 
 /datum/material/meat/on_removed(atom/source, mat_amount, multiplier)
@@ -114,6 +117,11 @@
 	else if(source.name)
 		subjectname = source.name
 
+	var/datum/blood_type/blood_type = source.get_bloodtype()
+	color = blood_type.get_color()
+
+	blood_dna = source.get_blood_dna_list()
+
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source
 		subjectjob = human_source.job
@@ -128,4 +136,28 @@
 		return FALSE
 
 	name = "[source?.name || "mystery"] [initial(name)]"
+
+	if(source.exotic_bloodtype)
+		var/datum/blood_type/blood_type = get_blood_type(source.exotic_bloodtype)
+		color = blood_type.get_color()
+		blood_dna = list("[blood_type.dna_string]" = blood_type)
+
+	return ..()
+
+/datum/material/meat/blood_meat
+	init_flags = MATERIAL_INIT_BESPOKE
+
+/datum/material/meat/blood_meat/Initialize(_id, datum/reagent/source)
+	if(!istype(source))
+		return FALSE
+
+	var/list/blood_data = source.data
+	name = "[blood_data["real_name"] || "mystery"] [initial(name)]"
+	var/datum/blood_type/blood_type = blood_data["blood_type"]
+	if(blood_type)
+		color = blood_type.get_color()
+		blood_dna = list("[blood_type.dna_string]" = blood_type)
+	else
+		color = source.color
+
 	return ..()
