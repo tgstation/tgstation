@@ -21,10 +21,6 @@
 			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits/armor.dmi', icon_state = "cult_armor"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/hardened),
 			),
-		FLAGELLANT_ARMOR = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits/armor.dmi', icon_state = "cultrobes"),
-			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/berserker),
-			),
 		ELDRITCH_SWORD = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "cultblade"),
 			OUTPUT_ITEMS = list(/obj/item/melee/cultblade),
