@@ -216,6 +216,9 @@
 	throw_range = 6
 	throw_speed = 2
 
+/obj/item/paper/paperslip/corporate/syndicate
+	icon_state = "corppaperslip_syndi"
+
 /obj/item/hatchet/cutterblade
 	name = "paper cutter blade"
 	desc = "The blade of a paper cutter. Most likely removed for polishing or sharpening."
