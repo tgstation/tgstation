@@ -496,22 +496,25 @@
 	language = pick(subtypesof(/datum/language/))
 	percent = rand(1, 100)
 
-/datum/relic_node/tabled
-	desc = "This node slammed things onto a table!"
-	var/grapple_range
-	var/table_range
+// The Platforms PR changed how table pushing works and I (Cirr) am pushed for time, so this is getting commented out.
+// FIXME!!!
 
-/datum/relic_node/tabled/on_generate()
-	grapple_range = rand(1, 4)
-	table_range = rand(6, 15)
+// /datum/relic_node/tabled
+// 	desc = "This node slammed things onto a table!"
+// 	var/grapple_range
+// 	var/table_range
 
-/datum/relic_node/tabled/reaction_power(mob/user)
-	var/list/table_list = list()
-	for (var/obj/structure/table/t in range(table_range, parent_relic))
-		table_list.Add(t)
-	var/obj/structure/table/chosen_one = pick(table_list)
-	for (var/mob/living/m in view(table_range, parent_relic))
-		chosen_one.tablepush(m, m)
+// /datum/relic_node/tabled/on_generate()
+// 	grapple_range = rand(1, 4)
+// 	table_range = rand(6, 15)
+
+// /datum/relic_node/tabled/reaction_power(mob/user)
+// 	var/list/table_list = list()
+// 	for (var/obj/structure/table/t in range(table_range, parent_relic))
+// 		table_list.Add(t)
+// 	var/obj/structure/table/chosen_one = pick(table_list)
+// 	for (var/mob/living/m in view(table_range, parent_relic))
+// 		chosen_one.tablepush(m, m)
 
 /obj/item/relic
 	desc = "What mysteries could this hold? Maybe Research & Development knows how to analyze it...."
@@ -545,7 +548,7 @@
 		/datum/relic_node/dimensional_shift = 10,
 		/datum/relic_node/blood		= 10,
 		/datum/relic_node/rosetta	= 10,
-		/datum/relic_node/tabled	= 10,
+		// /datum/relic_node/tabled	= 10,
 	)
 
 	var/static/list/relic_trans_types = list(
