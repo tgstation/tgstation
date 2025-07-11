@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Flex, Stack } from 'tgui-core/components';
 
-import { DataEvidence } from './DataTypes';
+import type { DataEvidence } from './DataTypes';
 import { Pin } from './Pin';
 
 type EvidenceProps = {
