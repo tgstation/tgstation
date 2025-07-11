@@ -283,12 +283,18 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
-/datum/dna/proc/generate_dna_blocks()
-	var/bonus
+/**
+ * Picks what mutations this DNA has innate and generates DNA blocks for them
+ *
+ * * mutation_blacklist - Optional list of mutation typepaths to exclude from generation.
+ */
+/datum/dna/proc/generate_dna_blocks(list/mutation_blacklist)
+	var/list/mutations_temp = list() + GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
 	if(species?.inert_mutation)
-		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
-	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
-	if(!LAZYLEN(mutations_temp))
+		mutations_temp |= GET_INITIALIZED_MUTATION(species.inert_mutation)
+	for(var/mutation_type in mutation_blacklist)
+		mutations_temp -= GET_INITIALIZED_MUTATION(mutation_type)
+	if(!length(mutations_temp))
 		return
 	mutation_index.Cut()
 	default_mutation_genes.Cut()
@@ -489,7 +495,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(newblood_type)
 		blood_type = newblood_type
 	if(create_mutation_blocks) //I hate this
-		generate_dna_blocks()
+		generate_dna_blocks(mutation_blacklist = list(/datum/mutation/headless))
 	if(randomize_features)
 		for(var/species_type in GLOB.species_prototypes)
 			var/list/new_features = GLOB.species_prototypes[species_type].randomize_features()
