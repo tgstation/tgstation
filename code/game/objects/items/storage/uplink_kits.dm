@@ -788,13 +788,7 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
-	var/faker
-	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
-			faker = TRUE
-
-	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(!human_target.is_antag()) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE

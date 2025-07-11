@@ -115,6 +115,15 @@
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"aU" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "aV" = (
 /obj/structure/flora/bush/large/style_random,
 /turf/open/misc/grass/jungle,
@@ -210,15 +219,6 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
 	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"bQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/law/malf,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "bR" = (
@@ -917,6 +917,9 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"hQ" = (
+/turf/open/space/basic,
+/area/space/virtual_domain)
 "hR" = (
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/stripes/corner{
@@ -3704,9 +3707,6 @@
 /obj/structure/sign/warning/biohazard/directional/north,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"Fd" = (
-/turf/open/space/basic,
-/area/space)
 "Ff" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/railing{
@@ -7003,7 +7003,7 @@ HM
 ps
 hV
 Hd
-bQ
+aU
 hZ
 ii
 SN
@@ -7179,13 +7179,13 @@ FR
 Hd
 Ka
 ps
-Fd
-Fd
-Fd
-Fd
-Fd
-Fd
-Fd
+hQ
+hQ
+hQ
+hQ
+hQ
+hQ
+hQ
 ps
 HM
 "}
@@ -7233,7 +7233,7 @@ hX
 hX
 hX
 Ls
-Fd
+hQ
 ps
 HM
 "}
@@ -7281,7 +7281,7 @@ Lq
 hX
 hX
 hX
-Fd
+hQ
 ps
 HM
 "}
@@ -7329,7 +7329,7 @@ hX
 hX
 hX
 hX
-Fd
+hQ
 ps
 HM
 "}
@@ -7377,7 +7377,7 @@ fD
 Cx
 hX
 hX
-Fd
+hQ
 ps
 HM
 "}
@@ -7425,7 +7425,7 @@ hX
 hX
 hX
 hX
-Fd
+hQ
 ps
 HM
 "}
@@ -7473,7 +7473,7 @@ hX
 Ca
 hX
 hX
-Fd
+hQ
 ps
 HM
 "}
@@ -7521,7 +7521,7 @@ hX
 hX
 hX
 rs
-Fd
+hQ
 ps
 HM
 "}
@@ -7563,13 +7563,13 @@ Hd
 aC
 Uo
 lE
-Fd
-Fd
-Fd
-Fd
-Fd
-Fd
-Fd
+hQ
+hQ
+hQ
+hQ
+hQ
+hQ
+hQ
 ps
 HM
 "}

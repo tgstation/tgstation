@@ -13,7 +13,7 @@ import { useBackend } from '../../backend';
 import { ReagentTooltip } from '../SeedExtractor';
 import { TraitTooltip } from '../SeedExtractor';
 import { Fallback } from './Fallback';
-import { PlantAnalyzerData } from './types';
+import type { PlantAnalyzerData } from './types';
 
 export function PlantAnalyzerSeed(props) {
   const { data } = useBackend<PlantAnalyzerData>();
