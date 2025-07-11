@@ -230,8 +230,11 @@
 
 /area/rainworld/surface/outdoors/unexplored/mining
 	icon_state = "unexplored"
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 	map_generator = /datum/map_generator/cave_generator/rainworld/surface/mining
+
+/area/rainworld/surface/outdoors/unexplored/mining/deep_ocean
+	map_generator = /datum/map_generator/cave_generator/rainworld/surface/mining/deep_ocean
 
 /area/rainworld/surface/outdoors/unexplored/mining/allow_megafauna
 	icon_state = "danger"

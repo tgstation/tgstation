@@ -153,7 +153,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/water/no_planet_atmos/deep/rainworld,
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/waystation/cargobay)
 "aK" = (
 /obj/effect/turf_decal/stripes/line{
@@ -261,7 +261,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/waystation/cargobay)
 "bq" = (
 /obj/effect/spawner/random/exotic/languagebook,
@@ -1312,7 +1312,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "gS" = (
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix,
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "gT" = (
@@ -2873,9 +2873,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "pU" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
-	name = "Burn Chamber Interior Airlock"
-	},
+/obj/machinery/door/airlock/research/glass,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "pW" = (
@@ -3060,13 +3058,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/waystation/cargobay)
-"qT" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/research/glass/incinerator/ordmix_exterior{
-	name = "Burn Chamber Exterior Airlock"
-	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "qV" = (
@@ -3896,7 +3887,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/turf/open/water/no_planet_atmos/deep/rainworld,
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/waystation/cargobay)
 "vQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -5684,7 +5675,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Fa" = (
 /obj/machinery/light/small/directional/north,
@@ -6292,7 +6283,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/water/no_planet_atmos/deep/rainworld,
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Iq" = (
 /obj/structure/table,
@@ -7881,9 +7872,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "QF" = (
-/obj/machinery/airlock_sensor/incinerator_ordmix{
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
@@ -16959,7 +16947,7 @@ fV
 BQ
 QN
 Lw
-qT
+pU
 SA
 jB
 oK
