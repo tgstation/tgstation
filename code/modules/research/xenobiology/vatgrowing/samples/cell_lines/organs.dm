@@ -25,6 +25,54 @@
 
 	resulting_atom = /obj/item/organ/heart
 
+/datum/micro_organism/cell_line/organs/heart/evolved
+	desc = "dense evolved heart tissue"
+
+	growth_rate = type::growth_rate * 0.5
+
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue)
+
+	supplementary_reagents = list(
+		/datum/reagent/love = 6,
+		/datum/reagent/mutagen = 4,
+		/datum/reagent/blood = 3,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	resulting_atom = /obj/item/organ/heart/evolved
+
+/datum/micro_organism/cell_line/organs/heart/sacred
+	desc = "dense sacred heart tissue"
+
+	growth_rate = type::growth_rate * 0.5
+
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue, /datum/reagent/water/holywater)
+
+	supplementary_reagents = list(
+		/datum/reagent/love = 6,
+		/datum/reagent/blood = 3,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	resulting_atom = /obj/item/organ/heart/evolved/sacred
+
+/datum/micro_organism/cell_line/organs/heart/corrupted
+	desc = "dense corrupted heart tissue"
+
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue)
+
+	supplementary_reagents = list(
+		/datum/reagent/water/unholy = 6,
+		/datum/reagent/blood = 3,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/water/holywater = -2,
+	)
+
+	resulting_atom = /obj/item/organ/heart/corrupted
+
 /datum/micro_organism/cell_line/organs/lungs
 	desc = "dense lung tissue"
 
@@ -50,6 +98,33 @@
 	)
 
 	resulting_atom = /obj/item/organ/liver
+
+/datum/micro_organism/cell_line/organs/liver/evolved
+	desc = "dense evolved liver tissue"
+
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue)
+
+	supplementary_reagents = list(
+		/datum/reagent/iron = 6,
+		/datum/reagent/mutagen = 4,
+		/datum/reagent/blood = 3,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	resulting_atom = /obj/item/organ/liver/evolved
+
+/datum/micro_organism/cell_line/organs/liver/bloody
+	desc = "spongy liver tissue"
+
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue, /datum/reagent/blood)
+
+	supplementary_reagents = list(
+		/datum/reagent/iron = 6,
+		/datum/reagent/blood = 3,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	resulting_atom = /obj/item/organ/liver/bloody
 
 /datum/micro_organism/cell_line/organs/stomach
 	desc = "dense stomach tissue"

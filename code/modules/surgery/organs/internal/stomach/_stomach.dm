@@ -24,6 +24,10 @@
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 
+	cell_line = CELL_LINE_ORGAN_STOMACH
+	cells_minimum = 1
+	cells_maximum = 1
+
 	///The rate that disgust decays
 	var/disgust_metabolism = 1
 
@@ -42,7 +46,6 @@
 
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_ORGAN_STOMACH, cell_line_amount = 1)
 	//None edible organs do not get a reagent holder by default
 	if(!reagents)
 		create_reagents(reagent_vol, REAGENT_HOLDER_ALIVE)

@@ -191,13 +191,13 @@
 
 	return ..()
 
-
 /// Occasionally bombards you with spooky hands and lets everyone hear your pulse.
 /obj/item/organ/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
 	beat_noise = "THE THUMPTHUMPTHUMPING OF THE CHISEL ON THE GLASS. OPEN THE FUTURE SHATTER THE-"
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
+	cell_line = CELL_LINE_ORGAN_HEART_CURSED
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 
