@@ -7,7 +7,7 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
 import { createLogger } from './logging';
 
@@ -50,7 +50,7 @@ export class DreamSeeker {
     const instances: DreamSeeker[] = [];
     const pidsToResolve: number[] = [];
 
-    for (let pid of pids) {
+    for (const pid of pids) {
       const instance = instanceByPid.get(pid);
       if (instance) {
         instances.push(instance);
@@ -76,7 +76,7 @@ export class DreamSeeker {
       const entries: Entry[] = [];
       const lines = stdout.split('\r\n');
 
-      for (let line of lines) {
+      for (const line of lines) {
         const words = line.match(/\S+/g);
         if (!words || words.length === 0) {
           continue;
@@ -92,7 +92,7 @@ export class DreamSeeker {
 
       const len = entries.length;
       logger.log('found', len, plural('instance', len));
-      for (let entry of entries) {
+      for (const entry of entries) {
         const { pid, addr } = entry;
         const instance = new DreamSeeker(pid, addr);
         instances.push(instance);
