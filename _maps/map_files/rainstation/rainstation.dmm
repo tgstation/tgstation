@@ -927,7 +927,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/theater)
 "adr" = (
-/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/sign/warning/gas_mask/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/security/office)
@@ -3366,7 +3366,7 @@
 /area/station/command/heads_quarters/cmo)
 "ajZ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
 "aka" = (
@@ -3600,7 +3600,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "akG" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/processing)
@@ -4048,7 +4048,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/port/fore)
 "alS" = (
-/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/structure/sign/warning/gas_mask/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
@@ -4639,7 +4639,7 @@
 	},
 /area/rainworld/surface/outdoors)
 "anG" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "anH" = (
@@ -4808,7 +4808,7 @@
 "aoi" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/item/multitool,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4844,7 +4844,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aoq" = (
-/obj/structure/sign/warning/vacuum/external/directional/south,
+/obj/structure/sign/warning/gas_mask/directional/south,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/processing)
@@ -5399,13 +5399,13 @@
 /turf/open/floor/plating,
 /area/station/commons/fitness)
 "aqv" = (
-/obj/machinery/door/airlock/external{
-	name = "External Access"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/obj/machinery/door/airlock/external/glass{
+	name = "External Access"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aqw" = (
@@ -5651,7 +5651,7 @@
 	},
 /area/station/holodeck/rec_center)
 "arp" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -6676,7 +6676,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "ave" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
@@ -8221,7 +8221,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/entry)
 "aAD" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
@@ -9341,7 +9341,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aEm" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -13385,7 +13385,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "aQG" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -14256,7 +14256,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/machinery/door/airlock/external/glass{
 	name = "Escape Airlock"
 	},
@@ -16915,7 +16915,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/central)
 "bcB" = (
-/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/structure/sign/warning/gas_mask/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -26469,7 +26469,7 @@
 	},
 /area/station/science/ordnance)
 "bLj" = (
-/obj/structure/sign/warning/vacuum/external/directional/south,
+/obj/structure/sign/warning/gas_mask/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
@@ -26828,7 +26828,7 @@
 /turf/open/floor/plating,
 /area/station/science/research)
 "bMt" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "bMu" = (
@@ -29954,7 +29954,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "bYu" = (
-/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/sign/warning/gas_mask/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "bYv" = (
@@ -31430,7 +31430,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/aft)
 "ceU" = (
-/obj/structure/sign/warning/vacuum/external/directional/south,
+/obj/structure/sign/warning/gas_mask/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "ceV" = (
@@ -31749,7 +31749,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "cgA" = (
-/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/sign/warning/gas_mask/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
@@ -32027,8 +32027,8 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance"
+/obj/machinery/door/airlock/external/glass{
+	name = "External Access"
 	},
 /turf/open/floor/noslip,
 /area/station/maintenance/solars/port/aft)
@@ -32933,7 +32933,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "cmx" = (
-/obj/structure/sign/warning/vacuum/external/directional/south,
+/obj/structure/sign/warning/gas_mask/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
@@ -33566,7 +33566,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "cqT" = (
-/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/structure/sign/warning/gas_mask/directional/east,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "cqU" = (
@@ -33741,7 +33741,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "crX" = (
-/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/structure/sign/warning/gas_mask/directional/east,
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/station/engineering/main)
@@ -34144,10 +34144,10 @@
 /area/station/engineering/atmos/pumproom)
 "cxW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/obj/machinery/door/airlock/external/glass{
 	name = "External Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "cxY" = (
@@ -34299,8 +34299,8 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance"
+/obj/machinery/door/airlock/external/glass{
+	name = "External Access"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
@@ -41265,6 +41265,10 @@
 	},
 /turf/open/floor/carpet/black,
 /area/station/security/detectives_office)
+"gRO" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "gSg" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -45359,6 +45363,11 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"ksX" = (
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/solars/port/fore)
 "ktJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -51495,6 +51504,11 @@
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/fore)
+"pxt" = (
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/solars/starboard/aft)
 "pyr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53730,7 +53744,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "rqI" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -57524,6 +57538,10 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"uGO" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "uHt" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -58653,6 +58671,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/checker,
 /area/station/science/explab)
+"vDp" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "vDF" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -59299,6 +59321,11 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
+"wdN" = (
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/solars/port/aft)
 "wes" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/seeds/grass,
@@ -71362,7 +71389,7 @@ apJ
 awZ
 ayl
 hFg
-auP
+uWW
 vku
 cqq
 cqq
@@ -71372,7 +71399,7 @@ cqq
 cqq
 cqq
 sgK
-auP
+uWW
 rFS
 bQH
 aRY
@@ -71386,7 +71413,7 @@ asE
 jVc
 ayl
 hFg
-auP
+uWW
 vku
 cyd
 cqq
@@ -73161,7 +73188,7 @@ apJ
 axh
 aIK
 hFg
-auP
+uWW
 vku
 cqq
 cqq
@@ -73171,7 +73198,7 @@ cqq
 cqq
 cqq
 sgK
-auP
+uWW
 rFS
 nHm
 aRY
@@ -73185,7 +73212,7 @@ awW
 awZ
 ayl
 hFg
-auP
+uWW
 vku
 cqq
 cqq
@@ -78026,7 +78053,7 @@ aag
 aag
 fFa
 ajW
-akB
+ksX
 alh
 akB
 amA
@@ -80432,7 +80459,7 @@ jPY
 cqq
 cqq
 cfx
-chN
+wdN
 cfx
 cqq
 cqq
@@ -81188,7 +81215,7 @@ pZJ
 bCq
 cbk
 bLv
-bHE
+vDp
 bLv
 jPY
 bCq
@@ -101422,7 +101449,7 @@ cqq
 cqq
 jPY
 cxW
-anf
+gRO
 aqv
 awD
 anf
@@ -103052,7 +103079,7 @@ cac
 cvO
 auf
 cOe
-cOe
+uGO
 aqW
 cqq
 cqq
@@ -106657,7 +106684,7 @@ cqq
 mtK
 jdH
 cNW
-cOe
+uGO
 jyP
 aag
 cqq
@@ -111788,7 +111815,7 @@ cks
 clx
 cks
 cnk
-cks
+pxt
 cyU
 fFa
 fFa
