@@ -210,6 +210,11 @@
 	name = "GPS Component"
 	id = "comp_gps"
 	build_path = /obj/item/circuit_component/gps
+	
+/datum/design/component/get_battery_charge
+	name = "Get Battery Charge Component"
+	id = "comp_get_battery_charge"
+	build_path = /obj/item/circuit_component/get_battery_charge
 
 /datum/design/component/direction
 	name = "Direction Component"
