@@ -2,7 +2,8 @@
 #define MODULE_SCREWED 1
 #define MODULE_WELDED 2
 
-#define MODULE_NAME(module) (ai_modules[module] == MODULE_WELDED ? "unidentified welded module" : (module?.name || "Empty"))
+/// Formats a module name for display
+#define MODULE_NAME(all_modules, named_module) (all_modules[named_module] == MODULE_WELDED ? "unidentified welded module" : (named_module?.name || "Empty"))
 
 /datum/armor/obj_machinery/law_rack
 	melee = 50
@@ -311,7 +312,7 @@
 /obj/machinery/ai_law_rack/proc/get_slot_examine(slot)
 	var/obj/item/ai_module/module = ai_modules[slot]
 	var/list/text = list()
-	text += span_info("&bull; [slot == 1 && has_core_slot ? "Core" : "Slot [slot - 1]"]: [MODULE_NAME(module)]")
+	text += span_info("&bull; [slot == 1 && has_core_slot ? "Core" : "Slot [slot - 1]"]: [MODULE_NAME(ai_modules, module)]")
 	if(module)
 		var/secure_desc = "Bugged (report this)"
 		switch(ai_modules[module])
@@ -403,7 +404,7 @@
 
 		data["slots"][i] = list(
 			"empty" = isnull(module),
-			"name" = MODULE_NAME(module),
+			"name" = MODULE_NAME(ai_modules, module),
 			"security" = ai_modules[module] || MODULE_UNSECURED,
 			"ioned" = astype(module, /obj/item/ai_module/law)?.ioned || FALSE,
 		)
