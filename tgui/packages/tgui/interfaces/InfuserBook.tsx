@@ -88,7 +88,7 @@ export const InfuserBook = (props) => {
 
   const paginatedEntries = paginateEntries(entries);
 
-  let currentEntry = paginatedEntries[chapter][pageInChapter];
+  const currentEntry = paginatedEntries[chapter][pageInChapter];
 
   const switchChapter = (newChapter) => {
     if (chapter === newChapter) {
@@ -301,7 +301,7 @@ const paginateEntries = (collection: Entry[]): Entry[][] => {
   });
   // negative 1 to account for introduction, which has no entries
   let tier = -1;
-  for (let _ in range(tier, maxTier + 1)) {
+  for (const _ in range(tier, maxTier + 1)) {
     pages.push(collection.filter((entry) => entry.tier === tier));
     tier++;
   }

@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "flatpacker now accepts custom component parts(like vendor refill canister) along with the circuit board so you can carry over your previous stock during deployment rather than starting out empty"
+  - bugfix: "flatpack boxes now passes its stored circuit board into the machine thus preserving its properties instead of creating a default board in the machine"
+  - bugfix: "vending machines reconstructed on station from circuits loaded off station(having free products) will continue to sell free products"
+  - code_imp: "machine construction via flatpacker/machine frame is faster performance wise"

@@ -2,7 +2,7 @@ import { Knob, LabeledControls } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../../backend';
-import { PodDelay, PodLauncherData } from './types';
+import type { PodDelay, PodLauncherData } from './types';
 
 type Props = {
   delay_list: PodDelay[];

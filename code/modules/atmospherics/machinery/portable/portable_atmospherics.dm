@@ -64,7 +64,7 @@
 	AddElement(/datum/element/elevation, pixel_shift = 8)
 	register_context()
 
-/obj/machinery/portable_atmospherics/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/portable_atmospherics/on_construction(mob/user)
 	. = ..()
 	set_anchored(FALSE)
 

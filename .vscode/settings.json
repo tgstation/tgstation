@@ -18,5 +18,8 @@
 	"workbench.editorAssociations": {
 		"*.dmi": "dmiEditor.dmiEditor"
 	},
+	"search.exclude": {
+		"**/node_modules": true
+	},
 	"Lua.diagnostics.enable": false
 }

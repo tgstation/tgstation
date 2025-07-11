@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Cult's music stinger is only played on first attempt at scribing a Nar'sie rune, following attempts will use the sound for red alert."

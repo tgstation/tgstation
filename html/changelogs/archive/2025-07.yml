@@ -92,3 +92,164 @@
   - bugfix: ' You cannot stack multiple of the same beacon onto a single mech.'
   twilightwanderer:
   - bugfix: Fixing print request issues
+2025-07-05:
+  Absolucy:
+  - admin: 'Added some more Lua/SDQL2 wrappers: _floor(), _ceil(), _typesof(), _uppertext(),
+      _html_encode(), _html_decode(), _url_encode(), and _url_decode()'
+  Fikou:
+  - admin: _generator wrapper for sdql, RandList proc for generators
+  Kocma-san:
+  - qol: Centcom station has received funding from the NT and can now use the photocopier
+      for free.
+  Kubisopplay:
+  - rscadd: Malfunctioning AI gets constant influx of processing time from hacked
+      APCs
+  - rscadd: Delta and robot factory are now locked behind a minimum amount of hacked
+      APCs
+  - refactor: Malf AI modules can now be locked behind a certain minimum number of
+      hacked APCs
+  - balance: Lowers the cost of voicechanger to make it less punishing at the beginning
+      of the round
+  OrionTheFox:
+  - balance: Jackboots available in the autodrobe have been changed to Tactical Work
+      Boots, a black version of shoelaced work boots.
+  - rscadd: Paramedics are now issued Tactical Work Boots as standard workwear.
+  - image: Paramedic Jackets now match in color to the rest of the Paramedic's gear.
+  TealSeer:
+  - bugfix: fixed crude shuttle blueprints being uncraftable
+  Y0SH1M4S73R:
+  - rscadd: The Knit Flesh spell can now be used to insert organs into people. Left-click
+      an organ with the hand, or use an organ on it, to put the organ in the grasp.
+2025-07-06:
+  Y0SH1M4S73R:
+  - rscadd: The Centcom Department of Import Control has become aware of the use of
+      highly-illegal and medically dubious self-surgery skillchips aboard company
+      stations. We suspect they are being sold to the station through the black market.
+  grungussuss:
+  - admin: added missing logs for prying
+2025-07-07:
+  EmptyLullaby:
+  - bugfix: The maid costume will no longer summon interdimensional pants onto your
+      digitigrade legs.
+  EnterTheJake:
+  - bugfix: the infiltrator suit  can overslot once more
+  JohnFulpWillard:
+  - bugfix: Getting extra arms attached now gives you your species arms rather than
+      human ones.
+  Krysonism:
+  - balance: sterilizing reagents like sterilizine, honey and alcohols now improve
+      surgery speed more.
+  RealWinterFrost:
+  - image: updates medalbox sprites.
+  - image: adds variants to medal box sprites.
+  SyncIt21:
+  - code_imp: merged New() & Initialize() for atmos machines
+  Time-Green:
+  - bugfix: Fixes inserting nightmare brains implanting the organ into their ???
+  grungussuss:
+  - refactor: refactored trapdoor remote interaction code
+  - qol: added some context tips for tattoo kit
+  - refactor: refactored tattoo kit attackby to item_interactioon
+  - bugfix: highlander cyborgs will get their sword again
+  - refactor: big manipulator ID card locking has been refactored, report any strangeness
+      with these!
+  theOOZ, kittysmooch:
+  - rscadd: Adds the shuttle remote item unlocked with shuttle engineering research,
+      it lets you remote control the whiteship or custom shuttles.
+  throwawayuseless:
+  - bugfix: Hemoanalytic Scanner description is no longer half-complete.
+  timothymtorres:
+  - bugfix: Fix map export including projectiles in saved maps
+  zxaber:
+  - bugfix: Borg modules no longer fail to break if they were holding an item.
+2025-07-08:
+  Deadgebert:
+  - balance: Removes buy limit on traitor discounts
+  - balance: Purchase limit was added to powersink
+  Ezel:
+  - qol: The volume of all airlock pumps are now doubled resulting in faster cycling
+  Jacquerel:
+  - admin: Additional logging for when people sign up for ghost roles.
+  TealSeer:
+  - bugfix: fixed icon preview for maid headband
+  grungussuss:
+  - refactor: refactored how holodisk to holodisk interactions work, report any issues!
+  kuricityy:
+  - bugfix: Fixes CatwalkStation's armory not having eguns in the gunlocker.
+  necromanceranne:
+  - bugfix: Mech beacons actually attach again.
+  - bugfix: You'll get a message about why a beacon failed to attach, if it failed
+      to attach
+  - bugfix: Cryo cannons can not be attached to mechs.
+  - rscadd: Felinids can choose to bite at will, rather than needing to be starving
+      and insane. They will still randomly bite still if they are starving and insane;
+      because they're mentally unstable freaks.
+  - balance: As a consequence, felinid bites are a smidge less potent and do a bit
+      less damage.
+  san7890:
+  - server: Savefile migration has been tweaked a bit, though there realistically
+      shouldn't be any issues with this. Keep a wary eye out though.
+2025-07-09:
+  Maurukas:
+  - map: Birdshot has been moved to the Map Depot
+  Melbert:
+  - bugfix: Fixes some storage items having potentially broken holdable selections
+  ZeWaka:
+  - bugfix: white TGUI window flashing should be less present
+  grungussuss:
+  - refactor: changed how sound handling for item sounds works, report any sounds
+      not making any sounds!
+  - sound: handling reagent containers around will play their reagent sloshing sounds
+      more often
+  jlsnow301:
+  - admin: The admin spawned component printer UI functions again
+  timothymtorres:
+  - code_imp: Add multi-z helper function
+2025-07-10:
+  00-Steven:
+  - refactor: Refactored IV drip item interactions. Please report any issues.
+  - sound: IV drip alt-click flow minimization/maximization makes the click sound.
+  - qol: IV drip alt-click flow minimization/maximization gives feedback.
+  - qol: Updated IV drip screentips.
+  AyIong:
+  - bugfix: Stat panel background no longer be... dark in both themes
+  Fhaxaris:
+  - image: edited NT BR-38 sprite
+  Gaxeer:
+  - admin: VV verb is removed from Debug tab. Who is even using it?
+  Melbert:
+  - config: Adds "roundstart_blue_alert", allowing you to disable roundstart blue
+      alert. Defaults to "on".
+  OrionTheFox:
+  - rscadd: Medical (and Science) can now print Organ Jars from their protolathes!
+      Their shatter-proofing requires some plastic, though.
+  - balance: Organ Jar capacity lowered to 120u, and they can only pour in large quantities
+      (have you ever tried pouring out of a jar with a lip like that? Disaster. Such
+      a mess.).
+  Time-Green:
+  - bugfix: Removing plasmaman limbs now doesnt leave you burning for eternity
+  WebcomicArtist:
+  - map: The engineering staff has converted the maintenance north of catwalk's supermatter
+      into a new gear storage room.
+  necromanceranne:
+  - qol: Security barrier grenades no longer have an arbitrary 4 second delay on becoming
+      tangible.
+  - refactor: Barricades now use tool act and item interactions, and behave sanely.
+      Looking at you wooden barricade.
+  - rscadd: .38 Flare, a laser bullet! Available in both .38 speedloader and BR-38
+      magazine once Advanced Beam Weaponry is researched.
+  - rscadd: .38 Flare highlights the target in an outline and makes sure your bullets
+      never accidentally hit any limb except the one you are aiming at. Never accidentally
+      hit someone in the arm when you were going for a headshot.
+  - balance: Reduces the printing costs of several ammunition types from the autolathe
+      and security lathe. Reduces the overall material contents of said printed ammo/magazines.
+      If you find a material dupe, let a coder know.
+  timothymtorres:
+  - map: Expand Catwalk dorms hallway that connects to holodeck to be 2 tiles wide.
+      The middle dorm room was squished by 1 tile. The ladder in the dorms top/bottom
+      area was slightly shifted. One of the top dorm rooms had a single tile of reinforced
+      wall that was hidden behind a poster that has been fixed to be regular.
+2025-07-11:
+  Aliceee2ch:
+  - bugfix: Mechs now take a fixed amount of damage if the simplemob "charge" ability
+      was used on them.

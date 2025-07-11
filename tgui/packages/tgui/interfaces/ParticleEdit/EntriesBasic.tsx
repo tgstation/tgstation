@@ -13,20 +13,25 @@ import {
 import { useBackend } from '../../backend';
 import { ParticleContext } from '.';
 import {
-  EntryCoordProps,
-  EntryFloatProps,
-  EntryGradientProps,
-  EntryIconStateProps,
-  EntryTransformProps,
+  type EntryCoordProps,
+  type EntryFloatProps,
+  type EntryGradientProps,
+  type EntryIconStateProps,
+  type EntryTransformProps,
   MatrixTypes,
   P_DATA_ICON_ADD,
   P_DATA_ICON_REMOVE,
   P_DATA_ICON_WEIGHT,
-  ParticleUIData,
+  type ParticleUIData,
   SpaceToNum,
   SpaceTypes,
 } from './data';
-import { editKeyOf, editWeightOf, setGradientSpace } from './helpers';
+import {
+  editKeyOf,
+  editWeightOf,
+  isColorSpaceObject,
+  setGradientSpace,
+} from './helpers';
 
 export const EntryFloat = (props: EntryFloatProps) => {
   const { act } = useBackend<ParticleUIData>();
@@ -114,12 +119,21 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const { act } = useBackend<ParticleUIData>();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, gradient } = props;
+
   const isLooping = gradient?.find((x) => x === 'loop');
-  const space_type = gradient?.includes('space')
-    ? Object.keys(SpaceToNum).find(
-        (space) => SpaceToNum[space] === gradient['space'],
-      )
-    : 'COLORSPACE_RGB';
+
+  let space_type = 'COLORSPACE_RGB';
+  const gradientSpace = gradient?.find(isColorSpaceObject);
+
+  if (gradientSpace) {
+    const match = Object.keys(SpaceToNum).find(
+      (space) => SpaceToNum[space] === gradientSpace.space,
+    );
+    if (match) {
+      space_type = match;
+    }
+  }
+
   return (
     <LabeledList.Item label={name}>
       <Stack>

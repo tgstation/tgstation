@@ -10,12 +10,16 @@ import {
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { Connection, Connections, Position } from './../common/Connections';
+import {
+  type Connection,
+  Connections,
+  type Position,
+} from './../common/Connections';
 import { ABSOLUTE_Y_OFFSET } from './../IntegratedCircuit/constants';
 import { PlaneEditor } from './PlaneEditor';
 import { PlaneMaster } from './PlaneMaster';
 import { PlaneMenus } from './PlaneMenus';
-import {
+import type {
   Filter,
   Plane,
   PlaneConnectionsMap,
@@ -518,7 +522,6 @@ export function PlaneMasterDebug() {
         planeOpen,
         setPlaneOpen,
         planesProcessed,
-        act,
       }}
     >
       <Window

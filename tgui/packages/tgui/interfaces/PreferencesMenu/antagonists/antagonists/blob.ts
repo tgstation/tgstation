@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 
 export const BLOB_MECHANICAL_DESCRIPTION = `
   The blob infests the station and destroys everything in its path, including

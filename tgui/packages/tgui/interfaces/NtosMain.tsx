@@ -2,7 +2,7 @@ import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { NTOSData } from '../layouts/NtosWindow';
+import type { NTOSData } from '../layouts/NtosWindow';
 
 export enum alert_relevancies {
   ALERT_RELEVANCY_SAFE,

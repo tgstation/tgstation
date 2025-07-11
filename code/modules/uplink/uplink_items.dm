@@ -29,7 +29,17 @@
 			"Use only as directed.",
 			"16% sales tax will be charged for orders originating within Space Nebraska.",
 		)
-		uplink_item.limited_stock = limited_stock
+
+		//We want to limit the purchase amount of some items without adjusting the pricing.
+		if (uplink_item.limited_discount_stock > 0) {
+			uplink_item.limited_stock = uplink_item.limited_discount_stock
+		}
+
+		//if stock limited is passed into the function, we'll override everything
+		if (limited_stock > 0) {
+			uplink_item.limited_stock = limited_stock
+		}
+
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
 		uplink_item.stock_key = WEAKREF(uplink_item)
@@ -73,6 +83,8 @@
 	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
 	/// How many items of this stock can be purchased.
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
+	/// How many items of this stock can be purchased from the discount tab.
+	var/limited_discount_stock = -1
 	/// A bitfield to represent what uplinks can purchase this item.
 	/// See [`code/__DEFINES/uplink.dm`].
 	var/purchasable_from = ALL

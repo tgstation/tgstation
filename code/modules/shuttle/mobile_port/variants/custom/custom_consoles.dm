@@ -3,9 +3,10 @@
 	shuttleId = ""
 	possible_destinations = "whiteship_home;"
 	circuit = /obj/item/circuitboard/computer/shuttle/flight_control
+	may_be_remote_controlled = TRUE
 	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
-/obj/machinery/computer/shuttle/custom_shuttle/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/computer/shuttle/custom_shuttle/on_construction(mob/user)
 	circuit.configure_machine(src)
 	if(!shuttleId)
 		AddElement(/datum/element/connect_loc, connections)
@@ -47,7 +48,7 @@
 	zlink_range = 1
 	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/on_construction(mob/user)
 	circuit.configure_machine(src)
 	if(!shuttleId)
 		AddElement(/datum/element/connect_loc, connections)

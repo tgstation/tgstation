@@ -13,7 +13,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { LibraryConsoleData } from '../types';
+import type { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
 
 export function Upload(props) {

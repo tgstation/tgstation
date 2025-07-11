@@ -1,0 +1,6 @@
+author: "Jacquerel, Smartkar, sprites by Kryson"
+delete-after: True
+changes:
+  - rscadd: "Added \"platforms\", or \"half-walls\" which are a kind of decorative block similar to tables which you can walk around on."
+  - rscadd: "You can walk freely between tables, platforms, and crates that happen to be near tables or platforms."
+  - rscadd: "You can construct iron steps to traverse tables and platforms without needing to climb on, but try not to trip over them."

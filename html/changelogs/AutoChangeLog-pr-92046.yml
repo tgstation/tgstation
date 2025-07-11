@@ -1,0 +1,4 @@
+author: "BobDABuilder9001"
+delete-after: True
+changes:
+  - qol: "slimes at 0% mutation chance stay at 0% upon splitting"

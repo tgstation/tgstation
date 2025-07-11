@@ -12,7 +12,7 @@ import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Fallback } from './Fallback';
-import { PlantAnalyzerData } from './types';
+import type { PlantAnalyzerData } from './types';
 
 export function PlantAnalyzerTray(props) {
   const { data } = useBackend<PlantAnalyzerData>();

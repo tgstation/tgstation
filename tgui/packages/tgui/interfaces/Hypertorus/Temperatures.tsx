@@ -1,7 +1,7 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui-core/components';
 
-import { HypertorusFuel } from '.';
+import type { HypertorusFuel } from '.';
 import { to_exponential_if_big } from './helpers';
 
 type Data = {
@@ -36,7 +36,7 @@ const height = 200;
 
 const VerticalBar = (props) => {
   const { color, value, progressHeight } = props;
-  let y = height - progressHeight;
+  const y = height - progressHeight;
 
   return (
     <div className="hypertorus-temperatures__vertical-bar">

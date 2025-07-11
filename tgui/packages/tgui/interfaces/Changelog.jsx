@@ -325,12 +325,12 @@ export class Changelog extends Component {
                                 color={
                                   icons[changeType]
                                     ? icons[changeType].color
-                                    : icons['unknown'].color
+                                    : icons.unknown.color
                                 }
                                 name={
                                   icons[changeType]
                                     ? icons[changeType].icon
-                                    : icons['unknown'].icon
+                                    : icons.unknown.icon
                                 }
                               />
                             </Table.Cell>

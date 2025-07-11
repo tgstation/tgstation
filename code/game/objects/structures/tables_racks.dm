@@ -50,6 +50,8 @@
 	var/use_matrices_instead = FALSE
 	/// Matrix to return to on unflipping table
 	var/matrix/before_flipped_matrix
+	/// Do we place people onto the table rather than slamming them?
+	var/slam_gently = FALSE
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -62,7 +64,6 @@
 	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
 
 	var/static/list/loc_connections = list(
-		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
@@ -82,8 +83,13 @@
 		return
 
 	make_climbable()
-	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	AddComponent(/datum/component/table_smash, gentle_push = slam_gently, after_smash = CALLBACK(src, PROC_REF(after_smash)))
+
+/// Called after someone is harmfully smashed into us
+/obj/structure/table/proc/after_smash(mob/living/smashed)
+	return // This is mostly for our children
 
 /// Applies additional properties based on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
@@ -97,6 +103,7 @@
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
@@ -123,6 +130,7 @@
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table(new_dir = SOUTH)
 	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
+	qdel(GetComponent(/datum/component/climb_walkable))
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
@@ -242,6 +250,7 @@
 		return FALSE
 	if(border_dir == dir)
 		return FALSE
+
 	return TRUE
 
 /obj/structure/table/update_icon(updates=ALL)
@@ -261,38 +270,6 @@
 /obj/structure/table/attack_hand(mob/living/user, list/modifiers)
 	if(is_flipped)
 		return
-	if(Adjacent(user) && user.pulling)
-		if(isliving(user.pulling))
-			var/mob/living/pushed_mob = user.pulling
-			if(pushed_mob.buckled)
-				if(pushed_mob.buckled == src)
-					//Already buckled to the table, you probably meant to unbuckle them
-					return ..()
-				to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
-				return
-			if(user.combat_mode)
-				switch(user.grab_state)
-					if(GRAB_PASSIVE)
-						to_chat(user, span_warning("You need a better grip to do that!"))
-						return
-					if(GRAB_AGGRESSIVE)
-						tablepush(user, pushed_mob)
-					if(GRAB_NECK to GRAB_KILL)
-						tablelimbsmash(user, pushed_mob)
-			else
-				pushed_mob.visible_message(span_notice("[user] begins to place [pushed_mob] onto [src]..."), \
-									span_userdanger("[user] begins to place [pushed_mob] onto [src]..."))
-				if(do_after(user, 3.5 SECONDS, target = pushed_mob))
-					tableplace(user, pushed_mob)
-				else
-					return
-			user.stop_pulling()
-		else if(user.pulling.pass_flags & PASSTABLE)
-			user.Move_Pulled(src)
-			if (user.pulling.loc == loc)
-				user.visible_message(span_notice("[user] places [user.pulling] onto [src]."),
-					span_notice("You place [user.pulling] onto [src]."))
-				user.stop_pulling()
 	return ..()
 
 /obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
@@ -332,68 +309,12 @@
 /obj/structure/table/attack_tk(mob/user)
 	return
 
-/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(.)
-		return
-	if(mover.throwing)
-		return TRUE
-	for(var/obj/structure/table/table in get_turf(mover))
-		if(!table.is_flipped)
-			return TRUE
-
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
 		return TRUE
 	if(pass_info.pass_flags & PASSTABLE)
 		return TRUE
 	return FALSE
-
-/obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(loc)
-	pushed_mob.set_resting(TRUE, TRUE)
-	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [src]."), \
-								span_notice("[user] places [pushed_mob] onto [src]."))
-	log_combat(user, pushed_mob, "places", null, "onto [src]")
-
-/obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
-		return
-	var/passtable_key = REF(user)
-	passtable_on(pushed_mob, passtable_key)
-	for (var/obj/obj in user.loc.contents)
-		if(!obj.CanAllowThrough(pushed_mob))
-			return
-	pushed_mob.Move(src.loc)
-	passtable_off(pushed_mob, passtable_key)
-	if(pushed_mob.loc != loc) //Something prevented the tabling
-		return
-	pushed_mob.Knockdown(30)
-	pushed_mob.apply_damage(10, BRUTE)
-	pushed_mob.apply_damage(40, STAMINA)
-	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
-								span_userdanger("[user] slams you onto \the [src]!"))
-	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
-	pushed_mob.add_mood_event("table", /datum/mood_event/table)
-	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAMMING, pushed_mob, src)
-
-/obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.Knockdown(30)
-	var/obj/item/bodypart/banged_limb = pushed_mob.get_bodypart(user.zone_selected) || pushed_mob.get_bodypart(BODY_ZONE_HEAD)
-	var/extra_wound = 0
-	if(HAS_TRAIT(user, TRAIT_HULK))
-		extra_wound = 20
-	pushed_mob.apply_damage(30, BRUTE, banged_limb, wound_bonus = extra_wound)
-	pushed_mob.apply_damage(60, STAMINA)
-	take_damage(50)
-	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
-								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
-	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
-	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
-	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_LIMB_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
@@ -426,8 +347,6 @@
 		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
-	else if(istype(tool, /obj/item/riding_offhand))
-		. = riding_offhand_act(user, tool)
 
 	// Continue to placing if we don't do anything else
 	if(.)
@@ -458,37 +377,6 @@
 	if(flip)
 		card.Flip()
 	return table_place_act(user, card, modifiers)
-
-/obj/structure/table/proc/riding_offhand_act(mob/living/user, obj/item/riding_offhand/riding_item)
-	var/mob/living/carried_mob = riding_item.rider
-	if(carried_mob == user) //Piggyback user.
-		return NONE
-
-	if(user.combat_mode)
-		user.unbuckle_mob(carried_mob)
-		tablelimbsmash(user, carried_mob)
-		return ITEM_INTERACT_SUCCESS
-
-	var/tableplace_delay = 3.5 SECONDS
-	var/skills_space = ""
-	if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-		tableplace_delay = 2 SECONDS
-		skills_space = " expertly"
-	else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-		tableplace_delay = 2.75 SECONDS
-		skills_space = " quickly"
-
-	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
-	if(istype(potential_spine))
-		tableplace_delay *= potential_spine.athletics_boost_multiplier
-
-	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-	if(!do_after(user, tableplace_delay, target = carried_mob))
-		return ITEM_INTERACT_BLOCKING
-	user.unbuckle_mob(carried_mob)
-	tableplace(user, carried_mob)
-	return ITEM_INTERACT_SUCCESS
 
 // Where putting things on tables is handled.
 /obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -534,18 +422,6 @@
 		qdel(src)
 		return TRUE
 	return FALSE
-
-/obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
-	SIGNAL_HANDLER
-	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
-		return
-	target.Knockdown(SHOVE_KNOCKDOWN_TABLE, daze_amount = 3 SECONDS)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
-		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
-	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(shover, target, "shoved", "onto [src] (table)[weapon ? " with [weapon]" : ""]")
-	return COMSIG_LIVING_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
@@ -746,31 +622,18 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
-/obj/structure/table/wood/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
-	. = ..()
-	if(prob(33))
-		wood_table_shatter(target)
-
-/obj/structure/table/wood/tablepush(mob/living/user, mob/living/pushed_mob)
-	. = ..()
-	if(!QDELETED(src) && prob(33))
-		wood_table_shatter(pushed_mob)
-
-/obj/structure/table/wood/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
-	. = ..()
-	if(!QDELETED(src) && prob(33))
-		wood_table_shatter(pushed_mob)
-
-/obj/structure/table/wood/proc/wood_table_shatter(mob/living/victim)
+/obj/structure/table/wood/after_smash(mob/living/smashed)
+	if(QDELETED(src) || prob(66))
+		return
 	visible_message(
 		span_warning("[src] smashes into bits!"),
 		blind_message = span_hear("You hear the loud cracking of wood being split."),
 	)
 
 	playsound(src, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
-	victim.Knockdown(10 SECONDS)
-	victim.Paralyze(2 SECONDS)
-	victim.apply_damage(20, BRUTE)
+	smashed.Knockdown(10 SECONDS)
+	smashed.Paralyze(2 SECONDS)
+	smashed.apply_damage(20, BRUTE)
 	deconstruct(FALSE)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
@@ -981,8 +844,7 @@
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
 	can_flip = FALSE
 
-/obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
-	..()
+/obj/structure/table/bronze/after_smash(mob/living/pushed_mob)
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/rglass
@@ -1041,6 +903,7 @@
 	buckle_lying = 90
 	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 	can_flip = FALSE
+	slam_gently = TRUE
 	/// Mob currently lying on the table
 	var/mob/living/carbon/patient = null
 	/// Operating computer we're linked to, to sync operations from
@@ -1158,11 +1021,6 @@
 
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
-
-/obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(loc)
-	pushed_mob.set_resting(TRUE, TRUE)
-	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
 
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
@@ -1562,3 +1420,4 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+

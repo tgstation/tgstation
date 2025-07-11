@@ -8,7 +8,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { round, toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

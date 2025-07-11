@@ -56,6 +56,22 @@
 	speed = 1.6
 	light_color = "#FF969D"
 
+/obj/projectile/beam/laser/flare
+	name = "flare particle"
+	icon_state = "flare"
+	light_range = 2
+	light_power = 3
+	damage = 20
+	wound_bonus = -15
+	exposed_wound_bonus = 15
+
+/obj/projectile/beam/laser/flare/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/designated_target = target
+	designated_target.apply_status_effect(/datum/status_effect/designated_target)
+
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"

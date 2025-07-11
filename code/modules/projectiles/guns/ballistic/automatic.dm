@@ -360,7 +360,7 @@
 	burst_size = 1
 	actions_types = list()
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
-	suppressor_x_offset = 8
+	suppressor_x_offset = 0
 
 	/// Determines how many shots we can make before the weapon needs to be maintained.
 	var/shots_before_degradation = 10

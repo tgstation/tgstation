@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(autodrobe_other_items, list(
 	/obj/item/clothing/head/wig/random = 6,
 	/obj/item/clothing/head/flatcap = 3,
 	/obj/item/clothing/suit/jacket/miljacket = 3,
-	/obj/item/clothing/shoes/jackboots = 3,
+	/obj/item/clothing/shoes/workboots/black = 3,
 	/obj/item/clothing/mask/fakemoustache = 3,
 	/obj/item/clothing/glasses/cold= 3,
 	/obj/item/clothing/glasses/heat= 3,

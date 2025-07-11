@@ -23,6 +23,7 @@
 	register_turf(atom_target, atom_target.loc)
 
 /datum/element/elevation/Detach(atom/movable/source)
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	unregister_turf(source, source.loc)
 	REMOVE_TRAIT(source, TRAIT_ELEVATING_OBJECT, ref(src))
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)

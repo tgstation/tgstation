@@ -2,7 +2,7 @@ import { Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { SOUNDS } from './constants';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function PodSounds(props) {
   const { act, data } = useBackend<PodLauncherData>();

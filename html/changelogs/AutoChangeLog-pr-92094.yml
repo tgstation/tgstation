@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "flatpack machine shows correct names for custom components"
+  - bugfix: "correct args gets passed to machine `Initialize()` proc when constructed from machine frames & flatpack boxes"

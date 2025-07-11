@@ -153,7 +153,7 @@ const validateRegExp = (str: string) => {
 const CategoryViewer = (props: CategoryViewerProps) => {
   const [search, setSearch] = useState('');
   let [searchRegex, setSearchRegex] = useState(false);
-  let [caseSensitive, setCaseSensitive] = useState(false);
+  const [caseSensitive, setCaseSensitive] = useState(false);
   if (!search && searchRegex) {
     setSearchRegex(false);
     searchRegex = false;

@@ -92,6 +92,7 @@
 	random_shots = null
 	shotgun_blast = null
 	dir_shots = null
+	colossus_final = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()

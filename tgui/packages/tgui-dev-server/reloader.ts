@@ -40,7 +40,7 @@ export async function findCacheRoot(): Promise<string | undefined> {
   logger.log('looking for byond cache');
   // Find BYOND cache folders
 
-  for (let pattern of SEARCH_LOCATIONS) {
+  for (const pattern of SEARCH_LOCATIONS) {
     if (!pattern) {
       continue;
     }
@@ -56,7 +56,10 @@ export async function findCacheRoot(): Promise<string | undefined> {
   // Query the Windows Registry
   if (process.platform === 'win32') {
     logger.log('querying windows registry');
-    let userpath = await regQuery('HKCU\\Software\\Dantom\\BYOND', 'userpath');
+    const userpath = await regQuery(
+      'HKCU\\Software\\Dantom\\BYOND',
+      'userpath',
+    );
     if (userpath) {
       cacheRoot = userpath.replace(/\\$/, '').replace(/\\/g, '/') + '/cache';
       await onCacheRootFound(cacheRoot);
@@ -91,10 +94,10 @@ export async function reloadByondCache(bundleDir: string): Promise<void> {
   // Copy assets
   const assets = await resolveGlob(bundleDir, bundleGlob);
 
-  for (let cacheDir of cacheDirs) {
+  for (const cacheDir of cacheDirs) {
     // Clear garbage
     const garbage = await resolveGlob(cacheDir, bundleGlob);
-    for (let file of garbage) {
+    for (const file of garbage) {
       await Bun.file(file).delete();
     }
 
@@ -103,7 +106,7 @@ export async function reloadByondCache(bundleDir: string): Promise<void> {
       await Bun.write(cacheDir + '/dummy.htm', '');
 
       // Copy assets
-      for (let asset of assets) {
+      for (const asset of assets) {
         const destination = resolvePath(cacheDir, path.basename(asset));
         const input = Bun.file(asset);
         const output = Bun.file(destination);
@@ -120,7 +123,7 @@ export async function reloadByondCache(bundleDir: string): Promise<void> {
   const dss = await dssPromise;
   if (dss.length > 0) {
     logger.log(`notifying dreamseeker`);
-    for (let dreamseeker of dss) {
+    for (const dreamseeker of dss) {
       dreamseeker.topic({
         tgui: 1,
         type: 'cacheReloaded',

@@ -10,7 +10,7 @@ import {
 
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
-import { TechwebNode } from '../types';
+import type { TechwebNode } from '../types';
 import { TechNode } from './TechNode';
 
 type NodeDetailProps = {

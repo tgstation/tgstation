@@ -63,6 +63,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \
+
+	new /datum/stack_recipe("runed stone platform", /obj/structure/platform/cult, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 ))
 
 /obj/item/stack/sheet/runed_metal

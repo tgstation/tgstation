@@ -1,5 +1,5 @@
 import { TabBay, TabDrop, TabPod } from './Tabs';
-import { PodDelay, PodEffect } from './types';
+import type { PodDelay, PodEffect } from './types';
 
 export const POD_GREY = {
   color: 'grey',

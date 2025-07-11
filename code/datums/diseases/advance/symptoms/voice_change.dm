@@ -57,7 +57,7 @@
 				H.SetSpecialVoice(H.generate_random_mob_name())
 				if(scramble_language && !current_language) // Last part prevents rerolling language with small amounts of cure.
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
-					H.add_blocked_language(subtypesof(/datum/language) - current_language, LANGUAGE_VOICECHANGE)
+					H.add_blocked_language(subtypesof(/datum/language) - current_language, source = LANGUAGE_VOICECHANGE)
 					H.grant_language(current_language, source = LANGUAGE_VOICECHANGE)
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
@@ -66,5 +66,5 @@
 		var/mob/living/carbon/human/H = A.affected_mob
 		H.UnsetSpecialVoice()
 	if(scramble_language)
-		A.affected_mob.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_VOICECHANGE)
+		A.affected_mob.remove_blocked_language(subtypesof(/datum/language), source = LANGUAGE_VOICECHANGE)
 		A.affected_mob.remove_all_languages(LANGUAGE_VOICECHANGE) // In case someone managed to get more than one anyway.

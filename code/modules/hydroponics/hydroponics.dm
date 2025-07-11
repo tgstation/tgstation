@@ -508,27 +508,11 @@
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
 	if(myseed)
-		. += update_plant_overlay()
+		. += myseed.get_tray_overlay(age, plant_status)
 		. += update_status_light_overlays()
 
 	if(self_sustaining && self_sustaining_overlay_icon_state)
 		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
-
-/obj/machinery/hydroponics/proc/update_plant_overlay()
-	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
-	switch(plant_status)
-		if(HYDROTRAY_PLANT_DEAD)
-			plant_overlay.icon_state = myseed.icon_dead
-		if(HYDROTRAY_PLANT_HARVESTABLE)
-			if(!myseed.icon_harvest)
-				plant_overlay.icon_state = "[myseed.icon_grow][myseed.growthstages]"
-			else
-				plant_overlay.icon_state = myseed.icon_harvest
-		else
-			var/t_growthstate = clamp(round((age / myseed.maturation) * myseed.growthstages), 1, myseed.growthstages)
-			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
-	plant_overlay.pixel_z = myseed.plant_icon_offset
-	return plant_overlay
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()

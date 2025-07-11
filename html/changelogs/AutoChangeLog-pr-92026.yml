@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Hitting lit things with the light_eater will no longer sometimes cause them to stay stuck, lit"

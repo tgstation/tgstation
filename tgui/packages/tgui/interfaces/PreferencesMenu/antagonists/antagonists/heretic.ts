@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 
 export const HERETIC_MECHANICAL_DESCRIPTION = `
       Find hidden influences and sacrifice crew members to gain magical

@@ -30,7 +30,7 @@
 		activate()
 
 /// Remove a bodypart from the effect. Deleting = TRUE is used during clean-up phase
-/datum/status_effect/grouped/bodypart_effect/proc/remove_bodypart(obj/item/bodypart/bodypart, deleting = FALSE)
+/datum/status_effect/grouped/bodypart_effect/proc/remove_bodypart(mob/living/carbon/old_owner, obj/item/bodypart/bodypart, deleting)
 	UnregisterSignal(bodypart, COMSIG_BODYPART_REMOVED)
 
 	bodyparts.Remove(bodypart)
@@ -38,14 +38,14 @@
 	if(deleting)
 		return
 
-	if(bodyparts.len == 0)
+	if(bodyparts.len == 0 && !QDELETED(old_owner))
 		qdel(src)
 
 	else if(is_active && bodyparts.len < minimum_bodyparts)
 		deactivate()
 
 /// Signal called when a bodypart is removed
-/datum/status_effect/grouped/bodypart_effect/proc/on_bodypart_removed(obj/item/bodypart/bodypart)
+/datum/status_effect/grouped/bodypart_effect/proc/on_bodypart_removed(obj/item/bodypart/bodypart, special)
 	SIGNAL_HANDLER
 
 	remove_bodypart(owner, bodypart)
@@ -54,7 +54,7 @@
 /datum/status_effect/grouped/bodypart_effect/proc/on_bodypart_destroyed(obj/item/bodypart/bodypart)
 	SIGNAL_HANDLER
 
-	remove_bodypart(bodypart)
+	remove_bodypart(bodypart.owner, bodypart)
 
 /// Activate some sort of effect when a threshold is reached
 /datum/status_effect/grouped/bodypart_effect/proc/activate()
@@ -75,7 +75,7 @@
 /datum/status_effect/grouped/bodypart_effect/Destroy()
 	deactivate()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		remove_bodypart(bodypart, deleting = TRUE)
+		remove_bodypart(bodypart.owner, bodypart, deleting = TRUE)
 
 	return ..()
 

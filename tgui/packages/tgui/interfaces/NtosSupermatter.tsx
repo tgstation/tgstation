@@ -3,7 +3,7 @@ import { Button, ProgressBar, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { SupermatterContent, SupermatterData } from './Supermatter';
+import { SupermatterContent, type SupermatterData } from './Supermatter';
 
 type NtosSupermatterData = SupermatterData & { focus_uid?: number };
 

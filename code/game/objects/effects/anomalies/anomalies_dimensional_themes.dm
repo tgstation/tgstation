@@ -22,6 +22,7 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/greyscale = 1),
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/material = 1),
 	)
 	/// List of random spawns to place in completely open turfs
 	var/list/random_spawns
@@ -194,7 +195,9 @@
 	/obj/structure/table, \
 	/obj/structure/toilet, \
 	/obj/structure/window, \
-	/obj/structure/sink,)
+	/obj/structure/sink, \
+	/obj/structure/platform, \
+)
 
 /**
  * Returns true if the provided object can have its material modified.
@@ -236,6 +239,13 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-gold_2"
 	material = /datum/material/gold
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/gold = 1, /obj/machinery/door/airlock/gold/glass = 1),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/gold = 1),
+	)
 
 /datum/dimension_theme/plasma
 	name = "Plasma"
@@ -270,6 +280,13 @@
 	icon_state = "pizzamargherita"
 	material = /datum/material/pizza
 	sound = 'sound/items/eatfood.ogg'
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 1),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/pizza = 1),
+	)
 
 /datum/dimension_theme/natural
 	name = "Natural"
@@ -282,6 +299,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/wood = 3, /obj/structure/chair/wood/wings = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 5, /obj/structure/table/wood/fancy = 1),
+		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 
 /datum/dimension_theme/bamboo
@@ -295,6 +313,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/stool/bamboo = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 1),
+		/obj/structure/platform = list(/obj/structure/platform/bamboo = 1),
 	)
 
 /datum/dimension_theme/icebox
@@ -321,6 +340,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 1),
+		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 
 /datum/dimension_theme/lavaland
@@ -330,7 +350,10 @@
 	window_colour = "#860000"
 	replace_floors = list(/turf/open/floor/fakebasalt = 5, /turf/open/floor/fakepit = 1)
 	replace_walls = /turf/closed/wall/mineral/cult
-	replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
+	replace_objs = list(
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1),
+		/obj/structure/platform = list(/obj/structure/platform/cult = 1),
+	)
 	random_spawns = list(/mob/living/basic/mining/goldgrub)
 	random_spawn_chance = 1
 
@@ -361,6 +384,7 @@
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/comfy = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
+		/obj/structure/platform = list(/obj/structure/platform/paper = 1),
 	)
 	/// Cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
 	COOLDOWN_DECLARE(carpet_switch_cd)
@@ -424,6 +448,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 1),
+		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 	random_spawns = list(
 		/mob/living/carbon/human/species/monkey,
@@ -448,6 +473,7 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
 		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
 	)
 
 /datum/dimension_theme/bronze
@@ -467,5 +493,6 @@
 		/obj/structure/chair = list(/obj/structure/chair/bronze = 1),
 		/obj/item/reagent_containers/cup/glass/trophy = list(/obj/item/reagent_containers/cup/glass/trophy/bronze_cup = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/bronze = 1),
+		/obj/structure/platform = list(/obj/structure/platform/bronze = 1),
 	)
 	sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'

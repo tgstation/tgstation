@@ -41,6 +41,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			continue
 		if(extraction_point.beacon_network in beacon_networks)
 			possible_beacons += extraction_point
+
 	if(!length(possible_beacons))
 		balloon_alert(user, "no beacons")
 		return
@@ -67,11 +68,18 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		balloon_alert(user, "not linked!")
 		beacon_ref = null
 		return .
+	var/area/area = get_area(thing)
 	if(!can_use_indoors)
-		var/area/area = get_area(thing)
 		if(!area.outdoors)
 			balloon_alert(user, "not outdoors!")
 			return .
+	if(area.area_flags & NOTELEPORT)
+		balloon_alert(user, "unable to activate!")
+		return
+	var/area/target_area = get_area(beacon)
+	if(area != target_area && ((area.area_flags & LOCAL_TELEPORT) || (target_area.area_flags & LOCAL_TELEPORT)))
+		balloon_alert(user, "unable to activate!")
+		return
 	if(!safe_for_living_creatures && check_for_living_mobs(thing))
 		to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 		balloon_alert(user, "not safe!")
@@ -186,10 +194,17 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon_state = "folded_extraction"
 
 /obj/item/fulton_core/attack_self(mob/user)
-	if(do_after(user, 1.5 SECONDS, target = user) && !QDELETED(src))
-		new /obj/structure/extraction_point(get_turf(user))
-		playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
-		qdel(src)
+	var/area/user_area = get_area(user)
+	if(user_area.area_flags & NOTELEPORT)
+		balloon_alert(user, "unable to deploy!")
+		return
+
+	if(!do_after(user, 1.5 SECONDS, target = user) || QDELETED(src))
+		return
+
+	new /obj/structure/extraction_point(get_turf(user))
+	playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+	qdel(src)
 
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"

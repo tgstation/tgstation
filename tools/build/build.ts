@@ -26,7 +26,7 @@ const dependencies: Record<string, any> = await Bun.file("dependencies.sh")
   .then(formatDeps)
   .catch((err) => {
     Juke.logger.error(
-      "Failed to read dependencies.sh, please ensure it exists and is formatted correctly."
+      "Failed to read dependencies.sh, please ensure it exists and is formatted correctly.",
     );
     Juke.logger.error(err);
     throw new Juke.ExitCode(1);
@@ -82,7 +82,7 @@ export const NoWarningParameter = new Juke.Parameter({
 export const CutterTarget = new Juke.Target({
   onlyWhen: () => {
     const files = Juke.glob(cutter_path);
-    return files.length == 0;
+    return files.length === 0;
   },
   executes: async () => {
     const repo = dependencies.CUTTER_REPO;
@@ -225,7 +225,7 @@ export const DmTestTarget = new Juke.Target({
       "-trusted",
       "-verbose",
       "-params",
-      "log-directory=ci"
+      "log-directory=ci",
     );
     Juke.rm("*.test.*");
     try {
@@ -272,7 +272,7 @@ export const AutowikiTarget = new Juke.Target({
       "-trusted",
       "-verbose",
       "-params",
-      "log-directory=ci"
+      "log-directory=ci",
     );
     Juke.rm("*.test.*");
     if (!fs.existsSync("data/autowiki_edits.txt")) {
@@ -305,11 +305,11 @@ export const TgFontTarget = new Juke.Target({
     fs.mkdirSync("tgui/packages/tgfont/static", { recursive: true });
     fs.copyFileSync(
       "tgui/packages/tgfont/dist/tgfont.css",
-      "tgui/packages/tgfont/static/tgfont.css"
+      "tgui/packages/tgfont/static/tgfont.css",
     );
     fs.copyFileSync(
       "tgui/packages/tgfont/dist/tgfont.woff2",
-      "tgui/packages/tgfont/static/tgfont.woff2"
+      "tgui/packages/tgfont/static/tgfont.woff2",
     );
   },
 });
@@ -317,7 +317,7 @@ export const TgFontTarget = new Juke.Target({
 export const TguiTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    "tgui/webpack.config.js",
+    "tgui/rspack.config.mjs",
     "tgui/**/package.json",
     "tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)",
   ],

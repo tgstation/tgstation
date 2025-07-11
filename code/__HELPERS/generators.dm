@@ -9,3 +9,13 @@
 	string_repr = copytext(string_repr, 11, length(string_repr)) // strips extraneous data
 	string_repr = replacetext(string_repr, "\"", "") // removes the " around the type
 	return splittext(string_repr, ", ")
+
+/generator/proc/RandList()
+	var/possible_vector = Rand()
+	var/vector_length = length(possible_vector)
+	if(vector_length == 0)
+		return possible_vector
+	. = list()
+	for(var/i in 1 to vector_length)
+		. += possible_vector[i]
+	return .

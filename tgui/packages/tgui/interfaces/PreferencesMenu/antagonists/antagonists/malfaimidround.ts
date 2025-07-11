@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 import { MALF_AI_MECHANICAL_DESCRIPTION } from './malfai';
 
 const MalfAIMidround: Antagonist = {

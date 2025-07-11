@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Section, Stack } from 'tgui-core/components';
 
 type Props = {

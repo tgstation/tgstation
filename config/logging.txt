@@ -29,6 +29,9 @@ LOG_ECON
 ## log emotes
 LOG_EMOTE
 
+## log ghost polling
+LOG_GHOST_POLL
+
 ## log game actions (start of round, results, etc.)
 LOG_GAME
 

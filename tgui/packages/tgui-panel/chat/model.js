@@ -12,9 +12,9 @@ export const canPageAcceptType = (page, type) =>
   type.startsWith(MESSAGE_TYPE_INTERNAL) || page.acceptedTypes[type];
 
 export const createPage = (obj) => {
-  let acceptedTypes = {};
+  const acceptedTypes = {};
 
-  for (let typeDef of MESSAGE_TYPES) {
+  for (const typeDef of MESSAGE_TYPES) {
     acceptedTypes[typeDef.type] = !!typeDef.important;
   }
 
@@ -32,7 +32,7 @@ export const createPage = (obj) => {
 
 export const createMainPage = () => {
   const acceptedTypes = {};
-  for (let typeDef of MESSAGE_TYPES) {
+  for (const typeDef of MESSAGE_TYPES) {
     acceptedTypes[typeDef.type] = true;
   }
   return createPage({

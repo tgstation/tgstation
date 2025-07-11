@@ -38,7 +38,7 @@
 			source.inhand_icon_state += "_on"
 		if(wielding)
 			source.inhand_icon_state += "[HAS_TRAIT(source, TRAIT_WIELDED)]"
-		source.icon_angle = initial(icon_angle)
+		source.icon_angle = initial(source.icon_angle)
 		return NONE
 
 	source.inhand_icon_state = "[icon_state_prefix]_[source.base_icon_state]"

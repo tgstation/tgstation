@@ -253,7 +253,7 @@ const RegionAccessList = (props) => {
   ]);
 
   const allWildcards = Object.keys(wildcardSlots);
-  let wcAccess = {};
+  const wcAccess = {};
   allWildcards.forEach((wildcard) => {
     wildcardSlots[wildcard].usage.forEach((access) => {
       wcAccess[access] = wildcard;

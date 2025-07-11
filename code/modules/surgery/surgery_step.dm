@@ -126,12 +126,27 @@
 	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
 
-	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
+	//multiply speed_mod by sterilizer modifier
+	speed_mod *= surgery.speed_modifier
+
+	speed_mod /= (get_location_modifier(target) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
 
-	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
-	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
+	fail_prob = max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)) //if modded_time > time * modifier, then fail_prob = modded_time - time*modifier
+
+	var/list/user_modifiers = list(0, 1)
+	SEND_SIGNAL(user, COMSIG_LIVING_INITIATE_SURGERY_STEP, user, target, target_zone, tool, surgery, src, user_modifiers)
+	fail_prob += user_modifiers[FAIL_PROB_INDEX]
+	modded_time *= user_modifiers[SPEED_MOD_INDEX]
+
+	var/list/target_modifiers = list(0, 1)
+	SEND_SIGNAL(target, COMSIG_LIVING_SURGERY_STEP_INITIATED_ON, user, target, target_zone, tool, surgery, src, target_modifiers)
+	fail_prob += target_modifiers[FAIL_PROB_INDEX]
+	modded_time *= target_modifiers[SPEED_MOD_INDEX]
+
+	fail_prob = min(max(0, fail_prob),99) // clamp fail_prob between 0 and 99
+	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)// cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time * tool.toolspeed
