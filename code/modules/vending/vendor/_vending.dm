@@ -351,9 +351,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	installed_refill.contraband = unbuild_inventory(hidden_records)
 	installed_refill.premium = unbuild_inventory(coin_records)
 
-	//sheets
-	new /obj/item/stack/sheet/iron(loc, 3)
-
 /obj/machinery/vending/Destroy()
 	GLOB.vending_machines_to_restock -= src
 	return ..()
