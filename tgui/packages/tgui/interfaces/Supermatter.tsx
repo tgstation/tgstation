@@ -1,5 +1,6 @@
-import { filter, sortBy } from 'common/collections';
-import { ReactNode, useState } from 'react';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
+import { type ReactNode, useState } from 'react';
 import {
   Box,
   Button,
@@ -9,7 +10,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { getGasFromPath } from '../constants';
@@ -129,7 +130,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
       ([gas_path, amount]) => amount !== 0,
     );
   }
-  gas_composition = sortBy(gas_composition, ([gas_path, amount]) => -amount);
+  gas_composition = sortBy(gas_composition, [([gas_path, amount]) => -amount]);
 
   return (
     <Stack height="100%">

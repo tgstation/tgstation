@@ -350,13 +350,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "claymore_cyborg"
-	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize(mapload)
-	var/obj/item/robot_model/kiltkit = loc
-	robot = kiltkit.loc
 	. = ..()
-	if(!istype(robot))
+	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()

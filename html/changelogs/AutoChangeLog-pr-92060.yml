@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fulton packs can no longer be used to enter/escape bitrunning domains"
