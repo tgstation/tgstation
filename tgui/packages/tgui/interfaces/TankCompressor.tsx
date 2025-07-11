@@ -49,7 +49,7 @@ type GasMoles = {
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };
@@ -78,7 +78,7 @@ const TankCompressorContent = (props) => {
           style={{
             textTransform: 'capitalize',
           }}
-          title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}
+          title={disk ? `${disk} (${storage})` : 'No Disk Inserted'}
           buttons={
             <Button
               icon="eject"
@@ -279,9 +279,9 @@ const TankCompressorRecords = (props) => {
                 <LabeledList>
                   {Object.keys(activeRecord.gases).map((gas_name) => (
                     <LabeledList.Item label={gas_name} key={gas_name}>
-                      {(activeRecord.gases[gas_name]
+                      {`${activeRecord.gases[gas_name]
                         ? activeRecord.gases[gas_name].toFixed(2)
-                        : '-') + ' moles'}
+                        : '-'} moles`}
                     </LabeledList.Item>
                   ))}
                 </LabeledList>

@@ -74,20 +74,20 @@ export class Changelog extends Component {
 
     if (attemptNumber > maxAttempts) {
       return this.setData(
-        'Failed to load data after ' + maxAttempts + ' attempts',
+        `Failed to load data after ${maxAttempts} attempts`,
       );
     }
 
     act('get_month', { date });
 
-    fetch(resolveAsset(date + '.yml')).then(async (changelogData) => {
+    fetch(resolveAsset(`${date}.yml`)).then(async (changelogData) => {
       const result = await changelogData.text();
       const errorRegex = /^Cannot find/;
 
       if (errorRegex.test(result)) {
         const timeout = 50 + attemptNumber * 50;
 
-        self.setData('Loading changelog data' + '.'.repeat(attemptNumber + 3));
+        self.setData(`Loading changelog data${'.'.repeat(attemptNumber + 3)}`);
         setTimeout(() => {
           self.getData(date, attemptNumber + 1);
         }, timeout);

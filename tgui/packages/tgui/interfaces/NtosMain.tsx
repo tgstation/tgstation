@@ -144,7 +144,7 @@ export const NtosMain = (props) => {
                 ? login.IDName +
                   ' ' +
                   (proposed_login.IDName
-                    ? '(' + proposed_login.IDName + ')'
+                    ? `(${proposed_login.IDName})`
                     : '')
                 : (proposed_login.IDName ?? '')}
             </Table.Row>
@@ -153,7 +153,7 @@ export const NtosMain = (props) => {
               {show_imprint
                 ? login.IDJob +
                   ' ' +
-                  (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
+                  (proposed_login.IDJob ? `(${proposed_login.IDJob})` : '')
                 : (proposed_login.IDJob ?? '')}
             </Table.Row>
           </Table>
