@@ -2964,6 +2964,10 @@
 		return
 	if(methods & INGEST)
 		exposed_mob.check_allergic_reaction(BUGS, chance = reac_volume * 10, histamine_add = min(10, reac_volume))
+		// Troutstation edit start
+		if(isanteater(exposed_mob))
+			return
+		// Troutstation edit end
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
 
