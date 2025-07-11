@@ -279,9 +279,11 @@ const TankCompressorRecords = (props) => {
                 <LabeledList>
                   {Object.keys(activeRecord.gases).map((gas_name) => (
                     <LabeledList.Item label={gas_name} key={gas_name}>
-                      {`${activeRecord.gases[gas_name]
-                        ? activeRecord.gases[gas_name].toFixed(2)
-                        : '-'} moles`}
+                      {`${
+                        activeRecord.gases[gas_name]
+                          ? activeRecord.gases[gas_name].toFixed(2)
+                          : '-'
+                      } moles`}
                     </LabeledList.Item>
                   ))}
                 </LabeledList>
