@@ -31,6 +31,14 @@
 	. = ..()
 	make_edible(source, mat_amount, multiplier)
 	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //The rod itself is the bait... sorta.
+	if(isbodypart(source))
+		var/obj/item/bodypart/bodypart = source
+		if(!(bodypart::bodytype & BODYTYPE_ORGANIC))
+			bodypart.bodytype |= BODYTYPE_ORGANIC
+	if(isorgan(source))
+		var/obj/item/organ/organ = source
+		if(!(organ::organ_flags & ORGAN_ORGANIC))
+			organ.organ_flags |= ORGAN_ORGANIC
 
 /datum/material/meat/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -100,6 +108,14 @@
 /datum/material/meat/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
+	if(isbodypart(source))
+		var/obj/item/bodypart/bodypart = source
+		if(!(bodypart::bodytype & BODYTYPE_ORGANIC))
+			bodypart.bodytype &= ~BODYTYPE_ORGANIC
+	if(isorgan(source))
+		var/obj/item/organ/organ = source
+		if(!(organ::organ_flags & ORGAN_ORGANIC))
+			organ.organ_flags &= ~ORGAN_ORGANIC
 
 /datum/material/meat/mob_meat
 	init_flags = MATERIAL_INIT_BESPOKE
