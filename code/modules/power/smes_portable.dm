@@ -134,7 +134,7 @@
 
 	register_context()
 
-/obj/machinery/smesbank/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/smesbank/on_construction(mob/user)
 	set_anchored(FALSE)
 
 /obj/machinery/smesbank/add_context(atom/source, list/context, obj/item/held_item, mob/user)

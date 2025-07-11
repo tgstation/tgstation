@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "HARS cannot spawn as an innate gene - it will only show up in scrambled DNA (such as from the DNA console)"

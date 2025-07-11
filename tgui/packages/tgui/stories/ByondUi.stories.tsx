@@ -38,7 +38,7 @@ function Story() {
               setTimeout(() => {
                 try {
                   const result = new Function('return (' + code + ')')();
-                  if (result && result.then) {
+                  if (result?.then) {
                     logger.log('Promise');
                     result.then(logger.log);
                   } else {
