@@ -216,22 +216,22 @@ DEFINE_BITFIELD(food_flags, list(
 #define FOOD_PRICE_TRASH 25
 ///In line with prices of cheap snacks and foods you find in vending machine, practically disposable.
 #define FOOD_PRICE_CHEAP 70
-///Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.
-#define FOOD_PRICE_NORMAL 150
+///Worth a lot more than the ingredients!
+#define FOOD_PRICE_NORMAL 350
 ///Making one of these should be worth the time investment, solid chunk of profit.
-#define FOOD_PRICE_EXOTIC 450
+#define FOOD_PRICE_EXOTIC 950
 ///Large windfall for making something from this list.
-#define FOOD_PRICE_LEGENDARY 1300
+#define FOOD_PRICE_LEGENDARY 3000
 
 ///***Drink price classes***
 ///Drinks that are only limited by a single click of the dispenser.
-#define DRINK_PRICE_STOCK 20
+#define DRINK_PRICE_STOCK 40
 ///Drinks that are made through very basic processing.
-#define DRINK_PRICE_EASY 35
+#define DRINK_PRICE_EASY 100
 ///Drinks that are made through more basic processing, or multiple steps.
-#define DRINK_PRICE_MEDIUM 80
+#define DRINK_PRICE_MEDIUM 400
 ///Drinks that are made through rare ingredients, or high levels of processing.
-#define DRINK_PRICE_HIGH 200
+#define DRINK_PRICE_HIGH 900
 
 /// Time spent deep frying an item after which it becomes fried.
 #define FRYING_TIME_FRIED (15 SECONDS)
