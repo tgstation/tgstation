@@ -152,6 +152,7 @@
 		return FALSE
 	if (!(patient.mob_biotypes & (MOB_ORGANIC|MOB_HUMANOID)))
 		return FALSE
+	return TRUE
 
 /datum/surgery_step/revive/carbon
 
