@@ -1,0 +1,4 @@
+author: "carpotoxin"
+delete-after: True
+changes:
+  - bugfix: "fixed the 'note_path' var of the 'airlock_note_placer' mapping helper"
