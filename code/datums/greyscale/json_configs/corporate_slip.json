@@ -1,0 +1,28 @@
+{
+	"corp_slip": [
+		{
+			"type": "icon_state",
+			"icon_state": "corp_slip_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "corp_slip_trim",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"corp_slip_words": [
+		{
+			"type": "icon_state",
+			"icon_state": "corp_slip_base_words",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "corp_slip_trim_words",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

@@ -325,6 +325,15 @@
 	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'
 
 //
+// BUREAUCRACY
+//
+
+/datum/greyscale_config/corporate_slip
+	name = "Corporate Plastic Card"
+	icon_file = 'icons/obj/service/bureaucracy.dmi'
+	json_config = 'code/datums/greyscale/json_configs/corporate_slip.json'
+
+//
 // MISC
 //
 
