@@ -5,6 +5,8 @@
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "biopsy"
 	worn_icon_state = "biopsy"
+	/// Base icon of the biopsy tool
+	var/base_icon_state = "biopsy"
 	/// Whether or not we can swab objects
 	var/can_swap_objects = FALSE
 
@@ -15,14 +17,15 @@
 
 /obj/item/biopsy_tool/proc/update_swab_icon(list/swabbed_items)
 	if(LAZYLEN(swabbed_items))
-		icon_state = initial(icon_state) + "_full"
+		icon_state = base_icon_state + "_full"
 	else
-		icon_state = initial(icon_state)
+		icon_state = base_icon_state
 
 /obj/item/biopsy_tool/organ
 	name = "tissue biopsy tool"
 	desc = "Used to retrieve cell lines from organ tissue and organisms. Don't worry, it won't sting."
 	icon_state = "biopsy_organ"
+	base_icon_state = "biopsy_organ"
 
 	can_swap_objects = TRUE
 

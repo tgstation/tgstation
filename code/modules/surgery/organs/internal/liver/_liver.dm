@@ -367,21 +367,14 @@
 
 	icon_state = "liver-distillery"
 
+	organ_traits = list(TRAIT_ALCOHOL_TOLERANCE)
+
 	alcohol_tolerance = ALCOHOL_RATE * 0.1
+
 	/// Volume that is converted per second
 	var/ethanol_conversion = 0.2
 	/// What to convert stuff into
 	var/convert_into = /datum/reagent/consumable/ethanol
-
-/obj/item/organ/liver/distillery/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
-	. = ..()
-
-	ADD_TRAIT(organ_owner, TRAIT_ALCOHOL_TOLERANCE, REF(src))
-
-/obj/item/organ/liver/distillery/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
-	. = ..()
-
-	REMOVE_TRAIT(organ_owner, TRAIT_ALCOHOL_TOLERANCE, REF(src))
 
 /obj/item/organ/liver/distillery/on_life(seconds_per_tick, times_fired)
 	. = ..()
