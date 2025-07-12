@@ -195,7 +195,7 @@
 				continue
 			var/datum/export/material/export_est = i
 			if(export_est.material_id == traded_mat)
-				elastic_mult = export_est.cost
+				elastic_mult = (export_est.cost / export_est.init_cost) * 100
 
 		material_data += list(list(
 			"name" = initial(traded_mat.name),

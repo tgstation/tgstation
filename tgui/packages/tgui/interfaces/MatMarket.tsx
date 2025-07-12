@@ -140,9 +140,15 @@ export const MatMarket = (props) => {
                     <Stack.Item
                       width="10%"
                       pr="2%"
-                      textColor={material.elastic < 0.33 ? 'red' : material.elastic < 0.66 ? 'orange' : 'green'}
+                      textColor={
+                        material.elastic < 33
+                          ? 'red'
+                          : material.elastic < 66
+                            ? 'orange'
+                            : 'green'
+                      }
                     >
-                      Elasticity: <b>{Math.round(material.elastic * 100)}</b>%
+                      Elasticity: <b>{Math.round(material.elastic)}</b>%
                     </Stack.Item>
 
                     <Stack.Item width="15%" pr="2%">
