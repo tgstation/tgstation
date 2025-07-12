@@ -1222,7 +1222,6 @@
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 	// Adjusts the speeds of any active surgeries to a certain maximum.
-	// Essentially removing speed boosts given from other sterilizing reagents.
 	exposed_carbon.adjust_surgery_speeds(0.1, maximum = 1.1)
 
 /datum/reagent/medicine/stimulants
