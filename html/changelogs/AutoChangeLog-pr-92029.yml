@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - rscadd: "You can now see inside closets you're in, and interact with yourself inside."
