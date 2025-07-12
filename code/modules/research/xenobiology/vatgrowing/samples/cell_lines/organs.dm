@@ -23,12 +23,15 @@
 		/datum/reagent/consumable/nutriment = 1,
 	)
 
+	suppressive_reagents = list(
+		/datum/reagent/mutagen = -2,
+	)
+
 	resulting_atom = /obj/item/organ/heart
 
 /datum/micro_organism/cell_line/organs/heart/evolved
 	desc = "dense evolved heart tissue"
-
-	growth_rate = type::growth_rate * 0.5
+	growth_rate = parent_type::growth_rate * 0.5
 
 	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue)
 
@@ -43,8 +46,7 @@
 
 /datum/micro_organism/cell_line/organs/heart/sacred
 	desc = "dense sacred heart tissue"
-
-	growth_rate = type::growth_rate * 0.5
+	growth_rate = parent_type::growth_rate * 0.5
 
 	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue, /datum/reagent/water/holywater)
 
@@ -56,13 +58,13 @@
 
 	resulting_atom = /obj/item/organ/heart/evolved/sacred
 
-/datum/micro_organism/cell_line/organs/heart/corrupted
+/datum/micro_organism/cell_line/organs/heart/corrupt
 	desc = "dense corrupted heart tissue"
 
 	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue)
 
 	supplementary_reagents = list(
-		/datum/reagent/water/unholy = 6,
+		/datum/reagent/hellwater = 6,
 		/datum/reagent/blood = 3,
 		/datum/reagent/consumable/nutriment = 1,
 	)
@@ -71,7 +73,7 @@
 		/datum/reagent/water/holywater = -2,
 	)
 
-	resulting_atom = /obj/item/organ/heart/corrupted
+	resulting_atom = /obj/item/organ/heart/corrupt
 
 /datum/micro_organism/cell_line/organs/lungs
 	desc = "dense lung tissue"
@@ -84,7 +86,25 @@
 		/datum/reagent/consumable/nutriment = 1,
 	)
 
+	suppressive_reagents = list(
+		/datum/reagent/mutagen = -2,
+	)
+
 	resulting_atom = /obj/item/organ/lungs
+
+/datum/micro_organism/cell_line/organs/lungs/evolved
+	desc = "dense evolved lung tissue"
+
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue)
+
+	supplementary_reagents = list(
+		/datum/reagent/medicine/salbutamol = 6,
+		/datum/reagent/mutagen = 4,
+		/datum/reagent/blood = 3,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	resulting_atom = /obj/item/organ/lungs/evolved
 
 /datum/micro_organism/cell_line/organs/liver
 	desc = "dense liver tissue"
@@ -95,6 +115,10 @@
 		/datum/reagent/iron = 6,
 		/datum/reagent/blood = 3,
 		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/mutagen = -2,
 	)
 
 	resulting_atom = /obj/item/organ/liver
@@ -126,6 +150,22 @@
 
 	resulting_atom = /obj/item/organ/liver/bloody
 
+/datum/micro_organism/cell_line/organs/liver/distillery
+	desc = "alcoholic liver tissue"
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue, /datum/reagent/consumable/ethanol)
+
+	supplementary_reagents = list(
+		/datum/reagent/iron = 6,
+		/datum/reagent/blood = 3,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/water = -6, //are you trying to poison me or something?
+	)
+
+	resulting_atom = /obj/item/organ/liver/distillery
+
 /datum/micro_organism/cell_line/organs/stomach
 	desc = "dense stomach tissue"
 
@@ -137,4 +177,22 @@
 		/datum/reagent/consumable/nutriment = 1,
 	)
 
+	suppressive_reagents = list(
+		/datum/reagent/mutagen = -2,
+	)
+
 	resulting_atom = /obj/item/organ/stomach
+
+/datum/micro_organism/cell_line/organs/stomach/evolved
+	desc = "dense evolved stomach tissue"
+
+	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining)
+
+	supplementary_reagents = list(
+		/datum/reagent/mutagen = 4,
+		/datum/reagent/consumable/nutriment/organ_tissue = 3,
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/blood = 3,
+	)
+
+	resulting_atom = /obj/item/organ/stomach/evolved

@@ -20,7 +20,7 @@
 
 	cell_line = CELL_LINE_ORGAN_LIVER
 	cells_minimum = 1
-	cells_maximum = 1
+	cells_maximum = 2
 
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
@@ -359,6 +359,39 @@
 
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += 4 * seconds_per_tick
+
+/// Convert all non-alcoholic drinks into alcohol
+/obj/item/organ/liver/distillery
+	name = "alcoholics delight"
+	desc = "The perfect liver, distilling non-alcoholic reagents into alcohol whenever possible."
+
+	icon_state = "liver-distillery"
+
+	alcohol_tolerance = ALCOHOL_RATE * 0.1
+	/// Volume that is converted per second
+	var/ethanol_conversion = 0.2
+	/// What to convert stuff into
+	var/convert_into = /datum/reagent/consumable/ethanol
+
+/obj/item/organ/liver/distillery/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+
+	ADD_TRAIT(organ_owner, TRAIT_ALCOHOL_TOLERANCE, REF(src))
+
+/obj/item/organ/liver/distillery/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+
+	REMOVE_TRAIT(organ_owner, TRAIT_ALCOHOL_TOLERANCE, REF(src))
+
+/obj/item/organ/liver/distillery/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+		// Already alcohol
+		if(istype(reagent, convert_into))
+			continue
+
+		owner.reagents.convert_reagent(reagent.type, convert_into, ethanol_conversion)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

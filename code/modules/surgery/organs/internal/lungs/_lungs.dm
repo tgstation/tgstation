@@ -20,7 +20,7 @@
 
 	cell_line = CELL_LINE_ORGAN_LUNGS
 	cells_minimum = 1
-	cells_maximum = 1
+	cells_maximum = 2
 
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
@@ -1084,6 +1084,8 @@
 /obj/item/organ/lungs/evolved
 	name = "evolved lungs"
 	desc = "A pair of lungs, with an organic filtering system and a stronger musculature."
+
+	icon_state = "lungs-evolved"
 
 	safe_plasma_max = 8
 	safe_co2_max = 8

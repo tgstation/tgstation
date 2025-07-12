@@ -198,6 +198,7 @@
 	beat_noise = "THE THUMPTHUMPTHUMPING OF THE CHISEL ON THE GLASS. OPEN THE FUTURE SHATTER THE-"
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	cell_line = CELL_LINE_ORGAN_HEART_CURSED
+	cells_minimum = 2 //guarantees we always get sacred heart and corrupted heart cells
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 

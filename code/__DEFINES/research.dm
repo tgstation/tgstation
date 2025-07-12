@@ -62,6 +62,8 @@
 #define CELL_LINE_ORGAN_LIVER "cell_line_organ_liver"
 #define CELL_LINE_ORGAN_STOMACH "cell_line_organ_stomach"
 
+#define CELL_LINE_ORGAN_HEART_CURSED "cell_line_organ_heart_cursed"
+
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"
 #define CELL_VIRUS_TABLE_GENERIC_MOB "cell_virus_generic_mob_table"

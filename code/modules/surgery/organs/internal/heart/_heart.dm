@@ -361,7 +361,7 @@
 		owner.heal_overall_damage(damage_to_heal, damage_to_heal, required_bodytype = BODYTYPE_ORGANIC)
 
 		if(owner.stat == HARD_CRIT && !owner.has_reagent(/datum/reagent/medicine/atropine, 5))
-			owner.add_reagent(/datum/reagent/medicine/atropine, 1 * seconds_per_tick)
+			owner.reagents.add_reagent(/datum/reagent/medicine/atropine, 1 * seconds_per_tick)
 
 /// A weaker evolved heart, but can block magic in exchange for our organs health!
 /obj/item/organ/heart/evolved/sacred
@@ -380,8 +380,8 @@
 /obj/item/organ/heart/evolved/sacred/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
-	if(ISCULTIST(owner))
-		owner.add_reagent(/datum/reagent/water/holywater, 5 * seconds_per_tick)
+	if(IS_CULTIST(owner))
+		owner.reagents.add_reagent(/datum/reagent/water/holywater, 5 * seconds_per_tick)
 
 /obj/item/organ/heart/evolved/sacred/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
@@ -396,8 +396,8 @@
 /// When we blocked damage, do PAIN on us
 /obj/item/organ/heart/evolved/sacred/proc/on_blocked()
 	apply_organ_damage(damage_per_block)
-	organ_owner.vomit(VOMIT_CATEGORY_BLOOD)
-	organ_owner.playsound('sound/effects/health/slowbeat.ogg', 80)
+	owner.vomit(VOMIT_CATEGORY_BLOOD)
+	playsound(owner, 'sound/effects/health/slowbeat.ogg', 80)
 
 /// We don't block magic if it would kill our heart
 /obj/item/organ/heart/evolved/sacred/proc/check_block()
