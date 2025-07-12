@@ -53,9 +53,8 @@
  * the component
  */
 /datum/surgery/organ_manipulation/proc/remove_fishing_spot()
-	for(var/datum/surgery/organ_manipulation/manipulation in target.surgeries)
-		if(manipulation != src && ispath(manipulation.steps[manipulation.status], /datum/surgery_step/manipulate_organs))
-			return
+	if(target.has_surgery(/datum/surgery/organ_manipulation, /datum/surgery_step/manipulate_organs))
+		return
 	qdel(target.GetComponent(/datum/component/fishing_spot))
 
 /datum/surgery/organ_manipulation/soft

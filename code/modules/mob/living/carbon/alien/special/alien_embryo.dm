@@ -77,11 +77,7 @@
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
-		for(var/datum/surgery/operations as anything in owner.surgeries)
-			if(operations.location != BODY_ZONE_CHEST)
-				continue
-			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
-				continue
+		if(owner.has_surgery(/datum/surgery/organ_manipulation, /datum/surgery_step/manipulate_organs/internal, BODY_ZONE_CHEST))
 			attempt_grow(gib_on_success = FALSE)
 			return
 		attempt_grow()
