@@ -10,8 +10,8 @@ export function PageSelect(props) {
     page_count,
   } = props;
 
-  if (page_count === 1) return;
   const [page, setPage] = useState(current_page);
+  if (page_count === 1) return;
 
   return (
     <Stack>

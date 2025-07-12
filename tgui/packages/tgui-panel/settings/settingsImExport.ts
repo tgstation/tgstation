@@ -39,10 +39,10 @@ export function exportChatSettings(
 }
 
 export function importChatSettings(settings: string | string[]) {
+  const dispatch = useDispatch();
   if (Array.isArray(settings)) {
     return;
   }
-  const dispatch = useDispatch();
   const ourImport = JSON.parse(settings);
   if (!ourImport?.version) {
     return;
