@@ -142,14 +142,6 @@
 	animate(src, alpha = 255, time = 0.5 SECONDS)
 	playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 
-/obj/vehicle/sealed/mecha/justice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
-	if(LAZYLEN(occupants))
-		if(prob(60))
-			new /obj/effect/temp_visual/mech_sparks(get_turf(src))
-			playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
-			return
-	return ..()
-
 /datum/action/vehicle/sealed/mecha/invisibility
 	name = "Invisibility"
 	button_icon_state = "mech_stealth_off"
