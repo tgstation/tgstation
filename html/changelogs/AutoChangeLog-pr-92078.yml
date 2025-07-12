@@ -1,0 +1,6 @@
+author: "Kurgis"
+delete-after: True
+changes:
+  - map: "Catwalk Science has gotten a minor clean-up of Robotics' Surgery area."
+  - map: "Adds destination taggers to various disposal bins on Catwalk where appropriate."
+  - bugfix: "Catwalk Station: exosuit fabricators no longer print in the wrong direction, removal of a stray airlock in Xenobiology, Security department now has their missing delivery tag set properly for disposal mail, and adds a missing wall near medical virology hallway."
