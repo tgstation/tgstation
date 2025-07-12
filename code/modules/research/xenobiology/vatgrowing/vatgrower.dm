@@ -203,7 +203,7 @@
 
 	if(isliving(thing))
 		var/mob/living/living_type = thing
-		if(living_type::mob_size > MOB_SIZE_SMALL)
+		if(living_type.mob_size > MOB_SIZE_SMALL)
 			explosion(src, light_impact_range = 2, explosion_cause = "growing vat too small")
 			qdel(src)
 			return
