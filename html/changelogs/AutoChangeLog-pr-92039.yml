@@ -1,6 +1,0 @@
-author: "Kubisopplay"
-delete-after: True
-changes:
-  - balance: "Adds a upper limit for malf ai points, currently at 400"
-  - balance: "Increases hacked apc power draw to 2 kW"
-  - bugfix: "Fixed bugged malf ai module descriptions"

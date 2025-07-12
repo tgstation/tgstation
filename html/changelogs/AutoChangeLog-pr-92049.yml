@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "fixed shattering glass sheets on the floor not dropping a shard if the stack only had 1"
