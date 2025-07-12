@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Cult spell action buttons have their unique tooltip style again"
+  - qol: "Radial tooltips can now have unique styles"
+  - qol: "Radial \"info\" buttons now have tooltips with the info text, meaning you don't have to click on the button and read chat"
