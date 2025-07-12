@@ -190,10 +190,6 @@
 		update_appearance()
 		return TRUE
 	else
-		if(silo_mats.on_hold())
-			if(user)
-				balloon_alert(user, "silo on hold!")
-			return FALSE
 		if(!silo_mats.mat_container)
 			if(user)
 				balloon_alert(user, "no silo detected!")
@@ -203,7 +199,7 @@
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
-		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume")
+		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume", user_data = ID_DATA(user))
 		return TRUE
 
 /obj/item/construction/ui_static_data(mob/user)
@@ -265,9 +261,7 @@
 		else
 			. = matter >= amount
 	else
-		if(silo_mats.on_hold())
-			if(user)
-				balloon_alert(user, "silo on hold!")
+		if(!silo_mats.can_use_resource(user_data = ID_DATA(user)))
 			return FALSE
 		. = silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT)
 	if(!. && user)
