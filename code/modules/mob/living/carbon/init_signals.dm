@@ -32,7 +32,7 @@
 	SIGNAL_HANDLER
 
 	var/datum/dna_block/identity/gender/to_update = GLOB.dna_identity_blocks[/datum/dna_block/identity/gender]
-	to_update.apply_to_mob(src)
+	to_update.apply_to_mob(src, src.dna.unique_identity)
 
 /**
  * On gain of TRAIT_NOBREATH
