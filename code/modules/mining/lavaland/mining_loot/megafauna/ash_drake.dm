@@ -177,11 +177,11 @@
 				FEATURE_SNOUT = "Sharp",
 				FEATURE_HORNS = "Curled",
 				FEATURE_EARS = "None",
-				"wings" = "None",
+				FEATURE_WINGS = "None",
 				FEATURE_FRILLS = "None",
 				FEATURE_SPINES = "Long",
 				FEATURE_LIZARD_MARKINGS = "Dark Tiger Body",
-				"legs" = DIGITIGRADE_LEGS,
+				FEATURE_LEGS = DIGITIGRADE_LEGS,
 			)
 			consumer.set_eye_color("#FEE5A3")
 			consumer.set_species(/datum/species/lizard)

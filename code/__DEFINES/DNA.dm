@@ -72,7 +72,12 @@
 #define FEATURE_POD_HAIR "podhair"
 
 // Other
-
+#define FEATURE_WINGS "wings"
+#define FEATURE_TAIL_MONKEY "tail_monkey"
+#define FEATURE_TAIL_XENO "tail_xeno"
+#define FEATURE_ORIGINAL_MOTH_WINGS "original_moth_wings" // These aren't even used anywhere so I gotta remove them after
+#define FEATURE_ORIGINAL_MOTH_ANTENNAE "original_moth_antennae"
+#define FEATURE_LEGS "legs"
 
 ///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
 #define COPY_DNA_SE (1<<0)

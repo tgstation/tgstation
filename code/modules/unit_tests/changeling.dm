@@ -81,7 +81,7 @@
 	ling.dna.features[FEATURE_FRILLS] = "Short"
 	ling.dna.features[FEATURE_SPINES] = "Long + Membrane"
 	ling.dna.features[FEATURE_LIZARD_MARKINGS] = "Light Belly"
-	ling.dna.features["legs"] = DIGITIGRADE_LEGS
+	ling.dna.features[FEATURE_LEGS] = DIGITIGRADE_LEGS
 	ling.set_eye_color(COLOR_WHITE)
 	ling.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
 	ling.set_species(/datum/species/lizard)
