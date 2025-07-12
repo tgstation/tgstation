@@ -50,7 +50,8 @@
 
 /datum/dna_block/identity/eye_colors/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	var/colors = get_block(dna_hash)
-	target.set_eye_color(sanitize_hexcolor(copytext(colors, 1, 4)), sanitize_hexcolor(copytext(colors, 4, 7)))
+	var/right_color_begin = DNA_BLOCK_SIZE_COLOR + 1
+	target.set_eye_color(sanitize_hexcolor(copytext(colors, 1, right_color_begin)), sanitize_hexcolor(copytext(colors, right_color_begin, length(colors) + 1)))
 
 /datum/dna_block/identity/hair_style
 

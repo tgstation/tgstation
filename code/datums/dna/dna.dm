@@ -195,6 +195,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		var/datum/dna_block/feature/block = GLOB.dna_feature_blocks[block_type]
 		if(isnull(features[block.feature_key]))
 			. += random_string(block.block_length, GLOB.hex_characters)
+			continue
 		. += block.unique_block(holder)
 
 /datum/dna/proc/generate_dna_blocks()
@@ -268,7 +269,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		CRASH("UF block type is null")
 	if(!ishuman(holder))
 		CRASH("Non-human mobs shouldn't have DNA")
-	var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[blocktype]
+	var/datum/dna_block/feature/block = GLOB.dna_identity_blocks[blocktype]
 	unique_features = block.modified_hash(unique_features, block.unique_block(holder))
 
 /**
@@ -495,7 +496,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			block_to_apply.apply_to_mob(src, dna.unique_features)
 
 	for(var/obj/item/organ/organ in organs)
-		organ.mutate_feature(dna.features, src)
+		organ.mutate_feature(dna.unique_features, src)
 
 	if(icon_update)
 		update_body(is_creating = mutcolor_update)
@@ -678,9 +679,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(value > values)
 		value = values
 	return value
-
-/proc/get_uni_feature_block(features, blocknum)
-	return copytext(features, GLOB.total_uf_len_by_block[blocknum], LAZYACCESS(GLOB.total_uf_len_by_block, blocknum+1))
 
 /////////////////////////// DNA HELPER-PROCS
 

@@ -61,7 +61,7 @@
 
 	preference = "feature_mushperson_cap"
 
-	dna_block = FEATURE_MUSH_CAP
+	dna_block = /datum/dna_block/feature/mush_cap
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/mushroom_cap

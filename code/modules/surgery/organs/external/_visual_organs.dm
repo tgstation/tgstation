@@ -75,7 +75,8 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	var/list/feature_list = bodypart_overlay.get_global_feature_list()
 
-	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
+	var/datum/dna_block/feature/feature_block = GLOB.dna_feature_blocks[dna_block]
+	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(feature_block.get_block(features), feature_list.len)])
 
 ///If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something
 /obj/item/organ/proc/simple_change_sprite(accessory_type)
@@ -109,7 +110,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	slot = ORGAN_SLOT_EXTERNAL_HORNS
 
 	preference = "feature_lizard_horns"
-	dna_block = FEATURE_HORNS
+	dna_block = /datum/dna_block/feature/horn
 	restyle_flags = EXTERNAL_RESTYLE_ENAMEL
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/horns
@@ -142,7 +143,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	slot = ORGAN_SLOT_EXTERNAL_FRILLS
 
 	preference = "feature_lizard_frills"
-	dna_block = FEATURE_FRILLS
+	dna_block = /datum/dna_block/feature/frill
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/frills
@@ -176,7 +177,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	preference = "feature_lizard_snout"
 	external_bodyshapes = BODYSHAPE_SNOUTED
 
-	dna_block = FEATURE_SNOUT
+	dna_block = /datum/dna_block/feature/snout
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
@@ -208,7 +209,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	slot = ORGAN_SLOT_EXTERNAL_ANTENNAE
 
 	preference = "feature_moth_antennae"
-	dna_block = FEATURE_MOTH_ANTENNAE
+	dna_block = /datum/dna_block/feature/moth_antenna
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/antennae
@@ -299,7 +300,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	preference = "feature_pod_hair"
 	use_mob_sprite_as_obj_sprite = TRUE
 
-	dna_block = FEATURE_POD_HAIR
+	dna_block = /datum/dna_block/feature/pod_hair
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pod_hair

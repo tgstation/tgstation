@@ -220,7 +220,7 @@
 	greyscale_colors = FISH_ORGAN_COLOR
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
-	dna_block = FEATURE_TAIL_FISH
+	dna_block = /datum/dna_block/feature/tail_fish
 	wag_flags = NONE
 	organ_traits = list(TRAIT_FLOPPING, TRAIT_SWIMMER)
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
