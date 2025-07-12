@@ -7,6 +7,7 @@
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
 	color = BLOOD_COLOR_RED
+	mouse_opacity = MOUSE_OPACITY_ICON
 
 	/// Amount of blood, in units, in this decal
 	/// Spent when drying or making footprints
