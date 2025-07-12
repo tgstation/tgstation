@@ -96,11 +96,6 @@
 	purchase_path = /obj/item/reagent_containers/condiment/grounding_solution
 	cost_per_order = 30
 
-/datum/orderable_item/reagents/honey
-	name = "Honey"
-	purchase_path = /obj/item/reagent_containers/condiment/honey
-	cost_per_order = 125 //its high quality honey :)
-
 /datum/orderable_item/reagents/mayonnaise
 	name = "Mayonnaise"
 	purchase_path = /obj/item/reagent_containers/condiment/mayonnaise
