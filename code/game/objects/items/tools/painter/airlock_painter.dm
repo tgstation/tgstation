@@ -43,11 +43,9 @@
 	. = ..()
 	ink = new initial_ink_type(src)
 
-
 /obj/item/airlock_painter/Destroy(force)
 	QDEL_NULL(ink)
 	return ..()
-
 
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
@@ -132,7 +130,6 @@
 	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 		ink_level = "dangerously high"
 	. += span_notice("Its ink levels look [ink_level].")
-
 
 /obj/item/airlock_painter/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/toner))

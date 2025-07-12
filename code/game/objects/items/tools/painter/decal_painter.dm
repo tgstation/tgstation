@@ -46,16 +46,12 @@
 
 	target.AddElement( \
 		/datum/element/decal, \
-		/*icon*/ 'icons/turf/decals.dmi', \
-		/*icon_state*/ decal_data[DECAL_INFO_ICON_STATE], \
-		/*dir*/ decal_data[DECAL_INFO_DIR], \
-		/*plane*/ null, \
-		/*layer*/ null, \
-		/*alpha*/ decal_data[DECAL_INFO_ALPHA], \
-		/*color*/ decal_data[DECAL_INFO_COLOR], \
-		/*smoothing*/ null, \
-		/*cleanable*/ FALSE, \
-		/*description*/ null, \
+		_icon = 'icons/turf/decals.dmi', \
+		_icon_state = decal_data[DECAL_INFO_ICON_STATE], \
+		_dir = decal_data[DECAL_INFO_DIR], \
+		_alpha = decal_data[DECAL_INFO_ALPHA], \
+		_color = decal_data[DECAL_INFO_COLOR], \
+		_cleanable = FALSE, \
 	)
 
 /obj/item/airlock_painter/decal/proc/set_category(datum/paintable_decal_category/category)
