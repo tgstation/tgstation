@@ -573,6 +573,10 @@
 	name = "evolved stomach"
 	desc = "It can draw nutrients from your food even harder!"
 	icon_state = "stomach-evolved"
+
+	cell_line = list(/datum/micro_organism/cell_line/organs/stomach/evolved = 1)
+	cells_maximum = 1
+
 	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 2.5
 	metabolism_efficiency = 0.08

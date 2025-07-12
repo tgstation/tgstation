@@ -1,4 +1,4 @@
-
+/// Cell lines for organ cytology, letting you duplicate or grow new mutant strains!
 /datum/micro_organism/cell_line/organs
 	desc = "dense tissue"
 	growth_rate = 1
