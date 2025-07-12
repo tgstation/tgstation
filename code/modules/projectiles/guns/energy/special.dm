@@ -413,16 +413,16 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 		w_class = WEIGHT_CLASS_NORMAL
 		ready_to_fire = FALSE
 		icon_state = "tesla"
-		playsound(user, 'sound/items/squeak_latch.ogg', 100)
+		playsound(user, 'sound/items/weapons/gun/tesla/squeak_latch.ogg', 100)
 
 	else
-		playsound(user, 'sound/items/click_creak.ogg', 100)
+		playsound(user, 'sound/items/weapons/gun/tesla/click_creak.ogg', 100)
 		if(!do_after(user, 1.5 SECONDS))
 			return
 		w_class = WEIGHT_CLASS_BULKY
 		ready_to_fire = TRUE
 		icon_state = "tesla_unfolded"
-		playsound(user, 'sound/items/squeak_latch.ogg', 100)
+		playsound(user, 'sound/items/weapons/gun/tesla/squeak_latch.ogg', 100)
 
 	update_appearance()
 	balloon_alert_to_viewers("[ready_to_fire ? "unfolded" : "folded"] stock")
