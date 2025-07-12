@@ -4586,7 +4586,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "bvH" = (
-/obj/item/airlock_painter/decal/tile,
+/obj/item/airlock_painter/decal,
 /obj/item/poster/random_official,
 /obj/structure/disposalpipe/segment{
 	dir = 4
