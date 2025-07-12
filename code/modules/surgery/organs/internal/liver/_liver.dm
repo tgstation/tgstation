@@ -338,9 +338,6 @@
 
 	icon_state = "evolved-liver"
 
-	cell_line = list(/datum/micro_organism/cell_line/organs/liver/evolved = 1)
-	cells_maximum = 1
-
 	alcohol_tolerance = ALCOHOL_RATE * 0.5
 	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 6 //can shrug off up to 6u of toxins
@@ -351,9 +348,6 @@
 	desc = "An extra spongy liver, only slightly better than a normal liver, but with an increased ability to replenish blood."
 
 	icon_state = "leaky-liver"
-
-	cell_line = list(/datum/micro_organism/cell_line/organs/liver/bloody = 1)
-	cells_maximum = 1
 
 	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
 	alcohol_tolerance = ALCOHOL_RATE * 0.8
@@ -372,9 +366,6 @@
 	desc = "The perfect liver, distilling non-alcoholic reagents into alcohol whenever possible."
 
 	icon_state = "liver-distillery"
-
-	cell_line = list(/datum/micro_organism/cell_line/organs/liver/distillery = 1)
-	cells_maximum = 1
 
 	alcohol_tolerance = ALCOHOL_RATE * 0.1
 	/// Volume that is converted per second

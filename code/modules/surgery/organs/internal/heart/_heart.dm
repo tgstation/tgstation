@@ -348,9 +348,6 @@
 
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.2
 
-	cell_line = list(/datum/micro_organism/cell_line/organs/heart/evolved = 1)
-	cells_maximum = 1
-
 	/// Chance to heal per on_life
 	var/healing_probability = 10
 	/// Base healing we receive per tick at 0 damage and for standard versions
@@ -373,9 +370,6 @@
 
 	icon_state = "heart-sacred-on"
 	base_icon_state = "heart-sacred"
-
-	cell_line = list(/datum/micro_organism/cell_line/organs/heart/sacred = 1)
-	cells_maximum = 1
 
 	healing_probability = 5
 	base_healing = 0.5

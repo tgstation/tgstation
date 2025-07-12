@@ -1092,9 +1092,6 @@
 	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 8
 
-	cell_line = list(/datum/micro_organism/cell_line/organs/lungs/evolved = 1)
-	cells_maximum = 1
-
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
 #undef BREATH_RELATIONSHIP_MULTIPLIER
