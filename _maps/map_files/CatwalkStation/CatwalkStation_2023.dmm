@@ -24742,6 +24742,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"hrh" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "hri" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/vending/snackvend,
@@ -74834,6 +74840,14 @@
 /obj/item/grenade/chem_grenade/cleaner,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"wjv" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "wjw" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -104534,7 +104548,7 @@ jhu
 tTO
 tDy
 tDy
-fgH
+wjv
 tTO
 tDy
 bUQ
@@ -107621,7 +107635,7 @@ fXf
 fWY
 bNt
 bUQ
-fgH
+hrh
 tpj
 tTO
 tDy
