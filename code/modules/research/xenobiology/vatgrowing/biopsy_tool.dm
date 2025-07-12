@@ -6,7 +6,7 @@
 	icon_state = "biopsy"
 	worn_icon_state = "biopsy"
 	/// Base icon of the biopsy tool
-	var/base_icon_state = "biopsy"
+	base_icon_state = "biopsy"
 	/// Whether or not we can swab objects
 	var/can_swap_objects = FALSE
 
