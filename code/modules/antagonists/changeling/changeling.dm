@@ -399,6 +399,17 @@
 		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return FALSE
 
+	if((sting_path == /datum/action/changeling/sting/transformation) && (purchased_powers[/datum/action/changeling/sting/false_armblade]))
+		to_chat(owner.current, span_notice("False changeling sting is now available."))
+	else if((sting_path == /datum/action/changeling/sting/false_armblade) && (purchased_powers[/datum/action/changeling/sting/transformation]))
+		to_chat(owner.current, span_notice("False changeling sting is now available."))
+
+	//Pre-requisite power for false ling helper ability
+	if(sting_path == /datum/action/changeling/sting/fake_changeling)
+		if(!(purchased_powers[/datum/action/changeling/sting/transformation]) || !(purchased_powers[/datum/action/changeling/sting/false_armblade]))
+			to_chat(owner.current, span_warning("We lack the pre-requisite abilities to evolve fake changeling sting."))
+			return FALSE
+
 	var/success = give_power(sting_path)
 	if(success)
 		genetic_points -= initial(sting_path.dna_cost)
