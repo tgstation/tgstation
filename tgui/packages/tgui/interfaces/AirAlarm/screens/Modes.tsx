@@ -28,7 +28,7 @@ export function AirAlarmControlModes(props) {
             }
             onClick={() => act('mode', { mode: mode.path })}
           >
-            {mode.name + ' - ' + mode.desc}
+            {`${mode.name} - ${mode.desc}`}
           </Button>
         </Stack.Item>
       ))}

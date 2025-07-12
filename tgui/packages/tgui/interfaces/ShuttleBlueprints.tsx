@@ -460,7 +460,7 @@ const ShuttleConfiguration = () => {
         <Button.Confirm
           disabled={!idle || !isMaster}
           tooltip={
-            'Remove all empty space from the shuttle.' + isMaster
+            `Remove all empty space from the shuttle.${isMaster}`
               ? idle
                 ? '\nThis will delete any areas left without any space, \
               and will decommission the shuttle entirely if there is nothing left of it.'

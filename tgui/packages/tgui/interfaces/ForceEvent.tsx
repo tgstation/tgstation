@@ -168,7 +168,7 @@ function EventSection(props) {
     EVENT_PAGE_ITEMS,
   );
 
-  const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
+  const sectionTitle = searchQuery ? 'Searching...' : `${category.name} Events`;
 
   return (
     <Section scrollable fill title={sectionTitle} buttons={<PanelOptions />}>

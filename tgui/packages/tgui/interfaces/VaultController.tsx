@@ -57,7 +57,7 @@ const VaultList = (props) => {
             bad: [-Infinity, 0.3],
           }}
         >
-          {toFixed(stored / 1000) + ' / ' + toFixed(max / 1000) + ' kW'}
+          {`${toFixed(stored / 1000)} / ${toFixed(max / 1000)} kW`}
         </ProgressBar>
       </LabeledList.Item>
     </LabeledList>

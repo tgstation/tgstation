@@ -68,7 +68,7 @@ export const FishCatalog = (props) => {
               title={
                 currentFish
                   ? capitalize(currentFish.name)
-                  : sponsored_by + ' Fish Index'
+                  : `${sponsored_by} Fish Index`
               }
             >
               {currentFish && (

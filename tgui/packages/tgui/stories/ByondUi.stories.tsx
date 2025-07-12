@@ -37,7 +37,7 @@ function Story() {
             onClick={() =>
               setTimeout(() => {
                 try {
-                  const result = new Function('return (' + code + ')')();
+                  const result = new Function(`return (${code})`)();
                   if (result?.then) {
                     logger.log('Promise');
                     result.then(logger.log);

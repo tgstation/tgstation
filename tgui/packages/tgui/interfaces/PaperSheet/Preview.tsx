@@ -342,7 +342,7 @@ export class PreviewView extends Component<PreviewViewProps> {
 
   // Builds a paper field ID from a number or string.
   createIDHeader = (index: number | string): string => {
-    return 'paperfield_' + index;
+    return `paperfield_${index}`;
   };
 
   // Returns the width the text with the provided attributes would take up in px.

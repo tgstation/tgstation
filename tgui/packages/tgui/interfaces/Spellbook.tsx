@@ -772,7 +772,7 @@ export const Spellbook = (props) => {
               <Stack>
                 <Stack.Item grow>
                   <ProgressBar value={points / 10}>
-                    {points + ' points left to spend.'}
+                    {`${points} points left to spend.`}
                   </ProgressBar>
                 </Stack.Item>
                 <Stack.Item>

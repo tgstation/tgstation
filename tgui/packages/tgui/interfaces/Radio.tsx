@@ -69,7 +69,7 @@ export const Radio = (props) => {
             <LabeledList.Item label="Frequency">
               {(freqlock && (
                 <Box inline color="light-gray">
-                  {toFixed(frequency / 10, 1) + ' kHz'}
+                  {`${toFixed(frequency / 10, 1)} kHz`}
                 </Box>
               )) || (
                 <NumberInput

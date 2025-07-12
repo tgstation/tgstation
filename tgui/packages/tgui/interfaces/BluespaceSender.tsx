@@ -103,7 +103,7 @@ export const BluespaceSender = (props) => {
             </>
           }
         >
-          <Box>{'The vendors have made ' + credits + ' credits so far.'}</Box>
+          <Box>{`The vendors have made ${credits} credits so far.`}</Box>
           <Divider />
           <LabeledList>
             {gases.map((gas, index) => (
@@ -152,7 +152,7 @@ const GasDisplay = (props: GasDisplayProps) => {
           />
         </Stack.Item>
         <Stack.Item color="label" grow={2}>
-          {toFixed(amount, 2) + ' moles'}
+          {`${toFixed(amount, 2)} moles`}
         </Stack.Item>
       </Stack>
     </LabeledList.Item>

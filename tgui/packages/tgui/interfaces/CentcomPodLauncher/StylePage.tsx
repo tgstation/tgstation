@@ -52,7 +52,7 @@ export function StylePage(props) {
           width="45px"
         >
           <Box
-            className={classes(['supplypods64x64', 'pod_asset' + page.id])}
+            className={classes(['supplypods64x64', `pod_asset${page.id}`])}
             style={{
               pointerEvents: 'none',
               transform: 'rotate(45deg) translate(-25%,-10%)',
