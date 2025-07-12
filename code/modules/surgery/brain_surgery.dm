@@ -1,5 +1,7 @@
 /datum/surgery/brain_surgery
 	name = "Brain surgery"
+	organ_to_manipulate = ORGAN_SLOT_BRAIN
+	requires_organ_flags = ORGAN_ORGANIC
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -13,6 +15,7 @@
 /datum/surgery/brain_surgery/mechanic
 	name = "Wetware OS Diagnostics"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
