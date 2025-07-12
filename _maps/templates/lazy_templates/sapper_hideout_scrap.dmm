@@ -1,0 +1,689 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area/space)
+"b" = (
+/obj/structure/fluff/minepost,
+/obj/item/paper,
+/turf/open/misc/asteroid,
+/area/space)
+"c" = (
+/obj/item/fishing_line/reinforced{
+	pixel_y = -9;
+	pixel_x = 8
+	},
+/turf/open/misc/asteroid,
+/area/space)
+"d" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable/layer3,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/space)
+"e" = (
+/turf/open/lava/plasma/air,
+/area/space)
+"f" = (
+/turf/open/floor/iron/smooth,
+/area/space)
+"g" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/space)
+"h" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/space)
+"i" = (
+/obj/structure/frame/machine/secured,
+/obj/item/circuitboard/machine/rtg/advanced,
+/obj/item/stack/cable_coil/five,
+/obj/item/stock_parts/capacitor/quadratic,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
+"j" = (
+/obj/effect/mapping_helpers/wall_dent{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/effect/mapping_helpers/wall_dent,
+/turf/closed/wall,
+/area/space)
+"l" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/misc/asteroid,
+/area/space)
+"o" = (
+/turf/closed/mineral,
+/area/space)
+"p" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
+"q" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/space)
+"r" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/space)
+"s" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
+/turf/open/floor/plating,
+/area/space)
+"t" = (
+/obj/item/trash/flare,
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/asteroid,
+/area/space)
+"u" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/space)
+"v" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder/displaced,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 1
+	},
+/area/space)
+"y" = (
+/obj/item/wallframe/airalarm,
+/obj/item/electronics/airalarm,
+/obj/item/stack/cable_coil/five,
+/turf/open/misc/asteroid,
+/area/space)
+"z" = (
+/obj/structure/cable/layer3,
+/obj/structure/lattice,
+/turf/open/misc/asteroid,
+/area/space)
+"A" = (
+/turf/open/misc/asteroid,
+/area/space)
+"B" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid,
+/area/space)
+"C" = (
+/obj/structure/lattice,
+/turf/open/lava/plasma/air,
+/area/space)
+"D" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder/displaced,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 9
+	},
+/area/space)
+"E" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid,
+/area/space)
+"F" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/cable/layer3,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 4
+	},
+/area/space)
+"H" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/mob_buckler,
+/obj/effect/mob_spawn/corpse/human/skeleton{
+	name = "Boney Corpsman";
+	mob_name = "Boney Corpsman"
+	},
+/obj/item/clothing/head/costume/tmc,
+/turf/open/misc/asteroid,
+/area/space)
+"I" = (
+/turf/closed/wall,
+/area/space)
+"J" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/space)
+"L" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
+	},
+/obj/item/ammo_casing{
+	dir = 5;
+	pixel_y = -6;
+	pixel_x = 4
+	},
+/obj/item/ammo_casing,
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/space)
+"N" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/space)
+"O" = (
+/obj/structure/cable/layer3,
+/turf/open/misc/asteroid,
+/area/space)
+"P" = (
+/obj/structure/girder,
+/obj/item/stack/sheet/iron/five,
+/turf/open/floor/plating,
+/area/space)
+"Q" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid,
+/area/space)
+"R" = (
+/obj/structure/cable,
+/turf/open/floor/plating/foam,
+/area/space)
+"T" = (
+/obj/structure/girder/displaced,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/tgmcemblem,
+/area/space)
+"U" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 5
+	},
+/area/space)
+"V" = (
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -6;
+	pixel_y = -11
+	},
+/obj/item/food/bait/worm,
+/turf/open/misc/asteroid,
+/area/space)
+"W" = (
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/closet/crate/miningcar{
+	anchored = 1
+	},
+/turf/open/misc/asteroid/dug,
+/area/space)
+"X" = (
+/turf/open/floor/plating,
+/area/space)
+"Y" = (
+/obj/structure/cable/layer3,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/space)
+"Z" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/space)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+e
+e
+e
+s
+C
+p
+a
+X
+X
+f
+X
+f
+f
+f
+f
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+R
+R
+R
+R
+R
+R
+a
+o
+Q
+f
+f
+f
+f
+f
+f
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+e
+e
+e
+i
+C
+p
+a
+o
+o
+X
+X
+f
+f
+f
+r
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+o
+Q
+N
+q
+f
+f
+J
+Q
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+A
+V
+B
+o
+a
+o
+o
+I
+h
+q
+z
+O
+O
+Y
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+c
+H
+g
+o
+a
+o
+l
+u
+I
+Z
+d
+o
+Q
+J
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+W
+b
+o
+o
+a
+A
+E
+A
+I
+P
+I
+o
+o
+u
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+A
+o
+o
+o
+a
+t
+B
+A
+A
+A
+A
+A
+E
+A
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+D
+o
+o
+a
+L
+a
+Q
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+v
+o
+T
+a
+j
+a
+y
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+U
+F
+Q
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -431,3 +431,38 @@
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
 
 	GLOB.round_default_lawset = /datum/ai_laws/united_nations
+
+/datum/dynamic_ruleset/roundstart/sapper_gang
+	name = "Sapper Gang"
+	config_tag = "Roundstart Sapper Gang"
+	preview_antag_datum = /datum/antagonist/sapper
+	pref_flag = ROLE_SPACE_SAPPER
+	ruleset_flags = RULESET_INVADER
+	weight = list(
+		DYNAMIC_TIER_LOW = 3,
+		DYNAMIC_TIER_LOWMEDIUM = 1,
+		DYNAMIC_TIER_MEDIUMHIGH = 0,
+		DYNAMIC_TIER_HIGH = 0,
+	)
+//	min_pop = 10
+	min_antag_cap = 2
+	max_antag_cap = 2
+	blacklisted_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+		JOB_CHIEF_ENGINEER,
+	)
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_SAPPER_HIDEOUT)
+	repeatable = FALSE
+
+/datum/dynamic_ruleset/roundstart/sapper_gang/prepare_for_role(datum/mind/candidate)
+	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/space_sapper)
+
+/datum/dynamic_ruleset/roundstart/sapper_gang/create_execute_args()
+	return list(new /datum/team/sapper())
+
+/datum/dynamic_ruleset/roundstart/sapper_gang/assign_role(datum/mind/candidate, datum/team/sapper/team)
+	if(candidate == selected_minds[1])
+		candidate.add_antag_datum(/datum/antagonist/sapper, team)
+	else
+		candidate.add_antag_datum(/datum/antagonist/sapper, team)
