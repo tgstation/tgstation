@@ -8,4 +8,4 @@
 	return assoc_to_keys_features(SSaccessories.caps_list)
 
 /datum/preference/choiced/mushroom_cap/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[/datum/dna_block/feature/mush_cap] = value
+	target.dna.features[FEATURE_MUSH_CAP] = value

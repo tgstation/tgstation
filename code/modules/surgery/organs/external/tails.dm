@@ -7,7 +7,7 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 
-	dna_block = /datum/dna_block/feature/tail
+	dna_block = FEATURE_TAIL
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	// defaults to cat, but the parent type shouldn't be created regardless
@@ -65,7 +65,7 @@
 
 	tail_spines_overlay = new
 	tail_spines_overlay.tail_spine_key = tail_spine_key
-	var/feature_name = bodypart.owner.dna.features[/datum/dna_block/feature/spine] //tail spines don't live in DNA, but share feature names with regular spines
+	var/feature_name = bodypart.owner.dna.features[FEATURE_SPINES] //tail spines don't live in DNA, but share feature names with regular spines
 	tail_spines_overlay.set_appearance_from_name(feature_name)
 	bodypart.add_bodypart_overlay(tail_spines_overlay)
 
@@ -169,7 +169,7 @@
 
 ///Cat tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/cat
-	feature_key = /datum/dna_block/feature/tail
+	feature_key = FEATURE_TAIL
 	color_source = ORGAN_COLOR_HAIR
 
 /datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
@@ -254,11 +254,11 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/lizard
 
 	wag_flags = WAG_ABLE
-	dna_block = /datum/dna_block/feature/tail_lizard
+	dna_block = FEATURE_TAIL_LIZARD
 
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard
-	feature_key = /datum/dna_block/feature/tail_lizard
+	feature_key = FEATURE_TAIL_LIZARD
 
 /datum/bodypart_overlay/mutant/tail/lizard/get_global_feature_list()
 	return SSaccessories.tails_list_lizard

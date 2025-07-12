@@ -6,11 +6,11 @@
 
 	// Test lizards as their own thing so we can get more coverage on their features
 	var/mob/living/carbon/human/lizard = allocate(/mob/living/carbon/human/dummy/consistent)
-	lizard.dna.features[/datum/dna_block/feature/mutant_color] = "#099"
-	lizard.dna.features[/datum/dna_block/feature/tail_lizard] = "Light Tiger"
-	lizard.dna.features[/datum/dna_block/feature/snout] = "Sharp + Light"
-	lizard.dna.features[/datum/dna_block/feature/horn] = "Simple"
-	lizard.dna.features[/datum/dna_block/feature/frill] = "Aquatic"
+	lizard.dna.features[FEATURE_MUTANT_COLOR] = "#099"
+	lizard.dna.features[FEATURE_TAIL_LIZARD] = "Light Tiger"
+	lizard.dna.features[FEATURE_SNOUT] = "Sharp + Light"
+	lizard.dna.features[FEATURE_HORNS] = "Simple"
+	lizard.dna.features[FEATURE_FRILLS] = "Aquatic"
 	lizard.dna.features["legs"] = "Normal Legs"
 	lizard.set_species(/datum/species/lizard)
 	lizard.equipOutfit(/datum/outfit/job/engineer)
@@ -24,9 +24,9 @@
 
 	// let me have this
 	var/mob/living/carbon/human/moth = allocate(/mob/living/carbon/human/dummy/consistent)
-	moth.dna.features[/datum/dna_block/feature/moth_antenna] = "Firewatch"
-	moth.dna.features[/datum/dna_block/feature/moth_marking] = "None"
-	moth.dna.features[/datum/dna_block/feature/moth_wing] = "Firewatch"
+	moth.dna.features[FEATURE_MOTH_ANTENNAE] = "Firewatch"
+	moth.dna.features[FEATURE_MOTH_MARKINGS] = "None"
+	moth.dna.features[FEATURE_MOTH_WINGS] = "Firewatch"
 	moth.set_species(/datum/species/moth)
 	moth.equipOutfit(/datum/outfit/job/cmo, visuals_only = TRUE)
 	test_screenshot("[/datum/species/moth]", get_flat_icon_for_all_directions(moth))
@@ -35,7 +35,7 @@
 	// More in depth test for slimes since they have a lot going on
 	for (var/datum/species/slime_type as anything in typesof(/datum/species/jelly))
 		var/mob/living/carbon/human/slime = allocate(/mob/living/carbon/human/dummy/consistent)
-		slime.dna.features[/datum/dna_block/feature/mutant_color] = COLOR_PINK
+		slime.dna.features[FEATURE_MUTANT_COLOR] = COLOR_PINK
 		slime.hairstyle = "Bob Hair 2"
 		slime.hair_color = COLOR_RED // Should be forced to pink
 		slime.set_species(slime_type)

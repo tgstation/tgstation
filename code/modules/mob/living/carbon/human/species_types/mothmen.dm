@@ -45,7 +45,7 @@
 
 /datum/species/moth/randomize_features()
 	var/list/features = ..()
-	features[/datum/dna_block/feature/moth_marking] = pick(SSaccessories.moth_markings_list)
+	features[FEATURE_MOTH_MARKINGS] = pick(SSaccessories.moth_markings_list)
 	return features
 
 /datum/species/moth/get_scream_sound(mob/living/carbon/human/moth)

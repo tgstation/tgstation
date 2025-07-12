@@ -199,10 +199,10 @@
 
 	podman.gender = blood_gender
 	podman.faction |= factions
-	if(!features[/datum/dna_block/feature/mutant_color])
-		features[/datum/dna_block/feature/mutant_color] = "#59CE00"
-	if(!features[/datum/dna_block/feature/pod_hair])
-		features[/datum/dna_block/feature/pod_hair] = pick(SSaccessories.pod_hair_list)
+	if(!features[FEATURE_MUTANT_COLOR])
+		features[FEATURE_MUTANT_COLOR] = "#59CE00"
+	if(!features[FEATURE_POD_HAIR])
+		features[FEATURE_POD_HAIR] = pick(SSaccessories.pod_hair_list)
 
 	for(var/V in quirks)
 		new V(podman)

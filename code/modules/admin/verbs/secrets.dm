@@ -578,7 +578,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
 
 				if(H.dna.species.id == SPECIES_HUMAN)
-					if(H.dna.features[/datum/dna_block/feature/tail] == "None" || H.dna.features[/datum/dna_block/feature/ears] == "None")
+					if(H.dna.features[FEATURE_TAIL] == "None" || H.dna.features[FEATURE_EARS] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
 						ears.Insert(H, movement_flags = DELETE_IF_REPLACED)

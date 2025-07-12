@@ -133,12 +133,12 @@
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
-	brother1.dna.features[/datum/dna_block/feature/ethereal_color] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.dna.features[FEATURE_ETHEREAL_COLOR] = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
-	brother2.dna.features[/datum/dna_block/feature/moth_antenna] = "Plain"
-	brother2.dna.features[/datum/dna_block/feature/moth_marking] = "None"
-	brother2.dna.features[/datum/dna_block/feature/moth_wing] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_ANTENNAE] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_MARKINGS] = "None"
+	brother2.dna.features[FEATURE_MOTH_WINGS] = "Plain"
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)

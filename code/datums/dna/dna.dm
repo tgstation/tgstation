@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/datum/species/species = new /datum/species/human
 	/// Assoc list of feature keys to their value
 	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
-	var/list/features = list(/datum/dna_block/feature/mutant_color = COLOR_WHITE)
+	var/list/features = list(FEATURE_MUTANT_COLOR = COLOR_WHITE)
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
 	///Stores the real name of the person who originally got this dna datum. Used primarily for changelings
@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			for(var/feature in new_features)
 				features[feature] = new_features[feature]
 
-		features[/datum/dna_block/feature/mutant_color] = "#[random_color()]"
+		features[FEATURE_MUTANT_COLOR] = "#[random_color()]"
 
 	update_dna_identity()
 
@@ -489,42 +489,42 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		var/datum/dna_block/identity/block_to_apply = GLOB.dna_identity_blocks[block_type]
 		block_to_apply.apply_to_mob(src, dna.unique_identity)
 	var/features = dna.unique_features
-	if(dna.features[/datum/dna_block/feature/mutant_color])
-		dna.features[/datum/dna_block/feature/mutant_color] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
-	if(dna.features[/datum/dna_block/feature/ethereal_color])
-		dna.features[/datum/dna_block/feature/ethereal_color] = sanitize_hexcolor(get_uni_feature_block(features, DNA_ETHEREAL_COLOR_BLOCK))
-	if(dna.features[/datum/dna_block/feature/lizard_marking])
-		dna.features[/datum/dna_block/feature/lizard_marking] = SSaccessories.lizard_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_MARKINGS_BLOCK), length(SSaccessories.lizard_markings_list))]
-	if(dna.features[/datum/dna_block/feature/snout])
-		dna.features[/datum/dna_block/feature/snout] = SSaccessories.snouts_list[deconstruct_block(get_uni_feature_block(features, DNA_SNOUT_BLOCK), length(SSaccessories.snouts_list))]
-	if(dna.features[/datum/dna_block/feature/horn])
-		dna.features[/datum/dna_block/feature/horn] = SSaccessories.horns_list[deconstruct_block(get_uni_feature_block(features, DNA_HORNS_BLOCK), length(SSaccessories.horns_list))]
-	if(dna.features[/datum/dna_block/feature/frill])
-		dna.features[/datum/dna_block/feature/frill] = SSaccessories.frills_list[deconstruct_block(get_uni_feature_block(features, DNA_FRILLS_BLOCK), length(SSaccessories.frills_list))]
-	if(dna.features[/datum/dna_block/feature/spine])
-		dna.features[/datum/dna_block/feature/spine] = SSaccessories.spines_list[deconstruct_block(get_uni_feature_block(features, DNA_SPINES_BLOCK), length(SSaccessories.spines_list))]
-	if(dna.features[/datum/dna_block/feature/tail])
-		dna.features[/datum/dna_block/feature/tail] = SSaccessories.tails_list_felinid[deconstruct_block(get_uni_feature_block(features, DNA_TAIL_BLOCK), length(SSaccessories.tails_list_felinid))]
-	if(dna.features[/datum/dna_block/feature/tail_lizard])
-		dna.features[/datum/dna_block/feature/tail_lizard] = SSaccessories.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), length(SSaccessories.tails_list_lizard))]
-	if(dna.features[/datum/dna_block/feature/ears])
-		dna.features[/datum/dna_block/feature/ears] = SSaccessories.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), length(SSaccessories.ears_list))]
-	if(dna.features[/datum/dna_block/feature/moth_wing])
+	if(dna.features[FEATURE_MUTANT_COLOR])
+		dna.features[FEATURE_MUTANT_COLOR] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
+	if(dna.features[FEATURE_ETHEREAL_COLOR])
+		dna.features[FEATURE_ETHEREAL_COLOR] = sanitize_hexcolor(get_uni_feature_block(features, DNA_ETHEREAL_COLOR_BLOCK))
+	if(dna.features[FEATURE_LIZARD_MARKINGS])
+		dna.features[FEATURE_LIZARD_MARKINGS] = SSaccessories.lizard_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_MARKINGS_BLOCK), length(SSaccessories.lizard_markings_list))]
+	if(dna.features[FEATURE_SNOUT])
+		dna.features[FEATURE_SNOUT] = SSaccessories.snouts_list[deconstruct_block(get_uni_feature_block(features, DNA_SNOUT_BLOCK), length(SSaccessories.snouts_list))]
+	if(dna.features[FEATURE_HORNS])
+		dna.features[FEATURE_HORNS] = SSaccessories.horns_list[deconstruct_block(get_uni_feature_block(features, DNA_HORNS_BLOCK), length(SSaccessories.horns_list))]
+	if(dna.features[FEATURE_FRILLS])
+		dna.features[FEATURE_FRILLS] = SSaccessories.frills_list[deconstruct_block(get_uni_feature_block(features, DNA_FRILLS_BLOCK), length(SSaccessories.frills_list))]
+	if(dna.features[FEATURE_SPINES])
+		dna.features[FEATURE_SPINES] = SSaccessories.spines_list[deconstruct_block(get_uni_feature_block(features, DNA_SPINES_BLOCK), length(SSaccessories.spines_list))]
+	if(dna.features[FEATURE_TAIL])
+		dna.features[FEATURE_TAIL] = SSaccessories.tails_list_felinid[deconstruct_block(get_uni_feature_block(features, DNA_TAIL_BLOCK), length(SSaccessories.tails_list_felinid))]
+	if(dna.features[FEATURE_TAIL_LIZARD])
+		dna.features[FEATURE_TAIL_LIZARD] = SSaccessories.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), length(SSaccessories.tails_list_lizard))]
+	if(dna.features[FEATURE_EARS])
+		dna.features[FEATURE_EARS] = SSaccessories.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), length(SSaccessories.ears_list))]
+	if(dna.features[FEATURE_MOTH_WINGS])
 		var/genetic_value = SSaccessories.moth_wings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_WINGS_BLOCK), length(SSaccessories.moth_wings_list))]
 		dna.features["original_moth_wings"] = genetic_value
-		dna.features[/datum/dna_block/feature/moth_wing] = genetic_value
-	if(dna.features[/datum/dna_block/feature/moth_antenna])
+		dna.features[FEATURE_MOTH_WINGS] = genetic_value
+	if(dna.features[FEATURE_MOTH_ANTENNAE])
 		var/genetic_value = SSaccessories.moth_antennae_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_ANTENNAE_BLOCK), length(SSaccessories.moth_antennae_list))]
 		dna.features["original_moth_antennae"] = genetic_value
-		dna.features[/datum/dna_block/feature/moth_antenna] = genetic_value
-	if(dna.features[/datum/dna_block/feature/moth_marking])
-		dna.features[/datum/dna_block/feature/moth_marking] = SSaccessories.moth_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_MARKINGS_BLOCK), length(SSaccessories.moth_markings_list))]
-	if(dna.features[/datum/dna_block/feature/mush_cap])
-		dna.features[/datum/dna_block/feature/mush_cap] = SSaccessories.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), length(SSaccessories.caps_list))]
-	if(dna.features[/datum/dna_block/feature/pod_hair])
-		dna.features[/datum/dna_block/feature/pod_hair] = SSaccessories.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), length(SSaccessories.pod_hair_list))]
-	if(dna.features[/datum/dna_block/feature/tail_fish])
-		dna.features[/datum/dna_block/feature/tail_fish] = SSaccessories.tails_list_fish[deconstruct_block(get_uni_feature_block(features, DNA_FISH_TAIL_BLOCK), length(SSaccessories.tails_list_fish))]
+		dna.features[FEATURE_MOTH_ANTENNAE] = genetic_value
+	if(dna.features[FEATURE_MOTH_MARKINGS])
+		dna.features[FEATURE_MOTH_MARKINGS] = SSaccessories.moth_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_MARKINGS_BLOCK), length(SSaccessories.moth_markings_list))]
+	if(dna.features[FEATURE_MUSH_CAP])
+		dna.features[FEATURE_MUSH_CAP] = SSaccessories.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), length(SSaccessories.caps_list))]
+	if(dna.features[FEATURE_POD_HAIR])
+		dna.features[FEATURE_POD_HAIR] = SSaccessories.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), length(SSaccessories.pod_hair_list))]
+	if(dna.features[FEATURE_TAIL_FISH])
+		dna.features[FEATURE_TAIL_FISH] = SSaccessories.tails_list_fish[deconstruct_block(get_uni_feature_block(features, DNA_FISH_TAIL_BLOCK), length(SSaccessories.tails_list_fish))]
 
 	for(var/obj/item/organ/organ in organs)
 		organ.mutate_feature(features, src)
