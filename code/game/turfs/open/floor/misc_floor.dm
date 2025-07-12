@@ -301,6 +301,36 @@
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
 
+/turf/open/floor/stone/rainworld
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+	name = "stone brick floor"
+	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
+		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
+		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
+		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
+		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
+		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
+	icon_state = "stone_floor"
+
+/turf/open/floor/fairy
+	name = "fairygrass patch"
+	desc = "Something about this grass makes you want to frolic. Or get high."
+	icon_state = "fairygrass"
+	light_range = 2
+	light_power = 0.80
+	light_color = COLOR_BLUE_LIGHT
+
+/turf/open/floor/fairy/rainworld
+	planetary_atmos = TRUE
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+
+/turf/open/floor/temple
+	icon = 'icons/turf/walls/temple.dmi'
+	name = "temple floor"
+	desc = "Eyes up. Doors and corners, kid, that's where they get ya."
+	icon_state = "temple_floor"
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+
 /turf/open/floor/vault
 	name = "strange floor"
 	desc = "You feel a strange nostalgia from looking at this..."

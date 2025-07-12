@@ -17,6 +17,7 @@
 		"mod_storage",
 		"mod_plasma",
 		"mod_flashlight",
+		"mod_diving",
 	)
 
 /datum/techweb_node/mod_equip
