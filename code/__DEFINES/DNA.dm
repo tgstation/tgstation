@@ -57,7 +57,7 @@
 #define FEATURE_MUTANT_COLOR "mcolor"
 #define FEATURE_ETHEREAL_COLOR "ethcolor"
 #define FEATURE_EARS "ears"
-#define FEATURE_TAIL "tail"
+#define FEATURE_TAIL "cat_tail"
 #define FEATURE_TAIL_LIZARD "tail_lizard"
 #define FEATURE_TAIL_FISH "tail_fish"
 #define FEATURE_SNOUT "snout"
