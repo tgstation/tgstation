@@ -3,7 +3,7 @@
 // Modular Computer - A machinery that is mostly just a host to the Modular Computer item.
 /obj/machinery/modular_computer
 	name = "modular computer"
-	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
+	desc = "The frame of an advanced computer" //This should only show up when building a computer, it should examine the processor instead
 	icon = 'icons/obj/machines/modular_console.dmi'
 	icon_state = "console"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.025
