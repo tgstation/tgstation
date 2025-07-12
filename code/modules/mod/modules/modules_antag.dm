@@ -140,8 +140,6 @@
 	var/charge_recovery = 1
 	/// Whether or not this shield can lose multiple charges.
 	var/lose_multiple_charges = FALSE
-	/// The item path to recharge this shielkd.
-	var/recharge_path = null
 	/// The icon file of the shield.
 	var/shield_icon_file = 'icons/effects/effects.dmi'
 	/// The icon_state of the shield.
@@ -154,8 +152,16 @@
 	charges = max_charges
 
 /obj/item/mod/module/energy_shield/on_part_activation()
-	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
+	mod.AddComponent(\
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		starting_charges = charges, \
+		shield_icon_file = shield_icon_file, \
+		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_part_deactivation(deleting = FALSE)
@@ -188,12 +194,9 @@
 	icon_state = "battlemage_shield"
 	idle_power_cost = 0 //magic
 	use_energy_cost = 0 //magic too
-	max_charges = 15
-	recharge_start_delay = 0 SECONDS
-	charge_recovery = 8
+	max_charges = 5
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
-	recharge_path = /obj/item/wizard_armour_charge
 	required_slots = list()
 
 ///Magic Nullifier - Protects you from magic.

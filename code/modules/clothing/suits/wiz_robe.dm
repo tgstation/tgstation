@@ -299,11 +299,3 @@
 	stickman.faction |= summoner.faction - FACTION_NEUTRAL //These bad boys shouldn't inherit the neutral faction from the crew
 
 	COOLDOWN_START(src, summoning_cooldown, 3 SECONDS)
-
-
-// The actual code for this is handled in the shielded component, see [/datum/component/shielded/proc/check_recharge_rune]
-/obj/item/wizard_armour_charge
-	name = "battlemage shield charges"
-	desc = "A powerful rune that will increase the number of hits a suit of battlemage armour can take before failing.."
-	icon = 'icons/effects/anomalies.dmi'
-	icon_state = "flux"

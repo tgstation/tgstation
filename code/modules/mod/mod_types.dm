@@ -396,6 +396,10 @@
 		/obj/item/mod/module/energy_shield/wizard,
 		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/noslip,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/rad_protection,
+		/obj/item/mod/module/eradication_lock,
 	)
 
 /obj/item/mod/control/pre_equipped/ninja
