@@ -47,6 +47,8 @@
 
 /// Blocks for unique features (mutant color, mutant bodyparts)
 /datum/dna_block/feature
+	/// The feature key this block ties in to.
+	var/feature_key = null
 
 /datum/dna_block/feature/position_in_hash()
 	return GLOB.total_uf_len_by_block[type]

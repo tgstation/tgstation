@@ -173,7 +173,7 @@
 			consumer.dna.features = list(
 				/datum/dna_block/feature/mutant_color = "#A02720",
 				/datum/dna_block/feature/tail_lizard = "Dark Tiger",
-				"tail_human" = "None",
+				/datum/dna_block/feature/tail = "None",
 				/datum/dna_block/feature/snout = "Sharp",
 				/datum/dna_block/feature/horn = "Curled",
 				/datum/dna_block/feature/ears = "None",

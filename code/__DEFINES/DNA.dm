@@ -44,12 +44,35 @@
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
-
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
+
+//Features - No more magic strings
+//These can't just simply use dna block paths like identities, because there's keys that aren't tied to blocks
+
+// Block tied
+#define FEATURE_MUTANT_COLOR "mcolor"
+#define FEATURE_ETHEREAL_COLOR "ethcolor"
+#define FEATURE_EARS "ears"
+#define FEATURE_TAIL "tail"
+#define FEATURE_TAIL_LIZARD "tail_lizard"
+#define FEATURE_TAIL_FISH "tail_fish"
+#define FEATURE_SNOUT "snout"
+#define FEATURE_LIZARD_MARKINGS "marking_lizard"
+#define FEATURE_HORNS "horns"
+#define FEATURE_FRILLS "frills"
+#define FEATURE_SPINES "spines"
+#define FEATURE_MOTH_WINGS "moth_wings"
+#define FEATURE_MOTH_ANTENNAE "moth_antennae"
+#define FEATURE_MOTH_MARKINGS "moth_markings"
+#define FEATURE_MUSH_CAP "mush_cap"
+#define FEATURE_POD_HAIR "podhair"
+
+// Other
+
 
 ///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
 #define COPY_DNA_SE (1<<0)
