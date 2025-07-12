@@ -126,6 +126,8 @@
 	resistance_flags = FLAMMABLE
 	/// How bloody is this rag?
 	var/blood_level = 0
+	/// How many times has this rag been wrung out since last clean?
+	var/wrings = 0
 
 /obj/item/rag/Initialize(mapload)
 	. = ..()
@@ -154,9 +156,10 @@
 		return
 
 	balloon_alert(user, "wringing out...")
-	if(!do_after(user, 2 SECONDS, src))
+	if(!do_after(user, (wrings + 2) * 1 SECONDS, src))
 		return
 
+	wrings += 1
 	blood_level *= 0.75
 
 /obj/item/rag/pickup(mob/user)
@@ -215,6 +218,7 @@
 	. = ..()
 	if(!(clean_types & CLEAN_TYPE_BLOOD))
 		return
+	wrings = 0
 	if(blood_level)
 		blood_level = 0
 		update_appearance()
