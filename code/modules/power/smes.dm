@@ -313,10 +313,15 @@
 		to_chat(user, span_alert("No power terminal found."))
 
 /obj/machinery/power/smes/cable_layer_act(mob/living/user, obj/item/tool)
-	if(!QDELETED(terminal))
-		balloon_alert(user, "cut the terminal first!")
+	if(!panel_open)
+		balloon_alert(user, "open panel first!")
 		return ITEM_INTERACT_BLOCKING
 	return ..()
+
+/obj/machinery/power/smes/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(. == ITEM_INTERACT_SUCCESS)
+		connect_to_network()
 
 ///Returns the charge level this smes is at 0->5 for display purposes
 /obj/machinery/power/smes/proc/chargedisplay()
