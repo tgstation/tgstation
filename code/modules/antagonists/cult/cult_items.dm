@@ -813,7 +813,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
-	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
+	desc = "Used by savvy cultists to instantly transport equipment into the hands of their needful brethren."
 	w_class = WEIGHT_CLASS_SMALL
 	light_range = 1
 	icon_state = "torch"
@@ -864,6 +864,7 @@ Striking a noncultist, however, will tear their flesh."}
 		but through the torch's flames you see that [interacting_with] has reached [cultist_to_receive]!"))
 	user.log_message("teleported [interacting_with] to [cultist_to_receive] with [src].", LOG_GAME)
 	cultist_to_receive.put_in_hands(interacting_with)
+	to_chat(cultist_to_receive, span_notice("A fellow cultist has teleported [interacting_with] to you via Void Torch!"))
 	charges--
 	to_chat(user, span_notice("[src] now has [charges] charge\s."))
 	if(charges <= 0)
