@@ -52,7 +52,7 @@
  */
 /datum/heretic_knowledge/proc/pre_research(mob/user, datum/antagonist/heretic/our_heretic)
 	// consider moving this check to a type instead
-	if(is_final_knowledge)
+	if(is_final_knowledge && !HAS_TRAIT(user, TRAIT_UNLIMITED_BLADES))
 		var/choice = tgui_alert(user, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this? The blade cap will also be removed.", "Get Final Spell?", list("Yes", "No"))
 		if(choice != "Yes")
 			return FALSE
@@ -624,7 +624,7 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
-	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE])
+	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.researched_knowledge[type][HKT_ROUTE])
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [gameTimestamp()].")
 	notify_ghosts(
 		"[user.real_name] has completed an ascension ritual!",
