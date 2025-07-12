@@ -1,0 +1,8 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - balance: "Nukie Chemistry section, now includes a proper chemistry locker with pill bottles medigels and big beakers"
+  - balance: "Nukie Chemistry section, now has a extra section attached to it that holds some limited amount chemistry materials and a empty bombcase."
+  - balance: "Nukie Chemistry section, now has various sizes of beakers, a special chemical payload that can hold up to 5 beakers, and a hand labeler to tag your stuff with"
+  - map: "Nukie Chemistry section, now has a smartfridge"
+  - map: "Nukie xenobiology section widened and added a fully upgraded slime proccesor"
