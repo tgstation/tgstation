@@ -838,10 +838,23 @@
 /datum/reagent/consumable/ethanol/moonshine
 	name = "Moonshine"
 	description = "You've really hit rock bottom now... your liver packed its bags and left last night."
-	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha) (like water)
-	boozepwr = 95
-	taste_description = "bitterness"
+	color = "#fff4c37e"
+	boozepwr = 120
+	taste_description = "white lightning"
+	quality = DRINK_NICE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/moonshine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+
+	if(prob(10)) //prob to make it more spiky and prevent a constant microdrip of methanol
+		drinker.reagents.add_reagent(/datum/reagent/impurity/methanol, metabolization_rate * (1 - purity))
+
+	if(HAS_TRAIT(drinker, TRAIT_ROUGHRIDER) || drinker.mind?.get_skill_level(/datum/skill/mining) > SKILL_LEVEL_APPRENTICE) //No fancy city folk, they can try healin from their latte crapuccino and leaf salads or whatever they be eatin over there
+		var/need_mob_update
+		need_mob_update = drinker.adjustBruteLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += drinker.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/b52
 	name = "B-52"
