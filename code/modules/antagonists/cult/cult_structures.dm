@@ -176,6 +176,7 @@
 		cultitem.name = item
 		cultitem.info = span_cult_italic(options[item][RADIAL_DESC])
 		cultitem.image = options[item][PREVIEW_IMAGE]
+		cultitem.tooltip_theme = "cult"
 		choices[item] = cultitem
 
 	var/picked_choice = show_radial_menu(
