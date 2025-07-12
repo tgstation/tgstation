@@ -94,7 +94,7 @@
 	if (!istype(tool, /obj/item/reagent_containers/cup) || istype(tool, /obj/item/rag))
 		return NONE
 
-	if (!lazy_init_reagents())
+	if (!lazy_init_reagents()?.total_volume)
 		to_chat(user, span_notice("[src] isn't thick enough to scoop up!"))
 		return ITEM_INTERACT_BLOCKING
 
