@@ -32,6 +32,8 @@
 
 /// Gets the block string from the hash inserted
 /datum/dna_block/proc/get_block(from_hash)
+	if(isnull(from_hash))
+		CRASH("Null hash provided for getting dna block string")
 	var/block_pos = position_in_hash()
 	return copytext(from_hash, block_pos, block_pos + block_length)
 
