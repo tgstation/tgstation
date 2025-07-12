@@ -401,6 +401,6 @@
 
 /// We don't block magic if it would kill our heart
 /obj/item/organ/heart/evolved/sacred/proc/check_block()
-	if(damage <= damage_per_block)
+	if(maxHealth - damage <= damage_per_block)
 		return FALSE
 	return TRUE

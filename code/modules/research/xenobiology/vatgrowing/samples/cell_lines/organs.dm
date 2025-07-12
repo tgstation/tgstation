@@ -24,20 +24,19 @@
 	)
 
 	suppressive_reagents = list(
-		/datum/reagent/mutagen = -2,
+		/datum/reagent/toxin/mutagen = -2,
 	)
 
 	resulting_atom = /obj/item/organ/heart
 
 /datum/micro_organism/cell_line/organs/heart/evolved
 	desc = "dense evolved heart tissue"
-	growth_rate = parent_type::growth_rate * 0.5
 
 	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue)
 
 	supplementary_reagents = list(
 		/datum/reagent/love = 6,
-		/datum/reagent/mutagen = 4,
+		/datum/reagent/toxin/mutagen = 4,
 		/datum/reagent/blood = 3,
 		/datum/reagent/consumable/nutriment = 1,
 	)
@@ -70,7 +69,7 @@
 	)
 
 	suppressive_reagents = list(
-		/datum/reagent/water/holywater = -2,
+		/datum/reagent/water/holywater = -3,
 	)
 
 	resulting_atom = /obj/item/organ/heart/corrupt
@@ -87,7 +86,7 @@
 	)
 
 	suppressive_reagents = list(
-		/datum/reagent/mutagen = -2,
+		/datum/reagent/toxin/mutagen = -2,
 	)
 
 	resulting_atom = /obj/item/organ/lungs
@@ -99,7 +98,7 @@
 
 	supplementary_reagents = list(
 		/datum/reagent/medicine/salbutamol = 6,
-		/datum/reagent/mutagen = 4,
+		/datum/reagent/toxin/mutagen = 4,
 		/datum/reagent/blood = 3,
 		/datum/reagent/consumable/nutriment = 1,
 	)
@@ -118,7 +117,7 @@
 	)
 
 	suppressive_reagents = list(
-		/datum/reagent/mutagen = -2,
+		/datum/reagent/toxin/mutagen = -2,
 	)
 
 	resulting_atom = /obj/item/organ/liver
@@ -130,7 +129,7 @@
 
 	supplementary_reagents = list(
 		/datum/reagent/iron = 6,
-		/datum/reagent/mutagen = 4,
+		/datum/reagent/toxin/mutagen = 4,
 		/datum/reagent/blood = 3,
 		/datum/reagent/consumable/nutriment = 1,
 	)
@@ -178,7 +177,7 @@
 	)
 
 	suppressive_reagents = list(
-		/datum/reagent/mutagen = -2,
+		/datum/reagent/toxin/mutagen = -2,
 	)
 
 	resulting_atom = /obj/item/organ/stomach
@@ -189,7 +188,7 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining)
 
 	supplementary_reagents = list(
-		/datum/reagent/mutagen = 4,
+		/datum/reagent/toxin/mutagen = 4,
 		/datum/reagent/consumable/nutriment/organ_tissue = 3,
 		/datum/reagent/consumable/nutriment = 3,
 		/datum/reagent/blood = 3,
