@@ -63,7 +63,7 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
             material={material}
             SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             onEjectRequested={(quantity) =>
-              onEjectRequested && onEjectRequested(material, quantity)
+              onEjectRequested?.(material, quantity)
             }
           />
         </Flex.Item>

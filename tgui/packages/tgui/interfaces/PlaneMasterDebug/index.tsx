@@ -522,7 +522,6 @@ export function PlaneMasterDebug() {
         planeOpen,
         setPlaneOpen,
         planesProcessed,
-        act,
       }}
     >
       <Window

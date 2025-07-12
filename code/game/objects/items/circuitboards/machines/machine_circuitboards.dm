@@ -363,7 +363,7 @@
 	name = "portable SMES"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	needs_anchored = FALSE
-	build_path = /obj/machinery/power/smesbank
+	build_path = /obj/machinery/smesbank
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/power_store/battery = 5,)
@@ -715,6 +715,7 @@
 	build_path = typepath
 	name = "[vending_names_paths[build_path]] Vendor"
 	req_components = list(initial(typepath.refill_canister) = 1)
+	flatpack_components = list(initial(typepath.refill_canister))
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
 	for(var/typepath in vending_names_paths)

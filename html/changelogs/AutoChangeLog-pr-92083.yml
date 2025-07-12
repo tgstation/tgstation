@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "You don't get nutrition from biting yourself"
+  - rscdel: "When punching (or biting) yourself, you can't hit the bodypart you're attacking with (ie, right arm punch can't hit your own right arm)"

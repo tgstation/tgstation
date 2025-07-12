@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "stock blocks created via GMM have the correct export value every time & won't apply price elasticity"

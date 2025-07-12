@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "SMES has examines and screentips for various stuff"
+  - code_imp: "Improved code of SMES in general"
+  - bugfix: "smes can be connected to the powernet with a multitool with the panel open after construction"
+  - refactor: "SMES now functions consistently with its power cells & the RPED."

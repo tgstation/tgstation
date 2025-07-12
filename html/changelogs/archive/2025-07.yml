@@ -249,3 +249,77 @@
       The middle dorm room was squished by 1 tile. The ladder in the dorms top/bottom
       area was slightly shifted. One of the top dorm rooms had a single tile of reinforced
       wall that was hidden behind a poster that has been fixed to be regular.
+2025-07-11:
+  Aliceee2ch:
+  - bugfix: Mechs now take a fixed amount of damage if the simplemob "charge" ability
+      was used on them.
+2025-07-12:
+  00-Steven:
+  - refactor: Refactored xenobio console item interaction and click code. Please report
+      any issues!
+  - bugfix: When using the xenobio console, you no longer examine slimes/turfs when
+      trying to deposit or pick up slimes.
+  - bugfix: Xenobio consoles properly check whether the turf they're interacting with
+      is visible to cameras when deciding whether to block interaction, rather than
+      whether the turf of the remote control eye itself is obscured by static.
+  - bugfix: Using a xenobio console and ctrl-clicking on a tile with dead monkeys
+      on it without a connected monkey recycler no longer runtimes.
+  - bugfix: Destroying a monkey recycler that was once linked to a xenobio console
+      but no longer is no longer disconnects the currently linked monkey recycler
+      from those xenobio consoles.
+  - bugfix: Multiple monkey recyclers mapped into the same xenobiology area no longer
+      enter a weird state of half-connection with the mapped in xenobio consoles.
+  - qol: Adds screentips to the xenobio console's item interactions.
+  - qol: More xenobio console item or click interactions have balloon alert feedback.
+  BobDABuilder9001:
+  - qol: slimes at 0% mutation chance stay at 0% upon splitting
+  Jacquerel, Smartkar, sprites by Kryson:
+  - rscadd: Added "platforms", or "half-walls" which are a kind of decorative block
+      similar to tables which you can walk around on.
+  - rscadd: You can walk freely between tables, platforms, and crates that happen
+      to be near tables or platforms.
+  - rscadd: You can construct iron steps to traverse tables and platforms without
+      needing to climb on, but try not to trip over them.
+  Kubisopplay:
+  - balance: Adds a upper limit for malf ai points, currently at 400
+  - balance: Increases hacked apc power draw to 2 kW
+  - bugfix: Fixed bugged malf ai module descriptions
+  LemonInTheDark:
+  - bugfix: Hitting lit things with the light_eater will no longer sometimes cause
+      them to stay stuck, lit
+  Melbert:
+  - balance: HARS cannot spawn as an innate gene - it will only show up in scrambled
+      DNA (such as from the DNA console)
+  - rscadd: Anti-cannabis mutation
+  - qol: Cult's music stinger is only played on first attempt at scribing a Nar'sie
+      rune, following attempts will use the sound for red alert.
+  OnlineGirlfriend:
+  - rscadd: double rainbow poster
+  SmArtKar:
+  - bugfix: Refunded holoparasite injectors no longer still spawn their holopara
+  - bugfix: Fixed broken text when refunding uplink purchases
+  - bugfix: Fixed fake windows looking like grilles
+  - bugfix: Pets no longer instantly resist out of your grip when picked up
+  - bugfix: Fixed inverted chainsaw swing animations
+  - bugfix: Fixed lizard blood bloodpacks being red instead of green
+  - refactor: Refactored blood packs
+  - bugfix: Fulton packs can no longer be used to enter/escape bitrunning domains
+  SyncIt21:
+  - bugfix: flatpack machine shows correct names for custom components
+  - bugfix: correct args gets passed to machine `Initialize()` proc when constructed
+      from machine frames & flatpack boxes
+  - qol: flatpacker now accepts custom component parts(like vendor refill canister)
+      along with the circuit board so you can carry over your previous stock during
+      deployment rather than starting out empty
+  - bugfix: flatpack boxes now passes its stored circuit board into the machine thus
+      preserving its properties instead of creating a default board in the machine
+  - bugfix: vending machines reconstructed on station from circuits loaded off station(having
+      free products) will continue to sell free products
+  - code_imp: machine construction via flatpacker/machine frame is faster performance
+      wise
+  - bugfix: ordering materials from the GMM won't result in empty crates & will display
+      detailed feedback if there weren't enough sheets in the market
+  - bugfix: material sheets show their proper amounts on crate manifests
+  TealSeer:
+  - bugfix: fixed shattering glass sheets on the floor not dropping a shard if the
+      stack only had 1

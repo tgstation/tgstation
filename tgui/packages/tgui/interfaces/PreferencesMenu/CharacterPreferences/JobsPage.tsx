@@ -191,8 +191,7 @@ function JobRow(props: JobRowProps) {
 
   const createSetPriority = createCreateSetPriorityFromName(name);
 
-  const experienceNeeded =
-    data.job_required_experience && data.job_required_experience[name];
+  const experienceNeeded = data.job_required_experience?.[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
   let rightSide: ReactNode;
