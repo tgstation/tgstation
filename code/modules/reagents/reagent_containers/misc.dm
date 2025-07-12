@@ -148,6 +148,17 @@
 		if(10 to INFINITY)
 			. += span_warning("This [name] is filthy! I couldn't clean a thing with it!")
 
+/obj/item/rag/interact(mob/user)
+	. = ..()
+	if(loc != user || blood_level <= 4)
+		return
+
+	balloon_alert(user, "wringing out...")
+	if(!do_after(user, 2 SECONDS, src))
+		return
+
+	blood_level *= 0.75
+
 /obj/item/rag/pickup(mob/user)
 	. = ..()
 	if(prob(5 * blood_level))
