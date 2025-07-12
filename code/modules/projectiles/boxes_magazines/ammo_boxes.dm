@@ -34,13 +34,26 @@
 	name = "speed loader (.38)"
 	desc = "Designed to quickly reload revolvers."
 	icon_state = "38"
+	base_icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	caliber = CALIBER_38
 	multiple_sprites = AMMO_BOX_PER_BULLET
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	ammo_band_icon = "+38_ammo_band"
 	ammo_band_color = null
+
+/obj/item/ammo_box/c38/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-base"
+
+/obj/item/ammo_box/c38/update_overlays()
+	. = ..()
+	if(!LAZYLEN(stored_ammo))
+		return
+	for(var/inserted_ammo in 1 to stored_ammo.len)
+		var/obj/item/ammo_casing/c38/boolet = stored_ammo[inserted_ammo]
+		. += "38-[boolet::lead_or_laser]-[inserted_ammo]"
 
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
@@ -83,6 +96,12 @@
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = COLOR_AMMO_ICEBLOX
+
+/obj/item/ammo_box/c38/flare
+	name = "speed loader (.38 Flare)"
+	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
+	ammo_type = /obj/item/ammo_casing/c38/flare
+	ammo_band_color = COLOR_AMMO_HELLFIRE
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"

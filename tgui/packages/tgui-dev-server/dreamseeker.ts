@@ -7,7 +7,7 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
 import { createLogger } from './logging';
 

@@ -10,7 +10,7 @@ import {
   sortByDisplayName,
 } from './helpers';
 import { OrbitItem } from './OrbitItem';
-import { Observable } from './types';
+import type { Observable } from './types';
 
 type Props = {
   color?: string;

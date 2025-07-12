@@ -1,6 +1,6 @@
 import { inspect } from 'node:util';
 
-import { ServerWebSocket } from 'bun';
+import type { ServerWebSocket } from 'bun';
 
 import { createLogger, directLog } from '../logging';
 import { retrace } from './retrace';

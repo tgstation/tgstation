@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Store } from 'common/redux';
+import type { Store } from 'common/redux';
 import { storage } from 'common/storage';
 import DOMPurify from 'dompurify';
 
