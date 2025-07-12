@@ -97,7 +97,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(bodypart_overlay)
 		setup_bodypart_overlay()
 
-	if(cell_line && organ_flags & ORGAN_ORGANIC)
+	if(cell_line && (organ_flags & ORGAN_ORGANIC))
 		AddElement(/datum/element/swabable, cell_line, cell_line_amount = rand(cells_minimum, cells_maximum))
 
 	START_PROCESSING(SSobj, src)

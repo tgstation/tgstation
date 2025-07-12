@@ -41,7 +41,7 @@
 		inventory_flags = ALL,
 		datum/callback/drain_antimagic,
 		datum/callback/expiration,
-		datum/callback/check_blocking
+		datum/callback/check_blocking,
 	)
 
 

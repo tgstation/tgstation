@@ -217,11 +217,12 @@
 	desc = "All the tools you need to grow organs at home! Besides letting you grow standard organs from tissue samples, \
 	you might find mutant cells which can be further proliferated to grow strange properties."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/machinery/vatgrower/small/unanchored,
-					/obj/item/biopsy_tool/organ,
-					/obj/item/storage/box/petridish,
-					/obj/structure/microscope/unanchored,
-					/obj/item/reagent_containers/cup/mortar,
-					/obj/item/pestle,
-				)
+	contains = list(
+		/obj/machinery/vatgrower/small/unanchored,
+		/obj/item/biopsy_tool/organ,
+		/obj/item/storage/box/petridish,
+		/obj/structure/microscope/unanchored,
+		/obj/item/reagent_containers/cup/mortar,
+		/obj/item/pestle,
+	)
 	crate_name = "organ growing kit"
