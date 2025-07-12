@@ -68,13 +68,14 @@
 #define FEATURE_MOTH_WINGS "moth_wings"
 #define FEATURE_MOTH_ANTENNAE "moth_antennae"
 #define FEATURE_MOTH_MARKINGS "moth_markings"
-#define FEATURE_MUSH_CAP "mush_cap"
-#define FEATURE_POD_HAIR "podhair"
+#define FEATURE_MUSH_CAP "caps"
+#define FEATURE_POD_HAIR "pod_hair"
 
 // Other
 #define FEATURE_WINGS "wings"
 #define FEATURE_TAIL_MONKEY "tail_monkey"
 #define FEATURE_TAIL_XENO "tail_xeno"
+#define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails
 #define FEATURE_LEGS "legs"
 
 ///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
