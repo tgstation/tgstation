@@ -17386,8 +17386,8 @@
 /area/station/science/research)
 "ggl" = (
 /obj/machinery/camera/autoname/directional/west,
-/obj/structure/water_source/puddle,
-/turf/open/floor/grass,
+/obj/structure/flora/grass/jungle,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "ggu" = (
 /obj/machinery/door/airlock/public/glass{
@@ -25966,6 +25966,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
+"jgP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/storage/toolbox/fishing,
+/obj/item/storage/toolbox/fishing,
+/obj/item/fishing_rod,
+/obj/item/fishing_rod,
+/turf/open/floor/iron/large,
+/area/station/service/hydroponics/garden)
 "jha" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -29094,6 +29103,9 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"khC" = (
+/turf/open/water/no_planet_atmos/deep,
+/area/station/service/hydroponics/garden)
 "khJ" = (
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "gib5-old"
@@ -33526,7 +33538,7 @@
 /area/station/engineering/main)
 "lFZ" = (
 /mob/living/basic/axolotl,
-/turf/open/floor/grass,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "lGe" = (
 /obj/effect/turf_decal/stripes/line{
@@ -34016,6 +34028,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry/minisat)
+"lPO" = (
+/obj/structure/window/spawner/directional/east,
+/obj/structure/flora/bush/lavendergrass,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "lPV" = (
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
@@ -48706,6 +48723,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"qXA" = (
+/turf/open/water/no_planet_atmos,
+/area/station/service/hydroponics/garden)
 "qXB" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/security_all,
@@ -54498,6 +54518,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"sOf" = (
+/obj/machinery/light/warm/directional/south,
+/obj/structure/flora/grass/jungle,
+/turf/open/water/no_planet_atmos,
+/area/station/service/hydroponics/garden)
 "sOj" = (
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -90311,8 +90336,8 @@ tIH
 tIH
 iuv
 ggl
-tIH
-tIH
+khC
+khC
 kAg
 afW
 wUc
@@ -90567,9 +90592,9 @@ ckn
 wnj
 tIH
 mWf
-tIH
+qXA
 lFZ
-sWn
+sOf
 kAg
 uZx
 sRH
@@ -90824,7 +90849,7 @@ nvD
 pNa
 nvD
 oQk
-nvD
+lPO
 fRv
 nvD
 kAg
@@ -91855,7 +91880,7 @@ kAg
 auo
 fvg
 rDs
-agu
+jgP
 nMT
 kYB
 sGk
