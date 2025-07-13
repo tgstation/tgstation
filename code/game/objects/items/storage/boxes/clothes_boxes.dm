@@ -254,6 +254,9 @@
 	var/obj/item/collar_bomb_button/button = new(src)
 	new /obj/item/clothing/neck/collar_bomb(src, button)
 
+/obj/item/storage/box/collar_bomb/security
+	desc = "Contains a bomb collar and its associated button."
+
 /obj/item/storage/box/itemset/crusader/blue/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)

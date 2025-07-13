@@ -391,3 +391,13 @@
 		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno,
 	)
 	crate_name = "thermal cannons crate"
+
+/datum/supply_pack/security/collar_bombs
+	name = "Collar Bombs Crate"
+	desc = "Contains three collar bombs with their associated boxes, along with a spare."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(
+		/obj/item/clothing/neck/collar_bomb = 1,
+		/obj/item/storage/box/collar_bomb/security = 3,
+	)
+	crate_name = "collar bombs crate"
