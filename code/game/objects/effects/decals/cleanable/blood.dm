@@ -517,7 +517,7 @@
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 	update_appearance(UPDATE_OVERLAYS)
 
-/// Don't override our reagents with out bloodtype ones, if bloodtypes want unique reagents they need to do it themselves (like oil)
+/// Don't override our reagents with our bloodtype ones, if bloodtypes want unique reagents they need to do it themselves (like oil)
 /obj/effect/decal/cleanable/blood/gibs/lazy_init_reagents()
 	if (reagents)
 		return reagents
