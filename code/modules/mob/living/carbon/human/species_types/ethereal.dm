@@ -182,17 +182,16 @@
 		rangemult = 1
 		refresh_light_color(ethereal)
 		return
-	if(flare)
-		powermult = 0.5
-		rangemult = 0.75
-		refresh_light_color(ethereal)
-		start_flicker(ethereal, duration = 1.5 SECONDS, min = 1, max = 2)
-		sleep(1.5 SECONDS)
-		powermult = 1
-		rangemult = 1
-		EMPeffect = TRUE
-		to_chat(ethereal, span_warning("Your shine flickers and fades."))
-		addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
+	powermult = 0.5
+	rangemult = 0.75
+	refresh_light_color(ethereal)
+	start_flicker(ethereal, duration = 1.5 SECONDS, min = 1, max = 2)
+	sleep(1.5 SECONDS)
+	powermult = 1
+	rangemult = 1
+	EMPeffect = TRUE
+	to_chat(ethereal, span_warning("Your shine flickers and fades."))
+	addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 
 /datum/species/ethereal/proc/start_flicker(mob/living/carbon/human/ethereal, duration = 6 SECONDS, min = 1, max = 4)
