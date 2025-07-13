@@ -151,6 +151,7 @@
 /obj/machinery/power/smes/proc/total_charge()
 	PROTECTED_PROC(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_BE_PURE(TRUE)
 
 	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 		. += power_cell.charge()
@@ -394,7 +395,7 @@
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
 /obj/machinery/power/smes/proc/restore()
-	if(machine_stat & BROKEN)
+	if(!is_operational)
 		return
 
 	if(!outputting)
