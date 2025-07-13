@@ -455,6 +455,11 @@
 	tastes = list("chicken" = 1)
 	starting_reagent_purity = 1
 
+/obj/item/food/meat/slab/chicken/burn()
+	visible_message(span_notice("[src] finishes cooking!"))
+	new /obj/item/food/meat/steak/chicken(loc)
+	qdel(src)
+
 /obj/item/food/meat/slab/chicken/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
@@ -574,6 +579,7 @@
 /obj/item/food/meat/steak/chicken
 	name = "chicken steak" //Can you have chicken steaks? Maybe this should be renamed once it gets new sprites.
 	icon_state = "birdsteak"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	tastes = list("chicken" = 1)
 
 /obj/item/food/meat/steak/plain/human/lizard
