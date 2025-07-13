@@ -39,7 +39,7 @@
 
 	var/current_color
 	var/default_color
-	var/EMPeffect = FALSE
+	var/disrupted = FALSE
 	var/emageffect = FALSE
 	var/powermult = 1
 	var/rangemult = 1
@@ -90,7 +90,7 @@
 	SIGNAL_HANDLER
 	if(isnull(ethereal_light))
 		return
-	if(ethereal.stat != DEAD && !EMPeffect)
+	if(ethereal.stat != DEAD && !disrupted)
 		var/healthpercent = max(ethereal.health, 0) / 100
 		if(!emageffect)
 			var/static/list/skin_color = rgb2num("#eda495")
@@ -189,7 +189,7 @@
 	sleep(1.5 SECONDS)
 	powermult = 1
 	rangemult = 1
-	EMPeffect = TRUE
+	disrupted = TRUE
 	to_chat(ethereal, span_warning("Your shine flickers and fades."))
 	addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
@@ -200,8 +200,8 @@
 	addtimer(CALLBACK(src, PROC_REF(stop_flicker), ethereal), duration)
 
 /datum/species/ethereal/proc/handle_flicker(mob/living/carbon/human/ethereal, flickmin = 1, flickmax = 4)
-	if(!flickering || EMPeffect)
-		if(!EMPeffect)
+	if(!flickering || disrupted)
+		if(!disrupted)
 			ethereal_light.set_light_on(TRUE)
 			return
 		else
