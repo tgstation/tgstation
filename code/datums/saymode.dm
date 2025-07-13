@@ -98,7 +98,7 @@
 	message_range,
 	list/message_mods = list()
 )
-	user.alien_talk(message, message_mods)
+	user.alien_talk(message, spans, message_mods)
 	return SAYMODE_MESSAGE_HANDLED
 
 
@@ -147,9 +147,9 @@
 )
 	if(isdrone(user))
 		var/mob/living/basic/drone/drone_user = user
-		drone_user.drone_chat(message, message_mods)
+		drone_user.drone_chat(message, spans, message_mods)
 	else if(user.binarycheck())
-		user.robot_talk(message, message_mods)
+		user.robot_talk(message, spans, message_mods)
 	return SAYMODE_MESSAGE_HANDLED
 
 
