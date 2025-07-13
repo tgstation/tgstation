@@ -184,12 +184,12 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 				return TRUE
 			var/list/tiers = list()
 			for(var/datum/dynamic_tier/tier as anything in subtypesof(/datum/dynamic_tier))
-				tiers[initial(tier.name)] = tier
-			var/datum/dynamic_tier/picked = tgui_input_list(ui.user, "Pick a dynamic tier before the game starts", "Pick tier", tiers, ui_state = ADMIN_STATE(R_ADMIN))
+				tiers[tier::config_tag] = tier
+			var/picked = tgui_input_list(ui.user, "Pick a dynamic tier before the game starts", "Pick tier", tiers, ui_state = ADMIN_STATE(R_ADMIN))
 			if(picked && !SSticker.HasRoundStarted())
 				SSdynamic.set_tier(tiers[picked])
-				message_admins("[key_name_admin(ui.user)] set the dynamic tier to [initial(picked.tier)].")
-				log_admin("[key_name_admin(ui.user)] set the dynamic tier to [initial(picked.tier)].")
+				message_admins("[key_name_admin(ui.user)] set the dynamic tier to [picked].")
+				log_admin("[key_name_admin(ui.user)] set the dynamic tier to [picked].")
 			return TRUE
 		if("max_light_chance")
 			SSdynamic.admin_forcing_next_light = !SSdynamic.admin_forcing_next_light
