@@ -44,6 +44,7 @@
 	var/powermult = 1
 	var/rangemult = 1
 	var/flickering = FALSE
+	var/currently_flickered
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 
 /datum/species/ethereal/Destroy(force)
@@ -101,7 +102,15 @@
 			current_color = rgb(built_color[1], built_color[2], built_color[3])
 
 		ethereal_light.set_light_range_power_color((1 + (2 * healthpercent)) * rangemult, (1 + (1 * healthpercent) * powermult), current_color)
-		ethereal_light.set_light_on(TRUE)
+		if(flickering)
+			if(currently_flickered)
+				ethereal_light.set_light_on(FALSE)
+			else
+				ethereal_light.set_light_on(TRUE)
+		else
+			if(currently_flickered)
+				currently_flickered = FALSE
+			ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
 		ethereal.update_body()
 		ethereal.set_facial_haircolor(current_color, override = TRUE, update = FALSE)
@@ -200,22 +209,20 @@
 	addtimer(CALLBACK(src, PROC_REF(stop_flicker), ethereal), duration)
 
 /datum/species/ethereal/proc/handle_flicker(mob/living/carbon/human/ethereal, flickmin = 1, flickmax = 4)
-	if(!flickering || disrupted)
-		if(!disrupted)
-			ethereal_light.set_light_on(TRUE)
-			return
-		else
-			return
-	if(ethereal_light.light_on)
-		ethereal_light.set_light_on(FALSE)
+	if(!flickering)
+		currently_flickered = FALSE
+		refresh_light_color(ethereal)
+		return
+	if(currently_flickered)
+		currently_flickered = FALSE
 	else
-		ethereal_light.set_light_on(TRUE)
+		currently_flickered = TRUE
+	refresh_light_color(ethereal)
 	addtimer(CALLBACK(src, PROC_REF(handle_flicker), ethereal), rand(1, 4))
 
 /datum/species/ethereal/proc/stop_flicker(mob/living/carbon/human/ethereal)
 	flickering = FALSE
-	if(!disrupted)
-		ethereal_light.set_light_on(TRUE)
+	currently_flickered = FALSE
 
 /datum/species/ethereal/get_features()
 	var/list/features = ..()
