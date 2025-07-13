@@ -18,7 +18,6 @@
  * message - The message to be said.
  * spans - A list of spans to attach to the message.
  * language - The language the message was said in.
- * message_range - The range of the message.
  * message_mods - A list of message modifiers, i.e. whispering/singing.
  */
 /datum/saymode/proc/handle_message(
@@ -26,7 +25,6 @@
 	message,
 	list/spans = list(),
 	datum/language/language,
-	message_range,
 	list/message_mods = list()
 )
 	return NONE
@@ -55,7 +53,6 @@
 	message,
 	list/spans = list(),
 	datum/language/language,
-	message_range,
 	list/message_mods = list()
 )
 	var/datum/antagonist/changeling/ling_sender = IS_CHANGELING(user)
@@ -95,7 +92,6 @@
 	message,
 	list/spans = list(),
 	datum/language/language,
-	message_range,
 	list/message_mods = list()
 )
 	user.alien_talk(message, spans, message_mods)
@@ -116,7 +112,6 @@
 	message,
 	list/spans = list(),
 	datum/language/language,
-	message_range,
 	list/message_mods = list()
 )
 	var/mob/living/carbon/carbon_user = user
@@ -142,7 +137,6 @@
 	message,
 	list/spans = list(),
 	datum/language/language,
-	message_range,
 	list/message_mods = list()
 )
 	if(isdrone(user))
@@ -168,9 +162,8 @@
 	message,
 	list/spans = list(),
 	datum/language/language,
-	message_range,
 	list/message_mods = list()
 )
 	var/mob/living/silicon/ai/ai_user = user
-	ai_user.holopad_talk(message, spans, language, message_range, message_mods)
+	ai_user.holopad_talk(message, spans, language, message_mods)
 	return SAYMODE_MESSAGE_HANDLED
