@@ -118,6 +118,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 	limited_discount_stock = 4
 
 /datum/uplink_item/explosives/syndicate_bomb/New()
