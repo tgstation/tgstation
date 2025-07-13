@@ -682,6 +682,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that determines whether our mob gains more strength from drinking during a fist fight
 #define TRAIT_DRUNKEN_BRAWLER "drunken brawler"
 
+/// Trait that ensures that a shot with a projectile always lands exactly where it was aimed at. Or the head.alist
+#define TRAIT_DESIGNATED_TARGET "designated_target"
+
+/// Trait that makes you bite when attacking with an unarmed strike.
+#define TRAIT_FERAL_BITER "feral biter"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -1530,4 +1536,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
 #define TRAIT_UNCOVERED_TURF "uncovered_turf"
+
+///Attached to objects currently on tables and such, allowing them to walk on other objects without the climbing delay
+#define TRAIT_ON_CLIMBABLE "on_climbable"
+
+/// Trait that allows mobs to perform surgery on themselves
+#define TRAIT_SELF_SURGERY "self_surgery"
+
 // END TRAIT DEFINES

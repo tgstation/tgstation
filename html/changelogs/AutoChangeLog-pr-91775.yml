@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "portable grav gen effects can't be moved by tram"
-  - code_imp: "portable grav gen effects are actually a subtype of effect now"
