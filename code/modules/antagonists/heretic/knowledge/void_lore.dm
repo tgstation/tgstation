@@ -107,7 +107,8 @@
 	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/void
-	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave. \
+	name = "Hollow Weave"
+	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave, this armor will periodicall nullify attacks and grant you a short stealth camo to reposition yourself. \
 			Acts as a focus while hooded."
 	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
 				Thousands of almost imperceivable threads cling to my form. \

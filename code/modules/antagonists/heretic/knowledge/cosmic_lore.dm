@@ -92,7 +92,7 @@
 
 /datum/heretic_knowledge/armor/cosmic
 
-	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of plasma to create a Starwoven Cloak. \
+	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of plasma to create a Starwoven Cloak, grants protection from the hazards of space while granting to the user the ability to levitate at will. \
 			Acts as a focus while hooded."
 	gain_text = "Like radiant cords, the stars shone in union across the silken shape of a billowing cloak, that at once does and does not drape my shoulders. \
 				The eyes of the Beast rested upon me, and through me."

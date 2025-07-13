@@ -223,7 +223,7 @@
 
 /datum/heretic_knowledge/armor/flesh
 	desc = "Allows you to transmute a table (or a suit), a mask and a pool of blood to create a writhing embrace. \
-		It grants you camoflage from cameras, hides your identity, voice and muffles your footsteps. \
+		It grants you the ability to detect the health condition of other living (and non-living) and an aura that slowly heals your summons. \
 		Acts as a focus while hooded."
 	gain_text = "I tugged these wretched, slothing things about me, like one might a warm blanket. \
 				With eyes-not-mine, they will witness. With teeth-not-mine, they will clench. With limbs-not-mine, they will break."

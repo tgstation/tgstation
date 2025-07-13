@@ -117,7 +117,7 @@
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/armor/moon
-	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of iron to create a Resplendant Regalia. \
+	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of iron to create a Resplendant Regalia, this robe will render the user   fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and render him unable to use ranged weapons (Moon blade will bypass pacifism). \
 			Acts as a focus while hooded."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
 				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
