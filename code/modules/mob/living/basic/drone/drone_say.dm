@@ -24,8 +24,8 @@
 		to_chat(
 			drone,
 			msg,
-			type = MESSAGE_TYPE_RADIO
-			avoid_highlighting = (drone == source)
+			type = MESSAGE_TYPE_RADIO,
+			avoid_highlighting = (drone == source),
 		)
 
 
