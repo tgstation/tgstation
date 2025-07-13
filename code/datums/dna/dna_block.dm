@@ -10,10 +10,23 @@
 	/// The length of this block when converted to ascii
 	var/block_length = DNA_BLOCK_SIZE
 
-/// Used to generate a unique block from the target.
+/// Returns the unique block created from target. To be used for external calls.
+///
+/// Does extra checks to make sure target is valid before calling the internal
+/// `create_unique_block`, don't override this.
 /datum/dna_block/proc/unique_block(mob/living/carbon/human/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!ishuman(target))
 		CRASH("Non-human mobs shouldn't have DNA")
+	return create_unique_block(target)
+
+/// Actually creates the unique block from the inputted target.
+/// Not used outside of the type, see `unique_block` instead.
+///
+/// Children should always override this.
+/datum/dna_block/proc/create_unique_block(mob/living/carbon/human/target)
+	PROTECTED_PROC(TRUE)
+	return null
 
 /// The position of this block's string in its hash type
 /datum/dna_block/proc/position_in_hash()

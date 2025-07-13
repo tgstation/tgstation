@@ -1,7 +1,6 @@
 /datum/dna_block/identity/gender
 
-/datum/dna_block/identity/gender/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/gender/create_unique_block(mob/living/carbon/human/target)
 	//ignores TRAIT_AGENDER so that a "real" gender can be stored in the DNA if later use is needed
 	switch(target.gender)
 		if(MALE)
@@ -31,8 +30,7 @@
 
 /datum/dna_block/identity/skin_tone
 
-/datum/dna_block/identity/skin_tone/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/skin_tone/create_unique_block(mob/living/carbon/human/target)
 	return construct_block(GLOB.skin_tones.Find(target.skin_tone), GLOB.skin_tones.len)
 
 /datum/dna_block/identity/skin_tone/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -42,8 +40,7 @@
 /datum/dna_block/identity/eye_colors
 	block_length = DNA_BLOCK_SIZE_COLOR * 2 // Left eye color, then right eye color
 
-/datum/dna_block/identity/eye_colors/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/eye_colors/create_unique_block(mob/living/carbon/human/target)
 	var/left = sanitize_hexcolor(target.eye_color_left, include_crunch = FALSE)
 	var/right = sanitize_hexcolor(target.eye_color_right, include_crunch = FALSE)
 	return left + right
@@ -55,8 +52,7 @@
 
 /datum/dna_block/identity/hair_style
 
-/datum/dna_block/identity/hair_style/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/hair_style/create_unique_block(mob/living/carbon/human/target)
 	return construct_block(SSaccessories.hairstyles_list.Find(target.hairstyle), length(SSaccessories.hairstyles_list))
 
 /datum/dna_block/identity/hair_style/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -69,8 +65,7 @@
 /datum/dna_block/identity/hair_color
 	block_length = DNA_BLOCK_SIZE_COLOR
 
-/datum/dna_block/identity/hair_color/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/hair_color/create_unique_block(mob/living/carbon/human/target)
 	return sanitize_hexcolor(target.hair_color, include_crunch = FALSE)
 
 /datum/dna_block/identity/hair_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -78,8 +73,7 @@
 
 /datum/dna_block/identity/facial_style
 
-/datum/dna_block/identity/facial_style/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/facial_style/create_unique_block(mob/living/carbon/human/target)
 	return construct_block(SSaccessories.facial_hairstyles_list.Find(target.facial_hairstyle), length(SSaccessories.facial_hairstyles_list))
 
 /datum/dna_block/identity/facial_style/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -92,8 +86,7 @@
 /datum/dna_block/identity/facial_color
 	block_length = DNA_BLOCK_SIZE_COLOR
 
-/datum/dna_block/identity/facial_color/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/facial_color/create_unique_block(mob/living/carbon/human/target)
 	return sanitize_hexcolor(target.facial_hair_color, include_crunch = FALSE)
 
 /datum/dna_block/identity/facial_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -101,8 +94,7 @@
 
 /datum/dna_block/identity/hair_gradient
 
-/datum/dna_block/identity/hair_gradient/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/hair_gradient/create_unique_block(mob/living/carbon/human/target)
 	return construct_block(SSaccessories.hair_gradients_list.Find(target.grad_style[GRADIENT_HAIR_KEY]), length(SSaccessories.hair_gradients_list))
 
 /datum/dna_block/identity/hair_gradient/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -112,8 +104,7 @@
 /datum/dna_block/identity/hair_gradient_color
 	block_length = DNA_BLOCK_SIZE_COLOR
 
-/datum/dna_block/identity/hair_gradient_color/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/hair_gradient_color/create_unique_block(mob/living/carbon/human/target)
 	return sanitize_hexcolor(target.grad_color[GRADIENT_HAIR_KEY], include_crunch = FALSE)
 
 /datum/dna_block/identity/hair_gradient_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -121,8 +112,7 @@
 
 /datum/dna_block/identity/facial_gradient
 
-/datum/dna_block/identity/facial_gradient/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/facial_gradient/create_unique_block(mob/living/carbon/human/target)
 	return construct_block(SSaccessories.facial_hair_gradients_list.Find(target.grad_style[GRADIENT_FACIAL_HAIR_KEY]), length(SSaccessories.facial_hair_gradients_list))
 
 /datum/dna_block/identity/facial_gradient/apply_to_mob(mob/living/carbon/human/target, dna_hash)
@@ -132,8 +122,7 @@
 /datum/dna_block/identity/facial_gradient_color
 	block_length = DNA_BLOCK_SIZE_COLOR
 
-/datum/dna_block/identity/facial_gradient_color/unique_block(mob/living/carbon/human/target)
-	. = ..()
+/datum/dna_block/identity/facial_gradient_color/create_unique_block(mob/living/carbon/human/target)
 	return sanitize_hexcolor(target.grad_color[GRADIENT_FACIAL_HAIR_KEY], include_crunch = FALSE)
 
 /datum/dna_block/identity/facial_gradient_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)

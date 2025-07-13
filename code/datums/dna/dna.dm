@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(standard_mutation_sources, list(MUTATION_SOURCE_ACTIVATED, MUTA
 /proc/populate_total_ui_len_by_block()
 	. = list()
 	var/total_block_len = 1
-	for(var/block_path as anything in GLOB.dna_identity_blocks)
+	for(var/block_path in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_path]
 		.[block_path] += total_block_len
 		total_block_len += block.block_length
@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /proc/populate_total_uf_len_by_block()
 	. = list()
 	var/total_block_len = 1
-	for(var/block_path as anything in GLOB.dna_feature_blocks)
+	for(var/block_path in GLOB.dna_feature_blocks)
 		var/datum/dna_block/feature/block = GLOB.dna_feature_blocks[block_path]
 		.[block_path] += total_block_len
 		total_block_len += block.block_length
@@ -185,13 +185,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /datum/dna/proc/generate_unique_identity()
 	. = ""
-	for(var/block_type as anything in GLOB.dna_identity_blocks)
+	for(var/block_type in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_type]
 		. += block.unique_block(holder)
 
 /datum/dna/proc/generate_unique_features()
 	. = ""
-	for(var/block_type as anything in GLOB.dna_feature_blocks)
+	for(var/block_type in GLOB.dna_feature_blocks)
 		var/datum/dna_block/feature/block = GLOB.dna_feature_blocks[block_type]
 		if(isnull(features[block.feature_key]))
 			. += random_string(block.block_length, GLOB.hex_characters)
@@ -492,11 +492,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
 	. = ..()
-	for(var/block_type as anything in GLOB.dna_identity_blocks)
+	for(var/block_type in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block_to_apply = GLOB.dna_identity_blocks[block_type]
 		block_to_apply.apply_to_mob(src, dna.unique_identity)
 
-	for(var/block_type as anything in GLOB.dna_feature_blocks)
+	for(var/block_type in GLOB.dna_feature_blocks)
 		var/datum/dna_block/feature/block_to_apply = GLOB.dna_feature_blocks[block_type]
 		if(dna.features[block_to_apply.feature_key])
 			block_to_apply.apply_to_mob(src, dna.unique_features)
@@ -657,12 +657,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				M.dna.generate_dna_blocks()
 		M.domutcheck()
 	if(ui)
-		for(var/block_id as anything in GLOB.dna_identity_blocks)
+		for(var/block_id in GLOB.dna_identity_blocks)
 			var/datum/dna_block/identity/block = GLOB.dna_identity_blocks[block_id]
 			if(prob(probability))
 				M.dna.unique_identity = block.modified_hash(M.dna.unique_identity, random_string(block.block_length, GLOB.hex_characters))
 	if(uf)
-		for(var/block_id as anything in GLOB.dna_feature_blocks)
+		for(var/block_id in GLOB.dna_feature_blocks)
 			var/datum/dna_block/feature/block = GLOB.dna_feature_blocks[block_id]
 			if(prob(probability))
 				M.dna.unique_identity = block.modified_hash(M.dna.unique_identity, random_string(block.block_length, GLOB.hex_characters))
