@@ -79,6 +79,7 @@
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MAGICALLY_GIFTED, INNATE_TRAIT)
 	set_light(4, l_color = "#dcaa5b")
 	INVOKE_ASYNC(src, PROC_REF(beg_for_ghost))
 	RegisterSignal(src, COMSIG_MOB_GHOSTIZED, PROC_REF(beg_for_ghost))
@@ -157,6 +158,7 @@
 	cooldown_time = 30 SECONDS
 	invocation = "SH''P D' W''P"
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
 	/// list of turfs we are hitting while shooting our beam
 	var/list/turf/targets
 	/// The laser beam we generate
