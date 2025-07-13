@@ -9,18 +9,24 @@
  * * exact_faction_match - Passed to [/mob/proc/faction_check_atom]
  */
 /proc/_alert_drones(msg, dead_can_hear = FALSE, atom/source, mob/living/faction_checked_mob, exact_faction_match)
-	if (dead_can_hear && source)
-		for (var/mob/dead_mob in GLOB.dead_mob_list)
+	if(dead_can_hear && source)
+		for(var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, source)
 			to_chat(dead_mob, "[link] [msg]")
 	for(var/global_drone in GLOB.drones_list)
 		var/mob/living/basic/drone/drone = global_drone
-		if(istype(drone) && drone.stat != DEAD)
-			if(faction_checked_mob)
-				if(drone.faction_check_atom(faction_checked_mob, exact_faction_match))
-					to_chat(drone, msg)
-			else
-				to_chat(drone, msg)
+		if(!istype(drone))
+			continue
+		if(drone.stat == DEAD)
+			continue
+		if(faction_checked_mob && !drone.faction_check_atom(faction_checked_mob, exact_faction_match))
+			continue
+		to_chat(
+			drone,
+			msg,
+			type = MESSAGE_TYPE_RADIO
+			avoid_highlighting = (drone == source)
+		)
 
 
 
