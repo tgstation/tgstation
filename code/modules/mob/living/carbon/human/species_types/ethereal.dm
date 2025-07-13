@@ -118,7 +118,7 @@
 	SIGNAL_HANDLER
 	if(protection & EMP_PROTECT_SELF)
 		return
-	EMPeffect = TRUE
+	disrupted = TRUE
 	refresh_light_color(source)
 	to_chat(source, span_notice("You feel the light of your body leave you."))
 	switch(severity)
@@ -128,7 +128,7 @@
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), source), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
 /datum/species/ethereal/proc/hit_by_saboteur(mob/living/carbon/human/source, disrupt_duration)
-	EMPeffect = TRUE
+	disrupted = TRUE
 	refresh_light_color(source)
 	to_chat(source, span_warning("Something inside of you crackles in a bad way."))
 	source.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
@@ -154,7 +154,7 @@
 	return COMPONENT_BLOCK_LIGHT_EATER
 
 /datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/ethereal)
-	EMPeffect = FALSE
+	disrupted = FALSE
 	refresh_light_color(ethereal)
 	to_chat(ethereal, span_notice("You feel more energized as your shine comes back."))
 
@@ -214,7 +214,7 @@
 
 /datum/species/ethereal/proc/stop_flicker(mob/living/carbon/human/ethereal)
 	flickering = FALSE
-	if(!EMPeffect)
+	if(!disrupted)
 		ethereal_light.set_light_on(TRUE)
 
 /datum/species/ethereal/get_features()
