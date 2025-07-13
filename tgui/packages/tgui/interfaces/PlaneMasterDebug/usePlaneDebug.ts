@@ -1,6 +1,11 @@
-import { createContext, Dispatch, SetStateAction, useContext } from 'react';
+import {
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+} from 'react';
 
-import { PlaneHighlight, PlaneMap } from './types';
+import type { PlaneHighlight, PlaneMap } from './types';
 
 type PlaneDebug = {
   connectionHighlight: PlaneHighlight | undefined;
@@ -14,7 +19,6 @@ type PlaneDebug = {
   planeOpen: boolean;
   setPlaneOpen: Dispatch<SetStateAction<boolean>>;
   planesProcessed: PlaneMap;
-  act: Function;
 };
 
 export const PlaneDebugContext = createContext({} as PlaneDebug);

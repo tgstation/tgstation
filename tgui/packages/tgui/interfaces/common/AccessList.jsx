@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { Button, Flex, Section, Tabs } from 'tgui-core/components';
 
 import { useSharedState } from '../../backend';
@@ -248,13 +248,12 @@ const RegionAccessList = (props) => {
   const selectedAccess = accesses.find(
     (access) => access.name === selectedAccessName,
   );
-  const selectedAccessEntries = sortBy(
-    selectedAccess?.accesses || [],
+  const selectedAccessEntries = sortBy(selectedAccess?.accesses || [], [
     (entry) => entry.desc,
-  );
+  ]);
 
   const allWildcards = Object.keys(wildcardSlots);
-  let wcAccess = {};
+  const wcAccess = {};
   allWildcards.forEach((wildcard) => {
     wildcardSlots[wildcard].usage.forEach((access) => {
       wcAccess[access] = wildcard;

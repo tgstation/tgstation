@@ -24,3 +24,7 @@
 ///from /datum/status_effect/slime_leech: (mob/living/basic/slime/draining_slime)
 #define COMSIG_SLIME_DRAINED "slime_drained"
 
+/// from /mob/living/basic/mutate(): (mob/living/basic/mutated_mob)
+#define COMSIG_BASICMOB_MUTATED "basicmob_mutated"
+	///cancel further mutation modifications to the mob such as shiny mutation.
+	#define MUTATED_NO_FURTHER_MUTATIONS (1 << 0)

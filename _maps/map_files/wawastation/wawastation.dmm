@@ -52186,8 +52186,6 @@
 /area/station/science/robotics/lab)
 "saY" = (
 /obj/structure/table/wood,
-/obj/item/clothing/gloves/maid,
-/obj/item/clothing/neck/maid,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)

@@ -31217,6 +31217,10 @@
 /obj/machinery/firealarm/directional/south,
 /obj/item/radio/headset/headset_medsci{
 	pixel_x = 16;
+	pixel_y = 3
+	},
+/obj/item/radio/headset/headset_medsci{
+	pixel_x = 16;
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
@@ -55056,7 +55060,6 @@
 /area/station/cargo/bitrunning/den)
 "pBI" = (
 /obj/machinery/power/smes{
-	capacity = 1.8e+008;
 	charge = 2e+005
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
