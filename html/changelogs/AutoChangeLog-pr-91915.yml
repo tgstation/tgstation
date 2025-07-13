@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored the decal painter, report any missing decals or ones that come out weird."
-  - rscdel: "Tile sprayer is dead. Its functionality has been merged with the decal painter."
-  - qol: "A bunch of decals have been added to the decal painter. Style to your heart's content."

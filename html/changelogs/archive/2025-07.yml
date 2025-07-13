@@ -323,3 +323,51 @@
   TealSeer:
   - bugfix: fixed shattering glass sheets on the floor not dropping a shard if the
       stack only had 1
+2025-07-13:
+  Ezel:
+  - balance: Nukie Chemistry section, now includes a proper chemistry locker with
+      pill bottles medigels and big beakers
+  - balance: Nukie Chemistry section, now has a extra section attached to it that
+      holds some limited amount chemistry materials and a empty bombcase.
+  - balance: Nukie Chemistry section, now has various sizes of beakers, a special
+      chemical payload that can hold up to 5 beakers, and a hand labeler to tag your
+      stuff with
+  - map: Nukie Chemistry section, now has a smartfridge
+  - map: Nukie xenobiology section widened and added a fully upgraded slime proccesor
+  Kurgis:
+  - map: Catwalk Science has gotten a minor clean-up of Robotics' Surgery area.
+  - map: Adds destination taggers to various disposal bins on Catwalk where appropriate.
+  - bugfix: 'Catwalk Station: exosuit fabricators no longer print in the wrong direction,
+      removal of a stray airlock in Xenobiology, Security department now has their
+      missing delivery tag set properly for disposal mail, and adds a missing wall
+      near medical virology hallway.'
+  Melbert:
+  - bugfix: Cult spell action buttons have their unique tooltip style again
+  - qol: Radial tooltips can now have unique styles
+  - qol: Radial "info" buttons now have tooltips with the info text, meaning you don't
+      have to click on the button and read chat
+  - qol: Altars, Archives, and Forges now have a ? explaining what the items do
+  - refactor: Refactored the decal painter, report any missing decals or ones that
+      come out weird.
+  - rscdel: Tile sprayer is dead. Its functionality has been merged with the decal
+      painter.
+  - qol: A bunch of decals have been added to the decal painter. Style to your heart's
+      content.
+  - rscdel: You don't get nutrition from biting yourself
+  - rscdel: When punching (or biting) yourself, you can't hit the bodypart you're
+      attacking with (ie, right arm punch can't hit your own right arm)
+  Mothblocks:
+  - rscadd: You can now see inside closets you're in, and interact with yourself inside.
+  SmArtKar:
+  - bugfix: Fixed BPM setting on synth circuit interface not doing anything
+  - bugfix: Cult banned or DNRed players no longer can become constructs
+  SyncIt21:
+  - bugfix: stock blocks created via GMM have the correct export value every time
+      & won't apply price elasticity
+  - qol: SMES has examines and screentips for various stuff
+  - code_imp: Improved code of SMES in general
+  - bugfix: smes can be connected to the powernet with a multitool with the panel
+      open after construction
+  - refactor: SMES now functions consistently with its power cells & the RPED.
+  carpotoxin:
+  - bugfix: fixed the 'note_path' var of the 'airlock_note_placer' mapping helper
