@@ -101,7 +101,6 @@ GLOBAL_LIST(heretic_research_tree)
 
 /// ID's are not unique, the same knowledge with the same type in the same shop will always have the same ID.
 /datum/antagonist/heretic/proc/make_knowledge_id(datum/heretic_knowledge/knowledge, shop_category = HERETIC_KNOWLEDGE_TREE)
-	// This is used to generate the knowledge ID for the heretic research tree
 	var/type_string = replacetext("[knowledge::type]", "/", "", 1, 2)
 	var/our_type = replacetext(type_string, "/", "_")
 	return "[shop_category]/[our_type]"
