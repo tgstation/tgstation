@@ -253,8 +253,8 @@
 
 /datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
-	desc = "We inject the target with a powerful hallucinogen causing them to see others as a random nearby passerby."
-	helptext = "The target does not notice they have been stung."
+	desc = "We inject the target with a powerful hallucinogen causing them to see others as a random nearby passerby. Costs 10 chemicals."
+	helptext = "The target does not notice they have been stung and will begin hallucinating after 5 seconds for 20 seconds."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
@@ -262,19 +262,22 @@
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	..()
 	log_combat(user, target, "stung", "LSD sting")
-	var/mob/random_guy = pick(oviewers(8, user))
-	target.cause_hallucination(\
-		/datum/hallucination/delusion/changeling, \
-		"[user.name]", \
-		duration = 20 SECONDS, \
-		affects_us = FALSE, \
-		affects_others = TRUE, \
-		skip_nearby = FALSE, \
-		play_wabbajack = FALSE, \
-		passed_appearance = random_guy.appearance, \
-	)
+	addtimer(CALLBACK(src, PROC_REF(begin_hallucination), target), 5 SECONDS)
 
 	return TRUE
+/datum/action/changeling/sting/lsd/begin_hallucination(mob/living/carbon/target)
+	var/mob/living/carbon/reference_hallucination = pick(view(8 ,target))
+
+		target.cause_hallucination(\
+			/datum/hallucination/delusion/changeling, \
+			"[user.name]", \
+			duration = 20 SECONDS, \
+			affects_us = FALSE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+			play_wabbajack = FALSE, \
+			passed_appearance = random_guy.appearance, \
+		)
 
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"
