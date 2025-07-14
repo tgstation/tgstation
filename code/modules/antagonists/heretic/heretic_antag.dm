@@ -30,12 +30,12 @@
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 
-	/// Contains multiple separate heretic shops so you can choose between multiple when buying. Tree contains all knowledges.
+	/// Contains multiple separate heretic shops so you can choose between multiple when buying.
 	var/list/heretic_shops = list(
+		HERETIC_KNOWLEDGE_START = list(),
 		HERETIC_KNOWLEDGE_TREE = list(),
 		HERETIC_KNOWLEDGE_SHOP = list(),
-		HERETIC_KNOWLEDGE_DRAFT = list(),
-		HERETIC_KNOWLEDGE_START = list()
+		HERETIC_KNOWLEDGE_DRAFT = list()
 	)
 
 	/// Whether we give this antagonist objectives on gain.
@@ -203,16 +203,17 @@
 
 	// TODO: sanity for purchasing categories as bypasses are likely rn
 	var/list/heretic_tree = heretic_shops[HERETIC_KNOWLEDGE_TREE]
-	var/list/tree_researchable = get_researchable_knowledge(list(HERETIC_KNOWLEDGE_START, HERETIC_KNOWLEDGE_TREE))
-	for(var/datum/heretic_knowledge/knowledge as anything in heretic_tree)
-		if(ispath(knowledge, /datum/heretic_knowledge/limited_amount/starting))
+	var/list/researchable_knowledges = get_researchable_knowledge()
+	for(var/datum/heretic_knowledge/knowledge_path as anything in heretic_tree)
+		if(ispath(knowledge_path, /datum/heretic_knowledge/limited_amount/starting))
 			continue
-		if(!(knowledge in tree_researchable))
+		var/list/knowledge_info = heretic_tree[knowledge_path]
+		if(!(knowledge_info[HKT_ID] in researchable_knowledges))
 			continue
-		var/list/knowledge_data = get_knowledge_data(knowledge, heretic_tree, FALSE)
+		var/list/knowledge_data = get_knowledge_data(knowledge_path, heretic_tree, FALSE)
 
 		// Final knowledge can't be learned until all objectives are complete.
-		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
+		if(ispath(knowledge_path, /datum/heretic_knowledge/ultimate))
 			knowledge_data["disabled"] ||= !can_ascend()
 
 		var/depth = knowledge_data[HKT_DEPTH]
@@ -228,10 +229,11 @@
 		return data
 
 	var/list/heretic_drafts = heretic_shops[HERETIC_KNOWLEDGE_DRAFT]
-	for(var/datum/heretic_knowledge/knowledge as anything in heretic_drafts)
-		if(!(knowledge in tree_researchable))
+	for(var/datum/heretic_knowledge/knowledge_path as anything in heretic_drafts)
+		var/list/knowledge_info = heretic_drafts[knowledge_path]
+		if(!(knowledge_info[HKT_ID] in researchable_knowledges))
 			continue
-		var/list/knowledge_data = get_knowledge_data(knowledge, heretic_drafts, FALSE, HERETIC_KNOWLEDGE_DRAFT)
+		var/list/knowledge_data = get_knowledge_data(knowledge_path, heretic_drafts, FALSE, HERETIC_KNOWLEDGE_DRAFT)
 
 		var/depth = knowledge_data[HKT_DEPTH]
 		while(depth > length(tree_data))
@@ -239,11 +241,11 @@
 
 		tree_data[depth]["nodes"] += list(knowledge_data)
 
-	var/list/draft_researchable = get_researchable_knowledge(list(HERETIC_KNOWLEDGE_DRAFT, HERETIC_KNOWLEDGE_SHOP))
 	data["knowledge_tiers"] = tree_data
 	var/list/shop = heretic_shops[HERETIC_KNOWLEDGE_SHOP]
 	for(var/knowledge_path as anything in shop)
-		if(!(knowledge_path in draft_researchable))
+		var/list/knowledge_info = shop[knowledge_path]
+		if(!(knowledge_info[HKT_ID] in researchable_knowledges))
 			continue
 
 		var/list/knowledge_data = get_knowledge_data(knowledge_path, shop, FALSE, HERETIC_KNOWLEDGE_SHOP)
@@ -263,14 +265,14 @@
 			var/datum/heretic_knowledge/researched_path = text2path(params["path"])
 			if(!ispath(researched_path, /datum/heretic_knowledge))
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path || "invalid path"])")
-			if(!researchable_knowledge(researched_path))
+			var/shop_category = params["category"]
+			if(!researchable_knowledge(researched_path, shop_category))
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
 				CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
 			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) & !can_ascend())
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
 				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 
-			var/shop_category = params["category"]
 
 			if(!purchase_knowledge(researched_path, shop_category))
 				return FALSE
@@ -278,12 +280,10 @@
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			return TRUE
 
-/datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path, shop_filter = NONE)
-	if(knowledge_path in get_researchable_knowledge(shop_filter))
+/datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path, shop_category = HERETIC_KNOWLEDGE_TREE)
+	var/list/knowledge_info = heretic_shops[shop_category][knowledge_path]
+	if(knowledge_info[HKT_ID] in get_researchable_knowledge())
 		return TRUE
-	// for(var/list/tier in heretic_knowledge_shop)
-	// 	if(knowledge_path in tier)
-	// 		return TRUE
 	return FALSE
 
 /datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
@@ -488,7 +488,7 @@
 /datum/antagonist/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 20 SECONDS, additional_checks)
 	drawing_rune = TRUE
 
-	var/rune_colour = GLOB.heretic_path_to_color[heretic_path.route || PATH_START]
+	var/rune_colour = GLOB.heretic_path_to_color[heretic_path?.route || PATH_START]
 	target_turf.balloon_alert(user, "drawing rune...")
 	var/obj/effect/temp_visual/drawing_heretic_rune/drawing_effect
 	if (drawing_time < (10 SECONDS))
@@ -942,17 +942,13 @@
 	return TRUE
 
 /**
- * Get a list of all knowledge TYPEPATHS that we can currently research.
+ * Get a list of all knowledge IDs that we can currently research.
  */
-/datum/antagonist/heretic/proc/get_researchable_knowledge(shop_filter = list(NONE))
-	if(!islist(shop_filter))
-		shop_filter = list(shop_filter)
+/datum/antagonist/heretic/proc/get_researchable_knowledge()
 	var/list/researchable_knowledge = list()
 	var/list/banned_knowledge = list()
 	for(var/knowledge_type in researched_knowledge)
 		var/list/knowledge_info = researched_knowledge[knowledge_type]
-		if(shop_filter[1] != NONE && !(knowledge_info[HKT_CATEGORY] in shop_filter))
-			continue // Not in the right shop
 		researchable_knowledge |= knowledge_info[HKT_NEXT]
 		banned_knowledge |= knowledge_info[HKT_BAN]
 		banned_knowledge |= knowledge_type

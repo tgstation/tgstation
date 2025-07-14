@@ -88,21 +88,38 @@ GLOBAL_LIST(heretic_research_tree)
 
 	return data
 
-/datum/antagonist/heretic/proc/make_knowledge_entry(datum/heretic_knowledge/knowledge, datum/heretic_knowledge_tree_column/path, depth = 1)
+/datum/antagonist/heretic/proc/make_knowledge_entry(datum/heretic_knowledge/knowledge, datum/heretic_knowledge_tree_column/path, category = HERETIC_KNOWLEDGE_TREE, depth = 1, cost = -1)
 	return list(
 		HKT_NEXT = list(),
 		HKT_BAN = list(),
 		HKT_DEPTH = depth,
 		HKT_UI_BGR = path ? path::ui_bgr : BGR_SIDE,
-		HKT_COST = knowledge::cost,
+		HKT_COST = cost != -1 ? cost : knowledge::cost,
 		HKT_ROUTE = path ? path::route : null,
+		HKT_ID = make_knowledge_id(knowledge, category),
 	)
+
+/// ID's are not unique, the same knowledge with the same type in the same shop will always have the same ID.
+/datum/antagonist/heretic/proc/make_knowledge_id(datum/heretic_knowledge/knowledge, shop_category = HERETIC_KNOWLEDGE_TREE)
+	// This is used to generate the knowledge ID for the heretic research tree
+	var/type_string = replacetext("[knowledge::type]", "/", "", 1, 2)
+	var/our_type = replacetext(type_string, "/", "_")
+	return "[shop_category]/[our_type]"
+
+/datum/antagonist/heretic/proc/get_knowledge_id(datum/heretic_knowledge/knowledge, shop_category = HERETIC_KNOWLEDGE_TREE)
+	// tell me, is this even neccesary?
+	var/found = heretic_shops[shop_category][knowledge::type]
+	if(!found)
+		return make_knowledge_id(knowledge, shop_category)
+	return found[HKT_ID]
 
 /datum/antagonist/heretic/proc/generate_starting_knowledge()
 	var/list/starting_knowledge = heretic_shops[HERETIC_KNOWLEDGE_START]
 	for(var/knowledge in GLOB.heretic_start_knowledge)
-		starting_knowledge[knowledge] = make_knowledge_entry(knowledge, null)
+		starting_knowledge[knowledge] = make_knowledge_entry(knowledge, null, HERETIC_KNOWLEDGE_START)
 
+	var/list/start_knowledges = list()
+	var/list/start_knowledge_ids = list()
 	for(var/datum/heretic_knowledge_tree_column/column_path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
 		if(initial(column_path.abstract_parent_type) == column_path)
 			continue
@@ -112,14 +129,22 @@ GLOBAL_LIST(heretic_research_tree)
 		var/t2_knowledge = column_path::knowledge_tier2
 		var/t3_knowledge = column_path::knowledge_tier3
 		var/t4_knowledge = column_path::knowledge_tier4
-		starting_knowledge[start_knowledge] = make_knowledge_entry(start_knowledge, column_path, 2)
-		starting_knowledge[t1_knowledge] = make_knowledge_entry(t1_knowledge, column_path, 3)
-		starting_knowledge[t2_knowledge] = make_knowledge_entry(t2_knowledge, column_path, 5)
-		starting_knowledge[t3_knowledge] = make_knowledge_entry(t3_knowledge, column_path, 8)
-		starting_knowledge[t4_knowledge] = make_knowledge_entry(t4_knowledge, column_path, 11)
+		starting_knowledge[start_knowledge] = make_knowledge_entry(start_knowledge, column_path, HERETIC_KNOWLEDGE_START, 2)
+		starting_knowledge[t1_knowledge] = make_knowledge_entry(t1_knowledge, column_path, HERETIC_KNOWLEDGE_START, 3)
+		starting_knowledge[t2_knowledge] = make_knowledge_entry(t2_knowledge, column_path, HERETIC_KNOWLEDGE_START, 5)
+		starting_knowledge[t3_knowledge] = make_knowledge_entry(t3_knowledge, column_path, HERETIC_KNOWLEDGE_START, 8)
+		starting_knowledge[t4_knowledge] = make_knowledge_entry(t4_knowledge, column_path, HERETIC_KNOWLEDGE_START, 11)
 		// start the HKT_NEXT chain here
-		starting_knowledge[/datum/heretic_knowledge/spell/basic][HKT_NEXT] += list(start_knowledge)
-		starting_knowledge[start_knowledge][HKT_NEXT] += column_path.knowledge_tier1
+		starting_knowledge[/datum/heretic_knowledge/spell/basic][HKT_NEXT] += get_knowledge_id(start_knowledge, HERETIC_KNOWLEDGE_START)
+		starting_knowledge[start_knowledge][HKT_NEXT] += get_knowledge_id(column_path.knowledge_tier1, HERETIC_KNOWLEDGE_TREE)
+		start_knowledges += start_knowledge
+		start_knowledge_ids += get_knowledge_id(start_knowledge, HERETIC_KNOWLEDGE_START)
+
+	// make sure to prevent starting on other paths
+	for(var/knowledge_path in start_knowledges)
+		var/list/target_knowledge = starting_knowledge[knowledge_path]
+		target_knowledge[HKT_BAN] += start_knowledge_ids - target_knowledge[HKT_ID]
+
 
 //TODO: use this to generate the globallist
 /datum/antagonist/heretic/proc/generate_heretic_research_tree()
@@ -139,14 +164,7 @@ GLOBAL_LIST(heretic_research_tree)
 	)
 
 	for(var/datum/heretic_knowledge/type as anything in tree_paths)
-		heretic_research_tree[type] = list(
-			HKT_NEXT = list(),
-			HKT_BAN = list(),
-			HKT_DEPTH = 1,
-			HKT_UI_BGR = BGR_SIDE,
-			HKT_COST = type::cost,
-			HKT_ROUTE = null
-		)
+		heretic_research_tree[type] = make_knowledge_entry(type, depth = 1)
 
 	//horizontal (two way)
 	var/list/knowledge_tier1 = heretic_path.knowledge_tier1
@@ -191,24 +209,24 @@ GLOBAL_LIST(heretic_research_tree)
 
 	//t1 handling
 	for(var/t1_knowledge in knowledge_tier1)
-		heretic_research_tree[t1_knowledge][HKT_NEXT] += heretic_path.knowledge_tier2
+		heretic_research_tree[t1_knowledge][HKT_NEXT] += get_knowledge_id(heretic_path.knowledge_tier2)
 	//t2 handling
 	for(var/t2_knowledge in knowledge_tier2)
-		heretic_research_tree[t2_knowledge][HKT_NEXT] += heretic_path.robes
+		heretic_research_tree[t2_knowledge][HKT_NEXT] += get_knowledge_id(heretic_path.robes)
 
 	// Robes upgrade gives us access to T3
-	heretic_research_tree[heretic_path.robes][HKT_NEXT] += heretic_path.knowledge_tier3
+	heretic_research_tree[heretic_path.robes][HKT_NEXT] += get_knowledge_id(heretic_path.knowledge_tier3)
 
 	//t3 handling
 	for(var/t3_knowledge in knowledge_tier3)
-		heretic_research_tree[t3_knowledge][HKT_NEXT] += heretic_path.blade
+		heretic_research_tree[t3_knowledge][HKT_NEXT] += get_knowledge_id(heretic_path.blade)
 
 	// Blade upgrade gives us access to T4
-	heretic_research_tree[heretic_path.blade][HKT_NEXT] += heretic_path.knowledge_tier4
+	heretic_research_tree[heretic_path.blade][HKT_NEXT] += get_knowledge_id(heretic_path.knowledge_tier4)
 
 	//t4 handling
 	for(var/t4_knowledge in knowledge_tier4)
-		heretic_research_tree[t4_knowledge][HKT_NEXT] += heretic_path.ascension
+		heretic_research_tree[t4_knowledge][HKT_NEXT] += get_knowledge_id(heretic_path.ascension)
 
 	//route stuff
 	heretic_research_tree[heretic_path.robes][HKT_ROUTE] = heretic_path.route
@@ -227,7 +245,7 @@ GLOBAL_LIST(heretic_research_tree)
 
 	//Per path bullshit goes here \/\/\/
 	for(var/t3_knowledge in knowledge_tier3)
-		heretic_research_tree[t3_knowledge][HKT_NEXT] += /datum/heretic_knowledge/reroll_targets
+		heretic_research_tree[t3_knowledge][HKT_NEXT] += get_knowledge_id(/datum/heretic_knowledge/reroll_targets)
 
 	//and we're done
 	return heretic_research_tree
@@ -269,14 +287,13 @@ GLOBAL_LIST(heretic_research_tree)
 		guaranteed_draft_t3
 	)
 
-	// // todo put this somewhere more shared
-	// var/list/shop_unlock_order = list(
-	// 	knowledge_tier1,
-	// 	knowledge_tier2,
-	// 	heretic_path.robes,
-	// 	knowledge_tier3,
-	// 	knowledge_tier4
-	// )
+	var/list/shop_unlock_order = list(
+		knowledge_tier1,
+		knowledge_tier2,
+		heretic_path.robes,
+		knowledge_tier3,
+		knowledge_tier4
+	)
 
 	var/list/draft_ineligible = path_knowledges.Copy()
 	draft_ineligible += guaranteed_drafts
@@ -321,8 +338,8 @@ GLOBAL_LIST(heretic_research_tree)
 			HKT_DEPTH = 12
 		)
 	)
-	// todo GLOB this
-	var/list/draft_nums = list(4, 6, 9, 12)
+	// // todo GLOB this
+	// var/list/draft_nums = list(4, 6, 9, 12)
 	for(var/draft in drafts)
 		var/parent_knowledge_path = draft["parent_knowledge"]
 		var/datum/heretic_knowledge/guaranteed_draft = draft["guaranteed_knowledge"]
@@ -350,48 +367,42 @@ GLOBAL_LIST(heretic_research_tree)
 				stack_trace("Failed to select a knowledge for heretic path [heretic_path] at depth [depth]. This should never happen.")
 				continue
 
-			heretic_research_tree[parent_knowledge_path][HKT_NEXT] += selected_knowledge
-
-			final_draft[selected_knowledge] = list(
-				HKT_NEXT = list(),
-				HKT_ROUTE = heretic_path.route,
-				HKT_DEPTH = depth,
-				HKT_UI_BGR = BGR_SIDE,
-				HKT_COST = 0
+			final_draft[selected_knowledge] = make_knowledge_entry(
+				selected_knowledge,
+				heretic_path,
+				HERETIC_KNOWLEDGE_DRAFT,
+				depth,
+				0
 			)
+
+			heretic_research_tree[parent_knowledge_path][HKT_NEXT] += get_knowledge_id(selected_knowledge)
 
 	for(var/drafting_tier in 1 to length(shop_knowledge))
+		var/unlocked_by = shop_unlock_order[drafting_tier]
 		var/list/eligible_tier = shop_knowledge[drafting_tier]
 		for(var/knowledge_type in eligible_tier)
-			shop[knowledge_type] = list(
-				HKT_NEXT = list(),
-				HKT_BAN = list(),
-				HKT_ROUTE = heretic_path.route,
-				HKT_DEPTH = drafting_tier,
-				HKT_UI_BGR = BGR_SIDE,
-				HKT_COST = shop_costs[drafting_tier],
+			shop[knowledge_type] = make_knowledge_entry(
+				knowledge_type,
+				null,
+				HERETIC_KNOWLEDGE_SHOP,
+				drafting_tier,
+				shop_costs[drafting_tier]
 			)
-
-			var/our_depth = shop[knowledge_type][HKT_DEPTH]
-			for(var/datum/heretic_knowledge/draft_type as anything in final_draft)
-				var/list/knowledge_info = final_draft[draft_type]
-				var/target_depth = draft_nums[min(our_depth, length(draft_nums))]
-				if(knowledge_info[HKT_DEPTH] != target_depth)
-					continue
-				final_draft[draft_type][HKT_NEXT] |= knowledge_type
+			heretic_research_tree[unlocked_by][HKT_NEXT] += get_knowledge_id(knowledge_type, HERETIC_KNOWLEDGE_SHOP)
 
 	var/reroll = /datum/heretic_knowledge/reroll_targets
-	shop[reroll] = make_knowledge_entry(reroll, heretic_path, 3)
+	shop[reroll] = make_knowledge_entry(reroll, heretic_path, depth = 3)
 
 	var/gun_path = /datum/heretic_knowledge/rifle
 	var/ammo_path = /datum/heretic_knowledge/rifle_ammo
-	shop[gun_path] = make_knowledge_entry(gun_path, null, 4)
-	shop[gun_path][HKT_NEXT] += ammo_path
+	shop[gun_path] = make_knowledge_entry(gun_path, null, depth = 4)
+	shop[ammo_path] = make_knowledge_entry(ammo_path, null, depth = 4)
+	var/ammo_id = get_knowledge_id(ammo_path, HERETIC_KNOWLEDGE_SHOP)
+	shop[gun_path][HKT_NEXT] += ammo_id
 
 	var/already_in = final_draft[gun_path]
 	if(already_in)
-		already_in[HKT_NEXT] += ammo_path
+		already_in[HKT_NEXT] += ammo_id
 
-	shop[ammo_path] = make_knowledge_entry(ammo_path, null, 4)
 	SEND_SIGNAL(src, COMSIG_HERETIC_SHOP_SETUP)
 
