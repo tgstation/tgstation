@@ -371,3 +371,9 @@
   - refactor: SMES now functions consistently with its power cells & the RPED.
   carpotoxin:
   - bugfix: fixed the 'note_path' var of the 'airlock_note_placer' mapping helper
+2025-07-14:
+  Absolucy:
+  - bugfix: You can now actually unlink the remote from a briefcase launchpad.
+  tattle:
+  - rscdel: Removed the shy component, allowing drones to once again use a wide array
+      of items and perform actions near mobs
