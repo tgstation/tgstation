@@ -34,6 +34,10 @@ type Ability = {
   dna_required: number; // Checks against dna_count
 };
 
+function compareArrays<t>(arr1: string[], arr2: string[]): boolean {
+  const set2 = new Set(arr2);
+  return arr1.some((item) => set2.has(item));
+}
 export const CellularEmporium = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
   const [searchAbilities, setSearchAbilities] = useState('');
