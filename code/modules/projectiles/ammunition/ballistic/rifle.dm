@@ -119,7 +119,7 @@
 	ignore_throwspeed_threshold = TRUE
 	rip_time = 1.5 SECONDS
 	/// Amount of each type of damage healed per second
-	var/healing_per_second = 5
+	var/healing_per_second = -5
 	/// Amount of drowsiness added per second
 	var/drowsy_per_second = 2 SECONDS
 	/// At what point of drowsiness do we knock out the owner
