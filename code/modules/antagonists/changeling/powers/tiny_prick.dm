@@ -266,7 +266,11 @@
 
 	return TRUE
 /datum/action/changeling/sting/lsd/begin_hallucination(mob/living/carbon/target)
-	var/mob/living/carbon/reference_hallucination = pick(view(8 ,target))
+	var/list/list_of_ref = list()
+	for (var/mob/living/carbon/reference_hallucination in view(8 ,target))
+		list_of_ref += reference_hallucination
+
+	var/mob/living/carbon/our_human_ref = pick(list_of_ref)
 
 		target.cause_hallucination(\
 			/datum/hallucination/delusion/changeling, \
@@ -276,7 +280,7 @@
 			affects_others = TRUE, \
 			skip_nearby = FALSE, \
 			play_wabbajack = FALSE, \
-			passed_appearance = random_guy.appearance, \
+			passed_appearance = our_human_ref.appearance, \
 		)
 
 /datum/action/changeling/sting/cryo
