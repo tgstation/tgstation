@@ -1,0 +1,4 @@
+author: "tattle"
+delete-after: True
+changes:
+  - rscdel: "Removed the shy component, allowing drones to once again use a wide array of items and perform actions near mobs"
