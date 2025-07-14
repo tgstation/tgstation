@@ -10,8 +10,8 @@ export function PageSelect(props) {
     page_count,
   } = props;
 
-  if (page_count === 1) return;
   const [page, setPage] = useState(current_page);
+  if (page_count === 1) return;
 
   return (
     <Stack>
@@ -31,7 +31,7 @@ export function PageSelect(props) {
       </Stack.Item>
       <Stack.Item>
         <Input
-          placeholder={current_page + '/' + page_count}
+          placeholder={`${current_page}/${page_count}`}
           onBlur={(value) => {
             if (value !== '') {
               call_on_change(value);

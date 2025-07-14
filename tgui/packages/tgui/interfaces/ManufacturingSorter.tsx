@@ -64,7 +64,7 @@ export function ManufacturingSorter(props) {
               <LabeledList>
                 {filters.map((filter, i) => (
                   <LabeledList.Item
-                    label={i + 1 + '. ' + filter.name}
+                    label={`${i + 1}. ${filter.name}`}
                     key={filter.ref}
                   >
                     <Button
