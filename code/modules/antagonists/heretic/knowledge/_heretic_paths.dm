@@ -106,7 +106,6 @@ GLOBAL_LIST(heretic_research_tree)
 	return "[shop_category]/[our_type]"
 
 /datum/antagonist/heretic/proc/get_knowledge_id(datum/heretic_knowledge/knowledge, shop_category = HERETIC_KNOWLEDGE_TREE)
-	// tell me, is this even neccesary?
 	var/found = heretic_shops[shop_category][knowledge::type]
 	if(!found)
 		return make_knowledge_id(knowledge, shop_category)
