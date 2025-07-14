@@ -20,8 +20,7 @@
 			"!**/node_modules",
 			"!tgui/public",
 			"tgui/public/tgui.html",
-			"!tgui/packages/tgui-setup/helpers.js",
-			"!tgui/packages/tgui-bench"
+			"!tgui/packages/tgui-setup/helpers.js"
 		]
 	},
 	"formatter": {
