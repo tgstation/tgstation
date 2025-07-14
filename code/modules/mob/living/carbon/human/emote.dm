@@ -269,7 +269,6 @@
 	var/datum/species/ethereal/goober = user.dna.species
 	goober.handle_glow_emote(user, 1.75, 1.2)
 
-
 /datum/emote/living/carbon/human/flare
 	key = "flare"
 	key_third_person = "flares"
