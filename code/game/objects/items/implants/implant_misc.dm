@@ -40,6 +40,8 @@
 	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
 	smoke.set_up(6, holder = imp_in, location = imp_in)
 	smoke.start()
+	if(!uses)
+		qdel(src)
 
 /obj/item/implanter/smoke
 	name = "implanter (Smoke)"
