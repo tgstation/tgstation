@@ -358,7 +358,6 @@
 /obj/item/wallframe/noticeboard{
 	pixel_x = 32
 	},
-/obj/item/stack/cannonball/shellball,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "tZ" = (
@@ -420,9 +419,10 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
 "vw" = (
-/obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/structure/sign/poster/contraband/random/directional/north,
-/turf/open/floor/iron/dark/diagonal,
+/obj/structure/safe/floor,
+/obj/item/gun/ballistic/automatic/pistol/deagle/contraband,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/powered)
 "wf" = (
 /turf/template_noop,
@@ -568,6 +568,7 @@
 /area/rainworld/surface/outdoors)
 "HX" = (
 /obj/structure/table/wood,
+/obj/item/stack/cannonball/shellball,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Ii" = (
@@ -638,6 +639,10 @@
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
+"OE" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
 "OU" = (
 /obj/item/plate/large,
 /obj/item/food/fishmeat/gunner_jellyfish,
@@ -666,7 +671,7 @@
 "Rq" = (
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /obj/structure/displaycase/noalert{
-	showpiece = "obj/item/ship_in_a_bottle"
+	showpiece = obj/item/ship_in_a_bottle
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/powered)
@@ -714,6 +719,11 @@
 /area/ruin/powered)
 "Uo" = (
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"Up" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/sign/poster/contraband/communist_state/directional/north,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/powered)
 "UE" = (
@@ -976,6 +986,7 @@ wf
 wf
 wf
 wf
+OE
 gK
 gK
 gK
@@ -1004,8 +1015,7 @@ gK
 gK
 gK
 gK
-gK
-gK
+OE
 wf
 wf
 wf
@@ -1259,7 +1269,7 @@ EV
 EV
 EV
 ci
-Uo
+Up
 Uo
 Rq
 ci
@@ -2096,7 +2106,7 @@ wf
 "}
 (29,1,1) = {"
 wf
-gK
+OE
 gK
 gK
 gK
@@ -2135,7 +2145,7 @@ gK
 gK
 gK
 gK
-gK
+OE
 wf
 wf
 "}
@@ -2540,13 +2550,13 @@ gK
 gK
 gK
 gK
-gK
+OE
 wf
 wf
 "}
 (39,1,1) = {"
 wf
-gK
+OE
 gK
 gK
 gK
@@ -2816,7 +2826,7 @@ wf
 "}
 (45,1,1) = {"
 wf
-gK
+OE
 gK
 gK
 gK
@@ -3035,7 +3045,7 @@ gK
 gK
 gK
 gK
-gK
+OE
 wf
 wf
 "}
@@ -3131,7 +3141,7 @@ wf
 "}
 (52,1,1) = {"
 wf
-gK
+OE
 gK
 gK
 gK
@@ -3395,13 +3405,13 @@ gK
 gK
 gK
 gK
-gK
+OE
 wf
 wf
 "}
 (58,1,1) = {"
 wf
-gK
+OE
 gK
 gK
 gK
@@ -3665,7 +3675,7 @@ gK
 gK
 gK
 gK
-gK
+OE
 wf
 wf
 "}
@@ -3716,6 +3726,32 @@ wf
 "}
 (65,1,1) = {"
 wf
+OE
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
 gK
 gK
 gK
@@ -3724,33 +3760,7 @@ gK
 gK
 gK
 gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+OE
 gK
 gK
 gK
