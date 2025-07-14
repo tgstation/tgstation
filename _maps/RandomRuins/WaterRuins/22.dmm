@@ -114,8 +114,9 @@
 /area/ruin/outpost31)
 "X" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/wrench/caravan,
 /obj/structure/rack,
+/obj/item/gps/spaceruin,
+/obj/item/wrench/caravan,
 /turf/open/floor/pod/dark,
 /area/ruin/outpost31)
 "Y" = (
@@ -124,8 +125,9 @@
 /area/ruin/outpost31)
 "Z" = (
 /obj/effect/spawner/random/structure/crate,
-/obj/effect/spawner/random/armory/buckshot,
 /obj/effect/spawner/random/mod/maint,
+/obj/effect/spawner/random/exotic/languagebook,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/pod/dark,
 /area/ruin/outpost31)
 

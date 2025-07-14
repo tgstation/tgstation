@@ -2,6 +2,10 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"b" = (
+/obj/item/gps/spaceruin,
+/turf/open/floor/plating,
+/area/rainworld/surface)
 "c" = (
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
@@ -689,7 +693,7 @@ Q
 Q
 U
 e
-g
+b
 m
 p
 S

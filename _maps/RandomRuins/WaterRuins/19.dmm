@@ -135,6 +135,7 @@
 /area/rainworld/surface)
 "W" = (
 /obj/structure/closet/crate,
+/obj/item/gps/spaceruin,
 /obj/item/borg/upgrade/rolling_table,
 /obj/item/borg/upgrade/transform/clown,
 /turf/open/floor/plating,

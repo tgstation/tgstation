@@ -17,6 +17,7 @@
 /area/rainworld/surface/misty_island/unexplored)
 "j" = (
 /obj/structure/closet/crate/wooden/toy,
+/obj/item/gps/spaceruin,
 /obj/item/coin/eldritch,
 /turf/open/floor/wood/freezing,
 /area/rainworld/surface/misty_island)
@@ -43,7 +44,7 @@
 /area/rainworld/surface/misty_island)
 "L" = (
 /obj/structure/closet/crate/wooden,
-/obj/item/fake_identity_kit,
+/obj/item/immortality_talisman,
 /turf/open/floor/wood/freezing,
 /area/rainworld/surface/misty_island)
 "P" = (

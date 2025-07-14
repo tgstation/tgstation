@@ -61,6 +61,7 @@
 /area/rainworld/surface/outdoors)
 "v" = (
 /obj/structure/closet/crate/wooden,
+/obj/item/gps/spaceruin,
 /obj/item/survivalcapsule/fishing,
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface/outdoors)

@@ -419,8 +419,8 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
 "uh" = (
-/obj/item/book/granter/crafting_recipe/death_sandwich,
 /obj/structure/closet/crate/freezer,
+/obj/item/book/granter/crafting_recipe/death_sandwich,
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
 "us" = (
@@ -530,6 +530,11 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered)
+"Df" = (
+/obj/structure/closet/crate/grave,
+/obj/item/fake_identity_kit,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
 "Dj" = (
 /obj/machinery/door/airlock/wood/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -601,6 +606,7 @@
 /obj/machinery/computer/old{
 	dir = 1
 	},
+/obj/item/gps/spaceruin,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/powered)
 "Ge" = (
@@ -1996,7 +2002,7 @@ EV
 EV
 EV
 EV
-sS
+Df
 sS
 sS
 sS

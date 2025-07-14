@@ -52,11 +52,11 @@
 /area/ruin/powered)
 "E" = (
 /obj/structure/rack,
-/obj/item/wrench/medical,
 /obj/effect/turf_decal/siding/white,
-/obj/item/food/popsicle/creamsicle_orange,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/item/gps/spaceruin,
 /obj/effect/spawner/random/medical/medkit_rare,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/ruin/powered)
 "K" = (
