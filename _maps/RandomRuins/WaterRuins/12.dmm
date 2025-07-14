@@ -748,7 +748,7 @@
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "Vb" = (
-/mob/living/basic/trooper/pirate/melee,
+/mob/living/basic/trooper/pirate/melee/space,
 /turf/open/floor/wood,
 /area/rainworld/surface/outdoors)
 "Vz" = (

@@ -5,18 +5,19 @@
 "e" = (
 /obj/structure/window/reinforced/shuttle/survival_pod,
 /turf/open/floor/plating,
-/area/rainworld/surface)
+/area/ruin/powered)
 "n" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/pod/dark,
-/area/rainworld/surface)
+/area/ruin/powered)
 "p" = (
 /obj/item/radio/intercom/syndicate/freerange/directional/east,
 /obj/item/radio/intercom/directional/west,
-/turf/open/floor/glass/reinforced,
-/area/rainworld/surface)
+/obj/machinery/light/floor,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
 "q" = (
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors)
@@ -24,10 +25,10 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/clothing/gloves/tackler/rocket,
 /turf/open/floor/pod/dark,
-/area/rainworld/surface)
+/area/ruin/powered)
 "u" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
-/area/rainworld/surface)
+/area/ruin/powered)
 "I" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/binoculars,
@@ -43,11 +44,11 @@
 	color = "#A52A2A"
 	},
 /turf/open/floor/pod/dark,
-/area/rainworld/surface)
+/area/ruin/powered)
 "O" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/pod/dark,
-/area/rainworld/surface)
+/area/ruin/powered)
 "S" = (
 /turf/closed/mineral/random/rainworld,
 /area/rainworld/surface/outdoors)
@@ -55,7 +56,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/table_clock,
 /turf/open/floor/pod/dark,
-/area/rainworld/surface)
+/area/ruin/powered)
 
 (1,1,1) = {"
 a

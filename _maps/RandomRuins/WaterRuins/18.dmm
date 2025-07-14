@@ -7,7 +7,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/rainworld/surface)
+/area/ruin/powered)
 "n" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -18,16 +18,16 @@
 	},
 /obj/structure/closet/body_bag/lost_crew/with_body,
 /turf/open/floor/iron/kitchen_coldroom,
-/area/rainworld/surface)
+/area/ruin/powered)
 "p" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/structure/closet/crate/freezer/organ,
 /turf/open/floor/iron/kitchen_coldroom,
-/area/rainworld/surface)
+/area/ruin/powered)
 "r" = (
 /turf/closed/wall/mineral/titanium,
-/area/rainworld/surface)
+/area/ruin/powered)
 "y" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -42,14 +42,14 @@
 /obj/effect/spawner/random/medical/organs,
 /obj/effect/spawner/random/medical/memeorgans,
 /turf/open/floor/iron/kitchen_coldroom,
-/area/rainworld/surface)
+/area/ruin/powered)
 "B" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/open/floor/iron/kitchen_coldroom,
-/area/rainworld/surface)
+/area/ruin/powered)
 "E" = (
 /obj/structure/rack,
 /obj/item/wrench/medical,
@@ -58,19 +58,19 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /obj/effect/spawner/random/medical/medkit_rare,
 /turf/open/floor/iron/kitchen_coldroom,
-/area/rainworld/surface)
+/area/ruin/powered)
 "K" = (
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/rainworld/surface)
+/area/ruin/powered)
 "L" = (
 /obj/machinery/door/airlock/freezer,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/rainworld/surface)
+/area/ruin/powered)
 "R" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating,
-/area/rainworld/surface)
+/area/ruin/powered)
 "S" = (
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/effect/turf_decal/box/white{
@@ -83,7 +83,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/kitchen_coldroom,
-/area/rainworld/surface)
+/area/ruin/powered)
 
 (1,1,1) = {"
 a

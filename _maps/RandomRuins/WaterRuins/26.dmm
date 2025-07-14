@@ -7,6 +7,14 @@
 /obj/item/toy/plush/wet_owl,
 /turf/open/floor/wood/freezing,
 /area/rainworld/surface/misty_island)
+"g" = (
+/obj/item/gun/magic/wand/safety{
+	max_charges = 1;
+	variable_charges = 0;
+	charges = 1
+	},
+/turf/open/floor/fairy/rainworld,
+/area/rainworld/surface/misty_island/unexplored)
 "j" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/item/coin/eldritch,
@@ -29,6 +37,9 @@
 /area/rainworld/surface/misty_island)
 "A" = (
 /turf/open/floor/fairy/rainworld,
+/area/rainworld/surface/misty_island)
+"C" = (
+/turf/open/genturf,
 /area/rainworld/surface/misty_island)
 "L" = (
 /obj/structure/closet/crate/wooden,
@@ -1674,7 +1685,7 @@ Z
 Z
 Z
 Z
-Z
+C
 Z
 Z
 Z
@@ -1728,7 +1739,7 @@ Z
 Z
 Z
 Z
-Z
+g
 Z
 Z
 Z

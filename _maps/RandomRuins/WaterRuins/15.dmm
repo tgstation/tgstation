@@ -87,10 +87,6 @@
 /obj/effect/spawner/random/structure/shipping_container/blank,
 /turf/template_noop,
 /area/template_noop)
-"y" = (
-/obj/effect/spawner/random/structure/crate_loot,
-/turf/open/misc/ashplanet/rocky/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
 "G" = (
 /obj/structure/closet,
 /obj/item/borg/upgrade/modkit/lifesteal,
@@ -849,7 +845,7 @@ f
 c
 c
 c
-y
+R
 Q
 a
 Q
@@ -1069,7 +1065,7 @@ U
 U
 U
 c
-y
+R
 a
 a
 a

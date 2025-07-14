@@ -4,30 +4,30 @@
 /area/template_noop)
 "b" = (
 /turf/open/misc/ashplanet/rocky/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
+/area/rainworld/surface/outdoors/nospawn)
 "c" = (
 /turf/closed/mineral/random/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
+/area/rainworld/surface/outdoors/nospawn)
 "d" = (
 /obj/item/crusher_trophy/bear_paw,
 /turf/open/misc/ashplanet/rocky/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
+/area/rainworld/surface/outdoors/nospawn)
 "u" = (
 /obj/effect/spawner/message_in_a_bottle,
 /turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
+/area/rainworld/surface/outdoors/nospawn)
 "C" = (
 /obj/effect/spawner/random/decoration/glowstick/on,
 /turf/open/misc/ashplanet/rocky/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
+/area/rainworld/surface/outdoors/nospawn)
 "Q" = (
 /obj/item/clothing/gloves/fishing,
 /turf/open/misc/ashplanet/rocky/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
+/area/rainworld/surface/outdoors/nospawn)
 "V" = (
 /obj/effect/spawner/random/chance_for_freedom,
 /turf/open/misc/ashplanet/rocky/rainworld,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
+/area/rainworld/surface/outdoors/nospawn)
 
 (1,1,1) = {"
 a
