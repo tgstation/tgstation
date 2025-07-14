@@ -3956,6 +3956,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "btJ" = (
@@ -15802,7 +15803,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/structure/sign/poster/random/directional/east,
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fEm" = (
@@ -30839,7 +30840,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
 /obj/structure/cable,
 /obj/item/healthanalyzer/simple,
 /obj/effect/mapping_helpers/apc/full_charge,
@@ -38018,9 +38018,6 @@
 /obj/item/storage/medkit/regular{
 	pixel_y = 5
 	},
-/obj/item/storage/medkit/regular{
-	pixel_y = 10
-	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -38028,6 +38025,7 @@
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "niI" = (
@@ -48731,6 +48729,11 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
+"qXP" = (
+/obj/structure/cable,
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "qXY" = (
 /turf/open/misc/asteroid,
 /area/station/cargo/miningoffice)
@@ -50825,7 +50828,6 @@
 /obj/item/watertank,
 /obj/item/grenade/chem_grenade/antiweed,
 /obj/structure/table/glass,
-/obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -59987,6 +59989,7 @@
 /obj/structure/ladder,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/dark_green/opposingcorners,
+/obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "uIF" = (
@@ -63511,7 +63514,6 @@
 "vWY" = (
 /obj/effect/turf_decal/siding,
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/large,
 /area/station/commons/locker)
@@ -107236,7 +107238,7 @@ mDK
 iUJ
 cPt
 ixU
-cpw
+qXP
 dfM
 pBn
 cPo

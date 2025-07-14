@@ -371,6 +371,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)
+"agz" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/engineering/lobby)
 "agD" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4464,6 +4471,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/break_room)
+"btS" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/wood,
+/area/station/hallway/secondary/service)
 "buh" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/hull/air,
@@ -32378,11 +32389,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/regular{
-	pixel_x = 0;
-	pixel_y = 5
-	},
 /obj/structure/cable,
+/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "jAc" = (
@@ -58632,6 +58640,7 @@
 "rrT" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/sign/poster/official/work_for_a_future/directional/south,
+/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron,
 /area/station/science/research)
 "rrY" = (
@@ -61721,6 +61730,7 @@
 	},
 /obj/machinery/autolathe,
 /obj/structure/sign/poster/official/do_not_question/directional/north,
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "soH" = (
@@ -106853,7 +106863,7 @@ gPW
 xRU
 xOn
 xAj
-gse
+btS
 own
 wik
 uxl
@@ -125877,7 +125887,7 @@ xSq
 irJ
 grE
 rTW
-dPD
+agz
 dPD
 dPD
 sNK
