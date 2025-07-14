@@ -17,7 +17,7 @@ const BoardTab = (props) => {
       className={classes([
         'BoardTab',
         selected ? 'BoardTab__Selected' : 'BoardTab__Perspective',
-        !selected && 'BoardTab__' + color,
+        !selected && `BoardTab__${color}`,
       ])}
     >
       <Box className={'BoardTab__Contain'}>{children}</Box>
