@@ -440,6 +440,7 @@
 	desc = "A box containing 7 frag grenades. Simple. Destructive."
 	item = /obj/item/storage/box/syndie_kit/frag_grenades
 	cost = 5
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/explosives/military_grade/x4
 	name = "Composition X-4"
@@ -455,6 +456,7 @@
 			in addition to dealing high amounts of damage to nearby personnel."
 	item = /obj/item/grenade/syndieminibomb
 	cost = 2
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/explosives/military_grade/pizza_bomb
 	name = "Pizza Bomb"
