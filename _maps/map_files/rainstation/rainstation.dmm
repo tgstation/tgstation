@@ -1151,7 +1151,9 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/fullgrass/style_2,
 /obj/structure/flora/bush/flowers_pp,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/hallway/secondary/exit/departure_lounge)
 "aeg" = (
 /obj/machinery/door/window/left/directional/west{
@@ -14574,12 +14576,12 @@
 	id = "kitchenhydro";
 	name = "Service Shutter"
 	},
-/obj/machinery/door/airlock/medical/glass{
-	name = "Service Door"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
+/obj/machinery/door/airlock/silver/glass{
+	name = "Service Door"
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "aUi" = (
@@ -15968,7 +15970,9 @@
 /obj/structure/flora/bush/fullgrass/style_3,
 /obj/structure/flora/bush/flowers_pp/style_3,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/hallway/secondary/exit/departure_lounge)
 "aZl" = (
 /obj/structure/chair,
@@ -18980,7 +18984,9 @@
 /obj/structure/flora/bush/fullgrass,
 /obj/structure/flora/bush/fullgrass/style_3,
 /obj/structure/flora/bush/flowers_pp/style_2,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/hallway/secondary/exit/departure_lounge)
 "bjb" = (
 /obj/machinery/conveyor{
@@ -19690,13 +19696,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/healthanalyzer,
-/obj/item/healthanalyzer,
-/obj/item/healthanalyzer,
 /obj/item/radio/intercom{
 	pixel_x = 29
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/toy/crayon/spraycan/roboticist{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "blF" = (
@@ -20170,9 +20179,8 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/machinery/firealarm/directional/east,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "bnk" = (
@@ -20328,6 +20336,9 @@
 	pixel_y = 32
 	},
 /obj/structure/filingcabinet/chestdrawer,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/hop)
 "bnP" = (
@@ -20377,7 +20388,9 @@
 	pixel_y = 30
 	},
 /obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/hop)
 "bnS" = (
@@ -20739,14 +20752,11 @@
 /area/station/hallway/primary/central)
 "bpb" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 9
 	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
 "bpe" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -22908,12 +22918,6 @@
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/glass,
 /area/station/maintenance/starboard/aft)
-"bya" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/service/kitchen)
 "byb" = (
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 4
@@ -37074,7 +37078,9 @@
 /obj/structure/flora/bush/flowers_pp/style_2,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/hallway/secondary/exit/departure_lounge)
 "dtc" = (
 /obj/machinery/photocopier,
@@ -40091,7 +40097,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/fullgrass,
 /obj/structure/flora/bush/flowers_pp/style_2,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/hallway/secondary/exit/departure_lounge)
 "fUH" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -43124,7 +43132,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/fullgrass/style_3,
 /obj/structure/flora/bush/flowers_pp/style_3,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/hallway/secondary/exit/departure_lounge)
 "iyP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -58011,6 +58021,12 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/breakroom)
+"uZA" = (
+/obj/machinery/modular_computer/preset/curator{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/station/service/library)
 "uZK" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -101225,7 +101241,7 @@ aKV
 umk
 kUv
 fzq
-bya
+aum
 aRH
 jjk
 jjk
@@ -106625,7 +106641,7 @@ aPg
 aQr
 aFu
 aTb
-puU
+uZA
 aVR
 ade
 sjK
