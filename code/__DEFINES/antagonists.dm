@@ -107,6 +107,8 @@
 /// Only present for already researched knowledge.
 #define HKT_INSTANCE "instance"
 #define HKT_CATEGORY "category"
+/// unique identifier most commonly used for identifying what knowledge is researchable
+#define HKT_ID "id"
 
 #define BGR_SIDE "node_side"
 
