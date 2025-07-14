@@ -1,7 +1,7 @@
 //Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
 /obj/item/stack/ore/bluespace_crystal
 	name = "bluespace crystal"
-	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
+	desc = "A glowing bluespace crystal, not much is known about how they work. It feels delicate and brittle, but the inner fractals give a dizzying, non-dimensional sense of density."
 	icon = 'icons/obj/ore.dmi'
 	icon_state = "bluespace_crystal"
 	singular_name = "bluespace crystal"
@@ -15,6 +15,10 @@
 	merge_type = /obj/item/stack/ore/bluespace_crystal
 	/// The teleport range when crushed/thrown at someone.
 	var/blink_range = 8
+
+/obj/item/stack/ore/bluespace_crystal/examine(mob/user)
+	. = ..()
+	. += span_notice("When crushed by high-velocity -- such as THROWING -- or USEd in-hand, this ")
 
 /obj/item/stack/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
@@ -33,6 +37,10 @@
 	return 1
 
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
+	user.visible_message("[user] takes [src] in-hand and squeezes with obvious effort...")
+	if(!do_after(user, 2 SECONDS))
+		balloon_alert(user, "crushing interrupted")
+		return
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -55,7 +63,7 @@
 //Artificial bluespace crystal, doesn't give you much research.
 /obj/item/stack/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
-	desc = "An artificially made bluespace crystal, it looks delicate."
+	desc = "An artificially made bluespace crystal; it looks infinitely-dense, but feels quite brittle."
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.5)
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 //nice try
@@ -73,7 +81,7 @@
 	inhand_icon_state = null
 	gulag_valid = TRUE
 	singular_name = "bluespace polycrystal"
-	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
+	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off; though stable crystals are known to have had their super-positional density and brittleness stabilized."
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
