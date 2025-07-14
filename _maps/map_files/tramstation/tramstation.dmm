@@ -38120,7 +38120,7 @@
 /area/station/maintenance/solars/starboard/fore)
 "mpw" = (
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/grass,
+/turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "mpx" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -59484,7 +59484,7 @@
 "tVO" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/grass,
+/turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "tWb" = (
 /obj/machinery/camera/directional/east{

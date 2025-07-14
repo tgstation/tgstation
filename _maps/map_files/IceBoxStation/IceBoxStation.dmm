@@ -21619,6 +21619,18 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/atmos/pumproom)
+"gcY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "gcZ" = (
 /obj/structure/table,
 /obj/item/storage/bag/tray,
@@ -21745,7 +21757,7 @@
 /area/station/maintenance/aft/lesser)
 "geZ" = (
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/grass,
+/turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "gfb" = (
 /turf/closed/wall/r_wall,
@@ -35203,7 +35215,9 @@
 "kby" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/grass,
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing,
+/turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "kbJ" = (
 /obj/machinery/field/generator,
@@ -43562,7 +43576,7 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/grass,
+/turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "muv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -232549,7 +232563,7 @@ kXI
 lJO
 wDf
 sAR
-sAR
+gcY
 lCn
 kPy
 dQI
