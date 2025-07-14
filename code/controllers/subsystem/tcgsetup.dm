@@ -182,8 +182,7 @@ SUBSYSTEM_DEF(trading_card_game)
 			cardsByCount[id] += 1
 	var/toSend = "Out of [totalCards] cards"
 	for(var/id in sort_list(cardsByCount, GLOBAL_PROC_REF(cmp_num_string_asc)))
-		if(id)
-			var/datum/card/template = cached_cards[pack.series]["ALL"][id]
-			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
+		var/datum/card/template = cached_cards[pack.series]["ALL"][id]
+		toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
 	message_admins(toSend)
 	qdel(pack)
