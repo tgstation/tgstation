@@ -44,13 +44,12 @@
 	can_approve_requests = FALSE
 	requestonly = TRUE
 
-/obj/machinery/computer/cargo/attacked_by(obj/item/I, mob/living/user)
-	if(istype(I,/obj/item/trade_chip))
-		var/obj/item/trade_chip/contract = I
-		contract.try_to_unlock_contract(user)
-		return TRUE
-	else
-		return ..()
+/obj/machinery/computer/cargo/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/trade_chip))
+		return NONE
+	var/obj/item/trade_chip/contract = tool
+	contract.try_to_unlock_contract(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/cargo/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -96,6 +95,7 @@
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	data["can_send"] = can_send
 	data["can_approve_requests"] = can_approve_requests
+	data["requestonly"] = requestonly
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message

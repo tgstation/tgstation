@@ -8,7 +8,7 @@
 	/// Reference to the limb we're inside of
 	var/obj/item/bodypart/bodypart_owner
 	/// The cached info about the blood this organ belongs to
-	var/list/blood_dna_info = list("Synthetic DNA" = "O+") // not every organ spawns inside a person
+	var/list/blood_dna_info // not every organ spawns inside a person
 	/// The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
 	/**
@@ -77,6 +77,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload)
 	. = ..()
+	blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponentFrom(
 			SOURCE_EDIBLE_INNATE, \
@@ -136,7 +137,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/wash(clean_types)
 	. = ..()
-
+	if(!.)
+		return
 	// always add the original dna to the organ after it's washed
 	if(!IS_ROBOTIC_ORGAN(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
@@ -285,15 +287,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  *
  * * regenerate_existing - if TRUE, existing organs will be deleted and replaced with new ones
  */
-/mob/living/carbon/proc/regenerate_organs(regenerate_existing = FALSE)
 
+/mob/living/carbon/proc/regenerate_organs(remove_hazardous = FALSE)
 	// Delegate to species if possible.
 	if(dna?.species)
-		dna.species.regenerate_organs(src, replace_current = regenerate_existing)
-
-		// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 		for(var/obj/item/organ/organ as anything in organs)
+			if(remove_hazardous && (organ.organ_flags & ORGAN_HAZARDOUS))
+				qdel(organ)
+				continue
+			// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 			organ.set_organ_damage(0)
+
+		dna.species.regenerate_organs(src, replace_current = FALSE)
 		set_heartattack(FALSE)
 
 		// Ears have aditional vаr "deaf", need to update it too

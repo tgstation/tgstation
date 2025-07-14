@@ -163,7 +163,7 @@
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, params)
+/obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
@@ -218,7 +218,7 @@
 		for(var/i in 1 to mineral_amount)
 			new mineral(loc)
 
-/obj/structure/tram/attackby(obj/item/item, mob/user, params)
+/obj/structure/tram/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(istype(item, /obj/item/wallframe/tram))
@@ -353,7 +353,7 @@
 	/// The last time a radiation pulse was performed
 	var/last_event = 0
 
-/obj/structure/tram/alt/uranium/attackby(obj/item/W, mob/user, params)
+/obj/structure/tram/alt/uranium/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	radiate()
 	return ..()
 
@@ -608,22 +608,27 @@
 /obj/structure/chair/sofa/bench/tram
 	name = "bench"
 	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
-	icon_state = "bench_middle"
+	icon_state = "/obj/structure/chair/sofa/bench/tram"
+	post_init_icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = COLOR_TRAM_BLUE
 
 /obj/structure/chair/sofa/bench/tram/left
-	icon_state = "bench_left"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/left"
+	post_init_icon_state = "bench_left"
 	greyscale_config = /datum/greyscale_config/bench_left
 
 /obj/structure/chair/sofa/bench/tram/right
-	icon_state = "bench_right"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/right"
+	post_init_icon_state = "bench_right"
 	greyscale_config = /datum/greyscale_config/bench_right
 
 /obj/structure/chair/sofa/bench/tram/corner
-	icon_state = "bench_corner"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/corner"
+	post_init_icon_state = "bench_corner"
 	greyscale_config = /datum/greyscale_config/bench_corner
 
 /obj/structure/chair/sofa/bench/tram/solo
-	icon_state = "bench_solo"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/solo"
+	post_init_icon_state = "bench_solo"
 	greyscale_config = /datum/greyscale_config/bench_solo

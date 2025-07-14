@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button, Input, Stack } from 'tgui-core/components';
 
 export function PageSelect(props) {
@@ -9,6 +10,7 @@ export function PageSelect(props) {
     page_count,
   } = props;
 
+  const [page, setPage] = useState(current_page);
   if (page_count === 1) return;
 
   return (
@@ -29,14 +31,14 @@ export function PageSelect(props) {
       </Stack.Item>
       <Stack.Item>
         <Input
-          placeholder={current_page + '/' + page_count}
-          onChange={(e, value) => {
-            // I am so sorry
+          placeholder={`${current_page}/${page_count}`}
+          onBlur={(value) => {
             if (value !== '') {
               call_on_change(value);
-              e.currentTarget.value = '';
+              setPage(value);
             }
           }}
+          value={page}
         />
       </Stack.Item>
       <Stack.Item>

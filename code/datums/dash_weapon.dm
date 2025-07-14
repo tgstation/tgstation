@@ -50,7 +50,9 @@
 	if(!(target in view(user.client.view, user)))
 		user.balloon_alert(user, "out of view!")
 		return FALSE
-
+	if(target_turf.is_blocked_turf_ignore_climbable())
+		user.balloon_alert(user, "destination blocked!")
+		return FALSE
 	if(!do_teleport(user, target_turf, no_effects = TRUE))
 		user.balloon_alert(user, "dash blocked!")
 		return FALSE

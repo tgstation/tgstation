@@ -83,9 +83,6 @@
 #define COMSIG_ATOM_PROCESSED "atom_processed"
 ///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
 #define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
-///called after teleporting into a protected turf: (channel, turf/origin)
-#define COMSIG_ATOM_INTERCEPT_TELEPORTED "intercept_teleported"
-	#define COMPONENT_BLOCK_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
 ///called when an atom starts orbiting another atom: (atom)
@@ -151,6 +148,11 @@
 
 /// From /datum/component/tether/UnregisterFromParent()
 #define COMSIG_ATOM_TETHER_SNAPPED "atom_tether_snapped"
+
+/// From /atom/finalize_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS "atom_finalize_material_effects"
+/// From /atom/finalize_remove_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS "atom_finalize_remove_material_effects"
 
 /// From /atom/proc/update_atom_colour() : (color_changed)
 #define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"

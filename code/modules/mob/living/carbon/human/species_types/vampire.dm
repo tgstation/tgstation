@@ -18,7 +18,7 @@
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | WABBAJACK | ERT_SPAWN
-	exotic_bloodtype = "V"
+	exotic_bloodtype = BLOOD_TYPE_VAMPIRE
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
 	mutantheart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
@@ -189,8 +189,12 @@
 	if(victim.stat == DEAD)
 		to_chat(user, span_warning("You need a living victim!"))
 		return FALSE
-	if(!victim.blood_volume || (victim.dna && (HAS_TRAIT(victim, TRAIT_NOBLOOD) || victim.dna.species.exotic_blood)))
-		to_chat(user, span_warning("[victim] doesn't have blood!"))
+	var/blood_name = LOWER_TEXT(user.get_bloodtype()?.get_blood_name())
+	if(!victim.blood_volume || victim.get_blood_reagent() != user.get_blood_reagent())
+		if (blood_name)
+			to_chat(user, span_warning("[victim] doesn't have [blood_name]!"))
+		else
+			to_chat(user, span_warning("[victim] doesn't have anything inside of them you could stomach!"))
 		return FALSE
 	COOLDOWN_START(licker_drinker, drain_cooldown, 3 SECONDS)
 	if(victim.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
@@ -211,7 +215,7 @@
 	victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 	user.blood_volume = clamp(user.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 	if(!victim.blood_volume)
-		to_chat(user, span_notice("You finish off [victim]'s blood supply."))
+		to_chat(user, span_notice("You finish off [victim]'s [blood_name] supply."))
 	return TRUE
 
 /obj/item/organ/heart/vampire

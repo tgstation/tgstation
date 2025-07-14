@@ -226,45 +226,76 @@
 		last_sentence_cache.Cut(1, last_sentence_cache.len - SENTENCE_CACHE_LEN + 1)
 
 /**
+ * Scramble a paragraph in this language.
+ *
+ * Takes into account any languages the hearer knows that has mutual understanding with this language.
+ */
+/datum/language/proc/scramble_paragraph(input, list/mutual_languages)
+	// perfect understanding, no need to scramble
+	if(mutual_languages?[type] >= 100)
+		return input
+
+	var/static/regex/first_sentence = regex(@"(.+?(?:[\.!\?]|$))", "g")
+	var/list/new_paragraph = list()
+	while(first_sentence.Find(input))
+		new_paragraph += scramble_sentence(trim(first_sentence.group[1]), mutual_languages)
+	return jointext(new_paragraph, " ")
+
+/**
  * Scrambles a sentence in this language.
  *
  * Takes into account any languages the hearer knows that has mutual understanding with this language.
  */
 /datum/language/proc/scramble_sentence(input, list/mutual_languages)
 	var/cache_key = "[mutual_languages?[type] || 0]-understanding"
-	var/list/cache = read_sentence_cache(cache_key)
+	var/list/cache = read_sentence_cache(input)
 	if(cache?[cache_key])
 		return cache[cache_key]
 
-	var/list/real_words = splittext(input, " ")
+	// List of words that will be recombined into a sentence
 	var/list/scrambled_words = list()
-	for(var/word in real_words)
+	// List which indexes correspond to words in scrambled_words, records whether the word was translated
+	// Can't be a single assoc list because duplicates are expected
+	var/list/translated_index = list()
+	for(var/word in splittext(input, " "))
 		var/translate_prob = mutual_languages?[type] || 0
 		var/base_word = strip_outer_punctuation(word)
 		if(translate_prob > 0)
-			// the probability of managing to understand a word is based on how common it is
-			// 1000 words in the list, so words outside the list are just treated as "the 1500th most common word"
-			var/commonness = GLOB.most_common_words[LOWER_TEXT(base_word)] || 1500
-			translate_prob += (translate_prob * 0.2 * (1 - (min(commonness, 1500) / 500)))
+			// the probability of managing to understand a word is based on how common it is (+10%, -15%)
+			// 1000 words in the list, so words outside the list are just treated as "the 1250th most common word"
+			var/commonness = GLOB.most_common_words[LOWER_TEXT(base_word)] || 1250
+			translate_prob += (10 * (1 - (min(commonness, 1250) / 500)))
 			if(prob(translate_prob))
-				scrambled_words += base_word
+				scrambled_words += word
+				translated_index += FALSE
 				continue
 
-		scrambled_words += scramble_word(base_word)
+		var/scrambled_word = scramble_word(base_word)
+		scrambled_words += scrambled_word
+		translated_index += (scrambled_word != base_word)
 
 	// start building the new sentence. first word is capitalized and otherwise untouched
-	var/sentence = capitalize(popleft(scrambled_words))
-	for(var/word in scrambled_words)
-		if(prob(between_word_sentence_chance))
+	var/sentence = capitalize(scrambled_words[1])
+	for(var/i in 2 to length(scrambled_words))
+		var/word = scrambled_words[i]
+		// this was not translated so just throw it in
+		if(!translated_index[i])
+			sentence += " [word]"
+			continue
+		// if the last word was scrambled, always include a space
+		if(translated_index[i - 1] || prob(between_word_space_chance))
+			sentence += " "
+		// lastly try inserting a new sentence
+		else if(prob(between_word_sentence_chance))
 			sentence += ". "
 			word = capitalize(word)
-		else if(prob(between_word_space_chance))
-			sentence += " "
 
 		sentence += word
 
-	// scrambling the words will drop punctuation, so re-add it at the end
-	sentence += find_last_punctuation(input)
+	// scrambling the word will drop punctuation, so we need to re-add it at the end
+	// (however we don't need to do anything if the last word was not translated)
+	if(translated_index[length(scrambled_words)])
+		sentence += find_last_punctuation(input)
 
 	write_sentence_cache(input, cache_key, sentence)
 

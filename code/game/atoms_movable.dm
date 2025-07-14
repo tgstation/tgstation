@@ -1499,14 +1499,7 @@
 
 /atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE, item_animation_override = null)
 	if(!no_effect && (visual_effect_icon || used_item))
-		var/animation_type = item_animation_override || ATTACK_ANIMATION_BLUNT
-		if (used_item && !item_animation_override)
-			switch(used_item.get_sharpness())
-				if (SHARP_EDGED)
-					animation_type = ATTACK_ANIMATION_SLASH
-				if (SHARP_POINTY)
-					animation_type = ATTACK_ANIMATION_PIERCE
-		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = animation_type)
+		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = item_animation_override)
 
 	if(attacked_atom == src)
 		return //don't do an animation if attacking self
@@ -1580,12 +1573,12 @@
 	return get_language_holder().remove_all_partial_languages(source)
 
 /// Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.
-/atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
-	return get_language_holder().add_blocked_language(language, source)
+/atom/movable/proc/add_blocked_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
+	return get_language_holder().add_blocked_language(language, language_flags, source)
 
 /// Removes a language from the blocked language list.
-/atom/movable/proc/remove_blocked_language(language, source = LANGUAGE_ATOM)
-	return get_language_holder().remove_blocked_language(language, source)
+/atom/movable/proc/remove_blocked_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
+	return get_language_holder().remove_blocked_language(language, language_flags, source)
 
 /// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
 /atom/movable/proc/has_language(language, flags_to_check)
@@ -1608,7 +1601,8 @@
 	return get_language_holder().get_random_understood_language()
 
 /// Gets a lazylist of all mutually understood languages.
-/atom/movable/proc/get_partially_understood_languages()
+/atom/movable/proc/get_partially_understood_languages() as /list
+	RETURN_TYPE(/list)
 	return get_language_holder().best_mutual_languages
 
 /// Gets a random spoken language, useful for forced speech and such.
@@ -1772,6 +1766,11 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+///This handles special behavior that happens when the movable is used in crafting (slapcrafting and UI, not sheets or lathes or processing with a tool)
+/atom/movable/proc/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_USED_IN_CRAFT, result)
 
 /**
  * Check if the other atom/movable has any factions the same as us. Defined at the atom/movable level so it can be defined for just about anything.

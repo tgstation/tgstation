@@ -1,0 +1,15 @@
+{
+	"mod-core-soul": [
+		{
+			"type": "icon_state",
+			"icon_state": "mod-core-soul-base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mod-core-soul-shard",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

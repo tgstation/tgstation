@@ -17,8 +17,8 @@
 		department_grab.quirk_poster_department = quirk_poster_department
 
 /// You can use any spraypaint can on a quirk poster to turn it into a contraband poster from the traitor objective
-/obj/item/poster/quirk/attackby(obj/item/postertool, mob/user, params)
-	if(!is_special_character(user) || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(postertool, /obj/item/toy/crayon))
+/obj/item/poster/quirk/attackby(obj/item/postertool, mob/user, list/modifiers, list/attack_modifiers)
+	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(postertool, /obj/item/toy/crayon))
 		return ..()
 	balloon_alert(user, "converting poster...")
 	if(!do_after(user, 5 SECONDS, user))
@@ -32,7 +32,7 @@
 /// Screentip for the above
 
 /obj/item/poster/quirk/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!is_special_character(user) || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(held_item, /obj/item/toy/crayon))
+	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(held_item, /obj/item/toy/crayon))
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = "Turn into Demoralizing Poster"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -50,7 +50,7 @@
 	mood_buff = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE, department = quirk_poster_department)
 	return ..()
 
-/obj/structure/sign/poster/quirk/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/poster/quirk/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if (I.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(mood_buff)
 	return ..()

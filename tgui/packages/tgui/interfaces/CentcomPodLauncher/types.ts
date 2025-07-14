@@ -1,6 +1,6 @@
-import { ComponentProps } from 'react';
-import { Floating } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { ComponentProps } from 'react';
+import type { Floating } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 export type PodLauncherData = {
   bayNumber: string;
@@ -39,7 +39,6 @@ export type PodLauncherData = {
   picking_dropoff_turf: BooleanLike;
   podDesc: string;
   podName: string;
-  renderLighting: BooleanLike;
   rev_delays: Record<string, number>;
   reverse_option_list: Record<string, BooleanLike>;
   shrapnelMagnitude: number;

@@ -40,7 +40,7 @@
 	/// Which stage does this subsystem init at. Earlier stages can fire while later stages init.
 	var/init_stage = INITSTAGE_MAIN
 
-	/// This var is set to TRUE after the subsystem has been initialized.
+	/// This var is set to `INITIALIZATION_INNEW_REGULAR` after the subsystem has been initialized.
 	var/initialized = FALSE
 
 	/// Set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later

@@ -1,4 +1,4 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Box,
@@ -87,7 +87,7 @@ const FilterTextEntry = (props) => {
     <Input
       value={value}
       width="250px"
-      onChange={(e, value) =>
+      onBlur={(value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {
@@ -116,7 +116,7 @@ const FilterColorEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onChange={(e, value) =>
+        onBlur={(value) =>
           act('transition_filter_value', {
             name: filterName,
             new_data: {
@@ -154,7 +154,7 @@ const FilterFlagsEntry = (props) => {
   const { act, data } = useBackend();
 
   const filterInfo = data.filter_info;
-  const flags = filterInfo[filterType]['flags'];
+  const flags = filterInfo[filterType].flags;
   return map(flags, (bitField, flagName) => (
     <Button.Checkbox
       checked={value & bitField}
@@ -219,15 +219,13 @@ const FilterEntry = (props) => {
   const { name, filterDataEntry } = props;
   const { type, priority, ...restOfProps } = filterDataEntry;
 
-  const filterDefaults = data['filter_info'];
+  const filterDefaults = data.filter_info;
 
-  const targetFilterPossibleKeys = Object.keys(
-    filterDefaults[type]['defaults'],
-  );
+  const targetFilterPossibleKeys = Object.keys(filterDefaults[type].defaults);
 
   return (
     <Collapsible
-      title={name + ' (' + type + ')'}
+      title={`${name} (${type})`}
       buttons={
         <>
           <NumberInput
@@ -243,12 +241,11 @@ const FilterEntry = (props) => {
             }
           />
           <Button.Input
-            content="Rename"
-            placeholder={name}
-            onCommit={(e, new_name) =>
+            buttonText="Rename"
+            onCommit={(value) =>
               act('rename_filter', {
-                name: name,
-                new_name: new_name,
+                name,
+                new_name: value,
               })
             }
             width="90px"
@@ -263,7 +260,7 @@ const FilterEntry = (props) => {
       <Section level={2}>
         <LabeledList>
           {targetFilterPossibleKeys.map((entryName) => {
-            const defaults = filterDefaults[type]['defaults'];
+            const defaults = filterDefaults[type].defaults;
             const value = restOfProps[entryName] || defaults[entryName];
             const hasValue = value !== defaults[entryName];
             return (
@@ -288,7 +285,7 @@ export const Filteriffic = (props) => {
   const name = data.target_name || 'Unknown Object';
   const filters = data.target_filter_data || {};
   const hasFilters = Object.keys(filters).length !== 0;
-  const filterDefaults = data['filter_info'];
+  const filterDefaults = data.filter_info;
   const [massApplyPath, setMassApplyPath] = useState('');
   const [hiddenSecret, setHiddenSecret] = useState(false);
 
@@ -309,7 +306,7 @@ export const Filteriffic = (props) => {
                 <Input
                   value={massApplyPath}
                   width="100px"
-                  onChange={(e, value) => setMassApplyPath(value)}
+                  onChange={setMassApplyPath}
                 />
                 <Button.Confirm
                   content="Apply"

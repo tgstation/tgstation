@@ -37,8 +37,8 @@ function Story() {
             onClick={() =>
               setTimeout(() => {
                 try {
-                  const result = new Function('return (' + code + ')')();
-                  if (result && result.then) {
+                  const result = new Function(`return (${code})`)();
+                  if (result?.then) {
                     logger.log('Promise');
                     result.then(logger.log);
                   } else {
@@ -54,12 +54,7 @@ function Story() {
           </Button>
         }
       >
-        <TextArea
-          as="textarea"
-          width="100%"
-          height="10em"
-          onChange={(event, value) => setCode(value)}
-        >
+        <TextArea fluid height="10em" onChange={setCode}>
           {code}
         </TextArea>
       </Section>

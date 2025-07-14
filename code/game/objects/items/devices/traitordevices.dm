@@ -96,7 +96,7 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, span_warning("Successfully irradiated [interacting_with]."))
-		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (intensity+(wavelength*4))*5)
 		return . | ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
@@ -409,58 +409,6 @@ effective or pretty fucking useless.
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-/obj/item/storage/toolbox/emergency/turret
-	desc = "You feel a strange urge to hit this with a wrench."
-
-/obj/item/storage/toolbox/emergency/turret/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench/combat(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/analyzer(src)
-	new /obj/item/wirecutters(src)
-
-/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/wrench/combat))
-		return NONE
-	if(!user.combat_mode)
-		return NONE
-	if(!tool.toolspeed)
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "constructing...")
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
-		return ITEM_INTERACT_BLOCKING
-
-	balloon_alert(user, "constructed!")
-	user.visible_message(
-		span_danger("[user] bashes [src] with [tool]!"),
-		span_danger("You bash [src] with [tool]!"),
-		null,
-		COMBAT_MESSAGE_RANGE,
-	)
-
-	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
-	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
-	set_faction(turret, user)
-	turret.toolbox = src
-	forceMove(turret)
-	return ITEM_INTERACT_SUCCESS
-
-
-/obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
-	turret.faction = list("[REF(user)]")
-
-/obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
-	turret.faction = list(ROLE_SYNDICATE)
-
-/obj/machinery/porta_turret/syndicate/toolbox
-	icon_state = "toolbox_off"
-	base_icon_state = "toolbox"
-
-/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
-	. = ..()
-	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
-
 /obj/machinery/porta_turret/syndicate/toolbox
 	integrity_failure = 0
 	max_integrity = 100
@@ -469,8 +417,14 @@ effective or pretty fucking useless.
 	lethal_projectile = /obj/projectile/bullet/toolbox_turret
 	subsystem_type = /datum/controller/subsystem/processing/projectiles
 	ignore_faction = TRUE
+	icon_state = "toolbox_off"
+	base_icon_state = "toolbox"
 	/// The toolbox we store.
 	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+	. = ..()
+	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
@@ -487,7 +441,7 @@ effective or pretty fucking useless.
 
 	return TRUE
 
-/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/wrench/combat))
 		return ..()
 

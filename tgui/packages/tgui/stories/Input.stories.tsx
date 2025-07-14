@@ -25,14 +25,15 @@ export const meta = {
 function Story() {
   const [number, setNumber] = useState(0);
   const [text, setText] = useState('Sample text');
+
   return (
     <Section>
       <LabeledList>
         <LabeledList.Item label="Input (onChange)">
-          <Input value={text} onChange={(e, value) => setText(value)} />
+          <Input value={text} onChange={setText} />
         </LabeledList.Item>
         <LabeledList.Item label="Input (onInput)">
-          <Input value={text} onInput={(e, value) => setText(value)} />
+          <Input value={text} onChange={setText} />
         </LabeledList.Item>
         <LabeledList.Item label="NumberInput (onChange)">
           <NumberInput
@@ -55,7 +56,7 @@ function Story() {
             value={number}
             minValue={-100}
             maxValue={100}
-            onDrag={(value) => setNumber(value)}
+            onChange={(value) => setNumber(value)}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Slider (onDrag)">
@@ -65,7 +66,7 @@ function Story() {
             value={number}
             minValue={-100}
             maxValue={100}
-            onDrag={(e, value) => setNumber(value)}
+            onChange={(e, value) => setNumber(value)}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Knob (onDrag)">
@@ -77,7 +78,7 @@ function Story() {
             value={number}
             minValue={-100}
             maxValue={100}
-            onDrag={(e, value) => setNumber(value)}
+            onChange={(e, value) => setNumber(value)}
           />
           <Knob
             ml={1}
@@ -89,7 +90,7 @@ function Story() {
             value={number}
             minValue={-100}
             maxValue={100}
-            onDrag={(e, value) => setNumber(value)}
+            onChange={(e, value) => setNumber(value)}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Rotating Icon">
@@ -101,7 +102,7 @@ function Story() {
               dragMatrix={[0, -1]}
               step={1}
               stepPixelSize={5}
-              onDrag={(e, value) => setNumber(value)}
+              onChange={(e, value) => setNumber(value)}
             >
               {(control) => (
                 <Box onMouseDown={control.handleDragStart}>

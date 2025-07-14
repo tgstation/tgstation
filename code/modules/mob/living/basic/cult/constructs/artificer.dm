@@ -48,6 +48,7 @@
 // Alternate artificer themes
 /mob/living/basic/construct/artificer/angelic
 	desc = "A bulbous construct dedicated to building and maintaining holy armies."
+	faction = list(FACTION_HOLY)
 	theme = THEME_HOLY
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/soulstone/purified,
@@ -61,6 +62,7 @@
 	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
 
 /mob/living/basic/construct/artificer/mystic
+	faction = list(ROLE_WIZARD)
 	theme = THEME_WIZARD
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/cult_floor,

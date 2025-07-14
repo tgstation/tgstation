@@ -163,21 +163,6 @@
 		if(isliving(sacrificed))
 			continue
 
-		if(isstack(sacrificed))
-			var/obj/item/stack/sac_stack = sacrificed
-			var/how_much_to_use = 0
-			for(var/requirement in required_atoms)
-				// If it's not requirement type and type is not a list, skip over this check
-				if(!istype(sacrificed, requirement) && !islist(requirement))
-					continue
-				// If requirement *is* a list and the stack *is* in the list, skip over this check
-				if(islist(requirement) && !is_type_in_list(sacrificed, requirement))
-					continue
-				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
-				break
-			sac_stack.use(how_much_to_use)
-			continue
-
 		selected_atoms -= sacrificed
 		qdel(sacrificed)
 
@@ -607,7 +592,7 @@
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, GLOB.heretic_research_tree[type][HKT_ROUTE])
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [gameTimestamp()].")
 	notify_ghosts(
-		"[user] has completed an ascension ritual!",
+		"[user.real_name] has completed an ascension ritual!",
 		source = user,
 		header = "A Heretic is Ascending!",
 	)

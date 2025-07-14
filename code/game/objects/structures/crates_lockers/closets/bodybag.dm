@@ -46,7 +46,7 @@
 		QDEL_NULL(foldedbag_instance)
 	return ..()
 
-/obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
+/obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, list/modifiers, list/attack_modifiers)
 	if (IS_WRITING_UTENSIL(interact_tool))
 		if(!user.can_write(interact_tool))
 			return
@@ -176,7 +176,7 @@
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(iscarbon(content))
 			var/mob/living/carbon/mob = content
-			if (mob.dna?.get_mutation(/datum/mutation/human/dwarfism))
+			if (mob.dna?.get_mutation(/datum/mutation/dwarfism))
 				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
 				continue
 		if(!isitem(content))

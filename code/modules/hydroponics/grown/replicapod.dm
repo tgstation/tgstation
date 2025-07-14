@@ -56,11 +56,9 @@
 	var/list/quirks
 	var/sampleDNA
 	var/contains_sample = FALSE
-	var/being_harvested = FALSE
 
 /obj/item/seeds/replicapod/Initialize(mapload)
 	. = ..()
-
 	create_reagents(volume, INJECTABLE | DRAWABLE)
 
 /obj/item/seeds/replicapod/create_reagents(max_vol, flags)
@@ -70,26 +68,27 @@
 /// Handles reagents getting added to this seed.
 /obj/item/seeds/replicapod/proc/on_reagent_update(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-	if(!B)
+
+	var/datum/reagent/blood/blood = reagents.has_reagent(/datum/reagent/blood)
+	if(!blood)
 		return
 
-	if(B.data["mind"] && B.data["cloneable"])
-		mind = B.data["mind"]
-		ckey = B.data["ckey"]
-		realName = B.data["real_name"]
-		blood_gender = B.data["gender"]
-		blood_type = B.data["blood_type"]
-		features = B.data["features"]
-		factions = B.data["factions"]
-		quirks = B.data["quirks"]
-		sampleDNA = B.data["blood_DNA"]
-		contains_sample = TRUE
-		visible_message(span_notice("The [src] is injected with a fresh blood sample."))
-		investigate_log("[key_name(mind)]'s cloning record was added to [src]", INVESTIGATE_BOTANY)
-	else
+	if(!blood.data["mind"] || !blood.data["cloneable"])
 		visible_message(span_warning("The [src] rejects the sample!"))
-	return NONE
+		return
+
+	mind = blood.data["mind"]
+	ckey = blood.data["ckey"]
+	realName = blood.data["real_name"]
+	blood_gender = blood.data["gender"]
+	blood_type = blood.data["blood_type"]
+	features = blood.data["features"]
+	factions = blood.data["factions"]
+	quirks = blood.data["quirks"]
+	sampleDNA = blood.data["blood_DNA"]
+	contains_sample = TRUE
+	visible_message(span_notice("The [src] is injected with a fresh blood sample."))
+	investigate_log("[key_name(mind)]'s cloning record was added to [src]", INVESTIGATE_BOTANY)
 
 /// Handles reagents being deleted from these seeds.
 /obj/item/seeds/replicapod/proc/on_reagent_del(changetype)
@@ -106,7 +105,6 @@
 	factions = null
 	sampleDNA = null
 	contains_sample = FALSE
-	return NONE
 
 /obj/item/seeds/replicapod/get_unique_analyzer_text()
 	if(contains_sample)
@@ -121,32 +119,45 @@
 	var/list/result = list()
 	if(CONFIG_GET(flag/revival_pod_plants))
 		if(ckey)
-			for(var/mob/M in GLOB.player_list)
-				if(isobserver(M))
-					var/mob/dead/observer/O = M
-					if(O.ckey == ckey && O.can_reenter_corpse)
+			for(var/mob/corpse as anything in GLOB.player_list)
+				if (corpse.ckey != ckey || HAS_TRAIT(corpse, TRAIT_SUICIDED))
+					continue
+
+				if(isobserver(corpse))
+					var/mob/dead/observer/ghost = corpse
+					if(ghost.can_reenter_corpse)
 						make_podman = TRUE
-						break
-				else
-					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED) && !HAS_TRAIT(M, TRAIT_MIND_TEMPORARILY_GONE))
-						make_podman = TRUE
-						break
-		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
-			for(var/mob/M in GLOB.player_list)
-				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
-					if(isobserver(M))
-						var/mob/dead/observer/O = M
-						if(!O.can_reenter_corpse)
-							break
+				else if(corpse.stat == DEAD && !HAS_TRAIT(corpse, TRAIT_MIND_TEMPORARILY_GONE))
 					make_podman = TRUE
-					ckey_holder = M.ckey
-					break
+
+				break
+
+		else if (mind)
+			// If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
+			for(var/mob/corpse in GLOB.player_list)
+				if (!corpse.mind || !corpse.ckey || !corpse.client)
+					continue
+
+				if (ckey(corpse.mind.key) != ckey(mind.key))
+					continue
+
+				if (corpse.stat != DEAD || HAS_TRAIT(corpse, TRAIT_SUICIDED))
+					continue
+
+				if(isobserver(corpse))
+					var/mob/dead/observer/ghost = corpse
+					if(!ghost.can_reenter_corpse)
+						break
+
+				make_podman = TRUE
+				ckey_holder = corpse.ckey
+				break
 
 	// No podman player, give one or two seeds.
 	if(!make_podman)
 		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
-		if(mind || ckey)
-			var/choice = tgui_alert(usr,"The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
+		if(user.client && (mind || ckey))
+			var/choice = tgui_alert(user, "The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
 			if(choice != "Harvest Seeds")
 				return result
 
@@ -179,11 +190,13 @@
 		podman.real_name = realName
 	else
 		podman.real_name = "Pod Person ([rand(1,999)])"
+
 	mind.transfer_to(podman)
 	if(ckey)
 		podman.PossessByPlayer(ckey)
 	else
 		podman.PossessByPlayer(ckey_holder)
+
 	podman.gender = blood_gender
 	podman.faction |= factions
 	if(!features["mcolor"])
@@ -203,7 +216,14 @@
 			most_plentiful_reagent.Cut()
 			most_plentiful_reagent[reagent] = reagents_add[reagent]
 
-	podman.dna.species.exotic_blood = most_plentiful_reagent[1]
+	var/datum/reagent/new_blood_reagent = most_plentiful_reagent[1]
+	// Try to find a corresponding blood type for this reagent
+	var/datum/blood_type/new_blood_type = get_blood_type(new_blood_reagent)
+	if(isnull(new_blood_type)) // this blood type doesn't exist yet in the global list, so make a new one
+		new_blood_type = new /datum/blood_type/random_chemical(new_blood_reagent)
+		GLOB.blood_types[new_blood_type::id] = new_blood_type
+	podman.set_blood_type(new_blood_type)
+
 	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
 	parent.update_tray(user, 1)
 	return result

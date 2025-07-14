@@ -93,9 +93,9 @@
 
 	chameleon_typecache |= typecacheof(type_to_add)
 	for(var/obj/item/item_type as anything in chameleon_typecache)
-		if(chameleon_blacklist[item_type] || (initial(item_type.item_flags) & ABSTRACT) || !initial(item_type.icon_state))
+		if(chameleon_blacklist[item_type] || (item_type::item_flags & ABSTRACT) || !item_type::icon_state)
 			continue
-		var/chameleon_item_name = "[initial(item_type.name)] ([initial(item_type.icon_state)])"
+		var/chameleon_item_name = "[item_type::name] ([item_type::post_init_icon_state || item_type::icon_state])"
 		chameleon_list[chameleon_item_name] = item_type
 
 
@@ -125,53 +125,53 @@
 	PROTECTED_PROC(TRUE) // Call update_look, not this!
 
 	var/atom/atom_target = target
-	atom_target.name = initial(picked_item.name)
-	atom_target.desc = initial(picked_item.desc)
-	atom_target.icon_state = initial(picked_item.icon_state)
+	atom_target.name = picked_item::name
+	atom_target.desc = picked_item::desc
+	atom_target.icon_state = picked_item::post_init_icon_state || picked_item::icon_state
 
 	if(isitem(atom_target))
 		var/obj/item/item_target = target
-		item_target.worn_icon = initial(picked_item.worn_icon)
-		item_target.lefthand_file = initial(picked_item.lefthand_file)
-		item_target.righthand_file = initial(picked_item.righthand_file)
+		item_target.worn_icon = picked_item::worn_icon
+		item_target.lefthand_file = picked_item::lefthand_file
+		item_target.righthand_file = picked_item::righthand_file
 
-		item_target.worn_icon_state = initial(picked_item.worn_icon_state)
-		item_target.inhand_icon_state = initial(picked_item.inhand_icon_state)
+		item_target.worn_icon_state = picked_item::worn_icon_state
+		item_target.inhand_icon_state = picked_item::inhand_icon_state
 
-		if(initial(picked_item.greyscale_colors))
-			if(initial(picked_item.greyscale_config_worn))
+		if(picked_item::greyscale_colors)
+			if(picked_item.greyscale_config_worn)
 				item_target.worn_icon = SSgreyscale.GetColoredIconByType(
-					initial(picked_item.greyscale_config_worn),
-					initial(picked_item.greyscale_colors),
+					picked_item::greyscale_config_worn,
+					picked_item::greyscale_colors,
 				)
-			if(initial(picked_item.greyscale_config_inhand_left))
+			if(picked_item::greyscale_config_inhand_left)
 				item_target.lefthand_file = SSgreyscale.GetColoredIconByType(
-					initial(picked_item.greyscale_config_inhand_left),
-					initial(picked_item.greyscale_colors),
+					picked_item::greyscale_config_inhand_left,
+					picked_item::greyscale_colors,
 				)
-			if(initial(picked_item.greyscale_config_inhand_right))
+			if(picked_item::greyscale_config_inhand_right)
 				item_target.righthand_file = SSgreyscale.GetColoredIconByType(
-					initial(picked_item.greyscale_config_inhand_right),
-					initial(picked_item.greyscale_colors),
+					picked_item::greyscale_config_inhand_right,
+					picked_item::greyscale_colors,
 				)
 
-		item_target.flags_inv = initial(picked_item.flags_inv)
-		item_target.hair_mask = initial(picked_item.hair_mask)
-		item_target.transparent_protection = initial(picked_item.transparent_protection)
+		item_target.flags_inv = picked_item::flags_inv
+		item_target.hair_mask = picked_item::hair_mask
+		item_target.transparent_protection = picked_item::transparent_protection
 		if(isclothing(item_target) && ispath(picked_item, /obj/item/clothing))
 			var/obj/item/clothing/clothing_target = item_target
 			var/obj/item/clothing/picked_clothing = picked_item
-			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
+			clothing_target.flags_cover = picked_clothing::flags_cover
 
 
-	if(initial(picked_item.greyscale_config) && initial(picked_item.greyscale_colors))
+	if((picked_item::greyscale_config) && picked_item::greyscale_colors)
 		atom_target.icon = SSgreyscale.GetColoredIconByType(
-			initial(picked_item.greyscale_config),
-			initial(picked_item.greyscale_colors),
+			picked_item::greyscale_config,
+			picked_item::greyscale_colors,
 		)
 
 	else
-		atom_target.icon = initial(picked_item.icon)
+		atom_target.icon = picked_item::icon
 
 /datum/action/item_action/chameleon/change/do_effect(trigger_flags)
 	select_look(owner)

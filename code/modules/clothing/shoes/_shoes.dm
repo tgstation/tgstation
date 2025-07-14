@@ -9,7 +9,6 @@
 	equip_sound = 'sound/items/equip/sneakers_equip1.ogg'
 	sound_vary = TRUE
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	clothing_flags = CLOTHING_MOD_OVERSLOTTING
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
 	armor_type = /datum/armor/clothing_shoes
@@ -60,13 +59,11 @@
 
 /obj/item/clothing/shoes/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
 	. = ..()
-	if(isinhands)
+	if (isinhands)
 		return
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		if(clothing_flags & LARGE_WORN_ICON)
-			. += mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
-		else
-			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+	var/blood_overlay = get_blood_overlay("shoe")
+	if (blood_overlay)
+		. += blood_overlay
 
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()

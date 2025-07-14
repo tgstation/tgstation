@@ -1,0 +1,375 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/crayon{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"c" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"d" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"h" = (
+/obj/structure/chair/comfy/beige,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"i" = (
+/obj/structure/chair/comfy/teal{
+	dir = 8
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"j" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/obj/item/cigarette/cigar/premium{
+	pixel_x = 4
+	},
+/obj/item/cigarette/cigar/havana{
+	pixel_y = 1;
+	pixel_x = -4
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"l" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/bookcase,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/bookcase/manuals/engineering,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"o" = (
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"p" = (
+/obj/structure/table/wood/fancy/green,
+/obj/machinery/light/small/dim/directional/west,
+/obj/item/book/bible{
+	pixel_y = 3
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"q" = (
+/obj/item/toy/crayon/green{
+	pixel_x = 2;
+	pixel_y = -6
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"r" = (
+/obj/structure/chair/comfy/teal{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"s" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"t" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"u" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"v" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/easel,
+/obj/item/canvas/nineteen_nineteen,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"w" = (
+/obj/machinery/light/small/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/machinery/door/morgue{
+	name = "Emergency Shuttle Library"
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"y" = (
+/obj/structure/bookcase/random,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"B" = (
+/turf/template_noop,
+/area/template_noop)
+"C" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/matches{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/lighter{
+	pixel_y = -2;
+	pixel_x = -3
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/obj/item/toy/crayon/blue{
+	pixel_x = 11;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"E" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"F" = (
+/obj/structure/chair/comfy/lime{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"G" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"H" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"I" = (
+/obj/structure/bookcase/random/reference,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/tile/wood/tile,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"K" = (
+/obj/machinery/power/shuttle_engine/large,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"L" = (
+/obj/structure/chair/comfy/carp{
+	dir = 8
+	},
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"M" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"N" = (
+/obj/structure/table/wood/fancy/green,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/dim/directional/north,
+/obj/item/book/random,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"P" = (
+/obj/modular_map_connector,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Q" = (
+/obj/machinery/door/morgue{
+	name = "Emergency Shuttle Library"
+	},
+/obj/structure/barricade/wooden/crude,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"R" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"S" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"T" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"U" = (
+/obj/structure/chair/comfy/lime{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"X" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+B
+B
+l
+B
+l
+l
+l
+B
+"}
+(2,1,1) = {"
+B
+w
+l
+N
+r
+n
+l
+B
+"}
+(3,1,1) = {"
+B
+d
+l
+U
+D
+T
+l
+l
+"}
+(4,1,1) = {"
+B
+X
+Q
+R
+o
+t
+u
+K
+"}
+(5,1,1) = {"
+B
+B
+x
+M
+R
+c
+u
+u
+"}
+(6,1,1) = {"
+B
+w
+P
+j
+F
+C
+l
+S
+"}
+(7,1,1) = {"
+B
+f
+T
+L
+a
+s
+u
+K
+"}
+(8,1,1) = {"
+l
+h
+p
+q
+g
+G
+u
+u
+"}
+(9,1,1) = {"
+l
+o
+i
+k
+J
+v
+S
+B
+"}
+(10,1,1) = {"
+l
+y
+H
+m
+I
+E
+B
+B
+"}
+(11,1,1) = {"
+T
+l
+l
+l
+l
+l
+B
+B
+"}

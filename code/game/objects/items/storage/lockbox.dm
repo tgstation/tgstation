@@ -8,6 +8,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	req_access = list(ACCESS_ARMORY)
+	storage_type = /datum/storage/lockbox
+
 	var/broken = FALSE
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
@@ -17,12 +19,20 @@
 
 /obj/item/storage/lockbox/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 14
-	atom_storage.max_slots = 4
-	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
+	update_icon_state()
+
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(src.broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/card/card = tool.GetID()
@@ -112,13 +122,7 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 	icon_open = "medalboxopen"
-
-/obj/item/storage/lockbox/medal/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 10
-	atom_storage.max_total_storage = 20
-	atom_storage.set_holdable(/obj/item/clothing/accessory/medal)
+	storage_type = /datum/storage/lockbox/medal
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
@@ -154,8 +158,7 @@
 		if(i > 1 && i <= 5)
 			medalicon.pixel_w += ((i-1)*3)
 		else if(i > 5)
-			medalicon.pixel_z -= 7
-			medalicon.pixel_w -= 2
+			medalicon.pixel_z -= 3
 			medalicon.pixel_w += ((i-6)*3)
 		. += medalicon
 
@@ -163,6 +166,9 @@
 	name = "Head of Personnel medal box"
 	desc = "A locked box used to store medals to be given to those exhibiting excellence in management."
 	req_access = list(ACCESS_HOP)
+	icon_state = "hopbox+l"
+	icon_locked = "hopbox+l"
+	icon_closed = "hopbox"
 
 /obj/item/storage/lockbox/medal/hop/PopulateContents()
 	for(var/i in 1 to 3)
@@ -173,11 +179,17 @@
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
 	req_access = list(ACCESS_HOS)
+	icon_state = "secbox+l"
+	icon_locked = "secbox+l"
+	icon_closed = "secbox"
 
 /obj/item/storage/lockbox/medal/med
 	name = "medical medal box"
 	desc = "A locked box used to store medals to be given to members of the medical department."
 	req_access = list(ACCESS_CMO)
+	icon_state = "medbox+l"
+	icon_locked = "medbox+l"
+	icon_closed = "medbox"
 
 /obj/item/storage/lockbox/medal/med/PopulateContents()
 	new /obj/item/clothing/accessory/medal/med_medal(src)
@@ -193,6 +205,9 @@
 	name = "cargo award box"
 	desc = "A locked box used to store awards to be given to members of the cargo department."
 	req_access = list(ACCESS_QM)
+	icon_state = "cargobox+l"
+	icon_locked = "cargobox+l"
+	icon_closed = "cargobox"
 
 /obj/item/storage/lockbox/medal/cargo/PopulateContents()
 	new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
@@ -201,6 +216,9 @@
 	name = "service award box"
 	desc = "A locked box used to store awards to be given to members of the service department."
 	req_access = list(ACCESS_HOP)
+	icon_state = "srvbox+l"
+	icon_locked = "srvbox+l"
+	icon_closed = "srvbox"
 
 /obj/item/storage/lockbox/medal/service/PopulateContents()
 	new /obj/item/clothing/accessory/medal/silver/excellence(src)
@@ -209,6 +227,10 @@
 	name = "science medal box"
 	desc = "A locked box used to store medals to be given to members of the science department."
 	req_access = list(ACCESS_RD)
+	icon_state = "scibox+l"
+	icon_locked = "scibox+l"
+	icon_closed = "scibox"
+
 
 /obj/item/storage/lockbox/medal/sci/PopulateContents()
 	for(var/i in 1 to 3)
@@ -218,6 +240,9 @@
 	name = "engineering medal box"
 	desc = "A locked box used to store awards to be given to members of the engineering department."
 	req_access = list(ACCESS_CE)
+	icon_state = "engbox+l"
+	icon_locked = "engbox+l"
+	icon_closed = "engbox"
 
 /obj/item/storage/lockbox/medal/engineering/PopulateContents()
 	for(var/i in 1 to 3)
@@ -251,13 +276,78 @@
 		balloon_alert(user, "incorrect bank account!")
 	return FALSE
 
-///screentips for lockboxes
-/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!held_item)
-		return NONE
-	if(src.broken)
-		return NONE
-	if(!held_item.GetID())
-		return NONE
-	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
-	return CONTEXTUAL_SCREENTIP_SET
+/obj/item/storage/lockbox/dueling
+	name = "dueling pistol case"
+	desc = "Let's solve this like gentlespacemen."
+	icon_state = "medalbox+l"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	req_access = list(ACCESS_CAPTAIN)
+	icon_locked = "medalbox+l"
+	icon_closed = "medalbox"
+	icon_broken = "medalbox+b"
+	base_icon_state = "medalbox"
+	icon_open = "medalboxopen"
+	storage_type = /datum/storage/lockbox/dueling
+
+/obj/item/storage/lockbox/dueling/PopulateContents()
+	. = ..()
+	var/obj/item/gun/energy/dueling/gun_A = new(src)
+	var/obj/item/gun/energy/dueling/gun_B = new(src)
+	new /datum/duel(gun_A, gun_B)
+
+/obj/item/storage/lockbox/bitrunning
+	name = "base class curiosity"
+	desc = "Talk to a coder."
+	req_access = list(ACCESS_INACCESSIBLE)
+	icon_state = "bitrunning+l"
+	inhand_icon_state = "bitrunning"
+	base_icon_state = "bitrunning"
+	icon_locked = "bitrunning+l"
+	icon_closed = "bitrunning"
+	icon_broken = "bitrunning+b"
+	icon_open = "bitrunning"
+
+/obj/item/storage/lockbox/bitrunning/encrypted
+	name = "encrypted curiosity"
+	desc = "Needs to be decrypted at the safehouse to be opened."
+	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	/// Path for the loot we are assigned
+	var/loot_path
+
+/obj/item/storage/lockbox/bitrunning/encrypted/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
+
+/obj/item/storage/lockbox/bitrunning/decrypted
+	name = "decrypted curiosity"
+	desc = "Compiled from the virtual domain. An extra reward of a successful bitrunner."
+	storage_type = /datum/storage/lockbox/bitrunning_decrypted
+
+	/// What virtual domain did we come from.
+	var/datum/lazy_template/virtual_domain/source_domain
+
+/obj/item/storage/lockbox/bitrunning/decrypted/Initialize(
+	mapload,
+	datum/lazy_template/virtual_domain/completed_domain,
+	)
+
+	if(isnull(completed_domain))
+		log_runtime("Decrypted curiosity was created with no source domain.")
+		return INITIALIZE_HINT_QDEL
+
+	if(!istype(completed_domain, /datum/lazy_template/virtual_domain)) // Check if this is a proper virtual domain before doing anything with it
+		log_runtime("Decrypted curiosity was created with an invalid source domain. [completed_domain.name] ([completed_domain.type]).")
+		return INITIALIZE_HINT_QDEL
+
+	source_domain = completed_domain
+
+	. = ..()
+
+	icon_state = icon_closed
+	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
+
+/obj/item/storage/lockbox/bitrunning/decrypted/PopulateContents()
+	var/choice = SSbitrunning.pick_secondary_loot(source_domain)
+	new choice(src)

@@ -26,7 +26,7 @@
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
 	faction = list(FACTION_HOSTILE)
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 	basic_mob_flags = DEL_ON_DEATH
 
 	ai_controller = /datum/ai_controller/basic_controller/cat_butcherer
@@ -71,6 +71,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

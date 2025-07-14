@@ -81,7 +81,7 @@
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
 	if(istype(attacking_item, /obj/item/assembly_holder) && accepts_rig)
@@ -293,7 +293,7 @@
 	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
 	return ..()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour != TOOL_WELDER)
 		return ..()
 

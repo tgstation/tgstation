@@ -17,6 +17,11 @@
 	test_screenshot("[/datum/species/lizard]", get_flat_icon_for_all_directions(lizard))
 	testable_species -= /datum/species/lizard
 
+	// Test humans as naked so we can catch issues with bodypart layering
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/dummy/consistent)
+	test_screenshot("[/datum/species/human]", get_flat_icon_for_all_directions(human))
+	testable_species -= /datum/species/human
+
 	// let me have this
 	var/mob/living/carbon/human/moth = allocate(/mob/living/carbon/human/dummy/consistent)
 	moth.dna.features["moth_antennae"] = "Firewatch"

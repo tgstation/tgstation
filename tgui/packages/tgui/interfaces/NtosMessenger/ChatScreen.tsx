@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject } from 'react';
+import { Component, createRef, type RefObject } from 'react';
 import {
   Box,
   Button,
@@ -10,10 +10,10 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { NtMessage, NtMessenger, NtPicture } from './types';
+import type { NtMessage, NtMessenger, NtPicture } from './types';
 
 type ChatScreenProps = {
   canReply: BooleanLike;
@@ -146,7 +146,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     const { act } = useBackend();
     const { chatRef, recipient } = this.props;
 
-    let ref = chatRef ? chatRef : recipient.ref;
+    const ref = chatRef ? chatRef : recipient.ref;
 
     act('PDA_sendMessage', {
       ref: ref,
@@ -157,7 +157,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     setTimeout(() => this.setState({ canSend: true }), SEND_COOLDOWN_MS);
   }
 
-  handleMessageInput(_: any, val: string) {
+  handleMessageInput(val: string) {
     this.setState({ message: val });
   }
 
@@ -175,7 +175,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     } = this.props;
     const { message, canSend, previewingImage, selectingPhoto } = this.state;
 
-    let filteredMessages: React.JSX.Element[] = [];
+    const filteredMessages: React.JSX.Element[] = [];
 
     for (let index = 0; index < messages.length; index++) {
       const message = messages[index];
@@ -297,16 +297,16 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             )}
             <Stack.Item>
               <Stack fill align="center">
-                <Stack.Item grow={1}>
+                <Stack.Item grow>
                   <Input
                     placeholder={`Send message to ${recipient.name}...`}
                     fluid
                     autoFocus
-                    width="100%"
                     value={message}
                     maxLength={1024}
-                    onInput={this.handleMessageInput}
+                    onChange={this.handleMessageInput}
                     onEnter={this.handleSendMessage}
+                    selfClear
                   />
                 </Stack.Item>
                 {buttons}

@@ -243,6 +243,8 @@
 	armor_type = /datum/armor/cultrobes_berserker
 	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
+	///Boolean on whether we've given the forced gravity trait, to keep track of it.
+	var/gave_gravity = FALSE
 
 /datum/armor/cultrobes_berserker
 	melee = -45
@@ -252,16 +254,75 @@
 	bomb = -45
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
-	..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
+	. = ..()
+	if(!(slot_flags & slot))
+		return
+	START_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/suit/hooded/cultrobes/berserker/dropped(mob/living/user)
+	STOP_PROCESSING(SSprocessing, src)
+	gave_gravity = FALSE
+	return ..()
+
+/obj/item/clothing/suit/hooded/cultrobes/berserker/process(seconds_per_tick)
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer))
+		return ..()
+
+	if(IS_CULTIST(wearer))
+		if (!gave_gravity)
+			return
+		wearer.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+		gave_gravity = FALSE
+		return
+
+	if(gave_gravity)
+		return
+
+	gave_gravity = TRUE
+	wearer.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	to_chat(wearer, span_warning("As you equip [src], everything begins to feel a whole lot heavier!"))
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
 	desc = "A blood-soaked hood infused with dark magic."
 	armor_type = /obj/item/clothing/suit/hooded/cultrobes/berserker::armor_type
 	slowdown = /obj/item/clothing/suit/hooded/cultrobes/berserker::slowdown
+
+/**
+ * Zealot's blindfold
+ * Version of night vision health HUDs that only cultists can use.
+ * Will deal eye damage overtime to non-cultists.
+ */
+/obj/item/clothing/glasses/hud/health/night/cultblind
+	name = "zealot's blindfold"
+	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
+	icon_state = "blindfold"
+	inhand_icon_state = "blindfold"
+	flags_cover = GLASSESCOVERSEYES
+	flash_protect = FLASH_PROTECTION_WELDER
+	actions_types = null
+	color_cutoffs = list(40, 0, 0) //red
+	glass_colour_type = null
+	forced_glass_color = FALSE
+
+/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		START_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/glasses/hud/health/night/cultblind/dropped(mob/living/user)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/glasses/hud/health/night/cultblind/process(seconds_per_tick)
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || IS_CULTIST(wearer))
+		return
+	var/obj/item/organ/eyes/eyes = wearer.get_organ_slot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		return
+	if(!eyes.apply_organ_damage(1))
+		return
+	if(SPT_PROB(3, seconds_per_tick))
+		to_chat(wearer, span_danger("You feel [src] digging into your eyes, burning [eyes.p_them()] up!"))

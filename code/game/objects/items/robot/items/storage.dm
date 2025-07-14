@@ -61,7 +61,7 @@
 	stored.forceMove(user.drop_location())
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
+/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
 		return ..() // Borgs should not be grabbing their own modules
 
@@ -72,6 +72,8 @@
 			break
 	if(itemcheck)
 		var/obj/item/item = atom
+		item.pixel_x = 0
+		item.pixel_y = 0
 		item.forceMove(src)
 		stored = item
 		RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
@@ -90,9 +92,9 @@
 	update_appearance()
 	return NONE
 
-/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, params)
+/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(stored)
-		item.melee_attack_chain(user, stored, params)
+		item.melee_attack_chain(user, stored, modifiers)
 		return
 	return ..()
 
@@ -286,10 +288,12 @@
 ///Apparatus allowing Engineer/Sabo borgs to manipulate Machine and Computer circuit boards
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards."
+	desc = "A special apparatus for carrying and manipulating circuit boards and power cells."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
-				/obj/item/electronics)
+		/obj/item/electronics,
+		/obj/item/stock_parts/power_store,
+	)
 
 /obj/item/borg/apparatus/circuit/Initialize(mapload)
 	update_appearance()
@@ -303,6 +307,10 @@
 		stored.pixel_z = 0
 		if(!istype(stored, /obj/item/circuitboard))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
+		else if(istype(stored, /obj/item/circuitboard || /obj/item/stock_parts/power_store))
+			stored.pixel_w = -5
+			stored.pixel_z = 2
+			arm.icon_state = "borg_hardware_apparatus_arm1"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
@@ -315,10 +323,16 @@
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
 
-/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, params)
+/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
+
+// stops them from cell interactions with other borgos
+/obj/item/borg/apparatus/circuit/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(iscyborg(user) && iscyborg(interacting_with))
+		balloon_alert(user, "your manipulator isn't dexterous enough to interact with this properly.")
+		return ITEM_INTERACT_FAILURE
 
 /obj/item/borg/apparatus/service
 	name = "service apparatus"

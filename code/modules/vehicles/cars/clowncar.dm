@@ -103,47 +103,36 @@
 		foam.set_up(4, holder = src, location = loc, carry = foamreagent)
 		foam.start()
 
-/obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(!istype(I, /obj/item/food/grown/banana))
+/obj/vehicle/sealed/car/clowncar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/food/grown/banana))
 		return
-	var/obj/item/food/grown/banana/banana = I
-	atom_integrity += min(banana.seed.potency, max_integrity-atom_integrity)
-	to_chat(user, span_danger("You use the [banana] to repair [src]!"))
+	var/obj/item/food/grown/banana/banana = tool
+	repair_damage(banana.seed.potency)
+	to_chat(user, span_danger("You use [banana] to repair [src]!"))
 	qdel(banana)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped))
-		if(ismegafauna(bumped))
-			return
-		var/mob/living/hittarget_living = bumped
+	if(isclosedturf(bumped))
+		visible_message(span_warning("[src] rams into [bumped] and crashes!"))
+		playsound(src, pick(
+			'sound/vehicles/clown_car/clowncar_crash1.ogg',
+			'sound/vehicles/clown_car/clowncar_crash2.ogg',
+			), 75)
+		playsound(src, 'sound/vehicles/clown_car/clowncar_crashpins.ogg', 75)
+		dump_mobs(TRUE)
+		log_combat(src, bumped, "crashed into", null, "dumping all passengers")
 
-		if(istype(hittarget_living, /mob/living/basic/deer))
-			visible_message(span_warning("[src] careens into [hittarget_living]! Oh the humanity!"))
-			for(var/mob/living/carbon/carbon_occupant in occupants)
-				if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
-					continue
-				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
-					var/pick_mode = text2num(pick(list(
-						"[WOUND_PICK_LOWEST_SEVERITY]",
-						"[WOUND_PICK_HIGHEST_SEVERITY]"
-					)))
-					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
-					carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
-					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
+	if(!isliving(bumped) || ismegafauna(bumped))
+		return
 
-			hittarget_living.adjustBruteLoss(200)
-			new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
-
-			log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
-			dump_mobs(TRUE)
-			playsound(src, 'sound/vehicles/car_crash.ogg', 100)
-			return
-
+	var/mob/living/hittarget_living = bumped
+	if(!istype(hittarget_living, /mob/living/basic/deer))
 		if(iscarbon(hittarget_living))
 			var/mob/living/carbon/carb = hittarget_living
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
+
 		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!")) //fuck off shezza this isn't ERP.
 		mob_forced_enter(hittarget_living)
 		playsound(src, pick(
@@ -153,16 +142,25 @@
 			), 75)
 		log_combat(src, hittarget_living, "sucked up")
 		return
-	if(!isclosedturf(bumped))
-		return
-	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
-	playsound(src, pick(
-		'sound/vehicles/clown_car/clowncar_crash1.ogg',
-		'sound/vehicles/clown_car/clowncar_crash2.ogg',
-		), 75)
-	playsound(src, 'sound/vehicles/clown_car/clowncar_crashpins.ogg', 75)
+
+	visible_message(span_warning("[src] careens into [hittarget_living]! Oh the humanity!"))
+	for(var/mob/living/carbon/carbon_occupant in occupants)
+		if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
+			continue
+		for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
+			var/pick_mode = text2num(pick(list(
+				"[WOUND_PICK_LOWEST_SEVERITY]",
+				"[WOUND_PICK_HIGHEST_SEVERITY]"
+			)))
+			carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
+			carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
+			carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
+
+	hittarget_living.add_splatter_floor(small_drip = FALSE)
+	hittarget_living.adjustBruteLoss(200)
+	log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
 	dump_mobs(TRUE)
-	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
+	playsound(src, 'sound/vehicles/car_crash.ogg', 100)
 
 /obj/vehicle/sealed/car/clowncar/proc/check_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
@@ -260,7 +258,7 @@
 ///Deploys oil when the clowncar moves in oil deploy mode
 /obj/vehicle/sealed/car/clowncar/proc/cover_in_oil()
 	SIGNAL_HANDLER
-	new /obj/effect/decal/cleanable/oil/slippery(loc)
+	new /obj/effect/decal/cleanable/blood/oil/slippery(loc)
 
 ///Stops dropping oil after the time has run up
 /obj/vehicle/sealed/car/clowncar/proc/stop_dropping_oil()

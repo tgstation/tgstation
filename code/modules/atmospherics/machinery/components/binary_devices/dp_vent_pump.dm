@@ -27,7 +27,7 @@
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "dpvent_cap", dir, pipe_color, piping_layer = piping_layer)
 		cap.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(cap)
@@ -102,8 +102,8 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/Initialize(mapload)
+	. = ..()
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 	air1.volume = 1000

@@ -62,7 +62,7 @@
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
-	cost = 4
+	cost = 2
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/emplight/New()

@@ -19,8 +19,7 @@
 	icon_state = "orbit"
 
 /atom/movable/screen/ghost/orbit/Click()
-	var/mob/dead/observer/G = usr
-	G.follow()
+	GLOB.orbit_menu.show(usr)
 
 /atom/movable/screen/ghost/reenter_corpse
 	name = "Reenter corpse"
@@ -30,6 +29,14 @@
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
+/atom/movable/screen/ghost/dnr
+	name = "Do Not Resuscitate"
+	icon_state = "dnr"
+
+/atom/movable/screen/ghost/dnr/Click()
+	var/mob/dead/observer/dnring = usr
+	dnring.do_not_resuscitate()
+
 /atom/movable/screen/ghost/teleport
 	name = "Teleport"
 	icon_state = "teleport"
@@ -38,13 +45,16 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/atom/movable/screen/ghost/pai
-	name = "pAI Candidate"
-	icon_state = "pai"
+/atom/movable/screen/ghost/settings
+	name = "Ghost Settings"
+	icon_state = "settings"
 
-/atom/movable/screen/ghost/pai/Click()
-	var/mob/dead/observer/G = usr
-	G.register_pai()
+/atom/movable/screen/ghost/settings/MouseEntered(location, control, params)
+	. = ..()
+	flick(icon_state + "_anim", src)
+
+/atom/movable/screen/ghost/settings/Click()
+	GLOB.ghost_menu.ui_interact(usr)
 
 /atom/movable/screen/ghost/minigames_menu
 	name ="Minigames"
@@ -70,30 +80,27 @@
 	using.screen_loc = ui_ghost_reenter_corpse
 	static_inventory += using
 
+	using = new /atom/movable/screen/ghost/dnr(null, src)
+	using.screen_loc = ui_dnr
+	static_inventory += using
+
 	using = new /atom/movable/screen/ghost/teleport(null, src)
 	using.screen_loc = ui_ghost_teleport
 	static_inventory += using
 
-	using = new /atom/movable/screen/ghost/pai(null, src)
-	using.screen_loc = ui_ghost_pai
+	using = new /atom/movable/screen/ghost/settings(null, src)
+	using.screen_loc = ui_ghost_settings
 	static_inventory += using
 
 	using = new /atom/movable/screen/ghost/minigames_menu(null, src)
 	using.screen_loc = ui_ghost_minigames
 	static_inventory += using
 
-	using = new /atom/movable/screen/language_menu(null, src)
+	using = new /atom/movable/screen/language_menu/ghost(null, src)
 	using.screen_loc = ui_ghost_language_menu
-	using.icon = ui_style
 	static_inventory += using
 
-	using = new /atom/movable/screen/language_menu(null, src)
-	using.screen_loc = ui_ghost_language_menu
-	using.icon = ui_style
-	static_inventory += using
-
-	floor_change = new /atom/movable/screen/floor_changer/vertical(null, src)
-	floor_change.icon = ui_style
+	floor_change = new /atom/movable/screen/floor_changer/vertical/ghost(null, src)
 	floor_change.screen_loc = ui_ghost_floor_changer
 	static_inventory += floor_change
 

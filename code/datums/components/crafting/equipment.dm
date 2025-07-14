@@ -88,9 +88,6 @@
 		/obj/item/assembly/igniter/condenser = 1,
 		/obj/item/electronics/airlock = 1,
 	)
-	parts = list(
-		/obj/item/electronics/airlock = 1,
-	)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT
 
@@ -110,9 +107,6 @@
 	result = /obj/structure/closet/secure_closet
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
-		/obj/item/electronics/airlock = 1,
-	)
-	parts = list(
 		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
@@ -298,3 +292,27 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/morbid_surgical_toolset
+	name = "Morbid Surgical Toolset Implant"
+	result = /obj/item/organ/cyberimp/arm/toolkit/surgery/cruel
+	reqs = list(
+		/obj/item/organ/cyberimp/arm/toolkit/surgery = 1
+	)
+	time = 10 SECONDS
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/morbid_surgical_toolset/New()
+	..()
+	blacklist |= subtypesof(/obj/item/organ/cyberimp/arm/toolkit/surgery)
+
+/datum/crafting_recipe/surgical_toolset
+	name = "Surgical Toolset Implant"
+	result = /obj/item/organ/cyberimp/arm/toolkit/surgery
+	reqs = list(
+		/obj/item/organ/cyberimp/arm/toolkit/surgery/cruel = 1
+	)
+	time = 10 SECONDS
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)

@@ -127,10 +127,10 @@ window "mapwindow"
 		style = ".center { text-align: center; } .maptext { font-family: 'Grand9K Pixel'; font-size: 6pt; -dm-text-outline: 1px black; color: white; line-height: 1.0; } .command_headset { font-weight: bold; } .context { font-family: 'Pixellari'; font-size: 12pt; -dm-text-outline: 1px black; }  .subcontext { font-family: 'TinyUnicode'; font-size: 12pt; line-height: 0.75; } .small { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; } .big { font-family: 'Pixellari'; font-size: 12pt; } .reallybig { font-size: 12pt; } .extremelybig { font-size: 12pt; } .greentext { color: #00FF00; font-size: 6pt; } .redtext { color: #FF0000; font-size: 6pt; } .clown { color: #FF69BF; font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; }"
 	elem "status_bar"
 		type = LABEL
-		pos = 0,464
-		size = 280x16
-		anchor1 = 0,100
-		anchor2 = -1,-1
+		pos = 0,470
+		size = 128x10
+		anchor1 = 0,99
+		anchor2 = 20,100
 		text-color = #ffffff
 		background-color = #222222
 		border = line
@@ -160,79 +160,6 @@ window "info_and_buttons"
 		is-vert = false
 		splitter = 2
 		show-splitter = false
-
-window "infobuttons"
-	elem "infobuttons"
-		type = MAIN
-		pos = 291,0
-		size = 640x30
-		anchor1 = 0,0
-		anchor2 = 100,100
-		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
-	elem "changelog"
-		type = BUTTON
-		pos = 0,5
-		size = 87x25
-		anchor1 = 0,0
-		anchor2 = 15,100
-		saved-params = "is-checked"
-		text = "Changelog"
-		command = "changelog"
-	elem "rules"
-		type = BUTTON
-		pos = 92,5
-		size = 88x25
-		anchor1 = 15,0
-		anchor2 = 29,100
-		saved-params = "is-checked"
-		text = "Rules"
-		command = "rules"
-	elem "wiki"
-		type = BUTTON
-		pos = 185,5
-		size = 87x25
-		anchor1 = 29,0
-		anchor2 = 43,100
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-	elem "forum"
-		type = BUTTON
-		pos = 277,5
-		size = 87x25
-		anchor1 = 43,0
-		anchor2 = 57,100
-		saved-params = "is-checked"
-		text = "Forum"
-		command = "forum"
-	elem "github"
-		type = BUTTON
-		pos = 369,5
-		size = 87x25
-		anchor1 = 57,0
-		anchor2 = 71,100
-		saved-params = "is-checked"
-		text = "GitHub"
-		command = "github"
-	elem "report-issue"
-		type = BUTTON
-		pos = 461,5
-		size = 87x25
-		anchor1 = 71,0
-		anchor2 = 85,100
-		saved-params = "is-checked"
-		text = "Report Issue"
-		command = "report-issue"
-	elem "fullscreen-toggle"
-		type = BUTTON
-		pos = 553,5
-		size = 89x25
-		anchor1 = 85,0
-		anchor2 = 99,100
-		saved-params = "is-checked"
-		text = "Fullscreen"
-		command = "fullscreen"
 
 window "infowindow"
 	elem "infowindow"

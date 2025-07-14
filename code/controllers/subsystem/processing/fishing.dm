@@ -97,7 +97,7 @@ PROCESSING_SUBSYSTEM_DEF(fishing)
 
 	///init the list of things lures can catch
 	lure_catchables = list()
-	for(var/lure_type in typesof(/obj/item/fishing_lure))
+	for(var/lure_type in subtypesof(/obj/item/fishing_lure))
 		var/obj/item/fishing_lure/lure = new lure_type
 		lure_catchables[lure_type] = list()
 		for(var/obj/item/fish/fish as anything in spawned_fish)

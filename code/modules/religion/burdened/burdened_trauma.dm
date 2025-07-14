@@ -8,6 +8,17 @@
 	random_gain = FALSE
 	/// goes from 0 to 9 (but can be beyond 9, just does nothing) and gives rewards. increased by disabling yourself with debuffs
 	var/burden_level = 0
+	/// Static list of organ slots that add burden when lost
+	var/static/list/burden_organ_slots = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_TONGUE,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
 
 /datum/brain_trauma/special/burdened/on_gain()
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(organ_added_burden))
@@ -24,6 +35,23 @@
 
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_TRAUMA, PROC_REF(trauma_added_burden))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_TRAUMA, PROC_REF(trauma_removed_burden))
+
+	for (var/burden_slot in burden_organ_slots)
+		if (!owner.get_organ_slot(burden_slot) && is_burdensome_organ(owner, burden_slot, null, FALSE))
+			update_burden(TRUE, silent = TRUE)
+
+	var/list/missing_limbs = owner.get_missing_limbs()
+	for (var/i in 1 to length(missing_limbs) + length(owner.mind?.active_addictions))
+		update_burden(TRUE, silent = TRUE)
+
+	if (owner.dna)
+		for (var/datum/mutation/mutation in owner.dna.mutations)
+			if (mutation.quality == NEGATIVE)
+				update_burden(TRUE, silent = TRUE)
+
+	for (var/datum/brain_trauma/severe/trauma in owner.get_traumas())
+		update_burden(TRUE, silent = TRUE)
+
 	return ..()
 
 /datum/brain_trauma/special/burdened/on_lose()
@@ -39,6 +67,10 @@
 		COMSIG_CARBON_GAIN_TRAUMA,
 		COMSIG_CARBON_LOSE_TRAUMA,
 	))
+
+	for (var/i in 1 to burden_level)
+		update_burden(FALSE, silent = TRUE)
+
 	return ..()
 
 /**
@@ -47,8 +79,9 @@
  *
  * Arguments:
  * * increase: whether to tick burden_level up or down 1
+ * * silent: if TRUE, this does not print out any to_chats
  */
-/datum/brain_trauma/special/burdened/proc/update_burden(increase)
+/datum/brain_trauma/special/burdened/proc/update_burden(increase, silent = FALSE)
 	var/datum/dna/dna = owner?.dna
 	if(!dna)
 		qdel(src)
@@ -60,66 +93,80 @@
 	//send a message and handle rewards
 	switch(burden_level)
 		if(0)
-			to_chat(owner, span_warning("You feel no weight on your shoulders. You are not feeling [GLOB.deity]'s suffering."))
+			if (!silent)
+				to_chat(owner, span_warning("You feel no weight on your shoulders. You are not feeling [GLOB.deity]'s suffering."))
 		if(1)
-			if(increase)
-				to_chat(owner, span_notice("You begin to feel the scars on [GLOB.deity]. You must continue to burden yourself."))
-			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You are barely feeling [GLOB.deity]'s suffering."))
+			if (!silent)
+				if(increase)
+					to_chat(owner, span_notice("You begin to feel the scars on [GLOB.deity]. You must continue to burden yourself."))
+				else
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You are barely feeling [GLOB.deity]'s suffering."))
 		if(2)
 			if(increase)
-				to_chat(owner, span_notice("You have done well to understand [GLOB.deity]. You are almost at a breakthrough."))
+				if (!silent)
+					to_chat(owner, span_notice("You have done well to understand [GLOB.deity]. You are almost at a breakthrough."))
 			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
-				dna.remove_mutation(/datum/mutation/human/telepathy)
-				dna.remove_mutation(/datum/mutation/human/unintelligible)
+				if (!silent)
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
+				dna.remove_mutation(/datum/mutation/telepathy, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.remove_mutation(/datum/mutation/unintelligible, MUTATION_SOURCE_BURDENED_TRAUMA)
 				owner.remove_filter("burden_outline")
 		if(3)
 			if(increase)
-				to_chat(owner, span_notice("Your suffering is only a fraction of [GLOB.deity]'s, and yet the universal truths are coming to you."))
-				dna.add_mutation(/datum/mutation/human/telepathy)
-				dna.add_mutation(/datum/mutation/human/unintelligible)
+				if (!silent)
+					to_chat(owner, span_notice("Your suffering is only a fraction of [GLOB.deity]'s, and yet the universal truths are coming to you."))
+				dna.add_mutation(/datum/mutation/telepathy, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.add_mutation(/datum/mutation/unintelligible, MUTATION_SOURCE_BURDENED_TRAUMA)
 				owner.add_filter("burden_outline", 9, list("type" = "outline", "color" = "#6c6eff"))
 			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You feel like you're about to forget."))
+				if (!silent)
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You feel like you're about to forget."))
 		if(4)
-			if(increase)
-				to_chat(owner, span_notice("It hurts, each ounce of pain a lesson told. How does [GLOB.deity] bear this weight?"))
-			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You're growing further from your goal."))
+			if (!silent)
+				if(increase)
+					to_chat(owner, span_notice("It hurts, each ounce of pain a lesson told. How does [GLOB.deity] bear this weight?"))
+				else
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You're growing further from your goal."))
 		if(5)
 			if(increase)
-				to_chat(owner, span_notice("Your body is a canvas of loss. You are almost at a breakthrough."))
+				if (!silent)
+					to_chat(owner, span_notice("Your body is a canvas of loss. You are almost at a breakthrough."))
 			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
-				dna.remove_mutation(/datum/mutation/human/telekinesis)
-				dna.remove_mutation(/datum/mutation/human/mindreader)
+				if (!silent)
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
+				dna.remove_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.remove_mutation(/datum/mutation/mindreader, MUTATION_SOURCE_BURDENED_TRAUMA)
 		if(6)
 			if(increase)
-				to_chat(owner, span_notice("Your suffering is respectful, your scars immaculate. More universal truths are clear, but you do not fully understand yet."))
-				dna.add_mutation(/datum/mutation/human/telekinesis)
-				dna.add_mutation(/datum/mutation/human/mindreader)
+				if (!silent)
+					to_chat(owner, span_notice("Your suffering is respectful, your scars immaculate. More universal truths are clear, but you do not fully understand yet."))
+				dna.add_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.add_mutation(/datum/mutation/mindreader, MUTATION_SOURCE_BURDENED_TRAUMA)
 			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You feel like you're about to forget."))
+				if (!silent)
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You feel like you're about to forget."))
 		if(7)
-			if(increase)
-				to_chat(owner, span_notice("The weight on your shoulders is immense. [GLOB.deity] is shattered across the cosmos."))
-			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You're growing further from your goal."))
+			if (!silent)
+				if(increase)
+					to_chat(owner, span_notice("The weight on your shoulders is immense. [GLOB.deity] is shattered across the cosmos."))
+				else
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You're growing further from your goal."))
 		if(8)
-			if(increase)
-				to_chat(owner, span_notice("You're on the cusp of another breakthrough. [GLOB.deity] lost everything."))
-			else
-				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
+			if (!silent)
+				if(increase)
+					to_chat(owner, span_notice("You're on the cusp of another breakthrough. [GLOB.deity] lost everything."))
+				else
+					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
 		if(9)
 			if(increase)
-				to_chat(owner, span_notice("You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you."))
+				if (!silent)
+					to_chat(owner, span_notice("You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you."))
 				var/mob/living/carbon/human/knower = owner
 				if(!istype(knower))
 					return
 				INVOKE_ASYNC(knower, TYPE_PROC_REF(/mob/living/carbon/human, slow_psykerize))
 
-/datum/brain_trauma/special/burdened/proc/is_burdensome_organ(mob/burdened, obj/item/organ/organ, special)
+/datum/brain_trauma/special/burdened/proc/is_burdensome_organ(mob/burdened, organ_slot, obj/item/organ/organ, special)
 	if(special) //aheals
 		return
 	if(!ishuman(burdened))
@@ -130,16 +177,7 @@
 		return
 
 	/// only organs that are slotted in these count. because there's a lot of useless organs to cheese with.
-	var/list/critical_slots = list(
-		ORGAN_SLOT_BRAIN,
-		ORGAN_SLOT_HEART,
-		ORGAN_SLOT_LUNGS,
-		ORGAN_SLOT_EYES,
-		ORGAN_SLOT_EARS,
-		ORGAN_SLOT_TONGUE,
-		ORGAN_SLOT_LIVER,
-		ORGAN_SLOT_STOMACH,
-	)
+	var/list/critical_slots = burden_organ_slots.Copy()
 	if(!burdened_species.mutantheart)
 		critical_slots -= ORGAN_SLOT_HEART
 	if(!burdened_species.mutanttongue)
@@ -151,9 +189,9 @@
 	if(!burdened_species.mutantliver)
 		critical_slots -= ORGAN_SLOT_LIVER
 
-	if(!(organ.slot in critical_slots))
+	if(!(organ_slot in critical_slots))
 		return FALSE
-	else if(istype(organ, /obj/item/organ/eyes))
+	if(istype(organ, /obj/item/organ/eyes))
 		var/obj/item/organ/eyes/eyes = organ
 		if(eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
 			return TRUE
@@ -164,14 +202,14 @@
 /datum/brain_trauma/special/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
 
-	if(is_burdensome_organ(burdened, new_organ, special))
+	if(is_burdensome_organ(burdened, new_organ.slot, new_organ, special))
 		update_burden(increase = FALSE)//working organ
 
 /// Signal to increase burden_level (see update_burden proc) if an organ is removed
 /datum/brain_trauma/special/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
 
-	if(is_burdensome_organ(burdened, old_organ, special))
+	if(is_burdensome_organ(burdened, old_organ.slot, old_organ, special))
 		update_burden(increase = TRUE) //lost organ
 
 /// Signal to decrease burden_level (see update_burden proc) if a limb is added
@@ -203,14 +241,14 @@
 	update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a mutation is added
-/datum/brain_trauma/special/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type, class)
+/datum/brain_trauma/special/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/mutation_type, class)
 	SIGNAL_HANDLER
 
 	if(initial(mutation_type.quality) == NEGATIVE)
 		update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if a mutation is removed
-/datum/brain_trauma/special/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type)
+/datum/brain_trauma/special/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/mutation_type)
 	SIGNAL_HANDLER
 
 	if(initial(mutation_type.quality) == NEGATIVE)

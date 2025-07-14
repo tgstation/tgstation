@@ -32,6 +32,7 @@
 	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
 	ai_controller = /datum/ai_controller/basic_controller/hivebot
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	///does this type do range attacks?
 	var/ranged_attacker = FALSE
 	/// How often can we shoot?
@@ -40,7 +41,7 @@
 
 /mob/living/basic/hivebot/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/effect/decal/cleanable/robot_debris)
+	var/static/list/death_loot = list(/obj/effect/decal/cleanable/blood/gibs/robot_debris)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/appearance_on_aggro, overlay_icon = icon, overlay_state = "[initial(icon_state)]_attack")
 	if(!ranged_attacker)

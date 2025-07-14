@@ -125,7 +125,7 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.GetID() && !broken)
 		if(allowed(user))
 			to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
@@ -272,7 +272,7 @@
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/electronics/airlock))
 		balloon_alert(user, "installing electronics...")
 		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item, src))
@@ -359,7 +359,7 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/key/displaycase))
 		toggle_historian_mode(user)
 		return
@@ -609,7 +609,7 @@
 			return TRUE
 	. = TRUE
 
-/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isidcard(attacking_item))
 		//Card Registration
 		var/obj/item/card/id/potential_acc = attacking_item

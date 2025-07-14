@@ -101,6 +101,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// how many pixels the closet can shift on the y axes when shaking
 	var/y_shake_pixel_shift = 1
 
+	VAR_PRIVATE
+		datum/closet_see_inside/closet_see_inside
+
 /datum/armor/structure_closet
 	melee = 20
 	bullet = 10
@@ -108,6 +111,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	bomb = 10
 	fire = 70
 	acid = 60
+
+/obj/structure/closet/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, welded)
+	. += NAMEOF(src, opened)
+	. += NAMEOF(src, locked)
+	. += NAMEOF(src, anchorable)
+	return .
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
@@ -144,6 +155,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	if(is_station_level(z) && mapload)
 		add_to_roundstart_list()
+
+	closet_see_inside = new(src)
 
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload)
@@ -195,6 +208,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	id_card = null
 	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
+	QDEL_NULL(closet_see_inside)
 	GLOB.roundstart_station_closets -= src
 	return ..()
 
@@ -425,6 +439,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return TRUE
 	if(welded || locked)
 		return FALSE
+	if(isliving(user))
+		if(!(user.mobility_flags & MOBILITY_USE))
+			return FALSE
 	if(strong_grab)
 		if(user)
 			to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
@@ -606,21 +623,22 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!broken)
 		bust_open()
 
-/obj/structure/closet/CheckParts(list/parts_list)
-	var/obj/item/electronics/airlock/access_control = locate() in parts_list
+/obj/structure/closet/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/electronics/airlock/access_control = locate() in components
 	if(QDELETED(access_control))
-		return
+		return ..()
 
+	inherit_airlock_electronics_access(access_control)
+
+	return ..()
+
+/obj/structure/closet/proc/inherit_airlock_electronics_access(obj/item/electronics/airlock/access_control)
 	if (access_control.one_access)
 		req_one_access = access_control.accesses
 		req_access = null
 	else
 		req_access = access_control.accesses
 		req_one_access = null
-	access_control.moveToNullspace()
-
-	parts_list -= access_control
-	qdel(access_control)
 
 /obj/structure/closet/multitool_act(mob/living/user, obj/item/tool)
 	if(!secure || !card_reader_installed || broken || locked || opened)
@@ -638,7 +656,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		req_access = accesses
 		req_one_access = null
 
-/obj/structure/closet/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(user in src)
 		return
 	if(src.tool_interact(W,user))
@@ -734,7 +752,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!user.transferItemToLoc(weapon, src))
 			return
 
-		CheckParts(list(weapon))
+		inherit_airlock_electronics_access(weapon)
+		qdel(weapon)
 		secure = TRUE
 		balloon_alert(user, "electronics installed")
 
@@ -876,7 +895,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				return
 		if (user.combat_mode)
 			return
-		if(user.transferItemToLoc(weapon, drop_location())) // so we put in unlit welder too
+		if(user.transfer_item_to_turf(weapon, drop_location())) // so we put in unlit welder too
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
@@ -964,7 +983,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			to_chat(user, span_warning("[src]'s door won't budge!"))
 		return
 	container_resist_act(user)
-
 
 /obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -1249,13 +1267,27 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	GLOB.roundstart_station_closets += src
 
 ///Spears deal bonus damages to lockers
-/obj/structure/closet/attacked_by(obj/item/attacking_item, mob/living/user)
+/obj/structure/closet/secure_closet/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/spear))
-		take_damage(attacking_item.force * 2, attacking_item.damtype, MELEE, 1, get_dir(src, user))
-		user.visible_message(span_danger("[user] stabs with precision [src]'s electronics with [attacking_item]!"),
-		span_danger("You stab with precision [src]'s electronics with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
-		log_combat(user, src, "attacked", attacking_item)
-		return
+		HIDE_ATTACK_MESSAGES(attack_modifiers)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 2)
+		user.visible_message(
+			span_danger("[user] stabs with precision [src]'s electronics with [attacking_item]!"),
+			span_danger("You stab with precision [src]'s electronics with [attacking_item]!"),
+			null,
+			COMBAT_MESSAGE_RANGE,
+		)
+
 	return ..()
+
+/obj/structure/closet/secure_closet/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(!istype(hit_by, /obj/item/spear))
+		return ..()
+	// We have to manually tweak throwforce for now
+	var/obj/item/spear = hit_by
+	spear.throwforce *= 2
+	. = ..()
+	spear.throwforce /= 2
+	return .
 
 #undef LOCKER_FULL

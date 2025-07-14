@@ -58,28 +58,22 @@
 	attack_self(user)
 	return BRUTELOSS
 
-/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, list/modifiers)
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
-/obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	var/is_open = HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
-		if(!is_open)
-			faction_bonus_force = 0
-		var/is_nemesis_faction = FALSE
 		for(var/found_faction in target.faction)
-			if(found_faction in nemesis_factions)
-				is_nemesis_faction = TRUE
-				force += faction_bonus_force
-				nemesis_effects(user, target)
-				break
+			if(!(found_faction in nemesis_factions))
+				continue
+			if(is_open)
+				MODIFY_ATTACK_FORCE(attack_modifiers, faction_bonus_force)
+			nemesis_effects(user, target)
+			break
 		. = ..()
-		if(is_nemesis_faction)
-			force -= faction_bonus_force
-		if(!is_open)
-			faction_bonus_force = initial(faction_bonus_force)
 		return
 
 	var/turf/user_turf = get_turf(user)

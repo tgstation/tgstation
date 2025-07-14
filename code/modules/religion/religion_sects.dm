@@ -31,7 +31,7 @@
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
 	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites_list
+	var/list/rites_list = list()
 	/// Changes the Altar of Gods icon
 	var/altar_icon
 	/// Changes the Altar of Gods icon_state
@@ -47,6 +47,8 @@
 	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
+	if(!locate(/datum/religion_rites/deaconize) in rites_list)
+		rites_list += list(/datum/religion_rites/deaconize)
 	on_select()
 
 /// Activates once selected
@@ -59,6 +61,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(chap, span_boldnotice("\"[quote]\""))
 	to_chat(chap, span_notice("[desc]"))
+	chap.faction |= FACTION_HOLY
 
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
@@ -66,6 +69,7 @@
 	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
 	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
+	chap.faction -= FACTION_HOLY
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
@@ -382,18 +386,15 @@
 
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/target_blood_data = target.get_blood_data(target.get_blood_id())
-			var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
-				transferred = TRUE
-				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
-		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+			if(transferred_blood_amount && target.get_blood_compatibility(chaplain))
+				transferred = chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
+		else if(target.blood_volume > BLOOD_VOLUME_EXCESS)
+			transferred = target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
 
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
-	if(transferred)
+	if(!transferred)
 		to_chat(chaplain, span_warning("They hold no burden!"))
 		return BLESSING_IGNORED
 
@@ -414,22 +415,7 @@
 	tgui_icon = "scroll"
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
-	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
-	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_crusaders = list()
-	///people who have been offered an invitation, they haven't finished the alert though.
-	var/list/currently_asking = list()
-
-/**
- * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
- * If yes, the deaconize rite can now recruit them instead of just offering invites
- */
-/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
-	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
-	currently_asking -= invited
-	if(ask == "Yes")
-		possible_crusaders += invited
+	rites_list = list(/datum/religion_rites/deaconize/crusader, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()

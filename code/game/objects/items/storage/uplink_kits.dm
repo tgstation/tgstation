@@ -204,7 +204,7 @@
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 			new /obj/item/clothing/under/chameleon(src) // 1 tc
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
-			new /obj/item/reagent_containers/cup/rag(src)
+			new /obj/item/rag(src)
 			new /obj/item/implanter/freedom(src) // 5 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/grenade/c4/x4(src) // 1ish tc
@@ -437,14 +437,7 @@
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
-
-/obj/item/storage/box/syndie_kit/space/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/suit/space/syndicate,
-		/obj/item/clothing/head/helmet/space/syndicate
-	))
+	storage_type = /datum/storage/box/syndicate_space
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
 	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
@@ -466,6 +459,8 @@
 /obj/item/storage/box/syndie_kit/smoke/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/smokebomb(src)
+	new /obj/item/implanter/smoke(src)
+	new /obj/item/clothing/mask/gas(src)
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
@@ -477,10 +472,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
-
-/obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 15
+	storage_type = /datum/storage/box/syndicate_chemical
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
@@ -548,6 +540,9 @@
 	new /obj/item/gun/energy/laser/chameleon(src)
 	new /obj/item/chameleon_scanner(src)
 
+/obj/item/storage/box/syndie_kit/throwing_weapons
+	storage_type = /datum/storage/box/syndicate_throwing
+
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
 /obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()
@@ -557,17 +552,6 @@
 		new /obj/item/paperplane/syndicate(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
-
-/obj/item/storage/box/syndie_kit/throwing_weapons/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 9 // 5 + 2 + 2
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 18 // 5*2 + 2*1 + 3*2
-	atom_storage.set_holdable(list(
-		/obj/item/restraints/legcuffs/bola/tactical,
-		/obj/item/paperplane/syndicate,
-		/obj/item/throwing_star,
-	))
 
 /obj/item/storage/box/syndie_kit/cutouts/PopulateContents()
 	for(var/i in 1 to 3)
@@ -643,6 +627,14 @@
 /obj/item/storage/box/syndie_kit/manhack_grenades/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/manhacks(src)
+
+/obj/item/storage/box/syndie_kit/feral_cat_grenades/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/spawnergrenade/cat(src)
+
+/obj/item/storage/box/syndie_kit/frag_grenades/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/frag(src)
 
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
@@ -806,13 +798,7 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
-	var/faker
-	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
-			faker = TRUE
-
-	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(!human_target.is_antag()) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
@@ -894,6 +880,17 @@
 	new /obj/item/jammer(src)
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
+
+/obj/item/storage/box/syndicate/horse_box
+	name = "A pony box"
+	desc = "This is a set containing a syndicate pony cube and an apple, for the best cowboys in the wild station! Don't make an apple pie!"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndicate/horse_box/PopulateContents()
+	new /obj/item/food/monkeycube/dangerous_horse(src)
+	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
+	new /obj/item/food/grown/apple(src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

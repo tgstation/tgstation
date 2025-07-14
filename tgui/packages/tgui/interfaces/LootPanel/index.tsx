@@ -3,13 +3,13 @@ import { useMemo } from 'react';
 import { Button, Input, Section, Stack } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
 import { clamp } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { GroupedContents } from './GroupedContents';
 import { RawContents } from './RawContents';
-import { SearchItem } from './types';
+import type { SearchItem } from './types';
 
 type Data = {
   contents: SearchItem[];
@@ -60,8 +60,9 @@ export function LootPanel(props) {
       buttons={
         <Stack align="center">
           <Input
-            onInput={(event, value) => setSearchText(value)}
-            placeholder={`Search items...`}
+            onChange={setSearchText}
+            placeholder="Search items..."
+            value={searchText}
           />
           <Button
             m={0}

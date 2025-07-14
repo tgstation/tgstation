@@ -178,6 +178,9 @@
 /datum/config_entry/string/alert_delta
 	default = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
+/datum/config_entry/flag/roundstart_blue_alert
+	default = TRUE
+
 /datum/config_entry/flag/revival_pod_plants
 
 /datum/config_entry/number/revival_brain_life
@@ -351,16 +354,6 @@
 
 /datum/config_entry/flag/forbid_station_traits
 
-/datum/config_entry/number/events_min_time_mul // Multipliers for random events minimal starting time and minimal players amounts
-	default = 1
-	min_val = 0
-	integer = FALSE
-
-/datum/config_entry/number/events_min_players_mul
-	default = 1
-	min_val = 0
-	integer = FALSE
-
 /datum/config_entry/number/events_frequency_lower
 	default = 2.5 MINUTES
 	min_val = 0
@@ -419,6 +412,8 @@
 	min_val = 0
 
 /datum/config_entry/flag/dynamic_config_enabled
+
+/datum/config_entry/flag/events_config_enabled
 
 /datum/config_entry/string/drone_required_role
 	default = "Silicon"

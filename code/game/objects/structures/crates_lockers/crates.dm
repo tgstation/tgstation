@@ -41,6 +41,7 @@
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
 	if(elevation)
+		AddComponent(/datum/component/climb_walkable)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	. = ..()
 
@@ -473,3 +474,15 @@
 
 /obj/structure/closet/crate/add_to_roundstart_list()
 	return
+
+/obj/structure/closet/crate/pink
+	name = "pink crate"
+	desc = "A glittery pink crate."
+	icon_state = "pink"
+	base_icon_state = "pink"
+
+/obj/structure/closet/crate/lavender
+	name = "lavender crate"
+	desc = "A glittery purple... no, lavender crate."
+	icon_state = "lavender"
+	base_icon_state = "lavender"

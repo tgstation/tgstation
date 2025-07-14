@@ -139,8 +139,11 @@
 
 	else
 		grilled_result = new cook_result(original_object.loc)
-		if(original_object.custom_materials)
-			grilled_result.set_custom_materials(original_object.custom_materials)
+		if(istype(original_object, /obj/item/food) && istype(grilled_result, /obj/item/food))
+			var/obj/item/food/original_food = original_object
+			var/obj/item/food/grilled_food = grilled_result
+			LAZYADD(grilled_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
+		grilled_result.set_custom_materials(original_object.custom_materials)
 
 	if(IsEdible(grilled_result) && positive_result)
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)

@@ -8,7 +8,7 @@ import {
   Table,
 } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -64,7 +64,7 @@ export const MassSpec = (props) => {
         {!!processing && (
           <Dimmer fontSize="32px">
             <Icon name="cog" spin={1} />
-            {' Purifying... ' + round(eta, 0) + 's'}
+            {` Purifying... ${round(eta, 0)}s`}
           </Dimmer>
         )}
         <Section
@@ -126,7 +126,7 @@ export const MassSpec = (props) => {
             beaker={beaker1}
           />
           {!!beaker_1_has_contents && (
-            <Box>{'Eta of selection: ' + round(eta, 0) + ' seconds'}</Box>
+            <Box>{`Eta of selection: ${round(eta, 0)} seconds`}</Box>
           )}
         </Section>
         <Section
@@ -403,12 +403,12 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         step={graphUpperRange / base_width}
         height={17.2}
         format={(value: number) => round(value, 2).toString()}
-        width={(centerValue / graphUpperRange) * base_width + 'px'}
+        width={`${(centerValue / graphUpperRange) * base_width}px`}
         value={lowerRange}
         minValue={graphLowerRange}
         maxValue={centerValue}
         color={'invisible'}
-        onDrag={(e, value) =>
+        onChange={(e, value) =>
           act('leftSlider', {
             value: value,
           })
@@ -418,12 +418,12 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         height={17.2}
         format={(value: number) => round(value, 2).toString()}
         step={graphUpperRange / base_width}
-        width={base_width - (centerValue / graphUpperRange) * base_width + 'px'}
+        width={`${base_width - (centerValue / graphUpperRange) * base_width}px`}
         value={upperRange}
         minValue={centerValue}
         maxValue={graphUpperRange}
         color={'invisible'}
-        onDrag={(e, value) =>
+        onChange={(e, value) =>
           act('rightSlider', {
             value: value,
           })
@@ -435,11 +435,11 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         value={centerValue}
         height={1.9}
         format={(value: number) => round(value, 2).toString()}
-        width={base_width + 'px'}
+        width={`${base_width}px`}
         minValue={graphLowerRange + 1}
         maxValue={graphUpperRange - 1}
         color={'invisible'}
-        onDrag={(e, value) =>
+        onChange={(e, value) =>
           act('centerSlider', {
             value: value,
           })

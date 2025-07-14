@@ -30,7 +30,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/golem_food, golem_food_key = /obj/item/light, extra_validation = CALLBACK(src, PROC_REF(is_intact)))
 
-/obj/item/light/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/light/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(istype(attacking_item, /obj/item/lightreplacer))
@@ -127,9 +127,9 @@
 	..()
 	shatter(M)
 
-/obj/item/light/attack_atom(obj/O, mob/living/user, params)
+/obj/item/light/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	..()
-	shatter(O)
+	shatter(attacked_obj)
 
 /obj/item/light/proc/shatter(target)
 	if(status == LIGHT_OK || status == LIGHT_BURNED)

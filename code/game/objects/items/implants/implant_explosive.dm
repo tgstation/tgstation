@@ -129,7 +129,7 @@
 		imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 		if(notify_ghosts)
 			notify_ghosts(
-				"[imp_in] is about to detonate their explosive implant!",
+				"[imp_in.real_name] is about to detonate their explosive implant!",
 				source = src,
 				header = "Tick Tick Tick...",
 				notify_flags = NOTIFY_CATEGORY_NOFLASH,

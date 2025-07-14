@@ -7,11 +7,11 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { NTOSData } from '../layouts/NtosWindow';
+import type { NTOSData } from '../layouts/NtosWindow';
 import { AccessList } from './common/AccessList';
 
 type Data = {
@@ -187,7 +187,7 @@ const IdCardPage = (props) => {
               <Input
                 width="100%"
                 value={id_owner}
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('PRG_edit', {
                     name: value,
                   })
@@ -216,7 +216,7 @@ const IdCardPage = (props) => {
                 fluid
                 mt={1}
                 value={id_rank}
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('PRG_assign', {
                     assignment: value,
                   })

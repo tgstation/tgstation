@@ -9,9 +9,12 @@
 	anchored = FALSE
 	layer = ABOVE_OBJ_LAYER
 	interaction_flags_click = NEED_DEXTERITY
+	damage_deflection = 11
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
+	///Stores the gas mixture in string form for map loading and saving
+	var/initial_gas_mix
 	///Stores the reference of the connecting port
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	///Stores the reference of the tank the machine is holding
@@ -41,11 +44,21 @@
 	fire = 60
 	acid = 30
 
+/obj/machinery/portable_atmospherics/get_save_vars()
+	. = ..()
+	var/datum/gas_mixture/gasmix = air_contents
+	initial_gas_mix = gasmix.to_string()
+	. += NAMEOF(src, initial_gas_mix)
+	return .
+
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
-	air_contents = new
+	if(initial_gas_mix)
+		air_contents = SSair.parse_gas_string(initial_gas_mix)
+	else
+		air_contents = new
+		air_contents.temperature = T20C
 	air_contents.volume = volume
-	air_contents.temperature = T20C
 	SSair.start_processing_machine(src)
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
@@ -253,7 +266,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, params)
+/obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/tank))
 		return replace_tank(user, FALSE, item)
 	return ..()
@@ -287,13 +300,20 @@
 	investigate_log("was connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 	return TRUE
 
+/obj/machinery/portable_atmospherics/atom_break(damage_flag)
+	. = ..()
+	damage_deflection = 0
+
+/obj/machinery/portable_atmospherics/atom_fix()
+	. = ..()
+	damage_deflection = initial(damage_deflection)
+
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/item, mob/user)
-	if(item.force < 10 && !(machine_stat & BROKEN))
-		take_damage(0)
+	. = ..()
+	if(!.)
 		return
 	investigate_log("was smacked with \a [item] by [key_name(user)].", INVESTIGATE_ATMOS)
-	add_fingerprint(user)
-	return ..()
+	add_hiddenprint(user)
 
 /// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change.
 /// This checks for that case and removes our reference to it.

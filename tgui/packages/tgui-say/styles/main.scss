@@ -2,13 +2,7 @@
 @use 'sass:color';
 @use './colors.scss';
 
-// Core styles
 @include meta.load-css('~tgui/styles/reset');
-// Atomic styles
-@include meta.load-css('~tgui/styles/atomic/text.scss');
-// External styles
-@include meta.load-css('~tgui-core/styles/components/TextArea');
-// Local styles
 @include meta.load-css('./styles.scss');
 
 @each $channel, $color in colors.$channel-map {
