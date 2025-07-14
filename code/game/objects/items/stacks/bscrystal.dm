@@ -39,8 +39,18 @@
 	blink_mob(user)
 	use(1)
 
-/obj/item/stack/ore/bluespace_crystal/proc/blink_mob(mob/living/L)
-	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+/obj/item/stack/ore/bluespace_crystal/proc/blink_mob(mob/living/living_user, thrown = FALSE)
+	if(!thrown)
+		leave_organ_behind(living_user)
+	do_teleport(living_user, get_turf(living_user), blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/obj/item/stack/ore/bluespace_crystal/proc/leave_organ_behind(mob/living/living_user)
+	if(!iscarbon(living_user))
+		return
+	if(!prob(20))
+		return
+	var/mob/living/carbon/carbon_user = living_user
+	carbon_user.spew_organ()
 
 /obj/item/stack/ore/bluespace_crystal/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) // not caught in mid-air
@@ -49,7 +59,7 @@
 		new /obj/effect/particle_effect/sparks(T)
 		playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(isliving(hit_atom))
-			blink_mob(hit_atom)
+			blink_mob(hit_atom, TRUE)
 		use(1)
 
 //Artificial bluespace crystal, doesn't give you much research.
