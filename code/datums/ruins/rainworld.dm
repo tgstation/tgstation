@@ -139,3 +139,13 @@
 	name = "Water-Ruin 27"
 	id = "waterruin27"
 	suffix = "27.dmm"
+
+/datum/map_template/ruin/rainworld/twentyeight
+	name = "Water-Ruin 28"
+	id = "waterruin28"
+	suffix = "28.dmm"
+
+/datum/map_template/ruin/rainworld/twentynine
+	name = "Water-Ruin 29"
+	id = "waterruin29"
+	suffix = "29.dmm"

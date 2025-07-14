@@ -1107,11 +1107,11 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "fR" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/suit_storage_unit/mining/diving,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "fV" = (
@@ -2661,6 +2661,7 @@
 "oK" = (
 /obj/structure/table,
 /obj/item/radio/intercom/directional/north,
+/obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "oN" = (
@@ -4452,6 +4453,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "yA" = (
 /obj/structure/table,
+/obj/effect/spawner/random/medical/medkit_rare,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -5859,6 +5861,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/engineering/tool_advanced,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Gk" = (
@@ -7381,8 +7384,8 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Og" = (
 /obj/structure/table,
-/obj/machinery/recharger,
 /obj/item/radio/intercom/directional/west,
+/obj/item/gun/ballistic/automatic/wt550,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Oi" = (
@@ -8297,7 +8300,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "SF" = (
 /obj/structure/rack,
-/obj/item/gun/energy/temperature/security,
+/obj/item/storage/box/lethalshot,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "SI" = (
@@ -14274,7 +14277,7 @@ OR
 OR
 OR
 OR
-OR
+da
 QN
 fJ
 BG
@@ -14376,7 +14379,7 @@ OR
 OR
 OR
 OR
-OR
+da
 QN
 QN
 QN
@@ -14478,8 +14481,8 @@ OR
 OR
 OR
 OR
-OR
-OR
+da
+da
 QN
 ID
 KQ
@@ -14580,8 +14583,8 @@ OR
 OR
 OR
 OR
-OR
-OR
+da
+da
 QN
 cY
 om
@@ -14682,8 +14685,8 @@ OR
 OR
 OR
 OR
-OR
-OR
+da
+da
 QN
 Dy
 QS
@@ -14784,8 +14787,8 @@ OR
 OR
 OR
 OR
-OR
-OR
+da
+da
 QN
 QN
 QN
@@ -14887,11 +14890,11 @@ OR
 OR
 OR
 OR
-OR
-OR
-bD
-OR
-OR
+da
+da
+da
+da
+da
 OR
 bD
 OR
@@ -14990,10 +14993,10 @@ OR
 OR
 OR
 OR
-OR
+da
 bD
-OR
-OR
+da
+da
 OR
 bD
 OR

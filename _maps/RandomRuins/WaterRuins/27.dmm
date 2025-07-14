@@ -8,6 +8,14 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/powered)
+"aG" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
 "by" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /mob/living/basic/trooper/pirate/melee,
@@ -23,9 +31,24 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
+"bL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/turf/open/floor/wood,
+/area/ruin/powered)
 "bN" = (
 /obj/effect/mapping_helpers/wall_dent/impact,
 /turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"bU" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/gambling{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood/parquet,
 /area/ruin/powered)
 "bW" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
@@ -54,6 +77,14 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
+"ef" = (
+/obj/structure/platform/wood,
+/obj/structure/marker_beacon/yellow{
+	light_range = 4;
+	light_power = 1
+	},
+/turf/open/floor/wood/rainworld,
+/area/rainworld/surface/outdoors)
 "eC" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/wood,
@@ -75,6 +106,7 @@
 /obj/machinery/computer/records/security/laptop/syndie{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/powered)
 "eZ" = (
@@ -155,6 +187,10 @@
 /obj/item/storage/fancy/pickles_jar,
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
+"ip" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
 "iL" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -267,12 +303,16 @@
 "oR" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "pa" = (
 /obj/item/plate_shard,
 /obj/structure/table/wood,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/entertainment/drugs{
+	spawn_random_offset = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/powered)
 "pk" = (
@@ -343,6 +383,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
+/obj/item/flashlight/lamp/bananalamp,
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
 "tv" = (
@@ -424,6 +465,13 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/powered)
+"vQ" = (
+/obj/structure/marker_beacon/yellow{
+	light_range = 4;
+	light_power = 1
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
 "wf" = (
 /turf/template_noop,
 /area/template_noop)
@@ -466,6 +514,10 @@
 "Aj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
+/area/ruin/powered)
+"Au" = (
+/obj/item/chair/wood/wings,
+/turf/open/floor/stone,
 /area/ruin/powered)
 "AH" = (
 /obj/effect/spawner/random/glass_shards/mini,
@@ -519,6 +571,7 @@
 /obj/effect/spawner/random/food_or_drink/booze{
 	spawn_random_offset = 1
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "ES" = (
@@ -535,6 +588,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/powered)
 "Fp" = (
@@ -608,13 +662,37 @@
 	},
 /turf/closed/wall/mineral/wood,
 /area/rainworld/surface/outdoors)
+"KV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Lz" = (
+/obj/structure/marker_beacon/yellow{
+	light_range = 4;
+	light_power = 1
+	},
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
 "LU" = (
 /mob/living/basic/trooper/pirate/ranged,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"MK" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"MV" = (
+/obj/item/flashlight/flare/torch,
 /turf/open/floor/stone,
 /area/ruin/powered)
 "Nz" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/stone,
+/area/ruin/powered)
+"NF" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood,
 /area/ruin/powered)
 "NM" = (
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
@@ -717,6 +795,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/ruin/powered)
+"Ue" = (
+/obj/structure/punching_bag,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
 "Uo" = (
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron/dark/diagonal,
@@ -725,6 +807,11 @@
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /obj/structure/sign/poster/contraband/communist_state/directional/north,
 /turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"UC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood,
 /area/ruin/powered)
 "UE" = (
 /obj/structure/disposalpipe/segment{
@@ -807,6 +894,7 @@
 /area/ruin/powered)
 "XA" = (
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "XD" = (
@@ -1355,7 +1443,7 @@ ci
 IM
 ci
 qE
-Jq
+MK
 Jq
 xv
 TU
@@ -1408,7 +1496,7 @@ Ea
 mY
 Yu
 rJ
-vg
+Au
 Ge
 ue
 ft
@@ -1489,7 +1577,7 @@ EV
 ci
 hH
 ci
-Jq
+Ue
 zq
 Jq
 zq
@@ -1503,8 +1591,8 @@ xg
 bE
 xy
 nv
-xy
-xy
+bU
+aG
 du
 ci
 EV
@@ -1579,7 +1667,7 @@ vh
 eX
 Aj
 kI
-Aj
+bL
 Aj
 Aj
 ZR
@@ -1589,7 +1677,7 @@ Vm
 jN
 eC
 vg
-vg
+MV
 vg
 RL
 RL
@@ -1627,7 +1715,7 @@ Ef
 Aj
 nF
 HX
-ZR
+NF
 AH
 VI
 ZR
@@ -1755,7 +1843,7 @@ gK
 sS
 EV
 ci
-kI
+KV
 ci
 EV
 EV
@@ -1775,7 +1863,7 @@ EV
 EV
 EV
 ci
-kI
+UC
 ci
 EV
 EV
@@ -2041,7 +2129,7 @@ gK
 gK
 gK
 gK
-sS
+ip
 sS
 sS
 sS
@@ -2067,33 +2155,33 @@ gK
 gK
 gK
 gK
-gK
+vQ
 sS
 iS
 sS
 sS
+Lz
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+vQ
+sS
+sS
 sS
 gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-sS
-sS
-sS
-gK
-gK
+vQ
 gK
 gK
 gK
@@ -2453,7 +2541,7 @@ Ij
 Ij
 Pi
 bZ
-gK
+vQ
 gK
 gK
 gK
@@ -2789,8 +2877,8 @@ gK
 gK
 gK
 oz
-Ij
-Ij
+ef
+ef
 qu
 gK
 gK
@@ -2832,6 +2920,12 @@ gK
 gK
 gK
 gK
+vQ
+gK
+gK
+gK
+gK
+vQ
 gK
 gK
 gK
@@ -2847,18 +2941,12 @@ gK
 gK
 gK
 gK
+vQ
 gK
 gK
 gK
 gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+vQ
 gK
 gK
 gK
