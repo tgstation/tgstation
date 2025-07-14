@@ -66,7 +66,7 @@ export const LightController = (props) => {
   const category_keys = category_ids ? Object.keys(category_ids) : [];
 
   return (
-    <Window title={light_info.name + ': Lighting'} width={600} height={400}>
+    <Window title={`${light_info.name}: Lighting`} width={600} height={400}>
       <Window.Content scrollable>
         <Stack fill>
           <Stack.Item>
@@ -98,7 +98,7 @@ export const LightController = (props) => {
                       ml={0.1}
                       className={classes([
                         'lights32x32',
-                        'light_fantastic_' + id,
+                        `light_fantastic_${id}`,
                       ])}
                     />
                   </Tabs.Tab>

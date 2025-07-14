@@ -19,7 +19,7 @@ import { Window } from '../layouts';
 
 const formatPressure = (value: number) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };
@@ -184,7 +184,7 @@ export const Canister = (props) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Cell Charge">
-                  {cellCharge > 0 ? cellCharge + '%' : 'Missing Cell'}
+                  {cellCharge > 0 ? `${cellCharge}%` : 'Missing Cell'}
                 </LabeledList.Item>
                 {!!hasHypernobCrystal && (
                   <LabeledList.Item label="Reaction Suppression">

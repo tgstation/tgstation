@@ -626,7 +626,7 @@ const CategoryDisplay = (props: { ActiveCat: TabType }) => {
           </Stack.Item>
         )}
         <Stack.Item>
-          {(ActiveCat.component && ActiveCat.component()) || (
+          {ActiveCat.component?.() || (
             <SpellTabDisplay TabSpells={TabSpells} PointOffset={38} />
           )}
         </Stack.Item>
@@ -772,7 +772,7 @@ export const Spellbook = (props) => {
               <Stack>
                 <Stack.Item grow>
                   <ProgressBar value={points / 10}>
-                    {points + ' points left to spend.'}
+                    {`${points} points left to spend.`}
                   </ProgressBar>
                 </Stack.Item>
                 <Stack.Item>
