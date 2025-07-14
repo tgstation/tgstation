@@ -328,7 +328,7 @@
 	var/stun = (vomit_flags & MOB_VOMIT_STUN)
 	var/knockdown = (vomit_flags & MOB_VOMIT_KNOCKDOWN)
 	var/blood = (vomit_flags & MOB_VOMIT_BLOOD)
-	if(!target.get_bodypart(BODY_ZONE_HEAD))
+	if(!src.get_bodypart(BODY_ZONE_HEAD))
 		blood = TRUE
 	if(!force && !blood && (nutrition < 100))
 		if(message)
