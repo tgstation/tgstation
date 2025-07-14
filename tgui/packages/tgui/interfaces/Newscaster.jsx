@@ -489,7 +489,7 @@ const NewscasterChannelSelector = (props) => {
   const { act, data } = useBackend();
   const { channels = [], viewing_channel, wanted = [] } = data;
   return (
-    <Section minHeight="100%" width={window.innerWidth - 410 + 'px'}>
+    <Section minHeight="100%" width={`${window.innerWidth - 410}px`}>
       <Tabs vertical>
         {wanted.map((activeWanted) => (
           <Tabs.Tab
