@@ -18,7 +18,9 @@
 /area/ruin/powered)
 "by" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/basic/trooper/pirate/melee,
+/mob/living/basic/trooper/russian{
+	faction = list("pirate")
+	},
 /turf/open/floor/wood,
 /area/ruin/powered)
 "bE" = (
@@ -749,7 +751,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/trooper/pirate/melee,
+/mob/living/basic/trooper/pirate/melee/space,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Rq" = (
