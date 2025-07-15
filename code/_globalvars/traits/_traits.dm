@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	),
 	/datum/antagonist/heretic = list(
 		"TRAIT_LOCK_GRASP_UPGRADED" = TRAIT_LOCK_GRASP_UPGRADED,
-	)
+	),
 	/obj = list(
 		"TRAIT_CONTRABAND" = TRAIT_CONTRABAND,
 		"TRAIT_SPEED_POTIONED" = TRAIT_SPEED_POTIONED,
@@ -753,7 +753,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	),
 	/obj/item/organ/brain = list(
 		"TRAIT_BRAIN_DAMAGE_NODEATH" = TRAIT_BRAIN_DAMAGE_NODEATH,
-	)
+	),
 	/obj/item/organ/liver = list(
 		"TRAIT_BALLMER_SCIENTIST" = TRAIT_BALLMER_SCIENTIST,
 		"TRAIT_COMEDY_METABOLISM" = TRAIT_COMEDY_METABOLISM,
