@@ -69,7 +69,7 @@
 
 /datum/objective/assassinate/captain_replacement/update_explanation_text()
 	. = ..()
-	explanation_text = "Assassinate [target.name], the Captain, and steal [target.p_their()] ID card - becoming the new Captain in the process."
+	explanation_text = "Assassinate [target.name], the Captain, and steal [target.p_their()] ID card."
 
 /datum/objective/assassinate/captain_replacement/check_completion()
 	if(completed)
