@@ -120,10 +120,10 @@
 
 	if(deviation == DEVIATION_FULL) //If no deviation, we can assume it's a non-assembly flash and should do max flash damage.
 		flashed.apply_damage(16, BURN, attacking_item = flash)
-		flashed.adjust_confusion_up_to(3 SECONDS, 3 SECONDS)
+		flashed.adjust_confusion_up_to(3 SECONDS, 6 SECONDS)
 	else //If it's anything less than a full hit, it does less than stellar damage. Bear in mind that this damage is dished out much faster since flashes have a quicker cooldown on clicks.
 		flashed.apply_damage(8, BURN, attacking_item = flash)
-		flashed.adjust_confusion_up_to(1 SECONDS, 2 SECONDS)
+		flashed.adjust_confusion_up_to(1 SECONDS, 3 SECONDS)
 
 	INVOKE_ASYNC(flashed, TYPE_PROC_REF(/mob, emote), "scream")
 	flashed.visible_message(span_danger("[flashed] wails in pain as a burst of light singes their flesh!"), \
