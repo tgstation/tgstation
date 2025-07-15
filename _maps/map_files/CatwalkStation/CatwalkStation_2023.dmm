@@ -42979,6 +42979,10 @@
 /obj/effect/spawner/random/contraband/armory,
 /obj/effect/spawner/random/maintenance/three,
 /obj/structure/cable,
+/obj/machinery/button/door/directional/south{
+	id = "armory";
+	name = "Armory Shutters"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "mJO" = (
@@ -63795,15 +63799,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "sVU" = (
-/obj/machinery/light_switch/directional/south,
 /obj/machinery/light/directional/south,
-/obj/machinery/button/door/directional/south{
-	id = "armory";
-	name = "Armory Shutters"
-	},
 /obj/structure/rack,
 /obj/effect/spawner/random/armory/riot_shield,
 /obj/structure/cable,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "sWg" = (
@@ -75090,7 +75090,6 @@
 /area/station/science/lobby)
 "wmS" = (
 /obj/structure/disposalpipe/segment,
-/obj/item/lighter,
 /turf/closed/wall,
 /area/station/security/warden)
 "wmZ" = (
