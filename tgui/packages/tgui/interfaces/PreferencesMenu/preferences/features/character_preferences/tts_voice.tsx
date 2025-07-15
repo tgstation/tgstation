@@ -2,11 +2,11 @@ import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
 
 import {
-  FeatureChoiced,
-  FeatureChoicedServerData,
-  FeatureNumeric,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
+  type FeatureNumeric,
   FeatureSliderInput,
-  FeatureValueProps,
+  type FeatureValueProps,
 } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 

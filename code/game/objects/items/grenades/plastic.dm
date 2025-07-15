@@ -188,4 +188,4 @@
 	inhand_icon_state = "plasticx4"
 	worn_icon_state = "x4"
 	directional = TRUE
-	boom_sizes = list(0, 2, 5)
+	boom_sizes = list(0, 5, 7)

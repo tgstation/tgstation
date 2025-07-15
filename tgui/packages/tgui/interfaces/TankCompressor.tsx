@@ -12,7 +12,7 @@ import {
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
@@ -27,7 +27,7 @@ type Data = {
   lastPressure: number;
   disk: string;
   storage: string;
-  records: Record[];
+  records: GasRecord[];
   // Static
   maxTransfer: number;
   leakPressure: number;
@@ -35,21 +35,17 @@ type Data = {
   ejectPressure: number;
 };
 
-type Record = {
+type GasRecord = {
   ref: string;
   name: string;
   timestamp: string;
   source: string;
-  gases: GasMoles[];
-};
-
-type GasMoles = {
-  [key: string]: number;
+  gases: Record<string, number>[];
 };
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };
@@ -78,7 +74,7 @@ const TankCompressorContent = (props) => {
           style={{
             textTransform: 'capitalize',
           }}
-          title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}
+          title={disk ? `${disk} (${storage})` : 'No Disk Inserted'}
           buttons={
             <Button
               icon="eject"
@@ -279,9 +275,11 @@ const TankCompressorRecords = (props) => {
                 <LabeledList>
                   {Object.keys(activeRecord.gases).map((gas_name) => (
                     <LabeledList.Item label={gas_name} key={gas_name}>
-                      {(activeRecord.gases[gas_name]
-                        ? activeRecord.gases[gas_name].toFixed(2)
-                        : '-') + ' moles'}
+                      {`${
+                        activeRecord.gases[gas_name]
+                          ? activeRecord.gases[gas_name].toFixed(2)
+                          : '-'
+                      } moles`}
                     </LabeledList.Item>
                   ))}
                 </LabeledList>

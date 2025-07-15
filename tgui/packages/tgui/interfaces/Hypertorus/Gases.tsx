@@ -12,7 +12,7 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
-import { HypertorusFuel, HypertorusGas } from '.';
+import type { HypertorusFuel, HypertorusGas } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {
@@ -147,7 +147,7 @@ const GasList = (props: GasListProps) => {
               minValue={0}
               maxValue={minimumScale}
             >
-              {toFixed(gas.amount, 2) + ' moles'}
+              {`${toFixed(gas.amount, 2)} moles`}
             </ProgressBar>
           </LabeledList.Item>
         );

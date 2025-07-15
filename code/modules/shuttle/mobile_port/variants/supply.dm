@@ -169,6 +169,21 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
+
+		//adjust galactic material market based on the ordered quantities
+		var/datum/supply_pack/custom/minerals/sheets = astype(spawning_order.pack)
+		if(!isnull(sheets))
+			var/list/orders_adjusted = sheets.adjust_market()
+			if(orders_adjusted.len)
+				var/datum/bank_account/paying_for_this = spawning_order.paying_account || SSeconomy.get_dep_account(ACCOUNT_CAR)
+				if(!sheets.contains.len) //no sheets in the market at all
+					paying_for_this.bank_card_talk("Order #[spawning_order.id] ([spawning_order.pack.name]) was cancelled due to insufficient materials in the market!.")
+					SSshuttle.shopping_list -= spawning_order
+					clean_up_orders += spawning_order
+					continue
+				//some of the orders were adjusted(quantity changed or cancelled) according to the market
+				paying_for_this.bank_card_talk("Order #[spawning_order.id] ([spawning_order.pack.name]) had the following orders adjusted<br>[orders_adjusted.Join("<br>")]<br>.")
+
 		price = spawning_order.get_final_cost()
 
 		// department orders EARN money for cargo, not the other way around

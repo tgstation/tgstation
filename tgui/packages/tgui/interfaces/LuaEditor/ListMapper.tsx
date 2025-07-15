@@ -1,4 +1,8 @@
-import React, { ComponentProps, Dispatch, SetStateAction } from 'react';
+import React, {
+  type ComponentProps,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 import {
   Box,
   Button,
@@ -7,12 +11,12 @@ import {
   Section,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { logger } from '../../logging';
-import { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
-import { ListElement, ListPath } from './types';
+import type { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
+import type { ListElement, ListPath } from './types';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {
@@ -260,7 +264,7 @@ export const ListMapper = (props: ListMapperProps) => {
 
   const inner = (
     <>
-      {list && list.map(ListMapperInner)}
+      {list?.map(ListMapperInner)}
       {editable && (
         <Button
           icon="plus"

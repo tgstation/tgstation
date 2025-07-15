@@ -1,24 +1,23 @@
 import { Box, Icon, Section, Stack, Tooltip } from 'tgui-core/components';
-import { classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Material } from './Fabrication/Types';
-import { Design } from './Fabrication/Types';
-import { MaterialMap } from './Fabrication/Types';
+import type { Design, Material, MaterialMap } from './Fabrication/Types';
 
-type ComponentPrinterData = {
+type Data = {
+  debug: BooleanLike;
   designs: Record<string, Design>;
   materials: Material[];
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-export const ComponentPrinter = (props) => {
-  const { act, data } = useBackend<ComponentPrinterData>();
-  const { materials, designs, SHEET_MATERIAL_AMOUNT } = data;
+export function ComponentPrinter(props) {
+  const { act, data } = useBackend<Data>();
+  const { materials = [], designs, SHEET_MATERIAL_AMOUNT, debug } = data;
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -28,7 +27,12 @@ export const ComponentPrinter = (props) => {
   }
 
   return (
-    <Window title={'Component Printer'} width={670} height={600}>
+    <Window
+      title={`${debug && 'Debug '}Component Printer`}
+      width={670}
+      height={600}
+      theme={debug ? 'admin' : undefined}
+    >
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -39,19 +43,13 @@ export const ComponentPrinter = (props) => {
                 design,
                 availableMaterials,
                 _onPrintDesign,
-              ) => (
-                <Recipe
-                  design={design}
-                  available={availableMaterials}
-                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
-                />
-              )}
+              ) => <Recipe design={design} available={availableMaterials} />}
             />
           </Stack.Item>
           <Stack.Item>
             <Section>
               <MaterialAccessBar
-                availableMaterials={materials ?? []}
+                availableMaterials={materials}
                 SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                 onEjectRequested={(material, amount) =>
                   act('remove_mat', { ref: material.ref, amount })
@@ -63,22 +61,28 @@ export const ComponentPrinter = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
 
 type RecipeProps = {
-  design: Design;
   available: MaterialMap;
-  SHEET_MATERIAL_AMOUNT: number;
+  design: Design;
 };
 
-const Recipe = (props: RecipeProps) => {
-  const { act } = useBackend<ComponentPrinterData>();
-  const { design, available, SHEET_MATERIAL_AMOUNT } = props;
+function Recipe(props: RecipeProps) {
+  const { available, design } = props;
 
-  const canPrint = !Object.entries(design.cost).some(
-    ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0),
-  );
+  const { act, data } = useBackend<Data>();
+  const { SHEET_MATERIAL_AMOUNT, debug } = data;
+
+  const costs = Object.entries(design.cost);
+
+  const canPrint =
+    debug ||
+    !costs.some(([material, amount]) => {
+      const have = available[material];
+
+      return !have || amount > have;
+    });
 
   return (
     <div className="FabricatorRecipe">
@@ -114,8 +118,8 @@ const Recipe = (props: RecipeProps) => {
         >
           <div className="FabricatorRecipe__Icon">
             <Box
-              width={'32px'}
-              height={'32px'}
+              width="32px"
+              height="32px"
               className={classes(['design32x32', design.icon])}
             />
           </div>
@@ -124,4 +128,4 @@ const Recipe = (props: RecipeProps) => {
       </Tooltip>
     </div>
   );
-};
+}

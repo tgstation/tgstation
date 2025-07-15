@@ -2,7 +2,7 @@ import { Box, Button } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { DataCase } from './DataTypes';
+import type { DataCase } from './DataTypes';
 
 type BoardTabsData = {
   cases: DataCase[];
@@ -17,7 +17,7 @@ const BoardTab = (props) => {
       className={classes([
         'BoardTab',
         selected ? 'BoardTab__Selected' : 'BoardTab__Perspective',
-        !selected && 'BoardTab__' + color,
+        !selected && `BoardTab__${color}`,
       ])}
     >
       <Box className={'BoardTab__Contain'}>{children}</Box>

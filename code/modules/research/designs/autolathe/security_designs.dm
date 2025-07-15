@@ -2,7 +2,7 @@
 	name = "Beanbag Slug (Less Lethal)"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -14,7 +14,7 @@
 	name = "Rubber Shot (Less Lethal)"
 	id = "rubber_shot"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -26,7 +26,7 @@
 	name = "Speed Loader (.38) (Lethal)"
 	id = "c38"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3)
 	build_path = /obj/item/ammo_box/c38
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -130,7 +130,7 @@
 	name = "Shotgun Dart (Lethal)"
 	id = "shotgun_dart"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_casing/shotgun/dart
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -142,7 +142,7 @@
 	name = "Incendiary Slug (Lethal)"
 	id = "incendiary_slug"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -178,7 +178,7 @@
 	name = ".357 Casing (VERY Lethal)"
 	id = "a357"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_casing/c357
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -190,7 +190,7 @@
 	name = ".310 Surplus Bullet Casing (VERY Lethal)"
 	id = "strilka310_surplus"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_casing/strilka310/surplus
 	category = list(
 		RND_CATEGORY_HACKED,

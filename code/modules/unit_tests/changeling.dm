@@ -26,7 +26,7 @@
 	TEST_ASSERT_EQUAL(victim.real_name, ling_name, "Victim real name did not change on being transformation stung.")
 	TEST_ASSERT_EQUAL(victim.name, ling_name, "Victim name did not change on being transformation stung.")
 	TEST_ASSERT_EQUAL(victim.dna.species.type, ling.dna.species.type, "Victim species did not change on being transformation stung.")
-	TEST_ASSERT_EQUAL(victim.dna.features["mcolor"], ling.dna.features["mcolor"], "Victim mcolor did not change on being transformation stung.")
+	TEST_ASSERT_EQUAL(victim.dna.features[FEATURE_MUTANT_COLOR], ling.dna.features[FEATURE_MUTANT_COLOR], "Victim mcolor did not change on being transformation stung.")
 	// Check they actually look the same
 	add_to_screenshot(ling, victim)
 
@@ -37,7 +37,7 @@
 	TEST_ASSERT_EQUAL(victim.name, base_victim_name, "Victim name did not change back after transformation sting expired.")
 	TEST_ASSERT_EQUAL(victim.real_name, base_victim_name, "Victim real name did not change back after transformation sting expired.")
 	TEST_ASSERT_NOTEQUAL(victim.dna.species.type, ling.dna.species.type, "Victim species did not change back after transformation sting expired.")
-	TEST_ASSERT_NOTEQUAL(victim.dna.features["mcolor"], ling.dna.features["mcolor"], "Victim mcolor did not reset after transformation sting expired.")
+	TEST_ASSERT_NOTEQUAL(victim.dna.features[FEATURE_MUTANT_COLOR], ling.dna.features[FEATURE_MUTANT_COLOR], "Victim mcolor did not reset after transformation sting expired.")
 	// Check they actually look different again
 	add_to_screenshot(ling, victim, both_species = TRUE)
 
@@ -74,17 +74,16 @@
 	// Because we use two consistent humans, we need to change some of the features to know they're actually updating to new values.
 	// The more DNA features and random things we change, the more likely we are to catch something not updating correctly.
 	// Yeah guess who/what this is, I dare you.
-	ling.dna.features["mcolor"] = "#886600"
-	ling.dna.features["tail_lizard"] = "Smooth"
-	ling.dna.features["snout"] = "Sharp + Light"
-	ling.dna.features["horns"] = "Curled"
-	ling.dna.features["frills"] = "Short"
-	ling.dna.features["spines"] = "Long + Membrane"
-	ling.dna.features["lizard_markings"] = "Light Belly"
-	ling.dna.features["legs"] = DIGITIGRADE_LEGS
+	ling.dna.features[FEATURE_MUTANT_COLOR] = "#886600"
+	ling.dna.features[FEATURE_TAIL_LIZARD] = "Smooth"
+	ling.dna.features[FEATURE_SNOUT] = "Sharp + Light"
+	ling.dna.features[FEATURE_HORNS] = "Curled"
+	ling.dna.features[FEATURE_FRILLS] = "Short"
+	ling.dna.features[FEATURE_SPINES] = "Long + Membrane"
+	ling.dna.features[FEATURE_LIZARD_MARKINGS] = "Light Belly"
+	ling.dna.features[FEATURE_LEGS] = DIGITIGRADE_LEGS
 	ling.set_eye_color(COLOR_WHITE)
-	ling.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
-	ling.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
+	ling.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
 	ling.set_species(/datum/species/lizard)
 
 	ling.real_name = ling_name

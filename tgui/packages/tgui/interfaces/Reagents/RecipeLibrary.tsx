@@ -9,7 +9,7 @@ import {
 
 import { useBackend } from '../../backend';
 import { bookmarkedReactions } from '.';
-import { ReagentsData, ReagentsProps } from './types';
+import type { ReagentsData, ReagentsProps } from './types';
 
 function matchBitflag(a: number, b: number) {
   return a & b && (a | b) === b;
@@ -89,7 +89,7 @@ export function RecipeLibrary(props: ReagentsProps) {
       title={bookmarkMode ? 'Bookmarked recipes' : 'Possible recipes'}
       buttons={
         <>
-          Beaker: {linkedBeaker + '  '}
+          Beaker: {`${linkedBeaker}  `}
           <Button
             icon="search"
             disabled={bookmarkMode}

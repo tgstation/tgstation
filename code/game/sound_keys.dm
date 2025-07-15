@@ -1,4 +1,4 @@
-/*
+/**
 # sound_effect datum
 * use for when you need multiple sound files to play at random in a playsound
 * see var documentation below
@@ -847,7 +847,6 @@
 /datum/sound_effect/cig_pack_throw_drop
 	key = SFX_CIG_PACK_THROW_DROP
 	file_paths = list('sound/items/cigs/cig_pack_throw_drop1.ogg')
-
 
 /* assoc lists go next */
 

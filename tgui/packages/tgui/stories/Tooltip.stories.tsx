@@ -4,8 +4,14 @@
  * @license MIT
  */
 
-import { ComponentProps } from 'react';
-import { Box, Button, Floating, Section, Tooltip } from 'tgui-core/components';
+import type { ComponentProps } from 'react';
+import {
+  Box,
+  Button,
+  type Floating,
+  Section,
+  Tooltip,
+} from 'tgui-core/components';
 
 export const meta = {
   title: 'Tooltip',
