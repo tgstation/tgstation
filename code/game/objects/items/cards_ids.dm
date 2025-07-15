@@ -1969,7 +1969,7 @@
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 
-//Upgraded variant of agent id, can hold unlimited amount of accesses.
+/// Upgraded variant of agent id, can hold unlimited amount of accesses.
 /obj/item/card/id/advanced/chameleon/elite
 	desc = "A highly advanced chameleon ID card. Swipe this card on another ID card, or a person wearing one, to copy access. \
 		Has special magnetic properties which force it to the front of wallets, and an embedded high-end microchip to hold unlimited access codes."
