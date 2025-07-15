@@ -281,7 +281,7 @@
 		return
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path.route)
 	our_heretic.generate_heretic_research_tree()
-	our_heretic.determine_drafted_knowledge(user, our_heretic.heretic_path)
+	our_heretic.determine_drafted_knowledge()
 
 /datum/heretic_knowledge/limited_amount/starting/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
