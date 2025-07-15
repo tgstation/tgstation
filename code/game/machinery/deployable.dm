@@ -99,7 +99,9 @@
 		balloon_alert(user, "interrupted!")
 		return ITEM_INTERACT_BLOCKING
 
-	our_wood.use(drop_amount)
+	if(!our_wood.use(drop_amount))
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
 	repair_damage(20 * drop_amount)
 	return ITEM_INTERACT_SUCCESS
 
