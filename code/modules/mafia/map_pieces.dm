@@ -1,10 +1,8 @@
 /obj/effect/landmark/mafia_game_area //locations where mafia will be loaded by the datum
 	name = "Mafia Area Spawn"
-	var/game_id = "mafia"
 
 /obj/effect/landmark/mafia
 	name = "Mafia Player Spawn"
-	var/game_id = "mafia"
 
 /obj/effect/landmark/mafia/town_center
 	name = "Mafia Town Center"
@@ -15,7 +13,6 @@
 	icon = 'icons/obj/mafia.dmi'
 	icon_state = "board"
 	anchored = TRUE
-	var/game_id = "mafia"
 	var/datum/mafia_controller/MF
 
 /obj/mafia_game_board/attack_ghost(mob/user)

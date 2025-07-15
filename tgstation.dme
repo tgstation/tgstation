@@ -4735,6 +4735,7 @@
 #include "code\modules\mafia\abilities\protective\heal.dm"
 #include "code\modules\mafia\abilities\protective\vest.dm"
 #include "code\modules\mafia\abilities\support\roleblock.dm"
+#include "code\modules\mafia\abilities\support\seance.dm"
 #include "code\modules\mafia\abilities\support\self_reveal.dm"
 #include "code\modules\mafia\abilities\voting\changeling_kill.dm"
 #include "code\modules\mafia\abilities\voting\day_voting.dm"

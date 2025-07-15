@@ -1,6 +1,6 @@
 /datum/mafia_role/mafia
 	name = "Changeling"
-	desc = "You're a member of the changeling hive. You may speak with your fellow Changelings at night."
+	desc = "You're a member of the changeling hive. Talk during the Night period to coordinate with your allies, and kill all non-Changelings."
 	team = MAFIA_TEAM_MAFIA
 	role_type = MAFIA_REGULAR
 	role_flags = ROLE_CAN_KILL
@@ -25,10 +25,10 @@
 
 /datum/mafia_role/mafia/thoughtfeeder
 	name = "Thoughtfeeder"
-	desc = "You're a changeling variant that feeds on the memories of others. Use ':j' talk prefix to talk to your fellow lings, and visit people at night to learn their role."
+	desc = "You're a changeling variant that feeds on the memories of others. Talk during the Night period to coordinate with your allies, \
+		and kill all non-Changelings, using your ability to learn people's roles to your advantage."
 	role_type = MAFIA_SPECIAL
 	hud_icon = "hudthoughtfeeder"
-	revealed_icon = "thoughtfeeder"
 	winner_award = /datum/award/achievement/mafia/thoughtfeeder
 
 	role_unique_actions = list(/datum/mafia_ability/changeling_kill, /datum/mafia_ability/thoughtfeeder)

@@ -27,6 +27,12 @@
 	database_id = MAFIA_MEDAL_CHAPLAIN
 	icon_state = "town"
 
+/datum/award/achievement/mafia/coroner
+	name = "Coroner Victory"
+	desc = "Useless... until the one night the thoughtfeeder confidently claims themselves as detective. Mafia's true bullshit detector."
+	database_id = MAFIA_MEDAL_CORONER
+	icon_state = "town"
+
 /datum/award/achievement/mafia/md
 	name = "Medical Doctor Victory"
 	desc = "Congratulations on learning how to not talk!"
