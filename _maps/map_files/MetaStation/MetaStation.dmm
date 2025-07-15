@@ -51361,7 +51361,6 @@
 /area/station/engineering/gravity_generator)
 "rMT" = (
 /obj/machinery/power/smes{
-	capacity = 1.8e+008;
 	charge = 2e+005
 	},
 /obj/effect/decal/cleanable/dirt,

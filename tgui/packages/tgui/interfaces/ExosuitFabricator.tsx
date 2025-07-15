@@ -330,14 +330,11 @@ const QueueList = (props: QueueListProps) => {
                   <Box
                     width={'32px'}
                     height={'32px'}
-                    className={classes([
-                      'design32x32',
-                      entry.design && entry.design.icon,
-                    ])}
+                    className={classes(['design32x32', entry.design?.icon])}
                   />
                 </div>
                 <div className="FabricatorRecipe__Label">
-                  {entry.design && entry.design.name}
+                  {entry.design?.name}
                 </div>
               </div>
             </Tooltip>
