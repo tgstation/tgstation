@@ -21257,7 +21257,6 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "fYH" = (

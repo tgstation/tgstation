@@ -43635,7 +43635,6 @@
 "kNB" = (
 /obj/structure/table/wood,
 /obj/item/papercutter,
-/obj/item/paper/fluff/ids_for_dummies,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)

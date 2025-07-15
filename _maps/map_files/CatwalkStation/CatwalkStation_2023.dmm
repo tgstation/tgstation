@@ -11157,10 +11157,6 @@
 "doU" = (
 /obj/structure/table,
 /obj/effect/spawner/random/bureaucracy/paper,
-/obj/item/paper/fluff/ids_for_dummies{
-	pixel_x = -6;
-	pixel_y = 14
-	},
 /obj/item/pen,
 /obj/structure/sign/poster/contraband/missing_gloves/directional/west,
 /turf/open/floor/wood,
@@ -28514,10 +28510,6 @@
 /area/station/medical/abandoned)
 "iwY" = (
 /obj/structure/table/wood,
-/obj/item/paper/fluff/ids_for_dummies{
-	pixel_x = 4;
-	pixel_y = 3
-	},
 /obj/item/paper_bin{
 	pixel_x = -5;
 	pixel_y = 4

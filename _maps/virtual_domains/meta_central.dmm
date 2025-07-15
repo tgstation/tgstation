@@ -4528,7 +4528,6 @@
 /obj/item/papercutter{
 	pixel_x = -4
 	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Ml" = (
