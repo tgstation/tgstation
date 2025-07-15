@@ -161,15 +161,16 @@
 		else if(sigreturn & DEVIATION_OVERRIDE_NONE)
 			deviation = DEVIATION_NONE
 
-	if(SEND_SIGNAL(flashed, COMSIG_MOB_FLASH_OVERRIDE_CHECK, flashed, src, deviation)) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
-		return
-
 	//If you face away from someone they shouldn't notice any effects.
 	if(deviation == DEVIATION_FULL)
 		return
 
 	if(targeted)
-		if(flashed.flash_act(1, 1))
+		var/flash_result = flashed.flash_act(1, 1)
+		if(flash_result & FLASH_OVERRIDDEN)
+			return //Behavior was overwritten, so we just skip the flashy stunny part and go with the override behavior instead
+
+		if(flash_result)
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction

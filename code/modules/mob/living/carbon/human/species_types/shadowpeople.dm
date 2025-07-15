@@ -118,14 +118,14 @@
 /datum/species/shadow/proc/on_flashed(source, mob/living/carbon/flashed, flash, deviation)
 	SIGNAL_HANDLER
 
-	if(deviation == DEVIATION_FULL)
-		flashed.apply_damage(15, BURN, attacking_item = flash)
+	if(deviation == DEVIATION_FULL) //If no deviation, we can assume it's a non-assembly flash and should do max flash damage.
+		flashed.apply_damage(16, BURN, attacking_item = flash)
 	else //If it's anything less than a full hit, it does less than stellar damage. Bear in mind that this damage is dished out much faster since flashes have a quicker cooldown on clicks.
 		flashed.apply_damage(8, BURN, attacking_item = flash)
 
 	INVOKE_ASYNC(flashed, TYPE_PROC_REF(/mob, emote), "scream")
-	flashed.visible_message(span_danger("[flashed] wails in pain as the light of [flash] singes their skin!"), \
-		span_danger("You wail in pain as the sudden burst of light singes your skin!"), \
+	flashed.visible_message(span_danger("[flashed] wails in pain as a burst of light singes their flesh!"), \
+		span_danger("You wail in pain as the sudden burst of light singes your flesh!"), \
 		span_danger("Something wails in pain! It sounds like a terrifying monster! Good thing you can't see it, or you'd probably be freaking out right now."))
 
-	return STOP_FLASH
+	return FLASH_OVERRIDDEN
