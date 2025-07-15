@@ -72,7 +72,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(charges <= 0)
-		balloon_alert(user, "No charges!")
+		balloon_alert(user, "no charges!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/turf_target = get_turf(interacting_with)
