@@ -307,8 +307,8 @@ const MafiaRole = (props) => {
           <Box fontSize="16px">You are the {roleinfo.role}</Box>
           {!!roleinfo.role_dead && (
             <Box bold>
-              You are currently dead. You may speak with the Chaplain
-              at night, if there is one.
+              You are currently dead. You may speak with the Chaplain at night,
+              if there is one.
             </Box>
           )}
           {!roleinfo.role_dead && <Box italic>{roleinfo.desc}</Box>}
