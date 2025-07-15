@@ -319,7 +319,7 @@
 	arm.unarmed_attack_verbs = list("slash")
 	arm.unarmed_attack_verbs_continuous = list("slashes")
 	arm.grappled_attack_verb = "lacerate"
-	arm.grappled_attack_verb_past = "lacerated"
+	arm.grappled_attack_verb_continuous = "lacerates"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -344,7 +344,7 @@
 	arm.unarmed_attack_verbs = initial_unarmed_verbs[arm]
 	arm.unarmed_attack_verbs_continuous = initial_unarmed_verbs_past[arm]
 	arm.grappled_attack_verb = initial(arm.grappled_attack_verb)
-	arm.grappled_attack_verb_past = initial(arm.grappled_attack_verb_past)
+	arm.grappled_attack_verb_continuous = initial(arm.grappled_attack_verb_continuous)
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)

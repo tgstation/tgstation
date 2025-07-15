@@ -942,7 +942,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(grappled && attacking_bodypart.grappled_attack_verb)
 		atk_verb = attacking_bodypart.grappled_attack_verb
-		atk_verb_continuous = attacking_bodypart.grappled_attack_verb_past
+		atk_verb_continuous = attacking_bodypart.grappled_attack_verb_continuous
 
 	target.visible_message(span_danger("[user] [atk_verb_continuous] [target]!"), \
 					span_userdanger("[user] [atk_verb_continuous] you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)

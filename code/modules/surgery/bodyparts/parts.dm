@@ -144,7 +144,7 @@
 	unarmed_attack_verbs = list("punch") /// The classic punch, wonderfully classic and completely random
 	unarmed_attack_verbs_continuous = list("punches")
 	grappled_attack_verb = "pummel"
-	grappled_attack_verb_past = "pummeled"
+	grappled_attack_verb_continuous = "pummels"
 	unarmed_damage_low = 5
 	unarmed_damage_high = 10
 	unarmed_pummeling_bonus = 1.5

@@ -171,12 +171,12 @@
 	var/attack_type = BRUTE
 	/// the verbs used for an unarmed attack when using this limb, such as arm.unarmed_attack_verbs = list("punch")
 	var/list/unarmed_attack_verbs = list("bump")
-	/// Continious tense attack verbs for successful attacks
+	/// Continuous tense attack verbs for successful attacks
 	var/list/unarmed_attack_verbs_continuous = list("bumps")
 	/// if we have a special attack verb for hitting someone who is grappled by us, it goes here.
 	var/grappled_attack_verb
-	/// Perfect tense grapple verb for successful attacks
-	var/grappled_attack_verb_past
+	/// Continuous tense grapple verb for successful attacks
+	var/grappled_attack_verb_continuous
 	/// what visual effect is used when this limb is used to strike someone.
 	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
 	/// Sounds when this bodypart is used in an umarmed attack

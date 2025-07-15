@@ -234,7 +234,7 @@
 	unarmed_attack_verbs = list("slash", "lash")
 	unarmed_attack_verbs_continuous = list("slashes", "lashes")
 	grappled_attack_verb = "lacerate"
-	grappled_attack_verb_past = "lacerated"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -248,7 +248,7 @@
 	unarmed_attack_verbs = list("slash", "lash")
 	unarmed_attack_verbs_continuous = list("slashes", "lashes")
 	grappled_attack_verb = "lacerate"
-	grappled_attack_verb_past = "lacerated"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
