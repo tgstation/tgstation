@@ -757,7 +757,7 @@
 "Rq" = (
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /obj/structure/displaycase/noalert{
-	showpiece = obj/item/ship_in_a_bottle
+	start_showpiece_type = /obj/item/ship_in_a_bottle
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/powered)

@@ -42,6 +42,7 @@
 /obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.mining_suit_allowed
+	AddElement(/datum/element/diving_gear)
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"

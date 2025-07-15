@@ -6266,7 +6266,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ih" = (
-/obj/structure/displaycase/noalert,
+/obj/structure/displaycase/noalert{
+	start_showpiece_type = /obj/item/grenade/c4/x4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ij" = (
@@ -7677,6 +7679,12 @@
 /obj/structure/table,
 /obj/item/clothing/mask/muzzle,
 /turf/open/floor/iron/white,
+/area/ruin/space/has_grav/waystation/cargobay)
+"PH" = (
+/obj/structure/displaycase/noalert{
+	start_showpiece_type = /obj/item/food/drug/moon_rock
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "PJ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -13760,7 +13768,7 @@ OR
 OR
 QN
 QN
-Ih
+PH
 Kg
 rJ
 WE

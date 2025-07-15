@@ -51,9 +51,9 @@
 		/mob/living/basic/lightgeist = 10,
 		/mob/living/basic/mining/faithless_mining = 15,
 
-		/obj/structure/spawner/ice_moon/demonic_portal/lobstrocity = 4,
-		/obj/structure/spawner/ice_moon/demonic_portal/hivelord = 4,
-		/obj/structure/spawner/ice_moon/demonic_portal/basilisk = 4,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/lobstrocity = 4,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord = 4,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk = 4,
 	)
 	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
 
@@ -69,9 +69,9 @@
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 
-		/obj/structure/spawner/ice_moon/demonic_portal/lobstrocity = 1,
-		/obj/structure/spawner/ice_moon/demonic_portal/hivelord = 1,
-		/obj/structure/spawner/ice_moon/demonic_portal/basilisk = 1,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/lobstrocity = 1,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord = 1,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk = 1,
 	)
 	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
 

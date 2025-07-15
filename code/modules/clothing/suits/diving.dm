@@ -75,6 +75,7 @@
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	var/obj/item/item_target = target
 	if(ismob(item_target.loc))
 		var/mob/wearer = item_target.loc
@@ -84,7 +85,7 @@
 
 /datum/element/diving_gear/Detach(obj/item/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(source, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE))
 
 	if(isliving(source.loc))
 		REMOVE_TRAIT(source.loc, TRAIT_SWIMMER, ELEMENT_TRAIT(source))
@@ -105,3 +106,6 @@
 	if (!HAS_TRAIT(user, TRAIT_SWIMMER) && istype(user.loc, /turf/open/water) && !HAS_TRAIT(user.loc, TRAIT_IMMERSE_STOPPED))
 		user.add_movespeed_modifier(/datum/movespeed_modifier/swimming_deep)
 
+/datum/element/diving_gear/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_green("This clothing will allow you to swim in deep water without drowning.")
