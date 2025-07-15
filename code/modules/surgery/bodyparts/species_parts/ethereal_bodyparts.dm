@@ -38,7 +38,7 @@
 	dmg_overlay_type = null
 	attack_type = BURN //burn bish
 	unarmed_attack_verbs = list("burn", "sear")
-	unarmed_attack_verbs_past = list("burnt", "seared")
+	unarmed_attack_verbs_continuous = list("burns", "sears")
 	grappled_attack_verb = "scorch"
 	grappled_attack_verb_past = "scorched"
 	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
@@ -58,7 +58,7 @@
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
 	unarmed_attack_verbs = list("burn", "sear")
-	unarmed_attack_verbs_past = list("burnt", "seared")
+	unarmed_attack_verbs_continuous = list("burns", "sears")
 	grappled_attack_verb = "scorch"
 	grappled_attack_verb_past = "scorched"
 	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'

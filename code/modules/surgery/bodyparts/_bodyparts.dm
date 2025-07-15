@@ -171,8 +171,8 @@
 	var/attack_type = BRUTE
 	/// the verbs used for an unarmed attack when using this limb, such as arm.unarmed_attack_verbs = list("punch")
 	var/list/unarmed_attack_verbs = list("bump")
-	/// Perfect tense attack verbs for successful attacks, called past because _perfect won't make much sense in isolation
-	var/list/unarmed_attack_verbs_past = list("bumped")
+	/// Continious tense attack verbs for successful attacks
+	var/list/unarmed_attack_verbs_continuous = list("bumps")
 	/// if we have a special attack verb for hitting someone who is grappled by us, it goes here.
 	var/grappled_attack_verb
 	/// Perfect tense grapple verb for successful attacks

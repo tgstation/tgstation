@@ -29,7 +29,7 @@
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
 	unarmed_attack_verbs = list("slash")
-	unarmed_attack_verbs_past = list("slashed")
+	unarmed_attack_verbs_continuous = list("slashes")
 	grappled_attack_verb = "lacerate"
 	grappled_attack_verb_past = "lacerated"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
@@ -43,7 +43,7 @@
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
 	unarmed_attack_verbs = list("slash")
-	unarmed_attack_verbs_past = list("slashed")
+	unarmed_attack_verbs_continuous = list("slashes")
 	grappled_attack_verb = "lacerate"
 	grappled_attack_verb_past = "lacerated"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
