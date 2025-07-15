@@ -942,6 +942,8 @@
 
 	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
+		// Conflict detected!! This is handled by bodypart_insert too, but when special = TRUE we don't want them moving around all willy-nilly
+		// So just drop it
 		if(special && get_organ_slot(organ.slot))
 			organ.bodypart_remove(new_bodypart)
 			organ.forceMove(drop_location())
