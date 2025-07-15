@@ -4818,7 +4818,10 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump/on/supply/visible,
+/obj/machinery/atmospherics/components/binary/pump/on/supply/visible{
+	pipe_color = null;
+	color = null
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "byU" = (
