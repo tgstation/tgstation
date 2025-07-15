@@ -43,19 +43,20 @@
 				"noUnusedImports": "warn",
 				"noUnusedVariables": "off",
 				"useExhaustiveDependencies": "off",
-				"noUnusedFunctionParameters": "off"
+				"noUnusedFunctionParameters": "off",
+				"useHookAtTopLevel": "off"
 			},
 			"security": {
 				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
-				"noNonNullAssertion": "off",
-				"useTemplate": "off"
+				"noNonNullAssertion": "off"
 			},
 			"suspicious": {
 				"noArrayIndexKey": "off",
 				"noExplicitAny": "off",
-				"noImplicitAnyLet": "off"
+				"noImplicitAnyLet": "off",
+				"noAssignInExpressions": "warn"
 			}
 		}
 	},
