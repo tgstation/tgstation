@@ -1,4 +1,3 @@
-/* XANTODO Maybe the unit test has to change
 
 
 /*
@@ -9,8 +8,8 @@
 /datum/unit_test/heretic_knowledge
 
 /datum/unit_test/heretic_knowledge/Run()
-	if(!GLOB.heretic_research_tree)
-		GLOB.heretic_research_tree = generate_heretic_research_tree()
+	if(!GLOB.heretic_paths)
+		GLOB.heretic_paths = generate_global_heretic_tree()
 	// First, we get a list of all knowledge types
 	// EXCLUDING all abstract types
 	var/list/all_possible_knowledge = typesof(/datum/heretic_knowledge)
@@ -29,13 +28,15 @@
 		if(!ispath(knowledge))
 			TEST_FAIL("Heretic Knowledge: Got a non-heretic knowledge datum (Got: [knowledge]) in the list knowledges!")
 		// Next knowledge is a list of typepaths.
-		for(var/datum/heretic_knowledge/next_knowledge as anything in GLOB.heretic_research_tree[knowledge][HKT_NEXT])
-			if(!ispath(next_knowledge))
-				TEST_FAIL("Heretic Knowledge: [next_knowledge.type] has a [isnull(next_knowledge) ? "null":"invalid path"] in its next_knowledge list!")
-				continue
-			if(next_knowledge in list_to_check)
-				continue
-			list_to_check += next_knowledge
+		for(var/route in GLOB.heretic_paths)
+			var/knowledge_tree = GLOB.heretic_paths[route]
+			for(var/datum/heretic_knowledge/next_knowledge as anything in knowledge_tree[knowledge][HKT_NEXT])
+				if(!ispath(next_knowledge))
+					TEST_FAIL("Heretic Knowledge: [next_knowledge.type] has a [isnull(next_knowledge) ? "null":"invalid path"] in its next_knowledge list!")
+					continue
+				if(next_knowledge in list_to_check)
+					continue
+				list_to_check += next_knowledge
 
 
 	// We now have a list that SHOULD contain all knowledges with a path set (list_to_check).
@@ -46,5 +47,3 @@
 		var/list/unreachables = all_possible_knowledge - list_to_check
 		for(var/datum/heretic_knowledge/lost_knowledge as anything in unreachables)
 			TEST_FAIL("Heretic Knowledge: [lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
-
-*/
