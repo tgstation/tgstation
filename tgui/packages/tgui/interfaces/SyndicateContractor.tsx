@@ -9,7 +9,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
@@ -104,7 +104,7 @@ function SyndicateContractorContent(props) {
     'Awaiting response...',
     'Awaiting response...',
     'Response received, ack 4851234...',
-    'CONFIRM ACC ' + Math.round(Math.random() * 20000),
+    `CONFIRM ACC ${Math.round(Math.random() * 20000)}`,
     'Setting up private accounts...',
     'CONTRACTOR ACCOUNT CREATED',
     'Searching for available contracts...',
@@ -282,7 +282,7 @@ function ContractsTab(props) {
                     disabled={!!contract.extraction_enroute}
                     color={active && 'bad'}
                     onClick={() =>
-                      act('PRG_contract' + (active ? '_abort' : '-accept'), {
+                      act(`PRG_contract${active ? '_abort' : '-accept'}`, {
                         contract_id: contract.id,
                       })
                     }

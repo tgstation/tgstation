@@ -32,7 +32,7 @@ export const PortableGenerator = (props) => {
                 {data.active ? 'On' : 'Off'}
               </Button>
             </LabeledList.Item>
-            <LabeledList.Item label={data.sheet_name + ' sheets'}>
+            <LabeledList.Item label={`${data.sheet_name} sheets`}>
               <Box inline color={stackPercentState}>
                 {data.sheets}
               </Box>

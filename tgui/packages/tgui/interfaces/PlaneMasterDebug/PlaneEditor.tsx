@@ -7,12 +7,13 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
-import { Plane } from './types';
+import { useBackend } from '../../backend';
+import type { Plane } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneEditor() {
-  const { activePlane, planesProcessed, setPlaneOpen, act } =
-    usePlaneDebugContext();
+  const { act } = useBackend();
+  const { activePlane, planesProcessed, setPlaneOpen } = usePlaneDebugContext();
 
   const currentPlane: Plane = planesProcessed[activePlane as number];
   const doc_html = {

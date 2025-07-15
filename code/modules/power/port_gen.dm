@@ -102,7 +102,7 @@
 	DropFuel()
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/power/port_gen/pacman/on_construction(mob/user)
 	var/obj/item/circuitboard/machine/pacman/our_board = circuit
 	if(our_board.high_production_profile)
 		icon_state = "portgen1_0"

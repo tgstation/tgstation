@@ -9,7 +9,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -117,7 +117,7 @@ export const TramController = (props) => {
                       white: [-Infinity, 0],
                     }}
                   >
-                    {toFixed(currentSpeed * 2.25, 0) + ' km/h'}
+                    {`${toFixed(currentSpeed * 2.25, 0)} km/h`}
                   </ProgressBar>
                 </LabeledList.Item>
               </LabeledList>
