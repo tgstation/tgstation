@@ -87,7 +87,7 @@
 	if(!istype(our_wood,/obj/item/stack/sheet/mineral/wood))
 		return NONE
 
-	if(!our_wood.amount < 5)
+	if(our_wood.amount < 5)
 		balloon_alert(user, "not enough wood!")
 		to_chat(user, span_warning("You need at least five wooden planks to make a barricade!"))
 		return ITEM_INTERACT_BLOCKING
