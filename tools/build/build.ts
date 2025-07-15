@@ -357,7 +357,7 @@ export const TguiTestTarget = new Juke.Target({
 
 export const BiomeCheckTarget = new Juke.Target({
   dependsOn: [BunTarget, BiomeInstallTarget],
-  executes: () => bun('tgui:lint'),
+  executes: () => bunRoot('tgui:lint'),
 });
 
 export const TguiLintTarget = new Juke.Target({
