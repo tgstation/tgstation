@@ -929,7 +929,7 @@
 	hand_bodyparts[lost_hand.held_index] = null
 
 ///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
-/mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
+/mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart, special = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	new_bodypart.on_adding(src)
@@ -942,6 +942,10 @@
 
 	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
+		if(special && get_organ_slot(organ.slot))
+			organ.bodypart_remove(new_bodypart)
+			organ.forceMove(drop_location())
+			continue
 		organ.mob_insert(src)
 
 	switch(new_bodypart.body_part)

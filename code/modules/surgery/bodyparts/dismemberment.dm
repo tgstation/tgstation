@@ -251,10 +251,12 @@
 	if(!istype(limb_owner))
 		return
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
+
 	if(old_limb)
 		old_limb.drop_limb(TRUE)
 
-	. = try_attach_limb(limb_owner, special)
+	. = try_attach_limb(limb_owner, TRUE)
+
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.try_attach_limb(limb_owner, TRUE)
 
@@ -289,7 +291,7 @@
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special, lazy)
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)
-	new_limb_owner.add_bodypart(src)
+	new_limb_owner.add_bodypart(src, special)
 
 	if(!lazy)
 		LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
