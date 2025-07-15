@@ -1,4 +1,0 @@
-author: "Ice-Type"
-delete-after: True
-changes:
-  - qol: "Increased the integer scaling range up to 9x"
