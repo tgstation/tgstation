@@ -10,7 +10,7 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -89,12 +89,12 @@ export const AutomatedAnnouncement = (props) => {
                           icon="info"
                           tooltip={
                             (entry.generalTooltip
-                              ? entry.generalTooltip + '\n'
+                              ? `${entry.generalTooltip}\n`
                               : '') +
                             Object.entries(entry.varsAndTooltipsMap)
                               .map(
                                 ([varName, tooltip]) =>
-                                  '%' + varName + ' ' + tooltip,
+                                  `%${varName} ${tooltip}`,
                               )
                               .join('\n')
                           }

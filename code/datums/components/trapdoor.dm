@@ -334,16 +334,16 @@
 	internals.forceMove(get_turf(src))
 	internals = null
 
-/obj/item/trapdoor_remote/attackby(obj/item/assembly/trapdoor/assembly, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(. || !istype(assembly))
-		return
+/obj/item/trapdoor_remote/item_interaction(mob/living/user, obj/item/assembly/trapdoor/assembly, list/modifiers)
+	if(!istype(assembly))
+		return NONE
 	if(internals)
-		to_chat(user, span_warning("[src] already has internals!"))
-		return
-	to_chat(user, span_notice("You add [assembly] to [src]."))
+		balloon_alert(user, "doesn't fit!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "added")
 	internals = assembly
-	assembly.forceMove(src)
+	user.transferItemToLoc(assembly, src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/trapdoor_remote/attack_self(mob/user, modifiers)
 	. = ..()

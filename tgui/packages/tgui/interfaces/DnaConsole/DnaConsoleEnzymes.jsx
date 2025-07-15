@@ -279,7 +279,7 @@ const PulseBoard = (props) => {
     }
   }
   return (
-    <Section title={'Unique ' + name} minHeight="100%" position="relative">
+    <Section title={`Unique ${name}`} minHeight="100%" position="relative">
       <Box mx="-1px">{blocks}</Box>
     </Section>
   );
