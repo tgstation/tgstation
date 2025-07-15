@@ -113,7 +113,7 @@
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 
 /datum/species/shadow/get_scream_sound(mob/living/carbon/human/moth)
-	return 'sound/mobs/humanoids/moth/scream_moth.ogg'
+	return 'sound/mobs/humanoids/shadow/shadow_wail.ogg'
 
 /datum/species/shadow/proc/on_flashed(source, mob/living/carbon/flashed, flash, deviation)
 	SIGNAL_HANDLER
