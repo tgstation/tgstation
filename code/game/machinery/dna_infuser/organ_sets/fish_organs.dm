@@ -290,7 +290,7 @@
 	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
 	if(imprint_on_next_insertion && !receiver.dna.features[FEATURE_TAIL_FISH])
 		receiver.dna.features[FEATURE_TAIL_FISH] = pick(SSaccessories.tails_list_fish)
-		receiver.dna.update_uf_block(FEATURE_TAIL_FISH)
+		receiver.dna.update_uf_block(/datum/dna_block/feature/tail_fish)
 
 	return ..()
 
