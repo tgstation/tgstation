@@ -50,10 +50,16 @@
 	return ..()
 
 /obj/machinery/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
+	. = NONE
+
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle processor interaction"
-	return CONTEXTUAL_SCREENTIP_SET
+		. |= CONTEXTUAL_SCREENTIP_SET
+
+	if(CPU_INTERACTABLE(user))
+		. |= cpu?.add_context(source, context, held_item, user)
+
+	return .
 
 /obj/machinery/modular_computer/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -117,9 +123,15 @@
 	return update_icon(updates)
 
 /obj/machinery/modular_computer/click_alt(mob/user)
-	if(CPU_INTERACTABLE(user) || !can_interact(user))
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
 		return NONE
 	cpu.click_alt(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/modular_computer/click_alt_secondary(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt_secondary(user)
 	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

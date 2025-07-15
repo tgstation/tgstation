@@ -76,7 +76,7 @@
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
-	if(computer_id_slot)
+	if(stored_id)
 		. += mutable_appearance(overlays_icon, "id_overlay")
 	if(light_on)
 		. += mutable_appearance(overlays_icon, "light_overlay")
