@@ -1,5 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - code_imp: "feature keys are no longer magical strings floating around the codebase and use proper defines"
-  - refactor: "DNA blocks are now handled with singleton datums."
