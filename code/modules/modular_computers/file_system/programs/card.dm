@@ -26,6 +26,15 @@
 	/// Which departments this program has access to. See region defines.
 	var/target_dept
 
+/datum/computer_file/program/card_mod/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+	. = ..()
+	ADD_TRAIT(computer_installing, TRAIT_MODPC_TWO_ID_SLOTS, REF(src))
+
+/datum/computer_file/program/card_mod/Destroy()
+	if(computer)
+		REMOVE_TRAIT(computer, TRAIT_MODPC_TWO_ID_SLOTS, REF(src))
+	return ..()
+
 /**
  * Authenticates the program based on the specific ID card.
  *
@@ -109,9 +118,7 @@
 			return TRUE
 		// Print a report.
 		if("PRG_print")
-			if(!computer)
-				return TRUE
-			if(!authenticated_card)
+			if(!computer || !authenticated_card || !modified_id)
 				return TRUE
 			var/contents = {"<h4>Access Report</h4>
 						<u>Prepared By:</u> [authenticated_user]<br>

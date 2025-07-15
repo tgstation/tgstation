@@ -169,6 +169,9 @@
 /obj/machinery/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.item_interaction(user, tool, modifiers) : ..()
 
+/obj/machinery/modular_computer/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.item_interaction_secondary(user, tool, modifiers) : ..()
+
 /obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	return CPU_INTERACTABLE(user) ? cpu.attacked_by(attacking_item, user, modifiers, attack_modifiers) : ..()
 

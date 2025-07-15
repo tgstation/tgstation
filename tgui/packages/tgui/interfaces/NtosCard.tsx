@@ -224,7 +224,11 @@ const IdCardPage = (props) => {
               </Button>
             </Flex.Item>
             <Flex.Item>
-              <Button icon="print" onClick={() => act('PRG_print')}>
+              <Button
+                icon="print"
+                disabled={!modified_card || !authed_user}
+                onClick={() => act('PRG_print')}
+              >
                 Print Report
               </Button>
             </Flex.Item>

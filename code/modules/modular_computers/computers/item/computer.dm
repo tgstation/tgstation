@@ -332,7 +332,7 @@
 	alt_stored_id = secondary_id
 	if(!isnull(user))
 		to_chat(user, span_notice("You insert \the [secondary_id] into the secondary card slot."))
-		balloon_alert(user, "inserted ID")
+		balloon_alert(user, "inserted secondary ID")
 		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	return TRUE
@@ -483,7 +483,8 @@
 
 	if(isidcard(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = stored_id ? "Swap ID" : "Insert ID"
-		context[SCREENTIP_CONTEXT_RMB] = alt_stored_id ? "Swap Secondary ID" : "Insert Secondary ID"
+		if(HAS_TRAIT(src, TRAIT_MODPC_TWO_ID_SLOTS))
+			context[SCREENTIP_CONTEXT_RMB] = alt_stored_id ? "Swap Secondary ID" : "Insert Secondary ID"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && internal_cell)
@@ -896,7 +897,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if(isidcard(tool))
+	if(isidcard(tool) && HAS_TRAIT(src, TRAIT_MODPC_TWO_ID_SLOTS))
 		return insert_secondary_id(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	return item_interaction(user, tool, modifiers)
