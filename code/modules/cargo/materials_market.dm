@@ -190,10 +190,7 @@
 			minimum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
 
 		//Pulling elastic modifier into data.
-		for(var/i as anything in GLOB.exports_list)
-			if(!istype(i, /datum/export/material/market))
-				continue
-			var/datum/export/material/export_est = i
+		for(var/datum/export/material/market/export_est in GLOB.exports_list)
 			if(export_est.material_id == traded_mat)
 				elastic_mult = (export_est.cost / export_est.init_cost) * 100
 
@@ -206,7 +203,7 @@
 			"trend" = trend_string,
 			"color" = color_string,
 			"requested" = requested_amount,
-			"elastic" = elastic_mult
+			"elastic" = elastic_mult,
 			))
 
 	//get account balance
