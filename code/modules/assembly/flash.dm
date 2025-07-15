@@ -161,6 +161,9 @@
 		else if(sigreturn & DEVIATION_OVERRIDE_NONE)
 			deviation = DEVIATION_NONE
 
+	if(SEND_SIGNAL(flashed, COMSIG_MOB_FLASH_OVERRIDE_CHECK, flashed, src, deviation)) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
+		return
+
 	//If you face away from someone they shouldn't notice any effects.
 	if(deviation == DEVIATION_FULL)
 		return
