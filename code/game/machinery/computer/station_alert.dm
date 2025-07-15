@@ -17,7 +17,7 @@
 	link_alerts()
 	return ..()
 
-/obj/machinery/computer/station_alert/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/computer/station_alert/on_construction(mob/user)
 	. = ..()
 	link_alerts()
 

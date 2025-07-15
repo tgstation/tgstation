@@ -43,13 +43,13 @@
 	return mutable_appearance(icon, gender_string + icon_state + "_" + limb.body_zone, layer = layer)
 
 /datum/bodypart_overlay/simple/body_marking/moth
-	dna_feature_key = "moth_markings"
+	dna_feature_key = FEATURE_MOTH_MARKINGS
 
 /datum/bodypart_overlay/simple/body_marking/moth/get_accessory(name)
 	return SSaccessories.moth_markings_list[name]
 
 /datum/bodypart_overlay/simple/body_marking/lizard
-	dna_feature_key = "lizard_markings"
+	dna_feature_key = FEATURE_LIZARD_MARKINGS
 	applies_to = list(/obj/item/bodypart/chest)
 
 /datum/bodypart_overlay/simple/body_marking/lizard/get_accessory(name)
