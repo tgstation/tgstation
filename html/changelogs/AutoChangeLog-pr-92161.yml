@@ -1,0 +1,5 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "Fish tails now correctly show up"
+  - bugfix: "Mutant colors and other features now apply correctly in some cases where they previously didn't"
