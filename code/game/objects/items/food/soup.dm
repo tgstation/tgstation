@@ -23,6 +23,7 @@
 		desc = "A wish come true!"
 		reagents.add_reagent(/datum/reagent/consumable/nutriment, 9)
 		reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 1)
+		trash_type = /obj/item/reagent_containers/cup/bowl
 
 /obj/item/food/bowled/mammi
 	name = "Mammi"
@@ -44,6 +45,7 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/drug/mushroomhallucinogen = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
+		trash_type = /obj/item/reagent_containers/cup/bowl
 	)
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtypes = VEGETABLES
@@ -59,6 +61,7 @@
 		/datum/reagent/drug/mushroomhallucinogen = 3,
 		/datum/reagent/toxin/amatoxin = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
+		trash_type = /obj/item/reagent_containers/cup/bowl
 	)
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtypes = VEGETABLES | TOXIC
