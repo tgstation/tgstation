@@ -18,7 +18,7 @@
 
 /obj/item/stack/ore/bluespace_crystal/examine(mob/user)
 	. = ..()
-	. += span_notice("When crushed by high-velocity -- such as THROWING -- or USEd in-hand, this ")
+	. += span_notice("When crushed by high-velocity -- such as THROWING -- or USEd in-hand, this  ")
 
 /obj/item/stack/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
@@ -38,7 +38,7 @@
 
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("[user] takes [src] in-hand and squeezes with obvious effort...")
-	if(!do_after(user, 2 SECONDS))
+	if(!do_after(user, 1.5 SECONDS))
 		balloon_alert(user, "crushing interrupted")
 		return
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
