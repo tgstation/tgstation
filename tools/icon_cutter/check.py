@@ -97,7 +97,7 @@ for cutter_template in files:
 if platform.system() == "Windows":
     subprocess.run(f"{path_to_us}\..\\build\\build.bat --force-recut --ci icon-cutter")
 else:
-    subprocess.run(f"{path_to_us}/../build/build --force-recut --ci icon-cutter", shell = True)
+    subprocess.run(f"{path_to_us}/../build/build.sh --force-recut --ci icon-cutter", shell = True)
 
 for output_name in output_hash:
     old_hash, old_metadata, old_icon_hash = output_hash[output_name]
