@@ -375,7 +375,6 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/openspace,
 /area/station/engineering/atmos/project)
 "agF" = (
@@ -8654,6 +8653,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/stairs,
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
 	},
@@ -31710,6 +31710,7 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "jsD" = (
@@ -53001,7 +53002,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "pKk" = (
@@ -76367,11 +76367,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/construction/mining/aux_base)
-"wHc" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/engineering/engine_smes)
 "wHn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -193184,7 +193179,7 @@ ctC
 szN
 ctC
 agD
-wHc
+dqJ
 apF
 ucW
 fAL
