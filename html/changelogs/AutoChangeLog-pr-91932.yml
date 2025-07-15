@@ -1,0 +1,6 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - balance: "Wiz suit is now bio,flash proof, comes with the no slip and Hilbert dna module installed, slowdown was removed."
+  - balance: "Energy shield charges on the battlemage module have been reduced to 5 but now regenerate over time."
+  - balance: "energy shield charges now require a minimum of 3 total damage to be consumed."
