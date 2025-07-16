@@ -200,6 +200,7 @@
 	//send updates to ui. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
+
 /**
  * Decodes the ui reaction var into its original name
  * Arguments
