@@ -495,7 +495,8 @@
 	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
 	var/main_healing = 1 + 1 * passive_level * delta_time
 	var/stam_healing = 5 + 5 * passive_level * delta_time
-	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, -stam_healing, updating_health = FALSE)
+	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-stam_healing, updating_stamina = FALSE)
 	need_mob_update += source.adjustToxLoss(-main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
 	need_mob_update += source.adjustOxyLoss(-main_healing, updating_health = FALSE)
 	if(need_mob_update)
@@ -519,7 +520,7 @@
 		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
 			to_cure.remove_wound()
 	for(var/obj/item/organ/internal as anything in carbon_owner.organs)
-		internal.apply_organ_damage(-2 * seconds_per_tick)
+		internal.apply_organ_damage(round(-2 * seconds_per_tick))
 	if(passive_level < HERETIC_LEVEL_FINAL)
 		return
 	if(length(carbon_owner.get_missing_limbs()))
