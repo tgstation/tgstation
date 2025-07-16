@@ -413,3 +413,35 @@
       and Ops can get these.
   throwawayuseless:
   - rscadd: '*flare, *flicker, and *glow, three new ethereal emotes.'
+2025-07-16:
+  EnterTheJake:
+  - balance: Wiz suit is now bio,flash proof, comes with the no slip and Hilbert dna
+      module installed, slowdown was removed.
+  - balance: Energy shield charges on the battlemage module have been reduced to 5
+      but now regenerate over time.
+  - balance: energy shield charges now require a minimum of 3 total damage to be consumed.
+  Ghommie:
+  - bugfix: Fixed an issue with fishing turfs like water and lava having multiple
+      fish source datums, making it possible to fish the same limited, rare loot more
+      times than you should.
+  Majkl-J:
+  - bugfix: Fish tails now correctly show up
+  - bugfix: Mutant colors and other features now apply correctly in some cases where
+      they previously didn't
+  SmArtKar:
+  - bugfix: Fixed incorrect perfect tense forms of some unarmed attacks like felinid
+      bites
+  - bugfix: Fixed frag grenade entry in the uplink containing full bags of C4
+  Time-Green:
+  - qol: Formaldehyde will no longer decay in recovered crew during the "soul pending"
+      phase
+  - qol: Recovered crew jumpsuits will now spawn in the crate, so you can pre-dress
+      them, rob them or take their assignment in account when determining how to "rebuild"
+      them
+  - qol: Recovered crew get 200 starting cr (from 100) and their departments headset
+  combustor:
+  - bugfix: Healium bolts now heal instead of dealing damage
+  timothymtorres:
+  - rscadd: Welded airlocks are saved as welded airlock mapping helpers when using
+      the `map_export` admin verb
+  - rscadd: Paper on noticeboards are saved when using the `map_export` admin verb
