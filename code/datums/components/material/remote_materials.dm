@@ -75,6 +75,8 @@ handles linking back and forth.
 	if(silo)
 		allow_standalone = FALSE
 		disconnect_from(silo)
+	if(mat_container)
+		mat_container = null
 
 	return ..()
 
