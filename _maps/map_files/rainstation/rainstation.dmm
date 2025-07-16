@@ -20980,6 +20980,9 @@
 "bpU" = (
 /obj/machinery/cell_charger,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/ecto_sniffer{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "bpW" = (
@@ -38985,6 +38988,10 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/green/full,
 /obj/machinery/light/directional/south,
+/obj/item/clothing/gloves/latex,
+/obj/item/healthanalyzer,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "eXD" = (
@@ -41171,6 +41178,11 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/security/courtroom)
+"gNC" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/closet/l3closet/virology,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "gNG" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
@@ -47928,10 +47940,6 @@
 	dir = 4;
 	network = list("ss13","medbay")
 	},
-/obj/item/clothing/mask/breath/medical,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -49697,8 +49705,8 @@
 	},
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/dropper,
-/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/yellow/full,
+/obj/structure/reagent_dispensers/wall/virusfood/directional/west,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/virology)
 "nXT" = (
@@ -51589,8 +51597,8 @@
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/spray/cleaner,
-/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
 /obj/effect/turf_decal/tile/green/full,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "pAZ" = (
@@ -56769,12 +56777,10 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "tTd" = (
-/obj/structure/table/glass,
-/obj/item/clothing/gloves/latex,
-/obj/item/healthanalyzer,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/tile/green/full,
+/obj/structure/table/glass,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "tTM" = (
@@ -58943,6 +58949,16 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/commons/dorms)
+"vNU" = (
+/obj/machinery/drone_dispenser,
+/obj/item/stack/sheet/glass{
+	amount = 20;
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/stack/sheet/iron/fifty,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/cmo)
 "vOt" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/chair{
@@ -97161,7 +97177,7 @@ pUW
 qCG
 bNd
 wCx
-sZs
+gNC
 bfL
 ssN
 gxo
@@ -103319,7 +103335,7 @@ mnj
 mnj
 mnj
 mnj
-bhe
+vNU
 nUF
 bhe
 mnj
