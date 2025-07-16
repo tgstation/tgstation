@@ -49,7 +49,7 @@
 		to barrier or border. Pulling more into their turmoil as they waltz."
 	required_atoms = list(
 		/obj/item/clothing/shoes = 1,
-		list(/obj/item/stack/sheet/mineral/titanium = 2, /obj/item/stack/sheet/mineral/silver = 2)
+		list(/obj/item/stack/sheet/mineral/titanium, /obj/item/stack/sheet/mineral/silver) = 2,
 	)
 	result_atoms = list(/obj/item/clothing/shoes/greaves_of_the_prophet)
 	cost = 2
