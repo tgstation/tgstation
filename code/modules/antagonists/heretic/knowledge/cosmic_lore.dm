@@ -194,8 +194,7 @@
 /datum/heretic_knowledge/blade_upgrade/cosmic/proc/reset_combo(mob/living/source)
 	second_target = null
 	third_target = null
-	if(combo_counter > 3)
-		source.RemoveElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
+	source.RemoveElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
 	combo_duration = combo_duration_amount
 	combo_counter = 0
 	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
