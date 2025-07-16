@@ -255,6 +255,8 @@
 
 /obj/effect/abstract/gazer_beam/Initialize(mapload, turf/target)
 	. = ..()
+	if(!target)
+		return INITIALIZE_HINT_QDEL
 	var/Angle = get_angle_raw(x, y, pixel_x, pixel_y, target.x , target.y, target.pixel_x, target.pixel_y)
 	var/matrix/transform_matrix = matrix()
 	Angle = round(Angle, 45)
@@ -270,6 +272,8 @@
 
 /obj/effect/abstract/gazer_beam_filling/Initialize(mapload, direction)
 	. = ..()
+	if(!direction)
+		return INITIALIZE_HINT_QDEL
 	var/Angle = dir2angle(direction)
 	var/matrix/transform_matrix = matrix()
 	transform_matrix.Turn(Angle)
@@ -293,6 +297,8 @@
 
 /obj/effect/abstract/gazer_beamend/Initialize(mapload, atom/origin)
 	. = ..()
+	if(!origin)
+		return INITIALIZE_HINT_QDEL
 	var/Angle = get_angle_raw(origin.x , origin.y, origin.pixel_x, origin.pixel_y, x, y, pixel_x, pixel_y)
 	var/matrix/transform_matrix = matrix()
 	Angle = round(Angle, 45)

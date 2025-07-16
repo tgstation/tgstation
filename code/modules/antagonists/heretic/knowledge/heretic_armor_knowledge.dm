@@ -21,4 +21,4 @@
 	var/datum/status_effect/heretic_passive/our_passive = user.has_status_effect(/datum/status_effect/heretic_passive)
 	our_passive?.heretic_level_upgrade()
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	heretic_datum.gain_knowledge(/datum/heretic_knowledge/knowledge_ritual)
+	heretic_datum?.gain_knowledge(/datum/heretic_knowledge/knowledge_ritual)
