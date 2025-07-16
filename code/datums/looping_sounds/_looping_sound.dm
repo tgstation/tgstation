@@ -78,7 +78,7 @@
 	set_parent(_parent)
 	direct = _direct
 	skip_starting_sounds = _skip_starting_sounds
-	src.sound_channel = sound_channel || SSsounds.random_available_channel()
+	src.sound_channel = sound_channel
 
 	if(start_immediately)
 		start()

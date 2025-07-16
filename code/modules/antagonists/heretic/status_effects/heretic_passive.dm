@@ -50,6 +50,10 @@
 	heretic_datum.passive_level = HERETIC_LEVEL_FINAL
 	heretic_datum.update_data_for_all_viewers()
 
+/datum/status_effect/heretic_passive/on_remove()
+	heretic_datum = null
+	return ..()
+
 //---- Ash Passive
 // Level 1 grants heat and ash storm immunity
 // Level 2 grants lava immunity
@@ -115,7 +119,7 @@
 /datum/status_effect/heretic_passive/blade/proc/z_impact_react(datum/source, levels, turf/fell_on)
 	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/mook_dust(fell_on)
-	owner.visible_message(span_notice("[owner] lands on [fell_on] safely, and quite stylishly on [p_their()] feet"))
+	owner.visible_message(span_notice("[owner] lands on [fell_on] safely, and quite stylishly on [p_their()] feet!"))
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/atom, SpinAnimation), 0.5 SECONDS, 0)
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/, emote), "flip")
 	return ZIMPACT_CANCEL_DAMAGE | ZIMPACT_NO_MESSAGE | ZIMPACT_NO_SPIN
@@ -225,7 +229,7 @@
 
 	if(!creator || !ismob(creator))
 		return
-	if(istype(creator, /mob/living/basic/heretic_summon/star_gazer))
+	if(isstargazer(creator))
 		new_field.slows_projectiles()
 		new_field.prevents_explosions()
 		return
@@ -345,7 +349,6 @@
 
 /datum/status_effect/heretic_passive/lock/on_apply()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, REF(src))
 	RegisterSignal(heretic_datum, COMSIG_HERETIC_SHOP_SETUP, PROC_REF(on_shop_setup)) // Just in case we are applying this after the shop was set up
 
@@ -356,7 +359,6 @@
 
 /datum/status_effect/heretic_passive/lock/heretic_level_final()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	ADD_TRAIT(heretic_datum, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
 
 /datum/status_effect/heretic_passive/lock/on_remove()
@@ -453,13 +455,11 @@
 
 /datum/status_effect/heretic_passive/rust/heretic_level_upgrade()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	if(heretic_datum.rust_strength < 2)
 		heretic_datum.increase_rust_strength() // Bring us up to 2
 
 /datum/status_effect/heretic_passive/rust/heretic_level_final()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	if(heretic_datum.rust_strength < 3)
 		heretic_datum.increase_rust_strength() // Bring us up to 3
 

@@ -192,7 +192,7 @@
 		return .
 
 	var/mob/living/thrower = throwingdatum?.get_thrower()
-	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	if(!istype(thrower)) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))

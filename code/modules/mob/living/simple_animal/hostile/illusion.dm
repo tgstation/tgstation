@@ -34,6 +34,7 @@
 
 /// Called before trying to attack something
 /mob/living/simple_animal/hostile/illusion/proc/check_mode(mob/living/source, atom/attacked_target)
+	SIGNAL_HANDLER
 	if(attack_mode != ATTACK_MODE_SHOVE)
 		return
 	if(disarm(attacked_target))

@@ -146,6 +146,8 @@
 	. = ..()
 	if(isliving(hit_atom))
 		var/mob/living/thrower = throwingdatum?.get_thrower()
+		if(!isliving(thrower))
+			return
 		toss_gun_hard(thrower, hit_atom)
 
 /obj/item/gun/proc/toss_gun_hard(mob/living/thrower, mob/living/target) //throw a gun at them. They don't expect it.
