@@ -220,6 +220,13 @@
 	liver_resistance = 0.333 * LIVER_DEFAULT_TOX_RESISTANCE // -66%
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
+/obj/item/organ/liver/ghost
+	name = "ghost liver"
+	desc = "Processes the last alcohol they drank in their time alive."
+	icon_state = "liver-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/liver/cybernetic
 	name = "basic cybernetic liver"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."

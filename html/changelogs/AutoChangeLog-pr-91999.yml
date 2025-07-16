@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed an issue with fishing turfs like water and lava having multiple fish source datums, making it possible to fish the same limited, rare loot more times than you should."

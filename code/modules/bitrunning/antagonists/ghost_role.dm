@@ -1,7 +1,7 @@
 /datum/antagonist/domain_ghost_actor
 	name = "Virtual Domain Actor"
 	antagpanel_category = ANTAG_GROUP_GLITCH
-	job_rank = ROLE_GLITCH
+	pref_flag = ROLE_GLITCH
 	show_to_ghosts = TRUE
 	suicide_cry = "FATAL ERROR"
 	ui_name = "AntagInfoGlitch"

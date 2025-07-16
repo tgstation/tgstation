@@ -42,7 +42,7 @@ export function debugMiddleware(store) {
 }
 
 export function relayMiddleware(store) {
-  const devServer = require('tgui-dev-server/link/client.mjs');
+  const devServer = require('tgui-dev-server/link/client.ts');
   const externalBrowser = location.search === '?external';
   if (externalBrowser) {
     devServer.subscribe((msg) => {
@@ -65,7 +65,7 @@ export function relayMiddleware(store) {
   return (next) => (action) => {
     const { type, relayed } = action;
     if (type === openExternalBrowser.type) {
-      window.open(location.href + '?external', '_blank');
+      window.open(`${location.href}?external`, '_blank');
       return;
     }
     if (relayedTypes.includes(type) && !relayed && !externalBrowser) {

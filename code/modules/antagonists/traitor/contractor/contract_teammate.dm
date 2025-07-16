@@ -1,7 +1,7 @@
 /// Support unit gets it's own very basic antag datum for admin logging.
 /datum/antagonist/traitor/contractor_support
 	name = "Contractor Support Unit"
-	job_rank = ROLE_CONTRACTOR_SUPPORT
+	pref_flag = ROLE_CONTRACTOR_SUPPORT
 	employer = "Contractor Support Unit"
 	show_in_roundend = FALSE
 	give_objectives = TRUE

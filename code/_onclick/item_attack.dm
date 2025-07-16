@@ -183,7 +183,7 @@
 	for(var/datum/surgery/operation as anything in surgeries)
 		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
 			continue
-		if(!(operation.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
+		if(!(operation.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src) && !HAS_TRAIT(user, TRAIT_SELF_SURGERY))
 			continue
 		if(operation.next_step(user, modifiers))
 			return ITEM_INTERACT_SUCCESS
@@ -348,7 +348,7 @@
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
-		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
+		SSblackbox.record_feedback("tally", "zone_targeted", 1, user.zone_selected)
 
 	var/damage_done = apply_damage(
 		damage = final_force,
@@ -356,7 +356,7 @@
 		def_zone = targeting,
 		blocked = armor_block,
 		wound_bonus = wounding,
-		bare_wound_bonus = attacking_item.bare_wound_bonus,
+		exposed_wound_bonus = attacking_item.exposed_wound_bonus,
 		sharpness = attacking_item.get_sharpness(),
 		attack_direction = get_dir(user, src),
 		attacking_item = attacking_item,
@@ -380,7 +380,7 @@
 	if(get_dist(attacker, src) > 1)
 		return TRUE
 
-	if(ishuman(attacker))
+	if(!ishuman(attacker))
 		attacker.add_mob_blood(src)
 		return TRUE
 

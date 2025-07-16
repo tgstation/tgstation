@@ -3,6 +3,7 @@
 	shuttleId = ""
 	possible_destinations = "whiteship_home;"
 	circuit = /obj/item/circuitboard/computer/shuttle/flight_control
+	may_be_remote_controlled = TRUE
 	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
 /obj/machinery/computer/shuttle/custom_shuttle/on_construction(mob/user)

@@ -48,7 +48,7 @@
 /obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
 	var/power = 0
 	for (var/obj/item/stack/telecrystal/stored_crystals in get_all_contents())
-		power += (stored_crystals.amount / 2)
+		power += stored_crystals.amount
 	force = initial(force) + power
 	throwforce = initial(throwforce) + power
 

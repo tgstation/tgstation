@@ -1,18 +1,15 @@
 {
-	"private": true,
 	"name": "tgui-panel",
 	"version": "6.0.0",
 	"dependencies": {
 		"common": "workspace:*",
 		"dompurify": "^3.2.5",
+		"es-toolkit": "^1.39.3",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"tgui": "workspace:*",
-		"tgui-core": "^4.0.2",
+		"tgui-core": "^4.2.3",
 		"tgui-dev-server": "workspace:*"
 	},
-	"devDependencies": {
-		"@types/react": "^19.1.0",
-		"@types/react-dom": "^19.1.2"
-	}
+	"private": true
 }

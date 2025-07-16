@@ -3,7 +3,7 @@ import { Window } from '../../layouts';
 import { PlantAnalyzerGraft } from './Graft';
 import { PlantAnalyzerSeed } from './Seed';
 import { PlantAnalyzerTray } from './Tray';
-import { PlantAnalyzerData } from './types';
+import type { PlantAnalyzerData } from './types';
 
 export function PlantAnalyzer(props) {
   const { data } = useBackend<PlantAnalyzerData>();

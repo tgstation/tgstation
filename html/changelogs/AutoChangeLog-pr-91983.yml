@@ -1,0 +1,6 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - qol: "Formaldehyde will no longer decay in recovered crew during the \"soul pending\" phase"
+  - qol: "Recovered crew jumpsuits will now spawn in the crate, so you can pre-dress them, rob them or take their assignment in account when determining how to \"rebuild\" them"
+  - qol: "Recovered crew get 200 starting cr (from 100) and their departments headset"

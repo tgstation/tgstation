@@ -132,7 +132,7 @@
 		return TRUE
 	if(user.combat_mode && istype(object, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/sheets = object
-		return sheets.on_attack_floor(user, modifiers)
+		return sheets.on_attack_floor(src, user, modifiers)
 	return FALSE
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)

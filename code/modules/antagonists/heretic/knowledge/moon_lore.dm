@@ -224,7 +224,6 @@
 		amount_of_lunatics++
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	SIGNAL_HANDLER
 
 	visible_hallucination_pulse(
@@ -240,7 +239,7 @@
 			continue
 		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MIND)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
-		new moon_effect(get_turf(carbon_view))
+		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.adjust_sanity(-5)
 		var/carbon_sanity = carbon_view.mob_mood.sanity

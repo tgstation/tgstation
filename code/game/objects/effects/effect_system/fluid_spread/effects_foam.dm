@@ -401,7 +401,7 @@
 
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
-	if(isspaceturf(location))
+	if(isspaceturf(location) || isopenspaceturf(location))
 		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)

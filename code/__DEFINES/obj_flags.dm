@@ -39,7 +39,7 @@
 #define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, is a lot worse at the job if the target is alive rather than dead
+#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, causes a lot more pain for the patient, and is more efficient in a morbid users hands
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define XENOMORPH_HOLDABLE (1<<15) // A Xenomorph can hold this item.
 #define NO_PIXEL_RANDOM_DROP (1<<16) //if dropped, it wont have a randomized pixel_x/pixel_y

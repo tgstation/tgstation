@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Direction } from '../constants';
@@ -460,7 +460,7 @@ const ShuttleConfiguration = () => {
         <Button.Confirm
           disabled={!idle || !isMaster}
           tooltip={
-            'Remove all empty space from the shuttle.' + isMaster
+            `Remove all empty space from the shuttle.${isMaster}`
               ? idle
                 ? '\nThis will delete any areas left without any space, \
               and will decommission the shuttle entirely if there is nothing left of it.'

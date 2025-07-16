@@ -40,18 +40,9 @@ em						{font-style: normal;	font-weight: bold;}
 .binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
 .binarysay a			{color: #00ff00;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
-.radio					{color: #008000;}
-.sciradio				{color: #993399;}
-.comradio				{color: #948f02;}
-.secradio				{color: #a30000;}
-.medradio				{color: #337296;}
-.engradio				{color: #fb5613;}
-.suppradio				{color: #a8732b;}
-.servradio				{color: #6eaa2c;}
 .syndradio				{color: #6d3f40;}
 .centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
-.enteradio				{color: #00ff99;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
 .greenteamradio			{color: #00ff00;}
