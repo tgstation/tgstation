@@ -503,7 +503,7 @@
 		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_BROWN)
 	// Reduces duration of stuns/etc
 	var/stun_reduction = 0.5 * passive_level * delta_time
-	source.AdjustAllImmobility(stun_reduction)
+	source.AdjustAllImmobility(-stun_reduction)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
