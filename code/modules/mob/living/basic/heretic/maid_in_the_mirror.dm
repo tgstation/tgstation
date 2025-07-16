@@ -73,6 +73,13 @@
 
 		death()
 
+/mob/living/basic/heretic_summon/maid_in_the_mirror/proc/clear_recent_examiner(mob_ref)
+	if(!(mob_ref in recent_examiner_refs))
+		return
+
+	recent_examiner_refs -= mob_ref
+	heal_overall_damage(5)
+
 /mob/living/basic/heretic_summon/maid_in_the_mirror/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if(!. || !isliving(target))
