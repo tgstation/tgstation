@@ -167,7 +167,7 @@
 
 	if(targeted)
 		var/flash_result = flashed.flash_act(1, 1)
-		if(flash_result & FLASH_OVERRIDDEN)
+		if(flash_result == FLASH_COMPLETED)
 			return //Behavior was overwritten, so we just skip the flashy stunny part and go with the override behavior instead
 
 		if(flash_result)
