@@ -305,7 +305,8 @@ GLOBAL_LIST(heretic_paths)
 		// Don't add the knowledge if it's obtainable later in the path
 		if(is_path_in_list(potential_type, draft_ineligible))
 			continue
-		elligible_knowledge[potential_type::drafting_tier] += potential_type
+		if(!potential_type::is_shop_only)
+			elligible_knowledge[potential_type::drafting_tier] += potential_type
 		shop_knowledge[potential_type::drafting_tier] += potential_type
 
 	var/list/drafts = list(
@@ -398,13 +399,9 @@ GLOBAL_LIST(heretic_paths)
 				continue
 			found[HKT_BAN] |= shop_id
 
-	var/reroll = /datum/heretic_knowledge/reroll_targets
-	shop[reroll] = make_knowledge_entry(reroll, heretic_path, depth = 2)
-
 	var/gun_path = /datum/heretic_knowledge/rifle
 	var/ammo_path = /datum/heretic_knowledge/rifle_ammo
-	shop[gun_path] = make_knowledge_entry(gun_path, null, depth = 2)
-	shop[ammo_path] = make_knowledge_entry(ammo_path, null, depth = 2)
+	shop[ammo_path] = make_knowledge_entry(ammo_path, null, HERETIC_KNOWLEDGE_SHOP, 2)
 	var/ammo_id = get_knowledge_id(ammo_path, HERETIC_KNOWLEDGE_SHOP)
 	shop[gun_path][HKT_NEXT] |= ammo_id
 
