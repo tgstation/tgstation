@@ -74,7 +74,7 @@
 	cost = 2
 	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
 	research_tree_icon_state = "goldrevolver"
-	drafting_tier = 4
+	drafting_tier = 2
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"
