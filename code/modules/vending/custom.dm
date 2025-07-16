@@ -18,40 +18,33 @@
 	VAR_PRIVATE/datum/bank_account/linked_account
 	/// Base64 cache of custom icons.
 	VAR_PRIVATE/static/list/base64_cache = list()
-	///Items that the players have loaded into the vendor
-	VAR_PRIVATE/list/vending_machine_input = list()
 
 /obj/machinery/vending/custom/on_deconstruction(disassembled)
-	unbuckle_all_mobs(TRUE)
-	var/turf/current_turf = get_turf(src)
-	if(current_turf)
-		explosion(src, devastation_range = -1, light_impact_range = 3)
+	var/obj/item/vending_refill/installed_refill = locate() in component_parts
 
-/obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(held_item?.tool_behaviour == TOOL_CROWBAR)
-		return NONE
+	//copy product hash keys
+	var/list/product_data = products.Copy()
+	if(!installed_refill.products)
+		installed_refill.products = product_data
+	else
+		installed_refill.products.Cut()
+		installed_refill.products += product_data
 
-	return ..()
-
-/obj/machinery/vending/custom/examine(mob/user)
-	. = ..()
-	if(panel_open)
-		. -= span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
+	//move products to canister
+	for(var/obj/item/stored_item in contents - component_parts)
+		stored_item.forceMove(installed_refill)
 
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
 
 	var/hash_key = ITEM_HASH(gone)
-	if(vending_machine_input[hash_key])
-		var/new_amount = vending_machine_input[hash_key] - 1
+	if(products[hash_key])
+		var/new_amount = products[hash_key] - 1
 		if(!new_amount)
-			vending_machine_input -= hash_key
+			products -= hash_key
 		else
-			vending_machine_input[hash_key] = new_amount
+			products[hash_key] = new_amount
 		update_static_data_for_all_viewers()
-
-/obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
-	return ITEM_INTERACT_FAILURE
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	if(loaded_item.flags_1 & HOLOGRAM_1)
@@ -73,8 +66,8 @@
 		return FALSE
 
 	var/loaded_items = 0
-	for(var/input in vending_machine_input)
-		loaded_items += vending_machine_input[input]
+	for(var/input in products)
+		loaded_items += products[input]
 	if(loaded_items == max_loaded_items)
 		speak("There are too many items in stock.")
 		return FALSE
@@ -85,12 +78,41 @@
 
 	//the hash key decides how items stack in the UI. We diffrentiate them based on name & price
 	var/hash_key = ITEM_HASH(inserted_item)
-	if(vending_machine_input[hash_key])
-		vending_machine_input[hash_key]++
+	if(products[hash_key])
+		products[hash_key]++
 	else
-		vending_machine_input[hash_key] = 1
+		products[hash_key] = 1
 		update_static_data_for_all_viewers()
 	return TRUE
+
+/obj/machinery/vending/custom/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
+
+	for(var/obj/item/vending_refill/custom/installed_refill in component_parts)
+		restock(installed_refill)
+
+/obj/machinery/vending/custom/restock(obj/item/vending_refill/canister)
+	if(!canister.products?.len)
+		return 0
+
+	//update records
+	var/update = canister.products.len
+	for(var/product_hash in canister.products)
+		products[product_hash] += canister.products[product_hash]
+	canister.products.Cut()
+
+	//move products
+	for(var/obj/item/stock in canister)
+		stock.forceMove(src)
+
+	return update
+
+/obj/machinery/vending/custom/post_restock(mob/living/user, restocked)
+	if(!restocked)
+		to_chat(user, span_warning("There's nothing to restock!"))
+		return
+
+	to_chat(user, span_notice("You loaded [restocked] items in [src]"))
 
 /obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
 	if(!linked_account)
@@ -104,7 +126,7 @@
 		return
 
 	categories["Products"] = list("icon" = "cart-shopping")
-	for(var/stocked_hash in vending_machine_input)
+	for(var/stocked_hash in products)
 		var/base64 = ""
 		var/obj/item/target = null
 		for(var/obj/item/stored_item in contents - component_parts)
@@ -132,9 +154,9 @@
 	var/is_owner = compartmentLoadAccessCheck(user)
 
 	.["stock"] = list()
-	for(var/stocked_hash in vending_machine_input)
+	for(var/stocked_hash in products)
 		.["stock"][stocked_hash] = list(
-			amount = vending_machine_input[stocked_hash],
+			amount = products[stocked_hash],
 			free = is_owner
 		)
 

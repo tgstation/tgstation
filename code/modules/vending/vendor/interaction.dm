@@ -138,7 +138,7 @@
  * * restocked - the amount of items we've been refilled with
  */
 /obj/machinery/vending/proc/post_restock(mob/living/user, restocked)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	if(!restocked)
 		to_chat(user, span_warning("There's nothing to restock!"))
