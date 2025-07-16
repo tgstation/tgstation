@@ -710,7 +710,7 @@
 
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
 	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
-	knowledge_gained += knowledge_points
+	knowledge_gained += max(0, amount)
 	if(knowledge_gained > 12 && !HAS_TRAIT_FROM(owner.current, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT))
 		to_chat(owner.current, span_boldwarning("You have gained a lot of power, the mansus will no longer allow you to break your blades, but you can now make as many as you wish."))
 		owner.current.balloon_alert(owner.current, "blade breaking disabled!")
