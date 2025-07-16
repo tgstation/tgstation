@@ -287,5 +287,5 @@
 	var/mob/living/arrived_living = arrived
 	if(!IS_HERETIC(arrived_living))
 		return
-	arrived_living.apply_status_effect(/datum/status_effect/temporary_xray)
+	arrived_living.apply_status_effect(/datum/status_effect/temporary_xray/eldritch)
 	COOLDOWN_START(src, xray_cooldown, 3 MINUTES)

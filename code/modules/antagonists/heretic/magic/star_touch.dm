@@ -234,10 +234,12 @@
 
 /// What to add when the beam connects to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target, mob/living/user)
-	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
-		target.AddElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
+	if(isstargazer(target))
+		return
+	target.AddElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
-	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
-		target.RemoveElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
+	if(isstargazer(target))
+		return
+	target.RemoveElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)

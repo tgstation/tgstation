@@ -13,6 +13,6 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
-	for(var/obj/item/bodypart/robotic_limb in carbon_owner.bodyparts)
-		if(robotic_limb.biological_state & BIO_ROBOTIC)
+	for(var/obj/item/bodypart/robotic_limb as anything in carbon_owner.bodyparts)
+		if(IS_ROBOTIC_LIMB(robotic_limb))
 			robotic_limb.receive_damage(10)

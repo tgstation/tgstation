@@ -14,7 +14,9 @@
 	if(!istype(start_turf) || !HAS_TRAIT(start_turf, TRAIT_RUSTY))
 		return FALSE
 	StartCooldown(135 SECONDS, 135 SECONDS)
-	ADD_TRAIT(owner, TRAIT_GODMODE, type)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.damage_resistance += 100
 	RegisterSignal(owner, COMSIG_FINISHED_CHARGE, PROC_REF(affect_aoe))
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.uncuff()
@@ -69,3 +71,6 @@
 			continue
 		nearby_mob.apply_damage(charge_damage, BRUTE, wound_bonus = CANT_WOUND)
 		nearby_mob.Knockdown(5 SECONDS)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.damage_resistance -= 100

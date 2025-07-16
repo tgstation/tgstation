@@ -119,10 +119,8 @@
 	name = "Cosmic Blade"
 	desc = "Your blade now star marks your victims, and allows you to attack star marked heathens from further away. \
 		Your attacks will chain bonus damage to up to two previous victims. \
-		The combo is reset after two seconds without making an attack, \
-		or if you attack someone already marked. If you combo more than four attacks you will receive, \
-		a cosmic trail and increase your combo timer up to ten seconds. \
-		Your attacks can now reach further if your victim is afflicted by a star mark."
+		The combo is reset after two seconds without making an attack, or if you attack someone already marked. \
+		If you combo three attacks you will receive a cosmic trail and increase your combo timer up to ten seconds."
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -156,9 +154,9 @@
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target || !isliving(target))
 		return
+	target.apply_status_effect(/datum/status_effect/star_mark, source)
 	if(combo_timer)
 		deltimer(combo_timer)
-	target.apply_status_effect(/datum/status_effect/star_mark, source)
 	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), combo_duration, TIMER_STOPPABLE)
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
@@ -185,12 +183,10 @@
 			need_mob_update += third_target_resolved.adjustFireLoss(28, updating_health = FALSE)
 			if(need_mob_update)
 				third_target_resolved.updatehealth()
-			if(combo_counter > 3)
-				target.apply_status_effect(/datum/status_effect/star_mark, source)
+			if(combo_counter == 3)
 				if(target.mind && target.stat != DEAD)
 					increase_combo_duration()
-					if(combo_counter == 4)
-						source.AddElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
+					source.AddElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
 		third_target = second_target
 	second_target = WEAKREF(target)
 

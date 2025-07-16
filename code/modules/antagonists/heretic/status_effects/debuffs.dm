@@ -130,7 +130,7 @@
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
-	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+	if(isstargazer(owner))
 		return FALSE
 	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
 	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
