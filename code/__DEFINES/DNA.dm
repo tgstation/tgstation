@@ -59,7 +59,7 @@
 #define FEATURE_EARS "ears"
 #define FEATURE_TAIL "tail_cat"
 #define FEATURE_TAIL_LIZARD "tail_lizard"
-#define FEATURE_TAIL_FISH "tail_fish"
+#define FEATURE_TAIL_FISH "fish_tail"
 #define FEATURE_SNOUT "snout"
 #define FEATURE_LIZARD_MARKINGS "marking_lizard"
 #define FEATURE_HORNS "horns"
