@@ -1157,3 +1157,6 @@
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious
+
+/mob/living/carbon/human/species/kitsune
+	race = /datum/species/human/kitsune

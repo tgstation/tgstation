@@ -45,6 +45,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 
 	//Mutant Human bits
 	var/list/tails_list_felinid
+	var/list/tails_list_fox
 	var/list/tails_list_lizard
 	var/list/tails_list_monkey
 	var/list/tails_list_xeno
@@ -92,6 +93,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 
 	lizard_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/lizard_markings, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	tails_list_felinid = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/felinid, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	tails_list_fox = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/fox)[DEFAULT_SPRITE_LIST]
 	tails_list_lizard = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard)[DEFAULT_SPRITE_LIST]
 	tails_list_monkey = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey)[DEFAULT_SPRITE_LIST]
 	tails_list_xeno = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/xeno)[DEFAULT_SPRITE_LIST]

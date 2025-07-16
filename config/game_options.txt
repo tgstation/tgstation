@@ -368,6 +368,7 @@ ROUNDSTART_RACES lizard
 ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
+ROUNDSTART_RACES kitsune
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
@@ -390,6 +391,7 @@ ROUNDSTART_RACES ethereal
 ## Roundstart no-reset races
 ## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
 #ROUNDSTART_NO_HARD_CHECK felinid
+#ROUNDSTART_NO_HARD_CHECK kitsune
 
 ## Disable roundstart species morgue cadavers?
 ## Cadavers in the morgue at the start of the round will be randomly picked from all enabled ROUNDSTART_RACES

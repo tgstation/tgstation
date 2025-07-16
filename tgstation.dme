@@ -5410,6 +5410,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\golems.dm"
 #include "code\modules\mob\living\carbon\human\species_types\humans.dm"
 #include "code\modules\mob\living\carbon\human\species_types\jellypeople.dm"
+#include "code\modules\mob\living\carbon\human\species_types\kitsune.dm"
 #include "code\modules\mob\living\carbon\human\species_types\lizardpeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\monkeys.dm"
 #include "code\modules\mob\living\carbon\human\species_types\mothmen.dm"
