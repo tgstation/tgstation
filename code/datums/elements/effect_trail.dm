@@ -46,7 +46,7 @@
 
 /datum/element/effect_trail/cosmic_field/Attach(datum/target, chosen_effect, mob/owner)
 	. = ..()
-	if(!istype(chosen_effect, typesof(/obj/effect/forcefield/cosmic_field)))
+	if(!ispath(chosen_effect, /obj/effect/forcefield/cosmic_field))
 		stack_trace("Tried to attach a cosmic_field effect trail with a non-cosmic field as the chosen effect")
 
 /datum/element/effect_trail/cosmic_field/generate_effect(atom/movable/target_object)
