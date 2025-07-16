@@ -278,6 +278,11 @@
 		update_light()
 	return TRUE
 
+/obj/structure/carp_rift/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
+		return
+	. = ..()
+
 #undef CHARGE_ONGOING
 #undef CHARGE_FINALWARNING
 #undef CHARGE_COMPLETED
