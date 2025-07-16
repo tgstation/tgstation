@@ -1,6 +1,8 @@
 ///Everything within this file is an edited form from this file, stripping it of some various components because they are not needed for the PDA app: code/game/machinery/civilian_bounties.dm
+
 ///Percentage of a civilian bounty the civilian will make.
 #define CIV_BOUNTY_SPLIT 30
+
 /datum/computer_file/program/civilianbounties
 	filename = "bountyapp"
 	filedesc = "Civilian Bounties"
