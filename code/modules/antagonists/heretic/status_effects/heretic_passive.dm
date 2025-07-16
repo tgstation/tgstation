@@ -496,8 +496,8 @@
 	var/main_healing = 1 + 1 * passive_level * delta_time
 	var/stam_healing = 5 + 5 * passive_level * delta_time
 	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, -stam_healing, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss(main_healing, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(-main_healing, updating_health = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_BROWN)
