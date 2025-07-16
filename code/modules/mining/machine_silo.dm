@@ -60,7 +60,7 @@
 		UNBAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME unbanned from ore silo access.",
 		FAILED_OPERATION_SUSPICIOUS = "NULL_ACCOUNT_RESOLVE_PTR_#?",
 		FAILED_OPERATION_NO_BANK_ID = "ACCESS ENFORCEMENT FAILURE: No account ID found. Please contact a banker.",
-		UNRESTRICT_FAILURE_NO_ACCESS = "ID ACCESS REQUIREMENT ENFORCED: $SILO_USER lacks supply command authority; ID ACCESS REQUIREMENT REMOVAL FAILED.",
+		UNRESTRICT_FAILURE_NO_ACCESS = "ID ACCESS REQUIREMENT ENFORCED: $SILO_USER_NAME lacks supply command authority; ID ACCESS REQUIREMENT REMOVAL FAILED.",
 		UNRESTRICT_FAILURE_SOULLESS_MACHINE = "$SILO_USER_NAME INTERFACE_EXCEPTION -> ID_ACCESS_REQUIREMENT = !ID_ACCESS_REQUIREMENT => NO_OP",
 		RESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE STARTED: $SILO_USER_NAME has enforced ID read requirement for this ore silo.",
 		UNRESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE SUSPENDED: $SILO_USER_NAME has removed ID read requirement for this ore silo.",
@@ -199,7 +199,7 @@
 	if(!user_data["Account ID"] || !isnum(user_data["Account ID"]))
 		if(prob(5))
 			physical_receptacle.say("SILO ERR: Bank account ID not found. Initiating anti-communist silo-access policy.")
-		physical_receptacle.say("SILO ERR: No account ID found. Please contact a banker.")
+		physical_receptacle.say("SILO ERR: No account ID found. Please contact Head of Personnel.")
 		return COMPONENT_ORE_SILO_DENY
 	if(banned_users.Find(user_data["Account ID"]))
 		physical_receptacle.say("SILO ERR: You are banned from using this ore silo.")
@@ -414,7 +414,7 @@
 		)
 		return
 	var/list/user_accesses = astype(silo_user_data["Accesses"], /list)
-	if(!user_accesses.Find(ACCESS_QM))
+	if(!user_accesses?.Find(ACCESS_QM))
 		handle_access_action_feedback(
 			UNRESTRICT_FAILURE_NO_ACCESS,
 			silo_user_data,
