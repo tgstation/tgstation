@@ -42,8 +42,10 @@
 	var/research_tree_icon_dir = SOUTH
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
-	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft)
+	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft), also makes it show up in the shop according to this tier
 	var/drafting_tier = 0
+	/// decides if it's added to the shop, only, and not drafts
+	var/is_shop_only = FALSE
 
 /**
  * Called before the knowledge is researched,
