@@ -31974,7 +31974,7 @@
 	dir = 5
 	},
 /obj/structure/closet/radiation,
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "hUx" = (

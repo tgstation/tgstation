@@ -34399,6 +34399,7 @@
 	name = "Privacy Shutters";
 	id = "hop"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "ldd" = (
@@ -37859,6 +37860,7 @@
 	name = "Privacy Shutters";
 	id = "hop"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "mkl" = (
