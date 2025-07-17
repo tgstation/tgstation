@@ -52,13 +52,12 @@
 	if(!carbon_user.get_equipped_items())
 		return
 	var/obj/item/lost_in_translation = pick(carbon_user.get_equipped_items())
-
-	carbon_user.dropItemToGround(lost_in_translation,TRUE,TRUE,TRUE,get_turf(L))
+	carbon_user.dropItemToGround(lost_in_translation,FALSE,TRUE,TRUE,get_turf(L))
 	if(lost_in_translation.slot_flags & ITEM_SLOT_ICLOTHING || lost_in_translation.slot_flags & ITEM_SLOT_OCLOTHING)
 		to_chat(carbon_user,span_boldwarning("\The [lost_in_translation] and everything it held is torn off of you as you teleport!"))
 	else
 		to_chat(carbon_user,span_warning("\The [lost_in_translation] is thrown off your person as you teleport!"))
-	balloon_alert(carbon_user,"Something's missing!")
+	balloon_alert(carbon_user,"something's missing!")
 
 
 /obj/item/stack/ore/bluespace_crystal/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
