@@ -18799,9 +18799,6 @@
 "gFO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -38506,9 +38503,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "nst" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -51033,12 +51027,6 @@
 /obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/service/library)
-"rIb" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/closed/wall,
-/area/station/service/theater)
 "rIh" = (
 /obj/machinery/light/directional/east,
 /obj/structure/cable,
@@ -69680,12 +69668,6 @@
 /obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain/private)
-"xXW" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/closed/wall,
-/area/station/service/theater)
 "xYq" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/cardboard,
@@ -107857,7 +107839,7 @@ yaO
 gyO
 xSO
 obG
-rIb
+obG
 obG
 obG
 obG
@@ -108370,7 +108352,7 @@ dLT
 qiY
 wAt
 utE
-xXW
+obG
 nst
 lih
 sNi
