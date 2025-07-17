@@ -25,7 +25,6 @@
 		reagents.add_reagent(/datum/reagent/consumable/nutriment, 9)
 		reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 1)
 		
-
 /obj/item/food/bowled/mammi
 	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
@@ -48,7 +47,6 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	trash_type = /obj/item/reagent_containers/cup/bowl
-
 
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtypes = VEGETABLES
