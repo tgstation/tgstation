@@ -8,7 +8,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/modular_computer/pda/nukeops
 	r_pocket = /obj/item/pen/edagger
-	id = /obj/item/card/id/advanced/chameleon
+	id = /obj/item/card/id/advanced/chameleon/elite
 	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)

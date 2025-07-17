@@ -42,6 +42,23 @@
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
 	new /obj/item/modular_computer/pda/syndicate(src)
 
+/obj/structure/closet/syndicate/chemical
+	name = "chemical supplies closet"
+	desc = "full of omninous chemical supplies"
+	icon_state = "syndicate_chemical"
+
+/obj/structure/closet/syndicate/chemical/PopulateContents()
+	..()
+	new /obj/item/storage/box/pillbottles(src)
+	new /obj/item/storage/box/pillbottles(src)
+	new /obj/item/storage/box/beakers/big(src)
+	new /obj/item/storage/box/beakers/big(src)
+	new /obj/item/storage/box/medigels(src)
+	new /obj/item/storage/box/medigels(src)
+	new /obj/item/ph_booklet(src)
+	new /obj/item/reagent_containers/dropper(src)
+	new /obj/item/reagent_containers/cup/bottle/acidic_buffer(src)
+
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
 

@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Evac broadcast messages are no longer scrambled unless the shuttle was hijacked."

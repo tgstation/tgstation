@@ -1,4 +1,5 @@
 .light:root {
+  --color-base: #ffffff;
   --scrollbar-base: #f2f2f2;
   --scrollbar-thumb: #a7a7a7;
 }
@@ -196,6 +197,7 @@ img {
  * MARK: Dark theme colors
  */
 .dark:root {
+  --color-base: #151515;
   --scrollbar-base: #151515;
   --scrollbar-thumb: #363636;
 }
@@ -203,13 +205,6 @@ img {
 body.dark {
   background-color: #151515;
   color: #b2c4dd;
-  scrollbar-base-color: #1c1c1c;
-  scrollbar-face-color: #3b3b3b;
-  scrollbar-3dlight-color: #252525;
-  scrollbar-highlight-color: #252525;
-  scrollbar-track-color: #1c1c1c;
-  scrollbar-arrow-color: #929292;
-  scrollbar-shadow-color: #3b3b3b;
 }
 
 .dark a {

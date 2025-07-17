@@ -453,6 +453,7 @@
 #define COLOR_AMMO_DUMDUM "#ffe601"
 #define COLOR_AMMO_HOTSHOT "#ff7b00"
 #define COLOR_AMMO_ICEBLOX "#0de3ff"
+#define COLOR_AMMO_HELLFIRE "#f60021"
 
 // defines for other ammo type colors (should this be merged with above?)
 #define COLOR_AMMO_INCENDIARY "#f4001f"

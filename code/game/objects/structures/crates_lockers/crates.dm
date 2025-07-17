@@ -41,6 +41,7 @@
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
 	if(elevation)
+		AddComponent(/datum/component/climb_walkable)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	. = ..()
 

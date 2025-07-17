@@ -835,7 +835,7 @@
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = max(0.6, surgery.speed_modifier)
+		surgery.speed_modifier = min(0.4, surgery.speed_modifier)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
