@@ -15,7 +15,7 @@
 			controller.queue_behavior(/datum/ai_behavior/resist)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	if (!isturf(living_pawn.loc) && !ismob(living_pawn.loc))
+	if (!isturf(living_pawn.loc) && !ismob(living_pawn.loc) && !istype(living_pawn.loc, /obj/item/mob_holder))
 		var/atom/contained_in = living_pawn.loc
 		var/attack_effective = FALSE
 		if (!pacifist)

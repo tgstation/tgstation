@@ -50,6 +50,10 @@
 	heretic_datum.passive_level = HERETIC_LEVEL_FINAL
 	heretic_datum.update_data_for_all_viewers()
 
+/datum/status_effect/heretic_passive/on_remove()
+	heretic_datum = null
+	return ..()
+
 //---- Ash Passive
 // Level 1 grants heat and ash storm immunity
 // Level 2 grants lava immunity
@@ -115,7 +119,7 @@
 /datum/status_effect/heretic_passive/blade/proc/z_impact_react(datum/source, levels, turf/fell_on)
 	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/mook_dust(fell_on)
-	owner.visible_message(span_notice("[owner] lands on [fell_on] safely, and quite stylishly on [p_their()] feet"))
+	owner.visible_message(span_notice("[owner] lands on [fell_on] safely, and quite stylishly on [p_their()] feet!"))
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/atom, SpinAnimation), 0.5 SECONDS, 0)
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/, emote), "flip")
 	return ZIMPACT_CANCEL_DAMAGE | ZIMPACT_NO_MESSAGE | ZIMPACT_NO_SPIN
@@ -225,7 +229,7 @@
 
 	if(!creator || !ismob(creator))
 		return
-	if(istype(creator, /mob/living/basic/heretic_summon/star_gazer))
+	if(isstargazer(creator))
 		new_field.slows_projectiles()
 		new_field.prevents_explosions()
 		return
@@ -345,7 +349,6 @@
 
 /datum/status_effect/heretic_passive/lock/on_apply()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, REF(src))
 	RegisterSignal(heretic_datum, COMSIG_HERETIC_SHOP_SETUP, PROC_REF(on_shop_setup)) // Just in case we are applying this after the shop was set up
 
@@ -356,7 +359,6 @@
 
 /datum/status_effect/heretic_passive/lock/heretic_level_final()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	ADD_TRAIT(heretic_datum, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
 
 /datum/status_effect/heretic_passive/lock/on_remove()
@@ -453,13 +455,11 @@
 
 /datum/status_effect/heretic_passive/rust/heretic_level_upgrade()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	if(heretic_datum.rust_strength < 2)
 		heretic_datum.increase_rust_strength() // Bring us up to 2
 
 /datum/status_effect/heretic_passive/rust/heretic_level_final()
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	if(heretic_datum.rust_strength < 3)
 		heretic_datum.increase_rust_strength() // Bring us up to 3
 
@@ -495,15 +495,16 @@
 	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
 	var/main_healing = 1 + 1 * passive_level * delta_time
 	var/stam_healing = 5 + 5 * passive_level * delta_time
-	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, -stam_healing, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss(main_healing, updating_health = FALSE)
+	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-stam_healing, updating_stamina = FALSE)
+	need_mob_update += source.adjustToxLoss(-main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(-main_healing, updating_health = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_BROWN)
 	// Reduces duration of stuns/etc
 	var/stun_reduction = 0.5 * passive_level * delta_time
-	source.AdjustAllImmobility(stun_reduction)
+	source.AdjustAllImmobility(-stun_reduction)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
@@ -519,7 +520,7 @@
 		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
 			to_cure.remove_wound()
 	for(var/obj/item/organ/internal as anything in carbon_owner.organs)
-		internal.apply_organ_damage(-2 * seconds_per_tick)
+		internal.apply_organ_damage(round(-2 * seconds_per_tick))
 	if(passive_level < HERETIC_LEVEL_FINAL)
 		return
 	if(length(carbon_owner.get_missing_limbs()))

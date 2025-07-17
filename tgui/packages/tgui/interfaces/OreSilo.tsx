@@ -17,7 +17,7 @@ import { capitalize } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type Machine = {
   name: string;

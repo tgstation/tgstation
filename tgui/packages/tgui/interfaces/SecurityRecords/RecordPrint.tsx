@@ -7,7 +7,7 @@ import {
   getDefaultPrintHeader,
   getSecurityRecord,
 } from './helpers';
-import { PRINTOUT, SecurityRecordsData } from './types';
+import { PRINTOUT, type SecurityRecordsData } from './types';
 
 /** Handles printing posters and rapsheets */
 export const RecordPrint = (props) => {

@@ -32,8 +32,8 @@ export const PortablePump = (props) => {
             <Button
               content={
                 direction
-                  ? area_or_tank + ' → ' + pump_or_port
-                  : pump_or_port + ' → ' + area_or_tank
+                  ? `${area_or_tank} → ${pump_or_port}`
+                  : `${pump_or_port} → ${area_or_tank}`
               }
               color={!direction && !holding ? 'caution' : null}
               onClick={() => act('direction')}

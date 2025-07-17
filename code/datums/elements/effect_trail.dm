@@ -8,7 +8,7 @@
 	/// The effect used for the trail generation.
 	var/chosen_effect
 
-/datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/effect/forcefield/cosmic_field, mob/owner)
+/datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/effect/forcefield/cosmic_field)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
@@ -30,10 +30,12 @@
 
 /// If we are a cosmic heretic, this will return the appropriate effect trail based on our passive level. returns the default trail otherwise
 /proc/cosmic_trail_based_on_passive(mob/living/source)
-	. = /datum/element/effect_trail/cosmic_field
+	if(isstargazer(source))
+		return /datum/element/effect_trail/cosmic_field/antiprojectile
+
 	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = source.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
 	if(!cosmic_passive)
-		return .
+		return /datum/element/effect_trail/cosmic_field
 	if(cosmic_passive.passive_level == 3)
 		return /datum/element/effect_trail/cosmic_field/antiprojectile
 	if(cosmic_passive.passive_level == 2)
@@ -44,9 +46,9 @@
 	var/prevents_explosions = FALSE
 	var/slows_projectiles = FALSE
 
-/datum/element/effect_trail/cosmic_field/Attach(datum/target, chosen_effect, mob/owner)
+/datum/element/effect_trail/cosmic_field/Attach(datum/target, chosen_effect)
 	. = ..()
-	if(!istype(chosen_effect, typesof(/obj/effect/forcefield/cosmic_field)))
+	if(!ispath(chosen_effect, /obj/effect/forcefield/cosmic_field))
 		stack_trace("Tried to attach a cosmic_field effect trail with a non-cosmic field as the chosen effect")
 
 /datum/element/effect_trail/cosmic_field/generate_effect(atom/movable/target_object)

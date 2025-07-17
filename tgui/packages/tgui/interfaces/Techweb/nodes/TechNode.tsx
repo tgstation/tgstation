@@ -6,13 +6,13 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { Experiment } from '../../ExperimentConfigure';
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
-import { TechwebNode } from '../types';
+import type { TechwebNode } from '../types';
 
 type Props = {
   node: TechwebNode;

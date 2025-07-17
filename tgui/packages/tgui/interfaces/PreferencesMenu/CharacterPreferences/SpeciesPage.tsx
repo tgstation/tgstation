@@ -16,10 +16,10 @@ import { LoadingScreen } from '../../common/LoadingScreen';
 import {
   createSetPreference,
   Food,
-  Perk,
-  PreferencesMenuData,
-  ServerData,
-  Species,
+  type Perk,
+  type PreferencesMenuData,
+  type ServerData,
+  type Species,
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 

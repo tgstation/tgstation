@@ -459,6 +459,8 @@
 /obj/item/storage/box/syndie_kit/smoke/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/smokebomb(src)
+	new /obj/item/implanter/smoke(src)
+	new /obj/item/clothing/mask/gas(src)
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
@@ -625,6 +627,14 @@
 /obj/item/storage/box/syndie_kit/manhack_grenades/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/manhacks(src)
+
+/obj/item/storage/box/syndie_kit/feral_cat_grenades/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/spawnergrenade/cat(src)
+
+/obj/item/storage/box/syndie_kit/frag_grenades/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/frag(src)
 
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)

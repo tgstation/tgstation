@@ -2,7 +2,7 @@ import { Box, Button } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
-import { CargoData } from './types';
+import type { CargoData } from './types';
 
 export function CargoCartButtons(props) {
   const { act, data } = useBackend<CargoData>();
@@ -23,7 +23,7 @@ export function CargoCartButtons(props) {
       <Box inline mx={1}>
         {amount === 0 && 'Cart is empty'}
         {amount === 1 && '1 item'}
-        {amount >= 2 && amount + ' items'}{' '}
+        {amount >= 2 && `${amount} items`}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
 

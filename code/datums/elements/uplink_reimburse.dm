@@ -45,9 +45,10 @@
 	if(!uplink_comp)
 		CRASH("No uplink component in arguments detected")
 
-	to_chat(user, span_notice("You tap [uplink_comp.uplink_handler] with [refund_item], and a moment after [refund_item] disappears in a puff of red smoke!"))
-	do_sparks(2, source = uplink_comp.uplink_handler)
+	to_chat(user, span_notice("You tap [uplink_comp.parent] with [refund_item], and a moment after [refund_item] disappears in a puff of red smoke!"))
+	do_sparks(2, source = uplink_comp.parent)
 	uplink_comp.uplink_handler.add_telecrystals(refundable_tc)
+	SEND_SIGNAL(refund_item, COMSIG_ITEM_TC_REIMBURSED)
 	qdel(refund_item)
 
 /// If the item is used, it needs to no longer be refundable

@@ -12,7 +12,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch, toTitleCase } from 'tgui-core/string';
 
 import { useBackend, useSharedState } from '../backend';
@@ -109,7 +109,7 @@ function MaterialRow(props: MaterialRowProps) {
       <Table.Cell collapsing textAlign="left">
         <Button
           color="transparent"
-          tooltip={material.value ? material.value + ' cr' : 'No cost'}
+          tooltip={material.value ? `${material.value} cr` : 'No cost'}
           onClick={() => onRelease(1)}
         >
           x1
@@ -117,7 +117,7 @@ function MaterialRow(props: MaterialRowProps) {
         <Button
           color="transparent"
           tooltip={
-            material.value ? material.value * print_amount + ' cr' : 'No cost'
+            material.value ? `${material.value * print_amount} cr` : 'No cost'
           }
           onClick={() => onRelease(print_amount)}
         >
@@ -187,7 +187,7 @@ function PointsSection(props) {
           <Box inline color="label" ml={1}>
             Unclaimed points:
           </Box>
-          {' ' + unclaimedPoints}
+          {` ${unclaimedPoints}`}
         </Stack.Item>
         <Stack.Item>
           <Button

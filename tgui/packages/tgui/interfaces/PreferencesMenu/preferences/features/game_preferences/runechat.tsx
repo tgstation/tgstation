@@ -1,8 +1,8 @@
 import {
   CheckboxInput,
   FeatureNumberInput,
-  FeatureNumeric,
-  FeatureToggle,
+  type FeatureNumeric,
+  type FeatureToggle,
 } from '../base';
 
 export const chat_on_map: FeatureToggle = {

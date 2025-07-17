@@ -893,7 +893,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			limb_accuracy *= 1.2
 			user.adjust_disgust(2)
 
-	var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
+	// Select a zone to hit, blacklisting the part we're attacking with if we're attacking ourselves.
+	var/hit_zone = target.get_random_valid_zone(user.zone_selected, blacklisted_parts = (user == target ? list(attacking_bodypart.body_zone) : null))
+	var/obj/item/bodypart/affecting = target.get_bodypart(hit_zone)
 
 	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 	if(attacking_bodypart.unarmed_damage_low)
@@ -958,7 +960,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.force_say()
 		log_combat(user, target, "punched")
 
-	if(biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+	if(user != target && biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
 		var/datum/reagents/tasty_meal = new()
 		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
 		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
@@ -1994,7 +1996,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
 	var/list/final_bodypart_overrides = new_species.bodypart_overrides.Copy()
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
+	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
 		final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
 		final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
 
@@ -2046,7 +2048,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	ASSERT(!isnull(for_mob))
 	switch(hair_color_mode)
 		if(USE_MUTANT_COLOR)
-			return for_mob.dna.features["mcolor"]
+			return for_mob.dna.features[FEATURE_MUTANT_COLOR]
 		if(USE_FIXED_MUTANT_COLOR)
 			return fixed_mut_color
 
@@ -2063,7 +2065,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				continue
 
 			var/datum/bodypart_overlay/simple/body_marking/overlay = new markings_type()
-			overlay.set_appearance(accessory_name, hooman.dna.features["mcolor"])
+			overlay.set_appearance(accessory_name, hooman.dna.features[FEATURE_MUTANT_COLOR])
 			people_part.add_bodypart_overlay(overlay)
 
 		qdel(markings)

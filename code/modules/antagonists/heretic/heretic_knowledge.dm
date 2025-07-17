@@ -42,8 +42,10 @@
 	var/research_tree_icon_dir = SOUTH
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
-	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft)
+	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft), also makes it show up in the shop according to this tier
 	var/drafting_tier = 0
+	/// decides if it's added to the shop, only, and not drafts
+	var/is_shop_only = FALSE
 
 /**
  * Called before the knowledge is researched,
@@ -72,7 +74,7 @@
 		to_chat(user, span_warning("[gain_text]"))
 	on_gain(user, our_heretic)
 	if(is_final_knowledge)
-		ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+		ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT)
 
 /**
  * Called when the knowledge is applied to a mob.
@@ -281,7 +283,7 @@
 		return
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path.route)
 	our_heretic.generate_heretic_research_tree()
-	our_heretic.determine_drafted_knowledge(user, our_heretic.heretic_path)
+	our_heretic.determine_drafted_knowledge()
 
 /datum/heretic_knowledge/limited_amount/starting/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))

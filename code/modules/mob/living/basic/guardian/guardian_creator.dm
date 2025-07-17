@@ -52,11 +52,15 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/standard,
 		/mob/living/basic/guardian/support,
 	)
+	/// Have we been refunded? Used to prevent guardians from being created after we've been refunded
+	/// while avoiding scamming people if they use and then destroy us
+	var/was_refunded = FALSE
 
 /obj/item/guardian_creator/Initialize(mapload)
 	. = ..()
 	var/datum/guardian_fluff/using_theme = GLOB.guardian_themes[theme]
 	mob_name = using_theme.name
+	RegisterSignal(src, COMSIG_ITEM_TC_REIMBURSED, PROC_REF(on_reimbursed))
 
 /obj/item/guardian_creator/attack_self(mob/living/user)
 	if(isguardian(user) && !allow_guardian)
@@ -97,6 +101,10 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		role_name_text = guardian_type_name,
 		amount_to_pick = 1,
 	)
+
+	if(was_refunded)
+		return
+
 	if(chosen_one)
 		spawn_guardian(user, chosen_one, guardian_path)
 		used = TRUE
@@ -104,6 +112,10 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	else
 		to_chat(user, failure_message)
 		used = FALSE
+
+/obj/item/guardian_creator/proc/on_reimbursed(datum/source)
+	SIGNAL_HANDLER
+	was_refunded = TRUE
 
 /// Actually create our guy
 /obj/item/guardian_creator/proc/spawn_guardian(mob/living/user, mob/dead/candidate, guardian_path)

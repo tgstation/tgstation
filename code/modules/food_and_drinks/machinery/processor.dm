@@ -201,6 +201,10 @@
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime
 
+/obj/machinery/processor/slime/fullupgrade //fully ugpraded stock parts
+	desc = "An industrial grinder with a sticker saying appropiated for bioterrorism department. keep hands clear of intake while operating."
+	circuit = /obj/item/circuitboard/machine/processor/slime/fullupgrade
+
 /obj/machinery/processor/slime/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(

@@ -47,14 +47,14 @@
 
 /datum/action/cooldown/spell/conjure/cosmic_expansion/post_summon(obj/effect/forcefield/cosmic_field/summoned_object, atom/cast_on)
 	. = ..()
-	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+	if(isstargazer(owner))
 		summoned_object.slows_projectiles()
 		summoned_object.prevents_explosions()
 		return
 	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = owner.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
 	if(!cosmic_passive)
 		return
-	if(cosmic_passive.passive_level > 1 || istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+	if(cosmic_passive.passive_level > 1)
 		summoned_object.prevents_explosions()
-	if(cosmic_passive.passive_level > 2 || istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+	if(cosmic_passive.passive_level > 2)
 		summoned_object.slows_projectiles()

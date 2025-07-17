@@ -20,14 +20,17 @@
 		NARSIE_ARMOR = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits/armor.dmi', icon_state = "cult_armor"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/hardened),
+			RADIAL_DESC = "Smiths a set of [/obj/item/clothing/suit/hooded/cultrobes/hardened::name], a robust suit of armor that can withstand space.",
 			),
 		FLAGELLANT_ARMOR = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits/armor.dmi', icon_state = "cultrobes"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/berserker),
+			RADIAL_DESC = "Smiths a set of [/obj/item/clothing/suit/hooded/cultrobes/berserker::name], a robe which makes you far more vulnerable to damage, but drastically increases your speed.",
 			),
 		ELDRITCH_SWORD = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "cultblade"),
 			OUTPUT_ITEMS = list(/obj/item/melee/cultblade),
+			RADIAL_DESC = "Smiths \a [/obj/item/melee/cultblade::name], a powerful blade that can cleave through the toughest of armor.",
 			),
 	)
 
@@ -43,6 +46,7 @@
 	return list(CURSED_BLADE = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/weapons/khopesh.dmi', icon_state = "cursed_blade"),
 			OUTPUT_ITEMS = list(/obj/item/melee/sickly_blade/cursed),
+			RADIAL_DESC = "Smiths a [/obj/item/melee/sickly_blade/cursed::name], an upgraded dagger that can be broken for an emergency teleport.",
 			),
 	)
 

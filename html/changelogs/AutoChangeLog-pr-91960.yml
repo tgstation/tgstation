@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Welded airlocks are saved as welded airlock mapping helpers when using the `map_export` admin verb"
+  - rscadd: "Paper on noticeboards are saved when using the `map_export` admin verb"

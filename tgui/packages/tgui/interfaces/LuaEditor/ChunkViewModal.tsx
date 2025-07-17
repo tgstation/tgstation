@@ -1,9 +1,9 @@
 import hljs from 'highlight.js/lib/core';
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { Box, Button, Modal, Section } from 'tgui-core/components';
 
 import { sanitizeText } from '../../sanitize';
-import { LuaEditorModal } from './types';
+import type { LuaEditorModal } from './types';
 
 type ChunkViewModalProps = {
   setModal: Dispatch<SetStateAction<LuaEditorModal>>;

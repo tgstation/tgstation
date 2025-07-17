@@ -101,12 +101,15 @@
 #define HKT_NEXT "next"
 #define HKT_BAN "ban"
 #define HKT_DEPTH "depth"
+#define HKT_PURCHASED_DEPTH "purchased_depth"
 #define HKT_ROUTE "route"
 #define HKT_UI_BGR "ui_bgr"
 #define HKT_COST "cost"
 /// Only present for already researched knowledge.
 #define HKT_INSTANCE "instance"
 #define HKT_CATEGORY "category"
+/// unique identifier most commonly used for identifying what knowledge is researchable
+#define HKT_ID "id"
 
 #define BGR_SIDE "node_side"
 
@@ -122,6 +125,21 @@
 #define HERETIC_KNOWLEDGE_SHOP "shop"
 #define HERETIC_KNOWLEDGE_DRAFT "draft"
 #define HERETIC_KNOWLEDGE_START "start"
+
+/// defines for the depths of the heretic knowledge tree nodes
+#define HKT_DEPTH_START 2
+#define HKT_DEPTH_TIER_1 3
+#define HKT_DEPTH_DRAFT_1 4
+#define HKT_DEPTH_TIER_2 5
+#define HKT_DEPTH_DRAFT_2 6
+#define HKT_DEPTH_ROBES 7
+#define HKT_DEPTH_TIER_3 8
+#define HKT_DEPTH_DRAFT_3 9
+#define HKT_DEPTH_ARMOR 10
+#define HKT_DEPTH_TIER_4 11
+#define HKT_DEPTH_DRAFT_4 12
+#define HKT_DEPTH_ASCENSION 13
+
 
 /// A define used in ritual priority for heretics.
 #define MAX_KNOWLEDGE_PRIORITY 100
@@ -464,3 +482,5 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 /// Camera net used by battle royale objective
 #define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"
+
+#define MALF_MAX_PP 400

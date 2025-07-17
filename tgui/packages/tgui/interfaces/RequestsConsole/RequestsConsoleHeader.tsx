@@ -1,7 +1,7 @@
 import { Button, NoticeBox, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { RequestPriority, RequestsData } from './types';
+import { RequestPriority, type RequestsData } from './types';
 
 export const RequestsConsoleHeader = (props) => {
   const { act, data } = useBackend<RequestsData>();
