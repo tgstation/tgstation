@@ -445,3 +445,18 @@
   - rscadd: Welded airlocks are saved as welded airlock mapping helpers when using
       the `map_export` admin verb
   - rscadd: Paper on noticeboards are saved when using the `map_export` admin verb
+2025-07-17:
+  DaCoolBoss:
+  - bugfix: Agent IDs that have not been spawned by an uplink or on a nuke op no longer
+      have infinite access slots.
+  - spellcheck: Rewrote item description for Agent IDs
+  Exester509:
+  - bugfix: Fixed the description of the modular console frame on the crafting menu
+  Likteer:
+  - rscadd: Added NT & British flag mugs to loadout
+  SmArtKar:
+  - bugfix: Fixed equipping items onto other people playing swing animations
+  TealSeer:
+  - bugfix: fixed shuttle remote design missing from protolathe
+  bigbakedbean:
+  - rscadd: chemical analyzer now displays bloodtype if analyzing blood
