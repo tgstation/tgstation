@@ -78,6 +78,25 @@
 	return
 
 /obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
+		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
+		set_anchored(!anchored)
+		balloon_alert(user, "[anchored ? "":"un"]anchored")
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/reagent_containers/cup/beaker/eldritch))
+		if(current_mass < max_mass)
+			balloon_alert(user, "not full enough!")
+			return ITEM_INTERACT_SUCCESS
+		var/obj/item/reagent_containers/cup/beaker/eldritch/to_fill = tool
+		if(to_fill.reagents.total_volume >= to_fill.reagents.maximum_volume)
+			balloon_alert(user, "flask is full!")
+			return ITEM_INTERACT_SUCCESS
+		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
+		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
+		current_mass--
+		balloon_alert(user, "refilled flask")
+		return ITEM_INTERACT_SUCCESS
+
 	if(isbodypart(tool))
 		var/obj/item/bodypart/consumed = tool
 		if(!IS_ORGANIC_LIMB(consumed))
@@ -108,26 +127,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
-
-/obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
-		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
-		set_anchored(!anchored)
-		balloon_alert(user, "[anchored ? "":"un"]anchored")
-		return ITEM_INTERACT_SUCCESS
-	if(istype(tool, /obj/item/reagent_containers/cup/beaker/eldritch))
-		if(current_mass < max_mass)
-			balloon_alert(user, "not full enough!")
-			return ITEM_INTERACT_SUCCESS
-		var/obj/item/reagent_containers/cup/beaker/eldritch/to_fill = tool
-		if(to_fill.reagents.total_volume >= to_fill.reagents.maximum_volume)
-			balloon_alert(user, "flask is full!")
-			return ITEM_INTERACT_SUCCESS
-		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
-		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
-		current_mass--
-		balloon_alert(user, "refilled flask")
-		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/destructible/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	. = ..()
