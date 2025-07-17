@@ -25,11 +25,10 @@
 #define MAFIA_SPEEDUP_INCREASE 2
 
 //'Team' flags, used to know which alliance your role is part of.
-//While you can have several of these at once, the imapcts of it is not known, with the exception of 'dead',
-//which is used for sending "team" messages to all dead players.
 #define MAFIA_TEAM_TOWN (1<<0)
 #define MAFIA_TEAM_MAFIA (1<<1)
 #define MAFIA_TEAM_SOLO (1<<2)
+//those part of the 'dead' faction can hear dead chat, not a "faction" of players.
 #define MAFIA_TEAM_DEAD (1<<3)
 
 //types of town roles for random setup gen

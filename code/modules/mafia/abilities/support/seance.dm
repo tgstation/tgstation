@@ -18,7 +18,7 @@
 	if(host_role.mafia_game_controller.phase != MAFIA_PHASE_NIGHT)
 		return FALSE
 
-	var/message = span_changeling("<b>\[DEAD CHAT\] [source]</b>: [html_decode(speech_args[SPEECH_MESSAGE])]")
+	var/message = span_changeling("<b>\[DEAD CHAT - CHAPLAIN\] [source]</b>: [html_decode(speech_args[SPEECH_MESSAGE])]")
 	host_role.mafia_game_controller.send_message(message, team = MAFIA_TEAM_DEAD)
 	speech_args[SPEECH_MESSAGE] = ""
 	return TRUE
