@@ -145,17 +145,6 @@
 	if(result.custom_materials == copycat.custom_materials)
 		delete_components(spawned_components)
 		return
-	var/comparison_failed = TRUE
-	if(length(result.custom_materials) == length(copycat.custom_materials))
-		comparison_failed = FALSE
-		for(var/mat in result.custom_materials)
-			var/enemy_amount = copycat.custom_materials[mat]
-			if(!enemy_amount) //break the loop early, we cannot perform a division by zero anyway
-				comparison_failed = TRUE
-				break
-			var/ratio_difference = abs((result.custom_materials[mat] / enemy_amount) - 1)
-			if(ratio_difference > ACCEPTABLE_MATERIAL_DEVIATION)
-				comparison_failed = TRUE
 	if(!result.compare_materials(copycat))
 		var/warning = "custom_materials of [result.type] when crafted compared to just spawned don't match"
 		var/what_it_should_be = result.get_materials_english_list()
