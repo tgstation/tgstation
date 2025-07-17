@@ -40,7 +40,26 @@
 	use(1)
 
 /obj/item/stack/ore/bluespace_crystal/proc/blink_mob(mob/living/L)
+	if(prob(50))
+		baggage_mishap(L)
 	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+
+///drops a worn item at the location of teleportation and notifies teleportee
+/obj/item/stack/ore/bluespace_crystal/proc/baggage_mishap(mob/living/L)
+	if(!iscarbon(L))
+		return
+	var/mob/living/carbon/carbon_user = L
+	if(!carbon_user.get_equipped_items())
+		return
+	var/obj/item/lost_in_translation = pick(carbon_user.get_equipped_items())
+
+	carbon_user.dropItemToGround(lost_in_translation,TRUE,TRUE,TRUE,get_turf(L))
+	if(lost_in_translation.slot_flags & ITEM_SLOT_ICLOTHING || lost_in_translation.slot_flags & ITEM_SLOT_OCLOTHING)
+		to_chat(carbon_user,span_boldwarning("\The [lost_in_translation] and everything it held is torn off of you as you teleport!"))
+	else
+		to_chat(carbon_user,span_warning("\The [lost_in_translation] is thrown off your person as you teleport!"))
+	balloon_alert(carbon_user,"Something's missing!")
+
 
 /obj/item/stack/ore/bluespace_crystal/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) // not caught in mid-air
