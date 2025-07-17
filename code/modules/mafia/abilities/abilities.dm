@@ -95,8 +95,6 @@
 
 	if(!using_ability)
 		return FALSE
-	if(host_role.game_status == MAFIA_DEAD)
-		return FALSE
 	if(!validate_action_target(target_role))
 		return FALSE
 
