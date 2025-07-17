@@ -1,0 +1,4 @@
+author: "Glu"
+delete-after: True
+changes:
+  - bugfix: "Certain food items that required bowl now drop a bowl post-consumption"
