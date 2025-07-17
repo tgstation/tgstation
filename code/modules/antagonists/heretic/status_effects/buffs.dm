@@ -47,7 +47,7 @@
 /datum/status_effect/crucible_soul_cooldown
 	id = "Crucible Soul Cooldown"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = 30 SECONDS
+	duration = 2 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul/cooldown
 	show_duration = TRUE
 	remove_on_fullheal = TRUE
@@ -130,6 +130,7 @@
 
 /atom/movable/screen/alert/status_effect/crucible_soul/cooldown
 	desc = "You have recently phased through reality. You must wait before you can do so once more."
+	icon_state = "crucible_cooldown"
 
 /atom/movable/screen/alert/status_effect/duskndawn
 	name = "Blessing of Dusk and Dawn"
