@@ -32,6 +32,7 @@
 	var/datum/looping_sound/autofire_sound_loop
 	COOLDOWN_DECLARE(next_shot_cd)
 
+
 /datum/component/automatic_fire/Initialize(autofire_shot_delay, windup_autofire, windup_autofire_reduction_multiplier, windup_autofire_cap, windup_spindown, allow_akimbo = TRUE, firing_sound_loop)
 	. = ..()
 	if(!isgun(parent))
@@ -55,6 +56,7 @@
 
 
 /datum/component/automatic_fire/Destroy()
+	QDEL_NULL(autofire_sound_loop)
 	autofire_off()
 	return ..()
 

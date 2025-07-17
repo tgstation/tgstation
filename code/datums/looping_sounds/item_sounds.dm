@@ -53,8 +53,9 @@
 	start_volume = 100
 	start_length = 200 MILLISECONDS
 	mid_sounds = list('sound/items/weapons/gun/tesla/tesla_loop.ogg' = 1)
+	mid_length = 3.8 SECONDS
 	volume = 100
 	end_sound = list('sound/items/weapons/gun/tesla/power_breaker_fan.ogg' = 1)
-	end_volume = 20
+	end_volume = 15
 	ignore_walls = FALSE
-	sound_channel = CHANNEL_FULLAUTO
+	reserve_random_channel = TRUE
