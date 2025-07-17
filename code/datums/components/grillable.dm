@@ -34,6 +34,20 @@
 	src.use_large_steam_sprite = use_large_steam_sprite
 	src.added_reagents = added_reagents
 
+	var/obj/item/item_parent = parent
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !item_parent.custom_materials || isstack(parent))
+		return
+
+	var/atom/result = new cook_result
+	if(!item_parent.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when grilled compared to just spawned don't match"
+		var/what_it_should_be = item_parent.get_materials_english_list()
+		//compose a text string containing the syntax and paths to use for editing the custom_materials var
+		if(result.custom_materials)
+			what_it_should_be += " (you can round values a bit)"
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 /datum/component/grillable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED, PROC_REF(on_grill_placed))
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_ON, PROC_REF(on_grill_turned_on))

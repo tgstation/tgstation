@@ -29,6 +29,21 @@
 	if(positive_result)
 		ADD_TRAIT(parent, TRAIT_BAKEABLE, REF(src))
 
+
+	var/obj/item/item_target = parent
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !item_target.custom_materials)
+		return
+
+	var/atom/result = new bake_result
+	if(!item_target.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when baked compared to just spawned don't match"
+		var/what_it_should_be = item_target.get_materials_english_list()
+		//compose a text string containing the syntax and paths to use for editing the custom_materials var
+		if(result.custom_materials)
+			what_it_should_be += " (you can round values a bit)"
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 // Inherit the new values passed to the component
 /datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
 	if(!original)

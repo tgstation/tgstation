@@ -9,9 +9,9 @@
 	/// Reagents that should be added to the result
 	var/list/added_reagents
 
-/datum/element/microwavable/Attach(datum/target, microwave_type, list/reagents)
+/datum/element/microwavable/Attach(obj/item/target, microwave_type, list/reagents)
 	. = ..()
-	if(!isitem(target))
+	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
 
 	result_typepath = microwave_type || default_typepath
@@ -22,6 +22,19 @@
 
 	if(!ispath(result_typepath, default_typepath))
 		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !target.custom_materials || isstack(target))
+		return
+
+	var/atom/result = new result_typepath
+	if(!target.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when microwaved compared to just spawned don't match"
+		var/what_it_should_be = target.get_materials_english_list()
+		//compose a text string containing the syntax and paths to use for editing the custom_materials var
+		if(result.custom_materials)
+			what_it_should_be += " (you can round values a bit)"
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
 
 /datum/element/microwavable/Detach(datum/source)
 	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_ATOM_EXAMINE))
