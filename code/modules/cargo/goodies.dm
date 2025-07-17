@@ -12,6 +12,13 @@
 	cost = 100000
 	contains = list(/obj/item/modular_computer/pda/clear)
 
+/datum/supply_pack/goody/pulse_rifle
+	name = "Pulse Rifle"
+	desc = "A Nanotrasen-issue Pulse Rifle. Valued at 75 thousand credits. Requires a weapons permit to order."
+	cost = 75000
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/energy/pulse
+
 /datum/supply_pack/goody/dumdum38
 	name = ".38 DumDum Speedloader Single-Pack"
 	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets."
