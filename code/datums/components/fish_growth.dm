@@ -73,7 +73,7 @@
 		fishie.breeding_wait = source.breeding_wait
 		fishie.last_feeding = source.last_feeding
 		var/health_percent = source.health / initial(source.health)
-		fishie.adjust_health(fishie.health * health_percent)
+		fishie.set_health(fishie.health * health_percent)
 	else
 		result = new result_type (location)
 		if(location != source.loc)

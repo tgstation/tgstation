@@ -339,7 +339,7 @@
 
 	for(var/mob/living/fallen_mob in falling_movables)
 		visible_message(span_danger("[src] flattens like a pancake as [fallen_mob] lands on top of it!"))
-		adjust_health(initial(health) * 0.1) // very durable
+		set_health(initial(health) * 0.1) // very durable
 		AddElement(/datum/element/squish, 15 SECONDS)
 		fallen_mob.Paralyze(0.5 SECONDS)
 		playsound(src, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', 75)
