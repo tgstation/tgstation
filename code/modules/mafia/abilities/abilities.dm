@@ -61,8 +61,6 @@
 	if(host_role.role_flags & ROLE_ROLEBLOCKED)
 		host_role.send_message_to_player(span_warning("You were roleblocked!"))
 		return FALSE
-	if(host_role.game_status == MAFIA_DEAD)
-		return FALSE
 
 	if(potential_target)
 		if(use_flags & CAN_USE_ON_DEAD)
