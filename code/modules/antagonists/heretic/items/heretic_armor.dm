@@ -1,14 +1,3 @@
-
-
-// XANTODO, add side effects
-// XANTODO, add side effects
-// XANTODO, add side effects
-// XANTODO, add side effects
-// XANTODO, add side effects
-// DONT FORGET :)
-
-
-
 /*!
  * Contains the eldritch robes for heretics, a suit of armor that they can make via a ritual
  */
@@ -42,24 +31,26 @@
 		return
 	// Heretic equipped the robes? Grant them the effects
 	on_robes_gained(user)
-	RegisterSignal(user, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
+	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_robes_lost))
 
 /// Adds effects to the user when they equip their robes
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_gained(mob/user)
 	SHOULD_CALL_PARENT(FALSE) // Base robes have no effects
 
-/// Removes any effects that our robes have
+/// Removes any effects that our robes have, returns `TRUE` if the item dropped was not robes
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
+	if(robes != src)
+		return TRUE
 	UnregisterSignal(user, list(COMSIG_PREQDELETED, COMSIG_MOB_DROPPED_ITEM))
 
 /// Applies a punishment to the user when the robes are equipped
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/robes_side_effect(mob/user)
 	SHOULD_CALL_PARENT(FALSE) // Base robes have no side effect
 
-/// Removes any effects if the robes are deleted
+/// Removes any effects if the robes are deleted while they are equipped
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_deleted()
 	SIGNAL_HANDLER
 	if(!ismob(loc))
@@ -147,7 +138,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
-	if(!isliving(user))
+	if(. || !isliving(user))
 		return
 	var/mob/living/wearer = user
 	wearer.fire_stack_decay_rate = initial(wearer.fire_stack_decay_rate)
@@ -241,6 +232,8 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
+	if(.)
+		return
 	user.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/robes_side_effect(mob/user)
@@ -296,6 +289,8 @@
 // Removes your antigravity if you lose the robes
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
+	if(.)
+		return
 	if(weightless_enabled)
 		toggle_gravity(user)
 
@@ -383,6 +378,8 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
+	if(.)
+		return
 	QDEL_NULL(healing_aura)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh/robes_side_effect(mob/user)
@@ -427,6 +424,8 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
+	if(.)
+		return
 	user.RemoveElement(/datum/element/digitalcamo)
 	user.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
 
@@ -510,7 +509,7 @@
 
 	// Non-Heretic equipped the robes? Grant them the effects :)
 	on_robes_gained(user)
-	RegisterSignal(user, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
+	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_robes_lost))
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_gained(mob/living/carbon/human/user)
@@ -537,7 +536,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_lost(mob/living/carbon/human/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
-	if(!ishuman(user))
+	if(. || !ishuman(user))
 		return
 	var/mob/living/carbon/human/wearer = user
 	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
@@ -644,11 +643,7 @@
 	if(!ishuman(wearer))
 		return
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
-	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200 && !braindead)
-		braindead = TRUE
-		playsound(wearer, 'sound/effects/pope_entry.ogg', 100)
-		to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
-		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
+	check_braindeath(wearer)
 	return COMPONENT_IGNORE_CHANGE
 
 /// Handles anything that calls `apply_damage()`, calculates the damage taken and converts it to brain damage
@@ -671,12 +666,7 @@
 	wearer.setStaminaLoss(0, forced = TRUE)
 	// Convert all damage to brain damage, good luck
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, total_damage)
-	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200 && !braindead)
-		braindead = TRUE
-		wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
-		playsound(wearer, 'sound/effects/pope_entry.ogg', 50)
-		to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
-		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
+	check_braindeath(wearer)
 
 /// Once you reach this point you're completely brain dead, so lets play our effects before you eat shit
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/kill_wearer(mob/living/carbon/human/wearer)
@@ -739,6 +729,18 @@
 		return
 	for(var/perform as anything in emote_list)
 		wearer.emote("[perform]")
+	check_braindeath(wearer)
+
+/// Checks if you are brain dead, starts the dying process once you've reached it
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/check_braindeath(mob/living/carbon/human/wearer)
+	if(braindead || wearer.get_organ_loss(ORGAN_SLOT_BRAIN) < 200)
+		return
+
+	braindead = TRUE
+	wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
+	playsound(wearer, 'sound/effects/pope_entry.ogg', 50)
+	to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
+	addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
 	name = "\improper Resplendant Hood"
@@ -842,6 +844,8 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
+	if(.)
+		return
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
 	user.vis_contents -= rust_overlay
 	rusted = FALSE
@@ -991,7 +995,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/void/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	. = ..()
-	if(!timeleft(stealth_timer))
+	if(. || !timeleft(stealth_timer))
 		return
 	// Remove from stealth when you lose the robes
 	deltimer(stealth_timer)
