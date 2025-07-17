@@ -269,7 +269,7 @@
 	pixel_x = 6;
 	pixel_y = -6
 	},
-/obj/item/card/id/advanced/chameleon,
+/obj/item/card/id/advanced/chameleon/elite,
 /obj/item/card/id/advanced/gold/captains_spare{
 	pixel_x = -6;
 	pixel_y = 6

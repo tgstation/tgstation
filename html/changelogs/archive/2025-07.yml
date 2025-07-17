@@ -377,3 +377,86 @@
   tattle:
   - rscdel: Removed the shy component, allowing drones to once again use a wide array
       of items and perform actions near mobs
+2025-07-15:
+  Ice-Type:
+  - qol: Increased the integer scaling range up to 9x
+  Majkl-J:
+  - code_imp: feature keys are no longer magical strings floating around the codebase
+      and use proper defines
+  - refactor: DNA blocks are now handled with singleton datums.
+  Melbert:
+  - qol: Smart metal foam fixes multi-z holes
+  - bugfix: Fixes some places where dynamic configs were not being read correctly
+  - qol: Using a damp rag in hand will wring it out, making it usable for a bit longer.
+  SmArtKar:
+  - bugfix: Fixed gibs not containing any actual gibs in them
+  necromanceranne:
+  - balance: Feral Cat Grenades were moved from Dangerous to Explosives. Buying this
+      option gives you a box of five grenades for 5 TC. Their stats also were buffed
+      to be similar to a viscerators.
+  - balance: Duffel Bags of X-4 are no longer available to traitors. Increased to
+      10 TC (for ops) and 10 sticks of X-4.
+  - balance: X-4 can be purchased individual from the uplink for only 2 TC. Traitors
+      can only buy 5 bricks, but Ops can buy an unlimited number.
+  - balance: Slipocalypse Clusterbang is now 1 TC. Ops have unlimited stock.
+  - balance: X-4 is now more boom for your buck at a Heavy 5 and Light 7 explosion.
+  - balance: Duffel Bags of C-4 are limited to two per traitor, but Ops can buy as
+      many as they like.
+  - balance: Traitors can buy individual frag grenades. for 1 TC They're limited to
+      only 10 out of the uplink. Ops can buy a whole box of 7 for 5 TC.
+  - balance: Ops purchase syndicate bombs and EMP bombs cheaper.
+  - balance: Syndicate mini-bombs are 2 TC. They're limited to 4. This does not remove
+      their time limit. Ops, once again, get an unlimited quantity. This also applies
+      to pizza bombs (which are just syndicate minibombs in disguise).
+  - balance: Smoke grenade boxes now contain a smoke implant, with 3 charges, that
+      creates a smoke cloud coughing smoke on activation. And a gas mask. Both Traitors
+      and Ops can get these.
+  throwawayuseless:
+  - rscadd: '*flare, *flicker, and *glow, three new ethereal emotes.'
+2025-07-16:
+  EnterTheJake:
+  - balance: Wiz suit is now bio,flash proof, comes with the no slip and Hilbert dna
+      module installed, slowdown was removed.
+  - balance: Energy shield charges on the battlemage module have been reduced to 5
+      but now regenerate over time.
+  - balance: energy shield charges now require a minimum of 3 total damage to be consumed.
+  Ghommie:
+  - bugfix: Fixed an issue with fishing turfs like water and lava having multiple
+      fish source datums, making it possible to fish the same limited, rare loot more
+      times than you should.
+  Majkl-J:
+  - bugfix: Fish tails now correctly show up
+  - bugfix: Mutant colors and other features now apply correctly in some cases where
+      they previously didn't
+  SmArtKar:
+  - bugfix: Fixed incorrect perfect tense forms of some unarmed attacks like felinid
+      bites
+  - bugfix: Fixed frag grenade entry in the uplink containing full bags of C4
+  Time-Green:
+  - qol: Formaldehyde will no longer decay in recovered crew during the "soul pending"
+      phase
+  - qol: Recovered crew jumpsuits will now spawn in the crate, so you can pre-dress
+      them, rob them or take their assignment in account when determining how to "rebuild"
+      them
+  - qol: Recovered crew get 200 starting cr (from 100) and their departments headset
+  combustor:
+  - bugfix: Healium bolts now heal instead of dealing damage
+  timothymtorres:
+  - rscadd: Welded airlocks are saved as welded airlock mapping helpers when using
+      the `map_export` admin verb
+  - rscadd: Paper on noticeboards are saved when using the `map_export` admin verb
+2025-07-17:
+  DaCoolBoss:
+  - bugfix: Agent IDs that have not been spawned by an uplink or on a nuke op no longer
+      have infinite access slots.
+  - spellcheck: Rewrote item description for Agent IDs
+  Exester509:
+  - bugfix: Fixed the description of the modular console frame on the crafting menu
+  Likteer:
+  - rscadd: Added NT & British flag mugs to loadout
+  SmArtKar:
+  - bugfix: Fixed equipping items onto other people playing swing animations
+  TealSeer:
+  - bugfix: fixed shuttle remote design missing from protolathe
+  bigbakedbean:
+  - rscadd: chemical analyzer now displays bloodtype if analyzing blood
