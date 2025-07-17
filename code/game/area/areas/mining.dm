@@ -260,6 +260,10 @@
 	base_lighting_alpha = 0
 	area_flags = UNIQUE_AREA | NOTELEPORT
 
+/area/rainworld/surface/outdoors/bermuda
+	name = "Bermuda Triangle"
+	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
+
 /**********************Ice Moon Areas**************************/
 
 /area/icemoon
