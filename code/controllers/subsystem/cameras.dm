@@ -54,8 +54,8 @@ SUBSYSTEM_DEF(cameras)
 	SIGNAL_HANDLER
 	update_offsets(new_offset)
 
-/// Checks if a chunk has been Generated in x, y, z.
-/datum/controller/subsystem/cameras/proc/generate_chunk(x, y, z)
+/// Checks if a chunk has been generated in x, y, z.
+/datum/controller/subsystem/cameras/proc/get_camera_chunk(x, y, z)
 	x = GET_CHUNK_COORD(x)
 	y = GET_CHUNK_COORD(y)
 	if(GET_LOWEST_STACK_OFFSET(z) != 0)
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(cameras)
 
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
-/datum/controller/subsystem/cameras/proc/get_camera_chunk(x, y, z)
+/datum/controller/subsystem/cameras/proc/generate_chunk(x, y, z)
 	x = GET_CHUNK_COORD(x)
 	y = GET_CHUNK_COORD(y)
 	var/turf/lowest = get_lowest_turf(locate(x, y, z))
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(cameras)
 
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-				visibleChunks |= get_camera_chunk(x, y, eye_turf.z)
+				visibleChunks |= generate_chunk(x, y, eye_turf.z)
 
 	var/list/remove = eye.visibleCameraChunks - visibleChunks
 	var/list/add = visibleChunks - eye.visibleCameraChunks
@@ -116,16 +116,16 @@ SUBSYSTEM_DEF(cameras)
 	major_chunk_change(relevant_atom, IGNORE_CAMERA)
 
 /// Finds a chunk at the given coordinates and queues an update for it.
-/datum/controller/subsystem/cameras/proc/updateChunk(x, y, z)
-	var/datum/camerachunk/chunk = generate_chunk(x, y, z)
+/datum/controller/subsystem/cameras/proc/update_chunk(x, y, z)
+	var/datum/camerachunk/chunk = get_camera_chunk(x, y, z)
 	chunk?.queue_update()
 
 /// Removes a camera from a chunk.
-/datum/controller/subsystem/cameras/proc/remove_camera(obj/machinery/camera/old_cam)
+/datum/controller/subsystem/cameras/proc/remove_camera_from_chunk(obj/machinery/camera/old_cam)
 	major_chunk_change(old_cam, REMOVE_CAMERA)
 
 /// Add a camera to a chunk.
-/datum/controller/subsystem/cameras/proc/add_camera(obj/machinery/camera/new_cam)
+/datum/controller/subsystem/cameras/proc/add_camera_to_chunk(obj/machinery/camera/new_cam)
 	if(new_cam.can_use())
 		major_chunk_change(new_cam, ADD_CAMERA)
 
@@ -163,7 +163,7 @@ SUBSYSTEM_DEF(cameras)
 	var/y2 = min(world.maxy, chunk_turf.y + (CHUNK_SIZE / 2))
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = generate_chunk(x, y, chunk_turf.z)
+			var/datum/camerachunk/chunk = get_camera_chunk(x, y, chunk_turf.z)
 			if(isnull(chunk))
 				continue
 			if(choice == REMOVE_CAMERA)
@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(cameras)
 	var/y2 = min(world.maxy, changed.y + (CHUNK_SIZE / 2))
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = generate_chunk(x, y, changed.z)
+			var/datum/camerachunk/chunk = get_camera_chunk(x, y, changed.z)
 			chunk?.queue_update()
 
 /// Will check if an atom is on a viewable turf.
@@ -197,7 +197,7 @@ SUBSYSTEM_DEF(cameras)
 	PRIVATE_PROC(TRUE)
 	if(isnull(position))
 		return FALSE
-	var/datum/camerachunk/chunk = get_camera_chunk(position.x, position.y, position.z)
+	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
 	if(isnull(chunk))
 		return FALSE
 	chunk.force_update() // Update NOW if necessary
@@ -209,7 +209,7 @@ SUBSYSTEM_DEF(cameras)
 /// Returns the chunk if it exists and is visible, null otherwise.
 /datum/controller/subsystem/cameras/proc/get_turf_camera_chunk(turf/position)
 	RETURN_TYPE(/datum/camerachunk)
-	var/datum/camerachunk/chunk = get_camera_chunk(position.x, position.y, position.z)
+	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
 	if(!chunk)
 		return null
 	chunk.force_update() // Update NOW if necessary

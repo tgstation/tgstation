@@ -118,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	myarea = get_room_area()
 
 	if(camera_enabled)
-		SScameras.add_camera(src)
+		SScameras.add_camera_to_chunk(src)
 		LAZYADD(myarea.cameras, src)
 #ifdef MAP_TEST
 		update_appearance()
@@ -136,7 +136,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	SScameras.remove_camera(src)
+	SScameras.remove_camera_from_chunk(src)
 	SScameras.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
@@ -222,7 +222,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(!prob(150 / severity))
 		return
 	network = list()
-	SScameras.remove_camera(src)
+	SScameras.remove_camera_from_chunk(src)
 	set_machine_stat(machine_stat | EMPED)
 	set_light(0)
 	emped++ //Increase the number of consecutive EMP's
@@ -249,7 +249,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	set_machine_stat(machine_stat & ~EMPED)
 	update_appearance()
 	if(can_use())
-		SScameras.add_camera(src)
+		SScameras.add_camera_to_chunk(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 
@@ -339,7 +339,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
 	if(can_use())
-		SScameras.add_camera(src)
+		SScameras.add_camera_to_chunk(src)
 		if (isturf(loc))
 			myarea = get_area(src)
 			LAZYADD(myarea.cameras, src)
@@ -347,12 +347,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			myarea = null
 	else
 		set_light(0)
-		SScameras.remove_camera(src)
+		SScameras.remove_camera_from_chunk(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
 	// We are not guarenteed that the camera will be on a turf. account for that
 	var/turf/our_turf = get_turf(src)
-	SScameras.updateChunk(our_turf.x, our_turf.y, our_turf.z)
+	SScameras.update_chunk(our_turf.x, our_turf.y, our_turf.z)
 	var/change_msg = "deactivates"
 	if(camera_enabled)
 		change_msg = "reactivates"

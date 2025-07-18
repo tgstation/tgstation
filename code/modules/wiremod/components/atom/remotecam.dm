@@ -198,7 +198,7 @@
 	if(current_cameranet_state)
 		return
 	SScameras.cameras += shell_camera
-	SScameras.add_camera(shell_camera)
+	SScameras.add_camera_to_chunk(shell_camera)
 	current_cameranet_state = TRUE
 
 /**
