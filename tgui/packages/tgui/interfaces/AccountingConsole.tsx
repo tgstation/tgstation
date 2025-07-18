@@ -82,7 +82,7 @@ const UsersScreen = (props) => {
       {PlayerAccounts.map((account) => (
         <Collapsible
           key={account.index}
-          title={account.name + ' the ' + account.job}
+          title={`${account.name} the ${account.job}`}
         >
           <Stack vertical>
             <BlockQuote>

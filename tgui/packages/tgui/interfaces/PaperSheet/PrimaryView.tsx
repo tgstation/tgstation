@@ -92,7 +92,7 @@ export class PrimaryView extends Component {
             />
           </Flex.Item>
           {canEdit && (
-            <Flex.Item shrink={1} height={TEXTAREA_INPUT_HEIGHT + 'px'}>
+            <Flex.Item shrink={1} height={`${TEXTAREA_INPUT_HEIGHT}px`}>
               <Section
                 title="Insert Text"
                 fitted

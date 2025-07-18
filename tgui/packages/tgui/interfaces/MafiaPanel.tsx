@@ -435,7 +435,7 @@ const MafiaPlayers = (props) => {
               >
                 {player.name}
                 {(!!player.is_you && ' (YOU)') ||
-                  (!!player.role_revealed && ' - ' + player.role_revealed)}
+                  (!!player.role_revealed && ` - ${player.role_revealed}`)}
               </Stack.Item>
               <Stack.Item>
                 {player.votes !== undefined &&

@@ -360,7 +360,7 @@ export const sendAct = (action: string, payload: object = {}) => {
 
   const stringifiedPayload = JSON.stringify(payload);
   const urlSize = Object.entries({
-    type: 'act/' + action,
+    type: `act/${action}`,
     payload: stringifiedPayload,
     tgui: 1,
     windowId: Byond.windowId,
@@ -375,14 +375,14 @@ export const sendAct = (action: string, payload: object = {}) => {
     const id = `${Date.now()}`;
     globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
     Byond.sendMessage('oversizedPayloadRequest', {
-      type: 'act/' + action,
+      type: `act/${action}`,
       id,
       chunkCount: chunks.length,
     });
     return;
   }
 
-  Byond.sendMessage('act/' + action, payload);
+  Byond.sendMessage(`act/${action}`, payload);
 };
 
 type BackendState<TData> = {

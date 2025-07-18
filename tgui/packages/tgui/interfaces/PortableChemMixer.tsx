@@ -56,7 +56,7 @@ export const PortableChemMixer = (props) => {
                 icon="tint"
                 fluid
                 lineHeight={1.75}
-                tooltip={'pH: ' + chemical.pH}
+                tooltip={`pH: ${chemical.pH}`}
                 onClick={() =>
                   act('dispense', {
                     reagent: chemical.id,

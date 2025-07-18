@@ -84,5 +84,5 @@ export function retrace(stack: string): string | undefined {
     })
     .join('\n');
 
-  return header + '\n' + mappedStack;
+  return `${header}\n${mappedStack}`;
 }

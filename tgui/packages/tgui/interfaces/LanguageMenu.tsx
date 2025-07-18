@@ -204,7 +204,7 @@ const OmnitongueToggle = (props) => {
       selected={omnitongue}
       onClick={() => act('toggle_omnitongue')}
     >
-      {'Omnitongue ' + (omnitongue ? 'Enabled' : 'Disabled')}
+      {`Omnitongue ${omnitongue ? 'Enabled' : 'Disabled'}`}
     </Button>
   );
 };

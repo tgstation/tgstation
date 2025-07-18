@@ -85,7 +85,7 @@ export const PollsSection = () => {
             { name, description, owner, creator, current_bets = [], locked },
             index,
           ) => (
-            <Section title={name + ' - Created by ' + creator} key={name}>
+            <Section title={`${name} - Created by ${creator}`} key={name}>
               <Stack>
                 <Stack.Item grow>
                   <Stack.Item grow>{description}</Stack.Item>

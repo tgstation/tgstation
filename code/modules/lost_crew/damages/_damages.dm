@@ -37,7 +37,7 @@
 	var/datum/corpse_assignment/assignment = pick_weight(possible_character_assignments)
 	if(ispath(assignment))
 		assignment = new assignment()
-		assignment.apply_assignment(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
+		assignment.apply_assignment(fashion_corpse, protected_objects, recovered_items, on_revive_and_player_occupancy)
 		body_data += assignment.type
 
 	var/datum/corpse_flavor/flavor = pick_weight(possible_flavor_types)

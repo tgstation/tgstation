@@ -72,7 +72,7 @@ export const ChemMixingChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        format={(value) => `${toFixed(value)} K`}
                       />
                     </Stack.Item>
                   </Stack>
@@ -137,7 +137,7 @@ export const ChemMixingChamber = (props) => {
                       <Stack.Item key={reagent.name}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ':'}
+                            {`${reagent.name}:`}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.volume}

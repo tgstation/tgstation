@@ -594,7 +594,7 @@
 		hacked_flicker_counter = hacked_flicker_counter - 1
 		if(hacked_flicker_counter <= 0)
 			flicker_hacked_icon()
-		if(COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(30 KILO JOULES)>0) // Over time generation of malf points for the ai controlling it, costs a bit of power
+		if(COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(60 KILO JOULES)>0 && malfai.malf_picker.processing_time<MALF_MAX_PP) // Over time generation of malf points for the ai controlling it, costs a bit of power
 			COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
 			malfai.malf_picker.processing_time += 1
 

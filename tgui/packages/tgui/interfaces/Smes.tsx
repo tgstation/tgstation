@@ -1,24 +1,39 @@
 import {
   Box,
   Button,
-  Flex,
   LabeledList,
   ProgressBar,
   Section,
   Slider,
+  Stack,
 } from 'tgui-core/components';
 import { formatPower } from 'tgui-core/format';
+import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+type Data = {
+  capacity: number;
+  charge: number;
+  inputAttempt: number;
+  inputting: number;
+  inputLevel: number;
+  inputLevelMax: number;
+  inputAvailable: number;
+  outputAttempt: number;
+  outputting: number;
+  outputLevel: number;
+  outputLevelMax: number;
+  outputUsed: number;
+};
+
 // Common power multiplier
 const POWER_MUL = 1e3;
 
-export const Smes = (props) => {
-  const { act, data } = useBackend();
+export const Smes = () => {
+  const { act, data } = useBackend<Data>();
   const {
-    capacityPercent,
     capacity,
     charge,
     inputAttempt,
@@ -32,6 +47,8 @@ export const Smes = (props) => {
     outputLevelMax,
     outputUsed,
   } = data;
+
+  const capacityPercent = round(100 * (charge / capacity), 0.1);
   const inputState =
     (capacityPercent >= 100 && 'good') || (inputting && 'average') || 'bad';
   const outputState =
@@ -70,8 +87,8 @@ export const Smes = (props) => {
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Input">
-              <Flex width="100%">
-                <Flex.Item>
+              <Stack fill>
+                <Stack.Item>
                   <Button
                     icon="fast-backward"
                     disabled={inputLevel === 0}
@@ -90,8 +107,8 @@ export const Smes = (props) => {
                       })
                     }
                   />
-                </Flex.Item>
-                <Flex.Item grow={1} mx={1}>
+                </Stack.Item>
+                <Stack.Item grow={1} mx={1}>
                   <Slider
                     value={inputLevel / POWER_MUL}
                     fillValue={inputAvailable / POWER_MUL}
@@ -106,8 +123,8 @@ export const Smes = (props) => {
                       })
                     }
                   />
-                </Flex.Item>
-                <Flex.Item>
+                </Stack.Item>
+                <Stack.Item>
                   <Button
                     icon="forward"
                     disabled={inputLevel === inputLevelMax}
@@ -126,8 +143,8 @@ export const Smes = (props) => {
                       })
                     }
                   />
-                </Flex.Item>
-              </Flex>
+                </Stack.Item>
+              </Stack>
             </LabeledList.Item>
             <LabeledList.Item label="Available">
               {formatPower(inputAvailable)}
@@ -157,8 +174,8 @@ export const Smes = (props) => {
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Output">
-              <Flex width="100%">
-                <Flex.Item>
+              <Stack fill>
+                <Stack.Item>
                   <Button
                     icon="fast-backward"
                     disabled={outputLevel === 0}
@@ -177,8 +194,8 @@ export const Smes = (props) => {
                       })
                     }
                   />
-                </Flex.Item>
-                <Flex.Item grow={1} mx={1}>
+                </Stack.Item>
+                <Stack.Item grow={1} mx={1}>
                   <Slider
                     value={outputLevel / POWER_MUL}
                     minValue={0}
@@ -192,8 +209,8 @@ export const Smes = (props) => {
                       })
                     }
                   />
-                </Flex.Item>
-                <Flex.Item>
+                </Stack.Item>
+                <Stack.Item>
                   <Button
                     icon="forward"
                     disabled={outputLevel === outputLevelMax}
@@ -212,8 +229,8 @@ export const Smes = (props) => {
                       })
                     }
                   />
-                </Flex.Item>
-              </Flex>
+                </Stack.Item>
+              </Stack>
             </LabeledList.Item>
             <LabeledList.Item label="Outputting">
               {formatPower(outputUsed)}

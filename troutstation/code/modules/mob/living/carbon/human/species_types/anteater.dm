@@ -45,17 +45,17 @@
 	target.cached_multiplicative_slowdown = base_speed + (target.cached_multiplicative_slowdown * speed_multiplier_multiplier)
 
 /datum/species/anteater/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.dna.features["mcolor"] = COLOR_BROWNER_BROWN
-	human.dna.features["anteater_snout"] = "Big"
-	human.dna.features["anteater_tail"] = "Giant"
-	human.dna.features["anteater_markings"] = "Giant"
+	human.dna.features[FEATURE_MUTANT_COLOR] = COLOR_BROWNER_BROWN
+	human.dna.features[FEATURE_ANTEATER_SNOUT] = "Big"
+	human.dna.features[FEATURE_ANTEATER_TAIL] = "Giant"
+	human.dna.features[FEATURE_ANTEATER_MARKINGS] = "Giant"
 	human.update_body(is_creating = TRUE)
 
 /datum/species/anteater/randomize_features()
 	var/list/features = ..()
-	features["anteater_snout"] = pick(SSaccessories.anteater_snouts_list)
-	features["anteater_tail"] = pick(SSaccessories.tails_list_anteater)
-	features["anteater_markings"] = pick(SSaccessories.anteater_markings_list)
+	features[FEATURE_ANTEATER_SNOUT] = pick(SSaccessories.anteater_snouts_list)
+	features[FEATURE_ANTEATER_TAIL] = pick(SSaccessories.tails_list_anteater)
+	features[FEATURE_ANTEATER_MARKINGS] = pick(SSaccessories.anteater_markings_list)
 	return features
 
 // sounds

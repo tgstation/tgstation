@@ -36,7 +36,7 @@ export function AlertModal(props) {
   // Stolen wholesale from fontcode
   function textWidth(text: string, font: string, fontsize: number) {
     // default font height is 12 in tgui
-    font = fontsize + 'px ' + font;
+    font = `${fontsize}px ${font}`;
     const c = document.createElement('canvas');
     const ctx = c.getContext('2d') as CanvasRenderingContext2D;
     ctx.font = font;

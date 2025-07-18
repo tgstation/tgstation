@@ -113,9 +113,6 @@
 		update_drone_hack(FALSE)
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/basic/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
-	return !(item.type in drone_item_whitelist_flat) && ..()
-
 /mob/living/basic/drone/getarmor(def_zone, type)
 	var/armorval = 0
 

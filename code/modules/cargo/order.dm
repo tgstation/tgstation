@@ -217,15 +217,11 @@
 	pack.cost += cost_increase
 
 /// Custom type of order who's supply pack can be safely deleted
-/datum/supply_order/disposable
-
 /datum/supply_order/disposable/Destroy(force)
 	QDEL_NULL(pack)
 	return ..()
 
 /// Custom material order to append cargo crate value to the final order cost
-/datum/supply_order/disposable/materials
-
 /datum/supply_order/disposable/materials/get_final_cost()
 	return (..() + CARGO_CRATE_VALUE)
 

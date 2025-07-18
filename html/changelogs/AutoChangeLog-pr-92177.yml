@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - qol: "made the Beach Bar bitdomain ghostrole spawners keep your old body revivable (as other bitdomain spawners do)"

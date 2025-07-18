@@ -30,7 +30,7 @@ export const Safe = (properties) => {
               className="Safe__dial"
               src={resolveAsset('safe_dial.png')}
               style={{
-                transform: 'rotate(-' + 3.6 * dial + 'deg)',
+                transform: `rotate(-${3.6 * dial}deg)`,
               }}
             />
           )}
@@ -48,8 +48,8 @@ const Dialer = (properties) => {
     return (
       <Button
         disabled={open || (right && !locked) || broken}
-        icon={'arrow-' + (right ? 'right' : 'left')}
-        content={(right ? 'Right' : 'Left') + ' ' + amount}
+        icon={`arrow-${right ? 'right' : 'left'}`}
+        content={`${right ? 'Right' : 'Left'} ${amount}`}
         iconPosition={right ? 'right' : 'left'}
         onClick={() =>
           act(!right ? 'turnright' : 'turnleft', {
@@ -96,7 +96,7 @@ const Contents = (properties) => {
             }
           >
             <Image
-              src={item.sprite + '.png'}
+              src={`${item.sprite}.png`}
               verticalAlign="middle"
               ml="-6px"
               mr="0.5rem"

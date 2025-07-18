@@ -68,7 +68,7 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
           <Flex.Item color="label">
             <AnimatedNumber
               value={beaker.pH}
-              format={(value) => 'pH: ' + round(value, 3)}
+              format={(value) => `pH: ${round(value, 3)}`}
             />
           </Flex.Item>
           <Flex.Item>
@@ -279,7 +279,7 @@ export const ChemHeater = (props) => {
                 color={COLORS.reagent.acidicbuffer}
                 textAlign="center"
               >
-                {acidicBufferVol + 'u'}
+                {`${acidicBufferVol}u`}
               </Table.Cell>
               <Table.Cell>
                 <Button
@@ -304,7 +304,7 @@ export const ChemHeater = (props) => {
                   {(isBeakerLoaded && (
                     <AnimatedNumber
                       value={currentTemp}
-                      format={(value) => toFixed(value) + ' K'}
+                      format={(value) => `${toFixed(value)} K`}
                     />
                   )) ||
                     '—'}
@@ -327,7 +327,7 @@ export const ChemHeater = (props) => {
                 />
               </Table.Cell>
               <Table.Cell color={COLORS.reagent.basicbuffer} textAlign="center">
-                {basicBufferVol + 'u'}
+                {`${basicBufferVol}u`}
               </Table.Cell>
               <Table.Cell>
                 <Button

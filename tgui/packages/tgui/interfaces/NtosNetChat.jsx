@@ -135,7 +135,7 @@ export const NtosNetChat = (props) => {
                     <Button
                       fluid
                       bold
-                      content={'ADMIN MODE: ' + (adminmode ? 'ON' : 'OFF')}
+                      content={`ADMIN MODE: ${adminmode ? 'ON' : 'OFF'}`}
                       color={adminmode ? 'bad' : 'good'}
                       onClick={() => act('PRG_toggleadmin')}
                     />
@@ -175,7 +175,7 @@ export const NtosNetChat = (props) => {
                   height="22px"
                   placeholder={
                     (this_client?.muted && 'You are muted!') ||
-                    'Message ' + title
+                    `Message ${title}`
                   }
                   fluid
                   disabled={this_client?.muted}

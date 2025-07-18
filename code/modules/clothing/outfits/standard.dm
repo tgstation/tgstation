@@ -194,7 +194,7 @@
 /datum/outfit/assassin
 	name = "Assassin"
 
-	id = /obj/item/card/id/advanced/chameleon/black
+	id = /obj/item/card/id/advanced/chameleon/elite/black
 	id_trim = /datum/id_trim/reaper_assassin
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	neck = /obj/item/clothing/neck/tie/red/hitman/tied

@@ -89,12 +89,12 @@ export const AutomatedAnnouncement = (props) => {
                           icon="info"
                           tooltip={
                             (entry.generalTooltip
-                              ? entry.generalTooltip + '\n'
+                              ? `${entry.generalTooltip}\n`
                               : '') +
                             Object.entries(entry.varsAndTooltipsMap)
                               .map(
                                 ([varName, tooltip]) =>
-                                  '%' + varName + ' ' + tooltip,
+                                  `%${varName} ${tooltip}`,
                               )
                               .join('\n')
                           }

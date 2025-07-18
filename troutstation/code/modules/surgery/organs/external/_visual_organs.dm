@@ -13,11 +13,12 @@
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout/anteater
+	dna_block = /datum/dna_block/feature/anteater_snout
 
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
 /datum/bodypart_overlay/mutant/snout/anteater
-	feature_key = "anteater_snout"
+	feature_key = FEATURE_ANTEATER_SNOUT
 
 /datum/bodypart_overlay/mutant/snout/anteater/get_global_feature_list()
 	return SSaccessories.anteater_snouts_list

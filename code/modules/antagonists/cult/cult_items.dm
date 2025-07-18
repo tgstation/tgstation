@@ -598,8 +598,6 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-///how many times can the shuttle be cursed?
-#define MAX_SHUTTLE_CURSES 3
 ///if the max number of shuttle curses are used within this duration, the entire cult gets an achievement
 #define SHUTTLE_CURSE_OMFG_TIMESPAN (10 SECONDS)
 
@@ -675,8 +673,6 @@ Striking a noncultist, however, will tear their flesh."}
 					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)
 
 		qdel(src)
-
-#undef MAX_SHUTTLE_CURSES
 
 #define GATEWAY_TURF_SCAN_RANGE 40
 

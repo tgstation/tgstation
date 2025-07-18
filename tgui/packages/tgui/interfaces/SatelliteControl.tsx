@@ -72,7 +72,7 @@ const SatelliteDisplay = (props) => {
           <Button.Checkbox
             key={satellite.id}
             checked={satellite.active}
-            content={'#' + satellite.id + ' ' + satellite.mode}
+            content={`#${satellite.id} ${satellite.mode}`}
             onClick={() =>
               act('toggle', {
                 id: satellite.id,

@@ -19,9 +19,9 @@ export const NtosPortraitPrinter = (props) => {
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex].title;
   const current_portrait_author =
-    got_paintings && 'By ' + paintings[listIndex].creator;
+    got_paintings && `By ${paintings[listIndex].creator}`;
   const current_portrait_asset_name =
-    got_paintings && 'paintings' + '_' + paintings[listIndex].md5;
+    got_paintings && `paintings_${paintings[listIndex].md5}`;
   const current_portrait_ratio = got_paintings && paintings[listIndex].ratio;
 
   return (

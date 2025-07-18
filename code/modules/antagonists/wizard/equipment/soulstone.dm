@@ -348,7 +348,8 @@
 				return FALSE
 
 		if(grab_sleeping ? victim.stat == CONSCIOUS : victim.stat != DEAD)
-			to_chat(user, "[span_userdanger("Capture failed!")]: Kill or maim the victim first!")
+			to_chat(user, span_userdanger("Capture failed!"))
+			to_chat(user, span_danger("Kill or maim the victim first!"))
 			return FALSE
 
 	victim.grab_ghost()
@@ -356,7 +357,8 @@
 		init_shade(victim, user)
 		return TRUE
 
-	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
+	to_chat(user, span_userdanger("Capture failed!"))
+	to_chat(user, span_warning("The soul has already fled its mortal frame. You attempt to bring it back..."))
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		check_jobban = ROLE_CULTIST,
 		poll_time = 20 SECONDS,
@@ -377,7 +379,8 @@
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
 		return
 	if(contents.len)
-		to_chat(user, "[span_userdanger("Capture failed!")]: [src] is full! Free an existing soul to make room.")
+		to_chat(user, span_userdanger("Capture failed!"))
+		to_chat(user, span_danger("[src] is full! Free an existing soul to make room."))
 		return FALSE
 	shade.AddComponent(/datum/component/soulstoned, src)
 	update_appearance()
@@ -557,10 +560,36 @@
 		var/datum/action/innate/seek_master/seek_master = new
 		seek_master.Grant(newstruct)
 
-	if (isnull(target.mind))
-		newstruct.PossessByPlayer(target.key)
+	if (!target.ckey || isnull(target.mind) || is_banned_from(target.ckey, ROLE_CULTIST))
+		to_chat(stoner, span_userdanger("Shell imbuement failed!"))
+		to_chat(stoner, span_warning("The soul has already fled its mortal frame. You attempt to bring it back..."))
+		target = SSpolling.poll_ghosts_for_target(
+			"Do you want to play as [span_danger(newstruct.real_name)]?",
+			check_jobban = ROLE_CULTIST,
+			role = ROLE_CULTIST,
+			poll_time = 10 SECONDS,
+			checked_target = newstruct,
+			alert_pic = newstruct,
+			role_name_text = "inactive construct",
+			ignore_category = POLL_IGNORE_SHADE
+		)
+
+		if (QDELETED(newstruct))
+			return
+
+		if (!target?.client)
+			if (!QDELETED(stoner))
+				to_chat(stoner, span_danger("There were no spirits willing to become a construct."))
+			new /obj/structure/constructshell(newstruct.drop_location())
+			qdel(newstruct)
+			return
+
+		if (!QDELETED(stoner))
+			to_chat(stoner, span_notice("A new soul has possessed [newstruct]!"))
+		newstruct.PossessByPlayer(target.ckey)
 	else
 		target.mind.transfer_to(newstruct, force_key_move = TRUE)
+
 	var/atom/movable/screen/alert/bloodsense/sense_alert
 	if(newstruct.mind && !IS_CULTIST(newstruct) && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)

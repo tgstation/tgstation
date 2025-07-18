@@ -100,79 +100,6 @@
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
 	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
-	/// blacklisted drone areas, direct
-	var/list/drone_area_blacklist_flat = list(/area/station/engineering/atmos, /area/station/engineering/atmospherics_engine)
-	/// blacklisted drone areas, recursive/includes descendants
-	var/list/drone_area_blacklist_recursive = list(/area/station/engineering/supermatter)
-	/// blacklisted drone machines, direct
-	var/list/drone_machinery_blacklist_flat
-	/// blacklisted drone machines, recursive/includes descendants
-	var/list/drone_machinery_blacklist_recursive = list(
-		/obj/machinery/airalarm,
-		/obj/machinery/computer,
-		/obj/machinery/modular_computer,
-	)
-	/// cancels out blacklisted machines, direct
-	var/list/drone_machinery_whitelist_flat
-	/// cancels out blacklisted machines, recursive/includes descendants
-	var/list/drone_machinery_whitelist_recursive = list(
-		/obj/machinery/computer/arcade,
-		/obj/machinery/computer/monitor,
-		/obj/machinery/computer/pod,
-		/obj/machinery/computer/station_alert,
-		/obj/machinery/computer/teleporter,
-	)
-	/// blacklisted drone machine typecache, compiled from [var/drone_machinery_blacklist_flat], [var/list/drone_machinery_blacklist_recursive], negated by their whitelist counterparts
-	var/list/drone_machinery_blacklist_compiled
-	/// whitelisted drone items, direct
-	var/list/drone_item_whitelist_flat = list(
-		/obj/item/chisel,
-		/obj/item/crowbar/drone,
-		/obj/item/screwdriver/drone,
-		/obj/item/wrench/drone,
-		/obj/item/weldingtool/drone,
-		/obj/item/wirecutters/drone,
-		/obj/item/multitool/drone,
-		/obj/item/pipe_dispenser/drone,
-		/obj/item/t_scanner/drone,
-		/obj/item/analyzer/drone,
-		/obj/item/rack_parts,
-	)
-	/// whitelisted drone items, recursive/includes descendants
-	var/list/drone_item_whitelist_recursive = list(
-		/obj/item/airlock_painter,
-		/obj/item/circuitboard,
-		/obj/item/conveyor_switch_construct,
-		/obj/item/electronics,
-		/obj/item/light,
-		/obj/item/pipe_meter,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/circuit_stack,
-		/obj/item/stack/conveyor,
-		/obj/item/stack/pipe_cleaner_coil,
-		/obj/item/stack/rods,
-		/obj/item/stack/sheet,
-		/obj/item/stack/tile,
-		/obj/item/stack/ducts,
-		/obj/item/stock_parts,
-		/obj/item/toner,
-		/obj/item/wallframe,
-		/obj/item/clothing/head,
-		/obj/item/clothing/mask,
-		/obj/item/storage/box/lights,
-		/obj/item/lightreplacer,
-		/obj/item/construction/rcd,
-		/obj/item/rcd_ammo,
-		/obj/item/rcd_upgrade,
-		/obj/item/storage/part_replacer,
-		/obj/item/soap,
-		/obj/item/holosign_creator,
-	)
-	/// machines whitelisted from being shy with
-	var/list/shy_machine_whitelist = list(
-		/obj/machinery/atmospherics/components/unary/vent_pump,
-		/obj/machinery/atmospherics/components/unary/vent_scrubber,
-	)
 
 /mob/living/basic/drone/Initialize(mapload)
 	. = ..()
@@ -183,8 +110,8 @@
 	AddComponent(/datum/component/personal_crafting) // Kind of hard to be a drone and not be able to make tiles
 	LoadComponent(/datum/component/bloodysoles/bot)
 
-	//only shy drones (so all the station ones) gets a camera.
-	if(shy)
+	// Only station drones get a camera.
+	if(is_station_level(src.loc.z))
 		built_in_camera = new(src)
 		built_in_camera.c_tag = real_name
 		built_in_camera.network = list(CAMERANET_NETWORK_SS13)
@@ -204,7 +131,6 @@
 		equip_to_slot_or_del(new_hat, ITEM_SLOT_HEAD)
 
 	shy_update()
-
 	alert_drones(DRONE_NET_CONNECT)
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -276,7 +202,6 @@
 
 	alert_drones(DRONE_NET_DISCONNECT)
 
-
 /mob/living/basic/drone/gib()
 	dust()
 
@@ -325,7 +250,6 @@
 /mob/living/basic/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
 	return -10
 
-
 /mob/living/basic/drone/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -344,52 +268,17 @@
 	SIGNAL_HANDLER
 	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
 
-/mob/living/basic/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
-	SIGNAL_HANDLER
-	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
-		to_chat(src, span_warning("Using [machine] could break your laws."))
-		return COMPONENT_CANT_USE_MACHINE_INTERACT | COMPONENT_CANT_USE_MACHINE_TOOLS
-
-/mob/living/basic/drone/proc/blacklist_on_try_wires_interact(datum/source, atom/machine)
-	SIGNAL_HANDLER
-	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
-		to_chat(src, span_warning("Using [machine] could break your laws."))
-		return COMPONENT_CANT_INTERACT_WIRES
-
-/mob/living/basic/drone/proc/init_shy_in_room_component(list/drone_bad_areas)
-	if(CONFIG_GET(flag/drone_area_interaction_restrict))
-		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-
 /mob/living/basic/drone/proc/set_shy(new_shy)
 	shy = new_shy
 	shy_update()
 
 /mob/living/basic/drone/proc/shy_update()
-	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
-	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
-
-	var/list/drone_bad_machinery = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
-	var/list/drone_good_machinery = LAZYCOPY(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive) // not a valid typecache, only intended for negation against drone_bad_machinery
-	drone_machinery_blacklist_compiled = drone_bad_machinery - drone_good_machinery
-
-	var/static/list/not_shy_of = typecacheof(list(/mob/living/basic/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		REMOVE_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // To shy to touch someone elses hat
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
-		init_shy_in_room_component(drone_bad_areas)
-		LoadComponent(/datum/component/technoshy, 20 SECONDS, "%TARGET was touched by a being recently, using it could break your laws.")
-		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
-		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, PROC_REF(blacklist_on_try_use_machine))
-		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, PROC_REF(blacklist_on_try_wires_interact))
 	else
 		ADD_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // ...I wonder if I can ware pants like a hat
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		qdel(GetComponent(/datum/component/shy))
-		qdel(GetComponent(/datum/component/shy_in_room))
-		qdel(GetComponent(/datum/component/technoshy))
-		qdel(GetComponent(/datum/component/itempicky))
-		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /mob/living/basic/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)

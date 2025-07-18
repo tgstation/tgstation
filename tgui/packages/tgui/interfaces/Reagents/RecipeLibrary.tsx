@@ -89,7 +89,7 @@ export function RecipeLibrary(props: ReagentsProps) {
       title={bookmarkMode ? 'Bookmarked recipes' : 'Possible recipes'}
       buttons={
         <>
-          Beaker: {linkedBeaker + '  '}
+          Beaker: {`${linkedBeaker}  `}
           <Button
             icon="search"
             disabled={bookmarkMode}

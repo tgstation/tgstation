@@ -88,7 +88,7 @@ export const BountyBoardContent = (props) => {
                     {request.owner}
                   </Stack.Item>
                   <Stack.Item width="100px">
-                    {formatMoney(request.value) + ' cr'}
+                    {`${formatMoney(request.value)} cr`}
                   </Stack.Item>
                   <Stack.Item>
                     <Button

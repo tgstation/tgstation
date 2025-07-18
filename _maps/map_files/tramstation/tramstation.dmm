@@ -46243,7 +46243,6 @@
 "pts" = (
 /obj/machinery/power/smes{
 	charge = 10000;
-	capacity = 9e+06
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

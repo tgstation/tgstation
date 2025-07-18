@@ -18,6 +18,7 @@
 	icon_state = "wishsoup"
 	food_reagents = list(/datum/reagent/water = 10)
 	tastes = list("wishes" = 1)
+	trash_type = /obj/item/reagent_containers/cup/bowl
 
 /obj/item/food/bowled/wish/Initialize(mapload)
 	. = ..()
@@ -25,7 +26,7 @@
 		desc = "A wish come true!"
 		reagents.add_reagent(/datum/reagent/consumable/nutriment, 9)
 		reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 1)
-
+		
 /obj/item/food/bowled/mammi
 	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
@@ -47,6 +48,8 @@
 		/datum/reagent/drug/mushroomhallucinogen = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
+	trash_type = /obj/item/reagent_containers/cup/bowl
+
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtypes = VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -62,6 +65,9 @@
 		/datum/reagent/toxin/amatoxin = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
+	trash_type = /obj/item/reagent_containers/cup/bowl
+
+
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtypes = VEGETABLES | TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_2

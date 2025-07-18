@@ -4,10 +4,10 @@
 	preference = "feature_anteater_tail"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/anteater
-	dna_block = DNA_ANTEATER_TAIL_BLOCK
+	dna_block = /datum/dna_block/feature/tail_anteater
 
 /datum/bodypart_overlay/mutant/tail/anteater
-	feature_key = "tail_anteater"
+	feature_key = FEATURE_ANTEATER_TAIL
 
 /datum/bodypart_overlay/mutant/tail/anteater/get_global_feature_list()
 	return SSaccessories.tails_list_anteater

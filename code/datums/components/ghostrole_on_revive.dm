@@ -81,6 +81,10 @@
 			soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes()
 			head.add_bodypart_overlay(soul_eyes)
 
+	// So during the potentially short period of time we're revived, we don't metabolize formaldehyde
+	// Really just a QOL for coroners, so we dont suddenly start decaying
+	ADD_TRAIT(aliver, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM, type)
+
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as a recovered crewmember?",
 		role = null,
@@ -91,6 +95,9 @@
 		alert_pic = aliver,
 		role_name_text = "recovered crew",
 	)
+
+	REMOVE_TRAIT(aliver, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM, type)
+
 	if(head)
 		head.remove_bodypart_overlay(soul_eyes)
 

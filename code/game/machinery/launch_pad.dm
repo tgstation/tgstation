@@ -315,7 +315,7 @@
 /obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/launch = item
-		if(launch.pad == WEAKREF(src)) //do not attempt to link when already linked
+		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
 			return ..()
 		launch.pad = WEAKREF(src)
 		to_chat(user, span_notice("You link [src] to [launch]."))
@@ -354,7 +354,7 @@
 
 /obj/item/launchpad_remote/ui_data(mob/user)
 	var/list/data = list()
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	data["has_pad"] = our_pad ? TRUE : FALSE
 	if(our_pad)
 		data["pad_closed"] = our_pad.closed
@@ -381,10 +381,11 @@
 	. = ..()
 	if(.)
 		return
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	if(!our_pad)
 		pad = null
 		return TRUE
+	var/mob/user = ui.user
 	switch(action)
 		if("set_pos")
 			var/new_x = text2num(params["x"])
@@ -409,15 +410,15 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("Confirm", "Abort")) == "I'm Sure")
-				our_pad = null
+			if(tgui_alert(user, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
+				pad = null
 		if("launch")
 			sending = TRUE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 		if("pull")
 			sending = FALSE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 
 #undef BEAM_FADE_TIME

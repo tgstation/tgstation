@@ -40,7 +40,7 @@ export const NtosSupermatter = (props) => {
             <Table>
               {sm_data.map((sm) => (
                 <Table.Row key={sm.uid}>
-                  <Table.Cell>{sm.uid + '. ' + sm.area_name}</Table.Cell>
+                  <Table.Cell>{`${sm.uid}. ${sm.area_name}`}</Table.Cell>
                   <Table.Cell collapsing color="label">
                     Integrity:
                   </Table.Cell>

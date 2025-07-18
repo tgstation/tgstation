@@ -94,11 +94,14 @@
 					transfer_fingerprints_to(FW)
 					qdel(src)
 					return
+			else if(state == GIRDER_REINF)
+				balloon_alert(user, "need plasteel sheet!")
+				return
 			else
 				if(rod.get_amount() < amount)
 					balloon_alert(user, "need [amount] rods!")
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "adding rods...")
 				if(do_after(user, 4 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return

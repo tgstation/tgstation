@@ -129,8 +129,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 		antag_time_limits = list()
 		for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
 			var/antag_flag = initial(ruleset.pref_flag)
-			var/config_min_days = SSdynamic.dynamic_config[initial(ruleset.config_tag)]?[NAMEOF(ruleset, minimum_required_age)]
-			var/min_days = isnull(config_min_days) ? initial(ruleset.minimum_required_age) : config_min_days
+			var/min_days = GET_DYNAMIC_CONFIG(ruleset, minimum_required_age)
 
 			antag_time_limits[antag_flag] = min_days
 

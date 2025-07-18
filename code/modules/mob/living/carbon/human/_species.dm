@@ -837,7 +837,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Whether or not we get some protein for a successful attack. Nom.
 	var/biting = FALSE
 
-	var/atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
+	var/atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
+	var/atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
+	var/atk_verb_continuous = "[atk_verb]s"
+	if (length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index) // Just in case
+		atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
+
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
@@ -845,7 +850,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			biting = TRUE
 		else if(user.get_active_hand()) //In the event we can't bite, emergency swap to see if we can attack with a hand.
 			attacking_bodypart = user.get_active_hand()
-			atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
+			atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
+			atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
+			atk_verb_continuous = "[atk_verb]s"
+			if (length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index) // Just in case
+				atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
 			atk_effect = attacking_bodypart.unarmed_attack_effect
 		else  //Nothing? Okay. Fail.
 			user.balloon_alert(user, "can't attack!")
@@ -883,7 +892,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			limb_accuracy += clamp(puncher_brute_and_burn / 2, 10, 200)
 			damage += damage * clamp(puncher_brute_and_burn / 100, 0.3, 2) //Basically a multiplier of how much extra damage you get based on how low your health is overall. A floor of about a 30%.
 			var/drunken_martial_descriptor = pick("Drunken", "Intoxicated", "Tipsy", "Inebriated", "Delirious", "Day-Drinker's", "Firegut", "Blackout")
-			atk_verb = "[drunken_martial_descriptor] [atk_verb]"
+			atk_verb = "[drunken_martial_descriptor] [capitalize(atk_verb)]"
+			atk_verb_continuous = "[drunken_martial_descriptor] [capitalize(atk_verb_continuous)]"
 
 		else if(user_drunkenness >= 60)
 			limb_accuracy = -limb_accuracy // good luck landing a punch now, you drunk fuck
@@ -893,7 +903,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			limb_accuracy *= 1.2
 			user.adjust_disgust(2)
 
-	var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
+	// Select a zone to hit, blacklisting the part we're attacking with if we're attacking ourselves.
+	var/hit_zone = target.get_random_valid_zone(user.zone_selected, blacklisted_parts = (user == target ? list(attacking_bodypart.body_zone) : null))
+	var/obj/item/bodypart/affecting = target.get_bodypart(hit_zone)
 
 	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 	if(attacking_bodypart.unarmed_damage_low)
@@ -932,8 +944,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(grappled && attacking_bodypart.grappled_attack_verb)
 		atk_verb = attacking_bodypart.grappled_attack_verb
-	target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
-					span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+		atk_verb_continuous = attacking_bodypart.grappled_attack_verb_continuous
+
+	target.visible_message(span_danger("[user] [atk_verb_continuous] [target]!"), \
+					span_userdanger("[user] [atk_verb_continuous] you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You [atk_verb] [target]!"))
 
 	target.lastattacker = user.real_name
@@ -958,7 +972,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.force_say()
 		log_combat(user, target, "punched")
 
-	if(biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+	if(user != target && biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
 		var/datum/reagents/tasty_meal = new()
 		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
 		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
@@ -1994,7 +2008,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
 	var/list/final_bodypart_overrides = new_species.bodypart_overrides.Copy()
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
+	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
 		final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
 		final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
 
@@ -2046,7 +2060,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	ASSERT(!isnull(for_mob))
 	switch(hair_color_mode)
 		if(USE_MUTANT_COLOR)
-			return for_mob.dna.features["mcolor"]
+			return for_mob.dna.features[FEATURE_MUTANT_COLOR]
 		if(USE_FIXED_MUTANT_COLOR)
 			return fixed_mut_color
 
@@ -2063,7 +2077,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				continue
 
 			var/datum/bodypart_overlay/simple/body_marking/overlay = new markings_type()
-			overlay.set_appearance(accessory_name, hooman.dna.features["mcolor"])
+			overlay.set_appearance(accessory_name, hooman.dna.features[FEATURE_MUTANT_COLOR])
 			people_part.add_bodypart_overlay(overlay)
 
 		qdel(markings)

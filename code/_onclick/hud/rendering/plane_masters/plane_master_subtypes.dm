@@ -460,7 +460,7 @@
 	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		// We use outlines instead of drop shadow due to how extremely expensive it is, and there's no reason to use it for runechat
 		// which already has high drop shadow transparency at just 32 alpha, so outline does the job good enough
-		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
+		add_filter("AO", 1, outline_filter(size = 2, color = "#04080F20", flags = OUTLINE_SQUARE))
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"

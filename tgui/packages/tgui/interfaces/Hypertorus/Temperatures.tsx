@@ -53,7 +53,7 @@ const BarLabel = (props) => {
       <Box align="center">{label}</Box>
       {value > 0 ? (
         <>
-          <Box align="center">{to_exponential_if_big(value) + ' K'}</Box>
+          <Box align="center">{`${to_exponential_if_big(value)} K`}</Box>
           <Box align="center">
             {delta === 0
               ? '-'
@@ -158,7 +158,7 @@ export const HypertorusTemperatures = (props) => {
             name={icon}
           />
         )}
-        {to_exponential_if_big(value) + ' K'}
+        {`${to_exponential_if_big(value)} K`}
       </Box>
     );
     return (
