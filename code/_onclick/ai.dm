@@ -288,4 +288,4 @@
 //
 
 /mob/living/silicon/ai/TurfAdjacent(turf/target_turf)
-	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(target_turf))
+	return (SScameras.check_if_visible_by_cameras(target_turf))

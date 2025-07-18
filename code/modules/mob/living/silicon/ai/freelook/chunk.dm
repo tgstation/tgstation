@@ -21,18 +21,19 @@
 	///images currently in use on obscured turfs.
 	var/list/active_static_images = list()
 
-	var/changed = FALSE
+	/// If TRUE, the chunk has been changed and needs to be updated.
+	var/updating = FALSE
+
 	var/x = 0
 	var/y = 0
 	var/lower_z
 	var/upper_z
 
-/// Add a camera eye to the chunk, then update if changed.
+/// Add a camera eye to the chunk, updating the chunk if necessary.
 /datum/camerachunk/proc/add(mob/eye/camera/eye)
 	eye.visibleCameraChunks += src
 	seenby += eye
-	if(changed)
-		update()
+	force_update()
 
 	var/client/client = eye.GetViewerClient()
 	if(client && eye.use_visibility)
@@ -47,29 +48,39 @@
 	if(client && eye.use_visibility && seenby.len == 0)
 		client.images -= active_static_images
 
-/// Called when a chunk has changed. I.E: A wall was deleted.
-/datum/camerachunk/proc/visibilityChanged(turf/loc)
-	if(!visibleTurfs[loc])
+/**
+ * Queues the chuck to be updated after a delay.
+ *
+ * * update_delay_buffer - the delay before the update is performed. Defaults to UPDATE_BUFFER_TIME.
+ */
+/datum/camerachunk/proc/queue_update(update_delay_buffer = UPDATE_BUFFER_TIME)
+	addtimer(CALLBACK(src, PROC_REF(_queue_update)), update_delay_buffer, TIMER_UNIQUE)
+	updating = TRUE
+
+/datum/camerachunk/proc/_queue_update()
+	PRIVATE_PROC(TRUE)
+	// Something forced an update during the delay
+	if(!updating)
 		return
-	hasChanged()
+	SScameras.chunks_to_update[src] = TRUE
 
 /**
- * Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
- * instead be flagged to update the next time an AI Eye moves near it.
+ * Forces the chunk to update immediately
  *
- * update_delay_buffer is used for cameras that are moving around, which are cyborg inbuilt cameras and
- * mecha onboard cameras. This buffer should be usually lower than UPDATE_BUFFER_TIME because
- * otherwise a moving camera can run out of its own view before updating static.
+ * * only_if_necessary - if TRUE, will not update the chunk unless it's been marked to update.
  */
-/datum/camerachunk/proc/hasChanged(update_now = 0, update_delay_buffer = UPDATE_BUFFER_TIME)
-	if(seenby.len || update_now)
-		addtimer(CALLBACK(src, PROC_REF(update)), update_delay_buffer, TIMER_UNIQUE)
-	else
-		changed = TRUE
+/datum/camerachunk/proc/force_update(only_if_necessary = TRUE)
+	if(only_if_necessary && !updating)
+		return
+	update()
 
 /// The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
-/// Accepts an optional partial_update argument, that blocks any calls out to chunks that could affect us, like above or below
-/datum/camerachunk/proc/update(partial_update = FALSE)
+/datum/camerachunk/proc/update()
+	if(SScameras.disable_camera_updates)
+		return
+
+	updating = FALSE
+
 	var/list/updated_visible_turfs = list()
 
 	for(var/z_level in lower_z to upper_z)
@@ -118,8 +129,6 @@
 		active_static_images += static_image
 	visibleTurfs = updated_visible_turfs
 
-	changed = FALSE
-
 	for(var/mob/eye/camera/client_eye as anything in seenby)
 		var/client/client = client_eye.GetViewerClient()
 		if(!client)
@@ -155,7 +164,7 @@
 
 		cameras["[z_level]"] = local_cameras
 
-		var/image/mirror_from = GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
+		var/image/mirror_from = SScameras.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		var/turf/chunk_corner = locate(x, y, z_level)
 		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE, CHUNK_SIZE)) //we use CHUNK_SIZE for width and height here as it handles subtracting 1 from those two parameters by itself
 			var/image/our_image = new /image(mirror_from)

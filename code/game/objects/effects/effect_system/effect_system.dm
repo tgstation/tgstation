@@ -14,10 +14,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/particle_effect/Initialize(mapload)
 	. = ..()
-	GLOB.cameranet.updateVisibility(src)
+	SScameras.update_visibility(src)
 
 /obj/effect/particle_effect/Destroy()
-	GLOB.cameranet.updateVisibility(src)
+	SScameras.update_visibility(src)
 	return ..()
 
 // Prevents effects from getting registered for SSnewtonian_movement
