@@ -1038,7 +1038,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * (4/3))
 
 /obj/item/food/korta_wellington
 	name = "Kotra wellington"
@@ -1073,7 +1073,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * (4/3))
 
 /obj/item/food/roast_dinner
 	name = "roast dinner"
@@ -1108,7 +1108,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/roast_dinner_lizzy
 	name = "grain-free roast dinner"
@@ -1143,7 +1143,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/roast_dinner_tofu
 	name = "tofu roast dinner"
@@ -1227,7 +1227,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
-	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/meat = = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/meatloaf/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meatloaf_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -1246,7 +1246,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2)
 
 /obj/item/food/sweet_and_sour_meatballs
 	name = "sweet and sour meatballs"
