@@ -483,7 +483,7 @@
 	tastes = list("juicy meat" = 1, "mashed potatoes" = 1, "baked veggies" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_5
-	custom_materials = list(/datum/material/meat = HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/food/pie/asdfpie
 	name = "pie-flavored pie"
