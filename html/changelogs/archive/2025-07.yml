@@ -460,3 +460,15 @@
   - bugfix: fixed shuttle remote design missing from protolathe
   bigbakedbean:
   - rscadd: chemical analyzer now displays bloodtype if analyzing blood
+2025-07-18:
+  Aliceee2ch:
+  - bugfix: Removed unused wooden decals from MetaStation theater
+  Glu:
+  - bugfix: Certain food items that required bowl now drop a bowl post-consumption
+  Melbert:
+  - qol: Tweaked size of runechat shadow outline.
+  Rhials:
+  - bugfix: Evac broadcast messages are no longer scrambled unless the shuttle was
+      hijacked.
+  SmArtKar:
+  - bugfix: Fixed projectiles inheriting gun's pixel offsets when fired
