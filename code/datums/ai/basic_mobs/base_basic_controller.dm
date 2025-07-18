@@ -66,7 +66,7 @@
 	clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST) //we have just been tamed by a new party, clean slate for everyone!
 	RegisterSignal(new_friend, COMSIG_LIVING_MADE_NEW_FRIEND, PROC_REF(on_master_tame))
 
-/datum/ai_controller/proc/on_unfriend(datum/source, mob/living/old_friend)
+/datum/ai_controller/proc/on_untamed(datum/source, mob/living/old_friend)
 	SIGNAL_HANDLER
 	UnregisterSignal(old_friend, COMSIG_LIVING_MADE_NEW_FRIEND)
 
