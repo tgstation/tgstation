@@ -37,6 +37,10 @@ SUBSYSTEM_DEF(cameras)
 		if(MC_TICK_CHECK)
 			break
 
+/datum/controller/subsystem/cameras/stat_entry(msg)
+	msg = "Cams: [length(cameras)] | Chunks: [length(chunks)] | Updating: [length(chunks_to_update)]"
+	return ..()
+
 /// Updates the images for new plane offsets
 /datum/controller/subsystem/cameras/proc/update_offsets(new_offset)
 	for(var/i in length(obscured_images) to new_offset)
