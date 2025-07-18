@@ -332,6 +332,7 @@
 /datum/reagents/proc/convert_reagent(
 	datum/reagent/source_reagent_typepath,
 	datum/reagent/target_reagent_typepath,
+	conversion_volume = -1,
 	multiplier = 1,
 	include_source_subtypes = FALSE,
 	keep_data = FALSE,
@@ -357,6 +358,17 @@
 			if(cached_reagent.type != source_reagent_typepath)
 				continue
 		else if(!istype(cached_reagent, source_reagent_typepath))
+			continue
+
+		if(conversion_volume != -1)
+			if(cached_reagent.volume > conversion_volume)
+				remove_reagent(cached_reagent.type, conversion_volume)
+				weighted_volume += conversion_volume
+				break
+
+			weighted_volume += cached_reagent.volume
+			conversion_volume -= cached_reagent.volume
+			del_reagent(cached_reagent.type)
 			continue
 
 		//compute average of everything
