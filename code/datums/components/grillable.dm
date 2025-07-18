@@ -35,7 +35,7 @@
 	src.added_reagents = added_reagents
 
 	var/obj/item/item_parent = parent
-	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !item_parent.custom_materials || isstack(parent))
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !positive_result || !item_parent.custom_materials || isstack(parent))
 		return
 
 	var/atom/result = new cook_result

@@ -3,13 +3,13 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	/// The typepath we default to if we were passed no microwave result
-	var/atom/default_typepath = /obj/item/food/badrecipe
+	var/atom/default_typepath
 	/// Resulting atom typepath on a completed microwave.
 	var/atom/result_typepath
 	/// Reagents that should be added to the result
 	var/list/added_reagents
 
-/datum/element/microwavable/Attach(obj/item/target, microwave_type, list/reagents)
+/datum/element/microwavable/Attach(obj/item/target, microwave_type, list/reagents, skip_matcheck = FALSE)
 	. = ..()
 	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
@@ -23,7 +23,7 @@
 	if(!ispath(result_typepath, default_typepath))
 		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !target.custom_materials || isstack(target))
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || skip_matcheck || !target.custom_materials || isstack(target))
 		return
 
 	var/atom/result = new result_typepath

@@ -31,7 +31,7 @@
 
 
 	var/obj/item/item_target = parent
-	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !item_target.custom_materials)
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !positive_result || !item_target.custom_materials)
 		return
 
 	var/atom/result = new bake_result
