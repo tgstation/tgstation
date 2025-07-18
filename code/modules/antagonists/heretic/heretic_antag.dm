@@ -749,7 +749,8 @@
 	var/list/string_of_knowledge = list()
 
 	for(var/knowledge_path in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path]
+		var/list/knowledge_info = researched_knowledge[knowledge_path]
+		var/datum/heretic_knowledge/knowledge = knowledge_info[HKT_INSTANCE]
 		string_of_knowledge += knowledge.name
 
 	parts += english_list(string_of_knowledge)
