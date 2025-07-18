@@ -186,7 +186,7 @@
 			set_temperature(reagtemp)
 
 	if(!isnull(reagent_added))
-		reagent_added += new_reagent
+		reagent_added +=new_reagent
 	if(!no_react)
 		handle_reactions()
 	return amount
@@ -464,14 +464,10 @@
 	if(amount <= 0)
 		return FALSE
 
-	//Set up new reagents to inherit the old ongoing reactions
-	if(!no_react)
-		transfer_reactions(target_holder)
-
 	var/trans_data = null
 	var/list/r_to_send = methods ? list() : null // Validated list of reagents to be exposed
+	var/list/added_reagents = list()
 	var/list/transfer_log = list()
-	var/list/reagents_to_remove = list()
 
 	var/part = isnull(target_id) ? (amount / total_volume) : 1
 	var/transfer_amount
@@ -491,34 +487,31 @@
 				continue
 		else
 			transfer_amount = reagent.volume * part
+		transfer_amount *= multiplier
 
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		if(reagent.intercept_reagents_transfer(target_holder, amount))
+		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount))
 			update_total()
 			target_holder.update_total()
 			continue
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = r_to_send, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = added_reagents, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
-		reagents_to_remove[reagent] = transfer_amount
 		total_transfered_amount += transfered_amount
+
+		if(methods)
+			r_to_send[added_reagents[added_reagents.len]] = transfered_amount
+		reagent.volume -= transfered_amount
+		transfer_log += "[reagent.type] ([transfered_amount]u, [reagent.purity] purity)"
 
 		if(!isnull(target_id))
 			break
+	update_total()
 
 	//expose target to reagent changes
 	if(methods)
-		target_holder.expose(isorgan(target_atom) ? target : target_atom, methods, part, show_message, r_to_send)
-
-	//remove chemicals that were added above
-	for(var/datum/reagent/reagent as anything in reagents_to_remove)
-		transfer_amount = reagents_to_remove[reagent]
-		if(methods)
-			reagent.on_transfer(target_atom, methods, transfer_amount)
-		reagent.volume -= transfer_amount
-		update_total()
-		transfer_log += "[reagent.type] ([transfer_amount]u, [reagent.purity] purity)"
+		target_holder.expose(isorgan(target_atom) ? target : target_atom, methods, 1, show_message, r_to_send)
 
 	//combat log
 	if(transferred_by && target_atom)
@@ -533,8 +526,9 @@
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [english_list(transfer_log)]")
 
 	if(!no_react)
-		target_holder.handle_reactions()
+		transfer_reactions(target_holder)
 		handle_reactions()
+		target_holder.handle_reactions()
 
 	return total_transfered_amount
 
@@ -560,7 +554,7 @@
 	multiplier = 1,
 	preserve_data = TRUE,
 	no_react = FALSE,
-	copy_methods
+	copy_methods = NONE,
 )
 	if(QDELETED(target) || !total_volume)
 		return
@@ -588,20 +582,25 @@
 	var/transfered_amount = 0
 	var/total_transfered_amount = 0
 	var/trans_data = null
+	var/list/added_reagents  = list()
+	var/list/r_to_send = list()
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		transfer_amount = reagent.volume * part * multiplier
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE)
-		if(copy_methods && !no_react)
-			reagent.on_transfer(target, copy_methods, transfer_amount)
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, reagent_added = added_reagents, no_react = TRUE)
 		if(!transfered_amount)
 			continue
+		if(copy_methods)
+			r_to_send[added_reagents[added_reagents.len]] = transfered_amount
 		total_transfered_amount += transfered_amount
 
+	//expose target to reagent changes
+	if(copy_methods)
+		target_holder.expose(target, copy_methods, 1, FALSE, r_to_send)
+
 	if(!no_react)
-		// pass over previous ongoing reactions before handle_reactions is called
 		transfer_reactions(target_holder)
 		target_holder.handle_reactions()
 
@@ -805,23 +804,27 @@
  * Arguments
  * - Atom/target: What mob/turf/object is being exposed to reagents? This is your reaction target.
  * - Methods: What reaction type is the reagent itself going to call on the reaction target? Types are TOUCH, INGEST, VAPOR, PATCH, INJECT and INHALE.
- * - Volume_modifier: What is the reagent volume multiplied by when exposed? Note that this is called on the volume of EVERY reagent in the base body, so factor in your Maximum_Volume if necessary!
+ * - Volume_modifier: reagent volume modifier applied to the reagents(passed to r_to_expose or this holder) before exposing. Must be between 0->1
  * - Show_message: Whether to display anything to mobs when they are exposed.
- * - list/datum/reagent/r_to_expose: list of reagents to expose. if null will expose the reagents present in this holder instead
+ * - list/datum/reagent/r_to_expose: map of[/datum/reagent -> amount] when you to want to expose specific reagents with precise amounts
  */
 /datum/reagents/proc/expose(atom/target, methods = TOUCH, volume_modifier = 1, show_message = 1, list/datum/reagent/r_to_expose = null)
 	if(isnull(target))
-		return null
+		return
 
-	var/list/target_reagents = isnull(r_to_expose) ? reagent_list : r_to_expose
-	if(!target_reagents.len)
-		return null
+	if(volume_modifier <= 0)
+		stack_trace("Volume modifier [volume_modifier] must be +ve")
+		return
 
 	var/list/datum/reagent/reagents = list()
-	for(var/datum/reagent/reagent as anything in target_reagents)
-		reagents[reagent] = reagent.volume * volume_modifier
+	if(isnull(r_to_expose))
+		for(var/datum/reagent/reagent as anything in reagents)
+			reagents[reagent] = reagent.volume * volume_modifier
+	else
+		for(var/datum/reagent/reagent as anything in r_to_expose)
+			reagents[reagent] = r_to_expose[reagent] * volume_modifier
 
-	return target.expose_reagents(reagents, src, methods, volume_modifier, show_message)
+	return target.expose_reagents(reagents, src, methods, show_message)
 
 /**
  * Applies heat to this holder

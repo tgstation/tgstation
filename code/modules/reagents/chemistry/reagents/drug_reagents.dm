@@ -816,11 +816,11 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	if(!kronkaine_fiend.stat)
 		kronkaine_fiend.stop_sound_channel(CHANNEL_HEARTBEAT)
 
-/datum/reagent/drug/kronkaine/on_transfer(atom/kronkaine_receptacle, methods, trans_volume)
+/datum/reagent/drug/kronkaine/expose_mob(mob/living/carbon/druggo, methods, trans_volume, show_message, touch_protection)
 	. = ..()
-	if(!iscarbon(kronkaine_receptacle))
+	if(!iscarbon(druggo))
 		return
-	var/mob/living/carbon/druggo = kronkaine_receptacle
+
 	//The drug is more effective if smoked or injected, restoring more stamina per unit.
 	var/stamina_heal_per_unit
 	if(methods & (INJECT|INHALE))
@@ -833,9 +833,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 			to_chat(druggo, span_nicegreen(pick("You feel the cowardice melt away...", "You feel unbothered by the judgements of others.", "My life feels lovely!", "You lower your snout... and suddenly feel more charitable!")))
 	else
 		stamina_heal_per_unit = 6
-	if(druggo.adjustStaminaLoss(-stamina_heal_per_unit * trans_volume))
-		return UPDATE_MOB_HEALTH
-
+	druggo.adjustStaminaLoss(-stamina_heal_per_unit * trans_volume)
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
 	. = ..()
