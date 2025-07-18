@@ -34,7 +34,6 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
-	allow_custom = FALSE
 
 /obj/item/vending_refill/donksoft
 	machine_name = "Donksoft Toy Vendor"

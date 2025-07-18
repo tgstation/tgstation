@@ -25,6 +25,7 @@
 	default_price = PAYCHECK_LOWER
 	extra_price = PAYCHECK_LOWER * 0.6
 	payment_department = NO_FREEBIES
+	allow_custom = TRUE
 
 /obj/item/vending_refill/sustenance
 	machine_name = "Sustenance Vendor"

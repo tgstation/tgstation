@@ -35,6 +35,7 @@
 	default_price = PAYCHECK_CREW * 0.7
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
+	allow_custom = TRUE
 
 	var/static/list/spiking_booze = list(
 		// Your "common" spiking booze

@@ -28,6 +28,7 @@
 	payment_department = ACCOUNT_MED
 	tiltable = FALSE
 	light_mask = "wallmed-light-mask"
+	allow_custom = TRUE
 
 /obj/machinery/vending/wallmed/directional
 	allow_custom = FALSE

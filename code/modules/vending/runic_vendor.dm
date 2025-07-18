@@ -10,7 +10,6 @@
 	resistance_flags = FIRE_PROOF
 	light_mask = "RunicVendor-light-mask"
 	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
-	allow_custom = FALSE
 	/// How long the vendor stays up before it decays.
 	var/time_to_decay = 30 SECONDS
 	/// Area around the vendor that will pushback nearby mobs.

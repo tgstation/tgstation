@@ -37,7 +37,6 @@
 	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
 	light_mask = "donksoft-light-mask"
-	allow_custom = FALSE
 
 /datum/armor/vending_toyliberationstation
 	melee = 100

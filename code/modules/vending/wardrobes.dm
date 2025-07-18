@@ -11,7 +11,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	payment_department = NO_FREEBIES
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
-	allow_custom = FALSE
 
 /obj/machinery/vending/wardrobe/Initialize(mapload)
 	. = ..()

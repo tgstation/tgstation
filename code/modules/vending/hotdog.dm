@@ -45,7 +45,6 @@
 		),
 	)
 	refill_canister = /obj/item/vending_refill/hotdog
-	allow_custom = FALSE
 
 /obj/item/vending_refill/hotdog
 	machine_name = "\improper Hotdoggo-Vend"

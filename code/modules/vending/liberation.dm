@@ -39,7 +39,6 @@
 	extra_price = PAYCHECK_COMMAND * 2.5
 	payment_department = ACCOUNT_SEC
 	light_mask = "liberation-light-mask"
-	allow_custom = FALSE
 
 /datum/armor/vending_liberationstation
 	melee = 100

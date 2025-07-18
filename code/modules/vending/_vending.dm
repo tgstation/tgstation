@@ -219,7 +219,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/fish_source_path = /datum/fish_source/vending
 
 	///Whether this vendor can be selected when building a custom vending machine
-	var/allow_custom = TRUE
+	var/allow_custom = FALSE
 
 /datum/armor/machinery_vending
 	melee = 20
@@ -1720,6 +1720,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	/// Base64 cache of custom icons.
 	var/list/base64_cache = list()
 	panel_type = "panel20"
+	allow_custom = TRUE
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE

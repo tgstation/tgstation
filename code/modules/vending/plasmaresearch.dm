@@ -16,4 +16,3 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SCI
-	allow_custom = FALSE
