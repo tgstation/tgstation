@@ -5,13 +5,9 @@
 	initial_duration = 15 SECONDS
 
 /obj/effect/forcefield/wizard/heretic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(isnull(mover.throwing))
-		return
-	var/datum/thrownthing/thrownthing = mover.throwing
-	var/datum/weakref/thrower = thrownthing.thrower
-	if(istype(thrower.resolve(), /obj/effect/forcefield/wizard/heretic))
+	if(istype(mover.throwing?.get_thrower(), /obj/effect/forcefield/wizard/heretic))
 		return TRUE
+	return ..()
 
 /obj/effect/forcefield/wizard/heretic/Bumped(mob/living/bumpee)
 	. = ..()
