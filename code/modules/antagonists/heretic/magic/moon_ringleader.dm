@@ -71,15 +71,13 @@
 		if(!living_owner)
 			continue
 		var/datum/status_effect/heretic_passive/moon/our_passive = living_owner.has_status_effect(/datum/status_effect/heretic_passive/moon)
-		if(our_passive?.amulet)
-			// We channel the amulet before the "spell effects" so that people don't get converted after 1 clone goes off
-			our_passive.amulet.channel_amulet(living_owner, mob)
+		// We channel the amulet before the "spell effects" so that people don't get converted after 1 clone goes off
+		our_passive.amulet?.channel_amulet(living_owner, mob)
 
 		mob.AdjustStun(1 SECONDS)
 		mob.AdjustKnockdown(1 SECONDS)
 		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 150)
-		if(mob.mob_mood)
-			mob.mob_mood.adjust_sanity(-50)
+		mob.mob_mood?.adjust_sanity(-50)
 
 	qdel(victim)
 
