@@ -24,9 +24,9 @@ SUBSYSTEM_DEF(cameras)
 	var/disable_camera_updates = FALSE
 
 /datum/controller/subsystem/cameras/Initialize()
-	. = ..()
 	update_offsets(SSmapping.max_plane_offset)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_growth))
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
 	while(length(chunks_to_update))
