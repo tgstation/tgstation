@@ -54,6 +54,8 @@
  * * update_delay_buffer - the delay before the update is performed. Defaults to UPDATE_BUFFER_TIME.
  */
 /datum/camerachunk/proc/queue_update(update_delay_buffer = UPDATE_BUFFER_TIME)
+	if(updating)
+		return
 	addtimer(CALLBACK(src, PROC_REF(_queue_update)), update_delay_buffer, TIMER_UNIQUE)
 	updating = TRUE
 
