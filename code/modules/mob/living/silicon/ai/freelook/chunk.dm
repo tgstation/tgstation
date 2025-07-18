@@ -70,6 +70,9 @@
 /// The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 /// Accepts an optional partial_update argument, that blocks any calls out to chunks that could affect us, like above or below
 /datum/camerachunk/proc/update(partial_update = FALSE)
+	if(GLOB.block_camera_updates)
+		return
+
 	var/list/updated_visible_turfs = list()
 
 	for(var/z_level in lower_z to upper_z)
@@ -179,3 +182,8 @@
 		obscuredTurfs[obscured_turf] = new_static
 
 #undef UPDATE_BUFFER_TIME
+
+GLOBAL_VAR_INIT(block_camera_updates, FALSE)
+
+ADMIN_VERB(pause_camera_updates, R_ADMIN, "Toggle Camera Updates", "Stop security cameras from updating, meaning what they see now is what they will see forever.", ADMIN_CATEGORY_DEBUG)
+	GLOB.block_camera_updates = !GLOB.block_camera_updates
