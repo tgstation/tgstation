@@ -207,7 +207,7 @@
 /obj/item/circuit_component/remotecam/proc/cameranet_remove()
 	if(!current_cameranet_state)
 		return
-	SScameras.remove_camera(shell_camera)
+	SScameras.remove_camera_from_chunk(shell_camera)
 	SScameras.cameras -= shell_camera
 	current_cameranet_state = FALSE
 

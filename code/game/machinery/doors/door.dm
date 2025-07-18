@@ -620,7 +620,7 @@
 	return !(machine_stat & NOPOWER)
 
 /obj/machinery/door/proc/update_freelook_sight()
-	if(!glass && SScameras)
+	if(!glass)
 		SScameras.update_visibility(src, FALSE)
 
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.

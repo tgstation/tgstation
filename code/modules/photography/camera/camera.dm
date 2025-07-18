@@ -191,7 +191,7 @@
 
 /// Check whether an AI could take a picture of the target turf.
 /obj/item/camera/proc/can_ai_target(turf/target_turf)
-	if(!SScameras.check_if_visible_by_cameras(target_turf))
+	if(!SScameras.is_visible_by_cameras(target_turf))
 		return FALSE
 	return TRUE
 
@@ -279,7 +279,7 @@
 		if(isnull(seen_placeholder))
 			continue
 
-		if(cameranet_user && !SScameras.check_if_visible_by_cameras(seen_placeholder))
+		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
 			continue
 		if(!cameranet_user && !(seen_placeholder in seen))
 			continue

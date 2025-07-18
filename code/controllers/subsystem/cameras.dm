@@ -188,12 +188,12 @@ SUBSYSTEM_DEF(cameras)
 
 /// Will check if an atom is on a viewable turf.
 /// Returns TRUE if the atom is visible by any camera, FALSE otherwise.
-/datum/controller/subsystem/cameras/proc/check_if_visible_by_cameras(atom/target)
-	return check_if_turf_visible_by_cameras(get_turf(target))
+/datum/controller/subsystem/cameras/proc/is_visible_by_cameras(atom/target)
+	return turf_visible_by_cameras(get_turf(target))
 
 /// Checks if the passed turf is visible by any camera.
 /// Returns TRUE if the turf is visible by any camera, FALSE otherwise.
-/datum/controller/subsystem/cameras/proc/check_if_turf_visible_by_cameras(turf/position)
+/datum/controller/subsystem/cameras/proc/turf_visible_by_cameras(turf/position)
 	PRIVATE_PROC(TRUE)
 	if(isnull(position))
 		return FALSE

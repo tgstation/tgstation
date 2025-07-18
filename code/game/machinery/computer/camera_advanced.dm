@@ -183,7 +183,7 @@
 		else
 			camera_location = myturf
 	else
-		if((!consider_zlock || (myturf.z in z_lock)) && SScameras.check_if_visible_by_cameras(myturf))
+		if((!consider_zlock || (myturf.z in z_lock)) && SScameras.is_visible_by_cameras(myturf))
 			camera_location = myturf
 		else
 			for(var/obj/machinery/camera/C as anything in SScameras.cameras)
@@ -403,7 +403,7 @@
 	var/turf/eye_turf = get_turf(source)
 	if(!eye_turf)
 		return
-	if(!SScameras.check_if_visible_by_cameras(eye_turf))
+	if(!SScameras.is_visible_by_cameras(eye_turf))
 		return
 	eye_x.set_output(source.x)
 	eye_y.set_output(source.y)
@@ -490,7 +490,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		return
-	if(!SScameras.check_if_visible_by_cameras(target_turf))
+	if(!SScameras.is_visible_by_cameras(target_turf))
 		return
 	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
 		return

@@ -292,7 +292,7 @@
 		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
 			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return SScameras.check_if_visible_by_cameras(target_turf)
+		return SScameras.is_visible_by_cameras(target_turf)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -457,7 +457,7 @@
 		if(controlled_equipment)
 			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
 			return
-		if(!SScameras.check_if_visible_by_cameras(M))
+		if(!SScameras.is_visible_by_cameras(M))
 			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
 			return
 		if(!isturf(loc))
@@ -502,7 +502,7 @@
 		//The target must be in view of a camera or near the core.
 	if(turf_check in range(get_turf(src)))
 		call_bot(turf_check)
-	else if(SScameras.check_if_visible_by_cameras(turf_check))
+	else if(SScameras.is_visible_by_cameras(turf_check))
 		call_bot(turf_check)
 	else
 		to_chat(src, span_danger("Selected location is not visible."))
@@ -788,7 +788,7 @@
 	if(isturf(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
-		return (SScameras.check_if_visible_by_cameras(get_turf_pixel(A)) || (A == apc_override))
+		return (SScameras.is_visible_by_cameras(get_turf_pixel(A)) || (A == apc_override))
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
