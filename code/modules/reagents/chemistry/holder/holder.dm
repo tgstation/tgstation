@@ -186,7 +186,7 @@
 			set_temperature(reagtemp)
 
 	if(!isnull(reagent_added))
-		reagent_added +=new_reagent
+		reagent_added += new_reagent
 	if(!no_react)
 		handle_reactions()
 	return amount
