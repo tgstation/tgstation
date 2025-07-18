@@ -15,7 +15,8 @@
 
 ///Called on COMSIG_LIVING_UNARMED_ATTACK. Yells the warcry and and reduces punch cooldown.
 /datum/component/wearertargeting/punchcooldown/proc/reducecooldown(mob/living/carbon/M, atom/target)
-	if((M.combat_mode && isliving(target)) || istype(M.get_active_held_item(), /obj/item/hand_item))
+	var/obj/item/used_item = M?.get_active_held_item.item_flags
+	if((M.combat_mode && isliving(target)) || (used_item & HAND_ITEM))
 		M.changeNext_move(CLICK_CD_RAPID)
 		if(warcry)
 			M.say(warcry, ignore_spam = TRUE, forced = "north star warcry")
