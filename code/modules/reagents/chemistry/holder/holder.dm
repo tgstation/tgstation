@@ -3,7 +3,7 @@
 /// Holder for a bunch of [/datum/reagent]
 /datum/reagents
 	/// The reagents being held
-	var/list/datum/reagent/reagent_list = new/list()
+	var/list/datum/reagent/reagent_list = list()
 	/// Current volume of all the reagents
 	var/total_volume = 0
 	/// Max volume of this holder
@@ -818,7 +818,7 @@
 
 	var/list/datum/reagent/reagents = list()
 	if(isnull(r_to_expose))
-		for(var/datum/reagent/reagent as anything in reagents)
+		for(var/datum/reagent/reagent as anything in reagent_list)
 			reagents[reagent] = reagent.volume * volume_modifier
 	else
 		for(var/datum/reagent/reagent as anything in r_to_expose)
