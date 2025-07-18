@@ -25,6 +25,7 @@
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "magivend-light-mask"
+	allow_custom = FALSE
 
 /datum/armor/vending_magivend
 	melee = 100

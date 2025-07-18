@@ -36,6 +36,7 @@
 	default_price = PAYCHECK_CREW * 1.4
 	extra_price = PAYCHECK_CREW * 5
 	payment_department = NO_FREEBIES
+	allow_custom = FALSE
 
 /obj/item/vending_refill/donksnackvendor
 	machine_name = "Donk Co Snack Vendor"

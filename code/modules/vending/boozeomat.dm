@@ -93,6 +93,7 @@
 
 /obj/machinery/vending/boozeomat/syndicate
 	age_restrictions = FALSE
+	allow_custom = FALSE
 	initial_language_holder = /datum/language_holder/syndicate
 
 /obj/item/vending_refill/boozeomat
