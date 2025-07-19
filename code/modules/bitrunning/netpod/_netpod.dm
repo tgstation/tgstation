@@ -48,8 +48,31 @@
 	QDEL_LIST(cached_outfits)
 
 
+/obj/machinery/netpod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Select Outfit"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER && !occupant && !state_open)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		if(isnull(occupant))
+			if(panel_open)
+				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			else
+				context[SCREENTIP_CONTEXT_LMB] = "[state_open ? "Open" : "Close"] Cover"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/netpod/examine(mob/user)
 	. = ..()
+
+	. += span_notice("Its maintainance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	if(panel_open && !occupant)
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
 	if(isnull(server_ref?.resolve()))
 		. += span_infoplain("It's not connected to anything.")
@@ -72,18 +95,6 @@
 		return
 
 	. += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
-
-
-/obj/machinery/netpod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Select Outfit"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(istype(held_item, /obj/item/crowbar) && occupant)
-		context[SCREENTIP_CONTEXT_LMB] = "Pry Open"
-		return CONTEXTUAL_SCREENTIP_SET
 
 
 /obj/machinery/netpod/update_icon_state()
