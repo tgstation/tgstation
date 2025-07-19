@@ -389,7 +389,6 @@
 	var/list/table = list()
 	///Create a list of products, ordered by price from highest to lowest
 	var/list/products = location.contents - location.component_parts
-	products = products.Copy()
 	sortTim(products, GLOBAL_PROC_REF(cmp_item_vending_prices))
 
 	var/bait_value = rod.bait?.get_item_credit_value() || 1
