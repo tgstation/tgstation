@@ -32,18 +32,16 @@ type Ability = {
   genetic_point_required: number; // Checks against genetic_points_count
   absorbs_required: number; // Checks against absorb_count
   dna_required: number; // Checks against dna_count
-  prequesite_abilities: typePath[];
+  prerequisite_abilities: typePath[];
 };
 
-function evaluate_prerequisite(owned_abilities, prequesite_abilities) {
-  const ability_length: number = owned_abilities.length;
-  owned_abilities - prequesite_abilities;
-  const post_length: number = owned_abilities.length;
-  if (post_length < ability_length) {
-    return true;
-  } else {
-    return false;
-  }
+function evaluate_prerequisite(
+  present_abilities: typePath[],
+  required_abilities: typePath[],
+): boolean {
+  return required_abilities.every((ref_element) =>
+    present_abilities.includes(ref_element),
+  );
 }
 
 export const CellularEmporium = (props) => {
@@ -166,10 +164,11 @@ const AbilityList = (props: { searchAbilities: string }) => {
                     ability.genetic_point_required > genetic_points_count ||
                     ability.absorbs_required > absorb_count ||
                     ability.dna_required > dna_count ||
-                    evaluate_prerequisite(
-                      owned_abilities,
-                      ability.prequesite_abilities,
-                    )
+                    (Array.isArray(ability.prerequisite_abilities) &&
+                      evaluate_prerequisite(
+                        owned_abilities,
+                        ability.prerequisite_abilities,
+                      ))
                   }
                   onClick={() =>
                     act('evolve', {
