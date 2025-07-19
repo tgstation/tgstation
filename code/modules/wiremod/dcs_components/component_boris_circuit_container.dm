@@ -8,6 +8,10 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+/datum/component/boris_circuit_container/Destroy(force)
+	mmi_components = null
+	return ..()
+
 /datum/component/boris_circuit_container/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_AI, PROC_REF(on_ai_click))
@@ -22,17 +26,20 @@
 	))
 
 /datum/component/boris_circuit_container/UnregisterFromParent()
-	. = ..()
 	QDEL_NULL(indicator_weakref)
+	return ..()
 
-/datum/component/boris_circuit_container/on_source_add(obj/item/circuit_component/mmi/source)
+/datum/component/boris_circuit_container/on_source_add(source)
 	. = ..()
-	if(!istype(source))
+	var/obj/item/circuit_component/mmi/source_comp = locate(source)
+	if(!istype(source_comp))
 		return COMPONENT_INCOMPATIBLE
 	LAZYADD(mmi_components, source)
 
 /datum/component/boris_circuit_container/on_source_remove(source)
-	LAZYREMOVE(mmi_components, source)
+	var/obj/item/circuit_component/mmi/source_comp = locate(source)
+	if(source_comp)
+		LAZYREMOVE(mmi_components, source_comp)
 	return ..()
 
 /datum/component/boris_circuit_container/proc/on_ai_click(atom/movable/source, mob/user)

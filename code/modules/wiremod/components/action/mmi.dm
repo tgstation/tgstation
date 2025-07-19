@@ -59,9 +59,6 @@
 	/// The action used to allow a connected AI to disconnect
 	var/datum/action/innate/mmi_comp_disconnect/disconnect_action
 
-	/// The connect_containers component used to track the movement of a boris shell or its containers
-	var/datum/component/connect_containers/connection_comp
-
 	/// Maximum length of the message that can be sent to the MMI
 	var/max_length = 300
 
@@ -157,14 +154,13 @@
 
 /obj/item/circuit_component/mmi/proc/register_boris_circuit(atom/movable/shell)
 	var/static/list/connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(boris_shell_or_container_moved))
-	connection_comp = AddComponent(/datum/component/connect_containers, shell, connections)
+	AddComponent(/datum/component/connect_containers, shell, connections)
 	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
-		location.AddComponentFrom(src, /datum/component/boris_circuit_container)
+		location.AddComponentFrom(REF(src), /datum/component/boris_circuit_container)
 
 /obj/item/circuit_component/mmi/proc/unregister_boris_circuit(atom/movable/shell)
 	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
-		location.RemoveComponentSource(src, /datum/component/boris_circuit_container)
-	QDEL_NULL(connection_comp)
+		location.RemoveComponentSource(REF(src), /datum/component/boris_circuit_container)
 
 /obj/item/circuit_component/mmi/proc/boris_shell_or_container_moved(atom/movable/shell_or_container, atom/old_loc)
 	SIGNAL_HANDLER
@@ -173,9 +169,9 @@
 	var/list/old_locs = ismovable(old_loc) ? (get_nested_locs(old_loc) + old_loc) : list()
 	var/list/new_locs = get_nested_locs(shell_or_container)
 	for(var/atom/movable/loc_exited as anything in old_locs - new_locs)
-		loc_exited.RemoveComponentSource(src, /datum/component/boris_circuit_container)
+		loc_exited.RemoveComponentSource(REF(src), /datum/component/boris_circuit_container)
 	for(var/atom/movable/loc_entered as anything in new_locs - old_locs)
-		loc_entered.AddComponentFrom(src, /datum/component/boris_circuit_container)
+		loc_entered.AddComponentFrom(REF(src), /datum/component/boris_circuit_container)
 
 /obj/item/circuit_component/mmi/proc/occupant_item_moved(atom/movable/occupant_item)
 	SIGNAL_HANDLER
@@ -185,7 +181,10 @@
 
 /obj/item/circuit_component/mmi/proc/remove_occupant_item(obj/item/removing)
 	SIGNAL_HANDLER
-	removing ||= brain || boris
+	if(!removing)
+		removing = brain
+	if(!removing)
+		removing = boris
 	if(!removing)
 		return
 	if(istype(removing, /obj/item/mmi))
@@ -221,18 +220,19 @@
 	new_occupant.remote_control = src
 	RegisterSignal(new_occupant, COMSIG_MOB_CLICKON, PROC_REF(handle_occupant_attack))
 	RegisterSignal(new_occupant, COMSIG_QDELETING, PROC_REF(remove_occupant))
-	if(isAI(new_occupant))
-		ADD_TRAIT(new_occupant, TRAIT_CONNECTED_TO_CIRCUIT, REF(src))
-		var/mob/living/silicon/ai = new_occupant
-		ai.reset_perspective(src)
-		// Perspective gets reset whenever multicam is ended.
-		RegisterSignal(ai, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(remove_occupant))
-		// There are probably some more immediate signals to hook on to in order to trigger disconnects,
-		// but I'm feeling lazy as of the time I'm coding this and a LIVING_LIFE handler should work fine.
-		RegisterSignal(ai, COMSIG_LIVING_LIFE, PROC_REF(on_ai_life))
-		disconnect_action.Grant(ai)
-		to_chat(ai, span_notice("Established connection with remote circuit."))
 	occupant = new_occupant
+	if(!isAI(new_occupant))
+		return
+	ADD_TRAIT(new_occupant, TRAIT_CONNECTED_TO_CIRCUIT, REF(src))
+	var/mob/living/silicon/ai = new_occupant
+	ai.reset_perspective(src)
+	// Perspective gets reset whenever multicam is ended.
+	RegisterSignal(ai, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(remove_occupant))
+	// There are probably some more immediate signals to hook on to in order to trigger disconnects,
+	// but I'm feeling lazy as of the time I'm coding this and a LIVING_LIFE handler should work fine.
+	RegisterSignal(ai, COMSIG_LIVING_LIFE, PROC_REF(on_ai_life))
+	disconnect_action.Grant(ai)
+	to_chat(ai, span_notice("Established connection with remote circuit."))
 
 /obj/item/circuit_component/mmi/proc/on_ai_life(mob/living/silicon/ai/ai)
 	SIGNAL_HANDLER
