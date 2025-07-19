@@ -49,6 +49,7 @@
 			ability_data["genetic_point_required"] = dna_cost
 			ability_data["absorbs_required"] = initial(ability_path.req_absorbs) // compares against changeling true_absorbs
 			ability_data["dna_required"] = initial(ability_path.req_dna) // compares against changeling absorbed_count
+			ability_data["prerequisite_abilities"] = initial(ability_path.prereq_ability)//compare against owned_abilities
 
 			abilities += list(ability_data)
 

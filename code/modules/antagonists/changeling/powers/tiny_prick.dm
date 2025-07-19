@@ -262,26 +262,25 @@
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	..()
 	log_combat(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, PROC_REF(begin_hallucination), target), 5 SECONDS)
-
+	addtimer(CALLBACK(src, PROC_REF(begin_hallucination), user, target), 5 SECONDS)
 	return TRUE
-/datum/action/changeling/sting/lsd/begin_hallucination(mob/living/carbon/target)
+
+/datum/action/changeling/sting/lsd/proc/begin_hallucination(mob/user, mob/living/carbon/target)
 	var/list/list_of_ref = list()
 	for (var/mob/living/carbon/reference_hallucination in view(8 ,target))
 		list_of_ref += reference_hallucination
 
 	var/mob/living/carbon/our_human_ref = pick(list_of_ref)
-
-		target.cause_hallucination(\
-			/datum/hallucination/delusion/changeling, \
-			"[user.name]", \
-			duration = 20 SECONDS, \
-			affects_us = FALSE, \
-			affects_others = TRUE, \
-			skip_nearby = FALSE, \
-			play_wabbajack = FALSE, \
-			passed_appearance = our_human_ref.appearance, \
-		)
+	target.cause_hallucination(\
+		/datum/hallucination/delusion/changeling, \
+		"[user.name]", \
+		duration = 20 SECONDS, \
+		affects_us = FALSE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+		passed_appearance = our_human_ref.appearance, \
+	)
 
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"
