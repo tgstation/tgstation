@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	SIGNAL_HANDLER
 	if(istype(reward))
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
-		reward.adjust_health(reward.health - damage)
+		reward.set_health(reward.health - damage)
 
 /datum/fishing_challenge/proc/get_difficulty()
 	var/list/difficulty_holder = list(0)
