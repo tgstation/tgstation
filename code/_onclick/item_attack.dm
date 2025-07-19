@@ -228,7 +228,7 @@
 		return FALSE
 
 	var/final_force = CALCULATE_FORCE(src, attack_modifiers)
-	if(damtype != STAMINA && final_force && HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(damtype != STAMINA && final_force && HAS_TRAIT(user, TRAIT_PACIFISM) && !(item_flags & BYPASSES_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return FALSE
 
@@ -475,6 +475,9 @@
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	if(SEND_SIGNAL(user, COMSIG_SEND_ITEM_ATTACK_MESSAGE) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 

@@ -21,3 +21,7 @@
 		/datum/action/cooldown/spell/pointed/cleave,
 	)
 	grant_actions_by_list(actions_to_add)
+
+/mob/living/basic/heretic_summon/ash_spirit/Life(seconds_per_tick, times_fired)
+	. = ..()
+	adjustBruteLoss(-3) // 3 health passively healing

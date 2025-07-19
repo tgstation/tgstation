@@ -115,6 +115,10 @@
 /datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)
 	SIGNAL_HANDLER
 
+	if(ismecha(entered))
+		var/obj/vehicle/sealed/mecha/victim = entered
+		victim.take_damage(20, armour_penetration = 100)
+		return
 	if(!isliving(entered))
 		return
 	var/mob/living/victim = entered

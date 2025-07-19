@@ -24,6 +24,7 @@
 	owner.alpha = initial(owner.alpha)
 	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
 	owner.forceMove(location)
+	owner.apply_status_effect(/datum/status_effect/crucible_soul_cooldown)
 	location = null
 
 /datum/status_effect/crucible_soul/get_examine_text()
@@ -42,6 +43,14 @@
 	var/datum/status_effect/active_effect = owner.has_status_effect(/datum/status_effect/crucible_soul)
 	target = active_effect
 	qdel(target)
+
+/datum/status_effect/crucible_soul_cooldown
+	id = "Crucible Soul Cooldown"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 2 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul/cooldown
+	show_duration = TRUE
+	remove_on_fullheal = TRUE
 
 // DUSK AND DAWN
 /datum/status_effect/duskndawn
@@ -118,6 +127,10 @@
 	name = "Blessing of Crucible Soul"
 	desc = "You phased through reality. You are halfway to your final destination..."
 	icon_state = "crucible"
+
+/atom/movable/screen/alert/status_effect/crucible_soul/cooldown
+	desc = "You have recently phased through reality. You must wait before you can do so once more."
+	icon_state = "crucible_cooldown"
 
 /atom/movable/screen/alert/status_effect/duskndawn
 	name = "Blessing of Dusk and Dawn"
