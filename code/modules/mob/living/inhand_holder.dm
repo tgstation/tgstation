@@ -1,6 +1,6 @@
 //Generic system for picking up mobs.
 //Currently works for head and hands.
-/obj/item/clothing/head/mob_holder
+/obj/item/mob_holder
 	name = "bugged mob"
 	desc = "Yell at coderbrush."
 	icon = null
@@ -10,8 +10,12 @@
 	var/mob/living/held_mob
 	/// True if we've started being destroyed
 	var/destroying = FALSE
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	body_parts_covered = HEAD
+	slot_flags = ITEM_SLOT_HEAD
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
+/obj/item/mob_holder/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	if(head_icon)
 		worn_icon = head_icon
 	if(worn_state)
@@ -26,13 +30,13 @@
 	insert_mob(held_mob)
 	return ..()
 
-/obj/item/clothing/head/mob_holder/Destroy()
+/obj/item/mob_holder/Destroy()
 	destroying = TRUE
 	if(held_mob)
 		release()
 	return ..()
 
-/obj/item/clothing/head/mob_holder/proc/insert_mob(mob/living/new_prisoner)
+/obj/item/mob_holder/proc/insert_mob(mob/living/new_prisoner)
 	if(!istype(new_prisoner))
 		return FALSE
 	new_prisoner.setDir(SOUTH)
@@ -44,7 +48,7 @@
 	desc = new_prisoner.desc
 	return TRUE
 
-/obj/item/clothing/head/mob_holder/proc/on_mob_deleted()
+/obj/item/mob_holder/proc/on_mob_deleted()
 	SIGNAL_HANDLER
 	held_mob = null
 	if (isliving(loc))
@@ -52,10 +56,10 @@
 		holder.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	qdel(src)
 
-/obj/item/clothing/head/mob_holder/proc/update_visuals(mob/living/held_guy)
+/obj/item/mob_holder/proc/update_visuals(mob/living/held_guy)
 	appearance = held_guy.appearance
 
-/obj/item/clothing/head/mob_holder/on_thrown(mob/living/carbon/user, atom/target)
+/obj/item/mob_holder/on_thrown(mob/living/carbon/user, atom/target)
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -67,12 +71,12 @@
 	release()
 	return throw_mob
 
-/obj/item/clothing/head/mob_holder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+/obj/item/mob_holder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(held_mob && isturf(loc))
 		release()
 
-/obj/item/clothing/head/mob_holder/proc/release(display_messages = TRUE)
+/obj/item/mob_holder/proc/release(display_messages = TRUE)
 	if(!held_mob)
 		if(!destroying)
 			qdel(src)
@@ -93,31 +97,31 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/clothing/head/mob_holder/relaymove(mob/living/user, direction)
+/obj/item/mob_holder/relaymove(mob/living/user, direction)
 	release()
 
-/obj/item/clothing/head/mob_holder/container_resist_act()
+/obj/item/mob_holder/container_resist_act()
 	release()
 
-/obj/item/clothing/head/mob_holder/Exited(atom/movable/gone, direction)
+/obj/item/mob_holder/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(held_mob == gone)
 		release()
 
-/obj/item/clothing/head/mob_holder/on_found(mob/finder)
+/obj/item/mob_holder/on_found(mob/finder)
 	if(held_mob?.will_escape_storage())
 		to_chat(finder, span_warning("\A [held_mob.name] pops out! "))
 		finder.visible_message(span_warning("\A [held_mob.name] pops out of the container [finder] is opening!"), ignored_mobs = finder)
 		release(display_messages = FALSE)
 		return
 
-/obj/item/clothing/head/mob_holder/drone/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
+/obj/item/mob_holder/drone/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	//If we're not being put onto a drone, end it all
 	if(!isdrone(M))
 		return INITIALIZE_HINT_QDEL
 	return ..()
 
-/obj/item/clothing/head/mob_holder/drone/insert_mob(mob/living/new_prisoner)
+/obj/item/mob_holder/drone/insert_mob(mob/living/new_prisoner)
 	. = ..()
 	if(!isdrone(new_prisoner))
 		qdel(src)
@@ -125,32 +129,32 @@
 	name = "drone (hiding)"
 	desc = "This drone is scared and has curled up into a ball!"
 
-/obj/item/clothing/head/mob_holder/drone/update_visuals(mob/living/contained)
+/obj/item/mob_holder/drone/update_visuals(mob/living/contained)
 	var/mob/living/basic/drone/drone = contained
 	if(!drone)
 		return ..()
 	icon = 'icons/mob/silicon/drone.dmi'
 	icon_state = "[drone.visualAppearance]_hat"
 
-/obj/item/clothing/head/mob_holder/destructible
+/obj/item/mob_holder/destructible
 
-/obj/item/clothing/head/mob_holder/destructible/Destroy()
+/obj/item/mob_holder/destructible/Destroy()
 	if(held_mob)
 		release(display_messages = TRUE, delete_mob = TRUE)
 	return ..()
 
-/obj/item/clothing/head/mob_holder/destructible/release(display_messages = TRUE, delete_mob = FALSE)
+/obj/item/mob_holder/destructible/release(display_messages = TRUE, delete_mob = FALSE)
 	if(delete_mob && held_mob)
 		QDEL_NULL(held_mob)
 	return ..()
 
-/obj/item/clothing/head/mob_holder/attack_self(mob/user, modifiers)
+/obj/item/mob_holder/attack_self(mob/user, modifiers)
 	. = ..()
 	if(. || !held_mob) //overriden or mob missing
 		return
 	user.UnarmedAttack(held_mob, proximity_flag = TRUE, modifiers = modifiers)
 
-/obj/item/clothing/head/mob_holder/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/mob_holder/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. || !held_mob) // Another interaction was performed
 		return

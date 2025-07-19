@@ -47,7 +47,7 @@
 	var/leaking = FALSE
 	/// The pressure of the gases this tank supplies to internals.
 	var/distribute_pressure = ONE_ATMOSPHERE
-	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
+	/// Icon state when in a tank holder or a surgical table. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
 	///Used by process() to track if there's a reason to process each tick
 	var/excited = TRUE

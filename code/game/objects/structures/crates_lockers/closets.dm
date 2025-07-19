@@ -101,6 +101,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// how many pixels the closet can shift on the y axes when shaking
 	var/y_shake_pixel_shift = 1
 
+	VAR_PRIVATE
+		datum/closet_see_inside/closet_see_inside
+
 /datum/armor/structure_closet
 	melee = 20
 	bullet = 10
@@ -153,6 +156,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(is_station_level(z) && mapload)
 		add_to_roundstart_list()
 
+	closet_see_inside = new(src)
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload)
 		is_maploaded = TRUE
@@ -203,6 +208,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	id_card = null
 	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
+	QDEL_NULL(closet_see_inside)
 	GLOB.roundstart_station_closets -= src
 	return ..()
 
@@ -433,6 +439,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return TRUE
 	if(welded || locked)
 		return FALSE
+	if(isliving(user))
+		if(!(user.mobility_flags & MOBILITY_USE))
+			return FALSE
 	if(strong_grab)
 		if(user)
 			to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
@@ -974,7 +983,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			to_chat(user, span_warning("[src]'s door won't budge!"))
 		return
 	container_resist_act(user)
-
 
 /obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

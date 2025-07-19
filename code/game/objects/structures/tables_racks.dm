@@ -50,6 +50,8 @@
 	var/use_matrices_instead = FALSE
 	/// Matrix to return to on unflipping table
 	var/matrix/before_flipped_matrix
+	/// Do we place people onto the table rather than slamming them?
+	var/slam_gently = FALSE
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -62,7 +64,6 @@
 	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
 
 	var/static/list/loc_connections = list(
-		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
@@ -82,8 +83,13 @@
 		return
 
 	make_climbable()
-	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	AddComponent(/datum/component/table_smash, gentle_push = slam_gently, after_smash = CALLBACK(src, PROC_REF(after_smash)))
+
+/// Called after someone is harmfully smashed into us
+/obj/structure/table/proc/after_smash(mob/living/smashed)
+	return // This is mostly for our children
 
 /// Applies additional properties based on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
@@ -97,6 +103,7 @@
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
@@ -123,6 +130,7 @@
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table(new_dir = SOUTH)
 	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
+	qdel(GetComponent(/datum/component/climb_walkable))
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
@@ -242,6 +250,7 @@
 		return FALSE
 	if(border_dir == dir)
 		return FALSE
+
 	return TRUE
 
 /obj/structure/table/update_icon(updates=ALL)
@@ -261,62 +270,29 @@
 /obj/structure/table/attack_hand(mob/living/user, list/modifiers)
 	if(is_flipped)
 		return
-	if(Adjacent(user) && user.pulling)
-		if(isliving(user.pulling))
-			var/mob/living/pushed_mob = user.pulling
-			if(pushed_mob.buckled)
-				if(pushed_mob.buckled == src)
-					//Already buckled to the table, you probably meant to unbuckle them
-					return ..()
-				to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
-				return
-			if(user.combat_mode)
-				switch(user.grab_state)
-					if(GRAB_PASSIVE)
-						to_chat(user, span_warning("You need a better grip to do that!"))
-						return
-					if(GRAB_AGGRESSIVE)
-						tablepush(user, pushed_mob)
-					if(GRAB_NECK to GRAB_KILL)
-						tablelimbsmash(user, pushed_mob)
-			else
-				pushed_mob.visible_message(span_notice("[user] begins to place [pushed_mob] onto [src]..."), \
-									span_userdanger("[user] begins to place [pushed_mob] onto [src]..."))
-				if(do_after(user, 3.5 SECONDS, target = pushed_mob))
-					tableplace(user, pushed_mob)
-				else
-					return
-			user.stop_pulling()
-		else if(user.pulling.pass_flags & PASSTABLE)
-			user.Move_Pulled(src)
-			if (user.pulling.loc == loc)
-				user.visible_message(span_notice("[user] places [user.pulling] onto [src]."),
-					span_notice("You place [user.pulling] onto [src]."))
-				user.stop_pulling()
 	return ..()
 
 /obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(!istype(user) || !user.can_interact_with(src))
-		return FALSE
+		return
 
 	if(!can_flip)
 		return
 
 	if(!is_flipped)
 		user.balloon_alert_to_viewers("flipping table...")
-		if(!do_after(user, max_integrity * 0.25))
-			return
+		if(do_after(user, max_integrity * 0.25))
+			flip_table(get_dir(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		flip_table(get_dir(user, src))
-
-		return
-
-	else
-		user.balloon_alert_to_viewers("flipping table upright...")
-		if(do_after(user, max_integrity * 0.25, src))
-			unflip_table()
-			return TRUE
+	user.balloon_alert_to_viewers("flipping table upright...")
+	if(do_after(user, max_integrity * 0.25, src))
+		unflip_table()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
 	if (movable_entity == table) //Thing is not the table
@@ -333,68 +309,12 @@
 /obj/structure/table/attack_tk(mob/user)
 	return
 
-/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(.)
-		return
-	if(mover.throwing)
-		return TRUE
-	for(var/obj/structure/table/table in get_turf(mover))
-		if(!table.is_flipped)
-			return TRUE
-
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
 		return TRUE
 	if(pass_info.pass_flags & PASSTABLE)
 		return TRUE
 	return FALSE
-
-/obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(loc)
-	pushed_mob.set_resting(TRUE, TRUE)
-	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [src]."), \
-								span_notice("[user] places [pushed_mob] onto [src]."))
-	log_combat(user, pushed_mob, "places", null, "onto [src]")
-
-/obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
-		return
-	var/passtable_key = REF(user)
-	passtable_on(pushed_mob, passtable_key)
-	for (var/obj/obj in user.loc.contents)
-		if(!obj.CanAllowThrough(pushed_mob))
-			return
-	pushed_mob.Move(src.loc)
-	passtable_off(pushed_mob, passtable_key)
-	if(pushed_mob.loc != loc) //Something prevented the tabling
-		return
-	pushed_mob.Knockdown(30)
-	pushed_mob.apply_damage(10, BRUTE)
-	pushed_mob.apply_damage(40, STAMINA)
-	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
-								span_userdanger("[user] slams you onto \the [src]!"))
-	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
-	pushed_mob.add_mood_event("table", /datum/mood_event/table)
-	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAMMING, pushed_mob, src)
-
-/obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.Knockdown(30)
-	var/obj/item/bodypart/banged_limb = pushed_mob.get_bodypart(user.zone_selected) || pushed_mob.get_bodypart(BODY_ZONE_HEAD)
-	var/extra_wound = 0
-	if(HAS_TRAIT(user, TRAIT_HULK))
-		extra_wound = 20
-	pushed_mob.apply_damage(30, BRUTE, banged_limb, wound_bonus = extra_wound)
-	pushed_mob.apply_damage(60, STAMINA)
-	take_damage(50)
-	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
-								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
-	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
-	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
-	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_LIMB_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
@@ -427,8 +347,6 @@
 		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
-	else if(istype(tool, /obj/item/riding_offhand))
-		. = riding_offhand_act(user, tool)
 
 	// Continue to placing if we don't do anything else
 	if(.)
@@ -459,37 +377,6 @@
 	if(flip)
 		card.Flip()
 	return table_place_act(user, card, modifiers)
-
-/obj/structure/table/proc/riding_offhand_act(mob/living/user, obj/item/riding_offhand/riding_item)
-	var/mob/living/carried_mob = riding_item.rider
-	if(carried_mob == user) //Piggyback user.
-		return NONE
-
-	if(user.combat_mode)
-		user.unbuckle_mob(carried_mob)
-		tablelimbsmash(user, carried_mob)
-		return ITEM_INTERACT_SUCCESS
-
-	var/tableplace_delay = 3.5 SECONDS
-	var/skills_space = ""
-	if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-		tableplace_delay = 2 SECONDS
-		skills_space = " expertly"
-	else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-		tableplace_delay = 2.75 SECONDS
-		skills_space = " quickly"
-
-	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
-	if(istype(potential_spine))
-		tableplace_delay *= potential_spine.athletics_boost_multiplier
-
-	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-	if(!do_after(user, tableplace_delay, target = carried_mob))
-		return ITEM_INTERACT_BLOCKING
-	user.unbuckle_mob(carried_mob)
-	tableplace(user, carried_mob)
-	return ITEM_INTERACT_SUCCESS
 
 // Where putting things on tables is handled.
 /obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -535,18 +422,6 @@
 		qdel(src)
 		return TRUE
 	return FALSE
-
-/obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
-	SIGNAL_HANDLER
-	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
-		return
-	target.Knockdown(SHOVE_KNOCKDOWN_TABLE, daze_amount = 3 SECONDS)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
-		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
-	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(shover, target, "shoved", "onto [src] (table)[weapon ? " with [weapon]" : ""]")
-	return COMSIG_LIVING_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
@@ -747,31 +622,18 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
-/obj/structure/table/wood/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
-	. = ..()
-	if(prob(33))
-		wood_table_shatter(target)
-
-/obj/structure/table/wood/tablepush(mob/living/user, mob/living/pushed_mob)
-	. = ..()
-	if(!QDELETED(src) && prob(33))
-		wood_table_shatter(pushed_mob)
-
-/obj/structure/table/wood/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
-	. = ..()
-	if(!QDELETED(src) && prob(33))
-		wood_table_shatter(pushed_mob)
-
-/obj/structure/table/wood/proc/wood_table_shatter(mob/living/victim)
+/obj/structure/table/wood/after_smash(mob/living/smashed)
+	if(QDELETED(src) || prob(66))
+		return
 	visible_message(
 		span_warning("[src] smashes into bits!"),
 		blind_message = span_hear("You hear the loud cracking of wood being split."),
 	)
 
 	playsound(src, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
-	victim.Knockdown(10 SECONDS)
-	victim.Paralyze(2 SECONDS)
-	victim.apply_damage(20, BRUTE)
+	smashed.Knockdown(10 SECONDS)
+	smashed.Paralyze(2 SECONDS)
+	smashed.apply_damage(20, BRUTE)
 	deconstruct(FALSE)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
@@ -982,8 +844,7 @@
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
 	can_flip = FALSE
 
-/obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
-	..()
+/obj/structure/table/bronze/after_smash(mob/living/pushed_mob)
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/rglass
@@ -1040,10 +901,17 @@
 	canSmoothWith = null
 	can_buckle = TRUE
 	buckle_lying = 90
-	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 	can_flip = FALSE
+	slam_gently = TRUE
+	/// Mob currently lying on the table
 	var/mob/living/carbon/patient = null
+	/// Operating computer we're linked to, to sync operations from
 	var/obj/machinery/computer/operating/computer = null
+	/// Tank attached under the table
+	var/obj/item/tank/air_tank = null
+	/// Mask attached *to* the table, doesn't mean its inside the table as it can be worn by the patient
+	var/obj/item/clothing/mask/breath/breath_mask = null
 
 /obj/structure/table/optable/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -1053,24 +921,106 @@
 			computer.table = src
 			break
 
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(mark_patient),
+		COMSIG_ATOM_EXITED = PROC_REF(unmark_patient),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	for (var/mob/living/carbon/potential_patient in loc)
+		mark_patient(potential_patient)
 
 /obj/structure/table/optable/Destroy()
 	if(computer && computer.table == src)
 		computer.table = null
 	patient = null
-	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
-	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
+	QDEL_NULL(air_tank)
+	if (breath_mask?.loc == src)
+		qdel(breath_mask)
+	breath_mask = null
 	return ..()
+
+/obj/structure/table/optable/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(HAS_TRAIT(being_buckled, TRAIT_RESTRAINED))
+		return ..()
+
+	if(being_buckled == buckler)
+		being_buckled.visible_message(
+			span_notice("[buckler] lays down on [src]."),
+			span_notice("You lay down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_buckled.visible_message(
+			span_notice("[buckler] lays [being_buckled] down on [src]."),
+			span_notice("[buckler] lays you down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/table/optable/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
+	if(HAS_TRAIT(being_unbuckled, TRAIT_RESTRAINED))
+		return ..()
+
+	if(being_unbuckled == unbuckler)
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] gets up from [src]."),
+			span_notice("You get up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] pulls [being_unbuckled] up from [src]."),
+			span_notice("[unbuckler] pulls you up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/table/optable/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isnull(held_item))
+		if (breath_mask?.loc == src)
+			context[SCREENTIP_CONTEXT_RMB] = "Take mask"
+			. |= CONTEXTUAL_SCREENTIP_SET
+		return
+
+	if(breath_mask && breath_mask != held_item)
+		if (held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "Detach mask"
+			. |= CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/clothing/mask/breath))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach mask"
+		. |= CONTEXTUAL_SCREENTIP_SET
+
+	if(air_tank)
+		if (held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Detach tank"
+			. |= CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/tank))
+		var/obj/item/tank/as_tank = held_item
+		if (as_tank.tank_holder_icon_state)
+			context[SCREENTIP_CONTEXT_LMB] = "Attach tank"
+			. |= CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/table/optable/atom_deconstruct(disassembled)
+	. = ..()
+	var/atom/drop_loc = drop_location()
+	if (!drop_loc)
+		return
+
+	if (air_tank)
+		air_tank.forceMove(drop_loc)
+		air_tank = null
+
+	if (!breath_mask)
+		return
+	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
+	if (breath_mask.loc == src)
+		breath_mask.forceMove(drop_loc)
+	else if (breath_mask.loc)
+		UnregisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED)
+	breath_mask = null
 
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
-
-/obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(loc)
-	pushed_mob.set_resting(TRUE, TRUE)
-	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
 
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
@@ -1102,19 +1052,223 @@
 /// The check is a bit broad so we can find a replacement patient.
 /obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
+
 	if(patient && patient != potential_patient)
 		return
 
 	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
-		patient = potential_patient
+		set_patient(potential_patient)
 		return
 
 	// Find another lying mob as a replacement.
 	for (var/mob/living/carbon/replacement_patient in loc.contents)
 		if(replacement_patient.body_position == LYING_DOWN)
-			patient = replacement_patient
+			set_patient(replacement_patient)
 			return
-	patient = null
+
+	set_patient(null)
+
+/obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
+	if (patient)
+		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED))
+		if (patient.external && patient.external == air_tank)
+			patient.close_externals()
+
+	patient = new_patient
+	update_appearance()
+	if (!patient)
+		return
+	RegisterSignal(patient, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_surgery_change))
+	RegisterSignal(patient, COMSIG_MOB_SURGERY_FINISHED, PROC_REF(on_surgery_change))
+
+/obj/structure/table/optable/proc/on_surgery_change(datum/source)
+	SIGNAL_HANDLER
+	update_appearance()
+
+/obj/structure/table/optable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (istype(tool, /obj/item/clothing/mask/breath))
+		if (breath_mask && breath_mask != tool)
+			balloon_alert(user, "mask already attached!")
+			return ITEM_INTERACT_BLOCKING
+
+		if (!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		if (breath_mask != tool)
+			breath_mask = tool
+			RegisterSignal(breath_mask, COMSIG_MOVABLE_MOVED, PROC_REF(on_mask_moved))
+
+		balloon_alert(user, "mask attached")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if (!istype(tool, /obj/item/tank))
+		return NONE
+
+	if (air_tank)
+		balloon_alert(user, "tank already attached!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/tank/as_tank = tool
+	if (!as_tank.tank_holder_icon_state)
+		balloon_alert(user, "does not fit!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	air_tank = as_tank
+	balloon_alert(user, "tank attached")
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/screwdriver_act(mob/living/user, obj/item/tool)
+	if (!breath_mask)
+		return NONE
+
+	if (breath_mask.loc != src)
+		return ITEM_INTERACT_BLOCKING
+
+	breath_mask.forceMove(drop_location())
+	tool.play_tool_sound(src, 50)
+	balloon_alert(user, "mask detached")
+	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
+	if (user.CanReach(breath_mask))
+		user.put_in_hands(breath_mask)
+	breath_mask = null
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/wrench_act(mob/living/user, obj/item/tool)
+	if (!air_tank)
+		return NONE
+	balloon_alert(user, "detaching the tank...")
+	if (!tool.use_tool(src, user, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	air_tank.forceMove(drop_location())
+	tool.play_tool_sound(src, 50)
+	balloon_alert(user, "tank detached")
+	if (user.CanReach(air_tank))
+		user.put_in_hands(air_tank)
+	if (patient?.external && patient.external == air_tank)
+		patient.close_externals()
+	air_tank = null
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/attack_hand_secondary(mob/living/user, list/modifiers)
+	. = ..()
+	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if (detach_mask(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/table/optable/examine(mob/user)
+	. = ..()
+	if (air_tank)
+		. += span_notice("It has \a [air_tank] secured to it with a couple of [EXAMINE_HINT("bolts")].")
+		if (patient)
+			. += span_info("You can connect [patient]'s internals to \the [air_tank] by dragging \the [src] onto them.")
+	else
+		. += span_notice("It has an attachment slot for an air tank underneath.")
+	if (breath_mask)
+		. += span_notice("It has \a [breath_mask] attached to its side, the tube secured with a single [EXAMINE_HINT("screw")].")
+		if (breath_mask.loc == src)
+			. += span_info("You can detach the mask by right-clicking \the [src] with an empty hand.")
+	else
+		. += span_notice("There's a port for a breathing mask tube on its side.")
+
+/obj/structure/table/optable/proc/detach_mask(mob/living/user)
+	if (!istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+		return FALSE
+
+	if (!breath_mask)
+		balloon_alert(user, "no mask attached!")
+		return TRUE
+
+	if (!user.put_in_hands(breath_mask))
+		balloon_alert(user, "hands busy!")
+		return TRUE
+
+	to_chat(user, span_notice("You pull out \the [breath_mask] from \the [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
+	if (over != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+		return
+
+	if (!air_tank)
+		balloon_alert(user, "no tank attached!")
+		return
+
+	var/internals = patient.can_breathe_internals()
+	if (!internals)
+		balloon_alert(user, "no internals connector!")
+		return
+
+	user.visible_message(span_notice("[user] begins connecting [src]'s [air_tank] to [patient]'s [internals]."), span_notice("You begin connecting [src]'s [air_tank] to [patient]'s [internals]..."), ignored_mobs = patient)
+	to_chat(patient, span_userdanger("[user] begins connecting [src]'s [air_tank] to your [internals]!"))
+
+	if (!do_after(user, 4 SECONDS, patient))
+		return
+
+	if (!air_tank || patient != over || !patient.can_breathe_internals())
+		return
+
+	patient.open_internals(air_tank, is_external = TRUE)
+	to_chat(user, span_notice("You connect [src]'s [air_tank] to [patient]'s [internals]."))
+	to_chat(patient, span_userdanger("[user] connects [src]'s [air_tank] to your [internals]!"))
+
+/obj/structure/table/optable/proc/on_mask_moved(datum/source, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	if (oldloc != src)
+		UnregisterSignal(oldloc, COMSIG_MOVABLE_MOVED)
+	if (breath_mask.loc && breath_mask.loc != src)
+		RegisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED, PROC_REF(check_mask_range))
+	check_mask_range()
+
+/obj/structure/table/optable/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (breath_mask)
+		check_mask_range()
+
+/obj/structure/table/optable/proc/check_mask_range()
+	SIGNAL_HANDLER
+
+	// Check if the mask is inside of us, or if its being *directly held* by someone and not in their backpack
+	if (breath_mask.loc == src || (isturf(breath_mask.loc?.loc) && in_range(breath_mask, src)))
+		return
+
+	if(isliving(loc))
+		var/mob/living/user = loc
+		to_chat(user, span_warning("[breath_mask]'s tube overextends and it comes out of your hands!"))
+	else
+		visible_message(span_notice("[breath_mask] snaps back into \the [src]."))
+	snap_mask_back()
+
+/obj/structure/table/optable/proc/snap_mask_back()
+	SIGNAL_HANDLER
+	if (ismob(breath_mask.loc))
+		var/mob/as_mob = breath_mask.loc
+		as_mob.temporarilyRemoveItemFromInventory(breath_mask, force = TRUE)
+	breath_mask.forceMove(src)
+	update_appearance()
+
+/obj/structure/table/optable/update_overlays()
+	. = ..()
+	if (air_tank)
+		. += mutable_appearance(icon, air_tank.tank_holder_icon_state)
+	if (breath_mask?.loc == src)
+		. += mutable_appearance(icon, "mask_[breath_mask.icon_state]")
+	if (!length(patient?.surgeries))
+		return
+	. += mutable_appearance(icon, "[icon_state]_[computer ? "" : "un"]linked")
+	if (computer)
+		. += emissive_appearance(icon, "[icon_state]_linked", src, alpha = 175)
 
 /*
  * Racks
@@ -1266,3 +1420,4 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+

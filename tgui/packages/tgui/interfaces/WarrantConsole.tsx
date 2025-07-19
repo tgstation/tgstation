@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   BlockQuote,
@@ -63,7 +63,7 @@ export const WarrantConsole = (props) => {
 const RecordList = (props) => {
   const { act, data } = useBackend<Data>();
   const { records = [] } = data;
-  const sorted = sortBy(records, (record) => record.crew_name);
+  const sorted = sortBy(records, [(record) => record.crew_name]);
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     WarrantRecord | undefined

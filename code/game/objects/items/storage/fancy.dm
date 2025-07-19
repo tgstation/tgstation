@@ -196,6 +196,10 @@
 	age_restricted = TRUE
 	contents_tag = "cigarette"
 	storage_type = /datum/storage/cigarette_box
+	drop_sound = SFX_CIG_PACK_DROP
+	pickup_sound = SFX_CIG_PACK_PICKUP
+	throw_drop_sound = SFX_CIG_PACK_THROW_DROP
+	sound_vary = TRUE
 
 	///for cigarette overlay
 	var/candy = FALSE
@@ -209,6 +213,8 @@
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
+
+	playsound(src, storage_type.rustle_sound, 50, TRUE)
 
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
@@ -314,6 +320,13 @@
 	icon_state = "robustg"
 	base_icon_state = "robustg"
 	spawn_type = /obj/item/cigarette/robustgold
+
+/obj/item/storage/fancy/cigarettes/cigpack_greytide
+	name = "\improper Mainthol Grey packet"
+	desc = "The thin grey line."
+	icon_state = "greytide"
+	base_icon_state = "greytide"
+	spawn_type = /obj/item/cigarette/greytide
 
 /obj/item/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"

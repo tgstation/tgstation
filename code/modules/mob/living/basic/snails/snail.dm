@@ -10,6 +10,8 @@
 	icon = 'icons/mob/simple/pets.dmi'
 	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 1)
 	mob_biotypes = MOB_ORGANIC
+	density = FALSE
+	pass_flags = PASSTABLE | PASSMOB
 	health = 30
 	maxHealth = 30
 	speed = 6
@@ -76,7 +78,7 @@
 	apply_damage(500) //ouch
 
 /mob/living/basic/snail/mob_pickup(mob/living/user)
-	var/obj/item/clothing/head/mob_holder/snail/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/mob_holder/snail/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	var/display_message = "[user] [HAS_TRAIT(src, TRAIT_MOVE_FLOATING) ? "scoops up [src]" : "peels [src] off the ground"]!"
 	user.visible_message(span_warning(display_message))
 	user.put_in_hands(holder)
@@ -106,9 +108,9 @@
 
 
 ///snail's custom holder object
-/obj/item/clothing/head/mob_holder/snail
+/obj/item/mob_holder/snail
 
-/obj/item/clothing/head/mob_holder/snail/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/mob_holder/snail/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/hydroponics))
 		return NONE
 

@@ -31,7 +31,7 @@
 		new_ability.Grant(user)
 
 	for(var/mutation in mutations_to_add)
-		user.dna.add_mutation(mutation)
+		user.dna.add_mutation(mutation, MUTATION_SOURCE_GHOST_ROLE)
 
 /datum/outfit/deathmatch_loadout/naked
 	name = "Deathmatch: Naked"
@@ -298,7 +298,7 @@
 	desc = "What"
 
 	l_hand = /obj/item/toy/katana
-	uniform = /obj/item/clothing/under/costume/schoolgirl
+	uniform = /obj/item/clothing/under/costume/seifuku
 	suit = /obj/item/clothing/suit/costume/joker
 	shoes = /obj/item/clothing/shoes/clown_shoes/meown_shoes
 	head = /obj/item/clothing/head/costume/kitty
@@ -1122,8 +1122,8 @@
 		/datum/action/cooldown/spell/smoke/lesser
 	)
 	mutations_to_add = list(
-		/datum/mutation/human/medieval,
-		/datum/mutation/human/lay_on_hands, // useless, but fun
+		/datum/mutation/medieval,
+		/datum/mutation/lay_on_hands, // useless, but fun
 	)
 
 // Rat'var Apostate

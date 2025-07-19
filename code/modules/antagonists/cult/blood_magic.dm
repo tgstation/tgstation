@@ -388,7 +388,7 @@
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
 	if(!cast_spell(M, user))
 		return
-	log_combat(user, M, "used a cult spell on", source.name, "")
+	log_combat(user, M, "used a cult spell on", src, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
@@ -665,7 +665,7 @@
 				candidate.color = prev_color
 				return
 			candidate.grab_ghost()
-			user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!"))
+			user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a [construct_class]!"))
 			make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
 			uses--
 			qdel(candidate)
@@ -893,7 +893,6 @@
 	if(!our_turf)
 		return
 	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf, 2))
-		// NON-MODULE CHANGE for blood
 		if(blood_around_us.decal_reagent == /datum/reagent/blood || blood_around_us.reagents?.has_reagent(/datum/reagent/blood))
 			blood_to_gain += max(blood_around_us.bloodiness * 0.6 * BLOOD_TO_UNITS_MULTIPLIER, 1)
 			new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))

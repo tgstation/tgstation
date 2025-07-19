@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import {
   Button,
   Collapsible,
@@ -8,7 +8,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -119,7 +119,7 @@ export const MatMarket = (props) => {
             </Stack>
           </Section>
         </Section>
-        {sortBy(materials, (tempmat: Material) => tempmat.rarity).map(
+        {sortBy(materials, [(tempmat: Material) => tempmat.rarity]).map(
           (material, i) => (
             <Section key={i}>
               <Stack fill>

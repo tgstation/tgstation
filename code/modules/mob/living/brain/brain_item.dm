@@ -485,7 +485,7 @@
 /obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)
 	var/starving_cat_bonus = owner.nutrition <= NUTRITION_LEVEL_HUNGRY ? 1 : 10
 	var/crazy_feral_cat = clamp((starving_cat_bonus * owner.mob_mood?.sanity_level), 0, 100)
-	if(prob(crazy_feral_cat))
+	if(prob(crazy_feral_cat) || HAS_TRAIT(owner, TRAIT_FERAL_BITER))
 		return owner.get_bodypart(BODY_ZONE_HEAD) || ..()
 	return ..()
 
@@ -493,6 +493,13 @@
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
 	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
+
+/obj/item/organ/brain/ghost
+	name = "ghost brain"
+	desc = "How are you even able to hold this?"
+	icon_state = "brain-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 /obj/item/organ/brain/abductor
 	name = "grey brain"
@@ -648,6 +655,9 @@
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
+	if(HAS_TRAIT(owner, TRAIT_FERAL_BITER)) //Feral biters will always prefer biting.
+		var/obj/item/bodypart/head/found_head = owner.get_bodypart(BODY_ZONE_HEAD)
+		return found_head || active_hand // If we are a feral biter, return a usable head.
 	if(target.pulledby == owner) // if we're grabbing our target we're beating them to death with our bare hands
 		return active_hand
 	if(target.body_position == LYING_DOWN && owner.usable_legs)

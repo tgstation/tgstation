@@ -18,7 +18,10 @@
 /mob/living/carbon/human/can_equip(obj/item/equip_target, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EQUIPPING_ITEM, equip_target, slot) == COMPONENT_BLOCK_EQUIP)
 		return FALSE
-
+	if(HAS_TRAIT(equip_target, TRAIT_NODROP) && (equip_target in held_items))
+		if(!disable_warning)
+			to_chat(src, span_warning("[equip_target] won't budge, it's impossible to put it on!"))
+		return FALSE
 	return dna.species.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped, indirect_action)
 
 /mob/living/carbon/human/get_item_by_slot(slot_id)
@@ -406,13 +409,14 @@
 		hand_bodyparts.len = amt
 	else if(amt > old_limbs)
 		hand_bodyparts.len = amt
-		for(var/i in old_limbs+1 to amt)
-			var/path = /obj/item/bodypart/arm/left
+		for(var/i in old_limbs + 1 to amt)
+			var/obj/item/bodypart/new_bodypart
 			if(IS_RIGHT_INDEX(i))
-				path = /obj/item/bodypart/arm/right
+				new_bodypart = newBodyPart(BODY_ZONE_R_ARM)
+			else
+				new_bodypart = newBodyPart(BODY_ZONE_L_ARM)
 
-			var/obj/item/bodypart/BP = new path ()
-			BP.held_index = i
-			BP.try_attach_limb(src, TRUE)
-			hand_bodyparts[i] = BP
+			new_bodypart.held_index = i
+			new_bodypart.try_attach_limb(src, TRUE)
+			hand_bodyparts[i] = new_bodypart
 	..() //Don't redraw hands until we have organs for them

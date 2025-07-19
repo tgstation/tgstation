@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
 		update_appearance()
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 /obj/machinery/washing_machine/proc/wash_cycle(mob/user)
 	for(var/X in contents)
@@ -299,7 +299,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(!can_adjust && adjusted == ALT_STYLE) //we deadjust the uniform if it's now unadjustable
 			toggle_jumpsuit_adjust()
 
-/obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
 	..()
 	held_mob.machine_wash(washer)
 

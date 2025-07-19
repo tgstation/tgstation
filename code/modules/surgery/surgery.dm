@@ -33,7 +33,7 @@
 	var/requires_bodypart_type = BODYTYPE_ORGANIC
 
 	///The speed modifier given to the surgery through external means.
-	var/speed_modifier = 0
+	var/speed_modifier = 1
 	///Whether the surgery requires research to do. You need to add a design if using this!
 	var/requires_tech = FALSE
 	///typepath of a surgery that will, once researched, replace this surgery in the operating menu.
@@ -64,6 +64,8 @@
 		operated_wound = null
 	if(target)
 		target.surgeries -= src
+		if(!QDELING(target))
+			SEND_SIGNAL(target, COMSIG_MOB_SURGERY_FINISHED, type, location, operated_bodypart)
 	target = null
 	operated_bodypart = null
 	return ..()

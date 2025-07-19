@@ -262,7 +262,7 @@
 	var/damage_falloff_tile
 	/// How much we want to drop stamina damage (defined by the stamina variable) per tile as it travels through the air
 	var/stamina_falloff_tile
-	/// How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	/// How much we want to drop both wound_bonus and exposed_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	/// How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
@@ -301,7 +301,7 @@
 	pixels_moved_last_tile -= ICON_SIZE_ALL
 	if(wound_falloff_tile && wound_bonus != CANT_WOUND)
 		wound_bonus += wound_falloff_tile
-		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+		exposed_wound_bonus = max(0, exposed_wound_bonus + wound_falloff_tile)
 	if(embed_falloff_tile && get_embed())
 		embed_data.embed_chance += embed_falloff_tile
 	if(damage_falloff_tile && damage >= 0)
@@ -496,8 +496,12 @@
 		return
 
 	last_impact_turf = get_turf(target)
+
+	// If our target has TRAIT_DESIGNATED_TARGET, treat accuracy_falloff as 0
+	var/effective_accuracy = HAS_TRAIT(target, TRAIT_DESIGNATED_TARGET) ? 0 : accuracy_falloff
+
 	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(last_impact_turf, starting)), 5, 100))
+	def_zone = ran_zone(def_zone, clamp(accurate_range - (effective_accuracy * get_dist(last_impact_turf, starting)), 5, 100))
 	var/impact_result = process_hit_loop(select_target(last_impact_turf, target))
 	if (impact_result == PROJECTILE_IMPACT_PASSED)
 		return
@@ -1266,6 +1270,11 @@
 				break
 			source_loc = new_loc
 		pixel_y = pixel_y % (ICON_SIZE_X / 2)
+
+	// We've got moved by turf offsets
+	if (starting != source_loc)
+		starting = source_loc
+		forceMove(source_loc)
 
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)

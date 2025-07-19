@@ -83,10 +83,7 @@
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)
 	comms.implant(src)
-	var/static/list/accesses = list(
-		/datum/id_trim/job/shaft_miner,
-	)
-	AddElement(/datum/element/mob_access, accesses)
+	assign_access()
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
@@ -273,3 +270,10 @@
 		return
 
 	. += combat_mode ? combat_overlay : neutral_overlay
+
+/mob/living/basic/mining_drone/proc/assign_access()
+	var/static/list/required_access
+	if(isnull(required_access))
+		var/datum/id_trim/access_card = SSid_access.trim_singletons_by_path[/datum/id_trim/job/shaft_miner]
+		required_access = access_card.access
+	AddElement(/datum/element/mob_access, required_access)
