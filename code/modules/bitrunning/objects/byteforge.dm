@@ -5,6 +5,7 @@
 	desc = "A machine used by the quantum server. Quantum code converges here, materializing decrypted assets from the virtual abyss."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	icon_state = "byteforge"
+	base_icon_state = "byteforge"
 	obj_flags = BLOCKS_CONSTRUCTION | CAN_BE_HIT
 	/// Idle particles
 	var/mutable_appearance/byteforge_particles
@@ -12,17 +13,48 @@
 /obj/machinery/byteforge/Initialize(mapload)
 	. = ..()
 
-	return INITIALIZE_HINT_LATELOAD
+	register_context()
 
 /obj/machinery/byteforge/post_machine_initialize()
 	. = ..()
 
 	setup_particles()
 
+/obj/machinery/byteforge/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		return
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/byteforge/examine(mob/user)
+	. = ..()
+
+	. += span_notice("Make sure this is 4 tiles from the quantum server")
+
+	. += span_notice("Its maintainance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	if(panel_open)
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+
 /obj/machinery/byteforge/update_appearance(updates)
 	. = ..()
 
 	setup_particles()
+
+/obj/machinery/byteforge/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	. = ITEM_INTERACT_FAILURE
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", base_icon_state, screwdriver))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/byteforge/crowbar_act(mob/living/user, obj/item/crowbar)
+	. = ITEM_INTERACT_FAILURE
+	if(default_deconstruction_crowbar(crowbar))
+		return ITEM_INTERACT_SUCCESS
 
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)
