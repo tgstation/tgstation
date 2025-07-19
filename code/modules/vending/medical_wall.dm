@@ -11,8 +11,6 @@
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
 		/obj/item/healthanalyzer/simple = 2,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/medical/bone_gel = 1,
 	)
 	contraband = list(
 		/obj/item/storage/box/bandages = 1,
@@ -24,8 +22,7 @@
 		/obj/item/reagent_containers/applicator/patch/aiuri = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wallmed
-	all_products_free = TRUE
-	default_price = PAYCHECK_CREW * 0.5 // Cheap since crew should be able to affort it in emergency situations
+	default_price = PAYCHECK_CREW * 0.2 // Cheap since crew should be able to affort it in emergency situations
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_MED
 	tiltable = FALSE

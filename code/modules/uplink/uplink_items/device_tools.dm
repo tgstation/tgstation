@@ -26,8 +26,9 @@
 	name = "combat first aid kit"
 	desc = "An medkit meant for combat support, it contains. Two medicated sutures and mesh, Gauze, Advanced health analyzer, And as last atropine medipen"
 	item = /obj/item/storage/medkit/tactical_lite
-	cost = 4
+	cost = 3
 	surplus = 72
+	purchasable_from = UPLINK_TRAITORS
 
 /datum/uplink_item/device_tools/surgery_syndie
 	name = "Full Syndicate Surgery Medkit"
