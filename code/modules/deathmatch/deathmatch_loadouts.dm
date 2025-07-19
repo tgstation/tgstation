@@ -941,8 +941,8 @@
 	uniform = /obj/item/clothing/under/color/black
 	id_trim = null
 	belt = /obj/item/melee/cultblade/dagger
-	l_pocket = /obj/item/flashlight/flare/culttorch
-	r_pocket = /obj/item/flashlight/flare/culttorch
+	l_pocket = /obj/item/flashlight/flare/torch/red/on
+	r_pocket = /obj/item/flashlight/flare/torch/red/on
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/cult/alt
 	l_hand = /obj/item/shield/mirror // the dreaded return!!
@@ -969,8 +969,8 @@
 	uniform = /obj/item/clothing/under/color/red
 	id_trim = null
 	belt = /obj/item/melee/cultblade/dagger
-	l_pocket = /obj/item/flashlight/flare/culttorch
-	r_pocket = /obj/item/flashlight/flare/culttorch
+	l_pocket = /obj/item/flashlight/flare/torch/red/on
+	r_pocket = /obj/item/flashlight/flare/torch/red/on
 	gloves = /obj/item/clothing/gloves/color/red
 	shoes = /obj/item/clothing/shoes/cult
 	l_hand = null
