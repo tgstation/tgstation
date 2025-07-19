@@ -2525,45 +2525,51 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/glitter
-	name = "Generic Glitter"
-	description = "if you can see this description, contact a coder."
+	name = "Glitter"
+	description = "The herpes of arts and crafts."
+	data = list("colors"=list(COLOR_WHITE = 100))
 	color = COLOR_WHITE //pure white
 	taste_description = "plastic"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/glitter_type = /obj/effect/decal/cleanable/glitter
+
+/datum/reagent/glitter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(25, seconds_per_tick))
+		affected_mob.emote("cough")
+		expose_turf(get_turf(affected_mob), 0)
 
 /datum/reagent/glitter/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	exposed_turf.spawn_unique_cleanable(glitter_type)
+	exposed_turf.spawn_glitter(data["colors"])
 
-/datum/reagent/glitter/pink
-	name = "Pink Glitter"
-	description = "pink sparkles that get everywhere"
-	color = "#ff8080" //A light pink color
-	glitter_type = /obj/effect/decal/cleanable/glitter/pink
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+/datum/reagent/glitter/on_new(data)
+	. = ..()
 
-/datum/reagent/glitter/white
-	name = "White Glitter"
-	description = "white sparkles that get everywhere"
-	glitter_type = /obj/effect/decal/cleanable/glitter/white
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	color = pick(data["colors"])
 
-/datum/reagent/glitter/blue
-	name = "Blue Glitter"
-	description = "blue sparkles that get everywhere"
-	color = "#4040FF" //A blueish color
-	glitter_type = /obj/effect/decal/cleanable/glitter/blue
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+/datum/reagent/glitter/on_merge(list/mix_data, amount)
+	. = ..()
 
-/datum/reagent/glitter/confetti
+	var/prop_current = (volume-amount)/(volume)
+
+	if(mix_data)
+		data["colors"] = blend_weighted_lists(mix_data["colors"], data["colors"], prop_current)
+
+	color = pick(data["colors"])
+
+/datum/reagent/confetti
 	name = "Confetti"
 	description = "Tiny plastic flakes that are impossible to sweep up."
 	color = "#7dd87b"
-	glitter_type = /obj/effect/decal/cleanable/confetti
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/confetti/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if(!istype(exposed_turf))
+		return
+	exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/confetti)
 
 /datum/reagent/pax
 	name = "Pax"

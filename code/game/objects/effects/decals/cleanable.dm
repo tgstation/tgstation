@@ -134,3 +134,7 @@
 	if (existing)
 		return existing
 	return new cleanable_type(checkturf)
+
+/turf/proc/spawn_glitter(glitter_colors)
+	var/obj/effect/decal/cleanable/glitter/new_glitter = spawn_unique_cleanable(/obj/effect/decal/cleanable/glitter)
+	new_glitter.color = pick_weight(glitter_colors)

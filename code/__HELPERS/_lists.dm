@@ -1344,3 +1344,17 @@
 	while(islist(result))
 		result = pick(result)
 	return result
+
+/** Takes in two weighted lists and outputs a third list containing the elements of both inputs with their weights blended according to a given proportion.
+ * Not exact and may have rounding errors, will round to nearest 1/1000.
+ * */
+/proc/blend_weighted_lists(list/listA, list/listB, blend)
+	var/list/joined_list = listA | listB
+
+	listA = counterlist_normalise(listA)
+	listB = counterlist_normalise(listB)
+
+	for(var/element in joined_list)
+		joined_list[element] = round((listA[element] * (1 - blend) + listB[element] * (blend)) * 1000)
+
+	return joined_list

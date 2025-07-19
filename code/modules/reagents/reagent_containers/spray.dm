@@ -393,7 +393,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	reagent_flags = NONE
-	list_reagents = list(/datum/reagent/glitter/confetti = 15)
+	list_reagents = list(/datum/reagent/confetti = 15)
 	volume = 15
 	amount_per_transfer_from_this = 5
 	can_toggle_range = FALSE
