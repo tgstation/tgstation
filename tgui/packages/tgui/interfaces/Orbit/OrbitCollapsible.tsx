@@ -10,7 +10,7 @@ import {
   sortByDisplayName,
 } from './helpers';
 import { OrbitItem } from './OrbitItem';
-import { Observable } from './types';
+import type { Observable } from './types';
 
 type Props = {
   color?: string;
@@ -49,7 +49,7 @@ export function OrbitCollapsible(props: Props) {
       bold
       color={color || 'grey'}
       open={!!color}
-      title={title + ` - (${filteredSection.length})`}
+      title={`${title} - (${filteredSection.length})`}
     >
       <Stack wrap g={0.5}>
         {filteredSection.map((item) => (

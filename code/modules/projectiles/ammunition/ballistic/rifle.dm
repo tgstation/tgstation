@@ -143,7 +143,7 @@
 	var/obj/item/ammo_casing/rebar/healium/casing = parent
 	casing.heals_left -= seconds_per_tick * 1 SECONDS
 	var/update_health = FALSE
-	var/healing = healing_per_second * seconds_per_tick
+	var/healing = -healing_per_second * seconds_per_tick
 	update_health += owner.adjustBruteLoss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
 	update_health += owner.adjustFireLoss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
 	update_health += owner.adjustToxLoss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)

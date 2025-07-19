@@ -3,7 +3,7 @@ import { Button, Divider, Section } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { DELAYS, REV_DELAYS } from './constants';
 import { DelayHelper } from './DelayHelper';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function Timing(props) {
   const { act, data } = useBackend<PodLauncherData>();
