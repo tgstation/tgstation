@@ -277,6 +277,9 @@
 	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
 	if(QDELETED(victim))
 		return
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if(!targeter.can_attack(controller.pawn, victim))
+		return
 	// cancel the action if they're below our given crit stat, OR if we're trying to attack ourselves (this can happen on tamed mobs w/ protect subtree rarely)
 	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT] || victim == controller.pawn)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)

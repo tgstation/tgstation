@@ -334,3 +334,6 @@
 	#define FAIL_PROB_INDEX 1
 	/// Index in modifiers containing the modifer to surgery speed
 	#define SPEED_MOD_INDEX 2
+
+///from mob/living/befriend()
+#define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"
