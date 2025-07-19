@@ -472,3 +472,13 @@
       hijacked.
   SmArtKar:
   - bugfix: Fixed projectiles inheriting gun's pixel offsets when fired
+2025-07-19:
+  OrionTheFox:
+  - qol: made the Beach Bar bitdomain ghostrole spawners keep your old body revivable
+      (as other bitdomain spawners do)
+  SmArtKar:
+  - bugfix: Fixed flashlight eyes trying to add nonexistent irises to themselves
+  SyncIt21:
+  - bugfix: You cannot complete re-enforced girders with iron rods
+  TheEmber:
+  - bugfix: Fixed building wall out of wooden barricade

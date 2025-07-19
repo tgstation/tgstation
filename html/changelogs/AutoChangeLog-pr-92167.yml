@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed flashlight eyes trying to add nonexistent irises to themselves"
