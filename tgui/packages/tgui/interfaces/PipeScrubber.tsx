@@ -38,7 +38,7 @@ type Filter = {
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };

@@ -96,7 +96,7 @@ export function RecipeContentCompact(props: Props) {
                 <Box>
                   {!!item.tool_behaviors && (
                     <Tooltip
-                      content={'Tools: ' + item.tool_behaviors.join(', ')}
+                      content={`Tools: ${item.tool_behaviors.join(', ')}`}
                     >
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>

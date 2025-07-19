@@ -218,7 +218,7 @@ export const SparringContract = (props) => {
                   <Button
                     tooltip={
                       (in_area &&
-                        'Both participants are present in the ' + area + '.') ||
+                        `Both participants are present in the ${area}.`) ||
                       'Both participants need to be in the arena!'
                     }
                     color={(in_area && 'green') || 'red'}

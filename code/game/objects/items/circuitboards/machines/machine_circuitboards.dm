@@ -1082,6 +1082,14 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/processor/slime
 
+/obj/item/circuitboard/machine/processor/slime/fullupgrade
+	build_path = /obj/machinery/processor/slime/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 1,
+		/datum/stock_part/servo/tier4 = 1,
+	)
+
 /obj/item/circuitboard/machine/protolathe/department/science
 	name = "Departmental Protolathe - Science"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

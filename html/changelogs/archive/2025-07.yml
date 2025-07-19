@@ -323,3 +323,162 @@
   TealSeer:
   - bugfix: fixed shattering glass sheets on the floor not dropping a shard if the
       stack only had 1
+2025-07-13:
+  Ezel:
+  - balance: Nukie Chemistry section, now includes a proper chemistry locker with
+      pill bottles medigels and big beakers
+  - balance: Nukie Chemistry section, now has a extra section attached to it that
+      holds some limited amount chemistry materials and a empty bombcase.
+  - balance: Nukie Chemistry section, now has various sizes of beakers, a special
+      chemical payload that can hold up to 5 beakers, and a hand labeler to tag your
+      stuff with
+  - map: Nukie Chemistry section, now has a smartfridge
+  - map: Nukie xenobiology section widened and added a fully upgraded slime proccesor
+  Kurgis:
+  - map: Catwalk Science has gotten a minor clean-up of Robotics' Surgery area.
+  - map: Adds destination taggers to various disposal bins on Catwalk where appropriate.
+  - bugfix: 'Catwalk Station: exosuit fabricators no longer print in the wrong direction,
+      removal of a stray airlock in Xenobiology, Security department now has their
+      missing delivery tag set properly for disposal mail, and adds a missing wall
+      near medical virology hallway.'
+  Melbert:
+  - bugfix: Cult spell action buttons have their unique tooltip style again
+  - qol: Radial tooltips can now have unique styles
+  - qol: Radial "info" buttons now have tooltips with the info text, meaning you don't
+      have to click on the button and read chat
+  - qol: Altars, Archives, and Forges now have a ? explaining what the items do
+  - refactor: Refactored the decal painter, report any missing decals or ones that
+      come out weird.
+  - rscdel: Tile sprayer is dead. Its functionality has been merged with the decal
+      painter.
+  - qol: A bunch of decals have been added to the decal painter. Style to your heart's
+      content.
+  - rscdel: You don't get nutrition from biting yourself
+  - rscdel: When punching (or biting) yourself, you can't hit the bodypart you're
+      attacking with (ie, right arm punch can't hit your own right arm)
+  Mothblocks:
+  - rscadd: You can now see inside closets you're in, and interact with yourself inside.
+  SmArtKar:
+  - bugfix: Fixed BPM setting on synth circuit interface not doing anything
+  - bugfix: Cult banned or DNRed players no longer can become constructs
+  SyncIt21:
+  - bugfix: stock blocks created via GMM have the correct export value every time
+      & won't apply price elasticity
+  - qol: SMES has examines and screentips for various stuff
+  - code_imp: Improved code of SMES in general
+  - bugfix: smes can be connected to the powernet with a multitool with the panel
+      open after construction
+  - refactor: SMES now functions consistently with its power cells & the RPED.
+  carpotoxin:
+  - bugfix: fixed the 'note_path' var of the 'airlock_note_placer' mapping helper
+2025-07-14:
+  Absolucy:
+  - bugfix: You can now actually unlink the remote from a briefcase launchpad.
+  tattle:
+  - rscdel: Removed the shy component, allowing drones to once again use a wide array
+      of items and perform actions near mobs
+2025-07-15:
+  Ice-Type:
+  - qol: Increased the integer scaling range up to 9x
+  Majkl-J:
+  - code_imp: feature keys are no longer magical strings floating around the codebase
+      and use proper defines
+  - refactor: DNA blocks are now handled with singleton datums.
+  Melbert:
+  - qol: Smart metal foam fixes multi-z holes
+  - bugfix: Fixes some places where dynamic configs were not being read correctly
+  - qol: Using a damp rag in hand will wring it out, making it usable for a bit longer.
+  SmArtKar:
+  - bugfix: Fixed gibs not containing any actual gibs in them
+  necromanceranne:
+  - balance: Feral Cat Grenades were moved from Dangerous to Explosives. Buying this
+      option gives you a box of five grenades for 5 TC. Their stats also were buffed
+      to be similar to a viscerators.
+  - balance: Duffel Bags of X-4 are no longer available to traitors. Increased to
+      10 TC (for ops) and 10 sticks of X-4.
+  - balance: X-4 can be purchased individual from the uplink for only 2 TC. Traitors
+      can only buy 5 bricks, but Ops can buy an unlimited number.
+  - balance: Slipocalypse Clusterbang is now 1 TC. Ops have unlimited stock.
+  - balance: X-4 is now more boom for your buck at a Heavy 5 and Light 7 explosion.
+  - balance: Duffel Bags of C-4 are limited to two per traitor, but Ops can buy as
+      many as they like.
+  - balance: Traitors can buy individual frag grenades. for 1 TC They're limited to
+      only 10 out of the uplink. Ops can buy a whole box of 7 for 5 TC.
+  - balance: Ops purchase syndicate bombs and EMP bombs cheaper.
+  - balance: Syndicate mini-bombs are 2 TC. They're limited to 4. This does not remove
+      their time limit. Ops, once again, get an unlimited quantity. This also applies
+      to pizza bombs (which are just syndicate minibombs in disguise).
+  - balance: Smoke grenade boxes now contain a smoke implant, with 3 charges, that
+      creates a smoke cloud coughing smoke on activation. And a gas mask. Both Traitors
+      and Ops can get these.
+  throwawayuseless:
+  - rscadd: '*flare, *flicker, and *glow, three new ethereal emotes.'
+2025-07-16:
+  EnterTheJake:
+  - balance: Wiz suit is now bio,flash proof, comes with the no slip and Hilbert dna
+      module installed, slowdown was removed.
+  - balance: Energy shield charges on the battlemage module have been reduced to 5
+      but now regenerate over time.
+  - balance: energy shield charges now require a minimum of 3 total damage to be consumed.
+  Ghommie:
+  - bugfix: Fixed an issue with fishing turfs like water and lava having multiple
+      fish source datums, making it possible to fish the same limited, rare loot more
+      times than you should.
+  Majkl-J:
+  - bugfix: Fish tails now correctly show up
+  - bugfix: Mutant colors and other features now apply correctly in some cases where
+      they previously didn't
+  SmArtKar:
+  - bugfix: Fixed incorrect perfect tense forms of some unarmed attacks like felinid
+      bites
+  - bugfix: Fixed frag grenade entry in the uplink containing full bags of C4
+  Time-Green:
+  - qol: Formaldehyde will no longer decay in recovered crew during the "soul pending"
+      phase
+  - qol: Recovered crew jumpsuits will now spawn in the crate, so you can pre-dress
+      them, rob them or take their assignment in account when determining how to "rebuild"
+      them
+  - qol: Recovered crew get 200 starting cr (from 100) and their departments headset
+  combustor:
+  - bugfix: Healium bolts now heal instead of dealing damage
+  timothymtorres:
+  - rscadd: Welded airlocks are saved as welded airlock mapping helpers when using
+      the `map_export` admin verb
+  - rscadd: Paper on noticeboards are saved when using the `map_export` admin verb
+2025-07-17:
+  DaCoolBoss:
+  - bugfix: Agent IDs that have not been spawned by an uplink or on a nuke op no longer
+      have infinite access slots.
+  - spellcheck: Rewrote item description for Agent IDs
+  Exester509:
+  - bugfix: Fixed the description of the modular console frame on the crafting menu
+  Likteer:
+  - rscadd: Added NT & British flag mugs to loadout
+  SmArtKar:
+  - bugfix: Fixed equipping items onto other people playing swing animations
+  TealSeer:
+  - bugfix: fixed shuttle remote design missing from protolathe
+  bigbakedbean:
+  - rscadd: chemical analyzer now displays bloodtype if analyzing blood
+2025-07-18:
+  Aliceee2ch:
+  - bugfix: Removed unused wooden decals from MetaStation theater
+  Glu:
+  - bugfix: Certain food items that required bowl now drop a bowl post-consumption
+  Melbert:
+  - qol: Tweaked size of runechat shadow outline.
+  Rhials:
+  - bugfix: Evac broadcast messages are no longer scrambled unless the shuttle was
+      hijacked.
+  SmArtKar:
+  - bugfix: Fixed projectiles inheriting gun's pixel offsets when fired
+2025-07-19:
+  OrionTheFox:
+  - qol: made the Beach Bar bitdomain ghostrole spawners keep your old body revivable
+      (as other bitdomain spawners do)
+  SmArtKar:
+  - bugfix: Fixed flashlight eyes trying to add nonexistent irises to themselves
+  SyncIt21:
+  - bugfix: You cannot complete re-enforced girders with iron rods
+  TheEmber:
+  - bugfix: Fixed building wall out of wooden barricade
