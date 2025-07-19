@@ -37,7 +37,8 @@
 /obj/machinery/vending/proc/compartmentLoadAccessCheck(mob/user)
 	PROTECTED_PROC(TRUE)
 
-	return (!req_access || allowed(user) || (obj_flags & EMAGGED) || !scan_id)
+	return !req_access || allowed(user) || (obj_flags & EMAGGED) || !scan_id
+
 /**
  * Are we able to load the item passed in
  *
@@ -48,7 +49,7 @@
 /obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	PROTECTED_PROC(TRUE)
 
-	if(!length(loaded_item.contents) && ((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband)))
+	if(!length(loaded_item.contents) && (products[loaded_item.type] || premium[loaded_item.type] || contraband[loaded_item.type]))
 		return TRUE
 	if(send_message)
 		to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
