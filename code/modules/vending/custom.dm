@@ -34,6 +34,13 @@
 	for(var/obj/item/stored_item in contents - component_parts)
 		stored_item.forceMove(installed_refill)
 
+/obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(panel_open && istype(held_item, refill_canister))
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return ..()
+
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
 
@@ -42,9 +49,18 @@
 		var/new_amount = products[hash_key] - 1
 		if(!new_amount)
 			products -= hash_key
+			update_static_data_for_all_viewers()
 		else
 			products[hash_key] = new_amount
-		update_static_data_for_all_viewers()
+
+///Returns the number of products loaded in this machine
+/obj/machinery/vending/custom/proc/loaded_items()
+	PRIVATE_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
+
+	. = 0
+	for(var/product_hash in products)
+		. += products[product_hash]
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	if(loaded_item.flags_1 & HOLOGRAM_1)
@@ -65,10 +81,7 @@
 	if(!canLoadItem(inserted_item, user))
 		return FALSE
 
-	var/loaded_items = 0
-	for(var/input in products)
-		loaded_items += products[input]
-	if(loaded_items == max_loaded_items)
+	if(loaded_items() == max_loaded_items)
 		speak("There are too many items in stock.")
 		return FALSE
 
@@ -92,20 +105,38 @@
 		restock(installed_refill)
 
 /obj/machinery/vending/custom/restock(obj/item/vending_refill/canister)
+	. = 0
 	if(!canister.products?.len)
-		return 0
+		return
 
-	//update records
-	var/update = canister.products.len
+	var/update_static_data = FALSE
+	var/available_load = max_loaded_items - loaded_items()
 	for(var/product_hash in canister.products)
-		products[product_hash] += canister.products[product_hash]
-	canister.products.Cut()
+		//get available space
+		var/load_count = min(canister.products[product_hash], available_load)
+		if(!load_count)
+			break
+		//update canister record
+		canister.products[product_hash] -= load_count
+		if(!canister.products[product_hash])
+			canister.products -= product_hash
+		//update vendor record
+		products[product_hash] += load_count
+		//reduce from available space
+		available_load -= load_count
 
-	//move products
-	for(var/obj/item/stock in canister)
-		stock.forceMove(src)
+		//update product
+		for(var/obj/item/product in canister)
+			if(!load_count)
+				break
+			if(ITEM_HASH(product) == product_hash)
+				. += 1
+				product.forceMove(src)
+				load_count--
 
-	return update
+	if(update_static_data)
+		update_static_data_for_all_viewers()
+
 
 /obj/machinery/vending/custom/post_restock(mob/living/user, restocked)
 	if(!restocked)
@@ -143,7 +174,7 @@
 			name = target.name,
 			price = target.custom_price,
 			category = "Products",
-			ref = REF(target),
+			ref = stocked_hash,
 			colorable = FALSE,
 			image = base64
 		))
@@ -203,8 +234,12 @@
 	. = FALSE
 	if(!isliving(user))
 		return
-	var/obj/item/dispensed_item = locate(params["ref"])
-	if(!dispensed_item)
+	var/obj/item/dispensed_item = params["ref"]
+	for(var/obj/item/product in (contents - component_parts))
+		if(ITEM_HASH(product) == dispensed_item)
+			dispensed_item = product
+			break
+	if(QDELETED(dispensed_item))
 		return
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
@@ -237,10 +272,7 @@
 
 	/// Remove the item
 	use_energy(active_power_usage)
-	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
-		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
-	else
-		to_chat(user, span_warning("[capitalize(format_text(dispensed_item.name))] falls onto the floor!"))
+	try_put_in_hand(dispensed_item, user)
 	return TRUE
 
 /obj/item/vending_refill/custom

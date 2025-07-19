@@ -49,6 +49,7 @@
 /obj/item/vending_refill/get_part_rating()
 	if (!products || !product_categories || !contraband || !premium)
 		return INFINITY
+
 	. = 0
 	for(var/key in products)
 		. += products[key]
@@ -62,4 +63,3 @@
 		for (var/product_key in products)
 			. += products[product_key]
 
-	return .

@@ -222,6 +222,8 @@
 
 	// Always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 	var/obj/item/vended_item = dispense(item_record, get_turf(src), dispense_returned = LAZYLEN(item_record.returned_products))
+	if(!vended_item)
+		return
 
 	if(greyscale_colors)
 		vended_item.set_greyscale(colors=greyscale_colors)
@@ -247,17 +249,19 @@
 	if(!silent)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 
-	var/obj/item/vended_item
+	var/obj/item/vended_item = null
 	if(dispense_returned)
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
-		vended_item.forceMove(spawn_location)
-	else
+		if(!QDELETED(vended_item))
+			vended_item.forceMove(spawn_location)
+	else if(item_record.amount)
 		vended_item = new item_record.product_path(spawn_location)
 		if(vended_item.type in contraband)
 			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 		item_record.amount--
 
-	on_dispense(vended_item, dispense_returned)
+	if(!QDELETED(vended_item))
+		on_dispense(vended_item, dispense_returned)
 	return vended_item
 
 /**

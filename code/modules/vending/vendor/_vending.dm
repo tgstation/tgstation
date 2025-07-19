@@ -356,6 +356,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return ..()
 
 /obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
 	if(tilted && !held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -378,8 +379,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	if(panel_open && istype(held_item, refill_canister))
 		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
-		return TRUE
-	return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Returns the total loaded & max amount of items i.e list(total_loaded, total_maximum) in the vending machine based on the product records and premium records
