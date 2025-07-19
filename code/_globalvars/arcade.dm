@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	/obj/item/restraints/handcuffs/fake = 2,
 	/obj/item/grenade/chem_grenade/glitter/pink = 1,
 	/obj/item/grenade/chem_grenade/glitter/blue = 1,
-	/obj/item/grenade/chem_grenade/glitter/white = 1,
+	/obj/item/grenade/chem_grenade/glitter = 1,
 	/obj/item/toy/eightball = 2,
 	/obj/item/toy/windup_toolbox = 2,
 	/obj/item/toy/clockwork_watch = 2,
