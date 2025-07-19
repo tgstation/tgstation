@@ -267,14 +267,14 @@
 	var/holder_item = FALSE
 
 	if(!isidcard(card_to_insert))
-		card_to_insert = inserting_item.RemoveID()
+		card_to_insert = inserting_item.remove_id()
 		holder_item = TRUE
 
 	if(!card_to_insert || !user.transferItemToLoc(card_to_insert, src))
 		return FALSE
 
 	if(target)
-		if(holder_item && inserting_item.InsertID(target))
+		if(holder_item && inserting_item.insert_id(target))
 			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		else
 			id_eject(user, target)
