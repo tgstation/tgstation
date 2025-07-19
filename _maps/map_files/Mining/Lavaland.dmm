@@ -8470,6 +8470,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/structure/table,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
