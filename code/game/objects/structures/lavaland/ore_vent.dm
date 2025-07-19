@@ -263,24 +263,20 @@
  * If the node drone is dead, the ore vent is not tapped and the wave defense can be reattempted.
  *
  * Also gives xp and mining points to all nearby miners in equal measure.
- * Arguments:
- * - force: Set to true if you want to just skip all checks and make the vent start producing boulders.
  */
-/obj/structure/ore_vent/proc/handle_wave_conclusion(datum/source, force = FALSE)
+/obj/structure/ore_vent/proc/handle_wave_conclusion(datum/source)
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
 	remove_shared_particles(/particles/smoke/ash)
 
-	if(force)
-		initiate_wave_win()
-		return
-
+	//happens in COMSIG_QDELETING
 	if(QDELETED(node))
 		initiate_wave_loss(loss_message = "\the [src] creaks and groans as the mining attempt fails, and the vent closes back up.")
 		return
 
+	//happens in COMSIG_MOVABLE_MOVED
 	if(get_turf(node) != get_turf(src))
 		initiate_wave_loss(loss_message = "The [node] detaches from the [src], and the vent closes back up!")
 		return //Start over!
