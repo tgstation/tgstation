@@ -31,6 +31,11 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
+/datum/chemical_reaction/drink/moonshine_extra_patriotic
+	results = list(/datum/reagent/consumable/ethanol/moonshine = 10)
+	required_reagents = list(/datum/reagent/consumable/cornmeal = 7, /datum/reagent/consumable/corn_syrup = 3)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
+
 /datum/chemical_reaction/drink/spacebeer
 	results = list(/datum/reagent/consumable/ethanol/beer = 10)
 	required_reagents = list(/datum/reagent/consumable/flour = 10)
@@ -498,7 +503,7 @@
 
 /datum/chemical_reaction/drink/turbo
 	results = list(/datum/reagent/consumable/ethanol/turbo = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/nitrous_oxide = 1, /datum/reagent/consumable/ethanol/sugar_rush = 1, /datum/reagent/consumable/pwr_game = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/nitrous_oxide = 1, /datum/reagent/consumable/pwr_game = 1)
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/old_timer
