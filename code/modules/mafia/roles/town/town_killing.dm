@@ -5,7 +5,7 @@
 	role_flags = ROLE_CAN_KILL | ROLE_UNIQUE
 	revealed_outfit = /datum/outfit/mafia/hos
 	revealed_icon = "headofsecurity"
-	hud_icon = "hudheadofsecurity"
+	hud_icon = SECHUD_HEAD_OF_SECURITY
 	winner_award = /datum/award/achievement/mafia/hos
 
 	role_unique_actions = list(/datum/mafia_ability/attack_player/execution)
@@ -18,7 +18,7 @@
 	role_flags = ROLE_CAN_KILL
 	revealed_outfit = /datum/outfit/mafia/warden
 	revealed_icon = "warden"
-	hud_icon = "hudwarden"
+	hud_icon = SECHUD_WARDEN
 	winner_award = /datum/award/achievement/mafia/warden
 
 	role_unique_actions = list(/datum/mafia_ability/attack_visitors)
