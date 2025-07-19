@@ -6,11 +6,11 @@ import { Window } from '../../layouts';
 import {
   type Connection,
   Connections,
-  type Position,
+  type Coordinates,
 } from '../common/Connections';
 import { BoardTabs } from './BoardTabs';
-import type { DataCase, DataEvidence } from './DataTypes';
 import { Evidence } from './Evidence';
+import type { DataCase, DataEvidence } from './types';
 
 type Data = {
   cases: DataCase[];
@@ -25,6 +25,14 @@ type TypedConnection = {
 const PIN_Y_OFFSET = 15;
 
 const PIN_CONNECTING_Y_OFFSET = -60;
+
+function getPinPositionByPosition(evidence: Coordinates): Coordinates {
+  return { x: evidence.x + 15, y: evidence.y + PIN_Y_OFFSET };
+}
+
+function getPinPosition(evidence: DataEvidence): Coordinates {
+  return getPinPositionByPosition({ x: evidence.x, y: evidence.y });
+}
 
 export function DetectiveBoard(props) {
   const { act, data } = useBackend<Data>();
@@ -46,7 +54,7 @@ export function DetectiveBoard(props) {
 
   function handlePinStartConnecting(
     evidence: DataEvidence,
-    mousePos: Position,
+    mousePos: Coordinates,
   ) {
     setConnectingEvidence(evidence);
     setConnection({
@@ -54,14 +62,6 @@ export function DetectiveBoard(props) {
       from: getPinPosition(evidence),
       to: { x: mousePos.x, y: mousePos.y + PIN_CONNECTING_Y_OFFSET },
     });
-  }
-
-  function getPinPositionByPosition(evidence: Position) {
-    return { x: evidence.x + 15, y: evidence.y + PIN_Y_OFFSET };
-  }
-
-  function getPinPosition(evidence: DataEvidence) {
-    return getPinPositionByPosition({ x: evidence.x, y: evidence.y });
   }
 
   function handlePinConnected(evidence: DataEvidence) {
@@ -219,7 +219,7 @@ export function DetectiveBoard(props) {
     setConnections(new_connections);
   }
 
-  function handleEvidenceMoving(evidence: DataEvidence, position: Position) {
+  function handleEvidenceMoving(evidence: DataEvidence, position: Coordinates) {
     if (movingEvidenceConnections) {
       const new_connections: TypedConnection[] = [];
       for (const con of movingEvidenceConnections) {
@@ -315,13 +315,12 @@ export function DetectiveBoard(props) {
                         key={evidence.ref}
                         evidence={evidence}
                         case_ref={item.ref}
-                        act={act}
-                        onPinStartConnecting={handlePinStartConnecting}
+                        onEvidenceRemoved={handleEvidenceRemoved}
+                        onMoving={handleEvidenceMoving}
                         onPinConnected={handlePinConnected}
                         onPinMouseUp={handleMouseUpOnPin}
-                        onEvidenceRemoved={handleEvidenceRemoved}
+                        onPinStartConnecting={handlePinStartConnecting}
                         onStartMoving={handleEvidenceStartMoving}
-                        onMoving={handleEvidenceMoving}
                         onStopMoving={handleEvidenceStopMoving}
                       />
                     ))}
@@ -343,11 +342,9 @@ export function DetectiveBoard(props) {
                   </Box>
                 </Stack.Item>
                 <Stack.Item align="center" grow={3}>
-                  <Button
-                    icon="plus"
-                    content="Create case"
-                    onClick={() => act('add_case')}
-                  />
+                  <Button icon="plus" onClick={() => act('add_case')}>
+                    Create case
+                  </Button>
                 </Stack.Item>
               </Stack>
             </Stack.Item>

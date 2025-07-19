@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - bugfix: "fixed bamboo and plastinum wall types tiling with red and royal black carpets"

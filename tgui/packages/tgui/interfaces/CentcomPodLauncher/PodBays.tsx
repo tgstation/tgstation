@@ -42,8 +42,8 @@ export function PodBays(props) {
       {BAYS.map((bay, i) => (
         <Button
           key={i}
-          onClick={() => act('switchBay', { bayNumber: '' + (i + 1) })}
-          selected={bayNumber === '' + (i + 1)}
+          onClick={() => act('switchBay', { bayNumber: `${i + 1}` })}
+          selected={bayNumber === `${i + 1}`}
           tooltipPosition="bottom-end"
         >
           {bay.title}

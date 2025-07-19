@@ -168,6 +168,7 @@
 	var/list/data = list()
 	data["processingTime"] = malf_ai.malf_picker.processing_time
 	data["compactMode"] = module_picker_compactmode
+	data["hackedAPCs"] = malf_ai.hacked_apcs.len
 	return data
 
 /datum/antagonist/malf_ai/ui_static_data(mob/living/silicon/ai/malf_ai)
@@ -199,6 +200,7 @@
 					"name" = mod.name,
 					"cost" = mod.cost,
 					"desc" = mod.description,
+					"minimum_apcs" = mod.minimum_apcs,
 				))
 			data["categories"] += list(cat)
 

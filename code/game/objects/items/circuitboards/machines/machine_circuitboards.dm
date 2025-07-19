@@ -363,7 +363,7 @@
 	name = "portable SMES"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	needs_anchored = FALSE
-	build_path = /obj/machinery/power/smesbank
+	build_path = /obj/machinery/smesbank
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/power_store/battery = 5,)
@@ -1081,6 +1081,14 @@
 	name = "Slime Processor"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/processor/slime
+
+/obj/item/circuitboard/machine/processor/slime/fullupgrade
+	build_path = /obj/machinery/processor/slime/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 1,
+		/datum/stock_part/servo/tier4 = 1,
+	)
 
 /obj/item/circuitboard/machine/protolathe/department/science
 	name = "Departmental Protolathe - Science"
