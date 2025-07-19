@@ -344,13 +344,17 @@
 	ASSERT(isnum(slot))
 	if(slot < 1 || slot > length(ai_modules))
 		return FALSE
+
+	var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
+
 	module.on_rack_install(src)
-	for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
+	for(var/mob/living/silicon/linked_ref in flatten_list(core_rack ? core_rack.linked_mobs : linked_mobs))
 		module.silicon_linked_to_installed(linked_ref)
 	ai_modules[slot] = module
 	ai_modules[module] = security
 	update_appearance()
 	update_lawset()
+	core_rack?.update_lawset()
 	return TRUE
 
 /obj/machinery/ai_law_rack/proc/remove_law_module(obj/item/ai_module/module)
@@ -358,13 +362,17 @@
 	var/index = ai_modules.Find(module)
 	if(index == 0 || isnull(ai_modules[index]))
 		return FALSE
+
+	var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
+
 	ai_modules[index] = null
 	module.on_rack_uninstall(src)
-	for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
+	for(var/mob/living/silicon/linked_ref in flatten_list(core_rack ? core_rack.linked_mobs : linked_mobs))
 		module.silicon_unlinked_from_installed(linked_ref)
 	if(!QDELING(src))
 		update_appearance()
 		update_lawset()
+	core_rack?.update_lawset()
 	return TRUE
 
 /obj/machinery/ai_law_rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -780,6 +788,11 @@
 /obj/machinery/ai_law_rack/core/proc/link_child_law_rack(obj/machinery/ai_law_rack/child)
 	if(child == src || (child in linked_racks))
 		return
+
+	for(var/obj/item/ai_module/installed in child.ai_modules)
+		for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
+			installed.silicon_linked_to_installed(linked_ref)
+
 	LAZYADD(linked_racks, child)
 	RegisterSignal(child, COMSIG_QDELETING, PROC_REF(unlink_child_law_rack))
 	update_lawset()
@@ -789,6 +802,10 @@
 
 /obj/machinery/ai_law_rack/core/proc/unlink_child_law_rack(obj/machinery/ai_law_rack/child)
 	SIGNAL_HANDLER
+
+	for(var/obj/item/ai_module/installed in child.ai_modules)
+		for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
+			installed.silicon_unlinked_from_installed(linked_ref)
 
 	UnregisterSignal(child, COMSIG_QDELETING)
 	LAZYREMOVE(linked_racks, child)
