@@ -89,6 +89,17 @@
 		return "linked to [english_list(mob_names)]"
 	return "unlinked"
 
+/obj/machinery/ai_law_rack/allowed(mob/accessor)
+	return ..() || (obj_flags & EMAGGED)
+
+/obj/machinery/ai_law_rack/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	to_chat(user, span_notice("You remove the access restrictions on unlinking silicons and other racks!"))
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	obj_flags |= EMAGGED
+	return TRUE
+
 /obj/machinery/ai_law_rack/on_set_is_operational(old_value)
 	update_lawset()
 
