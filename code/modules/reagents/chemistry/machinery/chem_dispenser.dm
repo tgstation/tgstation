@@ -80,8 +80,7 @@
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine,
 		/datum/reagent/fuel/oil,
-		/datum/reagent/saltpetre,
-		/datum/reagent/glitter
+		/datum/reagent/saltpetre
 	)
 	/// The default list of reagents emagged_reagents
 	var/static/list/default_emagged_reagents = list(

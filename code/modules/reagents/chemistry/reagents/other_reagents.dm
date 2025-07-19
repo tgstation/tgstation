@@ -2547,7 +2547,10 @@
 /datum/reagent/glitter/on_new(data)
 	. = ..()
 
-	color = pick(data["colors"])
+	if(data["colors"])
+		color = pick(data["colors"])
+	else
+		color = COLOR_WHITE
 
 /datum/reagent/glitter/on_merge(list/mix_data, amount)
 	. = ..()
@@ -2557,7 +2560,10 @@
 	if(mix_data)
 		data["colors"] = blend_weighted_lists(mix_data["colors"], data["colors"], prop_current)
 
-	color = pick(data["colors"])
+	if(data["colors"])
+		color = pick(data["colors"])
+	else
+		color = COLOR_WHITE
 
 /datum/reagent/confetti
 	name = "Confetti"
