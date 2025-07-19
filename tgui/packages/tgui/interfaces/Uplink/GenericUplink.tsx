@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Tooltip } from 'tgui-core/components';
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
   Section,
   Stack,
   Tabs,
+  Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
@@ -155,7 +155,7 @@ const ItemList = (props: ItemListProps) => {
       <Stack vertical mt={compactMode ? -0.5 : -1}>
         {items.map((item, index) => (
           <Stack.Item key={index} mt={compactMode ? 0.5 : 1}>
-            <Section key={item.name} fitted={compactMode ? true : false}>
+            <Section key={item.name} fitted={!!compactMode}>
               <Stack>
                 <Stack.Item>
                   <Box
