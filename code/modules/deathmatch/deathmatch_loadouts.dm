@@ -962,9 +962,9 @@
 	desc = "Prove Nar'sie's superiority with your well-balanced blood magicks."
 	//species_override = /datum/species/plasmaman
 
-	head = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
+	head = /obj/item/clothing/head/hooded/cult_hoodie
 	neck = /obj/item/clothing/neck/heretic_focus/crimson_medallion
-	suit = /obj/item/clothing/suit/hooded/cultrobes/berserker
+	suit = /obj/item/clothing/suit/hooded/cultrobes
 	suit_store = /obj/item/melee/sickly_blade/cursed
 	uniform = /obj/item/clothing/under/color/red
 	id_trim = null
