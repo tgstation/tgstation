@@ -5,26 +5,6 @@
 #define MOVEDELAY_INVISIBILITY 2
 #define MOVEDELAY_PRE_CHARGE 4
 
-#define JUSTICE_IDLE "idle"
-#define JUSTICE_CHARGE "charge"
-#define JUSTICE_INVISIBILITY "invisibility"
-#define JUSTICE_INVISIBILITY_ATTACK "invisibility attack"
-#define JUSTICE_FATALITY "fatality"
-
-#define JUSTICE_ENGINE_ACTIVE "active"
-#define JUSTICE_ENGINE_ACTIVATING "activating"
-#define JUSTICE_ENGINE_ONCOOLDOWN "oncooldown"
-#define JUSTICE_ENGINE_DEACTIVATING "deactivating"
-#define JUSTICE_ENGINE_DEACTIVE "deactive"
-
-#define COMSIG_JUSTICE_ATTACK_AOE "justice_attack_aoe"
-#define COMSIG_JUSTICE_CHARGE_BUTTON_DOWN "justice_charge_button_down"
-
-#define COMSIG_JUSTICE_INVISIBILITY_ACTIVATE "justice_invisibility_activate"
-	#define COMPONENT_CANCEL_JUSTICE_INVISIBILITY_ACTIVATE (1<<0)
-#define COMSIG_JUSTICE_INVISIBILITY_DEACTIVATE "justice_invisibility_deactivate"
-	#define COMPONENT_CANCEL_JUSTICE_INVISIBILITY_DEACTIVATE (1<<0)
-
 /obj/vehicle/sealed/mecha/justice
 	name = "\improper Justice"
 	desc = "Black and red syndicate mech designed for execution orders. \
@@ -70,15 +50,20 @@
 	var/max_charge_range = 7
 	/// Is charge used or can be used.
 	var/charge_on_cooldown = FALSE
+	/// Remember strafe mode when we press right click to make charge attack. We need it to return strafe mode that was before we pressed right click button.
+	var/remember_strafe = FALSE
 	/// Sound when mech do charge attack.
 	var/charge_attack_sound = 'sound/vehicles/mecha/mech_charge_attack.ogg'
 	/// Aoe pre attack sound.
 	var/stealth_pre_attack_sound = 'sound/vehicles/mecha/mech_stealth_pre_attack.ogg'
 	/// Aoe attack sound.
 	var/stealth_attack_sound = 'sound/vehicles/mecha/mech_stealth_attack.ogg'
+	/// Sound plays when one of justice engine being succesful attacked.
 	var/engine_attacked_sound = 'sound/vehicles/mecha/justice_shield_broken.ogg'
+	/// Sound plays when justice lose all engines.
 	var/shields_disabled_sound = 'sound/vehicles/mecha/justice_warning.ogg'
-	var/pre_charge_sound = 'sound/vehicles/mecha/mech_pre_charge.ogg'
+	/// Sound plays when justice pilot press right mouse button to prepare charge attack.
+	var/pre_charge_sound = 'sound/vehicles/mecha/justice_pre_charge.ogg'
 
 /datum/armor/mecha_justice
 	melee = 50
@@ -142,16 +127,16 @@
 	user_hud.infodisplay += charge_arrow
 	user_hud.show_hud(user_hud.hud_version)
 
-/obj/vehicle/sealed/mecha/justice/mob_exit(mob/M, silent, randomstep, forced)
+/obj/vehicle/sealed/mecha/justice/mob_exit(mob/exiter, silent, randomstep, forced)
 	. = ..()
-	null_arrow(M.hud_used)
+	null_arrow(exiter.hud_used)
 	deactivate_engines()
-	return null
+	UnregisterSignal(exiter.canon_client, COMSIG_CLIENT_MOUSEDOWN)
 
 /obj/vehicle/sealed/mecha/justice/Destroy()
 	if(LAZYLEN(justice_engines) < 1)
 		return ..()
-	for(var/obj/effect/justice_engine/justice_engine in justice_engines)
+	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		QDEL_NULL(justice_engine)
 	return ..()
 
@@ -187,6 +172,7 @@
 	charge_arrow.icon_state = charge_arrow.active_icon
 	justice_state = JUSTICE_CHARGE
 	movedelay = MOVEDELAY_PRE_CHARGE
+	remember_strafe = strafe
 	strafe = TRUE
 	set_charge_mouse_pointer()
 	playsound(src, pre_charge_sound, 75, FALSE)
@@ -227,7 +213,7 @@
 	UnregisterSignal(source, COMSIG_CLIENT_MOUSEUP)
 	UnregisterSignal(source, COMSIG_CLIENT_MOUSEDRAG)
 	charge_arrow.icon_state = charge_arrow.inactive_icon
-	strafe = FALSE
+	strafe = remember_strafe
 	justice_state = JUSTICE_IDLE
 	movedelay = MOVEDELAY_IDLE
 	charge_on_cooldown = TRUE
@@ -251,7 +237,7 @@
 /obj/vehicle/sealed/mecha/justice/proc/activate_engines()
 	if(LAZYLEN(justice_engines) < 1)
 		return
-	for(var/obj/effect/justice_engine/justice_engine in justice_engines)
+	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		if(justice_engine.engine_state != JUSTICE_ENGINE_DEACTIVE)
 			continue
 		justice_engine.change_engine_state(JUSTICE_ENGINE_ACTIVATING)
@@ -264,7 +250,7 @@
 /obj/vehicle/sealed/mecha/justice/proc/deactivate_engines()
 	if(LAZYLEN(justice_engines) < 1)
 		return
-	for(var/obj/effect/justice_engine/justice_engine in justice_engines)
+	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		justice_engine.remember_engine_state_on_deactivate = justice_engine.engine_state
 		if(justice_engine.engine_state == JUSTICE_ENGINE_DEACTIVE)
 			continue
@@ -278,7 +264,7 @@
 /obj/vehicle/sealed/mecha/justice/proc/get_engine_by_state(state)
 	if(LAZYLEN(justice_engines) < 1)
 		return
-	for(var/obj/effect/justice_engine/justice_engine in justice_engines)
+	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		if(justice_engine.engine_state != state)
 			continue
 		return justice_engine
@@ -332,10 +318,6 @@
 
 	for(var/mob/mob_occupant as anything in occupants)
 		mob_occupant.update_mouse_pointer()
-
-/obj/vehicle/sealed/mecha/justice/mob_exit(mob/exiter, silent, randomstep, forced)
-	. = ..()
-	UnregisterSignal(exiter.canon_client, COMSIG_CLIENT_MOUSEDOWN)
 
 /obj/vehicle/sealed/mecha/justice/hitby(atom/movable/throwed_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -404,7 +386,7 @@
 	playsound(src, shields_disabled_sound , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/proc/reactivate_engines()
-	for(var/obj/effect/justice_engine/justice_engine in justice_engines)
+	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		justice_engine.remember_engine_state_on_deactivate = JUSTICE_ENGINE_ACTIVE
 	if(isnull(occupants))
 		return
@@ -423,14 +405,14 @@
 	if(new_state == justice_state)
 		return
 	if(new_state != JUSTICE_INVISIBILITY && LAZYLEN(justice_engines) > 0)
-		for(var/obj/effect/justice_engine/justice_engine in justice_engines)
+		for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 			if(!justice_engine.is_in_invis)
 				continue
 			justice_engine.is_in_invis = FALSE
 			justice_engine.alpha = 255
 
 	if(new_state == JUSTICE_INVISIBILITY && LAZYLEN(justice_engines) > 0)
-		for(var/obj/effect/justice_engine/justice_engine in justice_engines)
+		for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 			if(justice_engine.is_in_invis)
 				continue
 			justice_engine.is_in_invis = TRUE
@@ -544,7 +526,6 @@
  * Deal everyone in line for mech location to mouse location 35 damage and 25 chanse to cut off limb.
  * Teleport mech to the end of line.
  * Arguments:
- * * charger - occupant inside mech.
  * * target - occupant inside mech.
  */
 /obj/vehicle/sealed/mecha/justice/proc/charge_attack(atom/target)
@@ -785,23 +766,3 @@
 #undef MOVEDELAY_IDLE
 #undef MOVEDELAY_INVISIBILITY
 #undef MOVEDELAY_PRE_CHARGE
-
-#undef JUSTICE_IDLE
-#undef JUSTICE_CHARGE
-#undef JUSTICE_INVISIBILITY
-#undef JUSTICE_INVISIBILITY_ATTACK
-#undef JUSTICE_FATALITY
-
-#undef JUSTICE_ENGINE_ACTIVE
-#undef JUSTICE_ENGINE_ACTIVATING
-#undef JUSTICE_ENGINE_ONCOOLDOWN
-#undef JUSTICE_ENGINE_DEACTIVATING
-#undef JUSTICE_ENGINE_DEACTIVE
-
-#undef COMSIG_JUSTICE_ATTACK_AOE
-#undef COMSIG_JUSTICE_CHARGE_BUTTON_DOWN
-
-#undef COMSIG_JUSTICE_INVISIBILITY_ACTIVATE
-#undef COMPONENT_CANCEL_JUSTICE_INVISIBILITY_ACTIVATE
-#undef COMSIG_JUSTICE_INVISIBILITY_DEACTIVATE
-#undef COMPONENT_CANCEL_JUSTICE_INVISIBILITY_DEACTIVATE
