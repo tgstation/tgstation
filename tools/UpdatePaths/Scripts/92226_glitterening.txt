@@ -1,0 +1,5 @@
+#comment This repaths white glitter grenades to be the base type, and pink/lavender glittery crates to come under /crate/glitter https://github.com/tgstation/tgstation/pull/92226
+
+/obj/item/grenade/chem_grenade/glitter/white : /obj/item/grenade/chem_grenade/glitter
+/obj/structure/closet/crate/pink : /obj/structure/closet/crate/glitter
+/obj/structure/closet/crate/lavender : /obj/structure/closet/crate/glitter/lavender

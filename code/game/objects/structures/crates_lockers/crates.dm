@@ -490,7 +490,7 @@
 	if(!old_turf)
 		return
 	if(prob(glitter_prob))
-		old_turf.spawn_glitter(list(glitter_color))
+		old_turf.spawn_glitter(list("[glitter_color]" = 100))
 
 /obj/structure/closet/crate/glitter/lavender
 	name = "lavender crate"
