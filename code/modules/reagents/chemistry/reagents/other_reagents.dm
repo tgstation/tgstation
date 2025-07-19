@@ -2697,15 +2697,15 @@
 	. = ..()
 	yuck_cycle = 0 // reset vomiting
 
-/datum/reagent/yuck/on_transfer(atom/A, methods=TOUCH, trans_volume)
-	if((methods & INGEST) || !iscarbon(A))
-		return ..()
+/datum/reagent/yuck/expose_mob(mob/living/carbon/exposed_mob, methods, expose_volume, show_message, touch_protection)
+	. = ..()
+	if(!(methods & INGEST) || !iscarbon(exposed_mob))
+		return
 
-	A.reagents.remove_reagent(type, trans_volume)
-	A.reagents.add_reagent(/datum/reagent/fuel, trans_volume * 0.75)
-	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
-
-	return ..()
+	var/datum/reagents/mob_reagents = exposed_mob.reagents
+	mob_reagents.remove_reagent(type, expose_volume)
+	mob_reagents.add_reagent(/datum/reagent/fuel, expose_volume * 0.75)
+	mob_reagents.add_reagent(/datum/reagent/water, expose_volume * 0.25)
 
 //monkey powder heehoo
 /datum/reagent/monkey_powder
