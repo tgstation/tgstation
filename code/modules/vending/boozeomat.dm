@@ -90,10 +90,12 @@
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "boozeomat-light-mask"
+	allow_custom = TRUE
 
 /obj/machinery/vending/boozeomat/syndicate
 	age_restrictions = FALSE
 	initial_language_holder = /datum/language_holder/syndicate
+	allow_custom = FALSE
 
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
