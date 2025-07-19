@@ -1,0 +1,186 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"l" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/ruin/powered)
+"n" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/light/cold/dim/directional/south,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/closet/body_bag/lost_crew/with_body,
+/turf/open/floor/iron/kitchen_coldroom,
+/area/ruin/powered)
+"p" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/structure/closet/crate/freezer/organ,
+/turf/open/floor/iron/kitchen_coldroom,
+/area/ruin/powered)
+"r" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered)
+"y" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/light_switch/directional/east,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/random/medical/memeorgans,
+/obj/effect/spawner/random/medical/organs,
+/obj/effect/spawner/random/medical/organs,
+/obj/effect/spawner/random/medical/memeorgans,
+/turf/open/floor/iron/kitchen_coldroom,
+/area/ruin/powered)
+"B" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/effect/turf_decal/siding/white,
+/obj/machinery/status_display/ai/directional/north,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/turf/open/floor/iron/kitchen_coldroom,
+/area/ruin/powered)
+"E" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/item/gps/spaceruin,
+/obj/effect/spawner/random/medical/medkit_rare,
+/obj/item/wrench/medical,
+/turf/open/floor/iron/kitchen_coldroom,
+/area/ruin/powered)
+"K" = (
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/ruin/powered)
+"L" = (
+/obj/machinery/door/airlock/freezer,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/ruin/powered)
+"R" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"S" = (
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen_coldroom,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+r
+r
+r
+r
+r
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+r
+E
+l
+S
+R
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+r
+B
+K
+n
+R
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+r
+p
+K
+y
+R
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+r
+r
+L
+r
+r
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
