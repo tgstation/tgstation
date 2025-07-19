@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "The GMM Stock market now shows material elasticity, AKA the sale price reduction caused by selling a material, which will steadily recover after a sale."
