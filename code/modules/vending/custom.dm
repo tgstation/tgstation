@@ -235,7 +235,7 @@
 	if(!isliving(user))
 		return
 	var/obj/item/dispensed_item = params["ref"]
-	for(var/obj/item/product in (contents - component_parts))
+	for(var/obj/item/product in contents - component_parts)
 		if(ITEM_HASH(product) == dispensed_item)
 			dispensed_item = product
 			break
