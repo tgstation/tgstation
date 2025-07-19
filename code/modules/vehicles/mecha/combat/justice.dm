@@ -153,7 +153,7 @@
 		return ..()
 	for(var/obj/effect/justice_engine/justice_engine in justice_engines)
 		QDEL_NULL(justice_engine)
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/mecha/justice/proc/null_arrow(datum/hud/user_hud)
 	if(isnull(user_hud))
@@ -193,7 +193,6 @@
 	SEND_SIGNAL(src, COMSIG_JUSTICE_CHARGE_BUTTON_DOWN)
 	RegisterSignal(source, COMSIG_CLIENT_MOUSEUP, PROC_REF(driver_mouseup))
 	RegisterSignal(source, COMSIG_CLIENT_MOUSEDRAG, PROC_REF(driver_mousedrag))
-
 
 /obj/vehicle/sealed/mecha/justice/proc/driver_mousedrag(client/source, atom/src_object, atom/over_object, turf/src_location, turf/over_location, src_control, over_control, params)
 	SIGNAL_HANDLER
@@ -321,7 +320,6 @@
 		mob_occupant.update_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/justice/set_mouse_pointer()
-
 	if(weapons_safety)
 		mouse_pointer = ""
 	else if(charge_on_cooldown)
