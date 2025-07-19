@@ -219,9 +219,9 @@
 
 /obj/machinery/ai_law_rack/on_deconstruction(disassembled)
 	for(var/mob/living/bot in flatten_list(linked_mobs))
-		if(IS_MALF_AI(bot))
+		if(bot.AmountStun() > 5 SECONDS || IS_MALF_AI(bot))
 			continue
-		bot.Stun(10 SECONDS)
+		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(bot, span_userdanger("Rack connection lost. Recalculating directives..."))
 		unlink_silicon(bot)
 
