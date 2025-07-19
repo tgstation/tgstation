@@ -21,6 +21,10 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/gun/energy/laser/empty
+	cell_type = /obj/item/stock_parts/power_store/cell/empty
+	dead_cell = TRUE
+
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
