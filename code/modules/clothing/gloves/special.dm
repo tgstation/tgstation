@@ -122,6 +122,7 @@
 	name = "nitrile gloves"
 	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
 	icon_state = "nitrile"
+	inhand_icon_state = "greyscale_gloves"
 	greyscale_colors = "#99eeff"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 
@@ -133,6 +134,7 @@
 	name = "coroner's gloves"
 	desc = "Black gloves made from latex with a superhydrophobic coating. Useful for picking bodies up instead of dragging blood behind."
 	icon_state = "latex_black"
+	inhand_icon_state = "greyscale_gloves"
 	greyscale_colors = "#15191a"
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FASTMED)
 
