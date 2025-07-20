@@ -280,11 +280,13 @@
 
 /obj/structure/carp_rift/attackby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
+		hit_by.visible_message(span_warning("The gravitational field of [src] interferes with the telekenetic control of [hit_by], nullifying the hit!"))
 		return FALSE
 	. = ..()
 
 /obj/structure/carp_rift/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
+		hit_by.visible_message(span_warning("The gravitational field of [src] interferes with the telekenetic control of [hit_by], nullifying the hit!"))
 		return
 	. = ..()
 
