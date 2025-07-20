@@ -137,7 +137,7 @@
 	max_total_storage = src.max_total_storage,
 	rustle_sound = src.rustle_sound,
 	remove_rustle_sound = src.remove_rustle_sound,
-	)
+)
 
 	if(!istype(parent))
 		stack_trace("Storage datum ([type]) created without a [isnull(parent) ? "null parent" : "invalid parent ([parent.type])"]!")
