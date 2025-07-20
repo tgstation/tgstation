@@ -64,15 +64,20 @@
 			if(panel_open)
 				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 			else
-				context[SCREENTIP_CONTEXT_LMB] = "[state_open ? "Open" : "Close"] Cover"
+				context[SCREENTIP_CONTEXT_LMB] = "[state_open ? "Close" : "Open"] Cover"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Break out"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/netpod/examine(mob/user)
 	. = ..()
 
 	. += span_notice("Its maintainance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
-	if(panel_open && !occupant)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+	if(isnull(occupant))
+		if(panel_open)
+			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		else
+			. += span_notice("Its hatch can be [EXAMINE_HINT("pried")] [state_open ? "closed" : "open"]")
 
 	if(isnull(server_ref?.resolve()))
 		. += span_infoplain("It's not connected to anything.")
