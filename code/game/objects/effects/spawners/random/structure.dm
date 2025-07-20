@@ -15,7 +15,7 @@
 	name = "crate spawner"
 	icon_state = "crate_secure"
 	loot = list(
-		/obj/effect/spawner/random/structure/crate_loot = 744,
+		/obj/effect/spawner/random/structure/crate_loot = 739,
 		/obj/structure/closet/crate/trashcart/filled = 75,
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
@@ -24,6 +24,7 @@
 		/obj/item/kirbyplants/fern = 20,
 		/obj/structure/closet/crate/decorations = 15,
 		/obj/effect/decal/remains/human/smokey/maintenance = 7,
+		/obj/effect/spawner/random/mimic = 5,
 		/obj/structure/destructible/cult/pants_altar = 1,
 	)
 

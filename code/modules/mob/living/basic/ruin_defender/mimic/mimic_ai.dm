@@ -1,13 +1,25 @@
 /datum/ai_controller/basic_controller/mimic_crate
-	idle_behavior = null
+	idle_behavior = /datum/idle_behavior/relocate_and_prepare_ambush
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/simple_find_target/cool_headed,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
+
+/datum/idle_behavior/relocate_and_prepare_ambush/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
+	. = ..()
+	var/mob/living/living_pawn = controller.pawn
+	//start moving with a bias towards our relocation direction.
+	if(SPT_PROB(90, seconds_per_tick) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
+		var/move_dir = prob(80) ? living_pawn.dir : pick(GLOB.alldirs)
+		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
+
+	//Go sleep in order to lure the next meal in.
+	else
+		INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob/living/basic/mimic/crate, prepare_ambush))
 
 /datum/ai_controller/basic_controller/mimic_copy
 	blackboard = list(

@@ -734,20 +734,25 @@
 	desc = "rectangular mantle cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/consumable/ethanol/moonshine,
+		/datum/reagent/consumable/grey_bull,
 	)
 
 	supplementary_reagents = list(
 		/datum/reagent/consumable/ethanol/salt_and_swell = 7,
 		/datum/reagent/consumable/peachjuice = 5,
 		/datum/reagent/consumable/ethanol/blank_paper = 5,
-		/datum/reagent/consumable/grey_bull = 2,
+		/datum/reagent/determination = 5,
+		/datum/reagent/consumable/grapejuice = 2,
+		/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining = 2,
+		/datum/reagent/lye = 2,
 	)
 
 	suppressive_reagents = list(
-		/datum/reagent/toxin/pestkiller = -2,
-		/datum/reagent/consumable/salt = -3,
-		/datum/reagent/consumable/ethanol/bug_spray = -1,
+		/datum/reagent/toxin/carpotoxin = -4,
+		/datum/reagent/toxin = -2,
+		/datum/reagent/toxin/bad_food = -2,
+		/datum/reagent/consumable/red_bay = -2,
+		/datum/reagent/consumable/nutraslop =  -2,
 	)
 	virus_suspectibility = 0
 	resulting_atom = /mob/living/basic/mimic/crate

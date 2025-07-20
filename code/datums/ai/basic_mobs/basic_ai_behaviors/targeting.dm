@@ -101,12 +101,13 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		valid_found = TRUE
 		break
 	if(!valid_found)
-		return
+		return FALSE
 	// If we found any one thing we "could" attack, then run the full search again so we can select from the best possible canidate
 	var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 	qdel(field) // autoclears so it's fine
 	// Fire instantly, you should find something I hope
 	controller.modify_cooldown(src, world.time)
+	return TRUE
 
 /datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/strategy, mob/pawn)
 	if(checking == pawn)
@@ -167,3 +168,28 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 /datum/ai_behavior/find_potential_targets/bigger_range
 	vision_range = 16
+
+///Mob calms down and reverts to doing the idle behaviour some duration after failing to find a viable target to maul.
+/datum/ai_behavior/find_potential_targets/cool_headed
+	///deternubes how long we look for targets before starting to calm down.
+	var/deaggro_time = 8 SECONDS
+	///The timer that triggers the deaggro proc, killed if we find another target while calming down.
+	var/chill_out_timer
+
+/datum/ai_behavior/find_potential_targets/cool_headed/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+	. = ..()
+	chill_out_timer = addtimer(CALLBACK(src, PROC_REF(chill_out), controller), deaggro_time)
+
+/datum/ai_behavior/find_potential_targets/proc/chill_out(datum/ai_controller/controller)
+	var/mob/mob_pawn = controller.pawn
+	//not changing the AI status if the mob has become player controlled.
+	if(mob_pawn.client)
+		return
+
+	controller.set_ai_status(AI_STATUS_IDLE)
+	controller.CancelActions()
+
+/datum/ai_behavior/find_potential_targets/cool_headed/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
+	. = ..()
+	if(. && chill_out_timer) //HE'S VALID!!!
+		deltimer(chill_out_timer)

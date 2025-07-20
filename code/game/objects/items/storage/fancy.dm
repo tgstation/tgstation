@@ -365,6 +365,10 @@
 	base_icon_state = "shadyjim"
 	spawn_type = /obj/item/cigarette/shadyjims
 
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MIMIC, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0) //replace with proper multi cellline sample next content expansion.
+
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
 	name = "\improper Xeno Filtered packet"
 	desc = "Loaded with 100% pure slime. And also nicotine."

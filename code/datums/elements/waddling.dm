@@ -20,11 +20,22 @@
 		var/mob/living/living_moved = moved
 		if (living_moved.incapacitated || (living_moved.body_position == LYING_DOWN && !HAS_TRAIT(living_moved, TRAIT_FLOPPING)))
 			return
-	waddling_animation(moved)
+	waddling_animation(moved, direction)
 
-/datum/element/waddling/proc/waddling_animation(atom/movable/target)
+/datum/element/waddling/proc/waddling_animation(atom/movable/target, dir)
 	var/prev_pixel_z = target.pixel_z
 	animate(target, pixel_z = target.pixel_z + 4, time = 0)
 	var/prev_transform = target.transform
 	animate(pixel_z = prev_pixel_z, transform = turn(target.transform, pick(-12, 0, 12)), time=2)
 	animate(transform = prev_transform, time = 0)
+
+
+//bouncy up and down walk animation without turning.
+/datum/element/waddling/hopping
+
+/datum/element/waddling/hopping/waddling_animation(atom/movable/target, dir)
+
+	var/prev_pixel_z = target.pixel_z
+	animate(target, pixel_z = target.pixel_z + (dir & (NORTH | SOUTH)) ? 4 : 5, time = 120 MILLISECONDS, easing = CUBIC_EASING | EASE_OUT)
+	animate(pixel_z = prev_pixel_z, time = 120 MILLISECONDS, easing = CUBIC_EASING | EASE_IN)
+
