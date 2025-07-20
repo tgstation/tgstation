@@ -147,7 +147,7 @@ const GasList = (props: GasListProps) => {
               minValue={0}
               maxValue={minimumScale}
             >
-              {toFixed(gas.amount, 2) + ' moles'}
+              {`${toFixed(gas.amount, 2)} moles`}
             </ProgressBar>
           </LabeledList.Item>
         );

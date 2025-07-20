@@ -38,7 +38,7 @@
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload)
 	. = ..()
 	if(slippery_foam)
-		AddComponent(/datum/component/slippery, 100)
+		AddComponent(/datum/component/slippery, 100, can_slip_callback = CALLBACK(src, PROC_REF(try_slip)))
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
 		layer = WATER_LEVEL_LAYER
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
@@ -136,6 +136,9 @@
 	reagents.expose(foaming, VAPOR, fraction)
 	lifetime -= seconds_per_tick
 	return TRUE
+
+/obj/effect/particle_effect/fluid/foam/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	return !HAS_TRAIT(slippee, TRAIT_MOB_ELEVATED)
 
 /obj/effect/particle_effect/fluid/foam/spread(seconds_per_tick = 0.2 SECONDS)
 	if(group.total_size > group.target_size)
@@ -401,7 +404,7 @@
 
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
-	if(isspaceturf(location))
+	if(isspaceturf(location) || isopenspaceturf(location))
 		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)

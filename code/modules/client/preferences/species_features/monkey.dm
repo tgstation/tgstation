@@ -9,7 +9,7 @@
 	return assoc_to_keys_features(SSaccessories.tails_list_monkey)
 
 /datum/preference/choiced/monkey_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["tail_monkey"] = value
+	target.dna.features[FEATURE_TAIL_MONKEY] = value
 
 /datum/preference/choiced/monkey_tail/create_default_value()
 	return /datum/sprite_accessory/tails/monkey/default::name

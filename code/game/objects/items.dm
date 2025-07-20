@@ -1852,7 +1852,7 @@
 
 			else if(victim_human.is_blind())
 				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
-	user.do_item_attack_animation(target, used_item = equipping)
+	user.do_item_attack_animation(target, used_item = equipping, animation_type = ATTACK_ANIMATION_BLUNT)
 
 	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
 
