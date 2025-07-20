@@ -476,7 +476,7 @@
 	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/blood), "Human doesn't have ingested blood after eating fish")
 	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/fishdummy), "Human doesn't have the reagent from /datum/fish_trait/dummy after eating fish")
 
-	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish is not dead, despite having sustained enough damage that it should. health: [fish.health]")
+	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish is not dead, despite having sustained enough damage that it should. health: [PERCENT(fish.get_health_percentage())]%")
 
 	var/obj/item/organ/stomach/belly = gourmet.get_organ_slot(ORGAN_SLOT_STOMACH)
 	belly.reagents.clear_reagents()
