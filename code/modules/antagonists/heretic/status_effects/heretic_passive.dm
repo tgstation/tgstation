@@ -371,9 +371,9 @@
 	SIGNAL_HANDLER
 	var/list/shop = heretic_datum.heretic_shops[HERETIC_KNOWLEDGE_SHOP]
 	for(var/knowledge_type in shop)
-		var/datum/heretic_knowledge/heretic_knowledge = shop[knowledge_type]
-		if(heretic_knowledge)
-			heretic_knowledge[HKT_COST] = max(1, heretic_knowledge[HKT_COST] - 1) // Reduce cost by 1, minimum of 1
+		var/list/heretic_info = shop[knowledge_type]
+		if(heretic_info)
+			heretic_info[HKT_COST] = max(1, heretic_info[HKT_COST] - 1) // Reduce cost by 1, minimum of 1
 
 //---- Moon Passive
 // Heals 5 brain damage per level
