@@ -197,8 +197,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	wash_loop.end_volume = 30
 
 /obj/machinery/washing_machine/Destroy()
-    QDEL_NULL(wash_loop)
-    return ..()
+	QDEL_NULL(wash_loop)
+	return ..()
 
 /obj/machinery/washing_machine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
