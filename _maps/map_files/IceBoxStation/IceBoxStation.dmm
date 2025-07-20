@@ -13982,7 +13982,6 @@
 "dRc" = (
 /obj/structure/table,
 /obj/machinery/firealarm/directional/west,
-/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -20380,6 +20379,10 @@
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/starboard/fore)
+"fLc" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "fLe" = (
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
@@ -23064,7 +23067,7 @@
 /area/station/command/bridge)
 "gya" = (
 /obj/structure/table/wood,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/emergency,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "gyd" = (
@@ -24170,6 +24173,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"gPX" = (
+/obj/structure/cable,
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/iron/white/side{
+	dir = 9
+	},
+/area/station/science/research)
 "gPY" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25027,6 +25037,7 @@
 	dir = 8
 	},
 /obj/machinery/duct,
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "hcw" = (
@@ -27623,6 +27634,7 @@
 "hQd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "hQi" = (
@@ -34291,6 +34303,13 @@
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"jOq" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "jOt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -36304,6 +36323,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/exit/departure_lounge)
 "kqG" = (
@@ -37069,9 +37089,7 @@
 /area/station/science/robotics/mechbay)
 "kBr" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular{
-	pixel_y = 5
-	},
+/obj/item/storage/medkit/advanced,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "kBL" = (
@@ -46219,9 +46237,8 @@
 /obj/item/emergency_bed{
 	pixel_x = 4
 	},
-/obj/item/storage/medkit/regular{
-	pixel_y = 1
-	},
+/obj/item/storage/box/bandages,
+/obj/item/stack/medical/ointment,
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "njJ" = (
@@ -52690,8 +52707,8 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Engineering Lobby"
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/window/spawner/directional/north,
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "oUL" = (
@@ -52919,7 +52936,6 @@
 "oXB" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/medkit/regular,
 /obj/item/razor{
 	pixel_y = 5
 	},
@@ -55060,7 +55076,6 @@
 /area/station/cargo/bitrunning/den)
 "pBI" = (
 /obj/machinery/power/smes{
-	capacity = 1.8e+008;
 	charge = 2e+005
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -57491,17 +57506,20 @@
 "qlD" = (
 /obj/structure/cable,
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/item/stack/medical/bandage{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/stack/medical/ointment{
+	pixel_y = 2;
+	pixel_x = -4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
@@ -60606,6 +60624,10 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"rdN" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "ree" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61723,6 +61745,13 @@
 	},
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
+"rtT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "rud" = (
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
@@ -68922,7 +68951,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "txH" = (
-/obj/machinery/vending/wallmed/directional/south,
 /obj/structure/cable,
 /obj/structure/table/glass,
 /obj/item/stack/sticky_tape/surgical,
@@ -73574,6 +73602,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
+"uRb" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/iron,
+/area/station/command/bridge)
 "uRi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -77784,7 +77818,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/medkit/regular,
 /obj/structure/table/glass,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/firealarm/directional/east,
@@ -80595,10 +80628,6 @@
 /area/station/medical/cryo)
 "wXR" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = 6;
-	pixel_y = -5
-	},
 /obj/item/multitool,
 /obj/item/trash/cheesie,
 /obj/effect/decal/cleanable/dirt,
@@ -81564,10 +81593,10 @@
 /area/station/cargo/sorting)
 "xjT" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/stack/medical/bruise_pack,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "xjZ" = (
@@ -84086,6 +84115,7 @@
 "xUU" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "xUV" = (
@@ -84744,7 +84774,6 @@
 /area/station/maintenance/department/chapel)
 "ydE" = (
 /obj/structure/table/glass,
-/obj/machinery/vending/wallmed/directional/north,
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -4;
 	pixel_y = 3
@@ -232801,7 +232830,7 @@ wtr
 oCO
 kxs
 lsi
-gpp
+fLc
 qnj
 qnj
 qnj
@@ -237198,7 +237227,7 @@ iaF
 iaF
 ajw
 ajw
-ajw
+rdN
 pBE
 pBE
 uYc
@@ -244921,7 +244950,7 @@ pvg
 nQW
 vsz
 fdy
-fdy
+jOq
 wHX
 nbi
 qzu
@@ -247200,7 +247229,7 @@ qWZ
 ydk
 tGF
 iUT
-aVH
+uRb
 lpM
 rCD
 uEm
@@ -247993,7 +248022,7 @@ frN
 mhQ
 dnq
 iuv
-vXh
+rtT
 cvS
 ewi
 cvS
@@ -262652,7 +262681,7 @@ fLl
 wMm
 xnM
 wqb
-xnM
+gPX
 xnM
 xnM
 xnM

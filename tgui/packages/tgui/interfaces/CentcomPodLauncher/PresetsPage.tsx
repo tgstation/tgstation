@@ -12,7 +12,7 @@ import { createUuid } from 'tgui-core/uuid';
 
 import { useBackend } from '../../backend';
 import { POD_GREY } from './constants';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 type Preset = {
   hue: number;
@@ -21,7 +21,7 @@ type Preset = {
 };
 
 async function saveDataToPreset(id: string, data: any) {
-  await storage.set('podlauncher_preset_' + id, data);
+  await storage.set(`podlauncher_preset_${id}`, data);
 }
 
 export function PresetsPage(props) {
@@ -45,7 +45,7 @@ export function PresetsPage(props) {
   }
 
   async function loadPreset(id: string) {
-    const presetData = await storage.get('podlauncher_preset_' + id);
+    const presetData = await storage.get(`podlauncher_preset_${id}`);
     if (presetData !== null && presetData !== undefined) {
       act('loadDataFromPreset', { payload: presetData });
     }
