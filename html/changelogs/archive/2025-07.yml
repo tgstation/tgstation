@@ -482,3 +482,33 @@
   - bugfix: You cannot complete re-enforced girders with iron rods
   TheEmber:
   - bugfix: Fixed building wall out of wooden barricade
+2025-07-20:
+  Absolucy:
+  - qol: You can now click on the song URL in the music player widget in chat.
+  ArcaneMusic:
+  - qol: The GMM Stock market now shows material elasticity, AKA the sale price reduction
+      caused by selling a material, which will steadily recover after a sale.
+  EnterTheJake:
+  - balance: Jetpack module energy drain has been massively reduced.
+  - balance: armor on the Magnate,Safegaurd and sec modsuits has been considerably
+      increased.
+  - balance: 'Sec MOD plates have been transferred from RnD to Cargo.
+
+      balance The Infiltrator MOD now comes with the shock absorption module pre-installed.'
+  - balance: Nukie MODsuits hav a bit more complexity.
+  - bugfix: Nukie MODs now have the same flash protection as the other suits with
+      welding protection.
+  - balance: night visor module comes pre-installed in the syndie mods, no longer
+      consumes complexity,drains less power and doesn't conflict with the other visor
+      MODules.
+  - balance: Combat MODs and RDs now grant earing protection when the suit is active.
+  FalloutFalcon:
+  - bugfix: fixed bamboo and plastinum wall types tiling with red and royal black
+      carpets
+  Melbert:
+  - rscdel: If buckled during a violent shuttle launch, you'll no longer be knocked
+      down + immobilized, instead just immobilized. Unbuckled effects are unchanged.
+  - qol: Replaces one of the two elevators on the Nebula bridge with stairs
+  SmArtKar:
+  - bugfix: Fixed admin's ckey search in orbit sometimes failing
+  - bugfix: Fixed foam slipping people standing on tables and racks

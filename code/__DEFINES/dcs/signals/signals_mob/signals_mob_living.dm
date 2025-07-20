@@ -340,3 +340,6 @@
 
 /// From /datum/status_effect/proc/Destroy() : (datum/status_effect/effect)
 #define COMSIG_LIVING_STATUS_REMOVED "living_status_removed"
+
+///from mob/living/befriend()
+#define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"
