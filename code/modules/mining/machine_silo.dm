@@ -111,7 +111,7 @@
 		GLOB.ore_silo_default = null
 
 	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
-		mats.disconnect_from(src)
+		mats.disconnect()
 
 	ore_connected_machines = null
 	materials = null
@@ -275,7 +275,7 @@
 			if(isnull(remote))
 				return
 
-			remote.disconnect_from(src)
+			remote.disconnect()
 			return TRUE
 
 		if("hold")
