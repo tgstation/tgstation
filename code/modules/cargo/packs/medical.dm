@@ -99,11 +99,6 @@
 					/obj/item/storage/box/medigels,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/bodybags,
-					/obj/item/storage/medkit/regular,
-					/obj/item/storage/medkit/o2,
-					/obj/item/storage/medkit/toxin,
-					/obj/item/storage/medkit/brute,
-					/obj/item/storage/medkit/fire,
 					/obj/item/defibrillator/loaded,
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
@@ -118,6 +113,25 @@
 
 /datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 10)
+		var/item = pick(contains)
+		new item(C)
+
+/datum/supply_pack/medical/medkit
+	name = "Medkit Supply Crate"
+	desc = "Contains a random assortment of medical medkits."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/storage/medkit/regular,
+					/obj/item/storage/medkit/o2,
+					/obj/item/storage/medkit/toxin,
+					/obj/item/storage/medkit/brute,
+					/obj/item/storage/medkit/fire,
+				)
+	crate_name = "Medkit supply crate"
+	crate_type = /obj/structure/closet/crate/medical
+	test_ignored = TRUE
+
+/datum/supply_pack/medical/medkit/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 3)
 		var/item = pick(contains)
 		new item(C)
 
