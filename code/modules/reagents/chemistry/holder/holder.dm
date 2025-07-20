@@ -80,7 +80,7 @@
  * * added_purity - override to force a purity when added
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
- * * list/reagent_added - If not null use this as an holder to store and retrive the reagent datum that was just added without having to locate it after this proc returns. Clear the list to erase old values
+ * * list/reagent_added - If not null will contain an map of [reagent datum->amount added] which holds the inverse chems added to mobs. Clear the list to erase old values
  * * creation_callback - Callback to invoke when the reagent is created
  */
 /datum/reagents/proc/add_reagent(
