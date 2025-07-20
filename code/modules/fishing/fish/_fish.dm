@@ -37,6 +37,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	//we handle slowdowns internally, and the fish weight modifier from materials already contributes to it.
 	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX|MATERIAL_NO_SLOWDOWN|MATERIAL_NO_EDIBILITY
 
+	max_integrity = 200
+	integrity_failure = 0.5
+
 	/// Flags for fish variables that would otherwise be TRUE/FALSE
 	var/fish_flags = FISH_FLAG_SHOW_IN_CATALOG|FISH_DO_FLOP_ANIM|FISH_FLAG_EXPERIMENT_SCANNABLE
 
@@ -75,8 +78,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	///icon used when the fish is dead, ifset.
 	var/icon_state_dead
 
-	/// Current fish health. Dies at 0.
-	var/health = 100
 	/// The message shown when the fish dies.
 	var/death_text = "%SRC dies."
 
@@ -196,7 +197,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	var/time_passed_on_safe_turf = 0
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
-	max_integrity = health * 2 //squisher fishes are destroyed more easily
 	. = ..()
 	base_icon_state = icon_state
 	//It's important that we register the signals before the component is attached.
@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/on_fish_cooked(datum/source, cooking_time)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
-	set_health(0)
+	damage_fish(max_integrity)
 
 	//Remove the blood from the reagents holder and reward the player with some extra nutriment added to the fish.
 	var/datum/reagent/consumable/nutriment/protein/protein = reagents.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/on_fish_cooked_again(datum/source, cooking_time)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_FISH_SURVIVE_COOKING))
-		set_health(0)
+		damage_fish(max_integrity)
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
 		well_cooked()
 
@@ -410,7 +410,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return
 	bites_amount++
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
-	set_health(health - (initial(health) / bites_to_finish) * 3)
+	damage_fish((max_integrity / bites_to_finish) * 3)
 	flinch_on_eat(eater, feeder)
 
 /obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
@@ -534,7 +534,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
 		warnings += "drowning"
 
-	var/health_ratio = health / initial(health)
+	var/health_ratio = get_health_percentage()
 	switch(health_ratio)
 		if(0 to 0.25)
 			warnings += "dying"
@@ -993,7 +993,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	switch(new_status)
 		if(FISH_ALIVE)
 			status = FISH_ALIVE
-			health = initial(health) // since the fishe has been revived
+			repair_damage(max_integrity)
 			regenerate_bites(bites_amount)
 			last_feeding = world.time //reset hunger
 			check_flopping()
@@ -1028,10 +1028,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			if(!isnum(var_value) || var_value == 0)
 				return FALSE
 			update_size_and_weight(size, var_value)
-		if(NAMEOF(src, health))
-			if(!isnum(var_value))
-				return FALSE
-			set_health(health)
 		if(NAMEOF(src, fish_flags))
 			var/old_fish_flags = fish_flags
 			fish_flags = var_value
@@ -1205,51 +1201,48 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	return TRUE
 
 /obj/item/fish/proc/process_health(seconds_per_tick)
-	var/health_change_per_second = 0
+	var/health_change = 0
 	if(!proper_environment())
-		health_change_per_second -= 2.5 //Dying here
+		health_change -= 2.5 //Dying here
 	var/starvation_mult = get_starvation_mult()
 	if(starvation_mult)
-		health_change_per_second -= 0.25 * starvation_mult //Starving
+		health_change -= 0.25 * starvation_mult //Starving
 	else
-		health_change_per_second += 0.5 //Slowly healing
+		health_change += 0.5 //Slowly healing
 	if(HAS_TRAIT(src, TRAIT_FISH_ON_TESLIUM))
-		health_change_per_second -= 0.65
+		health_change -= 0.65
 
-	set_health(health + health_change_per_second * seconds_per_tick)
+	if(!health_change)
+		return
 
-//for consistency, because fish is an item, if it takes integrity damage, it should be reflected on its health
-/obj/item/fish/take_damage(damage_amount)
+	health_change *= seconds_per_tick
+	if(health_change < 0)
+		damage_fish(health_change)
+	else
+		repair_damage(health_change)
+
+///Used to damage this fish while it's still alive. Prevents the fish from taking damage beyond the integrity_failure threshold
+/obj/item/fish/proc/damage_fish(amount)
+	if(status == FISH_DEAD || amount <= 0)
+		return
+	var/current_integrity = get_integrity()
+	take_damage(min(amount, current_integrity - max_integrity * integrity_failure), sound_effect = FALSE, armour_penetration = 100)
+
+/// fish dies when its integrity reaches 50%
+/obj/item/fish/atom_break(damage_flag)
 	. = ..()
-	var/dam_taken = .
-	if(!dam_taken)
-		return
-	set_health(health - dam_taken)
+	set_status(FISH_DEAD)
 
-/**
- * Proc used to set the health of a fish to a new value.
- * If the new value is zero, it dies. If it's above the previous health value, it regenerates integrity and reduces the amount of bites it has taken.
- */
-/obj/item/fish/proc/set_health(new_value)
-	if(status == FISH_DEAD || new_value == health)
+/obj/item/fish/repair_damage(amount)
+	. = ..()
+	if(!. || !bites_amount)
 		return
-	var/old_value = health
-	var/initial_health = initial(health)
-	health = clamp(new_value, 0, initial_health)
-	if(health == 0)
-		set_status(FISH_DEAD)
-		return
-	if(new_value < old_value)
-		return
-	var/health_diff = new_value - old_value
-	var/init_health_diff = initial_health - old_value
-	var/percent = health_diff / init_health_diff
-	if(bites_amount)
-		var/bites_to_recover = bites_amount * percent
-		regenerate_bites(bites_to_recover)
-	var/integrity_dam = max_integrity - get_integrity()
-	if(integrity_dam)
-		repair_damage(integrity_dam * percent)
+	var/current_integrity = get_integrity()
+	var/old_integrity = current_integrity - amount
+	var/old_max_integrity_diff = max_integrity - old_integrity
+	var/percent = (max_integrity - current_integrity)  / old_max_integrity_diff
+	var/bites_to_recover = bites_amount * percent
+	regenerate_bites(bites_to_recover)
 
 /obj/item/fish/proc/regenerate_bites(amount)
 	amount = min(amount, bites_amount)
@@ -1257,6 +1250,12 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return
 	bites_amount -= amount
 	generate_fish_reagents(amount)
+
+/// returns a value between 0 and 1 representing how much integrity the fish has before dying (atom_break)
+/obj/item/fish/proc/get_health_percentage()
+	var/max_health = max_integrity * (1 - integrity_failure)
+	var/death_thres = max_integrity - max_health
+	return CLAMP01((get_integrity() - death_thres) / max_health)
 
 /// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
 /obj/item/fish/proc/get_aquarium_fishes(shuffle = FALSE, blacklist)
@@ -1275,7 +1274,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return FALSE
 	if(!being_targeted && length(get_aquarium_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
+	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && get_health_percentage() >= 0.8 && stable_population >= 1 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
 	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
@@ -1508,7 +1507,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		happiness_value += 2
 	if(bites_amount) // ouch
 		happiness_value -= 2
-	if(health < initial(health) * 0.6)
+	if(get_health_percentage() < 0.6)
 		happiness_value -= 1
 	return clamp(happiness_value, FISH_SAD, FISH_VERY_HAPPY)
 

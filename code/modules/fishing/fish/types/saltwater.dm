@@ -167,7 +167,7 @@
 	average_weight = 4000
 	breeding_timeout = 4.5 MINUTES
 	feeding_frequency = 4 MINUTES
-	health = 180
+	max_integrity = 360
 	beauty = FISH_BEAUTY_EXCELLENT
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
