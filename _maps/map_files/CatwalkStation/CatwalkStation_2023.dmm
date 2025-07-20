@@ -23328,6 +23328,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gVi" = (
@@ -34699,6 +34700,11 @@
 /obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
+"kjl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "kjF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/junction/yjunction{
@@ -44060,6 +44066,10 @@
 /obj/structure/railing,
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
+"nck" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/iron/large,
+/area/station/hallway/primary/central)
 "nct" = (
 /obj/item/radio/intercom/directional/south,
 /obj/structure/disposalpipe/segment{
@@ -44382,13 +44392,11 @@
 /area/station/hallway/primary/central)
 "nhD" = (
 /obj/structure/table/glass,
-/obj/item/storage/medkit/regular{
-	pixel_y = 1
-	},
 /obj/machinery/vending/wallmed/directional/west,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/item/storage/medkit/advanced,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "nhE" = (
@@ -75655,6 +75663,13 @@
 /obj/effect/spawner/random/entertainment/dice,
 /turf/open/floor/wood/large,
 /area/station/service/library)
+"wvm" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "wvw" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -113531,7 +113546,7 @@ bOk
 bOk
 wrI
 fjt
-fLr
+nck
 vuO
 ilg
 wmy
@@ -121556,7 +121571,7 @@ hFi
 hFi
 hFi
 hFi
-hFi
+kjl
 gnT
 hFi
 hFi
@@ -122034,7 +122049,7 @@ iYq
 caE
 dUe
 oDH
-oDH
+wvm
 iKT
 oDH
 oDH

@@ -22355,6 +22355,7 @@
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -26719,7 +26720,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/spawner/random/structure/table,
 /obj/machinery/airalarm/directional/south,
-/obj/item/storage/medkit/brute,
+/obj/item/stack/medical/bruise_pack,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "juh" = (
@@ -49271,13 +49272,9 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/medkit/regular,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/sign/departments/chemistry/pharmacy/directional/north,
+/obj/item/storage/box/bandages,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "rgy" = (
@@ -51012,10 +51009,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/storage/medkit,
 /obj/structure/table,
 /obj/machinery/light/directional/south,
 /obj/item/radio/intercom/directional/south,
+/obj/item/storage/box/bandages,
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "rIw" = (
@@ -58368,6 +58365,12 @@
 /obj/machinery/exodrone_launcher,
 /turf/open/floor/iron/dark,
 /area/station/cargo/drone_bay)
+"ufl" = (
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 8
+	},
+/area/station/science/xenobiology)
 "ufr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -60949,10 +60952,10 @@
 /area/station/medical/virology)
 "vay" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/medkit/advanced,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vaC" = (
@@ -65311,6 +65314,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
+"wDs" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "wDu" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
@@ -66349,6 +66359,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"wXS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "wXY" = (
 /obj/structure/broken_flooring/side/directional/east,
 /turf/open/floor/plating,
@@ -94394,7 +94413,7 @@ eEa
 kmu
 kmu
 xJe
-kmu
+wDs
 wSi
 kmu
 rqj
@@ -103143,7 +103162,7 @@ nxG
 nxG
 nxG
 hjJ
-nxG
+wXS
 glH
 iAE
 xAm
@@ -188471,7 +188490,7 @@ jEt
 aMf
 rdn
 xSW
-wnA
+ufl
 wnA
 wnA
 wnA
