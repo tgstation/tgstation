@@ -154,7 +154,7 @@
 					set_temperature(reagtemp)
 
 			if(!isnull(reagent_added))
-				reagent_added += iter_reagent
+				reagent_added[iter_reagent] = amount
 			if(!no_react && !is_reacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return amount
@@ -186,7 +186,7 @@
 			set_temperature(reagtemp)
 
 	if(!isnull(reagent_added))
-		reagent_added += new_reagent
+		reagent_added[new_reagent] = amount
 	if(!no_react)
 		handle_reactions()
 	return amount
@@ -466,7 +466,6 @@
 
 	var/trans_data = null
 	var/list/r_to_send = methods ? list() : null // Validated list of reagents to be exposed
-	var/list/added_reagents = list()
 	var/list/transfer_log = list()
 
 	var/part = isnull(target_id) ? (amount / total_volume) : 1
@@ -495,13 +494,11 @@
 			update_total()
 			target_holder.update_total()
 			continue
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = added_reagents, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = r_to_send, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
-		total_transfered_amount += transfered_amount
 
-		if(methods)
-			r_to_send[added_reagents[added_reagents.len]] = transfered_amount
+		total_transfered_amount += transfered_amount
 		reagent.volume -= transfered_amount
 		transfer_log += "[reagent.type] ([transfered_amount]u, [reagent.purity] purity)"
 
@@ -579,22 +576,15 @@
 	var/list/cached_reagents = reagent_list
 	var/part = amount / total_volume
 	var/transfer_amount
-	var/transfered_amount = 0
 	var/total_transfered_amount = 0
 	var/trans_data = null
-	var/list/added_reagents  = list()
-	var/list/r_to_send = list()
+	var/list/r_to_send = copy_methods ? list() : null
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		transfer_amount = reagent.volume * part * multiplier
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, reagent_added = added_reagents, no_react = TRUE)
-		if(!transfered_amount)
-			continue
-		if(copy_methods)
-			r_to_send[added_reagents[added_reagents.len]] = transfered_amount
-		total_transfered_amount += transfered_amount
+		total_transfered_amount += target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, reagent_added = r_to_send, no_react = TRUE)
 
 	//expose target to reagent changes
 	if(copy_methods)
