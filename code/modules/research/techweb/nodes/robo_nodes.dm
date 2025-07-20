@@ -46,8 +46,6 @@
 		"paladin_module",
 		"protectstation_module",
 		"quarantine_module",
-		"remove_module",
-		"reset_module",
 		"robocop_module",
 		"safeguard_module",
 	)
@@ -89,7 +87,6 @@
 		"painter_module",
 		"paladin_devotion_module",
 		"peacekeeper_module",
-		"purge_module",
 		"reporter_module",
 		"ten_commandments_module",
 		"thermurderdynamic_module",
