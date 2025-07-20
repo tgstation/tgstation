@@ -184,11 +184,55 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/bloody_mess = FALSE
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
+	var/datum/looping_sound/wash/wash_loop
+	var/door_open_sound = 'sound/vehicles/clown_car/door_open.ogg' //sounds similar enough
+	var/door_close_sound = 'sound/vehicles/clown_car/door_close.ogg'
+
+/obj/machinery/washing_machine/Initialize(mapload)
+	. = ..()
+	register_context()
+	wash_loop = new(src, FALSE)
+	wash_loop.extra_range = -12
+	wash_loop.start_volume = 30
+	wash_loop.end_volume = 30
+
+/obj/machinery/washing_machine/Destroy()
+    QDEL_NULL(wash_loop)
+    return ..()
+
+/obj/machinery/washing_machine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(busy)
+		return NONE
+	if(held_item)
+		return NONE
+	if(state_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Close the door"
+	else
+		context[SCREENTIP_CONTEXT_LMB] = "Open the door"
+		context[SCREENTIP_CONTEXT_RMB] = "Start washing cycle"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
-	if(!busy)
-		. += span_notice("<b>Right-click</b> with an empty hand to start a wash cycle.")
+	if(busy)
+		. += span_notice("The door is closed and the motor is running.")
+		return
+	if(LAZYLEN(contents))
+		var/remaining = max_wash_capacity - contents.len
+		if(remaining > 0)
+			. += span_notice("You estimate room for <b>[remaining]</b> more item[remaining == 1 ? "" : "s"]. Inside you see:")
+		else
+			. += span_notice("It's completely packed! Inside you see:")
+
+		for(var/atom/movable/washed in contents)
+			if(ismob(washed))
+				var/mob/neatnik = washed
+				. += "\t[neatnik.name] [neatnik.stat == DEAD || UNCONSCIOUS ? span_boldwarning("is unconscious!") : span_warning("moving around!")]"
+			else
+				. += "\t[icon2html(washed, user)] [washed.name]"
+	else
+		. += span_notice("The drum is empty.")
 
 /obj/machinery/washing_machine/process(seconds_per_tick)
 	if(!busy)
@@ -215,6 +259,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		. |= COMPONENT_CLEANED
 
 /obj/machinery/washing_machine/proc/wash_cycle(mob/user)
+	wash_loop.stop()
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		AM.wash(CLEAN_WASH)
@@ -230,39 +275,37 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	use_energy(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
-	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
-	if(undyeable)
-		return FALSE
-	if(!dye_key_selector)
+	var/dye_key_selector = dye_key_override || dying_key
+	if(undyeable || !dye_key_selector)
 		return FALSE
 	if(!GLOB.dye_registry[dye_key_selector])
-		log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key_selector]")
+		log_runtime("Item [type] just tried to be dyed with an invalid registry key: [dye_key_selector]")
 		return FALSE
 	var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
 	if(!target_type)
 		return FALSE
 
-	var/list/greyscale_args = list()
+	var/list/new_greyscale_configs = list()
 
-	if(initial(target_type.greyscale_config))
-		greyscale_args["new_config"] = initial(target_type.greyscale_config)
+	if(!isnull(initial(target_type.greyscale_config)))
+		new_greyscale_configs["new_config"] = initial(target_type.greyscale_config)
 	else
 		icon = initial(target_type.icon)
-	if(initial(target_type.greyscale_config_worn))
-		greyscale_args["new_worn_config"] = initial(target_type.greyscale_config_worn)
+	if(!isnull(initial(target_type.greyscale_config_worn)))
+		new_greyscale_configs["new_worn_config"] = initial(target_type.greyscale_config_worn)
 	else
 		worn_icon = initial(target_type.worn_icon)
-	if(initial(target_type.greyscale_config_inhand_left))
-		greyscale_args["new_inhand_left"] = initial(target_type.greyscale_config_inhand_left)
+	if(!isnull(initial(target_type.greyscale_config_inhand_left)))
+		new_greyscale_configs["new_inhand_left"] = initial(target_type.greyscale_config_inhand_left)
 	else
 		lefthand_file = initial(target_type.lefthand_file)
-	if(initial(target_type.greyscale_config_inhand_right))
-		greyscale_args["new_inhand_right"] = initial(target_type.greyscale_config_inhand_right)
+	if(!isnull(initial(target_type.greyscale_config_inhand_right)))
+		new_greyscale_configs["new_inhand_right"] = initial(target_type.greyscale_config_inhand_right)
 	else
 		righthand_file = initial(target_type.righthand_file)
-	if(length(greyscale_args))
-		greyscale_args["colors"] = initial(target_type.greyscale_colors) || greyscale_colors || COLOR_WHITE
-		set_greyscale(arglist(greyscale_args))
+	if(length(new_greyscale_configs))
+		new_greyscale_configs["colors"] = initial(target_type.greyscale_colors) || COLOR_WHITE
+		set_greyscale(arglist(new_greyscale_configs))
 
 	icon_state = initial(target_type.post_init_icon_state) || initial(target_type.icon_state)
 	inhand_icon_state = initial(target_type.inhand_icon_state)
@@ -408,6 +451,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!state_open)
 		open_machine()
 	else
+		playsound(src, door_close_sound, 30, 1)
 		state_open = FALSE //close the door
 		update_appearance()
 
@@ -430,6 +474,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(bloody_mess)
 		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	wash_loop.start()
 	busy = TRUE
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
 		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
@@ -445,6 +490,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	new /obj/item/stack/sheet/iron(drop_location(), 2)
 
 /obj/machinery/washing_machine/open_machine(drop = TRUE, density_to_set = FALSE)
+	playsound(src, door_open_sound, 30, 1)
 	. = ..()
 	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null

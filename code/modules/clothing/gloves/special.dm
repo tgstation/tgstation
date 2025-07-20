@@ -54,6 +54,7 @@
 	name = "Gloves of the North Star"
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
+	greyscale_colors = "#202566"
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/rapid/Initialize(mapload)
@@ -65,6 +66,7 @@
 	name = "translation gloves"
 	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."
 	icon_state = "radio_g"
+	greyscale_colors = "#535353"
 	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS)
 
 /obj/item/clothing/gloves/race
@@ -82,6 +84,7 @@
 	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
 	name = "captain's gloves"
 	icon_state = "captain"
+	greyscale_colors = "#41579a"
 	siemens_coefficient = 0
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -154,6 +157,7 @@
 	name = "atmospheric extrication gloves"
 	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable and let you carry people faster."
 	icon_state = "atmos"
+	greyscale_colors = "#1a89ad"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
@@ -172,6 +176,7 @@
 	name = "athletic fishing gloves"
 	desc = "A pair of gloves to fish without a fishing rod but your raw <b>athletics</b> strength. It doubles as a good workout device. <i><b>WARNING</b>: May cause injuries when catching bigger fish.</i>"
 	icon_state = "fishing_gloves"
+	greyscale_colors = "#992133"
 	///The current fishing minigame datum the wearer is engaged in.
 	var/datum/fishing_challenge/challenge
 

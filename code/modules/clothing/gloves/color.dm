@@ -90,7 +90,7 @@
 	name = "purple gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "purple"
-	greyscale_colors = "#cc33ff"
+	greyscale_colors = COLOR_CRAYON_PURPLE
 
 /obj/item/clothing/gloves/color/green
 	name = "green gloves"

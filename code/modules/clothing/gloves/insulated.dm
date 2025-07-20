@@ -96,7 +96,6 @@
 	name = "budget insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
-	greyscale_colors = null
 	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
 	armor_type = /datum/armor/color_fyellow
 	resistance_flags = NONE
@@ -129,7 +128,6 @@
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
-	greyscale_colors = null
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/cut/Initialize(mapload)
@@ -143,7 +141,7 @@
 	desc = "These gloves provide excellent heat and electric insulation."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
-	greyscale_colors = null
+	inhand_icon_state = "ygloves"
 	siemens_coefficient = 0
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
