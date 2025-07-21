@@ -380,10 +380,6 @@
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
-"zI" = (
-/obj/machinery/porta_turret/syndicate/energy,
-/turf/closed/wall/mineral/wood/nonmetal,
-/area/rainworld/surface/outdoors)
 "zM" = (
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = -1;
@@ -1218,7 +1214,7 @@ ui
 "}
 (10,1,1) = {"
 ui
-zI
+ey
 VE
 vh
 IC
@@ -1255,7 +1251,7 @@ vh
 fN
 fN
 ul
-zI
+ey
 ui
 "}
 (11,1,1) = {"
@@ -1473,7 +1469,7 @@ ui
 ui
 ui
 ui
-zI
+ey
 cf
 Pi
 cf
@@ -1501,7 +1497,7 @@ cf
 IN
 cf
 ey
-zI
+ey
 ui
 ui
 ui
