@@ -69,6 +69,15 @@
 /obj/machinery/vending/RefreshParts()
 	SHOULD_CALL_PARENT(FALSE)
 
+	//compress all product categories into an linear list
+	if(product_categories)
+		products.Cut()
+		for(var/list/category as anything in product_categories)
+			products |= category["products"]
+
+	//build the records
+	build_inventories(start_empty = TRUE)
+
 	//fill the records
 	if(refill_canister)
 		restock(locate(/obj/item/vending_refill) in component_parts)
