@@ -1,4 +1,0 @@
-author: "combustor"
-delete-after: True
-changes:
-  - bugfix: "Healium bolts now heal instead of dealing damage"
