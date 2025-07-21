@@ -37,7 +37,7 @@
 
 /datum/proximity_monitor/advanced/bubble/space_protection/cleanup_field_turf(turf/target)
 	for(var/mob/possible_mob in target)
-		if(HAS_TRAIT_FROM(possible_mob, TRAIT_GOT_DAMPENED, REF(src)))
+		if(HAS_TRAIT_FROM(possible_mob, traits_to_give[1], REF(src)))
 			remove_space_immunity(possible_mob)
 
 ///a mob has entered our field, apply the space protection to them.
