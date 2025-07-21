@@ -88,7 +88,7 @@
  * * source the datum that sent the signal to start cleaning
  * * target the thing being cleaned
  * * user the person doing the cleaning
- * * clean_target set this to false if the target should not be washed
+ * * call_wash set this to false if the target should not be wash()ed
  * * grant_xp set this to false if the user should not be granted cleaning experience
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, call_wash = TRUE, grant_xp = TRUE)
