@@ -1,0 +1,9 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - rscadd: "Justice mech: New block and charge system! Build and try it now!"
+  - qol: "Justice mech: charge attack is now much more pleasant and convenient to use!"
+  - balance: "Justice mech: Increased HP and armor."
+  - balance: "Justice mech: Invisibility is now infinite."
+  - balance: "Justice mech: stealth aoe attack is now 2x faster."
+  - refactor: "Justice mech: Some code clenup and mechanic improvements."
