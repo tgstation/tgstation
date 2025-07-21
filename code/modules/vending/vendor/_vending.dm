@@ -14,10 +14,6 @@
 	premium = list()
 */
 
-/// List of vending machines that players can restock, so only vending machines that are on station or don't have a unique condition.
-GLOBAL_LIST_EMPTY(vending_machines_to_restock)
-
-
 #define CREDITS_DUMP_THRESHOLD 50
 /**
  * # vending record datum
@@ -252,7 +248,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 	if(!all_products_free)
 		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
-		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
 	register_context()
 
 	if(fish_source_path)
@@ -331,7 +326,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	QDEL_LIST(product_records)
 	QDEL_LIST(hidden_records)
 	QDEL_LIST(coin_records)
-	GLOB.vending_machines_to_restock -= src
 	return ..()
 
 /obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -427,10 +421,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if (vname == NAMEOF(src, all_products_free))
 		if (all_products_free)
 			RemoveComponentSource(src, /datum/component/payment)
-			GLOB.vending_machines_to_restock -= src
 		else
 			AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
-			GLOB.vending_machines_to_restock += src
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()
