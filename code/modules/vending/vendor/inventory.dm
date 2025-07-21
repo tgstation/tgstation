@@ -75,12 +75,15 @@
 		for(var/list/category as anything in product_categories)
 			products |= category["products"]
 
-	//build the records
-	build_inventories(start_empty = TRUE)
+	//locate canister
+	var/obj/item/vending_refill/canister = refill_canister ? locate(/obj/item/vending_refill) in component_parts : null
 
-	//fill the records
-	if(refill_canister)
-		restock(locate(/obj/item/vending_refill) in component_parts)
+	//build the records, if we have a canister make the records empty so we can refill it from the canister else make it max amount
+	build_inventories(start_empty = !isnull(canister))
+
+	//fill the records if we have an canister
+	if(canister)
+		restock(canister)
 
 /**
  * Refill a vending machine from a refill canister
