@@ -32,7 +32,7 @@
 		},
 		{
 			"Mining": true,
-			"Linkage": "Grid",
+			"Linkage": null,
 			"Gravity": true,
 			"Ice Ruins": true,
 			"Weather_Snowstorm": true,
