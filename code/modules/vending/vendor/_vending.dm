@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 		canister_list.Cut()
 		for(var/datum/data/vending_product/record as anything in record_list)
-			canister_list[record.product_path] += record.amount
+			canister_list[record.product_path] = record.amount
 
 /obj/machinery/vending/Destroy()
 	GLOB.vending_machines_to_restock -= src
