@@ -103,9 +103,9 @@
 
 	if(methods & (TOUCH|VAPOR|PATCH))
 		exposed_mob.adjust_fire_stacks(reac_volume / 15)
-		var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+		var/sterilizing_power = boozepwr / 650 // Weak alcohol has less sterilizing power
 		for(var/datum/surgery/surgery as anything in exposed_mob.surgeries)
-			surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
+			surgery.speed_modifier = min(1 - sterilizing_power, surgery.speed_modifier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -168,7 +168,7 @@
 	if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 		affected_human.skin_tone = "green"
 	else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Code stolen from spraytan overdose
-		affected_human.dna.features["mcolor"] = "#a8e61d"
+		affected_human.dna.features[FEATURE_MUTANT_COLOR] = "#a8e61d"
 	affected_human.update_body(is_creating = TRUE)
 
 /datum/reagent/consumable/ethanol/kahlua
@@ -353,12 +353,12 @@
 
 /datum/reagent/consumable/ethanol/rum/aged/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/piratespeak, LANGUAGE_DRINK)
+	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/piratespeak, source = LANGUAGE_DRINK)
 	drinker.grant_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
 
 /datum/reagent/consumable/ethanol/rum/aged/on_mob_end_metabolize(mob/living/drinker)
 	if(!QDELING(drinker))
-		drinker.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_DRINK)
+		drinker.remove_blocked_language(subtypesof(/datum/language), source = LANGUAGE_DRINK)
 		drinker.remove_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
 	return ..()
 

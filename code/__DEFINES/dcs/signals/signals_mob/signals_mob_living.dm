@@ -337,3 +337,6 @@
 
 /// From /datum/spawners_menu/ui_static_data(mob/user) : (list/string_info)
 #define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"
+
+///from mob/living/befriend()
+#define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"

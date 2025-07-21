@@ -5,7 +5,7 @@ import { formatSiUnit } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
 
 import { MaterialIcon } from './MaterialIcon';
-import { Material } from './Types';
+import type { Material } from './Types';
 
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up
@@ -63,7 +63,7 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
             material={material}
             SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             onEjectRequested={(quantity) =>
-              onEjectRequested && onEjectRequested(material, quantity)
+              onEjectRequested?.(material, quantity)
             }
           />
         </Flex.Item>
