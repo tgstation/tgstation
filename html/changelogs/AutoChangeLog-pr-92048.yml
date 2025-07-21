@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "fixed shuttle remote design missing from protolathe"

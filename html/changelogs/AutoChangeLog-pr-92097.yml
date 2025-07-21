@@ -1,5 +1,0 @@
-author: "DaCoolBoss"
-delete-after: True
-changes:
-  - bugfix: "Agent IDs that have not been spawned by an uplink or on a nuke op no longer have infinite access slots."
-  - spellcheck: "Rewrote item description for Agent IDs"
