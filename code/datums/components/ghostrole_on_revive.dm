@@ -115,6 +115,14 @@
 
 	// Add it to the ghostrole spawner menu. Note that we can't directly spawn from it, but we can make it twitch to alert bystanders to defib it
 	LAZYADD(GLOB.joinable_mobs[format_text("Recovered Crew")], liver)
+	RegisterSignal(liver, COMSIG_LIVING_GHOSTROLE_INFO, PROC_REF(set_spawner_info))
+
+/datum/component/ghostrole_on_revive/proc/set_spawner_info(datum/spawners_menu/menu, string_info)
+	SIGNAL_HANDLER
+
+	string_info["you_are_text"] = "You are a long dead crewmember, but are soon to be revived to rejoin the crew!"
+	string_info["flavor_text"] = "Get a job and get back to work!"
+	string_info["important_text"] = "Do your best to help the station. You still roll for midround antagonists."
 
 /datum/component/ghostrole_on_revive/proc/remove_orbit_twitching(mob/living/living)
 	living.RemoveElement(/datum/element/orbit_twitcher, twitch_chance)
@@ -125,6 +133,8 @@
 
 	if(!LAZYLEN(spawners))
 		GLOB.joinable_mobs -= format_text("Recovered Crew")
+
+	UnregisterSignal(living, COMSIG_LIVING_GHOSTROLE_INFO)
 
 /datum/component/ghostrole_on_revive/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))

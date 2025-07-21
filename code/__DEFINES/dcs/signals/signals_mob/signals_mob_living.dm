@@ -334,3 +334,6 @@
 	#define FAIL_PROB_INDEX 1
 	/// Index in modifiers containing the modifer to surgery speed
 	#define SPEED_MOD_INDEX 2
+
+/// From /datum/spawners_menu/ui_static_data(mob/user) : (list/string_info)
+#define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"

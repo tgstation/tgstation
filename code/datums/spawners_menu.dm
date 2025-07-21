@@ -51,13 +51,8 @@
 		this["amount_left"] = 0
 		for(var/mob/joinable_mob as anything in GLOB.joinable_mobs[mob_type])
 			this["amount_left"] += 1
-			if(!this["desc"])
-				if(HAS_TRAIT(joinable_mob, TRAIT_GHOSTROLE_ON_REVIVE))
-					this["you_are_text"] = "You are a long dead crewmember, but are soon to be revived to rejoin the crew!"
-					this["flavor_text"] = "Get a job and get back to work!"
-					this["important_text"] = "Do your best to help the station. You still roll for midround antagonists."
-				else
-					this["desc"] = initial(joinable_mob.desc)
+			if(!SEND_SIGNAL(joinable_mob, COMSIG_LIVING_GHOSTROLE_INFO, this))
+				this["desc"] = initial(joinable_mob.desc)
 		if(this["amount_left"] > 0)
 			data["spawners"] += list(this)
 	return data
