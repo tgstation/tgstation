@@ -1,6 +1,0 @@
-author: "Rex9001"
-delete-after: True
-changes:
-  - rscadd: "Fire extinguishers now have an alternate attack, usable with right click"
-  - balance: "Fire extinguishers force: 10 -> 13"
-  - balance: "Fire extinguishers weight: Normal -> Bulky"

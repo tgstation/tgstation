@@ -512,3 +512,31 @@
   SmArtKar:
   - bugfix: Fixed admin's ckey search in orbit sometimes failing
   - bugfix: Fixed foam slipping people standing on tables and racks
+2025-07-21:
+  00-Steven:
+  - bugfix: The notice board UI actually fits the full 8 paper entries.
+  Ben10Omintrix:
+  - bugfix: fixes tamed pets sometimes attacking one another
+  Ezel:
+  - balance: Removes some public medkits on every map
+  - balance: Changes the contents of wall med vendors to just have emergency stuff
+  - balance: Drugs vendor now includes 3 sterilizine medigels instead of 1
+  - balance: 'Tactical lite medkit added to traitor uplink for 4 tc, this includes
+      medicated suture/mesh, atropine pen, gauze, advanced health analyzer
+
+      map:Adds more wall med vendors to the map atleast 1 every department.'
+  Melbert:
+  - rscdel: Removes the Flagellant's Robes from Cult
+  - bugfix: Fix backwards default buckle feedback
+  - rscdel: Removes the Void Torch from Cult
+  Rex9001:
+  - rscadd: Fire extinguishers now have an alternate attack, usable with right click
+  - balance: 'Fire extinguishers force: 10 -> 13'
+  - balance: 'Fire extinguishers weight: Normal -> Bulky'
+  SmArtKar:
+  - bugfix: Fixed dropdel embeds runtiming upon removal
+  - bugfix: Fixes seclights attached to objects runtiming when their parent object
+      gets deleted
+  SyncIt21:
+  - bugfix: You cannot win an ore vent wave defence by throwing a blue space crystal
+      on the drone or by moving it in any other way

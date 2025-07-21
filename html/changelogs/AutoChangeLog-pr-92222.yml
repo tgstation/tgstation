@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixes seclights attached to objects runtiming when their parent object gets deleted"
