@@ -6502,6 +6502,7 @@
 #include "code\modules\vending\sovietsoda.dm"
 #include "code\modules\vending\subtype.dm"
 #include "code\modules\vending\sustenance.dm"
+#include "code\modules\vending\syndichem.dm"
 #include "code\modules\vending\toys.dm"
 #include "code\modules\vending\wardrobes.dm"
 #include "code\modules\vending\youtool.dm"
