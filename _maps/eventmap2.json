@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"map_name": "Pubbyrain",
+	"map_path": "map_files/pubbyrain",
+	"map_file": "pubbyrain.dmm",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
+	"planetary": 1,
+	"minetype": "none",
+	"ocean_levels": 4,
+	"shuttles": {
+		"emergency": "emergency_pubby",
+		"whiteship": "whiteship_pubby",
+		"ferry": "ferry_fancy",
+		"cargo": "cargo_pubby"
+	},
+	"ocean_wilderness": {
+		"directory": "map_files/RainworldOcean",
+		"misc_ocean1.dmm": 1,
+		"misc_ocean2.dmm": 1,
+		"misc_ocean3.dmm": 1,
+		"mining_ocean.dmm": 1
+	},
+	"traits": [
+		{
+			"Mining": true,
+			"Linkage": "Grid",
+			"Gravity": true,
+			"Weather_Rainstorm": true,
+			"Baseturf": "/turf/open/water/no_planet_atmos/deep/rainworld",
+			"No Parallax": true
+		}
+	],
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar/atrium"]
+		}
+	}
+}

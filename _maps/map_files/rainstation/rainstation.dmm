@@ -5927,16 +5927,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth,
 /area/station/commons/fitness)
-"ass" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/commons/fitness)
 "ast" = (
 /obj/structure/closet/lasertag/blue,
 /obj/effect/turf_decal/tile/neutral{
@@ -56157,6 +56147,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
 "tsE" = (
@@ -58467,8 +58458,8 @@
 /area/station/engineering/supermatter/room)
 "vro" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "vrx" = (
@@ -58949,16 +58940,6 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/commons/dorms)
-"vNU" = (
-/obj/machinery/drone_dispenser,
-/obj/item/stack/sheet/glass{
-	amount = 20;
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/obj/item/stack/sheet/iron/fifty,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/cmo)
 "vOt" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/chair{
@@ -97388,7 +97369,7 @@ arP
 arP
 arP
 arP
-ass
+arj
 asN
 asN
 att
@@ -103335,7 +103316,7 @@ mnj
 mnj
 mnj
 mnj
-vNU
+bhe
 nUF
 bhe
 mnj
