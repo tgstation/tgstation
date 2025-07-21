@@ -202,6 +202,7 @@
 			if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
 				thegun.equip_cooldown = 8
 		equip_cooldown = 8
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, obj/vehicle/sealed/mecha/themech, attach_right)
 	var/has_cryo = FALSE

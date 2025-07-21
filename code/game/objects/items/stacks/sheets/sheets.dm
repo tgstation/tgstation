@@ -66,10 +66,11 @@
  * This is used for crafting by hitting the floor with items.
  * The initial use case is glass sheets breaking in to shards when the floor is hit.
  * Args:
+ * * target: The floor that was hit
  * * user: The user that did the action
- * * params: paramas passed in from attackby
+ * * modifiers: The modifiers passed in from attackby
  */
-/obj/item/stack/sheet/proc/on_attack_floor(mob/user, params)
+/obj/item/stack/sheet/proc/on_attack_floor(turf/open/floor/target, mob/user, list/modifiers)
 	var/list/shards = list()
 	for(var/datum/material/mat in custom_materials)
 		if(mat.shard_type)
@@ -81,14 +82,14 @@
 		if(!is_cyborg)
 			stack_trace("A stack of sheet material was attempted to be shattered into shards while having less than 1 sheets remaining.")
 		return FALSE
-	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)
-	playsound(src, SFX_SHATTER, 70, TRUE)
+	user.do_attack_animation(target, ATTACK_EFFECT_BOOP)
+	playsound(target, SFX_SHATTER, 70, TRUE)
 	var/list/shards_created = list()
 	for(var/shard_to_create in shards)
-		var/obj/item/new_shard = new shard_to_create(drop_location())
+		var/obj/item/new_shard = new shard_to_create(target)
 		new_shard.add_fingerprint(user)
 		shards_created += "[new_shard.name]"
-	user.visible_message(span_notice("[user] shatters the sheet of [name] on the floor, leaving [english_list(shards_created)]."), \
-		span_notice("You shatter the sheet of [name] on the floor, leaving [english_list(shards_created)]."))
+	user.visible_message(span_notice("[user] shatters the sheet of [name] on [target], leaving [english_list(shards_created)]."), \
+		span_notice("You shatter the sheet of [name] on [target], leaving [english_list(shards_created)]."))
 	return TRUE
 

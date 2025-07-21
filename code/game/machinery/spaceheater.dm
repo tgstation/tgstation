@@ -79,7 +79,7 @@
 	QDEL_NULL(cell)
 	return..()
 
-/obj/machinery/space_heater/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/space_heater/on_construction()
 	set_panel_open(TRUE)
 	QDEL_NULL(cell)
 

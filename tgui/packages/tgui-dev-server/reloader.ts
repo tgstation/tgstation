@@ -61,7 +61,7 @@ export async function findCacheRoot(): Promise<string | undefined> {
       'userpath',
     );
     if (userpath) {
-      cacheRoot = userpath.replace(/\\$/, '').replace(/\\/g, '/') + '/cache';
+      cacheRoot = `${userpath.replace(/\\$/, '').replace(/\\/g, '/')}/cache`;
       await onCacheRootFound(cacheRoot);
       return cacheRoot;
     }
@@ -72,7 +72,7 @@ export async function findCacheRoot(): Promise<string | undefined> {
 async function onCacheRootFound(cacheRoot: string): Promise<void> {
   logger.log(`found cache at '${cacheRoot}'`);
   // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 514.
-  await Bun.write(cacheRoot + '/dummy.htm', '');
+  await Bun.write(`${cacheRoot}/dummy.htm`, '');
 }
 
 export async function reloadByondCache(bundleDir: string): Promise<void> {
@@ -103,7 +103,7 @@ export async function reloadByondCache(bundleDir: string): Promise<void> {
 
     try {
       // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515-516.
-      await Bun.write(cacheDir + '/dummy.htm', '');
+      await Bun.write(`${cacheDir}/dummy.htm`, '');
 
       // Copy assets
       for (const asset of assets) {
