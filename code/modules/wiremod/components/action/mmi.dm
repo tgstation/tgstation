@@ -154,24 +154,31 @@
 
 /obj/item/circuit_component/mmi/proc/register_boris_circuit(atom/movable/shell)
 	var/static/list/connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(boris_shell_or_container_moved))
-	AddComponent(/datum/component/connect_containers, shell, connections)
+	AddComponentFrom(REF(src), /datum/component/multi_connect_containers, connections)
 	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
 		location.AddComponentFrom(REF(src), /datum/component/boris_circuit_container)
+		AddComponentFrom(REF(location), /datum/component/shuttle_move_deferred_checks, PROC_REF(post_movement_checks))
 
 /obj/item/circuit_component/mmi/proc/unregister_boris_circuit(atom/movable/shell)
+	RemoveComponentSource(REF(src), /datum/component/multi_connect_containers)
 	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
 		location.RemoveComponentSource(REF(src), /datum/component/boris_circuit_container)
+		RemoveComponentSource(REF(location), /datum/component/shuttle_move_deferred_checks)
 
 /obj/item/circuit_component/mmi/proc/boris_shell_or_container_moved(atom/movable/shell_or_container, atom/old_loc)
 	SIGNAL_HANDLER
 	if(isturf(old_loc) && isturf(shell_or_container.loc))
 		return
-	var/list/old_locs = ismovable(old_loc) ? (get_nested_locs(old_loc) + old_loc) : list()
+	var/list/old_locs = list()
+	if(ismovable(old_loc))
+		old_locs = get_nested_locs(old_loc) + old_loc
 	var/list/new_locs = get_nested_locs(shell_or_container)
 	for(var/atom/movable/loc_exited as anything in old_locs - new_locs)
 		loc_exited.RemoveComponentSource(REF(src), /datum/component/boris_circuit_container)
+		RemoveComponentSource(REF(loc_exited), /datum/component/shuttle_move_deferred_checks)
 	for(var/atom/movable/loc_entered as anything in new_locs - old_locs)
 		loc_entered.AddComponentFrom(REF(src), /datum/component/boris_circuit_container)
+		AddComponentFrom(REF(loc_entered), /datum/component/shuttle_move_deferred_checks, PROC_REF(post_movement_checks))
 
 /obj/item/circuit_component/mmi/proc/occupant_item_moved(atom/movable/occupant_item)
 	SIGNAL_HANDLER
@@ -226,19 +233,41 @@
 	ADD_TRAIT(new_occupant, TRAIT_CONNECTED_TO_CIRCUIT, REF(src))
 	var/mob/living/silicon/ai = new_occupant
 	ai.reset_perspective(src)
-	// Perspective gets reset whenever multicam is ended.
-	RegisterSignal(ai, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(remove_occupant))
-	// There are probably some more immediate signals to hook on to in order to trigger disconnects,
-	// but I'm feeling lazy as of the time I'm coding this and a LIVING_LIFE handler should work fine.
-	RegisterSignal(ai, COMSIG_LIVING_LIFE, PROC_REF(on_ai_life))
+	// Perspective gets reset whenever multicam is ended, which happens whenever an AI gets incapacitated or carded.
+	// This could change in the future, so we also register other signal handlers.
+	RegisterSignals(ai, list(COMSIG_MOB_RESET_PERSPECTIVE, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED)), PROC_REF(remove_occupant))
+	RegisterSignal(ai, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, PROC_REF(on_control_toggled))
+	var/static/list/connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(occupant_or_container_moved))
+	AddComponentFrom(REF(ai), /datum/component/multi_connect_containers, connections)
+	for(var/atom/movable/location as anything in get_nested_locs(ai) + ai)
+		AddComponentFrom(REF(location), /datum/component/shuttle_move_deferred_checks, PROC_REF(post_movement_checks))
 	disconnect_action.Grant(ai)
 	to_chat(ai, span_notice("Established connection with remote circuit."))
 
-/obj/item/circuit_component/mmi/proc/on_ai_life(mob/living/silicon/ai/ai)
+/obj/item/circuit_component/mmi/proc/occupant_or_container_moved(atom/movable/occupant_or_container, atom/old_loc)
 	SIGNAL_HANDLER
+	if(isturf(old_loc) && isturf(occupant_or_container.loc))
+		return
+	var/list/old_locs = list()
+	if(ismovable(old_loc))
+		old_locs = get_nested_locs(old_loc) + old_loc
+	var/list/new_locs = get_nested_locs(occupant_or_container)
+	for(var/atom/movable/loc_exited as anything in old_locs - new_locs)
+		RemoveComponentSource(REF(loc_exited), /datum/component/shuttle_move_deferred_checks)
+	for(var/atom/movable/loc_entered as anything in new_locs - old_locs)
+		AddComponentFrom(REF(loc_entered), /datum/component/shuttle_move_deferred_checks, PROC_REF(post_movement_checks))
+
+/obj/item/circuit_component/mmi/proc/post_movement_checks()
+	SIGNAL_HANDLER
+	var/mob/living/silicon/ai/ai = occupant
 	if(!istype(ai))
 		return
-	if(ai.control_disabled || !ai.can_interact_with(parent.shell))
+	if(!ai.can_interact_with(parent.shell))
+		remove_occupant()
+
+/obj/item/circuit_component/mmi/proc/on_control_toggled(datum/_source, control_disabled)
+	SIGNAL_HANDLER
+	if(control_disabled)
 		remove_occupant()
 
 /obj/item/circuit_component/mmi/proc/remove_occupant()
@@ -251,7 +280,10 @@
 		if(!ai.eyeobj)
 			ai.create_eye()
 		disconnect_action.Remove(ai)
-		UnregisterSignal(ai, list(COMSIG_MOB_RESET_PERSPECTIVE, COMSIG_LIVING_LIFE))
+		UnregisterSignal(ai, list(COMSIG_MOB_RESET_PERSPECTIVE, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), COMSIG_SILICON_AI_SET_CONTROL_DISABLED))
+		RemoveComponentSource(REF(ai), /datum/component/multi_connect_containers)
+		for(var/atom/movable/location as anything in get_nested_locs(ai) + ai)
+			RemoveComponentSource(REF(location), /datum/component/shuttle_move_deferred_checks)
 		ai.reset_perspective(null)
 		to_chat(ai, span_notice("Disconnected from remote circuit."))
 	occupant.remote_control = null
