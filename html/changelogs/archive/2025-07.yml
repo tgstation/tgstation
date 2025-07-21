@@ -472,3 +472,71 @@
       hijacked.
   SmArtKar:
   - bugfix: Fixed projectiles inheriting gun's pixel offsets when fired
+2025-07-19:
+  OrionTheFox:
+  - qol: made the Beach Bar bitdomain ghostrole spawners keep your old body revivable
+      (as other bitdomain spawners do)
+  SmArtKar:
+  - bugfix: Fixed flashlight eyes trying to add nonexistent irises to themselves
+  SyncIt21:
+  - bugfix: You cannot complete re-enforced girders with iron rods
+  TheEmber:
+  - bugfix: Fixed building wall out of wooden barricade
+2025-07-20:
+  Absolucy:
+  - qol: You can now click on the song URL in the music player widget in chat.
+  ArcaneMusic:
+  - qol: The GMM Stock market now shows material elasticity, AKA the sale price reduction
+      caused by selling a material, which will steadily recover after a sale.
+  EnterTheJake:
+  - balance: Jetpack module energy drain has been massively reduced.
+  - balance: armor on the Magnate,Safegaurd and sec modsuits has been considerably
+      increased.
+  - balance: 'Sec MOD plates have been transferred from RnD to Cargo.
+
+      balance The Infiltrator MOD now comes with the shock absorption module pre-installed.'
+  - balance: Nukie MODsuits hav a bit more complexity.
+  - bugfix: Nukie MODs now have the same flash protection as the other suits with
+      welding protection.
+  - balance: night visor module comes pre-installed in the syndie mods, no longer
+      consumes complexity,drains less power and doesn't conflict with the other visor
+      MODules.
+  - balance: Combat MODs and RDs now grant earing protection when the suit is active.
+  FalloutFalcon:
+  - bugfix: fixed bamboo and plastinum wall types tiling with red and royal black
+      carpets
+  Melbert:
+  - rscdel: If buckled during a violent shuttle launch, you'll no longer be knocked
+      down + immobilized, instead just immobilized. Unbuckled effects are unchanged.
+  - qol: Replaces one of the two elevators on the Nebula bridge with stairs
+  SmArtKar:
+  - bugfix: Fixed admin's ckey search in orbit sometimes failing
+  - bugfix: Fixed foam slipping people standing on tables and racks
+2025-07-21:
+  00-Steven:
+  - bugfix: The notice board UI actually fits the full 8 paper entries.
+  Ben10Omintrix:
+  - bugfix: fixes tamed pets sometimes attacking one another
+  Ezel:
+  - balance: Removes some public medkits on every map
+  - balance: Changes the contents of wall med vendors to just have emergency stuff
+  - balance: Drugs vendor now includes 3 sterilizine medigels instead of 1
+  - balance: 'Tactical lite medkit added to traitor uplink for 4 tc, this includes
+      medicated suture/mesh, atropine pen, gauze, advanced health analyzer
+
+      map:Adds more wall med vendors to the map atleast 1 every department.'
+  Melbert:
+  - rscdel: Removes the Flagellant's Robes from Cult
+  - bugfix: Fix backwards default buckle feedback
+  - rscdel: Removes the Void Torch from Cult
+  Rex9001:
+  - rscadd: Fire extinguishers now have an alternate attack, usable with right click
+  - balance: 'Fire extinguishers force: 10 -> 13'
+  - balance: 'Fire extinguishers weight: Normal -> Bulky'
+  SmArtKar:
+  - bugfix: Fixed dropdel embeds runtiming upon removal
+  - bugfix: Fixes seclights attached to objects runtiming when their parent object
+      gets deleted
+  SyncIt21:
+  - bugfix: You cannot win an ore vent wave defence by throwing a blue space crystal
+      on the drone or by moving it in any other way

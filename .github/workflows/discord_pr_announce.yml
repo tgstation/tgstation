@@ -6,7 +6,7 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
-    if: ${{ github.event.action != "labeled" || github.event.label.name == "Stale" }}
+    if: ${{ github.event.action != 'labeled' || github.event.label.name == 'Stale' }}
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set
@@ -26,7 +26,7 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: ${{ github.event.pull_request.user.login }} - ${{ github.event.pull_request.title }}
-          message: ${{ github.event.action != "labeled" && "GET_ACTION" || "**Pull Request ${{ github.event.pull_request.number }} automatically marked as stale.**" }}
+          message: ${{ github.event.action != 'labeled' && 'GET_ACTION' || format('**Pull Request {0} automatically marked as stale.**', github.event.pull_request.number) }}
           include_image: false
           show_author: false
           avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4
