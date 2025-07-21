@@ -38,6 +38,11 @@
 	else if(x < 0)
 		. += 360
 
+/proc/recurse(times)
+	if(times <= 0)
+		return
+	recurse(times - 1)
+	
 /**
  * Get a list of turfs in a line from `starting_atom` to `ending_atom`.
  *
