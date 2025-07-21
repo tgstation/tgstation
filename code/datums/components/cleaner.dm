@@ -71,7 +71,7 @@
 		var/callback_return = pre_clean_callback.Invoke(source, target, user)
 		if(callback_return & CLEAN_BLOCKED)
 			return (callback_return & CLEAN_DONT_BLOCK_INTERACTION) ? NONE : ITEM_INTERACT_BLOCKING
-		if(callback_return & CLEAN_NO_CLEANER_REAGENTS)
+		if(callback_return & CLEAN_NO_WASH)
 			call_wash = FALSE
 		if(callback_return & CLEAN_NO_XP)
 			give_xp = FALSE
