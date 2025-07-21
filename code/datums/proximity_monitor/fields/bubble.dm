@@ -17,9 +17,10 @@
 /datum/proximity_monitor/advanced/bubble/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	. = ..()
 	setup_effect_directions()
-	RegisterSignal(projector, COMSIG_QDELETING, PROC_REF(on_projector_del))
+	if(_host != projector)
+		RegisterSignal(projector, COMSIG_QDELETING, PROC_REF(on_projector_del))
 	var/atom/movable/movable_host = _host
-	my_movable = new(get_turf(projector))
+	my_movable = new(get_turf(movable_host))
 	my_movable.transform = my_movable.transform.Scale(current_range, current_range)
 	my_movable.set_glide_size(movable_host.glide_size)
 	draw_effect()
@@ -48,7 +49,7 @@
 
 /datum/proximity_monitor/advanced/bubble/on_moved(atom/movable/source, atom/old_loc)
 	. = ..()
-	my_movable.forceMove(source.loc)
+	my_movable.forceMove(get_turf(source))
 
 /datum/proximity_monitor/advanced/bubble/on_z_change(datum/source)
 	recalculate_field(full_recalc = TRUE)

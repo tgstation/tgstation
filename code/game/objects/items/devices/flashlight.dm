@@ -1106,7 +1106,7 @@
 
 /obj/item/flashlight/lamp/space_barrier/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro))
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro) || installed_pyro_core)
 		return NONE
 	user.balloon_alert(user, "core inserted")
 	qdel(tool)
@@ -1124,6 +1124,6 @@
 	if(light_on)
 		if(istype(space_bubble))
 			QDEL_NULL(space_bubble)
-		space_bubble = new(user, 4, TRUE, src)
+		space_bubble = new(src, 4, FALSE, src)
 	else
 		QDEL_NULL(space_bubble)

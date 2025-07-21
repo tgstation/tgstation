@@ -45,5 +45,5 @@
 	new_immunne.add_traits(traits_to_give, REF(src))
 
 ///removing the effects after the mob has exited our field.
-/datum/proximity_monitor/advanced/bubble/space_protection/proc/remove_space_immunity(obj/projectile/no_longer_immune)
-	REMOVE_TRAIT(no_longer_immune, traits_to_give, REF(src))
+/datum/proximity_monitor/advanced/bubble/space_protection/proc/remove_space_immunity(mob/living/no_longer_immune)
+	no_longer_immune.remove_traits(traits_to_give, REF(src))
