@@ -1,0 +1,4 @@
+author: "MX0739"
+delete-after: True
+changes:
+  - bugfix: "mops don't need to have 1 unit of water to be used with other reagents"
