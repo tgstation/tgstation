@@ -1792,6 +1792,7 @@
 #include "code\datums\proximity_monitor\field.dm"
 #include "code\datums\proximity_monitor\proximity_monitor.dm"
 #include "code\datums\proximity_monitor\fields\ai_target_tracking.dm"
+#include "code\datums\proximity_monitor\fields\bubble.dm"
 #include "code\datums\proximity_monitor\fields\gravity.dm"
 #include "code\datums\proximity_monitor\fields\heretic_arena.dm"
 #include "code\datums\proximity_monitor\fields\space_protection.dm"

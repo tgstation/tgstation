@@ -1162,3 +1162,22 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+// Anomaly locked item
+
+/datum/design/space_lamp
+	name = "Spacelamp"
+	desc = "A heavy lamp capable of beaming a barrier of breathable air. Requires a pyroclastic anomaly core to function."
+	id = "space_lamp"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT*2.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
+	)
+	build_path = /obj/item/flashlight/lamp/space_barrier
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

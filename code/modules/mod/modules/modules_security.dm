@@ -318,7 +318,7 @@
 	/// Effect image on projectiles.
 	var/image/projectile_effect
 	/// The dampening field
-	var/datum/proximity_monitor/advanced/projectile_dampener/dampening_field
+	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/dampening_field
 
 /obj/item/mod/module/projectile_dampener/Initialize(mapload)
 	. = ..()
