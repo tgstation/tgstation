@@ -50,7 +50,8 @@
 				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
-				"noNonNullAssertion": "off"
+				"noNonNullAssertion": "off",
+				"useSelfClosingElements": "error"
 			},
 			"suspicious": {
 				"noArrayIndexKey": "off",
