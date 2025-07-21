@@ -69,9 +69,6 @@
 /obj/machinery/vending/RefreshParts()
 	SHOULD_CALL_PARENT(FALSE)
 
-	//build the records
-	build_inventories(start_empty = TRUE)
-
 	//fill the records
 	if(refill_canister)
 		restock(locate(/obj/item/vending_refill) in component_parts)

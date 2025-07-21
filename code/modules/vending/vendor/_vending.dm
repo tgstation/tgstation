@@ -216,17 +216,22 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * * TRUE - all other cases
  */
 /obj/machinery/vending/Initialize(mapload)
-	if(!refill_canister)
-		circuit = null
-		RefreshParts()
-
 	//get all products from all categories into an linear list
 	if(product_categories)
 		products.Cut()
 		for(var/list/category as anything in product_categories)
 			products |= category["products"]
 
+	//build the records
+	build_inventories(start_empty = TRUE)
+
+	//means we produce products with fixed amounts
+	if(!refill_canister)
+		circuit = null
+		RefreshParts()
+
 	. = ..()
+
 	set_wires(new /datum/wires/vending(src))
 
 	if(SStts.tts_enabled)
