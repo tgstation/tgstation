@@ -295,6 +295,24 @@
 	name = "Trek Uniform (Worn)"
 	icon_file = 'icons/mob/clothing/under/trek.dmi'
 
+/datum/greyscale_config/pareoswimop
+	name = "One Piece Swimsuit With Pareo"
+	icon_file = 'icons/obj/clothing/under/misc.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pareoswimop.json'
+
+/datum/greyscale_config/pareoswimop/worn
+	name = "One Piece Swimsuit With Pareo (Worn)"
+	icon_file = 'icons/mob/clothing/under/misc.dmi'
+
+/datum/greyscale_config/pareoswimbk
+	name = "Bikini Swimsuit With Pareo"
+	icon_file = 'icons/obj/clothing/under/misc.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pareoswimbk.json'
+
+/datum/greyscale_config/pareoswimbk/worn
+	name = "Bikini Swimsuit With Pareo (Worn)"
+	icon_file = 'icons/mob/clothing/under/misc.dmi'
+
 // DRESSES AND SKIRTS
 /datum/greyscale_config/plaidskirt
 	name = "Plaid Skirt"
