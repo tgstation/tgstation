@@ -29,8 +29,6 @@
 
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(isnull(amount))
-			amount = 0
 
 		var/obj/item/temp = typepath
 		var/datum/data/vending_product/new_record = new
@@ -62,7 +60,7 @@
  * Arguments
  * start_empty - bool to pass into build_inventory that determines whether a product entry starts with available stock or not
 */
-/obj/machinery/vending/proc/build_inventories(start_empty)
+/obj/machinery/vending/proc/build_inventories(start_empty = FALSE)
 	build_inventory(products, product_records, product_categories, start_empty)
 	build_inventory(contraband, hidden_records, list(list("name" = "Contraband", "icon" = "mask", "products" = contraband)), start_empty, premium = TRUE)
 	build_inventory(premium, coin_records, list(list("name" = "Premium", "icon" = "coins", "products" = premium)), start_empty, premium = TRUE)
@@ -71,32 +69,12 @@
 /obj/machinery/vending/RefreshParts()
 	SHOULD_CALL_PARENT(FALSE)
 
-	if(product_categories)
-		products.Cut()
-		for(var/list/category as anything in product_categories)
-			products |= category["products"]
-
+	//build the records
 	build_inventories(start_empty = TRUE)
-	for(var/obj/item/vending_refill/installed_refill in component_parts)
-		restock(installed_refill)
 
-/**
- * Refill a category from the refill canister
- *
- * Arguments:
- * * list/productlist - the product list from the canister tor ead from
- * * list/recordlist - the record list to write into
- */
-/obj/machinery/vending/proc/refill_inventory(list/productlist, list/recordlist)
-	PRIVATE_PROC(TRUE)
-
-	. = 0
-	for(var/datum/data/vending_product/record as anything in recordlist)
-		var/diff = min(record.max_amount - record.amount, productlist[record.product_path])
-		if (diff)
-			productlist[record.product_path] -= diff
-			record.amount += diff
-			. += diff
+	//fill the records
+	if(refill_canister)
+		restock(locate(/obj/item/vending_refill) in component_parts)
 
 /**
  * Refill a vending machine from a refill canister
@@ -107,32 +85,32 @@
  * * canister - the vending canister we are refilling from
  */
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
-	if (!canister.products)
-		canister.products = products.Copy()
-	if (!canister.contraband)
-		canister.contraband = contraband.Copy()
-	if (!canister.premium)
-		canister.premium = premium.Copy()
-
 	. = 0
+	var/list/datum/data/vending_product/record_list
+	var/list/canister_list
 
-	if (isnull(canister.product_categories) && !isnull(product_categories))
-		canister.product_categories = product_categories.Copy()
+	for(var/i in 1 to 3)
+		switch(i)
+			if (1)
+				record_list = product_records
+				canister_list = canister.products
+			if (2)
+				record_list = hidden_records
+				canister_list = canister.contraband
+			else
+				record_list = coin_records
+				canister_list = canister.premium
+		if(!record_list.len || !canister_list.len)
+			continue
 
-	if (!isnull(canister.product_categories))
-		var/list/products_unwrapped = list()
-		for (var/list/category as anything in canister.product_categories)
-			var/list/products = category["products"]
-			for (var/product_key in products)
-				products_unwrapped[product_key] += products[product_key]
-
-		. += refill_inventory(products_unwrapped, product_records)
-	else
-		. += refill_inventory(canister.products, product_records)
-
-	. += refill_inventory(canister.contraband, hidden_records)
-	. += refill_inventory(canister.premium, coin_records)
-
+		for(var/datum/data/vending_product/record as anything in record_list)
+			var/diff = min(record.max_amount - record.amount, canister_list[record.product_path] || 0)
+			if (diff)
+				canister_list[record.product_path] -= diff
+				if(!canister_list[record.product_path])
+					canister_list -= record.product_path
+				record.amount += diff
+				. += diff
 
 //===========================VENDING OUT ITEMS================================
 /obj/machinery/vending/Exited(atom/movable/gone, direction)

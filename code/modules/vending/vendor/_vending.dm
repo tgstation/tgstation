@@ -126,11 +126,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/product_ads = ""
 
 	///List of standard product records
-	var/list/product_records = list()
+	var/list/datum/data/vending_product/product_records = list()
 	///List of contraband product records
-	var/list/hidden_records = list()
+	var/list/datum/data/vending_product/hidden_records = list()
 	///List of premium product records
-	var/list/coin_records = list()
+	var/list/datum/data/vending_product/coin_records = list()
 	///List of slogans to scream at potential customers; built upon Iniitialize() of the vendor from product_slogans
 	var/list/slogan_list = list()
 	///List of ads built from product_ads upon Iniitialize()
@@ -219,6 +219,13 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(!refill_canister)
 		circuit = null
 		RefreshParts()
+
+	//get all products from all categories into an linear list
+	if(product_categories)
+		products.Cut()
+		for(var/list/category as anything in product_categories)
+			products |= category["products"]
+
 	. = ..()
 	set_wires(new /datum/wires/vending(src))
 
@@ -292,64 +299,37 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Arguments:
  * recordlist - list of records to unbuild products from
  */
-/obj/machinery/vending/proc/unbuild_inventory(list/recordlist)
+/obj/machinery/vending/proc/unbuild_inventory(list/recordlist, list/targetlist)
 	PRIVATE_PROC(TRUE)
 
-	. = list()
+	targetlist.Cut()
 	for(var/datum/data/vending_product/record as anything in recordlist)
-		.[record.product_path] += record.amount
+		targetlist[record.product_path] += record.amount
 
 /obj/machinery/vending/on_deconstruction(disassembled)
-	if (!component_parts)
+	var/obj/item/vending_refill/installed_refill = locate() in component_parts
+	if(!installed_refill)
 		return
 
-	var/obj/item/vending_refill/installed_refill = locate() in component_parts
-	if (!installed_refill)
-		CRASH("Constructible vending machine did not have a refill canister")
-
-	//unbuild regular products into canister
-	installed_refill.products?.Cut()
-	installed_refill.product_categories?.Cut()
-	var/others_have_category = null
-	var/list/categories_to_index = list()
-	for (var/datum/data/vending_product/record as anything in product_records)
-		var/list/category = record.category
-		var/has_category = !isnull(category)
-		//check if there're any uncategorized products
-		if (isnull(others_have_category))
-			others_have_category = has_category
-		else if (others_have_category != has_category)
-			if (has_category)
-				WARNING("[record.product_path] in [type] has a category, but other products don't")
+	var/list/datum/data/vending_product/record_list
+	var/list/canister_list
+	for(var/i in 1 to 3)
+		switch(i)
+			if (1)
+				record_list = product_records
+				canister_list = installed_refill.products
+			if (2)
+				record_list = hidden_records
+				canister_list = installed_refill.contraband
 			else
-				WARNING("[record.product_path] in [type] does not have a category, but other products do")
-
+				record_list = coin_records
+				canister_list = installed_refill.premium
+		if(!record_list.len)
 			continue
 
-		if (has_category)
-			var/index = categories_to_index.Find(category)
-
-			if (index) //if we've already established a category, add the product there
-				var/list/category_in_list = installed_refill.product_categories[index]
-				var/list/products_in_category = category_in_list["products"]
-				products_in_category[record.product_path] += record.amount
-			else //create a category that the product is supposed to have and put it there
-				categories_to_index += list(category)
-				index = categories_to_index.len
-
-				var/list/category_clone = category.Copy()
-
-				var/list/initial_product_list = list()
-				initial_product_list[record.product_path] = record.amount
-				category_clone["products"] = initial_product_list
-
-				installed_refill.product_categories += list(category_clone)
-		else //no category found - dump it into standard stock
-			installed_refill.products[record.product_path] = record.amount
-
-	//unbuild contrabrand & premium into canister
-	installed_refill.contraband = unbuild_inventory(hidden_records)
-	installed_refill.premium = unbuild_inventory(coin_records)
+		canister_list.Cut()
+		for(var/datum/data/vending_product/record as anything in record_list)
+			canister_list[record.product_path] += record.amount
 
 /obj/machinery/vending/Destroy()
 	GLOB.vending_machines_to_restock -= src

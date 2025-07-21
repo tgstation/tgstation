@@ -1,7 +1,7 @@
 /// Maximum amount of items in a storage bag that we're transferring items to the vendor from.
 #define MAX_VENDING_INPUT_AMOUNT 30
 
-//TOOL ACTS
+//================================TOOL ACTS==============================================
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
 		return ITEM_INTERACT_FAILURE
@@ -27,7 +27,7 @@
 /obj/machinery/vending/on_set_panel_open(old_value)
 	update_appearance(UPDATE_OVERLAYS)
 
-//RESTOCKING
+//=======================================RESTOCKING==========================================
 /**
  * Is the passed in user allowed to load this vending machines compartments? This only is ran if we are using a /obj/item/storage/bag to load the vending machine, and not a dedicated restocker.
  *
@@ -175,9 +175,10 @@
 		replacer.play_rped_sound()
 	return TRUE
 
-//ATTACKS
+//=======================================ATTACKS================================================
 /**
  * Dispenses free items from the standard stock.
+ *
  * Arguments:
  * freebies - number of free items to vend
  */

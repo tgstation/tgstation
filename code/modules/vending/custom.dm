@@ -20,15 +20,11 @@
 	VAR_PRIVATE/static/list/base64_cache = list()
 
 /obj/machinery/vending/custom/on_deconstruction(disassembled)
-	var/obj/item/vending_refill/installed_refill = locate() in component_parts
+	var/obj/item/vending_refill/custom/installed_refill = locate() in component_parts
 
 	//copy product hash keys
-	var/list/product_data = products.Copy()
-	if(!installed_refill.products)
-		installed_refill.products = product_data
-	else
-		installed_refill.products.Cut()
-		installed_refill.products += product_data
+	installed_refill.products.Cut()
+	installed_refill.products += products
 
 	//move products to canister
 	for(var/obj/item/stored_item in contents - component_parts)
@@ -101,8 +97,7 @@
 /obj/machinery/vending/custom/RefreshParts()
 	SHOULD_CALL_PARENT(FALSE)
 
-	for(var/obj/item/vending_refill/custom/installed_refill in component_parts)
-		restock(installed_refill)
+	restock(locate(refill_canister) in component_parts)
 
 /obj/machinery/vending/custom/restock(obj/item/vending_refill/canister)
 	. = 0

@@ -25,7 +25,8 @@
 	for(var/type in typesof(type_to_vend))
 		LAZYADDASSOC(products, type, 50)
 
-	build_inventories()
+	//no refill canister so we fill the records with their max amounts directly
+	build_inventories(start_empty = FALSE)
 
 /obj/machinery/vending/subtype_vendor/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
