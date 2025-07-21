@@ -1087,6 +1087,11 @@
 	slowdown = 1.5
 	drag_slowdown = 1.5
 	start_on = FALSE
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
+	)
 
 	///Boolean on whether or not a pyroclastic anomaly core has been inserted, allowing the item to be used.
 	var/installed_pyro_core = FALSE
