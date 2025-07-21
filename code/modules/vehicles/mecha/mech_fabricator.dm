@@ -246,6 +246,7 @@
  * Uses materials.
  * * D - Design datum to attempt to print.
  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
+ * * user_data - ID_DATA(user), see the proc on SSid_access
  */
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE, alist/user_data)
 	if(!D || length(D.reagents_list))
@@ -331,6 +332,7 @@
  *
  * Returns TRUE if successful and FALSE if the design was not added to the queue.
  * * D - Datum design to add to the queue.
+ * user_data - user data in the form rendered by ID_DATA(user), see the proc on SSidaccess
  */
 /obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D, alist/user_data)
 	if(!istype(queue))

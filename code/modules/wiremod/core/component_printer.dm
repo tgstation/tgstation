@@ -115,6 +115,10 @@
 
 	update_static_data_for_all_viewers()
 
+/**
+ * typepath - the type path of the component to be printed
+ * user_data - data in the form rendered by ID_DATA(user), for print logging, see the proc on SSid_access
+*/
 /obj/machinery/component_printer/proc/print_component(typepath, alist/user_data)
 	var/design_id = current_unlocked_designs[typepath]
 

@@ -169,12 +169,30 @@
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
+
+/**
+ * The logic for disconnecting a remote receptacle (RCD, fabricator, etc.) is collected here for sanity's sake
+ * rather than being on specific types. Serves to agnosticize the remote_materials component somewhat rather than
+ * snowflaking code for silos into the component.
+ * * receptacle - The datum/component/remote_materials component that is getting connected.
+ * * physical_receptacle - the actual object in the game world that was connected to our material supply. Typed as atom/movable for
+ *   future-proofing against anything that may conceivably one day have remote silo access, such as a cyborg, an implant, structures, vehicles,
+ *   and so-on.
+ */
 /obj/machinery/ore_silo/proc/connect_receptacle(datum/component/remote_materials/receptacle, atom/movable/physical_receptacle)
 	ore_connected_machines += receptacle
 	receptacle.mat_container = src.materials
 	receptacle.silo = src
 	RegisterSignal(physical_receptacle, COMSIG_ORE_SILO_PERMISSION_CHECKED, PROC_REF(check_permitted))
 
+/**
+ * The logic for disconnecting a remote receptacle (RCD, fabricator, etc.) is collected here for sanity's sake
+ * rather than being on specific types. Cleans up references to us and to the receptacle.
+ * * receptacle - The datum/component/remote_materials component that is getting destroyed.
+ * * physical_receptacle - the actual object in the game world that was connected to our material supply. Typed as atom/movable for
+ *   future-proofing against anything that may conceivably one day have remote silo access, such as a cyborg, an implant, structures, vehicles,
+ *   and so-on.
+ */
 /obj/machinery/ore_silo/proc/disconnect_receptacle(datum/component/remote_materials/receptacle, atom/movable/physical_receptacle)
 	ore_connected_machines -= receptacle
 	receptacle.mat_container = null
@@ -307,7 +325,7 @@
 			if(isnull(amount))
 				return
 
-			materials.retrieve_sheets(amount, ejecting, drop_location(), user_data = ID_DATA(usr))
+			materials.retrieve_sheets(amount, ejecting, drop_location(), user_data = ID_DATA(ui.user))
 			return TRUE
 
 		if("toggle_ban")
@@ -317,7 +335,15 @@
 
 		if("toggle_restrict")
 			attempt_toggle_restrict(usr)
-
+/**
+ * Called from the ore silo's UI, when someone attempts to (un)ban a user from using the ore silo.
+ * The person doing the banning should have at least QM access. Unless this is emagged. Not modifiable by silicons unless emagged.
+ * Anyone but the Captain attempting to ban someone with QM access from the ore silo gets what is essentially a glorified version
+ * of the permission denied result.
+ * * user - The person who clicked the ban button in the UI.
+ * * target_user_data - Data in the form rendered from ID_DATA(target), passed into the ore silo logs by whatever the target did such
+ * 	 as removing/adding sheets, printing items, etc
+ */
 /obj/machinery/ore_silo/proc/attempt_ban_toggle(mob/living/user, list/target_user_data)
 	if(!istype(user) || !istype(target_user_data))
 		CRASH("Bad arguments passed to [callee]")
@@ -396,10 +422,16 @@
 		silo_user_data,
 		target_user_data
 	)
-
+/**
+ * Called from the ore silo tgui interface, for when someone attempts to restrict or unrestrict the ore silo from requiring
+ * an ID with an attached bank account (or, a chameleon ID, or, being a silicon)
+ * user - the person who tried to toggle the ore silo's access restriction. Needs to be someone with QM access, unless the
+ * 	silo is emagged. Shouldn't allow silicons to toggle this unless the silo is emagged.
+ *
+ */
 /obj/machinery/ore_silo/proc/attempt_toggle_restrict(mob/living/user)
 	if(!istype(user))
-		CRASH()
+		CRASH("No user to check toggle attempt restrictions. .ID_required is unchanged.")
 	var/emagged = obj_flags & EMAGGED
 	if(emagged)
 		ID_required = !ID_required
@@ -495,6 +527,7 @@
  * - amount: The amount of sheets/objects deposited/withdrawn by this action. Positive for depositing, negative for withdrawing.
  * - noun: Name of the object the action was performed with (sheet, units, ore...)
  * - [mats][list]: Assoc list in format (material datum = amount of raw materials). Wants the actual amount of raw (iron, glass...) materials involved in this action. If you have 10 metal sheets each worth 100 iron you would pass a list with the iron material datum = 1000
+ * - user_data - ID_DATA(user), includes details (not currently) rendered to the player, such as bank account #, see the proc on SSid_access
  */
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats, alist/user_data)
 	if (!length(mats))
@@ -580,7 +613,7 @@
 	var/list/msg = list()
 	for(var/key in materials)
 		var/datum/material/M = key
-		var/val = round(materials[key]) / 100
+		var/val = round(materials[key]) / SHEET_MATERIAL_AMOUNT
 		msg += separator
 		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"

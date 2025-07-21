@@ -158,9 +158,9 @@
  * Arguments:
  * - [source][/obj/item]: The source of the materials we are inserting.
  * - multiplier: The multiplier for the materials extract from this item being inserted.
- * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED
- * and is used mostly for silo logging, the silo resends this signal on the context to give it a
+ * - context: the atom performing the operation, is used mostly for silo logging, the silo resends this signal on the context to give it a
  * chance to process the item
+ * - user_data: in the form rendered by ID_DATA(user), for material logging (and if this component is connected to a silo, also for permission checking)
  */
 /datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, atom/context = parent, alist/user_data)
 	var/primary_mat
@@ -226,6 +226,7 @@
  * - multiplier: The multiplier for the materials being inserted
  * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  * * - delete_item: should we delete the item after its materials are consumed. does not apply to stacks if they were split due to lack of space
+ * * - user_data - in the form rendered by ID_DATA(user), for material logging (and if this component is connected to a silo, also for permission checking)
  */
 /datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent, delete_item = TRUE, alist/user_data)
 	if(QDELETED(weapon))
@@ -679,6 +680,7 @@
  * [material][datum/material]: type of sheets present in this container to extract
  * [target][atom]: drop location
  * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_SHEETS_RETRIEVED and is used mostly for silo logging
+ * user_data - in the form rendered by ID_DATA(user), for material logging (and if this component is connected to a silo, also for permission checking)
  */
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null, atom/context = parent, alist/user_data)
 	//do we support sheets of this material

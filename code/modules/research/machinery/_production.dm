@@ -378,7 +378,7 @@
  * * material_cost_coefficient - the cost efficiency to print 1 design
  * * charge_per_item - the amount of power to print 1 item
  * * turf/target - the location to drop the printed item on
- * * user_atom - the user who started the print
+ * * user_data - ID_DATA(user), see the proc on SSid_access, served for logging
 */
 /obj/machinery/rnd/production/proc/do_make_item(
 		datum/design/design,

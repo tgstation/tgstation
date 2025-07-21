@@ -205,6 +205,7 @@ handles linking back and forth.
  * - The silo in not on hold
  * Arguments
  * * check_hold - should we check if the silo is on hold
+ * * user_data - in the form rendered by ID_DATA(user); used as a reference for silo bans and access checks
  */
 /datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE, alist/user_data)
 	var/atom/movable/movable_parent = parent
@@ -230,6 +231,7 @@ handles linking back and forth.
  * multiplier- each mat unit is scaled by this value then rounded after it is scaled by coefficient. This value is your print quatity e.g. printing multiple items
  * action- For logging only. e.g. build, create, i.e. the action you are trying to perform
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
+ * user_data - in the form rendered by ID_DATA(user), for material logging and (if this component is connected to a silo), permission checking
  */
 /datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design", alist/user_data)
 	if(!can_use_resource(user_data = user_data))
@@ -252,6 +254,7 @@ handles linking back and forth.
  * [material_ref][datum/material]- The material type you are trying to eject
  * eject_amount- how many sheets to eject
  * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
+ * user_data - in the form rendered by ID_DATA(user), for material logging and (if this component is connected to a silo), permission checking
  */
 /datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null, alist/user_data)
 	if(!can_use_resource(user_data = user_data))
@@ -270,10 +273,7 @@ handles linking back and forth.
  * * obj/item/weapon - the item you are trying to insert
  * * multiplier - the multiplier applied on the materials consumed
  */
-/datum/component/remote_materials/proc/insert_item(
-	obj/item/weapon,
-	multiplier = 1,
-	alist/user_data)
+/datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1, alist/user_data)
 	// Inserting materials automatically shouldn't be permission-restricted
 	if(!islist(user_data))
 		user_data = alist(
