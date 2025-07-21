@@ -1077,3 +1077,159 @@
 #undef SUCCESS
 #undef NO_FUEL
 #undef ALREADY_LIT
+
+/obj/item/flashlight/space_barrier
+	name = "spacelight"
+	desc = "A hand-held flashlight capable of beaming a barrier of breathable air."
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 1.5
+	drag_slowdown = 1.5
+	///Boolean on whether or not a pyroclastic anomaly core has been inserted, allowing the item to be used.
+	var/installed_pyro_core = FALSE
+	///The proximity monitor & visual bubble that grants space protection to people nearby, while active.
+	var/datum/proximity_monitor/advanced/space_protection/space_bubble
+
+/obj/item/flashlight/space_barrier/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_DESC)
+
+/obj/item/flashlight/space_barrier/update_desc(updates)
+	. = ..()
+	if(!installed_pyro_core)
+		desc = initial(desc) + "Requires a pyroclastic anomaly core to function."
+
+/obj/item/flashlight/space_barrier/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro))
+		return NONE
+	user.balloon_alert(user, "core inserted")
+	qdel(tool)
+	installed_pyro_core = TRUE
+	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
+	update_appearance(UPDATE_DESC)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/flashlight/space_barrier/toggle_light(mob/user)
+	if(!installed_pyro_core)
+		user.balloon_alert(user, "core missing!")
+		return FALSE
+	. = ..()
+	if(light_on)
+		if(istype(space_bubble))
+			QDEL_NULL(space_bubble)
+		space_bubble = new(user, 2, TRUE, src)
+	else
+		QDEL_NULL(space_bubble)
+
+/*
+/obj/effect/abstract/space_bubble
+	name = "space bubble"
+	desc = "An aura of energy that contains a livable atmosphere within."
+	icon_state = "chronofield"
+
+/obj/effect/abstract/space_bubble/Initialize(mapload, mob/living/target, obj/item/mod/module/tem/tem)
+	if(isliving(target))
+		if(!tem)
+			attached = FALSE
+		target.forceMove(src)
+		captured = target
+		var/icon/mob_snapshot = getFlatIcon(target)
+		var/icon/cached_icon = new()
+
+		for(var/i in 1 to CHRONO_FRAME_COUNT)
+			var/icon/removing_frame = icon('icons/obj/chronos.dmi', "erasing", SOUTH, i)
+			var/icon/mob_icon = icon(mob_snapshot)
+			mob_icon.Blend(removing_frame, ICON_MULTIPLY)
+			cached_icon.Insert(mob_icon, "frame[i]")
+
+		mob_underlay = mutable_appearance(cached_icon, "frame1")
+		update_appearance()
+
+		desc = initial(desc) + "<br>[span_info("It appears to contain [target.name].")]"
+	START_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/effect/abstract/space_bubble/Destroy()
+	if(tem)
+		tem.field_disconnect(src)
+	return ..()
+
+/obj/effect/abstract/space_bubble/update_overlays()
+	. = ..()
+	var/ttk_frame = 1 - (timetokill / initial(timetokill))
+	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
+	if(ttk_frame != RPpos)
+		RPpos = ttk_frame
+		underlays -= mob_underlay
+		mob_underlay.icon_state = "frame[RPpos]"
+		underlays += mob_underlay
+
+/obj/effect/abstract/space_bubble/process(seconds_per_tick)
+	if(!captured)
+		qdel(src)
+		return
+
+	if(timetokill > initial(timetokill))
+		for(var/atom/movable/freed_movable in contents)
+			freed_movable.forceMove(drop_location())
+		qdel(src)
+	else if(timetokill <= 0)
+		to_chat(captured, span_notice("As the last essence of your being is erased from time, you are taken back to your most enjoyable memory. You feel happy..."))
+		var/mob/dead/observer/ghost = captured.ghostize(can_reenter_corpse = TRUE)
+		if(captured.mind)
+			if(ghost)
+				ghost.mind = null
+		qdel(captured)
+		qdel(src)
+	else
+		captured.Unconscious(8 SECONDS)
+		if(captured.loc != src)
+			captured.forceMove(src)
+		update_appearance()
+		if(tem)
+			if(tem.field_check(src))
+				timetokill -= seconds_per_tick
+			else
+				tem = null
+				return
+		else if(!attached)
+			timetokill -= seconds_per_tick
+		else
+			timetokill += seconds_per_tick
+
+
+/obj/effect/abstract/space_bubble/bullet_act(obj/projectile/projectile)
+	if(istype(projectile, /obj/projectile/energy/chrono_beam))
+		var/obj/projectile/energy/chrono_beam/beam = projectile
+		var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
+		if(linked_tem && istype(linked_tem))
+			linked_tem.field_connect(src)
+		return BULLET_ACT_HIT
+
+	return ..()
+
+/obj/effect/abstract/space_bubble/assume_air()
+	return FALSE
+
+/obj/effect/abstract/space_bubble/return_air() //we always have nominal air and temperature
+	var/datum/gas_mixture/fresh_air = new
+	fresh_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
+	fresh_air.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
+	fresh_air.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
+	fresh_air.temperature = T20C
+	return fresh_air
+
+/obj/effect/abstract/space_bubble/singularity_act()
+	return
+
+/obj/effect/abstract/space_bubble/singularity_pull(atom/singularity, current_size)
+	return
+
+/obj/effect/abstract/space_bubble/ex_act()
+	return FALSE
+
+/obj/effect/abstract/space_bubble/blob_act(obj/structure/blob/B)
+	return
+*/
