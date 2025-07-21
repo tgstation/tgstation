@@ -164,6 +164,8 @@
 /obj/machinery/New(loc, obj/item/circuitboard/board, ...)
 	if(istype(board))
 		circuit = board
+		//we don't want machines that override Initialize() have the board passed as a param e.g. atmos
+		return ..(loc)
 
 	return ..()
 

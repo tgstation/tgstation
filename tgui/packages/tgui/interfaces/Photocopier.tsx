@@ -188,7 +188,7 @@ const Status = (props: StatusProps) => {
                   fluid
                   dmIcon={paper.icon}
                   dmIconState={paper.icon_state}
-                  tooltip={paper.name + ' amount is ' + paper.amount}
+                  tooltip={`${paper.name} amount is ${paper.amount}`}
                   imageSize={32}
                   disabled={!paper.amount}
                   selected={created_paper === paper.type && paper.amount}

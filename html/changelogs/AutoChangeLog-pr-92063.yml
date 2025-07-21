@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed lizard blood bloodpacks being red instead of green"
-  - refactor: "Refactored blood packs"

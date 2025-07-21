@@ -711,10 +711,10 @@
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
 	desc = "It's two flashlights rigged together with some wire. Why would you put these in someone's head?"
-	eye_color_left ="#fee5a3"
-	eye_color_right ="#fee5a3"
-	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight_eyes"
+	eye_color_left = "#fee5a3"
+	eye_color_right = "#fee5a3"
+	iris_overlay = null
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = INFINITY
 	var/obj/item/flashlight/eyelight/eye
