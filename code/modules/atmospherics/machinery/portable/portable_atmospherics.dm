@@ -77,7 +77,8 @@
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect(destroyed = TRUE)
 	air_contents = null
-	unregister_holding()
+	if(holding)
+		unregister_holding()
 	SSair.stop_processing_machine(src)
 
 	return ..()
