@@ -58,7 +58,7 @@
 	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
 
 /datum/map_generator/cave_generator/rainworld/surface/mining/deep_ocean
-	mob_spawn_chance = 3
+	mob_spawn_chance = 1.5
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 2,
 		/mob/living/basic/mining/lobstrosity = 35,
