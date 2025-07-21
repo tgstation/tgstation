@@ -328,6 +328,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			canister_list[record.product_path] = record.amount - LAZYLEN(record.returned_products)
 
 /obj/machinery/vending/Destroy()
+	QDEL_LIST(product_records)
+	QDEL_LIST(hidden_records)
+	QDEL_LIST(coin_records)
 	GLOB.vending_machines_to_restock -= src
 	return ..()
 
