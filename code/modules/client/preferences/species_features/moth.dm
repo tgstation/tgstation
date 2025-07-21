@@ -27,7 +27,7 @@
 	return icon_with_antennae
 
 /datum/preference/choiced/moth_antennae/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["moth_antennae"] = value
+	target.dna.features[FEATURE_MOTH_ANTENNAE] = value
 
 /datum/preference/choiced/moth_markings
 	savefile_key = "feature_moth_markings"
@@ -77,7 +77,7 @@
 	return icon_with_markings
 
 /datum/preference/choiced/moth_markings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["moth_markings"] = value
+	target.dna.features[FEATURE_MOTH_MARKINGS] = value
 
 /datum/preference/choiced/moth_wings
 	savefile_key = "feature_moth_wings"
@@ -95,4 +95,4 @@
 	return uni_icon(moth_wings.icon, "m_moth_wings_[moth_wings.icon_state]_BEHIND")
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["moth_wings"] = value
+	target.dna.features[FEATURE_MOTH_WINGS] = value

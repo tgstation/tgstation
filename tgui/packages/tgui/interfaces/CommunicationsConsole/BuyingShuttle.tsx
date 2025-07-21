@@ -1,16 +1,15 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { EMAG_SHUTTLE_NOTICE } from './constants';
-import { CommsConsoleData, Shuttle, ShuttleState } from './types';
+import { type CommsConsoleData, type Shuttle, ShuttleState } from './types';
 
 function sortShuttles(shuttles: CommsConsoleData['shuttles']) {
-  return sortBy(
-    shuttles,
+  return sortBy(shuttles, [
     (shuttle) => !shuttle.emagOnly,
     (shuttle) => shuttle.initial_cost,
-  );
+  ]);
 }
 
 export function PageBuyingShuttle(props) {

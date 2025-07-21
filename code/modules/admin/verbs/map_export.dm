@@ -45,7 +45,10 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 
 /**
  * A procedure for saving non-standard properties of an object.
- * For example, saving ore into a silo, and further spavn by coordinates of metal stacks objects
+ * Examples:
+ * Saving material stacks (ie. ore in a silo)
+ * Saving variables that can be shown as mapping helpers (ie. welded airlock mapping helper)
+ * Saving objects inside of another object (ie. paper inside a noticeboard)
  */
 /obj/proc/on_object_saved()
 	return null
@@ -202,19 +205,20 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	maxz,
 	save_flag = ALL,
 	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
-	list/obj_blacklist = typecacheof(/obj/effect),
+	list/obj_blacklist,
 )
 	var/width = maxx - minx
 	var/height = maxy - miny
 	var/depth = maxz - minz
 
-	if(!islist(obj_blacklist))
+	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
 
-	// we want to keep crayon writings, blood splatters, cobwebs, etc.
-	obj_blacklist -= typecacheof(/obj/effect/decal)
-	obj_blacklist -= typecacheof(/obj/effect/turf_decal)
-	obj_blacklist -= typecacheof(/obj/effect/landmark) // most landmarks get deleted except for latejoin arrivals shuttle
+	// we want to keep decals from crayon writings, blood splatters, cobwebs, etc.
+	// most landmarks get deleted except for latejoin arrivals shuttle
+	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
+	if(!obj_blacklist)
+		obj_blacklist = default_blacklist
 
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
 	var/turfs_needed = width * height
