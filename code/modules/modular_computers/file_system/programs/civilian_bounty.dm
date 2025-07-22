@@ -14,7 +14,6 @@
 	size = 5
 	tgui_id = "NtosCivCargoHoldTerminal"
 	program_icon = FA_ICON_BOXES_STACKED
-	var/obj/item/card/id/inserted_scan_id
 	var/status_report = "Ready for delivery."
 	var/points = 0
 
@@ -22,24 +21,23 @@
 	var/list/data = list()
 	data["points"] = points
 	data["status_report"] = status_report
-	inserted_scan_id = computer.computer_id_slot?.GetID()
-	data["id_inserted"] = inserted_scan_id
-	if(inserted_scan_id?.registered_account)
-		if(inserted_scan_id.registered_account.civilian_bounty)
-			data["id_bounty_info"] = inserted_scan_id.registered_account.civilian_bounty.description
-			data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
-			data["id_bounty_value"] = (inserted_scan_id.registered_account.civilian_bounty.reward) * (CIV_BOUNTY_SPLIT/100)
-		if(inserted_scan_id.registered_account.bounties)
+	data["id_inserted"] = computer.computer_id_slot
+	if(computer.computer_id_slot?.registered_account)
+		if(computer.computer_id_slot.registered_account.civilian_bounty)
+			data["id_bounty_info"] = computer.computer_id_slot.registered_account.civilian_bounty.description
+			data["id_bounty_num"] = computer.computer_id_slot.registered_account.bounty_num()
+			data["id_bounty_value"] = (computer.computer_id_slot.registered_account.civilian_bounty.reward) * (CIV_BOUNTY_SPLIT/100)
+		if(computer.computer_id_slot.registered_account.bounties)
 			data["picking"] = TRUE
-			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[1].name,
-											inserted_scan_id.registered_account.bounties[2].name,
-											inserted_scan_id.registered_account.bounties[3].name)
-			data["id_bounty_infos"] = list(inserted_scan_id.registered_account.bounties[1].description,
-											inserted_scan_id.registered_account.bounties[2].description,
-											inserted_scan_id.registered_account.bounties[3].description)
-			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[1].reward * (CIV_BOUNTY_SPLIT/100),
-											inserted_scan_id.registered_account.bounties[2].reward * (CIV_BOUNTY_SPLIT/100),
-											inserted_scan_id.registered_account.bounties[3].reward * (CIV_BOUNTY_SPLIT/100))
+			data["id_bounty_names"] = list(computer.computer_id_slot.registered_account.bounties[1].name,
+											computer.computer_id_slot.registered_account.bounties[2].name,
+											computer.computer_id_slot.registered_account.bounties[3].name)
+			data["id_bounty_infos"] = list(computer.computer_id_slot.registered_account.bounties[1].description,
+											computer.computer_id_slot.registered_account.bounties[2].description,
+											computer.computer_id_slot.registered_account.bounties[3].description)
+			data["id_bounty_values"] = list(computer.computer_id_slot.registered_account.bounties[1].reward * (CIV_BOUNTY_SPLIT/100),
+											computer.computer_id_slot.registered_account.bounties[2].reward * (CIV_BOUNTY_SPLIT/100),
+											computer.computer_id_slot.registered_account.bounties[3].reward * (CIV_BOUNTY_SPLIT/100))
 		else
 			data["picking"] = FALSE
 
@@ -56,7 +54,7 @@
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 /datum/computer_file/program/civilianbounties/proc/add_bounties(mob/user, cooldown_reduction = 0)
-	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	var/datum/bank_account/id_account = computer.computer_id_slot?.registered_account
 	if(!id_account)
 		return
 	if((id_account.civilian_bounty || id_account.bounties) && !COOLDOWN_FINISHED(id_account, bounty_timer))
@@ -78,7 +76,7 @@
  * @param choice The index of the bounty in the list of bounties that the player can choose from.
  */
 /datum/computer_file/program/civilianbounties/proc/pick_bounty(datum/bounty/choice)
-	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
+	var/datum/bank_account/id_account = computer.computer_id_slot?.registered_account
 	if(!id_account?.bounties?[choice])
 		playsound(computer.loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
