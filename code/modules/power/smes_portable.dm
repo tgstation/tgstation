@@ -131,7 +131,7 @@
 /obj/machinery/smesbank/post_machine_initialize()
 	. = ..()
 
-	//we somehow located an deleted port or not port at all. clear out
+	//we somehow located an deleted port or no port at all. clear out
 	if(QDELETED(connected_port))
 		connected_port = null
 		return
