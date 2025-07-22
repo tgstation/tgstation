@@ -101,7 +101,6 @@
 "abE" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/medical/pharmacy,
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "abF" = (
@@ -3308,6 +3307,7 @@
 /area/station/hallway/primary/fore)
 "bbC" = (
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "bbF" = (
@@ -4939,7 +4939,6 @@
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Foyer"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable/layer3,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7473,6 +7472,13 @@
 "ckM" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
+"ckY" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "ckZ" = (
 /obj/structure/cable,
 /turf/open/floor/iron/large,
@@ -11831,6 +11837,7 @@
 /area/station/command/heads_quarters/rd)
 "dyQ" = (
 /obj/item/radio/intercom/directional/east,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/wood,
 /area/station/commons/toilet/restrooms)
 "dyS" = (
@@ -12203,6 +12210,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "dFm" = (
@@ -21716,6 +21724,10 @@
 /obj/structure/cable,
 /turf/open/openspace,
 /area/station/hallway/secondary/construction)
+"gsq" = (
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/openspace,
+/area/station/medical/chemistry)
 "gtd" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -24931,7 +24943,6 @@
 	name = "Maintenance Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
-/obj/machinery/door/firedoor,
 /turf/open/floor/wood/large,
 /area/station/maintenance/hallway/abandoned_recreation)
 "hsi" = (
@@ -26222,6 +26233,7 @@
 /area/station/maintenance/starboard/lesser)
 "hKm" = (
 /obj/machinery/light/small/directional/north,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "hKr" = (
@@ -26957,6 +26969,7 @@
 /area/station/construction/storage_wing)
 "hTI" = (
 /obj/machinery/light/directional/south,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/stairs/medium{
 	dir = 4
 	},
@@ -29039,6 +29052,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "iCa" = (
@@ -29063,6 +29077,7 @@
 /obj/item/screwdriver{
 	pixel_y = -4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/medical)
 "iCe" = (
@@ -38388,7 +38403,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "lnV" = (
@@ -38532,6 +38546,12 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
+"lqB" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/openspace,
+/area/station/hallway/primary/central)
 "lqD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39018,7 +39038,6 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Chamber"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "aicoredoor";
 	name = "AI Core Access"
@@ -40306,6 +40325,7 @@
 /area/station/hallway/secondary/entry)
 "lRm" = (
 /obj/structure/stairs/west,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/plating,
 /area/station/security/brig)
 "lRp" = (
@@ -41437,7 +41457,6 @@
 /obj/machinery/door/airlock/silver{
 	name = "Bathroom"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/freezer,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "mgY" = (
@@ -42506,7 +42525,6 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Server Room"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44206,7 +44224,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
@@ -47573,7 +47590,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "nXQ" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
@@ -50621,6 +50637,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "oTp" = (
@@ -53672,6 +53689,7 @@
 	dir = 2
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "pNA" = (
@@ -54010,6 +54028,7 @@
 	name = "Medbay Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
 "pQQ" = (
@@ -55766,6 +55785,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/wood/large,
 /area/station/medical/psychology)
 "quD" = (
@@ -66158,7 +66178,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "tCO" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
@@ -67052,6 +67071,7 @@
 "tQt" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/reagent_dispensers/plumbed,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "tQI" = (
@@ -68215,6 +68235,7 @@
 	name = "Psychology Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/psychology,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood/large,
 /area/station/medical/psychology)
 "uik" = (
@@ -68632,6 +68653,10 @@
 "unl" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/upper)
+"unv" = (
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/openspace,
+/area/station/medical/medbay/central)
 "unz" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/line{
@@ -74618,7 +74643,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "waH" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Maintenance"
 	},
@@ -74844,6 +74868,7 @@
 /obj/effect/turf_decal/trimline/red/filled/mid_joiner{
 	dir = 8
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/brig)
 "weo" = (
@@ -80332,6 +80357,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/landmark/start/depsec/medical,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -28
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "xME" = (
@@ -109098,7 +109126,7 @@ iGB
 iGB
 iGB
 iGB
-fhO
+ckY
 dMR
 ced
 sTv
@@ -177487,7 +177515,7 @@ wQH
 rcM
 jKX
 jKX
-voU
+gsq
 phh
 voU
 voU
@@ -179022,12 +179050,12 @@ dUb
 dfn
 djf
 nRE
-nRE
+unv
 nRE
 kSc
 nRE
 nRE
-nRE
+unv
 nRE
 nRE
 rKq
@@ -180046,7 +180074,7 @@ aia
 bVS
 cvP
 jyM
-htH
+lqB
 htH
 wga
 afR

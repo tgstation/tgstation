@@ -29256,6 +29256,11 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"kgM" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/openspace/xenobio,
+/area/station/science/xenobiology)
 "kgT" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/door/firedoor,
@@ -40852,6 +40857,7 @@
 	id = "Xenolab";
 	name = "Test Chamber Blast Door"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/science/xenobiology)
 "oix" = (
@@ -43201,7 +43207,12 @@
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/directional/west{
+	pixel_y = 4
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -5
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "oYu" = (
@@ -48583,6 +48594,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/research)
 "qQm" = (
@@ -57735,6 +57747,7 @@
 /area/station/engineering/storage/tech)
 "tPr" = (
 /obj/structure/sign/poster/random/directional/north,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/openspace,
 /area/station/science/research)
 "tPJ" = (
@@ -190017,7 +190030,7 @@ jQS
 nCm
 nCm
 nCm
-kvd
+kgM
 nCm
 nCm
 nCm

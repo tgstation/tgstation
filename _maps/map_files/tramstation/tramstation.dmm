@@ -8769,6 +8769,14 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/station/security/office)
+"bYC" = (
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/iron/stairs/medium,
+/area/station/commons/dorms)
 "bYD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14793,7 +14801,6 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "eam" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Prison Dorm 6";
 	id_tag = "prisondorm"
@@ -17458,6 +17465,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
 "fad" = (
@@ -17848,7 +17857,6 @@
 /area/station/maintenance/tram/left)
 "fii" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/structure/disposalpipe/segment{
@@ -19781,8 +19789,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
-/obj/item/kirbyplants/random,
 /obj/item/radio/intercom/directional/west,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "fSZ" = (
@@ -20509,6 +20517,7 @@
 	c_tag = "Science - Entrance Airlock"
 	},
 /obj/machinery/light/cold/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "ggV" = (
@@ -26162,11 +26171,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "ipC" = (
@@ -26488,6 +26495,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "ivC" = (
@@ -28203,6 +28211,9 @@
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/firealarm/directional/north{
+	pixel_x = -6
+	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
 "jbx" = (
@@ -40335,7 +40346,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/structure/disposalpipe/segment,
@@ -41706,6 +41716,9 @@
 /obj/item/multitool,
 /obj/item/flatpack{
 	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -4
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
@@ -44021,6 +44034,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
 "ovL" = (
@@ -45437,7 +45451,6 @@
 /area/station/maintenance/solars/port)
 "pbL" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
@@ -48599,6 +48612,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
 "qeD" = (
@@ -49070,6 +49085,7 @@
 	dir = 10
 	},
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "qmN" = (
@@ -50150,16 +50166,11 @@
 /area/station/commons/dorms)
 "qHI" = (
 /obj/structure/table/reinforced,
-/obj/machinery/firealarm/directional/west,
 /obj/item/storage/box,
 /obj/item/hand_labeler{
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/machinery/light_switch/directional/west{
-	pixel_x = -22;
-	pixel_y = 8
-	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "qHM" = (
@@ -51178,7 +51189,6 @@
 "qZx" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
@@ -51331,10 +51341,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/firealarm/directional/south{
 	pixel_x = 4
-	},
-/obj/machinery/light_switch/directional/south{
-	pixel_x = -7;
-	pixel_y = -27
 	},
 /turf/open/floor/iron,
 /area/station/science/lab)
@@ -56343,6 +56349,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"sOx" = (
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/iron/stairs/medium,
+/area/station/commons/dorms)
 "sOD" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
@@ -56969,7 +56983,6 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Public Garden Maintenance Hatch"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
@@ -61972,6 +61985,13 @@
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -4
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_x = -27;
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "uHj" = (
@@ -64328,7 +64348,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/pen/red,
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "vvS" = (
@@ -68431,6 +68451,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
 "wXi" = (
@@ -90045,7 +90066,7 @@ apC
 apC
 eAE
 apC
-qSs
+sOx
 vYD
 vYD
 jAK
@@ -90559,7 +90580,7 @@ apC
 apC
 lgu
 apC
-itn
+bYC
 pWC
 pWC
 nyV
