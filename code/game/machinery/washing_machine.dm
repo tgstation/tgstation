@@ -432,7 +432,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		balloon_alert(user, "[src.name] is busy!")
 		return ITEM_INTERACT_BLOCKING
 	if (!state_open)
-		balloon_alert(user, "Door is closed!")
+		balloon_alert(user, "door is closed!")
 		return ITEM_INTERACT_BLOCKING
 	if(contents.len >= max_wash_capacity)
 		balloon_alert(user, "[src.name] is full!")
@@ -496,7 +496,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		balloon_alert(user, "[src.name] is busy!")
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(state_open)
-		balloon_alert(user, "Door is open!")
+		balloon_alert(user, "door is open!")
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	wash_loop.start()
 	busy = TRUE
