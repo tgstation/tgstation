@@ -230,8 +230,8 @@
 ///Returns TRUE to signal it hitting the limit, in case its being called from a loop and we want it to stop
 /obj/machinery/computer/camera_advanced/xenobio/proc/slime_pickup(mob/living/user, mob/living/basic/slime/target_slime)
 	if(target_slime in stored_slimes)
-		// It's possible for this proc to run multiple times on the same slime,
-		// so we need to check this to avoid duplicate entries.
+		// It's possible for this proc to be called on a slime that's already being picked up,
+		// so we need to check whether we already have to avoid duplicate entries.
 		return FALSE
 	if(stored_slimes.len >= max_slimes)
 		to_chat(user, span_warning("Slime storage is full."))
