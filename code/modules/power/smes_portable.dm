@@ -114,7 +114,7 @@
 /obj/machinery/smesbank/Initialize(mapload)
 	. = ..()
 
-	///Initial connection for mapload, We only attempt to locate the connector but only connect to it after it has initialized
+	///Initial connection for mapload, We attempt to locate the connector but only connect to it after it has initialized
 	if(mapload)
 		connected_port = locate() in loc
 
