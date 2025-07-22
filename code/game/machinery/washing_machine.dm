@@ -202,10 +202,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(busy)
-		return NONE
 	if(held_item)
-		return NONE
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] maintenance panel"
+		else if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unanchor" : "Anchor"] [src]"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Put the [held_item.name] in [src]"
+		return CONTEXTUAL_SCREENTIP_SET
 	if(state_open)
 		context[SCREENTIP_CONTEXT_LMB] = "Close the door"
 	else
@@ -216,23 +220,30 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
 	if(busy)
+		if(bloody_mess)
+			. += span_warning("Bloody water is sloshing against the door!")
+			return
 		. += span_notice("The door is closed and the motor is running.")
 		return
-	if(LAZYLEN(contents))
-		var/remaining = max_wash_capacity - contents.len
-		if(remaining > 0)
-			. += span_notice("You estimate room for <b>[remaining]</b> more item[remaining == 1 ? "" : "s"]. Inside you see:")
-		else
-			. += span_notice("It's completely packed! Inside you see:")
-
-		for(var/atom/movable/washed in contents)
-			if(ismob(washed))
-				var/mob/neatnik = washed
-				. += "\t[neatnik.name] [neatnik.stat == DEAD || UNCONSCIOUS ? span_boldwarning("is unconscious!") : span_warning("moving around!")]"
-			else
-				. += "\t[icon2html(washed, user)] [washed.name]"
-	else
+	if(bloody_mess)
+		. += span_warning("Bloody water is leaking from [src]!")
+	if(!LAZYLEN(contents))
 		. += span_notice("The drum is empty.")
+		return
+
+	var/remaining = max_wash_capacity - contents.len
+	if(remaining > 0)
+		. += span_notice("You estimate room for <b>[remaining]</b> more item[remaining == 1 ? "" : "s"]. Inside you see:")
+	else
+		. += span_notice("It's completely packed! Inside you see:")
+
+	for(var/atom/movable/washed as anything in contents)
+		if(ismob(washed))
+			var/mob/neatnik = washed
+			. += "\t[neatnik.name] [neatnik.stat == DEAD || UNCONSCIOUS ? span_boldwarning("is unconscious!") : span_warning("moving around!")]"
+		else
+			. += "\t[icon2html(washed, user)] [washed.name]"
+
 
 /obj/machinery/washing_machine/process(seconds_per_tick)
 	if(!busy)
@@ -260,17 +271,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/proc/wash_cycle(mob/user)
 	wash_loop.stop()
-	for(var/X in contents)
-		var/atom/movable/AM = X
+	var/bloody_wash = bloody_mess
+	for(var/atom/movable/AM as anything in contents)
+		if(bloody_wash)
+			AM.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+			continue
 		AM.wash(CLEAN_WASH)
 		AM.machine_wash(src, user)
-
 	//if we had the ability to brainwash, remove that now
 	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	busy = FALSE
 	if(color_source)
-		qdel(color_source)
-		color_source = null
+		QDEL_NULL(color_source)
 	update_appearance()
 	use_energy(active_power_usage)
 
@@ -330,11 +342,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /mob/living/basic/pet/machine_wash(obj/machinery/washing_machine/washer)
 	washer.bloody_mess = TRUE
+	washer.add_blood_DNA(get_blood_dna_list())
 	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
 	gib()
 
 /mob/living/carbon/human/machine_wash(obj/machinery/washing_machine/washer, mob/user)
-	adjust_wet_stacks(8)
+	var/bloody_wash = washer.bloody_mess
+	if(bloody_wash)
+		add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(washer))
+	else
+		for(var/obj/item/equipped_item in get_equipped_items(INCLUDE_HELD))
+			equipped_item.wash(CLEAN_WASH)
+			equipped_item.machine_wash(washer)
 	adjust_disgust(40, DISGUST_LEVEL_VERYDISGUSTED)
 	adjustOxyLoss(12)
 	log_combat(user, src, "machine washed (oxy)")
@@ -386,32 +405,40 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(!panel_open || busy)
-		return FALSE
+	if(!panel_open)
+		balloon_alert(user, "panel is closed!")
+		return ITEM_INTERACT_BLOCKING
+	if(busy)
+		balloon_alert(user, "[src.name] is busy!")
+		return ITEM_INTERACT_BLOCKING
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/washing_machine/screwdriver_act(mob/living/user, obj/item/tool)
-	if (!state_open)
-		default_deconstruction_screwdriver(user, null, null, tool)
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	if(busy)
+		balloon_alert(user, "[src.name] is busy!")
+		return ITEM_INTERACT_BLOCKING
+	if(state_open)
+		balloon_alert(user, "door is open!")
+		return ITEM_INTERACT_BLOCKING
+	default_deconstruction_screwdriver(user, null, null, tool)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(user.combat_mode)
 		return NONE
-	if (!state_open)
-		to_chat(user, span_warning("Open the door first!"))
+	if(busy)
+		balloon_alert(user, "[src.name] is busy!")
 		return ITEM_INTERACT_BLOCKING
-	if(bloody_mess)
-		to_chat(user, span_warning("[src] must be cleaned up first!"))
+	if (!state_open)
+		balloon_alert(user, "Door is closed!")
 		return ITEM_INTERACT_BLOCKING
 	if(contents.len >= max_wash_capacity)
-		to_chat(user, span_warning("The washing machine is full!"))
+		balloon_alert(user, "[src.name] is full!")
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
-		to_chat(user, span_warning("\The [item] is stuck to your hand, you cannot put it in the washing machine!"))
+		to_chat(user, span_warning("\The [item] is stuck to your hand, you cannot put it in [src]!"))
 		return ITEM_INTERACT_BLOCKING
 	if(item.dye_color)
 		color_source = item
@@ -424,7 +451,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(.)
 		return
 	if(busy)
-		to_chat(user, span_warning("[src] is busy!"))
+		balloon_alert(user, "[src.name] is busy!")
 		return
 
 	if(user.pulling && isliving(user.pulling))
@@ -466,13 +493,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(busy)
-		to_chat(user, span_warning("[src] is busy!"))
+		balloon_alert(user, "[src.name] is busy!")
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(state_open)
-		to_chat(user, span_warning("Close the door first!"))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	if(bloody_mess)
-		to_chat(user, span_warning("[src] must be cleaned up first!"))
+		balloon_alert(user, "Door is open!")
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	wash_loop.start()
 	busy = TRUE
