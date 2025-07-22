@@ -73,8 +73,9 @@
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
 	on_gain(user, our_heretic)
-	if(is_final_knowledge)
+	if(is_final_knowledge && !HAS_TRAIT(user, TRAIT_UNLIMITED_BLADES))
 		ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT)
+		user.balloon_alert(user, "blade breaking disabled!")
 
 /**
  * Called when the knowledge is applied to a mob.
