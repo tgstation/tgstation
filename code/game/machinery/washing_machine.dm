@@ -347,13 +347,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	gib()
 
 /mob/living/carbon/human/machine_wash(obj/machinery/washing_machine/washer, mob/user)
-	var/bloody_wash = washer.bloody_mess
-	if(bloody_wash)
-		add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(washer))
-	else
-		for(var/obj/item/equipped_item in get_equipped_items(INCLUDE_HELD))
+	if(!washer.bloody_mess)
+		for(var/obj/item/equipped_item as anything in get_equipped_items(INCLUDE_HELD))
 			equipped_item.wash(CLEAN_WASH)
 			equipped_item.machine_wash(washer)
+	else
+		add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(washer))
 	adjust_disgust(40, DISGUST_LEVEL_VERYDISGUSTED)
 	adjustOxyLoss(12)
 	log_combat(user, src, "machine washed (oxy)")
