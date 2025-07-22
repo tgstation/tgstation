@@ -45,7 +45,7 @@
 	var/list/banned_users = list()
 	///The machine's internal radio, used to broadcast alerts.
 	var/obj/item/radio/radio
-	///The channel we announce a siphon over.
+	///The channels we announce over
 	var/list/radio_channels = list(
 		RADIO_CHANNEL_COMMON = NONE,
 		RADIO_CHANNEL_COMMAND = NONE,
@@ -85,7 +85,6 @@
 	register_context()
 	setup_radio()
 	configure_default_announcements_policy()
-	// Setting up a global list for this static list of sound parameters would be a waste
 
 /obj/machinery/ore_silo/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -484,7 +483,7 @@
 	// Security channel is used for security-related announcements
 	// but gets less information than command to avoid over-informing them without
 	// QM involvement
-	radio_channels[RADIO_CHANNEL_SECURITY] = radio_channels[RADIO_CHANNEL_COMMAND]
+	radio_channels[RADIO_CHANNEL_SECURITY] = radio_channels[RADIO_CHANNEL_COMMON]
 	radio_channels[RADIO_CHANNEL_SECURITY] |= BAN_ATTEMPT_FAILURE_NO_ACCESS
 	radio_channels[RADIO_CHANNEL_SECURITY] |= UNRESTRICT_FAILURE_NO_ACCESS
 	radio_channels[RADIO_CHANNEL_SECURITY] |= BAN_CONFIRMATION
