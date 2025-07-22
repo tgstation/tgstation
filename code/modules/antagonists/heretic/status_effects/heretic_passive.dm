@@ -40,6 +40,8 @@
 	passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.update_data_for_all_viewers()
+	if(!HAS_TRAIT(owner, TRAIT_UNLIMITED_BLADES)) // XANTODO Check all the sources of unlimited blades and make sure they all work
+		ADD_TRAIT(owner, TRAIT_UNLIMITED_BLADES, REF(src))
 
 /// Gives our final upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_final()
@@ -52,6 +54,7 @@
 
 /datum/status_effect/heretic_passive/on_remove()
 	heretic_datum = null
+	REMOVE_TRAIT(owner, TRAIT_UNLIMITED_BLADES, REF(src))
 	return ..()
 
 //---- Ash Passive
@@ -391,9 +394,8 @@
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
 	/// When were we last attacked?
 	var/last_attack = 0
-	var/last_attack_threshold = 5 SECONDS // How long after an attack do we heal brain damage
-	var/heal_out_of_combat = 2 // How much brain damage we heal out of combat
-	var/heal_in_combat = 1 // How much brain damage we heal in combat, halved from the out of combat value
+	/// How long the combat tag lasts for
+	var/combat_lockout = 5 SECONDS
 
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
@@ -409,7 +411,10 @@
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + last_attack_threshold) ? -heal_in_combat * passive_level * seconds_between_ticks : -heal_out_of_combat * passive_level * seconds_between_ticks))
+	var/healing_amount = ((world.time > last_attack + combat_lockout) ? -1 * passive_level * seconds_between_ticks : -2 * passive_level * seconds_between_ticks)
+	if(heretic_datum.ascended)
+		healing_amount = 15
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, healing_amount)
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)

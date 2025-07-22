@@ -18,7 +18,6 @@
 	var/static/list/actions_to_add = list(
 		/datum/action/cooldown/spell/fire_sworn,
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
-		/datum/action/cooldown/spell/pointed/cleave,
 	)
 	grant_actions_by_list(actions_to_add)
 

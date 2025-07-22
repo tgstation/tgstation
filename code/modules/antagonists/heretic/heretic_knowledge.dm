@@ -611,6 +611,9 @@
 	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	SSshuttle.call_evac_shuttle("[user] has ascended!")
+	SSshuttle.emergency_no_recall = TRUE
+
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
 	// In case we skipped ritual of knowledge

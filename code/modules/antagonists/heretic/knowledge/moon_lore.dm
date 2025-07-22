@@ -161,7 +161,7 @@
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
-	target.mob_mood.adjust_sanity(-10)
+	target.mob_mood?.adjust_sanity(-10)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
@@ -192,7 +192,6 @@
 	announcement_text = "%SPOOKY% Laugh, for the ringleader %NAME% has ascended! \
 						The truth shall finally devour the lie! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_moon.ogg'
-	var/regen_amount = 15 // How much brain damage we heal per tick
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
@@ -258,8 +257,6 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-	source.adjustOrganLoss(ORGAN_SLOT_BRAIN, -regen_amount)
-
 	visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,

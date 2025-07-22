@@ -46,6 +46,7 @@
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
 		/obj/item/book = 1,
+		/obj/structure/bonfire = 1,
 		)
 	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
 	cost = 2
