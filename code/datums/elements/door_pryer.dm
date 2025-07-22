@@ -40,6 +40,7 @@
 
 	if (airlock_target.locked || airlock_target.welded || airlock_target.seal)
 		airlock_target.balloon_alert(attacker, "it's sealed!")
+		attacker.log_message("Tried to pry open [src], located at [loc_name(src)], but failed due to the airlock being sealed.", LOG_GAME)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(open_door), attacker, airlock_target)
@@ -49,6 +50,7 @@
 /datum/element/door_pryer/proc/open_door(mob/living/basic/attacker, obj/machinery/door/airlock/airlock_target)
 	if (!airlock_target.hasPower())
 		attacker.visible_message(span_warning("[attacker] forces the [airlock_target] to open."))
+		attacker.log_message("Pried open [src], located at [loc_name(src)].", LOG_GAME)
 		airlock_target.open(FORCING_DOOR_CHECKS)
 		return
 
@@ -60,13 +62,18 @@
 		message = span_warning("[attacker] starts forcing the [airlock_target] open!"),
 		blind_message = span_hear("You hear a metal screeching sound."),
 	)
+	attacker.log_message("Started prying open [src], located at [loc_name(src)].", LOG_GAME)
+
 	playsound(airlock_target, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 	airlock_target.balloon_alert(attacker, "prying...")
 	if(!do_after(attacker, pry_time, airlock_target))
 		airlock_target.balloon_alert(attacker, "interrupted!")
+		attacker.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to getting interrupted.", LOG_GAME)
 		return
 	if(airlock_target.locked)
+		attacker.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to the airlock getting bolted during the do_after.", LOG_GAME)
 		return
 	attacker.visible_message(span_warning("[attacker] forces the [airlock_target] to open."))
+	attacker.log_message("Successfully pried open [src], located at [loc_name(src)].", LOG_GAME)
 	airlock_target.open(BYPASS_DOOR_CHECKS)
 	airlock_target.take_damage(AIRLOCK_PRY_DAMAGE, BRUTE, sound_effect = FALSE)
