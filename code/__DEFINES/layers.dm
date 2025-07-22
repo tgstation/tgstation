@@ -52,7 +52,7 @@
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_RENDER_PLATE 14
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+#define EMISSIVE_PLATE_RENDER_TARGET "*EMISSIVE_RENDER_PLATE"
 // Ensures all the render targets that point at the emissive plate layer correctly
 #define EMISSIVE_Z_BELOW_LAYER 1
 #define EMISSIVE_FLOOR_LAYER 2
@@ -62,41 +62,43 @@
 #define EMISSIVE_BLOOM_MASK_PLATE 15
 #define EMISSIVE_BLOOM_MASK_TARGET "*EMISSIVE_BLOOM_MASK_PLATE"
 #define EMISSIVE_BLOOM_PLATE 16
+#define SPECULAR_MASK_PLATE 17
+#define SPECULAR_PLATE 18
 
 //-------------------- Game plane assembly ---------------------
 
-#define RENDER_PLANE_GAME 17
+#define RENDER_PLANE_GAME 19
 /// If fov is enabled we'll draw game to this and do shit to it
-#define RENDER_PLANE_GAME_MASKED 18
+#define RENDER_PLANE_GAME_MASKED 20
 /// The bit of the game plane that is let alone is sent here
-#define RENDER_PLANE_GAME_UNMASKED 19
+#define RENDER_PLANE_GAME_UNMASKED 21
 
 //-------------------- Lighting ---------------------
 
-#define RENDER_PLANE_LIGHTING 20
+#define RENDER_PLANE_LIGHTING 22
 
 /// Masks the lighting plane with turfs, so we never light up the void
 /// Failing that, masks emissives and the overlay lighting plane
-#define LIGHT_MASK_PLANE 21
+#define LIGHT_MASK_PLANE 23
 #define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
 
 ///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 22
+#define ABOVE_LIGHTING_PLANE 24
 
-#define WEATHER_GLOW_PLANE 23
+#define WEATHER_GLOW_PLANE 25
 
 ///---------------- MISC -----------------------
 
 ///Pipecrawling images
-#define PIPECRAWL_IMAGES_PLANE 24
+#define PIPECRAWL_IMAGES_PLANE 26
 
 ///AI Camera Static
-#define CAMERA_STATIC_PLANE 25
+#define CAMERA_STATIC_PLANE 27
 
 ///Anything that wants to be part of the game plane, but also wants to draw above literally everything else
-#define HIGH_GAME_PLANE 26
+#define HIGH_GAME_PLANE 28
 
-#define FULLSCREEN_PLANE 27
+#define FULLSCREEN_PLANE 29
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
@@ -228,6 +230,7 @@
 #define BELOW_MOB_LAYER 3.7
 #define LOW_MOB_LAYER 3.75
 #define LYING_MOB_LAYER 3.8
+#define ABOVE_LYING_MOB_LAYER 3.85
 #define VEHICLE_LAYER 3.9
 #define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define

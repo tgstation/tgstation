@@ -37,7 +37,7 @@
 	blood_splatter.color = _color
 	var/mutable_appearance/emissive_splatter = null
 	if (emissive_alpha)
-		emissive_splatter = emissive_appearance('icons/effects/blood.dmi', "itemblood", as_item, alpha = emissive_alpha)
+		emissive_splatter = emissive_appearance('icons/effects/blood.dmi', "itemblood", as_item, alpha = emissive_alpha, effect_type = EMISSIVE_NO_BLOOM)
 		emissive_splatter.blend_mode = BLEND_INSET_OVERLAY
 	if (uses_filter)
 		blood_splatter.appearance_flags |= KEEP_APART

@@ -247,7 +247,7 @@
  */
 /atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_PLATE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	set_light_cutoff(10)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
@@ -324,7 +324,7 @@
 	plane = EMISSIVE_RENDER_PLATE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_target = EMISSIVE_RENDER_TARGET
+	render_target = EMISSIVE_PLATE_RENDER_TARGET
 	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
 
@@ -417,8 +417,28 @@
 	name = "Turf lighting post-processing plate"
 	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
 	plane = TURF_LIGHTING_PLATE
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(SPECULAR_PLATE, RENDER_PLANE_LIGHTING)
 	blend_mode = BLEND_ADD
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/specular_mask
+	name = "Specular mask plate"
+	documentation = "Plate used to generate the specular mask for the specular plate effect."
+	plane = SPECULAR_MASK_PLATE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_MULTIPLY
+	render_relay_planes = list(SPECULAR_PLATE)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/specular
+	name = "Specular plate"
+	documentation = "Plate used to artificially increase lighting on certain pixels to poorly mimic shiny surfaces."
+	plane = SPECULAR_PLATE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_ADD
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/rendering_plate/lit_game

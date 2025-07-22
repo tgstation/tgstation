@@ -309,7 +309,7 @@
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(SPECULAR_PLATE, RENDER_PLANE_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
@@ -360,12 +360,15 @@
 
 /atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	/// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e. adding light so objects glow)
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 1,1,1,0, 0,0,0,1, 0,0,0,0))
-	/// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
-	/// which allows us to selectively bloom only a part of our emissives
+	// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e. adding light so objects glow)
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
+	// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
+	// which allows us to selectively bloom only a part of our emissives
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), relay_color = list(255,255,255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_MASK_PLATE, offset), relay_color = list(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0))
+	// Blue channel is dedicated to specular, i.e. our crappy implementation of shiny objects
+	// Alpha must be always maximal as its used to multiply all lighting to add fake shine by increasing existing light
+	add_relay_to(GET_NEW_PLANE(SPECULAR_MASK_PLATE, offset), relay_color = list(0,0,0,0, 0,0,0,0, 1,1,1,0, 0,0,0,0, 0,0,0,1))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
