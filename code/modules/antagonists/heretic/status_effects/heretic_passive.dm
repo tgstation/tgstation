@@ -391,6 +391,9 @@
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
 	/// When were we last attacked?
 	var/last_attack = 0
+	var/last_attack_threshold = 5 SECONDS // How long after an attack do we heal brain damage
+	var/heal_out_of_combat = 2 // How much brain damage we heal out of combat
+	var/heal_in_combat = 1 // How much brain damage we heal in combat, halved from the out of combat value
 
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
@@ -406,7 +409,7 @@
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + 5 SECONDS) ? -2.5 * passive_level * seconds_between_ticks : -5 * passive_level * seconds_between_ticks))
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + last_attack_threshold) ? -heal_in_combat * passive_level * seconds_between_ticks : -heal_out_of_combat * passive_level * seconds_between_ticks))
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)

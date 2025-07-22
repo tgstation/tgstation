@@ -94,7 +94,7 @@
 	gain_text = "He knew how to walk between the planes."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
-	cost = 1
+	cost = 2
 	drafting_tier = 5
 
 /datum/heretic_knowledge/spell/fire_blast

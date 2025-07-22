@@ -79,7 +79,7 @@
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
-	cost = 1
+	cost = 2
 	drafting_tier = 5
 
 /datum/heretic_knowledge/spell/star_blast

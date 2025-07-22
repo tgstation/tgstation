@@ -138,7 +138,7 @@
 		/obj/item/food/grown/poppy = 1,
 	)
 	limit = 2
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
 

@@ -94,7 +94,7 @@
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
 
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"
@@ -192,6 +192,7 @@
 	announcement_text = "%SPOOKY% Laugh, for the ringleader %NAME% has ascended! \
 						The truth shall finally devour the lie! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_moon.ogg'
+	var/regen_amount = 15 // How much brain damage we heal per tick
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
@@ -257,7 +258,7 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-	source.adjustOrganLoss(ORGAN_SLOT_BRAIN, -30)
+	source.adjustOrganLoss(ORGAN_SLOT_BRAIN, -regen_amount)
 
 	visible_hallucination_pulse(
 		center = get_turf(source),
