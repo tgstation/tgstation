@@ -34,4 +34,7 @@ ADMIN_VERB(whitelist_player, R_BAN, "Whitelist CKey", "Adds a ckey to the Whitel
 
 	message_admins("[input_ckey] has been whitelisted by [usr]")
 
+ADMIN_VERB_CUSTOM_EXIST_CHECK(whitelist_player)
+	return CONFIG_GET(flag/usewhitelist)
+
 #undef WHITELISTFILE
