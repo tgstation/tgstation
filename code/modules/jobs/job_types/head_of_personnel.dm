@@ -51,8 +51,6 @@
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
 
 /datum/job/head_of_personnel/generate_traitor_objective()
-	if(prob(50))
-		return null
 	var/datum/objective/assassinate/captain_replacement/promotion = new()
 	promotion.target = promotion.find_target()
 	if(isnull(promotion.target))
