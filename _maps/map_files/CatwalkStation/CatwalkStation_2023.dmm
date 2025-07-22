@@ -458,7 +458,6 @@
 /obj/machinery/door/airlock/security{
 	name = "Court Cell"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
@@ -25171,12 +25170,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
-"hwS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "hwT" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 8
@@ -42428,9 +42421,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
 "mwr" = (
@@ -45395,9 +45388,6 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /turf/open/floor/iron/large,
@@ -53219,9 +53209,6 @@
 /obj/structure/railing/corner/end/flip{
 	dir = 1
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "pJp" = (
@@ -55486,7 +55473,6 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "qpt" = (
@@ -56395,6 +56381,10 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
+"qDi" = (
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/openspace,
+/area/station/commons/dorms)
 "qDn" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Storage Room"
@@ -63527,6 +63517,10 @@
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
+"sLd" = (
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/openspace,
+/area/station/service/kitchen)
 "sLr" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 1
@@ -77347,6 +77341,7 @@
 /obj/effect/landmark/start/hangover,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
 "wPG" = (
@@ -78030,7 +78025,6 @@
 	name = "Psychology Storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/medical/psychology,
 /turf/open/floor/plating,
 /area/station/medical/psychology)
@@ -78047,6 +78041,7 @@
 "xaj" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "xak" = (
@@ -174648,7 +174643,7 @@ eGs
 hRX
 fyp
 pag
-cFa
+sLd
 cFa
 fqC
 tfK
@@ -183379,7 +183374,7 @@ kdG
 hik
 fmN
 afu
-afu
+qDi
 afu
 afu
 jap
@@ -187476,7 +187471,7 @@ noj
 eSu
 hRj
 dCm
-hwS
+eEN
 gFR
 qrx
 fpZ
@@ -187733,7 +187728,7 @@ txh
 txh
 eSu
 dCm
-doL
+dCm
 dCm
 dCm
 dCm

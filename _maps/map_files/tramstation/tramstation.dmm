@@ -2238,6 +2238,14 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/library)
+"ain" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "aiw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -17465,7 +17473,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
@@ -48612,7 +48619,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
@@ -93153,7 +93159,7 @@ jwq
 toy
 elr
 wsZ
-glY
+ain
 elr
 bPz
 oar
