@@ -4344,6 +4344,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
+"brP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "brX" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/vending/cigarette,
@@ -14979,7 +14984,6 @@
 /area/station/maintenance/starboard/central)
 "etu" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "abandoned_kitchen";
 	name = "Kitchen Shudders"
@@ -21054,7 +21058,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/engineering,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "giB" = (
@@ -62173,7 +62176,6 @@
 /area/station/cargo/sorting)
 "spw" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "abandoned_kitchen";
 	name = "Kitchen Shudders"
@@ -65015,6 +65017,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
+"tjR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "tjU" = (
 /obj/effect/landmark/transport/transport_id{
 	specific_transport_id = "catwalk_engi"
@@ -75544,7 +75554,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/engineering,
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "wng" = (
@@ -120993,7 +121002,7 @@ wps
 wps
 wps
 oaQ
-hFi
+brP
 eIh
 fKk
 ibF
@@ -121997,7 +122006,7 @@ aCa
 djL
 uzj
 txz
-gnT
+tjR
 kxY
 nLp
 dOk
