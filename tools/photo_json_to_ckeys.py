@@ -2,12 +2,12 @@
 Usage:
     $ python photo_json_to_ckeys.py path/to/photo_albums.json -o path/to/photo_albums.json
 
-This script will convert all personal entries to ckey() format.
+This script is designed to convert all personal entries in photo_albums.json to ckey() format.
 It will also merge any entries that are from the same ckey into a single record.
+The intent here is to provide hosts with a quick and easy way to fix their persistence json files.
 
 '''
 
-#!/usr/bin/env python3
 #!/usr/bin/env python3
 import argparse, json
 import re
