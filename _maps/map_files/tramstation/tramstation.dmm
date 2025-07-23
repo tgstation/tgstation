@@ -18895,7 +18895,6 @@
 /obj/item/papercutter{
 	pixel_x = -4
 	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "fEp" = (
@@ -49080,10 +49079,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
-"qoZ" = (
-/obj/item/paper/fluff/ids_for_dummies,
-/turf/open/misc/asteroid/airless,
-/area/station/asteroid)
 "qpb" = (
 /obj/structure/closet/secure_closet/exile,
 /obj/effect/turf_decal/bot,
@@ -76115,7 +76110,7 @@ aaa
 gcp
 gcp
 gcp
-qoZ
+aac
 aac
 aaa
 aaa
