@@ -236,8 +236,8 @@
 	return ..()
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
-	if(owner.current?.stat == DEAD)
-		return UI_UPDATE
+	if(user.stat == DEAD)
+		return UI_CLOSE
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
