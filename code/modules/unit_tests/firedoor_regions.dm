@@ -16,7 +16,6 @@
 		if(!is_station_level(firedoor.z))
 			continue
 		any_fail = check_fire_area(firedoor, detected_turfs) || any_fail
-		CHECK_TICK
 
 	if(!any_fail)
 		return
@@ -25,7 +24,7 @@
 
 /datum/unit_test/firedoor_regions/proc/check_fire_area(obj/machinery/door/firedoor/firedoor, list/already_detected_turfs)
 	. = FALSE
-	var/datum/callback/room_cb = CALLBACK(src, PROC_REF(check_fire_area_callback))
+	var/static/datum/callback/room_cb = CALLBACK(src, PROC_REF(check_fire_area_callback))
 	for(var/turf/open/nearby as anything in get_adjacent_open_turfs(firedoor))
 		if(nearby in already_detected_turfs)
 			continue
@@ -45,7 +44,7 @@
 		if(!is_fire_alarm_in_list_of_turfs(detected_area))
 			TEST_FAIL("No fire alarm in region: [AREACOORD(nearby)] (Region size: [length(detected_area)] turfs)")
 			. = TRUE
-		CHECK_TICK
+
 	return .
 
 /datum/unit_test/firedoor_regions/proc/is_fire_alarm_in_list_of_turfs(list/all_turfs)
