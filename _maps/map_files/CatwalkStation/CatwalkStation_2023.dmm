@@ -20754,7 +20754,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "geL" = (
-/obj/item/kirbyplants/random,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "geM" = (
@@ -70959,6 +70959,7 @@
 "uUK" = (
 /obj/machinery/light/directional/south,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/kirbyplants/random,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "uUL" = (
