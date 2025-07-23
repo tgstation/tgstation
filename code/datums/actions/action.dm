@@ -27,6 +27,8 @@
 	/// If TRUE, this action button will be shown to observers / other mobs who view from this action's owner's eyes.
 	/// Used in [/mob/proc/show_other_mob_action_buttons]
 	var/show_to_observers = TRUE
+	/// If observers can click this action at any time, regardless of the owner
+	var/allow_observer_click = FALSE
 
 	/// The style the button's tooltips appear to be
 	var/buttontooltipstyle = ""
@@ -373,7 +375,7 @@
 /datum/action/proc/create_button()
 	var/atom/movable/screen/movable/action_button/button = new()
 	button.linked_action = src
-	button.allow_observers = show_to_observers
+	button.allow_observer_click = allow_observer_click
 	build_button_icon(button, ALL, TRUE)
 	return button
 
