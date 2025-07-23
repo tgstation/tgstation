@@ -313,24 +313,24 @@ GLOBAL_LIST(heretic_paths)
 		list(
 			"parent_knowledge" = knowledge_tier1,
 			"guaranteed_knowledge" = guaranteed_draft_t1,
-			"probabilities" = list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5),
+			"probabilities" = list("1" = 50, "2" = 50, "3" = 0, "4" = 0, "5" = 0),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_1
 		),
 		list(
 			"parent_knowledge" = knowledge_tier2,
 			"guaranteed_knowledge" = guaranteed_draft_t2,
-			"probabilities" = list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5),
+			"probabilities" = list("1" = 50, "2" = 25, "3" = 25, "4" = 0, "5" = 0),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_2
 		),
 		list(
 			"parent_knowledge" = knowledge_tier3,
 			"guaranteed_knowledge" = guaranteed_draft_t3,
-			"probabilities" = list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5),
+			"probabilities" = list("1" = 20, "2" = 20, "3" = 20, "4" = 20, "5" = 20),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_3
 		),
 		list(
 			"parent_knowledge" = knowledge_tier4,
-			"probabilities" = list("1" = 10, "2" = 10, "3" = 10, "4" = 10, "5" = 60),
+			"probabilities" = list("1" = 0, "2" = 0, "3" = 0, "4" = 0, "5" = 100),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_4
 		)
 	)
