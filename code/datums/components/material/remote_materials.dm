@@ -272,6 +272,7 @@ handles linking back and forth.
  * Arguments
  * * obj/item/weapon - the item you are trying to insert
  * * multiplier - the multiplier applied on the materials consumed
+ * * user_data - an alist in the form rendered by ID_DATA(user), for logging who/where/when the item was inserted
  */
 /datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1, alist/user_data)
 	// Inserting materials automatically shouldn't be permission-restricted
