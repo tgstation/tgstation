@@ -160,7 +160,7 @@
 	our_manifest.forceMove(get_turf(src))
 	if(ishuman(user))
 		user.put_in_hands(our_manifest)
-	our_manifest = null
+	manifest = null
 	update_appearance()
 
 /obj/structure/closet/crate/preopen
