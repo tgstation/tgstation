@@ -998,12 +998,12 @@
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
 		to_chat(drinker, span_warning("Antioxidants are weakening your radical spirit!"))
-		
+
 /datum/reagent/consumable/grenadine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
 		drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
-		if(drinker.getStaminaLoss() < 80) 
+		if(drinker.getStaminaLoss() < 80)
 			drinker.adjustStaminaLoss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.
 
 /datum/reagent/consumable/parsnipjuice
@@ -1309,3 +1309,33 @@
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 20 * ETHEREAL_DISCHARGE_RATE)
+
+/datum/reagent/consumable/fruit_punch
+	name = "fruit punch"
+	description = "Impossibly sweet fruit punch. It's impossible to tell what fruit this actually tastes like. EXTREMELY dangerous to consume without the support of a nearby water cooler!"
+	color = "#f7b2e3"
+	taste_description = "painfully sweet fruit"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	quality = DRINK_VERYGOOD
+	///Have we warned the drinker about proximity to water coolers?
+	var/warned = FALSE //Change this to a popup like with penthrite
+
+/datum/reagent/consumable/fruit_punch/on_mob_metabolize(mob/living/affected_mob, seconds_per_tick)
+	. = ..()
+	var/need_mob_update
+
+	if(locate(/obj/structure/reagent_dispensers/water_cooler) in range(6, affected_mob))
+		need_mob_update = affected_mob.heal_bodypart_damage(0.5 * REM * seconds_per_tick, 2 * REM *  seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		if(warned)
+			to_chat(affected_mob, span_green("You feel the water cooler and it's hypnotic, soothing aura help you endure the unbearable sweetness of the fruit punch..."))
+			warned = FALSE
+	else
+		if(warned)
+			to_chat(affected_mob, span_boldwarning("Without warning, the fruit punch turns unbearably sweet. This drink is too powerful you to endure without the support of a nearby water cooler!"))
+			warned = TRUE
+		else
+			if(prob(10))
+				to_chat(affected_mob, span_boldwarning("The sweetness of the fruit punch sends your body into shock!"))
+
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH

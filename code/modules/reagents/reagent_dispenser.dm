@@ -354,13 +354,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	find_and_hang_on_wall()
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "liquid cooler"
-	desc = "A machine that dispenses liquid to drink."
-	icon = 'icons/obj/machines/vending.dmi'
+	name = "water cooler"
+	desc = "A machine that dispenses water to drink. It appears docile."
 	icon_state = "water_cooler"
 	anchored = TRUE
 	tank_volume = 500
-	var/paper_cups = 25 //Paper cups left from the cooler
+	can_be_tanked = FALSE
+	///Paper cups left from the cooler
+	var/paper_cups = 25
+
+/obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
+	. = ..()
+	update_overlays()
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
@@ -382,6 +387,41 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/obj/item/reagent_containers/cup/glass/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--
+
+/obj/structure/reagent_dispensers/water_cooler/update_overlays()
+	. = ..()
+	if(!reagents)
+		return
+
+	if(!reagents.total_volume)
+		return
+
+	var/mutable_appearance/tank_color
+	if(reagent_id == /datum/reagent/water) //Figure out this, make it work for reagent mixes
+		tank_color = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay")
+		tank_color.color = "#47B4F5"
+	else
+		tank_color = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay")
+		tank_color.color = mix_color_from_reagents(reagents.reagent_list)
+
+	if(tank_color.color)
+		. += tank_color
+
+/obj/structure/reagent_dispensers/water_cooler/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/punch_cooler
+	name = "punch cooler"
+	desc = "A machine that dispenses fruit punch to drink. Engage with caution. Do not stray from punch cooler after consumption."
+	reagent_id = /datum/reagent/consumable/fruit_punch
+	tank_volume = 200
+
+/obj/structure/reagent_dispensers/water_cooler/punch_cooler/
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
