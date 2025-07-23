@@ -562,3 +562,7 @@
       on reinforced girders.
   kuricityy:
   - qol: Makes seclights attachable to almost every security firearm.
+2025-07-23:
+  SmArtKar:
+  - bugfix: Fixes facial hair gradient DNA runtiming and sometimes not adding proper
+      gradients
