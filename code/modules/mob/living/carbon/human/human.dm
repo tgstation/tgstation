@@ -902,7 +902,7 @@
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space
 	var/fitness_level = mind?.get_skill_level(/datum/skill/athletics) - 1
-	var/experience_reward = 5
+	var/experience_reward = ATHLETICS_SKILL_MISC_EXP
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay -= 2 SECONDS
 		experience_reward *= 3

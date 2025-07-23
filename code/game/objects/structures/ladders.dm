@@ -278,7 +278,7 @@
 
 	if(grant_exp)
 		var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics)
-		user.mind?.adjust_experience(/datum/skill/athletics, round(5/(fitness_level || 1), 1)) //get a little experience for our trouble
+		user.mind?.adjust_experience(/datum/skill/athletics, round(ATHLETICS_SKILL_MISC_EXP/(fitness_level || 1), 1)) //get a little experience for our trouble
 
 	if(!is_ghost)
 		show_final_fluff_message(user, ladder, going_up)
