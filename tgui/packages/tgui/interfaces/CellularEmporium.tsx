@@ -32,16 +32,17 @@ type Ability = {
   genetic_point_required: number; // Checks against genetic_points_count
   absorbs_required: number; // Checks against absorb_count
   dna_required: number; // Checks against dna_count
-  prerequisite_abilities: typePath[];
+  prerequisite_abilities: typePath[]; // Checks against owned_abilities
 };
 
 function evaluate_prerequisite(
   present_abilities: typePath[],
   required_abilities: typePath[],
 ): boolean {
-  return required_abilities.every((ref_element) =>
+  const result = required_abilities.every((ref_element) =>
     present_abilities.includes(ref_element),
   );
+  return result;
 }
 
 export const CellularEmporium = (props) => {
@@ -165,7 +166,8 @@ const AbilityList = (props: { searchAbilities: string }) => {
                     ability.absorbs_required > absorb_count ||
                     ability.dna_required > dna_count ||
                     (Array.isArray(ability.prerequisite_abilities) &&
-                      evaluate_prerequisite(
+                      ability.prerequisite_abilities.length > 0 &&
+                      !evaluate_prerequisite(
                         owned_abilities,
                         ability.prerequisite_abilities,
                       ))
