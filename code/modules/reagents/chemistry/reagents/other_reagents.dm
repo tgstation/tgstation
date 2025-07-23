@@ -294,7 +294,7 @@
 	ph = 7.5 //God is alkaline
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_UNAFFECTED_BY_METABOLISM // Operates at fixed metabolism for balancing memes.
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
-	metabolized_traits = list(TRAIT_HOLY)
+	//metabolized_traits = list(TRAIT_HOLY)
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater
