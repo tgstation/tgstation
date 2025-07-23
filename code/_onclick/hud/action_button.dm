@@ -51,7 +51,7 @@
 	return TRUE
 
 /atom/movable/screen/movable/action_button/Click(location,control,params)
-	if (!can_use(usr))
+	if(!can_use(usr))
 		return FALSE
 
 	var/list/modifiers = params2list(params)

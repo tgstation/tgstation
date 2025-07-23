@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if(. || isobserver(ui.user))
 		return
 	switch(action)
 		if("change_objectives")
@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!.)
 		return
 
-	target.ui_interact(usr)
+	target.ui_interact(usr || owner)
 
 /datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)
