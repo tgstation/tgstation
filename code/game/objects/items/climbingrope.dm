@@ -69,7 +69,7 @@
 	if(do_after(user, final_climb_time, interacting_with))
 		user.forceMove(interacting_with)
 		uses--
-		user.mind?.adjust_experience(/datum/skill/athletics, round((ATHLETICS_SKILL_MISC_XP*10)/(fitness_level || 1), 1)) //get some experience for our trouble, especially since this costs us a climbing rope use
+		user.mind?.adjust_experience(/datum/skill/athletics, round((ATHLETICS_SKILL_MISC_EXP*10)/(fitness_level || 1), 1)) //get some experience for our trouble, especially since this costs us a climbing rope use
 
 	if(uses <= 0)
 		user.visible_message(span_warning("[src] snaps and tears apart!"))
