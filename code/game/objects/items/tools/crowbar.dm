@@ -249,7 +249,7 @@
 	var/mech_dir = mech.dir
 	mech.balloon_alert(user, "prying open...")
 	playsound(mech, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
-	if(!use_tool(mech, user, (mech.mecha_flags & IS_ENCLOSED) ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
+	if(!use_tool(mech, user, (mech.mecha_flags & IS_ENCLOSED) ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir, mech_sleeper)))
 		mech.balloon_alert(user, "interrupted!")
 		return
 	var/list/log_list_after = LAZYCOPY(mech.occupants)
@@ -263,5 +263,5 @@
 		mech.mob_exit(occupant)
 	playsound(mech, 'sound/machines/airlock/airlockforced.ogg', 75, TRUE)
 
-/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
-	return HAS_TRAIT(src, TRAIT_WIELDED) && (LAZYLEN(mech.occupants) || mech_sleeper?.patient) && mech.dir == mech_dir
+/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir, obj/item/mecha_parts/mecha_equipment/sleeper/mech_sleeper)
+	return HAS_TRAIT(src, TRAIT_WIELDED) && (LAZYLEN(mech.occupants) || mech_sleeper?.patient) && (mech.dir == mech_dir)
