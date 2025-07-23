@@ -427,8 +427,8 @@
 	plane = SPECULAR_MASK_PLATE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_MULTIPLY
-	render_relay_planes = list(SPECULAR_PLATE)
+	render_target = SPECULAR_MASK_RENDER_TARGET
+	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/rendering_plate/specular
@@ -438,8 +438,12 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(ABOVE_LIGHTING_PLANE)
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/specular/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("specular_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(SPECULAR_MASK_RENDER_TARGET, offset)))
 
 /atom/movable/screen/plane_master/rendering_plate/lit_game
 	name = "Lit game rendering plate"

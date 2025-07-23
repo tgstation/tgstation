@@ -367,8 +367,8 @@
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), relay_color = list(255,255,255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_MASK_PLATE, offset), relay_color = list(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0))
 	// Blue channel is dedicated to specular, i.e. our crappy implementation of shiny objects
-	// Alpha must be always maximal as its used to multiply all lighting to add fake shine by increasing existing light
-	add_relay_to(GET_NEW_PLANE(SPECULAR_MASK_PLATE, offset), relay_color = list(0,0,0,0, 0,0,0,0, 1,1,1,0, 0,0,0,0, 0,0,0,1))
+	// We map it onto alpha so we can use the mask plate in an alpha mask filter to cut out only the shiny bits
+	add_relay_to(GET_NEW_PLANE(SPECULAR_MASK_PLATE, offset), relay_color = list(0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0, 1,1,1,0))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"

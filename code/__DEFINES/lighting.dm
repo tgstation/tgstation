@@ -91,8 +91,11 @@ GLOBAL_LIST_INIT(emissive_color_no_bloom, EMISSIVE_COLOR_NO_BLOOM)
 GLOBAL_LIST_INIT(specular_color, SPECULAR_COLOR)
 
 // Types of emissives
+/// Emissive that will not have bloom applied to it, encoded into the green channel
 #define EMISSIVE_NO_BLOOM 0
+/// Emissive that will get bloom applied to it, encoded into the red channel
 #define EMISSIVE_BLOOM 1
+/// Mimics a highly reflective surface, will not have any glow by itself but will amplify any lighting applied to it, encoded into the blue channel
 #define EMISSIVE_SPECULAR 2
 
 #define _EM_BLOCK_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,val, 0,0,0,0)

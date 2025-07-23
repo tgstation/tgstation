@@ -63,6 +63,7 @@
 #define EMISSIVE_BLOOM_MASK_TARGET "*EMISSIVE_BLOOM_MASK_PLATE"
 #define EMISSIVE_BLOOM_PLATE 16
 #define SPECULAR_MASK_PLATE 17
+#define SPECULAR_MASK_RENDER_TARGET "*SPECULAR_MASK_PLATE"
 #define SPECULAR_PLATE 18
 
 //-------------------- Game plane assembly ---------------------
