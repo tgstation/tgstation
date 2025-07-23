@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "The quartermaster's request console on Catwalk Station will no longer show up as Unknown."
+  - map: "The quartermaster's request console on Catwalk Station has been moved from their bedroom to the office."
