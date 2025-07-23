@@ -21,6 +21,8 @@
 	var/datum/weakref/last_hovored_ref
 	/// overlay for keybind maptext
 	var/mutable_appearance/keybind_maptext
+	/// if observers can trigger this action at any time
+	var/allow_observers = FALSE
 
 /atom/movable/screen/movable/action_button/Destroy()
 	if(our_hud)
@@ -36,6 +38,8 @@
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
 	if(isobserver(user))
 		var/mob/dead/observer/dead_mob = user
+		if(allow_observers)
+			return TRUE
 		if(dead_mob.observetarget) // Observers can only click on action buttons if they're not observing something
 			return FALSE
 

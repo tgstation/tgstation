@@ -373,6 +373,7 @@
 /datum/action/proc/create_button()
 	var/atom/movable/screen/movable/action_button/button = new()
 	button.linked_action = src
+	button.allow_observers = show_to_observers
 	build_button_icon(button, ALL, TRUE)
 	return button
 
