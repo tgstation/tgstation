@@ -333,6 +333,7 @@
 	duration = 60 SECONDS
 	affects_us = TRUE
 
+/// Used by changelings to make people see a specific other player's appearance
 /datum/hallucination/delusion/changeling
 	random_hallucination_weight = 0
 
@@ -343,7 +344,7 @@
 	affects_others,
 	skip_nearby,
 	play_wabbajack,
-	passed_appearance
+	passed_appearance,
 )
 	src.delusion_appearance = passed_appearance
 	return ..()
