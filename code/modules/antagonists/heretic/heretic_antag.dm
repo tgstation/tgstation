@@ -236,7 +236,7 @@
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
 	if(isnull(owner.current) || owner.current.stat == DEAD) // If the owner is dead, we can't show the UI.
-		return UI_INTERACTIVE
+		return UI_UPDATE
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
