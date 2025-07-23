@@ -82,10 +82,13 @@
 	fire = 80
 	acid = 70
 
-/obj/machinery/door/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, welded)
-	return .
+/obj/machinery/door/on_object_saved()
+	var/data
+
+	if(welded)
+		data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded]"
+
+	return data
 
 /obj/machinery/door/Initialize(mapload)
 	AddElement(/datum/element/blocks_explosives)
@@ -480,15 +483,15 @@
 			return 0.6 SECONDS
 
 /// Override this to do misc tasks on animation start
-/obj/machinery/door/proc/animation_effects(animation)
+/obj/machinery/door/proc/animation_effects(animation, force_type = DEFAULT_DOOR_CHECKS)
 	return
 
 /// Used to start a new animation
 /// Accepts the animation to start as an arg
-/obj/machinery/door/proc/run_animation(animation)
+/obj/machinery/door/proc/run_animation(animation, force_type = DEFAULT_DOOR_CHECKS)
 	set_animation(animation)
 	addtimer(CALLBACK(src, PROC_REF(set_animation), null), animation_length(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
-	animation_effects(animation)
+	animation_effects(animation, force_type)
 
 // React to our animation changing
 /obj/machinery/door/proc/set_animation(animation)

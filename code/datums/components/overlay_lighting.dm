@@ -334,6 +334,8 @@
 ///Called when the current_holder is qdeleted, to remove the light effect.
 /datum/component/overlay_lighting/proc/on_parent_attached_to_qdel(atom/movable/source, force)
 	SIGNAL_HANDLER
+	if(isnull(parent_attached_to))
+		return
 	UnregisterSignal(parent_attached_to, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(directional)
 		UnregisterSignal(parent_attached_to, COMSIG_ATOM_DIR_CHANGE)
@@ -391,12 +393,10 @@
 	var/new_power = source.light_power
 	set_lum_power(new_power >= 0 ? 0.5 : -0.5)
 	set_alpha = min(230, (abs(new_power) * 120) + 30)
-	visible_mask.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
-	if(directional)
-		cone.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= visible_mask
 	visible_mask.alpha = set_alpha
+	visible_mask.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
 	if(!directional)
@@ -404,6 +404,7 @@
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= cone
 	cone.alpha = min(120, (abs(new_power) * 60) + 15)
+	cone.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += cone
 
