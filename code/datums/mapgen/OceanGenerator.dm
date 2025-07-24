@@ -48,6 +48,7 @@
 		/mob/living/basic/mining/lobstrosity = 100,
 		/mob/living/basic/mining/hivelord = 60,
 		/mob/living/basic/mining/basilisk = 80,
+		/mob/living/basic/mining/ice_whelp/sea = 65,
 		/mob/living/basic/lightgeist = 10,
 		/mob/living/basic/mining/faithless_mining = 15,
 
@@ -64,6 +65,7 @@
 		/mob/living/basic/mining/lobstrosity = 35,
 		/mob/living/basic/mining/hivelord = 20,
 		/mob/living/basic/mining/basilisk = 30,
+		/mob/living/basic/mining/ice_whelp/sea = 25,
 		/mob/living/basic/lightgeist = 5,
 		/mob/living/basic/turtle = 1,
 		/mob/living/basic/frog = 1,

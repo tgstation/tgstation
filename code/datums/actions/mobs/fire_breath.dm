@@ -75,6 +75,9 @@
 	if(fire_temperature <= TCMB)
 		barbecued.apply_status_effect(/datum/status_effect/ice_block_talisman, 2 SECONDS)
 		to_chat(barbecued, span_userdanger("You're frozen solid by [source]'s icy breath!"))
+	if(fire_temperature == 10)
+		barbecued.electrocute_act(30, "electric breath", flags = SHOCK_TESLA|SHOCK_NOGLOVES|SHOCK_NOSTUN)
+		to_chat(barbecued, span_userdanger("You're shocked by [source]'s electric breath!"))
 	else
 		to_chat(barbecued, span_userdanger("You are burned by [source]'s fire breath!"))
 	barbecued.adjustFireLoss(fire_damage)

@@ -80,3 +80,15 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/fire
 	name = "Eruption"
 	fire_temperature = /datum/action/cooldown/mob_cooldown/fire_breath::fire_temperature
+
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/electric
+	name = "Electric Breath"
+	desc = "Fire a line of electricity towards the enemy!"
+	button_icon = 'icons/effects/magic.dmi'
+	button_icon_state = "fireball"
+	fire_temperature = 10
+	fire_sound = 'sound/effects/magic/lightningbolt.ogg'
+
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/electric
+	fire_temperature = 10
+	fire_sound = 'sound/effects/magic/lightningbolt.ogg'

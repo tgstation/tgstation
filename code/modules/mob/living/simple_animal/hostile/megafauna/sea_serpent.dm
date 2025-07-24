@@ -35,24 +35,28 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/effects/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	var/datum/action/cooldown/spell/pointed/lightning_strike/serpent/lightning_strike
 	var/datum/action/cooldown/mob_cooldown/thunderstorm/thunderstorm
 	var/datum/action/cooldown/mob_cooldown/dash/dash
+	var/datum/action/cooldown/mob_cooldown/fire_breath/ice/electric/serpent/breath = BB_WHELP_STRAIGHTLINE_FIRE
+	var/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/electric/serpent/eruption = BB_WHELP_WIDESPREAD_FIRE
 
 /mob/living/simple_animal/hostile/megafauna/serpent/Initialize(mapload)
 	. = ..()
-	lightning_strike = new(src)
 	thunderstorm = new(src)
 	dash = new(src)
-	lightning_strike.Grant(src)
+	breath = new(src)
+	eruption = new(src)
 	thunderstorm.Grant(src)
 	dash.Grant(src)
+	breath.Grant(src)
+	eruption.Grant(src)
 	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT)
 	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/serpent/Destroy()
-	lightning_strike = null
 	thunderstorm = null
+	breath = null
+	eruption = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/serpent/OpenFire()
@@ -63,8 +67,12 @@
 		dash.Trigger(target = target)
 		return
 
-	if(prob(50))
-		lightning_strike.cast(target = target)
+	if(prob(30))
+		breath.Trigger(target = target)
+		return
+
+	if(prob(18))
+		eruption.Trigger(target = target)
 		return
 
 	if(prob(18))
@@ -75,9 +83,6 @@
 	if(severity <= EXPLODE_LIGHT)
 		return FALSE
 	return ..()
-
-/datum/action/cooldown/spell/pointed/lightning_strike/serpent
-	cooldown_time = 1 SECONDS
 
 /datum/action/cooldown/mob_cooldown/thunderstorm
 	name = "Thunderstorm"
@@ -99,5 +104,16 @@
 	target.visible_message(span_boldwarning("The sky lights up with a storm!"))
 	var/turf/targetturf = get_turf(target)
 	for(var/turf/turf as anything in RANGE_TURFS(9,targetturf))
-		if(prob(11))
+		if(prob(12))
 			new /obj/effect/temp_visual/lightning_strike(turf)
+
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/electric/serpent
+	cooldown_time = 6 SECONDS
+	click_to_activate = FALSE
+	fire_range = 10
+	forecast_delay = 0
+	fire_delay = 1.5 DECISECONDS
+
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/electric/serpent
+	forecast_delay = 0
+	fire_delay = 1.8 DECISECONDS
