@@ -485,7 +485,7 @@
 	if(blood_type.reagent_type != chem.type)
 		return
 
-	var/blood_stream_volume = min(round(reac_volume, CHEMICAL_VOLUME_ROUNDING), BLOOD_VOLUME_NORMAL - blood_volume)
+	var/blood_stream_volume = min(round(reac_volume, CHEMICAL_VOLUME_ROUNDING), BLOOD_VOLUME_MAXIMUM - blood_volume)
 	if(blood_stream_volume > 0) //remove reagents from mob that has now entered the bloodstream
 		reagents.remove_reagent(chem.type, blood_stream_volume)
 		blood_volume += blood_stream_volume
