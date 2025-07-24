@@ -282,12 +282,8 @@ const UserItem = (props: UserData) => {
   const { banned_users } = data;
   return (
     <Stack align="center" className="__UserItem">
-      <Stack.Item className="__Name">
-        <Box>{name}</Box>
-      </Stack.Item>
-      <Stack.Item className="__Assignment">
-        <Box>{assignment}</Box>
-      </Stack.Item>
+      <Stack.Item className="__Name">{name}</Stack.Item>
+      <Stack.Item className="__Assignment">{assignment}</Stack.Item>
       {!id_read_failure && !silicon_override && (
         <Stack.Item>
           <Button
@@ -326,17 +322,7 @@ const LogEntry = (props: Log) => {
   } = props;
   return (
     <Collapsible
-      title={
-        <>
-          {action.toUpperCase()} {formatAmount(action, amount)} {noun}
-          {', '}
-          {'['}
-          {user_data.name}
-          {' | '}
-          {user_data.assignment.toUpperCase()}
-          {']'}
-        </>
-      }
+      title={`${action.toUpperCase()} ${formatAmount(action, amount)} ${noun}, [${user_data.name} | ${user_data.assignment.toUpperCase()}]`}
     >
       <Section className="__LogEntry">
         <LabeledList>
