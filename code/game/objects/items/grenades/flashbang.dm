@@ -8,15 +8,26 @@
 	//how many tiles away the mob will be affected by the flashbang.
 	var/flashbang_range = 7
 	//How many tiles away the mob will be hit with the most severe effects of the flashbang?
-	var/sweetspot_range = 3
+	var/sweetspot_range = 1
+	//The devision for the sweetspot culations. if set to 1, the sweetspot is ostensibly the flashbang range.
+	var/sweetspot_divider = 3
 	//The light emitted by this flashbang to indicate the sweetspot.
 	var/flashbang_light = LIGHT_COLOR_INTENSE_RED
 
+/obj/item/grenade/flashbang/Initialize(mapload)
+	. = ..()
+	calculate_sweetspot()
+
 /obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)
 	flashbang_range = modify_fantasy_variable("flashbang_range", flashbang_range, quality)
+	calculate_sweetspot()
 
 /obj/item/grenade/flashbang/remove_grenade_fantasy_bonuses(quality)
 	flashbang_range = reset_fantasy_variable("flashbang_range", flashbang_range)
+	calculate_sweetspot()
+
+/obj/item/grenade/flashbang/proc/calculate_sweetspot()
+	sweetspot_range = clamp(round(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
 
 /obj/item/grenade/flashbang/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	. = ..()
