@@ -266,10 +266,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
 "qy" = (
-/obj/item/clothing/suit/hooded/explorer/syndicate{
-	pixel_x = 8;
-	pixel_y = -2
-	},
 /obj/item/clothing/mask/gas/syndicate,
 /obj/structure/rack,
 /obj/machinery/light/warm/directional/north,
@@ -408,7 +404,7 @@
 /obj/structure/rack,
 /obj/item/storage/backpack/satchel,
 /obj/item/clothing/mask/gas/syndicate,
-/obj/item/clothing/suit/hooded/explorer/syndicate{
+/obj/item/clothing/suit/hooded/explorer/diving{
 	pixel_x = 8;
 	pixel_y = -2
 	},

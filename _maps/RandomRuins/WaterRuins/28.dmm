@@ -14,7 +14,7 @@
 /obj/effect/spawner/random/medical/medkit_rare,
 /obj/structure/table/bronze,
 /obj/item/stack/sheet/bronze/thirty,
-/turf/open/floor/bronze/flat,
+/turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface/outdoors)
 "X" = (
 /obj/structure/girder/bronze,

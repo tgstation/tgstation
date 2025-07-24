@@ -182,7 +182,7 @@
 "aP" = (
 /obj/effect/turf_decal/sand/volcanic,
 /obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/plating,
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
 "aQ" = (
 /obj/structure/cable,
@@ -1013,6 +1013,9 @@
 /obj/machinery/drone_dispenser,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
+"ft" = (
+/turf/open/floor/plating/rainworld,
+/area/rainworld/surface/outdoors)
 "fw" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -1351,7 +1354,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/sand/volcanic,
-/turf/open/floor/plating,
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
 "ha" = (
 /obj/effect/turf_decal/siding/thinplating/end{
@@ -3646,7 +3649,7 @@
 "us" = (
 /obj/effect/turf_decal/sand/volcanic,
 /obj/machinery/light/small/broken/directional/south,
-/turf/open/floor/plating,
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
 "ut" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -3689,7 +3692,7 @@
 /obj/structure/table/survival_pod,
 /obj/effect/turf_decal/sand/volcanic,
 /obj/item/paper/crumpled/bloody,
-/turf/open/floor/plating,
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
 "uF" = (
 /obj/structure/cable,
@@ -4167,7 +4170,12 @@
 "xf" = (
 /obj/effect/turf_decal/sand/volcanic,
 /obj/effect/gibspawner/human,
-/turf/open/floor/plating,
+/turf/open/floor/plating/rainworld,
+/area/rainworld/surface/outdoors)
+"xg" = (
+/obj/machinery/door/airlock/survival_pod/glass,
+/obj/effect/turf_decal/sand/volcanic,
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
 "xl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
@@ -7175,7 +7183,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Nd" = (
 /obj/effect/turf_decal/sand/volcanic,
-/turf/open/floor/plating,
+/turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
 "Ne" = (
 /obj/structure/table/reinforced,
@@ -11065,7 +11073,7 @@ OR
 OR
 OR
 OR
-ja
+ft
 OR
 OR
 OR
@@ -11167,7 +11175,7 @@ OR
 OR
 OR
 OR
-ja
+ft
 OR
 OR
 OR
@@ -11680,7 +11688,7 @@ OR
 QN
 iz
 zr
-ja
+ft
 bD
 OR
 OR
@@ -12040,7 +12048,7 @@ OR
 OR
 OR
 OR
-ja
+ft
 QN
 ZF
 QN
@@ -12142,7 +12150,7 @@ OR
 OR
 OR
 OR
-ja
+ft
 WR
 TB
 of
@@ -12244,7 +12252,7 @@ OR
 OR
 OR
 OR
-ja
+ft
 QN
 QN
 QN
@@ -12449,7 +12457,7 @@ OR
 OR
 OR
 OR
-ja
+ft
 bD
 QN
 Dj
@@ -16174,7 +16182,7 @@ OR
 OR
 OR
 Nd
-iO
+xg
 Nd
 oj
 OR
@@ -16478,7 +16486,7 @@ OR
 OR
 oj
 oj
-iO
+xg
 oj
 oj
 iO
@@ -16881,7 +16889,7 @@ OR
 OR
 OR
 oj
-iO
+xg
 oj
 oj
 oj
@@ -16986,7 +16994,7 @@ oj
 Nd
 aP
 Nd
-iO
+xg
 Nd
 OR
 OR
@@ -17665,7 +17673,7 @@ OR
 OR
 OR
 bD
-ja
+ft
 bD
 OR
 OR

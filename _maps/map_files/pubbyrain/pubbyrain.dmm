@@ -4279,7 +4279,9 @@
 	name = "Port Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
+/turf/open/floor/iron/solarpanel/airless{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/rainworld/surface/outdoors)
 "aqd" = (
 /obj/machinery/power/solar{
@@ -4287,7 +4289,9 @@
 	name = "Starboard Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
+/turf/open/floor/iron/solarpanel/airless{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/rainworld/surface/outdoors)
 "aqe" = (
 /obj/item/target/alien,
@@ -6997,15 +7001,14 @@
 "azG" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
+/turf/open/floor/iron/solarpanel/airless{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/rainworld/surface/outdoors)
 "azJ" = (
 /obj/structure/lattice/catwalk,
 /obj/item/stack/cable_coil,
 /turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
-"azK" = (
-/turf/open/genturf/blue,
 /area/rainworld/surface/outdoors)
 "azN" = (
 /obj/effect/turf_decal/box/white{
@@ -89333,14 +89336,14 @@ aMo
 aby
 aMo
 aMo
-azK
-azK
-azK
-azK
-azK
-azK
-azK
-azK
+vek
+vek
+vek
+vek
+vek
+vek
+vek
+vek
 aMo
 aMo
 aMo
@@ -89590,14 +89593,14 @@ tgH
 aby
 aMo
 aMo
-azK
-azK
-azK
-azK
-azK
-azK
-azK
-azK
+vek
+vek
+vek
+vek
+vek
+vek
+vek
+vek
 aMo
 aMo
 aMo
@@ -89847,14 +89850,14 @@ aMo
 aby
 aMo
 aMo
-azK
-azK
-azK
-azK
-azK
-azK
-azK
-azK
+vek
+vek
+vek
+vek
+vek
+vek
+vek
+vek
 aMo
 aMo
 cBU

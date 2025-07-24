@@ -84,9 +84,8 @@
 /area/template_noop)
 "aT" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/eva,
 /obj/item/tank/internals/emergency_oxygen/double,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/suit/hooded/explorer/diving,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aV" = (
