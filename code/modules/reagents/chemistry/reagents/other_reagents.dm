@@ -2558,6 +2558,20 @@
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/glitter/green
+	name = "Green Glitter"
+	description = "green sparkles that get everywhere"
+	color = "#1EFF00" //A toxic green color
+	glitter_type = /obj/effect/decal/cleanable/glitter/green
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/glitter/gray
+	name = "Gray Glitter"
+	description = "gray sparkles that get everywhere"
+	color = "#A1A1A1" //A dark gray color
+	glitter_type = /obj/effect/decal/cleanable/glitter/gray
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/glitter/confetti
 	name = "Confetti"
 	description = "Tiny plastic flakes that are impossible to sweep up."

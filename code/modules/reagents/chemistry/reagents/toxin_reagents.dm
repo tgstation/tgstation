@@ -1480,3 +1480,17 @@
 	description = "A poison produced by the rare and elusive gatfruit plant."
 	liver_damage_multiplier = 0
 	toxpwr = 1
+
+/datum/reagent/toxin/babyboom_toxin
+	name = "Baby-boom toxin"
+	color = COLOR_YELLOW
+	toxpwr = 2
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	description = "Toxic chemical, what deal victims a toxin and burn damage. Makes victims smaller, just like dwarfs"
+	liver_damage_multiplier = 0.5
+	metabolized_traits = list(TRAIT_DWARF)
+
+/datum/reagent/toxin/babyboom_toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.adjustFireLoss(((current_cycle-1)/4) * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
+		return UPDATE_MOB_HEALTH

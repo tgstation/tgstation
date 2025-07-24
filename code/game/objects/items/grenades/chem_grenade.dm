@@ -619,6 +619,16 @@
 	desc = "For that somnolent glittery look."
 	glitter_type = /datum/reagent/glitter/white
 
+/obj/item/grenade/chem_grenade/glitter/green
+	name = "green glitter bomb"
+	desc = "For that toxic glittery look."
+	glitter_type = /datum/reagent/glitter/green
+
+/obj/item/grenade/chem_grenade/glitter/gray
+	name = "gray glitter bomb"
+	desc = "For that foggy glittery look."
+	glitter_type = /datum/reagent/glitter/gray
+
 /obj/item/grenade/chem_grenade/clf3
 	name = "clf3 grenade"
 	desc = "BURN!-brand foaming clf3. In a special applicator for rapid purging of wide areas."

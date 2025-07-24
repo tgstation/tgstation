@@ -335,3 +335,11 @@
 		if("Moonlabor Malt's")
 			icon_state = "moonlabor"
 			desc = "Mars' underdog rice beer brand. Popular amongst the Yakuza, for reasons unknown."
+
+/obj/item/reagent_containers/cup/soda_cans/liquid_plasma
+	name = "liquid plasma"
+	desc = "Drink for plasmamales and plasmafemales. Has a warning: contains plasma and sugar, sugar is harmful to health when consumed in large quantities. DO NOT HEAT UP."
+	icon_state = "liquid_plasma"
+	list_reagents = list(/datum/reagent/toxin/plasma = 20, /datum/reagent/consumable/sugar = 10)
+	drink_type = SUGAR
+

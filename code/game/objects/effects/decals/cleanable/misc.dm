@@ -311,6 +311,14 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	name = "blue glitter"
 	icon_state = "freon"
 
+/obj/effect/decal/cleanable/glitter/green
+	name = "green glitter"
+	icon_state = "tritium"
+
+/obj/effect/decal/cleanable/glitter/gray
+	name = "gray glitter"
+	icon_state = "water_vapor"
+
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
