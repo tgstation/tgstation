@@ -18,9 +18,7 @@
 	default_price = round(initial(default_price) * inflation_value)
 	extra_price = round(initial(extra_price) * inflation_value)
 
-	for(var/datum/data/vending_product/record in recordlist)
-		recordlist -= record
-		qdel(record)
+	QDEL_LIST(recordlist)
 
 	var/list/product_to_category = list()
 	for (var/list/category as anything in categories)
