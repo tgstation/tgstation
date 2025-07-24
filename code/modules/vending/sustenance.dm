@@ -44,8 +44,15 @@
 	if(isliving(user))
 		var/mob/living/living_user = user
 		if(!(machine_stat & NOPOWER) && !istype(living_user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner))
-			speak("No valid prisoner account found. Vending is not permitted.")
-			return
+			if(!is_operational)
+				to_chat(user, span_warning("Machine does not respond to your ID swipe"))
+				return
+			if(!istype(living_user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner) && !req_access)
+				speak("No valid prisoner account found. Vending is not permitted.")
+				return
+			if(!allowed(user))
+				speak("No valid permissions. Vending is not permitted.")
+				return
 	return ..()
 
 /obj/machinery/vending/sustenance/labor_camp/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
