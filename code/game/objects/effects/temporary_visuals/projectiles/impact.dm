@@ -42,6 +42,21 @@
 	icon_state = "impact_greyscale"
 	color = COLOR_BLUSH_PINK
 
+/obj/effect/projectile/impact/laser/emitter/magnetic
+	name = "magnetogenerative impact"
+	icon_state = "impact_greyscale"
+	color = COLOR_SILVER
+
+/obj/effect/projectile/impact/laser/emitter/quake
+	name = "seismodisintegrating impact"
+	icon_state = "impact_greyscale"
+	color = COLOR_BROWNER_BROWN
+
+/obj/effect/projectile/impact/laser/emitter/blast
+	name = "hyperconcussive impact"
+	icon_state = "impact_greyscale"
+	color = COLOR_ORANGE
+
 /obj/effect/projectile/impact/laser/emitter
 	name = "emitter impact"
 	icon_state = "impact_emitter"

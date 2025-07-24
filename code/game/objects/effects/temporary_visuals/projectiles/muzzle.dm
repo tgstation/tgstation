@@ -34,6 +34,21 @@
 	icon_state = "muzzle_greyscale"
 	color = COLOR_BLUSH_PINK
 
+/obj/effect/projectile/muzzle/laser/emitter/magnetic
+	name = "magnetogenerative flash"
+	icon_state = "muzzle_greyscale"
+	color = COLOR_SILVER
+
+/obj/effect/projectile/muzzle/laser/emitter/quake
+	name = "seismodisintegrating flash"
+	icon_state = "muzzle_greyscale"
+	color = COLOR_BROWNER_BROWN
+
+/obj/effect/projectile/muzzle/laser/emitter/blast
+	name = "hyperconcussive flash"
+	icon_state = "muzzle_greyscale"
+	color = COLOR_ORANGE
+
 /obj/effect/projectile/muzzle/laser/emitter
 	name = "emitter flash"
 	icon_state = "muzzle_emitter"

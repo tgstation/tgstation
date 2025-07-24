@@ -642,3 +642,10 @@
 	stored_proj = /obj/projectile/beam/emitter/hitscan/psy
 	consumed_on_removal = FALSE
 	consumable = FALSE
+
+/obj/item/emitter_disk/magnetic
+	name = "Diode Disk: Magnetogenerative"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will attract nearby objects. The disk will be consumed in the process."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/magnetic
+	consumed_on_removal = FALSE
+	consumable = FALSE

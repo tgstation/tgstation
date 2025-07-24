@@ -320,6 +320,23 @@
 	siphoned.mob_mood.adjust_sanity(-25)
 	to_chat(siphoned, span_warning("Suddenly, everything feels just a little bit worse!"))
 
+/obj/projectile/beam/emitter/hitscan/magnetic
+	name = "magnetogenerative beam"
+	light_color = LIGHT_COLOR_BLUEGREEN
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter/magnetic
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/magnetic
+	impact_type = /obj/effect/projectile/impact/laser/emitter/magnetic
+	hitscan_light_color_override = COLOR_SILVER
+	muzzle_flash_color_override = COLOR_SILVER
+	impact_light_color_override = COLOR_SILVER
+	damage = 0
+
+/obj/projectile/beam/emitter/hitscan/magnetic/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/turf/turf_to_magnet = get_turf(target)
+	goonchem_vortex(turf_to_magnet, FALSE, 4)
+
+
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
 	icon_state = "omnilaser"

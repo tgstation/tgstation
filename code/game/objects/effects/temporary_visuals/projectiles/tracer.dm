@@ -75,6 +75,21 @@
 	icon_state = "tracer_greyscale"
 	color = COLOR_BLUSH_PINK
 
+/obj/effect/projectile/tracer/laser/emitter/magnetic
+	name = "magnetogenerative emitter beam"
+	icon_state = "tracer_greyscale"
+	color = COLOR_SILVER
+
+/obj/effect/projectile/tracer/laser/emitter/quake
+	name = "seismodisintegrating emitter beam"
+	icon_state = "tracer_greyscale"
+	color = COLOR_BROWNER_BROWN
+
+/obj/effect/projectile/tracer/laser/emitter/blast
+	name = "hyperconcussive emitter beam"
+	icon_state = "tracer_greyscale"
+	color = COLOR_ORANGE
+
 /obj/effect/projectile/tracer/sniper
 	icon_state = "sniper"
 
