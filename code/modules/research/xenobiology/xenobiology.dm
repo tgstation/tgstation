@@ -42,7 +42,7 @@
 
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()
-	create_reagents(100, INJECTABLE | DRAWABLE)
+	create_reagents(100, INJECTABLE | DRAWABLE | SEALED_CONTAINER)
 
 /**
 * Effect when activated by a Luminescent.
@@ -606,8 +606,8 @@
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.dna.features["mcolor"] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
-			user.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
+			user.dna.features[FEATURE_MUTANT_COLOR] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
+			user.dna.update_uf_block(/datum/dna_block/feature/mutant_color)
 			user.updateappearance(mutcolor_update=1)
 			species.update_glow(user)
 			to_chat(user, span_notice("You feel different..."))

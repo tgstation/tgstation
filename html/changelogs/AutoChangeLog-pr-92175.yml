@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed hiveheads spawning bees on tiles when you're riding disposals"
+  - code_imp: "Cleaned up and updated hivehead code"

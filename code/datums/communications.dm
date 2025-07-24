@@ -118,7 +118,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			SSstation.announcer.get_rand_report_sound(),
 			color_override = "green",
 		)
-	else
+	else if(CONFIG_GET(flag/roundstart_blue_alert))
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
 			SSsecurity_level.set_level(SEC_LEVEL_BLUE, announce = FALSE)
 		priority_announce(
@@ -128,6 +128,13 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			ANNOUNCER_INTERCEPT,
 			color_override = SSsecurity_level.current_security_level.announcement_color,
 		)
+	else
+		priority_announce(
+			"A summary of the station's situation has been copied and printed to all communications consoles.",
+			"Security Report",
+			SSstation.announcer.get_rand_report_sound(),
+		)
+
 #endif
 
 	return .

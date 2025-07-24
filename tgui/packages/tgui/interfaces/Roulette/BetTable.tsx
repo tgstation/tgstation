@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Button, NumberInput, Stack, Table } from 'tgui-core/components';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { getNumberColor } from './helpers';
@@ -56,7 +56,7 @@ export function RouletteBetTable(props) {
             'Roulette',
             'Roulette__lowertable--cell',
             'Roulette__lowertable--spinresult',
-            'Roulette__lowertable--spinresult-' + getNumberColor(LastSpin),
+            `Roulette__lowertable--spinresult-${getNumberColor(LastSpin)}`,
           ])}
         >
           {LastSpin}
@@ -152,7 +152,7 @@ export function RouletteBetTable(props) {
           <Box inline bold mr={1}>
             House Balance:
           </Box>
-          <Box inline>{HouseBalance ? HouseBalance + ' cr' : 'None'}</Box>
+          <Box inline>{HouseBalance ? `${HouseBalance} cr` : 'None'}</Box>
         </Table.Cell>
         <Table.Cell className="Roulette__lowertable--cell">
           <Button

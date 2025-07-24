@@ -377,7 +377,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictconstruction)
 "SK" = (
-/obj/item/airlock_painter/decal/tile,
+/obj/item/airlock_painter/decal,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/derelictconstruction)
 "SX" = (

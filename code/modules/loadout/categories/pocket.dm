@@ -273,6 +273,14 @@
 	name = "Holodisk"
 	item_path = /obj/item/disk/holodisk
 
+/datum/loadout_item/pocket_items/mug_nt
+	name = "Nanotrasen Mug"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/nanotrasen
+
+/datum/loadout_item/pocket_items/britcup
+	name = "British Flag Cup"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/britcup
+
 // The wallet loadout item is special, and puts the player's ID and other small items into it on initialize (fancy!)
 /datum/loadout_item/pocket_items/wallet
 	name = "Wallet"
@@ -321,3 +329,26 @@
 		if(thing.w_class > wallet.atom_storage.max_specific_storage)
 			continue
 		wallet.atom_storage.attempt_insert(thing, override = TRUE, force = STORAGE_FULLY_LOCKED, messages = FALSE)
+
+
+/datum/loadout_item/pocket_items/borg_me_dogtag
+	item_path = /obj/item/clothing/accessory/dogtag/borg_ready
+
+/datum/loadout_item/pocket_items/borg_me_dogtag/on_equip_item(
+	obj/item/equipped_item,
+	datum/preferences/preference_source,
+	list/preference_list,
+	mob/living/carbon/human/equipper,
+	visuals_only = FALSE,
+)
+	// We're hooking this datum to add an extra bit of flavor to the dogtag - a pregenerated medical record
+	if(!visuals_only && !isdummy(equipper))
+		RegisterSignal(equipper, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED, PROC_REF(apply_after_setup), override = TRUE)
+	return NONE
+
+/datum/loadout_item/pocket_items/borg_me_dogtag/proc/apply_after_setup(mob/living/carbon/human/source, ...)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
+	var/datum/record/crew/record = find_record(source.real_name)
+	record?.medical_notes += new /datum/medical_note("Central Command", "Patient is a registered brain donor for Robotics research.", null)

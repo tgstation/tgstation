@@ -1955,7 +1955,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
 
@@ -2767,6 +2767,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends or null if qdeleted.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(new_friend, COMSIG_LIVING_MADE_NEW_FRIEND, src)
 	if(QDELETED(new_friend))
 		return
 	var/friend_ref = REF(new_friend)
