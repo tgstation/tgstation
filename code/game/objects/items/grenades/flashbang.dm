@@ -27,7 +27,7 @@
 	calculate_sweetspot()
 
 /obj/item/grenade/flashbang/proc/calculate_sweetspot()
-	sweetspot_range = clamp(round(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
+	sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
 
 /obj/item/grenade/flashbang/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	. = ..()
