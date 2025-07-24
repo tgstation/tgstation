@@ -208,17 +208,17 @@
 		// Just allow to salvage the situation
 		. = COMPONENT_ORE_SILO_ALLOW
 		CRASH("Invalid data passed to check_permitted")
-	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["Accesses"], /list)?.Find(ACCESS_QM))
+	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["accesses"], /list)?.Find(ACCESS_QM))
 		return COMPONENT_ORE_SILO_ALLOW
 	if(user_data[ID_READ_FAILURE])
 		physical_receptacle.say("SILO ERR: ID interface failure. Please contact the Head of Personnel.")
 		return COMPONENT_ORE_SILO_DENY
-	if(!user_data["Account ID"] || !isnum(user_data["Account ID"]))
+	if(!user_data["account_id"] || !isnum(user_data["account_id"]))
 		if(prob(5))
 			physical_receptacle.say("SILO ERR: Bank account ID not found. Initiating anti-communist silo-access policy.")
 		physical_receptacle.say("SILO ERR: No account ID found. Please contact Head of Personnel.")
 		return COMPONENT_ORE_SILO_DENY
-	if(banned_users.Find(user_data["Account ID"]))
+	if(banned_users.Find(user_data["account_id"]))
 		physical_receptacle.say("SILO ERR: You are banned from using this ore silo.")
 		return COMPONENT_ORE_SILO_DENY
 	return COMPONENT_ORE_SILO_ALLOW

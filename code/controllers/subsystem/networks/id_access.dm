@@ -550,6 +550,7 @@ SUBSYSTEM_DEF(id_access)
 		.["account_holder"] = ID_READ_FAILURE
 		.["account_assignment"] = ID_READ_FAILURE
 		.["accesses"] = ID_READ_FAILURE
+		.[ID_READ_FAILURE] = ID_READ_FAILURE
 		return .
 	var/mob/living/target = astype(target_of_record, /mob/living)
 	if(target)
