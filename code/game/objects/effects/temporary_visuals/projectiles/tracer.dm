@@ -58,6 +58,23 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 
+/obj/effect/projectile/tracer/laser/emitter/bluelens
+	name = "electrodisruptive emitter beam"
+	icon_state = "u_laser"
+
+/obj/effect/projectile/tracer/laser/emitter/redlens
+	name = "hyperenergetic emitter beam"
+	icon_state = "beam_heavy"
+
+/obj/effect/projectile/tracer/laser/emitter/bioregen
+	name = "bioregenerative emitter beam"
+	icon_state = "solar"
+
+/obj/effect/projectile/tracer/laser/emitter/psy
+	name = "psychosiphoning emitter beam"
+	icon_state = "emitter"
+	color = COLOR_BLUSH_PINK
+
 /obj/effect/projectile/tracer/sniper
 	icon_state = "sniper"
 

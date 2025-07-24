@@ -24,7 +24,6 @@
 	if(projectile.armor_flag != BULLET || kiss_power)
 		if(kiss_power)
 			psy_coeff = 1
-		external_power_immediate += projectile.damage * bullet_energy + kiss_power
 		log_activation(who = projectile.firer, how = projectile.fired_from)
 	else
 		external_damage_immediate += projectile.damage * bullet_energy * 0.1
@@ -34,6 +33,13 @@
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	if(projectile?.integrity_heal)
+		damage = max(0, damage - projectile.integrity_heal)
+	if(projectile?.energy_reduction)
+		internal_energy = max(0, internal_energy - projectile.energy_reduction)
+	if(projectile?.psi_change)
+		psy_coeff = clamp(psy_coeff + projectile.psi_change, 0, 1)
+		external_power_immediate += projectile.damage * bullet_energy + kiss_power
 
 	qdel(projectile)
 	return COMPONENT_BULLET_BLOCKED

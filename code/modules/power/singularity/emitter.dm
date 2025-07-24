@@ -57,6 +57,8 @@
 	var/charge = 0
 	///stores the direction and orientation of the last projectile
 	var/last_projectile_params
+	//the disk in the gun
+	var/obj/item/emitter_disk/diskie
 
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
@@ -311,6 +313,8 @@
 /obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/item)
 	if(panel_open && gun)
 		return remove_gun(user)
+	if(panel_open && diskie)
+		return remove_disk(user)
 	default_deconstruction_crowbar(item)
 	return TRUE
 
@@ -343,8 +347,28 @@
 		wires.interact(user)
 		return
 	if(panel_open && !gun && istype(item,/obj/item/gun/energy))
+		if(diskie)
+			to_chat(user, span_warning("Remove the Diode Disk before inserting a gun."))
+			return
 		if(integrate(item,user))
 			return
+	if(panel_open && !gun && istype(item,/obj/item/emitter_disk))
+		var/obj/item/emitter_disk/config_disk = item
+		if(!user.transferItemToLoc(config_disk, src))
+			balloon_alert(user, "stuck in hand!")
+			return
+		if(diskie)
+			user.put_in_hands(diskie)
+			balloon_alert(user, "disks swapped!")
+		else
+			balloon_alert(user, "disk inserted!")
+		diskie = config_disk
+		projectile_type = diskie.stored_proj
+		projectile_sound = diskie.stored_sound
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+		to_chat(user, span_notice("You update the [src]'s diode configuration with the [config_disk]."))
+		if(diskie.consumable)
+			qdel(diskie)
 	return ..()
 
 
@@ -370,6 +394,19 @@
 	gun_properties = list()
 	set_projectile()
 	return TRUE
+
+/obj/machinery/power/emitter/proc/remove_disk(mob/user)
+	if(!diskie)
+		return
+	if(diskie.consumed_on_removal)
+		qdel(diskie)
+	else
+		user.put_in_hands(diskie)
+	diskie = null
+	playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+	set_projectile()
+	return TRUE
+
 
 /obj/machinery/power/emitter/proc/set_projectile()
 	if(LAZYLEN(gun_properties))
@@ -567,3 +604,41 @@
 	req_access = list("science")
 	welded = TRUE
 	use_power = NO_POWER_USE
+
+/obj/item/emitter_disk
+	name = "Diode Disk: Debugger"
+	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin to fix something broken, report this on github."
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon_state = "datadisk6"
+	var/stored_proj = /obj/projectile/beam/emitter/hitscan
+	var/stored_sound = 'sound/items/weapons/emitter.ogg'
+	var/consumed_on_removal = TRUE
+	var/consumable = TRUE
+
+/obj/item/emitter_disk/stamina
+	name = "Diode Disk: Electrodisruptive"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will increase the integrity of Supermatter crystals and exhaust living creatures. The disk will be consumed in the process."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/bluelens
+	consumed_on_removal = FALSE
+	consumable = FALSE
+
+/obj/item/emitter_disk/healing
+	name = "Diode Disk: Bioregenerative"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will heal the physical damages of living creatures. The disk will be consumed in the process."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/bioregen
+	consumed_on_removal = FALSE
+	consumable = FALSE
+
+/obj/item/emitter_disk/incendiary
+	name = "Diode Disk: Conflagratory"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will set living creatures ablaze. The disk will be consumed in the process."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/incend
+	consumed_on_removal = FALSE
+	consumable = FALSE
+
+/obj/item/emitter_disk/sanity
+	name = "Diode Disk: Psychosiphoning"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will depress living creatures and calm supermatter crystals. The disk will be consumed in the process."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/psy
+	consumed_on_removal = FALSE
+	consumable = FALSE

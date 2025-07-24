@@ -272,7 +272,12 @@
 	var/accurate_range = 100
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
-
+	// Subtract this from SM damage on hit for lasers
+	var/integrity_heal
+	// Subtract this from SM energy on hit for lasers
+	var/energy_reduction
+	// Add this to SM psi coefficient on hit for lasers
+	var/psi_change
 /obj/projectile/Initialize(mapload)
 	. = ..()
 	maximum_range = range
