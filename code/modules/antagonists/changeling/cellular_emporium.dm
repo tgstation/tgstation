@@ -40,15 +40,15 @@
 
 			if(dna_cost < 0) // 0 = free, but negatives are invalid
 				continue
-			var/datum/action/changeling/ref_power = new ability_path()
 			var/list/ability_data = list()
-			ability_data["name"] = initial(ref_power.name)
-			ability_data["desc"] = initial(ref_power.desc)
-			ability_data["path"] = ref_power
-			ability_data["helptext"] = initial(ref_power.helptext)
+			ability_data["name"] = initial(ability_path.name)
+			ability_data["desc"] = initial(ability_path.desc)
+			ability_data["path"] = ability_path
+			ability_data["helptext"] = initial(ability_path.helptext)
 			ability_data["genetic_point_required"] = dna_cost
-			ability_data["absorbs_required"] = initial(ref_power.req_absorbs) // compares against changeling true_absorbs
-			ability_data["dna_required"] = initial(ref_power.req_dna) // compares against changeling absorbed_count
+			ability_data["absorbs_required"] = initial(ability_path.req_absorbs) // compares against changeling true_absorbs
+			ability_data["dna_required"] = initial(ability_path.req_dna) // compares against changeling absorbed_count
+			var/datum/action/changeling/ref_power = new ability_path() // this way so it doesnt mess with the other var access
 			ability_data["prerequisite_abilities"] = ref_power.prereq_ability // compares against owned_abilities
 
 			abilities += list(ability_data)

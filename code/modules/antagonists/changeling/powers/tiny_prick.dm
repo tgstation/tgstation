@@ -322,8 +322,8 @@
 	var/datum/dna/our_dna = changeling.dna
 	var/datum/dna/their_dna = victim.dna
 
-	victim.updateappearance(mutcolor_update = TRUE ,target_dna = our_dna)
-	changeling.updateappearance(mutcolor_update = TRUE ,target_dna = their_dna)
+	victim.updateappearance(mutcolor_update = TRUE ,passed_dna = our_dna)
+	changeling.updateappearance(mutcolor_update = TRUE ,passed_dna = their_dna)
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
