@@ -39,6 +39,7 @@
 
 /obj/effect/projectile/impact/laser/emitter/psy
 	name = "psychosiphoning impact"
+	icon_state = "impact_greyscale"
 	color = COLOR_BLUSH_PINK
 
 /obj/effect/projectile/impact/laser/emitter

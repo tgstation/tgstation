@@ -31,6 +31,7 @@
 
 /obj/effect/projectile/muzzle/laser/emitter/psy
 	name = "psychosiphoning flash"
+	icon_state = "muzzle_greyscale"
 	color = COLOR_BLUSH_PINK
 
 /obj/effect/projectile/muzzle/laser/emitter

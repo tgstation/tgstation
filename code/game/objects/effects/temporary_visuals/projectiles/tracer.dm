@@ -72,7 +72,7 @@
 
 /obj/effect/projectile/tracer/laser/emitter/psy
 	name = "psychosiphoning emitter beam"
-	icon_state = "emitter"
+	icon_state = "tracer_greyscale"
 	color = COLOR_BLUSH_PINK
 
 /obj/effect/projectile/tracer/sniper
