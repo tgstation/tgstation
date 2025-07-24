@@ -23,7 +23,7 @@
 	if(!.)
 		return
 
-	set_light(swwetspot_range, sweetspot_range, flashbang_light)
+	set_light(sweetspot_range, sweetspot_range, flashbang_light)
 
 /obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
 	. = ..()
