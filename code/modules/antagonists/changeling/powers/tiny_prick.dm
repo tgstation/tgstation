@@ -331,6 +331,7 @@
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, blade), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_our_dna), changeling), 30 SECONDS)
 	return TRUE
 
 /datum/action/changeling/sting/fake_changeling/proc/remove_effect(mob/living/carbon/human/target, obj/item/melee/arm_blade/false/blade)
@@ -341,6 +342,9 @@
 	qdel(blade)
 	target.update_held_items()
 	target.updateappearance(mutcolor_update = TRUE)
+
+/datum/action/changeling/sting/fake_changeling/proc/reset_our_dna(mob/living/carbon/human/us)
+	us.updateappearance(mutcolor_update = TRUE)
 
 /datum/action/changeling/sting/false_revival
 	name = "False Revival"
