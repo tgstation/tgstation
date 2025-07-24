@@ -526,7 +526,8 @@
 				to_chat(src, span_warning("Your ears start to ring!"))
 			SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
 		return effect_amount //how soundbanged we are
-
+	else
+		return FALSE
 
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
