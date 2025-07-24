@@ -247,9 +247,10 @@
 /obj/item/clothing/suit/hooded/explorer/diving
 	name = "waterproof explorer suit"
 	desc = "An armoured suit for exploring harsh environments. This one seems better suited for aquatic combat."
-	icon_state = "explorer_syndicate"
-	icon = 'icons/obj/clothing/suits/utility.dmi'
-	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	icon_state = "explorer_diving"
+	worn_icon_state = "explorer_diving"
+	icon = 'icons/obj/clothing/suits/explorer_diving.dmi'
+	worn_icon = 'icons/mob/clothing/suits/explorer_diving.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/explorer/diving
 
 /obj/item/clothing/suit/hooded/explorer/diving/Initialize(mapload)
