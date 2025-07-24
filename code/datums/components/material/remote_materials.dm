@@ -277,9 +277,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1, alist/user_data)
 	// Inserting materials automatically shouldn't be permission-restricted
 	if(!islist(user_data))
-		user_data = alist(
-			"Name" = ID_READ_FAILURE,
-		)
+		user_data = ID_DATA(null)
 	user_data[SILICON_OVERRIDE] = SILICON_OVERRIDE
 	if(!can_use_resource(FALSE, user_data))
 		return MATERIAL_INSERT_ITEM_FAILURE
