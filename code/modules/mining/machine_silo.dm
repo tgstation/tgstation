@@ -357,14 +357,14 @@
 		)
 		return
 
-	var/target_bank_id = target_user_data["Account ID"]
+	var/target_bank_id = target_user_data["account_id"]
 	var/target_is_banned = banned_users.Find(target_bank_id)
 	// Agent card bypasses bans but we want to specially handle them anyway
 	// so a bunch of random account IDs don't fill the list and do something
 	// like ban people who haven't joined the round yet
 	var/haxxor_card_ban_immunity = !isnull(target_user_data[CHAMELEON_OVERRIDE])
 
-	to_chat(user, span_warning("You press the button to [target_is_banned ? "un" : ""]ban [target_user_data["Name"]]'s account..."))
+	to_chat(user, span_warning("You press the button to [target_is_banned ? "un" : ""]ban [target_user_data["name"]]'s account..."))
 	// No feedback if emagged
 	if(emagged)
 		if(!haxxor_card_ban_immunity && isnum(target_bank_id))
@@ -372,8 +372,8 @@
 		return
 
 	var/alist/silo_user_data = ID_DATA(user)
-	var/list/silo_user_accesses = astype(silo_user_data["Accesses"], /list)
-	var/list/target_user_accesses = astype(target_user_data["Accesses"], /list)
+	var/list/silo_user_accesses = astype(silo_user_data["accesses"], /list)
+	var/list/target_user_accesses = astype(target_user_data["accesses"], /list)
 
 
 	// Even though QM bypasses the access check (or rather always pases)
@@ -444,7 +444,7 @@
 			null
 		)
 		return
-	var/list/user_accesses = astype(silo_user_data["Accesses"], /list)
+	var/list/user_accesses = astype(silo_user_data["accesses"], /list)
 	if(!user_accesses?.Find(ACCESS_QM))
 		handle_access_action_feedback(
 			UNRESTRICT_FAILURE_NO_ACCESS,
@@ -495,8 +495,8 @@
 
 /obj/machinery/ore_silo/proc/handle_access_action_feedback(action, alist/silo_user_data, list/target_user_data = null)
 	var/message = announcement_messages[action]
-	message = replacetext(message, "$TARGET_NAME", target_user_data?["Name"])
-	message = replacetext(message, "$SILO_USER_NAME", silo_user_data["Name"])
+	message = replacetext(message, "$TARGET_NAME", target_user_data?["name"])
+	message = replacetext(message, "$SILO_USER_NAME", silo_user_data["name"])
 	say(message)
 	for(var/channel in radio_channels)
 		// Key is the channel name, value is the bitmask of announced actions
@@ -580,7 +580,7 @@
 	)
 	logger.Log(
 		LOG_CATEGORY_SILO,
-		"[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")] | [user_data["Name"]]",
+		"[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")] | [user_data["name"]]",
 		data,
 	)
 
