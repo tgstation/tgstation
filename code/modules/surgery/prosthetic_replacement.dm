@@ -113,6 +113,10 @@
 		return SURGERY_STEP_FAIL
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	if(HAS_TRAIT(target, TRAIT_FRAGILE_NERVES) && target_zone != BODY_ZONE_HEAD)
+		to_chat(user, span_warning("You can't find any functional motor nerves in [target]'s stump that can control a new limb."))
+		return ..()
+
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 		tool.icon_state = initial(tool.icon_state)
 		tool.desc = initial(tool.desc)
