@@ -249,7 +249,7 @@
 			list(
 				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
 				"name" = parent.name,
-				"onHold" = !!holds[remote],
+				"on_hold" = !!holds[remote],
 				"location" = get_area_name(parent, TRUE),
 			)
 		)
@@ -258,9 +258,9 @@
 	for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
 		data["logs"] += list(
 			list(
-				"rawMaterials" = entry.get_raw_materials(""),
-				"machineName" = entry.machine_name,
-				"areaName" = entry.area_name,
+				"raw_materials" = entry.get_raw_materials(""),
+				"machine_name" = entry.machine_name,
+				"area_name" = entry.area_name,
 				"action" = entry.action,
 				"amount" = entry.amount,
 				"time" = entry.timestamp,

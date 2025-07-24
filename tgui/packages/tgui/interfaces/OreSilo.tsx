@@ -25,27 +25,27 @@ import type { Material } from './Fabrication/Types';
 type Machine = {
   name: string;
   icon: string;
-  onHold: boolean;
+  on_hold: boolean;
   location: string;
 };
 
 type UserData = {
-  Name: string;
-  Age: number;
-  Assignment: string;
-  'Account ID': number;
-  'Account Holder': string;
-  'Account Assignment': string;
-  Accesses: string[];
+  name: string;
+  age: number;
+  assignment: string;
+  account_id: number;
+  account_holder: string;
+  account_assignment: string;
+  accesses: string[];
   chamelon_override: string | null;
   silicon_override: string | null;
   id_read_failure: string | null;
 };
 
 type Log = {
-  rawMaterials: string;
-  machineName: string;
-  areaName: string;
+  raw_materials: string;
+  machine_name: string;
+  area_name: string;
   action: string;
   amount: number;
   time: string;
@@ -65,7 +65,7 @@ type Data = {
   logs: Log[];
   // Banned users is a list of bank account datum IDs
   banned_users: number[];
-  ID_required: BooleanLike;
+  id_required: BooleanLike;
 };
 
 export const OreSilo = (props: any) => {
@@ -104,12 +104,12 @@ export const OreSilo = (props: any) => {
                 onRemove={(index) => act('remove', { id: index })}
               />
             ) : null}
-            {currentTab === Tab.Logs ? (
+            {currentTab === Tab.Logs && (
               <>
                 <RestrictButton />
                 <LogsList logs={logs!} />
               </>
-            ) : null}
+            )}
           </Stack.Item>
           <Stack.Item>
             <Section fill>
@@ -173,7 +173,7 @@ const MachineDisplay = (props: MachineProps) => {
     <Box className="FabricatorRecipe">
       <Box
         className={
-          machine.onHold
+          machine.on_hold
             ? classes([
                 'FabricatorRecipe__Title',
                 'FabricatorRecipe__Title--disabled',
@@ -193,7 +193,7 @@ const MachineDisplay = (props: MachineProps) => {
 
       <Tooltip
         content={
-          machine.onHold
+          machine.on_hold
             ? `Resume ${machine.name} usage.`
             : `Put ${machine.name} on hold.`
         }
@@ -207,7 +207,7 @@ const MachineDisplay = (props: MachineProps) => {
             onPause();
           }}
         >
-          <Icon name={machine.onHold ? 'circle-play' : 'circle-pause'} />
+          <Icon name={machine.on_hold ? 'circle-play' : 'circle-pause'} />
         </Box>
       </Tooltip>
       <Tooltip content={`Disconnect ${machine.name}.`}>
@@ -233,16 +233,16 @@ type LogsListProps = {
 
 const RestrictButton = () => {
   const { act, data } = useBackend<Data>();
-  const { ID_required } = data;
+  const { id_required } = data;
   return (
     <Box align="center">
       <Button
         position="relative"
         className="__RestrictButton"
-        color={ID_required ? 'bad' : 'good'}
+        color={id_required ? 'bad' : 'good'}
         onClick={() => act('toggle_restrict')}
       >
-        {ID_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
+        {id_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
       </Button>
     </Box>
   );
@@ -252,7 +252,7 @@ const LogsList = (props: LogsListProps) => {
   const { logs } = props;
 
   return logs.length > 0 ? (
-    <Section fill scrollable pr={1} align="center" height="100%">
+    <Section fill scrollable pr={1} align="center">
       <Divider />
       <VirtualList>
         {logs.map((log, index) => (
@@ -265,113 +265,91 @@ const LogsList = (props: LogsListProps) => {
   );
 };
 
-const EntryTitle = (log: Log) => {
-  const { action, amount, noun, user_data } = log;
-
-  const Verb = (
-    <Box as="span" className="__actionPart">
-      {action}
-    </Box>
-  );
-
-  const formatAmount = (action: string, amount: number) => {
-    const isSheetAction = action === 'EJECT' || action === 'DEPOSIT';
-    const rawAmount = Math.abs(amount);
-    if (!isSheetAction) {
-      return rawAmount;
-    }
-    const proportionalAmount = rawAmount / 100;
-    return ` ${proportionalAmount} `;
-  };
-
-  const Noun = (
-    <Box as="span" className="__nounPart">
-      {noun}
-    </Box>
-  );
-
-  return (
-    <>
-      {
-        <Box as="span" style={{ textTransform: 'uppercase' }}>
-          {Verb}
-        </Box>
-      }{' '}
-      {formatAmount(action, amount)} {Noun}
-      {', '}
-      {'['}
-      {user_data.Name}
-      {' | '}
-      {
-        <Box
-          as="span"
-          style={{
-            textTransform: 'uppercase',
-          }}
-        >
-          {user_data.Assignment}
-        </Box>
-      }
-      {']'}
-    </>
-  );
-};
-
-const UserItem = (user_data: UserData) => {
+const UserItem = (props: UserData) => {
   const {
-    Name,
-    Age,
-    Assignment,
-    'Account ID': accountId,
-    'Account Holder': accountHolder,
-    'Account Assignment': accountAssignment,
-    Accesses,
+    name,
+    age,
+    assignment,
+    account_id,
+    account_holder,
+    account_assignment,
+    accesses,
     chamelon_override,
     silicon_override,
     id_read_failure,
-  } = user_data;
+  } = props;
   const { act, data } = useBackend<Data>();
   const { banned_users } = data;
   return (
     <Stack align="center" className="__UserItem">
-      <Stack.Item>
-        <Box className="__Name">{Name}</Box>
+      <Stack.Item className="__Name">
+        <Box>{name}</Box>
       </Stack.Item>
-      <Stack.Item>
-        <Box className="__Assignment">{Assignment}</Box>
+      <Stack.Item className="__Assignment">
+        <Box>{assignment}</Box>
       </Stack.Item>
-      {!id_read_failure && !silicon_override ? (
+      {!id_read_failure && !silicon_override && (
         <Stack.Item>
           <Button
             className="__AntiRoboticistButton" // we have fun here
-            color={banned_users.includes(accountId) ? 'bad' : 'good'}
-            onClick={() => act('toggle_ban', { user_data: user_data })}
+            color={banned_users.includes(account_id) ? 'bad' : 'good'}
+            onClick={() => act('toggle_ban', { user_data: props })}
           >
-            {banned_users.includes(accountId) ? 'Unban' : 'Ban'} User?
+            {banned_users.includes(account_id) ? 'Unban' : 'Ban'} User?
           </Button>
         </Stack.Item>
-      ) : null}
+      )}
     </Stack>
   );
 };
 
+const formatAmount = (action: string, amount: number) => {
+  const isSheetAction = action === 'EJECT' || action === 'DEPOSIT';
+  const rawAmount = Math.abs(amount);
+  if (!isSheetAction) {
+    return rawAmount;
+  }
+  const proportionalAmount = rawAmount / 100;
+  return ` ${proportionalAmount} `;
+};
+
 const LogEntry = (props: Log) => {
-  const { rawMaterials, machineName, areaName, amount, time, user_data } =
-    props;
+  const {
+    raw_materials,
+    machine_name,
+    area_name,
+    action,
+    amount,
+    time,
+    noun,
+    user_data,
+  } = props;
   return (
-    <Collapsible title={EntryTitle(props)}>
+    <Collapsible
+      title={
+        <>
+          {action.toUpperCase()} {formatAmount(action, amount)} {noun}
+          {', '}
+          {'['}
+          {user_data.name}
+          {' | '}
+          {user_data.assignment.toUpperCase()}
+          {']'}
+        </>
+      }
+    >
       <Section className="__LogEntry">
         <LabeledList>
           <LabeledList.Item label="Time">{time}</LabeledList.Item>
           <LabeledList.Item label="Machine">
-            {capitalize(machineName)}
+            {capitalize(machine_name)}
           </LabeledList.Item>
-          <LabeledList.Item label="Location">{areaName}</LabeledList.Item>
+          <LabeledList.Item label="Location">{area_name}</LabeledList.Item>
           <LabeledList.Item
             label="Materials"
             color={amount > 0 ? 'good' : 'bad'}
           >
-            {rawMaterials}
+            {raw_materials}
           </LabeledList.Item>
           <LabeledList.Item label="User">
             <UserItem {...user_data} />
