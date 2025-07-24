@@ -54,6 +54,8 @@
 			living_mob.Knockdown(max(200/max(1, distance), 60))
 		else
 			living_mob.adjust_dizzy_up_to(max(200/max(1, distance), 5), 20 SECONDS)
+			living_mob.dropItemToGround(living_mob.get_active_held_item())
+			living_mob.dropItemToGround(living_mob.get_inactive_held_item())
 
 //Bang
 	if(!distance || loc == living_mob || loc == living_mob.loc)
@@ -65,6 +67,8 @@
 			living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
 		else
 			living_mob.adjust_staggered_up_to(max(200/max(1, distance), 5), 10 SECONDS)
+			living_mob.dropItemToGround(living_mob.get_active_held_item())
+			living_mob.dropItemToGround(living_mob.get_inactive_held_item())
 			living_mob.soundbang_act(1, 0, rand(0, 2))
 
 /obj/item/grenade/stingbang
