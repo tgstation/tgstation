@@ -73,7 +73,7 @@
 /obj/effect/projectile/tracer/laser/emitter/psy
 	name = "psychosiphoning emitter beam"
 	icon_state = "tracer_greyscale"
-	color = COLOR_BLUSH_PINK
+	color = COLOR_PINK
 
 /obj/effect/projectile/tracer/laser/emitter/magnetic
 	name = "magnetogenerative emitter beam"
