@@ -40,6 +40,10 @@
 	///List of items that have been returned to the vending machine.
 	var/list/returned_products
 
+/datum/data/vending_product/Destroy(force)
+	returned_products = null
+	return ..()
+
 /**
  * # vending machines
  *
