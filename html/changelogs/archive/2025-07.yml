@@ -566,3 +566,22 @@
   SmArtKar:
   - bugfix: Fixes facial hair gradient DNA runtiming and sometimes not adding proper
       gradients
+2025-07-24:
+  Aliceee2ch:
+  - bugfix: Added missing ID machinery on CatwalkStation and WawaStation
+  - bugfix: Fixed wrongly placed decal in TramStation brig
+  - bugfix: Removed acidentally placed slime grinder in nuclear operatives outpost
+  DaxDupont:
+  - spellcheck: The crew is no longer encouranged to assist in repairs.
+  Melbert:
+  - qol: Firelock setups across every map should be more sane now, with better coverage
+      of fire alarms and fewer firelock boxes of doom.
+  SmArtKar:
+  - bugfix: Deleted a misplaced basetype sign on snowcabin
+  Thunder12345:
+  - bugfix: The quartermaster's request console on Catwalk Station will no longer
+      show up as Unknown.
+  - map: The quartermaster's request console on Catwalk Station has been moved from
+      their bedroom to the office.
+  lelandkemble:
+  - bugfix: makes the icebox hermit native to icebox
