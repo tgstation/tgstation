@@ -505,7 +505,7 @@
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
-	if(effect_power <= 0)
+	if(effect_amount <= 0)
 		return FALSE
 
 	if(stun_pwr)
