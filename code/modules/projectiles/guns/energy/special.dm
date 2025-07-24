@@ -184,6 +184,9 @@
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
+/obj/item/gun/energy/plasmacutter/adv/borg
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/borg)
+
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2
 

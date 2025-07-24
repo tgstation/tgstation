@@ -253,11 +253,11 @@
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and shuttle frame rods."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and various rods."
 	icon_state = "borg_stack_apparatus"
 	storable = list(/obj/item/stack/sheet,
 					/obj/item/stack/tile,
-					/obj/item/stack/rods/shuttle)
+					/obj/item/stack/rods)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -285,14 +285,15 @@
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored sheets. ")
 
-///Apparatus allowing Engineer/Sabo borgs to manipulate Machine and Computer circuit boards
-/obj/item/borg/apparatus/circuit
-	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards and power cells."
+///Apparatus allowing Engineer/Sabo borgs to manipulate circuit boards and more
+/obj/item/borg/apparatus/engineering
+	name = "engineering apparatus"
+	desc = "A special apparatus for carrying and manipulating circuit boards, lights and power cells."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
 		/obj/item/electronics,
 		/obj/item/stock_parts/power_store,
+		/obj/item/light
 	)
 
 /obj/item/borg/apparatus/circuit/Initialize(mapload)
@@ -321,7 +322,7 @@
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
+	. += span_notice(" <i>Alt-click</i> will drop the currently stored item. ")
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails

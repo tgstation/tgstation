@@ -109,6 +109,24 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
+	if(istype(tool, /obj/item/storage/part_replacer))
+		var/obj/item/storage/part_replacer/replacer = tool
+		if(!opened)
+			balloon_alert(user, "chassis cover is closed!")
+			return ITEM_INTERACT_BLOCKING
+		if(!istype(model, /obj/item/robot_model/engineering))
+			balloon_alert(user, "wrong cyborg model!")
+			return ITEM_INTERACT_BLOCKING
+		if(locate(/obj/item/borg/upgrade/rped) in src)
+			balloon_alert(user, "already has a RPED!")
+			return ITEM_INTERACT_BLOCKING
+		qdel(tool)
+		var/obj/item/borg/upgrade/smallrped/lilrped = new
+		if(apply_upgrade(lilrped, user))
+			balloon_alert(user, "[replacer] installed")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
 	if(istype(tool, /obj/item/ai_module))
 		if(!opened)
 			balloon_alert(user, "chassis cover is closed!")
