@@ -630,7 +630,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 10
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "do" = (
 /obj/structure/window/reinforced/plasma{
@@ -845,7 +845,7 @@
 	dir = 5
 	},
 /obj/machinery/meter,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "eC" = (
 /obj/machinery/door/firedoor,
@@ -959,7 +959,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "fl" = (
 /obj/structure/sign/warning/radiation,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "fm" = (
 /obj/structure/closet/crate,
@@ -1168,7 +1168,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "go" = (
 /obj/machinery/light/broken/directional/west,
@@ -1233,7 +1233,7 @@
 "gz" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/meter,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "gA" = (
 /obj/machinery/door/firedoor/border_only{
@@ -1435,7 +1435,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "hr" = (
 /obj/structure/cable,
@@ -1576,7 +1576,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ih" = (
 /obj/structure/cable,
@@ -1834,7 +1834,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jB" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jC" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -2728,7 +2728,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "pf" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "pg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
@@ -3081,7 +3081,7 @@
 	dir = 9
 	},
 /obj/machinery/meter,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "qZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3316,7 +3316,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "sh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3541,7 +3541,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 8
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "tK" = (
 /turf/open/floor/carpet/royalblack,
@@ -3597,7 +3597,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 6
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ue" = (
 /obj/structure/chair/comfy/lime,
@@ -4829,7 +4829,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ap" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Aw" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
@@ -4841,7 +4841,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ax" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ay" = (
 /obj/effect/turf_decal/stripes/line{
@@ -5037,7 +5037,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 8
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "BA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -5520,7 +5520,7 @@
 "Eb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/machinery/meter,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ec" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
@@ -5647,7 +5647,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 8
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ER" = (
 /obj/effect/turf_decal/stripes/line{
@@ -6053,7 +6053,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "GY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "GZ" = (
 /obj/effect/turf_decal/tile/purple{
@@ -6351,7 +6351,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ID" = (
 /obj/structure/closet/secure_closet/contraband/armory,
@@ -6401,7 +6401,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "IQ" = (
 /mob/living/basic/mining/faithless_mining,
@@ -6808,7 +6808,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ls" = (
 /obj/item/wallframe/flasher,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Lt" = (
 /obj/effect/turf_decal/stripes/line{
@@ -8206,7 +8206,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Sb" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -9209,7 +9209,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "XG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "XH" = (
 /obj/structure/closet/secure_closet/engineering_personal,
@@ -9273,7 +9273,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "XU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "XX" = (
 /obj/effect/turf_decal/stripes/line{

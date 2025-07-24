@@ -257,6 +257,9 @@
 	AddElement(/datum/element/diving_gear)
 
 /obj/item/clothing/head/hooded/explorer/diving
+	icon = 'icons/obj/clothing/head/ethereal.dmi'
+	icon_state = "eth_rainhood"
+	worn_icon = 'icons/mob/clothing/head/ethereal.dmi'
+	worn_icon_state = "eth_rainhood"
 	name = "waterproof explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
-	icon_state = "explorer_syndicate"
