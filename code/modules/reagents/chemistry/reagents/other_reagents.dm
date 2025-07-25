@@ -2547,8 +2547,8 @@
 /datum/reagent/glitter/on_new(data)
 	. = ..()
 
-	if(data["colors"])
-		color = pick(data["colors"])
+	if(src.data["colors"])
+		color = pick(src.data["colors"])
 	else
 		color = COLOR_WHITE
 
