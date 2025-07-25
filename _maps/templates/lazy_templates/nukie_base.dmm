@@ -3221,10 +3221,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
-"IZ" = (
-/obj/machinery/processor/slime/fullupgrade,
-/turf/closed/indestructible/opsglass,
-/area/centcom/syndicate_mothership/control)
 "Jc" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -7932,7 +7928,7 @@ uT
 VK
 VK
 DZ
-IZ
+VK
 VK
 VK
 VK

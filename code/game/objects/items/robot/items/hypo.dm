@@ -211,12 +211,11 @@
 /obj/item/reagent_containers/borghypo/ui_data(mob/user)
 	var/list/available_reagents = list()
 	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			available_reagents.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+		available_reagents.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme
@@ -443,12 +442,11 @@
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_data(mob/user)
 	var/list/condiments = list()
 	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			condiments.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+		condiments.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme

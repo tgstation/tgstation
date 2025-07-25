@@ -11,14 +11,37 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		log_world("uncaught runtime error: [E]")
 		return ..()
 
-	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
+	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this block OR BEFORE IT
 	if(copytext(E.name, 1, 32) == "Maximum recursion level reached")//32 == length() of that string + 1
-		//log to world while intentionally triggering the byond bug.
+		var/list/proc_path_to_count = list()
+		var/crashed = FALSE
+		try
+			var/callee/stack_entry = caller
+			while(!isnull(stack_entry))
+				proc_path_to_count[stack_entry.proc] += 1
+				stack_entry = stack_entry.caller
+		catch
+			//union job. avoids crashing the stack again
+			//I just do not trust this construct to work reliably
+			crashed = TRUE
+
+		var/list/split = splittext(E.desc, "\n")
+		for (var/i in 1 to split.len)
+			if (split[i] != "" || copytext(split[1], 1, 2) != "  ")
+				split[i] = "  [split[i]]"
+		split += "--Stack Info [crashed ? "(Crashed, may be missing info)" : ""]:"
+		for(var/path in proc_path_to_count)
+			split += "  [path] = [proc_path_to_count[path]]"
+		E.desc = jointext(split, "\n")
+		SEND_TEXT(world.log, "\[[time2text(world.timeofday,"hh:mm:ss")]\] Runtime Error: [E.name]\n[E.desc]")
+		//log to world while intentionally triggering the byond bug. this does not DO anything, it just errors
+		//(seemingly because of the extra proc call to logger inside log_world interestingly enough)
 		log_world("runtime error: [E.name]\n[E.desc]")
 		//if we got to here without silently ending, the byond bug has been fixed.
-		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
+		log_world("The \"bug\" with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
 
+	// Proc calls are allowed past this point
 	else if(copytext(E.name, 1, 18) == "Out of resources!")//18 == length() of that string + 1
 		log_world("BYOND out of memory. Restarting ([E?.file]:[E?.line])")
 		TgsEndProcess()
@@ -154,3 +177,9 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 #endif
 
 #undef ERROR_USEFUL_LEN
+
+/// Exists to trigger infinite recursion runtimes in testing
+/proc/recurse(times)
+	if(times <= 0)
+		return
+	recurse(times - 1)

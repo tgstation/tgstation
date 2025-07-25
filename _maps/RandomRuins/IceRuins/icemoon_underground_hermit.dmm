@@ -25,7 +25,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
 "ha" = (
-/obj/effect/mob_spawn/ghost_role/human/hermit,
+/obj/effect/mob_spawn/ghost_role/human/hermit/icemoon,
 /turf/open/floor/wood,
 /area/ruin/powered/hermit)
 "hN" = (

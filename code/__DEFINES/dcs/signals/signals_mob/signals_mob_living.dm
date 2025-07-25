@@ -145,6 +145,8 @@
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAPPED "living_slapped"
+///from /obj/item/hand_item/attack(): (source=mob/living/attacker, mob/living/attacked)
+#define COMSIG_LIVING_HAND_ITEM_ATTACK "living_hand_item_attack"
 /// from /mob/living/*/UnarmedAttack(), before sending [COMSIG_LIVING_UNARMED_ATTACK]: (mob/living/source, atom/target, proximity, modifiers)
 /// The only reason this exists is so hulk can fire before Fists of the North Star.
 /// Note that this is called before [/mob/living/proc/can_unarmed_attack] is called, so be wary of that.
@@ -334,3 +336,6 @@
 	#define FAIL_PROB_INDEX 1
 	/// Index in modifiers containing the modifer to surgery speed
 	#define SPEED_MOD_INDEX 2
+
+///from mob/living/befriend()
+#define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"

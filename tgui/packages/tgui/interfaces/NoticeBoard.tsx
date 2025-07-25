@@ -14,7 +14,7 @@ export const NoticeBoard = (props) => {
   const { allowed, items = [] } = data;
 
   return (
-    <Window width={425} height={176}>
+    <Window width={425} height={220}>
       <Window.Content backgroundColor="#704D25">
         {!items.length ? (
           <Section>

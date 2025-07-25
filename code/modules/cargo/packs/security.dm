@@ -25,6 +25,14 @@
 	contains = list(/obj/item/clothing/suit/armor/vest = 3)
 	crate_name = "armor crate"
 
+/datum/supply_pack/security/modsuit_plating
+	name = "Security MOD plating"
+	desc = "A single security MOD suit plating"
+	cost = CARGO_CRATE_VALUE
+	access_view = ACCESS_SECURITY
+	contains = list(/obj/item/mod/construction/plating/security)
+	crate_name = "MOD plating crate"
+
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
 	desc = "Three stamina-draining disabler weapons."

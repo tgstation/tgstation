@@ -326,8 +326,6 @@ All ShuttleMove procs go here
 		return
 	if(knockdown > 0)
 		if(buckled)
-			// If we're buckled, no stun but we'll still be floored and frozen
-			Knockdown(knockdown)
 			Immobilize(knockdown * 0.5)
 			return
 		Paralyze(knockdown)
