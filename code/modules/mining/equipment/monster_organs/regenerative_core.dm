@@ -11,6 +11,7 @@
 	actions_types = list(/datum/action/cooldown/monster_core_action/regenerative_core)
 	icon_state = "hivelord_core"
 	icon_state_inert = "hivelord_core_decayed"
+	layer = ABOVE_LYING_MOB_LAYER
 
 /obj/item/organ/monster_core/regenerative_core/preserve(implanted = FALSE)
 	if (implanted)
