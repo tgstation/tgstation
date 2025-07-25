@@ -409,12 +409,12 @@
 /datum/chemical_reaction/babyboomtoxin
 	results = list(/datum/reagent/toxin/babyboom_toxin = 6)
 	required_reagents = list(/datum/reagent/toxin/plasma = 3, /datum/reagent/toxin/mutagen = 2, /datum/reagent/toxin/cyanide = 1)
-	mix_message = span_danger("The mixture turns into a yellow liquid, and starts smells very strongly.")
+	mix_message = span_danger("The mixture turns into a yellow liquid, and starts smells very strongly and disgusting.")
 	is_cold_recipe = FALSE
 	required_temp = 310
 	optimal_temp = 600
-	overheat_temp = 900
-	optimal_ph_min = 0
+	overheat_temp = 666 //soooo spookey!!
+	optimal_ph_min = 1
 	optimal_ph_max = 9
 	determin_ph_range = 3
 	temp_exponent_factor = 1.5
@@ -424,4 +424,4 @@
 	rate_up_lim = 10
 	purity_min = 0.5
 	reaction_flags = REACTION_PH_VOL_CONSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_TOXIN | REACTION_TAG_OTHER

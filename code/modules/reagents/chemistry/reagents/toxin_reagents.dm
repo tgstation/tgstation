@@ -1484,13 +1484,31 @@
 /datum/reagent/toxin/babyboom_toxin
 	name = "Baby-boom toxin"
 	color = COLOR_YELLOW
-	toxpwr = 2
+	toxpwr = 1.25
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	description = "Toxic chemical, what deal victims a toxin and burn damage. Makes victims smaller, just like dwarfs"
+	inverse_chem_val = 0.55
+	inverse_chem = /datum/reagent/inverse/babyboom_toxin
+	description = "Toxic chemical, what deal victims a toxin and burn damage. Makes victims smaller, just like little little man."
 	liver_damage_multiplier = 0.5
+	taste_description = "something like bad smells diapers"
+	var/current_size = RESIZE_DEFAULT_SIZE
 	metabolized_traits = list(TRAIT_DWARF)
 
 /datum/reagent/toxin/babyboom_toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.adjustFireLoss(((current_cycle-1)/4) * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
 		return UPDATE_MOB_HEALTH
+	var/newsize = current_size
+	switch(volume)
+		if(0 to 19)
+			newsize = 0.8*RESIZE_DEFAULT_SIZE
+		if(20 to INFINITY)
+			newsize = 0.7*RESIZE_DEFAULT_SIZE
+
+	affected_mob.update_transform(newsize/current_size)
+	current_size = newsize
+
+/datum/reagent/toxin/babyboom_toxin/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
+	current_size = RESIZE_DEFAULT_SIZE
