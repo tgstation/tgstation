@@ -41572,6 +41572,10 @@
 "mVM" = (
 /turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
+"mWj" = (
+/obj/docking_port/stationary/syndicate/northeast,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
 "mWI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -42966,6 +42970,13 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/central/fore)
+"ofi" = (
+/obj/effect/landmark/carpspawn,
+/obj/docking_port/stationary/syndicate/northwest{
+	dir = 4
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
 "ofj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -66805,9 +66816,9 @@ vek
 vek
 vek
 vek
-vek
-vek
-vek
+aMo
+aMo
+aMo
 vek
 vek
 vek
@@ -67062,9 +67073,9 @@ vek
 vek
 vek
 vek
-vek
-vek
-vek
+aMo
+ofi
+aMo
 vek
 vek
 vek
@@ -67319,9 +67330,9 @@ vek
 vek
 vek
 vek
-vek
-vek
-vek
+aMo
+aMo
+aMo
 vek
 vek
 vek
@@ -109220,9 +109231,9 @@ vek
 vek
 vek
 vek
-vek
-vek
-vek
+aMo
+aMo
+aMo
 vek
 vek
 vek
@@ -109477,9 +109488,9 @@ vek
 vek
 vek
 vek
-vek
-vek
-vek
+aMo
+mWj
+aMo
 vek
 vek
 vek
@@ -109734,9 +109745,9 @@ vek
 vek
 vek
 vek
-vek
-vek
-vek
+aMo
+aMo
+aMo
 vek
 vek
 vek
