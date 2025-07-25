@@ -585,3 +585,18 @@
       their bedroom to the office.
   lelandkemble:
   - bugfix: makes the icebox hermit native to icebox
+2025-07-25:
+  00-Steven:
+  - bugfix: Xenobio console can no longer pick up the same slime multiple times.
+  SmArtKar:
+  - bugfix: Fixed hiveheads spawning bees on tiles when you're riding disposals
+  - code_imp: Cleaned up and updated hivehead code
+  - spellcheck: Removed double the when trying to write with an incorrect instrument
+  - refactor: Refactored how facial offsets interact with eye rendering, potentially
+      optimizing future species that use this feature.
+  TealSeer:
+  - code_imp: added a new parameter to playsound and playsound_local that lets you
+      specify a volume pref type to use
+  - bugfix: fixed scarp breaking your HUD sometimes
+  twilightwanderer:
+  - bugfix: Solar console and pipe sprite fixes

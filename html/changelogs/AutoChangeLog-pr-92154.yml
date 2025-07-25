@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Refactored how facial offsets interact with eye rendering, potentially optimizing future species that use this feature."
