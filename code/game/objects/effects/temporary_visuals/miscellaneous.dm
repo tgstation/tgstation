@@ -752,7 +752,7 @@
 	name = "mech attack aoe charge"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "mech_attack_aoe_charge"
-	duration = 1 SECONDS
+	duration = 0.5 SECONDS
 	pixel_x = -32
 	pixel_y = -32
 
