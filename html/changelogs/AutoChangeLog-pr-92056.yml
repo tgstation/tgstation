@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Refunded holoparasite injectors no longer still spawn their holopara"
-  - bugfix: "Fixed broken text when refunding uplink purchases"

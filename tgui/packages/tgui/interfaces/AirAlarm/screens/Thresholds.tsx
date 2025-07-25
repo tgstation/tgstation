@@ -47,7 +47,7 @@ export function AirAlarmControlThresholds(props) {
             >
               {tlv.hazard_min === -1
                 ? 'Disabled'
-                : tlv.hazard_min + ' ' + tlv.unit}
+                : `${tlv.hazard_min} ${tlv.unit}`}
             </Button>
           </Table.Cell>
           <Table.Cell>
@@ -67,7 +67,7 @@ export function AirAlarmControlThresholds(props) {
             >
               {tlv.warning_min === -1
                 ? 'Disabled'
-                : tlv.warning_min + ' ' + tlv.unit}
+                : `${tlv.warning_min} ${tlv.unit}`}
             </Button>
           </Table.Cell>
           <Table.Cell>
@@ -87,7 +87,7 @@ export function AirAlarmControlThresholds(props) {
             >
               {tlv.warning_max === -1
                 ? 'Disabled'
-                : tlv.warning_max + ' ' + tlv.unit}
+                : `${tlv.warning_max} ${tlv.unit}`}
             </Button>
           </Table.Cell>
           <Table.Cell>
@@ -107,7 +107,7 @@ export function AirAlarmControlThresholds(props) {
             >
               {tlv.hazard_max === -1
                 ? 'Disabled'
-                : tlv.hazard_max + ' ' + tlv.unit}
+                : `${tlv.hazard_max} ${tlv.unit}`}
             </Button>
           </Table.Cell>
           <Table.Cell>

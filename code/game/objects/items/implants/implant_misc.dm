@@ -12,7 +12,7 @@
 		<b>Function:</b> Allows operation of implant-locked weaponry, preventing equipment from falling into enemy hands."
 
 /obj/item/implant/emp
-	name = "emp implant"
+	name = "\improper EMP implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
 	uses = 3
@@ -27,6 +27,25 @@
 /obj/item/implanter/emp
 	name = "implanter (EMP)"
 	imp_type = /obj/item/implant/emp
+
+/obj/item/implant/smoke
+	name = "smoke implant"
+	desc = "Releases a plume of smoke."
+	icon_state = "smoke"
+	uses = 3
+
+/obj/item/implant/smoke/activate()
+	. = ..()
+	uses--
+	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
+	smoke.set_up(6, holder = imp_in, location = imp_in)
+	smoke.start()
+	if(!uses)
+		qdel(src)
+
+/obj/item/implanter/smoke
+	name = "implanter (Smoke)"
+	imp_type = /obj/item/implant/smoke
 
 /obj/item/implant/radio
 	name = "internal radio implant"

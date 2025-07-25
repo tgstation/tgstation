@@ -173,6 +173,7 @@
 		mmi.set_mecha(null)
 		mmi.update_appearance()
 	setDir(SOUTH)
+	SEND_SIGNAL(src, COMSIG_MECHA_MOB_EXIT)
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/driver, control_flags)
