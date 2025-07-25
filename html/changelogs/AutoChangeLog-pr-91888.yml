@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "all hand items will now have no cooldown when used with northstar gloves, including circle hand"
