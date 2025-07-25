@@ -199,6 +199,7 @@
 	// Just in case the heart has migrated from its owner in the meantime of this status effect
 	if(associated_heart.owner == owner)
 		associated_heart.start_recharge()
+	associated_heart = null
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
