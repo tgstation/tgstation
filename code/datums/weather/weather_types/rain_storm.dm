@@ -133,7 +133,7 @@
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/plantnutriment))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/impurity))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
-	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/glitter))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/glitter/random))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/uranium))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/luminescent_fluid))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/carpet))

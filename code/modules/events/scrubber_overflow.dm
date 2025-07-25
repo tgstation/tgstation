@@ -51,7 +51,7 @@
 		/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/hair_dye,
 		/datum/reagent/consumable/sugar,
-		/datum/reagent/glitter,
+		/datum/reagent/glitter/random,
 		/datum/reagent/gravitum,
 		/datum/reagent/growthserum,
 		/datum/reagent/yuck,

@@ -2565,6 +2565,29 @@
 	else
 		color = COLOR_WHITE
 
+/datum/reagent/glitter/random
+	name = "Unrandomised Randomised Glitter"
+	description = "You shouldn't be seeing this, please make an issue report describing how you found it."
+
+	var/list/possible_colors = list(
+		list(COLOR_WHITE = 100),
+		list("#ff8080" = 100),
+		list("#4040ff" = 100),
+		list("#ff5555" = 34, "#55ff55" = 33, "#5555ff" = 33),
+	)
+
+/datum/reagent/glitter/random/on_new(data)
+	. = ..()
+
+	var/list/color_list = pick(possible_colors)
+
+	var/datum/reagents/our_holder = src.holder
+	var/our_volume = src.volume
+	var/list/our_data = list("colors" = color_list)
+
+	our_holder.remove_reagent(/datum/reagent/glitter/random, our_volume)
+	our_holder.add_reagent(/datum/reagent/glitter, our_volume, data = our_data)
+
 /datum/reagent/confetti
 	name = "Confetti"
 	description = "Tiny plastic flakes that are impossible to sweep up."
