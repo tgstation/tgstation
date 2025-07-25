@@ -5,7 +5,7 @@
 
 /obj/item/organ/heart/cybernetic/anomalock
 	name = "voltaic combat cyberheart"
-	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
+	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source. Requires a recharge between critical protection periods."
 	icon_state = "anomalock_heart"
 	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	bleed_prevention = TRUE
@@ -29,6 +29,10 @@
 	///If the core is removable once socketed.
 	var/core_removable = TRUE
 
+/obj/item/organ/heart/cybernetic/anomalock/Initialize(mapload) // The heart itself is ALWAYS immune to EMPs
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+
 /obj/item/organ/heart/cybernetic/anomalock/Destroy()
 	QDEL_NULL(core)
 	return ..()
@@ -39,7 +43,6 @@
 		return
 	add_lightning_overlay(30 SECONDS)
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
-	organ_owner.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 	RegisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(activate_survival))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
@@ -47,31 +50,19 @@
 	. = ..()
 	if(!core)
 		return
-	UnregisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION))
-	organ_owner.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+	UnregisterSignal(organ_owner, list(COMSIG_ATOM_EMP_ACT, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)))
 	tesla_zap(source = organ_owner, zap_range = 20, power = 2.5e5, cutoff = 1e3)
-	qdel(src)
-
-/obj/item/organ/heart/cybernetic/anomalock/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(target_mob != user || !istype(target_mob) || !core)
-		return ..()
-
-	if(DOING_INTERACTION(user, DOAFTER_IMPLANTING_HEART))
-		return
-	user.balloon_alert(user, "this will hurt...")
-	to_chat(user, span_userdanger("Black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
-	if(!do_after(user, 5 SECONDS, interaction_key = DOAFTER_IMPLANTING_HEART))
-		return ..()
-	playsound(target_mob, 'sound/items/weapons/slice.ogg', 100, TRUE)
-	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	Insert(user)
-	user.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
-	user.emote("scream")
-	return TRUE
 
 /obj/item/organ/heart/cybernetic/anomalock/proc/on_emp_act(severity)
 	SIGNAL_HANDLER
+
+	if(owner.has_status_effect(/datum/status_effect/voltaic_overdrive))
+		to_chat(owner, span_danger("Your voltaic combat cyberheart flutters against an electromagnetic pulse!"))
+		return EMP_PROTECT_ALL
 	add_lightning_overlay(10 SECONDS)
+	to_chat(owner, span_userdanger("Your voltaic combat cyberheart thunders in your chest wildly, surging to hold against the electromagnetic pulse!"))
+	activate_survival(owner)
+	return EMP_PROTECT_ALL
 
 /obj/item/organ/heart/cybernetic/anomalock/proc/add_lightning_overlay(time_to_last = 10 SECONDS)
 	if(lightning_overlay)
@@ -85,21 +76,14 @@
 	owner.cut_overlay(lightning_overlay)
 	lightning_overlay = null
 
-/obj/item/organ/heart/cybernetic/anomalock/attack_self(mob/user, modifiers)
-	. = ..()
-	if(.)
-		return
-
-	if(core)
-		return attack(user, user, modifiers)
-
 /obj/item/organ/heart/cybernetic/anomalock/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(!core)
-		return
 
 	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += 5 * seconds_per_tick
+
+	if(!core)
+		return
 
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
@@ -122,16 +106,20 @@
 /obj/item/organ/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
 	if(!COOLDOWN_FINISHED(src, survival_cooldown))
 		return
-
-	organ_owner.apply_status_effect(/datum/status_effect/voltaic_overdrive)
+	var/datum/status_effect/voltaic_overdrive/maximum_overdrive = organ_owner.apply_status_effect(/datum/status_effect/voltaic_overdrive)
+	maximum_overdrive.associated_heart = src
 	add_lightning_overlay(30 SECONDS)
 	COOLDOWN_START(src, survival_cooldown, survival_cooldown_time)
-	addtimer(CALLBACK(src, PROC_REF(notify_cooldown), organ_owner), COOLDOWN_TIMELEFT(src, survival_cooldown))
+	addtimer(CALLBACK(src, PROC_REF(finish_recharge), organ_owner), COOLDOWN_TIMELEFT(src, survival_cooldown))
+
+/obj/item/organ/heart/cybernetic/anomalock/proc/start_recharge()
+	UnregisterSignal(owner, COMSIG_ATOM_EMP_ACT)
 
 ///Alerts our owner that the organ is ready to do its thing again
-/obj/item/organ/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
+/obj/item/organ/heart/cybernetic/anomalock/proc/finish_recharge(mob/living/carbon/organ_owner)
 	balloon_alert(organ_owner, "your heart strengthtens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
+	RegisterSignal(owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /obj/item/organ/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, required_anomaly))
@@ -182,6 +170,7 @@
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/anomalock_active
 	show_duration = TRUE
+	var/obj/item/organ/heart/cybernetic/anomalock/associated_heart
 
 /datum/status_effect/voltaic_overdrive/tick(seconds_between_ticks)
 	. = ..()
@@ -205,7 +194,11 @@
 	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_filter("emp_shield")
 	owner.balloon_alert(owner, "your heart weakens")
+	to_chat(owner, span_userdanger("Your voltaic combat cyberheart putters weakly in your chest as it recharges; it won't protect you against EMPs until it recovers."))
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
+	// Just in case the heart has migrated from its owner in the meantime of this status effect
+	if(associated_heart.owner == owner)
+		associated_heart.start_recharge()
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
