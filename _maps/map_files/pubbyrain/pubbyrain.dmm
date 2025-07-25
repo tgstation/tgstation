@@ -22751,9 +22751,7 @@
 	},
 /area/station/service/chapel/asteroid/monastery)
 "bQe" = (
-/obj/item/flashlight/lantern{
-	icon_state = "lantern-on"
-	},
+/obj/item/flashlight/lantern/on,
 /turf/open/misc/ashplanet/rocky{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
@@ -25627,9 +25625,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
 "ccL" = (
-/obj/item/flashlight/lantern{
-	icon_state = "lantern-on"
-	},
+/obj/item/flashlight/lantern/on,
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/iron/smooth,
 /area/station/service/chapel/asteroid/monastery)
@@ -26954,9 +26950,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library/lounge)
 "clj" = (
-/obj/item/flashlight/lantern{
-	icon_state = "lantern-on"
-	},
+/obj/item/flashlight/lantern/on,
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/station/science/ordnance/bomb/planet)
 "clk" = (
@@ -29151,10 +29145,7 @@
 /area/station/service/library)
 "czC" = (
 /obj/structure/table/wood/fancy,
-/obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	pixel_y = 8
-	},
+/obj/item/flashlight/lantern/on,
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
 "czD" = (
