@@ -446,7 +446,28 @@
 	color = "#9ACD32"
 	toxpwr = 1
 	ph = 11
+	liver_damage_multiplier = 0.7
+	taste_description = "spores"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/toxin/spore/on_transfer(atom/A, methods, trans_volume)
+	. = ..()
+	if(!isliving(A))
+		return
+
+	if(!(methods & INHALE))
+		return
+
+	var/mob/living/spore_lung_victim = A
+
+	if(!(spore_lung_victim.mob_biotypes & (MOB_HUMANOID | MOB_BEAST)))
+		return
+
+	if(prob(min(trans_volume * 10, 80)))
+		to_chat(spore_lung_victim, span_danger("[pick("You have a coughing fit!", "You hack and cough!", "Your lungs burn!")]"))
+		spore_lung_victim.Stun(1 SECONDS)
+		spore_lung_victim.emote("cough")
+
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -692,9 +713,15 @@
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)) //it counteracts its own toxin damage.
 			return UPDATE_MOB_HEALTH
 		return
-	else if(SPT_PROB(2.5, seconds_per_tick))
+	else if(SPT_PROB(2.5, seconds_per_tick) && !HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
+	return ..()
+
+/datum/reagent/toxin/formaldehyde/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
+		return
+
 	return ..()
 
 /datum/reagent/toxin/venom

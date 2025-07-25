@@ -223,11 +223,6 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
-/obj/item/clothing/neck/maid
-	name = "maid neck cover"
-	desc = "A neckpiece for a maid costume, it smells faintly of disappointment."
-	icon_state = "maid_neck"
-
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
@@ -254,6 +249,8 @@
 	var/heart_strength
 	var/pulse_pressure
 
+	var/heart_noises = TRUE
+
 	var/obj/item/organ/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/obj/item/organ/liver/liver = carbon_patient.get_organ_slot(ORGAN_SLOT_LIVER)
@@ -272,6 +269,7 @@
 				render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
 
 			//assess breathing
+			var/lung_noises = TRUE
 			if(isnull(lungs) \
 				|| carbon_patient.stat == DEAD \
 				|| (HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)) \
@@ -279,21 +277,27 @@
 				|| carbon_patient.failed_last_breath \
 				|| carbon_patient.losebreath)//If pt is dead or otherwise not breathing
 				render_list += "<span class='danger ml-1'>[target.p_Theyre()] not breathing!</span>\n"
+				lung_noises = FALSE
+
 			else if(lungs.damage > 10)//if breathing, check for lung damage
 				render_list += "<span class='danger ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n"
 			else if(oxy_loss > 10)//if they have suffocation damage
 				render_list += "<span class='danger ml-1'>[target.p_Theyre()] breathing heavily!</span>\n"
 			else
 				render_list += "<span class='notice ml-1'>[target.p_Theyre()] breathing normally.</span>\n"//they're okay :D
-
+			if(lung_noises)
+				render_list += "<span class='notice ml-1'>[lungs.hear_breath_noise(user)]</span>\n"
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
 					render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
+					heart_noises = FALSE
 				else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
 				else
 					render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
+				if(heart_noises)
+					render_list += "<span class='notice ml-1'>[heart.hear_beat_noise(user)]</span>\n"
 
 		if(BODY_ZONE_PRECISE_GROIN)//If we're targeting the groin
 			render_list += span_info("You carefully press down on [carbon_patient]'s abdomen:\n")

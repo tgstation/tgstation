@@ -1,4 +1,4 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { RADIO_CHANNELS } from '../constants';
@@ -69,7 +69,7 @@ export const Radio = (props) => {
             <LabeledList.Item label="Frequency">
               {(freqlock && (
                 <Box inline color="light-gray">
-                  {toFixed(frequency / 10, 1) + ' kHz'}
+                  {`${toFixed(frequency / 10, 1)} kHz`}
                 </Box>
               )) || (
                 <NumberInput

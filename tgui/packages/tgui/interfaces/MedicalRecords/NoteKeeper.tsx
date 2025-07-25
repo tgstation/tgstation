@@ -12,7 +12,7 @@ import {
 } from 'tgui-core/components';
 
 import { getMedicalRecord } from './helpers';
-import { MedicalNote, MedicalRecordData } from './types';
+import type { MedicalNote, MedicalRecordData } from './types';
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
 export const NoteKeeper = (props) => {

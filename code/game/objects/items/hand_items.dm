@@ -10,6 +10,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC)
 
+/obj/item/hand_item/attack(mob/living/target_mob, mob/living/user)
+	. = ..()
+	SEND_SIGNAL(user, COMSIG_LIVING_HAND_ITEM_ATTACK, target_mob)
+
 /obj/item/hand_item/circlegame
 	name = "circled hand"
 	desc = "If somebody looks at this while it's below your waist, you get to bop them."
@@ -217,6 +221,7 @@
 	AddElement(/datum/element/high_fiver)
 
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
+	. = ..()
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 	SEND_SIGNAL(slapped, COMSIG_LIVING_SLAPPED, user)
 
@@ -687,7 +692,7 @@
 	armour_penetration = 0
 	damage = 25
 	wound_bonus = -20
-	bare_wound_bonus = 40
+	exposed_wound_bonus = 40
 	silent_blown = TRUE
 
 /obj/projectile/kiss/french

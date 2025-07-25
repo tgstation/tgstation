@@ -13,7 +13,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -301,7 +301,7 @@ const Settings = (props) => {
             maxValue={maxTemperature}
             step={1}
             stepPixelSize={1}
-            onDrag={(_, value) =>
+            onChange={(_, value) =>
               act('temperature', {
                 temperature: value,
               })

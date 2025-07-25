@@ -18,6 +18,7 @@
 	jaunt_duration = 1.1 SECONDS
 	jaunt_in_time = 1.3 SECONDS
 	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt/red
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ash_shift
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/ash_shift/out
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_steam_effects()

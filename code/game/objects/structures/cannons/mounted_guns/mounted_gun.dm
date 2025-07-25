@@ -210,6 +210,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 0
 	w_class = WEIGHT_CLASS_BULKY
+	projectile_type = /obj/projectile/bullet/shrapnel
 
 /obj/structure/mounted_gun/ratvarian_repeater
 

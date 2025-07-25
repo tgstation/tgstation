@@ -11,7 +11,7 @@ import {
 import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
-import { CargoData } from './types';
+import type { CargoData } from './types';
 
 export function CargoCart(props) {
   const { act, data } = useBackend<CargoData>();
@@ -59,11 +59,11 @@ function CheckoutItems(props) {
   const { act, data } = useBackend<CargoData>();
   const { amount_by_name = {}, can_send, cart = [], max_order } = data;
 
+  const [isValid, setIsValid] = useState(true);
+
   if (cart.length === 0) {
     return <NoticeBox>Nothing in cart</NoticeBox>;
   }
-
-  const [isValid, setIsValid] = useState(true);
 
   return (
     <Table>

@@ -459,11 +459,11 @@
 	/// Beyond a threshold we change to a bloodier icon state
 	var/very_bloody = FALSE
 
-/obj/effect/decal/cleanable/blood/update_desc(updates)
+/obj/effect/decal/cleanable/blood/trail/update_desc(updates)
 	. = ..()
 	desc = "A [dried ? "dried " : ""]trail of [get_blood_string()]."
 
-/obj/effect/decal/cleanable/blood/lazy_init_reagents()
+/obj/effect/decal/cleanable/blood/trail/lazy_init_reagents()
 	if(!istype(loc, /obj/effect/decal/cleanable/blood/trail_holder))
 		return ..()
 
@@ -516,6 +516,18 @@
 		AddElement(/datum/element/squish_sound)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 	update_appearance(UPDATE_OVERLAYS)
+
+/// Don't override our reagents with our bloodtype ones, if bloodtypes want unique reagents they need to do it themselves (like oil)
+/obj/effect/decal/cleanable/blood/gibs/lazy_init_reagents()
+	if (reagents)
+		return reagents
+
+	if (!decal_reagent)
+		return
+
+	create_reagents(reagent_amount)
+	reagents.add_reagent(decal_reagent, reagent_amount)
+	return reagents
 
 /obj/effect/decal/cleanable/blood/gibs/update_overlays()
 	. = ..()

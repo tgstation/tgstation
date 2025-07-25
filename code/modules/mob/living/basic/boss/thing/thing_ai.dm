@@ -11,6 +11,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance // dont need anything better because the arena is a square lol
 	idle_behavior = null
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target/increased_range, //aggros at 6, sees 16 tiles
 		/datum/ai_planning_subtree/thing_boss_aoe,
 		/datum/ai_planning_subtree/thing_boss_melee,
