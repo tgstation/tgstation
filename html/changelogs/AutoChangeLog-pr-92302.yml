@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "adds logging for turning bot sapience on and off"
