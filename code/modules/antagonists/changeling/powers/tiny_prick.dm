@@ -370,6 +370,8 @@
 	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	// but leave out limbs so we can do it specially
 	target.revive(flags_to_heal & ~HEAL_LIMBS)
+	to_chat(target, span_notice("Your body is being piloted by a sentient flesh, you are the manifestation of that flesh. Flee or attack anyone indiscriminately!"))
+	to_chat(target, span_boldwarning("Do not in anyway give away the identity of who revived you. Attack indiscriminately or flee from someone indiscriminately."))
 	target.emote("gasp")
 	target.emote("scream")
 	target.apply_status_effect(/datum/status_effect/amok)
