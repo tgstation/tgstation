@@ -41,12 +41,14 @@
 	displayed_currency_name = " LP"
 
 /obj/machinery/vending/sustenance/interact(mob/user)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!is_operational)
-			to_chat(user, span_warning("Machine does not respond to your ID swipe"))
-			return
-		if(!istype(living_user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner) && !req_access)
+	if(!isliving(user))
+		return ..()
+	var/mob/living/living_user = user
+	if(!is_operational)
+		to_chat(user, span_warning("Machine does not respond to your ID swipe"))
+		return
+	if(!istype(living_user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner))
+		if(!req_access)
 			speak("No valid prisoner account found. Vending is not permitted.")
 			return
 		if(!allowed(user))
