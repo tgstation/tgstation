@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		user.balloon_alert(user, "something is blocking the tile!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/frame_path
+	var/frame_path = null
 	var/cost = 2 // Default girder cost
 	var/board_type
 	for(var/datum/stack_recipe/recipe in GLOB.metal_recipes)
@@ -270,6 +270,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 			frame_path = recipe.result_type
 			cost = recipe.req_amount
 			board_type = "machine"
+		if(!isnull(frame_path))
+			break
 	if(get_amount() < cost)
 		user.balloon_alert(user, "need [cost] metal sheets!")
 		return ITEM_INTERACT_BLOCKING
