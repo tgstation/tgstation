@@ -153,8 +153,8 @@
 	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
 		if(istype(limb, /obj/item/bodypart/head) || istype(limb, /obj/item/bodypart/chest))
 			continue
-		limb.drop_limb()
-		limb.dust()
+		sleep(10)
+		limb.dismember(BURN)
 
 /datum/action/item_action/toggle/flames
 	button_icon = 'icons/effects/magic.dmi'
@@ -225,6 +225,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
 	armor_type = /datum/armor/eldritch_armor/blade
 	siemens_coefficient = 0
+	var/murdering_with_blades = FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/on_robes_gained(mob/user)
 	. = ..()
@@ -236,16 +237,82 @@
 		return
 	user.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/robes_side_effect(mob/user)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/robes_side_effect(mob/living/user)
+	set waitfor = FALSE
 	. = ..()
-	if(!iscarbon(user))
+	if(murdering_with_blades)
 		return
-	var/mob/living/carbon/victim = user
-	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
-		if(istype(limb, /obj/item/bodypart/chest))
+	murdering_with_blades = TRUE
+	var/delay = 2 SECONDS
+	var/knives = 100
+	for(var/knife in 1 to knives)
+		if(user.stat == DEAD)
+			break
+		sleep(delay)
+		var/list/turf/valid_turfs = get_blade_turfs(get_turf(user))
+		if(!length(valid_turfs))
+			var/mob/living/carbon/carbon_user = user
+			if(iscarbon(user))
+				var/obj/item/bodypart/limb = pick(carbon_user.bodyparts)
+				limb.force_wound_upwards(/datum/wound/slash/flesh/severe)
 			continue
-		sleep(5) // XANTODO remove this with a timer setup instead https://discord.com/channels/326822144233439242/326831214667235328/1392911944771702928
-		limb.dismember()
+		throw_blade(pick(valid_turfs), user)
+		delay = max(0.5 SECONDS, delay - 0.1 SECONDS)
+
+	murdering_with_blades = FALSE
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/proc/get_blade_turfs(mob/user)
+	var/list/turfs_around_us = get_perimeter(user, 4)
+	var/list/valid_turfs = list()
+	for(var/turf/open/valid_turf in turfs_around_us)
+		if(!valid_turf.is_blocked_turf() && get_angle(valid_turf, user) != 180)
+			valid_turfs |= valid_turf
+	return valid_turfs
+
+/obj/item/knife/kitchen/magic
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "dio_knife"
+	name = "magic knife"
+	throwforce = 15
+	// most importantly, this ignores shields
+	armour_penetration = 200
+	pass_flags = ALL
+
+/obj/item/knife/kitchen/magic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/movetype_handler)
+	add_traits(list(TRAIT_MOVE_PHASING, TRAIT_MOVE_FLOATING, TRAIT_UNCATCHABLE), INNATE_TRAIT)
+	add_filter("dio_knife", 2, list("type" = "outline", "color" = "#ececff", "size" = 1))
+	set_embed(/datum/embedding/magic_knife)
+
+/obj/item/knife/kitchen/magic/get_demolition_modifier(obj/target)
+	if(!ismob(target))
+		return 100
+	return ..()
+
+/datum/embedding/magic_knife
+
+	embed_chance = 150
+	fall_chance = 0
+	impact_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/proc/throw_blade(turf/target_turf, mob/user)
+	var/obj/item/knife/kitchen/magic/knife = new(target_turf)
+	knife.alpha = 0
+	knife.throw_at()
+
+	var/matrix/transform = matrix(knife.transform)
+	var/angle = get_angle(target_turf, user)
+	transform.Turn(angle)
+	var/appear_delay = 0.5 SECONDS
+	var/throw_delay = 1 SECONDS
+	var/delete_delay = 10 SECONDS
+	addtimer(CALLBACK(knife, TYPE_PROC_REF(/atom/movable, throw_at), user, 50, 5, null, FALSE), throw_delay)
+	animate(knife, transform = transform, time = throw_delay, ANIMATION_PARALLEL)
+	animate(knife, alpha = 255, time = appear_delay, ANIMATION_PARALLEL)
+	animate(alpha = 0, time = delete_delay)
+	QDEL_IN(knife, delete_delay + appear_delay + throw_delay)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
 	name = "\improper Shattered Panoply"
@@ -387,11 +454,9 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/victim = user
-	for(var/_limb in victim.bodyparts)
-		var/obj/item/bodypart/limb = _limb
-		limb.force_wound_upwards(/datum/wound/slash/flesh/critical)
 	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
-		victim.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, WOUND_SEVERITY_CRITICAL)
+		sleep(10)
+		limb.force_wound_upwards(/datum/wound/slash/flesh/severe)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	icon_state = "flesh_armor"
@@ -435,10 +500,12 @@
 		return
 	var/mob/living/carbon/victim = user
 	var/list/things = victim.get_all_contents_ignoring((typecacheof(/obj/item/organ) + typecacheof(/obj/item/bodypart)))
-	things -= src
 	things -= victim
-	for(var/obj/item/to_delete in things)
-		qdel(to_delete)
+	var/turf/our_turf = get_turf(victim)
+	var/list/turf/nearby_turfs = RANGE_TURFS(5, our_turf) - our_turf
+	for(var/obj/item/to_throw in things)
+		user.dropItemToGround(to_throw)
+		to_throw.safe_throw_at(pick(nearby_turfs), 2, 1, spin = TRUE)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	icon_state = "lock_armor"
@@ -498,6 +565,7 @@
 		"You hear the sound of bells and whistles.",
 		"You hear the clack of a tambourine.",
 	)
+	var/signal_registered = list()
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/user, slot, initial) // Special handling, because non-heretics also gain the effects
 	. = ..()
@@ -511,6 +579,7 @@
 	on_robes_gained(user)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_robes_lost))
+	signal_registered += list(COMSIG_PREQDELETED, COMSIG_MOB_DROPPED_ITEM)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/on_robes_gained(mob/living/carbon/human/user)
 	. = ..()
@@ -521,15 +590,33 @@
 		on_hud_created(user)
 	else
 		RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+		signal_registered += COMSIG_MOB_HUD_CREATED
 
 	// Gives the traits and effects
 	user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_checked))
-	RegisterSignals(user, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE), PROC_REF(on_damage_adjust))
+	signal_registered += COMSIG_LIVING_CHECK_BLOCK
+
+	var/list/damage_signals = list(
+		COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,
+		COMSIG_LIVING_ADJUST_BURN_DAMAGE,
+		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
+		COMSIG_LIVING_ADJUST_TOX_DAMAGE,
+		COMSIG_LIVING_ADJUST_STAMINA_DAMAGE
+	)
+	RegisterSignals(user, damage_signals, PROC_REF(on_damage_adjust))
+	signal_registered += damage_signals
+
 	RegisterSignal(user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
+	signal_registered += COMSIG_MOB_AFTER_APPLY_DAMAGE
+
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	signal_registered += COMSIG_LIVING_DEATH
+
 	RegisterSignal(user, COMSIG_SEND_ITEM_ATTACK_MESSAGE, PROC_REF(item_attack_response))
+	signal_registered += COMSIG_SEND_ITEM_ATTACK_MESSAGE
+
 	var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	START_PROCESSING(SSobj, src)
@@ -540,7 +627,9 @@
 		return
 	var/mob/living/carbon/human/wearer = user
 	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_PACIFISM, TRAIT_NOHUNGER), REF(src))
-	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(wearer, signal_registered)
+	signal_registered = list()
+
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
@@ -576,6 +665,7 @@
 	original_hud.infodisplay += health_hud
 	original_hud.show_hud(original_hud.hud_version)
 	UnregisterSignal(wearer, COMSIG_MOB_HUD_CREATED)
+	signal_registered -= COMSIG_MOB_HUD_CREATED
 
 /// Removes the HUD element from the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_remove(mob/living/carbon/human/wearer)
@@ -686,15 +776,10 @@
 	var/obj/item/bodypart/head/to_explode = human_wearer.get_bodypart(BODY_ZONE_HEAD)
 	if(!to_explode)
 		return
-	var/obj/item/organ/brain/brain = human_wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(brain)
-		brain.Remove(human_wearer, special = TRUE, movement_flags = NO_ID_TRANSFER)
-		brain.zone = BODY_ZONE_CHEST
-		brain.Insert(human_wearer, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	human_wearer.visible_message(span_warning("[human_wearer]'s head splatters with a sickening crunch!"), ignored_mobs = list(human_wearer))
 	new /obj/effect/gibspawner/generic(get_turf(human_wearer), human_wearer)
-	to_explode.drop_organs()
 	to_explode.dismember(dam_type = BRUTE, silent = TRUE)
+	to_explode.drop_organs()
 	qdel(to_explode)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/process(seconds_per_tick)
@@ -865,8 +950,8 @@
 		return
 
 	for(var/obj/item/organ/to_puke as anything in organ_list)
-		sleep(5) // XANTODO, timer system to make this not cringe
-		victim.vomit()
+		sleep(50) // XANTODO, timer system to make this not cringe
+		victim.vomit(MOB_VOMIT_BLOOD | MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_FORCE)
 		victim.spew_organ(rand(4, 6))
 
 /*
