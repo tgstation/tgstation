@@ -227,6 +227,7 @@
 		"modular_shield_charger",
 		"modular_shield_well",
 		"modular_shield_console",
+		"diode_disk_magnetic",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
