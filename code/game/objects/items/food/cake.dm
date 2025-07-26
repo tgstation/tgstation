@@ -500,6 +500,7 @@
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtypes = GRAIN|DAIRY|SUGAR|GROSS
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/cake/vanilla_cake
 	name = "vanilla cake"

@@ -1328,6 +1328,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 // Ethereal-suitable cross-culture food
 /*	Ethereals are, as part of the uplifting process, considered as citizens of the Terran Federation.
