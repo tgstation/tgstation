@@ -78,7 +78,7 @@
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
 		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
-	build_path = /obj/item/ammo_box/magazine/c38/true
+	build_path = /obj/item/ammo_box/c38/true
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
