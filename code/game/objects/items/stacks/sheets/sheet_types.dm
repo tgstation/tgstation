@@ -189,7 +189,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
-	. += span_notice("You can build a wall girder (unanchored) by right clicking on an empty floor.")
+	. += span_notice("Right click on floor to build:")
+	. += span_notice("- Unanchored wall girder")
+	. += span_notice("- Computer or Machine frame (with circuitboard)")
 
 /obj/item/stack/sheet/iron/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -253,18 +255,40 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	if(build_on.is_blocked_turf())
 		user.balloon_alert(user, "something is blocking the tile!")
 		return ITEM_INTERACT_BLOCKING
-	if(get_amount() < 2)
-		user.balloon_alert(user, "not enough material!")
+
+	var/frame_path
+	var/cost = 2 // Default girder cost
+	var/board_type
+	for(var/datum/stack_recipe/recipe as anything in GLOB.metal_recipes)
+		if(!istype(recipe, /datum/stack_recipe))
+			continue
+		// Check computer circuit boards
+		if(recipe.result_type == /obj/structure/frame/computer && locate(/obj/item/circuitboard/computer) in user.held_items)
+			frame_path = recipe.result_type
+			cost = recipe.req_amount
+			board_type = "computer"
+		// Check machine circuit boards
+		else if(recipe.result_type == /obj/structure/frame/machine && locate(/obj/item/circuitboard/machine) in user.held_items)
+			frame_path = recipe.result_type
+			cost = recipe.req_amount
+			board_type = "machine"
+	if(get_amount() < cost)
+		user.balloon_alert(user, "need [cost] metal sheets!")
 		return ITEM_INTERACT_BLOCKING
 	if(!do_after(user, 4 SECONDS, build_on))
 		return ITEM_INTERACT_BLOCKING
 	if(build_on.is_blocked_turf())
 		user.balloon_alert(user, "something is blocking the tile!")
 		return ITEM_INTERACT_BLOCKING
-	if(!use(2))
+	if(!use(cost))
 		user.balloon_alert(user, "not enough material!")
 		return ITEM_INTERACT_BLOCKING
-	new/obj/structure/girder/displaced(build_on)
+	if(frame_path)
+		new frame_path(build_on)
+		user.balloon_alert(user, "[board_type] frame created")
+	else
+		new/obj/structure/girder/displaced(build_on)
+		user.balloon_alert(user, "girder created")
 	return ITEM_INTERACT_SUCCESS
 
 /*
