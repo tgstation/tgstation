@@ -8,7 +8,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	r_pocket = /obj/item/bikehorn
-	id = /obj/item/card/id/advanced/chameleon
+	id = /obj/item/card/id/advanced/chameleon/elite
 	backpack_contents = list(
 		/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine = 1, //The clown op equivalent to the Ansem
 		/obj/item/pen/edagger = 1,

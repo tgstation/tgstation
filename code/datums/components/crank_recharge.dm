@@ -43,6 +43,7 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(crank), source, user) //game doesnt like signal handler and do afters mingling
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/crank_recharge/proc/crank(obj/source, mob/user)
 	if(charging_cell.charge >= charging_cell.maxcharge)
