@@ -485,13 +485,17 @@
 	if(blood_type.reagent_type != chem.type)
 		return
 
+	var/blood_stream_volume = min(round(reac_volume, CHEMICAL_VOLUME_ROUNDING), BLOOD_VOLUME_MAXIMUM - blood_volume)
+	if(blood_stream_volume > 0) //remove reagents from mob that has now entered the bloodstream
+		reagents.remove_reagent(chem.type, blood_stream_volume)
+		blood_volume += blood_stream_volume
+
 	if(chem.data?["blood_type"])
 		var/datum/blood_type/donor_type = chem.data["blood_type"]
 		if(!(donor_type.type_key() in blood_type.compatible_types))
 			reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			return COMPONENT_NO_EXPOSE_REAGENTS
 
-	blood_volume = min(blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 	return COMPONENT_NO_EXPOSE_REAGENTS
 
 /mob/living/carbon/proc/handle_bodyparts(seconds_per_tick, times_fired)
