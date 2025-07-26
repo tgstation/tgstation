@@ -27,6 +27,10 @@
 	var/maximum_fire_delay = 10 SECONDS
 	///Min delay before firing
 	var/minimum_fire_delay = 2 SECONDS
+	///Modifier to the preceeding two numbers
+	var/fire_rate_mod = 1
+	///Deactivates the "pause every 3 shots" system
+	var/no_shot_counter = FALSE
 	///When was the last shot
 	var/last_shot = 0
 	///Number of shots made (gets reset every few shots)
@@ -127,7 +131,7 @@
 	else if(!powered)
 		. += span_notice("Its status display is glowing faintly.")
 	else
-		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay)]</b> and <b>[DisplayTimeText(maximum_fire_delay)]</b>.")
+		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay * fire_rate_mod)]</b> and <b>[DisplayTimeText(maximum_fire_delay * fire_rate_mod)]</b>.")
 		. += span_notice("Power consumption at <b>[display_power(active_power_usage, convert = FALSE)]</b>.")
 
 /obj/machinery/power/emitter/should_have_node()
@@ -248,11 +252,11 @@
 		projectile.fire(dir2angle(dir))
 	if(!manual)
 		last_shot = world.time
-		if(shot_number < 3)
-			fire_delay = 20
+		if(shot_number < 3 || no_shot_counter)
+			fire_delay = 20 * fire_rate_mod
 			shot_number ++
 		else
-			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			fire_delay = rand(minimum_fire_delay,maximum_fire_delay) * fire_rate_mod
 			shot_number = 0
 	return projectile
 
@@ -365,6 +369,8 @@
 		diskie = config_disk
 		projectile_type = diskie.stored_proj
 		projectile_sound = diskie.stored_sound
+		fire_rate_mod = diskie.fire_rate_mod
+		no_shot_counter = diskie.no_shot_counter
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		to_chat(user, span_notice("You update the [src]'s diode configuration with the [config_disk]."))
 		if(diskie.consumable)
@@ -419,6 +425,8 @@
 		return
 	projectile_type = initial(projectile_type)
 	projectile_sound = initial(projectile_sound)
+	fire_rate_mod = initial(fire_rate_mod)
+	no_shot_counter = initial(no_shot_counter)
 
 /obj/machinery/power/emitter/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -607,13 +615,15 @@
 
 /obj/item/emitter_disk
 	name = "Diode Disk: Debugger"
-	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin to fix something broken, report this on github."
+	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk6"
 	var/stored_proj = /obj/projectile/beam/emitter/hitscan
 	var/stored_sound = 'sound/items/weapons/emitter.ogg'
 	var/consumed_on_removal = TRUE
 	var/consumable = TRUE
+	var/fire_rate_mod = 1
+	var/no_shot_counter = FALSE
 
 /obj/item/emitter_disk/stamina
 	name = "Diode Disk: Electrodisruptive"
@@ -624,28 +634,36 @@
 
 /obj/item/emitter_disk/healing
 	name = "Diode Disk: Bioregenerative"
-	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will heal the physical damages of living creatures. The disk will be consumed in the process."
+	desc = "This disk can be installed into an emitter with an open panel to make it shoot lasers which will heal the physical damages of living creatures."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/bioregen
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/incendiary
 	name = "Diode Disk: Conflagratory"
-	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will set living creatures ablaze. The disk will be consumed in the process."
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will set living creatures ablaze."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/incend
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/sanity
 	name = "Diode Disk: Psychosiphoning"
-	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will depress living creatures and calm supermatter crystals. The disk will be consumed in the process."
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will depress living creatures and calm supermatter crystals."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/psy
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/magnetic
 	name = "Diode Disk: Magnetogenerative"
-	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will attract nearby objects. The disk will be consumed in the process."
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will attract nearby objects."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/magnetic
 	consumed_on_removal = FALSE
 	consumable = FALSE
+
+/obj/item/emitter_disk/blast
+	name = "Diode Disk: Hyperconcussive"
+	desc = "This disk, loaded with proprietary syndicate firmware, can be used on an emitter with an open panel to make it shoot beams of concussive force which will cause small explosions."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/blast
+	consumed_on_removal = FALSE
+	consumable = FALSE
+	fire_rate_mod = 2

@@ -322,7 +322,7 @@
 
 /obj/projectile/beam/emitter/hitscan/magnetic
 	name = "magnetogenerative beam"
-	light_color = LIGHT_COLOR_BLUEGREEN
+	light_color = COLOR_SILVER
 	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter/magnetic
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter/magnetic
 	impact_type = /obj/effect/projectile/impact/laser/emitter/magnetic
@@ -335,6 +335,25 @@
 	. = ..()
 	var/turf/turf_to_magnet = get_turf(target)
 	goonchem_vortex(turf_to_magnet, FALSE, 4)
+
+/obj/projectile/beam/emitter/hitscan/blast
+	name = "hyperconcussive beam"
+	light_color = LIGHT_COLOR_ORANGE
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter/magnetic
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/magnetic
+	impact_type = /obj/effect/projectile/impact/laser/emitter/magnetic
+	hitscan_light_color_override = COLOR_ORANGE
+	muzzle_flash_color_override = COLOR_ORANGE
+	impact_light_color_override = COLOR_ORANGE
+	damage = 0
+	integrity_heal = -2
+	energy_reduction = -500
+
+
+/obj/projectile/beam/emitter/hitscan/blast/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/turf/turf_to_explode = get_turf(target)
+	explosion(turf_to_explode, 0, 1, 2)
 
 
 /obj/projectile/beam/lasertag

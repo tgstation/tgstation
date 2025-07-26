@@ -40,6 +40,8 @@
 	if(projectile?.psi_change)
 		psy_coeff = clamp(psy_coeff + projectile.psi_change, 0, 1)
 		external_power_immediate += projectile.damage * bullet_energy + kiss_power
+	if(istype(projectile, /obj/projectile/beam/emitter/hitscan/magnetic))
+		absorption_ratio = clamp(absorption_ratio + 0.05, 0.15, 1)
 
 	qdel(projectile)
 	return COMPONENT_BULLET_BLOCKED
