@@ -31,7 +31,7 @@
 	/// Are we at all five organs?
 	var/color_active = FALSE
 
-/datum/status_effect/organ_set_bonus/fish/enable_bonus()
+/datum/status_effect/organ_set_bonus/fish/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
 	if(!.)
 		return
@@ -55,7 +55,7 @@
 	owner.mind?.adjust_experience(/datum/skill/fishing, SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.grant_language(/datum/language/carptongue, ALL, type)
 
-/datum/status_effect/organ_set_bonus/fish/disable_bonus()
+/datum/status_effect/organ_set_bonus/fish/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
 	UnregisterSignal(owner, list(
 		COMSIG_CARBON_GAIN_ORGAN,
@@ -80,7 +80,7 @@
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.remove_language(/datum/language/carptongue, ALL, type)
 
-/datum/status_effect/organ_set_bonus/fish/set_organs(new_value)
+/datum/status_effect/organ_set_bonus/fish/set_organs(new_value, obj/item/organ/organ)
 	. = ..()
 	if (!iscarbon(owner))
 		return
