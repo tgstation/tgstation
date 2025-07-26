@@ -259,9 +259,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	var/frame_path
 	var/cost = 2 // Default girder cost
 	var/board_type
-	for(var/datum/stack_recipe/recipe as anything in GLOB.metal_recipes)
-		if(!istype(recipe, /datum/stack_recipe))
-			continue
+	for(var/datum/stack_recipe/recipe in GLOB.metal_recipes)
 		// Check computer circuit boards
 		if(recipe.result_type == /obj/structure/frame/computer && locate(/obj/item/circuitboard/computer) in user.held_items)
 			frame_path = recipe.result_type
