@@ -64165,7 +64165,9 @@
 /area/station/commons/dorms)
 "sVj" = (
 /obj/structure/cable,
-/obj/machinery/vending/sustenance,
+/obj/machinery/vending/sustenance{
+	req_access = list("command")
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
