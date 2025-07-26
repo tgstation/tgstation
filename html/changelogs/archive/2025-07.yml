@@ -600,3 +600,11 @@
   - bugfix: fixed scarp breaking your HUD sometimes
   twilightwanderer:
   - bugfix: Solar console and pipe sprite fixes
+2025-07-26:
+  grungussuss:
+  - bugfix: all hand items will now have no cooldown when used with northstar gloves,
+      including circle hand
+  jlsnow301:
+  - admin: Fixed the bluescreen in admin fax panel
+  twilightwanderer:
+  - admin: Added the ability to play your own announce sounds.

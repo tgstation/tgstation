@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "clothing with hood now correctly hides slots based on inv_flags"

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Trying to ignite oil with a welding tool no longer runtimes due to it trying to get ignited twice"
