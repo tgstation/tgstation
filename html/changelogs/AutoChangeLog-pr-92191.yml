@@ -1,0 +1,7 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - rscadd: "Climbing hooks can now be used to climb UP or DOWN, instead of only up."
+  - qol: "Climbing hooks no longer have a limit on their number of uses."
+  - balance: "Syndicate climbing hooks now have a speed of 0.75 seconds to climb, in comparison to the standard 4 seconds for emergency hooks."
+  - bugfix: "Fixed a runtime in climbing hooks when you would try to climb down."
