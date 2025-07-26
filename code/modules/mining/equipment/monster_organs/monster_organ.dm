@@ -35,7 +35,6 @@
 		It will rapidly decay into uselessness. but don't worry because it's already useless."
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	icon_state = "hivelord_core"
-	layer = ABOVE_LYING_MOB_LAYER
 	actions_types = list(/datum/action/cooldown/monster_core_action)
 
 	item_flags = NOBLUDGEON
@@ -58,12 +57,11 @@
 	var/desc_inert
 	/// Status effect applied by this organ
 	var/datum/status_effect/user_status
-	/// Have we changed our layer to a normal item's layer?
-	var/layer_swapped = FALSE
 
 /obj/item/organ/monster_core/Initialize(mapload)
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
+	AddElement(/datum/element/above_mob_drop)
 
 /obj/item/organ/monster_core/examine(mob/user)
 	. = ..()
@@ -85,15 +83,6 @@
 /obj/item/organ/monster_core/Destroy(force)
 	deltimer(decay_timer)
 	return ..()
-
-/obj/item/organ/monster_core/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	if (layer_swapped)
-		return
-	// After being picked up, etc, reset our layer to that of a normal item
-	layer_swapped = TRUE
-	if (layer == initial(layer))
-		layer = /obj/item/organ::layer
 
 /obj/item/organ/monster_core/on_mob_insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
 	. = ..()
