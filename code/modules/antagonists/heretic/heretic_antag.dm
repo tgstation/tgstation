@@ -401,7 +401,7 @@
 		return
 
 	for(var/knowledge_path in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path]
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		knowledge.on_lose(old_body, src)
 		knowledge.on_gain(new_body, src)
 
