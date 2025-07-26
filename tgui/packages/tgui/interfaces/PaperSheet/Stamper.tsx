@@ -77,7 +77,7 @@ export class PaperSheetStamper extends Component<PaperSheetStamperProps> {
     });
   };
 
-  findStampPosition(e: MouseEvent): StampPosition | void {
+  findStampPosition(e: MouseEvent): StampPosition | undefined {
     let rotating;
     const scrollable = this.scrollableRef.current;
 

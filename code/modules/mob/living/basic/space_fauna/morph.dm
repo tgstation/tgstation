@@ -189,6 +189,7 @@
 	if((delay > 0 SECONDS) && !do_after(src, delay, target = eatable))
 		return FALSE
 
+	log_combat(src, eatable, "ate", addition = "as morph")
 	visible_message(span_warning("[src] swallows [eatable] whole!"))
 	eatable.forceMove(src)
 	if(update_health != 0)
