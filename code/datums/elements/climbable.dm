@@ -99,7 +99,7 @@
 			if(istype(buckle_target))
 				if(buckle_target.is_buckle_possible(user))
 					buckle_target.buckle_mob(user)
-			user.mind?.adjust_experience(/datum/skill/athletics, 5) //Get a bit fitter with every climb.
+			user.mind?.adjust_experience(/datum/skill/athletics, round(ATHLETICS_SKILL_MISC_EXP/(fitness_level || 1), 1)) //Get a bit fitter with every climb. But it has diminishing returns at a certain point.
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
