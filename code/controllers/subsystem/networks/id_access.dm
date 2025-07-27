@@ -558,12 +558,12 @@ SUBSYSTEM_DEF(id_access)
 			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
 			return .
 		.["name"] = target.name
-		.["age"] = "INSPECT MANUFACTURER MANIFEST"
-		.["assignment"] = 0
-		.["account_id"] = "NO ACCOUNT."
-		.["account_holder"] = "NO ACCOUNT."
-		.["account_assignment"] = "N/A"
-		.["accesses"] = target.mind?.assigned_role?.title
+		.["age"] = 0
+		.["assignment"] = "Silicon"
+		.["account_id"] = null
+		.["account_holder"] = null
+		.["account_assignment"] = null
+		.["accesses"] = null
 		.[SILICON_OVERRIDE] = SILICON_OVERRIDE
 		return .
 	var/obj/item/card/id/advanced/id_card = astype(target_of_record, /obj/item/card/id/advanced)
