@@ -415,7 +415,7 @@
 	. = ..()
 	var/healing_amount = ((world.time > last_attack + combat_lockout) ? -1 * passive_level * seconds_between_ticks : -2 * passive_level * seconds_between_ticks)
 	if(heretic_datum.ascended)
-		healing_amount = -15
+		healing_amount = -15 * seconds_between_ticks
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, healing_amount)
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
