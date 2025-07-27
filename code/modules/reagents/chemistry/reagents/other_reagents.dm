@@ -3286,6 +3286,7 @@
 	description = "Drink for plasmamales and plasmafemales. Has a warning: contains plasma, sugar and our secret sauce, sugar is harmful to health when consumed in large quantities."
 	toxpwr = 3
 	color = "#BC46D4"
+	overdose_threshold = 30
 	metabolization_rate = 6 * REAGENTS_METABOLISM
 	taste_description = "plasma, sugar and this are indescribable"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3294,6 +3295,10 @@
 	. = ..()
 	if(is_species(affected_mob, /datum/species/plasmaman))
 		affected_mob.add_traits(TRAIT_NO_BREATHLESS_DAMAGE, type)
+
+/datum/reagent/toxin/liquid_plasma/overdose_start(mob/living/affected_mob)
+	. = ..()
+	metabolization_rate = 12 * REM
 
 /datum/reagent/liquid_plasma/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
