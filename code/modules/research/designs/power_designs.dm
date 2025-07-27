@@ -13,7 +13,7 @@
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	// No department_flag means this can be crafted at all lathes
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"

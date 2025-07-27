@@ -38,7 +38,7 @@
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	// No department flag means this can be crafted at all lathes
 
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
@@ -91,7 +91,7 @@
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	// No department flag means this can be crafted at all lathes
 
 /datum/design/adv_scanning
 	name = "Advanced Scanning Module"
@@ -144,7 +144,7 @@
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	// No department flag means this can be crafted at all lathes
 
 /datum/design/nano_servo
 	name = "Nano Servo"
@@ -197,7 +197,7 @@
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	// No department flag means this can be crafted at all lathes
 
 /datum/design/high_micro_laser
 	name = "High-Power Micro-Laser"
@@ -249,7 +249,7 @@
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	// No department flag means this can be crafted at all lathes
 
 /datum/design/adv_matter_bin
 	name = "Advanced Matter Bin"

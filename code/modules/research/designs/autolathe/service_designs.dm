@@ -303,7 +303,7 @@
 	name = "Hatchet"
 	id = "hatchet"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.5)
 	build_path = /obj/item/hatchet
 	category = list(
 		RND_CATEGORY_INITIAL,

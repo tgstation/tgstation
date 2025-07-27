@@ -146,6 +146,7 @@
 		"wirecutters",
 		"light_bulb",
 		"light_tube",
+		"duct_tape",
 		"crossing_signal",
 		"guideway_sensor",
 		"manuunloader",
