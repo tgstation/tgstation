@@ -249,6 +249,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
 #define TRAIT_EASILY_WOUNDED "easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
+#define TRAIT_FRAGILE_NERVES "fragile_nerves"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 /// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds
 #define TRAIT_EASYBLEED "easybleed"

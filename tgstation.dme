@@ -1821,6 +1821,7 @@
 #include "code\datums\quirks\negative_quirks\family_heirloom.dm"
 #include "code\datums\quirks\negative_quirks\fluoride_stare.dm"
 #include "code\datums\quirks\negative_quirks\food_allergy.dm"
+#include "code\datums\quirks\negative_quirks\fragile_nerves.dm"
 #include "code\datums\quirks\negative_quirks\frail.dm"
 #include "code\datums\quirks\negative_quirks\glass_jaw.dm"
 #include "code\datums\quirks\negative_quirks\hemiplegic.dm"
