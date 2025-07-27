@@ -652,7 +652,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// Weighted list of random reagents to add
 	var/static/list/possible_reagents = list(
 		/datum/reagent/toxin/fentanyl = 2,
-		/datum/reagent/glitter = 2,
+		/datum/reagent/glitter/random = 2,
 		/datum/reagent/drug/aranesp = 2,
 		/datum/reagent/consumable/laughter = 2,
 		/datum/reagent/medicine/insulin = 2,

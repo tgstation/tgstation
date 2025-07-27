@@ -294,6 +294,6 @@
 	loot = list(
 		/obj/item/grenade/chem_grenade/glitter/pink,
 		/obj/item/grenade/chem_grenade/glitter/blue,
-		/obj/item/grenade/chem_grenade/glitter/white,
+		/obj/item/grenade/chem_grenade/glitter,
 		/obj/item/grenade/chem_grenade/colorful
 	)
