@@ -67,12 +67,11 @@
 
 		transition_levels.Add(level)
 
-		if(linkage)
-			if(level.linkage != linkage)
-				// Either you be gridlinked or crosslinked, both is uhhh... a headache
-				stack_trace("Mixed linkages detected in z-level neighbour transitions!")
-		else
-			linkage = level.linkage
+		if(!isnull(linkage) && level.linkage != linkage)
+			// Either you be gridlinked or crosslinked, both is uhhh... a headache
+			stack_trace("Mixed linkages detected in z-level neighbour transitions!")
+			continue
+		linkage = level.linkage
 
 	if(linkage == CROSSLINKED)
 		set_cross_linkages(transition_levels)
@@ -156,7 +155,7 @@
 	var/datum/space_transition_point/point
 	for(var/x in 1 to grid_diameter)
 		for(var/y in 1 to grid_diameter)
-			point = new/datum/space_transition_point(x, y, grid)
+			point = new /datum/space_transition_point(x, y, grid)
 			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
 	for(point as anything in grid)
 		point.set_neigbours(grid, grid_diameter)
@@ -190,7 +189,7 @@
 	var/datum/space_transition_point/point
 	for(var/x in 1 to grid_diameter)
 		for(var/y in 1 to grid_diameter)
-			point = new/datum/space_transition_point(x, y, grid)
+			point = new /datum/space_transition_point(x, y, grid)
 			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
 
 	// Translate the grid we made to the z-levels
