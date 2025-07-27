@@ -846,7 +846,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
 
-//A debugging proc hat colors objects based on what grid they belong to
+//A debugging proc that colors objects based on what grid they belong to
 /datum/controller/subsystem/spatial_grid/proc/paint_grids()
 	cells_with_color = list()
 	for(var/list/z_level_grid as anything in grids_by_z_level)
@@ -858,7 +858,9 @@ SUBSYSTEM_DEF(spatial_grid)
 		if(!things_cell)
 			continue
 		thing.add_atom_colour(cells_with_color[things_cell], ADMIN_COLOUR_PRIORITY)
-		RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(update_color))
+		if(ismovable(thing))
+			RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(update_color))
+		CHECK_TICK
 
 //A debugging proc that colors objects based on what grid they belong to
 /datum/controller/subsystem/spatial_grid/proc/update_color(atom/movable/thing)
