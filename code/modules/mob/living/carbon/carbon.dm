@@ -1323,6 +1323,11 @@
 	if(isnull(dna))
 		return
 
+	if(istext(new_blood_type))
+		new_blood_type = get_blood_type(new_blood_type)
+	if(!istype(new_blood_type))
+		return
+
 	if(get_bloodtype() == new_blood_type) // already has this blood type, we don't need to do anything.
 		return
 

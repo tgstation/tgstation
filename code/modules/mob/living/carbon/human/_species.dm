@@ -388,7 +388,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!human_who_gained_species.get_bloodtype()?.is_species_universal) // Clown blood is forever.
 		//Assigns exotic blood type if the species has one
 		if(exotic_bloodtype && human_who_gained_species.get_bloodtype()?.id != exotic_bloodtype)
-			human_who_gained_species.set_blood_type(get_blood_type(exotic_bloodtype))
+			human_who_gained_species.set_blood_type(exotic_bloodtype)
 		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
 			human_who_gained_species.set_blood_type(random_human_blood_type())
