@@ -1082,8 +1082,8 @@
 #define SLOWDOWN_WORN 1
 
 /obj/item/flashlight/lamp/space_barrier
-	name = "spacelamp"
-	desc = "A heavy lamp capable of beaming a barrier of breathable air."
+	name = "Space Furnace"
+	desc = "A heavy furnace capable of beaming a barrier of breathable air."
 	icon_state = "space_lamp"
 	worn_icon_state = "space_lamp"
 	inhand_icon_state = "space_lamp"
