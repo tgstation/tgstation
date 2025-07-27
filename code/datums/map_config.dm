@@ -32,7 +32,7 @@
 	var/planetary = FALSE
 	/// How many z's to generate around a planetary station
 	var/wilderness_levels = 0
-	/// Directory to the wilderness 0rea we can spawn in
+	/// Directory to the wilderness area we can spawn in
 	var/wilderness_directory
 	/// Index of map names (inside wilderness_directory) with the amount to spawn. ("ice_planes" = 1) for one ice spawn
 	var/list/maps_to_spawn = list()
