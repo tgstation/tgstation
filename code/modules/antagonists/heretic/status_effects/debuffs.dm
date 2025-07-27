@@ -130,7 +130,7 @@
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
-	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+	if(isstargazer(owner))
 		return FALSE
 	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
 	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
@@ -175,7 +175,7 @@
 
 /datum/status_effect/heretic_lastresort/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
-	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
+	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = TRUE)
 
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
@@ -208,12 +208,12 @@
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	// Heals them so people who are in crit can have this affect applied on them and still be of some use for the heretic
-	owner.adjustBruteLoss( -150 + owner.mob_mood.sanity)
+	owner.adjustBruteLoss(-150 + owner.mob_mood.sanity)
 	owner.adjustFireLoss(-150 + owner.mob_mood.sanity)
 
 	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
 	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
-	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
+	owner.SetUnconscious(60 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)

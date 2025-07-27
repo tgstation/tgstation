@@ -1,20 +1,50 @@
-
-/datum/heretic_knowledge_tree_column/main/void
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/flesh_to_void
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/void_to_blade
-
+/datum/heretic_knowledge_tree_column/void
 	route = PATH_VOID
 	ui_bgr = "node_void"
+	complexity = "Easy"
+	complexity_color = COLOR_GREEN
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "void_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Void focuses on stealth, freezing cold, mobility and depressurization.",
+		"Pick this path if you enjoy being a highly mobile assassin who leaves their foes struggling to catch up.",
+	)
+	pros = list(
+		"Protection from the hazards of space.",
+		"Your spells apply a stacking debuff that chills and slows targets.",
+		"High amount of mobility spells.",
+		"Highly stealthy.",
+	)
+	cons = list(
+		"Though protected from space, you are not nearly as mobile in it as you are on foot.",
+		"Has a difficult time fighting opponents immune to cold effects.",
+		"Has a difficult time with silicon-based lifeforms.",
+	)
+	tips = list(
+		"Your Mansus Grasp allows you to mute your targets, making it ideal for silent assassinations (keep in mind that it won't short circuit their suit sensors, make sure you turn them off after you kill them). Yhe grasp also applies a mark that when triggered by the void blade will apply the maximum amount of stacks of void chill to your target, slowing them down to a crawl.",
+		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix when the hood is down,  while acting as a focus when it's up.",
+		"Void chill is a debuff applied by your spells, your grasp, your mark and your blade once you unlock the upgrade. Each stack slows your target movement speed by 10% and make them gradually colder, up to a maximum of 5 stacks.",
+		"At 5 stacks void chill will also prevent your target from heating up.",
+		"You are immune to low pressure and cold damage at the start of the shift. Upgrade your passive to level 2 to no longer need to breathe. Use this to your advantage.",
+		"Void prison can put a target in stasis for 10 seconds. Ideal if you are fighting multiple opponents and need to isolate one target at a time.",
+		"Void Conduit is your signature ability. It slowly destroys windows and airlocks around its area of effect. Use it to depressurize the station and expand your domain.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
-	grasp = /datum/heretic_knowledge/void_grasp
-	tier1 = /datum/heretic_knowledge/cold_snap
-	mark = 	/datum/heretic_knowledge/mark/void_mark
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/void
-	unique_ability = /datum/heretic_knowledge/spell/void_conduit
-	tier2 = /datum/heretic_knowledge/spell/void_phase
+	knowledge_tier1 = /datum/heretic_knowledge/spell/void_phase
+	guaranteed_side_tier1 = /datum/heretic_knowledge/void_cloak
+	knowledge_tier2 = /datum/heretic_knowledge/spell/void_prison
+	guaranteed_side_tier2 = /datum/heretic_knowledge/ether
+	robes = /datum/heretic_knowledge/armor/void
+	knowledge_tier3 = /datum/heretic_knowledge/spell/void_pull
+	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/maid_in_mirror
 	blade = /datum/heretic_knowledge/blade_upgrade/void
-	tier3 =	/datum/heretic_knowledge/spell/void_pull
+	knowledge_tier4 = /datum/heretic_knowledge/spell/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void
@@ -28,6 +58,8 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
+	mark_type = /datum/status_effect/eldritch/void
+	eldritch_passive = /datum/status_effect/heretic_passive/void
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
@@ -41,23 +73,8 @@
 
 	return ..()
 
-/datum/heretic_knowledge/void_grasp
-	name = "Grasp of Void"
-	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
-	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
-		They are quiet. This isn't the end of the mystery."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_void"
-
-/datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/void_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_void/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(!iscarbon(target))
 		return
@@ -66,59 +83,6 @@
 	carbon_target.adjust_silence(10 SECONDS)
 	carbon_target.apply_status_effect(/datum/status_effect/void_chill, 2)
 
-/datum/heretic_knowledge/cold_snap
-	name = "Aristocrat's Way"
-	desc = "Grants you immunity to cold temperatures, and removes your need to breathe. \
-		You can still take damage due to a lack of pressure."
-	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
-		Translucent and white, a depiction of a nobleman stood before me."
-	cost = 1
-	research_tree_icon_path = 'icons/effects/effects.dmi'
-	research_tree_icon_state = "the_freezer"
-
-	/// Traits we apply to become immune to the environment
-	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
-
-/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(check_environment))
-
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
-	UnregisterSignal(user, COMSIG_LIVING_LIFE)
-
-///Checks if our traits should be active
-/datum/heretic_knowledge/cold_snap/proc/check_environment(mob/living/user)
-	SIGNAL_HANDLER
-
-	var/datum/gas_mixture/environment = user.loc?.return_air()
-	if(!isnull(environment))
-		var/affected_temperature = environment.return_temperature()
-		var/affected_pressure = environment.return_pressure()
-		if(affected_temperature <= T0C || affected_pressure < ONE_ATMOSPHERE)
-			user.add_traits(gain_traits, type)
-		else
-			user.remove_traits(gain_traits, type)
-
-/datum/heretic_knowledge/mark/void_mark
-	name = "Mark of Void"
-	desc = "Your Mansus Grasp now applies the Mark of Void. The mark is triggered from an attack with your Void Blade. \
-		When triggered, further silences the victim and swiftly lowers the temperature of their body and the air around them."
-	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
-		my senses began to betray me. My mind is my own enemy."
-	mark_type = /datum/status_effect/eldritch/void
-
-/datum/heretic_knowledge/knowledge_ritual/void
-
-/datum/heretic_knowledge/spell/void_conduit
-	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
-	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
-		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
-		The doors won't close. I can't keep the cold out now."
-	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
-	cost = 1
-
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
 	desc = "Grants you Void Phase, a long range targeted teleport spell. \
@@ -126,8 +90,58 @@
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
 	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
-	cost = 1
+	cost = 2
 	research_tree_icon_frame = 7
+
+/datum/heretic_knowledge/spell/void_prison
+	name = "Void Prison"
+	desc = "Grants you Void Prison, a spell that places your victim into ball, making them unable to do anything or speak. \
+		Applies void chill afterwards."
+	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
+		I try to yell, grab hold of this fool and tell them to run. \
+		But the only welts made are on my own beating fist. \
+		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
+
+	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
+	cost = 2
+	drafting_tier = 5
+
+/datum/heretic_knowledge/armor/void
+	name = "Hollow Weave"
+	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave, this armor will periodicall nullify attacks and grant you a short stealth camo to reposition yourself. \
+			Acts as a focus while hooded."
+	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
+				Thousands of almost imperceivable threads cling to my form. \
+				I am left adrift with every step. \
+				Even as I hear the crunch of snow as I plant my foot to the ground, I feel nothing."
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/void)
+	research_tree_icon_state = "void_armor"
+	required_atoms = list(
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
+		/obj/item/clothing/mask = 1,
+	)
+
+/datum/heretic_knowledge/armor/void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(!isopenturf(loc))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
+		return FALSE
+
+	var/turf/open/our_turf = loc
+	if(our_turf.GetTemperature() > T0C)
+		loc.balloon_alert(user, "ritual failed, not cold enough!")
+		return FALSE
+
+	return ..()
+
+/datum/heretic_knowledge/spell/void_pull
+	name = "Void Pull"
+	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
+	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
+		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
+
+	action_to_add = /datum/action/cooldown/spell/aoe/void_pull
+	cost = 2
+	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
@@ -156,17 +170,15 @@
 /datum/heretic_knowledge/blade_upgrade/void/proc/follow_up_attack(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	blade.melee_attack_chain(user, target)
 
-/datum/heretic_knowledge/spell/void_pull
-	name = "Void Pull"
-	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
-	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
-		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
-
-	action_to_add = /datum/action/cooldown/spell/aoe/void_pull
-	cost = 1
-
-
-	research_tree_icon_frame = 6
+/datum/heretic_knowledge/spell/void_conduit
+	name = "Void Conduit"
+	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
+	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
+		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
+		The doors won't close. I can't keep the cold out now."
+	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
+	cost = 2
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"

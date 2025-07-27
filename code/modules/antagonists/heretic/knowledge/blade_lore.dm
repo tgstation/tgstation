@@ -1,20 +1,53 @@
-
-/datum/heretic_knowledge_tree_column/main/blade
-	neighbour_type_left = /datum/heretic_knowledge_tree_column/void_to_blade
-	neighbour_type_right = /datum/heretic_knowledge_tree_column/blade_to_rust
-
+/datum/heretic_knowledge_tree_column/blade
 	route = PATH_BLADE
 	ui_bgr = "node_blade"
+	complexity = "Hard"
+	complexity_color = COLOR_RED
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "dark_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Blade is as the name suggests.",
+		"You are highly competent at cutting your opponents to ribbons.",
+		"Pick this path if you want to fight, and you want to be the best at fighting.",
+	)
+	pros = list(
+		"Capable of blocking incoming attacks, retaliating with a riposte.",
+		"Rapidly deals damage through dual-wielded blades and channeled strikes.",
+		"High defense against stuns and knockdowns.",
+		"Highly lethal combatant in a direct combat with a single opponent.",
+	)
+	cons = list(
+		"Requires a high degree of skill input.",
+		"Without blades, the path loses most of its fighting power.",
+		"Lacks mobility options.",
+		"Lacks environmental protections.",
+	)
+	tips = list(
+		"Your Mansus Grasp will stun your opponent if they are attacked from behind or while they are prone. This also locks them in the room they are in until the mark is detonated. Triggering the mark will grant you a orbiting knife that will protect you from one melee or ranged attack.",
+		"You have the highest blade cap out of all paths (A total of 4). But since they require silver or titanium to craft, you might be strapped for ingredients if the miners aren't doing their job. If you need materials, shuttle walls and seats are a source of titanium metal, and surgery tables a source of silver.",
+		"You are highly reliant on approaching opponents in melee. Slips, bolas and beartraps are your worst enemy. You can counteract slips by crafting a pair of Greaves Of The Prophet, or remove restraints with Ashen Passage.",
+		"Realignment will pull you out of stuns and knockdowns, but also pacifies you for the duration.",
+		"With Empowered Blades, your offensive power grows considerably. You are able to fight with dual-wielded blades, and can empower them by activating your Mansus Grasp while wielding your blades. Your blades also deal additional damage to objects, silicons and mechs.",
+		"Maintaining a good offense also creates a good defense. With orbiting blades, you are able to block additional incoming attacks.",
+		"With Furious Steel, you can not only produce several knives for defensive purposes, but throw them by clicking with an empty hand. This gives you additional ranged power in a pinch.",
+		"Use Wolves Among Sheep with caution. Not only does it have a significant cooldown, but it also arms anyone trapped in the effect with you with blades of their own. Use it either as a last ditch defense, or when you know you have the upper hand and need an extra edge. Just don't try to flee the area before taking someone out first.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
-	grasp = /datum/heretic_knowledge/blade_grasp
-	tier1 = /datum/heretic_knowledge/blade_dance
-	mark = /datum/heretic_knowledge/mark/blade_mark
-	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/blade
-	unique_ability = /datum/heretic_knowledge/spell/realignment
-	tier2 = /datum/heretic_knowledge/spell/furious_steel
+	knowledge_tier1 = /datum/heretic_knowledge/spell/realignment
+	guaranteed_side_tier1 = /datum/heretic_knowledge/greaves_of_the_prophet
+	knowledge_tier2 = /datum/heretic_knowledge/duel_stance
+	guaranteed_side_tier2 = /datum/heretic_knowledge/essence
+	robes = /datum/heretic_knowledge/armor/blade
+	knowledge_tier3 = /datum/heretic_knowledge/spell/furious_steel
+	guaranteed_side_tier3 = /datum/heretic_knowledge/rune_carver
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
-	tier3 = /datum/heretic_knowledge/spell/wolves_among_sheep
+	knowledge_tier4 = /datum/heretic_knowledge/spell/wolves_among_sheep
 	ascension = /datum/heretic_knowledge/ultimate/blade_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade
@@ -31,24 +64,11 @@
 	limit = 4 // It's the blade path, it's a given
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
+	mark_type = /datum/status_effect/eldritch/blade
+	eldritch_passive = /datum/status_effect/heretic_passive/blade
 
-/datum/heretic_knowledge/blade_grasp
-	name = "Grasp of the Blade"
-	desc = "Your Mansus Grasp will cause a short stun when used on someone lying down or facing away from you."
-	gain_text = "The story of the footsoldier has been told since antiquity. It is one of blood and valor, \
-		and is championed by sword, steel and silver."
-	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "grasp_blade"
-
-/datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/blade_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/blade_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_blade/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(!check_behind(source, target))
 		return
@@ -59,109 +79,7 @@
 	target.balloon_alert(source, "backstab!")
 	playsound(target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
-/// The cooldown duration between triggers of blade dance
-#define BLADE_DANCE_COOLDOWN (20 SECONDS)
-
-/datum/heretic_knowledge/blade_dance
-	name = "Dance of the Brand"
-	desc = "Being attacked while wielding a Heretic Blade in either hand will deliver a riposte \
-		towards your attacker. This effect can only trigger once every 20 seconds."
-	gain_text = "The footsoldier was known to be a fearsome duelist. \
-		Their general quickly appointed them as their personal Champion."
-	cost = 1
-	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
-	research_tree_icon_state = "shatter"
-	/// Whether the counter-attack is ready or not.
-	/// Used instead of cooldowns, so we can give feedback when it's ready again
-	var/riposte_ready = TRUE
-
-/datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
-
-/datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
-
-/datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
-	mob/living/carbon/human/source,
-	atom/movable/hitby,
-	damage = 0,
-	attack_text = "the attack",
-	attack_type = MELEE_ATTACK,
-	armour_penetration = 0,
-	damage_type = BRUTE,
-)
-
-	SIGNAL_HANDLER
-
-	if(attack_type != MELEE_ATTACK)
-		return
-
-	if(!riposte_ready)
-		return
-
-	if(INCAPACITATED_IGNORING(source, INCAPABLE_GRAB))
-		return
-
-	var/mob/living/attacker = hitby.loc
-	if(!istype(attacker))
-		return
-
-	if(!source.Adjacent(attacker))
-		return
-
-	// Let's check their held items to see if we can do a riposte
-	var/obj/item/main_hand = source.get_active_held_item()
-	var/obj/item/off_hand = source.get_inactive_held_item()
-	// This is the item that ends up doing the "blocking" (flavor)
-	var/obj/item/striking_with
-
-	// First we'll check if the offhand is valid
-	if(!QDELETED(off_hand) && istype(off_hand, /obj/item/melee/sickly_blade))
-		striking_with = off_hand
-
-	// Then we'll check the mainhand
-	// We do mainhand second, because we want to prioritize it over the offhand
-	if(!QDELETED(main_hand) && istype(main_hand, /obj/item/melee/sickly_blade))
-		striking_with = main_hand
-
-	// No valid item in either slot? No riposte
-	if(!striking_with)
-		return
-
-	// If we made it here, deliver the strike
-	INVOKE_ASYNC(src, PROC_REF(counter_attack), source, attacker, striking_with, attack_text)
-
-	// And reset after a bit
-	riposte_ready = FALSE
-	addtimer(CALLBACK(src, PROC_REF(reset_riposte), source), BLADE_DANCE_COOLDOWN)
-
-/datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
-	playsound(get_turf(source), 'sound/items/weapons/parry.ogg', 100, TRUE)
-	source.balloon_alert(source, "riposte used")
-	source.visible_message(
-		span_warning("[source] leans into [attack_text] and delivers a sudden riposte back at [target]!"),
-		span_warning("You lean into [attack_text] and deliver a sudden riposte back at [target]!"),
-		span_hear("You hear a clink, followed by a stab."),
-	)
-	weapon.melee_attack_chain(source, target)
-
-/datum/heretic_knowledge/blade_dance/proc/reset_riposte(mob/living/carbon/human/source)
-	riposte_ready = TRUE
-	source.balloon_alert(source, "riposte ready")
-
-#undef BLADE_DANCE_COOLDOWN
-
-/datum/heretic_knowledge/mark/blade_mark
-	name = "Mark of the Blade"
-	desc = "Your Mansus Grasp now applies the Mark of the Blade. While marked, \
-		the victim will be unable to leave their current room until it expires or is triggered. \
-		Triggering the mark will summon a knife that will orbit you for a short time. \
-		The knife will block any attack directed towards you, but is consumed on use."
-	gain_text = "His general wished to end the war, but the Champion knew there could be no life without death. \
-		He would slay the coward himself, and anyone who tried to run."
-	mark_type = /datum/status_effect/eldritch/blade
-
-/datum/heretic_knowledge/mark/blade_mark/create_mark(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/base_blade/create_mark(mob/living/source, mob/living/target)
 	var/datum/status_effect/eldritch/blade/blade_mark = ..()
 	if(istype(blade_mark))
 		var/area/to_lock_to = get_area(target)
@@ -169,15 +87,11 @@
 		to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
 	return blade_mark
 
-/datum/heretic_knowledge/mark/blade_mark/trigger_mark(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/base_blade/trigger_mark(mob/living/source, mob/living/target)
 	. = ..()
 	if(!.)
 		return
 	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
-
-/datum/heretic_knowledge/knowledge_ritual/blade
-
-
 
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"
@@ -186,7 +100,91 @@
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
 	action_to_add = /datum/action/cooldown/spell/realignment
-	cost = 1
+	cost = 2
+
+/// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
+#define BLOOD_FLOW_PER_SEVEIRTY -1
+
+/datum/heretic_knowledge/duel_stance
+	name = "Stance of the Torn Champion"
+	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
+		Additionally, when damaged below 50% of your maximum health, \
+		you gain increased resistance to gaining wounds and resistance to slowdown."
+	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
+		He was without rival, equal, or purpose."
+	cost = 2
+	research_tree_icon_path = 'icons/effects/blood.dmi'
+	research_tree_icon_state = "suitblood"
+	research_tree_icon_dir = SOUTH
+	drafting_tier = 5
+	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
+	var/in_duelist_stance = FALSE
+
+/datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
+	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
+	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
+
+	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
+
+/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
+	if(in_duelist_stance)
+		user.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
+		if(isliving(user))
+			var/mob/living/living_mob = user
+			living_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
+
+	UnregisterSignal(user, list(COMSIG_ATOM_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_HEALTH_UPDATE))
+
+/datum/heretic_knowledge/duel_stance/proc/on_examine(mob/living/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	var/obj/item/held_item = source.get_active_held_item()
+	if(in_duelist_stance)
+		examine_list += span_warning("[source] looks unnaturally poised[held_item?.force >= 15 ? " and ready to strike out":""].")
+
+/datum/heretic_knowledge/duel_stance/proc/on_wound_gain(mob/living/source, datum/wound/gained_wound, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	if(gained_wound.blood_flow <= 0)
+		return
+
+	gained_wound.adjust_blood_flow(gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
+
+/datum/heretic_knowledge/duel_stance/proc/on_health_update(mob/living/source)
+	SIGNAL_HANDLER
+
+	if(in_duelist_stance && source.health > source.maxHealth * 0.5)
+		source.balloon_alert(source, "exited duelist stance")
+		in_duelist_stance = FALSE
+		source.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
+		source.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
+		return
+
+	if(!in_duelist_stance && source.health <= source.maxHealth * 0.5)
+		source.balloon_alert(source, "entered duelist stance")
+		in_duelist_stance = TRUE
+		ADD_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
+		source.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
+		return
+
+#undef BLOOD_FLOW_PER_SEVEIRTY
+
+/datum/heretic_knowledge/armor/blade
+	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of titanium or silver to create a Shattered Panoply. \
+			Provides baton resistance and shock insulation while worn. \
+			Acts as a focus while hooded."
+	gain_text = "The echoing, directionless cacophony of violence reverberates about me. \
+				Even as the Champion's steel panoply was torn from their form, each piece craves purpose still, seeking to intercept unseen or imagined attackers."
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade)
+	research_tree_icon_state = "blade_armor"
+	required_atoms = list(
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
+		/obj/item/clothing/mask = 1,
+		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
+	)
 
 /datum/heretic_knowledge/spell/wolves_among_sheep
 	name = "Wolves Among Sheep"
@@ -199,8 +197,9 @@
 		I have made an enemy of all, and peace will never be known to me \
 		again. I have shattered bonds and severed all alliances. In this truth, \
 		I know now the fragility of comradery. My enemies will be all, divided."
-	cost = 1
+	cost = 2
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Empowered Blades"
@@ -221,11 +220,10 @@
 	. = ..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_blade_equipped))
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(do_melee_effects))
 
 /datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_HERETIC_BLADE_ATTACK))
+	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM))
 
 ///Tries to infuse our held blade with our mansus grasp
 /datum/heretic_knowledge/blade_upgrade/blade/proc/on_grasp_cast(mob/living/carbon/cast_on)
@@ -296,7 +294,7 @@
 /datum/heretic_knowledge/blade_upgrade/blade/proc/on_blade_equipped(mob/user, obj/item/equipped, slot)
 	SIGNAL_HANDLER
 	if(istype(equipped, /obj/item/melee/sickly_blade/dark))
-		equipped.demolition_mod = 1.5
+		equipped.demolition_mod = 2.5
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"
@@ -307,7 +305,7 @@
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
@@ -336,7 +334,7 @@
 	. = ..()
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, type)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
-	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, /obj/effect/floating_blade, 1 MINUTES)
+	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, STATUS_EFFECT_PERMANENT, 8, 30, 0.25 SECONDS, /obj/effect/floating_blade, 40 SECONDS)
 	user.add_stun_absorption(
 		source = name,
 		message = span_warning("%EFFECT_OWNER throws off the stun!"),

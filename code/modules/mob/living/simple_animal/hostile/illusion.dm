@@ -1,3 +1,6 @@
+#define ATTACK_MODE_ATTACK "attack_mode"
+#define ATTACK_MODE_SHOVE "shove_mode"
+
 /mob/living/simple_animal/hostile/illusion
 	name = "illusion"
 	desc = "It's a fake!"
@@ -22,8 +25,22 @@
 	var/datum/weakref/parent_mob_ref
 	/// Prob of getting a clone on attack
 	var/multiply_chance = 0
+	/// Decides how the clones attack people
+	var/attack_mode = ATTACK_MODE_ATTACK
 
-/mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
+/mob/living/simple_animal/hostile/illusion/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(check_mode))
+
+/// Called before trying to attack something
+/mob/living/simple_animal/hostile/illusion/proc/check_mode(mob/living/source, atom/attacked_target)
+	SIGNAL_HANDLER
+	if(attack_mode != ATTACK_MODE_SHOVE)
+		return
+	if(disarm(attacked_target))
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+/mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0, attack_mode = ATTACK_MODE_ATTACK)
 	appearance = original.appearance
 	parent_mob_ref = WEAKREF(original)
 	setDir(original.dir)
@@ -36,6 +53,7 @@
 	transform = initial(transform)
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
+	src.attack_mode = attack_mode
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, death)), life)
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
@@ -81,3 +99,6 @@
 /mob/living/simple_animal/hostile/illusion/mirage/death(gibbed)
 	do_sparks(rand(3, 6), FALSE, src)
 	return ..()
+
+#undef ATTACK_MODE_ATTACK
+#undef ATTACK_MODE_SHOVE

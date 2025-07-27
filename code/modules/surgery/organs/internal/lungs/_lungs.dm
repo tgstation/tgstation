@@ -744,13 +744,13 @@
 	// Low pressure.
 	if(breath_pp)
 		var/ratio = safe_breath_min / breath_pp
-		suffocator.adjustOxyLoss(min(5 * ratio, HUMAN_MAX_OXYLOSS))
+		suffocator.apply_damage(min(5 * ratio, HUMAN_MAX_OXYLOSS), OXY)
 		return mole_count * ratio / 6
 	// Zero pressure.
 	if(suffocator.health >= suffocator.crit_threshold)
-		suffocator.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+		suffocator.apply_damage(HUMAN_MAX_OXYLOSS, OXY)
 	else
-		suffocator.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+		suffocator.apply_damage(HUMAN_CRIT_MAX_OXYLOSS, OXY)
 
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/breather) // called by human/life, handles temperatures

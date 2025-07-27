@@ -57,8 +57,6 @@
 #define SHOES_TRAIT "shoes"
 /// Trait inherited by implants
 #define IMPLANT_TRAIT "implant"
-/// Traits given by the heretic arena spell
-#define HERETIC_ARENA_TRAIT "heretic_arena"
 #define GLASSES_TRAIT "glasses"
 /// inherited from riding vehicles
 #define VEHICLE_TRAIT "vehicle"
@@ -101,6 +99,14 @@
 #define SWORDPLAY_TRAIT "swordplay"
 /// Trait given by being recruited as a nuclear operative
 #define NUKE_OP_MINION_TRAIT "nuke-op-minion"
+
+//---- Heretic Traits Sources
+/// Traits given by the heretic arena spell
+#define HERETIC_ARENA_TRAIT "heretic_arena"
+/// Trait given by researching any final knowledge before ascension
+#define FINAL_KNOWLEDGE_TRAIT "final_knowledge"
+/// Trait given by getting too many knowledge points
+#define HELLA_KNOWLEDGE_TRAIT "hella_knowledge"
 
 /// Trait given to you by shapeshifting
 #define SHAPESHIFT_TRAIT "shapeshift_trait"

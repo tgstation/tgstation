@@ -330,6 +330,8 @@
 	return ..()
 
 /obj/item/organ/brain/on_life(seconds_per_tick, times_fired)
+	if(HAS_TRAIT(src, TRAIT_BRAIN_DAMAGE_NODEATH))
+		return
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
@@ -524,6 +526,9 @@
 			. += BT
 
 /obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience, natural_gain = FALSE)
+	if(HAS_TRAIT(src, TRAIT_BRAIN_TRAUMA_IMMUNITY))
+		return FALSE
+
 	if(!ispath(trauma))
 		trauma = trauma.type
 	if(!initial(trauma.can_gain))
