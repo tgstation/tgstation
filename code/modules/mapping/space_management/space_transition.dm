@@ -147,9 +147,8 @@
 				var/turf/place = locate(S.destination_x, S.destination_y, zdestination)
 				S.AddElement(/datum/element/mirage_border, place, mirage_dir, range_cached)
 
-/// Construct linkages randomly to get confusing space transitions
-/// We do this by constructing an absurdly large grid, and placing the levels randomly inside
-/// Please update this comment when you figure out why this is
+/// Construct linkages randomly to get maze-like space transitions
+/// We do this by constructing a very large grid, and placing the levels randomly inside, and then filling out the empty spaces
 /datum/controller/subsystem/mapping/proc/set_cross_linkages(list/transition_levels)
 	var/grid_diameter = (length(transition_levels) * 2) + 1
 	var/list/grid = new /list(grid_diameter ** 2)

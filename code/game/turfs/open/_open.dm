@@ -115,6 +115,7 @@
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /turf/open/attack_ghost(mob/dead/observer/user)
+	. = ..()
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
@@ -124,7 +125,7 @@
 		return FALSE
 	return TRUE
 
-/turf/open/space/is_transition_turf()
+/turf/open/is_transition_turf()
 	if(destination_x || destination_y || destination_z)
 		return TRUE
 
@@ -133,32 +134,34 @@
 	if(!arrived || src != arrived.loc)
 		return
 
-	if(destination_z && destination_x && destination_y && !arrived.pulledby && !arrived.currently_z_moving)
-		var/tx = destination_x
-		var/ty = destination_y
-		var/turf/DT = locate(tx, ty, destination_z)
-		var/itercount = 0
-		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
-			if (itercount++ >= 100)
-				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [arrived] within 100 iterations.")
-				break
-			if (tx < 128)
-				tx++
-			else
-				tx--
-			if (ty < 128)
-				ty++
-			else
-				ty--
-			DT = locate(tx, ty, destination_z)
+	if(!destination_z || !destination_x || !destination_y || arrived.pulledby || arrived.currently_z_moving)
+		return
 
-		arrived.zMove(null, DT, ZMOVE_ALLOW_BUCKLED)
+	var/tx = destination_x
+	var/ty = destination_y
+	var/turf/DT = locate(tx, ty, destination_z)
+	var/itercount = 0
+	while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
+		if (itercount++ >= 100)
+			log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [arrived] within 100 iterations.")
+			break
+		if (tx < 128)
+			tx++
+		else
+			tx--
+		if (ty < 128)
+			ty++
+		else
+			ty--
+		DT = locate(tx, ty, destination_z)
 
-		var/atom/movable/current_pull = arrived.pulling
-		while (current_pull)
-			var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
-			current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
-			current_pull = current_pull.pulling
+	arrived.zMove(null, DT, ZMOVE_ALLOW_BUCKLED)
+
+	var/atom/movable/current_pull = arrived.pulling
+	while (current_pull)
+		var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
+		current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
+		current_pull = current_pull.pulling
 /**
  * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.
  * This replaces the current turf if it is plating and is passed plating, is tile and is passed tile.
