@@ -376,7 +376,7 @@ be able to save yourself for a few seconds and keep fighting.
 <br>
 <br><B>Secondly, the bomb can be activated posthumously</B>. There is a small onboard, low-level AI built into the microbomb. Based on a series of arbitrary factors, the bomb can still be activated
 despite the presence of atropine by releasing a failsafe vial of monkey blood (notoriously volatile), the timing of which is determined by the onboard AI.
-<br>The only factor is whether or not, and for give me for what I'm about to write, your 'animating spirit' still resides within your body to guide the AI and activate the bomb manually.
+<br>The only factor is whether or not, and forgive me for what I'm about to write, your 'animating spirit' still resides within your body to guide the AI and activate the bomb manually.
 <br>Please, do not ask your fellow operatives what this means.
 <br>
 <br>They'll probably say something absurd like <B>'your ghost needs to still be in your body to use the microbomb'</B>. That's stupid, do not listen to these ridiculous assertions. It is likely Nanotrasen propaganda.
