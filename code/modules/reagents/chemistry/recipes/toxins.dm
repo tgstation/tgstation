@@ -406,8 +406,8 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
-/datum/chemical_reaction/babyboomtoxin
-	results = list(/datum/reagent/toxin/babyboom_toxin = 4)
+/datum/chemical_reaction/shortenertoxin
+	results = list(/datum/reagent/toxin/shortener_toxin = 4)
 	mix_message = span_danger("The mixture turns into a yellow liquid, and starts smells very strongly and disgusting.")
 	required_reagents = list(/datum/reagent/uranium/radium = 2, /datum/reagent/toxin/mutagen = 2, /datum/chemical_reaction/medicine/hercuri = 2, /datum/reagent/toxin/cyanide = 1, /datum/chemical_reaction/aranesp = 1)
 	is_cold_recipe = FALSE
