@@ -67,12 +67,11 @@
 
 		transition_levels.Add(level)
 
-		if(linkage)
-			if(level.linkage != linkage)
-				// Either you be gridlinked or crosslinked, both is uhhh... a headache
-				stack_trace("Mixed linkages detected in z-level neighbour transitions!")
-		else
-			linkage = level.linkage
+		if(!isnull(linkage) && level.linkage != linkage)
+			// Either you be gridlinked or crosslinked, both is uhhh... a headache
+			stack_trace("Mixed linkages detected in z-level neighbour transitions!")
+			continue
+		linkage = level.linkage
 
 	if(linkage == CROSSLINKED)
 		set_cross_linkages(transition_levels)
