@@ -91,11 +91,20 @@
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
+	//Heads up to other AIs that a new AI is online and listening to Binary.
+	if(announce_init_to_others)
+		for(var/mob/living/silicon/ai/remotehost in GLOB.ai_list)
+			if(remotehost == src)
+				continue
+			to_chat(remotehost, "<br><span class='notice'>NEW REMOTE HOST CONNECTED - ID: \"[src]\"</span><br>")
+			remotehost.playsound_local(remotehost, 'sound/machines/beep/twobeep.ogg', 50, pressure_affected = FALSE, use_reverb = FALSE)
+
 /mob/living/silicon/ai/weak_syndie
 	radio = /obj/item/radio/headset/silicon/ai/evil
 	radio_enabled = TRUE
 	interaction_range = 1
 	sprint = 5
+	announce_init_to_others = FALSE
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
