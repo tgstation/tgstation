@@ -1087,7 +1087,7 @@
 	icon_state = "space_lamp"
 	worn_icon_state = "space_lamp"
 	inhand_icon_state = "space_lamp"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK
 	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = SLOWDOWN_DEFAULT
