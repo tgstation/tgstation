@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("dumps")
 	attack_verb_simple = list("dump")
+	/// Has the phone been used already?
 	var/dumped = FALSE
 
 /obj/item/suspiciousphone/attack_self(mob/living/user)
@@ -48,10 +49,14 @@
 	density = TRUE
 	pixel_z = -8
 	max_integrity = 5000
+	/// List of bank accounts to take money from, determines in start_dumping()
 	var/list/accounts_to_rob
+	/// The original user of the suspicious phone
 	var/mob/living/bogdanoff
 	/// Are we able to start moving?
 	var/canwalk = FALSE
+	/// Our own internal bank account, serves as a fallback to transfer money to if Bogdanoff doesn't have one
+	var/datum/bank_account/internal_account
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
@@ -103,6 +108,7 @@
 	if(QDELETED(src))
 		return
 	bogdanoff = user
+	internal_account = new /datum/bank_account/remote("CRAB-17", 0, player_account = FALSE)
 	add_overlay("flaps")
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
@@ -178,6 +184,8 @@
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
+	if(internal_account.account_balance)
+		expel_cash()
 	explosion(src, light_impact_range = 1, flame_range = 2)
 	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 	return ..()
@@ -201,7 +209,9 @@
 		var/datum/bank_account/account = bogdanoff?.get_bank_account()
 		if (account) // get_bank_account() may return FALSE
 			account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
-			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
+		else
+			internal_account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
+		B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, PROC_REF(dump)), 15 SECONDS) //Drain every 15 seconds
 
 /obj/structure/checkoutmachine/process()
@@ -214,6 +224,16 @@
 		var/datum/bank_account/B = i
 		if(B)
 			B.being_dumped = FALSE
+
+/obj/structure/checkoutmachine/proc/expel_cash()
+	message_admins("Spitting out money")
+	var/funds_remaining = internal_account.account_balance
+	while(funds_remaining)
+		message_admins("[funds_remaining]")
+		var/amount_to_remove = min(funds_remaining, rand(1, round(internal_account.account_balance)/8))
+		var/obj/item/holochip/holochip = new (get_turf(src), amount_to_remove)
+		funds_remaining -= amount_to_remove
+		holochip.throw_at(pick(oview(7,get_turf(src))),10,1)
 
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""
