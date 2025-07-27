@@ -1345,3 +1345,37 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.AddElement(/datum/element/squish, 120 SECONDS)
 	for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
 		affected_mob.cause_wound_of_type_and_severity(WOUND_SLASH, leg, WOUND_SEVERITY_SEVERE)
+
+/datum/reagent/inverse/babyboom_toxin
+	name = "Tallcrasher"
+	color = COLOR_SOFT_RED
+	description = "Inversed version of baby-boom toxin, whats make you very and very big. This also will heals your burns."
+	ph = 6.9
+	tox_damage = -0.25
+	metabolization_rate = 0.9 * REM
+	overdose_threshold = 30
+	var/current_size = RESIZE_DEFAULT_SIZE
+	metabolized_traits = list(TRAIT_TOO_TALL)
+
+/datum/reagent/inverse/babyboom_toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
+		return UPDATE_MOB_HEALTH
+	var/newsize = current_size
+	switch(volume)
+		if(0 to 49)
+			newsize = 2.5*RESIZE_DEFAULT_SIZE
+		if(50 to INFINITY)
+			newsize = 3.5*RESIZE_DEFAULT_SIZE
+
+	affected_mob.update_transform(newsize/current_size)
+	current_size = newsize
+
+/datum/reagent/inverse/babyboom_toxin/overdose_start(mob/living/affected_mob)
+	. = ..()
+	metabolization_rate = 3 * REM
+
+/datum/reagent/inverse/babyboom_toxin/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
+	current_size = RESIZE_DEFAULT_SIZE
