@@ -243,6 +243,12 @@
 	impact_light_intensity = 7
 	impact_light_range = 2.5
 	impact_light_color_override = COLOR_LIME
+	// Subtract this from SM damage on hit for lasers
+	var/integrity_heal
+	// Subtract this from SM energy on hit for lasers
+	var/energy_reduction
+	// Add this to SM psi coefficient on hit for lasers
+	var/psi_change
 
 /obj/projectile/beam/emitter/hitscan/bluelens
 	name = "electrodisruptive beam"
