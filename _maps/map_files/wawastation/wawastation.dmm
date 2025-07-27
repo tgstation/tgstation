@@ -66762,10 +66762,20 @@
 /obj/structure/table/wood/fancy/red,
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/recharger{
-	pixel_x = 14
+	pixel_x = 16;
+	pixel_y = 3
 	},
-/obj/item/folder/red,
-/obj/item/stamp/head/hos,
+/obj/item/folder/red{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/obj/item/stamp/head/hos{
+	pixel_y = 11;
+	pixel_x = 2
+	},
+/obj/machinery/computer/records/security/laptop{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "wZR" = (
@@ -66884,8 +66894,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xaY" = (
-/obj/machinery/computer/records/security,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "xbi" = (

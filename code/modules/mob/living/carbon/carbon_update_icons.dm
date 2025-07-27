@@ -24,7 +24,7 @@
 		if(OFFSET_HEAD)
 			update_worn_head()
 		if(OFFSET_FACE)
-			dna?.species?.handle_body(src) // updates eye icon
+			dna?.species?.update_face_offset(src) // updates eye and lipstick icon
 			update_worn_mask()
 		if(OFFSET_BELT)
 			update_worn_belt()

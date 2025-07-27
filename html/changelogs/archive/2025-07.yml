@@ -566,3 +566,91 @@
   SmArtKar:
   - bugfix: Fixes facial hair gradient DNA runtiming and sometimes not adding proper
       gradients
+2025-07-24:
+  Aliceee2ch:
+  - bugfix: Added missing ID machinery on CatwalkStation and WawaStation
+  - bugfix: Fixed wrongly placed decal in TramStation brig
+  - bugfix: Removed acidentally placed slime grinder in nuclear operatives outpost
+  DaxDupont:
+  - spellcheck: The crew is no longer encouranged to assist in repairs.
+  Melbert:
+  - qol: Firelock setups across every map should be more sane now, with better coverage
+      of fire alarms and fewer firelock boxes of doom.
+  SmArtKar:
+  - bugfix: Deleted a misplaced basetype sign on snowcabin
+  Thunder12345:
+  - bugfix: The quartermaster's request console on Catwalk Station will no longer
+      show up as Unknown.
+  - map: The quartermaster's request console on Catwalk Station has been moved from
+      their bedroom to the office.
+  lelandkemble:
+  - bugfix: makes the icebox hermit native to icebox
+2025-07-25:
+  00-Steven:
+  - bugfix: Xenobio console can no longer pick up the same slime multiple times.
+  SmArtKar:
+  - bugfix: Fixed hiveheads spawning bees on tiles when you're riding disposals
+  - code_imp: Cleaned up and updated hivehead code
+  - spellcheck: Removed double the when trying to write with an incorrect instrument
+  - refactor: Refactored how facial offsets interact with eye rendering, potentially
+      optimizing future species that use this feature.
+  TealSeer:
+  - code_imp: added a new parameter to playsound and playsound_local that lets you
+      specify a volume pref type to use
+  - bugfix: fixed scarp breaking your HUD sometimes
+  twilightwanderer:
+  - bugfix: Solar console and pipe sprite fixes
+2025-07-26:
+  grungussuss:
+  - bugfix: all hand items will now have no cooldown when used with northstar gloves,
+      including circle hand
+  jlsnow301:
+  - admin: Fixed the bluescreen in admin fax panel
+  twilightwanderer:
+  - admin: Added the ability to play your own announce sounds.
+2025-07-27:
+  Absolucy:
+  - bugfix: Fixed runechat emote icons being too big.
+  - bugfix: Fixed screentip icons having awkward spacing.
+  Arturlang:
+  - bugfix: clothing with hood now correctly hides slots based on inv_flags
+  Bisar:
+  - code_imp: The .outfit and .plasmaman_outfit variables on the job datum are now
+      defined to their expected types.
+  - rscadd: Climbing hooks can now be used to climb UP or DOWN, instead of only up.
+  - qol: Climbing hooks no longer have a limit on their number of uses.
+  - balance: Syndicate climbing hooks now have a speed of 0.75 seconds to climb, in
+      comparison to the standard 4 seconds for emergency hooks.
+  - bugfix: Fixed a runtime in climbing hooks when you would try to climb down.
+  DresserOnFire:
+  - bugfix: Wanted posters now correctly return to your inventory if you move while
+      placing them
+  Ezel:
+  - rscdel: Removes ralsei plushie
+  - rscdel: Removes jevil mask from clown masks
+  Fikou:
+  - rscadd: mech removal crowbar removes mech sleeper patients
+  - balance: occupants it removes also no longer get thrown at a random tile
+  - spellcheck: clarke mech description was rewritten for grammar
+  Jacquerel:
+  - admin: adds logging for turning bot sapience on and off
+  Melbert:
+  - rscadd: HoP traitors can get an objective to "replace the captain" - requiring
+      they assassinate the captain and steal their id.
+  SmArtKar:
+  - bugfix: Trying to ignite oil with a welding tool no longer runtimes due to it
+      trying to get ignited twice
+  - bugfix: Fixed repaired plastitanium r-walls disappearing
+  - bugfix: Fixed borgs made with athlete brains runtiming when trying to examine
+      an especially fit person
+  lelandkemble:
+  - bugfix: Command can now use their sustenance vendor on Catwalk Station
+  moocowswag:
+  - rscadd: Modular shield gates which project a shield in a line and does not suffer
+      indoor penalties.
+  - balance: Modular shields now better interact with and block atmos and explosions
+      and melee for what they are protecting, hulks are able to take one down eventually
+      no matter what.
+  - balance: Modular shields now suffer a severe range penalty when generating indoors
+      but are more potent in their capacity to endure damage.
+  - image: modular shield gate sprites
