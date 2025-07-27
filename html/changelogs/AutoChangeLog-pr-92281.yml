@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - rscadd: "mech removal crowbar removes mech sleeper patients"
-  - balance: "occupants it removes also no longer get thrown at a random tile"
-  - spellcheck: "clarke mech description was rewritten for grammar"
