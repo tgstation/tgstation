@@ -101,3 +101,19 @@
 		/datum/action/cooldown/mob_cooldown/fire_breath = BB_WHELP_STRAIGHTLINE_FIRE,
 		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/fire = BB_WHELP_WIDESPREAD_FIRE,
 	)
+
+/mob/living/basic/mining/ice_whelp/sea
+	name = "sea whelp"
+	desc = "The offspring of a sea serpent, still does not look like a serpent."
+	icon = 'icons/mob/simple/lavaland/sea_whelp.dmi'
+	icon_state = "sea_whelp"
+	icon_living = "sea_whelp"
+	icon_dead = "sea_whelp_dead"
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/electric = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/electric = BB_WHELP_WIDESPREAD_FIRE,
+	)
+
+/mob/living/basic/mining/ice_whelp/sea/Initialize(mapload)
+	. = ..()
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)

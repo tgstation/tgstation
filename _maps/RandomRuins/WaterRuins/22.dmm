@@ -1,0 +1,388 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"f" = (
+/obj/structure/curtain/bounty,
+/obj/effect/turf_decal/trimline/brown/filled/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"h" = (
+/obj/structure/cable,
+/obj/machinery/smesbank,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"i" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"o" = (
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/ruin/outpost31)
+"p" = (
+/obj/structure/curtain/bounty,
+/obj/effect/turf_decal/trimline/brown/filled/warning{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"q" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"r" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/outpost31)
+"v" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"x" = (
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"E" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"K" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/floor/pod/light,
+/area/ruin/outpost31)
+"O" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"R" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"S" = (
+/obj/machinery/light/floor,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"U" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"W" = (
+/obj/vehicle/sealed/car/vim,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"X" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/gps/spaceruin,
+/obj/item/wrench/caravan,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"Y" = (
+/obj/machinery/computer/old,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+"Z" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/spawner/random/mod/maint,
+/obj/effect/spawner/random/exotic/languagebook,
+/obj/effect/spawner/random/exotic/technology,
+/turf/open/floor/pod/dark,
+/area/ruin/outpost31)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+o
+o
+o
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+o
+K
+o
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+o
+o
+w
+o
+o
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+r
+D
+w
+Z
+r
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+r
+Y
+S
+X
+r
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+r
+r
+r
+O
+d
+r
+r
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+o
+E
+f
+b
+d
+U
+r
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+o
+q
+p
+R
+x
+h
+r
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+r
+r
+r
+v
+W
+r
+r
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+r
+r
+i
+r
+r
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

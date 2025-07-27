@@ -156,6 +156,7 @@
 		"manusorter",
 		"manurouter",
 		"mailsorter",
+		"waterrods",
 	)
 
 /datum/techweb_node/energy_manipulation

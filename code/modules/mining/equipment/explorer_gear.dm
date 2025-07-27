@@ -243,3 +243,24 @@
 	desc = "An armoured hood for exploring harsh environments."
 	icon_state = "explorer_syndicate"
 	armor_type = /datum/armor/hooded_explorer_syndicate
+
+/obj/item/clothing/suit/hooded/explorer/diving
+	name = "waterproof explorer suit"
+	desc = "An armoured suit for exploring harsh environments. This one seems better suited for aquatic combat."
+	icon_state = "explorer_diving"
+	worn_icon_state = "explorer_diving"
+	icon = 'icons/obj/clothing/suits/explorer_diving.dmi'
+	worn_icon = 'icons/mob/clothing/suits/explorer_diving.dmi'
+	hoodtype = /obj/item/clothing/head/hooded/explorer/diving
+
+/obj/item/clothing/suit/hooded/explorer/diving/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/diving_gear)
+
+/obj/item/clothing/head/hooded/explorer/diving
+	icon = 'icons/obj/clothing/head/ethereal.dmi'
+	icon_state = "eth_rainhood"
+	worn_icon = 'icons/mob/clothing/head/ethereal.dmi'
+	worn_icon_state = "eth_rainhood"
+	name = "waterproof explorer hood"
+	desc = "An armoured hood for exploring harsh environments."

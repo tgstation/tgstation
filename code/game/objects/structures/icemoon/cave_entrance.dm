@@ -111,6 +111,20 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	mob_types = list(/mob/living/basic/mining/legion/snow/spawner_made)
 	mob_gps_id = "LG|S" // legion | snow
 
+/obj/structure/spawner/ice_moon/demonic_portal/rainworld
+
+/obj/structure/spawner/ice_moon/demonic_portal/rainworld/lobstrocity
+	mob_types = list(/mob/living/basic/mining/hivelord)
+	mob_gps_id = "L"
+
+/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord
+	mob_types = list(/mob/living/basic/mining/lobstrosity)
+	mob_gps_id = "H"
+
+/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk
+	mob_types = list(/mob/living/basic/mining/basilisk)
+	mob_gps_id = "B"
+
 /obj/effect/collapsing_demonic_portal
 	name = "collapsing demonic portal"
 	desc = "It's slowly fading!"
@@ -200,3 +214,12 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			new /obj/item/clothing/shoes/winterboots/ice_boots(loc)
 		if(27)
 			new /obj/item/book/granter/action/spell/sacredflame(loc)
+
+/obj/effect/collapsing_demonic_portal/rainworld
+
+/obj/structure/spawner/ice_moon/demonic_portal/rainworld/destroy_effect()
+	new /obj/effect/collapsing_demonic_portal/rainworld(loc)
+
+/obj/effect/collapsing_demonic_portal/rainworld/drop_loot()
+	visible_message(span_warning("Something slips out of [src]!"))
+	new /obj/structure/closet/crate/necropolis/tendril (loc)

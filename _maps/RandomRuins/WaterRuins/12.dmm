@@ -1,0 +1,1634 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/item/light/tube/broken,
+/obj/item/stack/cable_coil/cut,
+/obj/item/flashlight/flare/torch{
+	dir = 2;
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/structure/light_construct/directional/east,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"bf" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"cf" = (
+/obj/structure/window/reinforced/shuttle/survival_pod,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"dT" = (
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/tube/broken,
+/obj/structure/table_frame/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"dW" = (
+/obj/item/storage/backpack/satchel,
+/obj/item/binoculars,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"ed" = (
+/obj/structure/barricade/wooden,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 1;
+	pixel_y = -2;
+	amount = 2
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"ey" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/rainworld/surface/outdoors)
+"eH" = (
+/obj/machinery/door/airlock/vault{
+	color = "#825427";
+	name = "Ye Olde Strong Door"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"eP" = (
+/obj/item/stack/cable_coil/cut,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -2;
+	pixel_y = 2;
+	amount = 2
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"eY" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"fE" = (
+/obj/structure/cannon{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"fN" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"fQ" = (
+/obj/item/wallframe/light_fixture/small,
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/bulb/broken,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"gn" = (
+/obj/machinery/turretid{
+	icon_state = "control_off";
+	pixel_y = -24;
+	req_access = null
+	},
+/turf/open/floor/carpet/red,
+/area/rainworld/surface/outdoors)
+"gN" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/mob/living/basic/trooper/pirate/ranged,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"hy" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 2;
+	pixel_y = 4;
+	amount = 3
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"iC" = (
+/obj/item/stock_parts/capacitor{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 2;
+	pixel_y = 1;
+	amount = 2
+	},
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/recharger,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"iJ" = (
+/obj/structure/lattice,
+/obj/item/wallframe/light_fixture,
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/tube/broken,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"jm" = (
+/obj/item/stack/rods,
+/obj/item/light/bulb/broken,
+/obj/item/wallframe/light_fixture/small,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"jy" = (
+/obj/structure/window/reinforced/shuttle/survival_pod,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"kO" = (
+/obj/item/stack/rods,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"kT" = (
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"mh" = (
+/obj/item/stack/cable_coil/cut,
+/obj/item/wallframe/light_fixture/small,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 2;
+	pixel_y = 2;
+	amount = 2
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"ml" = (
+/obj/item/wallframe/light_fixture,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"mn" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -4;
+	pixel_y = -2;
+	amount = 2
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"mt" = (
+/obj/effect/decal/cleanable/glass/titanium,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"mF" = (
+/obj/structure/table/wood,
+/obj/item/storage/lockbox/dueling,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"mX" = (
+/obj/item/binoculars,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"nc" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"nB" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -3;
+	pixel_y = -2;
+	amount = 3
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"nT" = (
+/obj/structure/fake_stairs/wood,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"nX" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/carpet{
+	initial_gas_mix = "TEMP=16.58"
+	},
+/area/rainworld/surface/outdoors)
+"oc" = (
+/obj/machinery/recharger,
+/obj/item/binoculars,
+/obj/structure/table/wood,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"ox" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"oA" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"oM" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/item/stack/rods,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/wood{
+	dir = 1;
+	pixel_x = 4;
+	pixel_y = -2;
+	amount = 4
+	},
+/obj/structure/table_frame/wood,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"pI" = (
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"pV" = (
+/obj/structure/window/plasma/spawner/directional/north,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"qm" = (
+/obj/structure/lattice,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"tx" = (
+/obj/item/stack/rods,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"tP" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mob_spawn/corpse/human/pirate/melee,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"ui" = (
+/turf/template_noop,
+/area/template_noop)
+"ul" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 4;
+	pixel_y = -2;
+	amount = 2
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"up" = (
+/obj/item/stack/sheet/mineral/wood{
+	dir = 8;
+	pixel_x = -1;
+	pixel_y = 4;
+	amount = 3
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"uN" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/effect/decal/cleanable/glass/titanium{
+	dir = 1
+	},
+/obj/item/stack/rods,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"vh" = (
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"vl" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/effect/decal/cleanable/glass/titanium{
+	dir = 1
+	},
+/obj/item/stack/rods,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"xK" = (
+/obj/structure/railing/corner{
+	color = "#4c3117";
+	name = "wooden railing"
+	},
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"xT" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"yw" = (
+/obj/item/wallframe/light_fixture/small,
+/obj/item/rack_parts,
+/obj/item/stack/sheet/mineral/wood{
+	dir = 8;
+	pixel_x = -2;
+	pixel_y = 4;
+	amount = 3
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"yX" = (
+/obj/item/reagent_containers/cup/glass/bottle/rum{
+	desc = "Rum with ghostly properties that can help the drinker enter the spirit realm. It has fermented under the sea of space for ages.";
+	name = "Ghost Pirate Rum";
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/lighter{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/structure/table/wood,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"zE" = (
+/obj/item/stack/sheet/mineral/wood{
+	dir = 8;
+	pixel_x = 2;
+	pixel_y = 2;
+	amount = 3
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"zM" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -1;
+	pixel_y = 1;
+	amount = 3
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Aa" = (
+/obj/structure/barricade/wooden,
+/obj/item/stack/sheet/mineral/wood{
+	dir = 4;
+	pixel_x = -4;
+	pixel_y = -4;
+	amount = 4
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Bn" = (
+/obj/machinery/loot_locator,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"Bv" = (
+/obj/item/stack/sheet/mineral/wood{
+	dir = 1;
+	pixel_x = -4;
+	pixel_y = -3;
+	amount = 6
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"BA" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/mineral/wood{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/structure/table_frame/wood,
+/obj/item/circuitboard/machine/recharger,
+/obj/item/stock_parts/capacitor{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"BU" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_y = -2;
+	amount = 2
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"CA" = (
+/obj/item/rack_parts,
+/obj/item/wallframe/light_fixture,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"CC" = (
+/obj/structure/frame/computer,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"CN" = (
+/obj/item/paper/fluff/old_pirate_note,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"Ds" = (
+/obj/machinery/computer/old{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"DA" = (
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/obj/machinery/door/airlock/vault{
+	color = "#825427";
+	name = "Ye Olde Strong Door"
+	},
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"DT" = (
+/obj/structure/rack/skeletal,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"Eh" = (
+/turf/open/floor/carpet/red,
+/area/rainworld/surface/outdoors)
+"ER" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/book/granter/crafting_recipe/trash_cannon,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"FQ" = (
+/obj/item/stack/cable_coil/cut,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -1;
+	pixel_y = 4;
+	amount = 2
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"FY" = (
+/obj/item/light/tube/broken,
+/obj/item/stack/cable_coil/cut,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Gm" = (
+/obj/structure/railing{
+	color = "#4c3117";
+	dir = 8;
+	name = "wooden railing"
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"HV" = (
+/obj/structure/table/wood,
+/obj/machinery/recharger,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"If" = (
+/obj/machinery/door/airlock/vault{
+	color = "#825427";
+	name = "Ye Olde Strong Door"
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Io" = (
+/obj/item/stack/sheet/mineral/wood{
+	dir = 4;
+	pixel_x = -1;
+	amount = 2
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Ix" = (
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"IC" = (
+/obj/machinery/door/airlock/vault{
+	color = "#825427";
+	name = "Ye Olde Strong Door"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"IN" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Jp" = (
+/obj/item/shard/plasma{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Jx" = (
+/obj/item/stack/rods,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Jz" = (
+/obj/machinery/door/airlock/vault{
+	color = "#825427";
+	name = "Ye Olde Strong Door"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"JC" = (
+/obj/structure/fermenting_barrel/gunpowder,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"Kw" = (
+/obj/item/stack/sheet/mineral/wood{
+	dir = 1;
+	pixel_x = 3;
+	pixel_y = -4;
+	amount = 3
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Ky" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"KI" = (
+/obj/effect/mob_spawn/corpse/human/pirate/ranged,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"LF" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/effect/decal/cleanable/glass/titanium{
+	dir = 8
+	},
+/obj/item/stack/rods,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"LU" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/item/stack/rods,
+/obj/item/shard{
+	dir = 8;
+	pixel_x = 1;
+	pixel_y = -4
+	},
+/obj/item/shard{
+	dir = 8;
+	icon_state = "medium";
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/stack/cable_coil/cut,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Mk" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/effect/decal/cleanable/glass/titanium,
+/obj/item/stack/rods,
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Ml" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/structure/table_frame/wood,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Mw" = (
+/obj/item/restraints/legcuffs/bola,
+/obj/item/megaphone{
+	dir = 1;
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/melee/chainofcommand/tailwhip/kitty{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/costume/pirate/captain/armored,
+/obj/structure/closet/cabinet,
+/obj/item/gps/spaceruin,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"Nt" = (
+/obj/item/stack/sheet/mineral/wood{
+	dir = 8;
+	pixel_x = -1;
+	pixel_y = -1;
+	amount = 3
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"NI" = (
+/obj/structure/window/plasma/spawner/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/carpet{
+	initial_gas_mix = "o2=0.94n2=3.57pluoxium=0.02helium=0.03TEMP=45.15"
+	},
+/area/rainworld/surface/outdoors)
+"Oh" = (
+/obj/effect/mob_spawn/corpse/human/pirate/ranged,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Pf" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Pi" = (
+/obj/structure/railing{
+	color = "#4c3117";
+	dir = 4;
+	name = "wooden railing"
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"PF" = (
+/obj/machinery/light/directional/south{
+	icon_state = "tube_emergency"
+	},
+/turf/open/floor/carpet/red,
+/area/rainworld/surface/outdoors)
+"PX" = (
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Ts" = (
+/obj/effect/mob_spawn/corpse/human/pirate/melee,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/gibspawner/human/bodypartless,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Tz" = (
+/obj/item/wallframe/light_fixture,
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/tube/broken,
+/obj/item/stack/sheet/mineral/wood{
+	dir = 4;
+	pixel_x = 4;
+	pixel_y = -1;
+	amount = 5
+	},
+/turf/open/floor/carpet/red,
+/area/rainworld/surface/outdoors)
+"TM" = (
+/obj/item/stock_parts/capacitor{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/stack/sheet/mineral/wood{
+	pixel_y = -4;
+	amount = 2
+	},
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/recharger,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Un" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Vb" = (
+/mob/living/basic/trooper/pirate/melee/space,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"Vz" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/item/stack/rods,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"VE" = (
+/obj/structure/rack,
+/obj/item/stack/cannonball/the_big_one,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"VR" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"Wm" = (
+/obj/structure/window/plasma/spawner/directional/east,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Wq" = (
+/obj/structure/rack,
+/obj/item/statuebust/hippocratic/evil{
+	name = "Solemn Vow"
+	},
+/mob/living/basic/parrot/headsetted,
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+"WP" = (
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/structure/fake_stairs/wood,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"WU" = (
+/obj/item/shard/titanium,
+/obj/item/shard/titanium,
+/obj/effect/decal/cleanable/glass/titanium{
+	dir = 8
+	},
+/obj/item/stack/rods,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"WV" = (
+/obj/item/stack/sheet/iron{
+	pixel_x = 4;
+	pixel_y = 3;
+	amount = 5
+	},
+/obj/item/electronics/airlock{
+	dir = 8;
+	req_access = list("maint_tunnels")
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"Xq" = (
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"Yh" = (
+/obj/item/wallframe/light_fixture/small,
+/obj/item/stack/cable_coil/cut,
+/obj/item/light/bulb/broken,
+/obj/item/light/bulb/broken,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/carpet/red,
+/area/rainworld/surface/outdoors)
+"YD" = (
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/rainworld/surface/outdoors)
+"YU" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/carpet/red,
+/area/rainworld/surface/outdoors)
+"Zv" = (
+/obj/structure/frame/machine{
+	anchored = 1
+	},
+/turf/open/floor/wood,
+/area/rainworld/surface/outdoors)
+
+(1,1,1) = {"
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(2,1,1) = {"
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(3,1,1) = {"
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(4,1,1) = {"
+ui
+ui
+ui
+ui
+ey
+cf
+Gm
+jy
+ey
+xT
+xT
+xT
+DA
+oA
+jy
+PX
+PX
+PX
+PX
+PX
+LF
+PX
+vl
+qm
+vl
+PX
+vl
+PX
+jy
+oA
+jy
+xT
+xT
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(5,1,1) = {"
+ui
+ui
+ui
+Un
+eY
+pV
+Eh
+Eh
+nT
+nT
+WP
+nT
+oA
+ml
+PX
+tx
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+tx
+PX
+tx
+PX
+PX
+pI
+oA
+PX
+fN
+xT
+ed
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(6,1,1) = {"
+ui
+ui
+Un
+eY
+eY
+pV
+Eh
+ey
+ey
+cf
+jy
+ey
+Ts
+oA
+kT
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+tx
+PX
+tx
+PX
+PX
+PX
+Ky
+qm
+iJ
+fN
+xT
+BU
+ui
+ui
+ui
+ui
+ui
+"}
+(7,1,1) = {"
+ui
+ui
+Un
+eY
+eY
+pV
+PF
+ey
+Bn
+mF
+YD
+ey
+xT
+YU
+dT
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+tx
+PX
+Ml
+FY
+qm
+zE
+BA
+fN
+fN
+PX
+PX
+ui
+ui
+ui
+ui
+"}
+(8,1,1) = {"
+ui
+ui
+ey
+ey
+ey
+vh
+gn
+ey
+ey
+mX
+gN
+Mw
+jy
+oA
+mh
+Zv
+KI
+oA
+qm
+PX
+PX
+FQ
+PX
+PX
+PX
+eP
+PX
+Vz
+LU
+jy
+Oh
+CC
+fN
+fN
+fN
+PX
+PX
+ui
+ui
+ui
+"}
+(9,1,1) = {"
+ui
+cf
+ey
+ER
+ey
+vh
+Eh
+Eh
+ey
+CN
+vh
+oc
+jy
+oA
+fN
+oA
+yw
+Wm
+WV
+PX
+qm
+PX
+PX
+PX
+tx
+nB
+hy
+Jp
+nX
+NI
+xT
+Nt
+vh
+fN
+fN
+fN
+fN
+cf
+ui
+ui
+"}
+(10,1,1) = {"
+ui
+ey
+VE
+vh
+IC
+vh
+vh
+Eh
+eH
+Vb
+ox
+Ds
+cf
+oA
+Yh
+tx
+PX
+PX
+PX
+Jx
+qm
+PX
+PX
+PX
+PX
+PX
+qm
+PX
+oA
+oA
+Eh
+If
+nc
+vh
+vh
+fN
+fN
+ul
+ey
+ui
+"}
+(11,1,1) = {"
+ui
+cf
+ey
+Wq
+ey
+vh
+Eh
+Eh
+ey
+vh
+vh
+yX
+cf
+Eh
+fN
+xT
+oA
+fN
+fN
+tP
+up
+zM
+tx
+PX
+PX
+PX
+qm
+dW
+pI
+Bv
+xT
+xT
+fQ
+vh
+vh
+vh
+vh
+cf
+ui
+ui
+"}
+(12,1,1) = {"
+ui
+ui
+ey
+ey
+ey
+vh
+Eh
+ey
+ey
+VR
+bf
+Ds
+cf
+Eh
+fN
+fN
+oA
+oA
+Kw
+oA
+oA
+TM
+tx
+tx
+PX
+iC
+oM
+mt
+LF
+jy
+xT
+HV
+vh
+vh
+vh
+xK
+jm
+ui
+ui
+ui
+"}
+(13,1,1) = {"
+ui
+ui
+Un
+eY
+eY
+pV
+PF
+ey
+JC
+fE
+Ix
+ey
+mn
+Tz
+fN
+fN
+fN
+fN
+Ky
+fN
+PX
+PX
+PX
+oA
+PX
+PX
+PX
+fN
+DT
+fN
+vh
+vh
+vh
+vh
+xT
+cf
+ui
+ui
+ui
+ui
+"}
+(14,1,1) = {"
+ui
+ui
+Un
+eY
+eY
+pV
+Eh
+ey
+ey
+cf
+cf
+ey
+Xq
+Eh
+fN
+fN
+fN
+fN
+fN
+Io
+qm
+PX
+Ky
+oA
+qm
+PX
+oA
+Ky
+PX
+fN
+vh
+vh
+ac
+xT
+Aa
+ui
+ui
+ui
+ui
+ui
+"}
+(15,1,1) = {"
+ui
+ui
+ui
+Un
+eY
+pV
+Eh
+Eh
+nT
+nT
+nT
+nT
+Xq
+CA
+nc
+fN
+fN
+fN
+fN
+pI
+qm
+PX
+qm
+oA
+Pf
+PX
+fN
+qm
+fN
+fN
+vh
+vh
+ey
+xT
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(16,1,1) = {"
+ui
+ui
+ui
+ui
+ey
+cf
+Pi
+cf
+ey
+ey
+ey
+ey
+Jz
+xT
+jy
+oA
+jy
+oA
+jy
+kO
+WU
+kO
+jy
+pI
+uN
+kO
+Mk
+kO
+cf
+IN
+cf
+ey
+ey
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(17,1,1) = {"
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(18,1,1) = {"
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}
+(19,1,1) = {"
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+ui
+"}

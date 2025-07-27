@@ -92,6 +92,9 @@
 	if(!mapload)
 		return
 
+	if (SSmapping.current_map.ocean_levels)
+		target_area = /area/rainworld/surface/outdoors/unexplored/mining/allow_megafauna
+
 	var/list/turfs = get_area_turfs(target_area)
 	var/original_len = turfs.len
 	while(turfs.len)

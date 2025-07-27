@@ -132,10 +132,18 @@ SUBSYSTEM_DEF(mapping)
 	while (space_levels_so_far < current_map.space_ruin_levels)
 		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 		++space_levels_so_far
+
 	// Create empty space levels
 	while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
+
+	if(current_map.ocean_levels)
+		var/list/FailedZs = list()
+		LoadGroup(FailedZs, "Deep Ocean", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_OCEAN, height_autosetup = FALSE)
+
+		if(LAZYLEN(FailedZs))
+			CRASH("Ocean failed to load!")
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
@@ -237,7 +245,6 @@ SUBSYSTEM_DEF(mapping)
 	gravity_by_z_level[z_level_number] = max_gravity
 	return max_gravity
 
-
 /**
  * ##setup_ruins
  *
@@ -265,6 +272,10 @@ SUBSYSTEM_DEF(mapping)
 		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0, ruins_type = ZTRAIT_SPACE_RUINS)
 
+	var/list/ocean_ruins = levels_by_trait(ZTRAIT_OCEAN_RUINS)
+	if (ocean_ruins.len)
+		seedRuins(ocean_ruins, 150, list(/area/rainworld/surface/outdoors/unexplored), themed_ruins[ZTRAIT_OCEAN_RUINS], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_LAVALAND, ruins_type = ZTRAIT_OCEAN_RUINS)
+
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
 /datum/controller/subsystem/mapping/proc/setup_rivers()
@@ -275,8 +286,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		var/river_type = HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED) ? /turf/open/lava/plasma/ice_moon : /turf/open/openspace/icemoon
-		spawn_rivers(ice_z, 4, river_type, /area/icemoon/surface/outdoors/unexplored/rivers)
+		spawn_rivers(ice_z, 4, /turf/open/lava/plasma/ice_moon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)
@@ -450,7 +460,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	if(current_map.minetype == MINETYPE_LAVALAND)
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE)
+	else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE && current_map.minetype != MINETYPE_LAVALAND)
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif
 

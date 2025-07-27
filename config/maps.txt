@@ -55,6 +55,12 @@ map wawastation
 	minplayers 40
 endmap
 
+map eventmap
+endmap
+
+map eventmap2
+endmap
+
 # Debug-only maps.
 
 map gateway_test
