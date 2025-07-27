@@ -1307,17 +1307,6 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
 
-/// Returns rustg-parsed size data as a `list(width, height)` for an icon or DMI file, using cached values where possible
-/// Falls back to /icon.Width() and /icon.Height() if rustg cannot parse it.
-/proc/icon_dimensions(file)
-	var/static/list/icon_size_cache = list()
-	if(isnull(file))
-		return FALSE
-	var/list/cached_size = icon_size_cache[file]
-	if(islist(cached_size))
-		return cached_size
-
-
 /// Fikou's fix for making toast alerts look nice - resets offsets, transforms to fit
 /proc/get_small_overlay(atom/source)
 	var/mutable_appearance/alert_overlay = new(source)
