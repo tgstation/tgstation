@@ -70,6 +70,7 @@
 #define MAFIA_MEDAL_DETECTIVE "Detective"
 #define MAFIA_MEDAL_PSYCHOLOGIST "Psychologist"
 #define MAFIA_MEDAL_CHAPLAIN "Chaplain"
+#define MAFIA_MEDAL_CORONER "Coroner"
 #define MAFIA_MEDAL_MD "Medical Doctor"
 #define MAFIA_MEDAL_OFFICER "Security Officer"
 #define MAFIA_MEDAL_LAWYER "Lawyer"
