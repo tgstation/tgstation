@@ -2,10 +2,8 @@
 /datum/proximity_monitor/advanced/bubble/space_protection
 	///List of all traits that's given to mobs in the field, which is our "space proof" we grant.
 	var/static/list/traits_to_give = list(
-		TRAIT_RESISTHEAT,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_NOBREATH,
 	)
 
