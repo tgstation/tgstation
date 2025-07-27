@@ -406,6 +406,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_FAKE (1 << 0)
 /// Antag is not added to the global list of antags
 #define ANTAG_SKIP_GLOBAL_LIST (1 << 1)
+/// Antag's panel action button and the UI therein is viewable by observers
+#define ANTAG_OBSERVER_VISIBLE_PANEL (1 << 2)
 
 #define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
