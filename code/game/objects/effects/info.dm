@@ -7,6 +7,9 @@
 	/// What should the info button display when clicked?
 	var/info_text
 
+	/// What theme should the tooltip use?
+	var/tooltip_theme
+
 /obj/effect/abstract/info/Initialize(mapload, info_text)
 	. = ..()
 
@@ -20,6 +23,7 @@
 /obj/effect/abstract/info/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "info_hovered"
+	openToolTip(usr, src, params, title = name, content = info_text, theme = tooltip_theme)
 
 /obj/effect/abstract/info/MouseExited()
 	. = ..()

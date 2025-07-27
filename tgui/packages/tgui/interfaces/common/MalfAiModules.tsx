@@ -12,14 +12,14 @@ type MalfItem = Item & {
 
 type Data = {
   processingTime: string;
-  apcsHacked: number;
+  hackedAPCs: number;
   categories: Category[];
 };
 
 /** Common ui for selecting malf ai modules */
 export function MalfAiModules(props) {
   const { act, data } = useBackend<Data>();
-  const { processingTime, apcsHacked, categories = [] } = data;
+  const { processingTime, hackedAPCs, categories = [] } = data;
 
   const categoriesList: string[] = [];
   const items: MalfItem[] = [];
@@ -35,10 +35,10 @@ export function MalfAiModules(props) {
         cost: `${item.cost} PT`,
         desc:
           item.desc +
-          (item.minimum_apcs
+          (item.minimum_apcs > 0
             ? ` Requires at least ${item.minimum_apcs} APCs hacked.`
             : ''),
-        disabled: processingTime < item.cost || apcsHacked < item.minimum_apcs,
+        disabled: processingTime < item.cost || hackedAPCs < item.minimum_apcs,
         icon_state: item.icon_state,
         icon: item.icon,
         id: item.name,

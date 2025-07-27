@@ -104,7 +104,6 @@
 	return ..()
 
 /datum/export/material/market/get_cost(obj/exported_obj, apply_elastic = TRUE)
-	. = ..()
 	if(!material_id)
 		return 0
 
@@ -127,7 +126,7 @@
 			material_value = block.export_value
 	else
 		material_value = SSstock_market.materials_prices[material_id] * amount
-	return cost * material_value // Cost in this case is only serving as the elastic modifier, where material value is the raw value of the sheets sold.
+	return (apply_elastic ? cost : init_cost) * material_value // Cost in this case is only serving as the elastic modifier, where material value is the raw value of the sheets sold.
 
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
 	. = ..()

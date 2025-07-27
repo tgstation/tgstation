@@ -49,7 +49,7 @@ export function OrbitCollapsible(props: Props) {
       bold
       color={color || 'grey'}
       open={!!color}
-      title={title + ` - (${filteredSection.length})`}
+      title={`${title} - (${filteredSection.length})`}
     >
       <Stack wrap g={0.5}>
         {filteredSection.map((item) => (
