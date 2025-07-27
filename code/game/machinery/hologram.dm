@@ -590,7 +590,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
-		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
+		outgoing_call.hologram.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_mods = message_mods)
 
 	if(record_mode && speaker == record_user)
 		record_message(speaker, raw_message, message_language)
