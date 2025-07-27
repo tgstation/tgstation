@@ -88,6 +88,8 @@
 				/obj/item/clothing/under/dress/eveninggown = 3,
 				/obj/item/clothing/under/misc/pj/blue = 3,
 				/obj/item/clothing/under/misc/pj/red = 3,
+				/obj/item/clothing/under/misc/pareoswimop = 3,
+				/obj/item/clothing/under/misc/pareoswimbk = 3,
 			),
 		),
 
