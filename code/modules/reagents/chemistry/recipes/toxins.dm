@@ -409,7 +409,7 @@
 /datum/chemical_reaction/shortenertoxin
 	results = list(/datum/reagent/toxin/shortener_toxin = 4)
 	mix_message = span_danger("The mixture turns into a yellow liquid, and starts smells very strongly and disgusting.")
-	required_reagents = list(/datum/reagent/uranium/radium = 2, /datum/reagent/toxin/mutagen = 2, /datum/chemical_reaction/medicine/hercuri = 2, /datum/reagent/toxin/cyanide = 1, /datum/chemical_reaction/aranesp = 1)
+	required_reagents = list(/datum/reagent/uranium/radium = 2, /datum/reagent/toxin/mutagen = 2, /datum/reagent/medicine/c2/hercuri = 2, /datum/reagent/toxin/cyanide = 1, /datum/reagent/drug/aranesp = 1)
 	is_cold_recipe = FALSE
 	required_temp = 310
 	optimal_temp = 600
