@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - rscadd: "you can now a ghost observe heretics heretics and click on their antag panel button to view their heretic UI"
