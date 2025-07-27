@@ -1165,10 +1165,10 @@
 
 // Anomaly locked item
 
-/datum/design/space_lamp
+/datum/design/space_furnace
 	name = "Spacelamp"
 	desc = "A heavy lamp capable of beaming a barrier of breathable air. Requires a pyroclastic anomaly core to function."
-	id = "space_lamp"
+	id = "space_furnace"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
