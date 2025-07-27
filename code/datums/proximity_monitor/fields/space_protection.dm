@@ -11,14 +11,14 @@
 
 /datum/proximity_monitor/advanced/bubble/space_protection/setup_effect_directions()
 	effect_direction_images = list(
-		"[SOUTH]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south"),
-		"[NORTH]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north"),
-		"[WEST]" =  image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west"),
-		"[EAST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_east"),
-		"[NORTHWEST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest"),
-		"[SOUTHWEST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest"),
-		"[NORTHEAST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast"),
-		"[SOUTHEAST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast"),
+		"[SOUTH]" = image('icons/effects/fields.dmi', icon_state = "space_protection_south"),
+		"[NORTH]" = image('icons/effects/fields.dmi', icon_state = "space_protection_north"),
+		"[WEST]" =  image('icons/effects/fields.dmi', icon_state = "space_protection_west"),
+		"[EAST]" = image('icons/effects/fields.dmi', icon_state = "space_protection_east"),
+		"[NORTHWEST]" = image('icons/effects/fields.dmi', icon_state = "space_protection_northwest"),
+		"[SOUTHWEST]" = image('icons/effects/fields.dmi', icon_state = "space_protection_southwest"),
+		"[NORTHEAST]" = image('icons/effects/fields.dmi', icon_state = "space_protection_northeast"),
+		"[SOUTHEAST]" = image('icons/effects/fields.dmi', icon_state = "space_protection_southeast"),
 	)
 
 /datum/proximity_monitor/advanced/bubble/space_protection/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)

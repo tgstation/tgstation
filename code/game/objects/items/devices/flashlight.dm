@@ -1078,29 +1078,55 @@
 #undef NO_FUEL
 #undef ALREADY_LIT
 
+#define SLOWDOWN_DEFAULT 1.5
+#define SLOWDOWN_WORN 1
+
 /obj/item/flashlight/lamp/space_barrier
 	name = "spacelamp"
 	desc = "A heavy lamp capable of beaming a barrier of breathable air."
+	icon_state = "space_lamp"
+	worn_icon_state = "space_lamp"
+	inhand_icon_state = "space_lamp"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	item_flags = SLOWS_WHILE_IN_HAND
-	slowdown = 1.5
-	drag_slowdown = 1.5
-	start_on = FALSE
+	slowdown = SLOWDOWN_DEFAULT
+	drag_slowdown = SLOWDOWN_DEFAULT
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
 	)
+	light_color = LIGHT_COLOR_ORANGE
+	start_on = FALSE
+	sound_on = 'sound/effects/fire_puff.ogg'
+	sound_off = 'sound/items/weapons/gun/bow/bow_fire.ogg'
 
 	///Boolean on whether or not a pyroclastic anomaly core has been inserted, allowing the item to be used.
 	var/installed_pyro_core = FALSE
 	///The proximity monitor & visual bubble that grants space protection to people nearby, while active.
 	var/datum/proximity_monitor/advanced/bubble/space_protection/space_bubble
 
+/obj/item/flashlight/lamp/space_barrier/equipped(mob/user, slot, initial)
+	//equipped is when we call 'update_equipment_speed_mods', so we need to update slowdown before it.
+	if(slot & slot_flags)
+		slowdown = SLOWDOWN_WORN
+	else
+		slowdown = SLOWDOWN_DEFAULT
+	return ..()
+
 /obj/item/flashlight/lamp/space_barrier/Initialize(mapload)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 	update_appearance(UPDATE_DESC)
+
+/obj/item/flashlight/lamp/space_barrier/update_icon_state()
+	. = ..()
+	if(light_on)
+		worn_icon_state = "[initial(worn_icon_state)]-on"
+	else
+		worn_icon_state = initial(worn_icon_state)
 
 /obj/item/flashlight/lamp/space_barrier/update_desc(updates)
 	. = ..()
@@ -1117,7 +1143,6 @@
 	qdel(tool)
 	installed_pyro_core = TRUE
 	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
-	set_light_color(LIGHT_COLOR_ORANGE)
 	update_appearance(UPDATE_DESC)
 	return ITEM_INTERACT_SUCCESS
 
@@ -1132,3 +1157,6 @@
 		space_bubble = new(src, 4, FALSE, src)
 	else
 		QDEL_NULL(space_bubble)
+
+#undef SLOWDOWN_DEFAULT
+#undef SLOWDOWN_WORN
