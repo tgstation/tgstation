@@ -78,6 +78,8 @@
 		set_waypoint(A)
 		return
 
+	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
 	A.attack_ai(src)
 
 /*
@@ -87,9 +89,13 @@
 	it functions and re-insert it above.
 */
 /mob/living/silicon/ai/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
 	A.attack_ai(src)
 
 /mob/living/silicon/ai/RangedAttack(atom/A)
+	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
 	A.attack_ai(src)
 
 /atom/proc/attack_ai(mob/user)
