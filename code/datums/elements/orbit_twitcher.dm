@@ -24,7 +24,7 @@
 
 /datum/element/orbit_twitcher/process(seconds_per_tick)
 	for(var/mob/living/living as anything in twitchers)
-		if(prob(twitch_chance * seconds_per_tick))
+		if(SPT_PROB(twitch_chance, seconds_per_tick))
 			if(prob(60))
 				living.emote("twitch_s", forced = TRUE)
 			else
