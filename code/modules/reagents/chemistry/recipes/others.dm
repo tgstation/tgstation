@@ -1046,3 +1046,8 @@
 	thermic_constant = 80
 	H_ion_release = 2
 	reaction_tags = REACTION_TAG_EASY
+
+/datum/chemical_reaction/liquid_plasma
+	results = list(/datum/reagent/toxin/liquid_plasma = 1)
+	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/stable_plasma = 3, /datum/reagent/consumable/secretsauce = 1)
+	reaction_tags = REACTION_TAG_UNIQUE | REACTION_TAG_OTHER

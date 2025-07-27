@@ -3280,3 +3280,22 @@
 /datum/reagent/luminescent_fluid/pink
 	name = "Pink Luminiscent Fluid"
 	color = LIGHT_COLOR_PINK
+
+/datum/reagent/toxin/liquid_plasma //Its drink, but recipe its hard and its made not for all species, this also deal tox damage.
+	name = "Liquid Plasma"
+	description = "Drink for plasmamales and plasmafemales. Has a warning: contains plasma, sugar and our secret sauce, sugar is harmful to health when consumed in large quantities."
+	toxpwr = 3
+	color = "#BC46D4"
+	metabolization_rate = 6 * REAGENTS_METABOLISM
+	taste_description = "plasma, sugar and this are indescribable"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/liquid_plasma/on_mob_life(mob/living/carbon/affected_mob)
+	. = ..()
+	if(is_species(affected_mob, /datum/species/plasmaman))
+		affected_mob.add_traits(TRAIT_NO_BREATHLESS_DAMAGE, type)
+
+/datum/reagent/liquid_plasma/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	if(is_species(affected_mob, /datum/species/plasmaman))
+		affected_mob.remove_traits(TRAIT_NO_BREATHLESS_DAMAGE, type)

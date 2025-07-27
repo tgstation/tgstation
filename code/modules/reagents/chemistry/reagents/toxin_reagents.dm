@@ -1492,7 +1492,6 @@
 	liver_damage_multiplier = 0.5
 	taste_description = "something like bad smells diapers"
 	var/current_size = RESIZE_DEFAULT_SIZE
-	metabolized_traits = list(TRAIT_DWARF)
 
 /datum/reagent/toxin/babyboom_toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1500,10 +1499,10 @@
 		return UPDATE_MOB_HEALTH
 	var/newsize = current_size
 	switch(volume)
-		if(0 to 19)
+		if(0 to 20)
 			newsize = 0.8*RESIZE_DEFAULT_SIZE
-		if(20 to INFINITY)
-			newsize = 0.7*RESIZE_DEFAULT_SIZE
+		if(21 to INFINITY)
+			newsize = 0.65*RESIZE_DEFAULT_SIZE
 
 	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
