@@ -42,6 +42,8 @@
 	var/fast_pressure_step_in = 1.5
 	/// How fast the mech is in normal pressure
 	var/slow_pressure_step_in = 2
+	/// Should we update our move delay to the config on init?
+	var/mirror_config_speed_init = TRUE
 
 /datum/armor/mecha_ripley
 	melee = 40
@@ -59,6 +61,10 @@
 /obj/vehicle/sealed/mecha/ripley/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate, 3, /obj/item/stack/sheet/animalhide/goliath_hide, /datum/armor/armor_plate_ripley_goliath)
+	if(mirror_config_speed_init)
+		movedelay = CONFIG_GET(number/movedelay/run_delay)
+		fast_pressure_step_in = CONFIG_GET(number/movedelay/run_delay)
+		slow_pressure_step_in = CONFIG_GET(number/movedelay/run_delay) + 0.5
 
 /datum/armor/armor_plate_ripley_goliath
 	melee = 10
@@ -72,6 +78,7 @@
 	base_icon_state = "ripleymkii"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
 	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
+	mirror_config_speed_init = FALSE
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
@@ -96,12 +103,13 @@
 	name = "\improper APLU \"Paddy\""
 	icon_state = "paddy"
 	base_icon_state = "paddy"
-	movedelay = 5
-	slow_pressure_step_in = 5
-	fast_pressure_step_in = 3
 	max_temperature = 20000
 	max_integrity = 250
 	mech_type = EXOSUIT_MODULE_PADDY
+	movedelay = 5
+	slow_pressure_step_in = 5
+	fast_pressure_step_in = 3
+	mirror_config_speed_init = FALSE
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_paddy
@@ -122,11 +130,11 @@
 	var/datum/looping_sound/siren/weewooloop
 
 /datum/armor/mecha_paddy
-	melee = 40
-	bullet = 20
-	laser = 10
-	energy = 20
-	bomb = 40
+	melee = 30
+	bullet = 0
+	laser = 0
+	energy = 0
+	bomb = -20
 	fire = 100
 	acid = 100
 
@@ -134,6 +142,8 @@
 	. = ..()
 	weewooloop = new(src, FALSE, FALSE)
 	weewooloop.volume = 100
+	weewooloop.extra_range = 14 // 2 additional screens away
+	weewooloop.falloff_exponent = 3
 
 /obj/vehicle/sealed/mecha/ripley/paddy/generate_actions()
 	. = ..()
@@ -148,9 +158,15 @@
 
 /obj/vehicle/sealed/mecha/ripley/paddy/proc/togglesiren(force_off = FALSE)
 	if(force_off || siren)
+		movedelay = initial(movedelay)
+		slow_pressure_step_in = initial(slow_pressure_step_in)
+		fast_pressure_step_in = initial(fast_pressure_step_in)
 		weewooloop.stop()
 		siren = FALSE
 	else
+		movedelay = CONFIG_GET(number/movedelay/run_delay)
+		fast_pressure_step_in = CONFIG_GET(number/movedelay/run_delay)
+		slow_pressure_step_in = CONFIG_GET(number/movedelay/run_delay) + 0.5
 		weewooloop.start()
 		siren = TRUE
 	for(var/mob/occupant as anything in occupants)
