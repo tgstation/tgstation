@@ -25,6 +25,7 @@
 	default_price = PAYCHECK_LOWER
 	extra_price = PAYCHECK_LOWER * 0.6
 	payment_department = NO_FREEBIES
+	allow_custom = TRUE
 
 /obj/item/vending_refill/sustenance
 	machine_name = "Sustenance Vendor"
@@ -39,6 +40,7 @@
 	all_products_free = FALSE
 	displayed_currency_icon = "digging"
 	displayed_currency_name = " LP"
+	allow_custom = FALSE
 
 /obj/machinery/vending/sustenance/interact(mob/user)
 	if(!isliving(user))
