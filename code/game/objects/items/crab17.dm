@@ -38,6 +38,7 @@
 
 		dumped = TRUE
 
+
 /obj/structure/checkoutmachine
 	name = "\improper Nanotrasen Space-Coin Market"
 	desc = "This is good for spacecoin because"
@@ -62,6 +63,10 @@
 	. = ..()
 	. += span_info("It has a flashing <b>ID card reader</b> for convenient cashing out.")
 
+/**
+ * Check whether any accounts in the accounts_to_rob list are still being drained.
+ * Returns TRUE if no accounts are being drained, FALSE otherwise
+ */
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
@@ -116,7 +121,9 @@
 	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
 	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 
-
+/**
+ * Starts the dumping process and plays a start-up animation before the checkout starts walking.
+ */
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
 	sleep(1 SECONDS)
@@ -177,7 +184,7 @@
 	add_overlay("screen_lines")
 	cut_overlay("text")
 	add_overlay("text")
-	START_PROCESSING(SSfastprocess, src) // we only start doing economy draining stuff once our machinery is initialized, thematically
+	START_PROCESSING(SSfastprocess, src)
 	canwalk = TRUE
 
 /obj/structure/checkoutmachine/Destroy()
@@ -190,6 +197,9 @@
 	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 	return ..()
 
+/**
+ * Grabs the accounts to be robbed and puts them in accounts_to_rob, tells the accounts they're being drained and calls dump() to start draining.
+ */
 /obj/structure/checkoutmachine/proc/start_dumping()
 	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff?.get_bank_account()
@@ -198,6 +208,11 @@
 		B.dumpeet()
 	dump()
 
+/**
+ * For each account being drained, pulls a random percentage of cash out the account and sends it to Bogdanoff's account.
+ * If Bogdanoff did not have a bank account, stores the funds in the checkout's internal_account.
+ * Sets a timer to call itself again after an interval.
+ */
 /obj/structure/checkoutmachine/proc/dump()
 	var/percentage_lost = (rand(5, 15) / 100)
 	for(var/i in accounts_to_rob)
@@ -219,12 +234,18 @@
 	if(Process_Spacemove(anydir))
 		Move(get_step(src, anydir), anydir)
 
+/**
+ * Goes through accounts_to_rob and tells every account that the drain has stopped.
+ */
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
 		if(B)
 			B.being_dumped = FALSE
 
+/**
+ * Splits the balance of the internal_account into several smaller piles of cash and scatters them around the area.
+ */
 /obj/structure/checkoutmachine/proc/expel_cash()
 	message_admins("Spitting out money")
 	var/funds_remaining = internal_account.account_balance
@@ -235,6 +256,7 @@
 		funds_remaining -= amount_to_remove
 		holochip.throw_at(pick(oview(7,get_turf(src))),10,1)
 
+
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""
 	icon = 'icons/obj/machines/money_machine_64.dmi'
@@ -243,6 +265,7 @@
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
 	plane = ABOVE_GAME_PLANE
 	icon_state = "missile_blur"
+
 
 /obj/effect/dumpeet_target
 	name = "Landing Zone Indicator"
@@ -262,6 +285,9 @@
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
+/**
+ * Sets up the falling animation for the checkout machine.
+ */
 /obj/effect/dumpeet_target/proc/startLaunch()
 	DF = new /obj/effect/dumpeet_fall(drop_location())
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
@@ -270,8 +296,9 @@
 	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, PROC_REF(endLaunch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
-
-
+/**
+ * Cleans up after the falling animation.
+ */
 /obj/effect/dumpeet_target/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	playsound(src, SFX_EXPLOSION, 80, TRUE)
