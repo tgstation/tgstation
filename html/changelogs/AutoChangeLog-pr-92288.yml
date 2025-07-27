@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - rscadd: "Heretics can now look at their UI while dead, though you can't buy stuff"
