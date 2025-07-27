@@ -258,24 +258,19 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 	var/frame_path = null
 	var/cost = 2 // Default girder cost
-	var/board_type
-	for(var/datum/stack_recipe/recipe in GLOB.metal_recipes)
-		// Check computer circuit boards
-		if(recipe.result_type == /obj/structure/frame/computer && locate(/obj/item/circuitboard/computer) in user.held_items)
-			frame_path = recipe.result_type
-			cost = recipe.req_amount
-			board_type = "computer"
-		// Check machine circuit boards
-		else if(recipe.result_type == /obj/structure/frame/machine && locate(/obj/item/circuitboard/machine) in user.held_items)
-			frame_path = recipe.result_type
-			cost = recipe.req_amount
-			board_type = "machine"
-		if(!isnull(frame_path))
-			break
+	var/time = 4 SECONDS //Default girder build time
+	var/obj/item/circuitboard/held_board = locate() in user.held_items
+	if(!isnull(held_board))
+		frame_path = text2path("/obj/structure/frame/[istype(held_board, /obj/item/circuitboard/machine) ? "machine" : "computer"]")
+		for(var/datum/stack_recipe/recipe in GLOB.metal_recipes)
+			if(recipe.result_type == frame_path)
+				time = recipe.time
+				cost = recipe.req_amount
+				break
 	if(get_amount() < cost)
 		user.balloon_alert(user, "need [cost] metal sheets!")
 		return ITEM_INTERACT_BLOCKING
-	if(!do_after(user, 4 SECONDS, build_on))
+	if(!do_after(user, time, build_on))
 		return ITEM_INTERACT_BLOCKING
 	if(build_on.is_blocked_turf())
 		user.balloon_alert(user, "something is blocking the tile!")
@@ -284,8 +279,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		user.balloon_alert(user, "not enough material!")
 		return ITEM_INTERACT_BLOCKING
 	if(frame_path)
-		new frame_path(build_on)
-		user.balloon_alert(user, "[board_type] frame created")
+		var/obj/structure/frame/constructed_frame = new frame_path(build_on)
+		constructed_frame.setDir(REVERSE_DIR(user.dir)) //to align computer frame with player direction
+		user.balloon_alert(user, "frame created")
 	else
 		new/obj/structure/girder/displaced(build_on)
 		user.balloon_alert(user, "girder created")
