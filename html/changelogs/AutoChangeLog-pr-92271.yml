@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "map loaded portable smes don't randomly break and become nonfunctional"
