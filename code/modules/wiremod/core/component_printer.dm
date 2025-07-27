@@ -69,7 +69,7 @@
 /obj/machinery/component_printer/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//to allow quick recycling of circuits
 	if(istype(tool, /obj/item/circuit_component))
-		var/amount_inserted = materials.insert_item(tool)
+		var/amount_inserted = materials.insert_item(tool, user_data = ID_DATA(user))
 
 		if(amount_inserted)
 			to_chat(user, span_notice("[tool] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [src]"))
@@ -115,20 +115,24 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/component_printer/proc/print_component(typepath)
+/**
+ * typepath - the type path of the component to be printed
+ * user_data - data in the form rendered by ID_DATA(user), for print logging, see the proc on SSid_access
+*/
+/obj/machinery/component_printer/proc/print_component(typepath, alist/user_data)
 	var/design_id = current_unlocked_designs[typepath]
 
 	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 	if (!(design.build_type & COMPONENT_PRINTER))
 		return
 
-	if (materials.on_hold())
+	if (!materials.can_use_resource(user_data = user_data))
 		return
 
 	if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
+	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]", user_data)
 	return new design.build_path(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -146,8 +150,7 @@
 			if (!(design.build_type & COMPONENT_PRINTER))
 				return TRUE
 
-			if (materials.on_hold())
-				say("Mineral access is on hold, please contact the quartermaster.")
+			if (!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
@@ -386,6 +389,7 @@
 	. = ..()
 	if (.)
 		return
+	var/obj/item/card/id/advanced/user_card = astype(usr, /mob/living)?.get_idcard()
 
 	switch (action)
 		if ("print")
@@ -396,22 +400,21 @@
 
 			var/list/design = scanned_designs[design_id]
 
-			if (materials.on_hold())
-				say("Mineral access is on hold, please contact the quartermaster.")
+			if (!materials.can_use_resource(user_card))
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design["materials"], efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
-			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"])
+			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"], user_card)
 			print_module(design)
 			balloon_alert_to_viewers("printed [design["name"]]")
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
 			// SAFETY: eject_sheets checks for valid mats
-			materials.eject_sheets(material, amount)
+			materials.eject_sheets(material, amount, user_data = ID_DATA(usr))
 
 	return TRUE
 
