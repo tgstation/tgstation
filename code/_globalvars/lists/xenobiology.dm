@@ -85,7 +85,8 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/snake = 1,
 		/datum/micro_organism/cell_line/walking_mushroom = 2,
 		/datum/micro_organism/cell_line/axolotl = 1,
-	)
+	),
+	CELL_LINE_TABLE_MIMIC = list(/datum/micro_organism/cell_line/mimic = 1),
 ))
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus

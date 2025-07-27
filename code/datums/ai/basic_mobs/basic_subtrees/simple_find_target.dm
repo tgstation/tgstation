@@ -22,3 +22,9 @@
 
 /datum/ai_planning_subtree/simple_find_target/increased_range/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	controller.queue_behavior(/datum/ai_behavior/find_potential_targets/bigger_range, target_key, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+
+///calms down and stops hunting for valids some time after running out of people to maul.
+/datum/ai_planning_subtree/simple_find_target/cool_headed
+
+/datum/ai_planning_subtree/simple_find_target/cool_headed/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	controller.queue_behavior(/datum/ai_behavior/find_potential_targets/cool_headed, target_key, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)

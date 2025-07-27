@@ -31,14 +31,14 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	basic_mob_flags = DEL_ON_DEATH
 	combat_mode = TRUE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
-	/// can we stun people on hit
+	/// can we knockdown people on hit
 	var/knockdown_people = FALSE
 
 /mob/living/basic/mimic/melee_attack(mob/living/carbon/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if(!. || !knockdown_people || !prob(15) || !istype(target))
 		return
-	target.Paralyze(4 SECONDS)
+	target.Knockdown(4 SECONDS)
 	target.visible_message(span_danger("\The [src] knocks down \the [target]!"), \
 		span_userdanger("\The [src] knocks you down!"))
 
@@ -53,13 +53,20 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	desc = "A very hostile rectangular steel crate."
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
-	base_icon_state = "crate"
+	base_icon_state = "crate_mimic"
 	icon_living = "crate"
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	speak_emote = list("clatters")
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	speed = 1
+	health = 210
+	maxHealth = 210
+	melee_attack_cooldown = CLICK_CD_MELEE
 	layer = BELOW_MOB_LAYER
+	basic_mob_flags = PRECISE_ATTACK_ZONES
 	ai_controller = /datum/ai_controller/basic_controller/mimic_crate
+	gold_core_spawnable = NO_SPAWN
 	/// are we open
 	var/opened = FALSE
 	/// max mob size
@@ -75,6 +82,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	///Nullspaced crate that we are pretending to be
 	var/atom/movable/crate = /obj/structure/closet/crate
 
+	//test vars, remove for production
+	var/time_up = 1.2
+	var/time_down = 1.2
+	var/z_move = 8
+
 // Pickup loot
 /mob/living/basic/mimic/crate/Initialize(mapload)
 	. = ..()
@@ -85,15 +97,16 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(mapload) //eat shit
 		for(var/obj/item/item in loc)
 			item.forceMove(src)
-
 	crate = new crate(null) // Nullspaced so we don't accidentally spew it out when opening
-	icon = crate.icon
 	icon_state = crate.icon_state
-	base_icon_state = crate.base_icon_state
 	icon_living = icon_state
+	name = crate.name
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MIMIC, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
+	crate.AddElement(/datum/element/swabable, CELL_LINE_TABLE_MIMIC, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling/hopping)
+	AddElement(/datum/element/footstep, 'sound/mobs/non-humanoids/mimic/crate_bounce.ogg', 0.3, sound_vary = TRUE)
 
 /mob/living/basic/mimic/crate/Destroy()
-	QDEL_NULL(crate)
 	lock = null
 	return ..()
 
@@ -106,10 +119,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	toggle_open(user)
 	return TRUE
 
-/mob/living/basic/mimic/crate/melee_attack(mob/living/carbon/target, list/modifiers, ignore_cooldown)
-	. = ..()
-	toggle_open() // show our cool lid at the dumbass humans
-
 /mob/living/basic/mimic/crate/proc/trigger()
 	if(isnull(ai_controller) || client)
 		return FALSE
@@ -120,7 +129,18 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	ai_controller.set_ai_status(AI_STATUS_ON)
 	if(length(contents))
 		locked = TRUE //if this was a crate with loot then we dont want people to just leftclick it to open it then bait it somewhere and steal its loot
+	toggle_open()
 	return TRUE
+
+///Go to sleep, turning off the AI in order to lure the next victim to approach
+/mob/living/basic/mimic/crate/proc/prepare_ambush()
+	if(opened)
+		locked = FALSE
+		addtimer(CALLBACK(src, PROC_REF(toggle_open)), 1 SECONDS)
+
+	emote("yawn")
+	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
+	ai_controller?.set_ai_status(AI_STATUS_OFF)
 
 /mob/living/basic/mimic/crate/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0)
@@ -128,16 +148,55 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return ..()
 
 /mob/living/basic/mimic/crate/death()
-	var/obj/structure/closet/crate/lootbox = new(get_turf(src))
+	crate.forceMove(loc)
 	// Put loot in crate
 	for(var/obj/loot in src)
-		loot.forceMove(lootbox)
+		loot.forceMove(crate)
+	qdel(src)
 	return ..()
 
 /mob/living/basic/mimic/crate/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(target == src)
-		toggle_open()
+		toggle_open(src)
 		return FALSE
+	if(opened)
+		do_bite_animation()
+
+	if(!iscarbon(target))
+		return ..()
+
+	if(target.loc == src.loc)
+		zone_selected = pick(GLOB.all_body_zones)
+		return ..()
+
+	//Our low height and lack of limbs limits the reach of out attacks to whatever limb is closest.
+	// Makes us bad at directily killing but good at stacking on wounds.
+	var/mob/living/carbon/carbon_victim = target
+	//If victim is standing, roll for which limb to target which a bias for the active hand and other limbs.
+	if(carbon_victim.body_position == STANDING_UP)
+		switch(rand(100))
+			if(1 to 40)
+				zone_selected = carbon_victim.get_active_hand()
+			if(41 to 58)
+				zone_selected = carbon_victim.get_inactive_hand()
+			if(59 to 93)
+				zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+			else
+				zone_selected = BODY_ZONE_CHEST
+	//if the victim is lying down we can ensure we always bite head, feet or arms with smart positiioning.
+	else
+		var/victim_direction = get_dir(carbon_victim, src)
+		if(victim_direction & (NORTH | SOUTH))
+			if(carbon_victim.dir & (NORTH | WEST) && (victim_direction & SOUTH))
+				zone_selected = BODY_ZONE_L_ARM
+			else
+				zone_selected = BODY_ZONE_R_ARM
+		else if(victim_direction & (EAST | WEST))
+			if(carbon_victim.dir & (NORTH | EAST ) && (victim_direction & WEST))
+				zone_selected = BODY_ZONE_HEAD
+			else
+				zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+
 	return ..()
 
 /mob/living/basic/mimic/crate/CanAllowThrough(atom/movable/mover, border_dir)
@@ -149,6 +208,13 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(ai_controller?.ai_status == AI_STATUS_OFF && !client)
 		return crate.examine(user)
 	return ..()
+
+/mob/living/basic/mimic/crate/update_icon_state()
+	. = ..()
+	if(opened)
+		icon_state = "[base_icon_state]open"
+	else
+		icon_state = crate.base_icon_state
 
 /**
 * Used to open and close the mimic
@@ -165,19 +231,40 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(!opened)
 		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = TRUE
-		icon_state = "[base_icon_state]open"
 		playsound(src, 'sound/machines/crate/crate_open.ogg', 50, TRUE)
+
+		//Cooler attack effect and wound bonus but we lose the ability to knockdown.
+		attack_verb_continuous = "bites"
+		attack_verb_simple = "bite"
+		attack_sound = 'sound/items/weapons/bite.ogg'
+		attack_vis_effect = ATTACK_EFFECT_BITE
+		wound_bonus = 10
+		exposed_wound_bonus = 10
+		sharpness = SHARP_POINTY
+		knockdown_people = FALSE
+
 		for(var/atom/movable/movable as anything in src)
 			movable.forceMove(loc)
 	else
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
-		icon_state = base_icon_state
 		playsound(src, 'sound/machines/crate/crate_close.ogg', 50, TRUE)
+
+		//A robust slam attack that might be better against hard threats, but we cannot wound.
+		attack_verb_continuous = "slams"
+		attack_verb_simple = "slam"
+		attack_sound = 'sound/items/weapons/punch1.ogg'
+		attack_vis_effect = ATTACK_EFFECT_SMASH
+		wound_bonus = CANT_WOUND
+		exposed_wound_bonus = 0
+		sharpness =  NONE
+		knockdown_people = TRUE
+
 		for(var/atom/movable/movable as anything in get_turf(src))
 			if(movable != src && insert(movable) == CANT_INSERT_FULL)
 				playsound(src, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 				break
+	update_appearance()
 
 /**
 * Called by toggle_open to put items inside the mimic when it's being closed
@@ -226,13 +313,21 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	return TRUE
 
-/mob/living/basic/mimic/crate/xenobio
-	health = 210
-	maxHealth = 210
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
-	speak_emote = list("clatters")
-	gold_core_spawnable = HOSTILE_SPAWN
+/mob/living/basic/mimic/crate/proc/do_bite_animation()
+	flick("[base_icon_state]_bite", src)
+
+
+///shitty slow type for ruins, 3 speed is still plenty slow.
+/mob/living/basic/mimic/crate/slow
+	health = 250
+	maxHealth = 250
+	melee_attack_cooldown = 2 SECONDS
+	speed = 3
+
+/mob/living/basic/mimic/crate/freezer
+	icon_state = "freezer"
+	base_icon_state = "freezer_mimic"
+	crate = /obj/structure/closet/crate/freezer
 
 /datum/action/innate/mimic_lock
 	name = "Lock/Unlock"
@@ -242,13 +337,71 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	background_icon_state = "bg_default"
 	overlay_icon_state = "bg_default_border"
 
-/datum/action/innate/mimic/lock/Activate()
+/datum/action/innate/mimic_lock/Activate()
+	. =  ..()
 	var/mob/living/basic/mimic/crate/mimic = owner
-	mimic.locked = !mimic.locked
-	if(!mimic.locked)
-		to_chat(mimic, span_warning("You loosen up, allowing yourself to be opened and closed."))
+	mimic.locked = TRUE
+	active = TRUE
+	button_icon_state = "radial_unlock"
+	to_chat(mimic, span_warning("You stiffen up, preventing anyone from opening or closing you."))
+	playsound(mimic, 'sound/machines/buckle/buckle2.ogg', 100)
+	build_all_button_icons(UPDATE_BUTTON_ICON)
+
+/datum/action/innate/mimic_lock/Deactivate()
+	. = ..()
+	var/mob/living/basic/mimic/crate/mimic = owner
+	mimic.locked = FALSE
+	active = FALSE
+	button_icon_state = "radial_lock"
+	to_chat(mimic, span_warning("You loosen up, allowing yourself to be opened and closed."))
+	playsound(mimic, 'sound/machines/buckle/buckle1.ogg', 40)
+	build_all_button_icons(UPDATE_BUTTON_ICON)
+
+/datum/action/innate/mimic_lock/update_button_status(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	. = ..()
+	if(active)
+		current_button.color = COLOR_JADE
 	else
-		to_chat(mimic, span_warning("You stiffen up, preventing anyone from opening or closing you."))
+		current_button.color = COLOR_MOSTLY_PURE_PINK
+
+
+///A version that can be used for crate types that don't have bespoke sprites yet.
+/mob/living/basic/mimic/crate/omni
+	///mimick graphic to overlay on the open crate.
+	var/static/mutable_appearance/mimic_overlay
+
+/mob/living/basic/mimic/crate/omni/Initialize(mapload)
+	. = ..()
+	icon = crate.icon
+	base_icon_state = crate.base_icon_state
+
+
+/mob/living/basic/mimic/crate/omni/update_overlays()
+	. = ..()
+	if(!mimic_overlay)
+		mimic_overlay = mutable_appearance('icons/obj/storage/crates.dmi', "crate_mimic_overlay")
+
+	if(opened)
+		. += mimic_overlay
+
+/mob/living/basic/mimic/crate/omni/do_bite_animation()
+	if(!opened)
+		return
+	//close the crate
+	toggle_open()
+	//reopen half a second later.
+	addtimer(CALLBACK(src, PROC_REF(do_open_animation), 0.5 SECONDS))
+	//shake animation
+	animate(src, pixel_z = 2, time = 40 MILLISECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -2, time = 40 MILLISECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = 1, time = 40 MILLISECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -1, time = 40 MILLISECONDS, flags = ANIMATION_RELATIVE)
+
+///Reopen our mouth after biting
+/mob/living/basic/mimic/crate/omni/proc/do_open_animation()
+	if(opened)
+		return
+	toggle_open()
 
 // ****************************
 // COPYING (actually imitates target object) MIMIC
