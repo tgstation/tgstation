@@ -608,3 +608,49 @@
   - admin: Fixed the bluescreen in admin fax panel
   twilightwanderer:
   - admin: Added the ability to play your own announce sounds.
+2025-07-27:
+  Absolucy:
+  - bugfix: Fixed runechat emote icons being too big.
+  - bugfix: Fixed screentip icons having awkward spacing.
+  Arturlang:
+  - bugfix: clothing with hood now correctly hides slots based on inv_flags
+  Bisar:
+  - code_imp: The .outfit and .plasmaman_outfit variables on the job datum are now
+      defined to their expected types.
+  - rscadd: Climbing hooks can now be used to climb UP or DOWN, instead of only up.
+  - qol: Climbing hooks no longer have a limit on their number of uses.
+  - balance: Syndicate climbing hooks now have a speed of 0.75 seconds to climb, in
+      comparison to the standard 4 seconds for emergency hooks.
+  - bugfix: Fixed a runtime in climbing hooks when you would try to climb down.
+  DresserOnFire:
+  - bugfix: Wanted posters now correctly return to your inventory if you move while
+      placing them
+  Ezel:
+  - rscdel: Removes ralsei plushie
+  - rscdel: Removes jevil mask from clown masks
+  Fikou:
+  - rscadd: mech removal crowbar removes mech sleeper patients
+  - balance: occupants it removes also no longer get thrown at a random tile
+  - spellcheck: clarke mech description was rewritten for grammar
+  Jacquerel:
+  - admin: adds logging for turning bot sapience on and off
+  Melbert:
+  - rscadd: HoP traitors can get an objective to "replace the captain" - requiring
+      they assassinate the captain and steal their id.
+  SmArtKar:
+  - bugfix: Trying to ignite oil with a welding tool no longer runtimes due to it
+      trying to get ignited twice
+  - bugfix: Fixed repaired plastitanium r-walls disappearing
+  - bugfix: Fixed borgs made with athlete brains runtiming when trying to examine
+      an especially fit person
+  lelandkemble:
+  - bugfix: Command can now use their sustenance vendor on Catwalk Station
+  moocowswag:
+  - rscadd: Modular shield gates which project a shield in a line and does not suffer
+      indoor penalties.
+  - balance: Modular shields now better interact with and block atmos and explosions
+      and melee for what they are protecting, hulks are able to take one down eventually
+      no matter what.
+  - balance: Modular shields now suffer a severe range penalty when generating indoors
+      but are more potent in their capacity to endure damage.
+  - image: modular shield gate sprites

@@ -1,7 +1,0 @@
-author: "moocowswag"
-delete-after: True
-changes:
-  - rscadd: "Modular shield gates which project a shield in a line and does not suffer indoor penalties."
-  - balance: "Modular shields now better interact with and block atmos and explosions and melee for what they are protecting, hulks are able to take one down eventually no matter what."
-  - balance: "Modular shields now suffer a severe range penalty when generating indoors but are more potent in their capacity to endure damage."
-  - image: "modular shield gate sprites"

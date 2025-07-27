@@ -1,4 +1,0 @@
-author: "DresserOnFire"
-delete-after: True
-changes:
-  - bugfix: "Wanted posters now correctly return to your inventory if you move while placing them"
