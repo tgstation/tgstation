@@ -42,14 +42,35 @@
 		"advanced_r_leg",
 		"borg_upgrade_rename",
 		"borg_upgrade_restart",
+		"borg_upgrade_expand",
+		"borg_upgrade_thrusters",
+		"borg_upgrade_selfrepair",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
+/datum/techweb_node/borg_general
+	id = TECHWEB_NODE_BORG_GENERAL
+	display_name = "General Cyborg Upgrades"
+	description = "Upgrades you can offer to any of your cyborg."
+	prereq_ids = list(TECHWEB_NODE_CYBERNETICS)
+	design_ids = list(
+		"borg_upgrade_expand",
+		"borg_upgrade_thrusters",
+		"borg_upgrade_selfrepair",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/borg_general/New()
+	. = ..()
+	if(!CONFIG_GET(flag/disable_secborg))
+		design_ids += "borg_upgrade_disablercooler"
+
 /datum/techweb_node/borg_service
 	id = TECHWEB_NODE_BORG_SERVICES
 	display_name = "Service Cyborg Upgrades"
-	description = "Let them do the cookin' by the book."
+	description = "Let them do the cookin' by the book and wipe our floors for us."
 	prereq_ids = list(TECHWEB_NODE_CYBERNETICS)
 	design_ids = list(
 		"borg_upgrade_rolling_table",
@@ -59,8 +80,14 @@
 		"borg_upgrade_drink_apparatus",
 		"borg_upgrade_service_cookbook",
 		"borg_upgrade_botany",
+		"borg_upgrade_advancedmop",
+		"borg_upgrade_broomer",
+		"borg_upgrade_prt",
+		"borg_upgrade_plunger",
+		"borg_upgrade_high_capacity_replacer",
+		"borg_upgrade_trashofholding",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_mining
@@ -80,7 +107,7 @@
 	id = TECHWEB_NODE_BORG_MEDICAL
 	display_name = "Medical Cyborg Upgrades"
 	description = "Let them follow Asimov's First Law."
-	prereq_ids = list(TECHWEB_NODE_BORG_SERVICES, TECHWEB_NODE_SURGERY_ADV)
+	prereq_ids = list(TECHWEB_NODE_CYBERNETICS, TECHWEB_NODE_SURGERY_ADV)
 	design_ids = list(
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_beakerapp",
@@ -89,46 +116,23 @@
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_surgicalprocessor",
 		"borg_upgrade_surgicalomnitool",
+		"borg_upgrade_syringe",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
-
-/datum/techweb_node/borg_utility
-	id = TECHWEB_NODE_BORG_UTILITY
-	display_name = "Utility Cyborg Upgrades"
-	description = "Let them wipe our floors for us."
-	prereq_ids = list(TECHWEB_NODE_BORG_SERVICES, TECHWEB_NODE_SANITATION)
-	design_ids = list(
-		"borg_upgrade_advancedmop",
-		"borg_upgrade_broomer",
-		"borg_upgrade_expand",
-		"borg_upgrade_prt",
-		"borg_upgrade_plunger",
-		"borg_upgrade_high_capacity_replacer",
-		"borg_upgrade_selfrepair",
-		"borg_upgrade_thrusters",
-		"borg_upgrade_trashofholding",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	announce_channels = list(RADIO_CHANNEL_SCIENCE)
-
-/datum/techweb_node/borg_utility/New()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_secborg))
-		design_ids += "borg_upgrade_disablercooler"
 
 /datum/techweb_node/borg_engi
 	id = TECHWEB_NODE_BORG_ENGI
 	display_name = "Engineering Cyborg Upgrades"
 	description = "To slack even more."
-	prereq_ids = list(TECHWEB_NODE_BORG_MINING, TECHWEB_NODE_PARTS_UPG)
+	prereq_ids = list(TECHWEB_NODE_PARTS_UPG)
 	design_ids = list(
 		"borg_upgrade_rped",
 		"borg_upgrade_engineeringomnitool",
-		"borg_upgrade_circuitapp",
+		"borg_upgrade_engineeringapp",
 		"borg_upgrade_inducer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 // Implants root node
