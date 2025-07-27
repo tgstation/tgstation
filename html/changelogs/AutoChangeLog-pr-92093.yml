@@ -1,0 +1,6 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - rscadd: "Items made out of a specific mob's meat take on the color of that mob's blood."
+  - rscadd: "Blood (or anything a mob uses as blood) can be used to imprint that mob's meat onto metalgen."
+  - rscadd: "Organs and bodyparts made predominantly out of meat become organic, if they weren't already. Likewise, hauntium makes them ghostly."
