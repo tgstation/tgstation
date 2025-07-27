@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
 	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
 
-	//For debugging, stores a list of grids with colors to paint atoms with
+	///for debugging, stores a list of grids with colors to paint atoms with
 	var/list/cells_with_color
 
 /datum/controller/subsystem/spatial_grid/Initialize()
