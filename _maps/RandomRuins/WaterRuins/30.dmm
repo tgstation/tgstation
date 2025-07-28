@@ -1,8 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/life_candle{
-	pixel_x = -8
-	},
 /obj/structure/table/abductor,
 /obj/item/hilbertshotel{
 	pixel_x = 8
@@ -12,9 +9,17 @@
 	anchored = 1;
 	gpstag = "Bermuda"
 	},
+/obj/structure/life_candle/rainworld{
+	pixel_x = -8
+	},
 /turf/open/floor/fairy/rainworld,
 /area/rainworld/surface/outdoors/bermuda)
 "g" = (
+/obj/effect/mist/rainworld,
+/turf/open/chasm/rainworld,
+/area/rainworld/surface/outdoors/bermuda)
+"s" = (
+/obj/effect/mist/rainworld,
 /obj/effect/mist/rainworld,
 /turf/open/chasm/rainworld,
 /area/rainworld/surface/outdoors/bermuda)
@@ -27,6 +32,10 @@
 "J" = (
 /turf/template_noop,
 /area/template_noop)
+"M" = (
+/obj/structure/light_prism,
+/turf/open/floor/fairy/rainworld,
+/area/rainworld/surface/outdoors/bermuda)
 
 (1,1,1) = {"
 J
@@ -456,7 +465,7 @@ J
 B
 g
 g
-g
+s
 g
 g
 g
@@ -488,9 +497,9 @@ B
 g
 g
 g
+M
 t
-t
-t
+M
 g
 B
 B
@@ -552,9 +561,9 @@ B
 B
 g
 g
+M
 t
-t
-t
+M
 g
 g
 B
