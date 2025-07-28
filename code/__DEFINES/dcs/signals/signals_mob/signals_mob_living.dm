@@ -337,6 +337,12 @@
 	/// Index in modifiers containing the modifer to surgery speed
 	#define SPEED_MOD_INDEX 2
 
+/// From /datum/status_effect/proc/on_creation() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_APPLIED "living_status_applied"
+
+/// From /datum/status_effect/proc/Destroy() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_REMOVED "living_status_removed"
+
 /// From /datum/spawners_menu/ui_static_data(mob/user) : (list/string_info)
 #define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"
 
