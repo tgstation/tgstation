@@ -152,7 +152,7 @@ handles linking back and forth.
 					new_container.materials[mat] += mat_amount
 					mat_container.materials[mat] = 0
 			qdel(mat_container)
-		silo.connect_receptacle(src, parent)
+		new_silo.connect_receptacle(src, parent)
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))

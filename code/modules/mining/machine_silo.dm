@@ -104,7 +104,6 @@
 	radio.keyslot.channels[RADIO_CHANNEL_SECURITY] = TRUE
 	radio.recalculateChannels()
 
-
 /obj/machinery/ore_silo/Destroy()
 	if (GLOB.ore_silo_default == src)
 		GLOB.ore_silo_default = null
@@ -114,6 +113,7 @@
 
 	ore_connected_machines = null
 	materials = null
+	QDEL_NULL(radio)
 
 	return ..()
 

@@ -68,7 +68,7 @@ type Data = {
   id_required: BooleanLike;
 };
 
-export const OreSilo = (props: any) => {
+export const OreSilo = (props: Data) => {
   const { act, data } = useBackend<Data>();
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
 
@@ -107,7 +107,7 @@ export const OreSilo = (props: any) => {
             {currentTab === Tab.Logs && (
               <>
                 <RestrictButton />
-                <LogsList logs={logs!} />
+                <LogsList logs={logs} />
               </>
             )}
           </Stack.Item>
