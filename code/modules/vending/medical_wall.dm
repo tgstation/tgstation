@@ -117,7 +117,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 /obj/machinery/wall_healer/proc/init_payment()
 	// Cost depends on service (so just use 0 here)
 	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
-	desc += " This one charges by the second, though."
+	desc += " This one charges by the second - better get your wallet ready."
 
 /obj/machinery/wall_healer/examine(mob/user)
 	. = ..()
