@@ -25,7 +25,7 @@
 
 /datum/map_generator/cave_generator/rainworld/surface
 	flora_spawn_chance = 1
-	mob_spawn_chance = 4
+	mob_spawn_chance = 2
 	feature_spawn_chance = 0.2
 	initial_closed_chance = 50
 	birth_limit = 6
@@ -42,7 +42,7 @@
 	)
 
 /datum/map_generator/cave_generator/rainworld/surface/mining
-	mob_spawn_chance = 6
+	mob_spawn_chance = 4
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 2,
 		/mob/living/basic/mining/lobstrosity = 100,
@@ -56,13 +56,13 @@
 		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord = 4,
 		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk = 4,
 	)
-	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
+	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 15, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
 
 /datum/map_generator/cave_generator/rainworld/surface/mining/deep_ocean
-	mob_spawn_chance = 1.5
+	mob_spawn_chance = 0.8
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 2,
-		/mob/living/basic/mining/lobstrosity = 35,
+		/mob/living/basic/mining/lobstrosity = 25,
 		/mob/living/basic/mining/hivelord = 20,
 		/mob/living/basic/mining/basilisk = 30,
 		/mob/living/basic/mining/ice_whelp/sea = 25,
@@ -71,9 +71,9 @@
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 
-		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/lobstrocity = 1,
-		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord = 1,
-		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk = 1,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/lobstrocity = 0.5,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord = 0.5,
+		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk = 0.5,
 	)
 	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
 
