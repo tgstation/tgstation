@@ -27,6 +27,7 @@
 		/obj/effect/spectre_of_resurrection,
 		/obj/effect/temp_visual,
 		/obj/effect/wisp,
+		/obj/effect/mist/rainworld,
 		/obj/energy_ball,
 		/obj/narsie,
 		/obj/projectile,

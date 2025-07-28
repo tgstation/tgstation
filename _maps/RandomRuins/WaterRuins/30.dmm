@@ -1,10 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/machinery/chem_dispenser/chem_synthesizer{
-	desc = "Miracle juice.";
-	name = "\improper chemical synthesizer";
-	icon = 'icons/obj/antags/abductor.dmi';
-	icon_state = "chem_dispenser"
+/obj/structure/life_candle{
+	pixel_x = -8
+	},
+/obj/structure/table/abductor,
+/obj/item/hilbertshotel{
+	pixel_x = 8
 	},
 /obj/item/gps/spaceruin{
 	invisibility = 100;
@@ -13,8 +14,11 @@
 	},
 /turf/open/floor/fairy/rainworld,
 /area/rainworld/surface/outdoors/bermuda)
-"t" = (
+"g" = (
 /obj/effect/mist/rainworld,
+/turf/open/chasm/rainworld,
+/area/rainworld/surface/outdoors/bermuda)
+"t" = (
 /turf/open/floor/fairy/rainworld,
 /area/rainworld/surface/outdoors/bermuda)
 "B" = (
@@ -361,7 +365,7 @@ B
 B
 B
 B
-B
+g
 B
 J
 J
@@ -388,12 +392,12 @@ J
 J
 J
 B
+g
 B
 B
-B
-B
-B
-B
+g
+g
+g
 B
 J
 J
@@ -419,13 +423,13 @@ J
 J
 J
 B
-B
-B
-B
-B
-B
-B
-B
+g
+g
+g
+g
+g
+g
+g
 B
 J
 J
@@ -450,13 +454,13 @@ J
 J
 J
 B
-B
-B
-B
-B
-B
-B
-B
+g
+g
+g
+g
+g
+g
+g
 B
 B
 J
@@ -481,13 +485,13 @@ J
 J
 J
 B
-B
-B
-B
-B
+g
+g
+g
 t
-B
-B
+t
+t
+g
 B
 B
 B
@@ -515,11 +519,11 @@ B
 B
 B
 B
-B
+g
 t
 a
 t
-B
+g
 B
 B
 B
@@ -546,13 +550,13 @@ J
 J
 B
 B
-B
-B
-B
+g
+g
 t
-B
-B
-B
+t
+t
+g
+g
 B
 B
 J
@@ -578,13 +582,13 @@ J
 J
 J
 B
-B
-B
-B
-B
-B
-B
-B
+g
+g
+g
+g
+g
+g
+g
 B
 B
 J
@@ -611,12 +615,12 @@ J
 J
 J
 B
-B
-B
-B
-B
-B
-B
+g
+g
+g
+g
+g
+g
 B
 B
 J
@@ -644,12 +648,12 @@ J
 J
 J
 B
+g
 B
 B
 B
-B
-B
-B
+g
+g
 B
 J
 J

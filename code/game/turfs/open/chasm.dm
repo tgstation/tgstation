@@ -179,6 +179,9 @@
 /turf/open/chasm/rainworld/can_cross_safely(atom/movable/crossing)
 	return FALSE
 
+/turf/open/chasm/rainworld/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	return FALSE
+
 /turf/open/chasm/rainworld/proc/set_random_target()
 	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
 	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_OCEAN_RUINS)
