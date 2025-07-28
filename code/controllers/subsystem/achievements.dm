@@ -106,18 +106,18 @@ SUBSYSTEM_DEF(achievements)
 	if(orphaned_keys.len)
 		message_admins("Achievement metadata found without matching achievement, use Achievement-Admin-Panel verb to cleanup if necessary")
 
-// returns metadata keys in db with no matching achievement datum, either deleted achievements, or from server with code ahead of us
+/// returns metadata keys in db with no matching achievement datum, either deleted achievements, or from server with code ahead of us
 /datum/controller/subsystem/achievements/proc/get_orphaned_keys()
 	. = list()
 	var/list/current_metadata = list()
-	//select metadata here
-	var/datum/db_query/Q = SSdbcore.NewQuery("SELECT achievement_key,achievement_version FROM [format_table_name("achievement_metadata")]")
+	// Fetch all keys from the db
+	var/datum/db_query/Q = SSdbcore.NewQuery("SELECT achievement_key FROM [format_table_name("achievement_metadata")]")
 	if(!Q.Execute(async = TRUE))
 		qdel(Q)
 		return
 	else
 		while(Q.NextRow())
-			current_metadata[Q.item[1]] = text2num(Q.item[2])
+			current_metadata += Q.item[1]
 		qdel(Q)
 
 	var/list/achievements_by_db_id = list()
