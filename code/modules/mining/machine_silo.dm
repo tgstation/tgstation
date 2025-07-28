@@ -113,8 +113,7 @@
 
 	ore_connected_machines = null
 	materials = null
-	qdel(radio)
-	radio = null
+	QDEL_NULL(radio)
 
 	return ..()
 
