@@ -32,7 +32,7 @@ ADMIN_VERB(whitelist_player, R_BAN, "Whitelist CKey", "Adds a ckey to the Whitel
 	GLOB.whitelist += canon_ckey
 	rustg_file_append("\n[input_ckey]", WHITELISTFILE)
 
-	message_admins("[input_ckey] has been whitelisted by [usr]")
+	message_admins("[input_ckey] has been whitelisted by [key_name(user)]")
 
 ADMIN_VERB_CUSTOM_EXIST_CHECK(whitelist_player)
 	return CONFIG_GET(flag/usewhitelist)
