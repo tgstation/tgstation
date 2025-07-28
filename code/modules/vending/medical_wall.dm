@@ -43,10 +43,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND // manually handled
 
 	/// Number of bandages to dispense on rmb. Never recharges but can be restocked.
-	VAR_PROTECTED/num_bandages = 5
+	var/num_bandages = 5
 	/// Lazylist of bandages that have been restocked into the wall healer.
 	VAR_PRIVATE/list/stocked_bandages
 
+	/// Amount of chems injected per use
+	var/per_injection = 3
+	/// Cost per unit of chem injected. Note, always disregarded on red alert.
+	var/per_injection_cost = 3
+	/// Cost per bandage dispensed. Note, always disregarded on red alert.
+	var/per_bandage_cost = (/obj/item/stack/medical/gauze::custom_price) / (/obj/item/stack/medical/gauze::amount)
 	/// Reagent container containing chems that heal brute
 	VAR_PRIVATE/datum/reagents/brute_healing
 	/// Reagenet container containing chems that heal burn
@@ -62,24 +68,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	VAR_PRIVATE/obj/item/bodypart/current_hand
 	/// Ref of the last user to touch the wall healer - only set when there is no active user
 	VAR_PRIVATE/last_user_ref
+	/// Bar that props above the healer to show time until next injection
+	VAR_PRIVATE/datum/progressbar/injection_bar
 
-	/// Cooldown between chem recharges
-	COOLDOWN_DECLARE(recharge_cooldown)
-	/// Cooldown between chem injections
-	COOLDOWN_DECLARE(injection_cooldown)
 	/// How long it takes to recharge the wall healer
 	var/recharge_cd_length = 30 SECONDS
 	/// How long it takes between injections
 	var/injection_cd_length = 5 SECONDS
-
-	/// Amount of chems injected per use
-	var/per_injection = 3
-	/// Cost per unit of chem injected. Note, skipped on red alert or on a shuttle.
-	var/per_injection_cost = 3
-	/// Cost per bandage dispensed. Note, skipped on red alert or on a shuttle.
-	var/per_bandage_cost = (/obj/item/stack/medical/gauze::custom_price) / (/obj/item/stack/medical/gauze::amount)
-	/// Bar that props above the healer to show time until next injection
-	var/datum/progressbar/injection_bar
+	/// Cooldown between chem recharges
+	COOLDOWN_DECLARE(recharge_cooldown)
+	/// Cooldown between chem injections
+	COOLDOWN_DECLARE(injection_cooldown)
 
 /obj/machinery/wall_healer/Initialize(mapload)
 	. = ..()
@@ -311,7 +310,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	if(num_bandages + LAZYLEN(stocked_bandages) <= 0)
 		to_chat(user, span_notice("You try to retrieve some gauze, but [src] seems to be out of stock."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(attempt_charge(user, src, extra_fees = per_bandage_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+	if(attempt_charge(user, src, extra_fees = round(per_bandage_cost, 1)) & COMPONENT_OBJ_CANCEL_CHARGE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/stack/medical/gauze/bandage = LAZYACCESS(stocked_bandages, 1)
@@ -440,7 +439,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	var/need_blood = !HAS_TRAIT(current_user, TRAIT_NOBLOOD) && current_user.blood_volume < BLOOD_VOLUME_OKAY && !current_user.has_reagent(/datum/reagent/medicine/salglu_solution)
 	var/need_tox = current_user.getToxLoss() && !current_user.has_reagent(/datum/reagent/medicine/c2/syriniver)
 
-	var/cost = per_injection_cost * per_injection * (need_brute + need_burn + need_blood + need_tox)
+	var/cost = round(per_injection_cost * per_injection * (need_brute + need_burn + need_blood + need_tox), 1)
 	if(attempt_charge(current_user, src, extra_fees = cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return
