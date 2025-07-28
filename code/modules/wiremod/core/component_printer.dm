@@ -139,6 +139,7 @@
 	. = ..()
 	if (.)
 		return
+	var/alist/user_data = ID_DATA(usr)
 
 	switch (action)
 		if ("print")
@@ -150,7 +151,7 @@
 			if (!(design.build_type & COMPONENT_PRINTER))
 				return TRUE
 
-			if (!materials.can_use_resource(user_data = ID_DATA(usr)))
+			if (!materials.can_use_resource(user_data = user_data))
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
@@ -159,7 +160,7 @@
 
 			balloon_alert_to_viewers("printed [design.name]")
 
-			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
+			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]", user_data)
 			var/atom/printed_design = new design.build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
@@ -167,7 +168,7 @@
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
 			// SAFETY: eject_sheets checks for valid mats
-			materials.eject_sheets(material, amount)
+			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = user_data)
 
 	return TRUE
 
