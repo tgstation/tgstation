@@ -46,7 +46,6 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
 
   const updateAmount = (value: number) => {
     setAmount(value);
-    storage.set('spawnpanel-object_count', value);
     sendUpdatedSettings({ object_count: value });
   };
 
@@ -74,6 +73,10 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     setObjectName(value);
     storage.set('spawnpanel-object_name', value);
     sendUpdatedSettings({ object_name: value });
+
+    if (isPreciseModeActive) {
+      sendUpdatedSettings();
+    }
   };
 
   const updateOffset = (value: string) => {
@@ -134,7 +137,6 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
 
   useEffect(() => {
     const loadStoredValues = async () => {
-      const storedAmount = await storage.get('spawnpanel-object_count');
       const storedCordsType = await storage.get('spawnpanel-offset_type');
       const storedSpawnLocation = await storage.get(
         'spawnpanel-where_dropdown_value',
@@ -143,7 +145,6 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       const storedObjectName = await storage.get('spawnpanel-object_name');
       const storedOffset = await storage.get('spawnpanel-offset');
 
-      if (storedAmount) setAmount(storedAmount);
       if (storedCordsType !== undefined) setCordsType(storedCordsType);
       if (storedSpawnLocation) setSpawnLocation(storedSpawnLocation);
       if (storedDirection !== undefined) setDirection(storedDirection);
@@ -212,6 +213,12 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     }
   }, [spawnLocation]);
 
+  useEffect(() => {
+    if (isPreciseModeActive) {
+      sendUpdatedSettings();
+    }
+  }, [iconSettings.icon, iconSettings.iconState, iconSettings.iconSize]);
+
   return (
     <Stack fill vertical>
       <Stack>
@@ -257,6 +264,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       minValue={0}
                       maxValue={3}
                       step={1}
+                      lineHeight={1}
                       stepPixelSize={25}
                       value={direction}
                       format={(value) => {

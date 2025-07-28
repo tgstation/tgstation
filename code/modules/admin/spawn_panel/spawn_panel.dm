@@ -2,7 +2,7 @@
 #define WHERE_SUPPLY_BELOW_MOB "Current location (droppod)"
 #define WHERE_MOB_HAND "In own mob's hand"
 #define WHERE_MARKED_OBJECT "At a marked object"
-
+#define WHERE_IN_MARKED_OBJECT "In the marked object"
 #define WHERE_TARGETED_LOCATION "Targeted location"
 #define WHERE_TARGETED_LOCATION_POD "Targeted location (droppod)"
 #define WHERE_TARGETED_MOB_HAND "In targeted mob's hand"
@@ -270,6 +270,7 @@
 #undef WHERE_SUPPLY_BELOW_MOB
 #undef WHERE_MOB_HAND
 #undef WHERE_MARKED_OBJECT
+#undef WHERE_IN_MARKED_OBJECT
 #undef WHERE_TARGETED_LOCATION
 #undef WHERE_TARGETED_LOCATION_POD
 #undef WHERE_TARGETED_MOB_HAND

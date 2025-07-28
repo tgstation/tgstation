@@ -2,7 +2,7 @@
 #define WHERE_SUPPLY_BELOW_MOB "Current location (droppod)"
 #define WHERE_MOB_HAND "In own mob's hand"
 #define WHERE_MARKED_OBJECT "At a marked object"
-
+#define WHERE_IN_MARKED_OBJECT "In the marked object"
 #define WHERE_TARGETED_LOCATION "Targeted location"
 #define WHERE_TARGETED_LOCATION_POD "Targeted location (droppod)"
 #define WHERE_TARGETED_MOB_HAND "In targeted mob's hand"
@@ -68,7 +68,7 @@
 			where = WHERE_FLOOR_BELOW_MOB
 		target = target_reference
 
-	else if(where == WHERE_MARKED_OBJECT)
+	else if(where == WHERE_MARKED_OBJECT || where == WHERE_IN_MARKED_OBJECT)
 		if(!user.client.holder.marked_datum)
 			to_chat(user, span_warning("You don't have any object marked."))
 			return
@@ -76,7 +76,7 @@
 			to_chat(user, span_warning("The object you have marked cannot be used as a target. Target must be of type /atom."))
 			return
 		else
-			target = get_turf(user.client.holder.marked_datum)
+			target = (where == WHERE_MARKED_OBJECT ? get_turf(user.client.holder.marked_datum) : user.client.holder.marked_datum)
 
 	else
 		switch(spawn_params["offset_type"])
@@ -172,6 +172,7 @@
 #undef WHERE_SUPPLY_BELOW_MOB
 #undef WHERE_MOB_HAND
 #undef WHERE_MARKED_OBJECT
+#undef WHERE_IN_MARKED_OBJECT
 #undef WHERE_TARGETED_LOCATION
 #undef WHERE_TARGETED_LOCATION_POD
 #undef WHERE_TARGETED_MOB_HAND
