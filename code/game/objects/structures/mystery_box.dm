@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	/obj/item/clothing/gloves/rapid,
 	/obj/item/shield/riot/flash,
 	/obj/item/grenade/stingbang/mega,
-	/obj/item/storage/belt/sabre,
+	/obj/item/storage/belt/sheath/sabre,
 	/obj/item/knife/combat,
 	/obj/item/melee/baton/security/loaded,
 	/obj/item/reagent_containers/hypospray/combat,

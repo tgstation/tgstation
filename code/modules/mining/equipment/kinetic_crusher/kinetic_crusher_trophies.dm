@@ -63,6 +63,7 @@
 	return
 
 /// Does an effect when you hit a mob that is marked via the projectile
+/// Returns additional damage for detonation
 /obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
 	SHOULD_CALL_PARENT(TRUE)
 	//if we dont have a set id, use the typepath as identifier
