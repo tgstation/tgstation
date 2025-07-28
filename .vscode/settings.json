@@ -1,7 +1,6 @@
 {
-	"eslint.workingDirectories": ["./tgui"],
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit"
+		"source.fixAll.biome": "explicit"
 	},
 	"files.eol": "\n",
 	"files.insertFinalNewline": true,
@@ -10,13 +9,21 @@
 	"git.branchProtection": ["master"],
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
-	"[javascript][typescript][typescriptreact][javascriptreact][html][scss][css][json][jsonc][markdown][yaml]": {
-		"editor.rulers": [80],
+	"[javascript][typescript][javascriptreact][typescriptreact][css][json][jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.formatOnSave": true,
+		"editor.rulers": [80]
+	},
+	"[yaml][markdown][html][scss]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
+		"editor.formatOnSave": true,
+		"editor.rulers": [80]
 	},
 	"workbench.editorAssociations": {
 		"*.dmi": "dmiEditor.dmiEditor"
+	},
+	"search.exclude": {
+		"**/node_modules": true
 	},
 	"Lua.diagnostics.enable": false
 }

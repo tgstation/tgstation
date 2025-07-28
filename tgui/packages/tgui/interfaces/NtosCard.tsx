@@ -7,11 +7,11 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { NTOSData } from '../layouts/NtosWindow';
+import type { NTOSData } from '../layouts/NtosWindow';
 import { AccessList } from './common/AccessList';
 
 type Data = {
@@ -236,9 +236,7 @@ const TemplateDropdown = (props) => {
 
   const templateKeys = Object.keys(templates);
 
-  if (!templateKeys.length) {
-    return <> </>;
-  }
+  if (!templateKeys.length) return;
 
   return (
     <Stack>

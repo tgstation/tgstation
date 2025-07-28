@@ -22,6 +22,14 @@
 	cost = 2
 	surplus = 50
 
+/datum/uplink_item/device_tools/tactical_medkit
+	name = "combat first aid kit"
+	desc = "An medkit meant for combat support, it contains. Two medicated sutures and mesh, Gauze, Advanced health analyzer, And as last atropine medipen"
+	item = /obj/item/storage/medkit/tactical_lite
+	cost = 3
+	surplus = 72
+	purchasable_from = UPLINK_TRAITORS
+
 /datum/uplink_item/device_tools/surgery_syndie
 	name = "Full Syndicate Surgery Medkit"
 	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
@@ -266,6 +274,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
+	limited_stock = 1
 
 /datum/uplink_item/device_tools/syndicate_contacts
 	name = "Polarized Contact Lenses"

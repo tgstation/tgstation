@@ -141,8 +141,12 @@
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
 	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
-	for(var/atom/movable/AM in container.contents - manifest_paper)
-		container_contents[AM.name]++
+	for(var/obj/item/stuff in container.contents - manifest_paper)
+		if(isstack(stuff))
+			var/obj/item/stack/thing = stuff
+			container_contents[thing.singular_name] += thing.amount
+			continue
+		container_contents[stuff.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
 		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
 			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
@@ -150,9 +154,8 @@
 			for(var/iteration in 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
 				var/missing_item = pick(container_contents)
 				container_contents[missing_item]--
-				if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
+				if(!container_contents[missing_item]) // To avoid 0s and negative values on the manifest
 					container_contents -= missing_item
-
 
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
@@ -169,16 +172,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-
 	manifest_paper.update_appearance()
 	manifest_paper.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = container
-		C.manifest = manifest_paper
-		C.update_appearance()
-	else
-		container.contents += manifest_paper
+		var/obj/structure/closet/crate/crate = container
+		crate.manifest = WEAKREF(manifest_paper)
+		crate.update_appearance()
 
 	return manifest_paper
 
@@ -213,15 +213,11 @@
 	pack.cost += cost_increase
 
 /// Custom type of order who's supply pack can be safely deleted
-/datum/supply_order/disposable
-
 /datum/supply_order/disposable/Destroy(force)
 	QDEL_NULL(pack)
 	return ..()
 
 /// Custom material order to append cargo crate value to the final order cost
-/datum/supply_order/disposable/materials
-
 /datum/supply_order/disposable/materials/get_final_cost()
 	return (..() + CARGO_CRATE_VALUE)
 

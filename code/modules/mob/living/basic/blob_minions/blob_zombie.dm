@@ -23,8 +23,11 @@
 	gold_core_spawnable = NO_SPAWN
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/blob_zombie
+	death_cloud_size = BLOBMOB_CLOUD_NORMAL
 	/// The dead body we have inside
 	var/mob/living/carbon/human/corpse
+	///Our head overlay
+	var/mutable_appearance/blob_head_overlay
 
 /mob/living/basic/blob_minion/zombie/Initialize(mapload)
 	. = ..()
@@ -33,7 +36,6 @@
 
 /mob/living/basic/blob_minion/zombie/death(gibbed)
 	corpse?.forceMove(loc)
-	death_burst()
 	return ..()
 
 /mob/living/basic/blob_minion/zombie/Exited(atom/movable/gone, direction)
@@ -51,17 +53,18 @@
 	. = ..()
 	death()
 
-//Sets up our appearance
-/mob/living/basic/blob_minion/zombie/proc/set_up_zombie_appearance()
-	copy_overlays(corpse, TRUE)
-	var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head")
-	blob_head_overlay.color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_WHITE
-	color = initial(color) // reversing what our component did lol, but we needed the value for the overlay
-	overlays += blob_head_overlay
+/mob/living/basic/blob_minion/zombie/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
+	. = ..()
+	update_appearance()
+	color = initial(color)
+	blob_head_overlay?.icon_state = "blob_head"
+	blob_head_overlay?.color = new_strain ? new_strain.color : COLOR_WHITE
 
-/// Create an explosion of spores on death
-/mob/living/basic/blob_minion/zombie/proc/death_burst()
-	do_chem_smoke(range = 0, holder = src, location = get_turf(src), reagent_type = /datum/reagent/toxin/spore)
+/mob/living/basic/blob_minion/zombie/update_overlays()
+	. = ..()
+	if(!blob_head_overlay)
+		blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head_independent")
+	. += blob_head_overlay
 
 /// Store a body so that we can drop it on death
 /mob/living/basic/blob_minion/zombie/proc/consume_corpse(mob/living/carbon/human/new_corpse)
@@ -72,8 +75,8 @@
 	new_corpse.set_hairstyle("Bald", update = TRUE)
 	new_corpse.forceMove(src)
 	corpse = new_corpse
+	copy_overlays(corpse, TRUE)
 	update_appearance(UPDATE_ICON)
-	set_up_zombie_appearance()
 	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
 
 /// Dynamic changeling reentry
@@ -95,6 +98,3 @@
 		poll_candidates = TRUE,\
 		poll_ignore_key = POLL_IGNORE_BLOB,\
 	)
-
-/mob/living/basic/blob_minion/zombie/controlled/death_burst()
-	return
