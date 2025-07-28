@@ -12,7 +12,7 @@
 	/// If this mainframe can process all syndicate chatter regardless of z level
 	var/syndicate = FALSE
 	/// List of all frequencies to their name/color
-	var/static/list/frequency_infos = list(
+	var/static/alist/frequency_infos = alist(
 		"[FREQ_SCIENCE]" = list(
 			"name" = RADIO_CHANNEL_SCIENCE,
 			"color" = RADIO_COLOR_SCIENCE
