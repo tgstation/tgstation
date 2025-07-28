@@ -386,7 +386,6 @@
 	name = "Engineering"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
 		/obj/item/construction/rcd/borg,
 		/obj/item/pipe_dispenser,
 		/obj/item/extinguisher,
@@ -414,6 +413,30 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))
+	var/datum/weakref/night_vision_ref
+
+/datum/action/cooldown/borg_meson
+	name = "Toggle Meson Vision"
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "meson"
+
+/datum/action/cooldown/borg_meson/Activate()
+	if(usr.sight & SEE_TURFS)
+		usr.clear_sight(SEE_TURFS)
+	else
+		usr.add_sight(SEE_TURFS)
+
+/obj/item/robot_model/engineering/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	var/datum/action/cooldown/borg_meson/night_vision = new(loc)
+	. = ..()
+	if(!.)
+		return
+	night_vision.Grant(loc)
+	night_vision_ref = WEAKREF(night_vision)
+
+/obj/item/robot_model/engineering/Destroy()
+	QDEL_NULL(night_vision_ref)
+	return ..()
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -732,6 +755,7 @@
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon,
 		/obj/item/t_scanner/adv_mining_scanner/cyborg,
+		/obj/item/shield_module,
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(
@@ -746,6 +770,7 @@
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/datum/weakref/night_vision_ref
+	var/obj/item/shield_module/shield
 
 /obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/borg_meson/night_vision = new(loc)
@@ -754,17 +779,6 @@
 		return
 	night_vision.Grant(loc)
 	night_vision_ref = WEAKREF(night_vision)
-
-/datum/action/cooldown/borg_meson
-	name = "Toggle Meson Vision"
-	button_icon = 'icons/mob/actions/actions_mecha.dmi'
-	button_icon_state = "meson"
-
-/datum/action/cooldown/borg_meson/Activate()
-	if(usr.sight & SEE_TURFS)
-		usr.clear_sight(SEE_TURFS)
-	else
-		usr.add_sight(SEE_TURFS)
 
 /obj/item/robot_model/miner/Destroy()
 	QDEL_NULL(night_vision_ref)
@@ -939,7 +953,6 @@
 	name = "Syndicate Saboteur"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/thermal,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
 		/obj/item/restraints/handcuffs/cable/zipties,
@@ -965,6 +978,34 @@
 	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))
 	canDispose = TRUE
+	var/datum/weakref/thermal_vision_ref
+
+/datum/action/cooldown/borg_thermal
+	name = "Toggle Thermal Night Vision"
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "meson"
+	var/list/lighting_color_cutoffs
+
+/datum/action/cooldown/borg_thermal/Activate()
+	if(usr.sight & SEE_TURFS)
+		usr.clear_sight(SEE_TURFS|SEE_MOBS)
+		usr.lighting_cutoff = 0
+	else
+		usr.add_sight(SEE_TURFS|SEE_MOBS)
+		usr.lighting_cutoff = 30
+	usr.sync_lighting_plane_cutoff()
+
+/obj/item/robot_model/saboteur/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	var/datum/action/cooldown/borg_thermal/thermal_vision = new(loc)
+	. = ..()
+	if(!.)
+		return
+	thermal_vision.Grant(loc)
+	thermal_vision_ref = WEAKREF(thermal_vision)
+
+/obj/item/robot_model/saboteur/Destroy()
+	QDEL_NULL(thermal_vision_ref)
+	return ..()
 
 /obj/item/robot_model/syndicate/kiltborg
 	name = "Highlander"

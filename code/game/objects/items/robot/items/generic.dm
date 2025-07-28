@@ -401,6 +401,27 @@
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)
 
+/obj/item/shield_module
+	name = "Shield Activator"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "module_miner"
+	var/active = FALSE
+
+/obj/item/shield_module/attack_self(mob/living/silicon/borg)
+	active = !active
+	if(active)
+		playsound(src, 'sound/vehicles/mecha/mech_shield_raise.ogg', 50, FALSE)
+		RegisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
+	else
+		playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
+		UnregisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS)
+	borg.update_appearance()
+
+/obj/item/shield_module/proc/on_overlay_update(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	if(active)
+		overlays += mutable_appearance('icons/mob/effects/durand_shield.dmi', "shield")
+
 #undef HUG_MODE_NICE
 #undef HUG_MODE_HUG
 #undef HUG_MODE_SHOCK

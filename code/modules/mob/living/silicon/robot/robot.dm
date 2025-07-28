@@ -312,6 +312,10 @@
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
+	var/obj/item/shield_module/module = locate(/obj/item/shield_module) in src
+	if(module && module.active)
+		add_overlay(mutable_appearance('icons/mob/effects/durand_shield.dmi', "shield"))
+
 	if(opened)
 		if(wiresexposed)
 			add_overlay("ov-opencover +w")

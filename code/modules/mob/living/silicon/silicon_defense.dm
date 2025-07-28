@@ -156,4 +156,10 @@
 		return
 	apply_status_effect(/datum/status_effect/borg_slow, damage_done / 60)
 
+/mob/living/silicon/take_damage(damage_amount, damage_type, damage_flag = 0, sound_effect = 1, attack_dir)
+	var/obj/item/shield_module/shield = locate() in usr
+	if(shield && shield.active)
+		playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
+		return damage_amount *= 0.75
+
 #undef CYBORG_SLOWDOWN_THRESHOLD
