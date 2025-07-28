@@ -42,17 +42,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	density = FALSE
 	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND // manually handled
 
+	/// Cost per bandage dispensed. Note, always disregarded on red alert.
+	var/per_bandage_cost = (/obj/item/stack/medical/gauze::custom_price) / (/obj/item/stack/medical/gauze::amount)
 	/// Number of bandages to dispense on rmb. Never recharges but can be restocked.
 	var/num_bandages = 5
 	/// Lazylist of bandages that have been restocked into the wall healer.
 	VAR_PRIVATE/list/stocked_bandages
 
-	/// Amount of chems injected per use
-	var/per_injection = 3
 	/// Cost per unit of chem injected. Note, always disregarded on red alert.
 	var/per_injection_cost = 3
-	/// Cost per bandage dispensed. Note, always disregarded on red alert.
-	var/per_bandage_cost = (/obj/item/stack/medical/gauze::custom_price) / (/obj/item/stack/medical/gauze::amount)
+	/// Amount of chems injected per use
+	var/per_injection = 3
 	/// Reagent container containing chems that heal brute
 	VAR_PRIVATE/datum/reagents/brute_healing
 	/// Reagenet container containing chems that heal burn
