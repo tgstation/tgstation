@@ -75,10 +75,10 @@
 	QDEL_NULL(active_trauma)
 	return ..()
 
-/datum/wound/blunt/bone/handle_process(seconds_per_tick, times_fired)
+/datum/wound/blunt/bone/handle_process(datum/sig_source, seconds_per_tick, times_fired)
 	. = ..()
 
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+	if (!victim)
 		return
 
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)

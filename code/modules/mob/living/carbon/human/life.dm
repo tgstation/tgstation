@@ -28,6 +28,7 @@
 
 	//Body temperature stability and damage
 	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
+
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(stat != DEAD)
 			//handle active mutations
@@ -40,9 +41,6 @@
 
 		// for special species interactions
 		dna.species.spec_life(src, seconds_per_tick, times_fired)
-	else
-		for(var/datum/wound/iter_wound as anything in all_wounds)
-			iter_wound.on_stasis(seconds_per_tick, times_fired)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()

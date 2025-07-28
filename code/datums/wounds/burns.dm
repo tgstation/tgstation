@@ -37,9 +37,8 @@
 	/// Once we reach infestation beyond WOUND_INFESTATION_SEPSIS, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn for a really long time for this to happen)
 	var/strikes_to_lose_limb = 3
 
-/datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
-
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+/datum/wound/burn/flesh/handle_process(datum/sig_source, seconds_per_tick, times_fired)
+	if (!victim)
 		return
 
 	. = ..()

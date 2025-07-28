@@ -6,16 +6,14 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	for(var/datum/wound/wound as anything in all_wounds)
-		if(!wound.processes) // meh
-			continue
-		wound.handle_process(seconds_per_tick, times_fired)
 
 	if(HAS_TRAIT(src, TRAIT_STASIS))
 		. = ..()
 		reagents?.handle_stasis_chems(src, seconds_per_tick, times_fired)
+		SEND_SIGNAL(src, COMSIG_LIFE_WOUND_STASIS_PROCESS, seconds_per_tick, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
+		SEND_SIGNAL(src, COMSIG_LIFE_WOUND_PROCESS, seconds_per_tick, times_fired)
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(seconds_per_tick, times_fired)
 
@@ -29,8 +27,7 @@
 		if(stat != DEAD)
 			handle_brain_damage(seconds_per_tick, times_fired)
 
-	if(stat != DEAD)
-		handle_bodyparts(seconds_per_tick, times_fired)
+	SEND_SIGNAL(src, COMSIG_LIFE_HANDLE_BODYPARTS, seconds_per_tick, times_fired)
 
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
@@ -493,10 +490,6 @@
 
 	blood_volume = min(blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 	return COMPONENT_NO_EXPOSE_REAGENTS
-
-/mob/living/carbon/proc/handle_bodyparts(seconds_per_tick, times_fired)
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		. |= limb.on_life(seconds_per_tick, times_fired)
 
 /mob/living/carbon/proc/handle_organs(seconds_per_tick, times_fired)
 	if(stat == DEAD)

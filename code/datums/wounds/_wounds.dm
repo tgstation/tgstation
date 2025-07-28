@@ -147,7 +147,7 @@
 	return (limb && victim && (limb.body_zone == BODY_ZONE_L_ARM || limb.body_zone == BODY_ZONE_R_ARM) && interaction_efficiency_penalty != 0)
 
 /// If we have no actionspeed_mod, generates a new one with our unique ID, sets actionspeed_mod to it, then returns it.
-/datum/wound/proc/generate_actionspeed_modifier()
+/datum/wound/proc/generate_actionspeed_modifier() as /datum/actionspeed_modifier
 	RETURN_TYPE(/datum/actionspeed_modifier)
 
 	if (actionspeed_mod)
@@ -266,22 +266,42 @@
 /// Setter for [victim]. Should completely transfer signals, attributes, etc. To the new victim - if there is any, as it can be null.
 /datum/wound/proc/set_victim(new_victim)
 	if(victim)
-		UnregisterSignal(victim, list(COMSIG_QDELETING, COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB))
-		UnregisterSignal(victim, COMSIG_QDELETING)
-		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
-		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
+		UnregisterSignal(victim, list(
+			COMSIG_QDELETING,
+			COMSIG_MOB_SWAP_HANDS,
+			COMSIG_CARBON_POST_REMOVE_LIMB,
+			COMSIG_CARBON_POST_ATTACH_LIMB,
+			COMSIG_LIFE_WOUND_PROCESS,
+			COMSIG_LIFE_WOUND_STASIS_PROCESS,
+			SIGNAL_ADDTRAIT(TRAIT_STASIS),
+			SIGNAL_REMOVETRAIT(TRAIT_STASIS)))
 		if (actionspeed_mod)
 			victim.remove_actionspeed_modifier(actionspeed_mod) // no need to qdelete it, just remove it from our victim
+		remove_wound_from_victim()
 
-	remove_wound_from_victim()
 	victim = new_victim
 	if(victim)
 		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
-		RegisterSignals(victim, list(COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB), PROC_REF(add_or_remove_actionspeed_mod))
+		RegisterSignals(victim, list(
+			COMSIG_MOB_SWAP_HANDS,
+			COMSIG_CARBON_POST_REMOVE_LIMB,
+			COMSIG_CARBON_POST_ATTACH_LIMB), PROC_REF(add_or_remove_actionspeed_mod))
+		if(!HAS_TRAIT(victim, TRAIT_STASIS))
+			RegisterSignal(victim, COMSIG_LIFE_WOUND_PROCESS, PROC_REF(handle_process))
+		RegisterSignal(victim, SIGNAL_ADDTRAIT(TRAIT_STASIS), PROC_REF(wound_enter_stasis))
+		RegisterSignal(victim, SIGNAL_REMOVETRAIT(TRAIT_STASIS), PROC_REF(wound_exit_stasis))
 
 		if (limb)
 			start_limping_if_we_should() // the status effect already handles removing itself
 			add_or_remove_actionspeed_mod()
+
+/datum/wound/proc/wound_enter_stasis(datum/victim, trait)
+	SIGNAL_HANDLER
+	UnregisterSignal(src, COMSIG_LIFE_WOUND_PROCESS)
+
+/datum/wound/proc/wound_exit_stasis(datum/victim, trait)
+	SIGNAL_HANDLER
+	RegisterSignal(src, COMSIG_LIFE_WOUND_PROCESS)
 
 /// Proc called to change the variable `limb` and react to the event.
 /datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
@@ -355,6 +375,8 @@
 			mob_victim.update_health_hud()
 
 /datum/wound/proc/remove_wound_from_victim()
+	PRIVATE_PROC(TRUE)
+
 	if(!victim)
 		return
 	LAZYREMOVE(victim.all_wounds, src)
@@ -525,8 +547,10 @@
 /datum/wound/proc/treat(obj/item/I, mob/user)
 	return
 
-/// If var/processing is TRUE, this is run on each life tick
-/datum/wound/proc/handle_process(seconds_per_tick, times_fired)
+/// If var/processing is TRUE, this is run on non-stasis life ticks
+/datum/wound/proc/handle_process(datum/sig_source, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
 	return
 
 /// For use in do_after callback checks
@@ -560,6 +584,8 @@
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
 /datum/wound/proc/on_stasis(seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
 	return
 
 /// Sets our blood flow

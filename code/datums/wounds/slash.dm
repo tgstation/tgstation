@@ -145,8 +145,8 @@
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
 
-/datum/wound/slash/flesh/handle_process(seconds_per_tick, times_fired)
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+/datum/wound/slash/flesh/handle_process(datum/sig_source, seconds_per_tick, times_fired)
+	if (!victim)
 		return
 
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on its own

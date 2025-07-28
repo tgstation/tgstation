@@ -393,6 +393,7 @@
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_movable.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_movement.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_x_act.dm"
+#include "code\__DEFINES\dcs\signals\signals_mob\signals_life.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_ai.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_arcade.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_basic.dm"
