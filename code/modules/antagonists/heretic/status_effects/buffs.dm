@@ -35,7 +35,7 @@
 	button_icon = 'icons/obj/antags/eldritch.dmi'
 	button_icon_state = "crucible_soul"
 
-/datum/action/cancel_crucible_soul/Trigger(trigger_flags)
+/datum/action/cancel_crucible_soul/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

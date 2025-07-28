@@ -417,7 +417,7 @@
 /datum/action/exit_possession/IsAvailable(feedback = FALSE)
 	return ..() && isfloorturf(owner.loc)
 
-/datum/action/exit_possession/Trigger(trigger_flags)
+/datum/action/exit_possession/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE

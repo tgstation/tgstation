@@ -594,7 +594,7 @@
 	make_visible()
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
-/datum/action/vehicle/sealed/mecha/invisibility/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/invisibility/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

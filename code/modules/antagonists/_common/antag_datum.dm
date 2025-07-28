@@ -155,12 +155,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = ..()
 	name = "Open [target] Information:"
 
-/datum/action/antag_info/Trigger(trigger_flags)
+/datum/action/antag_info/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
 
-	target.ui_interact(usr || owner)
+	target.ui_interact(clicker || owner)
 
 /datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)

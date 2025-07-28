@@ -12,7 +12,7 @@
 	/// If we're a click action, the text shown on disable
 	var/disable_text
 
-/datum/action/innate/Trigger(trigger_flags)
+/datum/action/innate/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return FALSE
 	// We're a click action, trigger just sets it as active or not

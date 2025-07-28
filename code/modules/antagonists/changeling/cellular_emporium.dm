@@ -99,7 +99,7 @@
 		stack_trace("cellular_emporium action created with non-emporium.")
 		qdel(src)
 
-/datum/action/cellular_emporium/Trigger(trigger_flags)
+/datum/action/cellular_emporium/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

@@ -22,7 +22,7 @@
 
 	return ..()
 
-/datum/action/personality_commune/Trigger(trigger_flags)
+/datum/action/personality_commune/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE

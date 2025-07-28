@@ -70,7 +70,7 @@
 	button_icon_state = "arrow"
 	check_flags = AB_CHECK_PHASED
 
-/datum/action/innate/deliver_gondola_package/Trigger(trigger_flags)
+/datum/action/innate/deliver_gondola_package/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -90,7 +90,7 @@
 	button_icon_state = "storage"
 	check_flags = AB_CHECK_PHASED
 
-/datum/action/innate/check_gondola_contents/Trigger(trigger_flags)
+/datum/action/innate/check_gondola_contents/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

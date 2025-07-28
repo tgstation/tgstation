@@ -24,7 +24,7 @@
 	button_icon_state = "neckchop"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/neck_chop/Trigger(trigger_flags)
+/datum/action/neck_chop/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -43,7 +43,7 @@
 	button_icon_state = "legsweep"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/leg_sweep/Trigger(trigger_flags)
+/datum/action/leg_sweep/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -62,7 +62,7 @@
 	button_icon_state = "lungpunch"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/lung_punch/Trigger(trigger_flags)
+/datum/action/lung_punch/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

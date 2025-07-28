@@ -53,7 +53,7 @@
 	. = ..()
 	arrow_overlay = null
 
-/datum/action/change_pointer_color/Trigger(trigger_flags)
+/datum/action/change_pointer_color/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
