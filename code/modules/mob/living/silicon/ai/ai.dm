@@ -93,11 +93,12 @@
 
 	//Heads up to other AIs that a new AI is online and listening to Binary.
 	if(announce_init_to_others)
-		for(var/mob/living/silicon/ai/remotehost in GLOB.ai_list)
-			if(remotehost == src)
+		for(var/mob/McMobby in GLOB.player_list)
+			if(McMobby == src)
 				continue
-			to_chat(remotehost, "<br><span class='notice'>NEW REMOTE HOST CONNECTED - ID: \"[src]\"</span><br>")
-			remotehost.playsound_local(remotehost, 'sound/machines/beep/twobeep.ogg', 50, pressure_affected = FALSE, use_reverb = FALSE)
+			if(!McMobby.binarycheck())
+				continue
+			to_chat(McMobby,span_binarysay("<span class=[SPAN_COMMAND]>\[ SYSTEM \] NEW REMOTE HOST HAS CONNECTED TO THIS CHANNEL -- ID: [src]</span>"), type = MESSAGE_TYPE_RADIO)
 
 /mob/living/silicon/ai/weak_syndie
 	radio = /obj/item/radio/headset/silicon/ai/evil
