@@ -207,6 +207,7 @@
 	if(!islist(user_data))
 		// Just allow to salvage the situation
 		. = COMPONENT_ORE_SILO_ALLOW
+		user_data = ID_DATA(null)
 		CRASH("Invalid data passed to check_permitted")
 	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["accesses"], /list)?.Find(ACCESS_QM))
 		return COMPONENT_ORE_SILO_ALLOW
