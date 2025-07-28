@@ -91,7 +91,7 @@
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
-	//Heads up to other AIs that a new AI is online and listening to Binary.
+	//Heads up to other binary chat listeners that a new AI is online and listening to Binary.
 	if(announce_init_to_others)
 		for(var/mob/McMobby in GLOB.player_list)
 			if(McMobby == src)
