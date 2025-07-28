@@ -409,9 +409,9 @@ class ChatRenderer {
               working_value = true;
             } else if (working_value === '$false') {
               working_value = false;
-            } else if (!isNaN(working_value)) {
+            } else if (!Number.isNaN(working_value)) {
               const parsed_float = parseFloat(working_value);
-              if (!isNaN(parsed_float)) {
+              if (!Number.isNaN(parsed_float)) {
                 working_value = parsed_float;
               }
             }
