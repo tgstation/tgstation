@@ -1349,7 +1349,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/shortener_toxin
 	name = "Tallcrasher"
 	color = COLOR_SOFT_RED
-	description = "Inversed version of baby-boom toxin, whats make you very and very big. This also will heals your burns."
+	description = "Inversed version of shortener toxin, whats make you very and very big. This also will heals your burns."
 	ph = 6.9
 	tox_damage = -0.25
 	metabolization_rate = 0.9 * REM
