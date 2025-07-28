@@ -176,6 +176,9 @@
 	. = ..()
 	set_random_target()
 
+/turf/open/chasm/rainworld/can_cross_safely(atom/movable/crossing)
+	return FALSE
+
 /turf/open/chasm/rainworld/proc/set_random_target()
 	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
 	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_OCEAN_RUINS)
@@ -183,3 +186,4 @@
 	if(length(levels))
 		dest = locate(rand(50,200), rand(50,200), pick(levels))
 	chasm_component.target_turf = dest
+
