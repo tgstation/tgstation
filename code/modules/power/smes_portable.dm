@@ -114,15 +114,9 @@
 /obj/machinery/smesbank/Initialize(mapload)
 	. = ..()
 
-	///Initial connection for mapload
+	///Initial connection for mapload, We attempt to locate the connector but only connect to it after it has initialized
 	if(mapload)
-		var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
-		if(!possible_connector)
-			return
-		if(!connect_port(possible_connector))
-			return
-		possible_connector.input_attempt = TRUE
-		possible_connector.output_attempt = TRUE
+		connected_port = locate() in loc
 
 	///Initial charge
 	if(charge)
@@ -133,6 +127,22 @@
 		charge = 0
 
 	register_context()
+
+/obj/machinery/smesbank/post_machine_initialize()
+	. = ..()
+
+	//we somehow located an deleted port or no port at all. clear out
+	if(QDELETED(connected_port))
+		connected_port = null
+		return
+
+	//connect to the port located during mapload
+	var/obj/machinery/power/smes/connector/possible_connector = connected_port
+	connected_port = null
+	if(!connect_port(possible_connector))
+		return
+	connected_port.input_attempt = TRUE
+	connected_port.output_attempt = TRUE
 
 /obj/machinery/smesbank/on_construction(mob/user)
 	set_anchored(FALSE)
