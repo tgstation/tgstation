@@ -297,7 +297,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       tooltipPosition="top"
                       disabled={
                         isTargetMode ||
-                        spawnLocation === 'At a marked object' ||
+                        spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object' ||
                         isAnyPreciseModeActive
                       }
                     />
@@ -310,7 +310,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       width="100%"
                       disabled={
                         isTargetMode ||
-                        spawnLocation === 'At a marked object' ||
+                        spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object' ||
                         isAnyPreciseModeActive
                       }
                     />
@@ -374,7 +374,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       lineHeight: '22px',
                     }}
                     icon={
-                      spawnLocation === 'At a marked object'
+                      spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object'
                         ? 'thumbtack'
                         : 'eye-dropper'
                     }
@@ -383,14 +383,14 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         newPreciseType:
                           isMarkModeActive || isCopyModeActive
                             ? 'Off'
-                            : spawnLocation === 'At a marked object'
+                            : spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object'
                               ? 'Mark'
                               : 'Copy',
                       });
                     }}
                     selected={isMarkModeActive || isCopyModeActive}
                     tooltip={
-                      spawnLocation === 'At a marked object'
+                      spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object'
                         ? 'Mark atom'
                         : 'Copy atom path'
                     }
