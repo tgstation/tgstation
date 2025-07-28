@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - admin: "new admin verb for whitelisting players through the txt"
