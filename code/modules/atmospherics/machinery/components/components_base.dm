@@ -112,7 +112,7 @@
 
 /obj/machinery/atmospherics/components/get_pipe_image(iconfile, iconstate, direction, color, piping_layer, trinary)
 	var/mutable_appearance/pipe_appearance = ..()
-	if (underfloor_state == UNDERFLOOR_VISIBLE || loc && HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF))
+	if (underfloor_state == UNDERFLOOR_VISIBLE || (loc && HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF)))
 		pipe_appearance.layer = BELOW_CATWALK_LAYER + get_pipe_layer_offset()
 		SET_PLANE_EXPLICIT(pipe_appearance, FLOOR_PLANE, src)
 	return pipe_appearance
