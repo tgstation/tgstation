@@ -24,7 +24,7 @@
 
 	return attacked_machinery.exchange_parts(user, src) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
-///Plays the sound for RPED exhanging or installing parts.
+///Plays the sound & flick animation for RPED exhanging or installing parts.
 /obj/item/storage/part_replacer/proc/play_rped_effect()
 	playsound(src, 'sound/items/tools/rped.ogg', 40, TRUE)
 	flick("[icon_state]_active", src)
