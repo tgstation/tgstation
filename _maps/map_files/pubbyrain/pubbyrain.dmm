@@ -23478,7 +23478,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "bSy" = (
-/mob/living/basic/pet/cat/space/slugcat,
+/mob/living/basic/slugcat,
 /turf/open/floor/grass/fairy,
 /area/station/service/hydroponics/garden/monastery)
 "bSB" = (

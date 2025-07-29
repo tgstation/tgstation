@@ -98,7 +98,7 @@
 
 /obj/structure/life_candle/rainworld
 	// If the body is destroyed, what do we spawn for them
-	mob_type = /mob/living/basic/pet/cat/space/slugcat
+	mob_type = /mob/living/basic/slugcat
 	// If the respawned person is given a specific outfit
 	outfit = /datum/outfit/mafia/abductee
 	// How long until we respawn them after their death.

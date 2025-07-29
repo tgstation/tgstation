@@ -377,7 +377,7 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Cs" = (
-/mob/living/basic/pet/cat/space/slugcat,
+/mob/living/basic/slugcat,
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/ruin/space/has_grav/abandonedzoo)
 "Ep" = (
