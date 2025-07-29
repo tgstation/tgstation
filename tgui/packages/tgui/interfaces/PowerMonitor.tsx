@@ -11,8 +11,8 @@ import {
   Section,
   Stack,
   Table,
+  Tooltip,
 } from 'tgui-core/components';
-import { Tooltip } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
@@ -82,7 +82,7 @@ export function PowerMonitorContent(props) {
   const { history } = data;
 
   if (!history) {
-    return <>Loading...</>;
+    return 'Loading...';
   }
 
   const supply = history.supply[history.supply.length - 1] || 0;

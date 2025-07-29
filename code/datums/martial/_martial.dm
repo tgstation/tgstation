@@ -352,6 +352,9 @@
 		remove_verb(remove_from, help_verb)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
 	if(!isnull(combo_display))
+		var/datum/hud/hud_used = remove_from.hud_used
+		hud_used.infodisplay -= combo_display
+		hud_used.show_hud(hud_used.hud_version)
 		QDEL_NULL(combo_display)
 
 ///Gives the owner of the martial art the combo HUD.

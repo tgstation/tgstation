@@ -583,87 +583,62 @@
 	new /obj/item/reagent_containers/cup/blastoff_ampoule(src)
 	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine(src)
 
-/obj/item/storage/belt/sabre
+/obj/item/storage/belt/sheath
+	desc = "holds like, blades and stuff. You should not be seeing this."
+	w_class = WEIGHT_CLASS_BULKY
+	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
+	var/stored_blade
+
+/obj/item/storage/belt/sheath/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/storage/belt/sheath/examine(mob/user)
+	. = ..()
+	if(length(contents))
+		. += span_notice("Alt-click it to quickly draw the blade.")
+
+/obj/item/storage/belt/sheath/click_alt(mob/user)
+	if(length(contents))
+		var/obj/item/I = contents[1]
+		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
+		user.put_in_hands(I)
+		update_appearance()
+	else
+		balloon_alert(user, "it's empty!")
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/storage/belt/sheath/update_icon_state()
+	icon_state = initial(inhand_icon_state)
+	inhand_icon_state = initial(inhand_icon_state)
+	worn_icon_state = initial(worn_icon_state)
+	if(contents.len)
+		icon_state += "-full"
+		inhand_icon_state += "-full"
+		worn_icon_state += "-full"
+	return ..()
+
+/obj/item/storage/belt/sheath/PopulateContents()
+	if(stored_blade)
+		new stored_blade(src)
+		update_appearance()
+
+/obj/item/storage/belt/sheath/sabre
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
-	w_class = WEIGHT_CLASS_BULKY
-	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	storage_type = /datum/storage/sabre_belt
+	stored_blade = /obj/item/melee/sabre
 
-/obj/item/storage/belt/sabre/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/storage/belt/sabre/examine(mob/user)
-	. = ..()
-	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
-
-/obj/item/storage/belt/sabre/click_alt(mob/user)
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
-		balloon_alert(user, "it's empty!")
-	return CLICK_ACTION_SUCCESS
-
-/obj/item/storage/belt/sabre/update_icon_state()
-	icon_state = initial(inhand_icon_state)
-	inhand_icon_state = initial(inhand_icon_state)
-	worn_icon_state = initial(worn_icon_state)
-	if(contents.len)
-		icon_state += "-sabre"
-		inhand_icon_state += "-sabre"
-		worn_icon_state += "-sabre"
-	return ..()
-
-/obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
-	update_appearance()
-
-/obj/item/storage/belt/grass_sabre
+/obj/item/storage/belt/sheath/grass_sabre
 	name = "sabre sheath"
 	desc = "A simple grass sheath designed to hold a sabre of... some sort. An actual metal one might be too sharp, though..."
 	icon_state = "grass_sheath"
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"
-	w_class = WEIGHT_CLASS_BULKY
-	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	storage_type = /datum/storage/green_sabre_belt
-
-/obj/item/storage/belt/grass_sabre/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/storage/belt/grass_sabre/examine(mob/user)
-	. = ..()
-	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
-
-/obj/item/storage/belt/grass_sabre/click_alt(mob/user)
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
-		balloon_alert(user, "it's empty!")
-	return CLICK_ACTION_SUCCESS
-
-/obj/item/storage/belt/grass_sabre/update_icon_state()
-	icon_state = initial(inhand_icon_state)
-	inhand_icon_state = initial(inhand_icon_state)
-	worn_icon_state = initial(worn_icon_state)
-	if(contents.len)
-		icon_state += "-sabre"
-		inhand_icon_state += "-sabre"
-		worn_icon_state += "-sabre"
-	return ..()
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"

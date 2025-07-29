@@ -1,4 +1,0 @@
-author: "bigbakedbean"
-delete-after: True
-changes:
-  - rscadd: "chemical analyzer now displays bloodtype if analyzing blood"
