@@ -518,6 +518,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
 	},
@@ -12729,6 +12730,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
 	},
+/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/primary/port)
 "aOt" = (
@@ -23277,6 +23279,7 @@
 "bzl" = (
 /obj/machinery/suit_storage_unit/cmo,
 /obj/item/mod/module/diving,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "bzm" = (
@@ -45550,6 +45553,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall,
 /area/station/engineering/atmos)
+"kCj" = (
+/obj/structure/chair/comfy/beige{
+	dir = 8
+	},
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/iron/grimy,
+/area/station/hallway/secondary/entry)
 "kCk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/circuit,
@@ -46884,6 +46894,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"lES" = (
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/primary/central)
 "lET" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/white,
@@ -50568,6 +50582,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/central)
 "oMq" = (
@@ -56424,6 +56439,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/primary/central)
 "tDw" = (
@@ -58773,6 +58789,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/primary/central)
 "vGD" = (
@@ -59014,9 +59031,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "vPZ" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/closed/wall,
-/area/station/security/prison/work)
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/primary/starboard)
 "vQv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -76055,7 +76072,7 @@ fZQ
 dGP
 aKk
 aLA
-aNf
+kCj
 aNf
 aLA
 aQJ
@@ -89113,7 +89130,7 @@ pfI
 ujr
 eHa
 mta
-vPZ
+nkS
 nkS
 ibu
 nkS
@@ -92758,7 +92775,7 @@ oMT
 aoa
 bAr
 aJw
-aJq
+lES
 aJq
 bHt
 aOE
@@ -102282,7 +102299,7 @@ whx
 bbB
 aYV
 gVZ
-aYV
+vPZ
 mnj
 mnj
 mnj

@@ -6620,6 +6620,7 @@
 /area/station/command/heads_quarters/captain/private)
 "axQ" = (
 /obj/machinery/suit_storage_unit/captain,
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
 "axR" = (
@@ -11815,6 +11816,7 @@
 "aTm" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/light_switch/directional/south,
+/obj/item/mod/module/diving,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "aTo" = (
@@ -20012,6 +20014,7 @@
 "bBZ" = (
 /obj/machinery/suit_storage_unit/medical,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "bCa" = (
@@ -20689,6 +20692,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "bEV" = (
@@ -24092,6 +24096,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "bUR" = (
@@ -24103,6 +24108,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "bUT" = (
@@ -24704,6 +24710,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/ce)
 "bXg" = (
@@ -27644,6 +27651,7 @@
 "cnQ" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/bot,
+/obj/item/mod/module/diving,
 /turf/open/floor/pod/dark,
 /area/station/security/lockers)
 "cnT" = (
@@ -32190,6 +32198,7 @@
 /area/station/engineering/atmos)
 "eLt" = (
 /obj/structure/closet/firecloset,
+/obj/machinery/vending/wallmed/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "eLG" = (
@@ -35668,6 +35677,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "hBY" = (
@@ -37172,6 +37182,16 @@
 "iUX" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
+"iVj" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/primary/central/fore)
 "iVJ" = (
 /obj/effect/spawner/random/medical/memeorgans,
 /obj/effect/mapping_helpers/broken_floor,
@@ -43568,6 +43588,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
+"ojl" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/primary/central/fore)
 "ojJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -45366,6 +45394,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
+"pwQ" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/primary/central/fore)
 "pwS" = (
 /obj/structure/lattice/water,
 /obj/structure/disposalpipe/segment{
@@ -46663,6 +46699,11 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/command/bridge)
+"qsm" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/primary/central/aft)
 "qsH" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
@@ -48106,6 +48147,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/engineering_welding,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "rAe" = (
@@ -49029,6 +49071,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "siF" = (
@@ -51234,6 +51277,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"tJG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/hallway/primary/central/fore)
 "tJX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -54886,6 +54940,7 @@
 	id = "Equipment Room";
 	name = "Space Shutters Control"
 	},
+/obj/item/mod/module/diving,
 /turf/open/floor/pod/dark,
 /area/station/security/lockers)
 "wtZ" = (
@@ -81409,7 +81464,7 @@ wtZ
 aVH
 nCV
 sjH
-nCV
+pwQ
 pfL
 clO
 nCV
@@ -86287,7 +86342,7 @@ kHO
 aFz
 aGm
 awR
-fxP
+tJG
 ilz
 fEN
 aKT
@@ -87341,7 +87396,7 @@ cpB
 bgk
 cqh
 xPQ
-bik
+qsm
 jze
 jze
 lxx
@@ -92455,7 +92510,7 @@ aAH
 aAH
 hDu
 hDu
-qlr
+ojl
 psM
 fei
 anX
@@ -96306,7 +96361,7 @@ qkS
 gxm
 gLn
 cop
-qxa
+iVj
 qxa
 aGC
 qxa
