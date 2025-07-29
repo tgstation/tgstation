@@ -36,7 +36,7 @@
 									entry += " - <font color='black'><b>DEAD</b></font>"
 							else
 								entry += " - <font color='black'><b>DEAD</b></font>"
-					if(is_special_character(client.mob))
+					if(client.mob.is_antag())
 						entry += " - <b><font color='red'>Antagonist</font></b>"
 				entry += " [ADMIN_QUE(client.mob)]"
 				entry += " ([round(client.avgping, 1)]ms)"

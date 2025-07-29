@@ -1,0 +1,2 @@
+output_name = "window_frame_bamboo"
+template = "bitmask/diagonal_32x32.toml"

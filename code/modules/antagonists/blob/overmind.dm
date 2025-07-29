@@ -179,23 +179,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /// Create a blob spore and link it to us
 /mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
 	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
-	assume_direct_control(spore)
+	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
-
-/// Give our new minion the properties of a minion
-/mob/eye/blob/proc/assume_direct_control(mob/living/minion)
-	minion.AddComponent(/datum/component/blob_minion, src)
 
 /// Add something to our list of mobs and wait for it to die
 /mob/eye/blob/proc/register_new_minion(mob/living/minion)
 	blob_mobs |= minion
-	if (!istype(minion, /mob/living/basic/blob_minion/blobbernaut))
-		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
-
-/// When a spore (or zombie) dies then we do this
-/mob/eye/blob/proc/on_minion_death(mob/living/spore)
-	SIGNAL_HANDLER
-	blobstrain.on_sporedeath(spore)
 
 /mob/eye/blob/proc/victory()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)

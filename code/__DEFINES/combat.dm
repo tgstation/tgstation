@@ -139,6 +139,8 @@ DEFINE_BITFIELD(status_flags, list(
 #define THROWN_PROJECTILE_ATTACK 4
 /// We're being tackled or leaped at.
 #define LEAP_ATTACK 5
+/// We're being attacked with an oversized object, perhaps a road roller. Not that anyone use such a thing as a waepon. So only relevant for certain mech based attacks.
+#define OVERWHELMING_ATTACK 6
 
 /// Used in check block to get what mob is attacking the blocker.
 #define GET_ASSAILANT(weapon) (get(weapon, /mob/living))
@@ -154,6 +156,7 @@ DEFINE_BITFIELD(status_flags, list(
 #define ATTACK_EFFECT_MECHFIRE "mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
+#define ATTACK_EFFECT_VOID "void"
 
 /// Attack animation for sharp items
 #define ATTACK_ANIMATION_SLASH "slash"
@@ -412,3 +415,6 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
 #define CALCULATE_FORCE(some_item, atk_mods) \
 	((((FORCE_OVERRIDE in atk_mods) ? atk_mods[FORCE_OVERRIDE] : some_item.force) + (atk_mods?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in atk_mods) ? atk_mods[FORCE_MULTIPLIER] : 1))
+
+///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown?
+#define FLASH_COMPLETED "flash_completed"

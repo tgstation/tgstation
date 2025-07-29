@@ -173,6 +173,17 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/modular_shield_generator/gate
+	name = "Modular Shield Gate"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield_generator/gate
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
 /obj/item/circuitboard/machine/modular_shield_generator
 	name = "Modular Shield Generator"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -363,7 +374,7 @@
 	name = "portable SMES"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	needs_anchored = FALSE
-	build_path = /obj/machinery/power/smesbank
+	build_path = /obj/machinery/smesbank
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/power_store/battery = 5,)
@@ -649,77 +660,37 @@
 	build_path = /obj/machinery/vending/custom
 	req_components = list(/obj/item/vending_refill/custom = 1)
 
-	var/static/list/vending_names_paths = list(
-		/obj/machinery/vending/assist = "Part-Mart",
-		/obj/machinery/vending/autodrobe = "AutoDrobe",
-		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-		/obj/machinery/vending/cart = "PTech",
-		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-		/obj/machinery/vending/clothing = "ClothesMate",
-		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
-		/obj/machinery/vending/cola = "Robust Softdrinks",
-		/obj/machinery/vending/custom = "Custom Vendor",
-		/obj/machinery/vending/cytopro = "CytoPro",
-		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
-		/obj/machinery/vending/drugs = "NanoDrug Plus",
-		/obj/machinery/vending/engineering = "Robco Tool Maker",
-		/obj/machinery/vending/engivend = "Engi-Vend",
-		/obj/machinery/vending/games = "\improper Good Clean Fun",
-		/obj/machinery/vending/hydronutrients = "NutriMax",
-		/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
-		/obj/machinery/vending/medical = "NanoMed Plus",
-		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
-		/obj/machinery/vending/robotics = "Robotech Deluxe",
-		/obj/machinery/vending/security = "SecTech",
-		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
-		/obj/machinery/vending/sovietsoda = "BODA",
-		/obj/machinery/vending/sustenance = "Sustenance Vendor",
-		/obj/machinery/vending/tool = "YouTool",
-		/obj/machinery/vending/wallmed = "NanoMed",
-		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
-		/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
-		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
-		/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
-		/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
-		/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
-		/obj/machinery/vending/wardrobe/coroner_wardrobe = "MortiDrobe",
-		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
-		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
-		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
-		/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
-		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
-		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
-		/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
-		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
-		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
-		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
-		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
-		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
-	)
+	///Assoc list (machine name = machine typepath) of all vendors that can be chosen when the circuit is screwdrivered
+	var/static/list/valid_vendor_names_paths
+
+/obj/item/circuitboard/machine/vendor/Initialize(mapload)
+	. = ..()
+	if(!valid_vendor_names_paths)
+		valid_vendor_names_paths = list()
+		for(var/obj/machinery/vending/vendor_type as anything in subtypesof(/obj/machinery/vending))
+			if(vendor_type::allow_custom)
+				valid_vendor_names_paths[vendor_type::name] = vendor_type
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
-	var/static/list/display_vending_names_paths
-	if(!display_vending_names_paths)
-		display_vending_names_paths = list()
-		for(var/path in vending_names_paths)
-			display_vending_names_paths[vending_names_paths[path]] = path
-	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(display_vending_names_paths))
+	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return
-	if(isnull(display_vending_names_paths[choice]))
+	if(isnull(valid_vendor_names_paths[choice]))
 		return
-	set_type(display_vending_names_paths[choice])
+	set_type(valid_vendor_names_paths[choice])
 	return TRUE
 
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
-	name = "[vending_names_paths[build_path]] Vendor"
+	name = "[typepath::name] Vendor"
 	req_components = list(initial(typepath.refill_canister) = 1)
+	flatpack_components = list(initial(typepath.refill_canister))
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
-	for(var/typepath in vending_names_paths)
-		if(istype(machine, typepath))
-			set_type(typepath)
+	for(var/key in valid_vendor_names_paths)
+		// == instead of istype so subtypes don't pass check for their supertypes
+		if(machine.type == valid_vendor_names_paths[key])
+			set_type(valid_vendor_names_paths[key])
 			break
 	return ..()
 
@@ -1080,6 +1051,14 @@
 	name = "Slime Processor"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/processor/slime
+
+/obj/item/circuitboard/machine/processor/slime/fullupgrade
+	build_path = /obj/machinery/processor/slime/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 1,
+		/datum/stock_part/servo/tier4 = 1,
+	)
 
 /obj/item/circuitboard/machine/protolathe/department/science
 	name = "Departmental Protolathe - Science"

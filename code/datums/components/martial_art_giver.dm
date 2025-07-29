@@ -10,6 +10,10 @@
 	style = new style_type(src)
 
 /datum/component/martial_art_giver/Destroy()
+	var/obj/item/item = parent
+	var/mob/living/wearer = item.loc
+	if(isliving(wearer))
+		style.unlearn(wearer)
 	QDEL_NULL(style)
 	return ..()
 
@@ -24,11 +28,6 @@
 
 /datum/component/martial_art_giver/UnregisterFromParent(datum/source)
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	var/obj/item/item = parent
-	var/mob/living/wearer = item.loc
-	if(istype(wearer))
-		dropped(item, wearer)
 
 /datum/component/martial_art_giver/proc/equipped(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
