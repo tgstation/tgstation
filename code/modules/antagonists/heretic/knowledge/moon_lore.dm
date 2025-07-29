@@ -58,7 +58,7 @@
 	gain_text = "Under the light of the moon the laughter echoes."
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/glass = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
@@ -127,7 +127,7 @@
 	required_atoms = list(
 		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
-		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/glass = 2,
 	)
 
 /datum/heretic_knowledge/spell/moon_parade

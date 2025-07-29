@@ -389,3 +389,63 @@
 	name = "Climb Over the Rusted Mountain"
 	desc = "Your every footfall erodes the ground beneath you! Everything crumbles away! Maybe if you looked closer at the mountain in that painting, the path might be clearer..."
 	icon_state = "eldritch_painting_rust"
+
+/atom/movable/screen/alert/status_effect/eldritch_parade
+	name = "Lunar Parade"
+	desc = "You feel like you are being pulled towards the parade!"
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "lunar_parade"
+
+/datum/status_effect/moon_parade
+	id = "moon_parade"
+	alert_type = /atom/movable/screen/alert/status_effect/eldritch_parade
+	duration = 20 SECONDS
+	tick_interval = -1
+	/// The component that leashes us to the parade
+	var/datum/component/leash/leash_component
+	/// what atom we are leashed to
+	var/atom/leashed_to
+	/// how much damage before we release the leash
+	var/damage_release_threshold = 50
+	/// how much damage we have received so far
+	var/damage_received = 0
+
+/datum/status_effect/moon_parade/on_creation(mob/living/new_owner, atom/leashed_by)
+	leashed_to = leashed_by
+	. = ..()
+
+/datum/status_effect/moon_parade/on_apply()
+	if(!istype(leashed_to))
+		return FALSE
+	owner.balloon_alert(owner, "you feel unable to move away from the [leashed_to]!")
+	leash_component = owner.AddComponent(/datum/component/leash, leashed_to, distance = 1)
+	RegisterSignal(leashed_to, COMSIG_QDELETING, PROC_REF(delete_self))
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(block_move))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damage_received))
+	return TRUE
+
+/datum/status_effect/moon_parade/on_remove()
+	. = ..()
+	QDEL_NULL(leash_component)
+	UnregisterSignal(owner, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_MOB_APPLY_DAMAGE))
+	if(leashed_to)
+		UnregisterSignal(leashed_to, COMSIG_QDELETING)
+
+/datum/status_effect/moon_parade/proc/delete_self(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/status_effect/moon_parade/proc/on_damage_received(mob/attacked, damage_amount, damagetype)
+	SIGNAL_HANDLER
+	if(damagetype == STAMINA)
+		return
+	damage_received += damage_amount
+	if(damage_received >= damage_release_threshold)
+		owner.balloon_alert(owner, "you are free!")
+		qdel(src)
+
+// Blocks movement in order to make it appear like the character is transfixed to the projectile and wandering after it
+// Coded this way because its a simple way to hold the illusion compared to other methods
+/datum/status_effect/moon_parade/proc/block_move(datum/source)
+	SIGNAL_HANDLER
+	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
