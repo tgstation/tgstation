@@ -86,6 +86,8 @@
 	var/list/pinned_mobs = list()
 	///Icon for the maintenance panel overlay
 	var/panel_type = "panel1"
+	///Whether this vendor can be selected when building a custom vending machine
+	var/allow_custom = FALSE
 
 	/**
 	  * List of products this machine sells

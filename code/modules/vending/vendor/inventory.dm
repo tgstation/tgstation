@@ -74,7 +74,7 @@
 			products |= category["products"]
 
 	//locate canister
-	var/obj/item/vending_refill/canister = refill_canister ? locate(/obj/item/vending_refill) in component_parts : null
+	var/obj/item/vending_refill/canister = refill_canister ? locate(refill_canister) in component_parts : null
 
 	//build the records, if we have a canister make the records empty so we can refill it from the canister else make it max amount
 	build_inventories(start_empty = !isnull(canister))

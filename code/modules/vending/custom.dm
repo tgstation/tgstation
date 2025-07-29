@@ -9,6 +9,7 @@
 	payment_department = NO_FREEBIES
 	light_mask = "custom-light-mask"
 	panel_type = "panel20"
+	allow_custom = TRUE
 	refill_canister = /obj/item/vending_refill/custom
 	fish_source_path = /datum/fish_source/vending/custom
 
@@ -278,6 +279,7 @@
 /obj/machinery/vending/custom/unbreakable
 	name = "Indestructible Vendor"
 	resistance_flags = INDESTRUCTIBLE
+	allow_custom = FALSE
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"
@@ -286,6 +288,7 @@
 	max_integrity = 700
 	max_loaded_items = 40
 	light_mask = "greed-light-mask"
+	allow_custom = FALSE
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
