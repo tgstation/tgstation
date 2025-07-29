@@ -27,6 +27,7 @@
 ///Plays the sound for RPED exhanging or installing parts.
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	playsound(src, 'sound/items/tools/rped.ogg', 40, TRUE)
+	flick("[icon_state]_active", src)
 
 /**
  * Gets parts sorted in order of their tier
@@ -53,6 +54,7 @@
 /obj/item/storage/part_replacer/bluespace
 	name = "bluespace rapid part exchange device"
 	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
+	icon = 'icons/obj/storage/storage_wide.dmi'
 	icon_state = "BS_RPED"
 	inhand_icon_state = "BS_RPED"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -75,8 +77,10 @@
 /obj/item/storage/part_replacer/bluespace/play_rped_sound()
 	if(prob(1))
 		playsound(src, 'sound/items/pshoom/pshoom_2.ogg', 40, TRUE)
+		flick("[icon_state]_old", src)
 		return
 	playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
+	flick("[icon_state]_active", src)
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.
