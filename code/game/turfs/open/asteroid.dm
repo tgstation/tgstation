@@ -9,6 +9,7 @@
 	damaged_dmi = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	base_icon_state = "asteroid"
+	turf_flags = IS_SOLID
 
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND

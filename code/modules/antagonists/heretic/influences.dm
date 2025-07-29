@@ -232,14 +232,19 @@
 
 	being_drained = TRUE
 	loc.balloon_alert(user, "draining influence...")
+	var/mutable_appearance/draining_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_eye_dripping")
+	draining_overlay.pixel_y = 16
+	user.add_overlay(draining_overlay)
 
 	if(!do_after(user, drain_speed, src, hidden = TRUE))
 		being_drained = FALSE
 		loc.balloon_alert(user, "interrupted!")
+		user.cut_overlay(draining_overlay)
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
 	loc.balloon_alert(user, "influence drained")
+	user.cut_overlay(draining_overlay)
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.adjust_knowledge_points(knowledge_to_gain)

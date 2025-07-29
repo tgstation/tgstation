@@ -78,7 +78,7 @@
 
 	if(!(victim in mobs_hit))
 		RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move))
-		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(clear_mob))
+		RegisterSignals(victim, list(COMSIG_QDELETING, COMSIG_MOB_APPLY_DAMAGE), PROC_REF(clear_mob))
 		victim.AddComponent(/datum/component/leash, src, distance = 1)
 		victim.balloon_alert(victim, "you feel unable to move away from the parade!")
 		mobs_hit += victim
@@ -102,5 +102,5 @@
 
 /obj/projectile/moon_parade/proc/clear_mob(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_QDELETING))
+	UnregisterSignal(source, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_QDELETING, COMSIG_MOB_APPLY_DAMAGE))
 	mobs_hit -= source

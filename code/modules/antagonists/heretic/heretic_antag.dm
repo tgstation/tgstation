@@ -85,6 +85,8 @@
 	var/rewards_given = 0
 	/// Our heretic passive level. Tracked here in case of body moving shenanigans
 	var/passive_level = 1
+	/// Reference to the overlay heretics get when they get strong enough
+	var/static/mutable_appearance/eldritch_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -376,6 +378,7 @@
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
+	RegisterSignal(our_mob, SIGNAL_ADDTRAIT(TRAIT_UNLIMITED_BLADES), PROC_REF(gain_heretic_aura))
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
@@ -393,7 +396,17 @@
 		COMSIG_USER_ITEM_INTERACTION,
 		COMSIG_LIVING_POST_FULLY_HEAL,
 		COMSIG_LIVING_CULT_SACRIFICED,
+		SIGNAL_ADDTRAIT(TRAIT_UNLIMITED_BLADES),
 	))
+
+/// Adds an overlay to the heretic
+/datum/antagonist/heretic/proc/gain_heretic_aura(mob/living/heretic_mob)
+	SIGNAL_HANDLER
+	if(feast_of_owls)
+		return // No use in giving the aura to a heretic that can't ascend
+	if(heretic_mob.has_status_effect(/datum/status_effect/heretic_passive/lock))
+		return // Lock heretics never get this aura
+	heretic_mob.add_overlay(eldritch_overlay)
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()

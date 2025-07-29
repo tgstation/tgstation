@@ -263,7 +263,6 @@ GLOBAL_LIST(heretic_paths)
 	var/knowledge_tier3 = heretic_path.knowledge_tier3
 	var/knowledge_tier4 = heretic_path.knowledge_tier4
 
-
 	var/list/path_knowledges = list(
 		knowledge_tier1,
 		knowledge_tier2,

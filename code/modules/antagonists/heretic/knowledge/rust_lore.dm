@@ -255,7 +255,7 @@
 	for (var/iterator in 1 to greatest_dist)
 		if(!turfs_to_transform["[iterator]"])
 			continue
-		addtimer(CALLBACK(src, PROC_REF(transform_area), turfs_to_transform["[iterator]"]), (5 SECONDS) * iterator)
+		addtimer(CALLBACK(src, PROC_REF(transform_area), turfs_to_transform["[iterator]"]), (2 SECONDS) * iterator)
 
 /datum/heretic_knowledge/ultimate/rust_final/proc/transform_area(list/turfs)
 	turfs = shuffle(turfs)

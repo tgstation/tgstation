@@ -21,6 +21,10 @@
 	/// Whether the hood is flipped up
 	var/hood_up = FALSE
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot_flags & slot))
@@ -31,12 +35,15 @@
 		return
 	// Heretic equipped the robes? Grant them the effects
 	on_robes_gained(user)
-	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_robes_lost))
 
 /// Adds effects to the user when they equip their robes
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_gained(mob/user)
-	SHOULD_CALL_PARENT(FALSE) // Base robes have no effects
+	SHOULD_CALL_PARENT(TRUE)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	if(!isliving(user) || !heretic_datum)
+		return
+	user.cut_overlay(heretic_datum.eldritch_overlay)
 
 /// Removes any effects that our robes have, returns `TRUE` if the item dropped was not robes
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
@@ -45,6 +52,13 @@
 	if(robes != src)
 		return TRUE
 	UnregisterSignal(user, list(COMSIG_PREQDELETED, COMSIG_MOB_DROPPED_ITEM))
+
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	if(!isliving(user) || !heretic_datum)
+		return
+	user.cut_overlay(heretic_datum.eldritch_overlay)
+	heretic_datum.gain_heretic_aura(user)
+
 
 /// Applies a punishment to the user when the robes are equipped
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/robes_side_effect(mob/user)
@@ -81,7 +95,7 @@
 	icon_state = "eldritch"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
 	flags_inv = HIDEMASK | HIDEEARS | HIDEEYES | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES | PEPPERPROOF
 	flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clothing_flags = THICKMATERIAL | SNUG_FIT
@@ -131,6 +145,7 @@
 	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/on_robes_gained(mob/user)
+	. = ..()
 	if(!isliving(user))
 		return
 	var/mob/living/wearer = user

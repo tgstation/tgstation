@@ -95,6 +95,7 @@
 // Level 3 only has the cooldown reduction (nothing else added)
 /datum/status_effect/heretic_passive/blade
 	name = "Dance of the Brand"
+	id = "blade_passive"
 	passive_descriptions = list(
 		"Riposte with a 20 seconds cooldown, it now counts as a block.",
 		"Immunity to fall damage.",
@@ -208,6 +209,7 @@
 // Level 3 Cosmic fields will temporarily slow down bullets that pass through them
 /datum/status_effect/heretic_passive/cosmic
 	name = "Chosen of the Stars"
+	id = "cosmic_passive"
 	passive_descriptions = list(
 		"Cosmic fields speed you up and regenerate stamina.",
 		"Cosmic fields disrupt grenades or signalers from being activated and turn off already primed grenades.",
@@ -252,6 +254,7 @@
 // Level 3, being fat gives damage resistance
 /datum/status_effect/heretic_passive/flesh
 	name = "Ravenous Hunger"
+	id = "flesh_passive"
 	passive_descriptions = list(
 		"Immunity to Diseases, Disgust and space ants.",
 		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
@@ -346,6 +349,7 @@
 // Level 3 your grasp no longer goes on cooldown when opening things
 /datum/status_effect/heretic_passive/lock
 	name = "Open Invitation"
+	id = "lock_passive"
 	passive_descriptions = list(
 		"Shock insulation, all knowledges researched from the shop are cheaper",
 		"X-ray vision, you can see through walls and objects.",
@@ -364,7 +368,7 @@
 
 /datum/status_effect/heretic_passive/lock/heretic_level_final()
 	. = ..()
-	ADD_TRAIT(heretic_datum, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
+	ADD_TRAIT(owner, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
 
 /datum/status_effect/heretic_passive/lock/on_remove()
 	UnregisterSignal(owner, COMSIG_HERETIC_SHOP_SETUP)
@@ -387,6 +391,7 @@
 // Level 3, Mind gate + Ringleader's rise will channel the moon amulet effects
 /datum/status_effect/heretic_passive/moon
 	name = "Do You Hear The Voices Too?"
+	id = "moon_passive"
 	passive_descriptions = list(
 		"Can no longer develop brain traumas except for special ones, passively regenerates brain health, (this bonus is halved in combat).",
 		"Sleep immunity, increases the ratio at which your brain damage regenerates.",
@@ -448,6 +453,7 @@
 // Level 3 will restore lost limbs when standing on rust
 /datum/status_effect/heretic_passive/rust
 	name = "Leeching Walk"
+	id = "rust_passive"
 	passive_descriptions = list(
 		"Standing on Rusted tiles heals and purge chems off your body.",
 		"Standing on Rusted tiles closes up your wounds and heals your organs, you may now rust reinforced floors and walls.",
@@ -542,6 +548,7 @@
 // Level 3 No slip on water/ice
 /datum/status_effect/heretic_passive/void
 	name = "Aristocrat's Way"
+	id = "void_passive"
 	passive_descriptions = list(
 		"Cold and low pressure immunity.",
 		"You no longer need to breathe.",

@@ -183,6 +183,7 @@
 /datum/action/cooldown/spell/stargazer_laser/cast(atom/target)
 	. = ..()
 
+	cooldown_time = initial(cooldown_time)
 	if(damage_timer)
 		stop_beaming()
 
@@ -207,6 +208,7 @@
 	var/beam_timer = addtimer(CALLBACK(src, PROC_REF(open_laser), owner, targets), 2.2 SECONDS, TIMER_STOPPABLE)
 	playsound(owner, 'sound/mobs/non-humanoids/stargazer/beam_open.ogg', 50, FALSE)
 	if(!do_after(owner, 3 SECONDS, owner))
+		cooldown_time = 1 SECONDS
 		deltimer(beam_timer)
 		QDEL_NULL(orb_visual)
 		QDEL_NULL(beam_visual)
