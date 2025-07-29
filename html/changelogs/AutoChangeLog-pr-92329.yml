@@ -1,0 +1,6 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - qol: "Power cells and megacells now take much less time to print."
+  - balance: "Power cells now take the base-item time-to-print ( 10 seconds -> 3.2 seconds ), WITHOUT the stock-item print speed increase."
+  - balance: "Megacells now take 5 seconds to print ( 10 seconds -> 5 seconds), WITHOUT the stock-item print speed increase."

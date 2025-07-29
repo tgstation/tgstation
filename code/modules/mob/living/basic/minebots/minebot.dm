@@ -22,6 +22,7 @@
 	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
 	mob_biotypes = MOB_ROBOTIC
+	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 	death_message = "blows apart!"
 	light_system = OVERLAY_LIGHT
 	light_range = 6
@@ -67,7 +68,7 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	var/static/list/death_drops = list(/obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
 	AddElement(/datum/element/death_drops, death_drops)
-	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
+	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 
 	var/static/list/innate_actions = list(

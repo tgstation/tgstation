@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Xenobio console can no longer pick up the same slime multiple times."

@@ -67,6 +67,12 @@
 	///This is the lazy list of perimeter turfs that we grab when making large shields of 10 or more radius
 	var/list/list_of_turfs
 
+	///This decides if we get nerfed by projecting on internal turfs with floors and stuff
+	var/internal_penalty = TRUE
+
+	///What machine we are for the purpose of updating icon state
+	var/icon_type = "gen"
+
 	///The name modular shield console tgui's see us as
 	var/display_name = "Shield Generator"
 
@@ -87,10 +93,10 @@
 	innate_strength = initial(innate_strength)
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		innate_strength += new_capacitor.tier * 10
+		innate_strength += new_capacitor.tier * 20
 
 	for(var/datum/stock_part/servo/new_servo in component_parts)
-		innate_regen += new_servo.tier
+		innate_regen += new_servo.tier * 2
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		innate_radius += new_laser.tier * 0.25
@@ -98,7 +104,6 @@
 	calculate_regeneration()
 	calculate_max_strength()
 	calculate_radius()
-
 
 /obj/machinery/modular_shield_generator/Initialize(mapload)
 	. = ..()
@@ -136,8 +141,8 @@
 /obj/machinery/modular_shield_generator/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 
-	if(default_deconstruction_screwdriver(user,"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
-		"gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  tool))
+	if(default_deconstruction_screwdriver(user,"[icon_type]_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
+		"[icon_type]_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  tool))
 		return TRUE
 
 /obj/machinery/modular_shield_generator/crowbar_act(mob/living/user, obj/item/tool)
@@ -146,7 +151,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
 
 	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
@@ -194,8 +199,7 @@
 					continue
 				if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 					continue
-				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-				deploying_shield.shield_generator = src
+				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 				LAZYADD(deployed_shields, deploying_shield)
 				if(color_shield)
 					deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -206,8 +210,7 @@
 		for(var/turf/open/target_tile in list_of_turfs)
 			if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 				continue
-			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-			deploying_shield.shield_generator = src
+			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 			LAZYADD(deployed_shields, deploying_shield)
 			if(color_shield)
 				deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -226,8 +229,7 @@
 				continue
 			if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 				continue
-			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-			deploying_shield.shield_generator = src
+			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 			LAZYADD(deployed_shields, deploying_shield)
 			if(color_shield)
 				deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
@@ -241,15 +243,13 @@
 			continue
 		if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 			continue
-		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
-		deploying_shield.shield_generator = src
+		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
 		LAZYADD(deployed_shields, deploying_shield)
 		if(color_shield)
 			deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
-
 
 ///After giving people a grace period to react to we up the alpha value and make the forcefield dense
 /obj/machinery/modular_shield_generator/proc/finish_field()
@@ -268,7 +268,7 @@
 
 /obj/machinery/modular_shield_generator/update_icon_state()
 
-	icon_state = ("gen_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"][(panel_open)?"open" : "closed"]")
+	icon_state = ("[icon_type]_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"][(panel_open)?"open" : "closed"]")
 	return ..()
 
 //ui stuff
@@ -313,7 +313,7 @@
 
 		if ("toggle_exterior")
 			exterior_only = !exterior_only
-
+			calculate_radius()
 
 ///calculations for the stats supplied by the network of machines that boost us
 /obj/machinery/modular_shield_generator/proc/calculate_boost()
@@ -340,10 +340,14 @@
 /obj/machinery/modular_shield_generator/proc/calculate_radius()
 
 	max_radius = innate_radius + radius_boost
+	if(!exterior_only && internal_penalty)
+		max_radius = max(3,max_radius * 0.5)
 
 	if(radius > max_radius)//the generator can no longer function at this capacity
 		deactivate_shields()
-		radius = max_radius
+		radius = round(max_radius, 1)
+		return
+	calculate_regeneration()
 
 ///Calculates the max strength or health of the forcefield, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_max_strength()
@@ -368,7 +372,7 @@
 	//of the max radius we can support we get a very small bonus multiplier
 	current_regeneration = (max_regeneration / (0.5 + (radius * 2)/max_radius))
 
-	if(!exterior_only)
+	if(!exterior_only && internal_penalty)
 		current_regeneration *= 0.5
 
 ///Reduces the strength of the shield based on the given integer
@@ -394,7 +398,60 @@
 		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
 		random_shield.alpha = max(255 * (stored_strength/max_strength), 40)
 
+/obj/machinery/modular_shield_generator/gate
+	name = "modular shield gate"
+	desc = "A forcefield generator that can deploy a flat wall, it seems more stationary than its cousins. It can't handle G-force and will require frequent reboots when built on mobile craft."
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = "gate_recovering_closed"
+	density = FALSE
+	circuit = /obj/item/circuitboard/machine/modular_shield_generator/gate
+	internal_penalty = FALSE
+	layer = GIB_LAYER
+	icon_type = "gate"
+	display_name = "Shield Gate"
 
+/obj/machinery/modular_shield_generator/gate/ui_interact(mob/user, datum/tgui/ui)
+	return
+
+/obj/machinery/modular_shield_generator/gate/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(!default_change_direction_wrench(user, tool))
+		return FALSE
+	return TRUE
+
+///we shield a tile and step forward until we either run out of max radius or hit a closed turf, every turf we shield is a penalty towards regen
+/obj/machinery/modular_shield_generator/gate/activate_shields()
+	if(active || (machine_stat & NOPOWER))//bug or did admin call proc on already active shield gen?
+		return
+	if(max_radius < 0)//what the fuck are admins doing
+		calculate_radius()
+	active = TRUE
+	initiating = TRUE
+	var/color_shield = cached_color_filter || color
+	var/turf/target_tile = src.loc
+	radius = 0
+	for(var/i in 1 to round(max_radius, 1))
+		if((!isopenturf(target_tile)) || (locate(/obj/structure/emergency_shield/modular) in target_tile))
+			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
+			calculate_regeneration()
+			if(radius == 0)//we couldnt even generate a single tile somehow
+				deactivate_shields()
+			return
+		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile, src)
+		LAZYADD(deployed_shields, deploying_shield)
+		if(color_shield)
+			deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
+		radius += 1
+		target_tile = get_step(target_tile,dir)
+	addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
+	calculate_regeneration()
+
+//if we are active we most definitely have something protecting us
+/obj/machinery/modular_shield_generator/gate/take_damage()
+	if(active)
+		return
+	. = ..()
 
 //Start of other machines
 ///The general code used for machines that want to connect to the network
@@ -491,7 +548,6 @@
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()
 	connected_turf = get_step(src, dir)
@@ -540,8 +596,6 @@
 	update_icon_state()
 	balloon_alert(user, "no connection!")
 
-
-
 /obj/machinery/modular_shield/module/node
 	name = "modular shield node"
 	desc = "A waist high mess of humming pipes and wires that extend the modular shield network."
@@ -558,7 +612,6 @@
 		icon_state = "node_off_[panel_open ? "open" : "closed"]"
 		return
 	icon_state = "node_on_[panel_open ? "open" : "closed"]"
-
 
 /obj/machinery/modular_shield/module/node/wrench_act(mob/living/user, obj/item/tool)
 
@@ -673,7 +726,7 @@
 	. = ..()
 	charge_boost = initial(charge_boost)
 	for(var/datum/stock_part/servo/new_servo in component_parts)
-		charge_boost += new_servo.tier
+		charge_boost += new_servo.tier * 2
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -722,7 +775,7 @@
 	. = ..()
 	strength_boost = initial(strength_boost)
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		strength_boost += new_capacitor.tier * 10
+		strength_boost += new_capacitor.tier * 20
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -734,7 +787,6 @@
 		return
 	icon_state = "well_on_[panel_open ? "open" : "closed"]"
 
-
 //The shield itself
 /obj/structure/emergency_shield/modular
 	name = "modular energy shield"
@@ -742,19 +794,26 @@
 	color = "#00ffff"
 	density = FALSE
 	alpha = 100
+	flags_1 = PREVENT_CLICK_UNDER_1
+	explosion_block = 2
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or at least should be
 	no_damage_feedback = "weakening the generator sustaining it"
+	can_atmos_pass = ATMOS_PASS_NO
 
 	///The shield generator sustaining us
 	var/obj/machinery/modular_shield_generator/shield_generator
 
 
-/obj/structure/emergency_shield/modular/Initialize(mapload)
+/obj/structure/emergency_shield/modular/Initialize(mapload, connected_to_generator)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
+	if(!connected_to_generator)
+		return INITIALIZE_HINT_QDEL
+	shield_generator = connected_to_generator
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
+	return exposed_temperature > (T0C + 200)
 
 //Damage from atmos
 /obj/structure/emergency_shield/modular/atmos_expose(datum/gas_mixture/air, exposed_temperature)
@@ -783,3 +842,29 @@
 		return
 
 	shield_generator.shield_drain(15 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the number if not enough damage
+
+//Damage from explosions, remember we dont use armor
+/obj/structure/emergency_shield/modular/ex_act(severity)
+	if(isnull(shield_generator))
+		qdel(src)
+		return
+
+	switch(severity)
+
+		if(EXPLODE_LIGHT)
+			shield_generator.shield_drain(20)
+			return
+
+		if(EXPLODE_HEAVY)
+			shield_generator.shield_drain(50)
+			return
+
+		if(EXPLODE_DEVASTATE)
+			shield_generator.shield_drain(100)
+
+/obj/structure/emergency_shield/modular/hulk_damage()
+	if(isnull(shield_generator))
+		qdel(src)
+		return 0
+	shield_generator.shield_drain(30 + shield_generator.current_regeneration)//shield will eventually go down no matter the regen, flat number is how fast the hulk eats at reserves
+	return 0
