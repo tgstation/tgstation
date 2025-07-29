@@ -299,11 +299,11 @@
 /// implement a registration for processing while on stasis.
 /datum/wound/proc/wound_enter_stasis(datum/victim, trait)
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_LIFE_WOUND_PROCESS)
+	UnregisterSignal(victim, COMSIG_LIFE_WOUND_PROCESS)
 
 /datum/wound/proc/wound_exit_stasis(datum/victim, trait)
 	SIGNAL_HANDLER
-	RegisterSignal(src, COMSIG_LIFE_WOUND_PROCESS, PROC_REF(handle_process))
+	RegisterSignal(victim, COMSIG_LIFE_WOUND_PROCESS, PROC_REF(handle_process))
 
 /// Proc called to change the variable `limb` and react to the event.
 /datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
