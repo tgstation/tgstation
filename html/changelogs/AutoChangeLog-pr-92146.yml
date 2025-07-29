@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "Nightmares/Shadowpeople are no longer stunned by intense flashes like flashbangs or handheld flashes."
+  - balance: "Nightmares/Shadowpeople are now harmed and confused by ALL flash sources, including welding or other sources of flash-like flashing."
+  - sound: "Nightmares now have a wretched hiss as their default scream sound. Spooky!"
