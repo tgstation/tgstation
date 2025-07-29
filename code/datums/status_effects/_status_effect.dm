@@ -79,7 +79,7 @@
 				START_PROCESSING(SSpriority_effects, src)
 
 	update_particles()
-
+	SEND_SIGNAL(owner, COMSIG_LIVING_STATUS_APPLIED, src)
 	return TRUE
 
 /datum/status_effect/Destroy()
@@ -96,6 +96,7 @@
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
 		UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
+		SEND_SIGNAL(owner, COMSIG_LIVING_STATUS_REMOVED, src)
 		owner = null
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
