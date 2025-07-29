@@ -40,7 +40,7 @@
 	passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.update_data_for_all_viewers()
-	if(!HAS_TRAIT(owner, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT))
+	if(!HAS_TRAIT_FROM(owner, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT))
 		to_chat(owner, span_boldwarning("You have gained a lot of power, the mansus will no longer allow you to break your blades, but you can now make as many as you wish."))
 		owner.balloon_alert(owner, "blade breaking disabled!")
 		ADD_TRAIT(owner, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT)
