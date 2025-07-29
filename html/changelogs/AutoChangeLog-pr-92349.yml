@@ -1,5 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "Ore silos should be able to be connected/disconnected/disassembled without any issues now."
-  - bugfix: "The define for CENTCOM_SPECOPS was incorrectly formatted; it has been fixed."
