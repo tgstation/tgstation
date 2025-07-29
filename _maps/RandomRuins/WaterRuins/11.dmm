@@ -213,7 +213,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "aW" = (
 /obj/item/documents/nanotrasen,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "aZ" = (
@@ -614,6 +614,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
+"dh" = (
+/obj/item/wormhole_jaunter,
+/obj/effect/spawner/random/structure/table_or_rack,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/has_grav/waystation/cargobay)
 "dk" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
@@ -662,7 +667,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "dD" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/aicard/aitater,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -693,7 +698,7 @@
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface/outdoors)
 "dQ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
@@ -757,6 +762,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "eh" = (
@@ -1010,7 +1016,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "fs" = (
-/obj/machinery/drone_dispenser,
+/obj/machinery/drone_dispenser/hivebot,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ft" = (
@@ -1259,7 +1265,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "gD" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1384,6 +1390,7 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/security,
+/obj/item/mod/module/diving,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "hg" = (
@@ -1537,7 +1544,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "hS" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
@@ -1590,6 +1597,10 @@
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 4
 	},
+/area/ruin/space/has_grav/waystation/cargobay)
+"ij" = (
+/obj/effect/spawner/random/glass_debris,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "in" = (
 /obj/machinery/light/broken/directional/west,
@@ -1744,7 +1755,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "iZ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
 /obj/item/assembly/timer,
@@ -1777,7 +1788,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jm" = (
+/obj/item/book/granter/crafting_recipe/dusting/pipegun_prime,
+/obj/effect/spawner/random/structure/table_or_rack,
 /turf/open/floor/iron/smooth_large,
+/area/ruin/space/has_grav/waystation/cargobay)
+"jn" = (
+/obj/structure/table,
+/obj/item/skillchip/self_surgery,
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jp" = (
 /obj/effect/turf_decal/bot,
@@ -1791,6 +1809,13 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/engine,
+/area/ruin/space/has_grav/waystation/cargobay)
+"jt" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ju" = (
 /obj/machinery/door/airlock/grunge,
@@ -1864,6 +1889,7 @@
 /obj/structure/table,
 /obj/item/kitchen/fork,
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jO" = (
@@ -1972,6 +1998,10 @@
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav/waystation/cargobay)
+"ku" = (
+/obj/machinery/vending/toyliberationstation,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
 "kv" = (
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -1990,6 +2020,7 @@
 	},
 /obj/item/radio/intercom/prison/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/item/trench_tool,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "kF" = (
@@ -2015,7 +2046,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "kL" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
@@ -2161,7 +2192,7 @@
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav/waystation/cargobay)
 "lP" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/assembly/igniter{
 	pixel_x = -8;
 	pixel_y = -2
@@ -2290,6 +2321,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
+"mB" = (
+/obj/machinery/door/airlock/grunge,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
 "mD" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/structure/crate,
@@ -2297,7 +2336,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "mE" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -2377,6 +2416,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine,
+/area/ruin/space/has_grav/waystation/cargobay)
+"mY" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "na" = (
 /obj/structure/cable/multilayer/connected,
@@ -2578,6 +2622,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
+"op" = (
+/obj/machinery/suit_storage_unit/mining/diving,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/cargobay)
 "oq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -2672,6 +2720,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/frame/computer,
+/obj/item/mod/module/hacker,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "oO" = (
@@ -2779,9 +2828,20 @@
 /obj/item/extinguisher/empty,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
+"pu" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
 "pv" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
+"px" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
 /area/ruin/space/has_grav/waystation/cargobay)
 "py" = (
 /obj/effect/turf_decal/bot,
@@ -2922,7 +2982,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "qb" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "qd" = (
@@ -3050,6 +3110,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
+"qL" = (
+/obj/machinery/electrolyzer,
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/waystation/cargobay)
 "qN" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Gas to Chamber"
@@ -3114,7 +3178,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "rg" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/door/firedoor,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/siding/thinplating/light{
@@ -3123,6 +3187,7 @@
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 4
 	},
+/obj/item/reagent_containers/hypospray/medipen/survival,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ri" = (
@@ -3140,7 +3205,7 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "rm" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -3304,6 +3369,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
+/obj/effect/spawner/random/junk_shell,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "se" = (
@@ -3382,7 +3448,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "sN" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -3573,6 +3639,8 @@
 "tW" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/broken/directional/north,
+/obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "tX" = (
@@ -3608,7 +3676,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "ug" = (
 /obj/item/storage/pill_bottle/mannitol,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "um" = (
@@ -3770,6 +3838,7 @@
 /obj/item/stack/ore/silver,
 /obj/item/stack/ore/iron,
 /obj/effect/turf_decal/bot,
+/obj/item/borg/upgrade/modkit/aoe/mobs/andturfs,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ve" = (
@@ -3870,7 +3939,12 @@
 "vH" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/suit_storage_unit/ce,
+/obj/item/mod/module/diving,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
+"vI" = (
+/obj/effect/spawner/random/environmentally_safe_anomaly/bioscramblerless,
+/turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "vL" = (
 /obj/effect/turf_decal/siding/thinplating/end,
@@ -4061,7 +4135,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "wB" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/door/firedoor,
 /obj/item/folder/white,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -4160,6 +4234,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
+"xc" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/food_or_drink/seed_vault,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
 "xd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -4225,6 +4304,15 @@
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
+"xA" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/item/kinetic_crusher/compact,
+/obj/structure/closet/secure_closet,
+/obj/item/crusher_trophy/blaster_tubes/magma_wing,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
 "xB" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
@@ -4248,6 +4336,8 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "xD" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "xH" = (
@@ -4266,7 +4356,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "xN" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/geiger_counter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -4440,7 +4530,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "yy" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	icon_state = "rightsecure";
@@ -4595,12 +4685,12 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "zh" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "zi" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/paper/crumpled/bloody,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -4831,12 +4921,20 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
+"Aq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/storage/part_replacer/bluespace/tier2,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/waystation/cargobay)
 "Aw" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
 /obj/effect/spawner/random/exotic/tool,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ax" = (
@@ -4849,6 +4947,10 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
+/area/ruin/space/has_grav/waystation/cargobay)
+"AA" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "AB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
@@ -4959,7 +5061,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Be" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -4968,6 +5070,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Bi" = (
 /obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/hypospray/medipen/salacid,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Bj" = (
@@ -5021,11 +5124,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Bu" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Bx" = (
@@ -5118,6 +5222,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/suit_storage_unit/syndicate/lavaland,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "BU" = (
@@ -5463,6 +5568,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "DL" = (
@@ -5470,6 +5576,12 @@
 	name = "Engineering External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/cargobay)
+"DM" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "DN" = (
@@ -5527,7 +5639,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ed" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/assembly/flash/handheld,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -5570,10 +5682,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Em" = (
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
+/obj/machinery/syndicatebomb/nukie/empty,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "En" = (
@@ -5597,10 +5706,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "EA" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "EB" = (
@@ -5686,6 +5793,11 @@
 	dir = 4
 	},
 /turf/open/floor/plastic,
+/area/ruin/space/has_grav/waystation/cargobay)
+"EZ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Fa" = (
 /obj/machinery/light/small/directional/north,
@@ -5799,6 +5911,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "FP" = (
 /obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/glass_debris,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "FV" = (
@@ -6305,10 +6418,6 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/obj/item/malf_upgrade{
-	pixel_y = -7;
-	pixel_x = 5
-	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Is" = (
@@ -6447,6 +6556,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/mod/module/diving,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ji" = (
@@ -6729,7 +6839,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "KT" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/box/pdas{
 	pixel_x = 4;
 	pixel_y = 4
@@ -6814,6 +6924,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Lu" = (
@@ -6897,7 +7009,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "LQ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/tank/internals/emergency_oxygen/engi{
 	pixel_x = 5
 	},
@@ -6932,7 +7044,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Mc" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -6944,7 +7056,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Mf" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
 	pixel_y = 4
@@ -7064,6 +7176,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
+"MC" = (
+/obj/machinery/door/airlock/grunge,
+/obj/structure/firelock_frame,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ME" = (
@@ -7186,7 +7304,7 @@
 /turf/open/floor/plating/rainworld,
 /area/rainworld/surface/outdoors)
 "Ne" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
@@ -7314,6 +7432,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "NT" = (
@@ -7383,6 +7502,7 @@
 	dir = 8;
 	pixel_x = 12
 	},
+/obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Of" = (
@@ -7421,7 +7541,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "On" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -7512,6 +7632,8 @@
 "OO" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/broken/directional/south,
+/obj/item/skillchip/brainwashing,
+/obj/structure/closet/crate,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "OR" = (
@@ -7600,6 +7722,7 @@
 "Pn" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/spawner/random/structure/crate,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Po" = (
@@ -7623,7 +7746,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ps" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/wrench,
 /obj/item/screwdriver{
 	pixel_y = 10
@@ -7728,7 +7851,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "PO" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/box/silver_ids{
 	pixel_x = 4;
 	pixel_y = 6
@@ -7994,6 +8117,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Rb" = (
 /obj/machinery/suit_storage_unit/security,
+/obj/item/mod/module/diving,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Rc" = (
@@ -8667,7 +8791,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "UN" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -8808,6 +8932,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "VB" = (
 /obj/structure/table,
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "VC" = (
@@ -9004,11 +9129,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Wz" = (
-/obj/structure/closet/secure_closet/cytology,
+/obj/structure/closet/secure_closet,
+/obj/item/malf_upgrade,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "WA" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/assembly/timer{
 	pixel_x = 6;
 	pixel_y = -4
@@ -9205,6 +9331,8 @@
 	dir = 4
 	},
 /obj/effect/gibspawner/human/bodypartless,
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "XG" = (
@@ -9304,6 +9432,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Yf" = (
@@ -9333,11 +9462,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Yi" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/light/small/broken/directional/north,
+/obj/item/reagent_containers/hypospray/medipen/pumpup,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Yj" = (
 /obj/machinery/door/airlock/engineering/glass{
@@ -9616,12 +9743,12 @@
 	},
 /area/ruin/space/has_grav/waystation/cargobay)
 "ZH" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/multitool,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ZI" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/radio/intercom{
 	freerange = 1;
 	name = "Station Intercom (Command)"
@@ -11338,7 +11465,7 @@ OR
 QN
 YX
 No
-pF
+op
 No
 QN
 xH
@@ -11746,7 +11873,7 @@ OR
 dw
 xH
 Qb
-nE
+xA
 xH
 Qt
 xH
@@ -12096,8 +12223,8 @@ IX
 QN
 XT
 jB
-Yi
-EA
+Lr
+AA
 xH
 dF
 xH
@@ -12198,7 +12325,7 @@ iz
 Pl
 XT
 jB
-Yi
+Lr
 EA
 Lr
 Lr
@@ -12300,8 +12427,8 @@ iz
 QN
 jF
 jB
-Yi
-EA
+Lr
+AA
 Pm
 Ly
 Ly
@@ -12386,7 +12513,7 @@ KV
 QN
 HQ
 hi
-xH
+ij
 jB
 jB
 tK
@@ -12606,7 +12733,7 @@ QN
 QN
 XT
 jB
-pF
+Db
 NQ
 IQ
 Ad
@@ -12616,7 +12743,7 @@ nE
 Mj
 Mj
 gC
-PC
+Aq
 PC
 MN
 xT
@@ -12812,7 +12939,7 @@ XT
 jB
 Gd
 Qm
-pF
+Db
 as
 jC
 Oz
@@ -12912,7 +13039,7 @@ iS
 iS
 HR
 jB
-aS
+px
 Mo
 aS
 vr
@@ -13185,7 +13312,7 @@ ep
 iz
 Dj
 xH
-uV
+pu
 xH
 ep
 dF
@@ -13199,7 +13326,7 @@ qv
 iC
 iC
 iC
-xH
+ij
 HQ
 ep
 xH
@@ -13287,7 +13414,7 @@ Jj
 Qc
 Ry
 Wv
-hx
+mB
 Wv
 AH
 Wv
@@ -13389,7 +13516,7 @@ Lr
 PB
 bU
 xH
-Jv
+MC
 xH
 ep
 QH
@@ -13416,7 +13543,7 @@ iz
 Pa
 HQ
 PB
-xH
+ij
 XQ
 HQ
 XQ
@@ -13587,7 +13714,7 @@ jB
 vE
 GV
 Qf
-XT
+DM
 go
 LA
 jB
@@ -13689,7 +13816,7 @@ jB
 gP
 xV
 Ys
-XT
+EZ
 DZ
 iz
 WH
@@ -13707,7 +13834,7 @@ jB
 jB
 jB
 jB
-Vo
+Yi
 Pa
 QN
 rF
@@ -13830,7 +13957,7 @@ QN
 Lx
 jB
 xD
-xH
+jt
 xH
 ym
 xH
@@ -13898,7 +14025,7 @@ HQ
 Hf
 wJ
 HQ
-xH
+ku
 jB
 NT
 ep
@@ -13932,7 +14059,7 @@ QN
 Lx
 jB
 tW
-xH
+jt
 ow
 FV
 rT
@@ -14033,7 +14160,7 @@ Gl
 QN
 Lx
 jB
-Dj
+mY
 Qb
 bU
 xH
@@ -14139,7 +14266,7 @@ Pn
 Lr
 MR
 Fs
-Yi
+Lr
 vf
 Is
 nE
@@ -14212,7 +14339,7 @@ HQ
 QN
 wE
 jB
-wl
+fR
 bY
 fo
 DC
@@ -14339,11 +14466,11 @@ Tq
 QN
 ab
 QN
-jm
+dh
 jm
 jB
 iU
-iU
+qL
 jB
 Yp
 pZ
@@ -14842,7 +14969,7 @@ aT
 wN
 Rw
 Lr
-Lr
+xc
 Nc
 XT
 wE
@@ -15723,7 +15850,7 @@ OR
 OR
 QN
 wY
-xQ
+vI
 xQ
 QN
 wY
@@ -16748,7 +16875,7 @@ rS
 QN
 jP
 UF
-VB
+jn
 QN
 QN
 QN

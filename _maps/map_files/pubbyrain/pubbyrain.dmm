@@ -314,13 +314,17 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors)
 "abJ" = (
-/obj/structure/lattice/water,
-/obj/machinery/camera/motion/directional/south{
-	c_tag = "MiniSat External Fore";
-	network = list("minisat")
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Secondary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = -4
+	},
+/turf/open/floor/circuit,
+/area/station/ai_monitored/turret_protected/ai)
 "abN" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/water/no_planet_atmos/deep/rainworld,
@@ -445,8 +449,8 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "acv" = (
-/obj/machinery/camera/motion/directional/west{
-	c_tag = "MiniSat External Starboard";
+/obj/machinery/camera/motion/directional/south{
+	c_tag = "MiniSat External Fore";
 	network = list("minisat")
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
@@ -3223,6 +3227,7 @@
 /area/station/security/medical)
 "amd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "ame" = (
@@ -8728,6 +8733,7 @@
 /area/station/commons/toilet/restrooms)
 "aFc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "aFe" = (
@@ -11715,7 +11721,7 @@
 /area/station/service/kitchen/coldroom)
 "aSI" = (
 /obj/structure/cable,
-/obj/machinery/deepfryer,
+/obj/machinery/food_cart,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/kitchen/coldroom)
 "aSJ" = (
@@ -14795,7 +14801,7 @@
 	name = "Kitchen Window Shutters Control";
 	req_access = list("kitchen")
 	},
-/obj/machinery/icecream_vat,
+/obj/machinery/deepfryer,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "bfr" = (
@@ -20484,6 +20490,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "bDL" = (
@@ -24647,9 +24654,8 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/office)
 "bWJ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/turf/open/floor/iron/smooth,
-/area/station/engineering/atmos)
+/turf/closed/wall,
+/area/station/engineering/gravity_generator)
 "bWO" = (
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
@@ -26358,7 +26364,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/transit_tube)
 "cgu" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -26457,7 +26463,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/gas_mask/directional/west,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/transit_tube)
 "cgT" = (
 /obj/effect/turf_decal/stripes/line{
@@ -26560,7 +26566,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/transit_tube)
 "chw" = (
 /obj/item/kirbyplants/organic/plant22,
@@ -27144,7 +27150,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/tcommsat/computer)
 "clC" = (
 /obj/structure/window/reinforced/fulltile,
@@ -27154,7 +27160,7 @@
 "clD" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/tcommsat/computer)
 "clE" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -27187,7 +27193,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/tcommsat/computer)
 "clK" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -27338,6 +27344,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
 "cmp" = (
@@ -27962,7 +27969,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "cpy" = (
-/obj/machinery/food_cart,
+/obj/machinery/deepfryer,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "cpz" = (
@@ -33513,6 +33520,18 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
+"fID" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Tertiary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = 4
+	},
+/turf/open/floor/circuit,
+/area/station/ai_monitored/turret_protected/ai)
 "fIH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -34906,6 +34925,10 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
+"gPt" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/circuit,
+/area/station/ai_monitored/turret_protected/ai)
 "gQa" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -36015,7 +36038,7 @@
 /area/station/medical/medbay)
 "hQz" = (
 /obj/structure/closet/emcloset/anchored,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/tcommsat/computer)
 "hQU" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -37695,7 +37718,7 @@
 	c_tag = "Kitchen Cold Room"
 	},
 /obj/structure/cable,
-/obj/machinery/deepfryer,
+/obj/machinery/icecream_vat,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/kitchen/coldroom)
 "jry" = (
@@ -38666,6 +38689,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/science/ordnance/testlab)
 "khJ" = (
@@ -38830,6 +38854,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "kmq" = (
@@ -40515,6 +40540,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "lEn" = (
@@ -44390,6 +44416,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/storage)
 "oKS" = (
@@ -44709,6 +44736,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/brig)
+"oTI" = (
+/obj/structure/lattice/water,
+/turf/closed/wall/r_wall,
+/area/station/ai_monitored/turret_protected/ai)
 "oTM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -45583,6 +45614,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/storage)
 "pEg" = (
@@ -47318,6 +47350,14 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"qTG" = (
+/obj/structure/lattice/water,
+/obj/machinery/camera/motion/directional/west{
+	c_tag = "MiniSat External Starboard";
+	network = list("minisat")
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
 "qUe" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -47359,7 +47399,7 @@
 /area/station/science/xenobiology)
 "qWG" = (
 /obj/structure/closet/emcloset/anchored,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/transit_tube)
 "qWM" = (
 /obj/item/storage/toolbox/mechanical{
@@ -48304,6 +48344,14 @@
 /obj/item/reagent_containers/blood/random,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"rEk" = (
+/obj/structure/lattice/water,
+/obj/machinery/camera/motion/directional/east{
+	c_tag = "MiniSat External Port";
+	network = list("minisat")
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
 "rEZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -49102,6 +49150,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/storage)
 "skw" = (
@@ -51884,7 +51933,7 @@
 /area/rainworld/surface/outdoors)
 "uhn" = (
 /obj/structure/cable,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/station/engineering/gravity_generator)
 "uhN" = (
 /obj/structure/cable,
@@ -52260,7 +52309,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "uvr" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -52398,6 +52446,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "uzL" = (
@@ -52550,6 +52599,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"uEg" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/circuit,
+/area/station/ai_monitored/turret_protected/ai)
 "uEr" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance,
@@ -52830,7 +52883,6 @@
 /area/station/maintenance/department/science/central)
 "uTt" = (
 /obj/machinery/firealarm/directional/north,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -57574,6 +57626,13 @@
 "ygc" = (
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/toilet)
+"ygl" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/station/engineering/atmos)
 "ygq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -84854,12 +84913,12 @@ oJj
 oJj
 snT
 pnn
-lRN
-bBX
-bBX
-bBX
-bBX
-bBX
+oJj
+bva
+bva
+bva
+bva
+bva
 bBX
 uwX
 bOB
@@ -85111,7 +85170,7 @@ bLG
 bpi
 bJb
 tHl
-lRN
+oJj
 bQm
 cCF
 bRa
@@ -85368,7 +85427,7 @@ fbb
 oPH
 xsZ
 eMp
-lRN
+oJj
 pQm
 ptK
 ptK
@@ -85882,7 +85941,7 @@ txK
 bMK
 lRN
 eMp
-lRN
+oJj
 bQp
 ptK
 ptK
@@ -86139,7 +86198,7 @@ bsK
 ygx
 cBL
 eMp
-lRN
+oJj
 wVE
 bRG
 iBk
@@ -86396,11 +86455,11 @@ bwV
 bMM
 lRN
 wzo
-lRN
-lRN
-bPB
+oJj
+oJj
+bWJ
 bRH
-bPB
+bWJ
 uhn
 bPB
 jMA
@@ -86654,7 +86713,7 @@ lRN
 lRN
 eMp
 pAM
-lRN
+oJj
 bRd
 bRI
 bSB
@@ -86911,7 +86970,7 @@ lRN
 bNV
 eMp
 bPD
-lRN
+oJj
 bRe
 bRJ
 bSC
@@ -87560,7 +87619,7 @@ vek
 vek
 vek
 vek
-vek
+aMo
 aMo
 aMo
 aMo
@@ -87817,7 +87876,7 @@ vek
 vek
 vek
 vek
-vek
+aMo
 aMo
 aMo
 aMo
@@ -88074,7 +88133,7 @@ vek
 vek
 vek
 vek
-vek
+aMo
 aMo
 aMo
 aMo
@@ -88331,22 +88390,22 @@ vek
 vek
 vek
 vek
-vek
 aMo
 aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
 aMo
 aby
 aby
@@ -88588,22 +88647,22 @@ vek
 vek
 vek
 vek
-vek
 aMo
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
+aMo
+aMo
+tgH
+aMo
+aMo
+aMo
+aMo
+aMo
+acm
+rEk
+aMo
+aMo
+aMo
+aMo
+tgH
 aMo
 aMo
 tgH
@@ -88845,23 +88904,23 @@ vek
 vek
 vek
 vek
-vek
 aMo
 aMo
 aMo
-tgH
-aMo
-aMo
-aMo
-aMo
-aMo
-tgH
-acm
-aMo
-aMo
-aMo
-tgH
-aMo
+oTI
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
 acP
 acP
 acP
@@ -89102,10 +89161,10 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
+abO
 abO
 abO
 abO
@@ -89359,14 +89418,14 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 tgH
+abO
 abO
 abV
 acc
 ach
+abY
 abY
 abY
 abW
@@ -89616,16 +89675,16 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 abW
 acd
 ace
 ace
-ace
+uEg
+uEg
 amd
 acC
 acC
@@ -89873,14 +89932,14 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 ipE
 ace
 ace
+abO
 abO
 abO
 abO
@@ -90130,16 +90189,16 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 abY
 ace
 abO
 abO
 abO
+acF
 abO
 bXg
 abO
@@ -90387,16 +90446,16 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 abY
 ace
 abO
 abO
-acF
+acd
+abJ
 uau
 acq
 abO
@@ -90644,13 +90703,13 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
-abJ
+acv
+abO
 abO
 abY
 acf
+abO
 abO
 abO
 adh
@@ -90901,16 +90960,16 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 abY
 ace
 abO
 abO
-acF
+acd
+fID
 aqw
 tin
 abO
@@ -91158,16 +91217,16 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 abY
 ace
 abO
 abO
 abO
+acF
 abO
 bhU
 abO
@@ -91415,14 +91474,14 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 abV
 ace
 ace
+abO
 abO
 abO
 abO
@@ -91672,16 +91731,16 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
 abO
 abW
 acd
 ace
 ace
-ace
+gPt
+gPt
 aFc
 adT
 adT
@@ -91929,14 +91988,14 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 tgH
+abO
 abO
 ipE
 acg
 nLM
+abY
 abY
 abY
 abW
@@ -92186,10 +92245,10 @@ vek
 vek
 vek
 vek
-vek
-aMo
 aby
 aMo
+abO
+abO
 abO
 abO
 abO
@@ -92443,23 +92502,23 @@ vek
 vek
 vek
 vek
-vek
 aMo
 aMo
 aMo
-tgH
-aMo
-aMo
-aMo
-aMo
-aMo
-tgH
-acv
-aMo
-aMo
-aMo
-tgH
-aMo
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
+abO
 acU
 acU
 acU
@@ -92700,22 +92759,22 @@ vek
 vek
 vek
 vek
-vek
 aMo
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
-aby
+aMo
+aMo
+tgH
+aMo
+aMo
+aMo
+aMo
+aMo
+aMo
+qTG
+aMo
+aMo
+aMo
+aMo
+tgH
 aMo
 aMo
 tgH
@@ -92957,23 +93016,23 @@ vek
 vek
 vek
 vek
-vek
 aMo
 aMo
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
+aby
 aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-aMo
-nge
 aby
 aby
 aby
@@ -93214,7 +93273,7 @@ vek
 vek
 vek
 vek
-vek
+aMo
 aMo
 aMo
 aMo
@@ -93471,7 +93530,7 @@ vek
 vek
 vek
 vek
-vek
+aMo
 aMo
 aMo
 aMo
@@ -93591,7 +93650,7 @@ bKR
 bLZ
 vap
 cmo
-bWJ
+hXC
 bPR
 sBV
 bPR
@@ -95131,8 +95190,8 @@ aMo
 tgH
 fBp
 uTt
-bWO
-vtD
+aAK
+ygl
 bWO
 bWO
 wCz
@@ -95389,7 +95448,7 @@ ajF
 bHv
 bHv
 bHv
-vtD
+ygl
 bWO
 bWO
 wCz
