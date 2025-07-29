@@ -681,7 +681,12 @@
 	set_type(valid_vendor_names_paths[choice])
 	return ITEM_INTERACT_SUCCESS
 
-///Sets circuitboard details based on vending machine type to create
+/**
+ * Sets circuitboard details based on the vending machine type to create
+ *
+ * Arguments
+ * * obj/machinery/vending/typepath - the vending machine type to create
+*/
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[typepath::name] Vendor"
