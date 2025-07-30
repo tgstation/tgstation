@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - refactor: "refactored custom vending machine brand code, a new var on /obj/machinery/vending called allow_custom now determines whether the machine can be chosen when screwdrivering the circuit board"
