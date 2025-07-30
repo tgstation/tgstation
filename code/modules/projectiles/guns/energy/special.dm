@@ -185,7 +185,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/gun/energy/plasmacutter/adv/borg
+	can_charge = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/borg)
+	use_cyborg_cell = TRUE
 
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2

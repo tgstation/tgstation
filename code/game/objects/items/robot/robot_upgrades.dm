@@ -176,6 +176,14 @@
 	items_to_add = list(/obj/item/storage/bag/ore/holding)
 	items_to_remove = list(/obj/item/storage/bag/ore/cyborg)
 
+/obj/item/borg/upgrade/pcutter
+	name = "mining cyborg plasma cutter"
+	desc = "Plasma cutter for the borg, specially designed with non-lethal chamber"
+	icon_state = "module_miner"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/miner)
+	model_flags = BORG_MODEL_MINER
+
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."

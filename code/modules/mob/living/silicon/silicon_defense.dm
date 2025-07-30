@@ -156,10 +156,18 @@
 		return
 	apply_status_effect(/datum/status_effect/borg_slow, damage_done / 60)
 
-/mob/living/silicon/take_damage(damage_amount, damage_type, damage_flag = 0, sound_effect = 1, attack_dir)
+/mob/living/silicon/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 	var/obj/item/shield_module/shield = locate() in usr
+	var/mob/living/silicon/robot/borg = usr
+	if(!shield)
+		return
 	if(shield && shield.active)
-		playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
-		return damage_amount *= 0.75
+		if(!lavaland_equipment_pressure_check(get_turf(borg)))
+			balloon_alert(borg, "the shield didn't absorb the damage!")
+			damage
+		else
+			playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
+			damage *= 0.5
+	. = ..()
 
 #undef CYBORG_SLOWDOWN_THRESHOLD

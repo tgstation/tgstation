@@ -77,6 +77,7 @@
 	design_ids = list(
 		"mech_plasma_cutter",
 		"plasmacutter_adv",
+		"borg_upgrade_cutter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SUPPLY)
