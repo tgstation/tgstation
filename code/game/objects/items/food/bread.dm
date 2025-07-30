@@ -118,6 +118,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 2.4,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -146,6 +147,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 2.4,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2.5)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -174,6 +176,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 3,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 10, "acid" = 10)
 	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -204,6 +207,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtypes = GRAIN|MEAT|DAIRY|TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_3
