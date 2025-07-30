@@ -23,6 +23,8 @@
 /datum/status_effect/heretic_passive/on_apply()
 	. = ..()
 	heretic_datum = GET_HERETIC(owner)
+	RegisterSignal(heretic_datum, COMSIG_HERETIC_PASSIVE_UPGRADE_FIRST, PROC_REF(heretic_level_upgrade))
+	RegisterSignal(heretic_datum, COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL, PROC_REF(heretic_level_final))
 	if(!heretic_datum)
 		return FALSE
 
@@ -35,11 +37,16 @@
 		return
 
 /datum/status_effect/heretic_passive/on_remove()
+	UnregisterSignal(heretic_datum, list(
+		COMSIG_HERETIC_PASSIVE_UPGRADE_FIRST,
+		COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL,
+	))
 	heretic_datum = null
 	return ..()
 
 /// Gives our first upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_upgrade()
+	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 	passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
@@ -49,6 +56,7 @@
 
 /// Gives our final upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_final()
+	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 	if(passive_level == HERETIC_LEVEL_START)
 		heretic_level_upgrade()

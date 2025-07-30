@@ -18,7 +18,6 @@
 
 /datum/heretic_knowledge/armor/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	var/datum/status_effect/heretic_passive/our_passive = user.has_status_effect(/datum/status_effect/heretic_passive)
-	our_passive?.heretic_level_upgrade()
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	SEND_SIGNAL(heretic_datum, COMSIG_HERETIC_PASSIVE_UPGRADE_FIRST)
 	heretic_datum?.gain_knowledge(/datum/heretic_knowledge/knowledge_ritual)
