@@ -1,5 +1,6 @@
 //Bubble that grants space protection to those inside of it.
 /datum/proximity_monitor/advanced/bubble/space_protection
+	edge_is_a_field = FALSE
 	///List of all traits that's given to mobs in the field, which is our "space proof" we grant.
 	var/static/list/traits_to_give = list(
 		TRAIT_RESISTCOLD,
