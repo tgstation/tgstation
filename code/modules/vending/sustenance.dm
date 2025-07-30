@@ -30,9 +30,6 @@
 /obj/machinery/vending/sustenance/interact(mob/living/living_user)
 	if(!isliving(living_user))
 		return
-	if(!is_operational)
-		to_chat(living_user, span_warning("Machine does not respond to your ID swipe"))
-		return
 	if(!istype(living_user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner))
 		if(!req_access)
 			speak("No valid prisoner account found. Vending is not permitted.")
