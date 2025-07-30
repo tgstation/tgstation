@@ -140,7 +140,10 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_HIEROPHANT S_TURF(61) ///turf/closed/indestructible/riveted/hierophant
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(62) ///turf/closed/indestructible/riveted/plastinum
 
-#define MAX_S_TURF 62 //Always match this value with the one above it.
+// Troutstation edit
+#define SMOOTH_GROUP_FLOCK S_TURF(63) ///turf/open/floor/flock
+
+#define MAX_S_TURF 63 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
