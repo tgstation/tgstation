@@ -1312,7 +1312,7 @@
 
 /datum/reagent/consumable/fruit_punch
 	name = "fruit punch"
-	description = "Impossibly sweet fruit punch. It's impossible to tell what fruit this actually tastes like. EXTREMELY dangerous to consume without the support of a nearby water cooler!"
+	description = "Impossibly sweet fruit punch. Nobody actually knows what fruits were used to make it, not even it's creators... EXTREMELY dangerous to consume without the support of a nearby water cooler!"
 	color = "#f7b2e3"
 	taste_description = "painfully sweet fruit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1320,22 +1320,25 @@
 	///Have we warned the drinker about proximity to water coolers?
 	var/warned = FALSE //Change this to a popup like with penthrite
 
-/datum/reagent/consumable/fruit_punch/on_mob_metabolize(mob/living/affected_mob, seconds_per_tick)
+/datum/reagent/consumable/fruit_punch/on_mob_life(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
 
 	if(locate(/obj/structure/reagent_dispensers/water_cooler) in range(6, affected_mob))
-		need_mob_update = affected_mob.heal_bodypart_damage(0.5 * REM * seconds_per_tick, 2 * REM *  seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustToxLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjustBruteLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjustFireLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
 		if(warned)
 			to_chat(affected_mob, span_green("You feel the water cooler and it's hypnotic, soothing aura help you endure the unbearable sweetness of the fruit punch..."))
 			warned = FALSE
 	else
-		if(warned)
-			to_chat(affected_mob, span_boldwarning("Without warning, the fruit punch turns unbearably sweet. This drink is too powerful you to endure without the support of a nearby water cooler!"))
+		if(!warned)
+			to_chat(affected_mob, span_boldwarning("Without warning, the fruit punch becomes unbearably sweet. This drink is too powerful you to endure without the support of a nearby water cooler!"))
 			warned = TRUE
 		else
 			if(prob(10))
 				to_chat(affected_mob, span_boldwarning("The sweetness of the fruit punch sends your body into shock!"))
+		need_mob_update = affected_mob.apply_damage(0.5 * REM * seconds_per_tick, TOX)
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH

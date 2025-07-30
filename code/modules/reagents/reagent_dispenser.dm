@@ -396,16 +396,37 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(!reagents.total_volume)
 		return
 
-	var/mutable_appearance/tank_color
-	if(reagent_id == /datum/reagent/water) //Figure out this, make it work for reagent mixes
-		tank_color = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay")
-		tank_color.color = "#47B4F5"
-	else
-		tank_color = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay")
-		tank_color.color = mix_color_from_reagents(reagents.reagent_list)
+	var/mixcolor
+	var/vol_counter = 0
+	var/vol_temp
 
-	if(tank_color.color)
-		. += tank_color
+	for(var/datum/reagent/stored_reagent in reagents.reagent_list)
+		vol_temp = stored_reagent.volume
+		vol_counter += vol_temp
+
+		var/chosen_color = stored_reagent.color
+		if(istype(stored_reagent, /datum/reagent/water))
+			if(!mixcolor)
+				mixcolor = "#2694D6"
+				continue
+			else
+				chosen_color = "#2694D6" //Override the water to be a nice blue
+		else
+			if(!mixcolor)
+				mixcolor = stored_reagent.color
+				continue
+			else
+				chosen_color = stored_reagent.color
+
+		if (length(mixcolor) >= length(chosen_color))
+			mixcolor = BlendRGB(mixcolor, chosen_color, vol_temp/vol_counter)
+		else
+			mixcolor = BlendRGB(chosen_color, mixcolor, vol_temp/vol_counter)
+
+	if(mixcolor)
+		var/mutable_appearance/tank_overlay = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay")
+		tank_overlay.color = mixcolor
+		. += tank_overlay //Note, make this overlay transparent
 
 /obj/structure/reagent_dispensers/water_cooler/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
