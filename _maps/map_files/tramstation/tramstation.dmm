@@ -10512,7 +10512,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "cAK" = (
-/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine/xenobio,
@@ -24574,6 +24573,11 @@
 /obj/machinery/transport/destination_sign/indicator/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
+"hLj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
+/turf/open/floor/engine/xenobio,
+/area/station/science/xenobiology)
 "hLr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -183119,7 +183123,7 @@ pHX
 qVr
 cAK
 ttj
-ttj
+hLj
 ttj
 ttj
 nzg
