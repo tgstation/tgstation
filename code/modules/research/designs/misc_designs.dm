@@ -1167,7 +1167,7 @@
 
 /datum/design/space_furnace
 	name = "Space Furnace"
-	desc = "A heavy furnace capable of beaming a barrier of breathable air. Requires a pyroclastic anomaly core to function."
+	desc = "A heavy furnace capable of forming a temporary bubble that holds in breathable air. Requires a pyroclastic anomaly core to function."
 	id = "space_furnace"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
@@ -1175,7 +1175,7 @@
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT*2.5,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	build_path = /obj/item/flashlight/lamp/space_barrier
+	build_path = /obj/item/flashlight/lamp/space_bubble
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
