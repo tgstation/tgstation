@@ -79,11 +79,6 @@
 			offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
 			offeredmob.gib(DROP_ALL_REMAINS)
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)
-			for(var/mob/living/L in view(src, 5))
-				if(L.mind?.has_antag_datum(/datum/antagonist/wild_slugcat))
-					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
-				else
-					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
 			wild_slugcat_team.sacrifices_made++
 
 /obj/structure/lavaland/wild_slugcat_nest/proc/remake_walker(mob/living/carbon/oldmob)

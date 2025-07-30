@@ -398,10 +398,10 @@
 	eggshell.egg = null
 	QDEL_NULL(eggshell)
 
-/obj/effect/mob_spawn/ghost_role/wild_slugcat/Initialize(mapload, datum/team/wild_slugcat/ashteam)
+/obj/effect/mob_spawn/ghost_role/wild_slugcat/Initialize(mapload, datum/team/wild_slugcat/scugteam)
 	. = ..()
 	var/area/spawner_area = get_area(src)
-	team = ashteam
+	team = scugteam
 	eggshell = new /obj/structure/wild_slugcat_eggshell(get_turf(loc))
 	eggshell.egg = src
 	src.forceMove(eggshell)
