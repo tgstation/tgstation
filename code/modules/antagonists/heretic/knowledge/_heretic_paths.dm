@@ -181,7 +181,7 @@ GLOBAL_LIST(heretic_paths)
 	)
 
 	for(var/datum/heretic_knowledge/type as anything in tree_paths)
-		heretic_research_tree[type] = make_knowledge_entry(type, depth = 1)
+		heretic_research_tree[type] = make_knowledge_entry(type, heretic_path, depth = 1)
 
 	//horizontal (two way)
 	var/list/knowledge_tier1 = heretic_path.knowledge_tier1
@@ -363,7 +363,7 @@ GLOBAL_LIST(heretic_paths)
 
 			final_draft[selected_knowledge] = make_knowledge_entry(
 				selected_knowledge,
-				heretic_path,
+				null,
 				HERETIC_KNOWLEDGE_DRAFT,
 				depth,
 				0
