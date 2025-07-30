@@ -190,7 +190,7 @@
 	return ..()
 
 /obj/structure/trap/eldritch/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/melee/rune_carver) || istype(tool, /obj/item/nullrod))
+	if(istype(tool, /obj/item/melee/rune_carver) || HAS_TRAIT(tool, TRAIT_NULLROD_ITEM))
 		loc.balloon_alert(user, "carving dispelled")
 		playsound(src, 'sound/items/sheath.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 		qdel(src)

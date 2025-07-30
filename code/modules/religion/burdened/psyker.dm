@@ -100,15 +100,16 @@
 	if(!burden || burden.burden_level < 9)
 		to_chat(human_user, span_warning("You aren't burdened enough."))
 		return FALSE
-	for(var/obj/item/nullrod/null_rod in get_turf(religious_tool))
-		transformation_target = null_rod
-		return ..()
+	for(var/obj/item/possible_rod in get_turf(religious_tool))
+		if(HAS_TRAIT(possible_rod, TRAIT_NULLROD_ITEM))
+			transformation_target = possible_rod
+			return ..()
 	to_chat(human_user, span_warning("You need to place a null rod on [religious_tool] to do this!"))
 	return FALSE
 
 /datum/religion_rites/nullrod_transformation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/nullrod/null_rod = transformation_target
+	var/obj/item/null_rod = transformation_target
 	transformation_target = null
 	if(QDELETED(null_rod) || null_rod.loc != get_turf(religious_tool))
 		to_chat(user, span_warning("Your target left the altar!"))
