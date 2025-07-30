@@ -1332,6 +1332,9 @@
 		affected_mob.clear_alert("punch_good")
 		affected_mob.throw_alert("punch_bad", /atom/movable/screen/alert/fruit_punch_bad)
 		need_mob_update = affected_mob.apply_damage(2 * REM * seconds_per_tick, TOX)
+		if(prob(10))
+			affected_mob.Knockdown(3 SECONDS, 6 SECONDS) //Gives daze effect. Using the cooler is a commitment and if you get jumped during it, you should be vulnerable.
+			to_chat(affected_mob, span_warning("The overwhelming sweetness of the fruit punch disorients and confounds you!"))
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -1348,5 +1351,5 @@
 
 /atom/movable/screen/alert/fruit_punch_bad
 	name = "Fruit Punishment"
-	desc = "The sweetness of the fruit punch is too much to bear without the soothing aura of a water cooler! Your body is going into shock!"
+	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a water cooler! Your body is going into shock!"
 	icon_state = "punch_punishment"
