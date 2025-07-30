@@ -104,9 +104,6 @@ export const IconCutterTarget = new Juke.Target({
       `icons/**/*.png.toml`,
       `icons/**/*.dmi.toml`,
       `cutter_templates/**/*.toml`,
-      // Troutstation edit
-      `troutstation/icons/**/*.png.toml`,
-      `troutstation/icons/**/*.dmi.toml`,
       cutter_path,
     ];
     // Alright we're gonna search out any existing toml files and convert
@@ -114,8 +111,6 @@ export const IconCutterTarget = new Juke.Target({
     const existing_configs = [
       ...Juke.glob(`icons/**/*.png.toml`),
       ...Juke.glob(`icons/**/*.dmi.toml`),
-      ...Juke.glob(`troutstation/icons/**/*.png.toml`),
-      ...Juke.glob(`troutstation/icons/**/*.dmi.toml`),
     ];
     return [
       ...standard_inputs,
@@ -127,6 +122,45 @@ export const IconCutterTarget = new Juke.Target({
     const folders = [
       ...Juke.glob(`icons/**/*.png.toml`),
       ...Juke.glob(`icons/**/*.dmi.toml`),
+    ];
+    return folders
+      .map((file) => file.replace(`.png.toml`, ".dmi"))
+      .map((file) => file.replace(`.dmi.toml`, ".png"));
+  },
+  executes: async () => {
+    await Juke.exec(cutter_path, [
+      "--dont-wait",
+      "--templates",
+      "cutter_templates",
+      "icons",
+    ]);
+  },
+});
+
+export const TroutstationIconCutterTarget = new Juke.Target({
+  parameters: [ForceRecutParameter],
+  dependsOn: () => [CutterTarget],
+  inputs: () => {
+    const standard_inputs = [
+      `troutstation/icons/**/*.png.toml`,
+      `troutstation/icons/**/*.dmi.toml`,
+      `cutter_templates/**/*.toml`,
+      cutter_path,
+    ];
+    // Alright we're gonna search out any existing toml files and convert
+    // them to their matching .dmi or .png file
+    const existing_configs = [
+      ...Juke.glob(`troutstation/icons/**/*.png.toml`),
+      ...Juke.glob(`troutstation/icons/**/*.dmi.toml`),
+    ];
+    return [
+      ...standard_inputs,
+      ...existing_configs.map((file) => file.replace(".toml", "")),
+    ];
+  },
+  outputs: ({ get }) => {
+    if (get(ForceRecutParameter)) return [];
+    const folders = [
       ...Juke.glob(`troutstation/icons/**/*.png.toml`),
       ...Juke.glob(`troutstation/icons/**/*.dmi.toml`),
     ];
@@ -139,7 +173,7 @@ export const IconCutterTarget = new Juke.Target({
       "--dont-wait",
       "--templates",
       "cutter_templates",
-      "icons",
+      "troutstation/icons",
     ]);
   },
 });
@@ -173,6 +207,7 @@ export const DmTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes("ALL_TEMPLATES") && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
+    !get(SkipIconCutter) && TroutstationIconCutterTarget
   ],
   inputs: [
     "_maps/map_files/generic/**",
@@ -212,6 +247,7 @@ export const DmTestTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes("ALL_MAPS") && DmMapsIncludeTarget,
     IconCutterTarget,
+    TroutstationIconCutterTarget
   ],
   executes: async ({ get }) => {
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
@@ -255,6 +291,7 @@ export const AutowikiTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes("ALL_TEMPLATES") && DmMapsIncludeTarget,
     IconCutterTarget,
+    TroutstationIconCutterTarget,
   ],
   outputs: ["data/autowiki_edits.txt"],
   executes: async ({ get }) => {
