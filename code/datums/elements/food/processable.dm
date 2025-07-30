@@ -34,6 +34,22 @@
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), PROC_REF(try_process))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(OnExamine))
 
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !atom_target.custom_materials)
+		return
+
+	var/atom/movable/prototype = new
+	prototype.set_custom_materials(atom_target.custom_materials, 1 / amount_created)
+	var/atom/movable/result = new result_atom_type
+	if(!prototype.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when processed compared to just spawned don't match"
+		var/what_it_should_be = prototype.get_materials_english_list()
+		//compose a text string containing the syntax and paths to use for editing the custom_materials var
+		if(result.custom_materials)
+			what_it_should_be += " (you can round values a bit)"
+		stack_trace("[warning]. custom_materials should be [what_it_should_be] (you can round values a bit).")
+	qdel(prototype)
+	qdel(result)
+
 /datum/element/processable/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ATOM_TOOL_ACT(tool_behaviour), COMSIG_ATOM_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))

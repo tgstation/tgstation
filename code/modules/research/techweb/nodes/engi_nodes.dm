@@ -219,6 +219,7 @@
 		"holopad",
 		"vendatray",
 		"holodisk",
+		"modular_shield_gate",
 		"modular_shield_generator",
 		"modular_shield_node",
 		"modular_shield_cable",

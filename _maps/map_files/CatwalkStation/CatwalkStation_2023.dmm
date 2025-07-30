@@ -64165,7 +64165,9 @@
 /area/station/commons/dorms)
 "sVj" = (
 /obj/structure/cable,
-/obj/machinery/vending/sustenance,
+/obj/machinery/vending/sustenance{
+	req_access = list("command")
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
@@ -73594,10 +73596,6 @@
 /area/station/hallway/primary/central)
 "vJP" = (
 /obj/structure/table,
-/obj/item/toy/plush/goatplushie{
-	pixel_x = 6;
-	pixel_y = 13
-	},
 /obj/item/storage/box/hug/plushes{
 	pixel_x = -11;
 	pixel_y = 16

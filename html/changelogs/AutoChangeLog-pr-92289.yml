@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - code_imp: "The .outfit and .plasmaman_outfit variables on the job datum are now defined to their expected types."
