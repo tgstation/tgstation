@@ -53,12 +53,12 @@
 
 			if(issilicon(offeredmob)) //no advantage to sacrificing borgs...
 				offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
-				visible_message(span_notice("Serrated tendrils eagerly pull [offeredmob] apart, but find nothing of interest."))
+				visible_message(span_notice("[offeredmob] is pulled into [src], doesn't appear to be useful."))
 				offeredmob.gib()
 				return
 
 			if(offeredmob.mind?.has_antag_datum(/datum/antagonist/wild_slugcat) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
-				visible_message(span_warning("Serrated tendrils carefully pull [offeredmob] to [src], absorbing the body and creating it anew."))
+				visible_message(span_warning("The [offeredmob] is pulled into [src]."))
 				var/mob/deadmob
 				if(offeredmob.ckey)
 					deadmob = offeredmob
@@ -74,17 +74,11 @@
 				meat_counter += 20
 			else
 				meat_counter++
-			visible_message(span_warning("Serrated tendrils eagerly pull [offeredmob] to [src], tearing the body apart as its blood seeps over the eggs."))
+			visible_message(span_warning("[offeredmob] is pulled into [src]"))
 			playsound(get_turf(src),'sound/effects/magic/demon_consume.ogg', 100, TRUE)
-			var/deliverykey = offeredmob.fingerprintslast //ckey of whoever brought the body
-			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said ckey
-			//there is a 40% chance that the Lava Lizard unlocks their respawn with each sacrifice
-			if(deliverymob && (deliverymob.mind?.has_antag_datum(/datum/antagonist/wild_slugcat)) && (deliverykey in wild_slugcat_team.players_spawned) && (prob(40)))
-				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
-				wild_slugcat_team.players_spawned -= deliverykey
 			offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
 			offeredmob.gib(DROP_ALL_REMAINS)
-			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
+			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/wild_slugcat))
 					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
@@ -105,7 +99,7 @@
 /obj/structure/lavaland/wild_slugcat_nest/proc/spawn_mob()
 	if(meat_counter >= wild_slugcat_nest_SPAWN_THRESHOLD)
 		new /obj/effect/mob_spawn/ghost_role/wild_slugcat(get_step(loc, pick(GLOB.alldirs)), wild_slugcat_team)
-		visible_message(span_danger("One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!"))
+		visible_message(span_danger("A new slugcat scurries out and quickly falls asleep."))
 		meat_counter -= wild_slugcat_nest_SPAWN_THRESHOLD
 
 #undef wild_slugcat_nest_SPAWN_THRESHOLD

@@ -269,7 +269,7 @@
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/ruin/unpowered/ash_walkers)
 "sX" = (
-/obj/structure/bonfire/dense,
+/obj/structure/bonfire/dense/prelit,
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface/outdoors)
 "tb" = (
@@ -437,7 +437,9 @@
 /area/ruin/unpowered/ash_walkers)
 "Dw" = (
 /obj/structure/stone_tile/center,
-/obj/structure/lavaland/wild_slugcat_nest,
+/obj/structure/lavaland/wild_slugcat_nest{
+	light_range = 6
+	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/ruin/unpowered/ash_walkers)
 "Ec" = (
@@ -574,6 +576,10 @@
 /area/rainworld/surface/outdoors)
 "Oq" = (
 /obj/item/flashlight/flare/torch,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"OR" = (
+/obj/item/pickaxe,
 /turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface/outdoors)
 "Pd" = (
@@ -2382,7 +2388,7 @@ Ez
 yS
 EP
 lp
-Oj
+ou
 ou
 ou
 ou
@@ -3368,7 +3374,7 @@ Oj
 Oj
 Oj
 Oj
-ou
+OR
 ou
 ou
 Oj

@@ -9,8 +9,8 @@
 	held_lh = 'icons/mob/simple/slugcat/slugcat_held_lh.dmi'
 	held_rh = 'icons/mob/simple/slugcat/slugcat_held_rh.dmi'
 	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = TCMB
-	maximum_survivable_temperature = T0C + 40
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE - 10
+	maximum_survivable_temperature = LAVALAND_MAX_TEMPERATURE + 10
 	maxHealth = 45
 	health = 45
 	speak_emote = list("purrs", "meows")
