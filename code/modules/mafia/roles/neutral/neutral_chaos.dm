@@ -23,7 +23,7 @@
 
 	var/list/all_roles_shuffle = shuffle(game.living_roles) - src
 	for(var/datum/mafia_role/possible as anything in all_roles_shuffle)
-		if(possible.team == MAFIA_TEAM_TOWN)
+		if(possible.team & MAFIA_TEAM_TOWN)
 			obsession = possible
 			break
 	if(!obsession)
@@ -59,7 +59,7 @@
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
 	special_ui_theme = "neutral"
-	hud_icon = "hudclown"
+	hud_icon = SECHUD_CLOWN
 	revealed_icon = "clown"
 	winner_award = /datum/award/achievement/mafia/clown
 
