@@ -13,6 +13,6 @@
 	if(!.)
 		return FALSE
 
-	to_chat(host_role.body, span_warning("Your autopsy report on [target_role.body.real_name] and \
+	to_chat(host_role.body, span_warning("Your autopsy report on [target_role.body.real_name] \
 		reveals their role was <b>[target_role.name]<b>."))
 	return TRUE
