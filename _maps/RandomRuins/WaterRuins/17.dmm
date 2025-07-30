@@ -368,7 +368,9 @@
 /area/ruin/unpowered/ash_walkers)
 "yS" = (
 /obj/structure/stone_tile/slab,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/cult{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/ruin/unpowered/ash_walkers)
 "zZ" = (
 /turf/closed/wall/mineral/wood,

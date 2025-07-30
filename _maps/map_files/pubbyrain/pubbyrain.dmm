@@ -34683,6 +34683,10 @@
 	dir = 4;
 	name = "Hot to Cold Loop"
 	},
+/obj/item/paper{
+	default_raw_text = "Hey, you might want to check temperature outside before using that cooling loop for, you know, cooling. Planet's temperatures get unstable at night.";
+	name = "Engineer's warning"
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gEK" = (
