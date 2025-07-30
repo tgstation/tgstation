@@ -1,0 +1,10 @@
+{
+justice_pre_charge.ogg -- https://freesound.org/s/215029/
+ - Created by Taira Komori | License: Attribution 4.0 International
+
+justice_shield_broken.ogg -- https://freesound.org/people/Metzik/sounds/459782/
+ - Created by Metzik | License: Attribution 4.0 International
+
+justice_warning.ogg -- https://freesound.org/people/JapanYoshiTheGamer/sounds/361247/
+ - Created by JapanYoshiTheGamer | License: CC0 1.0 Universal
+} - sourced from freesound.org by Xackii 

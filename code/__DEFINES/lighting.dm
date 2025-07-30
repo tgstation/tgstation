@@ -98,6 +98,12 @@ GLOBAL_LIST_INIT(specular_color, SPECULAR_COLOR)
 /// Mimics a highly reflective surface, will not have any glow by itself but will amplify any lighting applied to it, encoded into the blue channel
 #define EMISSIVE_SPECULAR 2
 
+/// Light cutoff of specular emissives, controls how sharp a light must be before it starts reflecting
+#define SPECULAR_EMISSIVE_CUTOFF 0.3
+/// Controls how bright specular emissives are, if this is above 1 + SPECULAR_EMISSIVE_CUTOFF
+/// then emissives can be brighter than the light shining on a white surface, otherwise they'll be dimmer
+#define SPECULAR_EMISSIVE_CONTRAST 1.5
+
 #define _EM_BLOCK_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,val, 0,0,0,0)
 /// The color matrix applied to all emissive blockers. Should be solely dependent on alpha and not have RGB overlap with [EMISSIVE_COLOR].
 #define EM_BLOCK_COLOR _EM_BLOCK_COLOR(1)

@@ -1,0 +1,2 @@
+/obj/item/storage/belt/sabre : /obj/item/storage/belt/sheath/sabre
+/obj/item/storage/belt/grass_sabre : /obj/item/storage/belt/sheath/grass_sabre

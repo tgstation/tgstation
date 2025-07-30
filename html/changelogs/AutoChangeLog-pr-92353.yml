@@ -1,0 +1,5 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Fixed a couple of missing entries for user_data"
+  - code_imp: "Ore silo logs will now generate an entry for a failed ID_DATA entry instead of not generating anything if the initial provided user_data wasn't valid."
