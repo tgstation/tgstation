@@ -315,7 +315,7 @@
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
 
-// God Hand - Cannot be dropped. Does burn damage.
+// God Hand - Cannot be dropped. Does burn damage and works like lighter.
 
 /obj/item/nullrod/godhand
 	name = "god hand"
@@ -331,13 +331,20 @@
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
-	attack_verb_continuous = list("punches", "cross counters", "pummels")
-	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
-	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
+	heat = 3800
+	attack_verb_continuous = list("burns", "singes")
+	attack_verb_simple = list(SFX_PUNCH, "burn", "singe")
+	menu_description = "An undroppable god hand dealing burn damage. Can set flameable things on fire or heat liquids. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/godhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+
+/obj/item/nullrod/ignition_effect(atom/ignitable_atom, mob/user)
+	if(use_tool(ignitable_atom, user, 0))
+		return span_rose("[user] casually ignites [ignitable_atom] with [src], what a badass.")
+	else
+		return ""
 
 // Red/Blue Holy Staff - 50% block chance, almost no damage at all.
 
