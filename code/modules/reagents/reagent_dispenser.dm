@@ -407,10 +407,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		var/chosen_color = stored_reagent.color
 		if(istype(stored_reagent, /datum/reagent/water))
 			if(!mixcolor)
-				mixcolor = "#2694D6"
+				mixcolor = "#2694D6" //Override the water to be a nice blue
 				continue
 			else
-				chosen_color = "#2694D6" //Override the water to be a nice blue
+				chosen_color = "#2694D6"
 		else
 			if(!mixcolor)
 				mixcolor = stored_reagent.color
@@ -426,7 +426,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(mixcolor)
 		var/mutable_appearance/tank_overlay = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay")
 		tank_overlay.color = mixcolor
-		. += tank_overlay //Note, make this overlay transparent
+		. += tank_overlay
 
 /obj/structure/reagent_dispensers/water_cooler/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -435,6 +435,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/attack_hand_secondary(mob/user, modifiers)
+	INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)
+	//if(!do_after(user, 2 SECONDS, )) //finish later
 
 /obj/structure/reagent_dispensers/water_cooler/punch_cooler
 	name = "punch cooler"
