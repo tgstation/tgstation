@@ -54,7 +54,7 @@
  */
 /datum/heretic_knowledge/proc/pre_research(mob/user, datum/antagonist/heretic/our_heretic)
 	// consider moving this check to a type instead
-	if(is_final_knowledge && !HAS_TRAIT(user, TRAIT_UNLIMITED_BLADES))
+	if(is_final_knowledge && !our_heretic.unlimited_blades)
 		var/choice = tgui_alert(user, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this? The blade cap will also be removed.", "Get Final Spell?", list("Yes", "No"))
 		if(choice != "Yes")
 			return FALSE
@@ -73,9 +73,8 @@
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
 	on_gain(user, our_heretic)
-	if(is_final_knowledge && !HAS_TRAIT_FROM(user, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT))
-		ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT)
-		user.balloon_alert(user, "blade breaking disabled!")
+	if(is_final_knowledge && !our_heretic.unlimited_blades)
+		our_heretic.disable_blade_breaking()
 
 /**
  * Called when the knowledge is applied to a mob.
@@ -232,7 +231,8 @@
 	return ..()
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(HAS_TRAIT(user, TRAIT_UNLIMITED_BLADES))
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	if(our_heretic?.unlimited_blades)
 		if(length(result_atoms & typesof(/obj/item/melee/sickly_blade)))
 			return TRUE
 

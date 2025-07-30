@@ -18,6 +18,7 @@
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	armor_type = /datum/armor/eldritch_armor
+	clothing_traits = list(TRAIT_HERETIC_AURA_HIDDEN)
 	/// Whether the hood is flipped up
 	var/hood_up = FALSE
 
@@ -40,10 +41,6 @@
 /// Adds effects to the user when they equip their robes
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_gained(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	if(!isliving(user) || !heretic_datum)
-		return
-	user.cut_overlay(heretic_datum.eldritch_overlay)
 
 /// Removes any effects that our robes have, returns `TRUE` if the item dropped was not robes
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
@@ -52,13 +49,6 @@
 	if(robes != src)
 		return TRUE
 	UnregisterSignal(user, list(COMSIG_PREQDELETED, COMSIG_MOB_DROPPED_ITEM))
-
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	if(!isliving(user) || !heretic_datum)
-		return
-	user.cut_overlay(heretic_datum.eldritch_overlay)
-	heretic_datum.gain_heretic_aura(user)
-
 
 /// Applies a punishment to the user when the robes are equipped
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/robes_side_effect(mob/user)

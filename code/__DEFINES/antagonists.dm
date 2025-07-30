@@ -120,6 +120,9 @@
 
 #define HERETIC_DRAFT_TIER_MAX 5
 
+/// The default drain speed for heretic rift's, anything below this will be considered a fast drain, and be very noticeable and cause a overlay
+#define HERETIC_RIFT_DEFAULT_DRAIN_SPEED 10 SECONDS
+
 /// Sources of knowledge purchased for heretics, used for positioning in the UI
 #define HERETIC_KNOWLEDGE_TREE "tree"
 #define HERETIC_KNOWLEDGE_SHOP "shop"

@@ -34,16 +34,18 @@
 		heretic_level_upgrade()
 		return
 
+/datum/status_effect/heretic_passive/on_remove()
+	heretic_datum = null
+	return ..()
+
 /// Gives our first upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_upgrade()
 	SHOULD_CALL_PARENT(TRUE)
 	passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.update_data_for_all_viewers()
-	if(!HAS_TRAIT_FROM(owner, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT))
-		to_chat(owner, span_boldwarning("You have gained a lot of power, the mansus will no longer allow you to break your blades, but you can now make as many as you wish."))
-		owner.balloon_alert(owner, "blade breaking disabled!")
-		ADD_TRAIT(owner, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT)
+	if(!heretic_datum.unlimited_blades)
+		heretic_datum.disable_blade_breaking()
 
 /// Gives our final upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_final()
@@ -54,10 +56,6 @@
 	heretic_datum.passive_level = HERETIC_LEVEL_FINAL
 	heretic_datum.update_data_for_all_viewers()
 
-/datum/status_effect/heretic_passive/on_remove()
-	heretic_datum = null
-	REMOVE_TRAIT(owner, TRAIT_UNLIMITED_BLADES, HELLA_KNOWLEDGE_TRAIT)
-	return ..()
 
 //---- Ash Passive
 // Level 1 grants heat and ash storm immunity

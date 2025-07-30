@@ -951,8 +951,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_SKIP "examine_skip"
 
 //---- Heretic Traits
-/// Removes the cap on blades a heretic can create, but also prevents them from being able to escape by blade bread
-#define TRAIT_UNLIMITED_BLADES "unlimited_blades"
+/// Hides the heretic overlay that outs them as the heretic
+#define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
 #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
 /// Allows heretics to cast their spells.
