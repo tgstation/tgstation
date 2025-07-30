@@ -442,8 +442,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	reagent_id = /datum/reagent/consumable/fruit_punch
 	tank_volume = 200
 
-/obj/structure/reagent_dispensers/water_cooler/punch_cooler/
-
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "Beer is liquid bread, it's good for you..."

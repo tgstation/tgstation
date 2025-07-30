@@ -1312,33 +1312,41 @@
 
 /datum/reagent/consumable/fruit_punch
 	name = "fruit punch"
-	description = "Impossibly sweet fruit punch. Nobody actually knows what fruits were used to make it, not even it's creators... EXTREMELY dangerous to consume without the support of a nearby water cooler!"
+	description = "Impossibly sweet fruit punch. Nobody actually knows what fruits were used to make it, not even it's creators... \
+		It's unique recipe is said to have rejuvinating effects on a drinker, but is unsafe to consume without the support of a nearby watercooler."
 	color = "#f7b2e3"
 	taste_description = "painfully sweet fruit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_VERYGOOD
-	///Have we warned the drinker about proximity to water coolers?
-	var/warned = FALSE //Change this to a popup like with penthrite
 
 /datum/reagent/consumable/fruit_punch/on_mob_life(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-
 	if(locate(/obj/structure/reagent_dispensers/water_cooler) in range(6, affected_mob))
+		affected_mob.clear_alert("punch_bad")
+		affected_mob.throw_alert("punch_good", /atom/movable/screen/alert/fruit_punch_good)
 		need_mob_update = affected_mob.adjustToxLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update = affected_mob.adjustBruteLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update = affected_mob.adjustFireLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
-		if(warned)
-			to_chat(affected_mob, span_green("You feel the water cooler and it's hypnotic, soothing aura help you endure the unbearable sweetness of the fruit punch..."))
-			warned = FALSE
 	else
-		if(!warned)
-			to_chat(affected_mob, span_boldwarning("Without warning, the fruit punch becomes unbearably sweet. This drink is too powerful you to endure without the support of a nearby water cooler!"))
-			warned = TRUE
-		else
-			if(prob(10))
-				to_chat(affected_mob, span_boldwarning("The sweetness of the fruit punch sends your body into shock!"))
-		need_mob_update = affected_mob.apply_damage(0.5 * REM * seconds_per_tick, TOX)
+		affected_mob.clear_alert("punch_good")
+		affected_mob.throw_alert("punch_bad", /atom/movable/screen/alert/fruit_punch_bad)
+		need_mob_update = affected_mob.apply_damage(2 * REM * seconds_per_tick, TOX)
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
+
+/datum/reagent/consumable/fruit_punch/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.clear_alert("punch_bad")
+	affected_mob.clear_alert("punch_good")
+
+/atom/movable/screen/alert/fruit_punch_good
+	name = "Fruit Punch Blessing"
+	desc = "The sweetness of the fruit punch and the friendly company of the water cooler are slowly restoring your health..."
+	icon_state = "punch_blessing"
+
+/atom/movable/screen/alert/fruit_punch_bad
+	name = "Fruit Punishment"
+	desc = "The sweetness of the fruit punch is too much to bear without the soothing aura of a water cooler! Your body is going into shock!"
+	icon_state = "punch_punishment"
