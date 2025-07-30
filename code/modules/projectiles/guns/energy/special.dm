@@ -184,10 +184,16 @@
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
-/obj/item/gun/energy/plasmacutter/adv/borg
+/obj/item/gun/energy/plasmacutter/borg
+	name = "cyborg plasma cutter"
+	icon_state = "plasmacutter_borg"
 	can_charge = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/borg)
 	use_cyborg_cell = TRUE
+	tool_behaviour = null
+
+/obj/item/gun/energy/plasmacutter/borg/examine(mob/user)
+	. = ..()
 
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2

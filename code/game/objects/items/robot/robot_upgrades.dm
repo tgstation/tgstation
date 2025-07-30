@@ -184,6 +184,8 @@
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 
+	items_to_add = list(/obj/item/gun/energy/plasmacutter/borg)
+
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."

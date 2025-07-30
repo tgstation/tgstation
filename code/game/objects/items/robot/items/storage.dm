@@ -290,17 +290,18 @@
 	name = "engineering apparatus"
 	desc = "A special apparatus for carrying and manipulating circuit boards, lights and power cells."
 	icon_state = "borg_hardware_apparatus"
-	storable = list(/obj/item/circuitboard,
+	storable = list(
+		/obj/item/circuitboard,
 		/obj/item/electronics,
 		/obj/item/stock_parts/power_store,
-		/obj/item/light
+		/obj/item/light,
 	)
 
-/obj/item/borg/apparatus/circuit/Initialize(mapload)
+/obj/item/borg/apparatus/engineering/Initialize(mapload)
 	update_appearance()
 	return ..()
 
-/obj/item/borg/apparatus/circuit/update_overlays()
+/obj/item/borg/apparatus/engineering/update_overlays()
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
@@ -318,19 +319,19 @@
 		. += stored_copy
 	. += arm
 
-/obj/item/borg/apparatus/circuit/examine()
+/obj/item/borg/apparatus/engineering/examine()
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored item. ")
 
-/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/borg/apparatus/engineering/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
 
 // stops them from cell interactions with other borgos
-/obj/item/borg/apparatus/circuit/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+/obj/item/borg/apparatus/engineering/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	if(iscyborg(user) && iscyborg(interacting_with))
 		balloon_alert(user, "your manipulator isn't dexterous enough to interact with this properly.")
 		return ITEM_INTERACT_FAILURE
