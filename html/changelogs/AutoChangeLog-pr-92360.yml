@@ -1,0 +1,5 @@
+author: "MelokG and KREKS"
+delete-after: True
+changes:
+  - image: "resprited all RPEDs"
+  - image: "RPEDs now play an animation when replacing parts"
