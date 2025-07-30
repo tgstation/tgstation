@@ -172,7 +172,7 @@
 			restocked += restock(replacer_item)
 	post_restock(user, restocked)
 	if(restocked > 0)
-		replacer.play_rped_sound()
+		replacer.play_rped_effect()
 	return TRUE
 
 //=======================================ATTACKS================================================
