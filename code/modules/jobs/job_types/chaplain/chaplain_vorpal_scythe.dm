@@ -11,6 +11,11 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	items_to_create = list(/obj/item/vorpalscythe)
 	organ_traits = list(TRAIT_MORBID)
 
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe/Initialize(mapload)
+	. = ..()
+	for (var/obj/item/scythe as anything in items_list)
+		ADD_TRAIT(scythe, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
+
 /obj/item/organ/cyberimp/arm/toolkit/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
 	if(!scythe)
