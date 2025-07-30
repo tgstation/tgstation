@@ -76,7 +76,7 @@
 	name = "Turf lighting post-processing plate"
 	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
 	plane = RENDER_PLANE_TURF_LIGHTING
-	render_relay_planes = list(, RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_SPECULAR, RENDER_PLANE_LIGHTING)
 	blend_mode = BLEND_ADD
 	critical = PLANE_CRITICAL_DISPLAY
 
