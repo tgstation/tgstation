@@ -140,8 +140,6 @@
 		if("vend")
 			. = vend(params, ui.user)
 		if("select_colors")
-			if(!can_vend(ui.user))
-				return FALSE
 			var/datum/data/vending_product/product = locate(params["ref"])
 			if(!istype(product))
 				return FALSE

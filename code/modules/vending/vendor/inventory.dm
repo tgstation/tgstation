@@ -129,22 +129,6 @@
 			break
 
 /**
- * Whether this vendor can vend items or not.
- * arguments:
- * user - current customer
- */
-/obj/machinery/vending/proc/can_vend(user)
-	PROTECTED_PROC(TRUE)
-
-	. = FALSE
-	if(!is_operational)
-		return
-	if(panel_open)
-		to_chat(user, span_warning("The vending machine cannot dispense products while its service panel is open!"))
-		return
-	return TRUE
-
-/**
  * The entire shebang of vending the picked item. Processes the vending and initiates the payment for the item.
  * arguments:
  * greyscale_colors - greyscale config for the item we're about to vend, if any
@@ -153,8 +137,6 @@
 	PROTECTED_PROC(TRUE)
 
 	. = TRUE
-	if(!can_vend(user))
-		return
 	var/datum/data/vending_product/item_record = locate(params["ref"])
 	var/list/record_to_check = product_records + coin_records
 	if(extended_inventory)
