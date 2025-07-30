@@ -261,7 +261,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	var/time = 4 SECONDS //Default girder build time
 	var/obj/item/circuitboard/held_board = locate() in user.held_items
 	if(!isnull(held_board))
-		frame_path = text2path("/obj/structure/frame/[istype(held_board, /obj/item/circuitboard/machine) ? "machine" : "computer"]")
+		if(istype(held_board, /obj/item/circuitboard/machine))
+			frame_path = /obj/structure/frame/machine
+		else
+			frame_path = /obj/structure/frame/computer
 		for(var/datum/stack_recipe/recipe in GLOB.metal_recipes)
 			if(recipe.result_type == frame_path)
 				time = recipe.time
