@@ -703,3 +703,40 @@
       they weren't already. Likewise, hauntium makes them ghostly.
   dj-34:
   - rscdel: Removed duplicate code of banner icons
+2025-07-29:
+  Bisar:
+  - bugfix: Ore silos should be able to be connected/disconnected/disassembled without
+      any issues now.
+  - bugfix: The define for CENTCOM_SPECOPS was incorrectly formatted; it has been
+      fixed.
+  FalloutFalcon:
+  - admin: new admin verb for whitelisting players through the txt
+  Melbert:
+  - bugfix: Genetics should be less likely to break your blood type
+  SmArtKar:
+  - rscadd: Added a raptor feather crusher trophy which makes your crusher shots go
+      through your allied mobs.
+  - balance: Rebuke effect from lobster claw trophy and the eye of god now applies
+      to basicmob attacks
+  - balance: Bileworm spewlet's damage is no longer reduced by 70% when hitting lavaland
+      fauna, and it no longer can hit allied mobs
+  - balance: Sphere MODule bombs no longer hit NODE drones and minebots
+  - balance: Ice demon/ice demon cube afterimages can now be walked through by players
+  - bugfix: Sphere MODule bombs now aggro basicmobs hit by their explosions
+2025-07-30:
+  Bisar:
+  - qol: Power cells and megacells now take much less time to print.
+  - balance: Power cells now take the base-item time-to-print ( 10 seconds -> 3.2
+      seconds ), WITHOUT the stock-item print speed increase.
+  - balance: Megacells now take 5 seconds to print ( 10 seconds -> 5 seconds), WITHOUT
+      the stock-item print speed increase.
+  Rhials:
+  - balance: Nightmares/Shadowpeople are no longer stunned by intense flashes like
+      flashbangs or handheld flashes.
+  - balance: Nightmares/Shadowpeople are now harmed and confused by ALL flash sources,
+      including welding or other sources of flash-like flashing.
+  - sound: Nightmares now have a wretched hiss as their default scream sound. Spooky!
+  TealSeer:
+  - refactor: refactored custom vending machine brand code, a new var on /obj/machinery/vending
+      called allow_custom now determines whether the machine can be chosen when screwdrivering
+      the circuit board

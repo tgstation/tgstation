@@ -104,7 +104,6 @@
 	radio.keyslot.channels[RADIO_CHANNEL_SECURITY] = TRUE
 	radio.recalculateChannels()
 
-
 /obj/machinery/ore_silo/Destroy()
 	if (GLOB.ore_silo_default == src)
 		GLOB.ore_silo_default = null
@@ -114,6 +113,7 @@
 
 	ore_connected_machines = null
 	materials = null
+	QDEL_NULL(radio)
 
 	return ..()
 
@@ -207,6 +207,7 @@
 	if(!islist(user_data))
 		// Just allow to salvage the situation
 		. = COMPONENT_ORE_SILO_ALLOW
+		user_data = ID_DATA(null)
 		CRASH("Invalid data passed to check_permitted")
 	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["accesses"], /list)?.Find(ACCESS_QM))
 		return COMPONENT_ORE_SILO_ALLOW

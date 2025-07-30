@@ -1,9 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Added a raptor feather crusher trophy which makes your crusher shots go through your allied mobs."
-  - balance: "Rebuke effect from lobster claw trophy and the eye of god now applies to basicmob attacks"
-  - balance: "Bileworm spewlet's damage is no longer reduced by 70% when hitting lavaland fauna, and it no longer can hit allied mobs"
-  - balance: "Sphere MODule bombs no longer hit NODE drones and minebots"
-  - balance: "Ice demon/ice demon cube afterimages can now be walked through by players"
-  - bugfix: "Sphere MODule bombs now aggro basicmobs hit by their explosions"
