@@ -161,13 +161,20 @@
 	var/mob/living/silicon/robot/borg = usr
 	if(!shield)
 		return
+	if(borg.cell.charge <= 0.4 * STANDARD_CELL_CHARGE)
+		balloon_alert(borg, "not enough energy!")
+		if(shield.active)
+			shield.active = FALSE
+			playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
+			borg.cut_overlay(shield.shield_overlay)
+			return
 	if(shield && shield.active)
 		if(!lavaland_equipment_pressure_check(get_turf(borg)))
 			balloon_alert(borg, "the shield didn't absorb the damage!")
-			damage
 		else
 			playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
 			damage *= 0.5
+			borg.cell.use(0.3 * STANDARD_CELL_CHARGE)
 	. = ..()
 
 #undef CYBORG_SLOWDOWN_THRESHOLD

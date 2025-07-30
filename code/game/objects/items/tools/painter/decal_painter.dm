@@ -149,9 +149,10 @@
 /obj/item/airlock_painter/decal/cyborg/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	var/mob/living/silicon/robot/cyborg = user
-	if(!iscyborg(user))
-		balloon_alert(user, "not enough energy!")
+	if(!iscyborg(user) || !cyborg.cell)
 		return
 	if(cyborg.cell && cyborg.cell.charge > 0)
 		cyborg.cell.use(0.025 * STANDARD_CELL_CHARGE)
-
+	else if(cyborg.cell.charge <= 0)
+		balloon_alert(user, "not enough energy!")
+		return

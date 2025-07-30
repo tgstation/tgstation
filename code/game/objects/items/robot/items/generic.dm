@@ -410,7 +410,7 @@
 
 /obj/item/shield_module/Initialize(mapload)
 	. = ..()
-	shield_overlay = mutable_appearance('icons/mob/effects/durand_shield.dmi', "shield")
+	shield_overlay = mutable_appearance('icons/mob/effects/durand_shield.dmi', "borg_shield")
 
 /obj/item/shield_module/attack_self(mob/living/silicon/borg)
 	active = !active
@@ -424,6 +424,7 @@
 
 /obj/item/shield_module/cyborg_unequip(mob/living/silicon/robot/borg)
 	active = FALSE
+	playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
 	borg.cut_overlay(shield_overlay)
 
 /obj/item/shield_module/proc/on_shield_overlay_update(atom/source, list/overlays)
