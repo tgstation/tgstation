@@ -392,7 +392,7 @@
 
 /atom/movable/screen/alert/status_effect/eldritch_parade
 	name = "Lunar Parade"
-	desc = "You feel like you are being pulled towards the parade!"
+	desc = "You MUST ENTER THE LUNAR PARADE! FOLLOW THE LIGHTS! LET THEM GUIDE YOU!"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "lunar_parade"
 
