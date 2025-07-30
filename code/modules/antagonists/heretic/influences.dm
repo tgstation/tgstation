@@ -232,9 +232,12 @@
 
 	being_drained = TRUE
 	loc.balloon_alert(user, "draining influence...")
+
+	// Only gives you the dripping eye effect if you have faster drain speed than default
 	var/mutable_appearance/draining_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_eye_dripping")
-	draining_overlay.pixel_y = 16
-	user.add_overlay(draining_overlay)
+	if(drain_speed < 10)
+		draining_overlay.pixel_y = 16
+		user.add_overlay(draining_overlay)
 
 	if(!do_after(user, drain_speed, src, hidden = TRUE))
 		being_drained = FALSE
