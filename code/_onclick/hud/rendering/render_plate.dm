@@ -145,7 +145,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(ABOVE_LIGHTING_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME)
 	critical = PLANE_CRITICAL_DISPLAY
 	/// We add some cutoff to the speculars, so they shine only under actually bright lights
 	color = list(SPECULAR_EMISSIVE_CONTRAST,0,0,0, 0,SPECULAR_EMISSIVE_CONTRAST,0,0, 0,0,SPECULAR_EMISSIVE_CONTRAST,0, 0,0,0,1, -SPECULAR_EMISSIVE_CUTOFF,-SPECULAR_EMISSIVE_CUTOFF,-SPECULAR_EMISSIVE_CUTOFF,0)
