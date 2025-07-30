@@ -12,9 +12,13 @@ import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 import { useBackend } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
-import { listNames, listTypes } from './constants';
 import { CreateObjectSettings } from './CreateObjectSettings';
-import { AtomData, CreateObjectProps, SpawnPanelPreferences } from './types';
+import { listNames, listTypes } from './constants';
+import type {
+  AtomData,
+  CreateObjectProps,
+  SpawnPanelPreferences,
+} from './types';
 
 interface spawnPanelData {
   icon: string;
@@ -296,6 +300,7 @@ export function CreateObject(props: CreateObjectProps) {
                     const nextIndex = (currentIndex + 1) % types.length;
                     updateSortBy(types[nextIndex]);
                   }}
+                  tooltip={`Cycle the searching target (objects, mobs, turfs)`}
                 >
                   {
                     listNames[
@@ -312,6 +317,7 @@ export function CreateObject(props: CreateObjectProps) {
                   onClick={() => {
                     updateSearchBy(!searchBy);
                   }}
+                  tooltip={`Cycle the search method (by name, by type)`}
                 >
                   {searchBy ? 'By type' : 'By name'}
                 </Button>
@@ -323,6 +329,7 @@ export function CreateObject(props: CreateObjectProps) {
                   }}
                   color={!hideMapping && 'good'}
                   checked={!hideMapping}
+                  tooltip={`Toggle mapping objects visibility`}
                 >
                   Mapping
                 </Button.Checkbox>
@@ -334,6 +341,7 @@ export function CreateObject(props: CreateObjectProps) {
                   }}
                   color={showIcons && 'good'}
                   checked={showIcons}
+                  tooltip={`Toggle preview icons on hovering`}
                 >
                   Icons
                 </Button.Checkbox>
@@ -345,6 +353,7 @@ export function CreateObject(props: CreateObjectProps) {
                   }}
                   color={showPreview && 'good'}
                   checked={showPreview}
+                  tooltip={`Toggle the large object preview panel`}
                 >
                   Preview
                 </Button.Checkbox>
