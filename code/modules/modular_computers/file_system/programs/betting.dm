@@ -170,18 +170,31 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	for(var/option in options)
 		if(!length(options[option]))
 			options[option] = list()
-	//we'll only advertise it on the first bet of the round, as to not make this overly annoying.
-	var/should_alert = FALSE
-	for(var/datum/feed_channel/FC in GLOB.news_network.network_channels)
-		if(FC.channel_name == NEWSCASTER_SPACE_BETTING)
-			if(!length(FC.messages))
-				should_alert = TRUE
-	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Space Betting App", NEWSCASTER_SPACE_BETTING, null, update_alert = should_alert)
+	advertise_bet()
 
 /datum/active_bet/Destroy(force)
 	GLOB.active_bets -= src
 	newscaster_message = null
 	return ..()
+
+/// Place a feed article advertising our bet.
+/datum/active_bet/proc/advertise_bet()
+	var/datum/feed_channel/betting_channel = GLOB.news_network.network_channels_by_name[NEWSCASTER_SPACE_BETTING]
+	if(isnull(betting_channel))
+		return
+	// We'll only advertise it on the first bet of the round, as to not make this overly annoying.
+	var/should_alert = !length(betting_channel.messages)
+	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Space Betting App", NEWSCASTER_SPACE_BETTING, null, update_alert = should_alert)
+
+/// Reply to our previously placed advertisement feed article.
+/datum/active_bet/proc/reply_to_feed(winning_option)
+	if(isnull(newscaster_message))
+		return
+	GLOB.news_network.submit_comment(
+		comment_text = "The bet [name] has ended, the winner was [winning_option]!",
+		newscaster_username = "NtOS Betting Results",
+		current_message = newscaster_message,
+	)
 
 ///Returns how many bets there is per option
 /datum/active_bet/proc/get_bets(datum/bank_account/user_account)
@@ -206,11 +219,8 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 				var/datum/bank_account/refunded_account = existing_bets[1]
 				refunded_account.adjust_money(text2num(existing_bets[2]), "Refund: [name] gamble cancelled.")
 		return
-	GLOB.news_network.submit_comment(
-		comment_text = "The bet [name] has ended, the winner was [winning_option]!",
-		newscaster_username = "NtOS Betting Results",
-		current_message = newscaster_message,
-	)
+
+	reply_to_feed(winning_option)
 	var/list/winners = options[winning_option]
 	if(!length(winners))
 		return
