@@ -76,9 +76,21 @@
 	name = "Turf lighting post-processing plate"
 	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
 	plane = RENDER_PLANE_TURF_LIGHTING
-	render_relay_planes = list(RENDER_PLANE_SPECULAR, RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	blend_mode = BLEND_ADD
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/turf_lighting/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	/// We get affected by cutoff but not by the contrast that overlay lights get
+	/// So flashlights seem to reflect "better"
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
+		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
+	))
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_slate
 	name = "Emissive Plate"
@@ -147,8 +159,6 @@
 	blend_mode = BLEND_ADD
 	render_relay_planes = list(RENDER_PLANE_GAME)
 	critical = PLANE_CRITICAL_DISPLAY
-	/// We add some cutoff to the speculars, so they shine only under actually bright lights
-	color = list(SPECULAR_EMISSIVE_CONTRAST,0,0,0, 0,SPECULAR_EMISSIVE_CONTRAST,0,0, 0,0,SPECULAR_EMISSIVE_CONTRAST,0, 0,0,0,1, -SPECULAR_EMISSIVE_CUTOFF,-SPECULAR_EMISSIVE_CUTOFF,-SPECULAR_EMISSIVE_CUTOFF,0)
 
 /atom/movable/screen/plane_master/rendering_plate/specular/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()

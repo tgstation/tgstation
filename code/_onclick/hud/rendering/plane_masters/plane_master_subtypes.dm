@@ -309,7 +309,7 @@
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_SPECULAR, RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
@@ -321,6 +321,13 @@
 		-1, -1, -1, 0,
 		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
 		1, 1, 1, 0,
+	))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
+		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
+		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
+		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
+		0, 0, 0, 1,
+		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
 	))
 
 /atom/movable/screen/plane_master/above_lighting
