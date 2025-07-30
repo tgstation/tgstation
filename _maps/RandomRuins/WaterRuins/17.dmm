@@ -437,6 +437,7 @@
 /area/ruin/unpowered/ash_walkers)
 "Dw" = (
 /obj/structure/stone_tile/center,
+/obj/structure/lavaland/wild_slugcat_nest,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/ruin/unpowered/ash_walkers)
 "Ec" = (
@@ -551,6 +552,10 @@
 	},
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/ruin/unpowered/ash_walkers)
+"My" = (
+/obj/item/reagent_containers/cup/bucket/wooden,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
 "No" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/water/no_planet_atmos/deep/rainworld,
@@ -2073,7 +2078,7 @@ fU
 fU
 ou
 ou
-ou
+My
 YD
 Oj
 Oj
@@ -2136,7 +2141,7 @@ ou
 UC
 ou
 ou
-Ec
+ou
 Oj
 Oj
 Oj
@@ -2321,8 +2326,8 @@ ou
 UC
 ou
 UC
-ou
-ou
+Ec
+Ec
 TT
 Oj
 Oj

@@ -51,8 +51,10 @@
 		/obj/item/aicard,
 		/obj/item/assembly,
 	))
+	hud_type = /datum/hud/dextrous/slugcat
 	/// Back slot
-	var/obj/item/back
+	var/obj/item/internal_storage
+	var/list/slugcat_overlays[DRONE_TOTAL_LAYERS]
 
 
 /mob/living/basic/slugcat/Initialize(mapload)
@@ -62,7 +64,7 @@
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_traits(list(TRAIT_CATLIKE_GRACE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WOUND_LICKER, TRAIT_COLORBLIND, TRAIT_NODROWN, TRAIT_SWIMMER, TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_CAN_THROW_ITEMS), INNATE_TRAIT)
-	AddElement(/datum/element/dextrous, can_throw = TRUE)
+	AddElement(/datum/element/dextrous, hud_type = hud_type, can_throw = TRUE)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -5)
 	LoadComponent(/datum/component/item_blacklist, scug_bad_items, "You don't know how to use %TARGET.")
@@ -81,15 +83,11 @@
 		return
 	icon_state = "[icon_living]"
 
-/mob/living/basic/slugcat/death(gibbed)
-	..(gibbed)
-	if(back)
-		dropItemToGround(back)
-
 /mob/living/basic/slugcat/examine(mob/user)
+	. = ..()
 	. = list()
-	if(back && !(back.item_flags & ABSTRACT))
-		. += "It is wearing [back.examine_title(user)] on its back."
+	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
+		. += "It is wearing [internal_storage.examine_title(user)] on its back."
 	if(client && stat != DEAD)
 		. += "It appears to be moving intelligently."
 	if((health != maxHealth) && stat != DEAD)
@@ -107,9 +105,9 @@
 	name = "rivulet"
 	desc = "A very territorial predator known to hunt local fauna using improvised weaponry. Highly agile underwater."
 	icon = 'icons/mob/simple/slugcat/rivulet.dmi'
-	speed = 0.8
-	maxHealth = 65
-	health = 65
+	speed = 0.75
+	maxHealth = 50
+	health = 50
 	melee_damage_lower = 6
 	melee_damage_upper = 8
 	melee_attack_cooldown = CLICK_CD_MELEE-2
@@ -120,15 +118,16 @@
 
 /mob/living/basic/slugcat/rivulet/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, PROC_REF(check_location))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_location))
+	check_location(src, null)
 
-/mob/living/basic/slugcat/rivulet/proc/check_location(mob/living/source, atom/movable/old_loc, dir, forced)
+/mob/living/basic/slugcat/rivulet/proc/check_location(atom/movable/mover, turf/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	var/was_water = istype(old_loc, /turf/open/water)
-	var/is_water = istype(source.loc, /turf/open/water) && !HAS_TRAIT(source.loc, TRAIT_TURF_IGNORE_SLOWDOWN)
+	var/is_water = istype(src.loc, /turf/open/water) && !HAS_TRAIT(src.loc, TRAIT_TURF_IGNORE_SLOWDOWN)
 	if(was_water && !is_water)
-		source.remove_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
-		source.add_traits(list(TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
+		src.remove_movespeed_modifier(/datum/movespeed_modifier/wet_scug)
+		src.add_traits(list(TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
 	else if(!was_water && is_water)
-		source.add_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
-		source.add_traits(list(TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
+		src.add_movespeed_modifier(/datum/movespeed_modifier/wet_scug)
+		src.add_traits(list(TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)

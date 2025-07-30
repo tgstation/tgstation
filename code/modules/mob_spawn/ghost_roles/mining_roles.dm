@@ -343,3 +343,74 @@
 	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the outpost fall into enemy hands!"
 	important_text = "Do NOT let the outpost fall into enemy hands"
 	outfit = /datum/outfit/lavaland_syndicate/comms/icemoon
+
+/obj/structure/wild_slugcat_eggshell
+	name = "frozen slugcat"
+	desc = "Appears to be in stasis."
+	icon = 'icons/mob/simple/slugcat/slugcat.dmi'
+	icon_state = "spacecat_rest"
+	color = COLOR_VOID_PURPLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
+	max_integrity = 80
+	var/obj/effect/mob_spawn/ghost_role/wild_slugcat/egg
+
+/obj/structure/wild_slugcat_eggshell/attack_ghost(mob/user) //Pass on ghost clicks to the mob spawner
+	if(egg)
+		egg.attack_ghost(user)
+	. = ..()
+
+/obj/structure/wild_slugcat_eggshell/Destroy()
+	if(!egg)
+		return ..()
+	var/mob/living/basic/slugcat/yolk = new(get_turf(src))
+	yolk.gib(DROP_ALL_REMAINS)
+	QDEL_NULL(egg)
+	return ..()
+
+/obj/effect/mob_spawn/ghost_role/wild_slugcat
+	name = "frozen slugcat"
+	desc = "Sleepy."
+	prompt_name = "wild slugcat"
+	icon = 'icons/mob/simple/slugcat/slugcat.dmi'
+	icon_state = "spacecat_rest"
+	color = COLOR_VOID_PURPLE
+	move_resist = MOVE_FORCE_NORMAL
+	density = FALSE
+	mob_type = /mob/living/basic/slugcat/rivulet
+	you_are_text = "You are a hunter slugcat."
+	flavour_text = "You heal by eating seraka mushrooms, berries and grapes. Grow some if you need to heal."
+	important_text = "Protect the nest. Hunt anyone out in the ocean. Do not enter the station."
+	var/datum/team/wild_slugcat/team
+	var/obj/structure/wild_slugcat_eggshell/eggshell
+
+/obj/effect/mob_spawn/ghost_role/wild_slugcat/Destroy()
+	eggshell = null
+	return ..()
+
+/obj/effect/mob_spawn/ghost_role/wild_slugcat/special(mob/living/basic/slugcat/spawned_mob, mob/mob_possessor)
+	. = ..()
+	to_chat(spawned_mob, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Hunt in the ocean, stay away from the station.</b>")
+
+	spawned_mob.mind.add_antag_datum(/datum/antagonist/wild_slugcat, team)
+	spawned_mob.remove_language(/datum/language/common)
+	spawned_mob.grant_language(/datum/language/uncommon)
+	team.players_spawned += (spawned_mob.ckey)
+	eggshell.egg = null
+	QDEL_NULL(eggshell)
+
+/obj/effect/mob_spawn/ghost_role/wild_slugcat/Initialize(mapload, datum/team/wild_slugcat/ashteam)
+	. = ..()
+	var/area/spawner_area = get_area(src)
+	team = ashteam
+	eggshell = new /obj/structure/wild_slugcat_eggshell(get_turf(loc))
+	eggshell.egg = src
+	src.forceMove(eggshell)
+	if(spawner_area)
+		notify_ghosts(
+			"A wild slugcat is ready to wake up in \the [spawner_area.name].",
+			source = src,
+			header = "Frozen Wild Slugcat",
+			click_interact = TRUE,
+			ignore_key = POLL_IGNORE_ASHWALKER,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
