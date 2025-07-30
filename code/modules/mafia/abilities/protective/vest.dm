@@ -13,7 +13,7 @@
 	///Amount of vests that can be used until the power deletes itself.
 	var/charges = STARTING_VEST_AMOUNT
 
-/datum/mafia_ability/vest/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
+/datum/mafia_ability/vest/set_target(datum/mafia_role/new_target)
 	. = ..()
 	if(!.)
 		return FALSE
