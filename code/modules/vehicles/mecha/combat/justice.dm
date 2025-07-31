@@ -20,7 +20,7 @@
 	wreckage = /obj/structure/mecha_wreckage/justice
 	mech_type = EXOSUIT_MODULE_JUSTICE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	mecha_flags = ID_LOCK_ON | QUIET_STEPS | QUIET_TURNS | CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | IS_ENCLOSED | AI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | QUIET_TURNS | CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | IS_ENCLOSED | AI_COMPATIBLE
 	destroy_wall_sound = 'sound/vehicles/mecha/mech_blade_break_wall.ogg'
 	brute_attack_sound = 'sound/vehicles/mecha/mech_blade_attack.ogg'
 	attack_verbs = list("cut", "cuts", "cutting")
@@ -139,6 +139,22 @@
 	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		QDEL_NULL(justice_engine)
 	return ..()
+
+/obj/vehicle/sealed/mecha/justice/play_stepsound()
+	if(mecha_flags & QUIET_STEPS)
+		return
+
+	// if we are on the second step of the diagonal movement, don't play step sound
+	if(src.moving_diagonally == SECOND_DIAG_STEP)
+		return
+
+	playsound(src, pick(
+		'sound/effects/footstep/stomp1.ogg',
+		'sound/effects/footstep/stomp2.ogg',
+		'sound/effects/footstep/stomp3.ogg',
+		'sound/effects/footstep/stomp4.ogg',
+		'sound/effects/footstep/stomp5.ogg',
+	), 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/vehicle/sealed/mecha/justice/proc/null_arrow(datum/hud/user_hud)
 	if(isnull(user_hud))
