@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(cameras)
 	flags = SS_BACKGROUND
 	priority = FIRE_PRIORITY_CAMERAS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 0.5 SECONDS
+	wait = 5 MINUTES
 	dependencies = list(
 		// Required to get plane offset for static images
 		/datum/controller/subsystem/mapping,
@@ -31,9 +31,9 @@ SUBSYSTEM_DEF(cameras)
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
 	while(length(chunks_to_update))
 		var/datum/camerachunk/chunk = chunks_to_update[1]
-		if(chunk.updating) // It's possible something forced update before we got to it
+		if(length(chunk.update_sources)) // It's possible something forced update before we got to it
 			chunk.update()
-		chunks_to_update.Cut(1,2)
+		chunks_to_update.Cut(1, 2)
 		if(MC_TICK_CHECK)
 			break
 
@@ -110,15 +110,10 @@ SUBSYSTEM_DEF(cameras)
 #define IGNORE_CAMERA 2
 
 /// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or when doors open.
-/datum/controller/subsystem/cameras/proc/update_visibility(atom/relevant_atom, opacity_check = TRUE)
-	if(!SSticker || (opacity_check && !relevant_atom.opacity))
+/datum/controller/subsystem/cameras/proc/update_visibility(atom/relevant_atom)
+	if(!SSticker)
 		return
 	major_chunk_change(relevant_atom, IGNORE_CAMERA)
-
-/// Finds a chunk at the given coordinates and queues an update for it.
-/datum/controller/subsystem/cameras/proc/update_chunk(x, y, z)
-	var/datum/camerachunk/chunk = get_camera_chunk(x, y, z)
-	chunk?.queue_update()
 
 /// Removes a camera from a chunk.
 /datum/controller/subsystem/cameras/proc/remove_camera_from_chunk(obj/machinery/camera/old_cam)
@@ -147,7 +142,7 @@ SUBSYSTEM_DEF(cameras)
  * update_delay_buffer is passed all the way to queue_update() from portable camera updates on movement
  * to change the time between static updates.
  */
-/datum/controller/subsystem/cameras/proc/major_chunk_change(atom/center_or_camera, choice = IGNORE_CAMERA, update_delay_buffer)
+/datum/controller/subsystem/cameras/proc/major_chunk_change(atom/center_or_camera, choice = IGNORE_CAMERA, update_delay_buffer = 0)
 	PROTECTED_PROC(TRUE)
 
 	if(QDELETED(center_or_camera) && choice == ADD_CAMERA)
@@ -172,7 +167,7 @@ SUBSYSTEM_DEF(cameras)
 			if(choice == ADD_CAMERA)
 				// You can't have the same camera in the list twice.
 				chunk.cameras["[chunk_turf.z]"] |= center_or_camera
-			chunk.queue_update(update_delay_buffer = update_delay_buffer)
+			chunk.queue_update(center_or_camera, update_delay_buffer)
 
 /// A faster, turf only version of [/datum/controller/subsystem/cameras/proc/major_chunk_change]
 /// For use in sensitive code, be careful with it
@@ -184,7 +179,7 @@ SUBSYSTEM_DEF(cameras)
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 			var/datum/camerachunk/chunk = get_camera_chunk(x, y, changed.z)
-			chunk?.queue_update()
+			chunk?.queue_update(changed, 0)
 
 /// Will check if an atom is on a viewable turf.
 /// Returns TRUE if the atom is visible by any camera, FALSE otherwise.

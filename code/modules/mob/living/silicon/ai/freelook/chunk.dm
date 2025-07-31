@@ -1,5 +1,3 @@
-#define UPDATE_BUFFER_TIME (2.5 SECONDS)
-
 /**
  * A 16x16 grid of the map with a list of turfs that can be seen, are visible and are dimmed. \
  * Allows Camera Eyes to stream these chunks and know what it can and cannot see.
@@ -21,13 +19,13 @@
 	///images currently in use on obscured turfs.
 	var/list/active_static_images = list()
 
-	/// If TRUE, the chunk has been changed and needs to be updated.
-	var/updating = FALSE
-
 	var/x = 0
 	var/y = 0
 	var/lower_z
 	var/upper_z
+
+	/// List of atoms that caused the chunk to update - assoc atom ref() to opacity on queue
+	var/list/update_sources = list()
 
 /// Add a camera eye to the chunk, updating the chunk if necessary.
 /datum/camerachunk/proc/add(mob/eye/camera/eye)
@@ -51,20 +49,49 @@
 /**
  * Queues the chuck to be updated after a delay.
  *
- * * update_delay_buffer - the delay before the update is performed. Defaults to UPDATE_BUFFER_TIME.
+ * * update_source - the atom that caused the update
+ * * update_delay_buffer - the delay before the update is performed. Defaults to 0 (instant).
  */
-/datum/camerachunk/proc/queue_update(update_delay_buffer = UPDATE_BUFFER_TIME)
-	if(updating)
+/datum/camerachunk/proc/queue_update(atom/update_source, update_delay_buffer = 0)
+	// This chunk is being actively observed, skip queuing
+	if(length(seenby))
+		addtimer(CALLBACK(src, PROC_REF(update)), update_delay_buffer || 1, TIMER_UNIQUE)
 		return
-	addtimer(CALLBACK(src, PROC_REF(_queue_update)), update_delay_buffer, TIMER_UNIQUE)
-	updating = TRUE
+
+	// Only start queue if this is the first thing to queue an update
+	var/start_queue = !length(update_sources)
+
+	var/update_key = REF(update_source)
+	// Camera updates will never be second guessed.
+	// Track the number of times the camera has queued an update instead of opacity (just for fun)
+	if(istype(update_source, /obj/machinery/camera))
+		update_sources[update_source] += 1
+
+	// Otherwise track this atom's opacity at time of queue
+	else if(isnull(update_sources[update_key]))
+		update_sources[update_key] = update_source.opacity
+
+	// If the tracked opacity does not match current opacity,
+	// that implies that the atom changed opacity twice in the time before the update happened
+	// So we can safely remove this atom as a "source of update"
+	else if(update_sources[update_key] != update_source.opacity)
+		update_sources -= update_key
+		return
+
+	if(!start_queue)
+		return
+
+	if(update_delay_buffer <= 0)
+		_queue_update()
+	else
+		addtimer(CALLBACK(src, PROC_REF(_queue_update)), update_delay_buffer, TIMER_UNIQUE)
 
 /datum/camerachunk/proc/_queue_update()
 	PRIVATE_PROC(TRUE)
 	// Something forced an update during the delay
-	if(!updating)
+	if(!length(update_sources))
 		return
-	SScameras.chunks_to_update[src] = TRUE
+	SScameras.chunks_to_update[src] += 1
 
 /**
  * Forces the chunk to update immediately
@@ -72,7 +99,7 @@
  * * only_if_necessary - if TRUE, will not update the chunk unless it's been marked to update.
  */
 /datum/camerachunk/proc/force_update(only_if_necessary = TRUE)
-	if(only_if_necessary && !updating)
+	if(only_if_necessary && !length(update_sources))
 		return
 	update()
 
@@ -81,7 +108,7 @@
 	if(SScameras.disable_camera_updates)
 		return
 
-	updating = FALSE
+	update_sources.Cut()
 
 	var/list/updated_visible_turfs = list()
 
@@ -188,5 +215,3 @@
 		var/image/new_static = turfs[obscured_turf]
 		active_static_images += new_static
 		obscuredTurfs[obscured_turf] = new_static
-
-#undef UPDATE_BUFFER_TIME
