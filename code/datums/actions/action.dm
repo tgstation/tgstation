@@ -433,7 +433,7 @@
 	return FALSE
 
 /datum/action/proc/begin_creating_bind(mob/user)
-	if(!user != owner)
+	if(user != owner)
 		return
 	if(!isnull(full_key))
 		full_key = null
