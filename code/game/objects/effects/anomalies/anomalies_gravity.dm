@@ -16,11 +16,6 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	apply_wibbly_filters(src)
 
-/obj/effect/anomaly/grav/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	. = ..()
-	if(same_z_layer)
-		return
-
 /obj/effect/anomaly/grav/anomalyEffect(seconds_per_tick)
 	..()
 	boing = 1
