@@ -170,9 +170,8 @@
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
 	new_reagent.ph = added_ph
-	if (creation_callback)
-		creation_callback.Invoke(new_reagent)
 	new_reagent.on_new(data)
+	creation_callback?.Invoke(new_reagent)
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete

@@ -205,7 +205,7 @@
 		icon = 'icons/turf/walls/reinforced_states.dmi'
 		icon_state = "[base_decon_state]-[d_state]"
 	else
-		icon = 'icons/turf/walls/reinforced_wall.dmi'
+		icon = initial(icon)
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	return ..()
 
@@ -233,13 +233,12 @@
 		return
 	return ..()
 
-/turf/closed/wall/r_wall/syndicate
-	name = "hull"
-	desc = "The armored hull of an ominous looking ship."
+/turf/closed/wall/r_wall/plastitanium
+	name = /turf/closed/wall/mineral/plastitanium::name
+	desc = "An extra durable wall made of an alloy of plasma and titanium, reinforced with plasteel rods."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
-	explosive_resistance = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	hardness = 25 //plastitanium
 	turf_flags = IS_SOLID
@@ -248,16 +247,32 @@
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	return FALSE
-
-/turf/closed/wall/r_wall/syndicate/nodiagonal
+/turf/closed/wall/r_wall/plastitanium/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle_nd"
 	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BITMASK
 
-/turf/closed/wall/r_wall/syndicate/overspace
+/turf/closed/wall/r_wall/plastitanium/overspace
+	icon_state = "map-overspace"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	fixed_underlay = list("space" = TRUE)
+
+/turf/closed/wall/r_wall/plastitanium/syndicate
+	name = "hull"
+	desc = "The armored hull of an ominous looking ship."
+	explosive_resistance = 20
+
+/turf/closed/wall/r_wall/plastitanium/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle_nd"
+	base_icon_state = "plastitanium_wall"
+	smoothing_flags = SMOOTH_BITMASK
+
+/turf/closed/wall/r_wall/plastitanium/syndicate/overspace
 	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
