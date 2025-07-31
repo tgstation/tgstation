@@ -124,7 +124,7 @@
 
 			if(add_cabling(user, cable, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
+					replacer.play_rped_effect()
 					no_sound = TRUE
 				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
 
@@ -137,7 +137,7 @@
 
 			if(add_glass(user, glass_sheets, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
+					replacer.play_rped_effect()
 				return TRUE
 
 			return FALSE

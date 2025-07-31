@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "toner filled")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/flashlight))
+	if(istype(tool, /obj/item/flashlight) && !istype(tool, /obj/item/flashlight/emp)) //subtypes my behated. OOP was a dumb idea
 		if(user.combat_mode)
 			return NONE
 		if(!opened)

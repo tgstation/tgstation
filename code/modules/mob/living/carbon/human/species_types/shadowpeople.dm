@@ -32,6 +32,14 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
 	)
 
+/datum/species/shadow/on_species_gain(mob/living/carbon/carbon_mob, datum/species/old_species, pref_load, regenerate_icons)
+	. = ..()
+	RegisterSignal(carbon_mob, COMSIG_MOB_FLASH_OVERRIDE_CHECK, PROC_REF(on_flashed))
+
+/datum/species/shadow/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(human, COMSIG_MOB_FLASH_OVERRIDE_CHECK)
+
 /datum/species/shadow/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE
@@ -103,3 +111,23 @@
 	name = "shadowling tumor"
 	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+
+/datum/species/shadow/get_scream_sound(mob/living/carbon/human/moth)
+	return 'sound/mobs/humanoids/shadow/shadow_wail.ogg'
+
+/datum/species/shadow/proc/on_flashed(source, mob/living/carbon/flashed, flash, deviation)
+	SIGNAL_HANDLER
+
+	if(deviation == DEVIATION_FULL) //If no deviation, we can assume it's a non-assembly flash and should do max flash damage.
+		flashed.apply_damage(16, BURN, attacking_item = flash)
+		flashed.adjust_confusion_up_to(3 SECONDS, 6 SECONDS)
+	else //If it's anything less than a full hit, it does less than stellar damage. Bear in mind that this damage is dished out much faster since flashes have a quicker cooldown on clicks.
+		flashed.apply_damage(8, BURN, attacking_item = flash)
+		flashed.adjust_confusion_up_to(1 SECONDS, 3 SECONDS)
+
+	INVOKE_ASYNC(flashed, TYPE_PROC_REF(/mob, emote), "scream")
+	flashed.visible_message(span_danger("[flashed] wails in pain as a burst of light singes their flesh!"), \
+		span_danger("You wail in pain as the sudden burst of light singes your flesh!"), \
+		span_danger("Something wails in pain! It sounds like a terrifying monster! Good thing you can't see it, or you'd probably be freaking out right now."))
+
+	return FLASH_OVERRIDDEN

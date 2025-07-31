@@ -300,7 +300,7 @@
 			new /obj/item/clothing/suit/armor/vest/marine/pmc(src) //The armor kit is comparable to the infiltrator, 6 TC
 			new /obj/item/clothing/head/helmet/marine/pmc(src)
 			new /obj/item/clothing/mask/gas/sechailer(src)
-			new /obj/item/clothing/glasses/night/colorless(src) // 3~ TC
+			new /obj/item/clothing/glasses/night(src) // 3~ TC
 			new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
 			new /obj/item/clothing/shoes/jackboots(src)
 			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC

@@ -3,10 +3,10 @@
 		"platymuus.dm-langclient",
 		"EditorConfig.EditorConfig",
 		"arcanis.vscode-zipfs",
-		"dbaeumer.vscode-eslint",
 		"stylemistake.auto-comment-blocks",
 		"Donkie.vscode-tgstation-test-adapter",
 		"anturk.dmi-editor",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"biomejs.biome"
 	]
 }

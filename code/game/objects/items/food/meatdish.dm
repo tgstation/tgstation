@@ -688,6 +688,7 @@
 	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 6)
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/rawkhinkali
@@ -726,6 +727,7 @@
 	foodtypes = MEAT|GRAIN|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/meatbun
 	name = "meat bun"
@@ -1085,6 +1087,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * (4/3))
 
 /obj/item/food/korta_wellington
 	name = "Kotra wellington"
@@ -1119,6 +1122,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * (4/3))
 
 /obj/item/food/roast_dinner
 	name = "roast dinner"
@@ -1153,6 +1157,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
@@ -1189,6 +1194,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
@@ -1297,6 +1303,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2)
 
 /obj/item/food/sweet_and_sour_meatballs
 	name = "sweet and sour meatballs"

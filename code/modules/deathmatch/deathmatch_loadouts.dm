@@ -585,7 +585,7 @@
 	neck = /obj/item/bedsheet/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/captain
-	belt = /obj/item/storage/belt/sabre
+	belt = /obj/item/storage/belt/sheath/sabre
 	l_hand = /obj/item/gun/energy/laser/captain
 	r_pocket = /obj/item/assembly/flash
 	l_pocket = /obj/item/melee/baton/telescopic

@@ -452,6 +452,9 @@
 	return embeds
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+	if(SEND_SIGNAL(src, COMSIG_MOB_FLASH_OVERRIDE_CHECK, src) & FLASH_OVERRIDDEN) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
+		return FLASH_COMPLETED
+
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return

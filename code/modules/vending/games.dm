@@ -115,6 +115,7 @@
 	extra_price = PAYCHECK_COMMAND * 1.25
 	payment_department = ACCOUNT_SRV
 	light_mask = "games-light-mask"
+	allow_custom = TRUE
 
 /obj/item/vending_refill/games
 	machine_name = "\improper Good Clean Fun"

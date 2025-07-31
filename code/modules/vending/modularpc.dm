@@ -19,6 +19,7 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SCI
+	allow_custom = TRUE
 
 /obj/item/vending_refill/modularpc
 	machine_name = "Deluxe Silicate Selections"

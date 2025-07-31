@@ -248,7 +248,7 @@
 		/obj/item/storage/box/lights/mixed = 1,
 	)
 	belt = /obj/item/storage/belt/janitor/full
-	glasses = /obj/item/clothing/glasses/night/colorless
+	glasses = /obj/item/clothing/glasses/night
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_hand = /obj/item/storage/bag/trash/bluespace
@@ -420,7 +420,7 @@
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/storage/box/fireworks = 3,
 	)
-	belt = /obj/item/storage/belt/sabre
+	belt = /obj/item/storage/belt/sheath/sabre
 	head = /obj/item/clothing/head/hats/coordinator
 	l_pocket = /obj/item/knife/kitchen
 	l_hand = /obj/item/toy/balloon

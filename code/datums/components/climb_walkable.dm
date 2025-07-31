@@ -13,7 +13,7 @@
 /datum/component/climb_walkable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_TRIED_PASS)
 	for (var/atom/movable/climber in get_turf(parent))
-		REMOVE_TRAIT(parent, TRAIT_ON_CLIMBABLE, REF(src))
+		REMOVE_TRAIT(climber, TRAIT_ON_CLIMBABLE, REF(src))
 
 /datum/component/climb_walkable/proc/on_enter(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER

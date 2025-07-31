@@ -29,6 +29,7 @@
 	default_price = PAYCHECK_CREW * 1
 	extra_price = PAYCHECK_COMMAND * 0.5
 	payment_department = ACCOUNT_SCI
+	allow_custom = TRUE
 
 /obj/item/vending_refill/cytopro
 	machine_name = "CytoPro"

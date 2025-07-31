@@ -374,6 +374,7 @@
 	)
 	result = /obj/item/food/honey_roll
 	category = CAT_LIZARD
+	crafting_flags = CRAFT_CLEARS_REAGENTS
 
 /datum/crafting_recipe/food/black_eggs
 	name = "Black scrambled eggs"
