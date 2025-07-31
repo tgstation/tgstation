@@ -239,7 +239,7 @@
 	embed_type = null
 	armour_penetration = 10
 	wound_bonus = -15
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	damage_type = BRUTE
 	shrapnel_type = /obj/item/spear
 

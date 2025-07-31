@@ -47,6 +47,12 @@
 	pellets = 3
 	variance = 10
 
+/obj/item/ammo_casing/energy/laser/musket/repeater
+	projectile_type = /obj/projectile/beam/laser/musket
+	pellets = 2
+	variance = 90
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
+
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice
 	select_name = "practice"

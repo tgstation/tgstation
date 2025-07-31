@@ -126,3 +126,20 @@
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+
+/obj/item/gun/energy/laser/musket/repeater
+	name = "Detached Ratvarian Repeater"
+	desc = "A weapon of incredible bulk, this ratvarian repeater has been detached from its stand to be carried by hand. Cumbersome, Yes - but powerful."
+	icon_state = "repeater"
+	inhand_icon_state = "musket"
+	w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/crank_recharge, \
+		charging_cell = get_cell(), \
+		charge_amount = LASER_SHOTS(8,STANDARD_CELL_CHARGE), \
+		cooldown_time = 0.5 SECONDS, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
+	)
