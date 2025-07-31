@@ -233,8 +233,8 @@
 /obj/projectile/bullet/Large_Ballista_Spear
 	name = "Spear"
 	icon_state = "Ballista_Spear"
-	range = 20
-	damage = 60 //YOU ARE LAUNCHING A GIANT SPEAR AT SOMEONE THIS IS GOING TO HURT A LOT.
+	//range = 20
+	damage = 80 //YOU ARE LAUNCHING A GIANT SPEAR AT SOMEONE THIS IS GOING TO HURT A LOT.
 	speed = 3
 	catastropic_dismemberment = TRUE //BECAUSE IF IT TAKES YOUR LEG OFF YOU SHOULDNT JUST BE GETTING OFF EASY.
 	projectile_piercing = PASSMOB

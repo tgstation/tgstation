@@ -292,7 +292,7 @@
 	desc = "''Engineers like to solve problems. If there are no problems handily available, they will create their own problems.''"
 	icon_state = "Improvised_Ballista"
 	icon_state_base = "Improvised_Ballista"
-	icon_state_loaded = "Improvised_Ballista_loaded"
+	icon_state_loaded = "Improvised_Ballista_Loaded"
 	icon_state_fire = "Improvised_Ballista"
 	loading_message = "You finish loading the ballista with a spear."
 	anchored = FALSE
@@ -307,15 +307,30 @@
 	last_fire_sound = 'sound/items/xbow_lock.ogg'
 	ammo_type = /obj/item/spear
 	projectile_type = /obj/projectile/bullet/Large_Ballista_Spear
-	loaded_gun = TRUE
-	fully_loaded_gun = TRUE
+	loaded_gun = FALSE
+	fully_loaded_gun = FALSE
 	fire_delay = 1
 	shot_delay = 1
 	firing_shakes_camera = FALSE
 
-/obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params)
+/obj/structure/mounted_gun/large_ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
+	if(is_firing)
+		balloon_alert(user, "the gun is in the middle of firing!")
+		return
 
-	user.log_message("fired a cannon", LOG_ATTACK)
-	log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
-	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
-	return
+	if(istype(used_item, ammo_type))
+		if(fully_loaded_gun)
+			balloon_alert(user, "already fully loaded!")
+			return
+
+		else //Single shot weirdness.
+
+			playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
+			do_after(user, load_delay, target = src)
+			shots_in_gun = 1 //MAX OF ONE SHOT.
+			balloon_alert(user, loading_message)
+			loaded_gun = TRUE
+			QDEL_NULL(used_item)
+			fully_loaded_gun = TRUE
+			icon_state = icon_state_loaded
+
