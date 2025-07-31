@@ -53,7 +53,7 @@
 	duration = 7 SECONDS
 
 /datum/movespeed_modifier/status_speed_boost/minor
-	multiplicative_slowdown = -0.22
+	multiplicative_slowdown = -0.20
 
 /atom/movable/screen/alert/status_effect/commanded
 	name = "Commanded"
