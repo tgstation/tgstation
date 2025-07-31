@@ -2,7 +2,7 @@
 	name = "MMI Talk"
 	desc = "Our decoy brain has been implanted into a Man-Machine Interface. \
 		In order to maintain our secrecy, we can speak through the decoy as if a normal brain. \
-		The decoy brain will relay speech it hears to you in purple."
+		The decoy brain will relay speech it hears to us in purple."
 	button_icon = 'icons/obj/devices/assemblies.dmi'
 	button_icon_state = "mmi_off"
 	dna_cost = CHANGELING_POWER_UNOBTAINABLE
