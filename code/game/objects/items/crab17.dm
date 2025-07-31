@@ -245,11 +245,15 @@
  */
 /obj/structure/checkoutmachine/proc/expel_cash()
 	var/funds_remaining = internal_account.account_balance
+	var/safety = funds_remaining + 1 // In the absolute worst case scenario the loop will complete in funds_remaining steps, if this is counter reaches 0 something went terribly wrong and we need to leave
 	while(floor(funds_remaining))
 		var/amount_to_remove = min(funds_remaining, rand(1, round(internal_account.account_balance)/8))
 		var/obj/item/holochip/holochip = new (get_turf(src), amount_to_remove)
 		funds_remaining -= amount_to_remove
 		holochip.throw_at(pick(oview(7,get_turf(src))),10,1)
+		safety -= 1
+		if(safety <= 0)
+			CRASH("/obj/structure/checkoutmachine/proc/expel_cash() did not complete in the theoretical maximum number of steps. Starting value: [initial(funds_remaining)]. Value at crash: [funds_remaining].")
 
 
 /obj/effect/dumpeet_fall //Falling pod
