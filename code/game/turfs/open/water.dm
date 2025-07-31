@@ -81,6 +81,14 @@
 
 /turf/open/water/attackby(obj/item/C, mob/user, list/modifiers)
 	..()
+	if(C.type == /obj/item/stack/rods)
+		var/obj/structure/lattice/water/H = locate(/obj/structure/lattice/water, src)
+		if(H)
+			to_chat(user, span_warning("There is already a lattice here!"))
+			return
+		else
+			to_chat(user, span_warning("You need to use waterproof rods to build lattice here."))
+		return
 	if(istype(C, /obj/item/stack/rods/water))
 		var/obj/item/stack/rods/water/R = C
 		var/obj/structure/lattice/water/H = locate(/obj/structure/lattice/water, src)
