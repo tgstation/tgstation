@@ -1,6 +1,8 @@
 #define DISMEMBER_CHANCE_HIGH 50
 #define DISMEMBER_CHANCE_LOW 25
 
+#define JUSTICE_INVISIBILITY_ALPHA 30
+
 #define MOVEDELAY_IDLE 3
 #define MOVEDELAY_INVISIBILITY 2
 #define MOVEDELAY_PRE_CHARGE 4
@@ -381,8 +383,8 @@
 		return
 	deactivate_engines()
 	for(var/mob/mob_occupant as anything in occupants)
-		balloon_alert(mob_occupant, "shields disabled! recharge after 10 seconds!")
-	addtimer(CALLBACK(src, PROC_REF(reactivate_engines)), 10 SECONDS)
+		balloon_alert(mob_occupant, "shields disabled! recharge after 30 seconds!")
+	addtimer(CALLBACK(src, PROC_REF(reactivate_engines)), 30 SECONDS)
 	playsound(src, shields_disabled_sound , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/proc/reactivate_engines()
@@ -416,7 +418,7 @@
 			if(justice_engine.is_in_invis)
 				continue
 			justice_engine.is_in_invis = TRUE
-			justice_engine.alpha = 0
+			justice_engine.alpha = JUSTICE_INVISIBILITY_ALPHA
 
 	justice_state = new_state
 
@@ -629,7 +631,7 @@
 		return
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
 	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
-	animate(chassis, alpha = 0, time = 0.5 SECONDS)
+	animate(chassis, alpha = JUSTICE_INVISIBILITY_ALPHA, time = 0.5 SECONDS)
 	button_icon_state = "mech_stealth_on"
 	RegisterSignal(chassis, COMSIG_MOVABLE_BUMP, PROC_REF(bumb_on))
 	RegisterSignal(chassis, COMSIG_ATOM_BUMPED, PROC_REF(bumbed_on))
@@ -762,6 +764,8 @@
 
 #undef DISMEMBER_CHANCE_HIGH
 #undef DISMEMBER_CHANCE_LOW
+
+#undef JUSTICE_INVISIBILITY_ALPHA
 
 #undef MOVEDELAY_IDLE
 #undef MOVEDELAY_INVISIBILITY
