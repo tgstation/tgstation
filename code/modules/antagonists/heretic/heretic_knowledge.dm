@@ -283,6 +283,7 @@
 		stack_trace("failed to find valid path [our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]] from researching [src]")
 		return
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path.route)
+	our_heretic.update_heretic_aura()
 	our_heretic.generate_heretic_research_tree()
 	our_heretic.determine_drafted_knowledge()
 
