@@ -12,8 +12,8 @@
 	accesses = list(ACCESS_SYNDICATE)
 	armor_type = /datum/armor/mecha_justice
 	max_temperature = 40000
-	force = 50 // dangerous in melee
-	melee_lower_damage_range = 0.75
+	force = 40 // dangerous in melee
+	melee_lower_damage_range = 0.8
 	melee_sharpness = SHARP_EDGED
 	damtype = BRUTE
 	destruction_sleep_duration = 10
