@@ -296,7 +296,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
-			human_wearer.sec_hud_set_ID()
+			human_wearer.update_ID_card()
 
 	update_appearance()
 	update_slot_icon()
@@ -331,7 +331,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
-			human_wearer.sec_hud_set_ID()
+			human_wearer.update_ID_card()
 
 	update_slot_icon()
 	update_appearance()
@@ -462,7 +462,7 @@
 		update_slot_icon()
 		if(ishuman(loc))
 			var/mob/living/carbon/human/human_wearer = loc
-			human_wearer.sec_hud_set_ID()
+			human_wearer.update_ID_card()
 	if(inserted_pai == gone)
 		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)

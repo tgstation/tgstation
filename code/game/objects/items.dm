@@ -750,7 +750,7 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
 		play_drop_sound(DROP_SOUND_VOLUME)
-	user?.update_equipment_speed_mods()
+	user?.update_equipment(src)
 
 /// called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -813,7 +813,7 @@
 	item_flags |= IN_INVENTORY
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)), PROC_REF(update_slot_icon), override = TRUE)
 
-	user.update_equipment_speed_mods()
+	user.update_equipment(src)
 
 	if(!initial && (slot_flags & slot) && (play_equip_sound()))
 		return

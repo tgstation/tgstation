@@ -148,7 +148,7 @@
 			if(wear_id)
 				return
 			wear_id = equipping
-			sec_hud_set_ID()
+			update_ID_card()
 			update_worn_id()
 		if(ITEM_SLOT_EARS)
 			if(ears)
@@ -265,7 +265,7 @@
 			update_worn_belt()
 	else if(item_dropping == wear_id)
 		wear_id = null
-		sec_hud_set_ID()
+		update_ID_card()
 		if(!QDELETED(src))
 			update_worn_id()
 	else if(item_dropping == r_store)
@@ -420,3 +420,9 @@
 			new_bodypart.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = new_bodypart
 	..() //Don't redraw hands until we have organs for them
+
+/mob/living/carbon/human/update_equipment(obj/item/source)
+	. = ..()
+	// If the item we equipped/unequipped hides our face, we (potentially) need to update our name
+	if (source.flags_inv & HIDEFACE)
+		update_visible_name()

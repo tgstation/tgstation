@@ -135,6 +135,8 @@
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	new_zombie.set_combat_mode(TRUE)
+	// Needs to be added after combat mode is set
+	ADD_TRAIT(new_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
@@ -160,6 +162,7 @@
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
+	REMOVE_TRAIT(was_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
 
@@ -171,8 +174,6 @@
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick, times_fired)
 	. = ..()
-	carbon_mob.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
-
 	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
 		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 

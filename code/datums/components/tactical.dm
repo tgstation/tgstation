@@ -44,6 +44,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(on_name_inquiry))
 	RegisterSignal(user, COMSIG_HUMAN_GET_FORCED_NAME, PROC_REF(on_name_inquiry))
+	// This forces a name update on the user, so we don't need to call name update ourselves
 	ADD_TRAIT(user, TRAIT_UNKNOWN, REF(src))
 
 	current_slot = slot

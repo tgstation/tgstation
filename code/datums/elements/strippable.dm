@@ -311,9 +311,6 @@
 	user.log_message("has stripped [key_name(source)] of [item].", LOG_ATTACK, color="red")
 	source.log_message("has been stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 
-	// Updates speed in case stripped speed affecting item
-	source.update_equipment_speed_mods()
-
 /// A representation of the stripping UI
 /datum/strip_menu
 	/// The owner who has the element /datum/element/strippable
