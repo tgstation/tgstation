@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscdel: "Removes forced tint from NVGs"

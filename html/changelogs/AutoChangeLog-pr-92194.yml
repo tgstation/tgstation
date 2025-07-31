@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixes a few dishes getting a bit too, uh, meaty when cut."
-  - bugfix: "Fixes being able to turn different types of cooked spaghetti into generic cooked spaghetti with an oven."

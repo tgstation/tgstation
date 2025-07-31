@@ -196,7 +196,7 @@
 		// After installing, attempts to follow up by inserting parts
 		install_parts_from_part_replacer(user, replacer, no_sound = TRUE)
 		if(!no_sound)
-			replacer.play_rped_sound()
+			replacer.play_rped_effect()
 		return TRUE
 
 	return FALSE
