@@ -461,7 +461,7 @@
 	var/mob/living/carbon/victim = user
 	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
 		sleep(10)
-		limb.force_wound_upwards(/datum/wound/slash/flesh/severe)
+		limb.force_wound_upwards(/datum/wound/slash/flesh/critical)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	icon_state = "flesh_armor"
@@ -504,8 +504,7 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/victim = user
-	var/list/things = victim.get_all_contents_ignoring((typecacheof(/obj/item/organ) + typecacheof(/obj/item/bodypart)))
-	things -= victim
+	var/list/things = victim.get_equipped_items(ALL)
 	var/turf/our_turf = get_turf(victim)
 	var/list/turf/nearby_turfs = RANGE_TURFS(5, our_turf) - our_turf
 	for(var/obj/item/to_throw in things)
