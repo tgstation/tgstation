@@ -236,3 +236,10 @@ sound/effects/siren.ogg -- siren.wav by IFartInUrGeneralDirection -- https://fre
 sound/mobs/non-humanoids/stoats/stoat_sound.ogg -- https://suche.tierstimmenarchiv.de/
 
 sounds/mobs/humanoids/shadow/shadow_wail.ogg -- https://freesound.org/people/Robinhood76/sounds/585631/ -- License: Attribution 4.0
+
+sounds/effects/footstep/stomp1.ogg
+sounds/effects/footstep/stomp2.ogg
+sounds/effects/footstep/stomp3.ogg
+sounds/effects/footstep/stomp4.ogg
+sounds/effects/footstep/stomp5.ogg
+-- https://freesound.org/s/789585/ -- License: Attribution 4.0

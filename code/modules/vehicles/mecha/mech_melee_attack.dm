@@ -104,7 +104,7 @@
 	if(mecha_attacker.damtype == BRUTE && !mecha_attacker.melee_sharpness)
 		step_away(src, mecha_attacker, 15)
 
-	var/damage = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
+	var/damage = rand(mecha_attacker.force * mecha_attacker.melee_lower_damage_range, mecha_attacker.force)
 	var/def_zone = get_random_valid_zone(user.zone_selected, even_weights = TRUE)
 
 	switch(mecha_attacker.damtype)

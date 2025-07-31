@@ -12,7 +12,8 @@
 	accesses = list(ACCESS_SYNDICATE)
 	armor_type = /datum/armor/mecha_justice
 	max_temperature = 40000
-	force = 40 // dangerous in melee
+	force = 50 // dangerous in melee
+	melee_lower_damage_range = 0.75
 	melee_sharpness = SHARP_EDGED
 	damtype = BRUTE
 	destruction_sleep_duration = 10
@@ -35,7 +36,7 @@
 	)
 	equip_by_category = list(
 		MECHA_L_ARM = null,
-		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/unremovable,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/justice,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
@@ -134,10 +135,7 @@
 	UnregisterSignal(exiter.canon_client, COMSIG_CLIENT_MOUSEDOWN)
 
 /obj/vehicle/sealed/mecha/justice/Destroy()
-	if(LAZYLEN(justice_engines) < 1)
-		return ..()
-	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
-		QDEL_NULL(justice_engine)
+	QDEL_LIST(justice_engines)
 	return ..()
 
 /obj/vehicle/sealed/mecha/justice/play_stepsound()
@@ -154,7 +152,7 @@
 		'sound/effects/footstep/stomp3.ogg',
 		'sound/effects/footstep/stomp4.ogg',
 		'sound/effects/footstep/stomp5.ogg',
-	), 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	), 20, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 0.75)
 
 /obj/vehicle/sealed/mecha/justice/proc/null_arrow(datum/hud/user_hud)
 	if(isnull(user_hud))
@@ -246,11 +244,9 @@
 	justice_engine.transform *= 0.6
 	justice_engine.orbit(src, 25, FALSE, 30)
 	justice_engine.change_engine_state(JUSTICE_ENGINE_DEACTIVE)
-	justice_engines.Add(justice_engine)
+	justice_engines += justice_engine
 
 /obj/vehicle/sealed/mecha/justice/proc/activate_engines()
-	if(LAZYLEN(justice_engines) < 1)
-		return
 	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		if(justice_engine.engine_state != JUSTICE_ENGINE_DEACTIVE)
 			continue
@@ -262,8 +258,6 @@
 	justice_engine.change_engine_state(justice_engine.remember_engine_state_on_deactivate)
 
 /obj/vehicle/sealed/mecha/justice/proc/deactivate_engines()
-	if(LAZYLEN(justice_engines) < 1)
-		return
 	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		justice_engine.remember_engine_state_on_deactivate = justice_engine.engine_state
 		if(justice_engine.engine_state == JUSTICE_ENGINE_DEACTIVE)
@@ -276,8 +270,6 @@
 	justice_engine.change_engine_state(JUSTICE_ENGINE_DEACTIVE)
 
 /obj/vehicle/sealed/mecha/justice/proc/get_engine_by_state(state)
-	if(LAZYLEN(justice_engines) < 1)
-		return
 	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
 		if(justice_engine.engine_state != state)
 			continue
@@ -423,7 +415,7 @@
 		) || BODY_ZONE_CHEST
 		// perform an "attack"
 		var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
-		something_living.apply_damage(force, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = (victim == something_living ? CANT_WOUND : -10))
+		something_living.apply_damage(force * melee_lower_damage_range, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = (victim == something_living ? CANT_WOUND : -10))
 		// if the attack capped out the limb's damage, force dismember (or disembowel if chest)
 		var/obj/item/bodypart/cut = something_living.get_bodypart(hit_zone)
 		if(damage >= 20 && cut && cut.get_damage() > cut.max_damage)
@@ -511,7 +503,7 @@
 			) || BODY_ZONE_CHEST
 			// perform an "attack"
 			var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
-			something_living.apply_damage(force * 0.9, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = 10, exposed_wound_bonus = 25)
+			something_living.apply_damage(force, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = 10, exposed_wound_bonus = 25)
 			// if the attack capped out the limb's damage - or a small random chance -, force dismember (or disembowel if chest)
 			var/obj/item/bodypart/cut = something_living.get_bodypart(hit_zone)
 			if(cut && (prob(25) || cut.get_damage() > cut.max_damage))
@@ -539,7 +531,7 @@
 /obj/vehicle/sealed/mecha/justice/loaded
 	equip_by_category = list(
 		MECHA_L_ARM = null,
-		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/unremovable,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/justice,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),

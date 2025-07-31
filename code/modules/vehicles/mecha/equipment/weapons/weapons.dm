@@ -546,13 +546,14 @@
 	projectile = /obj/item/restraints/legcuffs/bola/energy
 	missile_range = 9
 	missile_speed = 1
-	variance = 1
+	variance = 2
 	equip_cooldown = 10 SECONDS
 	fire_sound = 'sound/items/weapons/laser2.ogg'
 	spin = TRUE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/proj_init(obj/bola, mob/user)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/proj_init(obj/item/bola, mob/user)
 	bola.obj_flags |= DROPDEL
+	bola.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	RegisterSignal(bola, COMSIG_MOVABLE_IMPACT, PROC_REF(del_on_miss))
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/proc/del_on_miss(obj/source, atom/hit_atom, ...)
@@ -560,11 +561,13 @@
 
 	if(isliving(hit_atom))
 		return
-	animate(src, alpha = 0, time = 0.5 SECONDS)
-	QDEL_IN(src, 0.5 SECONDS)
+	animate(source, alpha = 0, time = 0.4 SECONDS)
+	QDEL_IN(source, 0.6 SECONDS)
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/unremovable
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/justice
 	detachable = FALSE
+	projectiles = 100
+	magazine_size = 100
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
 	name = "banana mortar"
