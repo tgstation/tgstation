@@ -193,7 +193,7 @@
 /datum/action/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA. Costs 25 chemicals."
-	helptext = "Will give you the DNA of your target, allowing you to transform into them."
+	helptext = "Will give you the DNA of your target, allowing you to transform into them. This will render you unable to absorb their body fully later."
 	button_icon_state = "sting_extract"
 	chemical_cost = 25
 	dna_cost = 0
