@@ -504,18 +504,18 @@
 		if(gun.ammo_type != A.ammo_type)
 			continue
 		found_gun = TRUE
-		if(A.direct_load)
-			ammo_needed = initial(gun.projectiles) - gun.projectiles
+		if(gun.stored_ammo_max <= 0)
+			ammo_needed = gun.magazine_size - gun.projectiles
 		else
-			ammo_needed = gun.projectiles_cache_max - gun.projectiles_cache
+			ammo_needed = gun.stored_ammo_max - gun.stored_ammo
 
 		if(!ammo_needed)
 			continue
 		if(ammo_needed < A.rounds)
-			if(A.direct_load)
-				gun.projectiles = gun.projectiles + ammo_needed
+			if(gun.stored_ammo_max <= 0)
+				gun.projectiles += ammo_needed
 			else
-				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
+				gun.stored_ammo += ammo_needed
 			playsound(get_turf(user),A.load_audio,50,TRUE)
 			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to \the [gun]"))
 			A.rounds = A.rounds - ammo_needed
@@ -531,10 +531,10 @@
 			A.update_name()
 			return TRUE
 
-		if(A.direct_load)
-			gun.projectiles = gun.projectiles + A.rounds
+		if(gun.stored_ammo_max <= 0)
+			gun.projectiles += A.rounds
 		else
-			gun.projectiles_cache = gun.projectiles_cache + A.rounds
+			gun.stored_ammo += A.rounds
 		playsound(get_turf(user),A.load_audio,50,TRUE)
 		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to \the [gun]"))
 		if(A.qdel_on_empty)

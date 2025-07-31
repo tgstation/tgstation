@@ -1,8 +1,4 @@
-#define DISMEMBER_CHANCE_HIGH 50
-#define DISMEMBER_CHANCE_LOW 25
-
 #define MOVEDELAY_IDLE 3
-#define MOVEDELAY_INVISIBILITY 2
 #define MOVEDELAY_PRE_CHARGE 4
 
 /obj/vehicle/sealed/mecha/justice
@@ -16,7 +12,8 @@
 	accesses = list(ACCESS_SYNDICATE)
 	armor_type = /datum/armor/mecha_justice
 	max_temperature = 40000
-	force = 60 // dangerous in melee
+	force = 40 // dangerous in melee
+	melee_sharpness = SHARP_EDGED
 	damtype = BRUTE
 	destruction_sleep_duration = 10
 	exit_delay = 10
@@ -31,10 +28,17 @@
 	safety_sound_custom = TRUE
 	max_equip_by_category = list(
 		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
+		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 2,
+	)
+	equip_by_category = list(
+		MECHA_L_ARM = null,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/unremovable,
+		MECHA_UTILITY = list(),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
 	)
 	step_energy_drain = 2
 	allow_diagonal_movement = TRUE
@@ -64,6 +68,8 @@
 	var/shields_disabled_sound = 'sound/vehicles/mecha/justice_warning.ogg'
 	/// Sound plays when justice pilot press right mouse button to prepare charge attack.
 	var/pre_charge_sound = 'sound/vehicles/mecha/justice_pre_charge.ogg'
+	/// Last mob we slashed
+	var/last_hit = null
 
 /datum/armor/mecha_justice
 	melee = 50
@@ -77,15 +83,9 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, PROC_REF(justice_attack)) //We do not hit those who are in crit or stun. We are finishing them.
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(on_ranged_hit))
-	RegisterSignal(src, COMSIG_JUSTICE_INVISIBILITY_ACTIVATE, PROC_REF(visibility_active))
-	RegisterSignal(src, COMSIG_JUSTICE_INVISIBILITY_DEACTIVATE, PROC_REF(visibility_deactive))
 	transform = transform.Scale(1.04, 1.04)
 	for(var/i in 1 to 3)
 		addtimer(CALLBACK(src, PROC_REF(create_engine)), i * 1 SECONDS)
-
-/obj/vehicle/sealed/mecha/justice/generate_actions()
-	. = ..()
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/invisibility)
 
 /obj/vehicle/sealed/mecha/justice/update_icon_state()
 	. = ..()
@@ -153,13 +153,11 @@
 
 	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
+	if(!weapons_safety)
+		return
 	if(charge_on_cooldown)
 		for(var/mob/mob_occupant as anything in occupants)
 			balloon_alert(mob_occupant, "on cooldown!")
-		return
-	if(!weapons_safety)
-		for(var/mob/mob_occupant as anything in occupants)
-			balloon_alert(mob_occupant, "katana is out of the sheath!")
 		return
 
 	turf_to_charge = get_turf(target)
@@ -272,10 +270,6 @@
 
 /obj/vehicle/sealed/mecha/justice/proc/justice_attack(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
 	SIGNAL_HANDLER
-
-	if(justice_state == JUSTICE_INVISIBILITY)
-		stealth_attack_aoe(source, pilot, target, on_cooldown, is_adjacent)
-		return COMPONENT_CANCEL_MELEE_CLICK
 
 	if(justice_state == JUSTICE_CHARGE)
 		return COMPONENT_CANCEL_MELEE_CLICK
@@ -392,49 +386,35 @@
 		return
 	activate_engines()
 
-/obj/vehicle/sealed/mecha/justice/melee_attack_effect(mob/living/victim, heavy)
-	if(!heavy)
-		victim.Knockdown(4 SECONDS)
+/obj/vehicle/sealed/mecha/justice/melee_attack_effect(mob/living/victim, damage, def_zone)
+	if(last_hit != REF(victim))
+		last_hit = REF(victim)
+		new /obj/effect/temp_visual/mech_attack_aoe_charge(get_turf(src))
+		playsound(src, stealth_pre_attack_sound, 75, FALSE)
+		addtimer(VARSET_CALLBACK(src, last_hit, null), 10 SECONDS)
 		return
-	if(!prob(DISMEMBER_CHANCE_HIGH))
-		return
-	var/obj/item/bodypart/cut_bodypart = victim.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
-	cut_bodypart?.dismember(BRUTE)
 
-/obj/vehicle/sealed/mecha/justice/proc/state_change(new_state)
-	if(new_state == justice_state)
-		return
-	if(new_state != JUSTICE_INVISIBILITY && LAZYLEN(justice_engines) > 0)
-		for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
-			if(!justice_engine.is_in_invis)
-				continue
-			justice_engine.is_in_invis = FALSE
-			justice_engine.alpha = 255
+	new /obj/effect/temp_visual/mech_attack_aoe_attack(get_turf(src))
+	for(var/mob/living/something_living in range(1, get_turf(src)))
+		if(something_living.stat >= UNCONSCIOUS || something_living.getStaminaLoss() >= 100 || is_driver(something_living) || is_occupant(something_living))
+			continue
+		// pick another random limb, avoiding head or chest unless the target has no other limbs
+		var/hit_zone = something_living.get_random_valid_zone(
+			base_zone = def_zone,
+			blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD),
+			even_weights = TRUE,
+			bypass_warning = TRUE,
+		) || BODY_ZONE_CHEST
+		// perform an "attack"
+		var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
+		something_living.apply_damage(force, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = (victim == something_living ? CANT_WOUND : -10))
+		// if the attack capped out the limb's damage, force dismember (or disembowel if chest)
+		var/obj/item/bodypart/cut = something_living.get_bodypart(hit_zone)
+		if(damage >= 20 && cut && cut.get_damage() > cut.max_damage)
+			cut.dismember(BRUTE)
 
-	if(new_state == JUSTICE_INVISIBILITY && LAZYLEN(justice_engines) > 0)
-		for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
-			if(justice_engine.is_in_invis)
-				continue
-			justice_engine.is_in_invis = TRUE
-			justice_engine.alpha = 0
-
-	justice_state = new_state
-
-/obj/vehicle/sealed/mecha/justice/proc/visibility_active(obj/vehicle/sealed/mecha/source, datum/action/vehicle/sealed/mecha/invisibility/status_caller)
-	SIGNAL_HANDLER
-
-	if(justice_state == JUSTICE_INVISIBILITY)
-		return COMPONENT_CANCEL_JUSTICE_INVISIBILITY_ACTIVATE
-	state_change(JUSTICE_INVISIBILITY)
-	movedelay = MOVEDELAY_INVISIBILITY
-
-/obj/vehicle/sealed/mecha/justice/proc/visibility_deactive(obj/vehicle/sealed/mecha/source, datum/action/vehicle/sealed/mecha/invisibility/status_caller)
-	SIGNAL_HANDLER
-
-	if(justice_state == JUSTICE_IDLE)
-		return COMPONENT_CANCEL_JUSTICE_INVISIBILITY_DEACTIVATE
-	state_change(JUSTICE_IDLE)
-	movedelay = MOVEDELAY_IDLE
+	playsound(src, stealth_attack_sound, 75, FALSE)
+	last_hit = null
 
 /// Says 1 of 3 epic phrases before attacking and make a finishing blow to targets in stun or crit after 1 SECOND.
 /obj/vehicle/sealed/mecha/justice/proc/fatality_attack(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
@@ -462,14 +442,12 @@
 	if(justice_state == JUSTICE_FATALITY)
 		return
 	justice_state = JUSTICE_FATALITY
-	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
+	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path."), forced = "Justice Mech")
 	playsound(src, 'sound/vehicles/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
 	if(!do_after(finisher, 1 SECONDS, him))
 		justice_state = JUSTICE_IDLE
 		return
-	if(QDELETED(finisher) \
-	|| QDELETED(him) \
-	|| !LAZYLEN(my_mech?.occupants))
+	if(QDELETED(finisher) || QDELETED(him) || !LAZYLEN(my_mech?.occupants))
 		justice_state = JUSTICE_IDLE
 		return
 	var/turf/finish_turf = get_step(him, get_dir(my_mech, him))
@@ -478,46 +456,7 @@
 	in_your_head?.dismember(BRUTE)
 	playsound(src, brute_attack_sound, 75, FALSE)
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 4)
-	forceMove(finish_turf)
-	justice_state = JUSTICE_IDLE
-
-/**
- * Proc makes an AOE attack after 0.5 SECOND.
- * Called by the mech pilot when he is in stealth mode and wants to attack.
- * During this, mech cannot move.
-*/
-/obj/vehicle/sealed/mecha/justice/proc/stealth_attack_aoe(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
-	if(justice_state == JUSTICE_INVISIBILITY_ATTACK)
-		return
-	justice_state = JUSTICE_INVISIBILITY_ATTACK
-	new /obj/effect/temp_visual/mech_attack_aoe_charge(get_turf(src))
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, REF(src))
-	playsound(src, stealth_pre_attack_sound, 75, FALSE)
-	addtimer(CALLBACK(src, PROC_REF(attack_in_aoe), pilot), 0.5 SECONDS)
-	return TRUE
-
-/**
- * ## attack_in_aoe
- *
- * Brings mech out of invisibility.
- * Deal everyone in range 3x3 35 damage and 25 chanse to cut off limb.
- * Arguments:
- * * pilot - occupant inside mech.
- */
-/obj/vehicle/sealed/mecha/justice/proc/attack_in_aoe(mob/living/pilot)
-	new /obj/effect/temp_visual/mech_attack_aoe_attack(get_turf(src))
-	for(var/mob/living/something_living in range(1, get_turf(src)))
-		if(something_living.stat >= UNCONSCIOUS \
-		|| something_living.getStaminaLoss() >= 100 \
-		|| something_living == pilot)
-			continue
-		if(prob(DISMEMBER_CHANCE_LOW))
-			var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
-			cut_bodypart?.dismember(BRUTE)
-		something_living.apply_damage(35, BRUTE)
-	playsound(src, stealth_attack_sound, 75, FALSE)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, REF(src))
-	SEND_SIGNAL(src, COMSIG_JUSTICE_ATTACK_AOE)
+	forceMove(finish_turf.density ? for_line_turf : finish_turf)
 	justice_state = JUSTICE_IDLE
 
 /**
@@ -543,21 +482,25 @@
 		if(funny_crystal)
 			funny_crystal.Bumped(src)
 			break
-		var/obj/machinery/door/airlock/like_a_wall = locate() in line_turf
-		if(like_a_wall?.density)
+		if(line_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 			break
-		if(locate(/obj/structure/window) in line_turf)
-			break
-		for(var/mob/living/something_living in line_turf.contents)
-			if(something_living.stat >= UNCONSCIOUS \
-			|| something_living.getStaminaLoss() >= 100 \
-			|| is_driver(something_living) \
-			|| is_occupant(something_living))
+		for(var/mob/living/something_living in line_turf)
+			if(something_living.stat >= UNCONSCIOUS || something_living.getStaminaLoss() >= 100 || is_driver(something_living) || is_occupant(something_living))
 				continue
-			if(prob(DISMEMBER_CHANCE_LOW))
-				var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_HEAD))
-				cut_bodypart?.dismember(BRUTE)
-			something_living.apply_damage(35, BRUTE)
+			// hit a random limb, avoiding head or chest unless the target has no other limbs
+			var/hit_zone = something_living.get_random_valid_zone(
+				base_zone = BODY_ZONE_CHEST,
+				blacklisted_parts = list(BODY_ZONE_CHEST), // no head blacklist for this one
+				bypass_warning = TRUE,
+			) || BODY_ZONE_CHEST
+			// perform an "attack"
+			var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
+			something_living.apply_damage(force * 0.9, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = 10, exposed_wound_bonus = 25)
+			// if the attack capped out the limb's damage - or a small random chance -, force dismember (or disembowel if chest)
+			var/obj/item/bodypart/cut = something_living.get_bodypart(hit_zone)
+			if(cut && (prob(25) || cut.get_damage() > cut.max_damage))
+				cut.dismember(BRUTE)
+
 		here_we_go = line_turf
 
 	// If the mech didn't move, it didn't charge
@@ -573,146 +516,14 @@
 	use_energy(200)
 	return TRUE
 
-/datum/action/vehicle/sealed/mecha/invisibility
-	name = "Invisibility"
-	button_icon_state = "mech_stealth_off"
-	/// Is invisibility activated.
-	var/on = FALSE
-	/// Recharge check.
-	var/charge = TRUE
-	/// Energy cost to become invisibile
-	var/energy_cost = 200
-
-
-/datum/action/vehicle/sealed/mecha/invisibility/set_chassis(passed_chassis)
-	. = ..()
-	RegisterSignals(chassis, list(COMSIG_MECH_SAFETIES_TOGGLE, COMSIG_MECHA_MOB_EXIT, COMSIG_JUSTICE_ATTACK_AOE, COMSIG_JUSTICE_CHARGE_BUTTON_DOWN), PROC_REF(diactivate_invisibility_by_signal))
-
-/datum/action/vehicle/sealed/mecha/invisibility/proc/diactivate_invisibility_by_signal()
-	SIGNAL_HANDLER
-
-	make_visible()
-	build_all_button_icons(UPDATE_BUTTON_STATUS)
-
-/datum/action/vehicle/sealed/mecha/invisibility/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-	on = !on
-	if(on)
-		invisibility_on()
-	else
-		invisibility_off()
-
-/datum/action/vehicle/sealed/mecha/invisibility/IsAvailable(feedback)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(!chassis.has_charge(energy_cost))
-		if(feedback)
-			owner.balloon_alert(owner, "not enough energy!")
-		return FALSE
-	if(chassis.weapons_safety)
-		if(feedback)
-			owner.balloon_alert(owner, "safety is on!")
-		return FALSE
-	if(!charge)
-		if(feedback)
-			owner.balloon_alert(owner, "recharging!")
-		return FALSE
-
-	return TRUE
-
-///Called when invisibility activated.
-/datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_on()
-	if(SEND_SIGNAL(chassis, COMSIG_JUSTICE_INVISIBILITY_ACTIVATE, src) & COMPONENT_CANCEL_JUSTICE_INVISIBILITY_ACTIVATE)
-		return
-	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
-	animate(chassis, alpha = 0, time = 0.5 SECONDS)
-	button_icon_state = "mech_stealth_on"
-	RegisterSignal(chassis, COMSIG_MOVABLE_BUMP, PROC_REF(bumb_on))
-	RegisterSignal(chassis, COMSIG_ATOM_BUMPED, PROC_REF(bumbed_on))
-	RegisterSignal(chassis, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(take_damage))
-	chassis.use_energy(energy_cost)
-	build_all_button_icons()
-
-///Called when invisibility deactivated.
-/datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_off()
-	if(SEND_SIGNAL(chassis, COMSIG_JUSTICE_INVISIBILITY_DEACTIVATE, src) & COMPONENT_CANCEL_JUSTICE_INVISIBILITY_DEACTIVATE)
-		return
-	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
-	charge = FALSE
-	addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)
-	button_icon_state = "mech_stealth_cooldown"
-	animate(chassis, alpha = 255, time = 0.5 SECONDS)
-	UnregisterSignal(chassis, list(
-		COMSIG_MOVABLE_BUMP,
-		COMSIG_ATOM_BUMPED,
-		COMSIG_ATOM_TAKE_DAMAGE
-		))
-	build_all_button_icons()
-
-/**
- * ## bumb_on
- *
- * Called when mech bumb on somthing. If is living somthing shutdown mech invisibility.
- */
-/datum/action/vehicle/sealed/mecha/invisibility/proc/bumb_on(obj/vehicle/sealed/mecha/our_mech, atom/obstacle)
-	SIGNAL_HANDLER
-
-	if(!iscarbon(obstacle))
-		return
-	make_visible()
-
-/**
- * ## bumbed_on
- *
- * Called when somthing bumbed on mech. If is living somthing shutdown mech invisibility.
- */
-/datum/action/vehicle/sealed/mecha/invisibility/proc/bumbed_on(obj/vehicle/sealed/mecha/our_mech, atom/movable/bumped_atom)
-	SIGNAL_HANDLER
-
-	if(!iscarbon(bumped_atom))
-		return
-	make_visible()
-
-/**
- * ## take_damage
- *
- * Called when mech take damage. Shutdown mech invisibility.
- */
-/datum/action/vehicle/sealed/mecha/invisibility/proc/take_damage(obj/vehicle/sealed/mecha/our_mech)
-	SIGNAL_HANDLER
-
-	make_visible()
-
-/**
- * ## make_visible
- *
- * Called when somthing force invisibility shutdown.
- */
-/datum/action/vehicle/sealed/mecha/invisibility/proc/make_visible()
-	if(!on)
-		return
-	on = !on
-	invisibility_off()
-
-/**
- * ## charge
- *
- * Recharge invisibility action after 5 SECONDS.
- */
-/datum/action/vehicle/sealed/mecha/invisibility/proc/charge()
-	button_icon_state = "mech_stealth_off"
-	charge = TRUE
-	build_all_button_icons()
+/obj/vehicle/sealed/mecha/justice/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+	visual_effect_icon = ATTACK_EFFECT_SLASH
+	return ..()
 
 /obj/vehicle/sealed/mecha/justice/loaded
 	equip_by_category = list(
 		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/unremovable,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
@@ -738,8 +549,6 @@
 	var/engine_state = JUSTICE_ENGINE_DEACTIVE
 	/// Remember if engine is on cooldown when we exit justice mech
 	var/remember_engine_state_on_deactivate = JUSTICE_ENGINE_ACTIVE
-	/// Check if engine in invis
-	var/is_in_invis = FALSE;
 
 /obj/effect/justice_engine/update_icon_state()
 	. = ..()
@@ -760,9 +569,5 @@
 	/// Idle charge arrow icon
 	var/inactive_icon = ""
 
-#undef DISMEMBER_CHANCE_HIGH
-#undef DISMEMBER_CHANCE_LOW
-
 #undef MOVEDELAY_IDLE
-#undef MOVEDELAY_INVISIBILITY
 #undef MOVEDELAY_PRE_CHARGE

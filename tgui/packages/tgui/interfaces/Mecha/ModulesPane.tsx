@@ -346,9 +346,8 @@ const SnowflakeWeaponBallistic = (props) => {
   const {
     projectiles,
     max_magazine,
-    projectiles_cache,
-    projectiles_cache_max,
-    disabledreload,
+    stored_ammo,
+    stored_ammo_max,
     ammo_type,
     mode,
   } = props.module.snowflake;
@@ -360,8 +359,7 @@ const SnowflakeWeaponBallistic = (props) => {
       <LabeledList.Item
         label="Loaded"
         buttons={
-          !disabledreload &&
-          projectiles_cache > 0 && (
+          stored_ammo > 0 && stored_ammo_max > 0 && (
             <Button
               icon="redo"
               disabled={projectiles >= max_magazine}
@@ -381,10 +379,10 @@ const SnowflakeWeaponBallistic = (props) => {
           {`${projectiles} of ${max_magazine}`}
         </ProgressBar>
       </LabeledList.Item>
-      {!!projectiles_cache_max && (
+      {!!stored_ammo_max && (
         <LabeledList.Item label="Stored">
-          <ProgressBar value={projectiles_cache / projectiles_cache_max}>
-            {`${projectiles_cache} of ${projectiles_cache_max}`}
+          <ProgressBar value={stored_ammo / stored_ammo_max}>
+            {`${stored_ammo} of ${stored_ammo_max}`}
           </ProgressBar>
         </LabeledList.Item>
       )}

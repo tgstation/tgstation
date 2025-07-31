@@ -149,6 +149,8 @@
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = CLICK_CD_SLOW
+	/// Sharpness of melee attacks
+	var/melee_sharpness = NONE
 
 	///TIme taken to leave the mech
 	var/exit_delay = 2 SECONDS
@@ -912,8 +914,8 @@
 		balloon_alert(occupant, "lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
 		act.build_all_button_icons()
 
-/obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, heavy)
-	if(heavy)
+/obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, damage, def_zone)
+	if(damage >= 35)
 		victim.Unconscious(2 SECONDS)
-	else
+	else if(damage >= 20 && !victim.IsKnockdown())
 		victim.Knockdown(4 SECONDS)

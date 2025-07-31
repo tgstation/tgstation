@@ -7,7 +7,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/rounds = 0
-	var/direct_load //For weapons where we re-load the weapon itself rather than adding to the ammo storage.
 	var/load_audio = 'sound/items/weapons/gun/general/mag_bullet_insert.ogg'
 	var/ammo_type
 	/// whether to qdel this mecha_ammo when it becomes empty
@@ -74,7 +73,6 @@
 	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
 	icon_state = "missile_he"
 	rounds = 8
-	direct_load = TRUE
 	load_audio = 'sound/items/weapons/gun/general/mag_bullet_insert.ogg'
 	ammo_type = MECHA_AMMO_MISSILE_SRM
 
@@ -85,7 +83,6 @@
 	icon_state = "missile_br"
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	rounds = 6
-	direct_load = TRUE
 	load_audio = 'sound/items/weapons/gun/general/mag_bullet_insert.ogg'
 	ammo_type = MECHA_AMMO_MISSILE_PEP
 
@@ -103,5 +100,4 @@
 	icon_state = "clusterbang"
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT * 1.5,/datum/material/uranium=HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	rounds = 3
-	direct_load = TRUE
 	ammo_type = MECHA_AMMO_CLUSTERBANG
