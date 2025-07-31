@@ -14,6 +14,8 @@
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
+/// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
+#define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
 
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
@@ -145,6 +147,8 @@
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAPPED "living_slapped"
+///from /obj/item/hand_item/attack(): (source=mob/living/attacker, mob/living/attacked)
+#define COMSIG_LIVING_HAND_ITEM_ATTACK "living_hand_item_attack"
 /// from /mob/living/*/UnarmedAttack(), before sending [COMSIG_LIVING_UNARMED_ATTACK]: (mob/living/source, atom/target, proximity, modifiers)
 /// The only reason this exists is so hulk can fire before Fists of the North Star.
 /// Note that this is called before [/mob/living/proc/can_unarmed_attack] is called, so be wary of that.
@@ -334,3 +338,15 @@
 	#define FAIL_PROB_INDEX 1
 	/// Index in modifiers containing the modifer to surgery speed
 	#define SPEED_MOD_INDEX 2
+
+/// From /datum/status_effect/proc/on_creation() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_APPLIED "living_status_applied"
+
+/// From /datum/status_effect/proc/Destroy() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_REMOVED "living_status_removed"
+
+/// From /datum/spawners_menu/ui_static_data(mob/user) : (list/string_info)
+#define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"
+
+///from mob/living/befriend()
+#define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"

@@ -157,7 +157,6 @@
 				if(!container_contents[missing_item]) // To avoid 0s and negative values on the manifest
 					container_contents -= missing_item
 
-
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
 	manifest_text += "</ul>"
@@ -173,16 +172,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-
 	manifest_paper.update_appearance()
 	manifest_paper.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = container
-		C.manifest = manifest_paper
-		C.update_appearance()
-	else
-		container.contents += manifest_paper
+		var/obj/structure/closet/crate/crate = container
+		crate.manifest = WEAKREF(manifest_paper)
+		crate.update_appearance()
 
 	return manifest_paper
 

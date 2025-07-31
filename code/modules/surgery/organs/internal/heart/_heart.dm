@@ -291,6 +291,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	stabilization_available = TRUE
 	toxification_probability = 0
+	bleed_prevention = TRUE
 	emp_vulnerability = 20
 
 /obj/item/organ/heart/cybernetic/surplus

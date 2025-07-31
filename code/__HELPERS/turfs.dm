@@ -236,7 +236,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/pixel_y_offset = checked_atom.pixel_y + checked_atom.pixel_z + atom_matrix.get_y_shift()
 
 	//Irregular objects
-	var/list/icon_dimensions = get_icon_dimensions(checked_atom.icon)
+	var/list/icon_dimensions = get_icon_dimensions_pure(checked_atom.icon)
 	var/checked_atom_icon_height = icon_dimensions["height"]
 	var/checked_atom_icon_width = icon_dimensions["width"]
 	if(checked_atom_icon_height != ICON_SIZE_Y || checked_atom_icon_width != ICON_SIZE_X)

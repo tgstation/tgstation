@@ -78,7 +78,7 @@
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
 		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
-	build_path = /obj/item/ammo_box/magazine/m38/true
+	build_path = /obj/item/ammo_box/c38/true
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -182,7 +182,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_true_mag
-	name = "Magazine (.38 Truee Strike) (Lethal)"
+	name = "Magazine (.38 True Strike) (Lethal)"
 	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Bullets bounce towards new targets with surprising accuracy."
 	id = "c38_true_strike_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -198,7 +198,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_flare_mag
-	name = "Magazine (.38 Flae) (VERY Lethal)"
+	name = "Magazine (.38 Flare) (VERY Lethal)"
 	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	id = "c38_flare_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
