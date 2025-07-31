@@ -50,7 +50,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/commanded
 	move_datum = /datum/movespeed_modifier/status_speed_boost/minor
-	duration = 8 SECONDS
+	duration = 7 SECONDS
 
 /datum/movespeed_modifier/status_speed_boost/minor
 	multiplicative_slowdown = -0.22
