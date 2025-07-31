@@ -393,8 +393,9 @@
 
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/wild_slugcat, team)
 	spawned_mob.remove_language(/datum/language/common)
-	spawned_mob.grant_language(/datum/language/uncommon)
+	spawned_mob.grant_language(/datum/language/slugtongue)
 	team.players_spawned += (spawned_mob.ckey)
+	try_keep_home(spawned_mob)
 	eggshell.egg = null
 	QDEL_NULL(eggshell)
 
@@ -414,3 +415,8 @@
 			ignore_key = POLL_IGNORE_ASHWALKER,
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
+
+/obj/effect/mob_spawn/ghost_role/wild_slugcat/proc/try_keep_home(mob/new_spawn)
+	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin, /area/misc/survivalpod, /area/rainworld))
+	ADD_TRAIT(new_spawn, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION, INNATE_TRAIT)
+	new_spawn.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)

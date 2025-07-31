@@ -81,10 +81,10 @@
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)
 			wild_slugcat_team.sacrifices_made++
 
-/obj/structure/lavaland/wild_slugcat_nest/proc/remake_walker(mob/living/carbon/oldmob)
-	var/mob/living/carbon/human/newwalker = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))
+/obj/structure/lavaland/wild_slugcat_nest/proc/remake_walker(mob/living/oldmob)
+	var/mob/living/basic/slugcat/rivulet/newwalker = new /mob/living/basic/slugcat/rivulet(get_step(loc, pick(GLOB.alldirs)))
 	newwalker.remove_language(/datum/language/common)
-	newwalker.grant_language(/datum/language/uncommon)
+	newwalker.grant_language(/datum/language/slugtongue)
 	oldmob.mind.transfer_to(newwalker)
 	newwalker.mind.grab_ghost()
 	to_chat(newwalker, "<b>You have been pulled back from beyond the grave.</b>")

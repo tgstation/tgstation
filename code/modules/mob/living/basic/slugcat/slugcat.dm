@@ -93,13 +93,11 @@
 
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
 		. += "It is wearing [internal_storage.examine_title(user)] on its back."
-	if(client && stat != DEAD)
-		. += "It appears to be moving intelligently."
 	if((health != maxHealth) && stat != DEAD)
 		if(health > maxHealth * 0.33)
-			. += span_warning("It appears injured.")
+			. += span_warning("It appears to be injured.")
 		else
-			. += span_boldwarning("It appears severely injured!")
+			. += span_boldwarning("It appears to be severely injured!")
 	if(stat == DEAD)
 		if(client)
 			. += span_deadsay("It is unmoving. But still bound to a soul.")
@@ -120,9 +118,11 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(FACTION_ASHWALKER)
 	can_be_held = FALSE
+	unique_name = TRUE
 
 /mob/living/basic/slugcat/rivulet/Initialize(mapload)
 	. = ..()
+	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_location))
 	check_location(src, null)
 

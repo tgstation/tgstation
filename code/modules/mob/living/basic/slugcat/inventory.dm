@@ -62,7 +62,7 @@
 		return FALSE
 	if(!(item.slot_flags & ITEM_SLOT_BACK))
 		return FALSE
-	if(istype (item, /obj/item/storage))
+	if((istype (item, /obj/item/storage)) || (istype (item, /obj/item/mod)))
 		return FALSE
 	return isnull(internal_storage)
 
