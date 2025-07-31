@@ -71,6 +71,8 @@
 	var/pre_charge_sound = 'sound/vehicles/mecha/justice_pre_charge.ogg'
 	/// Last mob we slashed
 	var/last_hit = null
+	/// Alternates between true and false to play footsteps
+	VAR_PRIVATE/footstep_step = TRUE
 
 /datum/armor/mecha_justice
 	melee = 50
@@ -139,20 +141,15 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/justice/play_stepsound()
-	if(mecha_flags & QUIET_STEPS)
-		return
-
-	// if we are on the second step of the diagonal movement, don't play step sound
-	if(src.moving_diagonally == SECOND_DIAG_STEP)
-		return
-
-	playsound(src, pick(
-		'sound/effects/footstep/stomp1.ogg',
-		'sound/effects/footstep/stomp2.ogg',
-		'sound/effects/footstep/stomp3.ogg',
-		'sound/effects/footstep/stomp4.ogg',
-		'sound/effects/footstep/stomp5.ogg',
-	), 20, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 0.75)
+	if(footstep_step)
+		playsound(src, pick(
+			'sound/effects/footstep/stomp1.ogg',
+			'sound/effects/footstep/stomp2.ogg',
+			'sound/effects/footstep/stomp3.ogg',
+			'sound/effects/footstep/stomp4.ogg',
+			'sound/effects/footstep/stomp5.ogg',
+		), 20, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 0.75)
+	footstep_step = !footstep_step
 
 /obj/vehicle/sealed/mecha/justice/proc/null_arrow(datum/hud/user_hud)
 	if(isnull(user_hud))
