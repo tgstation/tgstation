@@ -394,3 +394,49 @@
  */
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
+
+
+/**
+ * A bit of leeway when comparing the amount of material of two items.
+ * This was made to test the material composition of items spawned via crafting/processable component and an items of the same type spawned
+ * via other means, since small portion of materials can be lost when rounding down values to the nearest integers and we can't do much about it.
+ * (eg. a slab of meat worth 100 mat points is cut in three cutlets, each 33, with the remaining 1 percent lost to rounding)
+ *
+ * right now it's 3 points per 100 units of a material.
+ *
+ */
+
+#define COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION 0.03
+
+/// Compares the materials of two items to see if they're roughly the same. Primarily used in crafting and processing unit tests.
+/atom/proc/compare_materials(atom/target)
+	if(length(custom_materials) != length(target.custom_materials))
+		return FALSE
+	for(var/mat in custom_materials)
+		var/enemy_amount = target.custom_materials[mat]
+		if(!enemy_amount) //we couldn't find said material, early return so we won't perform a division by zero
+			return FALSE
+		var/ratio_difference = abs((custom_materials[mat] / enemy_amount) - 1)
+		if(ratio_difference > COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION)
+			return FALSE
+	return TRUE
+
+#undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION
+
+/**
+ * Returns a string with the materials and their respective amounts in it (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)] )
+ * also used in several unit tests.
+ */
+/atom/proc/get_materials_english_list()
+	if(!custom_materials)
+		return "null"
+	var/text = "\[list("
+	var/index = 1
+	var/mats_len = length(custom_materials)
+	for(var/datum/material/mat as anything in custom_materials)
+		text += "[mat.type] = [custom_materials[mat]]"
+		if(index < mats_len)
+			text += ", "
+		index++
+	text += ")\]"
+	return text

@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - qol: "Right-clicking with a sheet of metal on a tile puts a computer or machine if you have a board of the appropriate type in your other hand."

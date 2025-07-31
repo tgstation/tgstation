@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Athletics experience gain from non-workout sources, such as climbing ladders, hopping tables and rope climbing, experience diminishing returns as you gain athletics levels. To reach legendary fitness, you really should hit the gym."

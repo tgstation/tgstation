@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /proc/setup_mafia_roles_by_name()
 	var/list/rolelist_dict = list()
 	for(var/datum/mafia_role/mafia_role as anything in typesof(/datum/mafia_role))
-		rolelist_dict[initial(mafia_role.name) + " ([uppertext(initial(mafia_role.team))])"] = mafia_role
+		rolelist_dict[initial(mafia_role.name) + " ([uppertext(initial(mafia_role.role_type))])"] = mafia_role
 	return rolelist_dict
 
 /proc/setup_mafia_role_by_alignment()
@@ -170,11 +170,23 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			role.player_pda = selected_player
 		ready_ghosts_and_pdas -= selected_player
 
-///Sends a global message to all players, or just 'team' if set.
+/**
+ * send_message
+ * By default, this will send a message to every single role in the game, and putting it in their role message history
+ * to view on their PDA/Mafia panel.
+ * Args:
+ * - msg: The message being sent.
+ * - team: A specific team flag that will receive the message, so people not part of it will not get it. Ex: Changeling-only messages.
+ * - log_only: Will not send the message to the player's chat, only their PDA/Mafia panel, for messages that aren't
+ * needed to be flooding their chat for people who are there physically, such as Day/Night starting.
+ */
 /datum/mafia_controller/proc/send_message(msg, team, log_only = FALSE)
 	for(var/datum/mafia_role/role as anything in all_roles)
-		if(team && role.team != team)
+		if(team && !(role.team & team))
 			continue
+		//people who can "hear" the dead, but are alive, can only hear at night.
+		if((team & MAFIA_TEAM_DEAD) && role.game_status == MAFIA_ALIVE && phase != MAFIA_PHASE_NIGHT)
+			return
 		role.role_messages += msg
 		if(!log_only)
 			to_chat(role.body, msg)
@@ -336,20 +348,21 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/town_can_kill = FALSE
 
 	for(var/datum/mafia_role/R as anything in living_roles)
-		switch(R.team)
-			if(MAFIA_TEAM_MAFIA)
-				living_mafia += R
-			if(MAFIA_TEAM_TOWN)
-				living_town += R
-				anti_mafia_power += R.vote_power
-				//the game cannot autoresolve with killing roles (unless a solo wins anyways, like traitors who are immune)
-				if(R.role_flags & ROLE_CAN_KILL)
-					town_can_kill = TRUE
-			if(MAFIA_TEAM_SOLO)
-				living_neutrals += R
-				anti_mafia_power += R.vote_power
-				if(R.role_flags & ROLE_CAN_KILL)
-					neutral_killers += R
+		if(R.team & MAFIA_TEAM_MAFIA)
+			living_mafia += R
+		else if(R.team & MAFIA_TEAM_TOWN)
+			living_town += R
+			anti_mafia_power += R.vote_power
+			//the game cannot autoresolve with killing roles (unless a solo wins anyways, like traitors who are immune)
+			if(R.role_flags & ROLE_CAN_KILL)
+				town_can_kill = TRUE
+		else if(R.team & MAFIA_TEAM_SOLO)
+			living_neutrals += R
+			anti_mafia_power += R.vote_power
+			if(R.role_flags & ROLE_CAN_KILL)
+				neutral_killers += R
+		else
+			stack_trace("[R] somehow lacks a faction while alive in a Mafia match!")
 
 	if(living_mafia.len && living_town.len && living_neutrals.len)
 		return FALSE
@@ -581,7 +594,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	if(phase != MAFIA_PHASE_VOTING)
 		return
-	var/v = get_vote_count(get_role_player(source),"Day")
+	var/v = get_vote_count(get_role_player(source), "Day")
 	var/mutable_appearance/MA = mutable_appearance('icons/obj/mafia.dmi',"vote_[v > 12 ? "over_12" : v]")
 	overlay_list += MA
 

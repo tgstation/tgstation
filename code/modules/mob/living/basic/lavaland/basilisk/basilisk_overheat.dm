@@ -52,7 +52,7 @@
 	qdel(src)
 
 /// Cool down if splashed with water
-/datum/status_effect/basilisk_overheat/proc/on_splashed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
+/datum/status_effect/basilisk_overheat/proc/on_splashed(atom/source, list/reagents, datum/reagents/source_reagents, methods, show_message)
 	SIGNAL_HANDLER
 	if(!(methods & (TOUCH|VAPOR)))
 		return
