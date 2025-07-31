@@ -56,8 +56,7 @@
 			"suspicious": {
 				"noArrayIndexKey": "off",
 				"noExplicitAny": "off",
-				"noImplicitAnyLet": "off",
-				"noAssignInExpressions": "warn"
+				"noImplicitAnyLet": "off"
 			}
 		}
 	},

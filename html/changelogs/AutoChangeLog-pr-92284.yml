@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscdel: "Hitting objects at high speed in zero-g no longer makes you crash into them."
