@@ -33,7 +33,6 @@
 		new /obj/effect/dumpeet_target(targetturf, L)
 
 		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
-		message_admins("[ADMIN_LOOKUPFLW(user)] has activated Protocol CRAB-17.")
 		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
 
 		dumped = TRUE
@@ -193,6 +192,7 @@
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
 	if(internal_account.account_balance)
 		expel_cash()
+	QDEL_NULL(internal_account)
 	explosion(src, light_impact_range = 1, flame_range = 2)
 	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 	return ..()
@@ -221,11 +221,8 @@
 			accounts_to_rob -= B
 			continue
 		var/amount = round(B.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
-		var/datum/bank_account/account = bogdanoff?.get_bank_account()
-		if (account) // get_bank_account() may return FALSE
-			account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
-		else
-			internal_account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
+		var/datum/bank_account/account = bogdanoff?.get_bank_account() || internal_account
+		account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
 		B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, PROC_REF(dump)), 15 SECONDS) //Drain every 15 seconds
 
@@ -247,10 +244,8 @@
  * Splits the balance of the internal_account into several smaller piles of cash and scatters them around the area.
  */
 /obj/structure/checkoutmachine/proc/expel_cash()
-	message_admins("Spitting out money")
 	var/funds_remaining = internal_account.account_balance
-	while(funds_remaining)
-		message_admins("[funds_remaining]")
+	while(floor(funds_remaining))
 		var/amount_to_remove = min(funds_remaining, rand(1, round(internal_account.account_balance)/8))
 		var/obj/item/holochip/holochip = new (get_turf(src), amount_to_remove)
 		funds_remaining -= amount_to_remove
