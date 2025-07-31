@@ -154,14 +154,14 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
-	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/stomach)) )
+/datum/reagent/medicine/c2/probital/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(!(methods & INGEST) || !iscarbon(exposed_mob))
 		return
 
-	A.reagents.remove_reagent(/datum/reagent/medicine/c2/probital, trans_volume * 0.05)
-	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
-
-	..()
+	var/datum/reagents/mob_reagents = exposed_mob.reagents
+	mob_reagents.remove_reagent(/datum/reagent/medicine/c2/probital, reac_volume * 0.05)
+	mob_reagents.add_reagent(/datum/reagent/medicine/metafactor, reac_volume * 0.25)
 
 /******BURN******/
 /*Suffix: -uri*/
@@ -406,19 +406,21 @@
 	var/conversion_amount
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, methods=INJECT, trans_volume)
-	if(!(methods & INJECT) || !iscarbon(A))
+/datum/reagent/medicine/c2/syriniver/expose_mob(mob/living/carbon/exposed_mob, methods, trans_volume, show_message, touch_protection)
+	. = ..()
+	if(!(methods & INJECT) || !iscarbon(exposed_mob))
 		return
-	var/mob/living/carbon/C = A
+
 	if(trans_volume >= 0.4) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss((-3 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
-	var/obj/item/organ/liver/L = C.organs_slot[ORGAN_SLOT_LIVER]
+		exposed_mob.adjustToxLoss((-3 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
+	var/obj/item/organ/liver/L = exposed_mob.organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
-	conversion_amount = (trans_volume * (min(100 -C.get_organ_loss(ORGAN_SLOT_LIVER), 80) / 100)*normalise_creation_purity()) //the more damaged the liver the worse we metabolize.
-	C.reagents.remove_reagent(/datum/reagent/medicine/c2/syriniver, conversion_amount)
-	C.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, conversion_amount)
-	..()
+	conversion_amount = (trans_volume * (min(100 -exposed_mob.get_organ_loss(ORGAN_SLOT_LIVER), 80) / 100)*normalise_creation_purity()) //the more damaged the liver the worse we metabolize.
+
+	var/datum/reagents/mob_reagents = exposed_mob.reagents
+	mob_reagents.remove_reagent(/datum/reagent/medicine/c2/syriniver, conversion_amount)
+	mob_reagents.add_reagent(/datum/reagent/medicine/c2/musiver, conversion_amount)
 
 /datum/reagent/medicine/c2/syriniver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
