@@ -48,10 +48,11 @@
 	variance = 10
 
 /obj/item/ammo_casing/energy/laser/musket/repeater
-	projectile_type = /obj/projectile/beam/laser/musket
+	projectile_type = /obj/projectile/beam/laser/musket/repeater
 	pellets = 2
-	variance = 90
-	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
+	variance = 10
+	fire_sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'
+	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice

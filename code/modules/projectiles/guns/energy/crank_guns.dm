@@ -131,15 +131,22 @@
 	name = "Detached Ratvarian Repeater"
 	desc = "A weapon of incredible bulk, this ratvarian repeater has been detached from its stand to be carried by hand. Cumbersome, Yes - but powerful."
 	icon_state = "repeater"
-	inhand_icon_state = "musket"
+	inhand_icon_state = "repeater"
+	slowdown = 1
 	w_class = WEIGHT_CLASS_HUGE
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater)
+	spread = 20
+	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
 	. = ..()
 	AddComponent( \
 		/datum/component/crank_recharge, \
 		charging_cell = get_cell(), \
-		charge_amount = LASER_SHOTS(8,STANDARD_CELL_CHARGE), \
-		cooldown_time = 0.5 SECONDS, \
+		charge_amount = STANDARD_CELL_CHARGE, \
+		cooldown_time = 3 SECONDS, \
+		charge_sound = 'sound/machines/clockcult/integration_cog_install.ogg', \
+		charge_sound_cooldown_time = 3 SECONDS, \
 		charge_move = IGNORE_USER_LOC_CHANGE, \
 	)
+	AddComponent(/datum/component/automatic_fire, 0.5 SECONDS)
