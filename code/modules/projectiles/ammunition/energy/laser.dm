@@ -53,7 +53,7 @@
 	variance = 10
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	//'sound/effects/magic/clockwork/fellowship_armory.ogg'
-	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(6, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice

@@ -233,13 +233,15 @@
 /obj/projectile/bullet/Large_Ballista_Spear
 	name = "Spear"
 	icon_state = "rebar"
-	damage = 80
-	speed = 4
-	dismemberment = 2
+	range = 20
+	damage = 80 //YOU ARE LAUNCHING A GIANT SPEAR AT SOMEONE THIS IS GOING TO HURT A LOT.
+	speed = 3
+	projectile_piercing = PASSMOB
+	dismemberment = 3
 	embed_type = null
-	armour_penetration = 10
-	wound_bonus = -15
-	exposed_wound_bonus = 15
+	armour_penetration = 40
+	wound_bonus = 15
+	exposed_wound_bonus = 30
 	damage_type = BRUTE
 	shrapnel_type = /obj/item/spear
 

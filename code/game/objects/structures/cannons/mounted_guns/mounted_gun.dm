@@ -58,8 +58,9 @@
 
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
+	if(needs_ignition == TRUE)
+		var/ignition_message = used_item.ignition_effect(src, user)
 
-	var/ignition_message = used_item.ignition_effect(src, user)
 	if(is_firing)
 		balloon_alert(user, "the gun is in the middle of firing!")
 		return
@@ -81,9 +82,9 @@
 				fully_loaded_gun = TRUE //So you cant load extra.
 			return
 
-	else if((needs_ignition == TRUE) && (!ignition_message))
-		balloon_alert(user, "Gun needs to be lit to fire!")
-		return
+	//else if((needs_ignition == TRUE) && (!ignition_message))
+	//	balloon_alert(user, "Gun needs to be lit to fire!")
+	//	return
 	else
 		user.log_message("fired a cannon", LOG_ATTACK)
 		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
@@ -226,12 +227,12 @@
 	needs_ignition = FALSE
 	has_loading_delay = TRUE
 	load_delay = 20
-	max_shots_per_fire = 10
+	max_shots_per_fire = 12
 	shots_per_load = 10
 	shots_in_gun = 10
-	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
-	last_fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
-	projectile_type = /obj/projectile/beam/laser/musket/
+	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
+	last_fire_sound = 'sound/items/weapons/thermalpistol.ogg'
+	projectile_type = /obj/projectile/beam/laser/musket/repeater
 	loaded_gun = TRUE
 	fully_loaded_gun = TRUE
 	fire_delay = 1
@@ -247,9 +248,9 @@
 	if(!fully_loaded_gun)
 		if(!do_after(user, load_delay, target = src))
 			return
-		shots_in_gun = shots_in_gun+shots_per_load //Add one to the shots in the gun
+		shots_in_gun = shots_per_load //Add one to the shots in the gun
 		balloon_alert(user, "Clockwork Mechanism Wound.")
-		playsound(src, 'sound/items/weapons/laser_crank.ogg', 50, FALSE, 5)
+		playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, FALSE, 5)
 		loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
 		if(shots_in_gun >= max_shots_per_fire)
 			shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
@@ -300,7 +301,7 @@
 	uses_ammo = TRUE
 	needs_ignition = FALSE
 	has_loading_delay = TRUE
-	load_delay = 10
+	load_delay = 60
 	max_shots_per_fire = 1
 	shots_per_load = 1
 	shots_in_gun = 1
@@ -313,3 +314,10 @@
 	fire_delay = 1
 	shot_delay = 1
 	firing_shakes_camera = FALSE
+
+/obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params)
+
+	user.log_message("fired a cannon", LOG_ATTACK)
+	log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
+	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
+	return
