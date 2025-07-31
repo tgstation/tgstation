@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "The calculation for discharged energy when committing suicide with a power storage part should now be correctly evaluated."
