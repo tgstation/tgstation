@@ -232,14 +232,15 @@
 //Big Ballista Mounted gun Spear
 /obj/projectile/bullet/Large_Ballista_Spear
 	name = "Spear"
-	icon_state = "rebar"
+	icon_state = "Ballista_Spear"
 	range = 20
-	damage = 80 //YOU ARE LAUNCHING A GIANT SPEAR AT SOMEONE THIS IS GOING TO HURT A LOT.
+	damage = 60 //YOU ARE LAUNCHING A GIANT SPEAR AT SOMEONE THIS IS GOING TO HURT A LOT.
 	speed = 3
+	catastropic_dismemberment = TRUE //BECAUSE IF IT TAKES YOUR LEG OFF YOU SHOULDNT JUST BE GETTING OFF EASY.
 	projectile_piercing = PASSMOB
 	dismemberment = 3
 	embed_type = null
-	armour_penetration = 40
+	armour_penetration = 25
 	wound_bonus = 15
 	exposed_wound_bonus = 30
 	damage_type = BRUTE

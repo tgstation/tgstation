@@ -9,14 +9,13 @@
 	icon = 'icons/obj/weapons/cannons.dmi'
 	icon_state = "falconet_patina"
 	var/icon_state_base = "falconet_patina"
+	var/icon_state_loaded = "falconet_patina"
 	var/icon_state_fire = "falconet_patina_fire"
 	max_integrity = 300
 	///whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
 	var/anchorable_gun = TRUE
 	/// does this thing need ammo at all or does it just make ammo?
 	var/uses_ammo= TRUE
-	/// does this thing need to be lit, like a cannon?
-	var/needs_ignition = TRUE
 	///Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
 	///Is there a do_after when loading the gun?
@@ -58,9 +57,6 @@
 
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
-	if(needs_ignition == TRUE)
-		var/ignition_message = used_item.ignition_effect(src, user)
-
 	if(is_firing)
 		balloon_alert(user, "the gun is in the middle of firing!")
 		return
@@ -80,16 +76,17 @@
 			if(shots_in_gun >= max_shots_per_fire)
 				shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
 				fully_loaded_gun = TRUE //So you cant load extra.
+			icon_state = icon_state_loaded
 			return
 
-	//else if((needs_ignition == TRUE) && (!ignition_message))
-	//	balloon_alert(user, "Gun needs to be lit to fire!")
-	//	return
-	else
-		user.log_message("fired a cannon", LOG_ATTACK)
-		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
-		addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
+/obj/structure/mounted_gun/attack_hand(mob/living/user, list/modifiers)
+	if(is_firing)
+		balloon_alert(user, "the gun is in the middle of firing!")
 		return
+	user.log_message("fired a cannon", LOG_ATTACK)
+	log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
+	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
+	return
 
 /obj/structure/mounted_gun/proc/fire()
 	if (!loaded_gun)
@@ -125,6 +122,7 @@
 	desc = "To become master over one who has killed, one must become a better killer. This engine of destruction is one of many things made to that end."
 	icon_state = "pipeorgangun"
 	icon_state_base = "pipeorgangun"
+	icon_state_loaded = "pipeorgangun"
 	icon_state_fire = "pipeorgangun_fire"
 	loading_message = "You loaded the Pipe Organ Gun."
 	anchored = FALSE
@@ -189,6 +187,7 @@
 	desc = "''Quantity has a quality of its own.''"
 	icon_state = "canister_gatling"
 	icon_state_base = "canister_gatling"
+	icon_state_loaded = "canister_gatling"
 	icon_state_fire = "canister_gatling_fire"
 	loading_message = "You dump a bucket of canister shot into the gatling."
 	anchored = FALSE
@@ -224,7 +223,6 @@
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = FALSE
-	needs_ignition = FALSE
 	has_loading_delay = TRUE
 	load_delay = 20
 	max_shots_per_fire = 12
@@ -292,14 +290,14 @@
 
 	name = "Improvised Ballista"
 	desc = "''Engineers like to solve problems. If there are no problems handily available, they will create their own problems.''"
-	icon_state = "falconet_patina"
-	icon_state_base = "falconet_patina"
-	icon_state_fire = "falconet_patina_fire"
+	icon_state = "Improvised_Ballista"
+	icon_state_base = "Improvised_Ballista"
+	icon_state_loaded = "Improvised_Ballista_loaded"
+	icon_state_fire = "Improvised_Ballista"
 	loading_message = "You finish loading the ballista with a spear."
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = TRUE
-	needs_ignition = FALSE
 	has_loading_delay = TRUE
 	load_delay = 60
 	max_shots_per_fire = 1
