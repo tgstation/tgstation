@@ -253,7 +253,7 @@
 		holochip.throw_at(pick(oview(7,get_turf(src))),10,1)
 		safety -= 1
 		if(safety <= 0)
-			CRASH("/obj/structure/checkoutmachine/proc/expel_cash() did not complete in the theoretical maximum number of steps. Starting value: [initial(funds_remaining)]. Value at crash: [funds_remaining].")
+			CRASH("/obj/structure/checkoutmachine/proc/expel_cash() did not complete in the theoretical maximum number of steps. Starting value: [internal_account.account_balance]. Value at crash: [funds_remaining].")
 
 
 /obj/effect/dumpeet_fall //Falling pod
