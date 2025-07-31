@@ -4,10 +4,7 @@
 	allowed = null
 	icon = 'icons/obj/clothing/suits/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
-
-/obj/item/clothing/suit/chaplainsuit/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.chaplain_suit_allowed
+	allowed = CHAPLAIN_SUIT_STORAGE
 
 /obj/item/clothing/suit/chaplainsuit/armor
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -268,14 +265,10 @@
 	icon_state = "chaplain_hoodie"
 	icon = 'icons/obj/clothing/suits/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
+	allowed = CHAPLAIN_SUIT_STORAGE
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = null
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
-
-/obj/item/clothing/suit/hooded/chaplain_hoodie/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.chaplain_suit_allowed
 
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"

@@ -12,6 +12,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
+	allowed = MINING_SUIT_STORAGE
 	/// Amount to heal when the effect is triggered
 	var/heal_amount = 500
 	/// Time until the effect can take place again
@@ -33,7 +34,6 @@
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.mining_suit_allowed
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/examine(mob/user)

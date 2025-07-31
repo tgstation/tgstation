@@ -20,8 +20,8 @@
 	var/visor_toggle_up_sound = null
 
 	var/clothing_flags = NONE
-	///List of items that can be equipped in the suit storage slot while we're worn.
-	var/list/allowed
+	///The key -- if any -- into this clothing item's entry in GLOB.suit_allowed, which holds a list
+	var/allowed = null
 
 	var/can_be_bloody = TRUE
 

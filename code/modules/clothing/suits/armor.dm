@@ -2,7 +2,7 @@
 	name = "armor"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
-	allowed = null
+	allowed = SECURITY_SUIT_STORAGE
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -23,11 +23,6 @@
 	fire = 50
 	acid = 50
 	wound = 10
-
-/obj/item/clothing/suit/armor/Initialize(mapload)
-	. = ..()
-	if(!allowed)
-		allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/armor/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -401,11 +396,8 @@
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
 	resistance_flags = FLAMMABLE
+	allowed = DETECTIVE_VEST_STORAGE
 	dog_fashion = null
-
-/obj/item/clothing/suit/armor/vest/det_suit/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.detective_vest_allowed
 
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"
@@ -524,13 +516,8 @@
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	inhand_icon_state = null
-	allowed = list(
-		/obj/item/banner,
-		/obj/item/claymore,
-		/obj/item/nullrod,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		)
+	allowed = KNIGHT_SUIT_STORAGE
+
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
@@ -574,11 +561,8 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
+	allowed = DURATHREAD_VEST_STORAGE
 	dog_fashion = null
-
-/obj/item/clothing/suit/armor/vest/durathread/Initialize(mapload)
-	. = ..()
-	allowed |= /obj/item/clothing/suit/apron::allowed
 
 /datum/armor/vest_durathread
 	melee = 20
@@ -635,15 +619,10 @@
 	inhand_icon_state = null
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	armor_type = /datum/armor/armor_elder_atmosian
+	allowed = ENGINEERING_SUIT_STORAGE
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
-/obj/item/clothing/suit/armor/elder_atmosian/Initialize(mapload)
-	. = ..()
-	allowed += list(
-		/obj/item/fireaxe/metal_h2_axe,
-	)
 
 /datum/armor/armor_elder_atmosian
 	melee = 25
@@ -713,13 +692,7 @@
 	inhand_icon_state = "armor"
 	dog_fashion = null
 	armor_type = /datum/armor/military
-	allowed = list(
-		/obj/item/banner,
-		/obj/item/claymore/shortsword,
-		/obj/item/nullrod,
-		/obj/item/spear,
-		/obj/item/gun/ballistic/bow
-	)
+	allowed = KNIGHT_SUIT_STORAGE
 
 /obj/item/clothing/suit/armor/vest/military/Initialize(mapload)
 	. = ..()
@@ -869,4 +842,4 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	allowed = list(/obj/item/spear/skybulge)
+	allowed = KNIGHT_SUIT_STORAGE

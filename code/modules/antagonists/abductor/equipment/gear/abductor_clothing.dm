@@ -21,12 +21,7 @@
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/abductor_vest
 	actions_types = list(/datum/action/item_action/hands_free/activate)
-	allowed = list(
-		/obj/item/abductor,
-		/obj/item/melee/baton,
-		/obj/item/gun/energy,
-		/obj/item/restraints/handcuffs,
-	)
+	allowed = ABDUCTOR_SUIT_STORAGE
 	/// What operation mode is our vest in?
 	var/mode = VEST_STEALTH
 	/// Do we have a disguise active?

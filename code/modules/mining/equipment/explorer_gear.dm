@@ -37,6 +37,7 @@
 	icon_state = "explorer"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	allowed = MINING_SUIT_STORAGE
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -47,7 +48,6 @@
 /obj/item/clothing/suit/hooded/explorer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/hooded/explorer/Initialize(mapload)
 	. = ..()
@@ -114,6 +114,7 @@
 	icon_state = "goliath_cloak"
 	alternate_worn_layer = NECK_LAYER
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = MINING_SUIT_STORAGE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -122,10 +123,6 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
-
-/obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.mining_suit_allowed
 
 /datum/armor/hooded_goliath
 	melee = 60
@@ -193,12 +190,12 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	allowed = MINING_SUIT_STORAGE
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/armor/bone/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"

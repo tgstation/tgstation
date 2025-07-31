@@ -25,5 +25,5 @@
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "santa"
 	slowdown = 0
-	allowed = list(/obj/item) //for stuffing exta special presents
+	allowed = SANTA_SUIT_STORAGE
 	fishing_modifier = 0

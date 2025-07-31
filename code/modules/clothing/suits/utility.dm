@@ -20,13 +20,7 @@
 	inhand_icon_state = "ro_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(
-		/obj/item/crowbar,
-		/obj/item/extinguisher,
-		/obj/item/flashlight,
-		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/tank/internals,
-	)
+	allowed = FIRESUIT_STORAGE
 	slowdown = 1
 	armor_type = /datum/armor/utility_fire
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -158,7 +152,7 @@
 /obj/item/clothing/suit/utility/bomb_suit/security
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
-	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
+	allowed = SECURITY_SUIT_STORAGE
 
 /obj/item/clothing/head/utility/bomb_hood/white
 	icon_state = "bombsuit_white"
@@ -204,11 +198,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(
-		/obj/item/flashlight,
-		/obj/item/geiger_counter,
-		/obj/item/tank/internals,
-		)
+	allowed = RADSUIT_STORAGE
 	slowdown = 1.5
 	armor_type = /datum/armor/utility_radiation
 	strip_delay = 60

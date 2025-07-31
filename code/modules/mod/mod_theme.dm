@@ -112,9 +112,6 @@
 		if(!ispath(path))
 			continue
 		var/obj/item/mod_part = new path(mod)
-		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
-			var/obj/item/clothing/chestplate = mod_part
-			chestplate.allowed |= allowed_suit_storage
 		var/datum/mod_part/part_datum = new()
 		part_datum.set_item(mod_part)
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
@@ -533,7 +530,7 @@
 
 /datum/mod_theme/mining/New()
 	.=..()
-	allowed_suit_storage = GLOB.mining_suit_allowed
+	allowed_suit_storage = MINING_SUIT_STORAGE
 
 /datum/armor/mod_theme_mining
 	melee = 20

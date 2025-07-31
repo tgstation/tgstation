@@ -31,15 +31,12 @@
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = SECURITY_SUIT_STORAGE
 	armor_type = /datum/armor/hooded_ablative
 	hoodtype = /obj/item/clothing/head/hooded/ablative
 	strip_delay = 30
 	equip_delay_other = 40
 	var/hit_reflect_chance = 50
-
-/obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/hooded/ablative/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))) //If not shot where ablative is covering you, you don't get the reflection bonus!

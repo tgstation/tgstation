@@ -193,7 +193,7 @@
 	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
 	armor_type = /datum/armor/none
-	allowed = null
+	allowed = SECURITY_SUIT_STORAGE
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/armor/vest/ctf"
 	post_init_icon_state = "standard"

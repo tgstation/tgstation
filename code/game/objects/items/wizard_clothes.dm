@@ -25,6 +25,6 @@
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
+	allowed = CULT_SUIT_STORAGE
 	armor_type = /obj/item/clothing/head/wizard/magus::armor_type
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

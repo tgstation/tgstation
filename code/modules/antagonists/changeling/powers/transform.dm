@@ -39,7 +39,7 @@
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
-	allowed = list(/obj/item/changeling)
+	allowed = CHANGELING_SUIT_STORAGE
 	item_flags = DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

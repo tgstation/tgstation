@@ -18,11 +18,7 @@
 	drop_sound = 'sound/items/handling/materials/plastic_drop.ogg'
 	armor_type = /datum/armor/suit_caution
 	species_exception = list(/datum/species/golem)
-	allowed = list(
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
-	)
+	allowed = FLOOR_SIGN_SUIT_STORAGE
 
 /datum/armor/suit_caution
 	melee = 5

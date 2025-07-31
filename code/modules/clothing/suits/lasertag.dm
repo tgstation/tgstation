@@ -7,7 +7,6 @@
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
-	allowed = list (/obj/item/gun/energy/laser/bluetag)
 	resistance_flags = NONE
 
 /obj/item/clothing/suit/redtag
@@ -19,5 +18,4 @@
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
-	allowed = list (/obj/item/gun/energy/laser/redtag)
 	resistance_flags = NONE

@@ -153,6 +153,14 @@
 #define COMSIG_ITEM_STORED "item_stored"
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
+///from base of datum/species/can_eqip():
+/// (	obj/item/I, slot, disable_warning, mob/living/carbon/human/H,
+/// 	bypass_equip_delay_self, ignore_equipped, indirect_action	)
+#define COMSIG_CARBON_SUIT_STORAGE_CHECK "carbon_suit_storage_check"
+	/// for when something can be worn in suit storage under any circumstance
+	#define COMPONENT_BYPASS_ALL_SUIT_STORAGE_RESTRICTIONS (1<<0)
+	/// for when something can be worn in suit storage even without a suit
+	#define COMPONENT_SUITLESS_SUIT_STORAGE (1<<1)
 
 ///from base of obj/item/apply_fantasy_bonuses(): (bonus)
 #define COMSIG_ITEM_APPLY_FANTASY_BONUSES "item_apply_fantasy_bonuses"

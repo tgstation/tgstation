@@ -55,6 +55,7 @@ do { \
 	icon_state = "armor"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+	allowed = SYNDICATE_SUIT_STORAGE
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
@@ -64,7 +65,6 @@ do { \
 
 /obj/item/clothing/suit/chameleon/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.security_vest_allowed //should at least act like a vest
 
 /obj/item/clothing/suit/chameleon/broken
 

@@ -39,10 +39,6 @@
 	acid = 100
 	wound = 10
 
-/obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.mining_suit_allowed
-
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
