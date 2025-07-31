@@ -47,7 +47,7 @@
 	handle_liver(seconds_per_tick, times_fired)
 	// For special species interactions
 	dna.species.spec_life(src, seconds_per_tick, times_fired)
-	return TRUE
+	return stat != DEAD
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	var/chest_covered = !get_bodypart(BODY_ZONE_CHEST)
