@@ -138,10 +138,10 @@
 	var/cool_temp = cooling_temperature
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
-	if(hotspot && !isspaceturf(exposed_turf))
+	if(hotspot && !isspaceturf(exposed_turf)) // the water evaporates in an endothermic reaction
 		if(exposed_turf.air)
 			var/datum/gas_mixture/air = exposed_turf.air
-			air.temperature = max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp),TCMB)
+			air.temperature = clamp(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp), T0C, air.temperature) // the max temperature check is for weird phenomena like freon combustion
 			air.react(src)
 			qdel(hotspot)
 
