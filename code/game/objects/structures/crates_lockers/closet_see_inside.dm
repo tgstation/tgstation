@@ -29,6 +29,9 @@
 	return ..()
 
 /datum/closet_see_inside/proc/create_image()
+	if(contents_image)
+		return
+
 	contents_image = new
 	contents_image.loc = closet
 	contents_image.appearance_flags |= KEEP_TOGETHER
