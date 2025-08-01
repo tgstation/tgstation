@@ -144,6 +144,8 @@
 	if(bodypart_overlay)
 		limb.add_bodypart_overlay(bodypart_overlay)
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_BODYPART_INSERTED, limb, movement_flags)
+
 /*
  * Remove the organ from the select mob.
  *

@@ -763,6 +763,9 @@
 /area/station/security/warden)
 "amk" = (
 /obj/item/radio/intercom/directional/south,
+/obj/structure/closet/crate/trashcart/laundry,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "ams" = (
@@ -12475,6 +12478,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/washing_machine,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "dJB" = (
@@ -15963,6 +15967,7 @@
 "eLk" = (
 /obj/structure/table,
 /obj/machinery/firealarm/directional/west,
+/obj/effect/spawner/random/clothing/gloves,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "eLl" = (
@@ -27851,7 +27856,10 @@
 /area/station/medical/virology)
 "iji" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "ijl" = (
@@ -49836,6 +49844,7 @@
 "oHh" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/light_switch/directional/north,
+/obj/structure/closet/wardrobe/white,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "oHu" = (
@@ -54205,6 +54214,7 @@
 	pixel_x = -4;
 	pixel_y = 9
 	},
+/obj/effect/spawner/random/entertainment/coin,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "pSY" = (
@@ -59315,6 +59325,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/status_display/ai/directional/south,
+/obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "rwh" = (
@@ -64629,6 +64640,7 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
+/obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "tda" = (
@@ -67612,8 +67624,7 @@
 /turf/open/floor/plating/airless,
 /area/station/maintenance/space_hut)
 "tYi" = (
-/obj/structure/table,
-/obj/effect/spawner/random/clothing/costume,
+/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "tYl" = (
@@ -71168,6 +71179,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office/private_investigators_office)
+"uXW" = (
+/obj/structure/table,
+/obj/structure/bedsheetbin/empty{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/locker)
 "uXZ" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/spawner/random/maintenance/three,
@@ -72327,6 +72345,7 @@
 /area/station/maintenance/solars/starboard/fore)
 "vpp" = (
 /obj/item/radio/intercom/directional/north,
+/obj/effect/spawner/random/clothing/wardrobe_closet_colored,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "vpt" = (
@@ -75806,6 +75825,9 @@
 /area/station/service/library)
 "wqE" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/closet/crate/trashcart/laundry,
+/obj/effect/spawner/random/clothing/backpack,
+/obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "wqI" = (
@@ -78522,8 +78544,10 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "xhT" = (
-/obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/random/clothing/costume,
+/obj/structure/table,
+/obj/structure/bedsheetbin{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "xhX" = (
@@ -116822,7 +116846,7 @@ dTL
 dJx
 uzN
 oqd
-sjO
+uXW
 dCm
 nZb
 ayn
