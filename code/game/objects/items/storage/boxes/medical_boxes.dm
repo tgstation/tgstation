@@ -51,7 +51,7 @@
 
 /obj/item/storage/box/beakers/big/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/cup/beaker/large
+		new /obj/item/reagent_containers/cup/beaker/large(src)
 
 /obj/item/storage/box/beakers/bluespace
 	name = "box of bluespace beakers"
