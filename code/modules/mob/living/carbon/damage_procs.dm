@@ -82,7 +82,27 @@
 	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
-/mob/living/carbon/getBruteLoss(required_bodytype = ALL)
+/mob/living/carbon/getBruteLoss()
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		amount += bodypart.brute_dam
+	return round(amount, DAMAGE_PRECISION)
+
+/mob/living/carbon/getFireLoss()
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		amount += bodypart.burn_dam
+	return round(amount, DAMAGE_PRECISION)
+
+
+/**
+ * Returns the amount of bruteloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the bruteloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/getBruteLossForType(required_bodytype = ALL)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.bodytype & required_bodytype))
@@ -90,7 +110,14 @@
 		amount += bodypart.brute_dam
 	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/getFireLoss(required_bodytype = ALL)
+/**
+ * Returns the amount of fireloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the fireloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/proc/getFireLossForType(required_bodytype = ALL)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.bodytype & required_bodytype))
