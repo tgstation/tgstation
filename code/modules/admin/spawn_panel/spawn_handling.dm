@@ -35,7 +35,7 @@
 	if(where_target_type == WHERE_MOB_HAND || where_target_type == WHERE_TARGETED_MOB_HAND)
 		var/atom/target = null
 
-		target = (where_target_type = WHERE_TARGETED_MOB_HAND ? spawn_params["object_reference"] : user)
+		target = (where_target_type == WHERE_TARGETED_MOB_HAND ? spawn_params["object_reference"] : user)
 
 		if(!target)
 			to_chat(user, span_warning("No target specified."))
@@ -104,9 +104,9 @@
 		var/atom/created_atom
 
 		if(use_droppod)
-			created_atom = new path(pod)
+			created_atom = new atom_to_spawn(pod)
 		else
-			created_atom = new path(target)
+			created_atom = new atom_to_spawn(target)
 
 		if(QDELETED(created_atom))
 			return

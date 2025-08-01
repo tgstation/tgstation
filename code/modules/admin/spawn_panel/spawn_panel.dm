@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 		ui.open()
 
 /// Returns a `spawnpanel` instance belonging to this `user`, or creates and registers a new one
-/datum/spawnpanel/proc/get_spawnpanel_for_admin(mob/user)
+/proc/get_spawnpanel_for_admin(mob/user)
 	if(!user?.client?.ckey)
 		return null
 
@@ -68,11 +68,16 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 		toggle_precise_mode(PRECISE_MODE_OFF)
 
 /datum/spawnpanel/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+  if(user.client.ckey != owner_ckey)
+    return GLOB.never_state
+  return ADMIN_STATE(R_ADMIN)
 
 /datum/spawnpanel/ui_act(action, params)
 	if(..())
-		return
+		return FALSE
+
+	if(usr.client.ckey != owner_ckey)
+    return FALSE
 
 	switch(action)
 		if("select-new-DMI") // pick-icon
@@ -159,7 +164,10 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 			if(params["atom_dir"])
 				atom_dir = text2num(params["atom_dir"])
 			if(params["offset"])
-				offset = params["offset"]
+				var/list/temp_offset = params["offset"]
+				offset["X"] = temp_offset[1]
+				offset["Y"] = temp_offset[2]
+				offset["Z"] = temp_offset[3]
 			if(params["atom_name"])
 				atom_name = params["atom_name"]
 			if(params["where_target_type"])
@@ -261,7 +269,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 			states += state
 	data["iconStates"] = states
 	data["precise_mode"] = precise_mode
-	data["selected_object"] = selected_atom.type
+	data["selected_object"] = selected_atom ? "[selected_atom.type]" : ""
 	return data
 
 /datum/spawnpanel/ui_assets(mob/user)
