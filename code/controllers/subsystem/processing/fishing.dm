@@ -113,7 +113,7 @@ PROCESSING_SUBSYSTEM_DEF(fishing)
 		if(!length(source.associated_safe_turfs))
 			continue
 		for(var/fish_path in source.fish_table)
-			if(!istype(fish_path, /obj/item/fish))
+			if(!ispath(fish_path, /obj/item/fish))
 				continue
 			LAZYOR(fish_safe_turfs_by_type[fish_path], source.associated_safe_turfs)
 	//If a subtype doesn't have set safe turfs, it'll inherit them from the parent type.

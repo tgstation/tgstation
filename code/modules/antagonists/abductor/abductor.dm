@@ -2,7 +2,7 @@
 	name = "\improper Abductor"
 	roundend_category = "abductors"
 	antagpanel_category = ANTAG_GROUP_ABDUCTORS
-	job_rank = ROLE_ABDUCTOR
+	pref_flag = ROLE_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
@@ -71,7 +71,6 @@
 
 /datum/antagonist/abductor/on_gain()
 	owner.set_assigned_role(SSjob.get_job_type(role_job))
-	owner.special_role = ROLE_ABDUCTOR
 	objectives += team.objectives
 	finalize_abductor()
 	// We don't want abductors to be converted by other antagonists
@@ -79,7 +78,6 @@
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
-	owner.special_role = null
 	owner.remove_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
 	return ..()
 

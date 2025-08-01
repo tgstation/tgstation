@@ -194,7 +194,7 @@
 /area/deathmatch)
 "hG" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade,
 /turf/open/floor/iron/dark,
 /area/deathmatch)
@@ -743,7 +743,7 @@
 "Ag" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "AE" = (

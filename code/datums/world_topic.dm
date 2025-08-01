@@ -254,7 +254,7 @@
 	var/list/timers
 
 /datum/world_topic/create_news_channel/Run(list/input)
-	var/message_delay = input["delay"]
+	var/message_delay = text2num(input["delay"])
 	var/timer_id = addtimer(CALLBACK(src, PROC_REF(create_channel), input), message_delay)
 	input["timer_id"] = timer_id
 	LAZYADD(timers, timer_id)

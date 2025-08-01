@@ -149,43 +149,65 @@
 //////////////////////////// ARMOR BOOSTER MODULES //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/armor
 	equipment_slot = MECHA_ARMOR
-	///short protection name to display in the UI
-	var/protect_name = "you're mome"
-	///icon in armor.dmi that shows in the UI
-	var/iconstate_name
 	//how much the armor of the mech is modified by
 	var/datum/armor/armor_mod
 
 /obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
-	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
+	if (armor_mod)
+		chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
 /obj/item/mecha_parts/mecha_equipment/armor/detach(atom/moveto)
-	chassis.set_armor(chassis.get_armor().subtract_other_armor(armor_mod))
+	if (armor_mod)
+		chassis.set_armor(chassis.get_armor().subtract_other_armor(armor_mod))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
-	name = "Impact Cushion Plates"
+	name = "exosuit impact cushion plates"
 	desc = "Boosts exosuit armor against melee attacks"
 	icon_state = "mecha_abooster_ccw"
-	iconstate_name = "melee"
-	protect_name = "Melee Armor"
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
 
 /datum/armor/mecha_equipment_ccw_boost
 	melee = 20
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
-	name = "Projectile Shielding"
+	name = "exosuit projectile shielding"
 	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
 	icon_state = "mecha_abooster_proj"
-	iconstate_name = "range"
-	protect_name = "Ranged Armor"
 	armor_mod = /datum/armor/mecha_equipment_ranged_boost
 
 /datum/armor/mecha_equipment_ranged_boost
 	bullet = 15
 	laser = 15
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster
+	name = "exosuit ablative insulation"
+	desc = "Boosts exosuit armor against energy-based attacks. Also shields the exosuit's internal wiring from hostile EMP attacks. However, this may leave the \
+		exosuit slightly more vulnerable to kinetic blows due to taking up valuable hull cushioning."
+	icon_state = "mecha_abooster_emp"
+	armor_mod = /datum/armor/mecha_equipment_energy_boost
+
+/datum/armor/mecha_equipment_energy_boost
+	melee = -5
+	bullet = -10
+	energy = 15
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+	. = ..()
+	chassis.AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/detach(atom/moveto)
+	chassis.RemoveElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/clandestine
+	name = "exosuit hardened ablative insulation"
+	desc = "Boosts exosuit armor against energy-based attacks. Also shields the exosuit's internal wiring from hostile EMP attacks."
+	armor_mod = /datum/armor/mecha_equipment_improved_energy_boost
+
+/datum/armor/mecha_equipment_improved_energy_boost
+	energy = 20
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
 
@@ -317,7 +339,7 @@
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(weapon, fuel))
 		return FALSE
@@ -363,7 +385,7 @@
 
 ///Introduces the actual fuel type to be used, as well as the starting amount of said fuel
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 1)
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 
@@ -376,11 +398,11 @@
 	active_label = "Thrusters"
 	var/effect_type = /obj/effect/particle_effect/sparks
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
-	for(var/obj/item/I in M.equip_by_category[MECHA_UTILITY])
-		if(istype(I, src))
-			to_chat(user, span_warning("[M] already has this thruster package!"))
-			return FALSE
+/obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha, attach_right)
+	for(var/obj/item/part in mecha.equip_by_category[MECHA_UTILITY])
+		if(istype(part, src))
+			to_chat(user, span_warning("[mecha] already has this thruster package!"))
+			return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
@@ -472,7 +494,7 @@
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
 	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
 		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
@@ -514,11 +536,10 @@
 /obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
 	if(mech.chassis_camera)
 		balloon_alert(user, "already has a camera!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	. = ..()
 
 	mech.chassis_camera = new /obj/machinery/camera/exosuit(mech)
 	mech.chassis_camera.update_c_tag(mech)
 	mech.diag_hud_set_camera()
-

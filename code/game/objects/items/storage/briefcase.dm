@@ -19,7 +19,7 @@
 	storage_type = /datum/storage/briefcase
 
 	/// The path of the folder that gets spawned in New()
-	var/folder_path = /obj/item/folder 
+	var/folder_path = /obj/item/folder
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)
@@ -86,6 +86,17 @@
 	. = ..()
 	AddComponent(/datum/component/lockable_storage)
 
+/// Base container used for gimmick disks.
+/obj/item/storage/briefcase/secure/digital_storage
+	name = "digi-case"
+	desc = "It's made of AUTHENTIC digital leather and has a price-tag still attached. Its owner must be a real professional."
+	icon_state = "secure"
+	base_icon_state = "secure"
+	inhand_icon_state = "sec-case"
+
+/obj/item/storage/briefcase/secure/digital_storage/PopulateContents()
+	return
+
 ///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/briefcase/secure/syndie
 	force = 15
@@ -96,8 +107,6 @@
 		new /obj/item/stack/spacecash/c1000(src)
 
 /// A briefcase that contains various sought-after spoils
-/obj/item/storage/briefcase/secure/riches
-
 /obj/item/storage/briefcase/secure/riches/PopulateContents()
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/gun/ballistic/automatic/pistol(src)
@@ -115,3 +124,43 @@
 	new /obj/item/pillow/random(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
+
+//Briefcase item that contains the launchpad.
+/obj/item/storage/briefcase/launchpad
+	var/obj/machinery/launchpad/briefcase/pad
+
+/obj/item/storage/briefcase/launchpad/Initialize(mapload)
+	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
+	. = ..()
+
+/obj/item/storage/briefcase/launchpad/Destroy()
+	if(!QDELETED(pad))
+		qdel(pad)
+	pad = null
+	return ..()
+
+/obj/item/storage/briefcase/launchpad/PopulateContents()
+	new /obj/item/pen(src)
+	new /obj/item/launchpad_remote(src, pad)
+
+/obj/item/storage/briefcase/launchpad/attack_self(mob/user)
+	if(!isturf(user.loc)) //no setting up in a locker
+		return
+	add_fingerprint(user)
+	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
+	if(do_after(user, 3 SECONDS, target = user))
+		pad.forceMove(get_turf(src))
+		pad.update_indicator()
+		pad.closed = FALSE
+		user.transferItemToLoc(src, pad, TRUE)
+		atom_storage.close_all()
+
+/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
+		return ..()
+	var/obj/item/launchpad_remote/remote = tool
+	if(remote.pad == WEAKREF(src.pad))
+		return ..()
+	remote.pad = WEAKREF(src.pad)
+	to_chat(user, span_notice("You link [pad] to [remote]."))
+	return ITEM_INTERACT_BLOCKING

@@ -1,4 +1,3 @@
-
 # Learn AI
 
 In ye olde days, we designed mob AI, and we built it into simple animals as they were the "non player controlled" mobs. Made sense at the time. But by coding AI directly into the mob, there was so little ability to make unique or complicated AI, and even when it was pulled off the code was hacky and non-reusable. the datum AI system was made to rectify these problems, and expand AI beyond just mobs.
@@ -57,6 +56,7 @@ AI's work by planning specific behaviors, and subtrees are datums that bundle th
 ```
 
 Finally, we have some more minor things.
+
 - ai_traits are flags for the AI, things like "STOP_MOVING_WHEN_PULLED" slightly modifying how the AI acts under some situations.
 - ai_movement is how the mob moves to its movement target. ranges from simple behaviors like ai_movement/dumb that awlays move in the direction of the target and hope there's nothing in the way, all the way to ai_movement/jps that plans and occasionally recalcuates more complicated paths, at the cost of more lag.
 - idle_behavior is just some simpler behavior to perform when nothing has been planned at all, like idle_behavior/idle_random_walk making a mob wander passively.

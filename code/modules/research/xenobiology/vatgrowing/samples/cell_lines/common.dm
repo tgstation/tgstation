@@ -254,18 +254,20 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
 	supplementary_reagents = list(
-		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/consumable/liquidgibs = 2,
-		/datum/reagent/sulfur = 2)
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/eggrot = 2,
+		/datum/reagent/medicine/c2/synthflesh = 1,
+		/datum/reagent/consumable/liquidgibs = 1,
+		/datum/reagent/sulfur = 1)
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/tinlux = -6,
+		/datum/reagent/lead = -4, //neurotoxin, works because spores are smort
 		/datum/reagent/napalm = -4,
 		/datum/reagent/medicine/psicodine = -2) //Blob zombies likely wouldn't appreciate psicodine so why this is here
 
 	virus_suspectibility = 0
-	resulting_atom = /mob/living/basic/blob_minion/spore
-	resulting_atom_count = 2
+	resulting_atom = /mob/living/basic/blob_minion/spore/independent
 
 /datum/micro_organism/cell_line/blobbernaut
 	desc = "Blobular myocytes"
@@ -284,7 +286,7 @@
 	suppressive_reagents = list(/datum/reagent/consumable/tinlux = -6)
 
 	virus_suspectibility = 0
-	resulting_atom = /mob/living/basic/blob_minion/blobbernaut
+	resulting_atom = /mob/living/basic/blob_minion/blobbernaut/independent
 
 /datum/micro_organism/cell_line/gelatinous_cube
 	desc = "Cubic ooze particles"
@@ -483,7 +485,7 @@
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/vatgrower/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 
-	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant/slow, /mob/living/basic/clown/fleshclown))
+	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
 
@@ -578,7 +580,7 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atom = /mob/living/basic/frog
+	resulting_atom = /obj/effect/spawner/random/frog
 
 /datum/micro_organism/cell_line/axolotl
 	desc = "caudata amphibian cells"
@@ -707,5 +709,27 @@
 		/datum/reagent/toxin/pestkiller = -1)
 
 	resulting_atom = /mob/living/basic/mega_arachnid
+
+/datum/micro_organism/cell_line/snail
+	desc = "gastropod epithelial cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/iron,
+	)
+
+	supplementary_reagents = list(
+		/datum/reagent/yuck = 2,
+		/datum/reagent/blood = 2,
+		/datum/reagent/consumable/applejuice = 2,
+		/datum/reagent/consumable/mold = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -2,
+		/datum/reagent/consumable/salt = -3,
+		/datum/reagent/consumable/ethanol/bug_spray = -1,
+	)
+	virus_suspectibility = 0
+	resulting_atom = /mob/living/basic/snail
 
 #undef VAT_GROWTH_RATE

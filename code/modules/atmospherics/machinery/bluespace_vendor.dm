@@ -62,7 +62,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	fire = 80
 	acid = 30
 
-/obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
+/obj/machinery/bluespace_vendor/Initialize(mapload, ndir, nbuild)
 	. = ..()
 
 	if(nbuild)
@@ -70,8 +70,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize(mapload)
-	. = ..()
 	purchased_gas_mix = new(100)
 	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 	find_and_hang_on_wall( FALSE)

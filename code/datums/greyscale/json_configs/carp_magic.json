@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "base",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -22,7 +22,7 @@
 			"type": "icon_state",
 			"icon_state": "base_dead",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",

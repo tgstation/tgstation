@@ -9,7 +9,7 @@ import { Box, Dialog, Divider, MenuBar, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { NTOSData } from '../layouts/NtosWindow';
+import type { NTOSData } from '../layouts/NtosWindow';
 import { createLogger } from '../logging';
 
 const logger = createLogger('NtosNotepad');
@@ -333,7 +333,7 @@ export const NtosNotepad = (props) => {
   const { note } = data;
   const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
   const [originalText, setOriginalText] = useState(note);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(note);
   const [statuses, setStatuses] = useState<Statuses>({
     line: 0,
     column: 0,

@@ -19,6 +19,8 @@
 	var/contents_hidden = FALSE
 	/// icon_state of overlay for papers inside of this folder
 	var/paper_overlay_state = "folder_paper"
+	/// Name to display for use-on-item screentips, to avoid overly long screentips.
+	var/folder_type_name = "folder"
 
 /obj/item/folder/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -28,6 +30,8 @@
 	update_icon()
 	. = ..()
 	AddElement(/datum/element/burn_on_item_ignition)
+	register_item_context()
+	register_context()
 
 /obj/item/folder/Destroy()
 	for(var/obj/important_thing in contents)
@@ -41,18 +45,23 @@
 	if(length(contents) && !contents_hidden)
 		. += span_notice("<b>Right-click</b> to remove [contents[1]].")
 
-/obj/item/folder/proc/rename(mob/user, obj/item/writing_instrument)
-	if(!user.can_write(writing_instrument))
-		return
+/obj/item/folder/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(is_type_in_typecache(target, folder_insertables))
+		// As this is shown on the paper, we clarify we are picking it up.
+		context[SCREENTIP_CONTEXT_LMB] = "Insert into [folder_type_name]"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
-	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
-
-	if(!inputvalue)
-		return
-
-	if(user.can_perform_action(src))
-		name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
-		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+/obj/item/folder/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+	if(is_type_in_typecache(held_item, folder_insertables))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(IS_WRITING_UTENSIL(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Rename"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)
 	if(istype(Item))
@@ -79,15 +88,49 @@
 	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
 	return paper_overlay
 
-/obj/item/folder/attackby(obj/item/weapon, mob/user, list/modifiers)
-	if(is_type_in_typecache(weapon, folder_insertables))
-		//Add paper, photo or documents into the folder
-		if(!user.transferItemToLoc(weapon, src))
-			return
-		to_chat(user, span_notice("You put [weapon] into [src]."))
-		update_appearance()
-	else if(IS_WRITING_UTENSIL(weapon))
-		rename(user, weapon)
+/obj/item/folder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_type_in_typecache(tool, folder_insertables))
+		return insertables_act(user, tool)
+	if(IS_WRITING_UTENSIL(tool))
+		return writing_utensil_act(user, tool)
+	return NONE
+
+/obj/item/folder/proc/insertables_act(mob/living/user, obj/item/tool)
+	if(!user.transferItemToLoc(tool, src, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/folder/proc/writing_utensil_act(mob/user, obj/item/writing_instrument)
+	if(!user.can_write(writing_instrument))
+		return ITEM_INTERACT_BLOCKING
+
+	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
+
+	if(!inputvalue)
+		return ITEM_INTERACT_BLOCKING
+	if(!user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
+
+	name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/folder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(is_type_in_typecache(interacting_with, folder_insertables))
+		return interact_with_insertables(interacting_with, user)
+
+/obj/item/folder/proc/interact_with_insertables(obj/item/interacting_with, mob/living/user)
+	if(interacting_with.loc == user)
+		if(!user.transferItemToLoc(interacting_with, src, silent = TRUE))
+			return ITEM_INTERACT_BLOCKING
+	else
+		interacting_with.do_pickup_animation(src)
+		interacting_with.forceMove(src)
+
+	playsound(src, interacting_with.pickup_sound, PICKUP_SOUND_VOLUME, interacting_with.sound_vary, ignore_walls = FALSE)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/folder/attack_self(mob/user)
 	add_fingerprint(usr)

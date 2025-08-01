@@ -37,7 +37,7 @@
 	var/datum/corpse_assignment/assignment = pick_weight(possible_character_assignments)
 	if(ispath(assignment))
 		assignment = new assignment()
-		assignment.apply_assignment(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
+		assignment.apply_assignment(fashion_corpse, protected_objects, recovered_items, on_revive_and_player_occupancy)
 		body_data += assignment.type
 
 	var/datum/corpse_flavor/flavor = pick_weight(possible_flavor_types)
@@ -88,7 +88,7 @@
 	body_data += decay.type
 
 	// Simulate bloodloss by dragging/moving
-	victim.blood_volume = max(victim.blood_volume - victim.bleedDragAmount() * rand(20, 100), 0)
+	victim.blood_volume = max(victim.blood_volume - victim.bleed_drag_amount() * rand(20, 100), 0)
 	set_death_date(victim)
 
 	death_lore += area_lore + " " + cause_of_death.cause_of_death

@@ -28,7 +28,7 @@
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
-/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers)
+/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
@@ -239,7 +239,7 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
 
 	notify_ghosts(
-		"[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
+		"[user.real_name] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
 		source = user,
 		header = "pAI Request!",
 		alert_overlay = alert_overlay,

@@ -64,7 +64,7 @@
 	playsound(src, 'sound/items/ampoule_snap.ogg', 40)
 	update_appearance()
 
-/obj/item/reagent_containers/cup/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/cup/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(.)
 		return
@@ -74,7 +74,7 @@
 	playsound(src, SFX_SHATTER, 40, TRUE)
 	transfer_fingerprints_to(ampoule_shard)
 	spillable = TRUE
-	SplashReagents(hit_atom, TRUE)
+	SplashReagents(hit_atom, throwingdatum)
 	qdel(src)
 	hit_atom.Bumped(ampoule_shard)
 

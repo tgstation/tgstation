@@ -1,7 +1,7 @@
 import hljs from 'highlight.js/lib/core';
 import lua from 'highlight.js/lib/languages/lua';
 import {
-  ReactNode,
+  type ReactNode,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -28,7 +28,7 @@ import { ListMapper } from './ListMapper';
 import { Log } from './Log';
 import { StateSelectModal } from './StateSelectModal';
 import { TaskManager } from './TaskManager';
-import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 hljs.registerLanguage('lua', lua);
 
 export const LuaEditor = () => {
@@ -209,7 +209,6 @@ export const LuaEditor = () => {
                     <Stack fill vertical>
                       <Stack.Item grow>
                         <TextArea
-                          fluid
                           width="100%"
                           height="100%"
                           value={scriptInput}

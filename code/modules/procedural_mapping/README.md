@@ -1,24 +1,29 @@
 # Procedural Mapping
-### *With Regards To RemieRichards*
+
+### _With Regards To RemieRichards_
 
 ---
 
 ## Coder Informative Readme
 
 ### mapGenerator:
-Desc: a *mapGenerator* is a master datum that collects and syncs all *mapGeneratorModules* in its modules list.
+
+Desc: a _mapGenerator_ is a master datum that collects and syncs all _mapGeneratorModules_ in its modules list.
 
 ### defineRegion(var/turf/Start, turf/End, replace = 0)
+
 Example: `defineRegion(locate(1,1,1),locate(5,5,5),0)`
 
-Desc: Sets the bounds of the *mapGenerator's* "map".
+Desc: Sets the bounds of the _mapGenerator's_ "map".
 
 ### defineCircularRegion(var/turf/Start, turf/End, replace = 0)
+
 Example: `defineCircularRegion(locate(1,1,1),locate(5,5,5),0)`
 
-Desc: Sets the *mapGenerator's* "map" as a circle, with center in the middle of Start and End's X,Y,Z coordinates.
+Desc: Sets the _mapGenerator's_ "map" as a circle, with center in the middle of Start and End's X,Y,Z coordinates.
 
 ### undefineRegion()
+
 Example: `undefineRegion()`
 
 Desc: Empties the map generator list.
@@ -35,13 +40,13 @@ Existing Calls: `mapGenerator/defineRegion(), mapGenerator/defineCircularRegion(
 
 Example: `generate()`
 
-Desc: Orders all *mapGeneratorModules* in the modules list to `generate()`.
+Desc: Orders all _mapGeneratorModules_ in the modules list to `generate()`.
 
 ### generateOneTurf(var/turf/T)
 
 Example: `generateOneTurf(locate(1,1,1))`
 
-Desc: Orders all *mapGeneratorModules* in the modules list to `place(T)` on this turf.
+Desc: Orders all _mapGeneratorModules_ in the modules list to `place(T)` on this turf.
 
 ### initialiseModules()
 
@@ -55,7 +60,7 @@ Existing Calls: `mapGenerator/New()`
 
 Example: `syncModules()`
 
-Desc: Sets the Mother variable on all *mapGeneratorModules* in the modules list to this *mapGenerator*.
+Desc: Sets the Mother variable on all _mapGeneratorModules_ in the modules list to this _mapGenerator_.
 
 Existing Calls: `initialiseModules(),generate(),generateOneTurf()`
 
@@ -85,7 +90,7 @@ Existing Calls: `mapGenerator/generate()`
 
 Example: `place(locate(1,1,1))
 `
-Desc: Run this *mapGeneratorModule's* effects on this turf (Spawning atoms, Changing turfs).
+Desc: Run this _mapGeneratorModule's_ effects on this turf (Spawning atoms, Changing turfs).
 
 Existing Calls: `mapGenerator/generate()`, `mapGenerator/generateOneTurf()`
 
@@ -105,31 +110,30 @@ Simple Workflow:
 
 1. Define a/some mapGeneratorModule(s) to your liking, choosing atoms and turfs to spawn
 
-* I chose to split Turfs and Atoms off into separate modules, but this is NOT required.
-* A mapGeneratorModule may have turfs AND atoms, so long as each is in its appropriate list
+- I chose to split Turfs and Atoms off into separate modules, but this is NOT required.
+- A mapGeneratorModule may have turfs AND atoms, so long as each is in its appropriate list
 
 2. Define a mapGenerator type who's modules list contains the typepath(s) of all the module(s) you wish to use
 
-* The order of the typepaths in the modules list is the order they will happen in, this is important for clusterCheckFlags.
+- The order of the typepaths in the modules list is the order they will happen in, this is important for clusterCheckFlags.
 
 3. Take notes of the Bottom Left and Top Right turfs of your rectangular "map"'s coordinates
 
-* X, Y, AND Z. Yes, you can create 3D "maps" by having differing Z coordinates
+- X, Y, AND Z. Yes, you can create 3D "maps" by having differing Z coordinates
 
 4. Create the mapGenerator type you created
 
 5. Call `yourMapGeneratorType.defineRegion(locate(X,Y,Z), locate(X,Y,Z))`
 
-* The above X/Y/Zs are the coordinates of the start and end turfs, the locate() simply finds the turf for the code
+- The above X/Y/Zs are the coordinates of the start and end turfs, the locate() simply finds the turf for the code
 
 6. Call `yourMapGeneratorType.generate()`, this will cause all the modules in the generator to build within the map bounds
 
 Option Suggestions:
 
-* Have separate modules for Turfs and Atoms, this is not enforced, but it is how I have structured my nature example.
-* If your map doesn't look quite to your liking, simply jiggle with the variables on your modules and the type probabilities.
-* You can mix and map premade areas with the procedural generation, for example mapping an entire flat land but having code generate just the grass tufts.
-
+- Have separate modules for Turfs and Atoms, this is not enforced, but it is how I have structured my nature example.
+- If your map doesn't look quite to your liking, simply jiggle with the variables on your modules and the type probabilities.
+- You can mix and map premade areas with the procedural generation, for example mapping an entire flat land but having code generate just the grass tufts.
 
 Using the Modules list
 
@@ -139,41 +143,40 @@ To help you do this templates such as /mapGeneratorModule/bottomLayer have been 
 
 These are located near the bottom of `mapGeneratorModule.dm`. You would order your list left to right, top to bottom. For example: `modules = list(bottomLayer,nextLayer,nextNextLayer)`, etc.
 
-
 Variable Breakdown (For Mappers):
 
 ### mapGenerator
 
-* map - INTERNAL, do not touch
-* modules - A list of typepaths of mapGeneratorModules
+- map - INTERNAL, do not touch
+- modules - A list of typepaths of mapGeneratorModules
 
 ### mapGeneratorModule
-* mother - INTERNAL, do not touch
 
-* spawnableAtoms - A list of typepaths and their probability to spawn, eg: `spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)`
+- mother - INTERNAL, do not touch
 
-* spawnableTurfs - A list of typepaths and their probability to spawn, eg: `spawnableTurfs = list(/turf/unsimulated/floor/grass = 100)`
+- spawnableAtoms - A list of typepaths and their probability to spawn, eg: `spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)`
 
-* clusterMax - The max range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
+- spawnableTurfs - A list of typepaths and their probability to spawn, eg: `spawnableTurfs = list(/turf/unsimulated/floor/grass = 100)`
 
-* clusterMin - The min range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
+- clusterMax - The max range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
 
-* clusterCheckFlags - A Bitfield that controls how the cluster checks work, All based on clusterMin and clusterMax guides
+- clusterMin - The min range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
 
-* allowAtomsOnSpace - A Boolean for if we allow atoms to spawn on space tiles
+- clusterCheckFlags - A Bitfield that controls how the cluster checks work, All based on clusterMin and clusterMax guides
+
+- allowAtomsOnSpace - A Boolean for if we allow atoms to spawn on space tiles
 
 ### clusterCheckFlags flags:
 
-	CLUSTER_CHECK_NONE				0   //No checks are done, cluster as much as possible
-	CLUSTER_CHECK_DIFFERENT_TURFS			2  //Don't let turfs of DIFFERENT types cluster
-	CLUSTER_CHECK_DIFFERENT_ATOMS			4  //Don't let atoms of DIFFERENT types cluster
-	CLUSTER_CHECK_SAME_TURFS			8  //Don't let turfs of the SAME type cluster
-	CLUSTER_CHECK_SAME_ATOMS			16 //Don't let atoms of the SAME type cluster
+    CLUSTER_CHECK_NONE				0   //No checks are done, cluster as much as possible
+    CLUSTER_CHECK_DIFFERENT_TURFS			2  //Don't let turfs of DIFFERENT types cluster
+    CLUSTER_CHECK_DIFFERENT_ATOMS			4  //Don't let atoms of DIFFERENT types cluster
+    CLUSTER_CHECK_SAME_TURFS			8  //Don't let turfs of the SAME type cluster
+    CLUSTER_CHECK_SAME_ATOMS			16 //Don't let atoms of the SAME type cluster
 
-	CLUSTER_CHECK_SAMES				24 //Don't let any of the same type cluster
-	CLUSTER_CHECK_DIFFERENTS			6  //Don't let any different types cluster
-	CLUSTER_CHECK_ALL_TURFS				10 //Don't let ANY turfs cluster same and different types
-	CLUSTER_CHECK_ALL_ATOMS				20 //Don't let ANY atoms cluster same and different types
+    CLUSTER_CHECK_SAMES				24 //Don't let any of the same type cluster
+    CLUSTER_CHECK_DIFFERENTS			6  //Don't let any different types cluster
+    CLUSTER_CHECK_ALL_TURFS				10 //Don't let ANY turfs cluster same and different types
+    CLUSTER_CHECK_ALL_ATOMS				20 //Don't let ANY atoms cluster same and different types
 
-	CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all
-
+    CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all

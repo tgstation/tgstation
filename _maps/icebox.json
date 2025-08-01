@@ -40,7 +40,7 @@
 			"No Parallax": true
 		}
 	],
-	"minetype": "none",
+	"minetype": "ice",
 	"blacklist_file": "iceruinblacklist.txt",
 	"job_changes": {
 		"Captain": {

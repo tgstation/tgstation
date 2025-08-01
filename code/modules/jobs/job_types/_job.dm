@@ -44,10 +44,10 @@
 	/// If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
-	var/outfit = null
+	var/datum/outfit/outfit = null
 
 	/// The job's outfit that will be assigned for plasmamen.
-	var/plasmaman_outfit = null
+	var/datum/outfit/plasmaman/plasmaman_outfit = null
 
 	/// Minutes of experience-time required to play in this job. The type is determined by [exp_required_type] and [exp_required_type_department] depending on configs.
 	var/exp_requirements = 0
@@ -416,7 +416,7 @@
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
 
 	if(istype(pda))
-		pda.imprint_id(equipped.real_name, equipped_job.title, card)
+		pda.imprint_id(equipped.real_name, equipped_job.title)
 		pda.update_ringtone(equipped_job.job_tone)
 		pda.UpdateDisplay()
 
@@ -640,3 +640,11 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+
+/// Called when a mob that has this job is admin respawned
+/datum/job/proc/on_respawn(mob/new_character)
+	SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)
+
+/// This proc may be called when someone of this job is made into a traitor to create custom objectives related to the job.
+/datum/job/proc/generate_traitor_objective()
+	return null

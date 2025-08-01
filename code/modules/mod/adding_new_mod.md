@@ -199,6 +199,7 @@ As it's a medical module, we'll put it [here](modules/modules_medical.dm). Let's
 ```
 
 As we want this effect to be on demand, we probably want this to be an usable module. There are four types of modules:
+
 - Passive: These have a passive effect.
 - Togglable: You can turn these on and off.
 - Usable: You can use these for a one time effect.
@@ -312,4 +313,5 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 ```
 
 ## Ending
+
 This finishes this hopefully easy to follow along tutorial. You should now know how to make a basic theme, a skin for it, and a module.

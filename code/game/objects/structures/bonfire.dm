@@ -39,7 +39,7 @@
 	QDEL_NULL(burning_loop)
 	. = ..()
 
-/obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, list/modifiers)
+/obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/rods = used_item
 		var/choice = tgui_alert(user, "What would you like to construct?", "Bonfire", list("Stake","Grill"))
@@ -90,7 +90,7 @@
 			bonfire_log.pixel_x += rand(1,4)
 			bonfire_log.pixel_y += rand(1,4)
 		if(can_buckle || grill)
-			new /obj/item/stack/rods(loc, 1)
+			new /obj/item/stack/rods(loc)
 		qdel(src)
 		return
 

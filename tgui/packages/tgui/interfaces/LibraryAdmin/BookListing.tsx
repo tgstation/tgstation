@@ -4,7 +4,7 @@ import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { PageSelect } from '../LibraryConsole/components/PageSelect';
 import { SearchAndDisplay } from '../LibraryConsole/components/Search';
-import { LibraryAdminData } from './types';
+import type { LibraryAdminData } from './types';
 
 export function BookListing(props) {
   const { act, data } = useBackend<LibraryAdminData>();

@@ -76,12 +76,12 @@
 		/datum/pet_command/move,
 		/datum/pet_command/attack,
 		charge_command,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/fish,
 	)
 	AddComponent(/datum/component/happiness)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_controller.ai_traits |= STOP_MOVING_WHEN_PULLED
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

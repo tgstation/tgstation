@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 
 export const WIZARD_MECHANICAL_DESCRIPTION = `
       Choose between a variety of powerful spells in order to cause chaos

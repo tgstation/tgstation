@@ -95,8 +95,6 @@
 #define BB_WHELP_STRAIGHTLINE_FIRE "BB_whelp_straightline_fire"
 ///whelp's secondary enraged ability
 #define BB_WHELP_WIDESPREAD_FIRE "BB_whelp_widespread_fire"
-///how enraged the whelp is
-#define BB_WHELP_ENRAGED "BB_whelp_enraged"
 ///the target rock we will attempt to create a sculpture out of
 #define BB_TARGET_ROCK "BB_target_rock"
 ///the cannibal target we shall consume
@@ -328,3 +326,7 @@
 #define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
 
 #define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
+
+//snails
+///snails retreat ability
+#define BB_SNAIL_RETREAT_ABILITY "snail_retreat_ability"

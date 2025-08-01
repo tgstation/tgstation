@@ -45,7 +45,7 @@
 		update_burden(TRUE, silent = TRUE)
 
 	if (owner.dna)
-		for (var/datum/mutation/human/mutation in owner.dna.mutations)
+		for (var/datum/mutation/mutation in owner.dna.mutations)
 			if (mutation.quality == NEGATIVE)
 				update_burden(TRUE, silent = TRUE)
 
@@ -108,15 +108,15 @@
 			else
 				if (!silent)
 					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
-				dna.remove_mutation(/datum/mutation/human/telepathy)
-				dna.remove_mutation(/datum/mutation/human/unintelligible)
+				dna.remove_mutation(/datum/mutation/telepathy, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.remove_mutation(/datum/mutation/unintelligible, MUTATION_SOURCE_BURDENED_TRAUMA)
 				owner.remove_filter("burden_outline")
 		if(3)
 			if(increase)
 				if (!silent)
 					to_chat(owner, span_notice("Your suffering is only a fraction of [GLOB.deity]'s, and yet the universal truths are coming to you."))
-				dna.add_mutation(/datum/mutation/human/telepathy)
-				dna.add_mutation(/datum/mutation/human/unintelligible)
+				dna.add_mutation(/datum/mutation/telepathy, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.add_mutation(/datum/mutation/unintelligible, MUTATION_SOURCE_BURDENED_TRAUMA)
 				owner.add_filter("burden_outline", 9, list("type" = "outline", "color" = "#6c6eff"))
 			else
 				if (!silent)
@@ -134,14 +134,14 @@
 			else
 				if (!silent)
 					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
-				dna.remove_mutation(/datum/mutation/human/telekinesis)
-				dna.remove_mutation(/datum/mutation/human/mindreader)
+				dna.remove_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.remove_mutation(/datum/mutation/mindreader, MUTATION_SOURCE_BURDENED_TRAUMA)
 		if(6)
 			if(increase)
 				if (!silent)
 					to_chat(owner, span_notice("Your suffering is respectful, your scars immaculate. More universal truths are clear, but you do not fully understand yet."))
-				dna.add_mutation(/datum/mutation/human/telekinesis)
-				dna.add_mutation(/datum/mutation/human/mindreader)
+				dna.add_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_BURDENED_TRAUMA)
+				dna.add_mutation(/datum/mutation/mindreader, MUTATION_SOURCE_BURDENED_TRAUMA)
 			else
 				if (!silent)
 					to_chat(owner, span_warning("The weight on your shoulders feels lighter. You feel like you're about to forget."))
@@ -241,14 +241,14 @@
 	update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a mutation is added
-/datum/brain_trauma/special/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type, class)
+/datum/brain_trauma/special/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/mutation_type, class)
 	SIGNAL_HANDLER
 
 	if(initial(mutation_type.quality) == NEGATIVE)
 		update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if a mutation is removed
-/datum/brain_trauma/special/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type)
+/datum/brain_trauma/special/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/mutation_type)
 	SIGNAL_HANDLER
 
 	if(initial(mutation_type.quality) == NEGATIVE)

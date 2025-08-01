@@ -171,8 +171,6 @@
 	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
 
-	///A weakref to the mob who threw the item
-	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
 	///Items can by default thrown up to 10 tiles by TK users
 	tk_throw_range = 10
 
@@ -584,10 +582,13 @@
 		return
 	return attempt_pickup(user)
 
-/obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
+/obj/item/proc/attempt_pickup(mob/living/user, skip_grav = FALSE)
 	. = TRUE
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
+		return
+
+	if(!(user.mobility_flags & MOBILITY_PICKUP))
 		return
 
 	if(!skip_grav)
@@ -646,15 +647,12 @@
 		return
 	attack_paw(ayy, modifiers)
 
-/obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/robot_model))
-		//If the item is part of a cyborg module, equip it
-		if(!iscyborg(user))
-			return
-		var/mob/living/silicon/robot/R = user
-		if(!R.low_power_mode) //can't equip modules with an empty cell.
-			R.activate_module(src)
-			R.hud_used.update_robot_modules_display()
+/obj/item/attack_robot(mob/living/silicon/robot/user)
+	if(!istype(loc, /obj/item/robot_model))
+		return
+	if(user.low_power_mode) //can't equip modules with an empty cell.
+		return
+	user.activate_module(src)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -687,6 +685,56 @@
 /obj/item/proc/talk_into(atom/movable/speaker, message, channel, list/spans, datum/language/language, list/message_mods)
 	return SEND_SIGNAL(src, COMSIG_ITEM_TALK_INTO, speaker, message, channel, spans, language, message_mods) || (ITALICS|REDUCE_RANGE)
 
+/* sound procs, made so they can be overriden on subtypes */
+
+/// executed when this item is thrown and hits a mob
+/obj/item/proc/mob_throw_hit_sound_chain(target, volume)
+	if(play_mob_throw_hit_sound(target, volume))
+		return TRUE
+	if(play_hit_sound(target, volume))
+		return TRUE
+	playsound(target, 'sound/items/weapons/throwtap.ogg', volume, TRUE, -1)
+	return TRUE
+
+/// executed when this item is thrown and lands on a turf
+/obj/item/proc/throw_drop_sound_chain(volume)
+	if(play_throw_drop_sound(volume))
+		return TRUE
+	if(play_drop_sound(volume))
+		return TRUE
+	return FALSE
+
+/obj/item/proc/sound_chain(sound_to_play, volume = HALFWAY_SOUND_VOLUME, target = src)
+	if(sound_to_play)
+		playsound(target, sound_to_play, volume, sound_vary, ignore_walls = FALSE)
+		return TRUE
+	return FALSE
+
+/// plays the pickup sound of this item.
+/obj/item/proc/play_pickup_sound(volume = PICKUP_SOUND_VOLUME)
+	return sound_chain(pickup_sound, volume)
+
+/// plays the drop sound
+/obj/item/proc/play_drop_sound(volume = DROP_SOUND_VOLUME)
+	return sound_chain(drop_sound, volume)
+
+/// plays the throw drop sound
+/obj/item/proc/play_throw_drop_sound(volume = YEET_SOUND_VOLUME)
+	return sound_chain(throw_drop_sound, volume)
+
+/// plays the mob throw hit sound
+/obj/item/proc/play_mob_throw_hit_sound(target, volume = DROP_SOUND_VOLUME)
+	return sound_chain(mob_throw_hit_sound, volume, target)
+
+/// plays when a mob is hit with this item
+/obj/item/proc/play_hit_sound(target, volume = HALFWAY_SOUND_VOLUME)
+	return sound_chain(hitsound, volume, target)
+
+/obj/item/proc/play_equip_sound(volume = EQUIP_SOUND_VOLUME)
+	return sound_chain(equip_sound, volume)
+
+/* sound procs over */
+
 /// Called when a mob drops an item.
 /obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -700,8 +748,8 @@
 	item_flags &= ~IN_INVENTORY
 	UnregisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)))
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(!silent && drop_sound)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+	if(!silent)
+		play_drop_sound(DROP_SOUND_VOLUME)
 	user?.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
@@ -764,12 +812,14 @@
 
 	item_flags |= IN_INVENTORY
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)), PROC_REF(update_slot_icon), override = TRUE)
-	if(!initial)
-		if(equip_sound && (slot_flags & slot))
-			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-		else if(slot & ITEM_SLOT_HANDS && pickup_sound)
-			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, sound_vary, ignore_walls = FALSE)
+
 	user.update_equipment_speed_mods()
+
+	if(!initial && (slot_flags & slot) && (play_equip_sound()))
+		return
+
+	if(slot & ITEM_SLOT_HANDS)
+		play_pickup_sound()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
 /obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)
@@ -785,7 +835,9 @@
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/action)
-	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
+	if(!slot) // Equipped into storage
+		return FALSE
+	if(slot & (ITEM_SLOT_HANDCUFFED|ITEM_SLOT_LEGCUFFED)) // These aren't true slots, so avoid granting actions there
 		return FALSE
 	if(!isnull(action_slots))
 		return (slot & action_slots)
@@ -866,11 +918,8 @@
 	. = ..()
 
 	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
-		if(throw_drop_sound)
-			playsound(src, throw_drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
-			return
-		else if(drop_sound)
-			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
+
+		throw_drop_sound_chain(YEET_SOUND_VOLUME)
 		return
 
 	if(.) //it's been caught.
@@ -880,19 +929,13 @@
 	if(!volume)
 		return
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		if (mob_throw_hit_sound)
-			playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-		else if(hitsound)
-			playsound(hit_atom, hitsound, volume, TRUE, -1)
-		else
-			playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
+		mob_throw_hit_sound_chain(hit_atom, volume)
 	else
 		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', volume, TRUE, -1)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
-	thrownby = WEAKREF(thrower)
 	callback = CALLBACK(src, PROC_REF(after_throw), callback) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
 
@@ -1432,6 +1475,8 @@
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
+	if(!.) // we don't need mob updates when the item was already clean
+		return
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.update_clothing(slot_flags)
@@ -1441,28 +1486,35 @@
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
 /**
- * * An interrupt for offering an item to other people, called mainly from [/mob/living/carbon/proc/give], in case you want to run your own offer behavior instead.
+ * * An interrupt for offering an item to other people, called mainly from [/mob/living/proc/give], in case you want to run your own offer behavior instead.
  *
  * * Return TRUE if you want to interrupt the offer.
  *
  * * Arguments:
- * * offerer - The person offering the item.
- * * offered - The person being offered the item.
+ * * offerer - The living mob offering the item.
+ * * offered - The living mob being offered the item.
  */
-/obj/item/proc/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
+/obj/item/proc/on_offered(mob/living/offerer, mob/living/offered)
+	if(!offered) // item has just been offered to anyone around
+		if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS)))
+			return TRUE
+	else if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(offered, TRAIT_CAN_HOLD_ITEMS)))
+		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
 /**
- * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/carbon/proc/take], in case you want to run your own take behavior instead.
+ * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/proc/take], in case you want to run your own take behavior instead.
  *
  * * Return TRUE if you want to interrupt the taking.
  *
  * * Arguments:
- * * offerer - the person offering the item
- * * taker - the person trying to accept the offer
+ * * offerer - the living mob offering the item
+ * * taker - the living mob trying to accept the offer
  */
-/obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+/obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)
+	if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS)))
+		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
@@ -1547,38 +1599,63 @@
 	// This is instant on byond's end, but to our clients this looks like a quick drop
 	animate(src, alpha = old_alpha, pixel_x = old_x, pixel_y = old_y, transform = old_transform, time = 3, easing = CUBIC_EASING)
 
-/atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_BLUNT)
-	if (visual_effect_icon)
-		var/image/attack_image = image(icon = 'icons/effects/effects.dmi', icon_state = visual_effect_icon)
-		attack_image.plane = attacked_atom.plane + 1
-		// Scale the icon.
-		attack_image.transform *= 0.4
-		// The icon should not rotate.
-		attack_image.appearance_flags = APPEARANCE_UI
-		var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
-		var/matrix/copy_transform = new(transform)
-		animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), time = 0.3 SECONDS)
-		animate(time = 0.1 SECONDS)
-		animate(alpha = 0, time = 0.3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+/atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, animation_type)
+	if (!visual_effect_icon)
+		if (used_item)
+			used_item.animate_attack(src, attacked_atom, animation_type)
 		return
 
-	if (isnull(used_item))
-		return
-
-	var/image/attack_image = isnull(used_item.attack_icon) ? image(icon = used_item) : image(icon = used_item.attack_icon, icon_state = used_item.attack_icon_state)
+	var/image/attack_image = image(icon = 'icons/effects/effects.dmi', icon_state = visual_effect_icon)
 	attack_image.plane = attacked_atom.plane + 1
-	attack_image.pixel_w = used_item.base_pixel_x + used_item.base_pixel_w
-	attack_image.pixel_z = used_item.base_pixel_y + used_item.base_pixel_z
+	// Scale the icon.
+	attack_image.transform *= 0.4
+	// The icon should not rotate.
+	attack_image.appearance_flags = APPEARANCE_UI
+	var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
+	var/matrix/copy_transform = new(transform)
+	animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), time = 0.3 SECONDS)
+	animate(time = 0.1 SECONDS)
+	animate(alpha = 0, time = 0.3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+
+/obj/item/proc/animate_attack(atom/movable/attacker, atom/attacked_atom, animation_type)
+	var/list/image_override = list()
+	var/list/animation_override = list()
+	var/used_icon_angle = icon_angle
+	var/list/angle_override = list()
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ANIMATION, attacker, attacked_atom, animation_type, image_override, animation_override, angle_override)
+	var/image/attack_image = null
+	if (!length(image_override))
+		attack_image = isnull(attack_icon) ? image(icon = src) : image(icon = attack_icon, icon_state = attack_icon_state)
+	else
+		attack_image = image_override[1]
+
+	if (length(animation_override))
+		animation_type = animation_override[1]
+	else if (!animation_type)
+		switch (get_sharpness())
+			if (SHARP_EDGED)
+				animation_type = ATTACK_ANIMATION_SLASH
+			if (SHARP_POINTY)
+				animation_type = ATTACK_ANIMATION_PIERCE
+			else
+				animation_type = ATTACK_ANIMATION_BLUNT
+
+	if (length(angle_override))
+		used_icon_angle = angle_override[1]
+
+	attack_image.plane = attacked_atom.plane + 1
+	attack_image.pixel_w = attacker.base_pixel_x + attacker.base_pixel_w - attacked_atom.base_pixel_x - attacked_atom.base_pixel_w
+	attack_image.pixel_z = attacker.base_pixel_y + attacker.base_pixel_z - attacked_atom.base_pixel_y - attacked_atom.base_pixel_z
 	// Scale the icon.
 	attack_image.transform *= 0.5
 	// The icon should not rotate.
 	attack_image.appearance_flags = APPEARANCE_UI
 
 	var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
-	var/matrix/copy_transform = new(transform)
+	var/matrix/copy_transform = new(attacker.transform)
 	var/x_sign = 0
 	var/y_sign = 0
-	var/direction = get_dir(src, attacked_atom)
+	var/direction = get_dir(attacker, attacked_atom)
 	if (direction & NORTH)
 		y_sign = -1
 	else if (direction & SOUTH)
@@ -1609,7 +1686,7 @@
 		if (ATTACK_ANIMATION_PIERCE)
 			var/attack_angle = dir2angle(direction) + rand(-7, 7)
 			// Deducting 90 because we're assuming that icon_angle of 0 means an east-facing sprite
-			var/anim_angle = attack_angle - 90 - used_item.icon_angle
+			var/anim_angle = attack_angle - 90 - used_icon_angle
 			var/angle_mult = 1
 			if (x_sign && y_sign)
 				angle_mult = 1.4
@@ -1647,7 +1724,7 @@
 			var/x_rot_sign = 0
 			var/y_rot_sign = 0
 			var/attack_dir = (prob(50) ? 1 : -1)
-			var/anim_angle = dir2angle(direction) - 90 - used_item.icon_angle
+			var/anim_angle = dir2angle(direction) - 90 - used_icon_angle
 
 			if (x_sign)
 				y_rot_sign = attack_dir
@@ -1775,7 +1852,7 @@
 
 			else if(victim_human.is_blind())
 				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
-	user.do_item_attack_animation(target, used_item = equipping)
+	user.do_item_attack_animation(target, used_item = equipping, animation_type = ATTACK_ANIMATION_BLUNT)
 
 	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
 
@@ -1822,7 +1899,7 @@
 	force = modify_fantasy_variable("force", force, bonus)
 	throwforce = modify_fantasy_variable("throwforce", throwforce, bonus)
 	wound_bonus = modify_fantasy_variable("wound_bonus", wound_bonus, bonus)
-	bare_wound_bonus = modify_fantasy_variable("bare_wound_bonus", bare_wound_bonus, bonus)
+	exposed_wound_bonus = modify_fantasy_variable("exposed_wound_bonus", exposed_wound_bonus, bonus)
 	toolspeed = modify_fantasy_variable("toolspeed", toolspeed, -bonus/10, minimum = 0.1)
 
 /obj/item/proc/remove_fantasy_bonuses(bonus)
@@ -1830,7 +1907,7 @@
 	force = reset_fantasy_variable("force", force)
 	throwforce = reset_fantasy_variable("throwforce", throwforce)
 	wound_bonus = reset_fantasy_variable("wound_bonus", wound_bonus)
-	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
+	exposed_wound_bonus = reset_fantasy_variable("exposed_wound_bonus", exposed_wound_bonus)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
 
@@ -1983,7 +2060,7 @@
 			DAMTYPE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=damtype' id='damtype'>[uppertext(damtype)]</a>
 			FORCE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=force' id='force'>[force]</a>
 			WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=wound' id='wound'>[wound_bonus]</a>
-			BARE WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[bare_wound_bonus]</a>
+			BARE WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[exposed_wound_bonus]</a>
 		</font>
 	"}
 

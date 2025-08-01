@@ -7,7 +7,6 @@
 	var/damage = rand(1, 9)
 	if (prob(90))
 		playsound(loc, SFX_PUNCH, 25, TRUE, -1)
-		log_combat(user, src, "attacked")
 		visible_message(span_danger("[user] kicks [src]!"), \
 						span_userdanger("[user] kicks you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You kick [src]!"))
@@ -16,11 +15,13 @@
 
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 		apply_damage(damage, BRUTE, affecting)
+		log_combat(user, src, "attacked")
 	else
 		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user]'s kick misses [src]!"), \
 						span_danger("You avoid [user]'s kick!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning("Your kick misses [src]!"))
+		log_combat(user, src, "attacked and missed")
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user)
 	. = ..()

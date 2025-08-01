@@ -199,7 +199,7 @@
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
 	forceMove(user.drop_location())
-	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
+	var/obj/item/mob_holder/consumed = new(src, user)
 	consumed.desc = "It's [user.real_name]! It looks like [user.p_they()] committed suicide!"
 	return OXYLOSS
 
@@ -309,3 +309,12 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
+
+/obj/item/storage/box/contractor/fulton_extraction
+	name = "Fulton Extraction Kit"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
+	new /obj/item/extraction_pack/syndicate(src)
+	new /obj/item/fulton_core(src)

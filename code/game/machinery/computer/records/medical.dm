@@ -20,11 +20,11 @@
 	pass_flags = PASSTABLE
 	projectiles_pass_chance = 100
 
-/obj/machinery/computer/records/medical/attacked_by(obj/item/attacking_item, mob/living/user)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/photo))
-		return
-	insert_new_record(user, attacking_item)
+/obj/machinery/computer/records/medical/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/photo))
+		return NONE
+	insert_new_record(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/records/medical/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -99,7 +99,7 @@
 			if(!content)
 				return FALSE
 
-			var/datum/medical_note/new_note = new(usr.name, content)
+			var/datum/medical_note/new_note = new(usr.name, content, station_time_timestamp())
 			while(length(target.medical_notes) > 2)
 				target.medical_notes.Cut(1, 2)
 

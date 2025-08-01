@@ -17,10 +17,8 @@ jobs:
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-spacemandmm-
-      - name: Setup Node
-        uses: ./.github/actions/setup_node
-        with:
-          restore-yarn-cache: true
+      - name: Setup Bun
+        uses: ./.github/actions/setup_bun
       - name: Restore Bootstrap cache
         uses: actions/cache@v4
         with:
@@ -60,6 +58,9 @@ jobs:
       - name: Give Linters A Go
         id: linter-setup
         run: ":"
+      - name: Ensure genesis_call.dme is unchanged
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: bash tools/ci/check_genesis.sh
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh
@@ -103,4 +104,4 @@ jobs:
         run: bash tools/ci/check_misc.sh
       - name: Run TGUI Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/build/build --ci lint tgui-test
+        run: tools/build/build.sh --ci lint tgui-test

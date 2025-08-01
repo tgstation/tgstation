@@ -40,7 +40,7 @@
 
 /obj/item/food/pie/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/pie/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/pie/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/pie/empty
 	name = "pie"
@@ -55,7 +55,7 @@
 
 /obj/item/food/pieslice/empty/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/pie/cream
 	name = "banana cream pie"
@@ -112,6 +112,7 @@
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
 	foodtypes = GRAIN|DAIRY|SUGAR|MEAT|FRUIT
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pie/meatpie
 	name = "meat-pie"
@@ -127,6 +128,7 @@
 	venue_value = FOOD_PRICE_NORMAL
 	slice_type = /obj/item/food/pieslice/meatpie
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pieslice/meatpie
 	name = "meat-pie slice"
@@ -135,6 +137,7 @@
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtypes = GRAIN|DAIRY|MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/pie/tofupie
 	name = "tofu-pie"
@@ -210,6 +213,7 @@
 	foodtypes = MEAT|GRAIN|DAIRY
 	slice_type = /obj/item/food/pieslice/xemeatpie
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/pieslice/xemeatpie
 	name = "xeno-pie slice"
@@ -218,6 +222,7 @@
 	tastes = list("pie" = 1, "acid" = 1, "meat" = 1)
 	foodtypes = GRAIN|DAIRY|MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/pie/applepie
 	name = "apple pie"
@@ -464,6 +469,7 @@
 	slice_type = /obj/item/food/pieslice/shepherds_pie
 	yield = 4
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pieslice/shepherds_pie
 	name = "shepherds pie slice"
@@ -477,6 +483,7 @@
 	tastes = list("juicy meat" = 1, "mashed potatoes" = 1, "baked veggies" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/food/pie/asdfpie
 	name = "pie-flavored pie"

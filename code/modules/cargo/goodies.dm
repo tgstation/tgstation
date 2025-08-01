@@ -191,6 +191,18 @@
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/toy/plush/shark)
 
+/datum/supply_pack/goody/horseplush
+	name = "Horse Plushie"
+	desc = "A horse friend to keep you company. You're basically a cowboy now."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/toy/plush/horse)
+
+/datum/supply_pack/goody/unicornplush
+	name = "Unicorn Plushie"
+	desc = "Good for someone who likes unicorns. Wait, that's everybody!"
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/toy/plush/unicorn)
+
 /datum/supply_pack/goody/dog_bone
 	name = "Jumbo Dog Bone"
 	desc = "The best dog bone money can have exported to a space station. A perfect gift for a dog."

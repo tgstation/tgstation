@@ -82,6 +82,9 @@
 		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 1] * seconds_per_tick)) //If true was returned, we lost the addiction!
 			return
 
+	if(!on_drug_of_this_addiction && HAS_TRAIT(affected_carbon, TRAIT_ADDICTIONRESILIENT) && affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 2] * seconds_per_tick))
+		return
+
 	if(!current_addiction_cycle) //Dont do the effects if were not on drugs
 		return FALSE
 

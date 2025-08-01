@@ -1,21 +1,18 @@
 /datum/crafting_recipe/food
 	mass_craftable = TRUE
-	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS
+	requirements_mats_blacklist = list(
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/popsicle_stick,
+		/obj/item/stack/rods,
+	)
+	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS | CRAFT_ENFORCE_MATERIALS_PARITY
 	///The food types that are added to the result when the recipe is completed
 	var/added_foodtypes = NONE
 	///The food types that are removed to the result when the recipe is completed
 	var/removed_foodtypes = NONE
 
-/datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
-	SHOULD_CALL_PARENT(TRUE)
-	. = ..()
-	if(istype(result) && istype(user) && !isnull(user.mind))
-		ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
-
 /datum/crafting_recipe/food/New()
 	. = ..()
-	parts |= reqs
-
 	//rarely, but a few cooking recipes (cake cat & co) don't result food items.
 	if(!PERFORM_ALL_TESTS(focus_only/check_foodtypes) || non_craftable || !ispath(result, /obj/item/food))
 		return
@@ -97,6 +94,19 @@
 /datum/chemical_reaction/food/chocolatepudding
 	results = list(/datum/reagent/consumable/chocolatepudding = 20)
 	required_reagents = list(/datum/reagent/consumable/cream = 5, /datum/reagent/consumable/coco = 5, /datum/reagent/consumable/eggyolk = 2)
+
+/datum/chemical_reaction/food/chocolatepudding/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	. = ..()
+	var/station_time = station_time()
+	if(!ISINRANGE(station_time, 3 HOURS + 45 MINUTES, 4 HOURS + 15 MINUTES))
+		return
+	var/lastkey = holder.my_atom?.fingerprintslast
+	if(!lastkey)
+		return
+	var/mob/living/user = get_mob_by_ckey(lastkey)
+	if(!istype(user) || user.stat || !is_in_sight(user, holder.my_atom))
+		return
+	user.add_mood_event("why_on_earth_are_you_making_chocolate_pudding", /datum/mood_event/lost_control_of_life)
 
 /datum/chemical_reaction/food/vanillapudding
 	results = list(/datum/reagent/consumable/vanillapudding = 20)
@@ -317,3 +327,9 @@
 	required_reagents = list(/datum/reagent/consumable/grapejuice = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mix_message = "The smell of the mixture reminds you of how you lost access to the country club..."
+
+/datum/chemical_reaction/food/spore_detoxification
+	results = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	required_reagents = list(/datum/reagent/toxin/spore = 1, /datum/reagent/consumable/eggwhite = 0.5)
+	required_temp = 350
+	optimal_temp = 420

@@ -181,7 +181,7 @@
 #define ACCESS_CENT_CAPTAIN "cent_captain"
 #define ACCESS_CENT_BAR "cent_bar"
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
-#define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcom, and syndicate mech access later -SonofSpace
+#define ACCESS_CENT_SPECOPS "cent_specops"
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
@@ -591,3 +591,8 @@
 #define FORCE_ADD_ALL 2
 /// Used in ID card access adding procs. Will stack trace on fail.
 #define ERROR_ON_FAIL 3
+
+#define ID_DATA(T) SSid_access.__in_character_record_id_information(T)
+#define SILICON_OVERRIDE "silicon_override"
+#define CHAMELEON_OVERRIDE "chameleon_override"
+#define ID_READ_FAILURE "id_read_failure"

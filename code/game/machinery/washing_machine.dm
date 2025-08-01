@@ -212,13 +212,13 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
 		update_appearance()
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
-/obj/machinery/washing_machine/proc/wash_cycle()
+/obj/machinery/washing_machine/proc/wash_cycle(mob/user)
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		AM.wash(CLEAN_WASH)
-		AM.machine_wash(src)
+		AM.machine_wash(src, user)
 
 	//if we had the ability to brainwash, remove that now
 	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
@@ -281,6 +281,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
 	gib()
 
+/mob/living/carbon/human/machine_wash(obj/machinery/washing_machine/washer, mob/user)
+	adjust_wet_stacks(8)
+	adjust_disgust(40, DISGUST_LEVEL_VERYDISGUSTED)
+	adjustOxyLoss(12)
+	log_combat(user, src, "machine washed (oxy)")
+
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
 	if(washer.color_source)
 		dye_item(washer.color_source.dye_color)
@@ -293,7 +299,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(!can_adjust && adjusted == ALT_STYLE) //we deadjust the uniform if it's now unadjustable
 			toggle_jumpsuit_adjust()
 
-/obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
 	..()
 	held_mob.machine_wash(washer)
 
@@ -370,12 +376,23 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return
 
 	if(user.pulling && isliving(user.pulling))
-		var/mob/living/L = user.pulling
-		if(L.buckled || L.has_buckled_mobs())
+		var/mob/living/victim = user.pulling
+		if(victim.buckled || victim.has_buckled_mobs())
 			return
 		if(state_open)
-			if(istype(L, /mob/living/basic/pet))
-				L.forceMove(src)
+			if(istype(victim, /mob/living/basic/pet))
+				victim.forceMove(src)
+				update_appearance()
+			else if(ishuman(victim))
+				if(user.grab_state < GRAB_AGGRESSIVE)
+					balloon_alert(user, "grab harder!")
+					return
+
+				victim.visible_message(span_danger("[user] is trying to force [victim] into [src]!"))
+				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(victim)] into a washing machine")
+				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(check_aggro_grab), user)))
+					return
+				victim.forceMove(src)
 				update_appearance()
 		return
 
@@ -384,6 +401,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else
 		state_open = FALSE //close the door
 		update_appearance()
+
+/obj/machinery/washing_machine/proc/check_aggro_grab(mob/living/user)
+	return user.grab_state >= GRAB_AGGRESSIVE
 
 /obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
@@ -405,7 +425,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
 		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(wash_cycle)), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wash_cycle), user), 20 SECONDS)
 	START_PROCESSING(SSfastprocess, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

@@ -1,4 +1,4 @@
-/datum/mutation/human/adaptation
+/datum/mutation/adaptation
 	name = "Adaptation"
 	desc = "A strange mutation that renders the host immune to damage from extreme temperatures. Does not protect from vacuums."
 	quality = POSITIVE
@@ -6,21 +6,21 @@
 	text_gain_indication = span_notice("Your body feels normal!")
 	instability = NEGATIVE_STABILITY_MAJOR
 	locked = TRUE // fake parent
-	conflicts = list(/datum/mutation/human/adaptation)
+	conflicts = list(/datum/mutation/adaptation)
 	mutation_traits = list(TRAIT_WADDLING)
 	/// Icon used for the adaptation overlay
 	var/adapt_icon = "meow"
 
-/datum/mutation/human/adaptation/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/adaptation/New(datum/mutation/copymut)
 	..()
-	conflicts = typesof(/datum/mutation/human/adaptation)
+	conflicts = typesof(/datum/mutation/adaptation)
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', adapt_icon, -MUTATIONS_LAYER))
 
-/datum/mutation/human/adaptation/get_visual_indicator()
+/datum/mutation/adaptation/get_visual_indicator()
 	return visual_indicators[type][1]
 
-/datum/mutation/human/adaptation/cold
+/datum/mutation/adaptation/cold
 	name = "Cold Adaptation"
 	desc = "A strange mutation that renders the host immune to damage from low temperature environments. It also prevents the host from slipping on ice."
 	text_gain_indication = span_notice("Your body feels refreshingly cold.")
@@ -29,7 +29,7 @@
 	adapt_icon = "cold"
 	locked = FALSE
 
-/datum/mutation/human/adaptation/heat
+/datum/mutation/adaptation/heat
 	name = "Heat Adaptation"
 	desc = "A strange mutation that renders the host immune to damage from high temperature, including being set alight, though the flame itself still burns clothing. It also seems to make the host resist ash storms."
 	text_gain_indication = span_notice("Your body feels invigoratingly warm.")
@@ -38,7 +38,7 @@
 	adapt_icon = "fire"
 	locked = FALSE
 
-/datum/mutation/human/adaptation/thermal
+/datum/mutation/adaptation/thermal
 	name = "Thermal Adaptation"
 	desc = "A strange mutation that renders the host immune to damage from both low and high temperature environments. Does not protect from high or low pressure environments."
 	difficulty = 32
@@ -48,7 +48,7 @@
 	adapt_icon = "thermal"
 	locked = TRUE // recipe
 
-/datum/mutation/human/adaptation/pressure
+/datum/mutation/adaptation/pressure
 	name = "Pressure Adaptation"
 	desc = "A strange mutation that renders the host immune to damage from both low and high pressure environments. Does not protect from temperature, including the cold of space."
 	text_gain_indication = span_notice("Your body feels impressively pressurized.")

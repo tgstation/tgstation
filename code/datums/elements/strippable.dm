@@ -258,13 +258,17 @@
 	return finish_equip_mob(equipping, source, user)
 
 /datum/strippable_item/mob_item_slot/get_obscuring(atom/source)
-	if (iscarbon(source))
-		var/mob/living/carbon/carbon_source = source
-		return (carbon_source.check_obscured_slots() & item_slot) \
-			? STRIPPABLE_OBSCURING_COMPLETELY \
-			: STRIPPABLE_OBSCURING_NONE
+	if (!iscarbon(source))
+		return STRIPPABLE_OBSCURING_NONE
 
-	return FALSE
+	var/mob/living/carbon/carbon_source = source
+	if (carbon_source.check_obscured_slots() & item_slot)
+		return STRIPPABLE_OBSCURING_COMPLETELY
+
+	if (carbon_source.check_covered_slots() & item_slot)
+		return STRIPPABLE_OBSCURING_INACCESSIBLE
+
+	return STRIPPABLE_OBSCURING_NONE
 
 /datum/strippable_item/mob_item_slot/start_unequip(atom/source, mob/user)
 	. = ..()
@@ -360,8 +364,8 @@
 			LAZYSET(result, "interacting", TRUE)
 
 		var/obscuring = item_data.get_obscuring(owner)
-		if (obscuring != STRIPPABLE_OBSCURING_NONE)
-			LAZYSET(result, "obscured", obscuring)
+		LAZYSET(result, "obscured", obscuring)
+		if (obscuring != STRIPPABLE_OBSCURING_NONE && obscuring != STRIPPABLE_OBSCURING_INACCESSIBLE)
 			items[strippable_key] = result
 			continue
 
@@ -413,7 +417,8 @@
 			if (!strippable_item.should_show(owner, user))
 				return
 
-			if (strippable_item.get_obscuring(owner) == STRIPPABLE_OBSCURING_COMPLETELY)
+			var/obscured = strippable_item.get_obscuring(owner)
+			if (obscured == STRIPPABLE_OBSCURING_COMPLETELY || obscured == STRIPPABLE_OBSCURING_INACCESSIBLE)
 				return
 
 			var/item = strippable_item.get_item(owner)
@@ -479,7 +484,8 @@
 			if (!strippable_item.should_show(owner, user))
 				return
 
-			if (strippable_item.get_obscuring(owner) == STRIPPABLE_OBSCURING_COMPLETELY)
+			var/obscured = strippable_item.get_obscuring(owner)
+			if (obscured == STRIPPABLE_OBSCURING_COMPLETELY || obscured == STRIPPABLE_OBSCURING_INACCESSIBLE)
 				return
 
 			var/item = strippable_item.get_item(owner)

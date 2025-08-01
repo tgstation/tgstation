@@ -1,3 +1,3 @@
 /obj/structure/table:
   banned_neighbors:
-  - /obj/structure/table
+    - /obj/structure/table

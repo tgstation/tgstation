@@ -5,9 +5,10 @@
 /obj/item/pet_carrier
 	name = "pet carrier"
 	desc = "A big white-and-blue pet carrier. Good for carrying <s>meat to the chef</s> cute animals around."
-	icon = 'icons/obj/pet_carrier.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/pet_carrier"
+	post_init_icon_state = "pet_carrier_open"
 	base_icon_state = "pet_carrier"
-	icon_state = "pet_carrier_open"
 	inhand_icon_state = "pet_carrier"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -224,8 +225,10 @@
 /obj/item/pet_carrier/biopod
 	name = "biopod"
 	desc = "Alien device used for undescribable purpose. Or carrying pets."
-	base_icon_state = "biopod"
+	icon = 'icons/obj/pet_carrier.dmi'
 	icon_state = "biopod_open"
+	post_init_icon_state = null
+	base_icon_state = "biopod"
 	inhand_icon_state = "biopod"
 	greyscale_config = null
 	greyscale_config_inhand_left = null
@@ -235,9 +238,11 @@
 /obj/item/pet_carrier/small
 	name = "small pet carrier"
 	desc = "A small pet carrier for miniature sized animals."
+	icon = 'icons/obj/pet_carrier.dmi'
+	icon_state = "small_carrier_open"
+	post_init_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
 	base_icon_state = "small_carrier"
-	icon_state = "small_carrier_open"
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -252,8 +257,8 @@
 /obj/item/pet_carrier/small/mouse
 	name = "small mouse carrier"
 	desc = "A small pet carrier for miniature sized animals. This looks prepared for a mouse."
-	open = FALSE
 	icon_state = "small_carrier_occupied_unlocked"
+	open = FALSE
 
 /obj/item/pet_carrier/small/mouse/Initialize(mapload)
 	var/mob/living/basic/mouse/hero_mouse = new /mob/living/basic/mouse(src)

@@ -27,8 +27,9 @@
 /obj/machinery/big_manipulator
 	name = "Big Manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
-	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
-	icon_state = "core"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/big_manipulator"
+	post_init_icon_state = "core"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/big_manipulator
 	greyscale_colors = "#d8ce13"
@@ -167,7 +168,7 @@
 
 /obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
 	if(gone == monkey_worker?.resolve())
-		var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
+		var/mob/living/carbon/human/poor_monkey = monkey_worker.resolve()
 		REMOVE_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
 		monkey_worker = null
 		poor_monkey.remove_offsets("[src]")
@@ -234,10 +235,28 @@
 /obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
 		return NONE
-	if(!panel_open || !is_wire_tool(tool))
+	if(!panel_open)
 		return NONE
-	wires.interact(user)
-	return ITEM_INTERACT_SUCCESS
+
+	if(isidcard(tool))
+		var/obj/item/card/id/clicked_by_this_id = tool
+		if(!isnull(locked_by_this_id))
+			var/obj/item/card/id/resolve_id = locked_by_this_id.resolve()
+			if(clicked_by_this_id != resolve_id)
+				balloon_alert(user, "locked by another id!")
+				return ITEM_INTERACT_BLOCKING
+			locked_by_this_id = null
+			change_id_locked_status(user)
+			return ITEM_INTERACT_SUCCESS
+		locked_by_this_id = WEAKREF(clicked_by_this_id)
+		change_id_locked_status(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(is_wire_tool(tool))
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/big_manipulator/RefreshParts()
 	. = ..()
@@ -253,10 +272,16 @@
 	if(status == STATUS_UNINSTALLING_WORKER)
 		balloon_alert(user, "already uninstalling worker, please wait")
 		return
-	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
-	if(!istype(poor_monkey, /mob/living/carbon/human/species/monkey))
+
+	var/mob/living/carbon/human/poor_monkey = monkey_worker.resolve()
+	if(!ismonkey(poor_monkey))
+		if(!QDELETED(poor_monkey))
+			poor_monkey.drop_all_held_items()
+			poor_monkey.set_lying_angle(0)
+			poor_monkey.forceMove(get_turf(src))
 		monkey_worker = null
 		return
+
 	status = STATUS_UNINSTALLING_WORKER
 	balloon_alert(user, "uninstalling monkey worker...")
 	if(!do_after(user, 3 SECONDS, src))
@@ -264,6 +289,7 @@
 		return
 	balloon_alert(user, "monkey worker uninstalled")
 	poor_monkey.drop_all_held_items()
+	poor_monkey.set_lying_angle(0)
 	poor_monkey.forceMove(get_turf(src))
 	status = STATUS_IDLE
 
@@ -276,7 +302,7 @@
 	if(status == STATUS_INSTALLING_WORKER)
 		balloon_alert(user, "already installing worker, please wait")
 		return
-	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey
+	var/mob/living/carbon/human/poor_monkey = monkey
 	if(poor_monkey.mind)
 		balloon_alert(user, "too smart! might demand pay!")
 		return
@@ -295,27 +321,12 @@
 	status = STATUS_IDLE
 	manipulator_arm.vis_contents += poor_monkey
 	poor_monkey.dir = manipulator_arm.dir
+	poor_monkey.set_lying_angle(dir2angle(manipulator_arm.dir))
 	poor_monkey.add_offsets(
 		"[src]",
 		x_add = 32 + manipulator_arm.calculate_item_offset(TRUE, pixels_to_offset = 16),
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
-
-/obj/machinery/big_manipulator/attackby(obj/item/is_card, mob/user, params)
-	. = ..()
-	if(!isidcard(is_card))
-		return
-	var/obj/item/card/id/clicked_by_this_id = is_card
-	if(!isnull(locked_by_this_id))
-		var/obj/item/card/id/resolve_id = locked_by_this_id.resolve()
-		if(clicked_by_this_id != resolve_id)
-			balloon_alert(user, "locked by another id")
-			return
-		locked_by_this_id = null
-		change_id_locked_status(user)
-		return
-	locked_by_this_id = WEAKREF(clicked_by_this_id)
-	change_id_locked_status(user)
 
 /obj/machinery/big_manipulator/proc/change_id_locked_status(mob/user)
 	id_locked = !id_locked
@@ -491,7 +502,7 @@
 	if(isnull(obj_resolve))
 		finish_manipulation()
 		return
-	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
+	var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 	if(isnull(monkey_resolve))
 		finish_manipulation()
 		return
@@ -518,7 +529,7 @@
 	check_end_of_use(im_item, item_was_used = TRUE)
 
 /obj/machinery/big_manipulator/proc/use_thing_with_empty_hand()
-	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
+	var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 	if(isnull(monkey_resolve))
 		finish_manipulation()
 		return
@@ -779,7 +790,7 @@
 			return TRUE
 		if("worker_combat_mode_change")
 			worker_combat_mode = !worker_combat_mode
-			var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
+			var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 			monkey_resolve?.set_combat_mode(worker_combat_mode)
 			return TRUE
 		if("worker_alt_mode_change")

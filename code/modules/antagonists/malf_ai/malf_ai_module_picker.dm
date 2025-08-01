@@ -41,6 +41,9 @@
 	var/list/data = list()
 	data["processingTime"] = processing_time
 	data["compactMode"] = compact_mode
+	if(isAI(user))
+		var/mob/living/silicon/ai/ai_user = user
+		data["hackedAPCs"] = ai_user.hacked_apcs.len
 	return data
 
 /datum/module_picker/ui_static_data(mob/user)
@@ -57,6 +60,7 @@
 				"name" = AM.name,
 				"cost" = AM.cost,
 				"desc" = AM.description,
+				"minimum_apcs" = AM.minimum_apcs,
 			))
 		data["categories"] += list(cat)
 
@@ -93,7 +97,8 @@
 		return
 	if(AM.cost > processing_time)
 		return
-
+	if(AM.minimum_apcs > AI.hacked_apcs.len)
+		return
 	var/datum/action/innate/ai/action = locate(AM.power_type) in AI.actions
 	// Give the power and take away the money.
 	if(AM.upgrade) //upgrade and upgrade() are separate, be careful!

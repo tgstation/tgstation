@@ -87,7 +87,17 @@
 /datum/component/aquarium_content/proc/generate_base_vc(atom/movable/aquarium)
 	vc_obj = new
 	vc_obj.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE //plane so it shows properly in containers on inventory ui for handheld cases
+	update_vc_color(parent)
+	RegisterSignal(parent, COMSIG_ATOM_COLOR_UPDATED, PROC_REF(update_vc_color))
 	SEND_SIGNAL(parent, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, vc_obj, aquarium)
+
+/datum/component/aquarium_content/proc/update_vc_color(atom/movable/source)
+	SIGNAL_HANDLER
+	var/color_to_use = source.color
+	if(!color_to_use && isfish(source)) //Small bit of snowflake code for those fish overlays that are greyscale.
+		var/obj/item/fish/fish = source
+		color_to_use = fish.aquarium_vc_color
+	vc_obj.color = color_to_use
 
 /datum/component/aquarium_content/proc/set_vc_base_position()
 	var/atom/movable/movable = parent

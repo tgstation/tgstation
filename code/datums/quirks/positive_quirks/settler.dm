@@ -31,8 +31,8 @@
 	human_quirkholder.add_traits(settler_traits, QUIRK_TRAIT)
 
 /datum/quirk/item_quirk/settler/add_unique(client/client_source)
-	give_item_to_holder(/obj/item/storage/box/papersack/wheat, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-	give_item_to_holder(/obj/item/storage/toolbox/fishing/small, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(/obj/item/storage/box/papersack/wheat, list(LOCATION_BACKPACK, LOCATION_HANDS))
+	give_item_to_holder(/obj/item/storage/toolbox/fishing/small, list(LOCATION_BACKPACK, LOCATION_HANDS))
 
 /datum/quirk/item_quirk/settler/remove()
 	if(QDELING(quirk_holder))
