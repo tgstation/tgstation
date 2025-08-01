@@ -93,7 +93,7 @@
  * * amount - the amount of damage to verify that the mob has
  * * included_types - Bitflag of damage types to check.
  */
-/datum/unit_test/mob_damage/proc/verify_damage(mob/living/testing_mob, amount, included_types = ALL)
+/datum/unit_test/mob_damage/proc/verify_damage(mob/living/carbon/testing_mob, amount, included_types = ALL)
 	if(included_types & TOXLOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), amount, \
 			"[testing_mob] should have [amount] toxin damage, instead they have [testing_mob.getToxLoss()]!")
@@ -128,7 +128,7 @@
  * * bodytypes - the bodytypes of damage to apply
  * * forced - whether or not this is forced damage
  */
-/datum/unit_test/mob_damage/proc/apply_damage(mob/living/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
+/datum/unit_test/mob_damage/proc/apply_damage(mob/living/carbon/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
 	var/damage_returned
 	if(included_types & TOXLOSS)
 		damage_returned = testing_mob.adjustToxLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
@@ -165,7 +165,7 @@
  * * bodytypes - the bodytypes of damage to apply
  * * forced - whether or not this is forced damage
  */
-/datum/unit_test/mob_damage/proc/set_damage(mob/living/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
+/datum/unit_test/mob_damage/proc/set_damage(mob/living/carbon/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
 	var/damage_returned
 	if(included_types & TOXLOSS)
 		damage_returned = testing_mob.setToxLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
@@ -473,7 +473,7 @@
  * * expected - the expected return value of the damage procs, if it differs from the default of (amount * 4)
  * * included_types - Bitflag of damage types to check.
  */
-/datum/unit_test/mob_damage/animal/verify_damage(mob/living/testing_mob, amount, expected, included_types = ALL)
+/datum/unit_test/mob_damage/animal/verify_damage(mob/living/carbon/testing_mob, amount, expected, included_types = ALL)
 	if(included_types & TOXLOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), 0, \
 			"[testing_mob] should have [0] toxin damage, instead they have [testing_mob.getToxLoss()]!")
@@ -491,7 +491,7 @@
 			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.getStaminaLoss()]!")
 	return TRUE
 
-/datum/unit_test/mob_damage/animal/test_sanity_simple(mob/living/test_mob)
+/datum/unit_test/mob_damage/animal/test_sanity_simple(mob/living/carbon/test_mob)
 	// check to see if basic mob damage works
 
 	// Simple damage and healing
@@ -522,7 +522,7 @@
 	if(!test_apply_damage(test_mob, amount = -35, expected = 0))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! overhealing was not applied correctly")
 
-/datum/unit_test/mob_damage/animal/test_sanity_complex(mob/living/test_mob)
+/datum/unit_test/mob_damage/animal/test_sanity_complex(mob/living/carbon/test_mob)
 	// Heal up, so that errors from the previous tests we won't cause this one to fail
 	test_mob.fully_heal(HEAL_DAMAGE)
 	var/damage_returned
