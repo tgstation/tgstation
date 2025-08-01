@@ -59,7 +59,8 @@
 	var/distance = max(0, get_dist(get_turf(src), turf))
 
 //Flash
-	if(living_mob.flash_act(affect_silicon = 1))
+	var/attempt_flash = living_mob.flash_act(affect_silicon = 1)
+	if(attempt_flash == FLASH_COMPLETED)
 		if(distance <= sweetspot_range)
 			living_mob.Paralyze(max(20/max(1, distance), 5))
 			living_mob.Knockdown(max(200/max(1, distance), 60))
