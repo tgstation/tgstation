@@ -82,7 +82,7 @@
 	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
-/mob/living/carbon/getBruteLoss(required_bodytype = NONE)
+/mob/living/carbon/getBruteLoss(required_bodytype = ALL)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.bodytype & required_bodytype))
@@ -90,7 +90,7 @@
 		amount += bodypart.brute_dam
 	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/getFireLoss(required_bodytype = NONE)
+/mob/living/carbon/getFireLoss(required_bodytype = ALL)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.bodytype & required_bodytype))
@@ -202,7 +202,7 @@
  */
 /mob/living/carbon/get_organ_loss(slot, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(affected_organ && (affected_organ.organ_flags & required_organ_flag))
+	if(affected_organ && required_organ_flag && (affected_organ.organ_flags & required_organ_flag))
 		return affected_organ.damage
 
 ////////////////////////////////////////////
