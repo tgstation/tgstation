@@ -1529,7 +1529,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)
 	if(paying_id_account)
 		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-		SSeconomy.track_purchase(account, price_to_use, name)
 		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
 	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE
