@@ -89,6 +89,7 @@
 	transform = transform.Scale(1.04, 1.04)
 	for(var/i in 1 to 3)
 		addtimer(CALLBACK(src, PROC_REF(create_engine)), i * 1 SECONDS)
+	ADD_TRAIT(src, TRAIT_PERFECT_ATTACKER, INNATE_TRAIT)
 
 /obj/vehicle/sealed/mecha/justice/update_icon_state()
 	. = ..()

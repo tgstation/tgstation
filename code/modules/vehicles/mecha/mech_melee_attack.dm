@@ -105,7 +105,9 @@
 		step_away(src, mecha_attacker, 15)
 
 	var/damage = rand(mecha_attacker.force * mecha_attacker.melee_lower_damage_range, mecha_attacker.force)
-	var/def_zone = get_random_valid_zone(user.zone_selected, even_weights = TRUE)
+	var/def_zone = user.zone_selected
+	if((!HAS_TRAIT(mecha_attacker, TRAIT_PERFECT_ATTACKER) && !HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) || !get_bodypart(def_zone))
+		def_zone = get_random_valid_zone(def_zone, even_weights = TRUE)
 
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
