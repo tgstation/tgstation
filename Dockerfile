@@ -5,7 +5,8 @@ RUN dpkg --add-architecture i386 \
     && apt-get upgrade -y \
     && apt-get dist-upgrade -y \
     && apt-get install -y --no-install-recommends \
-        ca-certificates
+        ca-certificates \
+        libcurl4
 
 # byond = base + byond installed globally
 FROM base AS byond
