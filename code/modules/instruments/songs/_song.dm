@@ -9,7 +9,7 @@
 	var/name = "Untitled"
 
 	/// ID for syncing songs together
-	var/id
+	var/id = ""
 
 	/// The atom we're attached to/playing from
 	var/atom/parent
@@ -134,7 +134,6 @@
 	update_sustain()
 	if(new_range)
 		instrument_range = new_range
-	id = assign_random_name(10)
 
 /datum/song/Destroy()
 	stop_playing()
