@@ -142,6 +142,7 @@
 		if(exposed_turf.air)
 			var/datum/gas_mixture/air = exposed_turf.air
 			air.temperature = clamp(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp), T0C, air.temperature) // the max temperature check is for weird phenomena like freon combustion
+			exposed_turf.temperature = clamp(min(exposed_turf.temperature-(cool_temp*1000), exposed_turf.temperature/cool_temp), T20C, exposed_turf.temperature) // turfs normally don't go below T20C so I'll just clamp it to that in case of weird phenomena.
 			air.react(src)
 			qdel(hotspot)
 
