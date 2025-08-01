@@ -2333,6 +2333,7 @@
 #include "code\game\objects\effects\countdown.dm"
 #include "code\game\objects\effects\cursor_catcher.dm"
 #include "code\game\objects\effects\effects.dm"
+#include "code\game\objects\effects\flotsam.dm"
 #include "code\game\objects\effects\forcefields.dm"
 #include "code\game\objects\effects\glowshroom.dm"
 #include "code\game\objects\effects\info.dm"

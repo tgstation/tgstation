@@ -20,7 +20,8 @@
 		/obj/structure/geyser/protozine = 10,
 		/obj/structure/geyser/random = 2,
 		/obj/structure/geyser/wittel = 10,
-		/obj/structure/ore_vent/random/water = 10,
+		/obj/structure/ore_vent/random/rainworld = 10,
+		/obj/effect/flotsam = 3,
 	)
 
 /datum/map_generator/cave_generator/rainworld/surface
