@@ -504,7 +504,7 @@
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
-/obj/item/mod/module/stealth/wraith/on_activation()
+/obj/item/mod/module/stealth/wraith/on_activation(mob/activator)
 	return // Don't activate stealth when the module is activated because the stealth portion of the module is fully passive
 
 /obj/item/mod/module/stealth/wraith/on_deactivation(display_message = TRUE, deleting = FALSE)

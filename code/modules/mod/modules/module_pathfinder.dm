@@ -59,14 +59,14 @@
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 	module_type = MODULE_PASSIVE
 
-/obj/item/mod/module/pathfinder/on_use()
+/obj/item/mod/module/pathfinder/on_use(mob/activator)
 	. = ..()
 	if (!ishuman(mod.wearer) || !implant)
 		return
 	if(!implant.implant(mod.wearer, mod.wearer))
-		balloon_alert(mod.wearer, "can't implant!")
+		balloon_alert(activator, "can't implant!")
 		return
-	balloon_alert(mod.wearer, "implanted")
+	balloon_alert(activator, "implanted")
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 	module_type = MODULE_PASSIVE
 	var/datum/action/item_action/mod/pinnable/module/existing_action = pinned_to[REF(mod.wearer)]
@@ -115,21 +115,21 @@
 		<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR> \
 		<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"
 
-/obj/item/implant/mod/proc/recall()
+/obj/item/implant/mod/proc/recall(mob/recaller)
 	if(!module?.mod)
-		balloon_alert(imp_in, "no connected unit!")
+		balloon_alert(recaller, "no connected unit!")
 		return FALSE
 	if(module.mod.open)
-		balloon_alert(imp_in, "cover open!")
+		balloon_alert(recaller, "cover open!")
 		return FALSE
 	if(module.mod.ai_controller)
-		balloon_alert(imp_in, "already moving!")
+		balloon_alert(recaller, "already moving!")
 		return FALSE
 	if(ismob(get_atom_on_turf(module.mod)))
-		balloon_alert(imp_in, "already on someone!")
+		balloon_alert(recaller, "already on someone!")
 		return FALSE
 	if(module.z != z || get_dist(imp_in, module.mod) > MOD_AI_RANGE)
-		balloon_alert(imp_in, "too far!")
+		balloon_alert(recaller, "too far!")
 		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai
@@ -142,7 +142,7 @@
 	animate(module.mod, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
 	module.mod.add_overlay(jet_icon)
 	RegisterSignal(module.mod, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	balloon_alert(imp_in, "suit recalled")
+	balloon_alert(recaller, "suit recalled")
 	return TRUE
 
 /obj/item/implant/mod/proc/end_recall(successful = TRUE)
@@ -185,7 +185,7 @@
 /datum/action/item_action/mod_recall/do_effect(trigger_flags)
 	var/obj/item/implant/mod/implant = target
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
-		implant.balloon_alert(implant.imp_in, "on cooldown!")
+		implant.balloon_alert(owner, "on cooldown!")
 		return
-	if(implant.recall())
+	if(implant.recall(owner))
 		COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
