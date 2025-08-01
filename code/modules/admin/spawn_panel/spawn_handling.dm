@@ -21,10 +21,16 @@
 
 	var/amount = clamp(text2num(spawn_params["atom_amount"]), 1, ADMIN_SPAWN_CAP)
 
-	var/list/offset = spawn_params["offset"]
-	var/X = offset["X"]
-	var/Y = offset["Y"]
-	var/Z = offset["Z"]
+	var/list/offset_data
+	if(islist(spawn_params["offset"]))
+		offset_data = spawn_params["offset"]
+	else
+		var/string_offset_data = spawn_params["offset"]
+		offset_data = list("X" = string_offset_data[1], "Y" = string_offset_data[2], "Z" = string_offset_data[3])
+
+	var/X = offset_data["X"] || 0
+	var/Y = offset_data["Y"] || 0
+	var/Z = offset_data["Z"] || 0
 
 	var/atom_dir = text2num(spawn_params["atom_dir"]) || 1
 	var/atom_name = sanitize(spawn_params["atom_name"])
@@ -33,8 +39,6 @@
 	var/atom/target = null
 
 	if(where_target_type == WHERE_MOB_HAND || where_target_type == WHERE_TARGETED_MOB_HAND)
-		var/atom/target = null
-
 		target = (where_target_type == WHERE_TARGETED_MOB_HAND ? spawn_params["object_reference"] : user)
 
 		if(!target)
