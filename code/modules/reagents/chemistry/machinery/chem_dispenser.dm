@@ -529,6 +529,7 @@
 		/datum/reagent/consumable/tomatojuice,
 		/datum/reagent/consumable/tonic,
 		/datum/reagent/water,
+		/datum/reagent/consumable/gaywater, // Troutstation edit
 	)
 	upgrade_reagents = null
 	/// The default list of emagged reagents dispensable by the soda dispenser
