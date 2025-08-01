@@ -485,7 +485,6 @@
 				continue
 		else
 			transfer_amount = reagent.volume * part
-		transfer_amount *= multiplier
 
 		if(preserve_data)
 			trans_data = copy_data(reagent)
@@ -493,12 +492,12 @@
 			update_total()
 			target_holder.update_total()
 			continue
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = r_to_send, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = r_to_send, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
 
 		total_transfered_amount += transfered_amount
-		reagent.volume -= transfered_amount
+		reagent.volume -= transfer_amount
 		transfer_log += "[reagent.type] ([transfered_amount]u, [reagent.purity] purity)"
 
 		if(!isnull(target_id))
