@@ -507,7 +507,7 @@
 /obj/item/mod/module/stealth/wraith/on_activation(mob/activator)
 	return // Don't activate stealth when the module is activated because the stealth portion of the module is fully passive
 
-/obj/item/mod/module/stealth/wraith/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/stealth/wraith/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	. = ..()
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 
