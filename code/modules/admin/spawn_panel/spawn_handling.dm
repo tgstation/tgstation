@@ -24,9 +24,15 @@
 	var/list/offset_data
 	if(islist(spawn_params["offset"]))
 		offset_data = spawn_params["offset"]
+	else if(istext(spawn_params["offset"]))
+		var/list/parsed = splittext(spawn_params["offset"], ",")
+		if(length(parsed) >= 3)
+			offset_data = list("X" = text2num(parsed[1]), "Y" = text2num(parsed[2]), "Z" = text2num(parsed[3]))
+		else
+			offset_data = list("X" = 0, "Y" = 0, "Z" = 0)
 	else
-		var/string_offset_data = spawn_params["offset"]
-		offset_data = list("X" = string_offset_data[1], "Y" = string_offset_data[2], "Z" = string_offset_data[3])
+		offset_data = list("X" = 0, "Y" = 0, "Z" = 0)
+
 
 	var/X = offset_data["X"] || 0
 	var/Y = offset_data["Y"] || 0
@@ -39,7 +45,7 @@
 	var/atom/target = null
 
 	if(where_target_type == WHERE_MOB_HAND || where_target_type == WHERE_TARGETED_MOB_HAND)
-		target = (where_target_type == WHERE_TARGETED_MOB_HAND ? spawn_params["object_reference"] : user)
+		target = (where_target_type == WHERE_TARGETED_MOB_HAND ? spawn_params["target"] : user)
 
 		if(!target)
 			to_chat(user, span_warning("No target specified."))
@@ -63,6 +69,8 @@
 		else
 			target = (where_target_type == WHERE_MARKED_OBJECT ? get_turf(user.client.holder.marked_datum) : user.client.holder.marked_datum)
 
+	else if(where_target_type == WHERE_TARGETED_LOCATION || where_target_type == WHERE_TARGETED_LOCATION_POD)
+		target = spawn_params["target"]
 	else
 		switch(spawn_params["offset_type"])
 			if(OFFSET_ABSOLUTE)
@@ -145,6 +153,21 @@
 				if(target_robot.model)
 					target_robot.model.add_module(created_item, TRUE, TRUE)
 					target_robot.activate_module(created_item)
+
+		if(spawn_params["selected_atom_icon"])
+			created_atom.icon = spawn_params["selected_atom_icon"]
+		else if(selected_atom)
+			created_atom.icon = initial(selected_atom.icon)
+
+		if(spawn_params["selected_atom_icon_state"])
+			created_atom.icon_state = spawn_params["selected_atom_icon_state"]
+		else if(selected_atom && spawn_params["selected_atom_icon_state"] != null)
+			created_atom.icon_state = initial(selected_atom.icon_state)
+
+		if(spawn_params["atom_icon_size"])
+			if(ismob(created_atom))
+				var/mob/living/created_mob = created_atom
+				created_mob.current_size = spawn_params["atom_icon_size"] / 100
 
 	if(pod)
 		new /obj/effect/pod_landingzone(target, pod)

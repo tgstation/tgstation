@@ -34,7 +34,7 @@ interface spawnPreferences {
   sort_by: string;
   search_text: string;
   search_by: string;
-  object_list?: string;
+  selected_atom?: string;
 }
 
 interface currentList {
@@ -55,12 +55,11 @@ export function CreateObject(props: CreateObjectProps) {
   const [showIcons, setshowIcons] = useState(false);
   const [showPreview, setshowPreview] = useState(false);
 
-  const allObjects = Object.entries(objList).reduce<Record<string, AtomData>>(
-    (acc, [_, objects]: [string, Record<string, AtomData>]) => {
-      return { ...acc, ...objects };
-    },
-    {},
-  );
+  // flattening the object lists
+  const allObjects = Object.assign({}, ...Object.values(objList)) as Record<
+    string,
+    AtomData
+  >;
 
   const currentList = objList as currentList;
   const currentType = allObjects[data.copied_type ?? '']?.type || 'Objects';
@@ -195,6 +194,21 @@ export function CreateObject(props: CreateObjectProps) {
   };
 
   const sendPreferences = (settings: Partial<spawnPreferences>) => {
+    const parseOffset = (offsetStr: string): number[] => {
+      if (!offsetStr.trim()) return [0, 0, 0];
+
+      const parts = offsetStr.split(',').map((part) => {
+        const num = parseInt(part.trim());
+        return isNaN(num) ? 0 : num;
+      });
+
+      while (parts.length < 3) {
+        parts.push(0);
+      }
+
+      return parts.slice(0, 3);
+    };
+
     const prefsToSend = {
       hide_icons: showIcons,
       hide_mappings: hideMapping,
@@ -206,12 +220,12 @@ export function CreateObject(props: CreateObjectProps) {
       ...settings,
     };
 
-    act('create-object-action', prefsToSend);
+    act('create-atom-action', prefsToSend);
   };
 
   const handleObjectSelect = (obj: string) => {
     setSelectedObj(obj);
-    act('selected-object-changed', {
+    act('selected-atom-changed', {
       newObj: obj,
     });
     if (allObjects[obj]) {
@@ -418,7 +432,7 @@ export function CreateObject(props: CreateObjectProps) {
                   }}
                   onDoubleClick={() => {
                     if (selectedObj) {
-                      sendPreferences({ object_list: selectedObj });
+                      sendPreferences({ selected_atom: selectedObj });
                     }
                   }}
                   onClick={() => handleObjectSelect(obj)}

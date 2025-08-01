@@ -77,10 +77,10 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 		return FALSE
 
 	if(usr.client.ckey != owner_ckey)
-    return FALSE
+		return FALSE
 
 	switch(action)
-		if("select-new-DMI") // pick-icon
+		if("select-new-DMI")
 			var/icon/new_icon = input("Select a new icon file:", "Icon") as null|icon
 			if(new_icon)
 				selected_atom_icon = new_icon
@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 			SStgui.update_uis(src)
 			return TRUE
 
-		if("reset-DMI-icon") // reset-icon
+		if("reset-DMI-icon")
 			selected_atom_icon = null
 			selected_atom_icon_state = null
 			if(selected_atom)
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 			SStgui.update_uis(src)
 			return TRUE
 
-		if("select-new-icon-state") // pick-icon-state
+		if("select-new-icon-state")
 			selected_atom_icon_state = params["new_state"]
 			SStgui.update_uis(src)
 			return TRUE
@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 			SStgui.update_uis(src)
 			return TRUE
 
-		if("selected-atom-changed") // selected-object-changed
+		if("selected-atom-changed")
 			var/path = text2path(params["newObj"])
 			if(path)
 				var/atom/temp_atom = path
@@ -136,16 +136,18 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 				selected_atom = temp_atom
 			return TRUE
 
-		if("create-atom-action") // create-object-action
+		if("create-atom-action")
 			var/list/spawn_params = list(
 				"selected_atom" = selected_atom,
-				"atom_amount" = text2num(params["object_count"]) || 1,
 				"offset" = params["offset"],
 				"atom_dir" = text2num(params["dir"]) || 1,
-				"atom_name" = params["object_name"],
-				"atom_where" = params["where_target_type"] || WHERE_FLOOR_BELOW_MOB,
+				"atom_amount" = text2num(params["atom_amount"]) || 1,
+				"atom_name" = params["atom_name"],
+				"where_target_type" = params["where_target_type"] || WHERE_FLOOR_BELOW_MOB,
+				"atom_icon_size" = params["atom_icon_size"],
 				"offset_type" = params["offset_type"] || OFFSET_RELATIVE,
-				"atom_icon_size" = params["custom_icon_size"],
+				"selected_atom_icon" = selected_atom_icon,
+				"selected_atom_icon_state" = selected_atom_icon_state,
 				)
 
 			spawn_item(spawn_params, usr)
@@ -176,6 +178,10 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 				offset_type = params["offset_type"]
 			if(params["atom_icon_size"])
 				atom_icon_size = text2num(params["atom_icon_size"])
+			if(params["selected_atom_icon"])
+				selected_atom_icon = params["selected_atom_icon"]
+			if(params["selected_atom_icon_state"])
+				selected_atom_icon_state = params["selected_atom_icon_state"]
 			return TRUE
 
 /datum/spawnpanel/proc/toggle_precise_mode(precise_type)
@@ -233,7 +239,9 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 					"offset_type" = OFFSET_ABSOLUTE,
 					"where_target_type" = where_target_type,
 					"target" = target,
-					"atom_icon_size" = atom_icon_size
+					"atom_icon_size" = atom_icon_size,
+					"selected_atom_icon" = selected_atom_icon,
+					"selected_atom_icon_state" = selected_atom_icon_state,
 				)
 
 				if(where_target_type == WHERE_TARGETED_LOCATION || where_target_type == WHERE_TARGETED_LOCATION_POD)

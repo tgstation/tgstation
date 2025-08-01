@@ -17,7 +17,7 @@ import {
   spawnLocationIcons,
   spawnLocationOptions,
 } from './constants';
-import { IconSettings } from './index';
+import type { IconSettings } from './index';
 
 export interface SpawnPanelData {
   icon: string;
@@ -46,7 +46,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
 
   const updateAmount = (value: number) => {
     setAmount(value);
-    sendUpdatedSettings({ object_count: value });
+    sendUpdatedSettings({ atom_amount: value });
   };
 
   const updateCordsType = (value: number) => {
@@ -59,20 +59,20 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
 
   const updateSpawnLocation = (value: string) => {
     setSpawnLocation(value);
-    storage.set('spawnpanel-where_dropdown_value', value);
-    sendUpdatedSettings({ where_dropdown_value: value });
+    storage.set('spawnpanel-where_target_type', value);
+    sendUpdatedSettings({ where_target_type: value });
   };
 
   const updateDirection = (value: number) => {
     setDirection(value);
     storage.set('spawnpanel-direction', value);
-    sendUpdatedSettings({ dir: [1, 2, 4, 8][value] });
+    sendUpdatedSettings({ atom_dir: [1, 2, 4, 8][value] });
   };
 
   const updateObjectName = (value: string) => {
     setObjectName(value);
-    storage.set('spawnpanel-object_name', value);
-    sendUpdatedSettings({ object_name: value });
+    storage.set('spawnpanel-atom_name', value);
+    sendUpdatedSettings({ atom_name: value });
 
     if (isPreciseModeActive) {
       sendUpdatedSettings();
@@ -82,22 +82,51 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const updateOffset = (value: string) => {
     setOffset(value);
     storage.set('spawnpanel-offset', value);
-    sendUpdatedSettings({ offset: value });
+
+    const parseOffset = (offsetStr: string): number[] => {
+      if (!offsetStr.trim()) return [0, 0, 0];
+
+      const parts = offsetStr.split(',').map((part) => {
+        const num = parseInt(part.trim());
+        return isNaN(num) ? 0 : num;
+      });
+
+      while (parts.length < 3) {
+        parts.push(0);
+      }
+
+      return parts.slice(0, 3);
+    };
+
+    sendUpdatedSettings({ offset: parseOffset(value) });
   };
 
   const sendUpdatedSettings = (
     changedSettings: Partial<Record<string, unknown>> = {},
   ) => {
+    const parseOffset = (offsetStr: string): number[] => {
+      if (!offsetStr.trim()) return [0, 0, 0];
+
+      const parts = offsetStr.split(',').map((part) => {
+        const num = parseInt(part.trim());
+        return isNaN(num) ? 0 : num;
+      });
+
+      while (parts.length < 3) {
+        parts.push(0);
+      }
+
+      return parts.slice(0, 3);
+    };
+
     const currentSettings = {
-      object_count: amount,
+      atom_amount: amount,
       offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
-      where_dropdown_value: spawnLocation,
-      dir: [1, 2, 4, 8][direction],
-      offset: offset,
-      object_name: objectName,
-      custom_icon: iconSettings.icon,
-      custom_icon_state: iconSettings.iconState,
-      custom_icon_size: iconSettings.iconSize,
+      where_target_type: spawnLocation,
+      atom_dir: [1, 2, 4, 8][direction],
+      offset: parseOffset(offset),
+      atom_name: objectName,
+      atom_icon_size: iconSettings.iconSize,
       ...changedSettings,
     };
     act('update-settings', currentSettings);
@@ -118,20 +147,20 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     setObjectName(defaultObjectName);
     setOffset(defaultOffset);
 
-    storage.set('spawnpanel-object_count', defaultAmount);
+    storage.set('spawnpanel-atom_amount', defaultAmount);
     storage.set('spawnpanel-offset_type', defaultCordsType);
-    storage.set('spawnpanel-where_dropdown_value', defaultSpawnLocation);
+    storage.set('spawnpanel-where_target_type', defaultSpawnLocation);
     storage.set('spawnpanel-direction', defaultDirection);
-    storage.set('spawnpanel-object_name', defaultObjectName);
+    storage.set('spawnpanel-atom_name', defaultObjectName);
     storage.set('spawnpanel-offset', defaultOffset);
 
     sendUpdatedSettings({
-      object_count: defaultAmount,
+      atom_amount: defaultAmount,
       offset_type: defaultCordsType ? 'Absolute offset' : 'Relative offset',
-      where_dropdown_value: defaultSpawnLocation,
-      dir: [1, 2, 4, 8][defaultDirection],
+      where_target_type: defaultSpawnLocation,
+      atom_dir: [1, 2, 4, 8][defaultDirection],
       offset: defaultOffset,
-      object_name: defaultObjectName,
+      atom_name: defaultObjectName,
     });
   };
 
@@ -139,10 +168,10 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     const loadStoredValues = async () => {
       const storedCordsType = await storage.get('spawnpanel-offset_type');
       const storedSpawnLocation = await storage.get(
-        'spawnpanel-where_dropdown_value',
+        'spawnpanel-where_target_type',
       );
       const storedDirection = await storage.get('spawnpanel-direction');
-      const storedObjectName = await storage.get('spawnpanel-object_name');
+      const storedObjectName = await storage.get('spawnpanel-atom_name');
       const storedOffset = await storage.get('spawnpanel-offset');
 
       if (storedCordsType !== undefined) setCordsType(storedCordsType);
@@ -175,25 +204,39 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   };
 
   const handleSpawn = () => {
-    const currentSettings = {
-      object_count: amount,
-      offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
-      where_dropdown_value: spawnLocation,
-      dir: [1, 2, 4, 8][direction],
-      offset,
-      object_name: objectName,
-      custom_icon: iconSettings.icon,
-      custom_icon_state: iconSettings.iconState || data.iconState || 'none',
-      custom_icon_size: iconSettings.iconSize,
-      object_list: data.selected_object,
+    const parseOffset = (offsetStr: string): number[] => {
+      if (!offsetStr.trim()) return [0, 0, 0];
+
+      const parts = offsetStr.split(',').map((part) => {
+        const num = parseInt(part.trim());
+        return isNaN(num) ? 0 : num;
+      });
+
+      while (parts.length < 3) {
+        parts.push(0);
+      }
+
+      return parts.slice(0, 3);
     };
+
+    const currentSettings = {
+      atom_amount: amount,
+      offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
+      where_target_type: spawnLocation,
+      atom_dir: [1, 2, 4, 8][direction],
+      offset: parseOffset(offset),
+      atom_name: objectName,
+      atom_icon_size: iconSettings.iconSize,
+      selected_atom: data.selected_object,
+    };
+
     act('update-settings', currentSettings);
 
     if (!isTargetMode) {
       if (onCreateObject) {
         onCreateObject(currentSettings);
       } else {
-        act('create-object-action', currentSettings);
+        act('create-atom-action', currentSettings);
       }
     } else {
       if (isPreciseModeActive) {
@@ -201,7 +244,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       } else {
         act('toggle-precise-mode', {
           newPreciseType: 'Target',
-          where_dropdown_value: spawnLocation,
+          where_target_type: spawnLocation,
         });
       }
     }
@@ -297,7 +340,8 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       tooltipPosition="top"
                       disabled={
                         isTargetMode ||
-                        spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object' ||
+                        spawnLocation === 'At a marked object' ||
+                        spawnLocation === 'In the marked object' ||
                         isAnyPreciseModeActive
                       }
                     />
@@ -310,7 +354,8 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       width="100%"
                       disabled={
                         isTargetMode ||
-                        spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object' ||
+                        spawnLocation === 'At a marked object' ||
+                        spawnLocation === 'In the marked object' ||
                         isAnyPreciseModeActive
                       }
                     />
@@ -374,7 +419,8 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       lineHeight: '22px',
                     }}
                     icon={
-                      spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object'
+                      spawnLocation === 'At a marked object' ||
+                      spawnLocation === 'In the marked object'
                         ? 'thumbtack'
                         : 'eye-dropper'
                     }
@@ -383,14 +429,16 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         newPreciseType:
                           isMarkModeActive || isCopyModeActive
                             ? 'Off'
-                            : spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object'
+                            : spawnLocation === 'At a marked object' ||
+                                spawnLocation === 'In the marked object'
                               ? 'Mark'
                               : 'Copy',
                       });
                     }}
                     selected={isMarkModeActive || isCopyModeActive}
                     tooltip={
-                      spawnLocation === 'At a marked object' || spawnLocation === 'In the marked object'
+                      spawnLocation === 'At a marked object' ||
+                      spawnLocation === 'In the marked object'
                         ? 'Mark atom'
                         : 'Copy atom path'
                     }
