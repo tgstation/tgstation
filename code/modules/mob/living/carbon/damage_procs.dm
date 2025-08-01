@@ -82,15 +82,19 @@
 	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
-/mob/living/carbon/getBruteLoss()
+/mob/living/carbon/getBruteLoss(required_bodytype = NONE)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(!(bodypart.bodytype & required_bodytype))
+			continue
 		amount += bodypart.brute_dam
 	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/getFireLoss()
+/mob/living/carbon/getFireLoss(required_bodytype = NONE)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	if(!(bodypart.bodytype & required_bodytype))
+			continue
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
@@ -194,10 +198,11 @@
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
+ * * required_organ_flag - if you only want to check the damage of organs with the specified organ_flag(s) then you can use this.
  */
-/mob/living/carbon/get_organ_loss(slot)
+/mob/living/carbon/get_organ_loss(slot, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(affected_organ)
+	if(affected_organ && (affected_organ.organ_flags & required_organ_flag))
 		return affected_organ.damage
 
 ////////////////////////////////////////////

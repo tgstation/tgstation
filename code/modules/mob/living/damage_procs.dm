@@ -266,7 +266,7 @@
 			return HAS_TRAIT(src, TRAIT_TOXIMMUNE) ? 0 : 1
 	return 1
 
-/mob/living/proc/getBruteLoss()
+/mob/living/proc/getBruteLoss(required_bodytype)
 	return bruteloss
 
 /mob/living/proc/can_adjust_brute_loss(amount, forced, required_bodytype)
@@ -401,7 +401,7 @@
 	if(updating_health)
 		updatehealth()
 
-/mob/living/proc/getFireLoss()
+/mob/living/proc/getFireLoss(required_bodytype)
 	return fireloss
 
 /mob/living/proc/can_adjust_fire_loss(amount, forced, required_bodytype)
@@ -439,7 +439,7 @@
 /mob/living/proc/setOrganLoss(slot, amount, maximum, required_organ_flag)
 	return
 
-/mob/living/proc/get_organ_loss(slot)
+/mob/living/proc/get_organ_loss(slot, required_organ_flag)
 	return
 
 /mob/living/proc/getStaminaLoss()
