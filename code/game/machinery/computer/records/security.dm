@@ -66,11 +66,11 @@
 			qdel(target)
 			continue
 
-/obj/machinery/computer/records/security/attacked_by(obj/item/attacking_item, mob/living/user)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/photo))
-		return
-	insert_new_record(user, attacking_item)
+/obj/machinery/computer/records/security/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/photo))
+		return NONE
+	insert_new_record(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/records/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -348,7 +348,7 @@
 	switch(params["type"])
 		if("missing")
 			var/obj/item/photo/mugshot = target.get_front_photo()
-			var/obj/item/poster/wanted/missing/missing_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+			var/obj/item/poster/wanted/missing/missing_poster = new(null, null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = missing_poster
 
@@ -367,7 +367,7 @@
 				input_description += "<b>Details:</b> [incident.details]\n"
 
 			var/obj/item/photo/mugshot = target.get_front_photo()
-			var/obj/item/poster/wanted/wanted_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+			var/obj/item/poster/wanted/wanted_poster = new(null, null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = wanted_poster
 

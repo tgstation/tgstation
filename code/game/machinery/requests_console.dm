@@ -384,7 +384,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		to_chat(user, span_warning("You must open the maintenance panel first!"))
 	return TRUE
 
-/obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/obj/item/card/id/ID = attacking_item.GetID()
 	if(ID)
 		message_verified_by = "[ID.registered_name] ([ID.assignment])"

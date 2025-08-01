@@ -103,7 +103,7 @@
 			var/mob/living/carbon/human/human = carbon
 			if(human.dna?.species)
 				//fixed_mut_color is also ethereal color (for some reason)
-				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features["mcolor"])
+				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features[FEATURE_MUTANT_COLOR])
 
 		playsound(carbon, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)

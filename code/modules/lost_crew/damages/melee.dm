@@ -13,7 +13,7 @@
 	var/hits = ((max_hits - min_hits) * severity + min_hits)
 	for(var/i in 1 to hits)
 		weapon.attack(body, body) //needs an attacker, no reason it cant be the body as well
-		body.zone_selected = pick(GLOB.all_body_zones)
+		body.zone_selected = pick(body.get_all_limbs())
 
 /datum/corpse_damage/cause_of_death/melee_weapon/proc/get_weapon(mob/living/carbon/human/body)
 	return new weapon(null)

@@ -17,8 +17,8 @@
 	id = "c38_trac"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/ammo_box/c38/trac
@@ -33,8 +33,8 @@
 	id = "c38_hotshot"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/ammo_box/c38/hotshot
 	category = list(
@@ -48,8 +48,8 @@
 	id = "c38_iceblox"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/ammo_box/c38/iceblox
 	category = list(
@@ -62,7 +62,7 @@
 	desc = "Designed to quickly reload revolvers. Rubber bullets are bouncy and less-than-lethal."
 	id = "c38_rubber"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/ammo_box/c38/match/bouncy
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -75,10 +75,26 @@
 	id = "c38_true_strike"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
-	build_path = /obj/item/ammo_box/magazine/m38/true
+	build_path = /obj/item/ammo_box/c38/true
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_flare
+	name = "Speedloader (.38 Flare) (VERY Lethal)"
+	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
+	id = "c38_flare"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/ammo_box/c38/flare
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -92,8 +108,8 @@
 	id = "c38_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38
 	category = list(
@@ -107,10 +123,10 @@
 	id = "c38_trac_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/trac
 	category = list(
@@ -124,9 +140,9 @@
 	id = "c38_hotshot_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/hotshot
 	category = list(
@@ -140,9 +156,9 @@
 	id = "c38_iceblox_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/iceblox
 	category = list(
@@ -156,8 +172,8 @@
 	id = "c38_rubber_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/match/bouncy
 	category = list(
@@ -166,16 +182,34 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_true_mag
-	name = "Magazine (.38 Truee Strike) (Lethal)"
+	name = "Magazine (.38 True Strike) (Lethal)"
 	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Bullets bounce towards new targets with surprising accuracy."
 	id = "c38_true_strike_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
-		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/ammo_box/magazine/m38/true
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_flare_mag
+	name = "Magazine (.38 Flare) (VERY Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
+	id = "c38_flare_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/flare
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -482,7 +516,7 @@
 		in grotesque burns."
 	id = "lasershell"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/ammo_casing/shotgun/scatterlaser
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -495,7 +529,7 @@
 		Does nothing on its own."
 	id = "techshotshell"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -508,7 +542,7 @@
 		into outsides."
 	id = "flechetteshell"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/ammo_casing/shotgun/flechette
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -521,7 +555,7 @@
 		shot by this, but is it really going to do that much damage? You decide, pal, I'm not your mother. I'm just a computer."
 	id = "donkshell"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/ammo_casing/shotgun/flechette/donk
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO

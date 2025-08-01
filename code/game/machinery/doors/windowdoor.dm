@@ -525,3 +525,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 /obj/machinery/door/window/brigdoor/security/holding/right
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
+
+/*
+ * Subtype used in unit tests to ensure instant windoor open/close
+*/
+/obj/machinery/door/window/instant
+
+/obj/machinery/door/window/instant/open(forced = DEFAULT_DOOR_CHECKS)
+	if(!density || operating || !try_to_force_door_open(forced))
+		return FALSE
+
+	operating = TRUE
+
+	set_density(FALSE)
+	air_update_turf(TRUE, FALSE)
+	update_freelook_sight()
+
+	operating = FALSE
+	update_appearance()
+
+	return TRUE
+
+/obj/machinery/door/window/instant/close(forced = DEFAULT_DOOR_CHECKS)
+	if(density || operating || !try_to_force_door_shut(forced))
+		return FALSE
+
+	operating = TRUE
+
+	set_density(TRUE)
+	air_update_turf(TRUE, TRUE)
+	update_freelook_sight()
+
+	operating = FALSE
+	update_appearance()
+
+	return TRUE

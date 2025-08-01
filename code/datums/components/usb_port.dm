@@ -27,13 +27,21 @@
 	/// Used to prevent range checking during shuttle movement, which moves atoms en-masse.
 	var/defer_range_checks = 0
 
-/datum/component/usb_port/Initialize(list/circuit_component_types)
+	/// An extra callback to invoke when registering this component with its parent. Can be a proc name or a callback datum.
+	var/extra_registration_callback
+
+	/// An extra callback to invoke when unregistering this component from its parent. Can be a proc name or a callback datum.
+	var/extra_unregistration_callback
+
+/datum/component/usb_port/Initialize(list/circuit_component_types, extra_registration_callback, extra_unregistration_callback)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	circuit_components = list()
 
 	src.circuit_component_types = circuit_component_types
+	src.extra_registration_callback = extra_registration_callback
+	src.extra_unregistration_callback = extra_unregistration_callback
 
 /datum/component/usb_port/proc/set_circuit_components(list/components)
 	var/should_register = FALSE
@@ -65,6 +73,13 @@
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
 
+	if(extra_registration_callback)
+		if(istype(extra_registration_callback, /datum/callback))
+			var/datum/callback/callback = extra_registration_callback
+			callback.Invoke(src)
+		else
+			call(parent, extra_registration_callback)(src)
+
 /datum/component/usb_port/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
@@ -77,6 +92,13 @@
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.unregister_usb_parent(parent)
+
+	if(extra_unregistration_callback)
+		if(istype(extra_unregistration_callback, /datum/callback))
+			var/datum/callback/callback = extra_unregistration_callback
+			callback.Invoke(src)
+		else
+			call(parent, extra_unregistration_callback)(src)
 
 	unregister_circuit_signals()
 	unregister_physical_signals()
@@ -125,6 +147,7 @@
 	if (isnull(physical_object))
 		return
 
+	SEND_SIGNAL(src, COMSIG_USB_PORT_UNREGISTER_PHYSICAL_OBJECT, physical_object)
 	UnregisterSignal(physical_object, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_BEFORE_SHUTTLE_MOVE,
@@ -209,6 +232,7 @@
 	RegisterSignal(new_physical_object, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(before_physical_object_shuttle_move))
 	RegisterSignal(new_physical_object, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(after_physical_object_shuttle_move))
 	RegisterSignal(new_physical_object, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_shell))
+	SEND_SIGNAL(src, COMSIG_USB_PORT_REGISTER_PHYSICAL_OBJECT, new_physical_object)
 	physical_object = new_physical_object
 
 // Adds support for loading circuits without shells but with usb cables, or loading circuits with shells because the shells might not load first.

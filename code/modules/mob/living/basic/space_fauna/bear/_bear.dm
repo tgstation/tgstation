@@ -23,7 +23,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	wound_bonus = -5
-	bare_wound_bonus = 10 // BEAR wound bonus am i right
+	exposed_wound_bonus = 10 // BEAR wound bonus am i right
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
@@ -138,6 +138,8 @@
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
+	//just ensuring the mats contained by the bear when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 5)
 
 /mob/living/basic/bear/butter/Initialize(mapload)
 	. = ..()
@@ -159,7 +161,7 @@
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.1)
 
-/mob/living/basic/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
+/mob/living/basic/bear/butter/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	. = ..()
 	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)

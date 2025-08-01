@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject, useState } from 'react';
+import { Component, createRef, type RefObject, useState } from 'react';
 import { Color } from 'tgui-core/color';
 import {
   Box,
@@ -180,7 +180,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     if (this.modifiedElements.some(checkPointCoords.bind(null, x, y))) {
       return;
     }
-    let p: PointData = { x, y };
+    const p: PointData = { x, y };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
     const ctx = canvas.getContext('2d')!;

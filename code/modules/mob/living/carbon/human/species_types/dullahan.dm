@@ -221,7 +221,6 @@
 		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
-	RegisterSignal(owner, COMSIG_CLICK_SHIFT, PROC_REF(examinate_check))
 	RegisterSignal(owner, COMSIG_CARBON_REGENERATE_LIMBS, PROC_REF(unlist_head))
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, PROC_REF(retrieve_head))
 	RegisterSignal(owner, COMSIG_HUMAN_PREFS_APPLIED, PROC_REF(update_prefs_name))
@@ -249,15 +248,10 @@
 	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in detached_head
 	brain.name = "[wearer.name]'s brain"
 
-/obj/item/dullahan_relay/proc/examinate_check(mob/user, atom/source)
-	SIGNAL_HANDLER
-	if(user.client.eye == src)
-		return COMPONENT_ALLOW_EXAMINATE
-
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(owner)
-		owner.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range)
+		owner.Hear(message, speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range)
 
 ///Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/hearers)

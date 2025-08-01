@@ -11,10 +11,7 @@
 /datum/hud/new_player/New(mob/owner)
 	. = ..()
 
-	if (!owner || !owner.client)
-		return
-
-	if (owner.client.interviewee)
+	if (!owner?.client || owner.client.interviewee)
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
@@ -669,7 +666,7 @@
 	. = ..()
 	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
 		return
-	SEND_SOUND(hud.mymob, sound('sound/effects/splat.ogg', volume = 50))
+	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_sfx/cartoon_splat.ogg', volume = 50))
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
@@ -767,7 +764,7 @@
 		else
 			time_remaining = "SOON"
 
-		if(hud.mymob.client.holder)
+		if(hud.mymob.client?.holder)
 			new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting in [time_remaining]<br /> \
 				[LAZYLEN(GLOB.clients)] player\s<br /> \
 				[SSticker.totalPlayersReady] players ready<br /> \

@@ -860,3 +860,13 @@
 	fire = 20
 	acid = 40
 	wound = 10
+
+/obj/item/clothing/suit/armor/dragoon
+	name = "drachen suit"
+	desc = "A chainmail suit with dragon scales attached to the skeleton, with ash-covered mythril plate reinforcement covering it."
+	icon_state = "dragoon"
+	inhand_icon_state = "dragoon"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	allowed = list(/obj/item/spear/skybulge)

@@ -160,7 +160,7 @@
 		melee_damage_upper += (level_gain * rand(1,5))
 	maxHealth += (level_gain * rand(1,5))
 
-/mob/living/basic/mushroom/attackby(obj/item/mush, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/mushroom/attackby(obj/item/mush, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(istype(mush, /obj/item/food/grown/mushroom))
 		recover(mush)
 		return

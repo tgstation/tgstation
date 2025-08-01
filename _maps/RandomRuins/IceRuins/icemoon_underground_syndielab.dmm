@@ -103,7 +103,7 @@
 /area/ruin/syndielab)
 "cP" = (
 /obj/effect/mapping_helpers/bombable_wall,
-/turf/closed/wall/r_wall/syndicate/nodiagonal{
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal{
 	desc = "An ominous looking wall. It has extra insulation to keep the heat in.";
 	name = "plastitanium wall"
 	},
@@ -323,7 +323,7 @@
 /area/ruin/syndielab)
 "tb" = (
 /obj/machinery/light/warm/directional/north,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
 /obj/structure/cable/layer1,
 /turf/open/floor/iron/dark/textured,
@@ -458,7 +458,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndielab)
 "AR" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal{
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal{
 	desc = "An ominous looking wall. It has extra insulation to keep the heat in.";
 	name = "plastitanium wall"
 	},

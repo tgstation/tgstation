@@ -84,7 +84,7 @@
 	else
 		soundloop.start()
 
-/obj/item/taperecorder/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/taperecorder/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!mytape && istype(I, /obj/item/tape))
 		if(!user.transferItemToLoc(I,src))
 			return
@@ -153,7 +153,7 @@
 	return ..()
 
 
-/obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
+/obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(message_mods[MODE_RELAY] || !mytape || istype(speaker, /obj/item/taperecorder))
 		return

@@ -155,7 +155,7 @@
 
 	return TRUE
 
-/obj/item/circuit_component/mmi/proc/handle_mmi_attack(mob/living/source, atom/target, list/modifiers)
+/obj/item/circuit_component/mmi/proc/handle_mmi_attack(mob/living/source, atom/target, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
 	if(modifiers[RIGHT_CLICK])
 		clicked_atom.set_output(target)

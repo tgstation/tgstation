@@ -286,6 +286,22 @@
 	update_appearance()
 	update_item_action_buttons()
 
+// Didn't attempt to catch the casing.
+#define CASING_CATCH_NO_ATTEMPT	0
+// Tried to catch, failed because casing was hot and hands were unprotected.
+#define CASING_CATCH_FAILED_SPICY	1
+// Tried to catch, failed because clumsy.
+#define CASING_CATCH_FAILED_CLUMSY	2
+// Tried to catch, failed because hands full.
+#define CASING_CATCH_FAILED_PLACEMENT	3
+// Tried to catch, succeeded. Hands protected or casing was cold (not recently fired).
+#define CASING_CATCH_SUCCESSFUL	4
+// Tried to catch, succeeded. Casing was hot, hands were unprotected, hands burned.
+#define CASING_CATCH_SUCCESSFUL_OUCH	5
+// Offset added to an ejected casing's fire timestamp;
+// if world.time is past the casing's fired timestamp plus this offset, casing is considered cold, and won't burn hands.
+#define CASING_HOT_DELAY (5 SECONDS)
+
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
@@ -297,12 +313,89 @@
 		else if(casing_ejector || !from_firing)
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
-				casing.bounce_away(TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
+				var/hitting_ground = TRUE
+				if(ishuman(loc))
+					var/mob/living/carbon/human/wielder = loc
+					var/caught_casing = can_catch_casing(casing, wielder, from_firing)
+					switch(caught_casing)
+						if(CASING_CATCH_NO_ATTEMPT)
+							hitting_ground = TRUE
+						if(CASING_CATCH_FAILED_SPICY)
+							hitting_ground = TRUE
+							wielder.visible_message(
+								span_warning("[wielder] reaches out for \the [casing] as it ejects from [src], and catches it... before fumbling it because it's a hot casing. Uncool!"),
+								span_warning("You reach out and catch \the [casing] as it ejects from [src]... before dropping it, because it's a hot casing! Ouch! Uncool!"),
+								span_notice("You hear someone reaching for something before a hiss of pain and the sound of something clattering."),
+							)
+							var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
+							wielder.apply_damage(2, BURN, affecting, wound_bonus = CANT_WOUND)
+						if(CASING_CATCH_FAILED_CLUMSY)
+							hitting_ground = TRUE
+							wielder.visible_message(
+								span_warning("[wielder] reaches out for \the [casing] as it ejects from [src]... before fumbling it in an incredibly unlikely, comical manner! Uncool!"),
+								span_warning("You reach out and catch \the [casing] as it ejects from [src]... before fumbling it in an incredibly unlikely, comical manner! Uncool!"),
+								span_notice("You hear someone reaching for something, shortly followed by an embarassingly loud, comedic clattering."),
+							)
+							if(!(world.time >= casing.shot_timestamp + CASING_HOT_DELAY))
+								var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
+								to_chat(wielder, span_warning("As if to add insult to injury, \the [casing] lands in the perfect way... to burn your [affecting.plaintext_zone]."))
+								wielder.apply_damage(5, BURN, affecting, wound_bonus = CANT_WOUND)
+						if(CASING_CATCH_FAILED_PLACEMENT)
+							hitting_ground = TRUE
+							wielder.visible_message(
+								span_warning("[wielder] reaches out for \the [casing] as it ejects from [src] and fumbles it due to [wielder.p_their()] full hands. Uncool!"),
+								span_warning("You try and reach out for \the [casing] as it ejects from [src], and fumble it because your hands are full. Uncool!"),
+								span_notice("You hear someone reaching for something, before a metallic clattering."),
+							)
+						if(CASING_CATCH_SUCCESSFUL)
+							hitting_ground = FALSE
+							casing.update_appearance()
+							to_chat(wielder, span_notice("You reach out and catch \the [casing] as it ejects from [src]. Awesome."))
+						if(CASING_CATCH_SUCCESSFUL_OUCH)
+							hitting_ground = FALSE
+							casing.update_appearance()
+							var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
+							to_chat(wielder, span_notice("You reach out and catch \the [casing] as it ejects from [src]. Awesome. Your [affecting.plaintext_zone] hurts, though."))
+							wielder.apply_damage(4, BURN, affecting, wound_bonus = CANT_WOUND)
+				if(hitting_ground)
+					casing.bounce_away(TRUE)
 		else if(empty_chamber)
 			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
+
+/// Used to check if the mob `wielder` can catch an ejected casing.
+/// Returns CASING_CATCH_NO_ATTEMPT if not trying, CASING_CATCH_FAILED if failed, CASING_CATCH_SUCCESSFUL if successful.
+/obj/item/gun/ballistic/proc/can_catch_casing(obj/item/ammo_casing/casing, mob/living/carbon/human/wielder)
+	if(!wielder.throw_mode) // if they're not in throw mode, don't bother
+		return CASING_CATCH_NO_ATTEMPT
+	if(HAS_TRAIT(wielder, TRAIT_CLUMSY)) // feats of dexterity are beyond the jester
+		return CASING_CATCH_FAILED_CLUMSY
+	// following adapted from lightbulbs
+	var/protected_hands = FALSE
+	if(wielder.gloves)
+		var/obj/item/clothing/gloves/electrician_gloves = wielder.gloves
+		if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
+			protected_hands = TRUE
+	// from left to right: are our hands protected from hot things via gloves? are we or our hands heat resistant? was this casing shot more than 5 seconds ago?
+	if(protected_hands || HAS_TRAIT(wielder, TRAIT_RESISTHEAT) || HAS_TRAIT(wielder, TRAIT_RESISTHEATHANDS) || world.time >= casing.shot_timestamp + CASING_HOT_DELAY)
+		if(wielder.put_in_hands(casing)) // try placement in hand,
+			return CASING_CATCH_SUCCESSFUL // success
+		return CASING_CATCH_FAILED_PLACEMENT // or not.
+	if(HAS_TRAIT(wielder, TRAIT_LIGHTBULB_REMOVER))
+		if(wielder.put_in_hands(casing)) // try placement in hand,
+			return CASING_CATCH_SUCCESSFUL_OUCH // success
+		return CASING_CATCH_FAILED_PLACEMENT // or not.
+	return CASING_CATCH_FAILED_SPICY
+
+#undef CASING_CATCH_NO_ATTEMPT
+#undef CASING_CATCH_FAILED_SPICY
+#undef CASING_CATCH_FAILED_CLUMSY
+#undef CASING_CATCH_FAILED_PLACEMENT
+#undef CASING_CATCH_SUCCESSFUL
+#undef CASING_CATCH_SUCCESSFUL_OUCH
+#undef CASING_HOT_DELAY
 
 ///Used to chamber a new round and eject the old one
 /obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)

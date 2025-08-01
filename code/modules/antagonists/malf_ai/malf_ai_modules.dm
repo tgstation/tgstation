@@ -121,6 +121,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/category = "generic category"
 	var/description = "generic description"
 	var/cost = 5
+	/// Minimum amount of APCs that has to be under the AI's control to purchase this module.
+	var/minimum_apcs = 0
 	/// If this module can only be purchased once. This always applies to upgrades, even if the variable is set to false.
 	var/one_purchase = FALSE
 	/// If the module gives an active ability, use this. Mutually exclusive with upgrade.
@@ -156,6 +158,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		Obtaining control of the weapon will be easier if Head of Staff office APCs are already under your control."
 	cost = 130
 	one_purchase = TRUE
+	minimum_apcs = 15 // So you cant speedrun delta
 	power_type = /datum/action/innate/ai/nuke_station
 	unlock_text = span_notice("You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.")
 	///List of areas that grant discounts. "heads_quarters" will match any head of staff office.
@@ -637,6 +640,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	name = "Robotic Factory (Removes Shunting)"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
+	minimum_apcs = 10 // So you can't speedrun this
 	power_type = /datum/action/innate/ai/place_transformer
 	unlock_text = span_notice("You make contact with Space Amazon and request a robotics factory for delivery.")
 	unlock_sound = 'sound/machines/ping.ogg'
@@ -919,7 +923,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/voice_changer
 	name = "Voice Changer"
 	description = "Allows you to change the AI's voice. Upgrade is active immediately upon purchase."
-	cost = 40
+	cost = 20
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/voice_changer
 	unlock_text = span_notice("OTA firmware distribution complete! Voice changer online.")

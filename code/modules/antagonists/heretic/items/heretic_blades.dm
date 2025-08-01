@@ -17,7 +17,7 @@
 	force = 20
 	throwforce = 10
 	wound_bonus = 5
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	toolspeed = 0.375
 	demolition_mod = 0.8
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
@@ -41,7 +41,7 @@
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)
 	return IS_HERETIC_OR_MONSTER(user)
 
-/obj/item/melee/sickly_blade/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/melee/sickly_blade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return .
@@ -89,7 +89,7 @@
 	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
-/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -136,9 +136,7 @@
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("Unknown DNA" = BLOOD_TYPE_XENO),\
-		diseases = null,\
+		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
 	)
 
 // Path of Void's blade
@@ -163,7 +161,7 @@
 	///If our blade is currently infused with the mansus grasp
 	var/infused = FALSE
 
-/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!infused || target == user || !isliving(target))
 		return
@@ -247,7 +245,7 @@
 	throwforce = 15
 	block_chance = 35
 	wound_bonus = 25
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	armour_penetration = 35
 	icon_state = "cursed_blade"
 	inhand_icon_state = "cursed_blade"

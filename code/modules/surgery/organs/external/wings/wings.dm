@@ -22,7 +22,7 @@
 ///Bodypart overlay of default wings. Does not have any wing functionality
 /datum/bodypart_overlay/mutant/wings
 	layers = ALL_EXTERNAL_OVERLAYS
-	feature_key = "wings"
+	feature_key = FEATURE_WINGS
 
 /datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/human = bodypart_owner.owner

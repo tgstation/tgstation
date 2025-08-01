@@ -49,7 +49,7 @@
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
 			if(has_job_loyalties && (H.mind.assigned_role.departments_bitflags & job_loyalties))
 				inspired += H
-			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
+			else if(has_role_loyalties && length(H.mind.get_special_roles() & role_loyalties))
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
@@ -85,8 +85,6 @@
 	desc = "The banner of Securistan, ruling the station with an iron fist."
 	icon_state = "banner_security"
 	inhand_icon_state = "banner_security"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
 /obj/item/banner/security/Initialize(mapload)
@@ -109,8 +107,6 @@
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
 	inhand_icon_state = "banner_medical"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "No wounds cannot be healed!"
 
 /obj/item/banner/medical/Initialize(mapload)
@@ -144,8 +140,6 @@
 	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
 	icon_state = "banner_science"
 	inhand_icon_state = "banner_science"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "For Cuban Pete!"
 
 /obj/item/banner/science/Initialize(mapload)
@@ -171,8 +165,6 @@
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
 	icon_state = "banner_cargo"
 	inhand_icon_state = "banner_cargo"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "Hail Cargonia!"
 
 /obj/item/banner/cargo/Initialize(mapload)
@@ -195,8 +187,6 @@
 	desc = "The banner of Engitopia, wielders of limitless power."
 	icon_state = "banner_engineering"
 	inhand_icon_state = "banner_engineering"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "All hail lord Singuloth!!"
 
 /obj/item/banner/engineering/Initialize(mapload)

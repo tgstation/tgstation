@@ -280,3 +280,10 @@ DEFINE_BITFIELD(food_flags, list(
 
 /// How much milk is needed to make butter on a reagent grinder
 #define MILK_TO_BUTTER_COEFF 25
+
+/// How much material one slab of meat usually contains
+#define MEATSLAB_MATERIAL_AMOUNT SHEET_MATERIAL_AMOUNT * 4
+/// How many cutlets or meatballs one slab gives when processed
+#define MEATSLAB_PROCESSED_AMOUNT 3
+/// This should be 1/3 of the amount found in a slab (a portion will be lost when rounding but it's negligible)
+#define MEATDISH_MATERIAL_AMOUNT (MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_PROCESSED_AMOUNT)

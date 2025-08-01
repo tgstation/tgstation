@@ -58,7 +58,7 @@
 	to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
 	return TRUE
 
-/obj/item/grenade/c4/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/grenade/c4/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_wire_tool(item))
 		wires.interact(user)
 	else
@@ -188,4 +188,4 @@
 	inhand_icon_state = "plasticx4"
 	worn_icon_state = "x4"
 	directional = TRUE
-	boom_sizes = list(0, 2, 5)
+	boom_sizes = list(0, 5, 7)

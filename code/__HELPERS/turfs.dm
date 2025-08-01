@@ -236,7 +236,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/pixel_y_offset = checked_atom.pixel_y + checked_atom.pixel_z + atom_matrix.get_y_shift()
 
 	//Irregular objects
-	var/list/icon_dimensions = get_icon_dimensions(checked_atom.icon)
+	var/list/icon_dimensions = get_icon_dimensions_pure(checked_atom.icon)
 	var/checked_atom_icon_height = icon_dimensions["height"]
 	var/checked_atom_icon_width = icon_dimensions["width"]
 	if(checked_atom_icon_height != ICON_SIZE_Y || checked_atom_icon_width != ICON_SIZE_X)
@@ -305,6 +305,8 @@ Turf and target are separate in case you want to teleport some distance from a t
  *   but using ratios (as implemented in the proc) is the recommended approach
  */
 /proc/get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, client/viewing_client)
+	if(sizex == 0 || sizey == 0) //contexts where this information is not availible should return 0 in size, aka tgui passthrough
+		return list(null, 0, 0)
 	var/turf/baseloc = get_turf(viewing_client.eye)
 	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
 

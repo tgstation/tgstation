@@ -105,11 +105,4 @@
 
 	playsound(current_item_loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
-/obj/item/pushbroom/cyborg
-	name = "cyborg push broom"
-
-/obj/item/pushbroom/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 #undef BROOM_PUSH_LIMIT

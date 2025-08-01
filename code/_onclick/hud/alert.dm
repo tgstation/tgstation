@@ -343,14 +343,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /**
  * Handles assigning most of the variables for the alert that pops up when an item is offered
  *
- * Handles setting the name, description and icon of the alert and tracking the person giving
+ * Handles setting the name, description and icon of the alert and tracking the living mob giving
  * and the item being offered.
  * Arguments:
- * * taker - The person receiving the alert
- * * offerer - The person giving the alert and item
- * * receiving - The item being given by the offerer
+ * * taker - The living mob receiving the alert
+ * * offer - The status effect connected to the offer being made
  */
-/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, datum/status_effect/offering/offer)
+/atom/movable/screen/alert/give/proc/setup(mob/living/taker, datum/status_effect/offering/offer)
 	src.offer = offer
 
 	var/mob/living/offerer = offer.owner
@@ -377,7 +376,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
  * Returns a string that will be displayed in the alert, which is `receiving.name`
  * by default.
  */
-/atom/movable/screen/alert/give/proc/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/proc/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	return receiving.name
 
 /atom/movable/screen/alert/give/Click(location, control, params)
@@ -385,7 +384,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!.)
 		return
 
-	if(!iscarbon(usr))
+	if(!isliving(usr))
 		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
 
 	handle_transfer()
@@ -402,11 +401,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
 /atom/movable/screen/alert/give/proc/handle_transfer()
-	var/mob/living/carbon/taker = owner
+	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
 	taker.take(offerer, receiving)
-	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
+	SEND_SIGNAL(offerer, COMSIG_LIVING_ITEM_GIVEN, taker, receiving)
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
@@ -415,10 +414,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	/// Tracks active "to slow"ing so we can't spam click
 	var/too_slowing_this_guy = FALSE
 
-/atom/movable/screen/alert/give/highfive/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/highfive/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	return "a high-five"
 
-/atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, datum/status_effect/offering/offer)
+/atom/movable/screen/alert/give/highfive/setup(mob/living/taker, datum/status_effect/offering/offer)
 	. = ..()
 	RegisterSignal(offer.owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(check_fake_out))
 
@@ -426,7 +425,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(too_slowing_this_guy)
 		return
 
-	var/mob/living/carbon/taker = owner
+	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
 	if(!QDELETED(receiving) && offerer.is_holding(receiving))
@@ -437,7 +436,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /// If the person who offered the high five no longer has it when we try to accept it, we get pranked hard
 /atom/movable/screen/alert/give/highfive/proc/too_slow_p1()
-	var/mob/living/carbon/rube = owner
+	var/mob/living/rube = owner
 	var/mob/living/offerer = offer?.owner
 	if(QDELETED(rube) || QDELETED(offerer))
 		qdel(src)
@@ -450,7 +449,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /// Part two of the ultimate prank
 /atom/movable/screen/alert/give/highfive/proc/too_slow_p2()
-	var/mob/living/carbon/rube = owner
+	var/mob/living/rube = owner
 	var/mob/living/offerer = offer?.owner
 	if(!QDELETED(rube) && !QDELETED(offerer))
 		offerer.visible_message(span_danger("[offerer] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
@@ -474,13 +473,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	screentip_override_text = "Take Hand"
 	examinable = FALSE
 
-/atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	additional_desc_text = "Click this alert to take it and let [offerer.p_them()] pull you around!"
 	return "[offerer.p_their()] [receiving.name]"
 
 /atom/movable/screen/alert/give/hand/helping
 
-/atom/movable/screen/alert/give/hand/helping/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/hand/helping/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	. = ..()
 	additional_desc_text = "Click this alert to let them help you up!"
 

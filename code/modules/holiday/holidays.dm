@@ -399,6 +399,23 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
 
+/datum/holiday/goth
+	name = "Goth Day"
+	begin_day = 22
+	begin_month = MAY
+	holiday_mail = list(
+		/obj/item/lipstick,
+		/obj/item/lipstick/black,
+		/obj/item/clothing/suit/costume/gothcoat,
+	)
+	holiday_colors = list(
+		COLOR_WHITE,
+		COLOR_BLACK,
+	)
+
+/datum/holiday/goth/getStationPrefix()
+	return pick("Goth", "Sanguine", "Tenebris", "Lacrimosa", "Umbra", "Noctis")
+
 // JUNE
 
 //The Festival of Atrakor's Might (Tizira's Moon) is celebrated on June 15th, the date on which the lizard visual revamp was merged (#9808)

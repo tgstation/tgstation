@@ -165,3 +165,65 @@
 	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
+
+/datum/keybinding/living/toggle_throw_mode
+	hotkey_keys = list("R", "Southwest") // END
+	name = "toggle_throw_mode"
+	full_name = "Toggle throw mode"
+	description = "Toggle throwing the current item or not."
+	keybind_signal = COMSIG_KB_LIVING_TOGGLETHROWMODE_DOWN
+
+/datum/keybinding/living/toggle_throw_mode/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/living_user = user.mob
+	living_user.toggle_throw_mode()
+	return TRUE
+
+/datum/keybinding/living/hold_throw_mode
+	hotkey_keys = list("Space")
+	name = "hold_throw_mode"
+	full_name = "Hold throw mode"
+	description = "Hold this to turn on throw mode, and release it to turn off throw mode"
+	keybind_signal = COMSIG_KB_LIVING_HOLDTHROWMODE_DOWN
+
+/datum/keybinding/living/hold_throw_mode/down(client/user, turf/target)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/living_user = user.mob
+	living_user.throw_mode_on(THROW_MODE_HOLD)
+
+/datum/keybinding/living/hold_throw_mode/up(client/user, turf/target)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/living_user = user.mob
+	living_user.throw_mode_off(THROW_MODE_HOLD)
+
+/datum/keybinding/living/give
+	hotkey_keys = list("G")
+	name = "Give_Item"
+	full_name = "Give item"
+	description = "Give the item you're currently holding"
+	keybind_signal = COMSIG_KB_LIVING_GIVEITEM_DOWN
+
+/datum/keybinding/living/give/can_use(client/user)
+	. = ..()
+	if (!.)
+		return FALSE
+	if(!user.mob)
+		return FALSE
+	if(!HAS_TRAIT(user.mob, TRAIT_CAN_HOLD_ITEMS))
+		return FALSE
+	return TRUE
+
+/datum/keybinding/living/give/down(client/user, turf/target)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/living_user = user.mob
+	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS))
+		return
+	living_user.give()

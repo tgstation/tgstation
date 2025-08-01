@@ -26,7 +26,7 @@
 	/// The time spent to climb this crate.
 	var/crate_climb_time = 2 SECONDS
 	/// The reference of the manifest paper attached to the cargo crate.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	var/datum/weakref/manifest
 	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
 	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
@@ -41,6 +41,7 @@
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
 	if(elevation)
+		AddComponent(/datum/component/climb_walkable)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	. = ..()
 
@@ -66,7 +67,7 @@
 	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
-	QDEL_NULL(manifest)
+	manifest = null
 	return ..()
 
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
@@ -113,8 +114,7 @@
 	. = ..()
 	if(.)
 		return
-	if(manifest)
-		tear_manifest(user)
+	tear_manifest(user)
 
 /obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
@@ -125,11 +125,8 @@
 			RemoveElement(/datum/element/elevation, pixel_shift = elevation)
 		if(elevation_open)
 			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
-	if(!QDELETED(manifest))
-		playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
-		manifest.forceMove(get_turf(src))
-		manifest = null
-		update_appearance()
+
+	tear_manifest()
 
 /obj/structure/closet/crate/after_close(mob/living/user)
 	. = ..()
@@ -152,12 +149,17 @@
 
 ///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	to_chat(user, span_notice("You tear the manifest off of [src]."))
+	var/obj/item/paper/fluff/jobs/cargo/manifest/our_manifest = manifest?.resolve()
+	if(QDELETED(our_manifest))
+		manifest = null
+		return
+	if(user)
+		to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 
-	manifest.forceMove(loc)
+	our_manifest.forceMove(drop_location(src))
 	if(ishuman(user))
-		user.put_in_hands(manifest)
+		user.put_in_hands(our_manifest)
 	manifest = null
 	update_appearance()
 

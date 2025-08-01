@@ -12,6 +12,8 @@
 		BB_MAX_CHILDREN = 5,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
@@ -55,6 +57,7 @@
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
@@ -65,6 +68,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/food_trough

@@ -24,6 +24,9 @@
 	unsuitable_heat_damage = 0
 	ai_controller = /datum/ai_controller/basic_controller/dark_wizard
 
+/mob/living/basic/dark_wizard/get_save_vars()
+	return ..() - NAMEOF(src, icon_state) // icon_state is applied via apply_dynamic_human_appearance()
+
 /mob/living/basic/dark_wizard/Initialize(mapload)
 	. = ..()
 
@@ -61,6 +64,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate, // If you get them to shoot each other it will start a wiz-war
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/maintain_distance,

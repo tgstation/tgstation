@@ -118,11 +118,11 @@
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
 	use_autosurgeon(user, user)
 
-/obj/item/autosurgeon/attack(mob/living/target, mob/living/user, list/modifiers)
+/obj/item/autosurgeon/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	use_autosurgeon(target, user, 8 SECONDS)
 
-/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isorgan(attacking_item))
 		load_organ(attacking_item, user)
 	else
@@ -169,7 +169,7 @@
 /obj/item/autosurgeon/syndicate/laser_arm
 	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
+	starting_organ = /obj/item/organ/cyberimp/arm/toolkit/gun/laser
 
 /obj/item/autosurgeon/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals
@@ -205,7 +205,7 @@
 	organ_whitelist += /obj/item/organ/tongue
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
-	starting_organ = /obj/item/organ/cyberimp/arm/surgery/emagged
+	starting_organ = /obj/item/organ/cyberimp/arm/toolkit/surgery/emagged
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use
 	uses = 1

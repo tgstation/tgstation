@@ -96,7 +96,7 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, span_warning("Successfully irradiated [interacting_with]."))
-		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (intensity+(wavelength*4))*5)
 		return . | ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
@@ -441,7 +441,7 @@ effective or pretty fucking useless.
 
 	return TRUE
 
-/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
+/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/wrench/combat))
 		return ..()
 

@@ -36,7 +36,7 @@
 /area/ruin/space/meateor)
 "q" = (
 /obj/effect/mob_spawn/corpse/headcrab,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/material/meat/airless,
 /area/ruin/space/meateor)
 "r" = (
@@ -47,7 +47,7 @@
 /area/ruin/space/meateor)
 "s" = (
 /obj/effect/mob_spawn/corpse/headcrab,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /turf/open/floor/material/meat/airless,
 /area/ruin/space/meateor)
 "v" = (

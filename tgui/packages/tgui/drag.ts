@@ -6,7 +6,7 @@
 
 import { storage } from 'common/storage';
 import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'common/vector';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { createLogger } from './logging';
 
@@ -43,14 +43,14 @@ export const getWindowSize = (): [number, number] => [
 export const setWindowPosition = (vec: [number, number]) => {
   const byondPos = vecAdd(vec, screenOffset);
   return Byond.winset(Byond.windowId, {
-    pos: byondPos[0] + ',' + byondPos[1],
+    pos: `${byondPos[0]},${byondPos[1]}`,
   });
 };
 
 // Set window size
 const setWindowSize = (vec: [number, number]) => {
   return Byond.winset(Byond.windowId, {
-    size: vec[0] + 'x' + vec[1],
+    size: `${vec[0]}x${vec[1]}`,
   });
 };
 
@@ -180,7 +180,7 @@ export const recallWindowGeometry = async (
 // Setup draggable window
 export const setupDrag = async () => {
   // Calculate screen offset caused by the windows taskbar
-  let windowPosition = getWindowPosition();
+  const windowPosition = getWindowPosition();
 
   screenOffsetPromise = Byond.winget(Byond.windowId, 'pos').then((pos) => [
     pos.x - windowPosition[0],

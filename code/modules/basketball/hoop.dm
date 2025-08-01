@@ -89,11 +89,11 @@
 	scoreboard.add_overlay(tens_overlay)
 	scoreboard.add_overlay(emissive_tens_overlay)
 
-/obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, list/modifiers)
+/obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, list/modifiers, list/attack_modifiers)
 	if(!baller.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return // TK users aren't allowed to dunk
 
-	if(!baller.transferItemToLoc(ball, drop_location()))
+	if(!baller.transfer_item_to_turf(ball, drop_location()))
 		return
 
 	var/dunk_dir = get_dir(baller, src)
@@ -102,7 +102,7 @@
 	var/dunk_pixel_w = ((dunk_dir & EAST) && 16) || ((dunk_dir & WEST) && -16) || 0
 
 	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
-	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)

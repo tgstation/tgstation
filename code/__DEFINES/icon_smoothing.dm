@@ -131,15 +131,16 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 #define SMOOTH_GROUP_CLOSED_TURFS S_TURF(53) ///turf/closed
 #define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(54) ///turf/closed/wall/material
-#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(55) ///turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate
+#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(55) ///turf/closed/wall/r_wall/plastitanium/syndicate, /turf/closed/indestructible/syndicate
 #define SMOOTH_GROUP_HOTEL_WALLS S_TURF(56) ///turf/closed/indestructible/hotelwall
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(57) ///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(58) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
 #define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(60) ///turf/open/cliff
 #define SMOOTH_GROUP_HIEROPHANT S_TURF(61) ///turf/closed/indestructible/riveted/hierophant
+#define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(62) ///turf/closed/indestructible/riveted/plastinum
 
-#define MAX_S_TURF 61 //Always match this value with the one above it.
+#define MAX_S_TURF 62 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
@@ -159,8 +160,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(14) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(15) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(16) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
-#define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
-#define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(18) //![turf/closed/indestructible/riveted/plastinum]
+#define SMOOTH_GROUP_BAMBOO_WALLS S_OBJ(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
 
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(21) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
@@ -209,6 +209,15 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_GRAV_FIELD S_OBJ(75)
 #define SMOOTH_GROUP_GIRDER S_OBJ(76)
 #define SMOOTH_GROUP_TEST_WALL S_OBJ(77) // I'm a lazy bum who doesn't want to increment all of these up by 1 ~Lemon
+#define SMOOTH_GROUP_ATMOS_SHIELD S_OBJ(78)
+
+#define SMOOTH_GROUP_PLATFORMS S_OBJ(80) ///obj/structure/platform & rusty
+#define SMOOTH_GROUP_PLATFORMS_SHUTTLE S_OBJ(81) ///obj/structure/platform/titanium & plastitanium
+#define SMOOTH_GROUP_PLATFORMS_MATERIAL S_OBJ(82) ///obj/structure/platform/material & iron & silver & gold & uranium & bronze
+#define SMOOTH_GROUP_PLATFORMS_WOOD S_OBJ(83) ///obj/structure/platform/wood & bamboo & hotel
+#define SMOOTH_GROUP_PLATFORMS_STONE S_OBJ(84) ///obj/structure/platform/sandstone & cult
+#define SMOOTH_GROUP_PLATFORMS_PIZZA S_OBJ(85) ///obj/structure/platform/pizza
+#define SMOOTH_GROUP_PLATFORMS_PAPER S_OBJ(86) ///obj/structure/platform/paper
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.

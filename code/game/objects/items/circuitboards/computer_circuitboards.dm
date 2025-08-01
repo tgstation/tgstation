@@ -222,6 +222,11 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/message_monitor
 
+/obj/item/circuitboard/computer/modular_shield_console
+	name = "Modular Shield Generator Console"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/computer/modular_shield
+
 /obj/item/circuitboard/computer/powermonitor
 	name = "Power Monitor"  //name fixed 250810
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -331,7 +336,8 @@
 	name = "Syndicate Shuttle"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/shuttle/syndicate
-	var/challenge = FALSE
+	/// If operatives declared war this will be the time challenge was started
+	var/challenge_start_time
 	var/moved = FALSE
 
 /obj/item/circuitboard/computer/syndicate_shuttle/Initialize(mapload)
@@ -488,7 +494,7 @@
 /obj/item/circuitboard/computer/scan_consolenew
 	name = "DNA Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/scan_consolenew
+	build_path = /obj/machinery/computer/dna_console
 
 /obj/item/circuitboard/computer/mechpad
 	name = "Mecha Orbital Pad Console"

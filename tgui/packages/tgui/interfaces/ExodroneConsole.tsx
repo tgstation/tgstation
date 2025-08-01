@@ -1,10 +1,11 @@
 import {
   createContext,
   Fragment,
-  SetStateAction,
+  type SetStateAction,
   useContext,
   useState,
 } from 'react';
+import nt_logo from 'tgui-core/assets/bg-nanotrasen.svg';
 import {
   BlockQuote,
   Box,
@@ -22,7 +23,6 @@ import { formatTime } from 'tgui-core/format';
 import { capitalize } from 'tgui-core/string';
 
 import { resolveAsset } from '../assets';
-import nt_logo from '../assets/bg-nanotrasen.svg';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -542,9 +542,9 @@ const TravelTargetSelectionScreen = (props: {
       dest.band_info[s] !== undefined && dest.band_info[s] !== 0;
     return Object.keys(all_bands).filter(band_check);
   };
-  const valid_destinations =
-    sites &&
-    sites.filter((destination) => !site || destination.ref !== site.ref);
+  const valid_destinations = sites?.filter(
+    (destination) => !site || destination.ref !== site.ref,
+  );
   return (
     (drone.drone_status === DroneStatusEnum.Travel && (
       <TravelDimmer drone={drone} />

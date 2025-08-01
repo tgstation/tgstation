@@ -124,7 +124,7 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	else
 		. = ..()
 
-/obj/vehicle/sealed/mecha/durand/attackby(obj/item/W as obj, mob/user as mob, list/modifiers)
+/obj/vehicle/sealed/mecha/durand/attackby(obj/item/W as obj, mob/user as mob, list/modifiers, list/attack_modifiers)
 	if(defense_check(user.loc))
 		log_message("Attack absorbed by defense field. Attacker - [user], with [W]", LOG_MECHA, color="orange")
 		shield.attackby(W, user, modifiers)
