@@ -140,7 +140,10 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_HIEROPHANT S_TURF(61) ///turf/closed/indestructible/riveted/hierophant
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(62) ///turf/closed/indestructible/riveted/plastinum
 
-#define MAX_S_TURF 62 //Always match this value with the one above it.
+// Troutstation edit
+#define SMOOTH_GROUP_FLOCK S_TURF(63) ///turf/open/floor/flock
+
+#define MAX_S_TURF 63 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
@@ -218,6 +221,9 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_PLATFORMS_STONE S_OBJ(84) ///obj/structure/platform/sandstone & cult
 #define SMOOTH_GROUP_PLATFORMS_PIZZA S_OBJ(85) ///obj/structure/platform/pizza
 #define SMOOTH_GROUP_PLATFORMS_PAPER S_OBJ(86) ///obj/structure/platform/paper
+
+// Troutstation edit
+#define SMOOTH_GROUP_FLOCK_WALL S_OBJ(87)
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
