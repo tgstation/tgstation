@@ -103,12 +103,12 @@
 		/obj/item/skillchip/acrobatics = 1,
 	)
 	premium = list(
+		/obj/item/disk/holodisk = 5,
+		/obj/item/rcl = 2,
 		/obj/item/airlock_painter = 1,
 		/obj/item/clothing/shoes/wheelys/rollerskates= 3,
-		/obj/item/disk/holodisk = 5,
-		/obj/item/melee/skateboard/hoverboard = 1,
 		/obj/item/melee/skateboard/pro = 3,
-		/obj/item/rcl = 2,
+		/obj/item/melee/skateboard/hoverboard = 1,
 	)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = PAYCHECK_CREW
