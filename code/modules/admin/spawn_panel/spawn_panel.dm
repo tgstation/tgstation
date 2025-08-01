@@ -15,12 +15,15 @@
 #define OFFSET_ABSOLUTE "Absolute offset"
 #define OFFSET_RELATIVE "Relative offset"
 
+GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
+
 /datum/spawnpanel
-	var/where_dropdown_value = WHERE_FLOOR_BELOW_MOB
-	var/selected_object = ""
-	var/copied_type = null
-	var/selected_object_icon = null
-	var/selected_object_icon_state = null
+	var/owner_ckey
+	var/where_target_type = WHERE_FLOOR_BELOW_MOB
+	var/atom/selected_atom = null
+	// var/copied_type = null
+	var/selected_atom_icon = null
+	var/selected_atom_icon_state = null
 	var/custom_icon = null
 	var/custom_icon_state = null
 	var/custom_icon_size = 100
@@ -34,10 +37,29 @@
 	var/precise_mode = PRECISE_MODE_OFF
 
 /datum/spawnpanel/ui_interact(mob/user, datum/tgui/ui)
+	if(user.client.ckey != owner_ckey)
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SpawnPanel")
 		ui.open()
+
+/// Returns a `spawnpanel` instance belonging to this `user`, or creates and registers a new one
+/datum/spawnpanel/proc/get_spawnpanel_for_admin(mob/user)
+	if(!user?.client?.ckey)
+		return null
+
+	var/ckey = user.client.ckey
+
+	if(GLOB.spawnpanels_by_ckey[ckey])
+		return GLOB.spawnpanels_by_ckey[ckey]
+
+	var/datum/spawnpanel/new_panel = new()
+	new_panel.owner_ckey = ckey
+	GLOB.spawnpanels_by_ckey[ckey] = new_panel
+
+	return new_panel
 
 /datum/spawnpanel/ui_close(mob/user)
 	. = ..()
@@ -64,13 +86,10 @@
 		if("reset-icon")
 			custom_icon = null
 			custom_icon_state = null
-			if(selected_object)
-				var/path = text2path(selected_object)
-				if(path)
-					var/atom/temp = path
-					selected_object_icon = initial(temp.icon)
-					selected_object_icon_state = initial(temp.icon_state)
-					available_icon_states = icon_states(selected_object_icon)
+			if(selected_atom)
+				selected_atom_icon = initial(selected_atom.icon)
+				selected_atom_icon_state = initial(selected_atom.icon_state)
+				available_icon_states = icon_states(selected_atom_icon)
 			SStgui.update_uis(src)
 			return TRUE
 
@@ -81,11 +100,8 @@
 
 		if("reset-icon-state")
 			custom_icon_state = null
-			if(selected_object)
-				var/path = text2path(selected_object)
-				if(path)
-					var/atom/temp = path
-					selected_object_icon_state = initial(temp.icon_state)
+			if(selected_atom)
+				selected_atom_icon_state = initial(selected_atom.icon_state)
 			SStgui.update_uis(src)
 			return TRUE
 
@@ -100,32 +116,28 @@
 			return TRUE
 
 		if("get-icon-states")
-			var/icon_to_use = custom_icon || selected_object_icon
-			if(icon_to_use)
-				available_icon_states = icon_states(icon_to_use)
+			available_icon_states = icon_states(selected_atom_icon)
 			SStgui.update_uis(src)
 			return TRUE
 
 		if("selected-object-changed")
-			selected_object = params?["newObj"]
-			if(selected_object)
-				var/path = text2path(selected_object)
-				if(path)
-					var/atom/temp = path
-					selected_object_icon = initial(temp.icon)
-					selected_object_icon_state = initial(temp.icon_state)
-					if(!custom_icon)
-						available_icon_states = icon_states(selected_object_icon)
+			var/path = text2path(params?["newObj"])
+			if(path)
+				var/atom/temp_atom = path
+				selected_atom_icon = initial(temp_atom.icon)
+				selected_atom_icon_state = initial(temp_atom.icon_state)
+				available_icon_states = icon_states(selected_atom_icon)
+				selected_atom = temp_atom
 			return TRUE
 
 		if("create-object-action")
 			spawn_item(list(
-				object_list = selected_object,
+				object_list = selected_atom,
 				object_count = text2num(params["object_count"]) || 1,
 				offset = params["offset"],
 				object_dir = text2num(params["dir"]) || 1,
 				object_name = params["object_name"],
-				object_where = params["where_dropdown_value"] || WHERE_FLOOR_BELOW_MOB,
+				object_where = params["where_target_type"] || WHERE_FLOOR_BELOW_MOB,
 				offset_type = params["offset_type"] || OFFSET_RELATIVE,
 				custom_icon = params["custom_icon"],
 				custom_icon_state = params["custom_icon_state"],
@@ -137,8 +149,8 @@
 
 		if("toggle-precise-mode")
 			var/precise_type = params["newPreciseType"]
-			if(precise_type == PRECISE_MODE_TARGET && params["where_dropdown_value"])
-				where_dropdown_value = params["where_dropdown_value"]
+			if(precise_type == PRECISE_MODE_TARGET && params["where_target_type"])
+				where_target_type = params["where_target_type"]
 			toggle_precise_mode(precise_type)
 			return TRUE
 
@@ -151,8 +163,8 @@
 				offset = params["offset"]
 			if(params["object_name"])
 				object_name = params["object_name"]
-			if(params["where_dropdown_value"])
-				where_dropdown_value = params["where_dropdown_value"]
+			if(params["where_target_type"])
+				where_target_type = params["where_target_type"]
 			if(params["offset_type"])
 				offset_type = params["offset_type"]
 			if(params["custom_icon"])
@@ -209,21 +221,21 @@
 		switch(precise_mode)
 			if(PRECISE_MODE_TARGET)
 				var/list/spawn_params = list(
-					"object_list" = selected_object,
+					"object_list" = selected_atom,
 					"object_count" = object_count,
 					"offset" = "0,0,0",
 					"object_dir" = dir,
 					"object_name" = object_name,
 					"object_desc" = object_desc,
 					"offset_type" = OFFSET_ABSOLUTE,
-					"object_where" = where_dropdown_value,
+					"object_where" = where_target_type,
 					"object_reference" = target,
 					"custom_icon" = custom_icon,
 					"custom_icon_state" = custom_icon_state,
 					"custom_icon_size" = custom_icon_size
 				)
 
-				if(where_dropdown_value == WHERE_TARGETED_LOCATION || where_dropdown_value == WHERE_TARGETED_LOCATION_POD)
+				if(where_target_type == WHERE_TARGETED_LOCATION || where_target_type == WHERE_TARGETED_LOCATION_POD)
 					spawn_params["X"] = clicked_turf.x
 					spawn_params["Y"] = clicked_turf.y
 					spawn_params["Z"] = clicked_turf.z
@@ -238,9 +250,8 @@
 				SStgui.update_uis(src)
 
 			if(PRECISE_MODE_COPY)
-				var/target_type = target.type
 				to_chat(user, span_notice("Picked object: [icon2html(target, user)] [span_bold("[target]")]"))
-				copied_type = "[target_type]"
+				selected_atom = target
 				toggle_precise_mode(PRECISE_MODE_OFF)
 				SStgui.update_uis(src)
 
@@ -248,8 +259,8 @@
 
 /datum/spawnpanel/ui_data(mob/user)
 	var/data = list()
-	data["icon"] = custom_icon || selected_object_icon
-	data["iconState"] = custom_icon_state || selected_object_icon_state
+	data["icon"] = selected_atom_icon
+	data["iconState"] = selected_atom_icon_state
 	data["iconSize"] = custom_icon_size
 	var/list/states = list()
 	if(available_icon_states)
@@ -257,8 +268,7 @@
 			states += state
 	data["iconStates"] = states
 	data["precise_mode"] = precise_mode
-	data["selected_object"] = selected_object
-	data["copied_type"] = copied_type
+	data["selected_object"] = selected_atom.type
 	return data
 
 /datum/spawnpanel/ui_assets(mob/user)
