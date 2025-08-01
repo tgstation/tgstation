@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(mapping)
 		++space_levels_so_far
 	// Create empty space levels
 	while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_EMPTY = TRUE))
 		++space_levels_so_far
 
 	// Pick a random away mission.
