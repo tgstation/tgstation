@@ -1,13 +1,13 @@
 /obj/item/instrument_syncer
 	name = "conductor's baton"
 	desc = "A beautifully crafted baton - no, not the kind you hit people with - used to conduct symphonies and orchestras."
-	icon_state = "music_baton"
-	inhand_icon_state = "music_baton"
-	worn_icon_state = "music_baton"
+	icon = 'icons/obj/weapons/baton.dmi'
+	icon_state = "classic_baton"
+	inhand_icon_state = "classic_baton"
+	worn_icon_state = "classic_baton"
 	icon_angle = -45
-	icon = 'icons/obj/art/musician.dmi'
-	lefthand_file = 'icons/mob/inhands/equipment/instruments_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/instruments_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8
 	throwforce = 8
@@ -220,7 +220,6 @@
 /obj/item/instrument_syncer/radio
 	name = "radio star's baton"
 	desc = "A baton shaped radio that can be used to sync multiple instruments together, regardless of distance."
-	icon_state = "music_baton_radio"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_COMMAND * 3
 	force = 6
