@@ -93,7 +93,7 @@
 /mob/living/carbon/getFireLoss(required_bodytype = NONE)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-	if(!(bodypart.bodytype & required_bodytype))
+		if(!(bodypart.bodytype & required_bodytype))
 			continue
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
