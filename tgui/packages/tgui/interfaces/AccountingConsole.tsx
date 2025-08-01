@@ -5,7 +5,6 @@ import {
   Button,
   DmIcon,
   Flex,
-  Icon,
   Modal,
   NumberInput,
   Section,
@@ -53,7 +52,7 @@ enum SCREENS {
 
 export const AccountingConsole = () => {
   const { data } = useBackend<Data>();
-  const { crashing, station_time = '00:00', pic_file_format = 'png' } = data;
+  const { station_time = '00:00', pic_file_format = 'png' } = data;
   const [screenmode, setScreenmode] = useState(SCREENS.none);
 
   return (
@@ -71,14 +70,12 @@ export const AccountingConsole = () => {
                         setScreenmode={setScreenmode}
                         ownerScreenMode={SCREENS.users}
                       >
-                        <Icon
+                        <DmIcon
                           width="70px"
                           height="70px"
                           mt={1}
-                          align="center"
-                          name="credit-card"
-                          color="blue"
-                          size={5}
+                          icon="icons/obj/card.dmi"
+                          icon_state="budgetcard"
                         />
                       </FakeDesktopButton>
                       <FakeDesktopButton
@@ -86,14 +83,12 @@ export const AccountingConsole = () => {
                         setScreenmode={setScreenmode}
                         ownerScreenMode={SCREENS.audit}
                       >
-                        <Icon
+                        <DmIcon
                           width="70px"
                           height="70px"
                           mt={1}
-                          align="center"
-                          name="coins"
-                          color="green"
-                          size={5}
+                          icon="icons/obj/service/bureaucracy.dmi"
+                          icon_state="docs_verified"
                         />
                       </FakeDesktopButton>
                       <FakeDesktopButton
