@@ -14,61 +14,42 @@
 	if(!check_rights(R_SPAWN) || !spawn_params)
 		return
 
-	var/path = text2path(spawn_params["object_list"])
+	var/atom/atom_to_spawn = spawn_params["selected_atom"]
 
-	if(!path || (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob)))
+	if(!atom_to_spawn || (!ispath(atom_to_spawn, /obj) && !ispath(atom_to_spawn, /turf) && !ispath(atom_to_spawn, /mob)))
 		return
 
-	var/amount = clamp(text2num(spawn_params["object_count"]), 1, ADMIN_SPAWN_CAP)
+	var/amount = clamp(text2num(spawn_params["atom_amount"]), 1, ADMIN_SPAWN_CAP)
 
-	var/offset_raw = spawn_params["offset"]
-	var/list/offset = splittext(offset_raw, ",")
-	var/X = 0
-	var/Y = 0
-	var/Z = 0
+	var/list/offset = spawn_params["offset"]
+	var/X = offset["X"]
+	var/Y = offset["Y"]
+	var/Z = offset["Z"]
 
-	if(spawn_params["X"] && spawn_params["Y"] && spawn_params["Z"])
-		X = spawn_params["X"]
-		Y = spawn_params["Y"]
-		Z = spawn_params["Z"]
-	else
-		if(offset.len > 0)
-			X = text2num(offset[1]) || 0
+	var/atom_dir = text2num(spawn_params["atom_dir"]) || 1
+	var/atom_name = sanitize(spawn_params["atom_name"])
 
-		if(offset.len > 1)
-			Y = text2num(offset[2]) || 0
+	var/where_target_type = spawn_params["where_target_type"]
+	var/atom/target = null
 
-		if(offset.len > 2)
-			Z = text2num(offset[3]) || 0
+	if(where_target_type == WHERE_MOB_HAND || where_target_type == WHERE_TARGETED_MOB_HAND)
+		var/atom/target = null
 
-	var/obj_dir = text2num(spawn_params["object_dir"]) || 1
-	var/atom_name = sanitize(spawn_params["object_name"])
-	var/where = spawn_params["object_where"]
-	var/atom/target
+		target = (where_target_type = WHERE_TARGETED_MOB_HAND ? spawn_params["object_reference"] : user)
 
-	if(where == WHERE_MOB_HAND || where == WHERE_TARGETED_MOB_HAND)
-		var/atom/target_reference
-		switch(where)
-			if(WHERE_TARGETED_MOB_HAND)
-				target_reference = spawn_params["object_reference"]
-
-			if(WHERE_MOB_HAND)
-				target_reference = user
-
-		if(!target_reference)
-			to_chat(user, span_warning("No target reference provided."))
+		if(!target)
+			to_chat(user, span_warning("No target specified."))
 			return
 
-		if(!ismob(target_reference))
+		if(!ismob(target))
 			to_chat(user, span_warning("The targeted atom is not a mob."))
 			return
 
-		if(!iscarbon(target_reference) && !iscyborg(target_reference))
-			to_chat(user, span_warning("Can only spawn in hand when the target is a carbon mob or cyborg."))
-			where = WHERE_FLOOR_BELOW_MOB
-		target = target_reference
+		if(!iscarbon(target) && !iscyborg(target))
+			to_chat(user, span_warning("Can only spawn in hand when the target is a carbon mob or a cyborg."))
+			where_target_type = WHERE_FLOOR_BELOW_MOB
 
-	else if(where == WHERE_MARKED_OBJECT || where == WHERE_IN_MARKED_OBJECT)
+	else if(where_target_type == WHERE_MARKED_OBJECT || where_target_type == WHERE_IN_MARKED_OBJECT)
 		if(!user.client.holder.marked_datum)
 			to_chat(user, span_warning("You don't have any object marked."))
 			return
@@ -76,7 +57,7 @@
 			to_chat(user, span_warning("The object you have marked cannot be used as a target. Target must be of type /atom."))
 			return
 		else
-			target = (where == WHERE_MARKED_OBJECT ? get_turf(user.client.holder.marked_datum) : user.client.holder.marked_datum)
+			target = (where_target_type == WHERE_MARKED_OBJECT ? get_turf(user.client.holder.marked_datum) : user.client.holder.marked_datum)
 
 	else
 		switch(spawn_params["offset_type"])
@@ -106,16 +87,16 @@
 	if(!target)
 		return
 
-	var/use_droppod = where == WHERE_SUPPLY_BELOW_MOB || where == WHERE_TARGETED_LOCATION_POD
+	var/use_droppod = where_target_type == WHERE_SUPPLY_BELOW_MOB || where_target_type == WHERE_TARGETED_LOCATION_POD
 
 	var/obj/structure/closet/supplypod/centcompod/pod
 	if(use_droppod)
 		pod = new()
 
 	for(var/i in 1 to amount)
-		if(ispath(path, /turf))
+		if(istype(atom_to_spawn, /turf))
 			var/turf/original_turf = target
-			var/turf/created_turf = original_turf.ChangeTurf(path)
+			var/turf/created_turf = original_turf.ChangeTurf(atom_to_spawn.type)
 			if(created_turf && atom_name)
 				created_turf.name = atom_name
 			continue
@@ -141,8 +122,8 @@
 				var/mob/living/created_mob = created_atom
 				created_mob.current_size = spawn_params["custom_icon_size"] / 100
 
-		if(obj_dir)
-			created_atom.setDir(obj_dir)
+		if(atom_dir)
+			created_atom.setDir(atom_dir)
 
 		if(atom_name)
 			created_atom.name = atom_name
@@ -150,7 +131,7 @@
 				var/mob/created_mob = created_atom
 				created_mob.real_name = atom_name
 
-		if((where == WHERE_MOB_HAND || where == WHERE_TARGETED_MOB_HAND) && isliving(target) && isitem(created_atom))
+		if((where_target_type == WHERE_MOB_HAND || where_target_type == WHERE_TARGETED_MOB_HAND) && isliving(target) && isitem(created_atom))
 			var/mob/living/living_target = target
 			var/obj/item/created_item = created_atom
 			living_target.put_in_hands(created_item)
@@ -164,9 +145,9 @@
 	if(pod)
 		new /obj/effect/pod_landingzone(target, pod)
 
-	log_admin("[key_name(user)] created [amount == 1 ? "an instance" : "[amount] instances"] of [path]")
-	if(ispath(path, /mob))
-		message_admins("[key_name_admin(user)] created [amount == 1 ? "an instance" : "[amount] instances"] of [path]")
+	log_admin("[key_name(user)] created [amount == 1 ? "an instance" : "[amount] instances"] of [atom_to_spawn.type]")
+	if(istype(atom_to_spawn, /mob))
+		message_admins("[key_name_admin(user)] created [amount == 1 ? "an instance" : "[amount] instances"] of [atom_to_spawn.type]")
 
 #undef WHERE_FLOOR_BELOW_MOB
 #undef WHERE_SUPPLY_BELOW_MOB

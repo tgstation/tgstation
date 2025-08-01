@@ -29,9 +29,13 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 	var/atom_name = null
 	var/atom_desc = null
 	var/atom_dir = 1
-	var/offset = "0,0,0"
+	var/offset = list()
 	var/offset_type = OFFSET_RELATIVE
 	var/precise_mode = PRECISE_MODE_OFF
+
+/datum/spawnpanel/New()
+	. = ..()
+	offset = list("X" = 0, "Y" = 0, "Z" = 0)
 
 /datum/spawnpanel/ui_interact(mob/user, datum/tgui/ui)
 	if(user.client.ckey != owner_ckey)
