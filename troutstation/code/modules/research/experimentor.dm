@@ -572,7 +572,7 @@
 	RegisterSignal(src, COMSIG_ATOM_FIRE_ACT, PROC_REF(on_fired))
 	RegisterSignal(src, COMSIG_ITEM_HIT_REACT, PROC_REF(on_hit_react))
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
-	RegisterSignal(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, PROC_REF(on_exposure))
+	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_exposure))
 	RegisterSignal(src, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_clicked))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IRRADIATED), PROC_REF(on_radiated))
 
