@@ -1194,7 +1194,7 @@
  * Converts all gases into antinoblium.
  */
 /datum/gas_reaction/antinoblium_replication/react(datum/gas_mixture/air, datum/holder)
-	. = REACTING
+	. = VOLATILE_REACTION | REACTING
 	var/list/cached_gases = air.gases
 	var/heat_capacity = air.heat_capacity()
 	var/total_moles = air.total_moles()
@@ -1204,6 +1204,7 @@
 	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
 	if(total_not_antinoblium_moles < MINIMUM_MOLE_COUNT) // Clear up the remaining gases if this condition is met.
 		. = NO_REACTION
+		. &= ~REACTING
 		reaction_rate = total_not_antinoblium_moles
 	for(var/id in cached_gases)
 		if(id == /datum/gas/antinoblium)
