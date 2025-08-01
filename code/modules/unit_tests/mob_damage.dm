@@ -100,13 +100,13 @@
 	if(included_types & BRUTELOSS)
 		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLoss(), 1), amount, \
 			"(Testing getBruteLoss()) [testing_mob] should have [amount] brute damage, instead they have [testing_mob.getBruteLoss()]!")
-		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLossForType(BODTYPE_ORGANIC), 1), amount, \
-			"(Testing getBruteLossForType(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] brute damage, instead they have [testing_mob.getBruteLossForType(BODTYPE_ORGANIC)]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLossForType(BODYTYPE_ORGANIC), 1), amount, \
+			"(Testing getBruteLossForType(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] brute damage, instead they have [testing_mob.getBruteLossForType(BODYTYPE_ORGANIC)]!")
 	if(included_types & FIRELOSS)
 		TEST_ASSERT_EQUAL(round(testing_mob.getFireLoss(), 1), amount, \
 			"(Testing getFireLoss()) [testing_mob] should have [amount] burn damage, instead they have [testing_mob.getFireLoss()]!")
-		TEST_ASSERT_EQUAL(round(testing_mob.getFireLossForType(BODTYPE_ORGANIC), 1), amount, \
-			"(Testing getFireLossForType(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] burn damage, instead they have [testing_mob.getFireLossForType(BODTYPE_ORGANIC)]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.getFireLossForType(BODYTYPE_ORGANIC), 1), amount, \
+			"(Testing getFireLossForType(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] burn damage, instead they have [testing_mob.getFireLossForType(BODYTYPE_ORGANIC)]!")
 	if(included_types & OXYLOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getOxyLoss(), amount, \
 			"[testing_mob] should have [amount] oxy damage, instead they have [testing_mob.getOxyLoss()]!")
