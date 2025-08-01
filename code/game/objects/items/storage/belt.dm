@@ -197,6 +197,38 @@
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 	storage_type = /datum/storage/medical_belt
 
+/obj/item/storage/belt/medical/chiefmedicalofficer
+	name = "Chief Medical Officer's Medical Belt"
+	desc = "Holds surgical instruments with precision. A must-have for any fashionable lifesaver."
+	icon_state = "medical_cmo"
+	inhand_icon_state = "medical_cmo"
+	worn_icon_state = "medical_cmo"
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
+
+/obj/item/storage/belt/medical/chiefmedicalofficer/full
+	preload = TRUE
+
+/obj/item/storage/belt/medical/chiefmedicalofficer/full/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
+	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
+	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/blood_filter, src)
+	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
+	SSwardrobe.provide_type(/obj/item/bonesetter,src)
+
+/obj/item/storage/belt/medical/chiefmedicalofficer/full/get_types_to_preload()
+	var/list/to_preload = list()
+	to_preload += /obj/item/cautery/advanced
+	to_preload += /obj/item/scalpel/advanced
+	to_preload += /obj/item/retractor/advanced
+	to_preload += /obj/item/blood_filter
+	to_preload += /obj/item/surgical_drapes
+	to_preload += /obj/item/bonesetter
+	to_preload += /obj/item/stack/medical/bone_gel
+	return to_preload
+
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
 	icon_state = "emt"
