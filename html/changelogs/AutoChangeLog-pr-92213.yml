@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "reagent intercept operations use correct volumes e.g. ph buffers"
-  - bugfix: "impure cryostylane now has inverse cryogeldia effects when applied on mods"
-  - bugfix: "exposing reagents now uses correct volumes i.e. injecting blood into mobs don't increase it exponentially and stops when max levels are reached. Exposure affects of all reagents are lessened upon continuous exposure"
-  - refactor: "refactors how reagent affects are applied on mobs. Report bugs on github"

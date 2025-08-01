@@ -1,5 +1,0 @@
-author: "itsmeow"
-delete-after: True
-changes:
-  - code_imp: "Improved performance of several icon metadata operations."
-  - rscadd: "IconForge GAGS now fully supports the OR blend mode and color matrices."

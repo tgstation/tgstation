@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "EMP Flashlights work on cyborgs for non-combat mode as well as combat mode"
