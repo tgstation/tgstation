@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Cyborgs correctly take brute damage from lasers again."
-  - bugfix: "Cyborgs correctly take burn damage from EMP again."

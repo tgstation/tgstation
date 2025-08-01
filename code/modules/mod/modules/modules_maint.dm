@@ -54,7 +54,7 @@
 	set_off = TRUE
 
 ///Calls snap_signal() when exposed to a reagent via VAPOR, PATCH or TOUCH
-/obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
+/obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, show_message)
 	SIGNAL_HANDLER
 
 	if(!(methods & (VAPOR|PATCH|TOUCH)))

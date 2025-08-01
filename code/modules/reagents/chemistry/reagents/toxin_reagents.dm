@@ -269,13 +269,15 @@
 	. = ..()
 	affected_mob.cure_fakedeath(type)
 
-/datum/reagent/toxin/zombiepowder/on_transfer(atom/target_atom, methods, trans_volume)
+/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
-	var/datum/reagent/zombiepowder = target_atom.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
-	if(!zombiepowder || !(methods & (INGEST|INHALE)))
+	if(!(methods & (INGEST|INHALE)))
 		return
-	LAZYINITLIST(zombiepowder.data)
-	zombiepowder.data["method"] |= (INGEST|INHALE)
+
+	var/datum/reagent/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+	if(zombiepowder)
+		LAZYINITLIST(zombiepowder.data)
+		zombiepowder.data["method"] |= (INGEST|INHALE)
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -450,24 +452,18 @@
 	taste_description = "spores"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/spore/on_transfer(atom/A, methods, trans_volume)
+/datum/reagent/toxin/spore/expose_mob(mob/living/spore_lung_victim, methods, reac_volume, show_message, touch_protection)
 	. = ..()
-	if(!isliving(A))
-		return
 
 	if(!(methods & INHALE))
 		return
-
-	var/mob/living/spore_lung_victim = A
-
 	if(!(spore_lung_victim.mob_biotypes & (MOB_HUMANOID | MOB_BEAST)))
 		return
 
-	if(prob(min(trans_volume * 10, 80)))
+	if(prob(min(reac_volume * 10, 80)))
 		to_chat(spore_lung_victim, span_danger("[pick("You have a coughing fit!", "You hack and cough!", "Your lungs burn!")]"))
 		spore_lung_victim.Stun(1 SECONDS)
 		spore_lung_victim.emote("cough")
-
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

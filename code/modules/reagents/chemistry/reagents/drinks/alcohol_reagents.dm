@@ -501,14 +501,16 @@
 
 	return ..()
 
-/datum/reagent/consumable/ethanol/goldschlager/on_transfer(atom/atom, methods = TOUCH, trans_volume)
+/datum/reagent/consumable/ethanol/goldschlager/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
 	if(!(methods & INGEST))
-		return ..()
+		return
 
-	var/convert_amount = trans_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
-	atom.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
-	atom.reagents.add_reagent(/datum/reagent/gold, convert_amount)
-	return ..()
+	var/convert_amount = reac_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
+	var/datum/reagents/mob_reagents = exposed_mob.reagents
+
+	mob_reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
+	mob_reagents.add_reagent(/datum/reagent/gold, convert_amount)
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
