@@ -27,7 +27,8 @@
 	remove_blacklisted = FALSE, //unused for plumbing, we don't care what reagents are inside us
 	methods = LINEAR, //default round robin technique for transferring reagents
 	show_message = TRUE, //unused for plumbing, used for logging only
-	ignore_stomach = FALSE //unused for plumbing, reagents flow only between machines & is not injected to mobs at any point in time
+	ignore_stomach = FALSE, //unused for plumbing, reagents flow only between machines & is not injected to mobs at any point in time
+	copy_only = FALSE //unused
 )
 	if(QDELETED(target) || !total_volume)
 		return FALSE
@@ -156,7 +157,8 @@
 	remove_blacklisted = FALSE,
 	methods = LINEAR,
 	show_message = TRUE,
-	ignore_stomach = FALSE
+	ignore_stomach = FALSE,
+	copy_only = FALSE
 )
 	var/obj/machinery/plumbing/reaction_chamber/reactor = my_atom
 	var/list/datum/reagent/catalysts = reactor.catalysts
