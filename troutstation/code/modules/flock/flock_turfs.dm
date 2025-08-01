@@ -17,7 +17,7 @@
 	/// Icon for the emissive overlay
 	var/emissive_icon = 'troutstation/icons/turf/floors/flock_floor_e.dmi'
 	/// The alpha used for the emissive decal.
-	var/emissive_alpha = 50
+	var/emissive_alpha = 20
 
 /turf/open/floor/flock/Initialize(mapload)
 	. = ..()
