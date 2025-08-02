@@ -63,11 +63,12 @@
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/silver = 1,
+		/obj/item/laser_pointer/blue = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/cmo
+	belt = /obj/item/storage/belt/medical/chiefmedicalofficer/full
 	ears = /obj/item/radio/headset/heads/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
-	l_pocket = /obj/item/laser_pointer/blue
+	l_pocket = /obj/item/modular_computer/pda/heads/cmo
 	r_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/medkit/surgery
 
