@@ -12,6 +12,20 @@
 	holder.mutations |= src
 	holder.add_atom_colour(hue, FIXED_COLOUR_PRIORITY)
 
+/datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
+	SHOULD_CALL_PARENT(TRUE)
+	buckled.layer = SPACEVINE_MOB_LAYER
+	RegisterSignal(buckled, COMSIG_MOB_UNBUCKLED, PROC_REF(on_unbuckle))
+
+/datum/spacevine_mutation/proc/on_unbuckle(datum/source)
+	SHOULD_CALL_PARENT(TRUE)
+	SIGNAL_HANDLER
+	if(!isliving(source))
+		return
+	var/mob/living/buckled = source
+	buckled.layer = initial(buckled.layer)
+	UnregisterSignal(buckled, COMSIG_MOB_UNBUCKLED)
+
 /datum/spacevine_mutation/proc/process_mutation(obj/structure/spacevine/holder)
 	return
 
@@ -37,9 +51,6 @@
 	return
 
 /datum/spacevine_mutation/proc/on_spread(obj/structure/spacevine/holder, turf/target)
-	return
-
-/datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
 	return
 
 /datum/spacevine_mutation/proc/on_explosion(severity, target, obj/structure/spacevine/holder)
@@ -168,6 +179,7 @@
 
 /// What happens if an aggr spreading vine buckles a mob.
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
+	. = ..()
 	aggrospread_act(holder, buckled)
 
 /// Hurts mobs. To be used when a vine with aggressive spread mutation spreads into the mob's tile or buckles them.
