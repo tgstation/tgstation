@@ -1,0 +1,10 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - rscadd: "Glitter can now be made from plastic polymers and aluminium."
+  - rscadd: "Plastic polymer can be made at any temperature, and then heated to produce sheets."
+  - rscadd: "Glitter can now be made any colour, mix 10 units each of glitter and acetone to change its colour to that of the other reagents in the beaker."
+  - rscadd: "Mixing different colours of glitter will cause a random selection of those colours to appear on the floor when released."
+  - rscadd: "Being exposed to glitter in reagent form causes you to cough up more glitter onto the floor"
+  - rscadd: "Dragging glittery crates will now spread a trail of glitter and angry janitors behind them."
+  - image: "Added new glitter sprites (that don't look like gasses)"

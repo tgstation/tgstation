@@ -1,0 +1,62 @@
+2025-08-01:
+  00-Steven:
+  - bugfix: Newspapers can be scrolled through again.
+  Glamyr:
+  - image: update old sprites of general minerals in hands
+  Maximal08:
+  - qol: Right-clicking with a sheet of metal on a tile puts a computer or machine
+      if you have a board of the appropriate type in your other hand.
+  SmArtKar:
+  - rscdel: Removes forced tint from NVGs
+  - bugfix: Fixed eyes not being affected by human height
+  - rscdel: Hitting objects at high speed in zero-g no longer makes you crash into
+      them.
+  SyncIt21:
+  - bugfix: reagent intercept operations use correct volumes e.g. ph buffers
+  - bugfix: impure cryostylane now has inverse cryogeldia effects when applied on
+      mods
+  - bugfix: exposing reagents now uses correct volumes i.e. injecting blood into mobs
+      don't increase it exponentially and stops when max levels are reached. Exposure
+      affects of all reagents are lessened upon continuous exposure
+  - refactor: refactors how reagent affects are applied on mobs. Report bugs on github
+  itsmeow:
+  - code_imp: Improved performance of several icon metadata operations.
+  - rscadd: IconForge GAGS now fully supports the OR blend mode and color matrices.
+  necromanceranne:
+  - bugfix: Operatives once again can purchase syndicate bombs.
+  - balance: Athletics experience gain from non-workout sources, such as climbing
+      ladders, hopping tables and rope climbing, experience diminishing returns as
+      you gain athletics levels. To reach legendary fitness, you really should hit
+      the gym.
+  projectkepler-ru:
+  - bugfix: .38 Truestrike speedloader not being printable
+  - spellcheck: .38 Truestrike Magazine no longer have the extra E and Flareshot now
+      no longer lose the R
+  trazodont:
+  - bugfix: honey sweetrolls can now be eaten
+  zxaber:
+  - bugfix: Cyborgs correctly take brute damage from lasers again.
+  - bugfix: Cyborgs correctly take burn damage from EMP again.
+  - bugfix: EMP Flashlights work on cyborgs for non-combat mode as well as combat
+      mode
+2025-08-02:
+  Aliceee2ch:
+  - bugfix: Fixed the nukies outpost chemical locker not having beakers inside of
+      a beaker box
+  SmArtKar:
+  - bugfix: Fixed fire arrow ritual not being accessible
+  - bugfix: Fixed certain nullrod types not being usable for certain holy and unholy
+      interactions
+  - bugfix: Fixed emissive bloom being all white
+  - bugfix: Fixed M90 underbarrel having its separate inaccessible firing pin
+  SyncIt21:
+  - bugfix: reagent transfer amounts with multiplier applied(e.g. cryotubes) have
+      been corrected
+  ZeWaka:
+  - bugfix: tgui windows should now stop flashing for a single frame elsewhere when
+      opening
+  necromanceranne:
+  - bugfix: Swimming now no longer punishes you with less gains for swimming in heavy
+      gravity, but also weirdly easier to swim in.
+  subject217:
+  - spellcheck: fixed a typo in the operative bomb implant manual

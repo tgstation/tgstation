@@ -38,8 +38,6 @@
 #define GHOST_PLANE 4
 #define POINT_PLANE 5
 
-#define RENDER_PLANE_UNLIT_GAME 9
-
 //---------- LIGHTING -------------
 /// Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
@@ -69,6 +67,10 @@
 #define SPECULAR_MASK_RENDER_TARGET "*RENDER_PLANE_SPECULAR_MASK"
 
 //-------------------- Lighting ---------------------
+
+/// Main game plane to which everything renders, which then is multiplied by light
+/// Should not be lit directly as it is sourced for emissive bloom
+#define RENDER_PLANE_UNLIT_GAME 19
 
 #define RENDER_PLANE_LIGHTING 20
 
