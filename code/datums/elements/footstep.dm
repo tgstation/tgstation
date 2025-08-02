@@ -54,6 +54,10 @@
 			src.volume = 90*volume
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
 			return
+		else if(isfile(footstep_type))
+			footstep_sounds = footstep_type
+			src.volume = 90*volume
+
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep))
 	steps_for_living[target] = 0
 

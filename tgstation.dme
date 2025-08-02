@@ -2418,6 +2418,7 @@
 #include "code\game\objects\effects\spawners\random\lavaland_mobs.dm"
 #include "code\game\objects\effects\spawners\random\maintenance.dm"
 #include "code\game\objects\effects\spawners\random\medical.dm"
+#include "code\game\objects\effects\spawners\random\mob.dm"
 #include "code\game\objects\effects\spawners\random\mod.dm"
 #include "code\game\objects\effects\spawners\random\random.dm"
 #include "code\game\objects\effects\spawners\random\russian_rifle_spawner.dm"
