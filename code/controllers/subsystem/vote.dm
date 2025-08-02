@@ -461,7 +461,7 @@ SUBSYSTEM_DEF(vote)
 /datum/action/vote/IsAvailable(feedback = FALSE)
 	return TRUE // Democracy is always available to the free people
 
-/datum/action/vote/Trigger(trigger_flags)
+/datum/action/vote/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 	. = ..()
 
-/datum/action/innate/ai/Trigger(trigger_flags)
+/datum/action/innate/ai/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(auto_use_uses)
 		adjust_uses(-1)
