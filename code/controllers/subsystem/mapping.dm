@@ -274,7 +274,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ocean_ruins = levels_by_trait(ZTRAIT_OCEAN_RUINS)
 	if (ocean_ruins.len)
-		seedRuins(ocean_ruins, 150, list(/area/rainworld/surface/outdoors/unexplored), themed_ruins[ZTRAIT_OCEAN_RUINS], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_LAVALAND, ruins_type = ZTRAIT_OCEAN_RUINS)
+		seedRuins(ocean_ruins, 150, list(/area/rainworld/surface/outdoors/unexplored), themed_ruins[ZTRAIT_OCEAN_RUINS], clear_below = TRUE, mineral_budget = 30, mineral_budget_update = OREGEN_PRESET_TRIPLE_Z, ruins_type = ZTRAIT_OCEAN_RUINS)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
