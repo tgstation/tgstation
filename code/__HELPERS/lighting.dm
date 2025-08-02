@@ -1,5 +1,11 @@
 /// Produces a mutable appearance glued to the [EMISSIVE_PLANE] dyed to be the [EMISSIVE_COLOR].
-/proc/emissive_appearance(icon, icon_state = "", atom/offset_spokesman, layer = FLOAT_LAYER, alpha = 255, appearance_flags = NONE, offset_const, apply_bloom = TRUE)
+/proc/emissive_appearance(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const, apply_bloom = TRUE)
+	if (isnull(layer))
+		if(IS_TOPDOWN_PLANE(offset_spokesman.plane))
+			layer = ABOVE_NORMAL_TURF_LAYER + (offset_spokesman.layer - LOW_FLOOR_LAYER + 0.5) * 0.001
+		else
+			layer = FLOAT_LAYER
+
 	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, offset_spokesman, EMISSIVE_PLANE, 255, appearance_flags | EMISSIVE_APPEARANCE_FLAGS, offset_const)
 	if(alpha == 255)
 		if (apply_bloom)
@@ -26,7 +32,10 @@
 	var/mutable_appearance/blocker = new()
 	blocker.icon = make_blocker.icon
 	blocker.icon_state = make_blocker.icon_state
-	// blocker.layer = FLOAT_LAYER // Implied, FLOAT_LAYER is default for appearances
+	// If we keep this on a FLOAT_LAYER on a topdown object it'll render ontop of everything
+	// So we need to force it to render at a saner layer
+	if(IS_TOPDOWN_PLANE(make_blocker.plane))
+		blocker.layer = ABOVE_NORMAL_TURF_LAYER + (make_blocker.layer - LOW_FLOOR_LAYER + 0.5) * 0.001 // Slightly shift it so the layering is still respected. + 0.5 so we don't collide with ABOVE_NORMAL_TURF_LAYER
 	blocker.appearance_flags |= make_blocker.appearance_flags | EMISSIVE_APPEARANCE_FLAGS
 	blocker.dir = make_blocker.dir
 	if(make_blocker.alpha == 255)
@@ -41,7 +50,12 @@
 	return blocker
 
 /// Produces a mutable appearance glued to the [EMISSIVE_PLANE] dyed to be the [EM_BLOCK_COLOR].
-/proc/emissive_blocker(icon, icon_state = "", atom/offset_spokesman, layer = FLOAT_LAYER, alpha = 255, appearance_flags = NONE, offset_const)
+/proc/emissive_blocker(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const)
+	if (isnull(layer))
+		if(IS_TOPDOWN_PLANE(offset_spokesman.plane))
+			layer = ABOVE_NORMAL_TURF_LAYER + (offset_spokesman.layer - LOW_FLOOR_LAYER + 0.5) * 0.001
+		else
+			layer = FLOAT_LAYER
 	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, offset_spokesman, EMISSIVE_PLANE, alpha, appearance_flags | EMISSIVE_APPEARANCE_FLAGS, offset_const)
 	if(alpha == 255)
 		appearance.color = GLOB.em_block_color
