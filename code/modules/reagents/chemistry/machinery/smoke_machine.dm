@@ -35,7 +35,7 @@
 	src.location = get_turf(location)
 	src.amount = amount
 	if(carry)
-		carry.copy_to(chemholder, 20)
+		carry.trans_to(chemholder, 20, copy_only = TRUE)
 		carry.remove_all(amount / efficiency)
 
 /obj/machinery/smoke_machine/Initialize(mapload)

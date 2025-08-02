@@ -327,7 +327,7 @@ Behavior that's still missing from this component that original food items had t
 	var/volume = ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT])
 
 	this_food.create_reagents(volume, this_food.reagents?.flags)
-	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], 1)
+	original_atom.reagents.trans_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], copy_only = TRUE)
 
 	if(original_atom.name != initial(original_atom.name))
 		this_food.name = "slice of [original_atom.name]"
