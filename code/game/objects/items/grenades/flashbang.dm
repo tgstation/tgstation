@@ -61,7 +61,7 @@
 //Flash
 	var/attempt_flash = living_mob.flash_act(affect_silicon = 1)
 	if(attempt_flash == FLASH_COMPLETED)
-		if(distance <= sweetspot_range)
+		if(distance <= sweetspot_range || issilicon(living_mob))
 			living_mob.Paralyze(max(20/max(1, distance), 5))
 			living_mob.Knockdown(max(200/max(1, distance), 60))
 		else
