@@ -3,7 +3,8 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 4
-	multiload = FALSE
+	// this inherits regular magazines' AMMO_BOX_MULTILOAD_IN, which means that regular shotguns shouldn't be multiloading from Bulldog magazines
+	// if someone has the bright idea to add shotgun speedloaders, i certainly hope they know what they're inviting by doing so
 
 /obj/item/ammo_box/magazine/internal/shot/tube
 	name = "dual feed shotgun internal tube"
