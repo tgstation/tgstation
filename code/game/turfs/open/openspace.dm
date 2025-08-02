@@ -113,7 +113,7 @@
 /turf/open/openspace/proc/CanBuildHere()
 	return can_build_on
 
-/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, params)
+/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	..()
 	if(!CanBuildHere())
 		return
@@ -210,3 +210,6 @@
 
 /turf/open/openspace/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/openspace/coldroom
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS

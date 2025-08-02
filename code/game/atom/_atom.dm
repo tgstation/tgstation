@@ -121,7 +121,11 @@
 	var/datum/ai_controller/ai_controller
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
-	var/datum/forensics/forensics
+	var/datum/forensics/forensics = null
+	/// Cached color for all blood on us to avoid doing constant math
+	var/cached_blood_color = null
+	/// Cached emissive alpha for all blood on us to avoid doing constant math
+	var/cached_blood_emissive = null
 
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
@@ -330,33 +334,33 @@
 /**
  * Ensure a list of atoms/reagents exists inside this atom
  *
- * Goes throught he list of passed in parts, if they're reagents, adds them to our reagent holder
- * creating the reagent holder if it exists.
- *
- * If the part is a moveable atom and the  previous location of the item was a mob/living,
- * it calls the inventory handler transferItemToLoc for that mob/living and transfers the part
- * to this atom
- *
- * Otherwise it simply forceMoves the atom into this atom
+ * Cycles through the list of movables used up in the recipe and calls used_in_craft() for each of them
+ * then it either moves them inside the object or deletes
+ * them depending on whether they're in the list of parts for the recipe or not
  */
-/atom/proc/CheckParts(list/parts_list, datum/crafting_recipe/current_recipe)
-	SEND_SIGNAL(src, COMSIG_ATOM_CHECKPARTS, parts_list, current_recipe)
-	if(!parts_list)
-		return
-	for(var/part in parts_list)
-		if(istype(part, /datum/reagent))
-			if(!reagents)
-				reagents = new()
-			reagents.reagent_list.Add(part)
-		else if(ismovable(part))
-			var/atom/movable/object = part
-			if(isliving(object.loc))
-				var/mob/living/living = object.loc
-				living.transferItemToLoc(object, src)
-			else
-				object.forceMove(src)
-			SEND_SIGNAL(object, COMSIG_ATOM_USED_IN_CRAFT, src)
-	parts_list.Cut()
+/atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
+	var/list/remaining_parts = current_recipe?.parts?.Copy()
+	var/list/parts_by_type = remaining_parts?.Copy()
+	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
+		parts_by_type[parttype] = parttype
+	for(var/obj/item/item in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
+		item.used_in_craft(src, current_recipe)
+		var/matched_type = is_type_in_list(item, parts_by_type, zebra = TRUE)
+		if(!matched_type)
+			continue
+
+		if(isliving(item.loc))
+			var/mob/living/living = item.loc
+			living.transferItemToLoc(item, src)
+		else
+			item.forceMove(src)
+
+		if(matched_type)
+			remaining_parts[matched_type] -= 1
+			if(remaining_parts[matched_type] <= 0)
+				remaining_parts -= matched_type
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
@@ -410,18 +414,15 @@
  * - [reagents][/list]: The list of reagents the atom is being exposed to.
  * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
  * - methods: How the atom is being exposed to the reagents. Bitflags.
- * - volume_modifier: Volume multiplier.
  * - show_message: Whether to display anything to mobs when they are exposed.
  */
-/atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
+/atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, show_message=TRUE)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, show_message)
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
-		. |= current_reagent.expose_atom(src, reagents[current_reagent])
-	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
+		. |= current_reagent.expose_atom(src, reagents[current_reagent], methods)
 
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()
@@ -488,45 +489,24 @@
 
 ///returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != /datum/reagent/blood)
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
 		return
-	return list("ANIMAL DNA" = "Y-")
+
+	return list(blood_type.dna_string = blood_type)
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != /datum/reagent/blood)
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
 		return
-	var/list/blood_dna = list()
-	if(dna)
-		blood_dna[dna.unique_enzymes] = dna.blood_type
-	else
-		blood_dna["UNKNOWN DNA"] = "X*"
-	return blood_dna
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
+	if (dna?.unique_enzymes)
+		return list(dna.unique_enzymes = blood_type)
+	return list(blood_type.dna_string = blood_type)
 
 /mob/living/silicon/get_blood_dna_list()
 	return
-
-///to add a mob's dna info into an object's blood_dna list.
-/atom/proc/transfer_mob_blood_dna(mob/living/injected_mob)
-	// Returns 0 if we have that blood already
-	var/new_blood_dna = injected_mob.get_blood_dna_list()
-	if(!new_blood_dna)
-		return FALSE
-	var/old_length = GET_ATOM_BLOOD_DNA_LENGTH(src)
-	add_blood_DNA(new_blood_dna)
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src) == old_length)
-		return FALSE
-	return TRUE
-
-///to add blood from a mob onto something, and transfer their dna info
-/atom/proc/add_mob_blood(mob/living/injected_mob)
-	var/list/blood_dna = injected_mob.get_blood_dna_list()
-	if(!blood_dna)
-		return FALSE
-	return add_blood_DNA(blood_dna)
 
 ///Is this atom in space
 /atom/proc/isinspace()
@@ -584,17 +564,19 @@
  * Returns true if any washing was necessary and thus performed
  * Arguments:
  * * clean_types: any of the CLEAN_ constants
+ * Returns: A bitflag if it successfully cleaned something: e.g. COMPONENT_CLEANED, or NONE if not. COMPONENT_CLEANED_GAIN_XP being flipped on signals whether the cleaning should yield cleaning xp.
  */
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
-		return TRUE
+	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types)
+	if(.)
+		return
 
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		return TRUE
-	return FALSE
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
+	return NONE
 
 ///Where atoms should drop if taken from this atom
 /atom/proc/drop_location()
@@ -667,25 +649,25 @@
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
 	to_chat(user, span_notice("You start working on [src]."))
-	if(process_item.use_tool(src, user, processing_time, volume=50))
-		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
-		var/list/atom/created_atoms = list()
-		var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
-		for(var/i = 1 to amount_to_create)
-			var/atom/created_atom = new atom_to_create(drop_location())
-			if(custom_materials)
-				created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
-			created_atom.pixel_x = pixel_x
-			created_atom.pixel_y = pixel_y
-			if(i > 1)
-				created_atom.pixel_x += rand(-8,8)
-				created_atom.pixel_y += rand(-8,8)
-			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			created_atoms.Add(created_atom)
-		to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
-		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
-		UsedforProcessing(user, process_item, chosen_option, created_atoms)
+	if(!process_item.use_tool(src, user, processing_time, volume=50))
 		return
+	var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
+	var/list/atom/created_atoms = list()
+	var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
+	for(var/i = 1 to amount_to_create)
+		var/atom/created_atom = new atom_to_create(drop_location())
+		created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
+		if(custom_materials)
+			created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
+		created_atom.pixel_x = pixel_x
+		created_atom.pixel_y = pixel_y
+		if(i > 1)
+			created_atom.pixel_x += rand(-8,8)
+			created_atom.pixel_y += rand(-8,8)
+		created_atoms.Add(created_atom)
+	to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
+	SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
+	UsedforProcessing(user, process_item, chosen_option, created_atoms)
 
 /atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
 	qdel(src)

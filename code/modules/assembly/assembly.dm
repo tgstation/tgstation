@@ -118,7 +118,7 @@
 		return
 	. = ..()
 
-/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isassembly(attacking_item))
 		var/obj/item/assembly/new_assembly = attacking_item
 		// Check both our's and their's assembly flags to see if either should not duplicate

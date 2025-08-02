@@ -30,6 +30,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	faction = list(FACTION_MIMIC)
 	basic_mob_flags = DEL_ON_DEATH
 	combat_mode = TRUE
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	/// can we stun people on hit
 	var/knockdown_people = FALSE
 

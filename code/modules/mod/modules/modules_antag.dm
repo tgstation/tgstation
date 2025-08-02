@@ -1,120 +1,5 @@
 //Antag modules for MODsuits
 
-///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection. Also acts as a welding screen.
-/obj/item/mod/module/armor_booster
-	name = "MOD armor booster module"
-	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
-		giving the user incredible protection against conventional firearms, or everyday attacks in close-quarters. \
-		However, the additional plating cannot deploy alongside parts of the suit used for vacuum sealing, \
-		so this extra armor provides zero ability for extravehicular activity while deployed."
-	icon_state = "armor_booster"
-	module_type = MODULE_TOGGLE
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
-	overlay_state_inactive = "module_armorbooster_off"
-	overlay_state_active = "module_armorbooster_on"
-	use_mod_colors = TRUE
-	mask_worn_overlay = TRUE
-	/// Whether or not this module removes pressure protection.
-	var/remove_pressure_protection = TRUE
-	/// Slowdown added to the control unit while this module is disabled
-	var/space_slowdown = 0.5
-	/// Armor values added to the suit parts.
-	var/datum/armor/armor_mod = /datum/armor/mod_module_armor_boost
-	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
-	var/list/spaceproofed = list()
-
-/obj/item/mod/module/armor_booster/no_speedbost
-	space_slowdown = 0
-
-/datum/armor/mod_module_armor_boost
-	melee = 25
-	bullet = 30
-	laser = 15
-	energy = 15
-
-/obj/item/mod/module/armor_booster/on_part_activation()
-	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.flash_protect = FLASH_PROTECTION_WELDER
-	mod.update_speed()
-
-/obj/item/mod/module/armor_booster/on_part_deactivation(deleting = FALSE)
-	if(deleting)
-		return
-	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.flash_protect = initial(head_cover.flash_protect)
-	mod.update_speed()
-
-/obj/item/mod/module/armor_booster/on_activation()
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(mod.wearer, "armor boosted, EVA lost")
-	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
-	if(head_cover)
-		RegisterSignal(mod, COMSIG_MOD_PART_SEALED, PROC_REF(seal_helmet))
-		seal_helmet(mod, head_cover)
-	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
-		part.set_armor(part.get_armor().add_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
-			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
-			spaceproofed[clothing_part] = TRUE
-	mod.update_speed()
-
-/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
-	if(!deleting)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		balloon_alert(mod.wearer, "armor retracts, EVA ready")
-	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
-	if(head_cover)
-		UnregisterSignal(mod, COMSIG_MOD_PART_SEALED)
-		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
-	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
-		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
-		if(!remove_pressure_protection || !isclothing(part))
-			continue
-		var/obj/item/clothing/clothing_part = part
-		if(spaceproofed[clothing_part])
-			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-	mod.update_speed()
-	spaceproofed = list()
-
-/obj/item/mod/module/armor_booster/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
-	SIGNAL_HANDLER
-	if (!active)
-		module_slowdowns += space_slowdown
-
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
-	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-	return ..()
-
-/obj/item/mod/module/armor_booster/proc/seal_helmet(datum/source, datum/mod_part/part)
-	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
-	if(part != head_cover)
-		return
-	if(part.sealed)
-		ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
-	else
-		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
-
-/obj/item/mod/module/armor_booster/on_install()
-	RegisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY, PROC_REF(on_visor_overlay))
-
-/obj/item/mod/module/armor_booster/on_uninstall(deleting)
-	UnregisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY)
-
-/obj/item/mod/module/armor_booster/proc/on_visor_overlay(datum/source,  mutable_appearance/standing, list/overrides)
-	SIGNAL_HANDLER
-	if (active)
-		overrides += mutable_appearance(overlay_icon_file, "module_armorbooster_visor-[mod.skin]", layer = standing.layer + 0.1)
-
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"
@@ -138,8 +23,6 @@
 	var/charge_recovery = 1
 	/// Whether or not this shield can lose multiple charges.
 	var/lose_multiple_charges = FALSE
-	/// The item path to recharge this shielkd.
-	var/recharge_path = null
 	/// The icon file of the shield.
 	var/shield_icon_file = 'icons/effects/effects.dmi'
 	/// The icon_state of the shield.
@@ -152,8 +35,16 @@
 	charges = max_charges
 
 /obj/item/mod/module/energy_shield/on_part_activation()
-	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
+	mod.AddComponent(\
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		starting_charges = charges, \
+		shield_icon_file = shield_icon_file, \
+		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_part_deactivation(deleting = FALSE)
@@ -186,12 +77,9 @@
 	icon_state = "battlemage_shield"
 	idle_power_cost = 0 //magic
 	use_energy_cost = 0 //magic too
-	max_charges = 15
-	recharge_start_delay = 0 SECONDS
-	charge_recovery = 8
+	max_charges = 5
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
-	recharge_path = /obj/item/wizard_armour_charge
 	required_slots = list()
 
 ///Magic Nullifier - Protects you from magic.
@@ -241,7 +129,7 @@
 	overlay_state_inactive = "module_insignia"
 	mask_worn_overlay = TRUE
 
-/obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/insignia/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	. = ..()
 	for(var/mutable_appearance/appearance as anything in .)
@@ -409,6 +297,7 @@
 	var/obj/item/current_disguise
 
 /obj/item/mod/module/chameleon/on_install()
+	. = ..()
 	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	for(var/clothing_path in all_disguises)
 		var/obj/item/clothing = clothing_path
@@ -418,6 +307,7 @@
 		possible_disguises[chameleon_item_name] = clothing_path
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(current_disguise)
 		return_look()
 	possible_disguises = null
@@ -449,7 +339,7 @@
 	mod.righthand_file = initial(current_disguise.righthand_file)
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(return_look))
 
 /obj/item/mod/module/chameleon/proc/return_look()
@@ -463,7 +353,7 @@
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = null
 	mod.inhand_icon_state = null
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 	current_disguise = null
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
@@ -481,10 +371,12 @@
 	var/old_size
 
 /obj/item/mod/module/plate_compression/on_install()
+	. = ..()
 	old_size = mod.w_class
 	mod.update_weight_class(new_size)
 
 /obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
+	. = ..()
 	mod.update_weight_class(old_size)
 	old_size = null
 	if(!mod.loc)
@@ -522,15 +414,17 @@
 	complexity = 0
 	removable = FALSE
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
-	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
 	required_slots = list(ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_OCLOTHING)
 	/// List of traits added when the suit is activated
 	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
+	. = ..()
 	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
+	. = ..()
 	REMOVE_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_part_activation()
@@ -584,7 +478,7 @@
 	stealth_alpha = 30
 	module_type = MODULE_ACTIVE
 	cooldown_time = 2 SECONDS
-	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/welding/syndicate)
 	/// How much time before we are able to cloak again after the cloak is broken (not disabled)
 	COOLDOWN_DECLARE(recloak_timer)
 	/// If the stealth portion of the module is active

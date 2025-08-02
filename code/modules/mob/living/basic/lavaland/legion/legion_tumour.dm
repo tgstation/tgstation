@@ -60,7 +60,7 @@
 	. = ..()
 	owner.log_message("has received [src] which will eventually turn them into a Legion.", LOG_VICTIM)
 
-/obj/item/organ/legion_tumour/attack(mob/living/target, mob/living/user, params)
+/obj/item/organ/legion_tumour/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (try_apply(target, user))
 		qdel(src)
 		return

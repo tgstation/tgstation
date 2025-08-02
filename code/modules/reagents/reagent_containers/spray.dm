@@ -132,7 +132,7 @@
 		current_range = spray_range
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
-/obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)

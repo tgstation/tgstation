@@ -6,7 +6,7 @@
 	school = SCHOOL_CONJURATION
 	cooldown_time = 2 MINUTES
 
-	invocation = "IA IA"
+	invocation = "IA IA!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

@@ -42,6 +42,8 @@
 	desc = "A .38 bullet casing."
 	caliber = CALIBER_38
 	projectile_type = /obj/projectile/bullet/c38
+	/// Used for icon building for things like speedloaders and the like to determine what kind of sprite this casing uses. Actually accepts any string, just make sure there is a matching positional sprite in _/icons/obj/weapons/guns/ammo.dmi.
+	var/lead_or_laser = "lead"
 
 /obj/item/ammo_casing/c38/trac
 	name = ".38 TRAC bullet casing"
@@ -77,6 +79,13 @@
 	name = ".38 Iceblox bullet casing"
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
+
+/obj/item/ammo_casing/c38/flare
+	name = ".38 flare casing"
+	desc = "A .38 flare casing."
+	icon_state = "sL-casing"
+	projectile_type = /obj/projectile/beam/laser/flare
+	lead_or_laser = "laser"
 
 //gatfruit
 /obj/item/ammo_casing/pea

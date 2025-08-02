@@ -49,7 +49,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "am" = (
-/obj/item/stock_parts/power_store/cell,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "an" = (
@@ -475,7 +475,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/tcommsat_oldaisat)
 "bT" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bU" = (

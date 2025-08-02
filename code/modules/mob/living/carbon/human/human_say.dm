@@ -65,15 +65,18 @@
 	return special_voice
 
 /mob/living/carbon/human/binarycheck()
-	if(stat >= SOFT_CRIT || !ears)
-		return FALSE
-	var/obj/item/radio/headset/dongle = ears
-	if(!istype(dongle))
+	if(stat >= SOFT_CRIT)
 		return FALSE
 	var/area/our_area = get_area(src)
 	if(our_area.area_flags & BINARY_JAMMING)
 		return FALSE
-	return (dongle.special_channels & RADIO_SPECIAL_BINARY)
+	var/obj/item/organ/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(istype(brain))
+		return TRUE
+	var/obj/item/radio/headset/dongle = ears
+	if(!istype(dongle))
+		return FALSE
+	return dongle.special_channels & RADIO_SPECIAL_BINARY
 
 /mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()
@@ -88,7 +91,7 @@
 		if(ears)
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 		return ITALICS | REDUCE_RANGE
-	else if(GLOB.radiochannels[message_mods[RADIO_EXTENSION]])
+	else if(GLOB.default_radio_channels[message_mods[RADIO_EXTENSION]])
 		if(ears)
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE

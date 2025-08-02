@@ -8,6 +8,7 @@
 	icon_living = "orbie"
 	speed = 0
 	maxHealth = 100
+	status_flags = CANPUSH
 	light_on = FALSE
 	light_system = OVERLAY_LIGHT
 	light_range = 6
@@ -25,6 +26,7 @@
 	maximum_survivable_temperature = INFINITY
 	death_message = "fades out of existence!"
 	ai_controller = /datum/ai_controller/basic_controller/orbie
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	///are we happy or not?
 	var/happy_state = FALSE
 	///overlay for our neutral eyes
@@ -48,6 +50,7 @@
 
 /mob/living/basic/orbie/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 	var/static/list/food_types = list(/obj/item/food/virtual_chocolate)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/basic_eating, food_types = food_types)

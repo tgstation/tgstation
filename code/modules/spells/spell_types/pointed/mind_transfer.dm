@@ -11,7 +11,7 @@
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_OPEN_TURF
 
-	invocation = "GIN'YU CAPAN"
+	invocation = "GIN'YU CAPAN."
 	invocation_type = INVOCATION_WHISPER
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
@@ -112,7 +112,7 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
-		|| mind_to_swap.key?[1] == "@" \
+		|| IS_FAKE_KEY(mind_to_swap.key) \
 	)
 		to_chat(caster, span_warning("[to_swap.p_Their()] mind is resisting your spell!"))
 		return FALSE

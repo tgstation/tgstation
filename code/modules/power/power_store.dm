@@ -38,6 +38,12 @@
 /obj/item/stock_parts/power_store/get_cell()
 	return src
 
+/obj/item/stock_parts/power_store/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, charge)
+	. += NAMEOF(src, rigged)
+	return .
+
 /obj/item/stock_parts/power_store/Initialize(mapload, override_maxcharge)
 	. = ..()
 	create_reagents(5, INJECTABLE | DRAINABLE)
@@ -261,13 +267,14 @@
 		return SHAME
 	playsound(user, 'sound/effects/sparks/sparks1.ogg', charge / maxcharge)
 	var/damage = charge / (1 KILO JOULES)
+	var/discharged_energy = charge
 	user.electrocute_act(damage, src, 1, SHOCK_IGNORE_IMMUNITY|SHOCK_DELAY_STUN|SHOCK_NOGLOVES)
 	charge = 0
 	update_appearance()
 	if(user.stat != DEAD)
 		to_chat(user, span_suicide("There's not enough charge in [src] to kill you!"))
 		return SHAME
-	addtimer(CALLBACK(src, PROC_REF(gib_user), user, charge), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(gib_user), user, discharged_energy), 3 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/stock_parts/power_store/proc/gib_user(mob/living/user, discharged_energy)

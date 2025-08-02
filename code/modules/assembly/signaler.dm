@@ -26,6 +26,8 @@
 	var/hearing_range = 1
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
+	/// Signal range, see /datum/radio_frequency/proc/post_signal
+	var/range = 0 //Everywhere
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
@@ -120,7 +122,7 @@
 
 	update_appearance()
 
-/obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(issignaler(W))
 		var/obj/item/assembly/signaler/signaler2 = W
 		if(secured && signaler2.secured)
@@ -153,7 +155,7 @@
 	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
-	radio_connection.post_signal(src, signal)
+	radio_connection.post_signal(src, signal, range = range)
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
@@ -182,7 +184,7 @@
 
 /obj/item/assembly/signaler/cyborg
 
-/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
 /obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
@@ -193,7 +195,7 @@
 /obj/item/assembly/signaler/internal/ui_state(mob/user)
 	return GLOB.inventory_state
 
-/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/assembly/signaler/internal/screwdriver_act(mob/living/user, obj/item/I)
@@ -203,3 +205,8 @@
 	if(ispAI(user))
 		return TRUE
 	. = ..()
+
+/obj/item/assembly/signaler/low_range
+	name = "low-power remote signaling device"
+	desc = "Used to remotely activate devices, within a small range of 9 tiles. Allows for syncing when using a secure signaler on another."
+	range = 9

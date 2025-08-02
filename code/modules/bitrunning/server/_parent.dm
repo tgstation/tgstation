@@ -48,6 +48,8 @@
 	var/broadcasting = FALSE
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
+	/// Cooldown for how often you're allowed to harass deadchat for PVP domains
+	COOLDOWN_DECLARE(polling_cooldown)
 
 
 /obj/machinery/quantum_server/post_machine_initialize()
@@ -123,7 +125,7 @@
 	return ..()
 
 
-/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(!istype(weapon, /obj/item/bitrunning_debug))

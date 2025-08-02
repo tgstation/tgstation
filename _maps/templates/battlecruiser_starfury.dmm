@@ -1165,11 +1165,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
-"eA" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/pod/dark,
-/area/shuttle/sbc_starfury)
 "eB" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/pod/dark,
@@ -1339,13 +1334,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
-"eY" = (
-/obj/effect/decal/cleanable/oil,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/pod/dark,
-/area/shuttle/sbc_starfury)
 "fa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -1490,14 +1478,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/sbc_starfury)
-"ft" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
 "fu" = (
@@ -1649,6 +1629,22 @@
 	name = "KEEP CLEAR: SHUTTLE BAY"
 	},
 /obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
+"gs" = (
+/obj/item/toy/cards/deck/syndicate{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/rag,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -2245,22 +2241,6 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/pod/light,
-/area/shuttle/sbc_starfury)
-"id" = (
-/obj/item/toy/cards/deck/syndicate{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/bottle/beer{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/cup/rag,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "ie" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -3440,10 +3420,6 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
-"lN" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
 "lO" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/dark_red{
@@ -3559,11 +3535,6 @@
 "mH" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
-/area/shuttle/sbc_starfury)
-"mI" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mJ" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -3823,6 +3794,14 @@
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/engine,
 /area/shuttle/sbc_starfury)
+"qo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/sbc_starfury)
 "qz" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3917,6 +3896,10 @@
 /area/shuttle/sbc_starfury)
 "sq" = (
 /obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
+"sA" = (
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "sB" = (
@@ -5206,6 +5189,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
+"Pt" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/sbc_starfury)
 "PF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -5236,6 +5226,13 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
+"PZ" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
 "Qf" = (
 /obj/machinery/power/port_gen/pacman/super,
@@ -5354,13 +5351,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
-"Sh" = (
-/obj/effect/decal/cleanable/oil,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/sbc_starfury)
 "Sk" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -5402,6 +5392,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/sbc_starfury)
+"SW" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "Ta" = (
@@ -5773,6 +5768,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
+"Zx" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
 "ZK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6117,7 +6117,7 @@ kx
 ng
 hf
 ei
-id
+gs
 Tr
 ay
 ae
@@ -6268,7 +6268,7 @@ kN
 ae
 MP
 aH
-lN
+sA
 IH
 Tn
 mH
@@ -6443,7 +6443,7 @@ et
 et
 et
 et
-Sh
+PZ
 et
 et
 et
@@ -6543,7 +6543,7 @@ VV
 lF
 qC
 ae
-mI
+Zx
 mH
 ir
 ir
@@ -6569,7 +6569,7 @@ dW
 ae
 eT
 pa
-eA
+SW
 Lt
 aH
 aH
@@ -7197,7 +7197,7 @@ aH
 aH
 aH
 hB
-eY
+Pt
 fo
 xG
 HL
@@ -7292,7 +7292,7 @@ aH
 aH
 ae
 aH
-mI
+Zx
 mH
 ir
 ir
@@ -7603,7 +7603,7 @@ Qu
 Qu
 Qu
 aI
-ft
+qo
 Ju
 nD
 Qw
@@ -7659,7 +7659,7 @@ AJ
 dd
 ik
 et
-Sh
+PZ
 et
 et
 et
@@ -7833,7 +7833,7 @@ Pb
 aH
 aH
 KR
-lN
+sA
 mF
 ae
 ae

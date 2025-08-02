@@ -30,7 +30,7 @@
 	// Mouse opacity can get set to opaque by some objects when placed into the object's contents (storage containers).
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	src.particle_flags = particle_flags
-	particles = get_particle_effect(particle_path)
+	particles = new particle_path()
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
 	var/atom/movable/lie_about_areas = parent
 	lie_about_areas.vis_contents += src
@@ -39,9 +39,6 @@
 	if(particle_flags & PARTICLE_ATTACH_MOB)
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	on_move(parent, null, NORTH)
-
-/obj/effect/abstract/particle_holder/proc/get_particle_effect(particle_path)
-	return new particle_path()
 
 /obj/effect/abstract/particle_holder/Destroy(force)
 	QDEL_NULL(particles)
@@ -74,44 +71,3 @@
 /// Sets the particles position to the passed coordinates
 /obj/effect/abstract/particle_holder/proc/set_particle_position(x = 0, y = 0, z = 0)
 	particles.position = list(x, y, z)
-
-/**
- * A subtype of particle holder that reuses the same particles to reduce client lag
- * when rendering certain atoms, usually found in large quantities and close together.
- * Since it reuses the same instances, modifying an instance of particles will affect all atoms
- * that show it, therefore procs like set_particle_position() shouldn't be used here.
- */
-/obj/effect/abstract/particle_holder/cached
-	///A static list meant to contain the availables instances of a particle path to use.
-	var/static/list/particles_by_type
-	/**
-	 * The length of the pool of particles from which the chosen instance will be picked
-	 * This provides an ever-so-lightly variety to the particles, so they don't all jarringly look EXACTLY the same
-	 */
-	var/max_particle_index = 4
-
-/obj/effect/abstract/particle_holder/cached/Initialize(mapload, particle_path = /particles/smoke, particle_flags = NONE, max_particle_index)
-	src.max_particle_index = max_particle_index
-	return ..()
-
-/obj/effect/abstract/particle_holder/cached/Destroy(force)
-	particles = null
-	return ..()
-
-/obj/effect/abstract/particle_holder/cached/get_particle_effect(particle_path)
-	LAZYINITLIST(particles_by_type)
-	LAZYINITLIST(particles_by_type[particle_path])
-
-	var/list/particles_list = particles_by_type[particle_path]
-	var/index = rand(1, max_particle_index)
-	var/particles/chosen
-	if(length(particles_list) < index)
-		chosen = new particle_path()
-		particles_list += chosen
-	else
-		chosen = particles_list[index]
-
-	return chosen
-
-/obj/effect/abstract/particle_holder/cached/set_particle_position(x = 0, y = 0, z = 0)
-	CRASH("[type] doesn't support set_particle_position()")

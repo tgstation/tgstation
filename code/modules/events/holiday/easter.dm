@@ -46,23 +46,7 @@
 //Easter Baskets
 /obj/item/storage/basket/easter
 	name = "Easter Basket"
-
-/obj/item/storage/basket/easter/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
-
-/obj/item/storage/basket/easter/proc/countEggs()
-	cut_overlays()
-	add_overlay("basket-grass")
-	add_overlay("basket-egg[min(contents.len, 5)]")
-
-/obj/item/storage/basket/easter/Exited(atom/movable/gone, direction)
-	. = ..()
-	countEggs()
-
-/obj/item/storage/basket/easter/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	countEggs()
+	storage_type = /datum/storage/basket/easter
 
 //Bunny Suit
 /obj/item/clothing/head/costume/bunnyhead
@@ -176,6 +160,7 @@
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "scotchegg"
 	bite_consumption = 3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	crafting_complexity = FOOD_COMPLEXITY_2
 	foodtypes = MEAT

@@ -4,7 +4,7 @@
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
-	spawn_positions = 1
+	spawn_positions = 2
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
@@ -100,7 +100,7 @@
 		return
 	var/assignment = worn_id.get_trim_assignment()
 	if(!isnull(assignment))
-		pda.imprint_id(user.real_name, assignment, worn_id)
+		pda.imprint_id(user.real_name, assignment)
 
 /datum/outfit/job/cook/get_types_to_preload()
 	. = ..()

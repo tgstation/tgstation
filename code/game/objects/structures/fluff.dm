@@ -14,7 +14,7 @@
 	///If true, the structure can be deconstructed into a metal sheet with a wrench.
 	var/deconstructible = TRUE
 
-/obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/fluff/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WRENCH && deconstructible)
 		user.visible_message(span_notice("[user] starts disassembling [src]..."), span_notice("You start disassembling [src]..."))
 		I.play_tool_sound(src)
@@ -289,6 +289,25 @@
 	plane = FLOOR_PLANE
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	deconstructible = FALSE
+	can_buckle = TRUE
+	buckle_requires_restraints = TRUE
+	buckle_lying = 90
+
+/obj/structure/fluff/tram_rail/post_buckle_mob(mob/living/target)
+	. = ..()
+	target.pixel_y += dir == SOUTH ? -3 : 14
+	RegisterSignal(target, COMSIG_LIVING_HIT_BY_TRAM, PROC_REF(on_buckled_tram_smashed))
+
+/obj/structure/fluff/tram_rail/post_unbuckle_mob(mob/living/target)
+	. = ..()
+	target.pixel_y -= dir == SOUTH ? -3 : 14
+	UnregisterSignal(target, COMSIG_LIVING_HIT_BY_TRAM)
+
+/// If someone gets hit by the tram while buckled to us (mission accomplished) unbuckle them so that they can fly away
+/// Also we rip one of their arms off to "uncuff" them
+/obj/structure/fluff/tram_rail/proc/on_buckled_tram_smashed(mob/living/smashed)
+	SIGNAL_HANDLER
+	unbuckle_mob(smashed, force = TRUE, can_fall = FALSE) // Make sure they don't fall down a z-level until they've been thrown
 
 /obj/structure/fluff/tram_rail/floor
 	name = "tram rail protective cover"
@@ -297,19 +316,36 @@
 /obj/structure/fluff/tram_rail/end
 	icon_state = "railend"
 
-/obj/structure/fluff/tram_rail/electric
-	desc = "Great for trams, not so great for skating. This one is a power rail."
-
 /obj/structure/fluff/tram_rail/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
+
+/obj/structure/fluff/tram_rail/electric
+	desc = "Great for trams, not so great for skating. This one is a power rail."
+	/// What power channel from the APC do we check for power?
+	var/power_channel = AREA_USAGE_ENVIRON
 
 /obj/structure/fluff/tram_rail/electric/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
 
+/obj/structure/fluff/tram_rail/electric/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/electrified_buckle,\
+		input_requirements = SHOCK_REQUIREMENT_AREA_POWER,\
+		shock_immediately = TRUE,\
+		print_message = FALSE,\
+		damage_on_shock = 5,\
+		loop_length = 8 SECONDS,\
+		area_power_channel = power_channel,\
+		shock_flags = SHOCK_NOSTUN\
+	)
+
 /obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
-	if(user.electrocute_act(75, src))
+	. = ..()
+	var/area/our_area = get_area(src)
+	if(our_area?.powered(power_channel) && user.electrocute_act(75, src))
 		do_sparks(5, TRUE, src)
 
 /obj/structure/fluff/broken_canister_frame

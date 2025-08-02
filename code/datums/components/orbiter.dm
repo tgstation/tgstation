@@ -57,7 +57,7 @@
 	newcomp.orbiter_list = null
 
 /datum/component/orbiter/PostTransfer(datum/new_parent)
-	if(!isatom(parent) || isarea(new_parent) || !get_turf(new_parent))
+	if(!isatom(new_parent) || isarea(new_parent) || !get_turf(new_parent))
 		return COMPONENT_INCOMPATIBLE
 	move_react(new_parent)
 

@@ -33,7 +33,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/statue/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
@@ -54,6 +54,39 @@
 			new custom_material.sheet_type(drop_location(), amount)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
+
+/obj/structure/statue/drake
+	name = "drake statue"
+	desc = "Statue of a lesser drake. Its carved eye sockets glow slightly."
+	icon_state = "drake"
+	anchored = TRUE
+
+/obj/structure/statue/drake/Initialize(mapload)
+	. = ..()
+	if (prob(25))
+		icon_state = "drake_headless"
+		desc = "Statue of a lesser drake. Time has not been kind."
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/statue/drake/update_overlays()
+	. = ..()
+	if (icon_state == "drake")
+		. += emissive_appearance(icon, "drake_emissive", src)
+
+/obj/structure/statue/dragonman
+	name = "dragonman statue"
+	desc = "Statue of a draconic humanoid warrior. Its glittering eyes seem to follow you around the room."
+	icon_state = "dragonman"
+	anchored = TRUE
+
+/obj/structure/statue/dragonman/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/statue/dragonman/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "dragonman_emissive", src)
+
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
@@ -165,15 +198,15 @@
 	abstract_type = /obj/structure/statue/diamond
 
 /obj/structure/statue/diamond/captain
-	name = "statue of THE captain."
+	name = "statue of THE captain"
 	icon_state = "cap"
 
 /obj/structure/statue/diamond/ai1
-	name = "statue of the AI hologram."
+	name = "statue of the AI hologram"
 	icon_state = "ai1"
 
 /obj/structure/statue/diamond/ai2
-	name = "statue of the AI core."
+	name = "statue of the AI core"
 	icon_state = "ai2"
 
 ////////////////////////bananium///////////////////////////////////////

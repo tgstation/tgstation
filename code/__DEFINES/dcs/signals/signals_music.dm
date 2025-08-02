@@ -10,3 +10,8 @@
 #define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
 ///sent to the instrument when tempo changes, skipped on new. (datum/song)
 #define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"
+
+// /datum/jukebox signals
+
+///sent to the jukebox when the volume preference is changed and applied
+#define COMSIG_MOB_JUKEBOX_PREFERENCE_APPLIED "jukebox_pref_applied"

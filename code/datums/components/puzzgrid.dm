@@ -172,7 +172,7 @@
 
 	var/message = answers.Join("<p>-----</p>")
 
-	for (var/mob/mob in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, parent))
+	for (var/mob/mob in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, parent, RECURSIVE_CONTENTS_CLIENT_MOBS))
 		to_chat(mob, message)
 
 /datum/component/puzzgrid/ui_data(mob/user)

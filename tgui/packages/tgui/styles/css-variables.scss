@@ -1,0 +1,13 @@
+/**
+ * Internal variables
+ * For more, see: https://github.com/tgstation/tgui-core
+ * Files: vars-colors.scss | vars-components.scss | vars-vaules.scss
+ */
+
+:root {
+  /* TitleBar */
+  --titlebar-background: var(--color-secondary);
+  --titlebar-text: var(--color-text-translucent-light);
+  --titlebar-shadow-color: var(--color-border-dark);
+  --titlebar-shadow-core: var(--color-border-dark);
+}

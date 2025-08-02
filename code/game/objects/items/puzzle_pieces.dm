@@ -124,7 +124,7 @@
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 	uses_queuelinks = FALSE
 
-/obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/keycard))
 		return
@@ -374,7 +374,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 	icon_state = "keycardpad0"
 	base_icon_state = "keycardpad"
 
-/obj/machinery/puzzle/keycardpad/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/puzzle/keycardpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/keycard) || used)
 		return

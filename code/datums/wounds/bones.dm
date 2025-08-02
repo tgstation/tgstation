@@ -17,6 +17,7 @@
 	wound_flags = (ACCEPTS_GAUZE)
 
 	default_scar_file = BONE_SCAR_FILE
+	threshold_penalty = 5
 
 	/// Have we been bone gel'd?
 	var/gelled
@@ -165,12 +166,8 @@
 		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
+	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE || !victim.can_bleed())
 		return
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		if(HAS_TRAIT(human_victim, TRAIT_NOBLOOD))
-			return
 
 	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))
 		var/blood_bled = rand(1, wounding_dmg * (severity == WOUND_SEVERITY_CRITICAL ? 2 : 1.5)) // 12 brute toolbox can cause up to 18/24 bleeding with a severe/critical chest wound
@@ -241,7 +238,7 @@
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
 	limp_chance = 50
-	threshold_penalty = 15
+	series_threshold_penalty = 15
 	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "dislocate"
@@ -382,7 +379,7 @@
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
 	limp_chance = 60
-	threshold_penalty = 30
+	series_threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/severe
 	scar_keyword = "bluntsevere"
@@ -422,7 +419,7 @@
 	limp_slowdown = 7
 	limp_chance = 70
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
-	threshold_penalty = 50
+	threshold_penalty = 15
 	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/critical

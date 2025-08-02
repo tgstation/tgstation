@@ -1,17 +1,20 @@
 import { marked } from 'marked';
-import { Component, RefObject } from 'react';
+import { baseUrl } from 'marked-base-url';
+import { markedSmartypants } from 'marked-smartypants';
+import { Component, type RefObject } from 'react';
 import { Box, Section } from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../../backend';
 import { sanitizeText } from '../../sanitize';
-import { canEdit, tokenizer, walkTokens } from './helpers';
+import { tokenizer, walkTokens } from './helpers';
 import { StampView } from './StampView';
-import { FieldInput, InteractionType, PaperContext } from './types';
+import { type FieldInput, InteractionType, type PaperContext } from './types';
 
 type PreviewViewProps = {
-  scrollableRef: RefObject<HTMLDivElement>;
+  scrollableRef: RefObject<HTMLDivElement | null>;
   handleOnScroll: (this: GlobalEventHandlers, ev: Event) => any;
   textArea: string;
+  canEdit: boolean;
 };
 
 type FieldCreationReturn = {
@@ -78,15 +81,17 @@ export class PreviewView extends Component<PreviewViewProps> {
       walkTokens,
     };
 
-    marked.use({
-      extensions: [inputField],
-      breaks: true,
-      gfm: true,
-      smartypants: true,
-      walkTokens: walkTokens,
+    marked.use(
+      {
+        extensions: [inputField],
+        breaks: true,
+        gfm: true,
+        walkTokens: walkTokens,
+      },
+      markedSmartypants(),
       // Once assets are fixed might need to change this for them
-      baseUrl: 'thisshouldbreakhttp',
-    });
+      baseUrl('thisshouldbreakhttp'),
+    );
   };
 
   // Extracts the paper field "counter" from a full ID.
@@ -145,6 +150,12 @@ export class PreviewView extends Component<PreviewViewProps> {
     document.removeEventListener('input', this.onInputHandler);
   }
 
+  shouldComponentUpdate(nextProps: Readonly<PreviewViewProps>): boolean {
+    if (!this.props.canEdit) return true;
+
+    return this.props.canEdit !== nextProps.canEdit;
+  }
+
   // Creates the partial inline HTML for previewing or reading the paper from
   // only static_ui_data from DM.
   createPreviewFromDM = (): { text: string; newFieldCount: number } => {
@@ -155,13 +166,12 @@ export class PreviewView extends Component<PreviewViewProps> {
       default_pen_font,
       default_pen_color,
       paper_color,
-      held_item_details,
     } = data;
 
     let output = '';
     let fieldCount = 0;
 
-    const readOnly = !canEdit(held_item_details);
+    const readOnly = !this.props.canEdit;
 
     // If readonly is the same (input field writiability state hasn't changed)
     // And the input stats are the same (no new text inputs since last time)
@@ -177,7 +187,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     this.lastReadOnly = readOnly;
 
     raw_text_input?.forEach((value) => {
-      let rawText = value.raw_text.trim();
+      const rawText = value.raw_text.trim();
       if (!rawText.length) {
         return;
       }
@@ -187,7 +197,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       const fontBold = value.bold || false;
       const advancedHtml = value.advanced_html || false;
 
-      let processingOutput = this.formatAndProcessRawText(
+      const processingOutput = this.formatAndProcessRawText(
         rawText,
         fontFace,
         fontColor,
@@ -234,7 +244,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     const fontFace = held_item_details?.font || default_pen_font;
     const fontBold = held_item_details?.use_bold || false;
 
-    let processingOutput = this.formatAndProcessRawText(
+    const processingOutput = this.formatAndProcessRawText(
       textArea,
       fontFace,
       fontColor,
@@ -254,7 +264,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     text: string,
     font: string,
     color: string,
-    bold: boolean = false,
+    bold = false,
   ): string => {
     return `<span style="color:${color};font-family:${font};${
       bold ? 'font-weight: bold;' : ''
@@ -289,7 +299,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       },
     };
 
-    return marked.parse(rawText);
+    return marked.parse(rawText, { async: false });
   };
 
   // Fully formats, sanitises and parses the provided raw text and wraps it
@@ -300,12 +310,11 @@ export class PreviewView extends Component<PreviewViewProps> {
     color: string,
     paperColor: string,
     bold: boolean,
-    fieldCounter: number = 0,
+    fieldCounter = 0,
     forceReadonlyFields: boolean = false,
-    advanced_html: boolean = false,
+    advanced_html = false,
   ): FieldCreationReturn => {
     // First lets make sure it ends in a new line
-    const { data } = useBackend<PaperContext>();
     rawText += rawText[rawText.length] === '\n' ? '\n' : '\n\n';
 
     // Second, parse the text using markup
@@ -333,7 +342,7 @@ export class PreviewView extends Component<PreviewViewProps> {
 
   // Builds a paper field ID from a number or string.
   createIDHeader = (index: number | string): string => {
-    return 'paperfield_' + index;
+    return `paperfield_${index}`;
   };
 
   // Returns the width the text with the provided attributes would take up in px.
@@ -358,41 +367,38 @@ export class PreviewView extends Component<PreviewViewProps> {
     color: string,
     paperColor: string,
     forceReadonlyFields: boolean,
-    counter: number = 0,
+    counter = 0,
   ): FieldCreationReturn => {
     const { data } = useBackend<PaperContext>();
     const { raw_field_input } = data;
 
-    const ret_text = rawText.replace(
-      fieldRegex,
-      (match, p1, offset, string) => {
-        const width = this.textWidth(match, font, fontSize);
-        const matchingData = raw_field_input?.find(
-          (e) => e.field_index === `${counter}`,
-        );
-        if (matchingData) {
-          return this.createFilledInputField(
-            matchingData,
-            p1.length,
-            width,
-            font,
-            fontSize,
-            color,
-            paperColor,
-            this.createIDHeader(counter++),
-          );
-        }
-        return this.createInputField(
+    const ret_text = rawText.replace(fieldRegex, (match, p1) => {
+      const width = this.textWidth(match, font, fontSize);
+      const matchingData = raw_field_input?.find(
+        (e) => e.field_index === `${counter}`,
+      );
+      if (matchingData) {
+        return this.createFilledInputField(
+          matchingData,
           p1.length,
           width,
           font,
           fontSize,
           color,
+          paperColor,
           this.createIDHeader(counter++),
-          forceReadonlyFields,
         );
-      },
-    );
+      }
+      return this.createInputField(
+        p1.length,
+        width,
+        font,
+        fontSize,
+        color,
+        this.createIDHeader(counter++),
+        forceReadonlyFields,
+      );
+    });
 
     return {
       nextCounter: counter,
@@ -474,7 +480,7 @@ export class PreviewView extends Component<PreviewViewProps> {
 
     const fieldData = field.field_data;
 
-    let input = document.createElement('input');
+    const input = document.createElement('input');
     input.setAttribute('type', 'text');
 
     input.style.fontSize = field.is_signature ? '15px' : `${fontSize}px`;

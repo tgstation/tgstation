@@ -28,3 +28,4 @@
 	to_fire.aim_projectile(target, caster)
 	SEND_SIGNAL(caster, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
 	to_fire.fire()
+	return to_fire

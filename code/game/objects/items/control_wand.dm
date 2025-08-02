@@ -94,7 +94,7 @@
 	// doesn't need a domain because their specific high-security areas aren't on anyone else's trim but cap
 
 /obj/item/door_remote/research_director
-	name = "research director's door remote"
+	name = "research door remote"
 	desc = "A remote for controlling a set of airlocks. This one is slightly misshapen, as if squeezed by a person possessing ludicrous strength."
 	department = "sci"
 	region_access = REGION_RESEARCH
@@ -115,7 +115,7 @@
 	our_domain = list(	/area/station/security	)
 
 /obj/item/door_remote/quartermaster
-	name = "quartermaster's door remote"
+	name = "cargo door remote"
 	desc = "Remotely controls airlocks. This remote has additional Vault access. Despite that, holding it makes you feel insecure for some reason."
 	department = "cargo"
 	region_access = REGION_SUPPLY
@@ -123,7 +123,7 @@
 	our_domain = list( /area/station/ai_monitored/command/nuke_storage )
 
 /obj/item/door_remote/chief_medical_officer
-	name = "chief medical officer's door remote"
+	name = "medical door remote"
 	desc = "A remote for controlling a set of airlocks. It has the overpowering odor of blood and, despite its medical insignia,\
 		has absolutely no accompanying odor of disinfectant."
 	department = "med"
@@ -131,7 +131,7 @@
 	owner_trim = /datum/id_trim/job/chief_medical_officer
 
 /obj/item/door_remote/head_of_personnel
-	name = "head of personnel's door remote"
+	name = "service door remote"
 	desc = "A remote for controlling a set of airlocks. This one smells like printer ink, and fills its holder with the urge\
 		to mysteriously vanish."
 	department = "civilian"

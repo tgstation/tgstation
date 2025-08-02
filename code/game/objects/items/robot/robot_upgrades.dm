@@ -67,7 +67,7 @@
 	for(var/item_to_remove in items)
 		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
 		if (module_item)
-			borg.model.remove_module(module_item, TRUE)
+			borg.model.remove_module(module_item)
 	return TRUE
 
 /obj/item/borg/upgrade/rename
@@ -162,8 +162,8 @@
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 
-	items_to_add = list(/obj/item/pickaxe/drill/cyborg/diamond)
-	items_to_remove = list(/obj/item/pickaxe/drill/cyborg, /obj/item/shovel)
+	items_to_add = list(/obj/item/pickaxe/drill/diamonddrill)
+	items_to_remove = list(/obj/item/pickaxe/drill, /obj/item/shovel)
 
 /obj/item/borg/upgrade/soh
 	name = "mining cyborg satchel of holding"
@@ -185,7 +185,7 @@
 	model_flags = BORG_MODEL_JANITOR
 
 	items_to_add = list(/obj/item/storage/bag/trash/bluespace/cyborg)
-	items_to_remove = list(/obj/item/storage/bag/trash/cyborg)
+	items_to_remove = list(/obj/item/storage/bag/trash)
 
 /obj/item/borg/upgrade/amop
 	name = "janitor cyborg advanced mop"
@@ -195,8 +195,8 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-	items_to_add = list(/obj/item/mop/advanced/cyborg)
-	items_to_remove = list(/obj/item/mop/cyborg)
+	items_to_add = list(/obj/item/mop/advanced)
+	items_to_remove = list(/obj/item/mop)
 
 /obj/item/borg/upgrade/prt
 	name = "janitor cyborg plating repair tool"
@@ -216,7 +216,7 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-	items_to_add = list(/obj/item/plunger/cyborg)
+	items_to_add = list(/obj/item/plunger)
 
 /obj/item/borg/upgrade/high_capacity_light_replacer
 	name = "janitor cyborg high capacity replacer"
@@ -226,8 +226,8 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-	items_to_add = list (/obj/item/lightreplacer/cyborg/advanced)
-	items_to_remove = list(/obj/item/lightreplacer/cyborg)
+	items_to_add = list (/obj/item/lightreplacer/advanced)
+	items_to_remove = list(/obj/item/lightreplacer)
 
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
@@ -741,7 +741,7 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-	items_to_add = list(/obj/item/pushbroom/cyborg)
+	items_to_add = list(/obj/item/pushbroom)
 
 /obj/item/borg/upgrade/condiment_synthesizer
 	name = "Service Cyborg Condiment Synthesiser"
@@ -823,7 +823,7 @@
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade1"
 
-/obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)
+/obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(borgo))
 		return ..()
 	if(!borgo.opened)

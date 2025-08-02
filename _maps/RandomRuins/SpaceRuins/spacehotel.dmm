@@ -2517,7 +2517,7 @@
 	pixel_x = -4;
 	pixel_y = 0
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 10;
 	pixel_y = 17
 	},

@@ -1,12 +1,9 @@
 /obj/machinery/computer/shuttle/custom_shuttle
 	desc = "A shuttle control computer."
-	icon_screen = "shuttle"
-	icon_keyboard = "tech_key"
 	shuttleId = ""
-	light_color = LIGHT_COLOR_CYAN
-	req_access = list()
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	possible_destinations = "whiteship_home;"
+	circuit = /obj/item/circuitboard/computer/shuttle/flight_control
+	may_be_remote_controlled = TRUE
 	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
 /obj/machinery/computer/shuttle/custom_shuttle/on_construction(mob/user)
@@ -155,7 +152,12 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/checkLandingTurf(turf/T, list/overlappers)
 	. = ..()
+	if(. != SHUTTLE_DOCKER_LANDING_CLEAR)
+		return
+	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/area/area = get_area(T)
+	if(M.shuttle_areas[area])
+		area = M.underlying_areas_by_turf[T]
 	if(!area.allow_shuttle_docking)
 		return SHUTTLE_DOCKER_BLOCKED
 

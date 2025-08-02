@@ -40,7 +40,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/perform_trick_sequence,
 	)
 
@@ -85,6 +85,8 @@
 	else
 		var/static/list/food_types = list(/obj/item/food/cheese)
 		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100)
+
+	AddElement(/datum/element/regal_rat_minion, converted_path = /mob/living/basic/mouse/rat, pet_commands = GLOB.regal_rat_minion_commands)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -140,8 +142,8 @@
 	if(!gibbed)
 		var/make_a_corpse = TRUE
 		var/place_to_make_corpse = loc
-		if(istype(loc, /obj/item/clothing/head/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
-			var/obj/item/clothing/head/mob_holder/found_holder = loc
+		if(istype(loc, /obj/item/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
+			var/obj/item/mob_holder/found_holder = loc
 			place_to_make_corpse = found_holder.loc
 			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
 				make_a_corpse = FALSE
@@ -300,7 +302,7 @@
 	name = "rat"
 	desc = "They're a nasty, ugly, evil, disease-ridden rodent with anger issues."
 
-	gold_core_spawnable = NO_SPAWN
+	gold_core_spawnable = HOSTILE_SPAWN
 	melee_damage_lower = 3
 	melee_damage_upper = 5
 	obj_damage = 5
@@ -362,7 +364,7 @@
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
-/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/living_user = user
 	if(istype(living_user) && attacking_item.get_sharpness() && living_user.combat_mode)
 		if(!isturf(loc))
@@ -407,21 +409,27 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BASIC_MOB_FLEE_DISTANCE = 3,
+		BB_SONG_LINES = MOUSE_SONG,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		// Try to speak, because it's cute
+		/datum/ai_planning_subtree/random_speech/mouse,
+		// Follow the boss's orders
 		/datum/ai_planning_subtree/pet_planning,
-		// Top priority is to look for and execute hunts for cheese even if someone is looking at us
+		// Look for and execute hunts for cheese even if someone is looking at us
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
+		// Next priority is to try and appreoach a keyboard
+		/datum/ai_planning_subtree/approach_synthesizer,
+		// And play it if we are near it
+		/datum/ai_planning_subtree/generic_play_instrument/end_planning,
 		// Next priority is see if anyone is looking at us
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		// Skedaddle
 		/datum/ai_planning_subtree/flee_target/mouse,
-		// Try to speak, because it's cute
-		/datum/ai_planning_subtree/random_speech/mouse,
 		// Otherwise, look for and execute hunts for cabling
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)
@@ -450,10 +458,11 @@
 		)
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

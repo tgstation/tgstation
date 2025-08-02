@@ -13,7 +13,7 @@
 			from other identification cards. In addition, they can be forged to display a new assignment, name and trim. \
 			This can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
 			with these cards."
-	item = /obj/item/card/id/advanced/chameleon
+	item = /obj/item/card/id/advanced/chameleon/elite
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/ai_detector
@@ -62,7 +62,7 @@
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
-	cost = 4
+	cost = 2
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/emplight/New()

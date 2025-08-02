@@ -391,10 +391,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/status_display,
 	))
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_sec_level_change))
 	find_and_hang_on_wall()
 
 /obj/machinery/status_display/evac/Destroy()
 	SSradio.remove_object(src,frequency)
+	UnregisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED)
 	return ..()
 
 /obj/machinery/status_display/evac/process()
@@ -457,6 +459,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	if(vname == NAMEOF(src, current_mode))
 		update_appearance()
 		update()
+
+/// Signal handler for [COMSIG_SECURITY_LEVEL_CHANGED] - Autoupdates our display to show current alert level.
+/// Changes only when we are in 'alert' mode ([SD_PICTURE] and one of the alert's icon state already set)
+/obj/machinery/status_display/evac/proc/on_sec_level_change(datum/source, new_level)
+	SIGNAL_HANDLER
+	if(current_mode != SD_PICTURE)
+		return
+	if(!(current_picture in SSsecurity_level.alert_level_icons))
+		return
+
+	var/datum/security_level/alert_level = SSsecurity_level.available_levels[SSsecurity_level.number_level_to_text(new_level)]
+	set_picture(alert_level.status_display_icon_state)
 
 /// Supply display which shows the status of the supply shuttle.
 /obj/machinery/status_display/supply

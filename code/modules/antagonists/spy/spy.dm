@@ -3,7 +3,7 @@
 	roundend_category = "spies"
 	antagpanel_category = "Spy"
 	antag_hud_name = "spy"
-	job_rank = ROLE_SPY
+	pref_flag = ROLE_SPY
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 1
 	ui_name = "AntagInfoSpy"
@@ -205,7 +205,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/fedora
-	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
 	glasses = /obj/item/clothing/glasses/osi
 	ears = /obj/item/radio/headset
 

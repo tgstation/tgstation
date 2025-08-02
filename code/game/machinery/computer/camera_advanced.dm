@@ -25,6 +25,8 @@
 	var/list/actions = list()
 	///Should we supress any view changes?
 	var/should_supress_view_changes = TRUE
+	///Should we add a usb port to this console?
+	var/add_usb_port = TRUE
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_REQUIRES_SIGHT
 
@@ -51,6 +53,15 @@
 	//Camera action button to move down a Z level
 	if(move_down_action)
 		actions += new move_down_action(src)
+	if(add_usb_port)
+		AddComponent(/datum/component/usb_port, \
+			list(
+				/obj/item/circuit_component/advanced_camera,
+				/obj/item/circuit_component/advanced_camera_intercept,
+			), \
+			extra_registration_callback = PROC_REF(register_usb_port), \
+			extra_unregistration_callback = PROC_REF(unregister_usb_port) \
+		)
 
 /obj/machinery/computer/camera_advanced/Destroy()
 	unset_machine()
@@ -113,8 +124,6 @@
 
 	for(var/datum/action/actions_removed as anything in actions)
 		actions_removed.Remove(user)
-	for(var/datum/camerachunk/camerachunks_gone as anything in eyeobj.visibleCameraChunks)
-		camerachunks_gone.remove(eyeobj)
 
 	eyeobj.assign_user(null)
 	current_user = null
@@ -161,6 +170,8 @@
 	if(!CreateEye())
 		to_chat(user, span_warning("\The [src] flashes a bunch of never-ending errors on the display. Something is really wrong."))
 		return
+
+	SEND_SIGNAL(src, COMSIG_ADVANCED_CAMERA_EYE_CREATED, eyeobj)
 
 	var/camera_location
 	var/turf/myturf = get_turf(src)
@@ -273,3 +284,226 @@
 	new /obj/item/secure_camera_console_pod(get_turf(src))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
+
+/// Equipment action component support
+
+/obj/machinery/computer/camera_advanced/proc/register_usb_port(datum/component/usb_port/port)
+	RegisterSignal(port, COMSIG_USB_PORT_REGISTER_PHYSICAL_OBJECT, PROC_REF(on_port_register_object))
+	RegisterSignal(port, COMSIG_USB_PORT_UNREGISTER_PHYSICAL_OBJECT, PROC_REF(on_port_unregister_object))
+	if(port.physical_object)
+		on_port_register_object(port, port.physical_object)
+
+/obj/machinery/computer/camera_advanced/proc/on_port_register_object(datum/component/usb_port/source, atom/movable/object)
+	SIGNAL_HANDLER
+	var/obj/item/integrated_circuit/circuit = source.attached_circuit
+	if(object == circuit)
+		return
+	RegisterSignal(object, COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED, PROC_REF(add_circuit_action))
+	RegisterSignal(object, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED, PROC_REF(remove_circuit_action))
+	for(var/obj/item/circuit_component/equipment_action/action_comp in circuit.attached_components)
+		add_circuit_action(null, action_comp)
+
+/obj/machinery/computer/camera_advanced/proc/add_circuit_action(datum/_source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	var/datum/action/innate/camera_circuit_action/new_action = new(src, action_comp)
+	LAZYADD(actions, new_action)
+	if(current_user)
+		new_action.Grant(current_user)
+
+/obj/machinery/computer/camera_advanced/proc/remove_circuit_action(datum/_source, obj/item/circuit_component/equipment_action/action_comp)
+	SIGNAL_HANDLER
+	var/datum/action/innate/camera_circuit_action/action = action_comp.granted_to[REF(src)]
+	if(!istype(action))
+		return
+	LAZYREMOVE(actions, action)
+	qdel(action)
+
+/obj/machinery/computer/camera_advanced/proc/on_port_unregister_object(datum/component/usb_port/source, atom/movable/object)
+	SIGNAL_HANDLER
+	var/obj/item/integrated_circuit/circuit = source.attached_circuit
+	for(var/obj/item/circuit_component/equipment_action/action_comp in circuit.attached_components)
+		remove_circuit_action(null, action_comp)
+	UnregisterSignal(object, list(COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED))
+
+/obj/machinery/computer/camera_advanced/proc/unregister_usb_port(datum/component/usb_port/port)
+	if(port.physical_object)
+		on_port_unregister_object(port, port.physical_object)
+	UnregisterSignal(port, list(COMSIG_USB_PORT_REGISTER_PHYSICAL_OBJECT, COMSIG_USB_PORT_UNREGISTER_PHYSICAL_OBJECT))
+
+/datum/action/innate/camera_circuit_action
+	name = "Action"
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "bci_power"
+
+	var/obj/machinery/computer/camera_advanced/console
+	var/obj/item/circuit_component/equipment_action/action_comp
+
+/datum/action/innate/camera_circuit_action/New(obj/machinery/computer/camera_advanced/console, obj/item/circuit_component/equipment_action/action_comp)
+	. = ..()
+	src.console = console
+	action_comp.granted_to[REF(console)] = src
+	src.action_comp = action_comp
+
+/datum/action/innate/camera_circuit_action/Destroy()
+	action_comp.granted_to -= REF(console)
+	action_comp = null
+
+	return ..()
+
+/datum/action/innate/camera_circuit_action/Activate()
+	action_comp.user.set_output(owner)
+	action_comp.signal.set_output(COMPONENT_SIGNAL)
+
+	return ..()
+
+/// Advanced camera component
+
+/obj/item/circuit_component/advanced_camera
+	display_name = "Advanced Camera Console"
+	desc = "Gets the position being viewed through the console."
+
+	var/datum/port/output/eye_x
+	var/datum/port/output/eye_y
+	var/datum/port/output/eye_z
+
+	var/obj/machinery/computer/camera_advanced/attached_console
+
+/obj/item/circuit_component/advanced_camera/populate_ports()
+	eye_x = add_output_port("X", PORT_TYPE_NUMBER)
+	eye_y = add_output_port("Y", PORT_TYPE_NUMBER)
+	eye_z = add_output_port("Z", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/advanced_camera/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/computer/camera_advanced))
+		attached_console = parent
+		if(attached_console.eyeobj)
+			register_eyeobj(attached_console.eyeobj)
+		else
+			RegisterSignal(attached_console, COMSIG_ADVANCED_CAMERA_EYE_CREATED, PROC_REF(on_parent_eye_created))
+
+/obj/item/circuit_component/advanced_camera/proc/on_parent_eye_created(datum/_source, mob/eye/camera/remote/eyeobj)
+	SIGNAL_HANDLER
+	UnregisterSignal(attached_console, COMSIG_ADVANCED_CAMERA_EYE_CREATED)
+	register_eyeobj(eyeobj)
+
+/obj/item/circuit_component/advanced_camera/proc/register_eyeobj(mob/eye/camera/remote/eyeobj)
+	RegisterSignal(eyeobj, COMSIG_MOVABLE_MOVED, PROC_REF(on_eyeobj_moved))
+
+/obj/item/circuit_component/advanced_camera/unregister_usb_parent(atom/movable/parent)
+	if(istype(parent, /obj/machinery/computer/camera_advanced))
+		UnregisterSignal(attached_console, COMSIG_ADVANCED_CAMERA_EYE_CREATED)
+		if(attached_console.eyeobj)
+			UnregisterSignal(attached_console.eyeobj, COMSIG_MOVABLE_MOVED)
+		attached_console = null
+	return ..()
+
+/obj/item/circuit_component/advanced_camera/proc/on_eyeobj_moved(atom/movable/source)
+	SIGNAL_HANDLER
+	var/turf/eye_turf = get_turf(source)
+	if(!eye_turf)
+		return
+	if(!GLOB.cameranet.checkTurfVis(eye_turf))
+		return
+	eye_x.set_output(source.x)
+	eye_y.set_output(source.y)
+	eye_z.set_output(source.z)
+
+/// Advanced camera target intercept component
+
+/obj/item/circuit_component/advanced_camera_intercept
+	display_name = "Advanced Camera Target Intercept"
+	desc = "Allows the user to target an entity or position with the console."
+
+	var/datum/port/input/enabled
+
+	var/datum/port/output/target_x
+	var/datum/port/output/target_y
+	var/datum/port/output/target_z
+
+	var/datum/port/output/target_port
+
+	var/datum/port/output/primary_click
+	var/datum/port/output/secondary_click
+
+	var/obj/machinery/computer/camera_advanced/attached_console
+
+/obj/item/circuit_component/advanced_camera_intercept/populate_ports()
+	. = ..()
+	enabled = add_input_port("Enabled", PORT_TYPE_NUMBER)
+
+	target_x = add_output_port("X", PORT_TYPE_NUMBER)
+	target_y = add_output_port("Y", PORT_TYPE_NUMBER)
+	target_z = add_output_port("Z", PORT_TYPE_NUMBER)
+
+	target_port = add_output_port("Target", PORT_TYPE_ATOM)
+
+	primary_click = add_output_port("Primary", PORT_TYPE_SIGNAL)
+	secondary_click = add_output_port("Secondary", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/advanced_camera_intercept/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/computer/camera_advanced))
+		attached_console = parent
+		if(attached_console.eyeobj)
+			register_eyeobj(attached_console.eyeobj)
+		else
+			RegisterSignal(attached_console, COMSIG_ADVANCED_CAMERA_EYE_CREATED, PROC_REF(on_parent_eye_created))
+
+/obj/item/circuit_component/advanced_camera_intercept/input_received(datum/port/input/port, list/return_values)
+	if(port != enabled)
+		return
+	if(enabled.value)
+		attached_console.current_user?.click_intercept = src
+	else
+		attached_console.current_user?.click_intercept = null
+
+/obj/item/circuit_component/advanced_camera_intercept/proc/on_parent_eye_created(datum/_source, mob/eye/camera/remote/eyeobj)
+	SIGNAL_HANDLER
+	UnregisterSignal(attached_console, COMSIG_ADVANCED_CAMERA_EYE_CREATED)
+	register_eyeobj(eyeobj)
+
+/obj/item/circuit_component/advanced_camera_intercept/proc/register_eyeobj(mob/eye/camera/remote/eyeobj)
+	RegisterSignal(eyeobj, COMSIG_REMOTE_CAMERA_ASSIGN_USER, PROC_REF(on_parent_assign_user))
+	if(enabled.value)
+		attached_console.current_user?.click_intercept = src
+
+/obj/item/circuit_component/advanced_camera_intercept/unregister_usb_parent(atom/movable/parent)
+	if(istype(parent, /obj/machinery/computer/camera_advanced))
+		attached_console.current_user?.click_intercept = null
+		if(attached_console.eyeobj)
+			UnregisterSignal(attached_console.eyeobj, COMSIG_REMOTE_CAMERA_ASSIGN_USER)
+		UnregisterSignal(attached_console, COMSIG_ADVANCED_CAMERA_EYE_CREATED)
+		attached_console = null
+	return ..()
+
+/obj/item/circuit_component/advanced_camera_intercept/proc/on_parent_assign_user(datum/_source, mob/living/new_user, mob/living/old_user)
+	SIGNAL_HANDLER
+	old_user?.click_intercept = null
+	if(enabled.value)
+		new_user?.click_intercept = src
+
+/obj/item/circuit_component/advanced_camera_intercept/proc/InterceptClickOn(mob/user, params, atom/target)
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+		return
+	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
+		return
+	if(!GLOB.cameranet.checkTurfVis(target_turf))
+		return
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
+		return
+	target_x.set_output(target.x)
+	target_y.set_output(target.y)
+	target_z.set_output(target.z)
+
+	target_port.set_output(target)
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		secondary_click.set_output(COMPONENT_SIGNAL)
+	else
+		primary_click.set_output(COMPONENT_SIGNAL)
+	if(parent.shell)
+		TIMER_COOLDOWN_START(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT, 1 SECONDS)
+	return TRUE

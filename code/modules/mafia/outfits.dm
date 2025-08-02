@@ -61,7 +61,7 @@
 	uniform = /obj/item/clothing/under/rank/security/detective
 	neck = /obj/item/clothing/neck/tie/detective
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	suit = /obj/item/clothing/suit/jacket/det_suit
+	suit = /obj/item/clothing/suit/toggle/jacket/det_trench
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
 	mask = /obj/item/cigarette
@@ -77,6 +77,7 @@
 	name = "Mafia Chaplain"
 
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/mafia/md
 	name = "Mafia Medical Doctor"
@@ -100,6 +101,14 @@
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
+
+/datum/outfit/mafia/coroner
+	name = "Mafia Coroner"
+
+	gloves = /obj/item/clothing/gloves/latex/coroner
+	head = /obj/item/clothing/head/utility/surgerycap/black
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/mafia/hop
 	name = "Mafia Head of Personnel"

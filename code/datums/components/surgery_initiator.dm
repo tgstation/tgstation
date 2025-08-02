@@ -13,6 +13,8 @@
 
 	var/obj/item/surgery_tool = parent
 	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	///Make sure we can use the surgery UI while laying down
+	surgery_tool.interaction_flags_atom |= INTERACT_ATOM_IGNORE_MOBILITY
 
 /datum/component/surgery_initiator/Destroy(force)
 	last_user_ref = null
@@ -88,7 +90,7 @@
 			continue
 		if(!is_type_in_list(target, surgery.target_mobtypes))
 			continue
-		if(user == target && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
+		if(user == target && !HAS_TRAIT(user, TRAIT_SELF_SURGERY) && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
 			continue
 
 		if(isnull(affecting))

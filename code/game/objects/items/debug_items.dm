@@ -52,27 +52,7 @@
 	return TRUE
 
 /obj/item/debug/omnitool/get_all_tool_behaviours()
-	return list(TOOL_ANALYZER,
-	TOOL_BLOODFILTER,
-	TOOL_BONESET,
-	TOOL_CAUTERY,
-	TOOL_CROWBAR,
-	TOOL_DRILL,
-	TOOL_HEMOSTAT,
-	TOOL_KNIFE,
-	TOOL_MINING,
-	TOOL_MULTITOOL,
-	TOOL_RETRACTOR,
-	TOOL_ROLLINGPIN,
-	TOOL_RUSTSCRAPER,
-	TOOL_SAW,
-	TOOL_SCALPEL,
-	TOOL_SCREWDRIVER,
-	TOOL_SHOVEL,
-	TOOL_WELDER,
-	TOOL_WIRECUTTER,
-	TOOL_WRENCH,
-	)
+	return GLOB.all_tool_behaviours
 
 /obj/item/debug/omnitool/attack_self(mob/user)
 	if(!user)
@@ -80,7 +60,7 @@
 	var/list/tool_list = list(
 		"Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
 		"Multitool" = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "multitool"),
-		"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
+		"Screwdriver" = image(icon = 'icons/map_icons/items/_item.dmi', icon_state = "/obj/item/screwdriver"),
 		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),

@@ -169,6 +169,21 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
+
+		//adjust galactic material market based on the ordered quantities
+		var/datum/supply_pack/custom/minerals/sheets = astype(spawning_order.pack)
+		if(!isnull(sheets))
+			var/list/orders_adjusted = sheets.adjust_market()
+			if(orders_adjusted.len)
+				var/datum/bank_account/paying_for_this = spawning_order.paying_account || SSeconomy.get_dep_account(ACCOUNT_CAR)
+				if(!sheets.contains.len) //no sheets in the market at all
+					paying_for_this.bank_card_talk("Order #[spawning_order.id] ([spawning_order.pack.name]) was cancelled due to insufficient materials in the market!.")
+					SSshuttle.shopping_list -= spawning_order
+					clean_up_orders += spawning_order
+					continue
+				//some of the orders were adjusted(quantity changed or cancelled) according to the market
+				paying_for_this.bank_card_talk("Order #[spawning_order.id] ([spawning_order.pack.name]) had the following orders adjusted<br>[orders_adjusted.Join("<br>")]<br>.")
+
 		price = spawning_order.get_final_cost()
 
 		// department orders EARN money for cargo, not the other way around
@@ -212,8 +227,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
 			crate.name += " - #[spawning_order.id]"
 
-		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]"))
-
+		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]", "[spawning_order.orderer_rank]"))
 		var/from_whom = paying_for_this?.account_holder || "nobody (department order)"
 
 		investigate_log("Order #[spawning_order.id] ([spawning_order.pack.name], placed by [key_name(spawning_order.orderer_ckey)]), paid by [from_whom] has shipped.", INVESTIGATE_CARGO)
@@ -306,7 +320,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
 	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
-	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked)
+	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked || SSsecurity_level.current_security_level.disables_mail)
 		return
 
 	//spawn crate

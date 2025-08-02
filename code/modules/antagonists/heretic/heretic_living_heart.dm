@@ -180,26 +180,6 @@
 	StartCooldown()
 	return TRUE
 
-/datum/action/cooldown/track_target/proc/make_navigate_arrow(turf/tracked_turf, arrow_color)
-	var/datum/hud/user_hud = owner.hud_used
-	if(!user_hud)
-		return
-	var/atom/movable/screen/heretic_arrow/arrow = new /atom/movable/screen/heretic_arrow(null, user_hud)
-	animate(arrow, transform = matrix(dir2angle(get_dir(owner, tracked_turf)), MATRIX_ROTATE), 0.2 SECONDS)
-	arrow.screen_loc = around_player
-	arrow.color = arrow_color
-	user_hud.infodisplay += arrow
-	user_hud.show_hud(user_hud.hud_version)
-	addtimer(CALLBACK(src, PROC_REF(end_effect), user_hud, arrow), 1.6 SECONDS)
-
-/datum/action/cooldown/track_target/proc/end_effect(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
-	arrow.icon_state = "heretic_arrow_disappear"
-	addtimer(CALLBACK(src, PROC_REF(null_arrow), user_hud, arrow), 0.4 SECONDS)
-
-/datum/action/cooldown/track_target/proc/null_arrow(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
-	user_hud.infodisplay -= arrow
-	user_hud.show_hud(user_hud.hud_version)
-
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
 	if(QDELETED(src))
@@ -268,7 +248,8 @@
 				balloon_message = "very far!"
 				arrow_color = COLOR_RED
 
-		make_navigate_arrow(their_turf, arrow_color)
+		if(owner.hud_used)
+			new /atom/movable/screen/navigate_arrow(null, owner.hud_used, their_turf, arrow_color)
 
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
@@ -277,9 +258,32 @@
 
 	return balloon_message
 
-/atom/movable/screen/heretic_arrow
+/atom/movable/screen/navigate_arrow
 	icon = 'icons/effects/96x96.dmi'
-	name = "heretic arrow"
-	icon_state = "heretic_arrow_appear"
+	name = "farsight arrow"
+	icon_state = "navigate_arrow_appear"
 	pixel_x = -32
 	pixel_y = -32
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/navigate_arrow/Initialize(mapload, datum/hud/hud_owner, turf/tracked_turf, arrow_color)
+	. = ..()
+	var/mob/owner = get_mob()
+	if (owner)
+		animate(src, transform = matrix(get_angle(owner, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
+	screen_loc = around_player
+	color = arrow_color
+	if (hud)
+		hud.infodisplay += src
+		hud.show_hud(hud.hud_version)
+	addtimer(CALLBACK(src, PROC_REF(end_effect)), 1.6 SECONDS)
+
+/atom/movable/screen/navigate_arrow/proc/end_effect()
+	icon_state = "navigate_arrow_disappear"
+	addtimer(CALLBACK(src, PROC_REF(null_arrow)), 0.4 SECONDS)
+
+/atom/movable/screen/navigate_arrow/proc/null_arrow()
+	if (hud)
+		hud.infodisplay -= src
+		hud.show_hud(hud.hud_version)
+	qdel(src)

@@ -24,6 +24,19 @@
 		/obj/item/circuitboard/computer/arcade/orion_trail,
 	)
 
+/obj/effect/spawner/random/techstorage/custom_shuttle
+	name = "custom shuttle circuit board spawner"
+	loot = list(
+		/obj/item/circuitboard/computer/shuttle/docker,
+		/obj/item/circuitboard/computer/shuttle/flight_control,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/shuttle_blueprints,
+		/obj/item/stack/rods/shuttle/fifty,
+	)
+
 /obj/effect/spawner/random/techstorage/service_all
 	name = "service circuit board spawner"
 	loot = list(

@@ -3,6 +3,8 @@
  * Not compatible with any other component or status effect which modifies attack damage
  */
 /datum/component/focused_attacker
+	/// Current attack bonus
+	VAR_FINAL/current_gain
 	/// Amount of damage we gain per attack
 	var/gain_per_attack
 	/// Maximum amount by which we can increase our attack power
@@ -48,14 +50,14 @@
 	register_new_target(target)
 
 /// Before an item attacks, try increasing its attack power
-/datum/component/focused_attacker/proc/pre_item_attack(obj/item/weapon, atom/target, mob/user, params)
+/datum/component/focused_attacker/proc/pre_item_attack(obj/item/weapon, atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
 	if (target == last_target)
-		if (weapon.force - initial(weapon.force) < maximum_gain)
-			weapon.force += gain_per_attack
+		current_gain += gain_per_attack
+		MODIFY_ATTACK_FORCE(attack_modifiers, current_gain)
 		return
 
-	weapon.force = initial(weapon.force)
+	current_gain = 0
 	register_new_target(target)
 
 /// Register a new target

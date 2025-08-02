@@ -1,4 +1,5 @@
 # maplint
+
 maplint is a tool that lets you prohibit anti-patterns in maps through simple rules. You can use maplint to do things like ban variable edits for specific types, ban specific variable edits, ban combinations of types, etc.
 
 ## Making lints
@@ -6,6 +7,7 @@ maplint is a tool that lets you prohibit anti-patterns in maps through simple ru
 To create a lint, create a new file in the `lints` folder. Lints use [YAML](https://learnxinyminutes.com/docs/yaml/), which is very expressive, though can be a little complex. If you get stuck, read other lints in this folder.
 
 ### Typepaths
+
 The root of the file is your typepaths. This will match not only that type, but also subtypes. For example:
 
 ```yml
@@ -26,6 +28,7 @@ If you only want to match a specific typepath, prefix it with `=`. This:
 Alternatively, if you want to match ALL types, enter a single `*`, for wildcard.
 
 ### `banned`
+
 The simplest rule is to completely ban a subtype. To do this, fill with `banned: true`.
 
 For example, this lint will ban `/mob/dog` and all subtypes:
@@ -36,34 +39,35 @@ For example, this lint will ban `/mob/dog` and all subtypes:
 ```
 
 ### `banned_neighbors`
+
 If you want to ban other objects being on the same tile as another, you can specify `banned_neighbors`.
 
-This takes a few forms. The simplest is just a list of types to not be next to. This lint will ban either cat_toy *or* cat_food (or their subtypes) from being on the same tile as a dog.
+This takes a few forms. The simplest is just a list of types to not be next to. This lint will ban either cat*toy \_or* cat_food (or their subtypes) from being on the same tile as a dog.
 
 ```yml
 /mob/dog:
   banned_neighbors:
-  - /obj/item/cat_toy
-  - /obj/item/cat_food
+    - /obj/item/cat_toy
+    - /obj/item/cat_food
 ```
 
-This also supports the `=` format as specified before. This will ban `/mob/dog` being on the same tile as `/obj/item/toy` *only*.
+This also supports the `=` format as specified before. This will ban `/mob/dog` being on the same tile as `/obj/item/toy` _only_.
 
 ```yml
 /mob/dog:
   banned_neighbors:
-  - =/obj/item/toy # Only the best toys for our dogs
+    - =/obj/item/toy # Only the best toys for our dogs
 ```
 
-Anything in this list will *not* include the object itself, meaning you can use it to make sure two of the same object are not on the same tile. For example, this lint will ban two dogs from being on the same tile:
+Anything in this list will _not_ include the object itself, meaning you can use it to make sure two of the same object are not on the same tile. For example, this lint will ban two dogs from being on the same tile:
 
 ```yml
 /mob/dog:
   banned_neighbors:
-  - /mob/dog # We're a space station, not a dog park!
+    - /mob/dog # We're a space station, not a dog park!
 ```
 
-However, you can add a bit more specificity with `identical: true`. This will prohibit other instances of the *exact* same type *and* variable edits from being on the same tile.
+However, you can add a bit more specificity with `identical: true`. This will prohibit other instances of the _exact_ same type _and_ variable edits from being on the same tile.
 
 ```yml
 /mob/dog:
@@ -81,6 +85,7 @@ Finally, if you need maximum precision, you can specify a [regular expression](h
 ```
 
 ### `banned_variables`
+
 To ban all variable edits, you can specify `banned_variables: true` for a typepath. For instance, if we want to block dogs from getting any var-edits, we can write:
 
 ```yml
@@ -119,10 +124,25 @@ Similar to [banned_neighbors](#banned_neighbors), you can specify a regular expr
   banned_variables:
     # Names must start with a capital letter
     name:
-      allow: { pattern: '^[A-Z].*$' }
+      allow: { pattern: "^[A-Z].*$" }
 ```
 
+### `ignore`
+
+If you want to exclude certain objects and subtypes from `banned_neighbors`, you can specify objects in `ignore` that will get skipped from triggering `banned_neighbors`.
+
+```yml
+/turf/wall:
+  banned_neighbors:
+    - /obj/structure
+  ignore:
+    - /obj/structure/sign
+```
+
+This lint stops structures from being put inside solid walls but we make an exception to ignore any signs and all their subtypes like `/obj/structure/sign/poster`.
+
 ### `help`
+
 If you want a custom message to go with your lint, you can specify "help" in the root.
 
 ```yml
@@ -146,11 +166,12 @@ If we wanted to create a rule which disallows the placement of access helpers wh
 ```
 
 The following conditions are valid:
-- **{var_name} is set**: The variable named *var_name* has been modified.
-- **{var_name} is not set**: The variable named *var_name* has not been modified.
-- **{var_name} is '{value}'**: The variable named *var_name* has a specific value.
-- **{var_name} is not '{value}'**: The variable named *var_name* does not have a specific value.
-- **{var_name} like '{regex}'**: The variable named *var_name* matches the provided regex.
+
+- **{var_name} is set**: The variable named _var_name_ has been modified.
+- **{var_name} is not set**: The variable named _var_name_ has not been modified.
+- **{var_name} is '{value}'**: The variable named _var_name_ has a specific value.
+- **{var_name} is not '{value}'**: The variable named _var_name_ does not have a specific value.
+- **{var_name} like '{regex}'**: The variable named _var_name_ matches the provided regex.
 
 #### `any`
 

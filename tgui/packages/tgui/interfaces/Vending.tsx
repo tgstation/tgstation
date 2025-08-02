@@ -144,7 +144,6 @@ export const Vending = (props) => {
               stockSearch={stockSearch}
               setStockSearch={setStockSearch}
               selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
             />
           </Stack.Item>
 
@@ -192,17 +191,10 @@ const ProductDisplay = (props: {
   stockSearch: string;
   setStockSearch: (search: string) => void;
   selectedCategory: string | null;
-  setSelectedCategory: (category: string) => void;
 }) => {
   const { data } = useBackend<VendingData>();
-  const {
-    custom,
-    inventory,
-    stockSearch,
-    setStockSearch,
-    selectedCategory,
-    setSelectedCategory,
-  } = props;
+  const { custom, inventory, stockSearch, setStockSearch, selectedCategory } =
+    props;
   const {
     stock,
     all_products_free,
@@ -221,14 +213,15 @@ const ProductDisplay = (props: {
         <Stack>
           {!all_products_free && user && (
             <Stack.Item fontSize="16px" color="green">
-              {(user && user.cash) || 0}
+              {user?.cash || 0}
               {displayed_currency_name}
               <Icon name={displayed_currency_icon} color="gold" />
             </Stack.Item>
           )}
           <Stack.Item>
             <Input
-              onInput={(_, value) => setStockSearch(value)}
+              onChange={setStockSearch}
+              expensive
               placeholder="Search..."
               value={stockSearch}
             />

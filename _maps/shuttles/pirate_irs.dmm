@@ -36,7 +36,7 @@
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 1
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/iron/kitchen,
 /area/shuttle/pirate)
 "bT" = (
@@ -1087,7 +1087,7 @@
 "FN" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/structure/table/glass,
-/obj/item/clothing/mask/muzzle/breath{
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_x = 3;
 	pixel_y = 4
 	},

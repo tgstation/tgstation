@@ -118,7 +118,7 @@
 	. = ..()
 	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
-/obj/item/instrument/trumpet/spectral/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/instrument/trumpet/spectral/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
 	return ..()
 
@@ -146,7 +146,7 @@
 	. = ..()
 	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
-/obj/item/instrument/saxophone/spectral/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/instrument/saxophone/spectral/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
 	return ..()
 
@@ -177,7 +177,7 @@
 /obj/item/instrument/trombone/spectral/one_doot
 	single_use = TRUE
 
-/obj/item/instrument/trombone/spectral/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/instrument/trombone/spectral/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	playsound(src, 'sound/runtime/instruments/trombone/Cn4.mid', 1000, 1, -1)
 	return ..()
 

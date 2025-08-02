@@ -12,19 +12,15 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 
 	var/stored_matter = 0
 	var/cube_production = 0.2
-	var/list/connected = list() //Keeps track of connected xenobio consoles, for deletion in /Destroy()
 
 /obj/machinery/monkey_recycler/Initialize(mapload)
 	. = ..()
 	if (mapload)
 		GLOB.monkey_recyclers += src
+	add_overlay("grinder_monkey")
 
 /obj/machinery/monkey_recycler/Destroy()
 	GLOB.monkey_recyclers -= src
-	for(var/thing in connected)
-		var/obj/machinery/computer/camera_advanced/xenobio/console = thing
-		console.connected_recycler = null
-	connected.Cut()
 	return ..()
 
 /obj/machinery/monkey_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
@@ -46,7 +42,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		power_change()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
+/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 

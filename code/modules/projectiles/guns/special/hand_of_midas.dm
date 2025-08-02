@@ -75,7 +75,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 // If we botch a shot, we have to start over again by inserting gold coins into the gun. Can only be done if it has no charges or gold.
-/obj/item/gun/magic/midas_hand/attackby(obj/item/I, mob/living/user, params)
+/obj/item/gun/magic/midas_hand/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(charges || gold_timer)
 		balloon_alert(user, "already loaded")

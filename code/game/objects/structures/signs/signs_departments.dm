@@ -99,6 +99,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering, 32)
 
+/obj/structure/sign/departments/atmospherics
+	name = "\improper Atmospherics sign"
+	sign_change_name = "Department - Engineering: Atmospherics"
+	desc = "A sign labelling an area where your life-giving air comes from."
+	icon_state = "atmos"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering, 32)
+
 ///////SCIENCE
 
 /obj/structure/sign/departments/science
@@ -177,9 +185,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3, 32)
 	name = "\improper Janitor sign"
 	sign_change_name = "Department - Janitor"
 	desc = "A sign labelling an area where the janitor works."
-	icon_state = "custodian"
+	icon_state = "custodian1"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian, 32)
+
+/obj/structure/sign/departments/custodian_alt
+	name = "\improper Janitor sign"
+	sign_change_name = "Department - Janitor Alt"
+	desc = "A sign labelling an area where the janitor works."
+	icon_state = "custodian2"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian_alt, 32)
 
 /obj/structure/sign/departments/holy
 	name = "\improper Chapel sign"
@@ -204,6 +220,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
 	icon_state = "lawyer"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer, 32)
+
+/obj/structure/sign/departments/restaurant
+	name = "\improper Restaurant sign"
+	sign_change_name = "Department - Restaurant"
+	desc = "A sign labelling an area where the food is served."
+	icon_state = "restaurant"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restaurant, 32)
+
+/obj/structure/sign/departments/bar
+	name = "\improper Bar sign"
+	sign_change_name = "Department - Bar"
+	desc = "A sign labelling an area where drinks are mixed."
+	icon_state = "bar"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/bar, 32)
 
 ///////SUPPLY
 

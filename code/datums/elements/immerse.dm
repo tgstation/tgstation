@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	RegisterSignal(source, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_atom_exited))
 	attached_turfs_and_movables += source
 	for(var/atom/movable/movable as anything in source)
-		if(!(movable.flags_1 & INITIALIZED_1))
+		if(!(movable.flags_1 & INITIALIZED_1) || movable.invisibility >= INVISIBILITY_OBSERVER)
 			continue
 		on_init_or_entered(source, movable)
 

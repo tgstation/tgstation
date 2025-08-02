@@ -39,20 +39,20 @@
 	// We do this check early so closed turfs are still be able to flood.
 	if(isturf(parent)) // Walls and floors.
 		var/turf/parent_turf = parent
-		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR | CHANGETURF_FORCEOP) // Ensure that we always forcefully replace the turf, even if the baseturf has the same type
 		delete_parent = FALSE
 
 	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];[TURF_TEMPERATURE((temp_amount || trigger_temperature))]")
 
 	// Logging-related
 	var/admin_message = "[flooded_turf] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
-	var/log_message = "ignited [flooded_turf]"
+	var/log_message = "ignited [flooded_turf] at [AREACOORD(flooded_turf)]"
 	if(user)
-		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
+		admin_message += " by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(flooded_turf)]"
 		user.log_message(log_message, LOG_ATTACK, log_globally = FALSE)//only individual log
 	else
-		log_message = "[key_name(user)] " + log_message + " by fire"
-		admin_message += " by fire"
+		log_message = "[key_name(user)] " + log_message + " by fire at [AREACOORD(flooded_turf)]"
+		admin_message += " by fire at [ADMIN_COORDJMP(flooded_turf)]"
 		log_attack(log_message)
 	message_admins(admin_message)
 

@@ -116,7 +116,9 @@
 		render_target = "HOLOGRAM [uid]"
 		uid++
 	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
-	var/static/atom/movable/render_step/emissive/glow = new(null)
+	var/static/atom/movable/render_step/emissive/glow
+	if(!glow)
+		glow = new(null)
 	glow.render_source = render_target
 	SET_PLANE_EXPLICIT(glow, initial(glow.plane), src)
 	// We're creating a render step that copies ourselves, and draws it to the emissive plane

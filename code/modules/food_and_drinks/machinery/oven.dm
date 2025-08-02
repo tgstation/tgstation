@@ -102,7 +102,7 @@
 	update_appearance()
 	use_energy(active_power_usage)
 
-/obj/machinery/oven/attackby(obj/item/item, mob/user, params)
+/obj/machinery/oven/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!open || used_tray || !istype(item, /obj/item/plate/oven_tray))
 		return ..()
 

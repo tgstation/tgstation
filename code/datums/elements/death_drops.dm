@@ -28,15 +28,20 @@
 	var/atom/loot_loc = target.drop_location()
 	for(var/thing_to_spawn in loot)
 		for(var/i in 1 to (loot[thing_to_spawn] || 1))
-			create_loot(thing_to_spawn, loot_loc, target, gibbed)
+			create_loot(thing_to_spawn, loot_loc, target, gibbed, spread_px = loot.len * 3)
 
 /// Handles creating the loots
-/datum/element/death_drops/proc/create_loot(typepath, atom/loot_loc, mob/living/dead, gibbed)
+/datum/element/death_drops/proc/create_loot(typepath, atom/loot_loc, mob/living/dead, gibbed, spread_px = 4)
 	if(ispath(typepath, /obj/effect/mob_spawn/corpse))
 		handle_corpse(typepath, loot_loc, dead, gibbed)
 		return
 
-	new typepath(loot_loc)
+	var/drop = new typepath(loot_loc)
+	if(isitem(drop) && spread_px)
+		var/obj/item/dropped_item = drop
+		var/clamped_px = clamp(spread_px, 0, 16)
+		dropped_item.pixel_x = rand(-clamped_px, clamped_px)
+		dropped_item.pixel_y = rand(-clamped_px, clamped_px)
 
 /// Handles snowflake case of mob corpses
 /datum/element/death_drops/proc/handle_corpse(typepath, atom/loot_loc, mob/living/dead, gibbed)

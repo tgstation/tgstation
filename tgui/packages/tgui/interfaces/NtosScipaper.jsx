@@ -157,7 +157,7 @@ const PaperPublishing = (props) => {
               mt={2}
               fluid
               value={author}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('rewrite', {
                   author: value,
                 })
@@ -168,7 +168,7 @@ const PaperPublishing = (props) => {
             <Input
               fluid
               value={title}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('rewrite', {
                   title: value,
                 })
@@ -179,7 +179,7 @@ const PaperPublishing = (props) => {
             <Input
               fluid
               value={abstract}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('rewrite', {
                   abstract: value,
                 })
@@ -230,32 +230,30 @@ const PaperBrowser = (props) => {
   } else {
     return publishedPapers.map((paper) => (
       <Collapsible
-        key={String(paper['experimentName'] + paper['tier'])}
-        title={paper['title']}
+        key={String(paper.experimentName + paper.tier)}
+        title={paper.title}
       >
         <Section>
           <LabeledList>
             <LabeledList.Item label="Topic">
-              {paper['experimentName'] + ' - ' + paper['tier']}
+              {`${paper.experimentName} - ${paper.tier}`}
             </LabeledList.Item>
             <LabeledList.Item label="Author">
-              {paper['author'] + (paper.etAlia ? ' et al.' : '')}
+              {paper.author + (paper.etAlia ? ' et al.' : '')}
             </LabeledList.Item>
-            <LabeledList.Item label="Partner">
-              {paper['partner']}
-            </LabeledList.Item>
+            <LabeledList.Item label="Partner">{paper.partner}</LabeledList.Item>
             <LabeledList.Item label="Yield">
               <LabeledList>
                 <LabeledList.Item label="Cooperation">
-                  {paper['gains'][coopIndex - 1]}
+                  {paper.gains[coopIndex - 1]}
                 </LabeledList.Item>
                 <LabeledList.Item label="Funding">
-                  {paper['gains'][fundingIndex - 1]}
+                  {paper.gains[fundingIndex - 1]}
                 </LabeledList.Item>
               </LabeledList>
             </LabeledList.Item>
             <LabeledList.Item label="Abstract">
-              {paper['abstract']}
+              {paper.abstract}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -281,7 +279,7 @@ const ExperimentBrowser = (props) => {
               String(Number(tier) + 1)
             }
           >
-            {experiment.target[tier] + ' ' + experiment.suffix}
+            {`${experiment.target[tier]} ${experiment.suffix}`}
           </LabeledList.Item>
         ))}
       </LabeledList>
@@ -301,7 +299,7 @@ const PartnersBrowser = (props) => {
   } = data;
   return partnersInformation.map((partner) => (
     <Section title={partner.name} key={partner.path}>
-      <Collapsible title={'Relations: ' + relations[partner.path]}>
+      <Collapsible title={`Relations: ${relations[partner.path]}`}>
         <LabeledList>
           <LabeledList.Item label="Description">
             {partner.flufftext}
@@ -310,10 +308,10 @@ const PartnersBrowser = (props) => {
             {relations[partner.path]}
           </LabeledList.Item>
           <LabeledList.Item label="Cooperation Bonus">
-            {partner.multipliers[coopIndex - 1] + 'x'}
+            {`${partner.multipliers[coopIndex - 1]}x`}
           </LabeledList.Item>
           <LabeledList.Item label="Funding Bonus">
-            {partner.multipliers[fundingIndex - 1] + 'x'}
+            {`${partner.multipliers[fundingIndex - 1]}x`}
           </LabeledList.Item>
           <LabeledList.Item label="Accepted Experiments">
             {partner.acceptedExperiments.map((experiment_name) => (
@@ -338,7 +336,7 @@ const PartnersBrowser = (props) => {
                         !purchaseableBoosts[partner.path].includes(node.id)
                       }
                       content="Purchase"
-                      tooltip={'Discount: ' + node.discount}
+                      tooltip={`Discount: ${node.discount}`}
                       onClick={() =>
                         act('purchase_boost', {
                           purchased_boost: node.id,

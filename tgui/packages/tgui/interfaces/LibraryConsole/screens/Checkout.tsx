@@ -14,7 +14,7 @@ import {
 
 import { PageSelect } from '../components/PageSelect';
 import { ScrollableSection } from '../components/ScrollableSection';
-import { LibraryConsoleData } from '../types';
+import type { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
 
 export function Checkout(props) {
@@ -102,7 +102,7 @@ function CheckoutModal(props) {
               <Input
                 width="160px"
                 value={checkoutee}
-                onChange={(e, value) => setCheckoutee(value)}
+                onChange={setCheckoutee}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Loan Period">
@@ -182,7 +182,7 @@ export function CheckoutEntries(props) {
             <Table.Cell>{entry.author}</Table.Cell>
             <Table.Cell>{entry.borrower}</Table.Cell>
             <Table.Cell backgroundColor={entry.overdue ? 'bad' : 'good'}>
-              {entry.overdue ? 'Overdue' : entry.due_in_minutes + ' Minutes'}
+              {entry.overdue ? 'Overdue' : `${entry.due_in_minutes} Minutes`}
             </Table.Cell>
             <Table.Cell width="70px" textAlign="center">
               <Button

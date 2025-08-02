@@ -1,6 +1,7 @@
 # Making new virtual domains
 
 ## REQUIRED:
+
 1. One way that the encrypted cache can spawn. This can be from a mob drop, a landmark (place a few, it'll pick one), or a signal landmark if you have a points system.
 2. Place a virtual domain baseturf helper in each area.
 3. If you're using modular safehouses, ensure that the map has ONE tile marked with the safehouse modular map loader (and set the KEY). it will need an open 7x6 area.
@@ -9,12 +10,14 @@
 6. Place a virtual domain baseturf helper in each area.
 
 ## Converting an existing map
+
 1. Create a new map using the existing map's size - give yourself enough room to enclose it with a binary wall. There's no need for any space outside of it, so ensure that it fits and is enclosed, nothing outside of this.
 2. Copy and paste the existing map into it.
 3. Find an accessible area for a safehouse, 7x6.
 4. Place a bottom left safehouse landmark somewhere on the map to load the safehouse.
 
 ## Notes
+
 You shouldn't need to fully enclose your map in 15 tiles of binary filler. Using one solid wall should do the trick.
 
 For areas, ideally just one on the map and one for the safehouse. Vdoms should never last so long as to need individual area power and atmos unless you're specifically going for a gimmick.

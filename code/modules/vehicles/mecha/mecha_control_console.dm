@@ -52,25 +52,25 @@
 
 	switch(action)
 		if("send_message")
-			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
-			if(!istype(MT))
+			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])
+			if(!istype(our_mecha_tracker))
 				return
 			var/message = tgui_input_text(usr, "Input message", "Transmit message", max_length = MAX_MESSAGE_LEN)
-			var/obj/vehicle/sealed/mecha/M = MT.chassis
-			if(trim(message) && M)
-				to_chat(M.occupants, message)
+			var/obj/vehicle/sealed/mecha/our_mecha = our_mecha_tracker.chassis
+			if(trim(message) && our_mecha)
+				to_chat(our_mecha.occupants, message)
 				to_chat(usr, span_notice("Message sent."))
 				. = TRUE
 		if("shock")
-			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
-			if(!istype(MT))
+			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])
+			if(!istype(our_mecha_tracker))
 				return
-			var/obj/vehicle/sealed/mecha/M = MT.chassis
-			if(M)
-				MT.shock()
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
-				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [M][ADMIN_JMP(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(",")][ADMIN_FLW(M)]." : "without a pilot."]")
+			var/obj/vehicle/sealed/mecha/our_mecha = our_mecha_tracker.chassis
+			if(our_mecha)
+				our_mecha_tracker.shock()
+				usr.log_message("has activated remote EMP on exosuit [our_mecha], located at [loc_name(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
+				usr.log_message("has activated remote EMP on exosuit [our_mecha], located at [loc_name(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
+				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [our_mecha][ADMIN_JMP(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(",")][ADMIN_FLW(our_mecha)]." : "without a pilot."]")
 				. = TRUE
 
 /obj/item/mecha_parts/mecha_tracking
@@ -85,6 +85,8 @@
 	var/recharging = FALSE
 	/// The Mecha that this tracking beacon is attached to
 	var/obj/vehicle/sealed/mecha/chassis
+	/// The type of flag this part checks before being able to be installed into the mech
+	var/flag_to_check = BEACON_TRACKABLE
 
 /**
  * Returns a html formatted string describing attached mech status
@@ -93,23 +95,21 @@
 	if(!chassis)
 		return FALSE
 
+	var/list/output = list()
+
 	var/cell_charge = chassis.get_charge()
-	var/answer = {"<b>Name:</b> [chassis.name]<br>
-				<b>Integrity:</b> [round((chassis.get_integrity()/chassis.max_integrity * 100), 0.01)]%<br>
-				<b>Cell Charge:</b> [isnull(cell_charge) ? "Not Found":"[chassis.cell.percent()]%"]<br>
-				<b>Cabin Pressure:</b> [(chassis.mecha_flags & IS_ENCLOSED) ? "[round(chassis.return_pressure(), 0.01)] kPa" : "Not Sealed"]<br>
-				<b>Pilot:</b> [english_list(chassis.return_drivers(), nothing_text = "None")]<br>
-				<b>Location:</b> [get_area_name(chassis, TRUE) || "Unknown"]"}
+	output += "[span_bold("Name:")] [chassis.name]"
+	output += "[span_bold("Integrity:")] [round((chassis.get_integrity()/chassis.max_integrity * 100), 0.01)]%"
+	output += "[span_bold("Cell Charge:")] [isnull(cell_charge) ? "Not Found":"[chassis.cell.percent()]%"]"
+	output += "[span_bold("Cabin Pressure:")] [(chassis.mecha_flags & IS_ENCLOSED) ? "[round(chassis.return_pressure(), 0.01)] kPa" : "Not Sealed"]"
+	output += "[span_bold("Pilot:")] [english_list(chassis.return_drivers(), nothing_text = "None")]"
+	output += "[span_bold("Current Location:")] [get_area_name(chassis, TRUE) || "Unknown"]"
+
 	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))
 		var/obj/item/mecha_parts/mecha_equipment/ejector/cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector) in chassis.equip_by_category[MECHA_UTILITY]
-		answer += "<br><b>Used Cargo Space:</b> [round((cargo_holder.contents.len / cargo_holder.cargo_capacity * 100), 0.01)]%"
+		output += "[span_bold("Used Cargo Space:")] [round((cargo_holder.contents.len / cargo_holder.cargo_capacity * 100), 0.01)]%"
 
-	return answer
-
-/obj/item/mecha_parts/mecha_tracking/emp_act(severity)
-	. = ..()
-	if(!(. & EMP_PROTECT_SELF))
-		qdel(src)
+	return jointext(output, "\n")
 
 /obj/item/mecha_parts/mecha_tracking/Destroy()
 	if(chassis)
@@ -118,12 +118,21 @@
 	chassis = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
+	if(!(mecha_to_attach.mecha_flags & flag_to_check))
+		to_chat(user, span_notice("[src] is incompatible with [mecha_to_attach]."))
+		return
+
+	for(var/obj/item/mecha_parts/mecha_tracking/tracker as anything in mecha_to_attach.trackers)
+		if(tracker.flag_to_check == flag_to_check)
+			to_chat(user, span_notice("There already exists a version of [src] attached to [mecha_to_attach]."))
+			return
+
 	if(!..())
 		return
-	M.trackers += src
-	M.diag_hud_set_mechtracking()
-	chassis = M
+	mecha_to_attach.trackers += src
+	mecha_to_attach.diag_hud_set_mechtracking()
+	chassis = mecha_to_attach
 
 /**
  * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
@@ -131,10 +140,11 @@
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	if(recharging)
 		return
-	if(chassis)
-		chassis.emp_act(EMP_HEAVY)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_tracking, recharge)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
-		recharging = TRUE
+	if(!chassis)
+		return
+	chassis.emp_act(EMP_HEAVY)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_tracking, recharge)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	recharging = TRUE
 
 /**
  * Resets recharge variable, allowing tracker to be EMP pulsed again
@@ -146,16 +156,4 @@
 	name = "exosuit AI control beacon"
 	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
 	ai_beacon = TRUE
-
-/obj/item/storage/box/mechabeacons
-	name = "exosuit tracking beacons"
-
-/obj/item/storage/box/mechabeacons/PopulateContents()
-	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
+	flag_to_check = BEACON_CONTROLLABLE

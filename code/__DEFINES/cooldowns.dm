@@ -38,6 +38,9 @@
 #define COOLDOWN_MECHA_MISSILE_STRIKE "mecha_missile_strike"
 #define COOLDOWN_MECHA_CABIN_SEAL "mecha_cabin_seal"
 
+//skybulge cooldown
+#define COOLDOWN_SKYBULGE_JUMP "skybulge_jump"
+
 //car cooldowns
 #define COOLDOWN_CAR_HONK "car_honk"
 

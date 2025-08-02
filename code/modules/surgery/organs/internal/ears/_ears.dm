@@ -160,7 +160,7 @@
 	preference = "feature_human_ears"
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
-	dna_block = DNA_EARS_BLOCK
+	dna_block = /datum/dna_block/feature/ears
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears
 
@@ -168,7 +168,7 @@
 /datum/bodypart_overlay/mutant/cat_ears
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	color_source = ORGAN_COLOR_HAIR
-	feature_key = "ears"
+	feature_key = FEATURE_EARS
 	dyable = TRUE
 
 	/// Layer upon which we add the inner ears overlay
@@ -187,6 +187,7 @@
 
 /datum/bodypart_overlay/mutant/cat_ears/get_image(image_layer, obj/item/bodypart/limb)
 	var/mutable_appearance/base_ears = ..()
+	base_ears.color = (dye_color || draw_color)
 
 	// Only add inner ears on the inner layer
 	if(image_layer != bitflag_to_layer(inner_layer))
@@ -195,19 +196,21 @@
 	// Construct image of inner ears, apply to base ears as an overlay
 	feature_key += "inner"
 	var/mutable_appearance/inner_ears = ..()
-	inner_ears.appearance_flags = RESET_COLOR|KEEP_APART
-	if(limb.cached_color_filter)
-		inner_ears.color = limb.color
-		inner_ears = filter_appearance_recursive(inner_ears, limb.cached_color_filter)
-	if(limb.owner)
-		if(limb.owner.color)
-			inner_ears.color = limb.owner.color
-		if(limb.owner.cached_color_filter)
-			inner_ears = filter_appearance_recursive(inner_ears, limb.owner.cached_color_filter)
 	feature_key = initial(feature_key)
+	var/mutable_appearance/ear_holder = mutable_appearance(layer = image_layer)
+	ear_holder.overlays += base_ears
+	ear_holder.overlays += inner_ears
+	return ear_holder
 
-	base_ears.overlays += inner_ears
-	return base_ears
+/datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, layer, obj/item/bodypart/limb)
+	return // We color base ears manually above in get_image
+
+/obj/item/organ/ears/ghost
+	name = "ghost ears"
+	desc = "All the more to hear you... though it can't hear through walls."
+	icon_state = "ears-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 /obj/item/organ/ears/penguin
 	name = "penguin ears"

@@ -2324,7 +2324,7 @@
 /turf/open/indestructible/meat,
 /area/ruin/space/has_grav/powered/biooutpost/vault)
 "Ue" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)

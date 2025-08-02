@@ -4,13 +4,13 @@
   height: 96%;
   left: 2.5%;
   top: 2%;
-  border: 5px outset hsl(217, 27%, 34%);
-  padding: 5px;
+  border: var(--border-thickness-larger) outset hsl(217, 27%, 34%);
+  padding: var(--space-m);
   text-align: center;
 }
 
 .Safe__engraving-arrow {
-  color: hsl(217, 27%, 27%);
+  color: var(--color-primary);
 }
 
 .Safe__engraving-hinge {
@@ -44,7 +44,7 @@
   background-color: hsl(217, 27%, 15%);
   font-size: 1.5rem;
   font-weight: bold;
-  padding: 0 0.5rem;
+  padding: 0 var(--space-m);
 }
 
 .Safe__contents {
@@ -52,7 +52,7 @@
   background-color: hsl(217, 27%, 10%);
   height: calc(85% + 7.5px);
   text-align: left;
-  padding: 5px;
+  padding: var(--space-m);
 }
 
 .Safe__help {

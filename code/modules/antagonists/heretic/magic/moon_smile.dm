@@ -12,7 +12,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
-	invocation = "Mo'N S'M'LE"
+	invocation = "M'N S'M'LE!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 	cast_range = 6

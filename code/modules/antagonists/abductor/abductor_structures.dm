@@ -35,6 +35,7 @@
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_TABLES
 	frame = /obj/structure/table_frame/abductor
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	can_flip = FALSE
 
 /obj/structure/table/optable/abductor
 	name = "alien operating table"

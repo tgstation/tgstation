@@ -115,6 +115,7 @@ CREATE TABLE IF NOT EXISTS `SS13_citation` (
   `sender_ic` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
   `recipient` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
   `crime` text NOT NULL,
+  `crime_desc` text NULL DEFAULT NULL,
   `fine` int(4) DEFAULT NULL,
   `paid` int(4) DEFAULT 0,
   `timestamp` datetime NOT NULL,
@@ -289,6 +290,28 @@ CREATE TABLE `SS13_library_action` (
   `ip_addr` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SS13_manifest`
+--
+
+DROP TABLE IF EXISTS `SS13_manifest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_manifest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) NOT NULL,
+  `round_id` int(11) NOT NULL,
+  `ckey` text NOT NULL,
+  `character_name` text NOT NULL,
+  `job` text NOT NULL,
+  `special` text DEFAULT NULL,
+  `latejoin` tinyint(1) NOT NULL DEFAULT 0,
+	`timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

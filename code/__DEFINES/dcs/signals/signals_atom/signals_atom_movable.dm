@@ -70,9 +70,11 @@
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
 	#define HEARING_RADIO_FREQ 5
-	#define HEARING_SPANS 6
-	#define HEARING_MESSAGE_MODE 7
-	#define HEARING_RANGE 8
+	#define HEARING_RADIO_FREQ_NAME 6
+	#define HEARING_RADIO_FREQ_COLOR 7
+	#define HEARING_SPANS 8
+	#define HEARING_MESSAGE_MODE 9
+	#define HEARING_RANGE 10
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
@@ -88,8 +90,6 @@
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 ///Called before a movable is being teleported from `check_teleport_valid()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTING "movable_teleporting"
-///Called when a movable is being teleported from `do_teleport()`: (destination, channel)
-#define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
 ///Called after a movable is teleported from `do_teleport()`: ()
 #define COMSIG_MOVABLE_POST_TELEPORT "movable_post_teleport"
 /// from /mob/living/can_z_move, sent to whatever the mob is buckled to. Only ridable movables should be ridden up or down btw.
@@ -138,4 +138,3 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
-

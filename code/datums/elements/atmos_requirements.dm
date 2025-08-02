@@ -49,21 +49,30 @@
 	if(!isopenturf(target.loc))
 		return TRUE
 
+	var/can_breathe_vacuum = HAS_TRAIT(target, TRAIT_NO_BREATHLESS_DAMAGE)
+
+	var/min_oxy = can_breathe_vacuum ? 0 : atmos_requirements["min_oxy"]
+	var/min_plasma = can_breathe_vacuum ? 0 : atmos_requirements["min_plas"]
+	var/min_n2 = can_breathe_vacuum ? 0 : atmos_requirements["min_n2"]
+	var/min_co2 = can_breathe_vacuum ? 0 : atmos_requirements["min_co2"]
+
 	var/turf/open/open_turf = target.loc
 	if(isnull(open_turf.air))
-		if(atmos_requirements["min_oxy"] || atmos_requirements["min_plas"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+		if (can_breathe_vacuum)
+			return TRUE
+		if(min_oxy || min_plasma || min_n2 || min_co2)
 			return FALSE
 		return TRUE
 
 	var/list/gases = get_atmos_req_list(open_turf)
 
-	if(!ISINRANGE(gases["oxy"], atmos_requirements["min_oxy"], (atmos_requirements["max_oxy"] || INFINITY)))
+	if(!ISINRANGE(gases["oxy"], min_oxy, (atmos_requirements["max_oxy"] || INFINITY)))
 		return FALSE
-	if(!ISINRANGE(gases["plas"], atmos_requirements["min_plas"], (atmos_requirements["max_plas"] || INFINITY)))
+	if(!ISINRANGE(gases["plas"], min_plasma, (atmos_requirements["max_plas"] || INFINITY)))
 		return FALSE
-	if(!ISINRANGE(gases["n2"], atmos_requirements["min_n2"], (atmos_requirements["max_n2"] || INFINITY)))
+	if(!ISINRANGE(gases["n2"], min_n2, (atmos_requirements["max_n2"] || INFINITY)))
 		return FALSE
-	if(!ISINRANGE(gases["co2"], atmos_requirements["min_co2"], (atmos_requirements["max_co2"] || INFINITY)))
+	if(!ISINRANGE(gases["co2"], min_co2, (atmos_requirements["max_co2"] || INFINITY)))
 		return FALSE
 	return TRUE
 

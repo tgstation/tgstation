@@ -48,7 +48,7 @@ export const TramPlaque = (props) => {
           </LabeledList>
         </Section>
         <Section title="Tram History">
-          <Stack fill>
+          <Stack fill g={0}>
             <Stack.Item m={1} grow>
               <b>Serial</b>
             </Stack.Item>
@@ -65,7 +65,7 @@ export const TramPlaque = (props) => {
           <Stack vertical fill>
             {previousTrams.map((tram_entry) => (
               <Stack.Item key={tram_entry.serialNumber}>
-                <Stack fill>
+                <Stack fill g={0}>
                   <Stack.Item m={1} grow>
                     {tram_entry.serialNumber}
                   </Stack.Item>

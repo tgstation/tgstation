@@ -17,6 +17,7 @@
 	hud_type = /datum/hud/guardian
 	faction = list()
 	speed = 0
+	status_flags = CANPUSH
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
 	health = INFINITY
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)

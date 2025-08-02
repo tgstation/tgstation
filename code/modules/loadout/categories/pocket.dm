@@ -43,10 +43,142 @@
 
 	return ..()
 
+
+/datum/loadout_item/pocket_items/plush
+	group = "Plushies"
+	abstract_type = /datum/loadout_item/pocket_items/plush
+	can_be_named = TRUE
+
+/datum/loadout_item/pocket_items/plush/bee
+	name = "Plush (Bee)"
+	item_path = /obj/item/toy/plush/beeplushie
+
+/datum/loadout_item/pocket_items/plush/carp
+	name = "Plush (Carp)"
+	item_path = /obj/item/toy/plush/carpplushie
+
+/datum/loadout_item/pocket_items/plush/lizard_greyscale
+	name = "Plush (Lizard, Colorable)"
+	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
+
+/datum/loadout_item/pocket_items/plush/lizard_random
+	name = "Plush (Lizard, Random)"
+	can_be_greyscale = DONT_GREYSCALE
+	ui_icon = 'icons/obj/fluff/previews.dmi'
+	ui_icon_state = "plushie_lizard_random"
+	item_path = /obj/item/toy/plush/lizard_plushie
+
+/datum/loadout_item/pocket_items/plush/moth
+	name = "Plush (Moth)"
+	item_path = /obj/item/toy/plush/moth
+
+/datum/loadout_item/pocket_items/plush/nukie
+	name = "Plush (Nukie)"
+	item_path = /obj/item/toy/plush/nukeplushie
+
+/datum/loadout_item/pocket_items/plush/peacekeeper
+	name = "Plush (Peacekeeper)"
+	item_path = /obj/item/toy/plush/pkplush
+
+/datum/loadout_item/pocket_items/plush/plasmaman
+	name = "Plush (Plasmaman)"
+	item_path = /obj/item/toy/plush/plasmamanplushie
+
+/datum/loadout_item/pocket_items/plush/human
+	name = "Plush (human)"
+	item_path = /obj/item/toy/plush/human
+
+/datum/loadout_item/pocket_items/plush/rouny
+	name = "Plush (Rouny)"
+	item_path = /obj/item/toy/plush/rouny
+
+/datum/loadout_item/pocket_items/plush/snake
+	name = "Plush (Snake)"
+	item_path = /obj/item/toy/plush/snakeplushie
+
+/datum/loadout_item/pocket_items/plush/horse
+	name = "Plush (Horse)"
+	item_path = /obj/item/toy/plush/horse
+
+/datum/loadout_item/pocket_items/dice
+	group = "Dice"
+	abstract_type = /datum/loadout_item/pocket_items/dice
+
+/datum/loadout_item/pocket_items/dice/dice_bag
+	name = "Dice Bag"
+	item_path = /obj/item/storage/dice
+
+/datum/loadout_item/pocket_items/dice/d1
+	name = "D1"
+	item_path = /obj/item/dice/d1
+
+/datum/loadout_item/pocket_items/dice/d2
+	name = "D2"
+	item_path = /obj/item/dice/d2
+
+/datum/loadout_item/pocket_items/dice/d4
+	name = "D4"
+	item_path = /obj/item/dice/d4
+
+/datum/loadout_item/pocket_items/dice/d6
+	name = "D6"
+	item_path = /obj/item/dice/d6
+
+/datum/loadout_item/pocket_items/dice/d6_ebony
+	name = "D6 (Ebony)"
+	item_path = /obj/item/dice/d6/ebony
+
+/datum/loadout_item/pocket_items/dice/d6_space
+	name = "D6 (Space)"
+	item_path = /obj/item/dice/d6/space
+
+/datum/loadout_item/pocket_items/dice/d8
+	name = "D8"
+	item_path = /obj/item/dice/d8
+
+/datum/loadout_item/pocket_items/dice/d10
+	name = "D10"
+	item_path = /obj/item/dice/d10
+
+/datum/loadout_item/pocket_items/dice/d12
+	name = "D12"
+	item_path = /obj/item/dice/d12
+
+/datum/loadout_item/pocket_items/dice/d20
+	name = "D20"
+	item_path = /obj/item/dice/d20
+
+/datum/loadout_item/pocket_items/dice/d100
+	name = "D100"
+	item_path = /obj/item/dice/d100
+
+/datum/loadout_item/pocket_items/dice/d00
+	name = "D00"
+	item_path = /obj/item/dice/d00
+
+/datum/loadout_item/pocket_items/card_binder
+	name = "Card Binder"
+	item_path = /obj/item/storage/card_binder
+
+/datum/loadout_item/pocket_items/card_deck
+	name = "Playing Card Deck"
+	item_path = /obj/item/toy/cards/deck
+
+/datum/loadout_item/pocket_items/kotahi_deck
+	name = "Kotahi Deck"
+	item_path = /obj/item/toy/cards/deck/kotahi
+
+/datum/loadout_item/pocket_items/wizoff_deck
+	name = "Wizoff Deck"
+	item_path = /obj/item/toy/cards/deck/wizoff
+
 /datum/loadout_item/pocket_items/lipstick
 	name = "Lipstick"
 	item_path = /obj/item/lipstick
-	additional_displayed_text = list("Recolorable")
+
+/datum/loadout_item/pocket_items/lipstick/get_item_information()
+	. = ..()
+	.[FA_ICON_PALETTE] = "Recolorable"
 
 /datum/loadout_item/pocket_items/lipstick/on_equip_item(
 	obj/item/lipstick/equipped_item,
@@ -87,6 +219,8 @@
 		"active_key" = INFO_GREYSCALE,
 	))
 
+	return .
+
 /datum/loadout_item/pocket_items/lipstick/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action, params)
 	switch(action)
 		if("select_lipstick_style")
@@ -110,124 +244,6 @@
 			return TRUE // Update UI
 
 	return ..()
-
-/datum/loadout_item/pocket_items/plush
-	abstract_type = /datum/loadout_item/pocket_items/plush
-	can_be_named = TRUE
-
-/datum/loadout_item/pocket_items/plush/bee
-	name = "Plush (Bee)"
-	item_path = /obj/item/toy/plush/beeplushie
-
-/datum/loadout_item/pocket_items/plush/carp
-	name = "Plush (Carp)"
-	item_path = /obj/item/toy/plush/carpplushie
-
-/datum/loadout_item/pocket_items/plush/lizard_greyscale
-	name = "Plush (Lizard, Colorable)"
-	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
-
-/datum/loadout_item/pocket_items/plush/lizard_random
-	name = "Plush (Lizard, Random)"
-	can_be_greyscale = DONT_GREYSCALE
-	item_path = /obj/item/toy/plush/lizard_plushie
-	additional_displayed_text = list("Random color")
-
-/datum/loadout_item/pocket_items/plush/moth
-	name = "Plush (Moth)"
-	item_path = /obj/item/toy/plush/moth
-
-/datum/loadout_item/pocket_items/plush/nukie
-	name = "Plush (Nukie)"
-	item_path = /obj/item/toy/plush/nukeplushie
-
-/datum/loadout_item/pocket_items/plush/peacekeeper
-	name = "Plush (Peacekeeper)"
-	item_path = /obj/item/toy/plush/pkplush
-
-/datum/loadout_item/pocket_items/plush/plasmaman
-	name = "Plush (Plasmaman)"
-	item_path = /obj/item/toy/plush/plasmamanplushie
-
-/datum/loadout_item/pocket_items/plush/human
-	name = "Plush (human)"
-	item_path = /obj/item/toy/plush/human
-
-/datum/loadout_item/pocket_items/plush/rouny
-	name = "Plush (Rouny)"
-	item_path = /obj/item/toy/plush/rouny
-
-/datum/loadout_item/pocket_items/plush/snake
-	name = "Plush (Snake)"
-	item_path = /obj/item/toy/plush/snakeplushie
-
-/datum/loadout_item/pocket_items/card_binder
-	name = "Card Binder"
-	item_path = /obj/item/storage/card_binder
-
-/datum/loadout_item/pocket_items/card_deck
-	name = "Playing Card Deck"
-	item_path = /obj/item/toy/cards/deck
-
-/datum/loadout_item/pocket_items/kotahi_deck
-	name = "Kotahi Deck"
-	item_path = /obj/item/toy/cards/deck/kotahi
-
-/datum/loadout_item/pocket_items/wizoff_deck
-	name = "Wizoff Deck"
-	item_path = /obj/item/toy/cards/deck/wizoff
-
-/datum/loadout_item/pocket_items/dice_bag
-	name = "Dice Bag"
-	item_path = /obj/item/storage/dice
-
-/datum/loadout_item/pocket_items/d1
-	name = "D1"
-	item_path = /obj/item/dice/d1
-
-/datum/loadout_item/pocket_items/d2
-	name = "D2"
-	item_path = /obj/item/dice/d2
-
-/datum/loadout_item/pocket_items/d4
-	name = "D4"
-	item_path = /obj/item/dice/d4
-
-/datum/loadout_item/pocket_items/d6
-	name = "D6"
-	item_path = /obj/item/dice/d6
-
-/datum/loadout_item/pocket_items/d6_ebony
-	name = "D6 (Ebony)"
-	item_path = /obj/item/dice/d6/ebony
-
-/datum/loadout_item/pocket_items/d6_space
-	name = "D6 (Space)"
-	item_path = /obj/item/dice/d6/space
-
-/datum/loadout_item/pocket_items/d8
-	name = "D8"
-	item_path = /obj/item/dice/d8
-
-/datum/loadout_item/pocket_items/d10
-	name = "D10"
-	item_path = /obj/item/dice/d10
-
-/datum/loadout_item/pocket_items/d12
-	name = "D12"
-	item_path = /obj/item/dice/d12
-
-/datum/loadout_item/pocket_items/d20
-	name = "D20"
-	item_path = /obj/item/dice/d20
-
-/datum/loadout_item/pocket_items/d100
-	name = "D100"
-	item_path = /obj/item/dice/d100
-
-/datum/loadout_item/pocket_items/d00
-	name = "D00"
-	item_path = /obj/item/dice/d00
 
 /datum/loadout_item/pocket_items/lighter
 	name = "Zippo Lighter"
@@ -256,6 +272,14 @@
 /datum/loadout_item/pocket_items/holodisk
 	name = "Holodisk"
 	item_path = /obj/item/disk/holodisk
+
+/datum/loadout_item/pocket_items/mug_nt
+	name = "Nanotrasen Mug"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/nanotrasen
+
+/datum/loadout_item/pocket_items/britcup
+	name = "British Flag Cup"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/britcup
 
 // The wallet loadout item is special, and puts the player's ID and other small items into it on initialize (fancy!)
 /datum/loadout_item/pocket_items/wallet
@@ -288,20 +312,43 @@
 		return
 
 	var/obj/item/storage/wallet/wallet = new(equipper)
-	if(istype(id_card))
-		equipper.temporarilyRemoveItemFromInventory(id_card, force = TRUE)
-		equipper.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial = TRUE)
-		id_card.forceMove(wallet)
-
-		for(var/obj/item/thing in equipper?.back)
-			// leaves a slot free for whatever they may want
-			if(length(wallet.contents) >= wallet.atom_storage.max_slots - 1)
-				break
-			if(thing.w_class > wallet.atom_storage.max_specific_storage)
-				continue
-			wallet.atom_storage.attempt_insert(thing, override = TRUE, force = STORAGE_FULLY_LOCKED, messages = FALSE)
-
-	else
+	if(!istype(id_card))
 		// They must have a PDA or some other thing in their ID slot, abort
-		if(!equipper.equip_to_slot_if_possible(wallet, slot = ITEM_SLOT_BACKPACK, initial = TRUE))
+		if(!equipper.equip_to_storage(wallet, ITEM_SLOT_BACK, indirect_action = TRUE))
 			wallet.forceMove(equipper.drop_location())
+		return
+
+	equipper.temporarilyRemoveItemFromInventory(id_card, force = TRUE)
+	equipper.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial = TRUE)
+	id_card.forceMove(wallet)
+
+	for(var/obj/item/thing in equipper?.back)
+		// leaves a slot free for whatever they may want
+		if(length(wallet.contents) >= wallet.atom_storage.max_slots - 1)
+			break
+		if(thing.w_class > wallet.atom_storage.max_specific_storage)
+			continue
+		wallet.atom_storage.attempt_insert(thing, override = TRUE, force = STORAGE_FULLY_LOCKED, messages = FALSE)
+
+
+/datum/loadout_item/pocket_items/borg_me_dogtag
+	item_path = /obj/item/clothing/accessory/dogtag/borg_ready
+
+/datum/loadout_item/pocket_items/borg_me_dogtag/on_equip_item(
+	obj/item/equipped_item,
+	datum/preferences/preference_source,
+	list/preference_list,
+	mob/living/carbon/human/equipper,
+	visuals_only = FALSE,
+)
+	// We're hooking this datum to add an extra bit of flavor to the dogtag - a pregenerated medical record
+	if(!visuals_only && !isdummy(equipper))
+		RegisterSignal(equipper, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED, PROC_REF(apply_after_setup), override = TRUE)
+	return NONE
+
+/datum/loadout_item/pocket_items/borg_me_dogtag/proc/apply_after_setup(mob/living/carbon/human/source, ...)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
+	var/datum/record/crew/record = find_record(source.real_name)
+	record?.medical_notes += new /datum/medical_note("Central Command", "Patient is a registered brain donor for Robotics research.", null)

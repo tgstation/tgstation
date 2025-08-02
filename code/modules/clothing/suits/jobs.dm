@@ -44,7 +44,9 @@
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
 	desc = "A set of overalls, good for protecting thinner clothes from the elements."
-	icon_state = "overalls"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/apron/overalls"
+	post_init_icon_state = "overalls"
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
 	species_exception = list(/datum/species/golem)
@@ -115,16 +117,13 @@
 	)
 
 //Detective
-/obj/item/clothing/suit/jacket/det_suit
-	name = "trenchcoat"
+/obj/item/clothing/suit/toggle/jacket/det_trench
+	name = "brown trenchcoat"
 	desc = "A 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "detective"
+	icon_state = "det_trenchcoat"
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/jacket_det_suit
-	cold_protection = CHEST|GROIN|ARMS
-	heat_protection = CHEST|GROIN|ARMS
 	flags_inv = HIDEBELT
 
 /datum/armor/jacket_det_suit
@@ -134,39 +133,41 @@
 	energy = 35
 	acid = 45
 
+/obj/item/clothing/suit/toggle/jacket/det_trench/Initialize(mapload)
+	. = ..()
+	allowed = GLOB.detective_vest_allowed
+
+/obj/item/clothing/suit/toggle/jacket/det_trench/noir
+	name = "noir trenchcoat"
+	desc = "A hard-boiled private investigator's dark trenchcoat."
+	icon_state = "noir_trenchcoat"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/jacket/det_suit
+	name = "brown blazer jacket"
+	desc = "A suit jacket perfect for dinner dates and criminal investigations."
+	icon_state = "det_blazer"
+	armor_type = /datum/armor/jacket_det_suit
+	inhand_icon_state = null
+
 /obj/item/clothing/suit/jacket/det_suit/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
-/obj/item/clothing/suit/jacket/det_suit/dark
-	name = "noir trenchcoat"
-	desc = "A hard-boiled private investigator's dark trenchcoat."
-	icon_state = "noirdet"
-	inhand_icon_state = null
-
 /obj/item/clothing/suit/jacket/det_suit/noir
-	name = "noir suit coat"
-	desc = "A dapper private investigator's dark suit coat."
-	icon_state = "detsuit"
-	inhand_icon_state = null
-
-/obj/item/clothing/suit/jacket/det_suit/brown
-	name = "brown suit jacket"
-	desc = "A suit jacket perfect for dinner dates and criminal investigations."
-	icon_state = "detsuit_brown"
-	inhand_icon_state = null
+	name = "noir blazer jacket"
+	desc = "A dapper private investigator's dark suit jacket."
+	icon_state = "noir_blazer"
 
 /obj/item/clothing/suit/jacket/det_suit/kim
 	name = "aerostatic bomber jacket"
 	desc = "A jacket once worn by the revolutionary air brigades during the Antecentennial Revolution. There are quite a few pockets on the inside, mostly for storing notebooks and compasses."
 	icon_state = "aerostatic_bomber_jacket"
-	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/disco
 	name = "disco ass blazer"
 	desc = "Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve."
 	icon_state = "jamrock_blazer"
-	inhand_icon_state = null
 
 //Engineering
 /obj/item/clothing/suit/hazardvest
@@ -195,7 +196,7 @@
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, apply_bloom = FALSE)
 
 /obj/item/clothing/suit/hazardvest/press // Variant used by the Curator
 	name = "press hazard vest"
@@ -265,7 +266,9 @@
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
 	name = "formal suit jacket"
-	icon_state = "jacket_lawyer"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/toggle/lawyer/greyscale"
+	post_init_icon_state = "jacket_lawyer"
 	inhand_icon_state = ""
 	greyscale_config = /datum/greyscale_config/jacket_lawyer
 	greyscale_config_worn = /datum/greyscale_config/jacket_lawyer/worn
@@ -276,8 +279,9 @@
 /obj/item/clothing/suit/toggle/suspenders
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
-	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "suspenders"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/toggle/suspenders"
+	post_init_icon_state = "suspenders"
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here

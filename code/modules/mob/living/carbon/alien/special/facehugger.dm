@@ -48,8 +48,8 @@
 	if(atom_integrity < 90)
 		Die()
 
-/obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
-	return O.attack_atom(src, user, params)
+/obj/item/clothing/mask/facehugger/attackby(obj/item/attacked_item, mob/user, list/modifiers, list/attack_modifiers)
+	return attacked_item.attack_atom(src, user, modifiers)
 
 /obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -168,6 +168,7 @@
 								span_userdanger("[src] tears [worn_mask] off of your face!"))
 
 	if(!target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1))
+		log_combat(target, src, "failed facehugged by")
 		return FALSE
 	log_combat(target, src, "was facehugged by")
 	return TRUE // time for a smoke

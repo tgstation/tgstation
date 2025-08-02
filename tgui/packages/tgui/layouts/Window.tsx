@@ -5,16 +5,16 @@
  */
 
 import {
-  ComponentProps,
-  PropsWithChildren,
-  ReactNode,
+  type ComponentProps,
+  type PropsWithChildren,
+  type ReactNode,
   useEffect,
   useLayoutEffect,
   useState,
 } from 'react';
-import { Box } from 'tgui-core/components';
+import type { Box } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { backendSuspendStart, globalStore, useBackend } from '../backend';
@@ -66,6 +66,8 @@ export const Window = (props: Props) => {
     setIsReadyToRender(true);
   }, []);
 
+  const { scale } = config.window;
+
   useEffect(() => {
     if (!suspended && isReadyToRender) {
       const updateGeometry = () => {
@@ -97,7 +99,7 @@ export const Window = (props: Props) => {
         logger.log('unmounting');
       };
     }
-  }, [isReadyToRender, width, height]);
+  }, [isReadyToRender, width, height, scale]);
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;

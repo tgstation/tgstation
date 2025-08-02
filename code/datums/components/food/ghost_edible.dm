@@ -23,8 +23,13 @@
 	src.bite_chance = bite_chance
 	src.minimum_scale = minimum_scale
 	initial_reagent_volume = atom_parent.reagents.total_volume
+
+	var/parent_name = "[parent]"
+	if(ismob(parent))
+		var/mob/mob_parent = parent
+		parent_name = "[mob_parent.real_name]"
 	notify_ghosts(
-		"[parent] is edible by ghosts!",
+		"[parent_name] is edible by ghosts!",
 		source = parent,
 		header = "Something Tasty!",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,

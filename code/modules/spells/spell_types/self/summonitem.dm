@@ -6,7 +6,7 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 
-	invocation = "GAR YOK"
+	invocation = "Gar Yok!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 

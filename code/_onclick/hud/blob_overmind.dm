@@ -151,17 +151,16 @@
 		var/mob/eye/blob/B = usr
 		B.relocate_core()
 
+/atom/movable/screen/blob_power_display
+	name = "blob power"
+	icon_state = "block"
+	screen_loc = ui_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = ABOVE_HUD_PLANE
+
 /datum/hud/blob_overmind/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
-
-	blobpwrdisplay = new /atom/movable/screen(null, src)
-	blobpwrdisplay.name = "blob power"
-	blobpwrdisplay.icon_state = "block"
-	blobpwrdisplay.screen_loc = ui_health
-	blobpwrdisplay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	SET_PLANE_EXPLICIT(blobpwrdisplay, ABOVE_HUD_PLANE, owner)
-	infodisplay += blobpwrdisplay
 
 	healths = new /atom/movable/screen/healths/blob(null, src)
 	infodisplay += healths

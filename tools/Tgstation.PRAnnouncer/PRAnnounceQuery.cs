@@ -46,7 +46,13 @@ namespace Tgstation.PRAnnouncer
 				PullRequest = new PRAnnouncePayloadPullRequest(pullRequestEvent.PullRequest),
 			};
 
-			announce = $"[{pullRequestEvent.PullRequest.Base.Repo.FullName}] Pull Request {(pullRequestEvent.PullRequest.Merged == true ? "merged" : (pullRequestEvent.Action ?? "(NULL ACTION)"))} {HtmlEncoder.Default.Encode(pullRequestEvent.Sender?.Login ?? "(NULL)")}: <a href=\"{pullRequestEvent.PullRequest.HtmlUrl}\"> #{pullRequestEvent.PullRequest.Number} {HtmlEncoder.Default.Encode($"{pullRequestEvent.PullRequest.User.Login} - {pullRequestEvent.PullRequest.Title}")}";
+            var action = pullRequestEvent.PullRequest.Merged == true ? "merged" : pullRequestEvent.Action;
+            if (action != null && pullRequestEvent.Sender?.Login != null)
+            {
+                action += $" by {HtmlEncoder.Default.Encode(pullRequestEvent.Sender.Login)}";
+            }
+
+			announce = $"[{pullRequestEvent.PullRequest.Base.Repo.FullName}] Pull Request {action ?? "(NULL ACTION)"}: <a href=\"{pullRequestEvent.PullRequest.HtmlUrl}\">#{pullRequestEvent.PullRequest.Number} {HtmlEncoder.Default.Encode($"{pullRequestEvent.PullRequest.User.Login} - {pullRequestEvent.PullRequest.Title}")}</a>";
 		}
 
 		/// <summary>

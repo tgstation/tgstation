@@ -32,6 +32,51 @@
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP 225
 
+// Bloodtype defines
+#define BLOOD_TYPE_A_MINUS "A-"
+#define BLOOD_TYPE_A_PLUS "A+"
+#define BLOOD_TYPE_B_MINUS "B-"
+#define BLOOD_TYPE_B_PLUS "B+"
+#define BLOOD_TYPE_AB_MINUS "AB-"
+#define BLOOD_TYPE_AB_PLUS "AB+"
+#define BLOOD_TYPE_O_MINUS "O-"
+#define BLOOD_TYPE_O_PLUS "O+"
+#define BLOOD_TYPE_UNIVERSAL "U"
+#define BLOOD_TYPE_LIZARD "L"
+#define BLOOD_TYPE_VAMPIRE "V"
+#define BLOOD_TYPE_ANIMAL "Y-"
+#define BLOOD_TYPE_ETHEREAL "LE"
+#define BLOOD_TYPE_TOX "TOX"
+#define BLOOD_TYPE_OIL "Oil"
+#define BLOOD_TYPE_MEAT "MT-"
+#define BLOOD_TYPE_CLOWN "C"
+#define BLOOD_TYPE_XENO "X*"
+#define BLOOD_TYPE_H2O "H2O"
+#define BLOOD_TYPE_SNAIL "S"
+
+// Blood exposure behavior flag defines
+/// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays
+/// mob/turf/item flags will add DNA when triggered even if this flag is false
+#define BLOOD_ADD_DNA (1<<0)
+/// Cover the entire mob in *visible* blood
+#define BLOOD_COVER_MOBS (1<<1)
+/// Create blood splashes and trails on floors, does not affect gibs creation
+#define BLOOD_COVER_TURFS (1<<2)
+/// Cover items in ourselves
+#define BLOOD_COVER_ITEMS (1<<3)
+/// Usually you want all COVER flags together or none at all
+#define BLOOD_COVER_ALL (BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS)
+/// Transfer blood immunities and viruses to exposed mobs
+#define BLOOD_TRANSFER_VIRAL_DATA (1<<4)
+
+// Bleed check results
+/// We cannot bleed (here, or in general) at all
+#define BLEED_NONE 0
+/// We cannot make a splatter, but we can add our DNA
+#define BLEED_ADD_DNA 1
+/// We can bleed just fine
+#define BLEED_SPLATTER 2
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
@@ -103,6 +148,8 @@
 #define BODYTYPE_PLANT (1<<6)
 //This limb is shadowy and will regen if shadowheal is active
 #define BODYTYPE_SHADOW (1<<7)
+//This limb is a ghost limb and can phase through walls.
+#define BODYTYPE_GHOST (1<<8)
 
 // Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
@@ -123,11 +170,14 @@
 #define SPECIES_DULLAHAN "dullahan"
 #define SPECIES_ETHEREAL "ethereal"
 #define SPECIES_ETHEREAL_LUSTROUS "lustrous"
+#define SPECIES_GHOST "ghost"
+#define SPECIES_GOLEM "golem"
 #define SPECIES_FELINE "felinid"
 #define SPECIES_FLYPERSON "fly"
 #define SPECIES_HUMAN "human"
 #define SPECIES_JELLYPERSON "jelly"
 #define SPECIES_SLIMEPERSON "slime"
+#define SPECIES_SPIRIT "spirit"
 #define SPECIES_LUMINESCENT "luminescent"
 #define SPECIES_STARGAZER "stargazer"
 #define SPECIES_LIZARD "lizard"
@@ -242,6 +292,7 @@
 #define NUTRITION_LEVEL_WELL_FED 450
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
+#define NUTRITION_LEVEL_VERY_HUNGRY 200
 #define NUTRITION_LEVEL_STARVING 150
 
 #define NUTRITION_LEVEL_START_MIN 250
@@ -306,6 +357,7 @@
 #define SENTIENCE_HUMANOID 3
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
+#define SENTIENCE_PONY 6
 
 //Mob AI Status
 #define POWER_RESTORATION_OFF 0
@@ -406,7 +458,7 @@
 #define OFFSET_HELD "held"
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN 17 //youngest a character can be
+#define AGE_MIN 18 //youngest a character can be
 #define AGE_MAX 85 //oldest a character can be
 #define AGE_MINOR 20 //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
@@ -619,11 +671,6 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
-// Hair masks
-#define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
-#define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
-#define HAIR_MASK_HIDE_WINTERHOOD "hide_winterhood"
-
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
 // - They do not start at 0 for futureproofing
@@ -659,59 +706,63 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 35
+#define TOTAL_LAYERS 38
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 35
+#define MUTATIONS_LAYER 37
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 34
+#define BODY_BEHIND_LAYER 36
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 33
+#define BODYPARTS_LOW_LAYER 35
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 32
+#define BODYPARTS_LAYER 34
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 31
-/// Underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_LAYER 30
+#define BODY_ADJ_LAYER 33
+/// Underwear, undershirts, socks
+#define BODY_LAYER 32
+/// Eyes and eyelids
+#define EYES_LAYER 31
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 29
+#define FRONT_MUTATIONS_LAYER 30
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 28
+#define DAMAGE_LAYER 29
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 27
+#define UNIFORM_LAYER 28
 /// ID card layer
-#define ID_LAYER 26
+#define ID_LAYER 27
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 25
+#define ID_CARD_LAYER 26
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 24
+#define BODYPARTS_HIGH_LAYER 25
 /// Gloves layer
-#define GLOVES_LAYER 23
+#define GLOVES_LAYER 24
 /// Shoes layer
-#define SHOES_LAYER 22
+#define SHOES_LAYER 23
 /// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define LOW_FACEMASK_LAYER 21
+#define LOW_FACEMASK_LAYER 22
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 20
+#define EARS_LAYER 21
 /// Layer for neck apperal that should appear below the suit slot (like neckties)
-#define LOW_NECK_LAYER 19
+#define LOW_NECK_LAYER 20
 /// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 18
+#define SUIT_LAYER 19
 /// Glasses layer
-#define GLASSES_LAYER 17
+#define GLASSES_LAYER 18
 /// Belt layer
-#define BELT_LAYER 16 //Possible make this an overlay of something required to wear a belt?
+#define BELT_LAYER 17 //Possible make this an overlay of something required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 15
+#define SUIT_STORE_LAYER 16
 /// Neck layer (for wearing capes and bedsheets)
-#define NECK_LAYER 14
+#define NECK_LAYER 15
 /// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 13
+#define BACK_LAYER 14
 /// Hair layer (mess with the fro and you got to go!)
-#define HAIR_LAYER 12 //TODO: make part of head layer?
+#define HAIR_LAYER 13 //TODO: make part of head layer?
 /// Facemask layer (gas masks, breath masks, etc.)
-#define FACEMASK_LAYER 11
+#define FACEMASK_LAYER 12
 /// Head layer (hats, helmets, etc.)
-#define HEAD_LAYER 10
+#define HEAD_LAYER 11
+/// Hair that layers out above clothing, including hats (high ponytails and such)
+#define OUTER_HAIR_LAYER 10
 /// Handcuff layer (when your hands are cuffed)
 #define HANDCUFF_LAYER 9
 /// Legcuff layer (when your feet are cuffed)
@@ -768,7 +819,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
-	// BODY_LAYER (body markings (full body), underwear (full body), eyes)
+	// BODY_LAYER (body markings (full body), underwear (full body))
+	// EYES_LAYER,
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
@@ -893,7 +945,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_LIMBS (1<<6)
 /// Heals all organs from failing.
 #define HEAL_ORGANS (1<<7)
-/// A "super" heal organs, this refreshes all organs entirely, deleting old and replacing them with new.
+/// replaces any organ with ORGAN_HAZARDOUS in organ_flags with species defaults
 #define HEAL_REFRESH_ORGANS (1<<8)
 /// Removes all wounds.
 #define HEAL_WOUNDS (1<<9)
@@ -989,3 +1041,11 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Distance which you can see someone's ID card
 /// Short enough that you can inspect over tables (bartender checking age)
 #define ID_EXAMINE_DISTANCE 3
+
+GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
+	/datum/pet_command/idle,
+	/datum/pet_command/free,
+	/datum/pet_command/protect_owner,
+	/datum/pet_command/follow,
+	/datum/pet_command/attack/mouse
+))

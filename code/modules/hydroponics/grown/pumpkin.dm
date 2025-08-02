@@ -29,7 +29,7 @@
 	///Which type of lantern this gourd produces when carved.
 	var/carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead
 
-/obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, list/modifiers, list/attack_modifiers)
 	if(W.get_sharpness())
 		user.show_message(span_notice("You carve a face into [src]!"), MSG_VISUAL)
 		new carved_type(user.loc)

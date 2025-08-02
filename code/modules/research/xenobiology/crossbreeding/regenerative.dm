@@ -244,17 +244,17 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/black/core_effect_before(mob/living/target, mob/user)
 	var/dummytype = target.type
-	if(ismegafauna(target)) //Prevents megafauna duping in a lame way
+	if(target.mob_biotypes & MOB_SPECIAL) //Prevents megafauna and voidwalker duping in a lame way
 		dummytype = /mob/living/basic/slime
 		to_chat(user, span_warning("The milky goo flows over [target], falling into a weak puddle."))
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, span_notice("The milky goo flows from your skin, forming an imperfect copy of you."))
-	if(iscarbon(target))
-		var/mob/living/carbon/T = target
-		var/mob/living/carbon/D = dummy
-		T.dna.transfer_identity(D)
-		D.updateappearance(mutcolor_update=1)
-		D.real_name = T.real_name
+	if(iscarbon(target) && iscarbon(dummy))
+		var/mob/living/carbon/carbon_target = target
+		var/mob/living/carbon/carbon_dummy = dummy
+		carbon_dummy.real_name = carbon_target.real_name
+		carbon_target.dna.copy_dna(carbon_dummy.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		carbon_dummy.updateappearance(mutcolor_update = TRUE)
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())
 	dummy.adjustToxLoss(target.getToxLoss())

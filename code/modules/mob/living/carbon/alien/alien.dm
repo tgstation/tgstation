@@ -19,7 +19,6 @@
 	var/leaping = FALSE
 	///The speed this alien should move at.
 	var/alien_speed = 0
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|princess|queen)( \\(\\d+\\))?")
@@ -74,47 +73,39 @@
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()
-
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		//Body temperature is too hot.
-		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
-		switch(bodytemperature)
-			if(360 to 400)
-				apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
-			if(400 to 460)
-				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
-			if(460 to INFINITY)
-				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3 * seconds_per_tick, BURN)
-				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
-	else
+	if(bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
 		clear_alert(ALERT_XENO_FIRE)
+		return
 
-/mob/living/carbon/alien/getTrail()
-	if(getBruteLoss() < 200)
-		return pick (list("xltrails_1", "xltrails2"))
-	else
-		return pick (list("xttrails_1", "xttrails2"))
+	//Body temperature is too hot.
+	throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
+	switch(bodytemperature)
+		if(360 to 400)
+			apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
+		if(400 to 460)
+			apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
+		if(460 to INFINITY)
+			if(on_fire)
+				apply_damage(HEAT_DAMAGE_LEVEL_3 * seconds_per_tick, BURN)
+			else
+				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
 
-/mob/living/carbon/alien/get_trail_blood()
-	return BLOOD_STATE_XENO
+/mob/living/carbon/alien/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_XENO)
 
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
-	if (client)
-		for (var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
-			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/body_egg/alien_embryo/A = L.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo)
-				if(A)
-					var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = L, icon_state = "infected[A.stage]")
-					client.images += I
-	return
+	if (!client)
+		return
 
+	for (var/mob/living/target as anything in GLOB.mob_living_list)
+		if(HAS_TRAIT(target, TRAIT_XENO_HOST))
+			var/obj/item/organ/body_egg/alien_embryo/embryo = target.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo)
+			if(embryo)
+				client.images += image('icons/mob/nonhuman-player/alien.dmi', loc = target, icon_state = "infected[embryo.stage]")
 
 /*----------------------------------------
 Proc: RemoveInfectionImages()

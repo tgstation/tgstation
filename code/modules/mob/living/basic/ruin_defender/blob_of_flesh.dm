@@ -43,7 +43,7 @@
 	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
 	AddComponent(\
 		/datum/component/blood_walk, \
-		blood_type = /obj/effect/decal/cleanable/blood/trails, \
+		blood_type = /obj/effect/decal/cleanable/blood/trail_holder, \
 		target_dir_change = TRUE,\
 	)
 

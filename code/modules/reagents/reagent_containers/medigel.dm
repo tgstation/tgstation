@@ -87,11 +87,28 @@
 
 /obj/item/reagent_containers/medigel/synthflesh
 	name = "medical gel (synthflesh)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, a slightly toxic medicine capable of healing both bruises and burns."
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, a slightly toxic medicine capable of healing bruises, burns, and husks."
 	icon_state = "synthgel"
 	current_skin = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 60)
+	list_reagents_purity = 1
+	amount_per_transfer_from_this = 60
+	possible_transfer_amounts = list(5, 10, 60)
 	custom_price = PAYCHECK_CREW * 5
+
+/obj/item/reagent_containers/medigel/synthflesh/examine(mob/user)
+	. = ..()
+	if(reagents.total_volume >= 60)
+		. += span_info("One full bottle can restore a corpse husked by burns.")
+
+/obj/item/reagent_containers/medigel/synthflesh/attack(mob/M, mob/user, def_zone)
+	if(iscarbon(M))
+		var/mob/living/carbon/carbies = M
+		if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
+			// give them a warning if the mob is a husk but synthflesh won't unhusk yet
+			carbies.visible_message(span_boldwarning("[carbies]'s burns need to be repaired first before synthflesh will unhusk it!"))
+
+	return ..()
 
 /obj/item/reagent_containers/medigel/sterilizine
 	name = "sterilizer gel"

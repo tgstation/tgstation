@@ -140,12 +140,12 @@
 /datum/component/riding/vehicle/lavaboat
 	ride_check_flags = NONE // not sure
 	keytype = /obj/item/oar
-	/// The one turf we can move on.
-	var/allowed_turf = /turf/open/lava
+	/// The turfs we can move on.
+	var/allowed_turfs = list(/turf/open/lava, /turf/open/water)
 
 /datum/component/riding/vehicle/lavaboat/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
-	allowed_turf_typecache = typecacheof(allowed_turf)
+	allowed_turf_typecache = typecacheof(allowed_turfs)
 
 /datum/component/riding/vehicle/lavaboat/get_parent_offsets_and_layers()
 	return list(
@@ -236,21 +236,26 @@
 
 /datum/component/riding/vehicle/scooter/skateboard/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
 	. = ..()
-	if(can_slow_down)
-		RegisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED, PROC_REF(toggle_move_delay))
-		toggle_move_delay(rider)
+	if(!can_slow_down)
+		return
+	RegisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED, PROC_REF(toggle_move_delay))
+	if(rider.move_intent == MOVE_INTENT_WALK)
+		vehicle_move_delay += 0.6
 
 /datum/component/riding/vehicle/scooter/skateboard/handle_unbuckle(mob/living/rider)
 	. = ..()
-	if(can_slow_down)
-		toggle_move_delay(rider)
-		UnregisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED)
+	if(!can_slow_down)
+		return
+	UnregisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED)
+	if(rider.move_intent == MOVE_INTENT_WALK)
+		vehicle_move_delay -= 0.6
 
 /datum/component/riding/vehicle/scooter/skateboard/proc/toggle_move_delay(mob/living/rider)
 	SIGNAL_HANDLER
-	vehicle_move_delay = initial(vehicle_move_delay)
 	if(rider.move_intent == MOVE_INTENT_WALK)
 		vehicle_move_delay += 0.6
+	else
+		vehicle_move_delay -= 0.6
 
 /datum/component/riding/vehicle/scooter/skateboard/pro
 	vehicle_move_delay = 1

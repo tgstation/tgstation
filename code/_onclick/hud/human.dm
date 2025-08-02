@@ -256,6 +256,10 @@
 	rest_icon.update_appearance()
 	static_inventory += rest_icon
 
+	sleep_icon = new /atom/movable/screen/sleep(null, src)
+	sleep_icon.icon = ui_style
+	sleep_icon.screen_loc = ui_above_throw
+
 	spacesuit = new /atom/movable/screen/spacesuit(null, src)
 	infodisplay += spacesuit
 
@@ -281,9 +285,6 @@
 	zone_select.icon = ui_style
 	zone_select.update_appearance()
 	static_inventory += zone_select
-
-	combo_display = new /atom/movable/screen/combo(null, src)
-	infodisplay += combo_display
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)

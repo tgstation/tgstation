@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "L'N'R P'RAD"
+	invocation = "L'N'R P'R'D!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Tooltip } from 'tgui-core/components';
 import {
   Box,
   Button,
@@ -10,13 +9,14 @@ import {
   Section,
   Stack,
   Tabs,
+  Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 
 type GenericUplinkProps = {
-  currency?: string | JSX.Element;
+  currency?: string | React.JSX.Element;
   categories: string[];
   items: Item[];
   handleBuy: (item: Item) => void;
@@ -33,7 +33,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [compactMode, setCompactMode] = useState(false);
-  let items = props.items.filter((value) => {
+  const items = props.items.filter((value) => {
     if (searchText.length === 0) {
       return value.category === selectedCategory;
     }
@@ -79,7 +79,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
               autoFocus
               value={searchText}
               placeholder="Search..."
-              onInput={(e, value) => setSearchText(value)}
+              onChange={setSearchText}
               fluid
             />
           </Stack.Item>
@@ -131,8 +131,8 @@ export type Item = {
   icon: string;
   icon_state: string;
   category: string;
-  cost: JSX.Element | string;
-  desc: JSX.Element | string;
+  cost: React.JSX.Element | string;
+  desc: React.JSX.Element | string;
   population_tooltip: string;
   insufficient_population: BooleanLike;
   disabled: BooleanLike;
@@ -155,7 +155,7 @@ const ItemList = (props: ItemListProps) => {
       <Stack vertical mt={compactMode ? -0.5 : -1}>
         {items.map((item, index) => (
           <Stack.Item key={index} mt={compactMode ? 0.5 : 1}>
-            <Section key={item.name} fitted={compactMode ? true : false}>
+            <Section key={item.name} fitted={!!compactMode}>
               <Stack>
                 <Stack.Item>
                   <Box

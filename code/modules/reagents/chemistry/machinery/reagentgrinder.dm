@@ -254,8 +254,8 @@
 
 	//add item directly
 	else if(length(tool.grind_results) || tool.reagents?.total_volume)
-		if(tool.atom_storage) //anything that has internal storage would be too much recursion for us to handle
-			to_chat(user, span_notice("Drag this item onto [src] to dump its contents."))
+		if(tool.atom_storage && length(tool.contents)) //anything that has internal storage would be too much recursion for us to handle
+			to_chat(user, span_notice("Drag this item onto [src] to dump its contents, or empty it to grind the container."))
 			return ITEM_INTERACT_BLOCKING
 
 		//add the items

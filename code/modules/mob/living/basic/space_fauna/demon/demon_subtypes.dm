@@ -17,7 +17,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	wound_bonus = -10
-	bare_wound_bonus = 0
+	exposed_wound_bonus = 0
 	sharpness = SHARP_EDGED
 
 	antag_type = /datum/antagonist/slaughter
@@ -28,7 +28,7 @@
 	var/slam_cooldown_time = 45 SECONDS
 	/// How many times we have hit humanoid targets since we last bloodcrawled, scaling wounding power
 	var/current_hitstreak = 0
-	/// How much both our wound_bonus and bare_wound_bonus go up per hitstreak hit
+	/// How much both our wound_bonus and exposed_wound_bonus go up per hitstreak hit
 	var/wound_bonus_per_hit = 5
 	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
 	var/wound_bonus_hitstreak_max = 12
@@ -62,7 +62,7 @@
 	// Reset our streaks
 	current_hitstreak = 0
 	wound_bonus = initial(wound_bonus)
-	bare_wound_bonus = initial(bare_wound_bonus)
+	exposed_wound_bonus = initial(exposed_wound_bonus)
 
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/basic/demon/slaughter/proc/bodyslam(atom/attack_target)
@@ -114,7 +114,7 @@
 
 	current_hitstreak++
 	wound_bonus += wound_bonus_per_hit
-	bare_wound_bonus += wound_bonus_per_hit
+	exposed_wound_bonus += wound_bonus_per_hit
 
 /// The laughter demon! It's everyone's best friend! It just wants to hug them so much, it wants to hug everyone at once!
 /mob/living/basic/demon/slaughter/laughter

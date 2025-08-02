@@ -15,12 +15,12 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Beaker, BeakerReagent } from './common/BeakerDisplay';
+import type { Beaker, BeakerReagent } from './common/BeakerDisplay';
 
 type Container = {
   icon: string;
@@ -214,10 +214,10 @@ const ChemMasterContent = (props: {
                 />
                 {selectedContainerCategory === 'pills' && (
                   <NumberInput
-                    unit={'s'}
+                    unit="s"
                     step={1}
                     value={selectedPillDuration}
-                    minValue={1}
+                    minValue={0}
                     maxValue={maxPillDuration}
                     onChange={(value) => {
                       act('setPillDuration', {
@@ -437,7 +437,7 @@ const ContainerButton = (props: CategoryButtonProps) => {
         />
       </Button>
     </Tooltip>
-  ) as any;
+  );
 };
 
 const AnalysisResults = (props: {
@@ -517,5 +517,5 @@ const GroupTitle = ({ title }) => {
         <Divider />
       </Stack.Item>
     </Stack>
-  ) as any;
+  );
 };

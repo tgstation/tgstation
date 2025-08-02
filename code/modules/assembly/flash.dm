@@ -166,7 +166,11 @@
 		return
 
 	if(targeted)
-		if(flashed.flash_act(1, 1))
+		var/flash_result = flashed.flash_act(1, 1)
+		if(flash_result == FLASH_COMPLETED)
+			return //Behavior was overwritten, so we just skip the flashy stunny part and go with the override behavior instead
+
+		if(flash_result)
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
@@ -289,8 +293,9 @@
 	..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
-/obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
+
 /obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
 
@@ -313,7 +318,7 @@
 	var/datum/weakref/arm
 
 /obj/item/assembly/flash/armimplant/burn_out()
-	var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
+	var/obj/item/organ/cyberimp/arm/toolkit/flash/real_arm = arm.resolve()
 	if(real_arm?.owner)
 		to_chat(real_arm.owner, span_warning("Your photon projector implant overheats and deactivates!"))
 		real_arm.Retract()
@@ -322,7 +327,7 @@
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
+		var/obj/item/organ/cyberimp/arm/toolkit/flash/real_arm = arm.resolve()
 		if(real_arm?.owner)
 			to_chat(real_arm.owner, span_warning("Your photon projector is running too hot to be used again so quickly!"))
 		return FALSE

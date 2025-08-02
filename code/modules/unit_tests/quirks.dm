@@ -45,11 +45,11 @@
 /// Ensures the blood deficiency quirk updates its mail goodies correctly
 /datum/unit_test/blood_deficiency_mail
 	var/list/species_to_test = list(
+		/datum/species/human = /obj/item/reagent_containers/blood/o_minus,
 		/datum/species/lizard = /obj/item/reagent_containers/blood/lizard,
 		/datum/species/ethereal = /obj/item/reagent_containers/blood/ethereal,
 		/datum/species/skeleton = null, // Anyone with noblood should not get a blood bag
 		/datum/species/jelly = /obj/item/reagent_containers/blood/toxin,
-		/datum/species/human = /obj/item/reagent_containers/blood/o_minus,
 	)
 
 /datum/unit_test/blood_deficiency_mail/Run()
@@ -57,10 +57,14 @@
 	dummy.add_quirk(/datum/quirk/blooddeficiency)
 	var/datum/quirk/blooddeficiency/quirk = dummy.get_quirk(/datum/quirk/blooddeficiency)
 
-	TEST_ASSERT((species_to_test[dummy.dna.species.type] in quirk.mail_goodies), "Blood deficiency quirk spawned with no mail goodies!")
+	TEST_ASSERT((species_to_test[dummy.dna.species.type] in quirk.mail_goodies), "Blood deficiency quirk did not get the right blood bag in its mail goodies for [dummy.dna.species.type]! \
+		It should be getting species_to_test[dummy.dna.species.type]." \
+	)
 
 	for(var/species_type in species_to_test)
 		var/last_species = dummy.dna.species.type
+		if(species_type == /datum/species/human) // we already tested this above, and setting species again will cause it to randomize
+			continue
 		dummy.set_species(species_type)
 		// Test that the new species has the correct blood bag
 		if(!isnull(species_to_test[species_type]))

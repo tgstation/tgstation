@@ -45,6 +45,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/cup/beaker( src )
 
+/obj/item/storage/box/beakers/big
+	name = "box of big beakers"
+	illustration = "beaker"
+
+/obj/item/storage/box/beakers/big/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/cup/beaker/large(src)
+
 /obj/item/storage/box/beakers/bluespace
 	name = "box of bluespace beakers"
 	illustration = "beaker"
@@ -143,15 +151,7 @@
 	illustration = null
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 1.75
-
-/obj/item/storage/box/bandages/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 6
-	atom_storage.set_holdable(list(
-		/obj/item/stack/medical/bandage,
-		/obj/item/reagent_containers/applicator/pill,
-		/obj/item/reagent_containers/applicator/patch,
-	))
+	storage_type = /datum/storage/box/bandages
 
 /obj/item/storage/box/bandages/PopulateContents()
 	for(var/i in 1 to 5)

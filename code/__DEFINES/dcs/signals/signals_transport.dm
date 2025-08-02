@@ -4,6 +4,9 @@
 /// Sent from /obj/structure/transport/linear/tram when it hits someone: ()
 #define COMSIG_TRAM_COLLISION "tram_collided"
 
+/// Sent from a mob that just got hit by the tram
+#define COMSIG_LIVING_HIT_BY_TRAM "tram_hit_me"
+
 // Sent to and from SStransport for control between various components
 /// Requesting transport move to a destination
 #define COMSIG_TRANSPORT_REQUEST "!REQ"

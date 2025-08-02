@@ -290,7 +290,7 @@
 			TRAIT_RESISTHIGHPRESSURE,
 			), AUGMENTATION_TRAIT)
 
-/obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
+/obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("You have already inserted a cell!"))
@@ -434,7 +434,7 @@
 			. += "It has two eye sockets occupied by flashes."
 		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
 
-/obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, params)
+/obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = weapon
 		if(flash1 && flash2)

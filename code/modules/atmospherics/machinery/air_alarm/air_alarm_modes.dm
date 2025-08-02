@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.update_appearance(UPDATE_ICON)
 
 	var/list/filtered = subtypesof(/datum/gas)
-	filtered -= list(/datum/gas/oxygen, /datum/gas/nitrogen)
+	filtered -= list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/pluoxium)
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
 		scrubber.filter_types = filtered.Copy()

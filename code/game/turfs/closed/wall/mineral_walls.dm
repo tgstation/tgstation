@@ -130,7 +130,7 @@
 	radiate()
 	return ..()
 
-/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
+/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, list/modifiers)
 	radiate()
 	return ..()
 
@@ -197,7 +197,7 @@
 	icon_state = "bamboo_wall-0"
 	base_icon_state = "bamboo_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	hardness = 80 //it's not a mineral...
@@ -291,13 +291,13 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
-/turf/closed/wall/mineral/titanium/interior/copyTurf(turf/T)
+/turf/closed/wall/mineral/titanium/interior/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	. = ..()
-	T.transform = transform
+	copy_to_turf.transform = transform
 
-/turf/closed/wall/mineral/titanium/copyTurf(turf/T)
+/turf/closed/wall/mineral/titanium/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	. = ..()
-	T.transform = transform
+	copy_to_turf.transform = transform
 
 /turf/closed/wall/mineral/titanium/survival
 	name = "pod wall"
@@ -379,6 +379,6 @@
 /turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
 
-/turf/closed/wall/mineral/plastitanium/copyTurf(turf/T)
+/turf/closed/wall/mineral/plastitanium/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	. = ..()
-	T.transform = transform
+	copy_to_turf.transform = transform

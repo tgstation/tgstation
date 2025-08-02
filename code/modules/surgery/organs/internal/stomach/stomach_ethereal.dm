@@ -103,7 +103,7 @@
 			var/mob/living/carbon/human/human = carbon
 			if(human.dna?.species)
 				//fixed_mut_color is also ethereal color (for some reason)
-				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features["mcolor"])
+				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features[FEATURE_MUTANT_COLOR])
 
 		playsound(carbon, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)
@@ -113,8 +113,7 @@
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
 
 		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
-			var/datum/disease/D = new /datum/disease/heart_failure
-			carbon.ForceContractDisease(D)
+			carbon.apply_status_effect(/datum/status_effect/heart_attack)
 			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
 

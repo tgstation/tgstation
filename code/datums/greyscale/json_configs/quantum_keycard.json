@@ -1,5 +1,5 @@
 {
-	"quantum_keycard_gags" : [
+	"quantum_keycard_gags": [
 		{
 			"type": "icon_state",
 			"icon_state": "quantum_keycard",
@@ -9,7 +9,7 @@
 			"type": "icon_state",
 			"icon_state": "quantum_wrapper",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

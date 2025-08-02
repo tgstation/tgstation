@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 70 SECONDS
 
-	invocation = "FL'MS"
+	invocation = "FL'MS."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -72,7 +72,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "C'SC'DE"
+	invocation = "C'SC'D."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -112,7 +112,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 300
 
-	invocation = "F'RE"
+	invocation = "F'R."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

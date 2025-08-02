@@ -11,6 +11,8 @@
 
 /// Ashwalker related creatures
 #define FACTION_ASHWALKER "ashwalker"
+/// Bears of all varieties
+#define FACTION_BEAR "bear"
 /// Megafauna bosses of mining
 #define FACTION_BOSS "boss"
 /// CARPS
@@ -85,6 +87,8 @@
 #define FACTION_VINES "vines"
 ///raptor factions
 #define FACTION_RAPTOR "raptor"
+///holy faction, for anything part of the church
+#define FACTION_HOLY "holy"
 // Antagonist factions
 
 /// Cultists and their constructs

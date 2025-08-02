@@ -8,7 +8,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -117,7 +117,7 @@ const InstrumentSettings = (props) => {
         <NumberInput
           step={1}
           minValue={0}
-          disabled={playing}
+          disabled={!!playing}
           maxValue={max_repeats}
           value={repeat}
           onChange={(value) =>

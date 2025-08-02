@@ -61,7 +61,7 @@
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (.)
 		return

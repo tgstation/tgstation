@@ -11,6 +11,7 @@
 	icon_living = "amerifat"
 
 	max_grab = GRAB_AGGRESSIVE
+	status_flags = CANPUSH
 	basic_mob_flags = DEL_ON_DEATH
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_ARTIFICIAL
@@ -20,11 +21,14 @@
 	maximum_survivable_temperature = T0C + 1000
 
 	ai_controller = /datum/ai_controller/robot_customer
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	/// The clothes that we draw on this tourist.
 	var/clothes_set = "amerifat_clothes"
 	/// Reference to the hud that we show when the player hovers over us.
 	var/datum/atom_hud/hud_to_show_on_hover
+	/// Amount of grim carried by the bot dropped as it goes
+	var/grime_carried = 0
 
 /mob/living/basic/robot_customer/Initialize(
 	mapload,
@@ -50,6 +54,8 @@
 	clothes_set = pick(customer_info.clothing_sets)
 	update_appearance(UPDATE_ICON)
 
+	grime_carried = prob(2) ? 20 : pick(0, 0, 0, 0, rand(0, 2), rand(0, 3), rand(2, 4), 6)
+
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/basic/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
@@ -60,9 +66,11 @@
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 
-///Robots need robot gibs...!
-/mob/living/basic/robot_customer/spawn_gibs()
-	new /obj/effect/gibspawner/robot(drop_location(), src)
+/mob/living/basic/robot_customer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(grime_carried && prob(grime_carried * 20) && !throwing && !(movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && has_gravity())
+		new /obj/effect/decal/cleanable/dirt(old_loc)
+		grime_carried--
 
 /mob/living/basic/robot_customer/MouseEntered(location, control, params)
 	. = ..()

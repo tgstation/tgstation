@@ -57,7 +57,7 @@
 		span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."),
 	)
 
-/obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
@@ -92,20 +92,6 @@
 		attacking_item.reagents.add_reagent(dispensedreagent, 5)
 		to_chat(user, span_notice("You wet [attacking_item] in [src]."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		return
-
-	if(istype(attacking_item, /obj/item/stack/medical/gauze))
-		var/obj/item/stack/medical/gauze/G = attacking_item
-		new /obj/item/reagent_containers/cup/rag(loc)
-		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
-		G.use(1)
-		return
-
-	if(istype(attacking_item, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = attacking_item
-		new /obj/item/reagent_containers/cup/rag(loc)
-		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
-		cloth.use(1)
 		return
 
 	if(istype(attacking_item, /obj/item/stack/ore/glass))
@@ -152,7 +138,7 @@
 	. = ..()
 	icon_state = base_icon_state
 
-/obj/structure/water_source/puddle/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/water_source/puddle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	icon_state = "[base_icon_state]-splash"
 	. = ..()
 	icon_state = base_icon_state

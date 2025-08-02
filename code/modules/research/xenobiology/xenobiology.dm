@@ -42,7 +42,7 @@
 
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()
-	create_reagents(100, INJECTABLE | DRAWABLE)
+	create_reagents(100, INJECTABLE | DRAWABLE | SEALED_CONTAINER)
 
 /**
 * Effect when activated by a Luminescent.
@@ -449,7 +449,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, span_warning("You vomit slippery oil."))
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			new /obj/effect/decal/cleanable/oil/slippery(get_turf(user))
+			new /obj/effect/decal/cleanable/blood/oil/slippery(get_turf(user))
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -606,8 +606,8 @@
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.dna.features["mcolor"] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
-			user.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
+			user.dna.features[FEATURE_MUTANT_COLOR] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
+			user.dna.update_uf_block(/datum/dna_block/feature/mutant_color)
 			user.updateappearance(mutcolor_update=1)
 			species.update_glow(user)
 			to_chat(user, span_notice("You feel different..."))
@@ -761,6 +761,11 @@
 	imp.implant(smart_mob, user)
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
 
+/obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse
+	name = "dangerous pony potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to pony beings. It has been modified with Syndicate technology to also grant an internal radio implant to the pony and authenticate with identification systems"
+	sentience_type = SENTIENCE_PONY
+
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
@@ -905,11 +910,11 @@
 	if(!isobj(interacting_with))
 		to_chat(user, span_warning("The potion can only be used on objects!"))
 		return ITEM_INTERACT_BLOCKING
+
 	if(HAS_TRAIT(interacting_with, TRAIT_SPEED_POTIONED))
 		to_chat(user, span_warning("[interacting_with] can't be made any faster!"))
 		return ITEM_INTERACT_BLOCKING
-	if(SEND_SIGNAL(interacting_with, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
-		return ITEM_INTERACT_SUCCESS
+
 	if(isitem(interacting_with))
 		var/obj/item/apply_to = interacting_with
 		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW) || HAS_TRAIT(apply_to, TRAIT_NO_SPEED_POTION))
@@ -917,6 +922,12 @@
 				return NONE // lets us put the potion in the bag
 			to_chat(user, span_warning("[apply_to] can't be made any faster!"))
 			return ITEM_INTERACT_BLOCKING
+
+	if(SEND_SIGNAL(interacting_with, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
+		return ITEM_INTERACT_SUCCESS
+
+	if(isitem(interacting_with))
+		var/obj/item/apply_to = interacting_with
 		apply_to.slowdown = 0
 
 	to_chat(user, span_notice("You slather the red gunk over the [interacting_with], making it faster."))

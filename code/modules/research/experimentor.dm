@@ -115,7 +115,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Malfunction probability reduced by <b>[malfunction_probability_coeff]%</b>.<br>Cooldown interval between experiments at <b>[resetTime*0.1]</b> seconds.")
 
-/obj/machinery/rnd/experimentor/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/rnd/experimentor/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(user.combat_mode)
 		return ..()
 	if(!is_insertion_ready(user))

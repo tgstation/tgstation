@@ -43,8 +43,8 @@ All ShuttleMove procs go here
 				qdel(thing)
 
 // Called on the old turf to move the turf data
-/turf/proc/onShuttleMove(turf/newT, list/movement_force, move_dir)
-	if(newT == src) // In case of in place shuttle rotation shenanigans.
+/turf/proc/onShuttleMove(turf/new_turf, list/movement_force, move_dir, ignore_area_change = FALSE)
+	if(new_turf == src) // In case of in place shuttle rotation shenanigans.
 		return
 	// Destination turf changes.
 	// Baseturfs is definitely a list or this proc wouldnt be called.
@@ -52,15 +52,15 @@ All ShuttleMove procs go here
 
 	if(!shuttle_depth)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
-	newT.CopyOnTop(src, 1, shuttle_depth, TRUE)
-	newT.blocks_air = TRUE
-	newT.air_update_turf(TRUE, FALSE)
+	new_turf.CopyOnTop(src, 1, shuttle_depth, TRUE, ignore_area_change ? CHANGETURF_NO_AREA_CHANGE : NONE) // Don't automatically change space area to nearspace if we'll override it later
+	new_turf.blocks_air = TRUE
+	new_turf.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
 	air_update_turf(TRUE, TRUE)
-	if(isopenturf(newT))
-		var/turf/open/new_open = newT
+	if(isopenturf(new_turf))
+		var/turf/open/new_open = new_turf
 		new_open.copy_air_with_tile(src)
-	SEND_SIGNAL(src, COMSIG_TURF_ON_SHUTTLE_MOVE, newT)
+	SEND_SIGNAL(src, COMSIG_TURF_ON_SHUTTLE_MOVE, new_turf)
 
 	return TRUE
 
@@ -77,6 +77,7 @@ All ShuttleMove procs go here
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
+	SEND_SIGNAL(src, COMSIG_TURF_AFTER_SHUTTLE_MOVE, oldT)
 
 	return TRUE
 
@@ -98,7 +99,8 @@ All ShuttleMove procs go here
 // returns the new move_mode (based on the old)
 // WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
 /atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
-	return move_mode
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, newT, rotation, move_mode, moving_dock) || move_mode
 
 /// Called on atoms to move the atom to the new location
 /atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
@@ -114,6 +116,7 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
 	if(light)
 		update_light()
@@ -250,7 +253,7 @@ All ShuttleMove procs go here
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
@@ -316,14 +319,17 @@ All ShuttleMove procs go here
 		shake_camera(src, shake_force, 1)
 
 /mob/living/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
-	if(buckled)
-		return
-
-	. = ..()
-
 	var/knockdown = movement_force["KNOCKDOWN"]
-	if(knockdown)
+	if(buckled && istype(get_area(src), /area/shuttle/arrival))
+		//if we're on the arrival shuttle, unbuckle so that new player's don't get stuck in there
+		buckled.user_unbuckle_mob(src, src)
+		return
+	if(knockdown > 0)
+		if(buckled)
+			Immobilize(knockdown * 0.5)
+			return
 		Paralyze(knockdown)
+	return ..()
 
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)

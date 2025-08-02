@@ -19,6 +19,7 @@
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examine))
 	RegisterSignal (target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_interaction))
 	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
+	RegisterSignal(target, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(on_reagent_expose))
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_appearance()
 
@@ -28,6 +29,7 @@
 	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(source, COMSIG_ATOM_ITEM_INTERACTION)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
+	UnregisterSignal(source, COMSIG_ATOM_EXPOSE_REAGENT)
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	source.update_appearance()
 
@@ -74,6 +76,15 @@
 			user.balloon_alert(user, "scraped off rust")
 			Detach(source)
 			return
+
+///Immediately removes rust if exposed to space cola.
+/datum/element/rust/proc/on_reagent_expose(atom/source, datum/reagent/reagent_splashed, reac_volume, methods)
+	SIGNAL_HANDLER
+	if(!istype(reagent_splashed, /datum/reagent/consumable/space_cola))
+		return
+	if(methods & INHALE)
+		return
+	Detach(source)
 
 /// Prevents placing floor tiles on rusted turf
 /datum/element/rust/proc/on_interaction(datum/source, mob/user, obj/item/tool, modifiers)

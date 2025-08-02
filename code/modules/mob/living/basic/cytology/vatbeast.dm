@@ -12,7 +12,7 @@
 	speak_emote = list("roars")
 	health = 250
 	maxHealth = 250
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	obj_damage = 40
@@ -26,6 +26,7 @@
 	lighting_cutoff_blue = 20
 	ai_controller = /datum/ai_controller/basic_controller/vatbeast
 	faction = list(FACTION_HOSTILE)
+	blood_volume = BLOOD_VOLUME_NORMAL
 	/// What can you feed a vatbeast to tame it?
 	var/static/list/enjoyed_food = list(
 		/obj/item/food/carrotfries,
@@ -55,6 +56,9 @@
 
 /mob/living/basic/vatbeast/proc/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/basic/vatbeast/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_LIZARD) // Green and alien
 
 /// Attack people and slap them
 /datum/ai_controller/basic_controller/vatbeast

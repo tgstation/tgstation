@@ -3,7 +3,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 SUBSYSTEM_DEF(admin_verbs)
 	name = "Admin Verbs"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_ADMIN_VERBS
+	init_stage = INITSTAGE_EARLY
 	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
 	/// A list of all admin verbs indexed by their visibility flag.

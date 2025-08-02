@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Autofocus, Box, Button, Section, Stack } from 'tgui-core/components';
 import { isEscape, KEY } from 'tgui-core/keys';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -35,7 +35,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
   PAGEDOWN: 'Southeast',
   PAGEUP: 'Northeast',
   RIGHT: 'East',
-  SPACEBAR: 'Space',
+  ' ': 'Space',
   UP: 'North',
 };
 
@@ -133,7 +133,7 @@ export function KeyComboModal(props) {
                   setBinding(true);
                 }}
               >
-                {binding ? 'Awaiting input...' : '' + input}
+                {binding ? 'Awaiting input...' : `${input}`}
               </Button>
             </Stack.Item>
             <Stack.Item>

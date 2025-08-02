@@ -5,3 +5,8 @@ https://freesound.org/people/BinaryMonkFlint/sounds/333296/
 tank_remove_thunk.ogg was made by mixing two sound tracks from Freesound:
 https://freesound.org/people/lowdjinn/sounds/533885/ and;
 https://freesound.org/people/BMacZero/sounds/96137/
+
+{
+air_suck.ogg
+air_shoot.ogg
+} - BBeats Air 60.wav by Department64 -- https://freesound.org/s/548262/ -- License: Attribution 4.0

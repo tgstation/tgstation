@@ -2,18 +2,63 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.28; The query to update the schema revision table is:
+The latest database version is 5.32; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 32);
 ```
+
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 32);
 ```
+
 In any query remember to add a prefix to the table names if you use one.
------------------------------------------------------
+
+---
+
+Version 5.32, 31 May 2025, by TealSeer
+Change column name of `manifest` table because `character` is a reserved word.
+
+```sql
+ALTER TABLE `manifest`
+	RENAME COLUMN `character` TO `character_name`;
+```
+
+---
+
+Version 5.31, 3 May 2025, by Atlanta-Ned
+Adds a `manifest` table.
+
+```sql
+CREATE TABLE `manifest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) NOT NULL,
+  `round_id` int(11) NOT NULL,
+  `ckey` text NOT NULL,
+  `character` text NOT NULL,
+  `job` text NOT NULL,
+  `special` text DEFAULT NULL,
+  `latejoin` tinyint(1) NOT NULL DEFAULT 0,
+  `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+
+---
+
+Version 5.30, 1 May 2025, by Rengan
+Adds `crime_desc` field to the `citation` table to save the description of the crime.
+
+```sql
+ALTER TABLE `citation`
+ADD COLUMN `crime_desc` TEXT NULL DEFAULT NULL AFTER `crime`;
+```
+
+---
+
 Version 5.29, 4 February 2024, by Tiviplus
 Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)
 
@@ -23,7 +68,9 @@ ALTER TABLE `admin_ranks`
 	MODIFY COLUMN `exclude_flags` mediumint(5) unsigned NOT NULL,
 	MODIFY COLUMN `can_edit_flags` mediumint(5) unsigned NOT NULL;
 ```
------------------------------------------------------
+
+---
+
 Version 5.28, 1 November 2024, by Ghommie
 Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
 
@@ -35,9 +82,12 @@ CREATE TABLE `fish_progress` (
   PRIMARY KEY (`ckey`,`progress_entry`)
 ) ENGINE=InnoDB;
 ```
------------------------------------------------------
+
+---
+
 Version 5.27, 26 April 2024, by zephyrtfa
 Add the ip intel whitelist table
+
 ```sql
 DROP TABLE IF EXISTS `ipintel_whitelist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -49,29 +99,37 @@ CREATE TABLE `ipintel_whitelist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 ```
------------------------------------------------------
+
+---
+
 Version 5.26, 03 December 2023, by distributivgesetz
 Set the default value of cloneloss to 0, as it's obsolete and it won't be set by blackbox anymore.
+
 ```sql
 ALTER TABLE `death` MODIFY COLUMN `cloneloss` SMALLINT(5) UNSIGNED DEFAULT '0';
 ```
 
------------------------------------------------------
+---
+
 Version 5.25, 27 September 2023, by Jimmyl
 Removes the text_adventures table because it is no longer used
+
 ```sql
  DROP TABLE IF EXISTS `text_adventures`;
 ```
 
------------------------------------------------------
+---
+
 Version 5.24, 17 May 2023, by LemonInTheDark
 Modified the library action table to fit ckeys properly, and to properly store ips.
+
 ```sql
  ALTER TABLE `library_action` MODIFY COLUMN `ckey` varchar(32) NOT NULL;
  ALTER TABLE `library_action` MODIFY COLUMN `ip_addr` int(10) unsigned NOT NULL;
 ```
 
------------------------------------------------------
+---
+
 Version 5.23, 28 December 2022, by Mothblocks
 Added `tutorial_completions` to mark what ckeys have completed contextual tutorials.
 
@@ -84,14 +142,16 @@ CREATE TABLE `tutorial_completions` (
   UNIQUE INDEX `ckey_tutorial_unique` (`ckey`, `tutorial_key`));
 ```
 
------------------------------------------------------
+---
+
 Version 5.22, 22 December 2021, by Mothblocks
 Fixes a bug in `telemetry_connections` that limited the range of IPs.
 
 ```sql
 ALTER TABLE `telemetry_connections` MODIFY COLUMN `address` INT(10) UNSIGNED NOT NULL;
 ```
------------------------------------------------------
+
+---
 
 Version 5.21, 15 December 2021, by Mothblocks
 Adds `telemetry_connections` table for tracking tgui telemetry.
@@ -109,7 +169,8 @@ CREATE TABLE `telemetry_connections` (
     UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
 );
 ```
------------------------------------------------------
+
+---
 
 Version 5.20, 11 November 2021, by Mothblocks
 Adds `admin_ckey` field to the `known_alts` table to track who added what.
@@ -119,7 +180,8 @@ ALTER TABLE `known_alts`
 ADD COLUMN `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*' AFTER `ckey2`;
 ```
 
------------------------------------------------------
+---
+
 Version 5.19, 10 November 2021, by WalterMeldron
 Adds an urgent column to tickets for ahelps marked as urgent.
 
@@ -127,7 +189,8 @@ Adds an urgent column to tickets for ahelps marked as urgent.
 ALTER TABLE `ticket` ADD COLUMN `urgent` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `sender`;
 ```
 
------------------------------------------------------
+---
+
 Version 5.18, 1 November 2021, by Mothblocks
 Added `known_alts` table for tracking who not to create suspicious logins for.
 
@@ -141,7 +204,8 @@ CREATE TABLE `known_alts` (
 );
 ```
 
------------------------------------------------------
+---
+
 Version 5.17, 8 October 2021, by MrStonedOne + Mothblocks
 Changes any table that requrired a NOT NULL round ID to now accept NULL. In the BSQL past, these were handled as 0, but in the move to rust-g this behavior was lost.
 
@@ -160,7 +224,8 @@ ALTER TABLE `player` CHANGE `lastseen_round_id` `lastseen_round_id` INT(11) UNSI
 ALTER TABLE `ticket` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ```
 
------------------------------------------------------
+---
+
 Version 5.16, 31 July 2021, by Atlanta-Ned
 Added `library_action` table for tracking reported library books and actions taken on them.
 
@@ -178,8 +243,8 @@ CREATE TABLE `library_action` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 ```
 
+---
 
------------------------------------------------------
 Version 5.15, 2 June 2021, by Mothblocks
 Added verified admin connection log used for 2FA
 
@@ -195,7 +260,7 @@ CREATE TABLE `admin_connections` (
   UNIQUE INDEX `unique_constraints` (`ckey`, `ip`, `cid`));
 ```
 
------------------------------------------------------
+---
 
 Version 5.14, xx May 2021, by Anturke
 Added exploration drone adventure table
@@ -212,7 +277,7 @@ CREATE TABLE `text_adventures` (
 ) ENGINE=InnoDB;
 ```
 
------------------------------------------------------
+---
 
 Version 5.13, 30 April 2021, by Atlanta Ned
 Added the `citation` table for tracking security citations in the database.
@@ -241,14 +306,14 @@ AUTO_INCREMENT=1
 ;
 ```
 
------------------------------------------------------
+---
 
 Version 5.12, 29 December 2020, by Missfox
 Modified table `messages`, adding column `playtime` to show the user's playtime when the note was created.
 
 ALTER TABLE `messages` ADD `playtime` INT(11) NULL DEFAULT(NULL) AFTER `severity`
 
------------------------------------------------------
+---
 
 Version 5.11, 7 September 2020, by bobbahbrown, MrStonedOne, and Jordie0608 (Updated 26 March 2021 by bobbahbrown)
 
@@ -262,7 +327,7 @@ ALTER TABLE `ticket`
 	ADD INDEX `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`);
 ```
 
------------------------------------------------------
+---
 
 Version 5.10, 7 August 2020, by oranges
 
@@ -291,7 +356,7 @@ ALTER TABLE `player` DROP COLUMN `discord_id`;
 COMMIT;
 ```
 
------------------------------------------------------
+---
 
 Version 5.9, 19 April 2020, by Jordie0608
 Updates and improvements to poll handling.
@@ -334,7 +399,7 @@ $$
 DELIMITER ;
 ```
 
------------------------------------------------------
+---
 
 Version 5.8, 7 April 2020, by Jordie0608
 Modified table `messages`, adding column `deleted_ckey` to record who deleted a message.
@@ -343,7 +408,7 @@ Modified table `messages`, adding column `deleted_ckey` to record who deleted a 
 ALTER TABLE `messages` ADD COLUMN `deleted_ckey` VARCHAR(32) NULL DEFAULT NULL AFTER `deleted`;
 ```
 
------------------------------------------------------
+---
 
 Version 5.7, 10 January 2020 by Atlanta-Ned
 Added ticket table for tracking ahelp tickets in the database.
@@ -365,7 +430,7 @@ CREATE TABLE `ticket` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
------------------------------------------------------
+---
 
 Version 5.6, 6 December 2019 by Anturke
 Added achievement_name and achievement_description columns to achievement_metadata table.
@@ -374,7 +439,7 @@ Added achievement_name and achievement_description columns to achievement_metada
 ALTER TABLE `achievement_metadata` ADD COLUMN (`achievement_name` VARCHAR(64) NULL DEFAULT NULL, `achievement_description` VARCHAR(512) NULL DEFAULT NULL);
 ```
 
------------------------------------------------------
+---
 
 Version 5.5, 26 October 2019 by Anturke
 Added achievement_metadata table.
@@ -389,11 +454,11 @@ CREATE TABLE `achievement_metadata` (
 ) ENGINE=InnoDB;
 ```
 
------------------------------------------------------
+---
 
 Version 5.4, 5 October 2019 by Anturke
 Added achievements table.
-See hub migration verb in _achievement_data.dm for details on migrating.
+See hub migration verb in \_achievement_data.dm for details on migrating.
 
 ```sql
 CREATE TABLE `achievements` (
@@ -405,7 +470,7 @@ CREATE TABLE `achievements` (
 ) ENGINE=InnoDB;
 ```
 
-----------------------------------------------------
+---
 
 Version 5.3, 6 July 2019, by Atlanta-Ned
 Added a `feedback` column to the admin table, used for linking to individual admin feedback threads. Currently this is only used for statistics tracking tools such as Statbus and isn't used by the game.
@@ -414,7 +479,7 @@ Added a `feedback` column to the admin table, used for linking to individual adm
 ALTER TABLE `admin` ADD `feedback` VARCHAR(255) NULL DEFAULT NULL AFTER `rank`;
 ```
 
-----------------------------------------------------
+---
 
 Version 5.2, 30 May 2019, by AffectedArc07
 Added a field to the `player` table to track ckey and discord ID relationships
@@ -423,7 +488,8 @@ Added a field to the `player` table to track ckey and discord ID relationships
 ALTER TABLE `player`
 	ADD COLUMN `discord_id` BIGINT NULL DEFAULT NULL AFTER `flags`;
 ```
-----------------------------------------------------
+
+---
 
 Version 5.1, 25 Feb 2018, by MrStonedOne
 Added four tables to enable storing of stickybans in the database since byond can lose them, and to enable disabling stickybans for a round without depending on a crash free round. Existing stickybans are automagically imported to the tables.
@@ -463,7 +529,7 @@ CREATE TABLE `stickyban_matched_cid` (
 ) ENGINE=InnoDB;
 ```
 
-----------------------------------------------------
+---
 
 Version 5.0, 28 October 2018, by Jordie0608
 Modified ban table to remove the need for the `bantype` column, a python script is used to migrate data to this new format.
@@ -504,21 +570,21 @@ CREATE TABLE `ban` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ```
 
-----------------------------------------------------
+---
 
 Version 4.7, 18 August 2018, by CitrusGender
 Modified table `messages`, adding column `severity` to classify notes based on their severity.
 
 ALTER TABLE `messages` ADD `severity` enum('high','medium','minor','none') DEFAULT NULL AFTER `expire_timestamp`
 
-----------------------------------------------------
+---
 
 Version 4.6, 11 August 2018, by Jordie0608
 Modified table `messages`, adding column `expire_timestamp` to allow for auto-"deleting" messages.
 
 ALTER TABLE `messages` ADD `expire_timestamp` DATETIME NULL DEFAULT NULL AFTER `secret`;
 
-----------------------------------------------------
+---
 
 Version 4.5, 9 July 2018, by Jordie0608
 Modified table `player`, adding column `byond_key` to store a user's key along with their ckey.
@@ -526,20 +592,20 @@ To populate this new column run the included script 'populate_key_2018-07', see 
 
 ALTER TABLE `player` ADD `byond_key` VARCHAR(32) DEFAULT NULL AFTER `ckey`;
 
-----------------------------------------------------
+---
 
 Version 4.4, 9 May 2018, by Jordie0608
 Modified table `round`, renaming column `start_datetime` to `initialize_datetime` and `end_datetime` to `shutdown_datetime` and adding columns to replace both under the same name in preparation for changes to TGS server initialization.
 
 ALTER TABLE `round`
-	ALTER `start_datetime` DROP DEFAULT;
+ALTER `start_datetime` DROP DEFAULT;
 ALTER TABLE `round`
-	CHANGE COLUMN `start_datetime` `initialize_datetime` DATETIME NOT NULL AFTER `id`,
-	ADD COLUMN `start_datetime` DATETIME NULL DEFAULT NULL AFTER `initialize_datetime`,
-	CHANGE COLUMN `end_datetime` `shutdown_datetime` DATETIME NULL DEFAULT NULL AFTER `start_datetime`,
-	ADD COLUMN `end_datetime` DATETIME NULL DEFAULT NULL AFTER `shutdown_datetime`;
+CHANGE COLUMN `start_datetime` `initialize_datetime` DATETIME NOT NULL AFTER `id`,
+ADD COLUMN `start_datetime` DATETIME NULL DEFAULT NULL AFTER `initialize_datetime`,
+CHANGE COLUMN `end_datetime` `shutdown_datetime` DATETIME NULL DEFAULT NULL AFTER `start_datetime`,
+ADD COLUMN `end_datetime` DATETIME NULL DEFAULT NULL AFTER `shutdown_datetime`;
 
-----------------------------------------------------
+---
 
 Version 4.3, 9 May 2018, by MrStonedOne
 Added table `role_time_log` and triggers `role_timeTlogupdate`, `role_timeTloginsert` and `role_timeTlogdelete` to update it from changes to `role_time`
@@ -549,12 +615,15 @@ CREATE TABLE `role_time_log` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `ckey` VARC
 DELIMITER $$
 CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
 END
+
 $$
 CREATE TRIGGER `role_timeTloginsert` AFTER INSERT ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
 END
 $$
-CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE  ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
+
+CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
+
 $$
 DELIMITER ;
 ----------------------------------------------------
@@ -974,3 +1043,4 @@ UPDATE erro_library SET deleted = 1 WHERE id = someid
 (Replace someid with the id of the book you want to soft delete.)
 
 ----------------------------------------------------
+$$

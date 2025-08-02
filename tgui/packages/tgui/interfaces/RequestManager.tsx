@@ -6,13 +6,13 @@
 import { useState } from 'react';
 import {
   Button,
+  Floating,
   Input,
-  Popper,
   Section,
   Stack,
   Table,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -92,8 +92,8 @@ export const RequestManager = (props) => {
                 </Button.Checkbox>
                 <Input
                   value={searchText}
-                  onInput={(_, value) => setSearchText(value)}
-                  placeholder={'Search...'}
+                  onChange={setSearchText}
+                  placeholder="Search..."
                   mr={1}
                 />
               </Stack.Item>
@@ -184,43 +184,37 @@ const FilterPanel = (props) => {
 
   return (
     <div>
-      {' '}
-      <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
-        Type Filter
-      </Button>
-      <Popper
-        isOpen={filterVisible}
+      <Floating
         placement="bottom-end"
+        onOpenChange={setFilterVisible}
+        contentClasses="RequestManager__filterPanel"
         content={
-          <div
-            className="RequestManager__filterPanel"
-            style={{
-              display: 'block',
-            }}
-          >
-            <Table width="0">
-              {Object.keys(displayTypeMap).map((type) => {
-                return (
-                  <Table.Row className="candystripe" key={type}>
-                    <Table.Cell collapsing>
-                      <RequestType requestType={type} />
-                    </Table.Cell>
-                    <Table.Cell collapsing>
-                      <Button.Checkbox
-                        checked={typesList[type]}
-                        onClick={() => {
-                          updateFilter(type);
-                        }}
-                        my={0.25}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              })}
-            </Table>
-          </div>
+          <Table width="0">
+            {Object.keys(displayTypeMap).map((type) => {
+              return (
+                <Table.Row className="candystripe" key={type}>
+                  <Table.Cell collapsing>
+                    <RequestType requestType={type} />
+                  </Table.Cell>
+                  <Table.Cell collapsing>
+                    <Button.Checkbox
+                      checked={typesList[type]}
+                      onClick={() => {
+                        updateFilter(type);
+                      }}
+                      my={0.25}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table>
         }
-      />
+      >
+        <Button icon="cog" selected={filterVisible}>
+          Type Filter
+        </Button>
+      </Floating>
     </div>
   );
 };

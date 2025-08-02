@@ -124,7 +124,7 @@
 		if(95 to INFINITY)
 			balloon_alert(user, "brimming with cash")
 
-/obj/item/piggy_bank/attackby(obj/item/item, mob/user, params)
+/obj/item/piggy_bank/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	var/creds_value = item.get_item_credit_value()
 	if(isnull(creds_value))
 		return ..()
@@ -152,6 +152,9 @@
 /obj/item/piggy_bank/museum
 	name = "Pigston Swinelord VI"
 	desc = "The museum's mascot piggy bank and favorite embezzler, known to carry donations between shifts without paying taxes. The space IRS hates him."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/piggy_bank/museum"
+	post_init_icon_state = "piggy_bank"
 	persistence_id = "museum_piggy"
 	greyscale_colors = COLOR_PINK
 	maximum_value = PAYCHECK_COMMAND * 100
@@ -164,6 +167,9 @@
 /obj/item/piggy_bank/vault
 	name = "vault piggy bank"
 	desc = "A pig-shaped money container made of porkelain, containing the station's emergency funds carried between shifts, oink. <i>Do not throw.</i>"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/piggy_bank/vault"
+	post_init_icon_state = "piggy_bank"
 	persistence_id = "vault_piggy"
 	greyscale_colors = COLOR_LIGHT_ORANGE
 	maximum_value = PAYCHECK_COMMAND * 33

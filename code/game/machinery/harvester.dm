@@ -96,7 +96,7 @@
 
 	if(carbon_occupant.stat < UNCONSCIOUS)
 		notify_ghosts(
-			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
+			"[carbon_occupant.real_name] is about to be ground up by a malfunctioning organ harvester!",
 			source = src,
 			header = "Gruesome!",
 		)

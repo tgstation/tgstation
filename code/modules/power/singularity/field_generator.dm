@@ -376,7 +376,7 @@ no power level overlay is currently in the overlays list.
 	if(connected_gens.len < 2)
 		return
 	var/connected_gen_counter
-	for(connected_gen_counter = 1; connected_gen_counter < connected_gens.len, connected_gen_counter++)
+	for(connected_gen_counter = 1; connected_gen_counter < connected_gens.len; connected_gen_counter++)
 
 		var/list/connected_gen_list = ((connected_gens[connected_gen_counter].connected_gens & connected_gens[connected_gen_counter+1].connected_gens)^src)
 		if(!connected_gen_list.len)

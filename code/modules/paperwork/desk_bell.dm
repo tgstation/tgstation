@@ -57,7 +57,7 @@
 /obj/structure/desk_bell/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/desk_bell/attackby(obj/item/weapon, mob/living/user, params)
+/obj/structure/desk_bell/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	times_rang += weapon.force
 	ring_bell(user)

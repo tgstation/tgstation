@@ -33,7 +33,7 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
-	associated_safe_turfs = list(/turf/open/water/beach)
+	associated_safe_turfs = list(/turf/open/water/deep_beach, /turf/open/water/beach)
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
@@ -107,7 +107,7 @@
 		FISHING_DUD = 20,
 		/obj/item/fish/bumpy = 10,
 		/obj/item/fish/sacabambaspis = 10,
-		/mob/living/basic/frog = 2,
+		/obj/effect/spawner/random/frog = 2,
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fish_counts = list(

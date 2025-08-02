@@ -34,11 +34,11 @@
 // Headers shouldn't get stripes, but should take the label text color.
 // Headers get left borders as a separator, except if they're furtherest left.
 .hypertorus-recipes__row.Table__row--header {
-  color: colors.fg(colors.$label);
+  color: colors.fg(var(--color-label));
   background-color: rgba(0, 0, 0, 0);
 }
 .hypertorus-recipes__row.Table__row--header > td {
-  border-left: 1px solid colors.bg(colors.$label);
+  border-left: 1px solid colors.bg(var(--color-label));
   text-align: center;
 }
 .hypertorus-recipes__row.Table__row--header > td:first-child {
@@ -49,11 +49,11 @@
 .hypertorus-recipes__icon {
   text-align: center;
   position: relative;
-  color: colors.fg(colors.$red);
+  color: colors.fg(var(--color-red));
   width: 10px;
 }
 .hypertorus-recipes__row.Table__row--header * .hypertorus-recipes__icon {
-  color: colors.fg(colors.$label);
+  color: colors.fg(var(--color-label));
 }
 
 /// @}
@@ -83,7 +83,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
 }
 
 .hypertorus-temperatures__x-axis {
-  background-color: colors.bg(colors.$label);
+  background-color: colors.bg(var(--color-label));
   position: absolute;
   top: $height;
   height: 1px;
@@ -92,7 +92,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
 }
 
 .hypertorus-temperatures__y-axis {
-  background-color: colors.bg(colors.$label);
+  background-color: colors.bg(var(--color-label));
   position: absolute;
   width: 1px;
   left: $yAxisMargin;
@@ -107,7 +107,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
 }
 
 .hypertorus-temperatures__y-axis-tick {
-  background-color: colors.bg(colors.$label);
+  background-color: colors.bg(var(--color-label));
   position: absolute;
   left: $yAxisMargin;
   right: 0;
@@ -116,7 +116,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
 
 .hypertorus-temperatures__y-axis-label {
   text-align: right;
-  color: colors.fg(colors.$label);
+  color: colors.fg(var(--color-label));
   position: absolute;
   top: 0;
   left: 0;
