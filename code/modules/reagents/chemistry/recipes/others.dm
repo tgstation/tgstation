@@ -1058,14 +1058,14 @@
 	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
-/datum/chemical_reaction/glitter_pigementation
+/datum/chemical_reaction/glitter_pigmentation
 	results = list(/datum/reagent/glitter = 1)
 	required_reagents = list(/datum/reagent/glitter = 1, /datum/reagent/acetone = 1)
 	mix_message = "the glitter rapidly changes colour!"
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
-/datum/chemical_reaction/glitter_pigementation/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+/datum/chemical_reaction/glitter_pigmentation/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	. = ..()
 
 	var/excluded_volume = 0
@@ -1073,18 +1073,15 @@
 
 	for(var/datum/reagent/reagent in holder.reagent_list)
 		if(is_type_in_list(reagent, required_reagents))
-			message_admins("Excluding [reagent.name]")
 			excluded_volume += reagent.volume
 
 	for(var/datum/reagent/reagent in holder.reagent_list)
 		if(!is_type_in_list(reagent, required_reagents))
-			message_admins("Including [reagent.name]")
 
 			if(accumulated_color)
 				accumulated_color = BlendRGB(reagent.color, accumulated_color, (reagent.volume/(holder.total_volume-excluded_volume)))
 			else
 				accumulated_color = reagent.color
-		message_admins(accumulated_color)
 
 	var/datum/reagent/glitter/glitter = locate(/datum/reagent/glitter) in holder.reagent_list
 
