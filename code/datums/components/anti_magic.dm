@@ -11,6 +11,8 @@
 	var/datum/callback/drain_antimagic
 	/// The callback invoked when twe have been depleted of all charges
 	var/datum/callback/expiration
+	/// Callback to invoke to see if we can block magic
+	var/datum/callback/check_blocking
 	/// Whether we should, on equipping, alert the caster that this item can block any of their spells
 	/// This changes between true and false on equip and drop, don't set it outright to something
 	var/alert_caster_on_equip = TRUE
@@ -39,6 +41,7 @@
 		inventory_flags = ALL,
 		datum/callback/drain_antimagic,
 		datum/callback/expiration,
+		datum/callback/check_blocking,
 	)
 
 
@@ -69,6 +72,7 @@
 	src.inventory_flags = inventory_flags
 	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
+	src.check_blocking = check_blocking
 
 /datum/component/anti_magic/Destroy(force)
 	drain_antimagic = null
@@ -124,6 +128,9 @@
 /datum/component/anti_magic/proc/block_receiving_magic(mob/living/carbon/source, casted_magic_flags, charge_cost, list/antimagic_sources)
 	SIGNAL_HANDLER
 
+	if(check_blocking && !check_blocking.Invoke())
+		return NONE
+
 	// We do not block this type of magic, good day
 	if(!(casted_magic_flags & antimagic_flags))
 		return NONE
@@ -135,8 +142,8 @@
 	// Block success! Add this parent to the list of antimagic sources
 	antimagic_sources += parent
 
+	drain_antimagic?.Invoke(source, parent)
 	if((charges != INFINITY) && charge_cost > 0)
-		drain_antimagic?.Invoke(source, parent)
 		charges -= charge_cost
 		if(charges <= 0)
 			expiration?.Invoke(source, parent)
