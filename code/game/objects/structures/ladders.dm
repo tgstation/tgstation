@@ -277,7 +277,8 @@
 	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
 
 	if(grant_exp)
-		user.mind?.adjust_experience(/datum/skill/athletics, 10) //get a little experience for our trouble
+		var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics)
+		user.mind?.adjust_experience(/datum/skill/athletics, round(ATHLETICS_SKILL_MISC_EXP/(fitness_level || 1), 1)) //get a little experience for our trouble
 
 	if(!is_ghost)
 		show_final_fluff_message(user, ladder, going_up)

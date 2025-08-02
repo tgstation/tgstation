@@ -736,7 +736,7 @@
 /datum/component/material_container/proc/retrieve_all(target = null, atom/context = parent)
 	var/result = 0
 	for(var/MAT in materials)
-		result += retrieve_sheets(amount2sheet(materials[MAT]), MAT, target, context)
+		result += retrieve_sheets(amount2sheet(materials[MAT]), MAT, target, context, user_data = ID_DATA(null))
 	return result
 //============================================================================================
 
