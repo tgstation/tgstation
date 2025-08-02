@@ -1,0 +1,50 @@
+/mob/living/basic/roro
+	name = "Roro"
+	desc = "An little round, sharp beaked alien. It bears a striking resemblance to standard issue insulated gloves."
+	icon_state = "roro"
+	icon_living = "roro"
+	icon_dead = "roro_dead"
+	mob_biotypes = MOB_ORGANIC
+	speed = 0.5
+	maxHealth = 50
+	health = 50
+
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+
+	melee_damage_lower = 1
+	melee_damage_upper = 4
+	attack_verb_continuous = "nips"
+	attack_verb_simple = "nip"
+	attack_sound = 'sound/items/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
+
+	melee_attack_cooldown = 0.5 SECONDS
+	speak_emote = list("warbles")
+
+	unsuitable_atmos_damage = 0
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
+
+	faction = list(FACTION_HOSTILE)
+
+	ai_controller = /datum/ai_controller/basic_controller/roro
+
+/// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
+/datum/ai_controller/basic_controller/roro
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+	)
+
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/snake,
+	)

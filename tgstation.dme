@@ -5227,6 +5227,7 @@
 #include "code\modules\mob\living\basic\space_fauna\morph.dm"
 #include "code\modules\mob\living\basic\space_fauna\mushroom.dm"
 #include "code\modules\mob\living\basic\space_fauna\robot_customer.dm"
+#include "code\modules\mob\living\basic\space_fauna\roro.dm"
 #include "code\modules\mob\living\basic\space_fauna\spaceman.dm"
 #include "code\modules\mob\living\basic\space_fauna\supermatter_spider.dm"
 #include "code\modules\mob\living\basic\space_fauna\bear\_bear.dm"
