@@ -100,9 +100,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/x_shake_pixel_shift = 2
 	/// how many pixels the closet can shift on the y axes when shaking
 	var/y_shake_pixel_shift = 1
-
-	VAR_PRIVATE
-		datum/closet_see_inside/closet_see_inside
+	///Creates see through image for clients to see while inside closet
+	VAR_PRIVATE/datum/closet_see_inside/closet_see_inside
 
 /datum/armor/structure_closet
 	melee = 20
