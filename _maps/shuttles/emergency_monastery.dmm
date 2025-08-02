@@ -60,7 +60,7 @@
 "bd" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "be" = (
 /obj/machinery/light/small/directional/west,
@@ -142,7 +142,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "cu" = (
 /obj/structure/table/wood,
@@ -158,10 +158,6 @@
 "cC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"cH" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
 /area/shuttle/escape)
 "cT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -199,11 +195,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"dp" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/lattice,
-/turf/open/space,
-/area/shuttle/escape)
 "du" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
@@ -230,7 +221,7 @@
 "dX" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "dY" = (
 /obj/structure/table/wood,
@@ -302,7 +293,7 @@
 "fm" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "fn" = (
 /obj/effect/spawner/xmastree,
@@ -341,7 +332,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "fT" = (
 /obj/structure/table/wood,
@@ -462,7 +453,7 @@
 "iw" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "iB" = (
 /obj/machinery/light/small/directional/west,
@@ -671,7 +662,7 @@
 "kJ" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "kM" = (
 /obj/structure/table/wood/fancy,
@@ -696,11 +687,6 @@
 "lm" = (
 /obj/machinery/meter,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"ln" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
 /area/shuttle/escape)
 "lB" = (
 /turf/open/floor/iron/chapel{
@@ -728,14 +714,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"ml" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space,
-/area/shuttle/escape)
-"mm" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space,
 /area/shuttle/escape)
 "mn" = (
 /obj/structure/chair/wood,
@@ -1315,10 +1293,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"uP" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/space,
-/area/shuttle/escape)
 "uX" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
@@ -2792,10 +2766,6 @@
 "OJ" = (
 /obj/effect/station_crash/devastating,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"OL" = (
-/obj/structure/lattice,
-/turf/open/space,
 /area/shuttle/escape)
 "OM" = (
 /obj/item/cultivator,
@@ -4287,7 +4257,7 @@ nr
 nr
 nr
 nr
-uP
+hq
 hq
 JG
 JG
@@ -4989,9 +4959,9 @@ JG
 JG
 PB
 ti
-OL
-uP
-ln
+PB
+hq
+gl
 zE
 zE
 AJ
@@ -5065,7 +5035,7 @@ JG
 JG
 JG
 iw
-OL
+PB
 iw
 iw
 iw
@@ -5149,8 +5119,8 @@ JG
 iw
 JG
 JG
-dp
-uP
+rZ
+hq
 zE
 Zf
 zE
@@ -5229,7 +5199,7 @@ JG
 JG
 JG
 bd
-OL
+PB
 bT
 zE
 zE
@@ -5311,7 +5281,7 @@ aH
 iw
 iw
 iw
-cH
+qA
 zE
 zE
 jc
@@ -5388,8 +5358,8 @@ JG
 JG
 "}
 (21,1,1) = {"
-uP
-uP
+hq
+hq
 hq
 rZ
 hq
@@ -5798,7 +5768,7 @@ JG
 JG
 "}
 (26,1,1) = {"
-cH
+qA
 zE
 ox
 bb
@@ -6217,7 +6187,7 @@ LK
 zE
 LK
 dX
-ml
+IM
 fm
 zE
 zE
@@ -6294,9 +6264,9 @@ JG
 JG
 IM
 IM
-ml
-ml
-ml
+IM
+IM
+IM
 IM
 JG
 JG
@@ -6384,7 +6354,7 @@ JG
 JG
 JG
 JG
-ml
+IM
 fm
 zE
 zE
@@ -6635,8 +6605,8 @@ JG
 JG
 JG
 JG
-ml
-ml
+IM
+IM
 jS
 zE
 ko
@@ -6721,7 +6691,7 @@ JG
 JG
 JG
 kJ
-mm
+ti
 zE
 jc
 jc
@@ -6803,7 +6773,7 @@ JG
 JG
 JG
 PB
-mm
+ti
 zE
 zE
 zE
@@ -6884,8 +6854,8 @@ JG
 JG
 JG
 JG
-OL
-mm
+PB
+ti
 kJ
 IM
 IM

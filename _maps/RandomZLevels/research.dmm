@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/mineral,

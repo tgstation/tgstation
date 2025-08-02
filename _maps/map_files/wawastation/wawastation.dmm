@@ -29675,10 +29675,6 @@
 /obj/structure/disposalpipe/trunk/multiz/down,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"kmZ" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "kno" = (
 /obj/structure/chair/sofa/bench{
 	dir = 8
@@ -96270,7 +96266,7 @@ uir
 aaB
 nHK
 cLf
-kmZ
+dUc
 cLf
 cLf
 cLf
@@ -96527,7 +96523,7 @@ amZ
 aaB
 nHK
 cLf
-kmZ
+dUc
 cLf
 cLf
 cLf
@@ -96784,7 +96780,7 @@ ewX
 aaB
 nHK
 cLf
-kmZ
+dUc
 cLf
 cLf
 cLf
@@ -128854,13 +128850,13 @@ cLf
 cLf
 cLf
 cLf
-kmZ
+dUc
 rYo
 rYo
 cAC
 rYo
 rYo
-kmZ
+dUc
 cLf
 cLf
 cLf
@@ -130396,13 +130392,13 @@ cLf
 cLf
 cLf
 cLf
-kmZ
+dUc
 rYo
 rYo
 fxp
 rYo
 rYo
-kmZ
+dUc
 cLf
 cLf
 cLf
