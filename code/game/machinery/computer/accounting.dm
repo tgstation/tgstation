@@ -68,7 +68,10 @@
 		if("change_pay_mod")
 			var/old_modifier = bank_account.payday_modifier
 			bank_account.payday_modifier = clamp(round(text2num(params["pay_mod"]), 0.05), MIN_PAY_MOD, MAX_PAY_MOD)
-			bank_account.bank_card_talk("Paycheck [bank_account.payday_modifier > old_modifier ? "raised" : "cut"] to [bank_account.payday_modifier * bank_account.account_job.paycheck]cr.")
+			var/new_check_total = bank_account.payday_modifier * bank_account.account_job.paycheck
+			var/raise_or_cut = new_check_total > old_modifier * bank_account.account_job.paycheck ? "raised" : "cut"
+			bank_account.bank_card_talk("Paycheck [raise_or_cut] to [new_check_total]cr.")
+			SSeconomy.add_audit_entry(bank_account, new_check_total, "Paycheck [raise_or_cut]")
 			return TRUE
 
 #undef MAX_ADVANCES

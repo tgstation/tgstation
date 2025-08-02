@@ -33,7 +33,7 @@ type PlayerAccount = {
   balance: number;
   job: string;
   modifier: number;
-  num_advances;
+  num_advances: number;
 };
 
 type AuditLog = {
@@ -148,11 +148,11 @@ export const AccountingConsole = () => {
             <Flex>
               <Flex.Item mr={1}>
                 <Button
+                  disabled
                   icon="user"
                   p={0.75}
                   pl={1}
                   pr={1}
-                  color="green"
                   iconSize={1.25}
                 />
               </Flex.Item>
@@ -182,7 +182,7 @@ export const AccountingConsole = () => {
               </Flex.Item>
               <Flex.Item grow />
               <Flex.Item>
-                <Button p={0.75} pl={1} pr={1}>
+                <Button p={0.75} pl={1} pr={1} disabled>
                   {station_time} ST
                 </Button>
               </Flex.Item>
@@ -510,7 +510,7 @@ const UsersScreen = () => {
                     height="12px"
                     width="12px"
                     fontSize="8px"
-                    disabled={account.num_advances > max_advances}
+                    disabled={account.num_advances >= max_advances}
                     onClick={() =>
                       act('paycheck_advance', {
                         account_id: account.id,
