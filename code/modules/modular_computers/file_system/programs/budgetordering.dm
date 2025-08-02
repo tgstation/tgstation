@@ -71,7 +71,7 @@
 			requestonly = FALSE
 			can_approve_requests = TRUE
 			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
-			data["department"] = addtext(buyer.account_holder, " Requisitions")
+			data["department"] = "[buyer.account_holder] Requisitions"
 		else
 			requestonly = TRUE
 			can_approve_requests = FALSE
