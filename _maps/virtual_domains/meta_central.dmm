@@ -94,6 +94,19 @@
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"aG" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/night{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/night{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "aO" = (
 /obj/structure/toilet{
 	pixel_y = 13
@@ -210,15 +223,6 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
 	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"bQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/malf,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "bR" = (
@@ -733,6 +737,15 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/decal/cleanable/glass,
 /obj/item/clothing/head/costume/party,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"fH" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "fK" = (
@@ -4406,19 +4419,6 @@
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"Lq" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/night{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/night,
-/obj/item/clothing/glasses/night{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/turf/template_noop,
-/area/virtual_domain/safehouse)
 "Ls" = (
 /obj/modular_map_root/safehouse{
 	key = "shuttle_space"
@@ -7003,7 +7003,7 @@ HM
 ps
 hV
 Hd
-bQ
+fH
 hZ
 ii
 SN
@@ -7277,7 +7277,7 @@ oD
 pB
 hX
 zQ
-Lq
+aG
 hX
 hX
 hX

@@ -448,7 +448,6 @@
 	random_options = list(
 		/obj/machinery/computer/accounting,
 		/obj/machinery/computer/communications,
-		/obj/machinery/computer/upload,
 		/obj/machinery/modular_computer/preset/id,
 	)
 

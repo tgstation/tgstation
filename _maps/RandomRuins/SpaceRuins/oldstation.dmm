@@ -3379,6 +3379,14 @@
 /obj/effect/decal/cleanable/blood/oil,
 /obj/structure/alien/weeds,
 /obj/machinery/light/small/broken/directional/west,
+/obj/item/stack/cable_coil{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_x = -8;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "pD" = (
@@ -5973,6 +5981,8 @@
 /obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
+/obj/item/circuitboard/machine/ai_law_rack/core,
+/obj/item/stock_parts/subspace/transmitter,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "HQ" = (

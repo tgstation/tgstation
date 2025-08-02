@@ -324,7 +324,7 @@
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
+	if(istype(atom, /obj/item/ai_module/law) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
 
