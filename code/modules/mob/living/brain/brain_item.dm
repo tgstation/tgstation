@@ -337,9 +337,15 @@
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
-	//if we're not more injured than before, return without gambling for a trauma
+	// If we crossed blinking brain damage thresholds either way, update our blinking
+	if ((prev_damage > BRAIN_DAMAGE_ASYNC_BLINKING && damage < BRAIN_DAMAGE_ASYNC_BLINKING) || (prev_damage < BRAIN_DAMAGE_ASYNC_BLINKING && damage > BRAIN_DAMAGE_ASYNC_BLINKING))
+		var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
+		eyes?.animate_eyelids(owner)
+
+	// If we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
 		return
+
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
@@ -353,20 +359,22 @@
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
 
-	if (owner)
-		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
-			var/brain_message
-			if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
-				brain_message = span_warning("You feel lightheaded.")
-			else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
-				brain_message = span_warning("You feel less in control of your thoughts.")
-			else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
-				brain_message = span_warning("You can feel your mind flickering on and off...")
+	if (!owner || owner.stat > UNCONSCIOUS)
+		return
 
-			if(.)
-				. += "\n[brain_message]"
-			else
-				return brain_message
+	// Conscious or soft-crit
+	var/brain_message
+	if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
+		brain_message = span_warning("You feel lightheaded.")
+	else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
+		brain_message = span_warning("You feel less in control of your thoughts.")
+	else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
+		brain_message = span_warning("You can feel your mind flickering on and off...")
+
+	if(.)
+		. += "\n[brain_message]"
+	else
+		return brain_message
 
 /obj/item/organ/brain/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()
