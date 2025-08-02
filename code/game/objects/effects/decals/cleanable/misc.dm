@@ -303,14 +303,6 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	. = ..()
 	add_overlay(mutable_appearance('icons/effects/glitter.dmi', "glitter_sparkle[rand(1,9)]", appearance_flags = EMISSIVE_APPEARANCE_FLAGS))
 
-/obj/effect/decal/cleanable/glitter/green
-	name = "green glitter"
-	icon_state = "tritium"
-
-/obj/effect/decal/cleanable/glitter/gray
-	name = "gray glitter"
-	icon_state = "water_vapor"
-
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
