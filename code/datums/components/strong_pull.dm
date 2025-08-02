@@ -29,7 +29,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 	RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_no_longer_pulled))
 	if(istype(strongpulling, /obj/structure/closet) && !istype(strongpulling, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/grabbed_closet = strongpulling
-		grabbed_closet.strong_grab_source = source
+		grabbed_closet.strong_grab_source = WEAKREF(source)
 
 /**
  * Signal for rejecting further grabs
