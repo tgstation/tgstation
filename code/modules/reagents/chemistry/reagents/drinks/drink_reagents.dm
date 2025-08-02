@@ -228,7 +228,7 @@
 
 /datum/reagent/milk/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
-		fish.adjust_health(fish.health + initial(fish.health) * max(fish.get_hunger() * 0.5, 0.12))
+		fish.repair_damage(fish.max_integrity * max(fish.get_hunger() * 0.5, 0.12))
 		fish.sate_hunger()
 		return TRUE
 
@@ -998,12 +998,12 @@
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
 		to_chat(drinker, span_warning("Antioxidants are weakening your radical spirit!"))
-		
+
 /datum/reagent/consumable/grenadine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
 		drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
-		if(drinker.getStaminaLoss() < 80) 
+		if(drinker.getStaminaLoss() < 80)
 			drinker.adjustStaminaLoss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.
 
 /datum/reagent/consumable/parsnipjuice

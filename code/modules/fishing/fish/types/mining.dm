@@ -71,7 +71,7 @@
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
-	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
+	if(get_health_percentage() <= 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		anger += growth * 2
 		return COMPONENT_DONT_GROW
 
@@ -124,7 +124,7 @@
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	min_pressure = HAZARD_LOW_PRESSURE
-	health = 150
+	max_integrity = 300
 	stable_population = 3
 	grind_results = list(/datum/reagent/bone_dust = 10)
 	fillet_type = /obj/item/stack/sheet/bone

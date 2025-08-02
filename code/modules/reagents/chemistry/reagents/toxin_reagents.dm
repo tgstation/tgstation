@@ -1269,7 +1269,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
-		fish.adjust_health(fish.health - 30)
+		fish.damage_fish(30)
 		return TRUE
 
 /datum/reagent/toxin/bungotoxin
