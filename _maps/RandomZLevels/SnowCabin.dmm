@@ -4530,16 +4530,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
-"LS" = (
-/obj/structure/sign{
-	pixel_x = 32
-	},
-/turf/open/misc/asteroid/snow/snow_cabin{
-	floor_variance = 0;
-	icon_state = "snow_dug";
-	slowdown = 1
-	},
-/area/awaymission/cabin/caves)
 "LW" = (
 /obj/structure/barricade/wooden/snowed,
 /turf/open/misc/asteroid/snow/snow_cabin{
@@ -32902,7 +32892,7 @@ Oe
 Oe
 JL
 JL
-LS
+JL
 Oe
 Oe
 Oe

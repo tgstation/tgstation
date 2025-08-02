@@ -46,7 +46,7 @@
 	if (!check_faction)
 		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
 
-	if (!QDELETED(existing_target) && (locate(existing_target) in shitlist) && targeting_strategy.can_attack(living_mob, existing_target, vision_range))
+	if (!QDELETED(existing_target) && targeting_strategy.can_attack(living_mob, existing_target, vision_range))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/list/enemies_list = list()

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "If buckled during a violent shuttle launch, you'll no longer be knocked down + immobilized, instead just immobilized. Unbuckled effects are unchanged."

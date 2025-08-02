@@ -158,11 +158,11 @@
  * Arguments:
  * - [source][/obj/item]: The source of the materials we are inserting.
  * - multiplier: The multiplier for the materials extract from this item being inserted.
- * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED
- * and is used mostly for silo logging, the silo resends this signal on the context to give it a
+ * - context: the atom performing the operation, is used mostly for silo logging, the silo resends this signal on the context to give it a
  * chance to process the item
+ * - user_data: in the form rendered by ID_DATA(user), for material logging (and if this component is connected to a silo, also for permission checking)
  */
-/datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, atom/context = parent)
+/datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, atom/context = parent, alist/user_data)
 	var/primary_mat
 	var/max_mat_value = 0
 	var/material_amount = 0
@@ -180,7 +180,7 @@
 		mats_consumed[MAT] = mat_amount
 		material_amount += mat_amount
 	if(length(mats_consumed))
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_ITEM_CONSUMED, source, primary_mat, mats_consumed, material_amount, context)
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_ITEM_CONSUMED, source, primary_mat, mats_consumed, material_amount, context, user_data)
 
 	return primary_mat
 //===================================================================================
@@ -226,8 +226,9 @@
  * - multiplier: The multiplier for the materials being inserted
  * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  * * - delete_item: should we delete the item after its materials are consumed. does not apply to stacks if they were split due to lack of space
+ * * - user_data - in the form rendered by ID_DATA(user), for material logging (and if this component is connected to a silo, also for permission checking)
  */
-/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent, delete_item = TRUE)
+/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent, delete_item = TRUE, alist/user_data)
 	if(QDELETED(weapon))
 		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
@@ -252,7 +253,7 @@
 	material_amount = OPTIMAL_COST(material_amount)
 
 	//do the insert
-	var/last_inserted_id = insert_item_materials(target, multiplier, context)
+	var/last_inserted_id = insert_item_materials(target, multiplier, context, user_data = user_data)
 	if(!isnull(last_inserted_id))
 		if(delete_item || target != weapon) //we could have split the stack ourselves
 			qdel(target) //item gone
@@ -389,7 +390,7 @@
 			is_stack = TRUE
 
 		//we typically don't want to consume bags, boxes but only their contents. so we skip processing
-		inserted = !target_item.atom_storage ? insert_item(target_item, 1, context, is_stack) : 0
+		inserted = !target_item.atom_storage ? insert_item(target_item, 1, context, is_stack, user_data = ID_DATA(user)) : 0
 		if(inserted > 0)
 			. += inserted
 			inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
@@ -679,8 +680,9 @@
  * [material][datum/material]: type of sheets present in this container to extract
  * [target][atom]: drop location
  * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_SHEETS_RETRIEVED and is used mostly for silo logging
+ * user_data - in the form rendered by ID_DATA(user), for material logging (and if this component is connected to a silo, also for permission checking)
  */
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null, atom/context = parent)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null, atom/context = parent, alist/user_data)
 	//do we support sheets of this material
 	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
@@ -709,7 +711,7 @@
 		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= new_sheets.amount
 		//send signal
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIEVED, new_sheets, context)
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIEVED, new_sheets, context, user_data)
 		//no point merging anything into an already full stack
 		if(new_sheets.amount == new_sheets.max_amount)
 			continue
@@ -734,7 +736,7 @@
 /datum/component/material_container/proc/retrieve_all(target = null, atom/context = parent)
 	var/result = 0
 	for(var/MAT in materials)
-		result += retrieve_sheets(amount2sheet(materials[MAT]), MAT, target, context)
+		result += retrieve_sheets(amount2sheet(materials[MAT]), MAT, target, context, user_data = ID_DATA(null))
 	return result
 //============================================================================================
 

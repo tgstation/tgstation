@@ -13,8 +13,8 @@
 #define PLANE_SPACE -21
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -12
-#define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
+#define DISPLACEMENT_PLANE -12
+#define DISPLACEMENT_RENDER_TARGET "*DISPLACEMENT_RENDER_TARGET"
 
 #define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
 
@@ -47,38 +47,35 @@
 #define O_LIGHTING_VISUAL_RENDER_TARGET "*O_LIGHT_VISUAL_PLANE"
 
 // Render plate used by overlay lighting to mask turf lights
-#define TURF_LIGHTING_PLATE 12
+#define RENDER_PLANE_TURF_LIGHTING 12
 
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
-#define EMISSIVE_RENDER_PLATE 14
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+#define RENDER_PLANE_EMISSIVE 14
+#define EMISSIVE_RENDER_TARGET "*RENDER_PLANE_EMISSIVE"
 // Ensures all the render targets that point at the emissive plate layer correctly
 #define EMISSIVE_Z_BELOW_LAYER 1
 #define EMISSIVE_FLOOR_LAYER 2
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
 
-#define EMISSIVE_BLOOM_MASK_PLATE 15
-#define EMISSIVE_BLOOM_MASK_TARGET "*EMISSIVE_BLOOM_MASK_PLATE"
-#define EMISSIVE_BLOOM_PLATE 16
+#define RENDER_PLANE_EMISSIVE_BLOOM_MASK 15
+#define EMISSIVE_BLOOM_MASK_TARGET "*RENDER_PLANE_EMISSIVE_BLOOM_MASK"
+#define RENDER_PLANE_EMISSIVE_BLOOM 16
 
-//-------------------- Game plane assembly ---------------------
-
-#define RENDER_PLANE_GAME 17
-/// If fov is enabled we'll draw game to this and do shit to it
-#define RENDER_PLANE_GAME_MASKED 18
-/// The bit of the game plane that is let alone is sent here
-#define RENDER_PLANE_GAME_UNMASKED 19
 
 //-------------------- Lighting ---------------------
+
+/// Main game plane to which everything renders, which then is multiplied by light
+/// Should not be lit directly as it is sourced for emissive bloom
+#define RENDER_PLANE_UNLIT_GAME 19
 
 #define RENDER_PLANE_LIGHTING 20
 
 /// Masks the lighting plane with turfs, so we never light up the void
 /// Failing that, masks emissives and the overlay lighting plane
-#define LIGHT_MASK_PLANE 21
-#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
+#define RENDER_PLANE_LIGHT_MASK 21
+#define LIGHT_MASK_RENDER_TARGET "*RENDER_PLANE_LIGHT_MASK"
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 22
@@ -116,7 +113,12 @@
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
-#define LIT_GAME_RENDER_PLATE 40
+#define RENDER_PLANE_GAME 40
+/// If fov is enabled we'll draw game to this and do shit to it
+#define RENDER_PLANE_GAME_MASKED 41
+/// The bit of the game plane that is let alone is sent here
+#define RENDER_PLANE_GAME_UNMASKED 42
+
 #define RENDER_PLANE_NON_GAME 45
 
 // Only VERY special planes should be here, as they are above not just the game, but the UI planes as well.
