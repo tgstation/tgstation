@@ -226,7 +226,13 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
 
-/// Called after add_reagents creates a new reagent.
+/**
+ * Called after add_reagents creates a new reagent.
+ *
+ * Arguments
+ * * data - if not null, contains reagent data which will be applied to the newly created reagent (this will override any pre-set data).
+ */
+
 /datum/reagent/proc/on_new(data)
 	if(data)
 		src.data = data
