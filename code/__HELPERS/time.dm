@@ -8,7 +8,7 @@
 	return time2text(wtime, format, NO_TIMEZONE)
 
 ///returns the current IC station time in a world.time format
-/proc/station_time(display_only = FALSE, wtime=world.time)
+/proc/station_time(wtime = world.time)
 	return (((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % (24 HOURS)
 
 ///returns the current IC station time in a human readable format
