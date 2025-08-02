@@ -405,3 +405,23 @@
 	purity_min = 0.4
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/shortenertoxin
+	results = list(/datum/reagent/toxin/shortener_toxin = 4)
+	mix_message = span_danger("The mixture turns into a yellow liquid, and starts smells very strongly and disgusting.")
+	required_reagents = list(/datum/reagent/uranium/radium = 2, /datum/reagent/toxin/mutagen = 2, /datum/reagent/medicine/c2/hercuri = 2, /datum/reagent/toxin/cyanide = 1, /datum/reagent/drug/aranesp = 1)
+	is_cold_recipe = FALSE
+	required_temp = 310
+	optimal_temp = 600
+	overheat_temp = 666 //soooo spookey!!
+	optimal_ph_min = 1
+	optimal_ph_max = 9
+	determin_ph_range = 3
+	temp_exponent_factor = 1.5
+	ph_exponent_factor = 1
+	thermic_constant = -400
+	H_ion_release = -3
+	rate_up_lim = 10
+	purity_min = 0.5
+	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_DAMAGING | REACTION_TAG_TOXIN | REACTION_TAG_OTHER
