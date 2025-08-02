@@ -190,8 +190,8 @@
 	return
 
 /**
- * Intercepts the reagent transfer/copy operation to do some work before it takes place. Return FALSE
- * To cancel the operation
+ * Intercepts the reagent transfer/copy operation to do some work before it takes place.
+ * Used to perform some reaction work. Return TRUE To cancel the operation
  *
  * Arguments
  *
