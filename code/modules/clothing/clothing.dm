@@ -644,7 +644,7 @@ BLIND     // can't see anything
 
 	var/emissive_alpha = get_blood_emissive_alpha(is_worn = TRUE)
 	if (emissive_alpha)
-		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha, effect_type = EMISSIVE_NO_BLOOM)
 		blood_overlay.overlays += emissive_overlay
 
 	return blood_overlay

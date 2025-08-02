@@ -60,9 +60,11 @@
 #define EMISSIVE_WALL_LAYER 4
 
 #define RENDER_PLANE_EMISSIVE_BLOOM_MASK 15
-#define EMISSIVE_BLOOM_MASK_TARGET "*RENDER_PLANE_EMISSIVE_BLOOM_MASK"
+#define EMISSIVE_BLOOM_MASK_RENDER_TARGET "*RENDER_PLANE_EMISSIVE_BLOOM_MASK"
 #define RENDER_PLANE_EMISSIVE_BLOOM 16
 
+#define RENDER_PLANE_SPECULAR_MASK 17
+#define SPECULAR_MASK_RENDER_TARGET "*RENDER_PLANE_SPECULAR_MASK"
 
 //-------------------- Lighting ---------------------
 
@@ -77,23 +79,27 @@
 #define RENDER_PLANE_LIGHT_MASK 21
 #define LIGHT_MASK_RENDER_TARGET "*RENDER_PLANE_LIGHT_MASK"
 
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 22
+/// We cannot render speculars to ABOVE_LIGHTING, as then they give it alpha and end up masking things in darkness
+/// So we need to render it directly to RENDER_PLANE_GAME above RENDER_PLANE_LIGHTING
+#define RENDER_PLANE_SPECULAR 22
 
-#define WEATHER_GLOW_PLANE 23
+/// Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 23
+
+#define WEATHER_GLOW_PLANE 24
 
 ///---------------- MISC -----------------------
 
 ///Pipecrawling images
-#define PIPECRAWL_IMAGES_PLANE 24
+#define PIPECRAWL_IMAGES_PLANE 25
 
 ///AI Camera Static
-#define CAMERA_STATIC_PLANE 25
+#define CAMERA_STATIC_PLANE 26
 
 ///Anything that wants to be part of the game plane, but also wants to draw above literally everything else
-#define HIGH_GAME_PLANE 26
+#define HIGH_GAME_PLANE 27
 
-#define FULLSCREEN_PLANE 27
+#define FULLSCREEN_PLANE 28
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
