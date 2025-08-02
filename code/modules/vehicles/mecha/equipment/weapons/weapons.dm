@@ -568,6 +568,8 @@
 	detachable = FALSE
 	projectiles = 100
 	magazine_size = 100
+	missile_range = 10
+	missile_speed = 1.5
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
 	name = "banana mortar"

@@ -43,6 +43,7 @@
 	)
 	step_energy_drain = 2
 	allow_diagonal_movement = TRUE
+	movedelay = 2.5
 	/// What actions does justice execute?
 	var/justice_state = JUSTICE_IDLE
 	/// Refs to our engines
@@ -277,6 +278,9 @@
 /obj/vehicle/sealed/mecha/justice/proc/justice_attack(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
 	SIGNAL_HANDLER
 
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_MELEE_ATTACK))
+		return COMPONENT_CANCEL_MELEE_CLICK
+
 	if(justice_state == JUSTICE_CHARGE)
 		return COMPONENT_CANCEL_MELEE_CLICK
 
@@ -392,7 +396,29 @@
 		return
 	activate_engines()
 
+/**
+ * Attempts to dismember passed bodypart if it damage hits its damage cap.
+ *
+ * * dismembering: Bodypart to dismember
+ * * effective_damage_modifier: Additional number to put on top of the bodypart's damage, to treat it as if it were more damaged than it is.
+ * * chance: Chance to dismember the bodypart, 100 by default.
+ * * blacklist: List of body zones that should not be dismembered, defaults to head and chest.
+ */
+/obj/vehicle/sealed/mecha/justice/proc/try_attack_dismember(obj/item/bodypart/dismembering, effective_damage_modifier = 0, chance = 100, list/blacklist = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD))
+	if(!prob(chance))
+		return FALSE
+	if(isnull(dismembering))
+		return FALSE
+	if(dismembering.body_zone in blacklist)
+		return FALSE
+	if(dismembering.get_damage() + effective_damage_modifier > dismembering.max_damage)
+		return dismembering.dismember(BRUTE)
+	return FALSE
+
 /obj/vehicle/sealed/mecha/justice/melee_attack_effect(mob/living/victim, damage, def_zone)
+	// Damage hasn't been applied yet but if it ends up capping out the limb's damage, we will dismember or disembowel
+	try_attack_dismember(victim.get_bodypart(def_zone), damage, 100, list(BODY_ZONE_HEAD))
+
 	if(last_hit != REF(victim))
 		last_hit = REF(victim)
 		new /obj/effect/temp_visual/mech_attack_aoe_charge(get_turf(src))
@@ -415,9 +441,7 @@
 		var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
 		something_living.apply_damage(force * melee_lower_damage_range, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = (victim == something_living ? CANT_WOUND : -10))
 		// if the attack capped out the limb's damage, force dismember (or disembowel if chest)
-		var/obj/item/bodypart/cut = something_living.get_bodypart(hit_zone)
-		if(damage >= 20 && cut && cut.get_damage() > cut.max_damage)
-			cut.dismember(BRUTE)
+		try_attack_dismember(something_living.get_bodypart(hit_zone), 0, 100, list(BODY_ZONE_HEAD))
 
 	playsound(src, stealth_attack_sound, 75, FALSE)
 	last_hit = null
@@ -432,6 +456,7 @@
 	var/obj/item/bodypart/check_head = live_or_dead.get_bodypart(BODY_ZONE_HEAD)
 	if(!check_head)
 		return FALSE
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 	INVOKE_ASYNC(src, PROC_REF(finish_him), src, pilot, live_or_dead)
 	return TRUE
 
@@ -503,9 +528,7 @@
 			var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
 			something_living.apply_damage(force, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = 10, exposed_wound_bonus = 25)
 			// if the attack capped out the limb's damage - or a small random chance -, force dismember (or disembowel if chest)
-			var/obj/item/bodypart/cut = something_living.get_bodypart(hit_zone)
-			if(cut && (prob(25) || cut.get_damage() > cut.max_damage))
-				cut.dismember(BRUTE)
+			try_attack_dismember(something_living.get_bodypart(hit_zone), 0, 25, list())
 
 		here_we_go = line_turf
 
@@ -519,6 +542,7 @@
 	forceMove(here_we_go)
 	start_charge_here.Beam(src, icon_state = "mech_charge", time = 8)
 	playsound(src, charge_attack_sound, 75, FALSE)
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 	use_energy(200)
 	return TRUE
 

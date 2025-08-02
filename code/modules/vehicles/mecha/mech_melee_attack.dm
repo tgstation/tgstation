@@ -125,8 +125,8 @@
 		else
 			return
 
+	var/zone_readable = parse_zone_with_bodypart(def_zone)
 	if (mecha_attacker.damtype == BRUTE || mecha_attacker.damtype == BURN)
-		var/zone_readable = parse_zone_with_bodypart(def_zone)
 		var/armor = run_armor_check(
 			def_zone = def_zone,
 			attack_flag = MELEE,
@@ -140,12 +140,12 @@
 		blind_message = "You hear a sickening sound of flesh sizzling!"
 
 	visible_message(
-		span_danger("[mecha_attacker.name] [mecha_attacker.attack_verbs[2]] [src]!"),
-		span_userdanger("[mecha_attacker.name] [mecha_attacker.attack_verbs[2]] you!"),
+		span_danger("[mecha_attacker.name] [mecha_attacker.attack_verbs[2]] [src] in the [zone_readable]!"),
+		span_userdanger("[mecha_attacker.name] [mecha_attacker.attack_verbs[2]] you in the [zone_readable]!"),
 		span_hear(blind_message),
 		COMBAT_MESSAGE_RANGE,
 		list(mecha_attacker),
 	)
-	to_chat(mecha_attacker, span_danger("You [mecha_attacker.attack_verbs[1]] [src]!"))
+	to_chat(mecha_attacker, span_danger("You [mecha_attacker.attack_verbs[1]] [src] in the [zone_readable]!"))
 	..()
 	return damage
