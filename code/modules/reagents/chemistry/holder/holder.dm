@@ -490,9 +490,7 @@
 
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount))
-			update_total()
-			target_holder.update_total()
+		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount, copy_only))
 			continue
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = r_to_send, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
