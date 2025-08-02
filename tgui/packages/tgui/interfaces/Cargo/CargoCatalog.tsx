@@ -18,7 +18,6 @@ import { useBackend, useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
 import { CargoData, Supply, SupplyCategory } from './types';
-import { useBackend } from '../../backend';
 
 type Props = {
   express?: boolean;
@@ -357,8 +356,6 @@ function RequestPackInfo(props: RequestContentsProps) {
   const pack = packs.find((pack) => pack.name === name);
   const contains = pack?.contains;
 
-  // Use the backend action function from tgui
-  const { act } = useBackend<CargoData>();
   return (
     <Modal p={1} width="50vw" height="50vh">
       <Stack fill vertical>
