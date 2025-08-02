@@ -1,0 +1,3867 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aw" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/fluff/shower_drain,
+/obj/effect/spawner/random/trash/mess,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"aG" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"by" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/trooper/russian{
+	faction = list("pirate")
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"bE" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"bL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"bN" = (
+/obj/effect/mapping_helpers/wall_dent/impact,
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"bU" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/gambling{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"bW" = (
+/obj/structure/sign/poster/contraband/random/directional/east,
+/obj/effect/spawner/random/glass_shards/mini,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"bZ" = (
+/obj/vehicle/ridden/lavaboat,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"ci" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"dk" = (
+/obj/item/trash/tray{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"du" = (
+/obj/machinery/door/window/right/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"ef" = (
+/obj/structure/platform/wood,
+/obj/structure/marker_beacon/yellow{
+	light_range = 4;
+	light_power = 1
+	},
+/turf/open/floor/wood/rainworld,
+/area/rainworld/surface/outdoors)
+"eC" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"eS" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/mob/living/basic/trooper/russian{
+	faction = list("pirate")
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"eX" = (
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"eY" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/computer/records/security/laptop/syndie{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"eZ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"fh" = (
+/obj/effect/spawner/random/glass_shards/mini,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"fs" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"ft" = (
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"fu" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/obj/structure/curtain/bounty/start_closed,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"fB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"fT" = (
+/mob/living/basic/trooper/russian{
+	faction = list("pirate")
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"gt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"gK" = (
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"hg" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"hs" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 9;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"hH" = (
+/obj/structure/bed/maint,
+/obj/item/bear_armor,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"hX" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/storage/fancy/pickles_jar,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"ip" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"iL" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"iS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"iV" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"jk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"jN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/crushed_can{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"kz" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 10;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"kI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"lA" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"lP" = (
+/turf/open/floor/plating,
+/area/ruin/powered)
+"md" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/effect/spawner/random/structure/chair_comfy{
+	dir = 4
+	},
+/mob/living/basic/trooper/russian/ranged/lootless,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"mk" = (
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"mY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"na" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"nv" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"nB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"nF" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"nU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/gun/ballistic/revolver/c38,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"oz" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 5;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/wood,
+/area/rainworld/surface/outdoors)
+"oR" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"pa" = (
+/obj/item/plate_shard,
+/obj/structure/table/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/entertainment/drugs{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"pk" = (
+/obj/machinery/vending/cigarette/syndicate{
+	onstation = 0
+	},
+/obj/effect/mapping_helpers/broken_machine,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"pz" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 6;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"pP" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/mineral/random/rainworld,
+/area/rainworld/surface/outdoors)
+"qu" = (
+/turf/closed/wall/mineral/wood,
+/area/rainworld/surface/outdoors)
+"qB" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"qE" = (
+/obj/effect/mob_spawn/corpse/human/damaged,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"rt" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"rJ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"sw" = (
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/wallframe/fish{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"sS" = (
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"td" = (
+/obj/machinery/vending/boozeomat/syndicate,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"tl" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"tv" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"tW" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"tX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wallframe/noticeboard{
+	pixel_x = 32
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"tZ" = (
+/obj/item/broken_bottle{
+	pixel_x = 9;
+	pixel_y = -4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"ue" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"uh" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/book/granter/crafting_recipe/death_sandwich,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"us" = (
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"uy" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"uM" = (
+/obj/effect/gibspawner/robot,
+/obj/item/mod/module/flamethrower,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"vg" = (
+/turf/open/floor/stone,
+/area/ruin/powered)
+"vh" = (
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking dog bed.";
+	name = "Garry's bed"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"vv" = (
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"vw" = (
+/obj/structure/safe/floor,
+/obj/item/gun/ballistic/automatic/pistol/deagle/contraband,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"vQ" = (
+/obj/structure/marker_beacon/yellow{
+	light_range = 4;
+	light_power = 1
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"wf" = (
+/turf/template_noop,
+/area/template_noop)
+"wE" = (
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"wM" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"xg" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/trooper/pirate/ranged,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"xv" = (
+/obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"xy" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood/parquet,
+/area/ruin/powered)
+"zq" = (
+/mob/living/basic/bear/russian{
+	faction = list("pirate")
+	},
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"Aj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Au" = (
+/obj/item/chair/wood/wings,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"AH" = (
+/obj/effect/spawner/random/glass_shards/mini,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"CP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/sleeper/party{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Df" = (
+/obj/structure/closet/crate/grave,
+/obj/item/fake_identity_kit,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"Dj" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Do" = (
+/obj/structure/sign/poster/contraband/revolver/directional/east,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"DP" = (
+/obj/item/plate/large,
+/obj/item/food/fishfingers{
+	pixel_y = 3
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Ea" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Ef" = (
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Eu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"ES" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/ruin/powered)
+"EV" = (
+/turf/closed/mineral/random/rainworld,
+/area/rainworld/surface/outdoors)
+"EX" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/ruin/powered)
+"Fp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"FF" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/machinery/computer/old{
+	dir = 1
+	},
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"Ge" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"HW" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 14;
+	height = 13;
+	shuttle_id = "caravanpirate_ambush";
+	name = "Trade Route";
+	roundstart_template = /datum/map_template/shuttle/ruin/pirate_cutter;
+	width = 22
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"HX" = (
+/obj/structure/table/wood,
+/obj/item/stack/cannonball/shellball,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Ii" = (
+/turf/open/floor/wood/tile,
+/area/ruin/powered)
+"Ij" = (
+/obj/structure/platform/wood,
+/turf/open/floor/wood/rainworld,
+/area/rainworld/surface/outdoors)
+"II" = (
+/obj/item/trash/candle{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"IM" = (
+/obj/item/bear_armor,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Ji" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"Jq" = (
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"JY" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 6;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/wood,
+/area/rainworld/surface/outdoors)
+"KV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Lz" = (
+/obj/structure/marker_beacon/yellow{
+	light_range = 4;
+	light_power = 1
+	},
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"LU" = (
+/mob/living/basic/trooper/pirate/ranged,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"MK" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"MV" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"Nz" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"NF" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"NM" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+/obj/item/gun/ballistic/rifle/boltaction,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"NZ" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 5;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"Ob" = (
+/obj/effect/mapping_helpers/mob_buckler,
+/obj/vehicle/ridden/lavaboat,
+/mob/living/basic/trooper/pirate/ranged{
+	environment_smash = 0;
+	obj_damage = 100
+	},
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"OE" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors)
+"OU" = (
+/obj/item/plate/large,
+/obj/item/food/fishmeat/gunner_jellyfish,
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Pi" = (
+/obj/structure/platform/wood,
+/obj/item/oar,
+/turf/open/floor/wood/rainworld,
+/area/rainworld/surface/outdoors)
+"QT" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"QU" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/trooper/pirate/melee/space,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Rq" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/displaycase/noalert{
+	start_showpiece_type = /obj/item/ship_in_a_bottle
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"RL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/powered)
+"Sz" = (
+/obj/structure/closet/crate/secure/trashcart/filled,
+/obj/item/book/granter/crafting_recipe/dusting/smoothbore_disabler_prime,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"SL" = (
+/obj/structure/platform/wood,
+/mob/living/basic/trooper/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/wood/rainworld,
+/area/rainworld/surface/outdoors)
+"Tb" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "If you open the door and see Garry inside WAIT FOR HIM TO LEAVE"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"TM" = (
+/obj/structure/platform/wood,
+/turf/closed/wall/mineral/wood,
+/area/rainworld/surface/outdoors)
+"TR" = (
+/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/spawner/random/trash/mopbucket,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/plating,
+/turf/open/floor/iron,
+/area/ruin/powered)
+"TU" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Ue" = (
+/obj/structure/punching_bag,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/ruin/powered)
+"Uo" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"Up" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/sign/poster/contraband/communist_state/directional/north,
+/turf/open/floor/iron/dark/diagonal,
+/area/ruin/powered)
+"UC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"UE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"UN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/lead_pipe,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Vm" = (
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Vn" = (
+/obj/effect/mine/shrapnel/sting,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface/outdoors)
+"Vs" = (
+/obj/structure/curtain/bounty/start_closed,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"VI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/mob/living/basic/trooper/pirate/ranged,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"VX" = (
+/obj/effect/spawner/random/trash/crushed_can{
+	spawn_random_offset = 1
+	},
+/turf/open/floor/stone,
+/area/ruin/powered)
+"We" = (
+/obj/item/soap/syndie,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
+/obj/structure/broken_flooring/pile,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"WO" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Xg" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Xy" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/glass,
+/mob/living/basic/snail/angry{
+	name = "Garry";
+	health = 200;
+	faction = list("pirate");
+	obj_damage = 20;
+	melee_damage_upper = 15;
+	melee_damage_lower = 12
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"XA" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"XD" = (
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"XN" = (
+/obj/effect/spawner/random/glass_shards/mini,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Yu" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/chair_flipped{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"YN" = (
+/obj/structure/table/wood,
+/obj/item/food/takoyaki/russian,
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"ZF" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/turf/open/floor/wood/tile,
+/area/ruin/powered)
+"ZR" = (
+/turf/open/floor/wood,
+/area/ruin/powered)
+
+(1,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(2,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(3,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(4,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(5,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(6,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+sS
+sS
+sS
+sS
+sS
+sS
+sS
+sS
+sS
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(7,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+sS
+sS
+sS
+sS
+EV
+EV
+hs
+fu
+fu
+fu
+kz
+EV
+EV
+EV
+sS
+sS
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(8,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+gK
+gK
+sS
+sS
+sS
+EV
+EV
+EV
+EV
+ci
+Uo
+md
+FF
+ci
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+sS
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(9,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+gK
+sS
+sS
+EV
+EV
+EV
+EV
+EV
+EV
+ci
+vw
+NM
+eY
+ci
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+sS
+sS
+gK
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(10,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+gK
+sS
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+ci
+Up
+Uo
+Rq
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+EV
+EV
+sS
+gK
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(11,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+sS
+EV
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+Xg
+ci
+ci
+Ji
+VX
+hX
+ft
+Ii
+wM
+ci
+EV
+EV
+EV
+sS
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(12,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+sS
+EV
+ci
+IM
+ci
+qE
+MK
+Jq
+xv
+TU
+iL
+fh
+oR
+qB
+nB
+Nz
+ue
+ft
+Ii
+vv
+ci
+ci
+ci
+EV
+EV
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(13,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+sS
+EV
+ci
+IM
+Vs
+Jq
+Jq
+wE
+zq
+na
+Ea
+mY
+Yu
+rJ
+Au
+Ge
+ue
+ft
+Ii
+mk
+td
+uh
+ci
+EV
+EV
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(14,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+sS
+EV
+ci
+lP
+Vs
+Jq
+Jq
+Jq
+zq
+na
+jk
+dk
+pa
+eS
+tW
+Ge
+tl
+ft
+Ii
+Ii
+Ii
+ZF
+ci
+EV
+EV
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(15,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+EV
+EV
+ci
+hH
+ci
+Ue
+zq
+Jq
+zq
+XD
+fB
+OU
+YN
+eC
+vg
+xg
+bE
+xy
+nv
+bU
+aG
+du
+ci
+EV
+EV
+EV
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(16,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+hs
+ci
+ci
+ci
+bN
+na
+na
+XD
+XD
+ci
+sw
+II
+DP
+eC
+LU
+tW
+RL
+us
+us
+us
+RL
+RL
+ci
+EV
+EV
+EV
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(17,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+sS
+ci
+vh
+eX
+Aj
+kI
+bL
+Aj
+Aj
+ZR
+fT
+fB
+Vm
+jN
+eC
+vg
+MV
+vg
+RL
+RL
+RL
+RL
+vg
+ci
+EV
+EV
+EV
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(18,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+EV
+ci
+kI
+kI
+ZR
+Ef
+Aj
+nF
+HX
+NF
+AH
+VI
+ZR
+nU
+eZ
+lA
+WO
+uy
+QU
+uy
+uy
+lA
+uy
+ci
+EV
+EV
+EV
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(19,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+EV
+ci
+XN
+by
+kI
+pk
+XA
+Aj
+UN
+iV
+ZR
+fB
+tZ
+Do
+tX
+nF
+CP
+CP
+Eu
+Fp
+ZR
+bW
+kI
+ci
+EV
+EV
+EV
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(20,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+gK
+EV
+ci
+fs
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+Tb
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+ci
+Dj
+ci
+EV
+EV
+sS
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(21,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+sS
+EV
+ci
+KV
+ci
+EV
+EV
+EV
+EV
+EV
+ci
+TR
+ES
+aw
+ci
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+ci
+UC
+ci
+EV
+EV
+sS
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(22,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+EV
+EV
+ci
+rt
+NZ
+EV
+EV
+EV
+EV
+EV
+ci
+Xy
+EX
+We
+ci
+EV
+EV
+hg
+EV
+EV
+EV
+EV
+ci
+rt
+pz
+EV
+EV
+sS
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(23,1,1) = {"
+wf
+wf
+wf
+wf
+wf
+wf
+gK
+EV
+EV
+EV
+iS
+iS
+EV
+EV
+EV
+uM
+EV
+ci
+ci
+ci
+UE
+ci
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+sS
+iS
+sS
+EV
+EV
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(24,1,1) = {"
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+sS
+EV
+EV
+iS
+sS
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+QT
+gt
+EV
+EV
+EV
+EV
+EV
+EV
+EV
+Df
+sS
+sS
+sS
+sS
+EV
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(25,1,1) = {"
+wf
+wf
+wf
+wf
+gK
+gK
+gK
+EV
+EV
+sS
+iS
+pP
+EV
+EV
+EV
+Sz
+iS
+EV
+QT
+QT
+sS
+tv
+sS
+sS
+sS
+sS
+EV
+EV
+sS
+sS
+sS
+iS
+sS
+EV
+gK
+gK
+wf
+wf
+wf
+wf
+wf
+wf
+wf
+"}
+(26,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+sS
+EV
+iS
+iS
+EV
+EV
+Vn
+sS
+sS
+sS
+iS
+iS
+sS
+sS
+gK
+gK
+sS
+sS
+sS
+sS
+sS
+sS
+iS
+iS
+sS
+sS
+EV
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(27,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+sS
+sS
+sS
+sS
+sS
+sS
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+ip
+sS
+sS
+sS
+sS
+iS
+sS
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(28,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+vQ
+sS
+iS
+sS
+sS
+Lz
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+vQ
+sS
+sS
+sS
+gK
+vQ
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(29,1,1) = {"
+wf
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+oz
+Ij
+Ij
+qu
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+qu
+Ij
+Ij
+JY
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+wf
+wf
+"}
+(30,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(31,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(32,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+TM
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(33,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(34,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(35,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(36,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+HW
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+Pi
+bZ
+vQ
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(37,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(38,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+wf
+wf
+"}
+(39,1,1) = {"
+wf
+OE
+gK
+gK
+gK
+gK
+gK
+Ob
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(40,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ob
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(41,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(42,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+SL
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(43,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ij
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+SL
+Ij
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(44,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+oz
+ef
+ef
+qu
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+Ob
+gK
+gK
+qu
+Ij
+Ij
+JY
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(45,1,1) = {"
+wf
+OE
+gK
+gK
+gK
+gK
+gK
+vQ
+gK
+gK
+gK
+gK
+vQ
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+vQ
+gK
+gK
+gK
+gK
+vQ
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(46,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(47,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(48,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(49,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+wf
+wf
+"}
+(50,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(51,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(52,1,1) = {"
+wf
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(53,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(54,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(55,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(56,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(57,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+wf
+wf
+"}
+(58,1,1) = {"
+wf
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(59,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(60,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(61,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(62,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(63,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+wf
+wf
+"}
+(64,1,1) = {"
+wf
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}
+(65,1,1) = {"
+wf
+OE
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+OE
+gK
+gK
+gK
+gK
+gK
+wf
+wf
+"}

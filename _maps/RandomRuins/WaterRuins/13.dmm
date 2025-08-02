@@ -1,0 +1,116 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/rainworld,
+/area/rainworld/surface/outdoors)
+"b" = (
+/obj/effect/spawner/random/contraband/landmine,
+/obj/structure/mineral_door/iron,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface)
+"c" = (
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+"j" = (
+/obj/item/storage/bag/quiver/full,
+/obj/item/gun/ballistic/bow,
+/obj/structure/rack/skeletal,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+"k" = (
+/obj/structure/closet/crate/secure/freezer,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage,
+/obj/item/crusher_trophy/wolf_ear,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+"n" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/obj/structure/bed/maint,
+/obj/item/bedsheet/runtime,
+/obj/item/clothing/neck/cloak/wolf_coat,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+"z" = (
+/obj/item/stack/rods,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+"D" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors)
+"G" = (
+/turf/closed/mineral/random/rainworld,
+/area/rainworld/surface)
+"P" = (
+/obj/structure/bonfire/dense/prelit,
+/turf/open/misc/ashplanet/rocky/rainworld,
+/area/rainworld/surface)
+
+(1,1,1) = {"
+n
+a
+a
+a
+a
+a
+n
+"}
+(2,1,1) = {"
+a
+a
+G
+G
+G
+a
+a
+"}
+(3,1,1) = {"
+a
+G
+j
+z
+c
+G
+a
+"}
+(4,1,1) = {"
+a
+G
+z
+P
+c
+b
+D
+"}
+(5,1,1) = {"
+a
+G
+t
+c
+k
+G
+a
+"}
+(6,1,1) = {"
+a
+a
+G
+G
+G
+a
+a
+"}
+(7,1,1) = {"
+n
+a
+a
+a
+a
+a
+n
+"}
