@@ -155,7 +155,7 @@
 					target_robot.activate_module(created_item)
 
 		if(spawn_params["selected_atom_icon"])
-			created_atom.icon = spawn_params["selected_atom_icon"]
+			created_atom.icon = file(spawn_params["selected_atom_icon"])
 		else if(selected_atom)
 			created_atom.icon = initial(selected_atom.icon)
 
