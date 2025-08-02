@@ -121,7 +121,7 @@
 /datum/terror_handler/panic/tick(seconds_per_tick, terror_buildup)
 	. = ..()
 	if (owner.stat >= UNCONSCIOUS)
-		active_attack = FALSE
+		stop_panic_attack()
 		active = FALSE
 		owner.remove_fov_trait(type, FOV_270_DEGREES)
 		return
