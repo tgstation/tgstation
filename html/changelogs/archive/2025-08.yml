@@ -39,3 +39,24 @@
   - bugfix: Cyborgs correctly take burn damage from EMP again.
   - bugfix: EMP Flashlights work on cyborgs for non-combat mode as well as combat
       mode
+2025-08-02:
+  Aliceee2ch:
+  - bugfix: Fixed the nukies outpost chemical locker not having beakers inside of
+      a beaker box
+  SmArtKar:
+  - bugfix: Fixed fire arrow ritual not being accessible
+  - bugfix: Fixed certain nullrod types not being usable for certain holy and unholy
+      interactions
+  - bugfix: Fixed emissive bloom being all white
+  - bugfix: Fixed M90 underbarrel having its separate inaccessible firing pin
+  SyncIt21:
+  - bugfix: reagent transfer amounts with multiplier applied(e.g. cryotubes) have
+      been corrected
+  ZeWaka:
+  - bugfix: tgui windows should now stop flashing for a single frame elsewhere when
+      opening
+  necromanceranne:
+  - bugfix: Swimming now no longer punishes you with less gains for swimming in heavy
+      gravity, but also weirdly easier to swim in.
+  subject217:
+  - spellcheck: fixed a typo in the operative bomb implant manual
