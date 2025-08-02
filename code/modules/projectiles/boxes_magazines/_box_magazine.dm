@@ -176,7 +176,7 @@
 	if(try_load(user, tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/item/ammo_box/proc/try_load(mob/living/user, obj/item/tool, var/silent = FALSE, var/replace_spent = FALSE)
+/obj/item/ammo_box/proc/try_load(mob/living/user, obj/item/tool, silent = FALSE, replace_spent = FALSE)
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
