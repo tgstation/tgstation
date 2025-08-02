@@ -336,6 +336,10 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define MAROON_PROB 30
 /// Probability that any job related objective is picked
 #define JOB_PROB 40
+/// Probability to having the credit heist objective roll
+#define HEIST_PROB 10
+/// If the heist objective did not roll, probability to have the archive destruction objective roll
+#define ALEXANDRIA_PROB 15
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
