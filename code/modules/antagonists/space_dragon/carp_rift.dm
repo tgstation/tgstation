@@ -278,6 +278,21 @@
 		update_light()
 	return TRUE
 
+/obj/structure/carp_rift/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(HAS_TRAIT(attacking_item, TRAIT_TELEKINESIS_CONTROLLED))
+		if(user)
+			to_chat(user, span_warning("The gravitational field of [src] interferes with the telekenetic control of [user], nullifying the hit!"))
+		return FALSE
+	. = ..()
+
+/obj/structure/carp_rift/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
+		var/mob/thrower = throwingdatum.thrower.resolve()
+		if(thrower && ismob(thrower))
+			to_chat(thrower, span_warning("The gravitational field of [src] interferes with the telekenetic control of [hit_by], nullifying the hit!"))
+		return
+	. = ..()
+
 #undef CHARGE_ONGOING
 #undef CHARGE_FINALWARNING
 #undef CHARGE_COMPLETED
