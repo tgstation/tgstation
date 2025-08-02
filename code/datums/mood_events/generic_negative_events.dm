@@ -85,12 +85,7 @@
 	description = "Ouch! My limb feels like I fell asleep on it."
 	mood_change = -3
 	timeout = 2 MINUTES
-
-/datum/mood_event/reattachment/New(mob/M, ...)
-	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
-		qdel(src)
-		return
-	return ..()
+	event_flags = MOOD_EVENT_PAIN
 
 /datum/mood_event/reattachment/add_effects(obj/item/bodypart/limb)
 	if(limb)
@@ -121,12 +116,7 @@
 	description = "That fucking table, man that hurts..."
 	mood_change = -3
 	timeout = 3 MINUTES
-
-/datum/mood_event/table_limbsmash/New(mob/M, ...)
-	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
-		qdel(src)
-		return
-	return ..()
+	event_flags = MOOD_EVENT_PAIN
 
 /datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
 	if(banged_limb)
@@ -203,12 +193,7 @@
 	description = "Medicine may be good for me but right now it stings like hell."
 	mood_change = -5
 	timeout = 60 SECONDS
-
-/datum/mood_event/painful_medicine/New(mob/M, ...)
-	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
-		qdel(src)
-		return
-	return ..()
+	event_flags = MOOD_EVENT_PAIN
 
 /datum/mood_event/startled
 	description = "Hearing that word made me think about something scary."
@@ -254,12 +239,7 @@
 /datum/mood_event/back_pain
 	description = "Bags never sit right on my back, this hurts like hell!"
 	mood_change = -15
-
-/datum/mood_event/back_pain/New(mob/M, ...)
-	if(HAS_TRAIT(M, TRAIT_ANALGESIA))
-		qdel(src)
-		return
-	return ..()
+	event_flags = MOOD_EVENT_PAIN
 
 /datum/mood_event/sad_empath
 	description = "Someone seems upset..."
@@ -273,6 +253,7 @@
 	description = "Those darn savages!"
 	mood_change = -5
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_SPIRITUAL
 
 /datum/mood_event/artbad
 	description = "I've produced better art than that from my ass."
@@ -443,19 +424,13 @@
 /datum/mood_event/gamer_withdrawal
 	description = "I wish I was gaming right now..."
 	mood_change = -5
-	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/gamer_lost
 	description = "If I'm not good at video games, can I truly call myself a gamer?"
 	mood_change = -6
 	timeout = 10 MINUTES
-	event_flags = MOOD_EVENT_WHIMSY | MOOD_EVENT_GAMING
-
-/datum/mood_event/gamer_lost/add_effects()
-	if(HAS_PERSONALITY(owner, /datum/personality/humble))
-		mood_change *= 0.5
-	if(HAS_PERSONALITY(owner, /datum/personality/prideful))
-		mood_change *= 1.5
+	event_flags = MOOD_EVENT_GAMING | MOOD_EVENT_SUCCESS
 
 /datum/mood_event/lost_52_card_pickup
 	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."
@@ -467,7 +442,12 @@
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
 	timeout = 10 MINUTES
-	event_flags = MOOD_EVENT_GAMBLING
+
+/datum/mood_event/russian_roulette_lose/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/gambler))
+		mood_change *= 0.5
+		description = "I gambled my life and lost! Truth is, the game was rigged from the start..."
+		return
 
 /datum/mood_event/bad_touch_bear_hug
 	description = "I just got squeezed way too hard."
@@ -571,21 +551,33 @@
 	mood_change = -8
 	timeout = 5 MINUTES
 
-/datum/mood_event/see_death/add_effects(mob/dead_mob, mood_amount_override)
+/datum/mood_event/see_death/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
-	if(!isnull(mood_amount_override))
-		mood_change = mood_amount_override
-	if(HAS_PERSONALITY(owner, /datum/personality/callous))
+	var/ispet = istype(dead_mob, /mob/living/basic/pet)
+	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
 		mood_change = 0
 		description = "Oh, [get_descriptor(dead_mob)] died. Shame, I guess."
 		return
-	if(istype(dead_mob, /mob/living/basic/pet))
+	if(ispet)
 		description = "My pet [dead_mob] just died!!"
 		mood_change *= 1.5
 		timeout = 8 MINUTES
 		return
 	description = "I just saw [get_descriptor(dead_mob)] die. How horrible..."
+
+/datum/mood_event/see_death/be_refreshed(datum/mood/home, ...)
+	// Every time we get refreshed we get worse
+	mood_change *= 1.5
+	return ..()
+
+/datum/mood_event/see_death/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
+	// Only be replaced if the incoming event's base mood is worse than our base mood
+	if(initial(new_event.mood_change) > initial(mood_change))
+		new_event.mood_change = max(new_event.mood_change, mood_change * 1.5)
+		return ..()
+	// Otherwise if it's equivalent or worse, refresh it instead
+	return be_refreshed(home)
 
 /datum/mood_event/see_death/proc/get_descriptor(mob/dead_mob)
 	if(isnull(dead_mob))
@@ -600,16 +592,15 @@
 	mood_change = -12
 	timeout = 8 MINUTES
 
-/datum/mood_event/see_death/gibbed/add_effects(mob/dead_mob, mood_amount_override)
+/datum/mood_event/see_death/gibbed/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
-	if(!isnull(mood_amount_override))
-		mood_change = mood_amount_override
-	if(HAS_PERSONALITY(owner, /datum/personality/callous))
+	var/ispet = istype(dead_mob, /mob/living/basic/pet)
+	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
 		mood_change = 0
 		description = "Oh, [get_descriptor(dead_mob)] exploded. Now I have to get the mop."
 		return
-	if(istype(dead_mob, /mob/living/basic/pet))
+	if(ispet)
 		description = "My pet [dead_mob] just exploded!!"
 		mood_change *= 1.5
 		timeout = 10 MINUTES
@@ -621,18 +612,34 @@
 	mood_change = -12
 	timeout = 8 MINUTES
 
-/datum/mood_event/see_death/dusted/add_effects(mob/dead_mob, mood_amount_override)
+/datum/mood_event/see_death/dusted/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
-	if(!isnull(mood_amount_override))
-		mood_change = mood_amount_override
-	if(HAS_PERSONALITY(owner, /datum/personality/callous))
+	var/ispet = istype(dead_mob, /mob/living/basic/pet)
+	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
 		mood_change = 0
 		description = "Oh, [get_descriptor(dead_mob)] was vaporized. Now I have to get the dustpan."
 		return
-	if(istype(dead_mob, /mob/living/basic/pet))
+	if(ispet)
 		description = "My pet [dead_mob] just vaporized!!"
 		mood_change *= 1.5
 		timeout = 10 MINUTES
 		return
 	description = "[capitalize(get_descriptor(dead_mob))] was just vaporized in front of me!! I don't feel so good..."
+
+/datum/mood_event/slots/loss
+	description = "Aww dang it!"
+	mood_change = -2
+	timeout = 5 MINUTES
+	event_flags = MOOD_EVENT_GAMING | MOOD_EVENT_FAILURE
+
+/datum/mood_event/slots/loss/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/gambler))
+		mood_change = 0
+		description = "Aww dang it."
+	if(HAS_PERSONALITY(owner, /datum/personality/reckless))
+		mood_change *= 0.5
+	if(HAS_PERSONALITY(owner, /datum/personality/cautious))
+		mood_change *= 2
+	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/diligent))
+		mood_change *= 1.5

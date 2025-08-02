@@ -25,8 +25,10 @@
 	/// Multiplier to negative moodlet values. Stacks with mood_modifier
 	var/negative_mood_modifier = 1
 	/// Multiplier to the length of positive moodlets.
+	/// Please don't set this to 0
 	var/positive_moodlet_length_modifier = 1
 	/// Multiplier to the length of negative moodlets.
+	/// Please don't set this to 0
 	var/negative_moodlet_length_modifier = 1
 	/// Used to track what stage of moodies they're on (1-9)
 	var/mood_level = MOOD_LEVEL_NEUTRAL
@@ -150,49 +152,34 @@
  * * category - (text) category of the mood event - see /datum/mood_event for category explanation
  * * type - (path) any /datum/mood_event
  */
-/datum/mood/proc/add_mood_event(category, type, ...)
-	// we may be passed an instantiated mood datum with a modified timeout
-	// it is to be used as a vehicle to copy data from and then cleaned up afterwards.
-	// why do it this way? because the params list may contain numbers, and we may not necessarily want those to be interpreted as a timeout modifier.
-	// this is only used by the food quality system currently
-	var/datum/mood_event/mood_to_copy_from
-	if (istype(type, /datum/mood_event))
-		mood_to_copy_from = type
-		type = mood_to_copy_from.type
-	if (!ispath(type, /datum/mood_event))
-		CRASH("A non path ([type]), was used to add a mood event. This shouldn't be happening.")
+/datum/mood/proc/add_mood_event(category, new_type, ...)
+	if (!ispath(new_type, /datum/mood_event))
+		CRASH("A non path ([new_type]), was used to add a mood event. This shouldn't be happening.")
 	if (!istext(category))
 		category = REF(category)
 
-	var/datum/mood_event/the_event
-	if (mood_events[category])
-		the_event = mood_events[category]
-		if (the_event.type == type)
-			if (the_event.timeout)
-				if (!isnull(mood_to_copy_from))
-					the_event.timeout = mood_to_copy_from.timeout
-				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
-			qdel(mood_to_copy_from)
-			return // Don't need to update the event.
-
-		clear_mood_event(category)
 	var/list/params = args.Copy(3)
-
-	params.Insert(1, mob_parent)
-	the_event = new type(arglist(params))
-	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
+	var/datum/mood_event/new_event = new new_type(category)
+	if(!new_event.can_effect_mob(arglist(list(src, mob_parent) + params)))
+		qdel(new_event)
 		return
 
-	the_event.category = category
-	if (!isnull(mood_to_copy_from))
-		the_event.timeout = mood_to_copy_from.timeout
-	qdel(mood_to_copy_from)
-	mood_events[category] = the_event
-	update_mood()
+	var/datum/mood_event/existing_event = mood_events[category]
+	if(existing_event)
+		var/continue_adding = FALSE
+		if(existing_event.type == new_event.type)
+			continue_adding = existing_event.be_refreshed(arglist(list(src) + params))
+		else
+			continue_adding = existing_event.be_replaced(arglist(list(src, new_event) + params))
+		if(!continue_adding)
+			update_mood()
+			qdel(new_event)
+			return
+		clear_mood_event(category)
 
-	if (the_event.timeout)
-		the_event.timeout *= ((the_event.mood_change > 0) ? positive_moodlet_length_modifier : negative_moodlet_length_modifier)
-		addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
+	new_event.on_add(src, mob_parent, params)
+	mood_events[category] = new_event
+	update_mood()
 
 /**
  * Removes a mood event from the mob

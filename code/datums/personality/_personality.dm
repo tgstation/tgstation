@@ -98,7 +98,13 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 		list(
 			/datum/personality/apathetic,
 			/datum/personality/sensitive,
-		)
+		),
+		list(
+			/datum/personality/animal_friend,
+			/datum/personality/animal_disliker,
+			/datum/personality/cat_lover,
+			/datum/personality/dog_lover,
+		),
 	)
 	/// All personality singletons indexed by their type
 	var/list/personalities_by_type
@@ -386,7 +392,7 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	savefile_key = "whimsical"
 	name = "Whimsical"
 	desc = "This station is too serious sometimes, lighten up!"
-	pos_gameplay_desc = "Likes things that are ostensibly pointless"
+	pos_gameplay_desc = "Likes ostensibly pointless but silly things, and does not mind clownish pranks"
 
 /datum/personality/spiritual
 	savefile_key = "spiritual"
@@ -394,6 +400,7 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	desc = "I believe in a higher power."
 	pos_gameplay_desc = "Likes the Chapel and the Chaplain"
 	neg_gameplay_desc = "Dislikes heretical things"
+	personality_trait = TRAIT_SPIRITUAL
 
 /datum/personality/creative
 	savefile_key = "creative"
@@ -554,3 +561,29 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	name = "Uneducated"
 	desc = "I don't care much for books. Already know everything I need to know."
 	neg_gameplay_desc = "Dislikes reading books"
+
+/datum/personality/animal_friend
+	savefile_key = "animal_friend"
+	name = "Animal Friend"
+	desc = "I love animals!"
+	pos_gameplay_desc = "Likes being around pets"
+
+/datum/personality/cat_lover
+	savefile_key = "cat_lover"
+	name = "Cat Lover"
+	desc = "Cats are so cute!"
+	pos_gameplay_desc = "Likes being around cats"
+	neg_gameplay_desc = "Dislikes being around dogs"
+
+/datum/personality/dog_lover
+	savefile_key = "dog_lover"
+	name = "Dog Lover"
+	desc = "Dogs are the best!"
+	pos_gameplay_desc = "Likes being around dogs"
+	neg_gameplay_desc = "Dislikes being around cats"
+
+/datum/personality/animal_disliker
+	savefile_key = "animal_disliker"
+	name = "Animal Averse"
+	desc = "We can barely survive on this station, and you want to keep a pet?"
+	neg_gameplay_desc = "Dislikes being around pets"

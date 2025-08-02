@@ -151,8 +151,6 @@
 	ash.pixel_z = -5
 	ash.pixel_w = rand(-1, 1)
 
-#define DEATH_MOODLET "saw_death"
-
 /**
  * Sends a moodlet to all nearby living mobs that are not blind or unconscious
  * to indicate that they saw this mob die (and thus feel bad about it)
@@ -170,23 +168,7 @@
 	for(var/mob/living/nearby in viewers(src))
 		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
 			continue
-		var/datum/mood_event/existing = nearby.mob_mood?.mood_events[DEATH_MOODLET]
-		var/mood_amount_override
-		if(existing)
-			// The existing debuff gets worse
-			if(existing.type == moodlet)
-				existing.mood_change *= 1.5
-
-			// If you see a gib, it overrides seeing death straight up
-			else if(initial(existing.mood_change) < initial(moodlet.mood_change))
-				// But the penalty from the existing moodlet is maintained (if stronger)
-				mood_amount_override = min(existing.mood_change, initial(moodlet.mood_change))
-				// Either way get rid of the old because we're adding an entirely new one
-				nearby.clear_mood_event(DEATH_MOODLET, moodlet)
-
-		// Either applies the moodlet or resets existing moodlet timers
-		// Description is unchanged / mood_amount_override does nothing if the moodlet already exists
-		nearby.add_mood_event(DEATH_MOODLET, moodlet, src, mood_amount_override)
+		nearby.add_mood_event("saw_death", moodlet, src)
 
 /mob/living/silicon/send_death_moodlets(datum/mood_event/moodlet)
 	return // You are a machine
@@ -204,8 +186,6 @@
 	. = ..()
 	var/memory_type = ispath(moodlet, /datum/mood_event/see_death/gibbed) ? /datum/memory/witness_gib : /datum/memory/witnessed_death
 	add_memory_in_range(src, 7, memory_type, protagonist = src)
-
-#undef DEATH_MOODLET
 
 /*
  * Called when the mob dies. Can also be called manually to kill a mob.

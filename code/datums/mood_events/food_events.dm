@@ -31,30 +31,24 @@
 /datum/mood_event/food
 	timeout = 5 MINUTES
 	event_flags = MOOD_EVENT_FOOD
-	var/quality = FOOD_QUALITY_NORMAL
 
-/datum/mood_event/food/New(mob/M, ...)
-	. = ..()
-	mood_change = 2 + 2 * quality
+/datum/mood_event/food/add_effects(quality = FOOD_QUALITY_NORMAL, timeout_mod = 1)
+	mood_change = calculate_mood_change(quality)
+	timeout *= timeout_mod
 	description = "That food was [GLOB.food_quality_description[quality]]."
 
-/datum/mood_event/food/nice
-	quality = FOOD_QUALITY_NICE
+/datum/mood_event/food/be_refreshed(datum/mood/home, quality, timeout_mod)
+	var/old_mood = mood_change
+	// updates timeout (which is handled in parent call) and mood
+	timeout = max(timeout, initial(timeout) * timeout_mod)
+	mood_change = max(mood_change, calculate_mood_change(quality))
+	// if mood_change is the same, we don't need to update the description
+	if(old_mood != mood_change)
+		description = "That food was [GLOB.food_quality_description[quality]]."
+	return ..()
 
-/datum/mood_event/food/good
-	quality = FOOD_QUALITY_GOOD
-
-/datum/mood_event/food/verygood
-	quality = FOOD_QUALITY_VERYGOOD
-
-/datum/mood_event/food/fantastic
-	quality = FOOD_QUALITY_FANTASTIC
-
-/datum/mood_event/food/amazing
-	quality = FOOD_QUALITY_AMAZING
-
-/datum/mood_event/food/top
-	quality = FOOD_QUALITY_TOP
+/datum/mood_event/food/proc/calculate_mood_change(quality)
+	return 2 + 2 * quality
 
 /datum/mood_event/pacifist_eating_fish_item
 	description = "I shouldn't be eating living creatures..."

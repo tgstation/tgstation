@@ -105,8 +105,6 @@
 /datum/mood_event/poster_mood
 	description = "That poster is really motivating me!"
 	mood_change = 2
-	category = POSTER_MOOD_CAT
-
 
 // random posters
 
