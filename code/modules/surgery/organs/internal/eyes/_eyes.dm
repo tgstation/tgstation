@@ -91,7 +91,7 @@
 			eye_color_left = as_human.eye_color_left
 		if (!eye_color_right)
 			eye_color_right = as_human.eye_color_right
-	refresh(receiver, call_update = !special)
+	refresh(receiver)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(receiver, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_wash))
 	if (scarring)
