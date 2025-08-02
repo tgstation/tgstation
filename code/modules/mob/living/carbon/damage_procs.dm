@@ -102,7 +102,7 @@
  * Arguments:
  * *  required_bodytype - The bodytype(s) to match against.
  */
-/mob/living/carbon/getBruteLossForType(required_bodytype = ALL)
+/mob/living/carbon/proc/getBruteLossForType(required_bodytype = ALL)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.bodytype & required_bodytype))
