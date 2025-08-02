@@ -2580,6 +2580,7 @@
 	. = ..()
 
 	var/list/color_list = pick(possible_colors)
+
 	var/datum/reagents/our_holder = src.holder
 	var/our_volume = src.volume
 	var/list/our_data = list("colors" = color_list)
