@@ -18,13 +18,17 @@
 		return damage * 1.5
 	return ..()
 
-/datum/blobstrain/reagent/explosive_lattice/on_sporedeath(mob/living/spore)
-	var/obj/effect/temp_visual/explosion/fast/effect = new /obj/effect/temp_visual/explosion/fast(get_turf(spore))
+/datum/blobstrain/reagent/explosive_lattice/on_sporedeath(mob/living/dead_spore, death_cloud_size)
+	var/obj/effect/temp_visual/explosion/fast/effect = new /obj/effect/temp_visual/explosion/fast(get_turf(dead_spore))
 	effect.alpha = 150
-	for(var/mob/living/actor in orange(get_turf(spore), 1))
+	for(var/mob/living/actor in orange(get_turf(dead_spore), death_cloud_size))
 		if(ROLE_BLOB in actor.faction) // No friendly fire
 			continue
-		actor.take_overall_damage(10, 10)
+		//increases damage to mobs if death_cloud_size is increased, but the damage falls off with distance.
+		var/damage_total = (10 + 10 * death_cloud_size) / max(1, get_dist(get_turf(dead_spore), get_turf(actor)))
+		//split damage between brute and burn
+		actor.take_overall_damage(damage_total / 2, damage_total / 2)
+		playsound(dead_spore , 'sound/effects/explosion/explosion2.ogg', 20 + 20 * death_cloud_size, TRUE)
 
 /datum/reagent/blob/explosive_lattice
 	name = "Explosive Lattice"
@@ -38,7 +42,7 @@
 	var/bomb_armor = 0
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 
-	if(reac_volume >= 10) // If it's not coming from a sporecloud, AOE 'explosion' damage
+	if(reac_volume > 10) // If it's not coming from a sporecloud, AOE 'explosion' damage
 		var/epicenter_turf = get_turf(exposed_mob)
 		var/obj/effect/temp_visual/explosion/fast/ex_effect = new /obj/effect/temp_visual/explosion/fast(get_turf(exposed_mob))
 		ex_effect.alpha = 150

@@ -18,7 +18,7 @@
 	var/datum/callback/should_modify_speech = null
 
 /datum/component/speechmod/Initialize(replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE, should_modify_speech)
-	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation/human))
+	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation))
 		return COMPONENT_INCOMPATIBLE
 
 	src.replacements = replacements
@@ -28,7 +28,7 @@
 	src.uppercase = uppercase
 	src.should_modify_speech = should_modify_speech
 
-	if (istype(parent, /datum/mutation/human))
+	if (istype(parent, /datum/mutation))
 		RegisterSignal(parent, COMSIG_MUTATION_GAINED, PROC_REF(on_mutation_gained))
 		RegisterSignal(parent, COMSIG_MUTATION_LOST, PROC_REF(on_mutation_lost))
 		return

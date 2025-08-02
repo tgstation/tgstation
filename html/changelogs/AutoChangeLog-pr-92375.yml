@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed fire arrow ritual not being accessible"
+  - bugfix: "Fixed certain nullrod types not being usable for certain holy and unholy interactions"

@@ -4,7 +4,7 @@ import { Stack } from 'tgui-core/components';
 
 import { BeakerDisplay } from './Beaker';
 import { SpecimenDisplay } from './Specimen';
-import { Data } from './types';
+import type { Data } from './types';
 
 export const Pandemic = (props) => {
   const { data } = useBackend<Data>();

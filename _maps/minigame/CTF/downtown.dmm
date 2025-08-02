@@ -73,7 +73,7 @@
 /turf/open/floor/wood,
 /area/centcom/ctf)
 "bA" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
@@ -220,7 +220,7 @@
 /area/centcom/ctf)
 "ff" = (
 /obj/effect/turf_decal/siding/white,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/barricade/sandbags{
 	resistance_flags = 64
 	},
@@ -354,7 +354,7 @@
 /area/centcom/ctf)
 "hF" = (
 /obj/effect/turf_decal/siding/yellow,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "hK" = (
@@ -1016,7 +1016,7 @@
 /turf/open/floor/wood,
 /area/centcom/ctf)
 "xD" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/barricade/security/ctf,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
@@ -1038,7 +1038,7 @@
 /area/centcom/ctf)
 "yp" = (
 /obj/effect/turf_decal/siding/yellow,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/barricade/security/ctf,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -1687,7 +1687,7 @@
 /area/centcom/ctf)
 "KV" = (
 /obj/effect/turf_decal/siding/white,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Ll" = (
@@ -1812,7 +1812,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Oc" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Oe" = (
@@ -1911,7 +1911,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Qw" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "QC" = (

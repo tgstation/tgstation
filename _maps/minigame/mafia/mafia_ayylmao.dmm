@@ -9,10 +9,6 @@
 /obj/effect/landmark/mafia,
 /turf/open/floor/plating/abductor,
 /area/centcom/mafia)
-"f" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/closed/indestructible/alien,
-/area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
 /obj/effect/mapping_helpers/broken_floor,
@@ -573,7 +569,7 @@ q
 b
 b
 r
-f
+b
 q
 b
 b

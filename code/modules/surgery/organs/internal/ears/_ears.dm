@@ -160,7 +160,7 @@
 	preference = "feature_human_ears"
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
-	dna_block = DNA_EARS_BLOCK
+	dna_block = /datum/dna_block/feature/ears
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears
 
@@ -168,7 +168,7 @@
 /datum/bodypart_overlay/mutant/cat_ears
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	color_source = ORGAN_COLOR_HAIR
-	feature_key = "ears"
+	feature_key = FEATURE_EARS
 	dyable = TRUE
 
 	/// Layer upon which we add the inner ears overlay
@@ -204,6 +204,13 @@
 
 /datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return // We color base ears manually above in get_image
+
+/obj/item/organ/ears/ghost
+	name = "ghost ears"
+	desc = "All the more to hear you... though it can't hear through walls."
+	icon_state = "ears-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 /obj/item/organ/ears/penguin
 	name = "penguin ears"

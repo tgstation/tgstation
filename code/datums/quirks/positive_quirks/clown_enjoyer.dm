@@ -24,7 +24,7 @@
 	)
 
 /datum/quirk/item_quirk/clown_enjoyer/add_unique(client/client_source)
-	give_item_to_holder(/obj/item/clothing/accessory/clown_enjoyer_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(/obj/item/clothing/accessory/clown_enjoyer_pin, list(LOCATION_BACKPACK, LOCATION_HANDS))
 
 /datum/quirk/item_quirk/clown_enjoyer/add(client/client_source)
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]

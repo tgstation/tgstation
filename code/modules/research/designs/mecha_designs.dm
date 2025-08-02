@@ -615,7 +615,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_ccw_armor
-	name = "Reactive Armor Booster Module"
+	name = "Exosuit Impact Cushion Plates"
 	desc = "Exosuit-mounted melee armor booster."
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
@@ -636,11 +636,32 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_proj_armor
-	name = "Reflective Armor Booster Module"
+	name = "Exosuit Projectile Shielding"
 	desc = "Exosuit-mounted ranged armor booster."
 	id = "mech_proj_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT * 2.5)
+	construction_time = 10 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_emp_armor
+	name = "Exosuit Ablative Insulation"
+	desc = "Exosuit-mounted energy and EMP armor booster. WARNING: This retrofit compromises exosuit hull plating stress points."
+	id = "mech_emp_armor"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT * 2.5)
 	construction_time = 10 SECONDS
 	category = list(

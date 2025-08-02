@@ -454,3 +454,4 @@
 	overlay_state = "meatsicle"
 	foodtypes = RAW | MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)

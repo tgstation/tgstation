@@ -23,6 +23,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/choice
 	var/next_page = FALSE
 	var/tooltips = FALSE
+	var/tooltip_theme
 
 /atom/movable/screen/radial/slice/set_parent(new_value)
 	. = ..()
@@ -36,7 +37,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	else
 		icon_state = "[parent.radial_slice_icon]_focus"
 	if(tooltips)
-		openToolTip(usr, src, params, title = name)
+		openToolTip(usr, src, params, title = name, theme = tooltip_theme)
 	if (click_on_hover && !isnull(usr) && !isnull(parent))
 		Click(location, control, params)
 
@@ -258,12 +259,15 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			var/atom/movable/AM = choices_values[choice_id] //Movables only
 			E.name = AM.name
 		E.choice = choice_id
+		E.tooltip_theme = choice_datum?.tooltip_theme
 		E.maptext = null
 		E.next_page = FALSE
 		if(choices_icons[choice_id])
 			E.add_overlay(choices_icons[choice_id])
 		if (choice_datum?.info)
 			var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
+			info_button.name = "Info: [E.name]"
+			info_button.tooltip_theme = choice_datum.tooltip_theme
 			SET_PLANE_EXPLICIT(info_button, ABOVE_HUD_PLANE, anchor)
 			info_button.layer = RADIAL_CONTENT_LAYER
 			E.vis_contents += info_button
@@ -432,6 +436,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	/// If provided, will display an info button that will put this text in your chat
 	var/info
+
+	/// If provided, changes the tooltip theme for this choice
+	var/tooltip_theme
 
 /datum/radial_menu_choice/Destroy(force)
 	. = ..()

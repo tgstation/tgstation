@@ -8,6 +8,7 @@
 
 /// Returns one of the human blood types at random, weighted by their rarity
 /proc/random_human_blood_type()
+	RETURN_TYPE(/datum/blood_type)
 	return get_blood_type(pick_weight(
 		list(
 			BLOOD_TYPE_O_MINUS = 4,
@@ -708,10 +709,6 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		slot_strings += "hand"
 	if(slot_flags & ITEM_SLOT_DEX_STORAGE)
 		slot_strings += "dextrous storage"
-	if(slot_flags & ITEM_SLOT_BACKPACK)
-		slot_strings += "backpack"
-	if(slot_flags & ITEM_SLOT_BELTPACK)
-		slot_strings += "belt" // ?
 	return slot_strings
 
 ///Returns the direction that the initiator and the target are facing

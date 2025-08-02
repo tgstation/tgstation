@@ -83,10 +83,16 @@
 					if("Both")
 						adding_flags |= ALL
 
-				if(LAZYACCESS(language_holder.blocked_languages, language_datum))
-					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", list("Yes", "No"))
+				var/ask_to_remove_block
+				var/list/block_being_removed_on = list()
+				if(adding_flags & SPOKEN_LANGUAGE && LAZYACCESS(language_holder.blocked_speaking, language_datum))
+					ask_to_remove_block = TRUE
+					block_being_removed_on += "spoken"
+
+				if(ask_to_remove_block)
+					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be [block_being_removed_on.Join(" or ")]?", "[language_datum]", list("Yes", "No"))
 					if(choice == "Yes")
-						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
+						language_holder.remove_blocked_language(language_datum, adding_flags, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, adding_flags)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(speaker)].")

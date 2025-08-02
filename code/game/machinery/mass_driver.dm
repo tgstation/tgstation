@@ -54,7 +54,7 @@
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 
-/obj/machinery/mass_driver/attackby(obj/item/item, mob/living/user, list/modifiers)
+/obj/machinery/mass_driver/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 
 	if(is_wire_tool(item) && panel_open)
 		wires.interact(user)

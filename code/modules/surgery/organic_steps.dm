@@ -32,13 +32,14 @@
 /datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if ishuman(target)
 		var/mob/living/carbon/human/human_target = target
-		if (!HAS_TRAIT(human_target, TRAIT_NOBLOOD))
+		if (human_target.can_bleed())
+			var/blood_name = human_target.get_bloodtype()?.get_blood_name() || "Blood"
 			display_results(
 				user,
 				target,
-				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
-				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
-				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+				span_notice("[blood_name] pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+				span_notice("[blood_name] pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+				span_notice("[blood_name] pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 			)
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)

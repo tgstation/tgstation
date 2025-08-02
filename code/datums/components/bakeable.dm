@@ -29,6 +29,18 @@
 	if(positive_result)
 		ADD_TRAIT(parent, TRAIT_BAKEABLE, REF(src))
 
+
+	var/obj/item/item_target = parent
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !positive_result || !item_target.custom_materials)
+		return
+
+	var/atom/result = new bake_result
+	if(!item_target.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when baked compared to just spawned don't match"
+		var/what_it_should_be = item_target.get_materials_english_list()
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 // Inherit the new values passed to the component
 /datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
 	if(!original)
@@ -79,6 +91,10 @@
 		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
 		if(added_reagents) // Add any new reagents that should be added
 			baked_result.reagents.add_reagent_list(added_reagents)
+		if(istype(original_object, /obj/item/food) && istype(baked_result, /obj/item/food))
+			var/obj/item/food/original_food = original_object
+			var/obj/item/food/baked_food = baked_result
+			LAZYADD(baked_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)

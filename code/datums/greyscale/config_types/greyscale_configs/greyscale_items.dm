@@ -274,7 +274,7 @@
 	json_config = 'code/datums/greyscale/json_configs/vape.json'
 
 /datum/greyscale_config/vape/worn
-	name = "Worn Vape"
+	name = "Vape (Worn)"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape_worn.json'
 
@@ -315,12 +315,12 @@
 	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes.json'
 
 /datum/greyscale_config/tape_piece/worn
-	name = "Worn Tape Piece"
+	name = "Tape Piece (Worn)"
 	icon_file = 'icons/obj/tapes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tape_piece_worn.json'
 
 /datum/greyscale_config/tape_piece/worn/spikes
-	name = "Worn Spiked Tape Piece"
+	name = "Spiked Tape Piece (Worn)"
 	icon_file = 'icons/obj/tapes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'
 
@@ -347,7 +347,7 @@
 	json_config = 'code/datums/greyscale/json_configs/simple_flower.json'
 
 /datum/greyscale_config/flower_simple_worn
-	name = "Flower Worn"
+	name = "Flower (Worn)"
 	icon_file = 'icons/mob/clothing/head/hydroponics.dmi'
 	json_config = 'code/datums/greyscale/json_configs/simple_flower_worn.json'
 
@@ -355,3 +355,8 @@
 	name = "Piggy Bank"
 	icon_file = 'icons/obj/fluff/general.dmi'
 	json_config = 'code/datums/greyscale/json_configs/piggy_bank.json'
+
+/datum/greyscale_config/mod_core_soul
+	name = "MOD Soul Core"
+	icon_file = 'icons/obj/clothing/modsuit/mod_construction.dmi'
+	json_config = 'code/datums/greyscale/json_configs/mod_core_soul.json'

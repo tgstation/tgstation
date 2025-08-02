@@ -3,7 +3,7 @@
 	roundend_category = "spies"
 	antagpanel_category = "Spy"
 	antag_hud_name = "spy"
-	job_rank = ROLE_SPY
+	pref_flag = ROLE_SPY
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 1
 	ui_name = "AntagInfoSpy"

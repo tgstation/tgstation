@@ -5,7 +5,7 @@
 #define ATTACK_CLOAK "Dark Cloak"
 #define ATTACK_SHATTER "Shatter"
 
-/obj/item/organ/cyberimp/arm/shard
+/obj/item/organ/cyberimp/arm/toolkit/shard
 	name = "dark spoon shard"
 	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
@@ -15,7 +15,7 @@
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/obj/item/organ/cyberimp/arm/shard/attack_self(mob/user, modifiers)
+/obj/item/organ/cyberimp/arm/toolkit/shard/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
@@ -24,15 +24,15 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/cyberimp/arm/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/cyberimp/arm/toolkit/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
 	return
 
-/obj/item/organ/cyberimp/arm/shard/katana
+/obj/item/organ/cyberimp/arm/toolkit/shard/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
 	items_to_create = list(/obj/item/cursed_katana)
 
-/obj/item/organ/cyberimp/arm/shard/katana/Retract()
+/obj/item/organ/cyberimp/arm/toolkit/shard/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
@@ -99,7 +99,7 @@
 	if(isturf(loc))
 		qdel(src)
 
-/obj/item/cursed_katana/attack(mob/living/target, mob/user, list/modifiers)
+/obj/item/cursed_katana/attack(mob/living/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(target.stat < DEAD && target != user)
 		drew_blood = TRUE
 		if(ismining(target))
@@ -107,8 +107,8 @@
 	return ..()
 
 /obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/cursed_katana/proc/can_combo_attack(mob/user, mob/living/target)
@@ -122,7 +122,7 @@
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(strike_throw_impact))
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, 5, 3, user, FALSE, gentle = TRUE)
-	target.apply_damage(damage = 17, bare_wound_bonus = 10)
+	target.apply_damage(damage = 17, exposed_wound_bonus = 10)
 	to_chat(target, span_userdanger("You've been struck by [user]!"))
 	user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
@@ -153,7 +153,7 @@
 		user.do_attack_animation(turf, ATTACK_EFFECT_SLASH)
 		for(var/mob/living/additional_target in turf)
 			if(user.Adjacent(additional_target) && additional_target.density)
-				additional_target.apply_damage(damage = 15, sharpness = SHARP_EDGED, bare_wound_bonus = 10)
+				additional_target.apply_damage(damage = 15, sharpness = SHARP_EDGED, exposed_wound_bonus = 10)
 				to_chat(additional_target, span_userdanger("You've been sliced by [user]!"))
 	target.apply_damage(damage = 5, sharpness = SHARP_EDGED, wound_bonus = 10)
 
@@ -199,7 +199,7 @@
 		span_notice("You dash through [target]!"))
 	to_chat(target, span_userdanger("[user] dashes through you!"))
 	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
-	target.apply_damage(damage = 17, sharpness = SHARP_POINTY, bare_wound_bonus = 10)
+	target.apply_damage(damage = 17, sharpness = SHARP_POINTY, exposed_wound_bonus = 10)
 	var/turf/dash_target = get_turf(target)
 	for(var/distance in 0 to 8)
 		var/turf/current_dash_target = dash_target

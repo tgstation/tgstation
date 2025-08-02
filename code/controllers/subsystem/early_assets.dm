@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(early_assets)
 	name = "Early Assets"
 	dependencies = list(
 		/datum/controller/subsystem/processing/reagents,
-		/datum/controller/subsystem/processing/greyscale,
+		/datum/controller/subsystem/greyscale_previews,
 	)
 	dependents = list(
 		/datum/controller/subsystem/mapping,
@@ -17,6 +17,9 @@ SUBSYSTEM_DEF(early_assets)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/early_assets/Initialize()
+	var/init_source = "early assets"
+	SSatoms.set_tracked_initalized(INITIALIZATION_INNEW_REGULAR, init_source)
+
 	for (var/datum/asset/asset_type as anything in subtypesof(/datum/asset))
 		if (initial(asset_type._abstract) == asset_type)
 			continue
@@ -28,5 +31,7 @@ SUBSYSTEM_DEF(early_assets)
 			stack_trace("Could not initialize early asset [asset_type]!")
 
 		CHECK_TICK
+
+	SSatoms.clear_tracked_initalize(init_source)
 
 	return SS_INIT_SUCCESS

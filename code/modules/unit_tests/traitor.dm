@@ -1,7 +1,7 @@
 /datum/unit_test/traitor/Run()
 	var/datum/dynamic_ruleset/roundstart/traitor/traitor_ruleset = allocate(/datum/dynamic_ruleset/roundstart/traitor)
 	var/list/possible_jobs = list()
-	var/list/restricted_roles = traitor_ruleset.restricted_roles
+	var/list/restricted_roles = traitor_ruleset.get_blacklisted_roles()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(!(job.job_flags & JOB_CREW_MEMBER))
 			continue

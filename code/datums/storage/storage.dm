@@ -23,6 +23,8 @@
 	/// List of all the mobs currently viewing the contents of this storage.
 	VAR_PRIVATE/list/mob/is_using = list()
 
+	///The type of storage interface this datum uses.
+	var/datum/storage_interface/storage_type = /datum/storage_interface
 	/// Associated list that keeps track of all storage UI datums per person.
 	VAR_PRIVATE/list/datum/storage_interface/storage_interfaces = null
 
@@ -133,7 +135,10 @@
 	max_slots = src.max_slots,
 	max_specific_storage = src.max_specific_storage,
 	max_total_storage = src.max_total_storage,
+	rustle_sound = src.rustle_sound,
+	remove_rustle_sound = src.remove_rustle_sound,
 )
+
 	if(!istype(parent))
 		stack_trace("Storage datum ([type]) created without a [isnull(parent) ? "null parent" : "invalid parent ([parent.type])"]!")
 		qdel(src)
@@ -145,6 +150,8 @@
 	src.max_slots = max_slots
 	src.max_specific_storage = max_specific_storage
 	src.max_total_storage = max_total_storage
+	src.rustle_sound = rustle_sound
+	src.remove_rustle_sound = remove_rustle_sound
 
 /datum/storage/Destroy()
 
@@ -460,7 +467,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * Arguments
  * * obj/item/to_insert - the item we're inserting
  * * mob/user - (optional) the user who is inserting the item.
- * * override - see item_insertion_feedback()
+ * * override - skip feedback, only do the animation
  * * force - bypass locked storage up to a certain level. See [code/__DEFINES/storage.dm]
  * * messages - if TRUE, we will create balloon alerts for the user.
  */
@@ -475,6 +482,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
+	if(get(real_location, /mob) != user)
+		to_insert.do_pickup_animation(real_location, user)
 	return TRUE
 
 /// Since items inside storages ignore transparency for QOL reasons, we're tracking when things are dropped onto them instead of our UI elements
@@ -822,8 +831,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(dest_object.atom_storage)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
-		if(do_rustle)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		if(do_rustle && rustle_sound)
+			playsound(parent, rustle_sound, 50, TRUE, -5)
 
 		for(var/obj/item/to_dump in real_location)
 			dest_object.atom_storage.attempt_insert(to_dump, user)
@@ -858,9 +867,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /// Called directly from the attack chain if [insert_on_attack] is TRUE.
 /// Handles inserting an item into the storage when clicked.
 /datum/storage/proc/item_interact_insert(mob/living/user, obj/item/thing)
-	if(iscyborg(user))
-		return ITEM_INTERACT_BLOCKING
-
 	attempt_insert(thing, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -920,12 +926,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
-/datum/storage/proc/open_storage(mob/to_show)
+/datum/storage/proc/open_storage(mob/living/to_show)
 	if(isobserver(to_show))
 		show_contents(to_show)
 		return FALSE
 
 	if(!isliving(to_show) || !to_show.can_perform_action(parent, ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
+		return FALSE
+
+	//because of the check above, it's safe to assume we're living now.
+	if(!(to_show.mobility_flags & MOBILITY_STORAGE))
 		return FALSE
 
 	if(locked)
@@ -1039,7 +1049,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/ui_style = ui_style2icon(to_show.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	if (isnull(storage_interfaces[to_show]))
-		storage_interfaces[to_show] = new /datum/storage_interface(ui_style, src)
+		storage_interfaces[to_show] = new storage_type(ui_style, src, to_show)
 
 	orient_storage()
 
@@ -1107,34 +1117,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	for (var/mob/ui_user as anything in storage_interfaces)
 		if (isnull(storage_interfaces[ui_user]))
 			continue
-		storage_interfaces[ui_user].update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
-
-	var/current_x = screen_start_x
-	var/current_y = screen_start_y
-	var/turf/our_turf = get_turf(real_location)
-
-	var/list/obj/storage_contents = list()
-	if (islist(numbered_contents))
-		for(var/content_type in numbered_contents)
-			var/datum/numbered_display/numberdisplay = numbered_contents[content_type]
-			storage_contents[numberdisplay.sample_object] = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
-	else
-		for(var/obj/item as anything in real_location)
-			storage_contents[item] = ""
-
-	for(var/obj/item as anything in storage_contents)
-		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
-		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
-		item.maptext = storage_contents[item]
-		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
-		current_x++
-		if(current_x - screen_start_x < columns)
-			continue
-		current_x = screen_start_x
-
-		current_y++
-		if(current_y - screen_start_y >= rows)
-			break
+		storage_interfaces[ui_user].update_position(
+			screen_start_x,
+			screen_pixel_x,
+			screen_start_y,
+			screen_pixel_y,
+			columns,
+			rows,
+			ui_user,
+			real_location,
+			numbered_contents,
+		)
 
 /**
  * Toggles the collectmode of our storage.

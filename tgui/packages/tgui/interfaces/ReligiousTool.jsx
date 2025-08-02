@@ -72,11 +72,11 @@ const SectTab = (props) => {
       <Stack fill vertical fontSize="15px" textAlign="center">
         <Stack.Item mt={2} fontSize="32px">
           <Icon name={icon} color={ALIGNMENT2COLOR[alignment]} />
-          {' ' + name + ' '}
+          {` ${name} `}
           <Icon name={icon} color={ALIGNMENT2COLOR[alignment]} />
         </Stack.Item>
         <Stack.Item grow mb={2} color="grey">
-          {'"' + quote + '"'}
+          {`"${quote}"`}
         </Stack.Item>
         <Stack.Item color={favor === 0 ? 'white' : 'green'}>
           {favordesc}
@@ -86,8 +86,8 @@ const SectTab = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Section mx={3} mt={-1} title="Wanted Sacrifices">
-            {(!wanted && deity + " doesn't want any sacrifices.") ||
-              deity + ' wishes for ' + wanted + '.'}
+            {(!wanted && `${deity} doesn't want any sacrifices.`) ||
+              `${deity} wishes for ${wanted}.`}
           </Section>
         </Stack.Item>
       </Stack>
@@ -115,7 +115,7 @@ const SectSelectTab = (props) => {
                     />
                   </Stack.Item>
                   <Stack.Item grow>{sect.name}</Stack.Item>
-                  <Stack.Item italic>{'"' + sect.quote + '"'}</Stack.Item>
+                  <Stack.Item italic>{`"${sect.quote}"`}</Stack.Item>
                 </Stack>
               }
               color="transparent"

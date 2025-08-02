@@ -224,11 +224,18 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			return TRUE
 
 		if("view_variables")
+			if(!check_rights_for(ui.user.client, R_DEBUG))
+				message_admins(
+					"[key_name(ui.user)] tried to view master controller variables while having improper rights, \
+					this is potentially a malicious exploit and worth noting."
+				)
+
 			var/datum/controller/subsystem/subsystem = locate(params["ref"]) in subsystems
 			if(isnull(subsystem))
 				to_chat(ui.user, span_warning("Failed to locate subsystem."))
 				return
-			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/debug_variables, subsystem)
+
+			ui.user.client.debug_variables(subsystem)
 			return TRUE
 
 /datum/controller/master/proc/check_and_perform_fast_update()
@@ -514,7 +521,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	if(result != SS_INIT_FAILURE)
 		// Some form of success, implicit failure, or the SS in unused.
 		subsystem.initialized = TRUE
-
 		SEND_SIGNAL(subsystem, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	else
 		// The subsystem officially reports that it failed to init and wishes to be treated as such.

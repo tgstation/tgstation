@@ -26,7 +26,7 @@
 	if(isobj(atom_parent) && atom_parent.uses_integrity)
 		RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_object_damaged))
 
-/datum/component/holographic_nature/proc/on_mob_damaged(mob/living/source, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/datum/component/holographic_nature/proc/on_mob_damaged(mob/living/source, damage_amount, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 	if(damagetype == BURN || damagetype == BRUTE)
 		apply_effects()

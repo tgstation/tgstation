@@ -232,36 +232,38 @@
 	armor_type = /obj/item/clothing/suit/hooded/cultrobes/cult_shield::armor_type
 
 /**
- * Flagellant's robes
- * Special type gained from the daemon forge.
- * Provides negative armor and no protection against space,
- * but gives you a 30% (60% if hooded) speed boost to the user.
+ * Zealot's blindfold
+ * Version of night vision health HUDs that only cultists can use.
+ * Will deal eye damage overtime to non-cultists.
  */
-/obj/item/clothing/suit/hooded/cultrobes/berserker
-	name = "flagellant's robes"
-	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage. Provides an even greater speed boost if its hood is worn."
-	armor_type = /datum/armor/cultrobes_berserker
-	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
+/obj/item/clothing/glasses/hud/health/night/cultblind
+	name = "zealot's blindfold"
+	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
+	icon_state = "blindfold"
+	inhand_icon_state = "blindfold"
+	flags_cover = GLASSESCOVERSEYES
+	flash_protect = FLASH_PROTECTION_WELDER
+	actions_types = null
+	color_cutoffs = list(40, 0, 0) //red
+	glass_colour_type = null
 
-/datum/armor/cultrobes_berserker
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
+/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		START_PROCESSING(SSprocessing, src)
 
-/obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
-	..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
+/obj/item/clothing/glasses/hud/health/night/cultblind/dropped(mob/living/user)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
 
-/obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
-	name = "flagellant's hood"
-	desc = "A blood-soaked hood infused with dark magic."
-	armor_type = /obj/item/clothing/suit/hooded/cultrobes/berserker::armor_type
-	slowdown = /obj/item/clothing/suit/hooded/cultrobes/berserker::slowdown
+/obj/item/clothing/glasses/hud/health/night/cultblind/process(seconds_per_tick)
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || IS_CULTIST(wearer))
+		return
+	var/obj/item/organ/eyes/eyes = wearer.get_organ_slot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		return
+	if(!eyes.apply_organ_damage(1))
+		return
+	if(SPT_PROB(3, seconds_per_tick))
+		to_chat(wearer, span_danger("You feel [src] digging into your eyes, burning [eyes.p_them()] up!"))

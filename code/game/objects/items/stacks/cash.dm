@@ -28,7 +28,7 @@
 /obj/item/stack/spacecash/get_item_credit_value()
 	return (amount*value)
 
-/obj/item/stack/spacecash/merge(obj/item/stack/S)
+/obj/item/stack/spacecash/merge(obj/item/stack/target_stack, limit)
 	. = ..()
 	update_desc()
 

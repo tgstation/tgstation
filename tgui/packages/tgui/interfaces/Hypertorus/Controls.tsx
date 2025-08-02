@@ -10,9 +10,9 @@ import {
   Section,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { HypertorusFilter } from '.';
+import type { HypertorusFilter } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type ComboProps = {
@@ -94,7 +94,7 @@ const ComboKnob = (props: ComboProps) => {
         maxValue={maxValue}
         step={step}
         stepPixelSize={1}
-        onDrag={(_, v) => act(parameter, { [parameter]: v })}
+        onChange={(_, v) => act(parameter, { [parameter]: v })}
         {...rest}
       />
       <Button

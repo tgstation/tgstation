@@ -80,7 +80,6 @@
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = poll_question,
 		check_jobban = ban_type,
-		role = ban_type,
 		poll_time = poll_length,
 		checked_target = parent,
 		ignore_category = poll_ignore_key,

@@ -16,15 +16,17 @@ function escapeRegex(string) {
 }
 
 export async function removeGuideComments({ github, context }) {
-  const originalBody = (await github.rest.pulls.get({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    pull_number: context.payload.pull_request.number,
-  })).data.body;
+  const originalBody = (
+    await github.rest.pulls.get({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      pull_number: context.payload.pull_request.number,
+    })
+  ).data.body;
 
   if (!originalBody) {
-	console.log("PR body is empty, skipping...");
-	return;
+    console.log("PR body is empty, skipping...");
+    return;
   }
 
   let newBody = originalBody;
@@ -32,7 +34,7 @@ export async function removeGuideComments({ github, context }) {
   for (const comment of comments) {
     newBody = newBody.replace(
       new RegExp(`^\\s*${escapeRegex(comment)}\\s*`, "gm"),
-      "\n"
+      "\n",
     );
   }
 

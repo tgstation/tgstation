@@ -254,7 +254,7 @@
 		return
 
 	if(default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool))
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
@@ -319,7 +319,7 @@
 		return
 
 	if(default_change_direction_wrench(user, tool))
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -330,7 +330,7 @@
 
 /obj/machinery/cryo_cell/set_occupant(atom/movable/new_occupant)
 	. = ..()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/cryo_cell/RefreshParts()
 	. = ..()
@@ -364,7 +364,7 @@
 	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
 	on = active
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	if(on) //Turned on

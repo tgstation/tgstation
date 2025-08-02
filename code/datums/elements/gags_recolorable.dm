@@ -5,25 +5,28 @@
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine))
 
 /datum/element/gags_recolorable/proc/on_examine(atom/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	examine_text += span_notice("Now utilising PPP recolouring technology, capable of absorbing paint and pigments for changing its colours!")
 
-/datum/element/gags_recolorable/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/datum/element/gags_recolorable/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/toy/crayon/spraycan/item, modifiers)
 	SIGNAL_HANDLER
 
-	if(!istype(attacking_item, /obj/item/toy/crayon/spraycan))
-		return
-	var/obj/item/toy/crayon/spraycan/can = attacking_item
+	if(!istype(item))
+		return NONE
 
-	if(can.is_capped || can.check_empty())
-		return
+	if(item.is_capped)
+		user.balloon_alert(user, "take the cap off first!")
+		return ITEM_INTERACT_BLOCKING
+	if(item.check_empty())
+		user.balloon_alert(user, "empty!")
+		return ITEM_INTERACT_BLOCKING
 
-	INVOKE_ASYNC(src, PROC_REF(open_ui), user, can, source)
-	return COMPONENT_NO_AFTERATTACK
+	INVOKE_ASYNC(src, PROC_REF(open_ui), user, item, source)
+	return ITEM_INTERACT_SUCCESS
 
 /datum/element/gags_recolorable/proc/open_ui(mob/user, obj/item/toy/crayon/spraycan/can, atom/target)
 	var/list/allowed_configs = list()
@@ -42,7 +45,7 @@
 
 	var/datum/greyscale_modify_menu/spray_paint/menu = new(
 		target, user, allowed_configs, CALLBACK(src, PROC_REF(recolor), user, can, target),
-		starting_icon_state = initial(target.icon_state),
+		starting_icon_state = target::post_init_icon_state || target::icon_state,
 		starting_config = initial(target.greyscale_config),
 		starting_colors = target.greyscale_colors,
 		used_spraycan = can,

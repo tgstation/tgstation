@@ -9,7 +9,7 @@ import {
 } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
 
-import { Data } from './types';
+import type { Data } from './types';
 
 /** Displays loaded container info, if it exists */
 export const BeakerDisplay = (props) => {

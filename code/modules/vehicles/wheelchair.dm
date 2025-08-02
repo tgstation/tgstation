@@ -59,10 +59,12 @@
 	update_appearance()
 
 /// When you ring your bell and are armed try to explode
-/obj/vehicle/ridden/wheelchair/proc/on_bell_rang()
+/obj/vehicle/ridden/wheelchair/proc/on_bell_rang(obj/source, mob/user)
 	SIGNAL_HANDLER
 	if (prob(80))
 		return
+	if (bomb_attached)
+		bomb_attached.add_hiddenprint(user)
 	detonate_bomb()
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/tool) //Attackby should stop it attacking the wheelchair after moving away during decon

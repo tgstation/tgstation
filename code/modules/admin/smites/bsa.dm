@@ -11,7 +11,7 @@
 	. = ..()
 
 	explosion(target.loc, explosion_cause = src)
-
+	new /obj/effect/temp_visual/bsa_impact(target.loc)
 	var/turf/open/floor/target_turf = get_turf(target)
 	if (istype(target_turf))
 		if (prob(BSA_CHANCE_TO_BREAK_TILE_TO_PLATING))

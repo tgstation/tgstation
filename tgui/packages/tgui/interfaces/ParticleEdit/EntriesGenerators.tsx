@@ -12,11 +12,11 @@ import {
 import { useBackend } from '../../backend';
 import { ParticleContext } from '.';
 import {
-  EntryGeneratorNumbersListProps,
-  FloatGeneratorColorProps,
-  FloatGeneratorProps,
+  type EntryGeneratorNumbersListProps,
+  type FloatGeneratorColorProps,
+  type FloatGeneratorProps,
   P_DATA_GENERATOR,
-  ParticleUIData,
+  type ParticleUIData,
   RandToNumber,
 } from './data';
 import { GeneratorListEntry } from './Generators';
@@ -45,7 +45,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
                 var: var_name,
                 var_mod: !Array.isArray(float) ? P_DATA_GENERATOR : null,
                 new_value: !Array.isArray(float)
-                  ? ['num', 0, 1, RandToNumber['UNIFORM_RAND']]
+                  ? ['num', 0, 1, RandToNumber.UNIFORM_RAND]
                   : 0,
               })
             }
@@ -98,7 +98,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
                 var: var_name,
                 var_mod: !Array.isArray(float) ? P_DATA_GENERATOR : null,
                 new_value: !Array.isArray(float)
-                  ? ['num', 0, 1, RandToNumber['UNIFORM_RAND']]
+                  ? ['num', 0, 1, RandToNumber.UNIFORM_RAND]
                   : '#FFFFFF',
               })
             }
@@ -113,8 +113,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
           <Stack.Item>
             <Input
               value={float?.toString()}
-              expensive
-              onChange={(value) =>
+              onBlur={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -155,12 +154,7 @@ export const EntryGeneratorNumbersList = (
                 var: var_name,
                 var_mod: !isStringArray(input) ? P_DATA_GENERATOR : null,
                 new_value: !isStringArray(input)
-                  ? [
-                      'sphere',
-                      [0, 0, 0],
-                      [1, 1, 1],
-                      RandToNumber['UNIFORM_RAND'],
-                    ]
+                  ? ['sphere', [0, 0, 0], [1, 1, 1], RandToNumber.UNIFORM_RAND]
                   : [1, 1, 1],
               })
             }

@@ -1,4 +1,4 @@
-import { beforeEach, describe, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'bun:test';
 
 import { ChatHistory } from './ChatHistory';
 
@@ -9,12 +9,12 @@ describe('ChatHistory', () => {
     chatHistory = new ChatHistory();
   });
 
-  it('should add a message to the history', ({ expect }) => {
+  it('should add a message to the history', () => {
     chatHistory.add('Hello');
     expect(chatHistory.getOlderMessage()).toEqual('Hello');
   });
 
-  it('should retrieve older and newer messages', ({ expect }) => {
+  it('should retrieve older and newer messages', () => {
     chatHistory.add('Hello');
     chatHistory.add('World');
     expect(chatHistory.getOlderMessage()).toEqual('World');
@@ -24,7 +24,7 @@ describe('ChatHistory', () => {
     expect(chatHistory.getOlderMessage()).toEqual('World');
   });
 
-  it('should limit the history to 5 messages', ({ expect }) => {
+  it('should limit the history to 5 messages', () => {
     for (let i = 1; i <= 6; i++) {
       chatHistory.add(`Message ${i}`);
     }
@@ -36,13 +36,13 @@ describe('ChatHistory', () => {
     expect(chatHistory.getOlderMessage()).toBeNull();
   });
 
-  it('should handle temp message correctly', ({ expect }) => {
+  it('should handle temp message correctly', () => {
     chatHistory.saveTemp('Temp message');
     expect(chatHistory.getTemp()).toEqual('Temp message');
     expect(chatHistory.getTemp()).toBeNull();
   });
 
-  it('should reset correctly', ({ expect }) => {
+  it('should reset correctly', () => {
     chatHistory.add('Hello');
     chatHistory.getOlderMessage();
     chatHistory.reset();

@@ -23,7 +23,7 @@
 		return
 
 	notify_ghosts(
-		"[user] has purchased a BADASS Syndicate Balloon!",
+		"[user.real_name] has purchased a BADASS Syndicate Balloon!",
 		source = .,
 		header = "What are they THINKING?",
 	)

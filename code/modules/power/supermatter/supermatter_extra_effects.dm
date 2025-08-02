@@ -172,7 +172,7 @@
 		if(PYRO_ANOMALY)
 			new /obj/effect/anomaly/pyro(local_turf, has_changed_lifespan ? rand(15 SECONDS, 25 SECONDS) : null, FALSE)
 		if(HALLUCINATION_ANOMALY)
-			new /obj/effect/anomaly/hallucination(local_turf, has_changed_lifespan ? rand(15 SECONDS, 25 SECONDS) : null, FALSE)
+			new /obj/effect/anomaly/hallucination/supermatter(local_turf, has_changed_lifespan ? rand(15 SECONDS, 25 SECONDS) : null, FALSE)
 		if(VORTEX_ANOMALY)
 			new /obj/effect/anomaly/bhole(local_turf, 2 SECONDS, FALSE)
 		if(BIOSCRAMBLER_ANOMALY)

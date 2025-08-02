@@ -1,5 +1,4 @@
 {
-
 	"french": {
 		"yes": "oui",
 		"no": "non",
@@ -13,27 +12,15 @@
 		"with": "avec",
 		"of": "de",
 
-
 		"assistant": "ravageur",
 		"assistants": "ravageurs",
-		"baby": [
-			"enfant",
-			"petit baguette"
-		],
+		"baby": ["enfant", "petit baguette"],
 		"bad": "mal",
-		"bye": [
-			"bon voyage",
-			"adieu",
-			"au revoir"
-		],
+		"bye": ["bon voyage", "adieu", "au revoir"],
 		"cake": "gateau",
 		"captain": "capitaine",
 		"changeling": "changeur",
-		"cheese": [
-			"brie",
-			"roquefort",
-			"camembert"
-		],
+		"cheese": ["brie", "roquefort", "camembert"],
 		"cigarette": "clope",
 		"cook": "cuisinier",
 		"dad": "papa",
@@ -44,22 +31,12 @@
 		"greytider": "les gitans",
 		"greytiders": "les gitans",
 		"modsuit": "burkini",
-		"hello": [
-			"'allo",
-			"bonjour",
-			"salut"
-		],
+		"hello": ["'allo", "bonjour", "salut"],
 		"maint": "les banlieues",
-		"meat": [
-			"coq au vin",
-			"boeuf"
-		],
+		"meat": ["coq au vin", "boeuf"],
 		"mom": "maman",
 		"my": "mon",
-		"nuke": [
-			"grand bombe",
-			"la baguette ultime"
-		],
+		"nuke": ["grand bombe", "la baguette ultime"],
 		"op": "boche",
 		"operative": "boche",
 		"operatives": "boches",
@@ -67,14 +44,8 @@
 		"urity": "urite",
 		"security": "securite",
 		"shit": "merde",
-		"shitcurity": [
-			"gendarmerie",
-			"les keufs"
-		],
-		"shitsec": [
-			"gendarmerie",
-			"les keufs"
-		],
+		"shitcurity": ["gendarmerie", "les keufs"],
+		"shitsec": ["gendarmerie", "les keufs"],
 		"spaghetti": "macaroni",
 		"spicy": "epice",
 		"thanks": "merci",
@@ -86,6 +57,5 @@
 		"why": "porquois",
 		"wine": "vin",
 		"wizard": "sorcier"
-		}
-
+	}
 }

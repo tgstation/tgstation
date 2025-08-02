@@ -106,6 +106,11 @@
 		vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
 		//We maybe add some color. the chance is static for now, but idewally we would be able to manipulate it in the future.
 		if(prob(CYTO_SHINY_CHANCE))
+			if(isbasicmob(thing))
+				var/mob/living/basic/vat_creature = thing
+				//if the mob has a special mutation interaction don't do any other mutations. Once we add more mutations that are stackable with shiny we should probably roll for each type independently.
+				if(vat_creature.mutate())
+					return
 			mutate_color(thing)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.

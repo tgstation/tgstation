@@ -47,11 +47,11 @@
 	fake_id.update_icon()
 
 	var/placed_in = user.equip_in_one_of_slots(fake_id, list(
-			LOCATION_ID = ITEM_SLOT_ID,
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
+			LOCATION_ID,
+			LOCATION_LPOCKET,
+			LOCATION_RPOCKET,
+			LOCATION_BACKPACK,
+			LOCATION_HANDS,
 		), qdel_on_fail = FALSE, indirect_action = TRUE)
 	if (isnull(placed_in))
 		fake_id.forceMove(user.drop_location())
@@ -63,7 +63,7 @@
 
 	var/mob/living/carbon/human/dummy/consistent/dummy = new() // For manifest rendering, unfortunately
 	dummy.physique = user.physique
-	user.dna.transfer_identity(dummy, transfer_SE = TRUE)
+	user.dna.copy_dna(dummy.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	user.copy_clothing_prefs(dummy)
 	dummy.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	dummy.dress_up_as_job(job, visual_only = TRUE, player_client = user.client)
@@ -73,10 +73,10 @@
 
 	if (original_id)
 		var/returned_to = user.equip_in_one_of_slots(original_id, list(
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
+			LOCATION_BACKPACK,
+			LOCATION_LPOCKET,
+			LOCATION_RPOCKET,
+			LOCATION_HANDS,
 		), qdel_on_fail = FALSE, indirect_action = TRUE)
 		if (isnull(returned_to))
 			fake_id.forceMove(user.drop_location())

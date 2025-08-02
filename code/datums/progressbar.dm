@@ -21,7 +21,7 @@
 	///Where to draw the progress bar above the icon
 	var/offset_y
 
-/datum/progressbar/New(mob/User, goal_number, atom/target)
+/datum/progressbar/New(mob/User, goal_number, atom/target, starting_amount)
 	. = ..()
 	if (!istype(target))
 		stack_trace("Invalid target [target] passed in")
@@ -60,6 +60,8 @@
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
 	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(on_user_login))
 
+	if(starting_amount)
+		update(starting_amount)
 
 /datum/progressbar/Destroy()
 	if(user)

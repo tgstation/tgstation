@@ -75,6 +75,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	force_string = "holy"
 	unique = TRUE
+	carved_storage_type = /datum/storage/carved_book/bible
+
 	/// Deity this bible is related to
 	var/deity_name = "Space Jesus"
 
@@ -114,6 +116,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		else
 			. += span_notice("[src] can be unpacked by hitting the floor of a holy area with it.")
 
+/obj/item/book/bible/get_attack_self_context(mob/living/user)
+	if(can_set_bible_skin(user))
+		return "Select bible skin"
+
 /obj/item/book/bible/proc/curse_heathen(datum/source, mob/living/user, obj/item/burning_tool)
 	SIGNAL_HANDLER
 
@@ -131,18 +137,19 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
 		user.AddComponent(/datum/component/omen/bible)
 
-/obj/item/book/bible/carve_out(obj/item/carving_item, mob/living/user)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-
 /obj/item/book/bible/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/book/bible/attack_self(mob/living/carbon/human/user)
+/obj/item/book/bible/proc/can_set_bible_skin(mob/living/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
 	if(user?.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
+		return FALSE
+	return TRUE
+
+/obj/item/book/bible/attack_self(mob/living/carbon/human/user)
+	if(!can_set_bible_skin(user))
 		return FALSE
 
 	var/list/skins = list()
@@ -161,10 +168,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	switch(icon_state)
 		if("honk1")
-			user.dna.add_mutation(/datum/mutation/human/clumsy)
+			user.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 		if("honk2")
-			user.dna.add_mutation(/datum/mutation/human/clumsy)
+			user.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 		if("insuls")
 			var/obj/item/clothing/gloves/color/fyellow/insuls = new
@@ -183,13 +190,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
  * * user The mob interacting with the menu
  */
 /obj/item/book/bible/proc/check_menu(mob/living/carbon/human/user)
-	if(GLOB.bible_icon_state)
-		return FALSE
 	if(!istype(user) || !user.is_holding(src))
 		return FALSE
 	if(user.incapacitated)
 		return FALSE
-	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
+	if(!can_set_bible_skin(user))
 		return FALSE
 	return TRUE
 
@@ -199,7 +204,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	balloon_alert(user, "unpacking bible...")
 	if(!do_after(user, 15 SECONDS, new_altar_area))
 		return
-	new /obj/structure/altar_of_gods(new_altar_area)
+	new /obj/structure/altar/of_gods(new_altar_area)
 	qdel(src)
 
 /obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
@@ -280,42 +285,40 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
+	if(!user.mind?.holy_role)
+		return
 	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user) & COMSIG_END_BIBLE_CHAIN)
 		return ITEM_INTERACT_SUCCESS
 	if(isfloorturf(bible_smacked))
-		if(user.mind?.holy_role)
-			var/area/current_area = get_area(bible_smacked)
-			if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
-				make_new_altar(bible_smacked, user)
-				return ITEM_INTERACT_SUCCESS
-			for(var/obj/effect/rune/nearby_runes in range(2, user))
-				nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
+		var/area/current_area = get_area(bible_smacked)
+		if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
+			make_new_altar(bible_smacked, user)
+			return ITEM_INTERACT_SUCCESS
+		for(var/obj/effect/rune/nearby_runes in range(2, user))
+			nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		bible_smacked.balloon_alert(user, "floor smacked!")
 		return ITEM_INTERACT_SUCCESS
 
-	if(user.mind?.holy_role)
-		if(bible_smacked.reagents?.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
-			bible_smacked.balloon_alert(user, "blessed")
-			var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
-			bible_smacked.reagents.del_reagent(/datum/reagent/water)
-			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
-			. = ITEM_INTERACT_SUCCESS
-		if(bible_smacked.reagents?.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
-			bible_smacked.balloon_alert(user, "purified")
-			var/unholy2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
-			bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
-			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2holy)
-			. = ITEM_INTERACT_SUCCESS
-		if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
-			bible_smacked.balloon_alert(user, "converted")
-			var/obj/item/book/bible/other_bible = bible_smacked
-			other_bible.name = name
-			other_bible.icon_state = icon_state
-			other_bible.inhand_icon_state = inhand_icon_state
-			other_bible.deity_name = deity_name
-			. = ITEM_INTERACT_SUCCESS
-		if(.)
-			return .
+	if(bible_smacked.reagents?.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
+		bible_smacked.balloon_alert(user, "blessed")
+		var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
+		bible_smacked.reagents.del_reagent(/datum/reagent/water)
+		bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
+		return ITEM_INTERACT_SUCCESS
+	if(bible_smacked.reagents?.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
+		bible_smacked.balloon_alert(user, "purified")
+		var/unholy2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
+		bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
+		bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2holy)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
+		bible_smacked.balloon_alert(user, "converted")
+		var/obj/item/book/bible/other_bible = bible_smacked
+		other_bible.name = name
+		other_bible.icon_state = icon_state
+		other_bible.inhand_icon_state = inhand_icon_state
+		other_bible.deity_name = deity_name
+		return ITEM_INTERACT_SUCCESS
 
 	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
 		var/obj/item/melee/cultblade/haunted/sword_smacked = bible_smacked
@@ -368,12 +371,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))
 		return
-	user.mind.holy_role = HOLY_ROLE_PRIEST
+	user.mind.set_holy_role(HOLY_ROLE_PRIEST)
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
@@ -385,6 +388,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	. = ..()
 	if(owner_name)
 		. += span_warning("The name [owner_name] is written in blood inside the cover.")
+
+/obj/item/book/bible/syndicate/get_attack_self_context(mob/living/user)
+	if(uses)
+		return "Read"
 
 /obj/item/book/bible/syndicate/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!user.combat_mode)

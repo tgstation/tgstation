@@ -20,7 +20,7 @@ RUN apt-get install -y --no-install-recommends \
 COPY dependencies.sh .
 
 RUN . ./dependencies.sh \
-    && curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
+    && curl -H "User-Agent: tgstation/1.0 CI Script" "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
     && unzip byond.zip \
     && cd byond \
     && sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile \
@@ -39,7 +39,7 @@ RUN apt-get install -y --no-install-recommends \
 
 COPY . .
 
-RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build \
+RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
     && tools/deploy.sh /deploy
 
 # rust = base + rustc and i686 target

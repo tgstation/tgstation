@@ -60,6 +60,7 @@ function CentComName(props) {
   const [name, setName] = useState(command_name);
 
   function sendName(value) {
+    setName(value);
     act('update_command_name', {
       updated_name: value,
     });
@@ -74,13 +75,7 @@ function CentComName(props) {
         onSelected={sendName}
       />
       {!!custom_name && (
-        <Input
-          fluid
-          mt={1}
-          value={name}
-          onChange={setName}
-          onEnter={sendName}
-        />
+        <Input fluid mt={1} value={name} onChange={setName} onBlur={sendName} />
       )}
     </Section>
   );
@@ -94,12 +89,11 @@ function SubHeader(props) {
   return (
     <Section title="Set report subheader" textAlign="center">
       <Input
-        expensive
         fluid
         mt={1}
         value={subheader}
         placeholder="Keep blank to not include a subheader"
-        onChange={(value) =>
+        onBlur={(value) =>
           act('set_subheader', {
             new_subheader: value,
           })
@@ -164,7 +158,7 @@ function ReportText(props) {
           <TextArea
             height="100%"
             fluid
-            onChange={setCommandReport}
+            onBlur={setCommandReport}
             value={commandReport}
             placeholder="Enter report text here..."
           />

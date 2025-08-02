@@ -830,3 +830,28 @@
   - image: all blood decals and overlays have been greyscaled, so ethereals will have
       green blood now for instance. fundamentally evil quirk havers get black blood
   - admin: new smite type, 'Clownify blood'. It pretty much does what you might expect.
+2025-04-30:
+  Jacquerel:
+  - rscadd: Out somewhere in space you may find experimental cloning technology.
+  Pepsilawn:
+  - bugfix: Fixes bins and chutes that did not have a trunk, and adds a maplint for
+      it.
+  Rhials:
+  - rscadd: Bears are now butchered for space bear hides, which can be used to craft
+      a pelt hat and suit. Wearing this suit/hat combo will make you friendly to bears!
+  - rscadd: 'New Gimmick Assistants station trait costume: Bear!'
+  SmArtKar:
+  - bugfix: Fixed a disposals loop on Catwalk's bridge
+  Wallem:
+  - rscadd: Xenobio consoles now work off a tube system instead of sudden teleportation
+  - qol: Xenobio consoles have a new HUD to show monkey/slime amounts, and slime processors
+      can now suck up more than 1 slime at a time depending on their matter bin
+  - image: Added some stripes to the monkey recycler to make it a little more obvious
+      it's not a meat grinder
+  grungussuss:
+  - rscadd: Lizard blood is now green
+  necromanceranne:
+  - balance: Reduces the embed probabilities of flechette rounds, they can fall out
+      naturally. Donk spikes still maintain their high embed chance and inability
+      to fall out naturally. Macroplastics launched straight into your body, as sponsored
+      by the Donk Corporation.
