@@ -129,7 +129,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
  * the timezone is the time value offset from the local time. It's to be applied outside time2text() to get the AM/PM right.
  */
 /proc/time_to_twelve_hour(time, format = "hh:mm:ss", timezone = TIMEZONE_UTC)
-	time = MODULUS(time + (timezone HOURS), 24 HOURS)
+	time = MODULUS(time + (timezone * (1 HOURS)), 24 HOURS)
 	var/am_pm = "AM"
 	if(time > 12 HOURS)
 		am_pm = "PM"
