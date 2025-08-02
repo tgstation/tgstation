@@ -166,7 +166,7 @@
 	multiplicative_slowdown = -26
 
 /datum/movespeed_modifier/settler
-	multiplicative_slowdown = 0.3
+	multiplicative_slowdown = 0.25
 	blacklisted_movetypes = FLOATING|FLYING
 
 /datum/movespeed_modifier/basilisk_overheat
