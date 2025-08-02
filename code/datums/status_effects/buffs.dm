@@ -454,6 +454,8 @@
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
 	alert_type = null
+	///What speed datum do we apply?
+	var/move_datum = /datum/movespeed_modifier/status_speed_boost
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -461,11 +463,11 @@
 	. = ..()
 
 /datum/status_effect/speed_boost/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	owner.add_movespeed_modifier(move_datum, update = TRUE)
 	return ..()
 
 /datum/status_effect/speed_boost/on_remove()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	owner.remove_movespeed_modifier(move_datum, update = TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
 	multiplicative_slowdown = -1

@@ -840,6 +840,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "tailwhip"
 	inhand_icon_state = "tailwhip"
 	item_flags = NONE
+	can_hasten = FALSE
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
 	name = "cat o' nine tails"
