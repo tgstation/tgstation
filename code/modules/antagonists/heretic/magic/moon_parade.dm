@@ -19,7 +19,7 @@
 	deactive_msg = "You stop the music and halt the parade... for now."
 	cast_range = 12
 	projectile_type = /obj/projectile/moon_parade
-
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 /obj/projectile/moon_parade
 	name = "Lunar parade"
@@ -63,7 +63,7 @@
 		return PROJECTILE_PIERCE_PHASE
 
 	// Anti-magic destroys the projectile for consistency and counterplay
-	if(victim.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+	if(victim.can_block_magic(MAGIC_RESISTANCE_MIND))
 		visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 
@@ -76,31 +76,22 @@
 
 	var/mob/living/victim = target
 
-	if(!(victim in mobs_hit))
-		RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move))
-		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(clear_mob))
-		victim.AddComponent(/datum/component/leash, src, distance = 1)
-		victim.balloon_alert(victim, "you feel unable to move away from the parade!")
-		mobs_hit += victim
+	if(!was_hit_already(victim))
+		victim.apply_status_effect(/datum/status_effect/moon_parade, src)
+		mobs_hit += WEAKREF(victim)
 
 	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, name)
 	victim.mob_mood.adjust_sanity(-20)
 
+/obj/projectile/moon_parade/proc/was_hit_already(mob/living/victim)
+	for(var/datum/weakref/ref as anything in mobs_hit)
+		var/mob/living/hit_victim = ref.resolve()
+		if(hit_victim == victim)
+			return TRUE
+	return FALSE
+
 /obj/projectile/moon_parade/Destroy()
-	for(var/mob/living/leftover_mob as anything in mobs_hit)
-		clear_mob(leftover_mob)
-	mobs_hit.Cut() // You never know
+	mobs_hit.Cut()
 	soundloop.stop()
 	return ..()
-
-// Blocks movement in order to make it appear like the character is transfixed to the projectile and wandering after it
-// Coded this way because its a simple way to hold the illusion compared to other methods
-/obj/projectile/moon_parade/proc/moon_block_move(datum/source)
-	SIGNAL_HANDLER
-	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
-
-/obj/projectile/moon_parade/proc/clear_mob(datum/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_QDELETING))
-	mobs_hit -= source

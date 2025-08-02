@@ -6,7 +6,7 @@
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_TOO_TALL), SIGNAL_REMOVETRAIT(TRAIT_TOO_TALL)), PROC_REF(on_tootall_trait))
 	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(get_name_part))
 
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT), SIGNAL_ADDTRAIT(TRAIT_FAT_IGNORE_SLOWDOWN), SIGNAL_REMOVETRAIT(TRAIT_FAT_IGNORE_SLOWDOWN)), PROC_REF(on_fat))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), SIGNAL_REMOVETRAIT(TRAIT_NOHUNGER)), PROC_REF(on_nohunger))
 
 	RegisterSignal(src, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(check_pocket_weght))
@@ -54,7 +54,7 @@
 	hud_used?.hunger?.update_hunger_bar()
 	mob_mood?.update_nutrition_moodlets()
 
-	if(HAS_TRAIT(src, TRAIT_FAT))
+	if(HAS_TRAIT(src, TRAIT_FAT) && !HAS_TRAIT(src, TRAIT_FAT_IGNORE_SLOWDOWN))
 		add_movespeed_modifier(/datum/movespeed_modifier/obesity)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)

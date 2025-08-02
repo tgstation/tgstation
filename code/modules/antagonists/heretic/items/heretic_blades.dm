@@ -54,6 +54,9 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	if(heretic_datum?.unlimited_blades)
+		return
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
 		user.balloon_alert(user, "can't escape!")
 		if(escape_attempts > 2)
@@ -170,16 +173,13 @@
 	if(!heretic_datum)
 		return
 
-	//Apply our heretic mark
-	var/datum/heretic_knowledge/mark/blade_mark/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/mark/blade_mark)
+	// Apply our heretic mark
+	var/datum/heretic_knowledge/limited_amount/starting/base_blade/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_blade)
 	if(!mark_to_apply)
 		return
 	mark_to_apply.create_mark(user, living_target)
-
-	//Remove the infusion from any blades we own (and update their sprite)
-	for(var/obj/item/melee/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/melee/sickly_blade/dark))
-		to_infuse.infused = FALSE
-		to_infuse.update_appearance(UPDATE_ICON)
+	infused = FALSE
+	update_appearance(UPDATE_ICON)
 	user.update_held_items()
 
 	if(!check_behind(user, living_target))
@@ -233,6 +233,7 @@
 	icon_state = "moon_blade"
 	inhand_icon_state = "moon_blade"
 	after_use_message = "The Moon hears your call..."
+	item_flags = BYPASSES_PACIFISM // Moon robes will pacify you
 
 // Path of Nar'Sie's blade
 // What!? This blade is given to cultists as an altar item when they sacrifice a heretic.

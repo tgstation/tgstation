@@ -74,8 +74,12 @@
 	scan_desc = "extra-sensory paranoia"
 	gain_text = span_warning("You feel like something wants to kill you...")
 	lose_text = span_notice("You no longer feel eyes on your back.")
+	/// Type of stalker that is chasing us
+	var/stalker_type = /obj/effect/client_image_holder/stalker_phantom
+	/// Reference to the stalker that is chasing us
 	var/obj/effect/client_image_holder/stalker_phantom/stalker
-	var/close_stalker = FALSE //For heartbeat
+	/// Plays a sound when the stalker is near their victim
+	var/close_stalker = FALSE
 
 /datum/brain_trauma/magic/stalker/Destroy()
 	QDEL_NULL(stalker)
@@ -87,7 +91,7 @@
 
 /datum/brain_trauma/magic/stalker/proc/create_stalker()
 	var/turf/stalker_source = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z) //random corner
-	stalker = new(stalker_source, owner)
+	stalker = new stalker_type(stalker_source, owner)
 
 /datum/brain_trauma/magic/stalker/on_lose()
 	QDEL_NULL(stalker)
@@ -125,3 +129,12 @@
 	desc = "It's coming closer..."
 	image_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	image_state = "curseblob"
+
+// Heretic subtype that replaces the ghost guy with a stargazer
+/datum/brain_trauma/magic/stalker/cosmic
+	stalker_type = /obj/effect/client_image_holder/stalker_phantom/cosmic
+	random_gain = FALSE
+
+/obj/effect/client_image_holder/stalker_phantom/cosmic
+	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi' // XANTODO figure out why its the ghost and not the gazer
+	image_state = "star_gazer"
