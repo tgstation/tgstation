@@ -213,6 +213,16 @@
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"
 
+/obj/item/bodypart/head/update_bodypart_damage_state()
+	if (!ishuman(owner))
+		return ..()
+	var/old_states = brutestate + burnstate
+	. = ..()
+	var/new_states = brutestate + burnstate
+	var/mob/living/carbon/human/as_human = owner
+	if ((old_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES && new_states < HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES) || (old_states < HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES && new_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES))
+		as_human.update_visible_name()
+
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'

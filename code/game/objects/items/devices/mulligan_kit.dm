@@ -59,7 +59,7 @@
 	else
 		to_chat(user, span_notice("You quickly put your new ID card [placed_in]."))
 
-	user.sec_hud_set_ID()
+	user.update_ID_card()
 
 	var/mob/living/carbon/human/dummy/consistent/dummy = new() // For manifest rendering, unfortunately
 	dummy.physique = user.physique
