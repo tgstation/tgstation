@@ -38,7 +38,7 @@
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"
-	desc = "Allows you to transmute a pile of ash and a book to create an Ash Spirit. \
+	desc = "Allows you to transmute a Bonfire and a book to create an Ash Spirit. \
 		Ash Spirits have a short range jaunt and the ability to cause bleeding in foes at range. \
 		They also have the ability to create a ring of fire around themselves for a length of time. \
 		They have a low amount of health, but will passively recover given enough time to do so."
