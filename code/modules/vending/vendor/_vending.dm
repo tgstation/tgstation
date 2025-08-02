@@ -297,9 +297,8 @@
 		canister_list.Cut()
 		for(var/datum/data/vending_product/record as anything in record_list)
 			var/stock = record.amount - LAZYLEN(record.returned_products)
-			if(!stock)
-				continue
-			canister_list[record.product_path] = stock
+			if(stock)
+				canister_list[record.product_path] = stock
 
 /obj/machinery/vending/Destroy()
 	QDEL_LIST(product_records)
