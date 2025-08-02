@@ -17,6 +17,11 @@
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// The pathfinding implant.
 	var/obj/item/implant/mod/implant
+	/// Whether the implant has been used or not
+	var/implant_inside = TRUE
+	/// Allow suit activation - Lets this module be recalled from the MOD.
+	var/allow_suit_activation = FALSE // look, I'm not here to argue about balance
+
 
 /obj/item/mod/module/pathfinder/Initialize(mapload)
 	. = ..()
@@ -28,23 +33,23 @@
 
 /obj/item/mod/module/pathfinder/Exited(atom/movable/gone, direction)
 	if(gone == implant)
-		implant = null
+		implant_inside = FALSE
 		update_icon_state()
 	return ..()
 
 /obj/item/mod/module/pathfinder/update_icon_state()
 	. = ..()
-	icon_state = implant ? "pathfinder" : "pathfinder_empty"
+	icon_state = implant_inside ? "pathfinder" : "pathfinder_empty"
 
 /obj/item/mod/module/pathfinder/examine(mob/user)
 	. = ..()
-	if(implant)
+	if(implant_inside)
 		. += span_notice("Use it on a human to implant them.")
 	else
 		. += span_warning("The implant is missing.")
 
 /obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!ishuman(target) || !implant)
+	if(!ishuman(target) || !implant_inside)
 		return
 	if(!do_after(user, 1.5 SECONDS, target = target))
 		balloon_alert(user, "interrupted!")
@@ -57,21 +62,27 @@
 	else
 		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-	module_type = MODULE_PASSIVE
 
 /obj/item/mod/module/pathfinder/on_use(mob/activator)
 	. = ..()
-	if (!ishuman(mod.wearer) || !implant)
+	if(mod.wearer && implant_inside) // implant them
+		try_implant(activator)
+		return
+	else
+		implant.recall(activator)
+
+
+/// Assuming we have a wearer, attempt to implant them.
+/obj/item/mod/module/pathfinder/proc/try_implant(mob/activator)
+	if(!ishuman(mod.wearer))
 		return
 	if(!implant.implant(mod.wearer, mod.wearer))
 		balloon_alert(activator, "can't implant!")
 		return
 	balloon_alert(activator, "implanted")
+	if(!(activator == mod.wearer)) // someone else implanted you
+		balloon_alert(mod.wearer, "pathfinder MOD implanted!")
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-	module_type = MODULE_PASSIVE
-	var/datum/action/item_action/mod/pinnable/module/existing_action = pinned_to[REF(mod.wearer)]
-	if(existing_action)
-		mod.remove_item_action(existing_action)
 
 /obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
 	if(!ishuman(user))
@@ -91,10 +102,12 @@
 	name = "MOD pathfinder implant"
 	desc = "Lets you recall a MODsuit to you at any time."
 	actions_types = list(/datum/action/item_action/mod_recall)
+	allow_multiple = TRUE // Surgrey is annoying if you loose your MOD
 	/// The pathfinder module we are linked to.
 	var/obj/item/mod/module/pathfinder/module
 	/// The jet icon we apply to the MOD.
 	var/image/jet_icon
+
 
 /obj/item/implant/mod/Initialize(mapload)
 	. = ..()
@@ -102,6 +115,7 @@
 		return INITIALIZE_HINT_QDEL
 	module = loc
 	jet_icon = image(icon = 'icons/obj/clothing/modsuit/mod_modules.dmi', icon_state = "mod_jet", layer = LOW_ITEM_LAYER)
+	jet_icon.color = hsv2rgb(rand(0, 359), 1, 0.5) // No problem if you have two implanted
 
 /obj/item/implant/mod/Destroy()
 	if(module?.mod?.ai_controller)

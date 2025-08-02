@@ -104,7 +104,7 @@
 		balloon_alert(mod.wearer, "too many crates!")
 		return FALSE
 	for(var/mob/living/mob in target.get_all_contents())
-		if(mob.mob_size =< max_mob_size)
+		if(mob.mob_size <= max_mob_size)
 			continue
 		balloon_alert(mod.wearer, "crate too heavy!")
 		return FALSE

@@ -106,13 +106,13 @@
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select(mob/activator)
-	if(!mod.wearer)
+	if(!mod.wearer && !(allow_flags & MODULE_ALLOW_UNWORN)) //No wearer and cannot be used unworn
 		balloon_alert(activator, "not equipped!")
 		return
-	if(((!mod.active || mod.activating) && !(allow_flags & MODULE_ALLOW_INACTIVE)) || module_type == MODULE_PASSIVE)
+	if(((!mod.active || mod.activating) && !(allow_flags & MODULE_ALLOW_INACTIVE)) || module_type == MODULE_PASSIVE) // not active
 		balloon_alert(activator, "not active!")
 		return
-	if(!has_required_parts(mod.mod_parts, need_active = TRUE))
+	if(!has_required_parts(mod.mod_parts, need_active = TRUE)) // Doesn't have parts
 		balloon_alert(activator, "required parts inactive!")
 		var/list/slot_strings = list()
 		for(var/slot in required_slots)
@@ -123,9 +123,9 @@
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
-			deactivate()
+			deactivate(activator)
 		else
-			activate()
+			activate(activator)
 	else
 		used()
 	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED, src)
@@ -195,14 +195,15 @@
 
 /// Call to update all slots visually affected by this module
 /obj/item/mod/module/proc/update_clothing_slots()
-	var/updated_slots = mod.slot_flags
-	if (mask_worn_overlay)
-		for (var/obj/item/part as anything in mod.get_parts())
-			updated_slots |= part.slot_flags
-	else if (length(required_slots))
-		for (var/slot in required_slots)
-			updated_slots |= slot
-	mod.wearer.update_clothing(updated_slots)
+	if(mod.wearer)
+		var/updated_slots = mod.slot_flags
+		if (mask_worn_overlay)
+			for (var/obj/item/part as anything in mod.get_parts())
+				updated_slots |= part.slot_flags
+		else if (length(required_slots))
+			for (var/slot in required_slots)
+				updated_slots |= slot
+		mod.wearer.update_clothing(updated_slots)
 
 /// Called when the module is used
 /obj/item/mod/module/proc/used(mob/activator)

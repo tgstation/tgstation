@@ -312,17 +312,17 @@
 		return_look()
 	possible_disguises = null
 
-/obj/item/mod/module/chameleon/used()
+/obj/item/mod/module/chameleon/used(mob/activator)
 	if(mod.active || mod.activating)
-		balloon_alert(mod.wearer, "unit active!")
+		balloon_alert(activator, "unit active!")
 		return FALSE
 	return ..()
 
-/obj/item/mod/module/chameleon/on_use()
+/obj/item/mod/module/chameleon/on_use(mob/activator)
 	if(current_disguise)
 		return_look()
 		return
-	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
+	var/picked_name = tgui_input_list(activator, "Select look to change into", "Chameleon Settings", possible_disguises)
 	if(!possible_disguises[picked_name] || mod.active || mod.activating)
 		return
 	current_disguise = possible_disguises[picked_name]
