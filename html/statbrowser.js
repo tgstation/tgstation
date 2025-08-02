@@ -236,6 +236,7 @@ function tab_change(tab) {
     document.getElementById(tab).className = "button active"; // make current button active
   var spell_tabs_thingy = spell_tabs.includes(tab);
   var verb_tabs_thingy = verb_tabs.includes(tab);
+  statcontentdiv.className = "statcontent"
   if (tab == "Status") {
     draw_status();
   } else if (tab == "MC") {
@@ -389,6 +390,7 @@ function draw_status() {
 
 function draw_mc() {
   statcontentdiv.textContent = "";
+  statcontentdiv.className = "mcstatcontent"
   var table = document.createElement("table");
   for (var i = 0; i < mc_tab_parts.length; i++) {
     var part = mc_tab_parts[i];

@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(air)
 
 
 /datum/controller/subsystem/air/stat_entry(msg)
-	msg += "C:{"
+	msg += "\n  Cost:{"
 	msg += "AT:[round(cost_turfs,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "EG:[round(cost_groups,1)]|"
@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(air)
 	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "AJ:[round(cost_adjacent,1)]|"
 	msg += "} "
-	msg += "AT:[active_turfs.len]|"
+	msg += "\n  Count:{AT:[active_turfs.len]|"
 	msg += "HS:[hotspots.len]|"
 	msg += "EG:[excited_groups.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
@@ -87,6 +87,7 @@ SUBSYSTEM_DEF(air)
 	msg += "EP:[expansion_queue.len]|"
 	msg += "AJ:[adjacent_rebuild.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
+	msg += "}"
 	return ..()
 
 
