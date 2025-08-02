@@ -229,7 +229,9 @@
  */
 /mob/living/carbon/get_organ_loss(slot, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(affected_organ && required_organ_flag && (affected_organ.organ_flags & required_organ_flag))
+	if(affected_organ)
+		if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
+			return
 		return affected_organ.damage
 
 ////////////////////////////////////////////
