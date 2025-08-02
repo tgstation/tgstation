@@ -566,7 +566,6 @@ Possible to do for anyone motivated enough:
 		hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		set_holo(user, hologram)
 
-		set_holo(user, hologram)
 		visible_message(span_notice("A holographic image of [user] flickers to life before your eyes!"))
 
 		return hologram
