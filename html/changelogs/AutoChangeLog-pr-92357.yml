@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Distortion/fov effects now properly impact the full game world"
