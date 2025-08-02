@@ -38,6 +38,16 @@ export function LootBox(props: Props) {
       p={0}
       fluid
       color="transparent"
+      onMouseDown={(event) =>
+        event.button === 1 &&
+        act('grab', {
+          middle: true,
+          alt: event.altKey,
+          ctrl: event.ctrlKey,
+          ref: item.ref,
+          shift: event.shiftKey,
+        })
+      }
       onClick={(event) =>
         act('grab', {
           alt: event.altKey,
@@ -50,7 +60,10 @@ export function LootBox(props: Props) {
         event.preventDefault();
         act('grab', {
           right: true,
+          alt: event.altKey,
+          ctrl: event.ctrlKey,
           ref: item.ref,
+          shift: event.shiftKey,
         });
       }}
     >
