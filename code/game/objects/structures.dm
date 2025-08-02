@@ -22,10 +22,8 @@
 	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
-	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy(force)
-	GLOB.cameranet.updateVisibility(src)
 	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()

@@ -694,8 +694,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		var/turf/T = turfs[n]
 		if(!isfloorturf(T))
 			success = FALSE
-		var/datum/camerachunk/C = GLOB.cameranet.getCameraChunk(T.x, T.y, T.z)
-		if(!C.visibleTurfs[T])
+		if(!SScameras.is_visible_by_cameras(T))
 			alert_msg = "You don't have camera vision of this location!"
 			success = FALSE
 		for(var/atom/movable/AM in T.contents)
@@ -820,7 +819,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
-	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 		if(!uses)
 			break
 		if(!C.camera_enabled || C.view_range != initial(C.view_range))
@@ -852,13 +851,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	AI.update_sight()
 
 	var/upgraded_cameras = 0
-	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/camera as anything in SScameras.cameras)
 		var/upgraded = FALSE
 
 		if(!camera.isXRay())
 			camera.upgradeXRay(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_xray_firmware_active and clean up isxray()
 			//Update what it can see.
-			GLOB.cameranet.updateVisibility(camera, 0)
 			upgraded = TRUE
 
 		if(!camera.isEmpProof())
