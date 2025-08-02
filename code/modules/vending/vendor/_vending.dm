@@ -1,23 +1,7 @@
-/*
- * Vending machine types - Can be found under /code/modules/vending/
- */
-
-/*
-
-/obj/machinery/vending/[vendors name here]   // --vending machine template   :)
-	name = ""
-	desc = ""
-	icon = ''
-	icon_state = ""
-	products = list()
-	contraband = list()
-	premium = list()
-*/
-
+///Maximum credits dump threshold
 #define CREDITS_DUMP_THRESHOLD 50
 /**
  * # vending record datum
- *
  * A datum that represents a product that is vendable
  */
 /datum/data/vending_product
@@ -291,18 +275,6 @@
 			if (dump_amount >= 16)
 				return
 
-/**
- * Given a record list, go through and return a list of products in format of type -> amount
- * Arguments:
- * recordlist - list of records to unbuild products from
- */
-/obj/machinery/vending/proc/unbuild_inventory(list/recordlist, list/targetlist)
-	PRIVATE_PROC(TRUE)
-
-	targetlist.Cut()
-	for(var/datum/data/vending_product/record as anything in recordlist)
-		targetlist[record.product_path] += record.amount
-
 /obj/machinery/vending/on_deconstruction(disassembled)
 	var/obj/item/vending_refill/installed_refill = locate() in component_parts
 	if(!installed_refill)
@@ -321,11 +293,11 @@
 			else
 				record_list = coin_records
 				canister_list = installed_refill.premium
-		if(!record_list.len)
-			continue
 
 		canister_list.Cut()
 		for(var/datum/data/vending_product/record as anything in record_list)
+			if(!record.amount)
+				continue
 			canister_list[record.product_path] = record.amount - LAZYLEN(record.returned_products)
 
 /obj/machinery/vending/Destroy()
