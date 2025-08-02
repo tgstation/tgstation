@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
 	var/map_save_directory = get_current_persistence_map_directory()
 
-	for(var/z in 2 to world.maxz) // ignore centcomm which is always 1st z level
+	for(var/z in 1 to world.maxz) // ignore centcomm which is always 1st z level
 		var/map
 		var/list/level_traits = list()
 		var/datum/space_level/level_to_check = SSmapping.z_list[z]
@@ -162,6 +162,18 @@ SUBSYSTEM_DEF(persistence)
 			z_traits["xi"] = level_to_check.xi
 			z_traits["yi"] = level_to_check.yi
 		level_traits += list(z_traits)
+
+		// skip saving certain z-levels depending on config settings
+		if(!CONFIG_GET(flag/persistent_save_centcomm_z_levels) && is_centcom_level(z))
+			continue
+		else if(!CONFIG_GET(flag/persistent_save_station_z_levels) && is_station_level(z))
+			continue
+		else if(!CONFIG_GET(flag/persistent_save_space_z_levels) && is_space_level(z))
+			continue
+		else if(!CONFIG_GET(flag/persistent_save_mining_z_levels) && is_mining_level(z))
+			continue
+		else if(!CONFIG_GET(flag/persistent_save_transitional_z_levels) && is_reserved_level(z)) // for shuttles in transit (hyperspace)
+			continue
 
 		if(is_multi_z_level(z))
 			if(!SSmapping.level_trait(z, ZTRAIT_UP) && SSmapping.level_trait(z, ZTRAIT_DOWN))

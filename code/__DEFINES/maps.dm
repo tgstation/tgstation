@@ -79,7 +79,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
-#define ZTRAIT_SPACE_EMPTY "Empty Space"
+#define ZTRAIT_SPACE_EMPTY "Space Empty"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 #define ZTRAIT_ICE_RUINS "Ice Ruins"
 #define ZTRAIT_ICE_RUINS_UNDERGROUND "Ice Ruins Underground"
