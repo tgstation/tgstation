@@ -4,7 +4,7 @@
 	icon = 'troutstation/icons/obj/machines/vending.dmi'
 	icon_state = "gaywater_cooler"
 	anchored = FALSE
-	reagent_id = /datum/reagent/consumable/gaywater
+	reagent_id = /datum/reagent/medicine/gaywater
 
 /obj/structure/reagent_dispensers/water_cooler/gay/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
