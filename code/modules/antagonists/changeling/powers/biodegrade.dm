@@ -44,6 +44,7 @@
 		for(var/beat in 1 to 3)
 			addtimer(CALLBACK(src, PROC_REF(make_puddle), restraint), beat SECONDS)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), restraint, 'sound/items/tools/welder.ogg', 50, TRUE), beat SECONDS)
+		log_combat(user = user, target = restraint, what_done = "melted restraining container", addition = "(biodegrade)")
 		return
 	//otherwise it's some kind of worn restraint
 	user.visible_message(
@@ -53,6 +54,8 @@
 	addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 1.5 SECONDS)
 	playsound(user, 'sound/items/tools/welder.ogg', 50, TRUE)
 	make_puddle(restraint)
+	log_combat(user = user, target = restraint, what_done = "melted restraining equipped item", addition = "(biodegrade)")
+
 
 /datum/action/changeling/biodegrade/proc/make_puddle(obj/melted_restraint)
 	return new /obj/effect/decal/cleanable/greenglow(get_turf(melted_restraint))
@@ -68,6 +71,7 @@
 		hapless_manhandler.Stun(2 SECONDS)
 		hapless_manhandler.adjustFireLoss(40, updating_health = TRUE)
 		hapless_manhandler.stop_pulling()
+		log_combat(user = user, target = hapless_manhandler, what_done = "acid-spewed to escape a grab", addition = "(biodegrade)")
 		return
 	var/mob/living/carbon/hapless_carbon = hapless_manhandler
 	var/obj/item/bodypart/arm/doomed_limb = hapless_carbon.get_active_hand()
@@ -95,4 +99,5 @@
 	doomed_limb.dismember()
 	hapless_carbon.Stun(2 SECONDS)
 	hapless_carbon.stop_pulling()
+	log_combat(user = user, target = hapless_carbon, what_done = "delimbed to escape a grab", addition = "(biodegrade)")
 	return
