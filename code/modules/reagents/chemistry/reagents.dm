@@ -196,10 +196,6 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target, amount)
 	return FALSE
 
-///Called after a reagent is transferred
-/datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
-	return
-
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
 	// Scale the overdose threshold of the chem by the difference between the default and creation purity.
@@ -230,7 +226,13 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
 
-/// Called after add_reagents creates a new reagent.
+/**
+ * Called after add_reagents creates a new reagent.
+ *
+ * Arguments
+ * * data - if not null, contains reagent data which will be applied to the newly created reagent (this will override any pre-set data).
+ */
+
 /datum/reagent/proc/on_new(data)
 	if(data)
 		src.data = data

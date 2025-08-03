@@ -5,6 +5,8 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
+///This is a mob that is forcing us to say something, so we can use the mob typing the text for bans rather than the one speaking.
+#define MANNEQUIN_CONTROLLED "mannequin controlled"
 /// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
 #define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
 #define SAY_MOD_VERB "say_mod_verb"
