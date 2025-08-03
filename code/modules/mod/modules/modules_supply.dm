@@ -49,11 +49,11 @@
 
 
 /obj/item/mod/module/clamp/Initialize(mapload)
-    . = ..()
-    accepted_items = typecacheof(list(
-        /obj/structure/closet/crate,
-        /obj/item/delivery/big
-    ))
+	. = ..()
+	accepted_items = typecacheof(list(
+		/obj/structure/closet/crate,
+		/obj/item/delivery/big
+	))
 
 /obj/item/mod/module/clamp/on_select_use(atom/target)
 	. = ..()

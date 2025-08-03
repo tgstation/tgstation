@@ -23,7 +23,7 @@
 	/// The jet icon we apply to the MOD.
 	var/image/jet_icon
 	/// Allow suit activation - Lets this module be recalled from the MOD.
-	var/allow_suit_activation = FALSE // look, I'm not here to argue about balance
+	var/allow_suit_activation = FALSE // I'm not here to argue about balance
 
 
 /obj/item/mod/module/pathfinder/Initialize(mapload)
