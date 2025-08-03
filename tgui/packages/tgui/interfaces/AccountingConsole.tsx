@@ -110,7 +110,7 @@ export const AccountingConsole = () => {
                           height="70px"
                           mt={1}
                           icon="icons/mob/simple/pets.dmi"
-                          icon_state="corgi"
+                          icon_state={young_ian ? 'puppy' : 'corgi'}
                         />
                       </FakeDesktopButton>
                     </Stack>
