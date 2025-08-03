@@ -511,7 +511,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler/punch_cooler
 	name = "punch cooler"
-	desc = "A machine that dispenses fruit punch to drink. Engage with caution. Do not stray from punch cooler after consumption."
+	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
 	reagent_id = /datum/reagent/consumable/fruit_punch
 
 /obj/structure/reagent_dispensers/beerkeg

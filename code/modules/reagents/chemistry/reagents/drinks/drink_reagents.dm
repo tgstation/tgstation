@@ -1346,10 +1346,10 @@
 
 /atom/movable/screen/alert/fruit_punch_good
 	name = "Fruit Punch Blessing"
-	desc = "The sweetness of the fruit punch and the friendly company of the water cooler are slowly restoring your health..."
+	desc = "The sweetness of the fruit punch and the friendly company of the liquid cooler are slowly restoring your health..."
 	icon_state = "punch_blessing"
 
 /atom/movable/screen/alert/fruit_punch_bad
 	name = "Fruit Punishment"
-	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a water cooler! Your body is going into shock!"
+	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a liquid cooler! Your body is going into shock!"
 	icon_state = "punch_punishment"
