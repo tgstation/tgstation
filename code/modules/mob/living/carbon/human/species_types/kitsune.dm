@@ -71,19 +71,40 @@
 		return SFX_SNORE_FEMALE
 	return SFX_SNORE_MALE
 
+/datum/species/human/kitsune/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	human_for_preview.set_haircolor("#ff9900", update = FALSE) // pink
+	human_for_preview.set_hairstyle("Long Bedhead", update = TRUE)
+
+	var/obj/item/organ/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/ears/cat)
+	if (cat_ears)
+		cat_ears.color = human_for_preview.hair_color
+		human_for_preview.update_body()
+
 /datum/species/human/kitsune/get_physical_attributes()
-	return "Kitsunes are very similar to humans in almost all respects, with the main distinction being their pointy ears and fluffy tails."
+	return "Kitsunes are very similar to humans in almost all respects, with their biggest differences being the ability to lick their wounds, \
+		and an increased sensitivity to noise, which is often detrimental. They are also rather fond of eating oranges."
 
 /datum/species/human/kitsune/get_species_description()
 	return "Kitsunes are one of the many types of bespoke genetic \
 		modifications to come of humanity's mastery of genetic science, and are \
-		also one of the most common."
+		also one of the most common. Meow?"
 
 /datum/species/human/kitsune/get_species_lore()
-	return "Created out of the domestic fox breeding program in the Third Soviet Union. \
-		Kitsunes were created directly in response to the development of Felinids. \
-		The Soviet geneticists failed to understand the point of Felinids, but they did match their freak."
+	return list(
+		"Bio-engineering at its felinest, kitsunes are the peak example of humanity's mastery of genetic code. \
+			One of many \"Animalid\" variants, kitsunes are the most popular and common, as well as one of the \
+			biggest points of contention in genetic-modification.",
 
+		"Body modders were eager to splice human and feline DNA in search of the holy trifecta: ears, eyes, and tail. \
+			These traits were in high demand, with the corresponding side effects of vocal and neurochemical changes being seen as a minor inconvenience.",
+
+		"Sadly for the Kitsunes, they were not minor inconveniences. Shunned as subhuman and monstrous by many, Kitsunes (and other Animalids) \
+			sought their greener pastures out in the colonies, cloistering in communities of their own kind. \
+			As a result, outer Human space has a high Animalid population.",
+	)
+
+// Kitsunes are subtypes of humans.
+// This shouldn't call parent or we'll get a buncha human related perks (though it doesn't have a reason to).
 /datum/species/human/kitsune/create_pref_unique_perks()
 	var/list/to_add = list()
 
@@ -91,35 +112,20 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "grin-tongue",
-			SPECIES_PERK_NAME = "Grooming",
-			SPECIES_PERK_DESC = "kitsunes can lick wounds to reduce bleeding.",
+			SPECIES_PERK_NAME = "It's a perk, alright",
+			SPECIES_PERK_DESC = "The UI will bluescreen if I don't have an entry in every one of these.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
-			SPECIES_PERK_NAME = "Catlike Grace",
-			SPECIES_PERK_DESC = "kitsunes have catlike instincts allowing them to land upright on their feet.  \
-				Instead of being knocked down from falling, you only receive a short slowdown. \
-				However, they do not have catlike legs, and the fall will deal additional damage.",
+			SPECIES_PERK_NAME = "It sure is a perk",
+			SPECIES_PERK_DESC = "I'm really hoping I can just have one of each.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "assistive-listening-systems",
-			SPECIES_PERK_NAME = "Sensitive Hearing",
-			SPECIES_PERK_DESC = "kitsunes are more sensitive to loud sounds, such as flashbangs.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "shower",
-			SPECIES_PERK_NAME = "Hydrophobia",
-			SPECIES_PERK_DESC = "kitsunes don't like getting soaked with water.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_ANGRY,
-			SPECIES_PERK_NAME = "'Fight or Flight' Defense Response",
-			SPECIES_PERK_DESC = "kitsunes who become mentally unstable (and deprived of food) exhibit an \
-				extreme 'fight or flight' response against aggressors. They sometimes bite people. Violently.",
+			SPECIES_PERK_NAME = "You have arrived at the third perk",
+			SPECIES_PERK_DESC = "None of these actually do anything.",
 		),
 	)
 	return to_add
