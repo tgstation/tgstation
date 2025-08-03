@@ -143,7 +143,8 @@
 	var/atom/movable/created
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
-		created = new stack_item(null, 1)
+		var/amount = design.materials[design.materials[1]]
+		created = new stack_item(null, amount)
 	else
 		created = new design.build_path(null)
 		split_materials_uniformly(materials_needed, target_object = created)
@@ -154,7 +155,6 @@
 
 	if(!send_resource(created, dir))
 		withheld = created
-
 
 /obj/machinery/power/manufacturing/lathe/proc/finalize_build()
 	print_sound.stop()
