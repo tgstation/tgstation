@@ -109,10 +109,10 @@
 	if(!mod.wearer && !(allow_flags & MODULE_ALLOW_UNWORN)) //No wearer and cannot be used unworn
 		balloon_alert(activator, "not equipped!")
 		return
-	if(((!mod.active || mod.activating) && !(allow_flags & MODULE_ALLOW_INACTIVE)) || module_type == MODULE_PASSIVE) // not active
+	if(((!mod.active || mod.activating) && !(allow_flags & (MODULE_ALLOW_INACTIVE | MODULE_ALLOW_UNWORN))) || module_type == MODULE_PASSIVE) // not active
 		balloon_alert(activator, "not active!")
 		return
-	if(!has_required_parts(mod.mod_parts, need_active = TRUE)) // Doesn't have parts
+	if(!has_required_parts(mod.mod_parts, need_active = TRUE) && !(allow_flags & MODULE_ALLOW_UNWORN)) // Doesn't have parts
 		balloon_alert(activator, "required parts inactive!")
 		var/list/slot_strings = list()
 		for(var/slot in required_slots)
@@ -127,7 +127,7 @@
 		else
 			activate(activator)
 	else
-		used()
+		used(activator)
 	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED, src)
 
 /// Apply a cooldown until this item can be used again
@@ -220,7 +220,8 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE)
 		return FALSE
 	start_cooldown()
-	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_clothing), mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
+	if(mod.wearer)
+		addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_clothing), mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	update_clothing_slots()
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	on_use(activator)
