@@ -87,8 +87,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        const num = parseInt(part.trim());
-        return isNaN(num) ? 0 : num;
+        return parseInt(part.trim());
       });
 
       while (parts.length < 3) {
@@ -108,8 +107,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        const num = parseInt(part.trim());
-        return isNaN(num) ? 0 : num;
+        return parseInt(part.trim());
       });
 
       while (parts.length < 3) {
@@ -208,8 +206,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        const num = parseInt(part.trim());
-        return isNaN(num) ? 0 : num;
+        return parseInt(part.trim());
       });
 
       while (parts.length < 3) {

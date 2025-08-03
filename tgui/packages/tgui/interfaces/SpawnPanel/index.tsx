@@ -7,7 +7,7 @@ import { Window } from '../../layouts';
 import { logger } from '../../logging';
 import { CreateObject } from './CreateObject';
 import { CreateObjectAdvancedSettings } from './CreateObjectAdvancedSettings';
-import { CreateObjectData } from './types';
+import type { CreateObjectData } from './types';
 
 export interface IconSettings {
   icon: string | null;
