@@ -1,6 +1,6 @@
 /mob/living/basic/roro
-	name = "Roro"
-	desc = "An little round, sharp beaked alien. It bears a striking resemblance to standard issue insulated gloves."
+	name = "roro"
+	desc = "An little round, sharp beaked alien. It bears a striking resemblance to insulated gloves."
 	icon_state = "roro"
 	icon_living = "roro"
 	icon_dead = "roro_dead"
@@ -46,7 +46,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-planning_subtrees = list(
+	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

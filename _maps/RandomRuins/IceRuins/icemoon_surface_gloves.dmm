@@ -1,0 +1,1534 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aM" = (
+/obj/machinery/door/airlock/freezer{
+	name = "Product Extraction"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"aU" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/cardboard,
+/turf/open/floor/plating,
+/area/ruin/roroco/packing)
+"bR" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"cG" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Packing Room"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/ruin/roroco/packing)
+"cR" = (
+/obj/structure/closet/l3closet,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"dk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution/red,
+/obj/machinery/conveyor_switch/oneway{
+	name = "product conveyor switch"
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
+/area/ruin/roroco/extraction)
+"dD" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco)
+"eq" = (
+/obj/structure/billboard/gloves,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"ez" = (
+/obj/effect/decal/cleanable/blood/trail{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/ruin/roroco/harvesting)
+"eW" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"hZ" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/gibspawner,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/iron/freezer/edge,
+/area/ruin/roroco/extraction)
+"ii" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"iq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/packing)
+"iN" = (
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"iW" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer/large,
+/area/ruin/roroco/harvesting)
+"jA" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trail,
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
+/area/ruin/roroco/extraction)
+"lm" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/iron/corner{
+	dir = 1
+	},
+/area/ruin/roroco)
+"md" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/roroco)
+"mm" = (
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco)
+"mD" = (
+/obj/effect/turf_decal/delivery/red,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"nj" = (
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/plating,
+/area/ruin/roroco/packing)
+"nA" = (
+/turf/closed/wall,
+/area/ruin/roroco/packing)
+"nO" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Harvesting Room"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"nY" = (
+/turf/closed/wall,
+/area/ruin/roroco/janitor)
+"ok" = (
+/turf/closed/wall,
+/area/ruin/roroco)
+"ot" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/roroco)
+"oA" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/plating,
+/area/ruin/roroco/extraction)
+"oS" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
+/area/ruin/roroco/packing)
+"pK" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 4
+	},
+/area/ruin/roroco/harvesting)
+"qA" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
+/area/ruin/roroco/extraction)
+"rQ" = (
+/turf/closed/wall/r_wall,
+/area/ruin/roroco/extraction)
+"sr" = (
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron/corner{
+	dir = 4
+	},
+/area/ruin/roroco)
+"sS" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/turf/open/floor/iron/dark/textured_edge,
+/area/ruin/roroco/harvesting)
+"th" = (
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/turf/open/floor/iron/corner{
+	dir = 8
+	},
+/area/ruin/roroco)
+"tk" = (
+/mob/living/basic/roro,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"tU" = (
+/obj/structure/fence,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"um" = (
+/obj/structure/sign/warning/secure_area/directional/south,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron/corner{
+	dir = 4
+	},
+/area/ruin/roroco)
+"uL" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/ruin/roroco/management)
+"uO" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/roroco/harvesting)
+"vb" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"vj" = (
+/turf/open/floor/iron/smooth_large,
+/area/ruin/roroco)
+"vG" = (
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"wM" = (
+/mob/living/basic/roro,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"wQ" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/secateurs{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/circular_saw{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"xj" = (
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"xI" = (
+/turf/closed/wall,
+/area/ruin/roroco/harvesting)
+"xK" = (
+/turf/template_noop,
+/area/template_noop)
+"xT" = (
+/obj/machinery/door/airlock{
+	name = "Janitor's Closet"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
+"yh" = (
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/ruin/roroco/packing)
+"yz" = (
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"zn" = (
+/turf/closed/wall,
+/area/ruin/roroco/extraction)
+"zq" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Primary Hallway Maintenance"
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"zJ" = (
+/turf/closed/wall,
+/area/ruin/roroco/maintenance)
+"zN" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Aw" = (
+/obj/machinery/modular_computer/preset/civilian,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"AF" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"Bh" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco)
+"Bp" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer/edge,
+/area/ruin/roroco/extraction)
+"BS" = (
+/turf/closed/wall/r_wall,
+/area/ruin/roroco/harvesting)
+"Ci" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/roroco)
+"CV" = (
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/iron/corner,
+/area/ruin/roroco)
+"Ef" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
+"Es" = (
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/structure/sink/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"EX" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"FQ" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/ruin/roroco/packing)
+"GA" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"GS" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco)
+"Ho" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Management Office"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/ruin/roroco/management)
+"HE" = (
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/ruin/roroco/harvesting)
+"JV" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"KO" = (
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"Lb" = (
+/obj/structure/rack,
+/obj/item/melee/baseball_bat/british,
+/obj/item/hatchet/wooden,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"LZ" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Main Entrance"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/roroco)
+"Mg" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
+/area/ruin/roroco)
+"Mk" = (
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"MA" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_y = 8
+	},
+/obj/item/boxcutter/extended{
+	pixel_y = 5;
+	pixel_x = 9
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"NH" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/ruin/roroco/packing)
+"NN" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"Oq" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Fabric Processing Maintenance"
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"OV" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron/freezer/edge,
+/area/ruin/roroco/extraction)
+"PY" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"Qr" = (
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
+"Qv" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"Qw" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"QA" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron/edge,
+/area/ruin/roroco)
+"Rt" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "Harvest Transfer"
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Harvest Transfer"
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/decal/cleanable/blood/trail,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/ruin/roroco/harvesting)
+"RA" = (
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 8
+	},
+/area/ruin/roroco/harvesting)
+"SN" = (
+/turf/open/floor/plating,
+/area/ruin/roroco/packing)
+"Tl" = (
+/obj/machinery/door/window/left/directional/west{
+	name = "Roro Pen"
+	},
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 1
+	},
+/area/ruin/roroco/harvesting)
+"Uh" = (
+/obj/machinery/door/window/right/directional/south{
+	name = "Harvest Transfer"
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Harvest Transfer"
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/ruin/roroco/harvesting)
+"Uz" = (
+/turf/closed/wall,
+/area/ruin/roroco/management)
+"UA" = (
+/obj/structure/fence/corner{
+	dir = 10
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"UV" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Vl" = (
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"VS" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"Xc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/roroco)
+"Xs" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
+"Xw" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/ruin/roroco)
+"XQ" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"Yy" = (
+/obj/machinery/door/puzzle/keycard/roro,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+
+(1,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(2,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+UV
+UV
+UV
+UV
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(3,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(4,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+UV
+ok
+LZ
+Xc
+LZ
+ok
+UV
+UV
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(5,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+UV
+UV
+Xc
+vj
+vj
+vj
+Xc
+UV
+UV
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(6,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+UV
+UV
+Xc
+vj
+vj
+vj
+Xc
+UV
+PY
+PY
+UV
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(7,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+UV
+UV
+ok
+LZ
+Xc
+LZ
+ok
+PY
+PY
+PY
+PY
+UV
+UV
+xK
+xK
+xK
+UV
+UV
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(8,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+ok
+ok
+CV
+Xw
+sr
+ok
+ok
+PY
+PY
+PY
+tU
+tU
+tU
+tU
+tU
+tU
+tU
+tU
+tU
+UA
+UV
+xK
+xK
+xK
+"}
+(9,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+ok
+ok
+Bh
+Ef
+mm
+QA
+dD
+ok
+PY
+PY
+PY
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+eq
+zN
+xK
+xK
+xK
+xK
+"}
+(10,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+ok
+CV
+Xw
+Ci
+mm
+ot
+um
+rQ
+rQ
+rQ
+rQ
+BS
+BS
+BS
+BS
+BS
+UV
+UV
+UV
+UV
+zN
+xK
+xK
+xK
+xK
+"}
+(11,1,1) = {"
+xK
+xK
+xK
+xK
+ok
+ok
+Xs
+md
+Mg
+Mg
+Mg
+lm
+Yy
+KO
+KO
+KO
+nO
+Mk
+Es
+iW
+BS
+PY
+UV
+UV
+UV
+zN
+UV
+xK
+xK
+xK
+"}
+(12,1,1) = {"
+xK
+xK
+xK
+xK
+ok
+mm
+Ef
+QA
+nA
+NH
+NH
+NH
+rQ
+cR
+cR
+KO
+xI
+iN
+yz
+ii
+BS
+BS
+BS
+PY
+PY
+zN
+UV
+xK
+xK
+xK
+"}
+(13,1,1) = {"
+xK
+xK
+xK
+xK
+ok
+mm
+Ef
+QA
+nA
+yh
+aU
+aU
+rQ
+rQ
+zn
+aM
+xI
+GA
+JV
+Qw
+Qw
+NN
+BS
+BS
+PY
+PY
+PY
+xK
+xK
+xK
+"}
+(14,1,1) = {"
+xK
+xK
+nY
+nY
+nY
+nY
+Ef
+QA
+cG
+SN
+SN
+SN
+nj
+rQ
+wQ
+xj
+xI
+Lb
+JV
+VS
+wM
+Qw
+Qw
+BS
+PY
+PY
+UV
+xK
+xK
+xK
+"}
+(15,1,1) = {"
+xK
+xK
+nY
+Qr
+Qr
+nY
+Ef
+QA
+FQ
+iq
+iq
+iq
+iq
+rQ
+hZ
+jA
+Rt
+ez
+pK
+Qw
+Qw
+eW
+bR
+BS
+PY
+UV
+UV
+xK
+xK
+xK
+"}
+(16,1,1) = {"
+xK
+xK
+nY
+Qr
+Qr
+xT
+Ef
+QA
+nA
+oS
+oS
+oS
+oS
+oA
+OV
+dk
+xI
+mD
+uO
+Qw
+NN
+tk
+Qw
+BS
+PY
+PY
+xK
+xK
+xK
+xK
+"}
+(17,1,1) = {"
+xK
+xK
+nY
+Qr
+Qr
+nY
+Ef
+QA
+Uz
+uL
+uL
+uL
+uL
+rQ
+Bp
+qA
+Uh
+HE
+sS
+bR
+Qw
+Qw
+BS
+BS
+PY
+PY
+xK
+xK
+xK
+xK
+"}
+(18,1,1) = {"
+xK
+xK
+nY
+nY
+nY
+nY
+Ef
+QA
+Uz
+XQ
+Vl
+EX
+vb
+rQ
+MA
+KO
+xI
+iN
+RA
+Tl
+BS
+BS
+BS
+PY
+PY
+xK
+xK
+xK
+xK
+xK
+"}
+(19,1,1) = {"
+xK
+xK
+xK
+xK
+ok
+GS
+Ef
+QA
+Ho
+Vl
+Vl
+Vl
+Vl
+rQ
+rQ
+Oq
+BS
+AF
+iN
+BS
+BS
+PY
+UV
+PY
+PY
+xK
+xK
+xK
+xK
+xK
+"}
+(20,1,1) = {"
+xK
+xK
+xK
+xK
+ok
+ok
+th
+lm
+Uz
+Aw
+Qv
+EX
+vb
+Uz
+vG
+vG
+BS
+BS
+Oq
+BS
+PY
+PY
+UV
+PY
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(21,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+ok
+ok
+zq
+Uz
+Uz
+Uz
+Uz
+Uz
+Uz
+vG
+vG
+vG
+vG
+vG
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(22,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+zJ
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(23,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+zJ
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(24,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(25,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(26,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(27,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(28,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(29,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
+(30,1,1) = {"
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+xK
+"}
