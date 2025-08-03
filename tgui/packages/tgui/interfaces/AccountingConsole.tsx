@@ -153,11 +153,18 @@ export const AccountingConsole = () => {
             ml={-1}
             mr={-1}
             mb={-1}
+            style={{
+              outline: 'solid 1px',
+              outlineStyle: 'outset',
+              outlineWidth: '2px',
+              outlineColor: 'hsl(0, 0%, 85%)',
+            }}
           >
             <Flex>
               <Flex.Item mr={1}>
                 <Button
                   disabled
+                  textColor="black"
                   icon="user"
                   p={0.75}
                   pl={1}
@@ -191,7 +198,7 @@ export const AccountingConsole = () => {
               </Flex.Item>
               <Flex.Item grow />
               <Flex.Item>
-                <Button p={0.75} pl={1} pr={1} disabled>
+                <Button p={0.75} pl={1} pr={1} disabled textColor="black">
                   {station_time} ST
                 </Button>
               </Flex.Item>
@@ -318,7 +325,9 @@ const FakeDesktopButton = (props: {
           {children}
         </Button>
       </Stack.Item>
-      <Stack.Item color="white">{name}</Stack.Item>
+      <Stack.Item color="white" textAlign="center">
+        {name}
+      </Stack.Item>
     </>
   );
 };
