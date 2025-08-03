@@ -68,9 +68,9 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 		toggle_precise_mode(PRECISE_MODE_OFF)
 
 /datum/spawnpanel/ui_state(mob/user)
-  if(user.client.ckey != owner_ckey)
-    return GLOB.never_state
-  return ADMIN_STATE(R_ADMIN)
+	if(user.client.ckey != owner_ckey)
+		return GLOB.never_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/spawnpanel/ui_act(action, params)
 	if(..())
