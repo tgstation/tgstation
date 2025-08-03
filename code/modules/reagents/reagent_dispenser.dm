@@ -369,7 +369,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
 	. = ..()
 	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
-	update_appearance()
+	refresh_appearance()
+
+/obj/structure/reagent_dispensers/water_cooler/Destroy()
+	. = ..()
+	our_jug = null
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
@@ -384,6 +388,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(.)
 		return
+
+	if(user.combat_mode && our_jug)
+		balloon_alert(user, "removing jug...")
+		if(!do_after(user, 10 SECONDS, src))
+			return
+		eject_jug(user)
+		return
+
 	if(!paper_cups)
 		to_chat(user, span_warning("There aren't any cups left!"))
 		return
@@ -451,6 +463,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		return
 
 	var/obj/item/reagent_containers/cooler_jug/new_jug = tool
+	balloon_alert(user, "replacing jug...")
+	if(!do_after(user, 10 SECONDS, src))
+		return
 	if(!user.transferItemToLoc(new_jug, src))
 		return ITEM_INTERACT_BLOCKING
 
@@ -460,18 +475,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	balloon_alert(user, "attached")
 	user.log_message("attached a [new_jug] to [src] at [AREACOORD(src)] containing ([new_jug.reagents.get_reagent_log_string()])", LOG_ATTACK)
 	add_fingerprint(user)
-	update_overlays()
+	refresh_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, obj/item/reagent_containers/cooler_jug/our_jug)
-	if(our_jug)
-		if(user)
-			user.put_in_hands(our_jug)
-		else
-			our_jug.forceMove(drop_location())
-		src.reagents.trans_to(our_jug.reagents, tank_volume)
-		our_jug = null
-		update_overlays()
+/obj/structure/reagent_dispensers/water_cooler/proc/refresh_appearance()
+	if(!our_jug)
+		icon_state = "water_cooler_forlorn"
+	else
+		icon_state = "water_cooler"
+
+	update_overlays()
+	update_appearance()
+
+/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user)
+	if(!our_jug)
+		return
+
+	if(user)
+		user.put_in_hands(our_jug)
+	else
+		our_jug.forceMove(drop_location())
+
+	reagents.trans_to(our_jug.reagents, tank_volume)
+	our_jug = null
+	refresh_appearance()
 
 /obj/structure/reagent_dispensers/water_cooler/boom()
 	if(QDELETED(src))

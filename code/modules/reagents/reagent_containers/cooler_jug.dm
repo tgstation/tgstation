@@ -9,4 +9,4 @@
 	has_variable_transfer_amount = FALSE
 	interaction_flags_click = NEED_DEXTERITY
 	fill_icon_state = "cooler_jug_overlay"
-	fill_icon_thresholds = list(0, 100, 200)
+	fill_icon_thresholds = list(100, 200)
