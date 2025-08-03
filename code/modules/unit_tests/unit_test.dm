@@ -278,6 +278,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/food/grown,
 		//Single use case holder atom requiring a user
 		/atom/movable/looking_holder,
+		//Should not exist outside of holders
+		/obj/effect/decal/cleanable/blood/trail,
 	)
 
 	// Everything that follows is a typesof() check.
