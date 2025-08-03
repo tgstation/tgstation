@@ -43,6 +43,9 @@
 /// From /datum/action/vehicle/sealed/mecha/mech_toggle_safeties/proc/update_action_icon(): ()
 #define COMSIG_MECH_SAFETIES_TOGGLE "mech_safeties_toggle"
 
+/// From /datum/action/vehicle/sealed/mecha//mob_exit(): ()
+#define COMSIG_MECHA_MOB_EXIT "mecha_mob_exit"
+
 /// From /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(), sent to the action owner: (atom/movable/target)
 #define COMSIG_ACTION_DISGUISED_APPEARANCE "mob_ability_disguise_appearance"
 

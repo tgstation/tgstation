@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "fixes tamed pets sometimes attacking one another"

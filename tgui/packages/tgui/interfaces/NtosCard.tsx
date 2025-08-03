@@ -236,9 +236,7 @@ const TemplateDropdown = (props) => {
 
   const templateKeys = Object.keys(templates);
 
-  if (!templateKeys.length) {
-    return <> </>;
-  }
+  if (!templateKeys.length) return;
 
   return (
     <Stack>

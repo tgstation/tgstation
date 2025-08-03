@@ -1,7 +1,0 @@
-author: "Ezel"
-delete-after: True
-changes:
-  - balance: "Removes some public medkits on every map"
-  - balance: "Changes the contents of wall med vendors to just have emergency stuff"
-  - balance: "Drugs vendor now includes 3 sterilizine medigels instead of 1"
-  - balance: "Tactical lite medkit added to traitor uplink for 4 tc, this includes medicated suture/mesh, atropine pen, gauze, advanced health analyzer\nmap:Adds more wall med vendors to the map atleast 1 every department."
