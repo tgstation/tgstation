@@ -85,7 +85,8 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 			if(new_icon)
 				selected_atom_icon = new_icon
 				available_icon_states = icon_states(selected_atom_icon)
-			selected_atom_icon_state = available_icon_states[1]
+				if(!(selected_atom_icon_state in available_icon_states))
+					selected_atom_icon_state = available_icon_states[1]
 			SStgui.update_uis(src)
 			return TRUE
 
@@ -96,6 +97,9 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 				selected_atom_icon = initial(selected_atom.icon)
 				selected_atom_icon_state = initial(selected_atom.icon_state)
 				available_icon_states = icon_states(selected_atom_icon)
+			else
+				available_icon_states = list()
+
 			SStgui.update_uis(src)
 			return TRUE
 

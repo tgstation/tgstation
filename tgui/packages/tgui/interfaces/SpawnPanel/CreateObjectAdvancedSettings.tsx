@@ -26,8 +26,8 @@ export function CreateObjectAdvancedSettings({
     changedSettings: Partial<Record<string, unknown>> = {},
   ) => {
     const currentSettings = {
-      selected_atom_icon: iconSettings.icon,
-      selected_atom_icon_state: iconSettings.iconState,
+      selected_atom_icon: data.icon || iconSettings.icon,
+      selected_atom_icon_state: data.iconState || iconSettings.iconState,
       atom_icon_size: iconSettings.iconSize,
       ...changedSettings,
     };
@@ -61,9 +61,8 @@ export function CreateObjectAdvancedSettings({
             icon="arrow-rotate-right"
             color="transparent"
             onClick={() => {
-              onIconSettingsChange({ icon: data.icon });
               act('reset-DMI-icon');
-              sendUpdatedSettings({ selected_atom_icon: data.icon });
+              sendUpdatedSettings();
             }}
           />
         </Table.Cell>
@@ -76,6 +75,10 @@ export function CreateObjectAdvancedSettings({
             selected={data.iconState || iconSettings.iconState || 'Default'}
             displayText={data.iconState || iconSettings.iconState || 'Default'}
             onSelected={(value) => {
+              act('select-new-icon-state', {
+                new_state: value,
+                current_icon: data.icon || iconSettings.icon,
+              });
               onIconSettingsChange({ iconState: value });
               sendUpdatedSettings({ selected_atom_icon_state: value });
             }}
@@ -87,8 +90,9 @@ export function CreateObjectAdvancedSettings({
             icon="arrow-rotate-right"
             color="transparent"
             onClick={() => {
-              onIconSettingsChange({ iconState: data.iconState });
-              sendUpdatedSettings({ selected_atom_icon_state: data.iconState });
+              // Сначала сбрасываем локальное состояние
+              onIconSettingsChange({ iconState: null });
+              // Затем отправляем запрос на сервер
               act('reset-icon-state');
             }}
           />

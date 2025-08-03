@@ -55,6 +55,8 @@ export function CreateObject(props: CreateObjectProps) {
   const [showIcons, setshowIcons] = useState(false);
   const [showPreview, setshowPreview] = useState(false);
 
+  useEffect(() => {}, [iconSettings.icon, iconSettings.iconState]);
+
   // flattening the object lists
   const allObjects = Object.assign({}, ...Object.values(objList)) as Record<
     string,
@@ -157,6 +159,14 @@ export function CreateObject(props: CreateObjectProps) {
     }
   }, [data.selected_object, data.copied_type]);
 
+  useEffect(() => {
+    if (data.iconState !== undefined) {
+      props.onIconSettingsChange({
+        iconState: data.iconState,
+      });
+    }
+  }, [data.iconState]);
+
   const sendUpdatedSettings = (
     changedSettings: Partial<Record<string, unknown>> = {},
   ) => {
@@ -198,8 +208,7 @@ export function CreateObject(props: CreateObjectProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        const num = parseInt(part.trim());
-        return isNaN(num) ? 0 : num;
+        return parseInt(part.trim());
       });
 
       while (parts.length < 3) {
@@ -236,6 +245,14 @@ export function CreateObject(props: CreateObjectProps) {
     }
   };
 
+  const handleResetIconState = () => {
+    props.onIconSettingsChange({
+      iconState: null,
+      icon: selectedObj ? allObjects[selectedObj]?.icon : null,
+    });
+    act('reset-icon-state');
+  };
+
   return (
     <Stack vertical fill>
       <Stack.Item>
@@ -250,11 +267,7 @@ export function CreateObject(props: CreateObjectProps) {
 
       {showPreview && selectedObj && allObjects[selectedObj] && (
         <Stack.Item>
-          <Section
-            style={{
-              height: '6em',
-            }}
-          >
+          <Section style={{ height: '6em' }}>
             <Stack>
               <Stack.Item>
                 <Button
@@ -263,16 +276,19 @@ export function CreateObject(props: CreateObjectProps) {
                   mb="-3px"
                   color="transparent"
                   ml="1px"
-                  style={{
-                    alignContent: 'center',
-                  }}
+                  style={{ alignContent: 'center' }}
                 >
                   <DmIcon
                     width="4em"
                     mt="2px"
-                    icon={iconSettings.icon || allObjects[selectedObj].icon}
+                    icon={
+                      iconSettings.icon ||
+                      data.icon ||
+                      allObjects[selectedObj].icon
+                    }
                     icon_state={
                       iconSettings.iconState ||
+                      data.iconState ||
                       allObjects[selectedObj].icon_state
                     }
                   />

@@ -1,4 +1,4 @@
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export interface Data {
   [panelName: string]: CreateObjectData[];
@@ -49,7 +49,7 @@ export interface CreateObjectProps {
     iconState: string | null;
     iconSize: number;
   };
-  onIconSettingsChange?: (
+  onIconSettingsChange: (
     settings: Partial<{
       icon: string | null;
       iconState: string | null;
