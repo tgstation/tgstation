@@ -81,13 +81,12 @@
 		human_for_preview.update_body()
 
 /datum/species/human/kitsune/get_physical_attributes()
-	return "Kitsunes are very similar to humans in almost all respects, with their biggest differences being the ability to lick their wounds, \
-		and an increased sensitivity to noise, which is often detrimental. They are also rather fond of eating oranges."
+	return "Kitsunes are very similar to humans in almost all respects, with their biggest differences being their fluffy ears and tails."
 
 /datum/species/human/kitsune/get_species_description()
 	return "Kitsunes are one of the many types of bespoke genetic \
 		modifications to come of humanity's mastery of genetic science, and are \
-		also one of the most common. Meow?"
+		also one of the most common."
 
 /datum/species/human/kitsune/get_species_lore()
 	return list(
@@ -95,7 +94,7 @@
 			One of many \"Animalid\" variants, kitsunes are the most popular and common, as well as one of the \
 			biggest points of contention in genetic-modification.",
 
-		"Body modders were eager to splice human and feline DNA in search of the holy trifecta: ears, eyes, and tail. \
+		"Body modders were eager to splice human and fox DNA in search of the holy trifecta: ears, eyes, and tail. \
 			These traits were in high demand, with the corresponding side effects of vocal and neurochemical changes being seen as a minor inconvenience.",
 
 		"Sadly for the Kitsunes, they were not minor inconveniences. Shunned as subhuman and monstrous by many, Kitsunes (and other Animalids) \
@@ -129,3 +128,6 @@
 		),
 	)
 	return to_add
+
+/datum/species/human/kitsune/check_roundstart_eligible()
+	return TRUE
