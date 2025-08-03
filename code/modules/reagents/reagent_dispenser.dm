@@ -358,14 +358,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "A machine that dispenses water to drink. It appears docile."
 	icon_state = "water_cooler"
 	anchored = TRUE
-	tank_volume = 500
+	tank_volume = 200
 	can_be_tanked = FALSE
-	///Paper cups left from the cooler
+	max_integrity = 150
+	///Paper cups left from the cooler.
 	var/paper_cups = 25
+	///Reference to our jug.
+	var/obj/item/reagent_containers/cooler_jug/our_jug
 
 /obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
 	. = ..()
-	update_overlays()
+	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
+	update_appearance()
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
@@ -437,14 +441,51 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand_secondary(mob/user, modifiers)
-	INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)
-	//if(!do_after(user, 2 SECONDS, )) //finish later
+	if(!do_after(user, 2 SECONDS, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	INVOKE_ASYNC(src, PROC_REF(boom), user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/reagent_dispensers/water_cooler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cooler_jug))
+		return
+
+	var/obj/item/reagent_containers/cooler_jug/new_jug = tool
+	if(!user.transferItemToLoc(new_jug, src))
+		return ITEM_INTERACT_BLOCKING
+
+	eject_jug(user, our_jug)
+	our_jug = new_jug
+	our_jug.reagents.trans_to(reagents, tank_volume)
+	balloon_alert(user, "attached")
+	user.log_message("attached a [new_jug] to [src] at [AREACOORD(src)] containing ([new_jug.reagents.get_reagent_log_string()])", LOG_ATTACK)
+	add_fingerprint(user)
+	update_overlays()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, obj/item/reagent_containers/cooler_jug/our_jug)
+	if(our_jug)
+		if(user)
+			user.put_in_hands(our_jug)
+		else
+			our_jug.forceMove(drop_location())
+		src.reagents.trans_to(our_jug.reagents, tank_volume)
+		our_jug = null
+		update_overlays()
+
+/obj/structure/reagent_dispensers/water_cooler/boom()
+	if(QDELETED(src))
+		return
+	var/liquid_amount = 0
+	if(reagents.total_volume)
+		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
+		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50),adminlog=(liquid_amount<25))
+	eject_jug()
 
 /obj/structure/reagent_dispensers/water_cooler/punch_cooler
 	name = "punch cooler"
 	desc = "A machine that dispenses fruit punch to drink. Engage with caution. Do not stray from punch cooler after consumption."
 	reagent_id = /datum/reagent/consumable/fruit_punch
-	tank_volume = 200
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
