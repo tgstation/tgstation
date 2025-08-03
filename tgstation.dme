@@ -557,6 +557,7 @@
 #include "code\_globalvars\lists\communication.dm"
 #include "code\_globalvars\lists\crafting.dm"
 #include "code\_globalvars\lists\department.dm"
+#include "code\_globalvars\lists\disposals.dm"
 #include "code\_globalvars\lists\engineering.dm"
 #include "code\_globalvars\lists\ghost.dm"
 #include "code\_globalvars\lists\icons.dm"
