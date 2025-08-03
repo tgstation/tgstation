@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Monster cores now display above corpses when dropped"
