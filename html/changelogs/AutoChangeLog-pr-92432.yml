@@ -1,0 +1,4 @@
+author: "carpotoxin"
+delete-after: True
+changes:
+  - qol: "Mobs entangled within spacevines are layered above the spacevines for as long as they stay buckled"
