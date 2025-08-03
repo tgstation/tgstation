@@ -1,8 +1,10 @@
+#define TOPDOWN_TO_EMISSIVE_LAYER(layer) LERP(FLOOR_EMISSIVE_START_LAYER, FLOOR_EMISSIVE_END_LAYER, (layer - (TOPDOWN_LAYER + 1)) / TOPDOWN_LAYER_COUNT)
+
 /// Produces a mutable appearance glued to the [EMISSIVE_PLANE] dyed to be the [EMISSIVE_COLOR].
 /proc/emissive_appearance(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const, apply_bloom = TRUE)
 	if (isnull(layer))
 		if(IS_TOPDOWN_PLANE(offset_spokesman.plane))
-			layer = ABOVE_NORMAL_TURF_LAYER + (offset_spokesman.layer - LOW_FLOOR_LAYER + 0.5) * 0.001
+			layer = TOPDOWN_TO_EMISSIVE_LAYER(offset_spokesman.layer)
 		else
 			layer = FLOAT_LAYER
 
@@ -35,7 +37,7 @@
 	// If we keep this on a FLOAT_LAYER on a topdown object it'll render ontop of everything
 	// So we need to force it to render at a saner layer
 	if(IS_TOPDOWN_PLANE(make_blocker.plane))
-		blocker.layer = ABOVE_NORMAL_TURF_LAYER + (make_blocker.layer - LOW_FLOOR_LAYER + 0.5) * 0.001 // Slightly shift it so the layering is still respected. + 0.5 so we don't collide with ABOVE_NORMAL_TURF_LAYER
+		blocker.layer = TOPDOWN_TO_EMISSIVE_LAYER(make_blocker.layer)
 	blocker.appearance_flags |= make_blocker.appearance_flags | EMISSIVE_APPEARANCE_FLAGS
 	blocker.dir = make_blocker.dir
 	if(make_blocker.alpha == 255)
@@ -53,7 +55,7 @@
 /proc/emissive_blocker(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const)
 	if (isnull(layer))
 		if(IS_TOPDOWN_PLANE(offset_spokesman.plane))
-			layer = ABOVE_NORMAL_TURF_LAYER + (offset_spokesman.layer - LOW_FLOOR_LAYER + 0.5) * 0.001
+			layer = TOPDOWN_TO_EMISSIVE_LAYER(offset_spokesman.layer)
 		else
 			layer = FLOAT_LAYER
 	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, offset_spokesman, EMISSIVE_PLANE, alpha, appearance_flags | EMISSIVE_APPEARANCE_FLAGS, offset_const)
@@ -91,3 +93,5 @@
 	var/atom/movable/vis_cast = make_blocker
 	vis_cast.vis_contents += hand_back
 	return hand_back
+
+#undef TOPDOWN_TO_EMISSIVE_LAYER

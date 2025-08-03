@@ -468,13 +468,9 @@
 			update_appearance() // correct our emissive
 		return
 
-#ifndef UNIT_TESTS
 	if (mapload)
-		log_mapping("[src] spawned outside of a trail holder at [AREACOORD(src)]!")
-		return INITIALIZE_HINT_QDEL
-#endif
+		stack_trace("[src] was mapped in at [AREACOORD(src)]!")
 
-	stack_trace("[src] spawned outside of a trail holder at [AREACOORD(src)]!")
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/decal/cleanable/blood/trail/update_desc(updates)
