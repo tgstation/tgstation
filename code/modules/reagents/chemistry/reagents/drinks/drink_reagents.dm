@@ -1312,10 +1312,10 @@
 
 /datum/reagent/consumable/fruit_punch
 	name = "fruit punch"
-	description = "Impossibly sweet fruit punch. Nobody actually knows what fruits were used to make it, not even it's creators... \
-		It's unique recipe is said to have rejuvinating effects on a drinker, but is unsafe to consume without the support of a nearby watercooler."
+	description = "Impossibly sweet fruit punch. Nobody knows what fruits were used to make it, not even it's creators... \
+		It's unique recipe heals and rejuvinates the drinker, but is unsafe to consume without the support of a nearby watercooler."
 	color = "#f7b2e3"
-	taste_description = "painfully sweet fruit"
+	taste_description = "dangerously sweet fruit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_VERYGOOD
 

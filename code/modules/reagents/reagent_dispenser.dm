@@ -365,10 +365,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/paper_cups = 25
 	///Reference to our jug.
 	var/obj/item/reagent_containers/cooler_jug/our_jug
+	///Have we been tipped?
+	var/tipped = FALSE
 
 /obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
 	. = ..()
-	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
+	our_jug = new /obj/item/reagent_containers/cooler_jug(src) //proc into "create_jug" for tipped/headless coolers
 	refresh_appearance()
 
 /obj/structure/reagent_dispensers/water_cooler/Destroy()
@@ -479,15 +481,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/water_cooler/proc/refresh_appearance()
-	if(!our_jug)
-		icon_state = "water_cooler_forlorn"
+	if(tipped)
+		icon_state = "water_cooler_disgraced"
 	else
-		icon_state = "water_cooler"
+		if(!our_jug)
+			icon_state = "water_cooler_forlorn"
+		else
+			icon_state = "water_cooler"
 
 	update_overlays()
 	update_appearance()
 
-/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user)
+/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, throw_away = FALSE)
 	if(!our_jug)
 		return
 
@@ -496,7 +501,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	else
 		our_jug.forceMove(drop_location())
 
-	reagents.trans_to(our_jug.reagents, tank_volume)
+	if(throw_away)
+		var/turf/turf_to_throw_at = get_ranged_target_turf(src, pick(GLOB.alldirs))
+		our_jug.throw_at(turf_to_throw_at, 3, 3)
+		reagents.remove_all(tank_volume) //Gets spilled on floor during boom()
+	else
+		reagents.trans_to(our_jug.reagents, tank_volume)
 	our_jug = null
 	refresh_appearance()
 
@@ -506,9 +516,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/liquid_amount = 0
 	if(reagents.total_volume)
 		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
-		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50),adminlog=(liquid_amount<25))
+		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50), adminlog=(liquid_amount<25))
 	eject_jug()
+	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
+	tip_over()
 
+/obj/structure/reagent_dispensers/water_cooler/proc/tip_over()
+	tipped = TRUE
+	refresh_appearance()
+
+///Pre-tipped version for mapping.
+/obj/structure/reagent_dispensers/water_cooler/fallen
+	tipped = TRUE
+
+/obj/structure/reagent_dispensers/water_cooler/fallen/Initialize(mapload)
+	. = ..()
+	tip_over()
+
+///Punch cooler. Starts full of healing juice.
 /obj/structure/reagent_dispensers/water_cooler/punch_cooler
 	name = "punch cooler"
 	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
