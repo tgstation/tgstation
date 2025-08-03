@@ -44,6 +44,7 @@
 	var/list/data = list()
 	var/static/ian_format = pick("png", "jpg", "jpeg", "webp", "bmp")
 	data["pic_file_format"] = ian_format
+	data["young_ian"] = check_holidays(IAN_HOLIDAY)
 	data["max_advances"] = MAX_ADVANCES
 	data["max_pay_mod"] = MAX_PAY_MOD
 	data["min_pay_mod"] = MIN_PAY_MOD

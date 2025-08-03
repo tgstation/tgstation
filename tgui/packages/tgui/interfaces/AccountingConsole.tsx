@@ -25,6 +25,7 @@ type Data = {
   min_pay_mod: number;
   max_advances: number;
   station_time: string;
+  young_ian: BooleanLike;
 };
 
 type PlayerAccount = {
@@ -52,8 +53,16 @@ enum SCREENS {
 
 export const AccountingConsole = () => {
   const { data } = useBackend<Data>();
-  const { station_time = '00:00', pic_file_format = 'png' } = data;
+  const {
+    station_time = '00:00',
+    pic_file_format = 'png',
+    young_ian = false,
+  } = data;
   const [screenmode, setScreenmode] = useState(SCREENS.none);
+
+  const ianFileName = young_ian
+    ? `Ian's first birthday.${pic_file_format}`
+    : `Ian.${pic_file_format}`;
 
   return (
     <Window width={600} height={440} theme="ntOS95">
@@ -92,7 +101,7 @@ export const AccountingConsole = () => {
                         />
                       </FakeDesktopButton>
                       <FakeDesktopButton
-                        name={`Ian.${pic_file_format}`}
+                        name={ianFileName}
                         setScreenmode={setScreenmode}
                         ownerScreenMode={SCREENS.ian}
                       >
@@ -128,7 +137,7 @@ export const AccountingConsole = () => {
               {screenmode === SCREENS.ian && (
                 <Flex.Item ml={10}>
                   <FakeWindowIan
-                    name={`Ian.${pic_file_format}`}
+                    name={ianFileName}
                     setScreenmode={setScreenmode}
                   />
                 </Flex.Item>
@@ -174,7 +183,7 @@ export const AccountingConsole = () => {
               </Flex.Item>
               <Flex.Item mr={1}>
                 <FakeToolbarButton
-                  name={`Ian.${pic_file_format}`}
+                  name={ianFileName}
                   currentScreenMode={screenmode}
                   setScreenmode={setScreenmode}
                   ownerScreenMode={SCREENS.ian}
@@ -214,6 +223,9 @@ type FakeWindowProps = {
 };
 
 const FakeWindowIan = (props: FakeWindowProps) => {
+  const { data } = useBackend<Data>();
+  const { young_ian } = data;
+
   return (
     <FakeWindow {...props}>
       <DmIcon
@@ -221,7 +233,7 @@ const FakeWindowIan = (props: FakeWindowProps) => {
         height="300px"
         mt={1}
         icon="icons/mob/simple/pets.dmi"
-        icon_state="corgi"
+        icon_state={young_ian ? 'puppy' : 'corgi'}
       />
     </FakeWindow>
   );
