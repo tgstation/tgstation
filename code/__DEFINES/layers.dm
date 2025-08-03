@@ -230,6 +230,7 @@
 #define BELOW_MOB_LAYER 3.7
 #define LOW_MOB_LAYER 3.75
 #define LYING_MOB_LAYER 3.8
+#define ABOVE_LYING_MOB_LAYER 3.85
 #define VEHICLE_LAYER 3.9
 #define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define

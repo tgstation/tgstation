@@ -1456,6 +1456,7 @@
 #include "code\datums\dna\blocks\dna_features_block.dm"
 #include "code\datums\dna\blocks\dna_identity_block.dm"
 #include "code\datums\elements\_element.dm"
+#include "code\datums\elements\above_mob_drop.dm"
 #include "code\datums\elements\ai_control_examine.dm"
 #include "code\datums\elements\ai_flee_while_injured.dm"
 #include "code\datums\elements\ai_held_item.dm"
