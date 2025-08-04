@@ -149,7 +149,7 @@
 	desc = "It sounds like hissing steam, ticking cogs, gone silent, It looks like a dead machine, trying to tick with life."
 	icon_state = "clockwork_cuirass"
 	inhand_icon_state = null
-	slowdown = 0
+	slowdown = 0.2
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock/Initialize(mapload)
 	. = ..()
@@ -181,7 +181,7 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	inhand_icon_state = null
-	slowdown = 0
+	slowdown = 0.2
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar/Initialize(mapload)
 	. = ..()
@@ -206,6 +206,8 @@
 	desc = "Defend the treasure..."
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	slowdown = 0.1
 
 /obj/item/clothing/suit/chaplainsuit/armor/ancient/Initialize(mapload)
 	. = ..()
@@ -232,6 +234,7 @@
 	desc = "The ideal outfit for burning the unfaithful."
 	icon_state = "crusader"
 	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader
 	name = "crusader's armour"
