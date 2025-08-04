@@ -166,8 +166,7 @@
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(closet.loc))
 			var/mob/being_pulled_by = closet.pulledby
-			if(being_pulled_by)
-				being_pulled_by.start_pulling(parcel)
+			being_pulled_by?.start_pulling(parcel)
 			parcel.base_icon_state = closet.delivery_icon
 			parcel.update_icon()
 			parcel.drag_slowdown = closet.drag_slowdown
