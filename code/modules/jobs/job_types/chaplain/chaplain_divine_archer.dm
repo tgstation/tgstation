@@ -64,4 +64,13 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	fastening_type = SHOES_SLIPON
-	armor_type = /datum/armor/chaplainsuit_armor_weaker
+	armor_type = /datum/armor/shoes_divine_archer
+
+/datum/armor/shoes_divine_archer
+	melee = 10
+	bullet = 5
+	laser = 5
+	energy = 5
+	fire = 60
+	acid = 60
+	wound = 10
