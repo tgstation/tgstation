@@ -59,7 +59,9 @@
 	desc = "Boots, For steady footing while aiming."
 	icon_state = "archerboots"
 	inhand_icon_state = "archerboots"
+	body_parts_covered = LEGS|FEET
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
 	fastening_type = SHOES_SLIPON
+	armor_type = /datum/armor/chaplainsuit_armor_weaker
