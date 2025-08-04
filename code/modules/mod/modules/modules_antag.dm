@@ -290,7 +290,7 @@
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/chameleon)
 	cooldown_time = 0.5 SECONDS
-	allow_flags = MODULE_ALLOW_INACTIVE
+	allow_flags = list(MODULE_ALLOW_INACTIVE|MODULE_ALLOW_UNWORN)
 	/// A list of all the items the suit can disguise as.
 	var/list/possible_disguises = list()
 	/// The path of the item we're disguised as.

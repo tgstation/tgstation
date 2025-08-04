@@ -149,17 +149,17 @@
 		//specifically a to_chat because the user is phased out.
 		to_chat(activator, span_warning("You cannot activate this right now."))
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE) // todo: figure out what this does
+	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE)
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
 		if(mod.selected_module && !mod.selected_module.deactivate(display_message = FALSE))
 			return FALSE
 		mod.selected_module = src
-		if(device) // todo: make compatable with pAIs
+		if(device)
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(activator, "[device] extended")
-				RegisterSignal(activator, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
-				RegisterSignal(activator, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey))
+				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
+				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey))
 			else
 				balloon_alert(activator, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
