@@ -127,11 +127,11 @@
 	icon_state = "style_meter_background"
 	icon = 'icons/hud/style_meter.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "WEST,CENTER:16"
-	maptext_height = 120
+	screen_loc = "WEST,CENTER-1:19"
+	maptext_height = 160
 	maptext_width = 105
 	maptext_x = 5
-	maptext_y = 94
+	maptext_y = 124
 	maptext = ""
 	layer = SCREENTIP_LAYER
 

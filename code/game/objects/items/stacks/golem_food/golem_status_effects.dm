@@ -286,6 +286,10 @@
 	var/moving_alpha = 200
 	/// List of arms we have updated
 	var/list/modified_arms
+	/// Arm -> original attack verbs assoc list
+	var/list/initial_unarmed_verbs = list()
+	/// Arm -> original past attack verbs assocl ist
+	var/list/initial_unarmed_verbs_past = list()
 
 /datum/status_effect/golem/diamond/on_apply()
 	. = ..()
@@ -310,8 +314,12 @@
 
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
+	initial_unarmed_verbs[arm] = arm.unarmed_attack_verbs
+	initial_unarmed_verbs_past[arm] = arm.unarmed_attack_verbs_continuous
 	arm.unarmed_attack_verbs = list("slash")
+	arm.unarmed_attack_verbs_continuous = list("slashes")
 	arm.grappled_attack_verb = "lacerate"
+	arm.grappled_attack_verb_continuous = "lacerates"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -325,13 +333,18 @@
 	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		reset_arm_fluff(arm)
 	LAZYCLEARLIST(modified_arms)
+	initial_unarmed_verbs.Cut()
+	initial_unarmed_verbs_past.Cut()
 	return ..()
 
 /// Make our arm do whatever it originally did
 /datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
 	if (!arm)
 		return
-	arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
+	arm.unarmed_attack_verbs = initial_unarmed_verbs[arm]
+	arm.unarmed_attack_verbs_continuous = initial_unarmed_verbs_past[arm]
+	arm.grappled_attack_verb = initial(arm.grappled_attack_verb)
+	arm.grappled_attack_verb_continuous = initial(arm.grappled_attack_verb_continuous)
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
@@ -341,6 +354,8 @@
 /datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
 	SIGNAL_HANDLER
 	modified_arms -= arm
+	initial_unarmed_verbs -= arm
+	initial_unarmed_verbs_past -= arm
 
 /// Makes you tougher
 /datum/status_effect/golem/titanium

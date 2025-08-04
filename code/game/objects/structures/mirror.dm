@@ -207,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
 				race_changer.dna.features[FEATURE_MUTANT_COLOR] = sanitize_hexcolor(new_mutantcolor)
-				race_changer.dna.update_uf_block(FEATURE_MUTANT_COLOR)
+				race_changer.dna.update_uf_block(/datum/dna_block/feature/mutant_color)
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE

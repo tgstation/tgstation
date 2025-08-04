@@ -41,7 +41,7 @@
 /datum/uplink_item/explosives/frag
 	name = "Frag Grenade"
 	desc = "A frag grenade. Pop the pin. Throw towards enemy. Keep clear of the shrapnel. Easy!"
-	item = /obj/item/storage/backpack/duffelbag/syndie/c4
+	item = /obj/item/grenade/frag
 	cost = 1
 	limited_stock = 10
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get a whole box of these at once at a considerable discount.

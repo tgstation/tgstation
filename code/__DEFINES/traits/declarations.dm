@@ -1539,10 +1539,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
 #define TRAIT_UNCOVERED_TURF "uncovered_turf"
 
+/// A trait that blocks the metabolism of formaldehyde
+#define TRAIT_BLOCK_FORMALDEHYDE_METABOLISM "block_formaldehyde_metabolism"
+
 ///Attached to objects currently on tables and such, allowing them to walk on other objects without the climbing delay
 #define TRAIT_ON_CLIMBABLE "on_climbable"
 
 /// Trait that allows mobs to perform surgery on themselves
 #define TRAIT_SELF_SURGERY "self_surgery"
+
+/// Trait that makes mobs with it immune to mining gear AOE attacks
+#define TRAIT_MINING_AOE_IMMUNE "mining_aoe_immune"
+
+/// Trait that allows an item to perform holy rites akin to a nullrod
+#define TRAIT_NULLROD_ITEM "nullrod_item"
 
 // END TRAIT DEFINES

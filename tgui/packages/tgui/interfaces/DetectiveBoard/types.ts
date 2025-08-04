@@ -19,3 +19,5 @@ export type DataEvidence = {
   text: string;
   connections: string[];
 };
+
+export type EvidenceFn = (evidence: DataEvidence) => void;
