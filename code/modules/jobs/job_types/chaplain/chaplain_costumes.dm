@@ -196,7 +196,7 @@
 	armor_type = /datum/armor/helmet_cage
 	worn_y_offset = 7
 
-armor_type = /datum/armor/helmet_cage
+/datum/armor/helmet_cage
 	melee = 60
 	bullet = 10
 	laser = 10
