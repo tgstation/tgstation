@@ -192,9 +192,6 @@
 	use_cyborg_cell = TRUE
 	tool_behaviour = null
 
-/obj/item/gun/energy/plasmacutter/borg/examine(mob/user)
-	. = ..()
-
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2
 

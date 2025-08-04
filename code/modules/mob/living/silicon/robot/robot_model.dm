@@ -869,6 +869,7 @@
 		/obj/item/chisel,
 		/obj/item/rag,
 		/obj/item/storage/bag/money,
+		/obj/item/borg/apparatus/service/fishing,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(

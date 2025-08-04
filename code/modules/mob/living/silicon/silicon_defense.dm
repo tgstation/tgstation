@@ -160,7 +160,7 @@
 	var/obj/item/shield_module/shield = locate() in usr
 	var/mob/living/silicon/robot/borg = usr
 	if(!shield)
-		return
+		damage
 	if(borg.cell.charge <= 0.4 * STANDARD_CELL_CHARGE)
 		balloon_alert(borg, "not enough energy!")
 		if(shield.active)

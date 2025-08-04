@@ -349,7 +349,6 @@
 		/obj/item/reagent_containers/cup/soup_pot,
 		/obj/item/seeds,
 		/obj/item/graft,
-		/obj/item/fish,
 	)
 
 /obj/item/borg/apparatus/service/Initialize(mapload)
@@ -375,3 +374,14 @@
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")
+
+/obj/item/borg/apparatus/service/fishing
+	name = "fishing service apparatus"
+	desc = "Service apparatus designed solely for fishing purposes"
+	icon_state = "borg_service_apparatus"
+	storable = list(
+		/obj/item/fish,
+		/obj/item/fishing_rod,
+		/obj/item/fishing_line,
+		/obj/item/fishing_hook,
+	)
