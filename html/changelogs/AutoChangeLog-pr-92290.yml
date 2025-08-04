@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed runechat emote icons being too big."
-  - bugfix: "Fixed screentip icons having awkward spacing."

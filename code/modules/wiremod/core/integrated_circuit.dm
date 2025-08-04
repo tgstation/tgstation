@@ -677,7 +677,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				if(!printer)
 					balloon_alert(ui.user, "linked printer not found!")
 					return
-				component = printer.print_component(component_path)
+				component = printer.print_component(component_path, user_data = ID_DATA(usr))
 				if(!component)
 					balloon_alert(ui.user, "failed to make the component!")
 					return
