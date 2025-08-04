@@ -333,7 +333,7 @@
 	if(!isnull(user))
 		to_chat(user, span_notice("You insert \the [secondary_id] into the secondary card slot."))
 		balloon_alert(user, "inserted secondary ID")
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	return TRUE
 
@@ -358,8 +358,8 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove \the [lost_id] from the secondary card slot."))
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		balloon_alert(user, "removed secondary ID")
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	return TRUE
 
@@ -386,8 +386,8 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove \the [lost_id] from the card slot."))
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		balloon_alert(user, "removed ID")
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
