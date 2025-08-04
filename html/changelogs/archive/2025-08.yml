@@ -76,3 +76,7 @@
   - rscadd: Dragging glittery crates will now spread a trail of glitter and angry
       janitors behind them.
   - image: Added new glitter sprites (that don't look like gasses)
+2025-08-04:
+  carpotoxin:
+  - qol: Mobs entangled within spacevines are layered above the spacevines for as
+      long as they stay buckled
