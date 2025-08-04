@@ -149,7 +149,7 @@
 	desc = "It sounds like hissing steam, ticking cogs, gone silent, It looks like a dead machine, trying to tick with life."
 	icon_state = "clockwork_cuirass"
 	inhand_icon_state = null
-	slowdown = 0.2
+	slowdown = 0
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock/Initialize(mapload)
 	. = ..()
@@ -181,7 +181,7 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	inhand_icon_state = null
-	slowdown = 0.2
+	slowdown = 0
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar/Initialize(mapload)
 	. = ..()
@@ -193,7 +193,16 @@
 	flags_inv = NONE
 	icon_state = "cage"
 	inhand_icon_state = null
+	armor_type = /datum/armor/helmet_cage
 	worn_y_offset = 7
+
+armor_type = /datum/armor/helmet_cage
+	melee = 60
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
 
 /obj/item/clothing/head/helmet/chaplain/ancient
 	name = "ancient helmet"
@@ -207,7 +216,6 @@
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
-	slowdown = 0.1
 
 /obj/item/clothing/suit/chaplainsuit/armor/ancient/Initialize(mapload)
 	. = ..()
