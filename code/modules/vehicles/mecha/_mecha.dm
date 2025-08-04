@@ -153,6 +153,8 @@
 	var/melee_sharpness = NONE
 	/// Lower end of damage dealt in a melee attack. Multiplier on force
 	var/melee_lower_damage_range = 0.5
+	/// Armor penetration of melee attacks
+	var/melee_armor_penetration = 0
 
 	///TIme taken to leave the mech
 	var/exit_delay = 2 SECONDS

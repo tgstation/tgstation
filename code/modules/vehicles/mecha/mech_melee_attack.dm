@@ -130,6 +130,7 @@
 		var/armor = run_armor_check(
 			def_zone = def_zone,
 			attack_flag = MELEE,
+			armour_penetration = mecha_attacker.melee_armor_penetration,
 			absorb_text = span_notice("Your armor has protected your [zone_readable]!"),
 			soften_text = span_warning("Your armor has softened a hit to your [zone_readable]!")
 		)

@@ -540,6 +540,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola
 	name = "\improper NET-5 Bola Launcher"
 	desc = "A weapon for combat exosuits. Launches bola nets to entangle targets."
+	icon_state = "mecha_ebola"
 	num_thrown = 2
 	projectiles = 999
 	magazine_size = 999

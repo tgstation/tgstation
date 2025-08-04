@@ -14,6 +14,7 @@
 	max_temperature = 40000
 	force = 40 // dangerous in melee
 	melee_lower_damage_range = 0.8
+	melee_armor_penetration = 50
 	melee_sharpness = SHARP_EDGED
 	damtype = BRUTE
 	destruction_sleep_duration = 10
@@ -77,8 +78,8 @@
 
 /datum/armor/mecha_justice
 	melee = 50
-	bullet = 30
-	laser = 30
+	bullet = 50
+	laser = 50
 	energy = 30
 	fire = 100
 	acid = 100
@@ -86,7 +87,6 @@
 /obj/vehicle/sealed/mecha/justice/Initialize(mapload, built_manually)
 	. = ..()
 	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, PROC_REF(justice_attack)) //We do not hit those who are in crit or stun. We are finishing them.
-	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(on_ranged_hit))
 	transform = transform.Scale(1.04, 1.04)
 	for(var/i in 1 to 3)
 		addtimer(CALLBACK(src, PROC_REF(create_engine)), i * 1 SECONDS)
@@ -324,7 +324,6 @@
 		mob_occupant.update_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/justice/hitby(atom/movable/throwed_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	. = ..()
 	if(isitem(throwed_by))
 		var/obj/item/throwed_by_item = throwed_by
 		if(throwed_by_item.throwforce < 10) /// don't counts 0-9 damage for such moments like throwforce from severed limbs and other unpleasant little things for which you would not want to lose a charge.
@@ -363,18 +362,30 @@
 
 	return EMP_PROTECT_SELF
 
-/obj/vehicle/sealed/mecha/justice/proc/on_ranged_hit(obj/vehicle/sealed/mecha/source, obj/projectile/hitting_projectile)
-	SIGNAL_HANDLER
+/obj/vehicle/sealed/mecha/justice/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = 0)
+	if(istype(hitting_projectile, /obj/projectile/ion))
+		return ..()
 
-	var/obj/effect/justice_engine/active_engine = get_engine_by_state(JUSTICE_ENGINE_ACTIVE)
-	if(isnull(active_engine))
-		return NONE
+	var/reflect_change = 0
+	for(var/obj/effect/justice_engine/justice_engine as anything in justice_engines)
+		if(justice_engine.engine_state != JUSTICE_ENGINE_ACTIVE)
+			continue
+		reflect_change += 25
+	if(!prob(reflect_change))
+		var/obj/effect/justice_engine/active_engine = get_engine_by_state(JUSTICE_ENGINE_ACTIVE)
+		if(isnull(active_engine))
+			return ..()
+
+		active_engine.change_engine_state(JUSTICE_ENGINE_ONCOOLDOWN)
+		playsound(src, engine_attacked_sound , 75, FALSE)
+		after_engine_attacked()
+		return BULLET_ACT_BLOCK
 
 	var/deflect_angel = dir2angle(get_dir(src, hitting_projectile.firer))
 	hitting_projectile.firer = src
 	hitting_projectile.set_angle(deflect_angel)
 	playsound(src, 'sound/vehicles/mecha/mech_blade_break_wall.ogg' , 75, FALSE)
-	return COMPONENT_BULLET_PIERCED
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/vehicle/sealed/mecha/justice/proc/block_effect()
 	new /obj/effect/temp_visual/mech_sparks(get_turf(src))
@@ -385,8 +396,8 @@
 		return
 	deactivate_engines()
 	for(var/mob/mob_occupant as anything in occupants)
-		balloon_alert(mob_occupant, "shields disabled! recharge after 10 seconds!")
-	addtimer(CALLBACK(src, PROC_REF(reactivate_engines)), 10 SECONDS)
+		balloon_alert(mob_occupant, "shields disabled! recharge after 20 seconds!")
+	addtimer(CALLBACK(src, PROC_REF(reactivate_engines)), 20 SECONDS)
 	playsound(src, shields_disabled_sound , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/proc/reactivate_engines()
@@ -438,7 +449,7 @@
 			bypass_warning = TRUE,
 		) || BODY_ZONE_CHEST
 		// perform an "attack"
-		var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
+		var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE, armour_penetration = mecha_attacker.melee_armor_penetration)
 		something_living.apply_damage(force * melee_lower_damage_range, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = (victim == something_living ? CANT_WOUND : -10))
 		// if the attack capped out the limb's damage, force dismember (or disembowel if chest)
 		try_attack_dismember(something_living.get_bodypart(hit_zone), 0, 100, list(BODY_ZONE_HEAD))
@@ -487,7 +498,7 @@
 	in_your_head?.dismember(BRUTE)
 	playsound(src, brute_attack_sound, 75, FALSE)
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 4)
-	forceMove(finish_turf.density ? for_line_turf : finish_turf)
+	forceMove(finish_turf.density ? get_turf(him) : finish_turf)
 	justice_state = JUSTICE_IDLE
 
 /**
@@ -525,7 +536,7 @@
 				bypass_warning = TRUE,
 			) || BODY_ZONE_CHEST
 			// perform an "attack"
-			var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE)
+			var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE, armour_penetration = mecha_attacker.melee_armor_penetration)
 			something_living.apply_damage(force, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = 10, exposed_wound_bonus = 25)
 			// if the attack capped out the limb's damage - or a small random chance -, force dismember (or disembowel if chest)
 			try_attack_dismember(something_living.get_bodypart(hit_zone), 0, 25, list())
