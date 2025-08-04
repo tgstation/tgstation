@@ -449,7 +449,7 @@
 			bypass_warning = TRUE,
 		) || BODY_ZONE_CHEST
 		// perform an "attack"
-		var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE, armour_penetration = mecha_attacker.melee_armor_penetration)
+		var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE, armour_penetration = melee_armor_penetration)
 		something_living.apply_damage(force * melee_lower_damage_range, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = (victim == something_living ? CANT_WOUND : -10))
 		// if the attack capped out the limb's damage, force dismember (or disembowel if chest)
 		try_attack_dismember(something_living.get_bodypart(hit_zone), 0, 100, list(BODY_ZONE_HEAD))
@@ -536,7 +536,7 @@
 				bypass_warning = TRUE,
 			) || BODY_ZONE_CHEST
 			// perform an "attack"
-			var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE, armour_penetration = mecha_attacker.melee_armor_penetration)
+			var/armor = something_living.run_armor_check(def_zone = hit_zone, attack_flag = MELEE, armour_penetration = melee_armor_penetration)
 			something_living.apply_damage(force, damtype, hit_zone, armor, sharpness = melee_sharpness, attacking_item = src, wound_bonus = 10, exposed_wound_bonus = 25)
 			// if the attack capped out the limb's damage - or a small random chance -, force dismember (or disembowel if chest)
 			try_attack_dismember(something_living.get_bodypart(hit_zone), 0, 25, list())
