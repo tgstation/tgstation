@@ -2,6 +2,7 @@
 	name = "Kitsune"
 	id = SPECIES_KITSUNE
 	examine_limb_id = SPECIES_HUMAN
+	mutanttongue = /obj/item/organ/tongue/fox
 	mutantears = /obj/item/organ/ears/fox
 	mutant_organs = list(
 		/obj/item/organ/tail/fox = "Fox",
