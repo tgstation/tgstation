@@ -3975,6 +3975,7 @@
 #include "code\modules\client\preferences\species_features\basic.dm"
 #include "code\modules\client\preferences\species_features\ethereal.dm"
 #include "code\modules\client\preferences\species_features\felinid.dm"
+#include "code\modules\client\preferences\species_features\fox.dm"
 #include "code\modules\client\preferences\species_features\lizard.dm"
 #include "code\modules\client\preferences\species_features\monkey.dm"
 #include "code\modules\client\preferences\species_features\moth.dm"

@@ -2122,12 +2122,17 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Round"
 	icon_state = "round"
 
-/datum/sprite_accessory/ears/fox
-	icon = 'icons/mob/human/fox_features.dmi'
+/datum/sprite_accessory/ears_fox
 	name = "Fox"
-	icon_state = "fox"
+	icon = 'icons/mob/human/fox_features.dmi'
 	color_src = HAIR_COLOR
-	locked = TRUE
+
+/datum/sprite_accessory/ears_fox/default
+	icon_state = "fox"
+
+/datum/sprite_accessory/ears_fox/fennec
+	name = "Fennec"
+	icon_state = "big"
 
 /datum/sprite_accessory/wings
 	icon = 'icons/mob/human/species/wings.dmi'
