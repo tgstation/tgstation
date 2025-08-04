@@ -3,7 +3,7 @@
 	desc = "A dusty, scratched door with a thick lock attached."
 	puzzle_id = "roroco"
 
-/obj/item/keycard/nt_commsbuoy
+/obj/item/keycard/roro
 	name = "Fabric Processing keycard"
 	desc = ""
 	color = "#b1634c"
@@ -29,3 +29,15 @@
 
 /area/ruin/roroco/janitor
 	name = "\improper RoroCo Janitor's Closet"
+
+/obj/item/card/id/away/roroco
+	name = "\improper RoroCo ID Card"
+	desc = "A plastic card that identifies its bearer as an employee of RoroCo. There are electronic chips embedded to communicate with airlocks and other machines. It does not have a name attached."
+	icon_state = "card_roro"
+	trim = /datum/id_trim/away/roroco
+
+/obj/item/card/id/away/roroco/boss
+	desc = "A plastic card that identifies its bearer as a senior employee of RoroCo. There are electronic chips embedded to communicate with airlocks and other machines. It does not have a name attached."
+	icon_state = "card_roroboss"
+	trim = /datum/id_trim/away/roroco/boss
+

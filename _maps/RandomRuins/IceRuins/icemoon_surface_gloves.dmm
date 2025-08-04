@@ -1,32 +1,85 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aM" = (
-/obj/machinery/door/airlock/freezer{
-	name = "Product Extraction"
+"ak" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/freezer,
-/area/ruin/roroco/extraction)
-"aU" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/cardboard,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/edge,
+/area/ruin/roroco)
+"am" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor,
 /area/ruin/roroco/packing)
+"as" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/roroco/harvesting)
+"aM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/packing)
+"aU" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/packing)
+"be" = (
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	pixel_y = -3;
+	pixel_x = 3;
+	puzzle_id = "roro_factory"
+	},
+/turf/closed/wall,
+/area/ruin/roroco/management)
+"bP" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
 "bR" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
 /area/ruin/roroco/harvesting)
 "cG" = (
-/obj/machinery/door/airlock/multi_tile/public/glass{
-	name = "Packing Room"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
 /area/ruin/roroco/packing)
 "cR" = (
 /obj/structure/closet/l3closet,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/ruin/roroco/extraction)
+"cU" = (
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/roroco)
+"cV" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"dg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/ruin/roroco/maintenance)
 "dk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -35,56 +88,192 @@
 /obj/machinery/conveyor_switch/oneway{
 	name = "product conveyor switch"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer/edge{
 	dir = 1
 	},
 /area/ruin/roroco/extraction)
 "dD" = (
 /obj/structure/closet/firecloset,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco)
+"dZ" = (
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"ed" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"ee" = (
+/obj/machinery/door/airlock{
+	name = "Janitor's Closet";
+	id_tag = "roro_factory";
+	req_access = list("roroco")
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/indestructible{
+	id = "roro_factory"
+	},
+/obj/item/restraints/legcuffs/beartrap/prearmed,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
 "eq" = (
 /obj/structure/billboard/gloves,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"ev" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
 "ez" = (
 /obj/effect/decal/cleanable/blood/trail{
 	dir = 10
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
 /area/ruin/roroco/harvesting)
+"eP" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Harvesting Room";
+	req_access = list("roroco_secure")
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"eS" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "eW" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/ruin/roroco/harvesting)
-"hZ" = (
-/obj/structure/table/optable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+"fB" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Packing Room";
+	req_access = list("roroco")
 	},
-/obj/effect/gibspawner,
-/obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/iron/freezer/edge,
-/area/ruin/roroco/extraction)
-"ii" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/obj/effect/turf_decal/siding/dark_blue{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/packing)
+"gV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"gX" = (
+/obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"hM" = (
+/obj/structure/closet/l3closet,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/east,
+/obj/item/card/id/away/roroco/boss,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"hS" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured_edge,
 /area/ruin/roroco/harvesting)
+"hZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/maintenance)
+"ii" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/roroco)
+"il" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/south{
+	id = "RoroToilet";
+	name = "Emergency Washroom Override";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
+"io" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
 "iq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Fabric Processing Maintenance";
+	req_access = list("roroco_secure")
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/maintenance)
+"iz" = (
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	pixel_y = 5;
+	pixel_x = 3;
+	puzzle_id = "roro_factory"
+	},
+/turf/closed/wall,
+/area/ruin/roroco)
+"iN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/puzzle_dots{
+	pixel_y = 32;
+	id = "roro_factory"
 	},
 /turf/open/floor/plating,
-/area/ruin/roroco/packing)
-"iN" = (
-/turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco/harvesting)
+/area/ruin/roroco/maintenance)
 "iW" = (
 /obj/machinery/shower/directional/east,
 /obj/structure/fluff/shower_drain,
@@ -95,18 +284,67 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/trail,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer/edge{
 	dir = 1
 	},
 /area/ruin/roroco/extraction)
+"kh" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
+"kt" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/cardboard,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/packing)
+"kS" = (
+/obj/effect/puzzle_poddoor_open{
+	icon = 'icons/effects/mapping_helpers.dmi';
+	id = "roro_factory";
+	queue_id = "roro_factory"
+	},
+/turf/closed/wall,
+/area/ruin/roroco/janitor)
+"ll" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/cardboard,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/item/crowbar,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/packing)
 "lm" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
 /area/ruin/roroco)
+"lq" = (
+/turf/closed/wall/rust,
+/area/ruin/roroco/janitor)
+"lO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"lY" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
 "md" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -117,33 +355,65 @@
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/roroco)
+"mk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "mm" = (
-/turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco)
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	pixel_y = -2;
+	pixel_x = -6;
+	puzzle_id = "roro_factory"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/roroco/harvesting)
 "mD" = (
 /obj/effect/turf_decal/delivery/red,
 /obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/harvesting)
+"mF" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/roroco)
 "nj" = (
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/plating,
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/full,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/packing)
 "nA" = (
 /turf/closed/wall,
 /area/ruin/roroco/packing)
 "nO" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Harvesting Room"
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco/harvesting)
+/area/ruin/roroco/packing)
 "nY" = (
 /turf/closed/wall,
 /area/ruin/roroco/janitor)
+"oa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "ok" = (
 /turf/closed/wall,
 /area/ruin/roroco)
@@ -153,6 +423,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -165,26 +438,94 @@
 /turf/open/floor/plating,
 /area/ruin/roroco/extraction)
 "oS" = (
-/obj/machinery/conveyor/auto{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/full,
-/turf/open/floor/plating,
-/area/ruin/roroco/packing)
-"pK" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/turf/open/floor/iron/dark/textured_corner{
+/obj/item/kirbyplants/random,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"oV" = (
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/packing)
+"py" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical/old,
+/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/harvesting)
+"pK" = (
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	pixel_y = -2;
+	pixel_x = 1;
+	puzzle_id = "roro_factory"
+	},
+/turf/closed/wall,
+/area/ruin/roroco)
+"pX" = (
+/obj/machinery/door/airlock/external{
+	req_access = list("roroco")
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "roro_maint"
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"qo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/steps,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "qA" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer/edge{
 	dir = 1
 	},
 /area/ruin/roroco/extraction)
+"qN" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/structure/sink/directional/east,
+/turf/open/floor/plating/rust,
+/area/ruin/roroco/janitor)
+"rd" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"rp" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/closet/cardboard,
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	puzzle_id = "roro_factory"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/packing)
+"rw" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/rack,
+/obj/item/mop,
+/obj/item/reagent_containers/cup/bucket,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
 "rQ" = (
 /turf/closed/wall/r_wall,
 /area/ruin/roroco/extraction)
@@ -196,14 +537,48 @@
 	dir = 4
 	},
 /area/ruin/roroco)
+"sG" = (
+/obj/structure/sink/directional/east,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"sH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/packing)
+"sM" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
 "sS" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/turf/open/floor/iron/dark/textured_edge,
-/area/ruin/roroco/harvesting)
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Fabric Processing Maintenance";
+	req_access = list("roroco_secure")
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/maintenance)
 "th" = (
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/corner{
 	dir = 8
 	},
@@ -213,6 +588,28 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
+"tv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"tG" = (
+/obj/machinery/door/window/right/directional/south{
+	name = "Harvest Transfer";
+	req_access = list("roroco_secure")
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Harvest Transfer";
+	req_access = list("roroco_secure")
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
 /area/ruin/roroco/harvesting)
 "tU" = (
 /obj/structure/fence,
@@ -227,29 +624,93 @@
 	dir = 4
 	},
 /area/ruin/roroco)
+"uv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "uL" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/roroco/management)
 "uO" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/turf/open/floor/iron/dark/textured_half,
-/area/ruin/roroco/harvesting)
+/obj/machinery/door/airlock/external{
+	req_access = list("roroco")
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "roro_maint"
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"uW" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/duct,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
 "vb" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet/blue,
-/area/ruin/roroco/management)
+/obj/machinery/airalarm/directional/east,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/ruin/roroco/harvesting)
 "vj" = (
 /turf/open/floor/iron/smooth_large,
 /area/ruin/roroco)
 "vG" = (
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
+"wd" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"wm" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco)
+"wA" = (
+/obj/machinery/power/smes/full,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"wH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/maintenance)
 "wM" = (
 /mob/living/basic/roro,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/ruin/roroco/harvesting)
+"wP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "wQ" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/secateurs{
@@ -261,8 +722,13 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/roroco/extraction)
+"wU" = (
+/turf/closed/wall/rust,
+/area/ruin/roroco/maintenance)
 "xj" = (
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/ruin/roroco/extraction)
 "xI" = (
@@ -271,31 +737,86 @@
 "xK" = (
 /turf/template_noop,
 /area/template_noop)
-"xT" = (
-/obj/machinery/door/airlock{
-	name = "Janitor's Closet"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/ruin/roroco/janitor)
-"yh" = (
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/ruin/roroco/packing)
-"yz" = (
-/obj/effect/turf_decal/siding/dark_blue/corner{
+"xP" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/freezer/edge,
+/area/ruin/roroco/extraction)
+"xT" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/full,
 /turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/packing)
+"xX" = (
+/obj/machinery/door/window/left/directional/west{
+	name = "Roro Pen";
+	req_access = list("roroco_secure")
+	},
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 1
+	},
 /area/ruin/roroco/harvesting)
+"yh" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
+"yz" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/roroco/harvesting)
+"yD" = (
+/obj/effect/turf_decal/roroco,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco)
+"yN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"zd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/steps{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"zl" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock{
+	req_access = list("roroco");
+	name = "Employee Washroom";
+	id_tag = "RoroToilet"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/management)
 "zn" = (
 /turf/closed/wall,
 /area/ruin/roroco/extraction)
 "zq" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Primary Hallway Maintenance"
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	puzzle_id = "roro_factory"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/rust,
 /area/ruin/roroco/maintenance)
 "zJ" = (
 /turf/closed/wall,
@@ -307,27 +828,78 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Aw" = (
-/obj/machinery/modular_computer/preset/civilian,
-/turf/open/floor/carpet/blue,
-/area/ruin/roroco/management)
-"AF" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco/harvesting)
-"Bh" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	puzzle_id = "roro_factory"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco)
+"AF" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"AL" = (
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/item/card/id/away/roroco,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"AP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/ruin/roroco/maintenance)
+"AZ" = (
+/obj/machinery/airalarm/directional/west,
+/obj/structure/mop_bucket/janitorialcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
+"Bh" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "Bp" = (
-/obj/structure/table/optable,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"BO" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
 	dir = 8
 	},
-/turf/open/floor/iron/freezer/edge,
-/area/ruin/roroco/extraction)
+/obj/structure/sign/poster/contraband/roroco/directional/north,
+/obj/machinery/duct,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
 "BS" = (
 /turf/closed/wall/r_wall,
 /area/ruin/roroco/harvesting)
+"Ce" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Cf" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Management Office";
+	req_access = list("roroco")
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/roroco/management)
 "Ci" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/dark_red{
@@ -336,12 +908,40 @@
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/roroco)
 "CV" = (
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron/corner,
 /area/ruin/roroco)
+"Dr" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	pixel_x = 4;
+	pixel_y = -8;
+	puzzle_id = "roro_factory"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"DK" = (
+/obj/machinery/button/door/directional/south{
+	id = "RoroToilet";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/toilet/secret{
+	dir = 4;
+	secret_type = /obj/item/keycard/roro
+	},
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/management)
 "Ef" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/dark_red{
@@ -351,59 +951,166 @@
 	dir = 1
 	},
 /area/ruin/roroco)
+"Eh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/platform/iron,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "Es" = (
-/obj/effect/turf_decal/siding/dark_blue,
-/obj/structure/sink/directional/east,
-/turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco/harvesting)
+/obj/machinery/door/airlock/freezer{
+	name = "Product Extraction";
+	req_access = list("roroco_secure")
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"EA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"ES" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/warm/directional/east,
+/obj/machinery/duct,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
+/area/ruin/roroco)
 "EX" = (
 /obj/structure/chair/office/light,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/blue,
 /area/ruin/roroco/management)
-"FQ" = (
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/ruin/roroco/packing)
-"GA" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/mechanical/old,
+"Fr" = (
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco/harvesting)
+/area/ruin/roroco)
+"FB" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
+"FQ" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Main Entrance";
+	req_access = list("roroco")
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "roro_entrance"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/roroco)
+"GA" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/gibspawner,
+/obj/item/clothing/gloves/color/yellow,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/freezer/edge,
+/area/ruin/roroco/extraction)
+"GC" = (
+/turf/closed/wall/rust,
+/area/ruin/roroco)
 "GS" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco)
 "Ho" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Management Office"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Hx" = (
+/obj/structure/fence/door/opened{
+	dir = 4
 	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/ruin/roroco/management)
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "HE" = (
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
 /area/ruin/roroco/harvesting)
+"JK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"JL" = (
+/obj/structure/tank_holder,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "JV" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco/harvesting)
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/roroco)
 "KO" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/ruin/roroco/extraction)
 "Lb" = (
 /obj/structure/rack,
 /obj/item/melee/baseball_bat/british,
 /obj/item/hatchet/wooden,
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/harvesting)
-"LZ" = (
-/obj/machinery/door/airlock/external/ruin{
-	name = "Main Entrance"
+"Lo" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
-/turf/open/floor/iron/smooth_large,
-/area/ruin/roroco)
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/extraction)
+"LE" = (
+/obj/machinery/modular_computer/preset/civilian,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"LL" = (
+/obj/effect/decal/cleanable/crayon/puzzle/pin{
+	puzzle_id = "roro_factory"
+	},
+/obj/structure/rack,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"LZ" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/ruin/roroco/harvesting)
 "Mg" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -411,14 +1118,18 @@
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
 /area/ruin/roroco)
 "Mk" = (
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron/dark/smooth_large,
-/area/ruin/roroco/harvesting)
+/obj/structure/rack,
+/obj/item/stack/sheet/cardboard,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/packing)
 "MA" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/scalpel,
@@ -429,8 +1140,28 @@
 	pixel_y = 5;
 	pixel_x = 9
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/roroco/extraction)
+"Nf" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Ni" = (
+/obj/structure/table/wood,
+/obj/machinery/firealarm/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
+"Nt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "NH" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -441,11 +1172,17 @@
 /turf/open/floor/grass,
 /area/ruin/roroco/harvesting)
 "Oq" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Fabric Processing Maintenance"
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
+"OF" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/ruin/roroco/janitor)
 "OV" = (
 /obj/machinery/conveyor/auto{
 	dir = 1
@@ -453,17 +1190,42 @@
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/iron/freezer/edge,
 /area/ruin/roroco/extraction)
+"Pj" = (
+/obj/structure/reagent_dispensers/plumbed{
+	name = "water reservoir";
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"PN" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "PY" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/nospawn)
 "Qr" = (
-/turf/open/floor/plating,
-/area/ruin/roroco/janitor)
-"Qv" = (
-/obj/structure/chair/office/light{
+/obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/east,
+/obj/structure/cable,
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/corner{
+	dir = 1
+	},
+/area/ruin/roroco)
+"Qv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/carpet/blue,
 /area/ruin/roroco/management)
 "Qw" = (
@@ -477,49 +1239,125 @@
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 4
 	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/edge,
 /area/ruin/roroco)
-"Rt" = (
-/obj/machinery/door/window/left/directional/north{
-	name = "Harvest Transfer"
-	},
-/obj/machinery/door/window/right/directional/south{
-	name = "Harvest Transfer"
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/effect/decal/cleanable/blood/trail,
-/turf/open/floor/iron/dark/textured_half{
-	dir = 1
+"QF" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 4
 	},
 /area/ruin/roroco/harvesting)
+"QP" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/edge,
+/area/ruin/roroco)
+"Rd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/roroco)
+"Rf" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
+"Rg" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Rl" = (
+/obj/structure/sink/directional/south,
+/obj/structure/mirror/broken/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/freezer,
+/area/ruin/roroco/management)
+"Rt" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
 "RA" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
 /area/ruin/roroco/harvesting)
-"SN" = (
+"Sf" = (
+/obj/machinery/atmospherics/components/tank/oxygen{
+	dir = 8;
+	piping_layer = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/roroco/packing)
-"Tl" = (
-/obj/machinery/door/window/left/directional/west{
-	name = "Roro Pen"
-	},
-/turf/open/floor/iron/dark/textured_corner{
-	dir = 1
-	},
+/area/ruin/roroco/maintenance)
+"Sr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"SN" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/sink/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/harvesting)
+"Tk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Tl" = (
+/obj/structure/rack,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/item/storage/box,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/packing)
 "Uh" = (
-/obj/machinery/door/window/right/directional/south{
-	name = "Harvest Transfer"
-	},
 /obj/machinery/door/window/left/directional/north{
-	name = "Harvest Transfer"
+	name = "Harvest Transfer";
+	req_access = list("roroco_secure")
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Harvest Transfer";
+	req_access = list("roroco_secure")
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/decal/cleanable/blood/trail,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
 /area/ruin/roroco/harvesting)
+"Ut" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/puzzle/password/pin/directional/north{
+	id = "roro_factory";
+	late_initialize_pop = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/roroco)
 "Uz" = (
 /turf/closed/wall,
 /area/ruin/roroco/management)
@@ -529,31 +1367,93 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"UO" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/freezer/large,
+/area/ruin/roroco/extraction)
 "UV" = (
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Vl" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/blue,
 /area/ruin/roroco/management)
-"VS" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/flowers_yw/style_random,
-/turf/open/floor/grass,
+"VA" = (
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/harvesting)
+"VQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"VS" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/maintenance{
+	name = "Primary Hallway Maintenance";
+	req_access = list("roroco")
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Wd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/ruin/roroco/maintenance)
+"WB" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Main Entrance";
+	req_access = list("roroco")
+	},
+/obj/structure/fans/tiny,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "roro_entrance"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/roroco)
 "Xc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/roroco)
-"Xs" = (
+"Xf" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
 /area/ruin/roroco)
+"Xm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Xs" = (
+/turf/closed/wall/r_wall,
+/area/ruin/roroco)
+"Xv" = (
+/obj/structure/cable,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
 "Xw" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/dark_red{
@@ -564,13 +1464,44 @@
 	},
 /area/ruin/roroco)
 "XQ" = (
-/obj/item/kirbyplants/random,
-/turf/open/floor/carpet/blue,
-/area/ruin/roroco/management)
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/roroco/harvesting)
 "Yy" = (
 /obj/machinery/door/puzzle/keycard/roro,
+/obj/machinery/door/firedoor,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/roroco/extraction)
+"YV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance{
+	name = "Plant Room";
+	req_access = list("roroco")
+	},
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
+"Zs" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/edge,
+/area/ruin/roroco)
+"ZE" = (
+/obj/structure/chair/office/light,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/carpet/blue,
+/area/ruin/roroco/management)
 
 (1,1,1) = {"
 xK
@@ -580,15 +1511,11 @@ xK
 xK
 xK
 xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
+Bp
+gX
+wd
+UV
+UV
 xK
 xK
 xK
@@ -610,18 +1537,14 @@ xK
 xK
 xK
 xK
-xK
-xK
-xK
+UV
+mF
+JV
+JV
+JV
+ii
 UV
 UV
-UV
-UV
-xK
-xK
-xK
-xK
-xK
 xK
 xK
 xK
@@ -641,21 +1564,17 @@ xK
 xK
 xK
 xK
-xK
-xK
+UV
+UV
+GC
+WB
+Xc
+FQ
+iz
 UV
 UV
 UV
 UV
-UV
-UV
-UV
-xK
-xK
-xK
-xK
-xK
-xK
 xK
 xK
 xK
@@ -673,22 +1592,18 @@ xK
 xK
 xK
 xK
-xK
-xK
 UV
-ok
-LZ
+UV
 Xc
-LZ
-ok
+Rd
+Rd
+vj
+Xc
+UV
+PY
+PY
 UV
 UV
-xK
-xK
-xK
-xK
-xK
-xK
 xK
 xK
 xK
@@ -705,28 +1620,24 @@ xK
 xK
 xK
 xK
-xK
 UV
 UV
 Xc
 vj
-vj
+cU
 vj
 Xc
+PY
+PY
+PY
+PY
 UV
 UV
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
+UV
+UV
+UV
+UV
+UV
 xK
 xK
 xK
@@ -736,182 +1647,105 @@ xK
 xK
 xK
 xK
-xK
-xK
-UV
-UV
-Xc
-vj
-vj
-vj
-Xc
-UV
-PY
-PY
-UV
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-"}
-(7,1,1) = {"
-xK
-xK
-xK
-xK
-xK
 UV
 UV
 ok
-LZ
-Xc
-LZ
+ok
+FQ
+ok
+FQ
+ok
 ok
 PY
 PY
-PY
-PY
-UV
-UV
-xK
-xK
-xK
-UV
-UV
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-"}
-(8,1,1) = {"
-xK
-xK
-xK
-xK
-xK
-xK
-ok
-ok
-CV
-Xw
-sr
-ok
-ok
 PY
 PY
 PY
 tU
 tU
-tU
-tU
-tU
+Hx
 tU
 tU
 tU
 tU
 UA
 UV
-xK
-xK
-xK
 "}
-(9,1,1) = {"
+(7,1,1) = {"
 xK
 xK
 xK
-xK
-xK
+UV
 ok
 ok
-Bh
-Ef
-mm
-QA
+Aw
+CV
+Xw
+sr
 dD
-ok
+Xs
+rQ
+rQ
+rQ
+rQ
 PY
 PY
-PY
 UV
 UV
-UV
-UV
-UV
-UV
+AL
 UV
 UV
 eq
 zN
 xK
-xK
-xK
-xK
 "}
-(10,1,1) = {"
+(8,1,1) = {"
 xK
 xK
-xK
-xK
-xK
-ok
+UV
+UV
+Xc
 CV
 Xw
 Ci
-mm
+yD
 ot
 um
 rQ
-rQ
-rQ
-rQ
+UO
+sG
+UO
 BS
 BS
 BS
 BS
-BS
+mm
 UV
 UV
 UV
 UV
 zN
 xK
-xK
-xK
-xK
 "}
-(11,1,1) = {"
+(9,1,1) = {"
 xK
 xK
-xK
-xK
+UV
 ok
-ok
-Xs
+pK
+BO
 md
-Mg
+ES
 Mg
 Mg
 lm
 Yy
-KO
-KO
-KO
-nO
-Mk
-Es
+Lo
+dZ
+ed
+eP
+SN
+XQ
 iW
 BS
 PY
@@ -920,95 +1754,83 @@ UV
 UV
 zN
 UV
-xK
-xK
-xK
 "}
-(12,1,1) = {"
-xK
+(10,1,1) = {"
 xK
 xK
 xK
 ok
-mm
-Ef
-QA
+wm
+FB
+ak
 nA
 NH
 NH
 NH
 rQ
 cR
-cR
-KO
+hM
+lO
 xI
-iN
-yz
-ii
+lY
+VA
+xI
 BS
 BS
-BS
+as
 PY
 PY
 zN
 UV
-xK
-xK
-xK
 "}
-(13,1,1) = {"
+(11,1,1) = {"
 xK
-xK
-xK
-xK
-ok
-mm
-Ef
-QA
+nY
+nY
+nY
+kS
+uW
+Zs
 nA
-yh
-aU
-aU
+Tl
+Mk
+kt
 rQ
 rQ
 zn
-aM
+Es
 xI
-GA
-JV
-Qw
-Qw
+py
+Rf
+bR
+LZ
 NN
 BS
 BS
 PY
 PY
 PY
-xK
-xK
-xK
 "}
-(14,1,1) = {"
+(12,1,1) = {"
 xK
-xK
+lq
+qN
+AZ
 nY
-nY
-nY
-nY
-Ef
+Ut
 QA
+fB
+am
 cG
-SN
-SN
-SN
-nj
+sH
+rp
 rQ
 wQ
 xj
 xI
 Lb
-JV
-VS
+Rf
+bR
 wM
 Qw
 Qw
@@ -1016,63 +1838,55 @@ BS
 PY
 PY
 UV
-xK
-xK
-xK
 "}
-(15,1,1) = {"
-xK
+(13,1,1) = {"
 xK
 nY
-Qr
-Qr
-nY
-Ef
+OF
+kh
+ee
+yh
 QA
-FQ
-iq
-iq
-iq
-iq
+aU
+nO
+ll
+oV
+aM
 rQ
-hZ
+GA
 jA
-Rt
+Uh
 ez
-pK
-Qw
+QF
+bR
 Qw
 eW
-bR
+ev
 BS
 PY
 UV
 UV
-xK
-xK
-xK
 "}
-(16,1,1) = {"
-xK
+(14,1,1) = {"
 xK
 nY
-Qr
-Qr
-xT
-Ef
+rw
+il
+nY
+Xf
 QA
 nA
-oS
-oS
-oS
-oS
+nj
+nj
+xT
+xT
 oA
 OV
 dk
 xI
 mD
-uO
-Qw
+yz
+bR
 NN
 tk
 Qw
@@ -1080,18 +1894,14 @@ BS
 PY
 PY
 xK
-xK
-xK
-xK
 "}
-(17,1,1) = {"
-xK
+(15,1,1) = {"
 xK
 nY
-Qr
-Qr
 nY
-Ef
+nY
+nY
+io
 QA
 Uz
 uL
@@ -1099,11 +1909,11 @@ uL
 uL
 uL
 rQ
-Bp
+xP
 qA
-Uh
+tG
 HE
-sS
+hS
 bR
 Qw
 Qw
@@ -1112,68 +1922,113 @@ BS
 PY
 PY
 xK
+"}
+(16,1,1) = {"
 xK
+xK
+xK
+ok
+Fr
+Ef
+QP
+Uz
+oS
+JK
+EX
+Dr
+rQ
+MA
+KO
+xI
+Rt
+RA
+vb
+xX
+BS
+BS
+PY
+PY
+xK
+xK
+"}
+(17,1,1) = {"
+xK
+xK
+PY
+ok
+GS
+sM
+QA
+Cf
+bP
+bP
+Xv
+Vl
+rQ
+rQ
+sS
+BS
+AF
+gV
+BS
+BS
+as
+UV
+PY
+PY
 xK
 xK
 "}
 (18,1,1) = {"
 xK
-xK
-nY
-nY
-nY
-nY
-Ef
-QA
+PY
+PY
+ok
+ok
+th
+Qr
 Uz
-XQ
-Vl
-EX
-vb
-rQ
-MA
-KO
-xI
+LE
+Qv
+ZE
+Ni
+Uz
 iN
-RA
-Tl
+wH
 BS
 BS
+iq
 BS
 PY
 PY
-xK
-xK
+UV
+PY
 xK
 xK
 xK
 "}
 (19,1,1) = {"
-xK
-xK
-xK
-xK
+PY
+PY
+PY
+PY
 ok
-GS
-Ef
-QA
-Ho
-Vl
-Vl
-Vl
-Vl
-rQ
-rQ
-Oq
-BS
-AF
-iN
-BS
-BS
-PY
-UV
-PY
-PY
+ok
+VS
+Uz
+Uz
+zl
+Uz
+Uz
+Uz
+oa
+oa
+PN
+Wd
+hZ
+zJ
+xK
+xK
 xK
 xK
 xK
@@ -1181,30 +2036,26 @@ xK
 xK
 "}
 (20,1,1) = {"
-xK
-xK
-xK
-xK
-ok
-ok
-th
-lm
+PY
+PY
+zJ
+wU
+zJ
+Ce
+oa
+Rg
 Uz
-Aw
-Qv
-EX
-vb
+Rl
+DK
 Uz
-vG
-vG
-BS
-BS
+Xm
+oa
 Oq
-BS
-PY
-PY
-UV
-PY
+Pj
+zJ
+eS
+zJ
+xK
 xK
 xK
 xK
@@ -1213,29 +2064,25 @@ xK
 xK
 "}
 (21,1,1) = {"
-xK
-xK
-xK
-xK
-xK
-ok
-ok
+PY
+PY
+zJ
 zq
-Uz
-Uz
-Uz
-Uz
-Uz
-Uz
+zJ
+Ho
+uv
 vG
-vG
-vG
-vG
-vG
-xK
-xK
-xK
-xK
+Uz
+Uz
+Uz
+be
+wP
+Rg
+zJ
+zJ
+zJ
+UV
+UV
 xK
 xK
 xK
@@ -1245,28 +2092,24 @@ xK
 xK
 "}
 (22,1,1) = {"
-xK
-xK
-xK
-xK
-xK
+PY
+PY
 zJ
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-xK
-xK
-xK
-xK
-xK
+AP
+rd
+Nf
+uv
+yN
+EA
+Nt
+uv
+uv
+uv
+Tk
+pX
+VQ
+eS
+UV
 xK
 xK
 xK
@@ -1277,27 +2120,23 @@ xK
 xK
 "}
 (23,1,1) = {"
-xK
-xK
-xK
-xK
-xK
+PY
+PY
+wU
 zJ
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-vG
-xK
-xK
-xK
-xK
-xK
+zJ
+zJ
+dg
+qo
+Eh
+zd
+Rg
+Sr
+JL
+wU
+zJ
+uO
+wU
 xK
 xK
 xK
@@ -1310,25 +2149,21 @@ xK
 "}
 (24,1,1) = {"
 xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
+PY
+PY
+PY
+PY
+wU
+wU
+zJ
+zJ
+zJ
+wU
+YV
+zJ
+zJ
+Bh
+tv
 xK
 xK
 xK
@@ -1344,23 +2179,19 @@ xK
 xK
 xK
 xK
+PY
+PY
 xK
 xK
 xK
 xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
+zJ
+cV
+Sr
+mk
+zJ
+UV
+UV
 xK
 xK
 xK
@@ -1382,15 +2213,11 @@ xK
 xK
 xK
 xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
+zJ
+wA
+LL
+Sf
+zJ
 xK
 xK
 xK
@@ -1414,111 +2241,11 @@ xK
 xK
 xK
 xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-"}
-(28,1,1) = {"
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-"}
-(29,1,1) = {"
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-"}
-(30,1,1) = {"
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
-xK
+zJ
+zJ
+zJ
+wU
+zJ
 xK
 xK
 xK
