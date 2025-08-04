@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed portable atmospheric machines trying to add themselves to SSair queue when destroyed"
