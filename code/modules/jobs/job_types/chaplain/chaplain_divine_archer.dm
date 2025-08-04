@@ -63,4 +63,3 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	fastening_type = SHOES_SLIPON
-	armor_type = /datum/armor/chaplainsuit_armor_weaker
