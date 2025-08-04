@@ -68,6 +68,15 @@ export const feature_human_tail: FeatureChoiced = {
   },
 };
 
+export const feature_fox_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
 export const feature_monkey_tail: FeatureChoiced = {
   name: 'Tail',
   component: (

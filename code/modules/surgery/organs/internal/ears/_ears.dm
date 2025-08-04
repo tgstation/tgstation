@@ -205,6 +205,13 @@
 /datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return // We color base ears manually above in get_image
 
+/datum/bodypart_overlay/mutant/cat_ears/fox
+	color_source = ORGAN_COLOR_HAIR
+	feature_key = FEATURE_EARS_FOX
+
+/datum/bodypart_overlay/mutant/cat_ears/fox/get_global_feature_list()
+	return SSaccessories.ears_list_fox
+
 /obj/item/organ/ears/ghost
 	name = "ghost ears"
 	desc = "All the more to hear you... though it can't hear through walls."

@@ -27,6 +27,15 @@
 /datum/dna_block/feature/ears/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	target.dna.features[feature_key] = SSaccessories.ears_list[deconstruct_block(get_block(dna_hash), length(SSaccessories.ears_list))]
 
+/datum/dna_block/feature/ears_fox
+	feature_key = FEATURE_EARS_FOX
+
+/datum/dna_block/feature/ears_fox/create_unique_block(mob/living/carbon/human/target)
+	return construct_block(SSaccessories.ears_list_fox.Find(target.dna.features[feature_key]), length(SSaccessories.ears_list_fox))
+
+/datum/dna_block/feature/ears_fox/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = SSaccessories.ears_list_fox[deconstruct_block(get_block(dna_hash), length(SSaccessories.ears_list_fox))]
+
 // One day, someone should consider merging all tails into one, this is stupid
 // No I don't care that it will "Create situations where a felinid grows a lizard tail" that makes it more fun
 /datum/dna_block/feature/tail

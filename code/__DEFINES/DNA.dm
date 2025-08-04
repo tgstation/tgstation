@@ -58,6 +58,7 @@
 #define FEATURE_ETHEREAL_COLOR "ethcolor"
 #define FEATURE_EARS "ears"
 #define FEATURE_TAIL "tail_cat"
+#define FEATURE_EARS_FOX "ears"
 #define FEATURE_TAIL_LIZARD "tail_lizard"
 #define FEATURE_TAIL_FISH "fish_tail"
 #define FEATURE_SNOUT "snout"
