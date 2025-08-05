@@ -31,14 +31,14 @@
 	max_equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = 1,
-		MECHA_UTILITY = 3,
+		MECHA_UTILITY = 4,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 2,
 	)
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/justice,
-		MECHA_UTILITY = list(),
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector_seat/justice),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
@@ -565,7 +565,12 @@
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bola/justice,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
+		MECHA_UTILITY = list(
+			/obj/item/mecha_parts/mecha_equipment/ejector_seat/justice,
+			/obj/item/mecha_parts/mecha_equipment/radio,
+			/obj/item/mecha_parts/mecha_equipment/air_tank/full,
+			/obj/item/mecha_parts/mecha_equipment/thrusters/ion,
+		),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)

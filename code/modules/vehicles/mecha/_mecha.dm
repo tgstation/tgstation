@@ -336,6 +336,7 @@
 	loc.assume_air(cabin_air)
 
 	var/mob/living/silicon/ai/unlucky_ai
+	var/has_ejector = has_ejector_seat()
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
@@ -346,9 +347,11 @@
 			else
 				mob_exit(ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
-		else
-			mob_exit(occupant, forced = TRUE)
-			if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+		mob_exit(occupant, forced = TRUE)
+		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+			if(has_ejector)
+				occupant.emote("flip")
+			else
 				occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
@@ -512,6 +515,9 @@
 			examine_text = "It's falling apart."
 
 	return examine_text
+
+/obj/vehicle/sealed/mecha/proc/has_ejector_seat()
+	return !!(locate(/obj/item/mecha_parts/mecha_equipment/ejector_seat) in flat_equipment)
 
 ///Locate an internal tack in the utility modules
 /obj/vehicle/sealed/mecha/proc/get_internal_tank()
