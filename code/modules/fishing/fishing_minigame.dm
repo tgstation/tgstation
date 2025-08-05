@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	SIGNAL_HANDLER
 	if(istype(reward))
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
-		reward.adjust_health(reward.health - damage)
+		reward.damage_fish(damage)
 
 /datum/fishing_challenge/proc/get_difficulty()
 	var/list/difficulty_holder = list(0)
@@ -599,7 +599,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	deltimer(next_phase_timer)
 	if((FISHING_MINIGAME_RULE_KILL in special_effects) && ispath(reward_path,/obj/item/fish))
 		var/obj/item/fish/fish = reward_path
-		var/wait_time = (initial(fish.health) / FISH_DAMAGE_PER_SECOND) SECONDS
+		var/wait_time = ((initial(fish.max_integrity) * (1 - initial(fish.integrity_failure))) / FISH_DAMAGE_PER_SECOND) SECONDS
 		addtimer(CALLBACK(src, PROC_REF(win_anyway)), wait_time, TIMER_DELETE_ME)
 	else if(ismovable(reward_path))
 		var/atom/movable/reward = reward_path
