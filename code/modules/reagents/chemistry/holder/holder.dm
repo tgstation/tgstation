@@ -409,6 +409,7 @@
  * * methods - passed through to [/datum/reagents/proc/expose] and [/datum/reagent/proc/on_transfer]
  * * show_message - passed through to [/datum/reagents/proc/expose]
  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
+ * * copy_only - transfers the reagents without removing it from this holder
  */
 /datum/reagents/proc/trans_to(
 	atom/target,
@@ -421,7 +422,8 @@
 	remove_blacklisted = FALSE,
 	methods = NONE,
 	show_message = TRUE,
-	ignore_stomach = FALSE
+	ignore_stomach = FALSE,
+	copy_only = FALSE
 )
 	if(QDELETED(target) || !total_volume)
 		return FALSE
@@ -488,21 +490,21 @@
 
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount))
-			update_total()
-			target_holder.update_total()
+		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount, copy_only))
 			continue
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = r_to_send, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
 
 		total_transfered_amount += transfered_amount
-		reagent.volume -= transfer_amount
+		if(!copy_only)
+			reagent.volume -= transfer_amount
 		transfer_log += "[reagent.type] ([transfered_amount]u, [reagent.purity] purity)"
 
 		if(!isnull(target_id))
 			break
-	update_total()
+	if(!copy_only)
+		update_total()
 
 	//expose target to reagent changes
 	if(methods)
@@ -522,7 +524,8 @@
 
 	if(!no_react)
 		transfer_reactions(target_holder)
-		handle_reactions()
+		if(!copy_only)
+			handle_reactions()
 		target_holder.handle_reactions()
 
 	return total_transfered_amount
@@ -532,67 +535,6 @@
 	PRIVATE_PROC(TRUE)
 
 	SEND_SIGNAL(reagent, COMSIG_REAGENT_ON_TRANSFER, target_holder, new_reagent)
-
-/**
- * Copies the reagents to the target object
- * Arguments
- *
- * * [target][obj] - the target to transfer reagents to
- * * multiplier - multiplies each reagent amount by this number well byond their available volume before transfering. used to create reagents from thin air if you ever need to
- * * preserve_data - preserve user data of all reagents after transfering
- * * no_react - if TRUE will not handle reactions
- * * copy_methods - forwards reagent exposure method flags like INGEST & INHALE to reagent.on_transfer to trigger transfer effects.
- */
-/datum/reagents/proc/copy_to(
-	atom/target,
-	amount = 1,
-	multiplier = 1,
-	preserve_data = TRUE,
-	no_react = FALSE,
-	copy_methods = NONE,
-)
-	if(QDELETED(target) || !total_volume)
-		return
-
-	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to copy_to [amount] amount of reagents")
-		return FALSE
-
-	var/datum/reagents/target_holder
-	if(istype(target, /datum/reagents))
-		target_holder = target
-	else
-		if(!target.reagents)
-			return
-		target_holder = target.reagents
-
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
-		return
-
-	var/list/cached_reagents = reagent_list
-	var/part = amount / total_volume
-	var/transfer_amount
-	var/total_transfered_amount = 0
-	var/trans_data = null
-	var/list/r_to_send = copy_methods ? list() : null
-
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		transfer_amount = reagent.volume * part * multiplier
-		if(preserve_data)
-			trans_data = copy_data(reagent)
-		total_transfered_amount += target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, reagent_added = r_to_send, no_react = TRUE)
-
-	//expose target to reagent changes
-	if(copy_methods)
-		target_holder.expose(target, copy_methods, 1, FALSE, r_to_send)
-
-	if(!no_react)
-		transfer_reactions(target_holder)
-		target_holder.handle_reactions()
-
-	return total_transfered_amount
 
 /**
  * Multiplies reagents inside this holder by a specific amount
