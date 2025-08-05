@@ -115,7 +115,6 @@
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 	update_appearance()
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
-	RegisterSignal(biological_sample, COMSIG_SAMPLE_DEPOSITED, PROC_REF(on_sample_deposited))
 	return ITEM_INTERACT_SUCCESS
 
 ///Adds text for when there is a sample in the vat
@@ -174,12 +173,8 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
 	else
-		UnregisterSignal(biological_sample, list(COMSIG_SAMPLE_GROWTH_COMPLETED, COMSIG_SAMPLE_DEPOSITED))
 		QDEL_NULL(biological_sample)
 	update_appearance()
-
-/obj/machinery/vatgrower/proc/on_sample_deposited(datum/biological_sample/sample, atom/thing)
-	SIGNAL_HANDLER
 
 /obj/machinery/vatgrower/small
 	name = "small growing vat"
@@ -198,8 +193,16 @@
 /obj/machinery/vatgrower/small/emag_act(mob/user, obj/item/card/emag/emag_card)
 	return
 
-/obj/machinery/vatgrower/small/on_sample_deposited(datum/biological_sample/sample, atom/thing)
+/obj/machinery/vatgrower/small/deposit_sample(mob/user, obj/item/petri_dish/petri)
 	. = ..()
+
+	if(. != ITEM_INTERACT_SUCCESS)
+		return
+
+	RegisterSignal(biological_sample, COMSIG_SAMPLE_DEPOSITED, PROC_REF(on_sample_deposited))
+
+/obj/machinery/vatgrower/small/proc/on_sample_deposited(datum/biological_sample/sample, atom/thing)
+	SIGNAL_HANDLER
 
 	if(isliving(thing))
 		var/mob/living/living_type = thing

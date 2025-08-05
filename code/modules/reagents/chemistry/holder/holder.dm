@@ -326,6 +326,7 @@
  *
  * * [source_reagent_typepath][/datum/reagent] - the typepath of the reagent you are trying to convert
  * * [target_reagent_typepath][/datum/reagent] - the final typepath the source_reagent_typepath will be converted into
+ * * conversion_volume - how much of the reagent volume to convert. -1 for all
  * * multiplier - the multiplier applied on the source_reagent_typepath volume before converting
  * * include_source_subtypes- if TRUE will convert all subtypes of source_reagent_typepath into target_reagent_typepath as well
  */

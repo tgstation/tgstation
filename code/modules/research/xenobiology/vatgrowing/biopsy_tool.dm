@@ -5,7 +5,6 @@
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "biopsy"
 	worn_icon_state = "biopsy"
-	/// Base icon of the biopsy tool
 	base_icon_state = "biopsy"
 	/// Whether or not we can swab objects
 	var/can_swap_objects = FALSE
