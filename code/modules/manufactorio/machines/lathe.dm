@@ -143,7 +143,13 @@
 	var/atom/movable/created
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
+		var/max_stack_amount = initial(stack_item.max_amount)
 		var/amount = design.materials[design.materials[1]]
+		while(amount > max_stack_amount)
+			var/obj/item/stack/new_stack = new stack_item(null, max_stack_amount)
+			if(!send_resource(new_stack, dir))
+				withheld = new_stack
+			amount -= max_stack_amount
 		created = new stack_item(null, amount)
 	else
 		created = new design.build_path(null)
