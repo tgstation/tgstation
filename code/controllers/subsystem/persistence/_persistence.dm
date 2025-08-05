@@ -7,8 +7,12 @@ SUBSYSTEM_DEF(persistence)
 		/datum/controller/subsystem/mapping,
 		/datum/controller/subsystem/atoms,
 	)
-	flags = SS_NO_FIRE
+	flags = SS_BACKGROUND
+	wait = INFINITY
+	runlevels = RUNLEVEL_GAME
 
+	/// This is used to skip the 1st autosave that is automatically done vis the subsystems fire() at roundstart
+	var/was_first_roundstart_autosave_skipped = FALSE
 	///instantiated wall engraving components
 	var/list/wall_engravings = list()
 	///all saved persistent engravings loaded from JSON
@@ -77,7 +81,23 @@ SUBSYSTEM_DEF(persistence)
 	load_delamination_counter()
 	load_tram_counter()
 	load_adventures()
+
+	if(CONFIG_GET(number/persistent_autosave_period) > 0 && CONFIG_GET(flag/persistent_save_enabled))
+		wait = CONFIG_GET(number/persistent_autosave_period) HOURS
+
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/persistence/fire(resumed = FALSE)
+	if(!was_first_roundstart_autosave_skipped) // prevents pointless autosave at the start of the game
+		was_first_roundstart_autosave_skipped = TRUE
+		return
+
+	save_world()
+
+/datum/controller/subsystem/persistence/save_world()
+	log_world("World map save initiated at [time_stamp()]")
+	save_persistent_maps()
+	log_world("World map save finished at [time_stamp()]")
 
 ///Collects all data to persist.
 /datum/controller/subsystem/persistence/proc/collect_data()
