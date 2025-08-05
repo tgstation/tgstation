@@ -9,5 +9,5 @@
 	has_variable_transfer_amount = FALSE
 	interaction_flags_click = NEED_DEXTERITY
 	fill_icon_state = "cooler_jug_overlay"
-	fill_icon_thresholds = list(50, 100, 150, 200) //the 100 icon is getting picked when its at 200 volume for some reason?
+	fill_icon_thresholds = list(25, 50, 75, 100)
 	obj_flags = UNIQUE_RENAME

@@ -542,11 +542,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		our_jug.forceMove(drop_location())
 
 	if(throw_away)
-		var/turf/turf_to_throw_at = get_ranged_target_turf(src, pick(GLOB.alldirs))
+		var/turf/turf_to_throw_at = get_ranged_target_turf(src, pick(GLOB.alldirs), 2)
 		our_jug.throw_at(turf_to_throw_at, 3, 3)
 		reagents.remove_all(tank_volume) //Gets spilled on floor during boom()
 	else
 		reagents.trans_to(our_jug.reagents, tank_volume)
+
 	our_jug = null
 	refresh_appearance()
 
