@@ -76,3 +76,26 @@
   - rscadd: Dragging glittery crates will now spread a trail of glitter and angry
       janitors behind them.
   - image: Added new glitter sprites (that don't look like gasses)
+2025-08-04:
+  carpotoxin:
+  - qol: Mobs entangled within spacevines are layered above the spacevines for as
+      long as they stay buckled
+2025-08-05:
+  FalloutFalcon:
+  - code_imp: debug proc for painting the world based on spatial grid.
+  IgiariValkyr:
+  - bugfix: Fixes the void eater's right-hand sprite
+  OnlineGirlfriend:
+  - image: update barnyard spellbook
+  Pickle-Coding:
+  - bugfix: Fixes BZ formation not actually creating the nitrogen and oxygen when
+      it decomposes nitrous oxide.
+  SmArtKar:
+  - bugfix: Fixed style meter text going out of bounds
+  - bugfix: Fixed recovered crew bodybags being foldable while there's a "corpse"
+      inside
+  - bugfix: Knocking someone out cold now properly stops their panic attack
+  - bugfix: Fixed portable atmospheric machines trying to add themselves to SSair
+      queue when destroyed
+  TheEmber:
+  - bugfix: Fixed bitrunning psyker
