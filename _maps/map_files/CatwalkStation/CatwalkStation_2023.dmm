@@ -8561,8 +8561,8 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "cAs" = (
-/obj/item/banner,
 /obj/structure/disposalpipe/segment,
+/obj/item/banner/command/mundane,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "cAv" = (
@@ -41200,7 +41200,9 @@
 /area/station/cargo/warehouse)
 "mdn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/banner/red,
+/obj/item/banner/red{
+	inspiration_available = 0
+	},
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "mdp" = (
@@ -64079,7 +64081,9 @@
 /area/station/security/courtroom)
 "sTK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/banner/blue,
+/obj/item/banner/blue{
+	inspiration_available = 0
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties,
