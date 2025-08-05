@@ -569,6 +569,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/water_cooler/fallen/create_jug()
 	return
 
+/obj/structure/reagent_dispensers/water_cooler/jugless
+	reagent_id = null
+	anchored = FALSE
+
+/obj/structure/reagent_dispensers/water_cooler/jugless/create_jug()
+	return
+
 ///Punch cooler. Starts full of healing juice.
 /obj/structure/reagent_dispensers/water_cooler/punch_cooler
 	name = "punch cooler"

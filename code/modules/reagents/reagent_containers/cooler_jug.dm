@@ -11,3 +11,4 @@
 	fill_icon_state = "cooler_jug_overlay"
 	fill_icon_thresholds = list(25, 50, 75, 100)
 	obj_flags = UNIQUE_RENAME
+	w_class = WEIGHT_CLASS_BULKY

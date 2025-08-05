@@ -257,3 +257,25 @@
 		/obj/item/hatchet/cutterblade = 1,
 	)
 	crate_name = "paper cutters crate"
+
+/datum/supply_pack/service/liquid_cooler
+	name = "Liquid Cooler"
+	desc = "A liquid cooler, perfect for wasting time at the office! Water not included."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1)
+	crate_name = "liquid cooler crate"
+
+/datum/supply_pack/service/water_jug
+	name = "Punch Cooler"
+	desc = "A liquid cooler, stocked with exotic fruit punch that can heal injuries! Be sure to remain near the liquid cooler while drinking, for your own health and safety. Seriously, do NOT drink this stuff away from the cooler."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/structure/reagent_dispensers/water_cooler/punch_cooler = 1)
+	crate_name = "punch cooler crate"
+
+
+/datum/supply_pack/service/punch_cooler
+	name = "Punch Cooler"
+	desc = "A liquid cooler, stocked with exotic fruit punch that can heal injuries! Be sure to remain near the liquid cooler while drinking, for your own health and safety. Seriously, do NOT drink this stuff away from the cooler."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/structure/reagent_dispensers/water_cooler/punch_cooler = 1)
+	crate_name = "punch cooler crate"
