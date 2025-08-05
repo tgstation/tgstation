@@ -211,14 +211,14 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
 		check_flopping()
 	if(status != FISH_DEAD)
-		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Composting a food that is not real food wouldn't work anyway.
+		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Compost fish only when it's dead.
 		START_PROCESSING(SSobj, src)
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FISH_STASIS), PROC_REF(enter_stasis))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FISH_STASIS), PROC_REF(exit_stasis))
 
 	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
-	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
+	add_traits(list(TRAIT_DUCT_TAPE_UNREPAIRABLE, TRAIT_VALID_DNA_INFUSION), INNATE_TRAIT)
 
 	//stops new fish from being able to reproduce right away.
 	breeding_wait = world.time + (breeding_timeout * NEW_FISH_BREEDING_TIMEOUT_MULT)
