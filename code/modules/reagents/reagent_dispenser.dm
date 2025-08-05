@@ -1,4 +1,5 @@
 #define REAGENT_SPILL_DIVISOR 200
+#define COOLER_JUG_EJECT_TIME (8 SECONDS)
 
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
@@ -370,7 +371,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
 	. = ..()
-	our_jug = new /obj/item/reagent_containers/cooler_jug(src) //proc into "create_jug" for tipped/headless coolers
+	create_jug()
 	refresh_appearance()
 
 /obj/structure/reagent_dispensers/water_cooler/Destroy()
@@ -391,9 +392,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(.)
 		return
 
+
+	if(tipped)
+		balloon_alert(user, "un-tipping...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		tipped = FALSE
+		refresh_appearance()
+		return
+
+
 	if(user.combat_mode && our_jug)
 		balloon_alert(user, "removing jug...")
-		if(!do_after(user, 10 SECONDS, src))
+		if(!do_after(user, COOLER_JUG_EJECT_TIME, src))
 			return
 		eject_jug(user)
 		return
@@ -455,7 +466,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand_secondary(mob/user, modifiers)
-	if(!do_after(user, 2 SECONDS, src))
+	if(tipped)
+		balloon_alert(user, "it's already tipped!")
+		return
+
+	if(anchored)
+		balloon_alert(user, "it's anchored!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(!do_after(user, 1.5 SECONDS, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	INVOKE_ASYNC(src, PROC_REF(boom), user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -464,10 +483,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(!istype(tool, /obj/item/reagent_containers/cooler_jug))
 		return
 
+	if(tipped)
+		balloon_alert(user, "it's tipped!")
+		return
+
 	var/obj/item/reagent_containers/cooler_jug/new_jug = tool
 	balloon_alert(user, "replacing jug...")
-	if(!do_after(user, 10 SECONDS, src))
+	if(!do_after(user, COOLER_JUG_EJECT_TIME, src))
 		return
+
 	if(!user.transferItemToLoc(new_jug, src))
 		return ITEM_INTERACT_BLOCKING
 
@@ -479,6 +503,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	add_fingerprint(user)
 	refresh_appearance()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/boom()
+	if(QDELETED(src))
+		return
+	var/liquid_amount = 0
+	if(reagents.total_volume)
+		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
+		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50), adminlog=(liquid_amount<25))
+	eject_jug(throw_away = TRUE) //Maybe, you could just call parent and have the chemical reactions sorted there? You could make welding coolers explode like they should?
+	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
+	tip_over()
 
 /obj/structure/reagent_dispensers/water_cooler/proc/refresh_appearance()
 	if(tipped)
@@ -492,6 +527,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	update_overlays()
 	update_appearance()
 
+///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
+/obj/structure/reagent_dispensers/water_cooler/proc/create_jug()
+	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
+
+///Eject the jug in a variety of ways. If there is a user, the jug goes into their hands. throw_away is passed on tip, to empty and throw the jug away. We delete the reagents since we create a splash before this is called.
 /obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, throw_away = FALSE)
 	if(!our_jug)
 		return
@@ -510,17 +550,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	our_jug = null
 	refresh_appearance()
 
-/obj/structure/reagent_dispensers/water_cooler/boom()
-	if(QDELETED(src))
-		return
-	var/liquid_amount = 0
-	if(reagents.total_volume)
-		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
-		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50), adminlog=(liquid_amount<25))
-	eject_jug()
-	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
-	tip_over()
-
+///Handles the visual stuff related to the cooler itself tipping.
 /obj/structure/reagent_dispensers/water_cooler/proc/tip_over()
 	tipped = TRUE
 	refresh_appearance()
@@ -528,10 +558,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 ///Pre-tipped version for mapping.
 /obj/structure/reagent_dispensers/water_cooler/fallen
 	tipped = TRUE
+	reagent_id = null
+	anchored = FALSE
 
 /obj/structure/reagent_dispensers/water_cooler/fallen/Initialize(mapload)
 	. = ..()
 	tip_over()
+
+/obj/structure/reagent_dispensers/water_cooler/fallen/create_jug()
+	return
 
 ///Punch cooler. Starts full of healing juice.
 /obj/structure/reagent_dispensers/water_cooler/punch_cooler
