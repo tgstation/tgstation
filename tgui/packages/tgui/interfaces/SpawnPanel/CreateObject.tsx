@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {
   Button,
   DmIcon,
+  Input,
   NoticeBox,
   Section,
   Stack,
@@ -11,7 +12,6 @@ import {
 import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 import { useBackend } from '../../backend';
-import { SearchBar } from '../common/SearchBar';
 import { CreateObjectSettings } from './CreateObjectSettings';
 import { listNames, listTypes } from './constants';
 import type {
@@ -395,16 +395,14 @@ export function CreateObject(props: CreateObjectProps) {
                 />
               </Stack.Item>
             </Stack>
-            <Stack>
-              <Stack.Item grow ml="-0.5em">
-                <SearchBar
-                  noIcon
-                  placeholder={'Search here...'}
-                  query={query}
-                  onSearch={setQuery}
-                />
-              </Stack.Item>
-            </Stack>
+            <Stack.Item grow>
+              <Input
+                placeholder="Search here..."
+                value={query}
+                onChange={(value) => updateSearchText(value)}
+                fluid
+              />
+            </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>

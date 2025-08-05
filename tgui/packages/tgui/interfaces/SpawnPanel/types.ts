@@ -1,10 +1,6 @@
 import type { BooleanLike } from 'tgui-core/react';
 
-export interface Data {
-  [panelName: string]: CreateObjectData[];
-}
-
-export type SpawnPreferences = {
+export interface SpawnPreferences {
   hide_icons: boolean;
   hide_mappings: boolean;
   sort_by: string;
@@ -16,29 +12,27 @@ export type SpawnPreferences = {
   object_count: number;
   dir: number;
   object_name: string;
-};
+}
 
-export type SpawnPanelPreferences = {
+export interface SpawnPanelPreferences {
   hide_icons: boolean;
   hide_mappings: boolean;
   sort_by: string;
   search_text: string;
   search_by: string;
-};
+}
 
-export type AtomData = {
+export interface AtomData {
   icon: string;
   icon_state: string;
   name: string;
   description?: string;
   mapping: BooleanLike;
   type: 'Objects' | 'Turfs' | 'Mobs';
-};
+}
 
 export interface CreateObjectData {
-  atoms: {
-    [key: string]: AtomData;
-  };
+  atoms: Record<string, AtomData>;
 }
 
 export interface CreateObjectProps {
