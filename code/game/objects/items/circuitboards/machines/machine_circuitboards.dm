@@ -1888,3 +1888,21 @@
 /obj/item/circuitboard/machine/engine/propulsion
 	name = "Shuttle Engine Propulsion"
 	build_path = /obj/machinery/power/shuttle_engine/propulsion
+
+/obj/item/circuitboard/machine/ai_law_rack
+	name = "Standard Rack"
+	name_extension = "(Module Rack Board)"
+	build_path = /obj/machinery/ai_law_rack
+	req_components = list(
+		/datum/stock_part/amplifier = 1,
+		/datum/stock_part/transmitter = 1,
+		/obj/item/stack/cable_coil = 10,
+	)
+
+/obj/item/circuitboard/machine/ai_law_rack/small
+	name = "Portable Rack"
+	build_path = /obj/machinery/ai_law_rack/small
+
+/obj/item/circuitboard/machine/ai_law_rack/core
+	name = "Core Rack"
+	build_path = /obj/machinery/ai_law_rack/core
