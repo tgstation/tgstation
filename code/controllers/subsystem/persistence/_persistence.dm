@@ -169,8 +169,8 @@ SUBSYSTEM_DEF(persistence)
 ///Returns the path to persistence maps directory based on current timestamp
 /datum/controller/subsystem/persistence/proc/get_current_persistence_map_directory()
 	var/realtime = world.realtime
-	var/timestamp_utc  = time2text(realtime, "YYYY/MM/DD/hh.mm.ss", TIMEZONE_UTC)
-	var/map_directory = "_maps/persistence/[timestamp_utc]"
+	var/timestamp_utc  = time2text(realtime, "YYYY/MM/DD/hh-mm-ss", TIMEZONE_UTC)
+	var/map_directory = MAP_PERSISTENT_DIRECTORY + "/[timestamp_utc]"
 	return map_directory
 
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
