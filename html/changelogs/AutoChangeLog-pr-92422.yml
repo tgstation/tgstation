@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Correct a few banners on Catwalk Station to be mundane banners, and not the magic barriers that heal you and remove your stuns."
