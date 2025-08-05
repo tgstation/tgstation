@@ -502,7 +502,7 @@
 	default = 250
 
 // Configs for persistent map saving and loading
-/// This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year/month/day/round-id
+/// This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year/month/day/hour-minute-second
 /datum/config_entry/flag/persistent_save_enabled
 /// Whether to include the centcom z level (by default this is turned off)
 /datum/config_entry/flag/persistent_save_centcomm_z_levels
@@ -514,9 +514,10 @@
 /datum/config_entry/flag/persistent_save_mining_z_levels
 /// Whether to include transitional z levels used for shuttle movement (by default this is turned off)
 /datum/config_entry/flag/persistent_save_transitional_z_levels
-/// Period of time in deciseconds between map autosaves (set to -1 to only allow saving when server reboots)
+/// Period of time in hours between map autosaves (set to -1 to only allow saving when server reboots)
 /datum/config_entry/number/persistent_autosave_period
-	default = 72000 // every 2 hours
+	integer = FALSE
+	default = 2 // every 2 hours
 	min_val = -1
 /// The maximum amount of autosaves to store (set to -1 to never delete any autosaves)
 /datum/config_entry/number/persistent_autosave_period
