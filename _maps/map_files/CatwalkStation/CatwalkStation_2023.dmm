@@ -2900,7 +2900,9 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/central)
 "aVv" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -13010,7 +13012,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/science/robotics)
 "dRo" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -17840,7 +17844,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
 "foP" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -27832,7 +27838,9 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "iiT" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/machinery/space_heater,
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -30680,7 +30688,9 @@
 /area/station/hallway/primary/starboard)
 "iZD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "iZH" = (
@@ -32509,7 +32519,9 @@
 /area/station/commons/dorms)
 "jyZ" = (
 /obj/item/tank/internals/plasma/empty,
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -38800,7 +38812,9 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "luD" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -41106,7 +41120,9 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "mcs" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -49684,7 +49700,9 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "oEA" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "oEI" = (
@@ -61132,7 +61150,9 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology/hallway)
 "rYa" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -62161,7 +62181,9 @@
 /turf/open/floor/iron/textured_large,
 /area/station/medical/abandoned)
 "spm" = (
-/obj/effect/decal/cleanable/glitter/pink,
+/obj/effect/decal/cleanable/glitter{
+	color = "ff8080"
+	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
