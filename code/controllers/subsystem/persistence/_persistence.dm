@@ -94,9 +94,14 @@ SUBSYSTEM_DEF(persistence)
 
 	save_world()
 
-/datum/controller/subsystem/persistence/save_world()
+/// Saves map z-levels in the world based on PERSISTENT_SAVE_ENABLED config options in game_options.txt
+/datum/controller/subsystem/persistence/proc/save_world()
 	log_world("World map save initiated at [time_stamp()]")
+	to_chat(world, span_boldannounce("World map save initiated at [time_stamp()]"))
+
 	save_persistent_maps()
+
+	to_chat(world, span_boldannounce("World map save finished at [time_stamp()]"))
 	log_world("World map save finished at [time_stamp()]")
 
 ///Collects all data to persist.
@@ -164,10 +169,8 @@ SUBSYSTEM_DEF(persistence)
 ///Returns the path to persistence maps directory based on current timestamp
 /datum/controller/subsystem/persistence/proc/get_current_persistence_map_directory()
 	var/realtime = world.realtime
-	var/texttime = time2text(realtime, "YYYY/MM/DD", TIMEZONE_UTC)
-	var/map_directory = "_maps/persistence/[texttime]/round-"
-	var/timestamp = replacetext(time_stamp(), ":", ".")
-	map_directory += "[timestamp]"
+	var/timestamp_utc  = time2text(realtime, "YYYY/MM/DD/hh.mm.ss", TIMEZONE_UTC)
+	var/map_directory = "_maps/persistence/[timestamp_utc]"
 	return map_directory
 
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
