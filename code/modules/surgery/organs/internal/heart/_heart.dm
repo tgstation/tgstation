@@ -386,7 +386,7 @@
 /obj/item/organ/heart/evolved/sacred/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 
-	receiver.AddComponent(/datum/component/anti_magic, drain_antimagic = CALLBACK(src, PROC_REF(on_blocked)), check_blocking = CALLBACK(src, PROC_REF(check_block)))
+	receiver.AddComponent(/datum/component/anti_magic, block_magic = CALLBACK(src, PROC_REF(on_blocked)), check_blocking = CALLBACK(src, PROC_REF(check_block)))
 
 /obj/item/organ/heart/evolved/sacred/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
