@@ -197,7 +197,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/roroco)
 "hM" = (
 /obj/structure/closet/l3closet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -676,12 +676,6 @@
 "vG" = (
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
-"wd" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 10
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "wm" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/dark/smooth_large,
@@ -861,12 +855,6 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"Bp" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -1511,9 +1499,9 @@ xK
 xK
 xK
 xK
-Bp
+mF
 gX
-wd
+ii
 UV
 UV
 xK

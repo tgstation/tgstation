@@ -1,6 +1,6 @@
 /mob/living/basic/roro
 	name = "roro"
-	desc = "An little round, sharp beaked alien. It bears a striking resemblance to insulated gloves."
+	desc = "A little round, sharp beaked alien. It bears a striking resemblance to insulated gloves."
 	icon_state = "roro"
 	icon_living = "roro"
 	icon_dead = "roro_dead"
@@ -34,9 +34,25 @@
 
 	faction = list(FACTION_HOSTILE)
 
-	ai_controller = /datum/ai_controller/basic_controller/roro
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_retaliate
 
-/// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
+/datum/emote/roro
+	mob_type_allowed_typecache = /mob/living/basic/roro
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/roro/warble
+	key = "warble"
+	key_third_person = "warbles"
+	message = "warbles happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_RORO_WARBLE
+
+/mob/living/basic/roro/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "warble")
+	AddElement(/datum/element/ai_retaliate)
+
 /datum/ai_controller/basic_controller/roro
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
