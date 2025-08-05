@@ -16,11 +16,12 @@ interface CreateObjectAdvancedSettingsProps {
   onIconSettingsChange: (settings: Partial<IconSettings>) => void;
 }
 
-export function CreateObjectAdvancedSettings({
-  iconSettings,
-  onIconSettingsChange,
-}: CreateObjectAdvancedSettingsProps) {
+export function CreateObjectAdvancedSettings(
+  CreateObjectAdvancedSettingsProps,
+) {
   const { act, data } = useBackend<SpawnPanelData>();
+  const { iconSettings, onIconSettingsChange } =
+    CreateObjectAdvancedSettingsProps;
 
   const sendUpdatedSettings = (
     changedSettings: Partial<Record<string, unknown>> = {},
@@ -90,9 +91,7 @@ export function CreateObjectAdvancedSettings({
             icon="arrow-rotate-right"
             color="transparent"
             onClick={() => {
-              // Сначала сбрасываем локальное состояние
               onIconSettingsChange({ iconState: null });
-              // Затем отправляем запрос на сервер
               act('reset-icon-state');
             }}
           />

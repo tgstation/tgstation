@@ -20,7 +20,7 @@ import type {
   SpawnPanelPreferences,
 } from './types';
 
-interface spawnPanelData {
+interface SpawnPanelData {
   icon: string;
   iconState: string;
   selected_object?: string;
@@ -28,7 +28,7 @@ interface spawnPanelData {
   preferences?: SpawnPanelPreferences;
 }
 
-interface spawnPreferences {
+interface SpawnPreferences {
   hide_icons: boolean;
   hide_mappings: boolean;
   sort_by: string;
@@ -37,14 +37,12 @@ interface spawnPreferences {
   selected_atom?: string;
 }
 
-interface currentList {
-  atoms: {
-    [key: string]: AtomData;
-  };
+interface CurrentList {
+  atoms: Record<string, AtomData>;
 }
 
 export function CreateObject(props: CreateObjectProps) {
-  const { act, data } = useBackend<spawnPanelData>();
+  const { act, data } = useBackend<SpawnPanelData>();
   const { setAdvancedSettings, iconSettings, objList = { atoms: {} } } = props;
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
@@ -63,7 +61,7 @@ export function CreateObject(props: CreateObjectProps) {
     AtomData
   >;
 
-  const currentList = objList as currentList;
+  const CurrentList = objList as CurrentList;
   const currentType = allObjects[data.copied_type ?? '']?.type || 'Objects';
 
   const { query, setQuery, results } = useFuzzySearch({
@@ -83,10 +81,10 @@ export function CreateObject(props: CreateObjectProps) {
   useEffect(() => {
     if (data.selected_object) {
       setSelectedObj(data.selected_object);
-      if (currentList[data.selected_object]) {
+      if (CurrentList[data.selected_object]) {
         props.onIconSettingsChange?.({
-          icon: currentList[data.selected_object].icon,
-          iconState: currentList[data.selected_object].icon_state,
+          icon: CurrentList[data.selected_object].icon,
+          iconState: CurrentList[data.selected_object].icon_state,
         });
       }
     }
@@ -203,7 +201,7 @@ export function CreateObject(props: CreateObjectProps) {
     storage.set('spawnpanel-showPreview', value);
   };
 
-  const sendPreferences = (settings: Partial<spawnPreferences>) => {
+  const sendPreferences = (settings: Partial<SpawnPreferences>) => {
     const parseOffset = (offsetStr: string): number[] => {
       if (!offsetStr.trim()) return [0, 0, 0];
 
