@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Collapsible,
-  Divider,
   Icon,
   Image,
   LabeledList,
@@ -14,7 +13,7 @@ import {
   Tooltip,
   VirtualList,
 } from 'tgui-core/components';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -68,6 +67,13 @@ type Data = {
   id_required: BooleanLike;
 };
 
+const actionToColor = {
+  DEPOSITED: 'green',
+  WITHDRAWN: 'red',
+  PROCESSED: 'blue',
+  RESTOCKED: 'purple',
+};
+
 export const OreSilo = (props: Data) => {
   const { act, data } = useBackend<Data>();
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
@@ -104,12 +110,7 @@ export const OreSilo = (props: Data) => {
                 onRemove={(index) => act('remove', { id: index })}
               />
             ) : null}
-            {currentTab === Tab.Logs && (
-              <>
-                <RestrictButton />
-                <LogsList logs={logs} />
-              </>
-            )}
+            {currentTab === Tab.Logs && <LogsList logs={logs} />}
           </Stack.Item>
           <Stack.Item>
             <Section fill>
@@ -235,33 +236,42 @@ const RestrictButton = () => {
   const { act, data } = useBackend<Data>();
   const { id_required } = data;
   return (
-    <Box align="center">
-      <Button
-        position="relative"
-        className="__RestrictButton"
-        color={id_required ? 'bad' : 'good'}
-        onClick={() => act('toggle_restrict')}
-      >
-        {id_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
-      </Button>
-    </Box>
+    <Button
+      position="relative"
+      className="__RestrictButton"
+      color={id_required ? 'bad' : 'good'}
+      onClick={() => act('toggle_restrict')}
+      style={{
+        marginLeft: 'auto',
+        right: 0,
+      }}
+    >
+      {id_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
+    </Button>
   );
 };
 
 const LogsList = (props: LogsListProps) => {
   const { logs } = props;
 
-  return logs.length > 0 ? (
-    <Section fill scrollable pr={1} align="center">
-      <Divider />
-      <VirtualList>
-        {logs.map((log, index) => (
-          <LogEntry key={index} {...log} />
-        ))}
-      </VirtualList>
+  return (
+    <Section
+      fill
+      scrollable
+      pr={1}
+      title="Action Logs"
+      buttons={<RestrictButton />}
+    >
+      {logs.length > 0 ? (
+        <VirtualList>
+          {logs.map((log, index) => (
+            <LogEntry key={index} {...log} />
+          ))}
+        </VirtualList>
+      ) : (
+        <NoticeBox>No log entries currently present!</NoticeBox>
+      )}
     </Section>
-  ) : (
-    <NoticeBox>No log entries currently present!</NoticeBox>
   );
 };
 
@@ -282,16 +292,17 @@ const UserItem = (props: UserData) => {
   const { banned_users } = data;
   return (
     <Stack align="center" className="__UserItem">
-      <Stack.Item className="__Name">{name}</Stack.Item>
+      <Stack.Item className="__Name">{name},</Stack.Item>
       <Stack.Item className="__Assignment">{assignment}</Stack.Item>
       {!id_read_failure && !silicon_override && (
         <Stack.Item>
           <Button
-            className="__AntiRoboticistButton" // we have fun here
+            className="__AntiRoboticistButton"
             color={banned_users.includes(account_id) ? 'bad' : 'good'}
             onClick={() => act('toggle_ban', { user_data: props })}
           >
-            {banned_users.includes(account_id) ? 'Unban' : 'Ban'} User?
+            {banned_users.includes(account_id) ? 'Unrestrict' : 'Restrict'}{' '}
+            access
           </Button>
         </Stack.Item>
       )}
@@ -300,7 +311,7 @@ const UserItem = (props: UserData) => {
 };
 
 const formatAmount = (action: string, amount: number) => {
-  const isSheetAction = action === 'EJECT' || action === 'DEPOSIT';
+  const isSheetAction = action === 'WITHDRAWN' || action === 'DEPOSITED';
   const rawAmount = Math.abs(amount);
   if (!isSheetAction) {
     return rawAmount;
@@ -322,26 +333,47 @@ const LogEntry = (props: Log) => {
   } = props;
   return (
     <Collapsible
-      title={`${action.toUpperCase()} ${formatAmount(action, amount)} ${noun}, [${user_data.name} | ${user_data.assignment.toUpperCase()}]`}
+      title={
+        <>
+          <Button
+            color={actionToColor[action.toUpperCase()]}
+            width="8em"
+            textAlign="center"
+            ml={1}
+          >
+            {action.toUpperCase()}
+          </Button>
+          <Icon name="arrow-right" ml={1} mr={1} />
+          {` ${formatAmount(action, amount)} ${noun}`}
+          <Icon name="arrow-right" ml={1} mr={1} />
+          {user_data.name} ({user_data.assignment})
+        </>
+      }
+      color="transparent"
     >
-      <Section className="__LogEntry">
+      <Box pl={1}>
         <LabeledList>
-          <LabeledList.Item label="Time">{time}</LabeledList.Item>
-          <LabeledList.Item label="Machine">
+          <LabeledList.Item className="candystripe" label="Time">
+            {time}
+          </LabeledList.Item>
+          <LabeledList.Item className="candystripe" label="Machine">
             {capitalize(machine_name)}
           </LabeledList.Item>
-          <LabeledList.Item label="Location">{area_name}</LabeledList.Item>
+          <LabeledList.Item className="candystripe" label="Location">
+            {area_name}
+          </LabeledList.Item>
           <LabeledList.Item
+            className="candystripe"
             label="Materials"
             color={amount > 0 ? 'good' : 'bad'}
           >
             {raw_materials}
           </LabeledList.Item>
-          <LabeledList.Item label="User">
+          <LabeledList.Item className="candystripe" label="User">
             <UserItem {...user_data} />
           </LabeledList.Item>
         </LabeledList>
-      </Section>
+      </Box>
     </Collapsible>
   );
 };
