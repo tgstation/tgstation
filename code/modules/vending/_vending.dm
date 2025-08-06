@@ -218,6 +218,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	//the path of the fish_source datum to use for the fishing_spot component
 	var/fish_source_path = /datum/fish_source/vending
 
+	///Whether this vendor can be selected when building a custom vending machine
+	var/allow_custom = FALSE
+
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
@@ -322,19 +325,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
 		restock(installed_refill)
-
-/obj/machinery/vending/on_construction(mob/user, from_flatpack = FALSE)
-	if (!from_flatpack)
-		return
-	// When built from a flatpack, empty our canister upon construction
-	for(var/obj/item/vending_refill/installed_refill in component_parts)
-		for (var/item_sold in installed_refill.products)
-			installed_refill.products[item_sold] = 0
-		for (var/item_sold in installed_refill.contraband)
-			installed_refill.contraband[item_sold] = 0
-		for (var/item_sold in installed_refill.premium)
-			installed_refill.premium[item_sold] = 0
-	RefreshParts()
 
 /obj/machinery/vending/on_deconstruction(disassembled)
 	if(refill_canister)
@@ -1182,7 +1172,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			restocked += restock(replacer_item)
 	post_restock(user, restocked)
 	if(restocked > 0)
-		replacer.play_rped_sound()
+		replacer.play_rped_effect()
 	return TRUE
 
 /obj/machinery/vending/on_deconstruction(disassembled)
@@ -1730,6 +1720,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	/// Base64 cache of custom icons.
 	var/list/base64_cache = list()
 	panel_type = "panel20"
+	allow_custom = TRUE
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
@@ -1892,6 +1883,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 /obj/machinery/vending/custom/unbreakable
 	name = "Indestructible Vendor"
 	resistance_flags = INDESTRUCTIBLE
+	allow_custom = FALSE
 
 /obj/item/vending_refill/custom
 	machine_name = "Custom Vendor"
@@ -1906,6 +1898,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	max_loaded_items = 40
 	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
+	allow_custom = FALSE
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()

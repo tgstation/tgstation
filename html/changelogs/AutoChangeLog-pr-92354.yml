@@ -1,0 +1,6 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - code_imp: "action's now pass down the clicker via the first arg of Trigger()"
+  - code_imp: "antagonist ui_act now ensures that the owners of the antag datum thesmelves can only do stuff in the UI"
+  - bugfix: "admins giving out heretic antag no longer opens it for them."

@@ -65,7 +65,7 @@ export const BlackMarketUplink = (props) => {
             <Box inline bold>
               <AnimatedNumber
                 value={money}
-                format={(value) => formatMoney(value) + ' cr'}
+                format={(value) => `${formatMoney(value)} cr`}
               />
             </Box>
           }
@@ -126,9 +126,9 @@ export const BlackMarketUplink = (props) => {
                     </Stack>
                   </Stack.Item>
                   <Stack.Item color="label">
-                    {item.amount ? item.amount + ' in stock' : 'Out of stock'}
+                    {item.amount ? `${item.amount} in stock` : 'Out of stock'}
                   </Stack.Item>
-                  <Stack.Item>{formatMoney(item.cost) + ' cr'}</Stack.Item>
+                  <Stack.Item>{`${formatMoney(item.cost)} cr`}</Stack.Item>
                   <Stack.Item>
                     <Button
                       content="Buy"
@@ -177,7 +177,7 @@ const ShipmentSelector = (props) => {
               <Box mt={1}>{method.description}</Box>
               <Button
                 mt={2}
-                content={formatMoney(method.price) + ' cr'}
+                content={`${formatMoney(method.price)} cr`}
                 disabled={money < method.price}
                 onClick={() =>
                   act('buy', {

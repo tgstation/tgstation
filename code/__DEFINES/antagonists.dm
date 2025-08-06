@@ -334,6 +334,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define DESTROY_AI_PROB(denominator) (100 / denominator)
 /// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
 #define MAROON_PROB 30
+/// Probability that any job related objective is picked
+#define JOB_PROB 40
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
@@ -404,6 +406,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_FAKE (1 << 0)
 /// Antag is not added to the global list of antags
 #define ANTAG_SKIP_GLOBAL_LIST (1 << 1)
+/// Antag's panel action button and the UI therein is viewable by observers
+#define ANTAG_OBSERVER_VISIBLE_PANEL (1 << 2)
 
 #define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
@@ -451,3 +455,5 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 /// Camera net used by battle royale objective
 #define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"
+
+#define MALF_MAX_PP 400

@@ -16,7 +16,7 @@ import { toFixed } from 'tgui-core/math';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { MainData, MechModule } from './data';
+import type { MainData, MechModule } from './data';
 
 const moduleSlotIcon = (param) => {
   switch (param) {
@@ -632,7 +632,7 @@ const SnowflakeRadio = (props) => {
           selected={microphone}
           icon={microphone ? 'microphone' : 'microphone-slash'}
         >
-          {(microphone ? 'En' : 'Dis') + 'abled'}
+          {`${microphone ? 'En' : 'Dis'}abled`}
         </Button>
       </LabeledList.Item>
       <LabeledList.Item label="Speaker">
@@ -646,7 +646,7 @@ const SnowflakeRadio = (props) => {
           selected={speaker}
           icon={speaker ? 'volume-up' : 'volume-mute'}
         >
-          {(speaker ? 'En' : 'Dis') + 'abled'}
+          {`${speaker ? 'En' : 'Dis'}abled`}
         </Button>
       </LabeledList.Item>
       <LabeledList.Item label="Frequency">
@@ -1029,7 +1029,7 @@ const SnowflakeGeneraor = (props) => {
     <LabeledList.Item label="Fuel Amount">
       {fuel === null
         ? 'None'
-        : toFixed(fuel * sheet_material_amount, 0.1) + ' cm³'}
+        : `${toFixed(fuel * sheet_material_amount, 0.1)} cm³`}
     </LabeledList.Item>
   );
 };
@@ -1040,7 +1040,7 @@ const SnowflakeOreScanner = (props) => {
   const { cooldown } = props.module.snowflake;
   return (
     <LabeledList.Item label="Vent Scanner">
-      <NoticeBox info={cooldown <= 0 ? true : false}>
+      <NoticeBox info={cooldown  <= 0}>
         {cooldown / 10 > 0 ? 'Recharging...' : 'Ready to scan vents'}
         <Button
           my={1}
@@ -1053,7 +1053,7 @@ const SnowflakeOreScanner = (props) => {
               gear_action: 'area_scan',
             })
           }
-          disabled={cooldown <= 0 ? false : true}
+          disabled={!(cooldown <= 0 )}
         >
           Scan all nearby vents
         </Button>

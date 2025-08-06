@@ -685,6 +685,56 @@
 /obj/item/proc/talk_into(atom/movable/speaker, message, channel, list/spans, datum/language/language, list/message_mods)
 	return SEND_SIGNAL(src, COMSIG_ITEM_TALK_INTO, speaker, message, channel, spans, language, message_mods) || (ITALICS|REDUCE_RANGE)
 
+/* sound procs, made so they can be overriden on subtypes */
+
+/// executed when this item is thrown and hits a mob
+/obj/item/proc/mob_throw_hit_sound_chain(target, volume)
+	if(play_mob_throw_hit_sound(target, volume))
+		return TRUE
+	if(play_hit_sound(target, volume))
+		return TRUE
+	playsound(target, 'sound/items/weapons/throwtap.ogg', volume, TRUE, -1)
+	return TRUE
+
+/// executed when this item is thrown and lands on a turf
+/obj/item/proc/throw_drop_sound_chain(volume)
+	if(play_throw_drop_sound(volume))
+		return TRUE
+	if(play_drop_sound(volume))
+		return TRUE
+	return FALSE
+
+/obj/item/proc/sound_chain(sound_to_play, volume = HALFWAY_SOUND_VOLUME, target = src)
+	if(sound_to_play)
+		playsound(target, sound_to_play, volume, sound_vary, ignore_walls = FALSE)
+		return TRUE
+	return FALSE
+
+/// plays the pickup sound of this item.
+/obj/item/proc/play_pickup_sound(volume = PICKUP_SOUND_VOLUME)
+	return sound_chain(pickup_sound, volume)
+
+/// plays the drop sound
+/obj/item/proc/play_drop_sound(volume = DROP_SOUND_VOLUME)
+	return sound_chain(drop_sound, volume)
+
+/// plays the throw drop sound
+/obj/item/proc/play_throw_drop_sound(volume = YEET_SOUND_VOLUME)
+	return sound_chain(throw_drop_sound, volume)
+
+/// plays the mob throw hit sound
+/obj/item/proc/play_mob_throw_hit_sound(target, volume = DROP_SOUND_VOLUME)
+	return sound_chain(mob_throw_hit_sound, volume, target)
+
+/// plays when a mob is hit with this item
+/obj/item/proc/play_hit_sound(target, volume = HALFWAY_SOUND_VOLUME)
+	return sound_chain(hitsound, volume, target)
+
+/obj/item/proc/play_equip_sound(volume = EQUIP_SOUND_VOLUME)
+	return sound_chain(equip_sound, volume)
+
+/* sound procs over */
+
 /// Called when a mob drops an item.
 /obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -698,8 +748,8 @@
 	item_flags &= ~IN_INVENTORY
 	UnregisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)))
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(!silent && drop_sound)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+	if(!silent)
+		play_drop_sound(DROP_SOUND_VOLUME)
 	user?.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
@@ -762,12 +812,14 @@
 
 	item_flags |= IN_INVENTORY
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)), PROC_REF(update_slot_icon), override = TRUE)
-	if(!initial)
-		if(equip_sound && (slot_flags & slot))
-			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-		else if(slot & ITEM_SLOT_HANDS && pickup_sound)
-			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, sound_vary, ignore_walls = FALSE)
+
 	user.update_equipment_speed_mods()
+
+	if(!initial && (slot_flags & slot) && (play_equip_sound()))
+		return
+
+	if(slot & ITEM_SLOT_HANDS)
+		play_pickup_sound()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
 /obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)
@@ -866,11 +918,8 @@
 	. = ..()
 
 	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
-		if(throw_drop_sound)
-			playsound(src, throw_drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
-			return
-		else if(drop_sound)
-			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
+
+		throw_drop_sound_chain(YEET_SOUND_VOLUME)
 		return
 
 	if(.) //it's been caught.
@@ -880,12 +929,7 @@
 	if(!volume)
 		return
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		if (mob_throw_hit_sound)
-			playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-		else if(hitsound)
-			playsound(hit_atom, hitsound, volume, TRUE, -1)
-		else
-			playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
+		mob_throw_hit_sound_chain(hit_atom, volume)
 	else
 		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', volume, TRUE, -1)
 
@@ -1808,7 +1852,7 @@
 
 			else if(victim_human.is_blind())
 				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
-	user.do_item_attack_animation(target, used_item = equipping)
+	user.do_item_attack_animation(target, used_item = equipping, animation_type = ATTACK_ANIMATION_BLUNT)
 
 	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
 

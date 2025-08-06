@@ -347,7 +347,7 @@
 		new /obj/item/grenade/c4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/x4/PopulateContents()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 10)
 		new /obj/item/grenade/c4/x4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
