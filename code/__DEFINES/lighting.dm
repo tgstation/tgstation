@@ -100,7 +100,8 @@ GLOBAL_LIST_INIT(specular_color, SPECULAR_COLOR)
 
 /// Light cutoff of specular emissives, controls how sharp a light must be before it starts reflecting
 #define SPECULAR_EMISSIVE_CUTOFF 0.3
-/// Controls how bright specular emissives sourced from overlay lights are, this is still affected by cutoff so deduct it from the contrast power
+/// Controls how bright specular emissives sourced from overlay lights are
+/// Keep in mind that overlay lights are also affected by the specular cutoff, so the maximum light value achievable is (contrast - cutoff)
 #define SPECULAR_EMISSIVE_OVERLAY_CONTRAST 1.4
 
 #define _EM_BLOCK_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,val, 0,0,0,0)
