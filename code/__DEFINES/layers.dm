@@ -153,6 +153,9 @@
 // NOTICE: we break from the pattern of increasing in steps of like 0.01 here
 // Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
 
+// Must be equal to the offset of the highest topdown layer
+#define TOPDOWN_LAYER_COUNT 18
+
 //lower than LOW_FLOOR_LAYER, for turfs with stuff on the edge that should be covered by other turfs
 #define LOWER_FLOOR_LAYER (1 + TOPDOWN_LAYER)
 #define LOW_FLOOR_LAYER (2 + TOPDOWN_LAYER)
@@ -172,7 +175,7 @@
 #define ABOVE_OPEN_TURF_LAYER (15 + TOPDOWN_LAYER)
 #define LOWER_RUNE_LAYER (16 + TOPDOWN_LAYER)
 #define RUNE_LAYER (17 + TOPDOWN_LAYER)
-#define CLEANABLE_FLOOR_OBJECT_LAYER (21 + TOPDOWN_LAYER)
+#define CLEANABLE_FLOOR_OBJECT_LAYER (18 + TOPDOWN_LAYER)
 
 //Placeholders in case the game plane and possibly other things between it and the floor plane are ever made into topdown planes
 
@@ -188,6 +191,8 @@
 // GAME_PLANE layers
 #define BULLET_HOLE_LAYER 2.06
 #define ABOVE_NORMAL_TURF_LAYER 2.08
+#define FLOOR_EMISSIVE_START_LAYER 2.09
+#define FLOOR_EMISSIVE_END_LAYER 2.26
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define WIRE_BRIDGE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
