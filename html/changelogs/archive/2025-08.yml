@@ -60,3 +60,67 @@
       gravity, but also weirdly easier to swim in.
   subject217:
   - spellcheck: fixed a typo in the operative bomb implant manual
+2025-08-03:
+  SmArtKar:
+  - qol: Monster cores now display above corpses when dropped
+  Thunder12345:
+  - rscadd: Glitter can now be made from plastic polymers and aluminium.
+  - rscadd: Plastic polymer can be made at any temperature, and then heated to produce
+      sheets.
+  - rscadd: Glitter can now be made any colour, mix 10 units each of glitter and acetone
+      to change its colour to that of the other reagents in the beaker.
+  - rscadd: Mixing different colours of glitter will cause a random selection of those
+      colours to appear on the floor when released.
+  - rscadd: Being exposed to glitter in reagent form causes you to cough up more glitter
+      onto the floor
+  - rscadd: Dragging glittery crates will now spread a trail of glitter and angry
+      janitors behind them.
+  - image: Added new glitter sprites (that don't look like gasses)
+2025-08-04:
+  carpotoxin:
+  - qol: Mobs entangled within spacevines are layered above the spacevines for as
+      long as they stay buckled
+2025-08-05:
+  FalloutFalcon:
+  - code_imp: debug proc for painting the world based on spatial grid.
+  IgiariValkyr:
+  - bugfix: Fixes the void eater's right-hand sprite
+  OnlineGirlfriend:
+  - image: update barnyard spellbook
+  Pickle-Coding:
+  - bugfix: Fixes BZ formation not actually creating the nitrogen and oxygen when
+      it decomposes nitrous oxide.
+  SmArtKar:
+  - bugfix: Fixed style meter text going out of bounds
+  - bugfix: Fixed recovered crew bodybags being foldable while there's a "corpse"
+      inside
+  - bugfix: Knocking someone out cold now properly stops their panic attack
+  - bugfix: Fixed portable atmospheric machines trying to add themselves to SSair
+      queue when destroyed
+  TheEmber:
+  - bugfix: Fixed bitrunning psyker
+2025-08-06:
+  Bisar:
+  - bugfix: Correct a few banners on Catwalk Station to be mundane banners, and not
+      the magic barriers that heal you and remove your stuns.
+  Ghommie:
+  - bugfix: Shooting a fish with a laser gun or otherwise damaging it like any other
+      item or object will reduce its health.
+  Rhials:
+  - balance: Dragon rifts no longer take damage from telekinesis-ed objects. Get in
+      there and fight like a man!
+  SmArtKar:
+  - bugfix: Fixed All-in-One tcomms servers not translating radio frequencies
+  - bugfix: Fixed RPD causing runtimes when placing atmos components for the first
+      time.
+  SyncIt21:
+  - code_imp: moved designs & circuitboards for bitrunning into their correct files
+  - qol: adds examines & screentips for bitrunning netpod, bitforge & server on how
+      to deconstruct them
+  - bugfix: bitforge can be deconstructed with a screwdriver & crowbar
+  - refactor: code for copying reagents has been refactored. Please report bugs on
+      github
+  - bugfix: You can no longer see parallel universes when 2 or more people gets shoved
+      into closets.
+  - code_imp: cleaned up closet see through code. It's documented & slightly faster
+      performance wise
