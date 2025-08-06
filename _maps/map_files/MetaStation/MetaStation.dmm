@@ -37301,7 +37301,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "mTV" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
@@ -48343,15 +48342,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"qMP" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "qMT" = (
 /obj/item/shard,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -103009,7 +102999,7 @@ gtU
 sXR
 dGD
 ayO
-qMP
+ayO
 mTV
 sLE
 tpN
