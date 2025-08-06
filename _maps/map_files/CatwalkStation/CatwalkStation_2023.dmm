@@ -4603,10 +4603,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"bvs" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "bvt" = (
 /obj/machinery/telecomms/server/presets/security,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -30693,9 +30689,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"iZH" = (
-/turf/open/space,
-/area/space)
 "iZI" = (
 /obj/machinery/computer/bank_machine,
 /obj/machinery/light_switch/directional/west{
@@ -113043,7 +113036,7 @@ oTK
 tQI
 eLU
 eLU
-iZH
+dcE
 gmE
 bYe
 ltW
@@ -113299,8 +113292,8 @@ iis
 iis
 iis
 aWV
-bvs
-bvs
+heR
+heR
 gmE
 rgb
 qeX
@@ -113556,7 +113549,7 @@ dNc
 rPQ
 qCe
 aWV
-iZH
+dcE
 gmE
 gmE
 bTU
@@ -113813,7 +113806,7 @@ mYf
 qSv
 sSY
 lll
-iZH
+dcE
 gmE
 rVE
 eRs
@@ -114070,7 +114063,7 @@ wTU
 vCW
 jkn
 lll
-bvs
+heR
 gmE
 mcX
 eRs
@@ -114327,7 +114320,7 @@ duE
 ibO
 ibO
 lll
-iZH
+dcE
 gmE
 mbY
 eRs
@@ -114584,7 +114577,7 @@ sAm
 wtz
 iXw
 lll
-bvs
+heR
 gmE
 czp
 aZd
@@ -114841,7 +114834,7 @@ cSO
 jMo
 lmA
 gDc
-iZH
+dcE
 gmE
 irL
 lbT
@@ -115098,7 +115091,7 @@ yes
 xvw
 tRt
 lll
-bvs
+heR
 gmE
 xef
 vFZ
@@ -115355,7 +115348,7 @@ aNb
 gzt
 jFp
 lll
-iZH
+dcE
 gmE
 eqa
 vFZ
@@ -115612,7 +115605,7 @@ nFA
 oSb
 gBG
 aWV
-iZH
+dcE
 gmE
 gmE
 ruc
@@ -115869,8 +115862,8 @@ nIo
 aWV
 aWV
 aWV
-bvs
-bvs
+heR
+heR
 gmE
 fQQ
 qeX
@@ -116126,8 +116119,8 @@ aNb
 opj
 wXU
 aWV
-iZH
-iZH
+dcE
+dcE
 gmE
 lsW
 njT
