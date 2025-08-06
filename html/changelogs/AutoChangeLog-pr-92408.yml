@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "You can no longer see parallel universes when 2 or more people gets shoved into closets."
-  - code_imp: "cleaned up closet see through code. It's documented & slightly faster performance wise"

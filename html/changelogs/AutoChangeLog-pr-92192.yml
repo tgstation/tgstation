@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Shooting a fish with a laser gun or otherwise damaging it like any other item or object will reduce its health."

@@ -99,3 +99,28 @@
       queue when destroyed
   TheEmber:
   - bugfix: Fixed bitrunning psyker
+2025-08-06:
+  Bisar:
+  - bugfix: Correct a few banners on Catwalk Station to be mundane banners, and not
+      the magic barriers that heal you and remove your stuns.
+  Ghommie:
+  - bugfix: Shooting a fish with a laser gun or otherwise damaging it like any other
+      item or object will reduce its health.
+  Rhials:
+  - balance: Dragon rifts no longer take damage from telekinesis-ed objects. Get in
+      there and fight like a man!
+  SmArtKar:
+  - bugfix: Fixed All-in-One tcomms servers not translating radio frequencies
+  - bugfix: Fixed RPD causing runtimes when placing atmos components for the first
+      time.
+  SyncIt21:
+  - code_imp: moved designs & circuitboards for bitrunning into their correct files
+  - qol: adds examines & screentips for bitrunning netpod, bitforge & server on how
+      to deconstruct them
+  - bugfix: bitforge can be deconstructed with a screwdriver & crowbar
+  - refactor: code for copying reagents has been refactored. Please report bugs on
+      github
+  - bugfix: You can no longer see parallel universes when 2 or more people gets shoved
+      into closets.
+  - code_imp: cleaned up closet see through code. It's documented & slightly faster
+      performance wise
