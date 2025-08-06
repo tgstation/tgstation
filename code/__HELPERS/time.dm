@@ -12,8 +12,8 @@
 	return (((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % (24 HOURS)
 
 ///returns the current IC station time in a human readable format
-/proc/station_time_timestamp(format = "hh:mm:ss", wtime)
-	return time2text(station_time(TRUE, wtime), format, NO_TIMEZONE)
+/proc/station_time_timestamp(format = "hh:mm:ss")
+	return time2text(station_time(), format, NO_TIMEZONE)
 
 /proc/station_time_debug(force_set)
 	if(isnum(force_set))
