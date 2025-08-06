@@ -1,25 +1,30 @@
 #define TOPDOWN_TO_EMISSIVE_LAYER(layer) LERP(FLOOR_EMISSIVE_START_LAYER, FLOOR_EMISSIVE_END_LAYER, (layer - (TOPDOWN_LAYER + 1)) / TOPDOWN_LAYER_COUNT)
 
 /// Produces a mutable appearance glued to the [EMISSIVE_PLANE] dyed to be the [EMISSIVE_COLOR].
-/proc/emissive_appearance(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const, apply_bloom = TRUE)
+/proc/emissive_appearance(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const, effect_type = EMISSIVE_BLOOM)
 	if (isnull(layer))
 		if(IS_TOPDOWN_PLANE(offset_spokesman.plane))
 			layer = TOPDOWN_TO_EMISSIVE_LAYER(offset_spokesman.layer)
 		else
 			layer = FLOAT_LAYER
-
 	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, offset_spokesman, EMISSIVE_PLANE, 255, appearance_flags | EMISSIVE_APPEARANCE_FLAGS, offset_const)
 	if(alpha == 255)
-		if (apply_bloom)
-			appearance.color = GLOB.emissive_color
-		else
-			appearance.color = GLOB.emissive_color_no_bloom
+		switch(effect_type)
+			if(EMISSIVE_NO_BLOOM)
+				appearance.color = GLOB.emissive_color_no_bloom
+			if (EMISSIVE_BLOOM)
+				appearance.color = GLOB.emissive_color
+			if (EMISSIVE_SPECULAR)
+				appearance.color = GLOB.specular_color
 	else
 		var/alpha_ratio = alpha/255
-		if (apply_bloom)
-			appearance.color = _EMISSIVE_COLOR(alpha_ratio)
-		else
-			appearance.color = _EMISSIVE_COLOR_NO_BLOOM(alpha_ratio)
+		switch(effect_type)
+			if(EMISSIVE_NO_BLOOM)
+				appearance.color = _EMISSIVE_COLOR_NO_BLOOM(alpha_ratio)
+			if (EMISSIVE_BLOOM)
+				appearance.color = _EMISSIVE_COLOR(alpha_ratio)
+			if (EMISSIVE_SPECULAR)
+				appearance.color = _SPECULAR_COLOR(alpha_ratio)
 
 	//Test to make sure emissives with broken or missing icon states are created
 	if(PERFORM_ALL_TESTS(focus_only/invalid_emissives))

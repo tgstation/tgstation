@@ -119,7 +119,7 @@
 		. += blood_emissive(icon, icon_state)
 
 /obj/effect/decal/cleanable/blood/proc/blood_emissive(icon_to_use, icon_state_to_use)
-	return emissive_appearance(icon_to_use, icon_state_to_use, src, alpha = 255 * emissive_alpha / alpha)
+	return emissive_appearance(icon_to_use, icon_state_to_use, src, alpha = 255 * emissive_alpha / alpha, effect_type = EMISSIVE_NO_BLOOM)
 
 /obj/effect/decal/cleanable/blood/lazy_init_reagents()
 	if (reagents)

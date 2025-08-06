@@ -926,7 +926,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	var/mutable_appearance/overlay = mutable_appearance(icon, "lure_light")
 	overlay.color = spin_ready ? COLOR_GREEN : COLOR_RED
 	. += overlay
-	. += emissive_appearance(icon, "lure_light_emissive", src, alpha = src.alpha)
+	. += emissive_appearance(icon, "lure_light_emissive", src, alpha = src.alpha, effect_type = EMISSIVE_NO_BLOOM)
 
 #undef WAIT_PHASE
 #undef BITING_PHASE
