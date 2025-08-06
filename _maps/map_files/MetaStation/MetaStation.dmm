@@ -55629,9 +55629,8 @@
 	},
 /area/station/service/chapel)
 "tlK" = (
-/obj/machinery/door/window/right/directional/west{
-	name = "Animal Pen";
-	dir = 4
+/obj/machinery/door/window/right/directional/east{
+	name = "Animal Pen"
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
