@@ -34,6 +34,7 @@
 	var/mutable_appearance/blocker = new()
 	blocker.icon = make_blocker.icon
 	blocker.icon_state = make_blocker.icon_state
+	// blocker.layer = FLOAT_LAYER // Implied, FLOAT_LAYER is default for appearances
 	// If we keep this on a FLOAT_LAYER on a topdown object it'll render ontop of everything
 	// So we need to force it to render at a saner layer
 	if(IS_TOPDOWN_PLANE(make_blocker.plane))
