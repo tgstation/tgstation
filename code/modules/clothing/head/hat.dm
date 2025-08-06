@@ -27,6 +27,8 @@
 	inhand_icon_state = null
 	custom_price = PAYCHECK_COMMAND * 1.5
 	worn_y_offset = 4
+	armor_type = /datum/armor/head_helmet
+	hair_mask = /datum/hair_mask/standard_hat_middle
 
 /obj/item/clothing/head/costume/spacepolice
 	name = "space police cap"
