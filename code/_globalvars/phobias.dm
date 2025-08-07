@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"spiders",
 	"strangers",
 	"the supernatural",
+	"water coolers", // Troutstation edit
 )))
 
 GLOBAL_LIST_INIT(phobia_regexes, list(
@@ -50,6 +51,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"spiders" = construct_phobia_regex("spiders"),
 	"strangers" = construct_phobia_regex("strangers"),
 	"the supernatural" = construct_phobia_regex("the supernatural"),
+	"water coolers" = construct_phobia_regex("water coolers"), // Troutstation edit
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
@@ -531,6 +533,10 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/structure/destructible/cult,
 		/obj/structure/destructible/eldritch_crucible,
 		/obj/structure/spirit_board,
+	)),
+	"water coolers" = typecacheof(list( // Troutstation edit
+		/obj/structure/reagent_dispensers/water_cooler, // Troutstation edit
+		/obj/structure/reagent_dispensers/watertank, // Troutstation edit
 	)),
 ))
 
