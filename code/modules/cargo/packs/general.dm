@@ -258,24 +258,16 @@
 	)
 	crate_name = "paper cutters crate"
 
-/datum/supply_pack/service/liquid_cooler
-	name = "Liquid Cooler"
-	desc = "A liquid cooler, perfect for wasting time at the office! Water not included."
+/datum/supply_pack/misc/water_cooler
+	name = "Liquid Cooler - Water"
+	desc = "A liquid cooler, stocked with the freshest water in all the Periphery. Perfect for wasting time at the office!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1)
-	crate_name = "liquid cooler crate"
+	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/water = 1)
+	crate_name = "water cooler crate"
 
-/datum/supply_pack/service/water_jug
-	name = "Punch Cooler"
+/datum/supply_pack/misc/punch_cooler
+	name = "Liquid Cooler - Fruit Punch"
 	desc = "A liquid cooler, stocked with exotic fruit punch that can heal injuries! Be sure to remain near the liquid cooler while drinking, for your own health and safety. Seriously, do NOT drink this stuff away from the cooler."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/structure/reagent_dispensers/water_cooler/punch_cooler = 1)
-	crate_name = "punch cooler crate"
-
-
-/datum/supply_pack/service/punch_cooler
-	name = "Punch Cooler"
-	desc = "A liquid cooler, stocked with exotic fruit punch that can heal injuries! Be sure to remain near the liquid cooler while drinking, for your own health and safety. Seriously, do NOT drink this stuff away from the cooler."
-	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/structure/reagent_dispensers/water_cooler/punch_cooler = 1)
+	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/punch = 1)
 	crate_name = "punch cooler crate"

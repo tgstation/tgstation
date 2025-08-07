@@ -12,3 +12,13 @@
 	fill_icon_thresholds = list(25, 50, 75, 100)
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/reagent_containers/cooler_jug/water
+	name = "water jug"
+	desc = "An elegant-looking water cooler jug. There's a water cooler out there, somewhere, waiting to be reunited with this. The jug's mouth smells intoxicatingly stale and metallic."
+	list_reagents = list(/datum/reagent/water = 200)
+
+/obj/item/reagent_containers/cooler_jug/punch
+	name = "punch jug"
+	desc = "A jug meant for storing fruit punch. It's covered in dozens of warning labels and scary-looking symbols you don't understand. The smell of sweet punch sticks to the mouth of the jug."
+	list_reagents = list(/datum/reagent/consumable/fruit_punch = 200)
