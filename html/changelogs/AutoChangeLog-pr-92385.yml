@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - map: "converts all non-basic space turfs to space/basic"
