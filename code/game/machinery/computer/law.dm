@@ -653,7 +653,6 @@
 
 /// Finds a core law rack this rack is linked to, if any
 /obj/machinery/ai_law_rack/proc/get_parent_rack()
-	PRIVATE_PROC(TRUE)
 	for(var/obj/machinery/ai_law_rack/core/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
 		if(src in rack.linked_racks)
 			return rack
