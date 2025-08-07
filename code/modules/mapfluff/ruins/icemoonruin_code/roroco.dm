@@ -47,7 +47,11 @@
 /obj/item/clothing/suit/toggle/labcoat/roroco
 	name = "\improper RoroCo labcoat"
 	desc = "A suit that protects against minor chemical spills, though the deep red colour makes them hard to see. Great for hiding blood stains, though..."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/toggle/labcoat/roroco"
+	post_init_icon_state = "labcoat_job"
+	greyscale_config = /datum/greyscale_config/labcoat
+	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#88242D#39393F#39393F#39393F"
 
 /obj/item/clothing/under/costume/buttondown/slacks/roroco

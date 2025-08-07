@@ -111,7 +111,7 @@
 	dir = 1
 	},
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/blood/trail{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
 /turf/open/floor/iron/freezer,
@@ -157,10 +157,10 @@
 /turf/open/floor/grass,
 /area/ruin/roroco/harvesting)
 "ez" = (
-/obj/effect/decal/cleanable/blood/trail{
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -299,10 +299,10 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/trail,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/dark_blue/half,
+/obj/effect/decal/cleanable/blood/trail_holder,
 /turf/open/floor/iron/freezer/edge,
 /area/ruin/roroco/extraction)
 "kh" = (
@@ -342,7 +342,7 @@
 	dir = 1
 	},
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/blood/trail{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /turf/open/floor/iron/corner{
@@ -1133,12 +1133,10 @@
 	dir = 8
 	},
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/blood/trail{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/blood/trail_holder,
 /turf/open/floor/iron/freezer/edge{
 	dir = 1
 	},
@@ -1395,8 +1393,10 @@
 	req_access = list("roroco_secure")
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/effect/decal/cleanable/blood/trail,
 /obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -1529,7 +1529,7 @@
 /obj/machinery/door/puzzle/keycard/roro,
 /obj/machinery/door/firedoor,
 /obj/machinery/duct,
-/obj/effect/decal/cleanable/blood/trail{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /turf/open/floor/iron/freezer/large,
