@@ -250,7 +250,7 @@
 
 	return ..()
 
-/datum/action/innate/bci_charge_action/Trigger(trigger_flags)
+/datum/action/innate/bci_charge_action/Trigger(mob/clicker, trigger_flags)
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))

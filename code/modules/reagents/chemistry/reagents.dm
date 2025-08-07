@@ -189,11 +189,17 @@
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	return
 
-/*
-Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.
-Primarily used in reagents/reaction_agents
+/**
+ * Intercepts the reagent transfer/copy operation to do some work before it takes place.
+ * Used to perform some reaction work. Return TRUE To cancel the operation
+ *
+ * Arguments
+ *
+ * * datum/reagents/target - the target holder we are being transferred to
+ * * amount - the amount of reagent being transferred
+ * * copy_only - if TRUE we don't remove ourself from the holder because its a reagent copy & not transfer operation
 */
-/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target, amount)
+/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
 	return FALSE
 
 /// Called when this reagent is first added to a mob
