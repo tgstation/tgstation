@@ -31,12 +31,31 @@
 	for(var/obj/item/stored_item in contents - component_parts)
 		stored_item.forceMove(installed_refill)
 
+	//self destruct protocol for unauthorized destruction
+	if(linked_account)
+		explosion(get_turf(src), devastation_range = -1, light_impact_range = 3)
+
 /obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(panel_open && istype(held_item, refill_canister))
 		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine"
 		return CONTEXTUAL_SCREENTIP_SET
 
+	if(isliving(user) && istype(held_item, /obj/item/card/id))
+		var/obj/item/card/id/card_used = held_item
+		if(card_used?.registered_account)
+			if(!linked_account)
+				context[SCREENTIP_CONTEXT_LMB] = "Link account"
+				return ITEM_INTERACT_SUCCESS
+			else if(linked_account == card_used.registered_account)
+				context[SCREENTIP_CONTEXT_LMB] = "Unlink account"
+				return ITEM_INTERACT_SUCCESS
+
 	return ..()
+
+/obj/machinery/vending/custom/examine(mob/user)
+	. = ..()
+	if(linked_account)
+		. += span_warning("Machine is ID locked. Destruction of machine will result in an explosion.")
 
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
@@ -141,11 +160,64 @@
 
 	to_chat(user, span_notice("You loaded [restocked] items in [src]"))
 
-/obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
-	if(!linked_account)
-		balloon_alert(user, "no registered owner!")
-		return FALSE
+/obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
+	if(linked_account)
+		visible_message("Security warning", "Unauthorized deconstruction of vending machine is prohibited. Please read the warning alert")
+
+		if(tgui_alert(user, "Vending machine is ID locked.\
+		Deconstruction will result in an catrostrophic self destruct.\
+		If you are the owner of this machine please unlink your account with an ID swipe before proceeding.\
+		Still proceed?",
+		"Vandalism protection protocol",
+		list("Yes", "No")) == "No")
+			return ITEM_INTERACT_FAILURE
+
 	return ..()
+
+/obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
+	. = FALSE
+	if(!isliving(user))
+		return FALSE
+	var/mob/living/living_user = user
+	var/obj/item/card/id/id_card = living_user.get_idcard(FALSE)
+	if(id_card?.registered_account && id_card.registered_account == linked_account)
+		return TRUE
+
+/obj/machinery/vending/custom/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
+	if(isliving(user) && istype(attack_item, /obj/item/card/id))
+		var/obj/item/card/id/card_used = attack_item
+		if(card_used?.registered_account)
+			if(!linked_account)
+				linked_account = card_used.registered_account
+				speak("\The [src] has been linked to [card_used].")
+			else if(linked_account == card_used.registered_account)
+				linked_account = null
+				speak("account unlinked.")
+			else
+				to_chat(user, "verification failed. unlinking process has been cancelled.")
+			return ITEM_INTERACT_SUCCESS
+
+	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
+		return ..()
+
+	. ITEM_INTERACT_FAILURE
+	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	if (new_name)
+		name = new_name
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	if (new_desc)
+		desc = new_desc
+	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	if (new_slogan)
+		slogan_list += new_slogan
+		last_slogan = world.time + rand(0, slogan_delay)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/vending/custom/collect_records_for_static_data(list/records, list/categories, premium)
 	. = list()
@@ -175,6 +247,13 @@
 			image = base64
 		))
 
+
+/obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
+	if(!linked_account)
+		balloon_alert(user, "no registered owner!")
+		return FALSE
+	return ..()
+
 /obj/machinery/vending/custom/ui_data(mob/user)
 	. = ..()
 
@@ -186,45 +265,6 @@
 			amount = products[stocked_hash],
 			free = is_owner
 		)
-
-/obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
-	. = FALSE
-	if(!isliving(user))
-		return FALSE
-	var/mob/living/living_user = user
-	var/obj/item/card/id/id_card = living_user.get_idcard(FALSE)
-	if(id_card?.registered_account && id_card.registered_account == linked_account)
-		return TRUE
-
-/obj/machinery/vending/custom/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
-	if(isliving(user) && !linked_account && istype(attack_item, /obj/item/card/id))
-		var/obj/item/card/id/card_used = attack_item
-		if(card_used?.registered_account)
-			linked_account = card_used.registered_account
-			speak("\The [src] has been linked to [card_used].")
-			return ITEM_INTERACT_SUCCESS
-
-	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
-		return ..()
-
-	. ITEM_INTERACT_FAILURE
-	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if (new_name)
-		name = new_name
-	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if (new_desc)
-		desc = new_desc
-	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if (new_slogan)
-		slogan_list += new_slogan
-		last_slogan = world.time + rand(0, slogan_delay)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/vending/custom/vend(list/params, mob/living/user, list/greyscale_colors)
 	. = FALSE
