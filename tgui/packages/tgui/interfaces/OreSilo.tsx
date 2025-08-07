@@ -345,7 +345,7 @@ const LogEntry = (props: Log) => {
           </Button>
           <Icon name="arrow-right" ml={1} mr={1} />
           {` ${formatAmount(action, amount)} ${noun}`}
-          <Icon name="arrow-right" ml={1} mr={1} />
+          <Icon name="user" ml={1} mr={1} />
           {user_data.name} ({user_data.assignment})
         </>
       }
