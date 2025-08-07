@@ -382,8 +382,8 @@
 /turf/open/floor/iron,
 /area/ruin/roroco)
 "mk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
 "mm" = (
@@ -698,6 +698,12 @@
 "vG" = (
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
+"vV" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/ruin/roroco/maintenance)
 "wm" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/dark/smooth_large,
@@ -722,9 +728,8 @@
 "wP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
 "wQ" = (
@@ -1352,8 +1357,7 @@
 /area/ruin/roroco/harvesting)
 "Sf" = (
 /obj/machinery/atmospherics/components/tank/oxygen{
-	dir = 8;
-	piping_layer = 4
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/rust,
@@ -1532,11 +1536,13 @@
 /area/ruin/roroco/extraction)
 "YV" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance{
 	name = "Plant Room";
 	req_access = list("roroco")
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
@@ -2247,7 +2253,7 @@ xK
 xK
 zJ
 cV
-Sr
+vV
 mk
 zJ
 UV
