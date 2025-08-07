@@ -365,6 +365,9 @@
 	if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy evil and we're not evil? If so, hurt.
 		return TRUE
 
+	if(!(hurtguy.mob_biotypes & MOB_UNDEAD) && HAS_TRAIT(hurtguy, TRAIT_EMPATH) && HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy not undead, they're an empath and we're evil? If so, hurt.
+		return TRUE
+
 	return FALSE
 
 ///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
