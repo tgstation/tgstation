@@ -162,7 +162,10 @@
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(linked_account)
-		visible_message("Security warning", "Unauthorized deconstruction of vending machine is prohibited. Please read the warning alert")
+		visible_message(
+			span_warning("Security warning"),
+			span_warning("Unauthorized deconstruction of vending machine is prohibited. Please read the warning alert")
+		)
 
 		if(tgui_alert(user, "Vending machine is ID locked.\
 		Deconstruction will result in an catrostrophic self destruct.\
