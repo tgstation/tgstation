@@ -596,6 +596,3 @@ effective or pretty fucking useless.
 /obj/item/clothing/shoes/jackboots/dagger/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Upon closer inspection, you notice a dagger embedded into the sole.")
-
-/// Lipstick that sprays debilitating gas at the target
-/obj/item/lipstick/gas
