@@ -465,8 +465,8 @@
 	floor_tile = /obj/item/stack/tile/iron/dark/textured
 
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
-	icon_state = "freezerfloor"
-	base_icon_state = "freezerfloor"
+	icon_state = "freezer"
+	base_icon_state = "freezer"
 	floor_tile = /obj/item/stack/tile/iron/freezer
 
 /turf/open/floor/iron/grimy
