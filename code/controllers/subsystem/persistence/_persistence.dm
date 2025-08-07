@@ -1,5 +1,8 @@
 #define FILE_RECENT_MAPS "data/RecentMaps.json"
 #define KEEP_ROUNDS_MAP 3
+#define OLDEST GLOBAL_PROC_REF(cmp_text_asc)
+#define NEWEST GLOBAL_PROC_REF(cmp_text_dsc)
+#define INFINITE_AUTOSAVES -1
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -98,11 +101,10 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/save_world()
 	log_world("World map save initiated at [time_stamp()]")
 	to_chat(world, span_boldannounce("World map save initiated at [time_stamp()]"))
-
 	save_persistent_maps()
-
 	to_chat(world, span_boldannounce("World map save finished at [time_stamp()]"))
 	log_world("World map save finished at [time_stamp()]")
+	prune_old_autosaves()
 
 ///Collects all data to persist.
 /datum/controller/subsystem/persistence/proc/collect_data()
@@ -166,12 +168,55 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-///Returns the path to persistence maps directory based on current timestamp
+///Returns the path to persistence maps directory based on current timestamp format via YYYY-MM-DD_UTC_hh.mm.ss
 /datum/controller/subsystem/persistence/proc/get_current_persistence_map_directory()
 	var/realtime = world.realtime
-	var/timestamp_utc  = time2text(realtime, "YYYY/MM/DD/hh-mm-ss", TIMEZONE_UTC)
-	var/map_directory = MAP_PERSISTENT_DIRECTORY + "/[timestamp_utc]"
+	var/timestamp_utc  = time2text(realtime, "YYYY-MM-DD_UTC_hh.mm.ss", TIMEZONE_UTC)
+	var/map_directory = MAP_PERSISTENT_DIRECTORY + timestamp_utc
 	return map_directory
+
+///Deletes empty save directories and removes the oldest saves if the total count exceeds the max autosaves allowed in config
+/datum/controller/subsystem/persistence/proc/prune_old_autosaves()
+	if(!CONFIG_GET(flag/persistent_save_enabled))
+		return
+	if(CONFIG_GET(number/persistent_max_autosaves) == INFINITE_AUTOSAVES)
+		return
+
+	var/list/all_saves = get_all_saves(OLDEST)
+	if(!all_saves.len)
+		return // no saves exist yet
+
+	var/total_saves = all_saves.len
+	var/saves_to_delete = total_saves - CONFIG_GET(number/persistent_max_autosaves)
+	if(saves_to_delete <= 0)
+		return
+
+	for(var/i in 1 to saves_to_delete)
+		var/oldest_autosave_full_path = MAP_PERSISTENT_DIRECTORY + all_saves[i]
+		to_chat(world, span_boldannounce("Deleted oldest autosave: [oldest_autosave_full_path]"))
+		fdel(oldest_autosave_full_path)
+
+/*
+ * Helper proc to get all saves that returns a list of paths relative to MAP_PERSISTENT_DIRECTORY
+ * This will also prune any empty save directories by deleting them automatically
+ * Args:
+ * * sorting_method: This determines the sorting method and must be either OLDEST or NEWEST
+ */
+/datum/controller/subsystem/persistence/proc/get_all_saves(sorting_method)
+	var/list/all_saves = flist(MAP_PERSISTENT_DIRECTORY)
+
+	// Prune any empty save directories
+	for(var/path in all_saves)
+		var/full_path = MAP_PERSISTENT_DIRECTORY + path
+
+		if(!flist(full_path).len) // empty save directory
+			log_world("Deleted empty autosave directory: [full_path]")
+			to_chat(world, span_boldannounce("Deleted empty autosave: [full_path]"))
+			all_saves -= full_path
+			fdel(full_path)
+
+	sortTim(all_saves, sorting_method)
+	return all_saves
 
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
 	var/map_save_directory = get_current_persistence_map_directory()
@@ -223,7 +268,6 @@ SUBSYSTEM_DEF(persistence)
 		var/file_path = "[map_save_directory]/[z].dmm"
 		rustg_file_write(map, file_path)
 
-
 		// consider adding ZTRAIT_SECRET to prevent ghosts observing z-levels
 		// is_mining_level(what_turf.z)
 
@@ -245,3 +289,6 @@ ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Select a part of the map 
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
+#undef OLDEST
+#undef NEWEST
+#undef INFINITE_AUTOSAVES
