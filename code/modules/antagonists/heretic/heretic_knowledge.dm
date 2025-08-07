@@ -612,8 +612,6 @@
 	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	SSshuttle.call_evac_shuttle("[user] has ascended!")
-	SSshuttle.emergency_no_recall = TRUE
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
@@ -641,6 +639,10 @@
 		sound = announcement_sound,
 		color_override = "pink",
 	)
+
+	if(EMERGENCY_IDLE_OR_RECALLED)
+		SSshuttle.call_evac_shuttle("Critical reality rupture detected on supranatural casuality long-range scanners. Mass crew casualty and possible station destruction determined to be beyond acceptable probability. Priority evacuation shuttle dispatched.")
+	SSshuttle.emergency_no_recall = TRUE
 
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
