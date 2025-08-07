@@ -1197,3 +1197,7 @@
 		user.update_equipment_speed_mods()
 
 #undef SLOWDOWN_ON
+
+///Pre-core activated one for admin spawning.
+/obj/item/flashlight/lamp/space_bubble/preactivated
+	installed_pyro_core = TRUE
