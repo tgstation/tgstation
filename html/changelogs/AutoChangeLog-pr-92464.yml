@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "ghosts can't buy heretic powers"

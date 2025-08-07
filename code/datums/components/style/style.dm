@@ -139,16 +139,15 @@
 /datum/component/style/proc/add_action(action, amount)
 	if(length(actions) > 9)
 		actions.Cut(1, 2)
+	var/action_id = 0
 	if(length(actions))
 		var/last_action = actions[length(actions)]
 		if(action == actions[last_action])
 			amount *= 0.5
-	var/id
-	while(!id || (id in actions))
-		id = "action[rand(1, 1000)]"
-	actions[id] = action
+		action_id = text2num(last_action) + 1
+	actions["[action_id]"] = action
 	change_points(amount)
-	addtimer(CALLBACK(src, PROC_REF(remove_action), id), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(remove_action), action_id), 10 SECONDS)
 
 /datum/component/style/proc/remove_action(action_id)
 	actions -= action_id
@@ -197,7 +196,7 @@
 
 			rank = rank_changed
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
-	meter.maptext_y = 94 - 12 * length(actions)
+	meter.maptext_y = initial(meter.maptext_y) - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
 
 /datum/component/style/proc/update_meter(new_rank, go_back)

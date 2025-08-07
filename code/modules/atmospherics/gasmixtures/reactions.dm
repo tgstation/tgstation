@@ -555,8 +555,8 @@
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/oxygen, air)
 		var/amount_decomposed = 0.4 * bz_formed * nitrous_oxide_decomposed_factor
-		cached_gases[/datum/gas/nitrogen] += amount_decomposed
-		cached_gases[/datum/gas/oxygen] += 0.5 * amount_decomposed
+		cached_gases[/datum/gas/nitrogen][MOLES] += amount_decomposed
+		cached_gases[/datum/gas/oxygen][MOLES] += 0.5 * amount_decomposed
 
 	ASSERT_GAS(/datum/gas/bz, air)
 	cached_gases[/datum/gas/bz][MOLES] += bz_formed * (1-nitrous_oxide_decomposed_factor)

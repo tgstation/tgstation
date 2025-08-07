@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "reagent transfer amounts with multiplier applied(e.g. cryotubes) have been corrected"

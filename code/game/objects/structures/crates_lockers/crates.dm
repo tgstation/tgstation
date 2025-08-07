@@ -476,14 +476,26 @@
 /obj/structure/closet/crate/add_to_roundstart_list()
 	return
 
-/obj/structure/closet/crate/pink
+/obj/structure/closet/crate/glitter
 	name = "pink crate"
 	desc = "A glittery pink crate."
 	icon_state = "pink"
 	base_icon_state = "pink"
+	var/glitter_prob = 25
+	var/glitter_color = "#ff8080"
 
-/obj/structure/closet/crate/lavender
+/obj/structure/closet/crate/glitter/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	var/turf/old_turf = get_turf(old_loc)
+	if(!old_turf)
+		return
+	if(prob(glitter_prob))
+		old_turf.spawn_glitter(list("[glitter_color]" = 100))
+
+/obj/structure/closet/crate/glitter/lavender
 	name = "lavender crate"
 	desc = "A glittery purple... no, lavender crate."
 	icon_state = "lavender"
 	base_icon_state = "lavender"
+	glitter_color = "#db80ff"

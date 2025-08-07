@@ -4,7 +4,7 @@
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
-	desc = "A tool used by great men to placate the frothing masses."
+	desc = "A tool used by great men to placate the frothing masses. Can be used to hasten allies with right-click."
 	icon = 'icons/obj/weapons/whip.dmi'
 	icon_state = "chain"
 	inhand_icon_state = "chain"
@@ -24,10 +24,41 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/items/weapons/chainhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	///Does this chain allow you to speed people up with right click?
+	var/can_hasten = TRUE
 
 /obj/item/melee/chainofcommand/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
+
+/obj/item/melee/chainofcommand/attack_secondary(mob/living/victim, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(victim == user)
+		to_chat(user, span_warning("You consider lashing yourself, but hesitate at the thought of how much it would hurt."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
+	victim.apply_status_effect(/datum/status_effect/speed_boost/commanded)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/datum/status_effect/speed_boost/commanded
+	id = "commanded"
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/commanded
+	move_datum = /datum/movespeed_modifier/status_speed_boost/minor
+	duration = 7 SECONDS
+
+/datum/movespeed_modifier/status_speed_boost/minor
+	multiplicative_slowdown = -0.20
+
+/atom/movable/screen/alert/status_effect/commanded
+	name = "Commanded"
+	desc = "You are inspired to move faster!"
+	icon_state = "commanded"
 
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"

@@ -908,7 +908,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
-/datum/action/innate/undeployment/Trigger(trigger_flags)
+/datum/action/innate/undeployment/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return FALSE
 	var/mob/living/silicon/robot/shell_to_disconnect = owner

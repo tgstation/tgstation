@@ -2,7 +2,7 @@
 	name = "Tiny Prick"
 	desc = "Stabby stabby"
 
-/datum/action/changeling/sting/Trigger(trigger_flags)
+/datum/action/changeling/sting/Trigger(mob/clicker, trigger_flags)
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return

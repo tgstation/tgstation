@@ -51,7 +51,7 @@
 	stable_population = 8
 	average_size = 20
 	average_weight = 400
-	health = 50
+	max_integrity = 100
 	breeding_timeout = 2.5 MINUTES
 	fish_traits = list(/datum/fish_trait/parthenogenesis, /datum/fish_trait/no_mating)
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
@@ -82,7 +82,7 @@
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 4
-	health = 150
+	max_integrity = 300
 	fillet_type = /obj/item/slime_extract/grey
 	fish_traits = list(/datum/fish_trait/toxin_immunity, /datum/fish_trait/crossbreeder)
 	favorite_bait = list(
@@ -263,7 +263,7 @@
 	sprite_height = 4
 	average_size = 150
 	average_weight = 6000
-	health = 125
+	max_integrity = 250
 	feeding_frequency = 5 MINUTES
 	breeding_timeout = 5 MINUTES
 	random_case_rarity = FISH_RARITY_NOPE

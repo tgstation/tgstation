@@ -1,4 +1,0 @@
-author: "ZeWaka"
-delete-after: True
-changes:
-  - bugfix: "tgui windows should now stop flashing for a single frame elsewhere when opening"

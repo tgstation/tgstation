@@ -270,6 +270,7 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(sinched)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
+		return FALSE
 	return ..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/before_open(mob/living/user, force)

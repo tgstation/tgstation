@@ -51,13 +51,15 @@
 	/// Cooldown for how often you're allowed to harass deadchat for PVP domains
 	COOLDOWN_DECLARE(polling_cooldown)
 
+/obj/machinery/quantum_server/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/machinery/quantum_server/post_machine_initialize()
 	. = ..()
 
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
-
 
 /obj/machinery/quantum_server/Destroy(force)
 	mutation_candidate_refs.Cut()
@@ -67,10 +69,26 @@
 	QDEL_NULL(generated_domain)
 	return ..()
 
+/obj/machinery/quantum_server/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		return
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/quantum_server/examine(mob/user)
 	. = ..()
 
 	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
+
+	. += span_notice("Its maintainance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	if(panel_open)
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
 	var/upgraded = FALSE
 	if(capacitor_coefficient < 1)
@@ -138,29 +156,23 @@
 
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
-	. = ..()
-
+	. = NONE
 	if(!is_ready)
 		balloon_alert(user, "it's scalding hot!")
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	if(length(avatar_connection_refs))
 		balloon_alert(user, "all clients must disconnect!")
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	if(default_deconstruction_crowbar(crowbar))
-		return TRUE
-	return FALSE
-
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/quantum_server/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	. = ..()
-
+	. = NONE
 	if(!is_ready)
 		balloon_alert(user, "it's scalding hot!")
-		return TRUE
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", icon_state, screwdriver))
-		return TRUE
-	return FALSE
-
+		return ITEM_INTERACT_FAILURE
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", base_icon_state, screwdriver))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/quantum_server/RefreshParts()
 	var/capacitor_rating = 1.15
