@@ -362,7 +362,7 @@
 	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	owner.current.RemoveElement(/datum/element/leeching_walk/minor)
 	QDEL_NULL(heretic_path)
-	heretic_mob.cut_overlay(eldritch_overlay)
+	owner.current.cut_overlay(eldritch_overlay)
 	return ..()
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
