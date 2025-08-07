@@ -6,7 +6,11 @@
 # Always double check (and be aware that dmi is weird so you may get diffs of 1 rgb value when doin this)
 mode = "BitmaskSliceReconstruct"
 # List of icon states to pull out, expanded to get the standard ordering for diagonals
-extract = ["0", "3", "12", "15", "255", "6-d", "10-d", "5-d", "9-d", "38-d", "74-d", "21-d", "137-d"]
+extract = [
+    "0", "3", "12", "15", "255",
+    "6-diagonal", "10-diagonal", "5-diagonal", "9-diagonal",
+    "38-diagonal", "74-diagonal", "21-diagonal", "137-diagonal"
+]
 
 # Map of name -> state that will be encoded into a positions list later
 # Lets you extract particular states and use them to fill in for states later
