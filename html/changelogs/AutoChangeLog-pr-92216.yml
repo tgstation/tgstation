@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Gravity anomalies can be properly clicked. Rather than chain stunning you, the anomaly will knock you down. You can avoid the negatives of gravity anomalies by wearing magboots. (Yes, it did not really protect you until now)"
+  - balance: "Flux anomalies detonate in a much smaller explosion, but release a wide EMP as well."
+  - balance: "Long range gas analyzers can now scan anomalies."

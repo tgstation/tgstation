@@ -12,7 +12,5 @@
 #define GET_MUTATION_POWER(A) ((A.power_coeff < 0) ? 1 : A.power_coeff)
 #define GET_MUTATION_ENERGY(A) ((A.energy_coeff < 0) ? 1 : A.energy_coeff)
 
-///Getter macro used to get the length of a identity block
-#define GET_UI_BLOCK_LEN(blocknum) (GLOB.identity_block_lengths["[blocknum]"] || DNA_BLOCK_SIZE)
 ///Ditto, but for a feature.
 #define GET_UF_BLOCK_LEN(blocknum) (GLOB.features_block_lengths["[blocknum]"] || DNA_BLOCK_SIZE)

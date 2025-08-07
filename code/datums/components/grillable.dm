@@ -34,6 +34,17 @@
 	src.use_large_steam_sprite = use_large_steam_sprite
 	src.added_reagents = added_reagents
 
+	var/obj/item/item_parent = parent
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !positive_result || !item_parent.custom_materials || isstack(parent))
+		return
+
+	var/atom/result = new cook_result
+	if(!item_parent.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when grilled compared to just spawned don't match"
+		var/what_it_should_be = item_parent.get_materials_english_list()
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 /datum/component/grillable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED, PROC_REF(on_grill_placed))
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_ON, PROC_REF(on_grill_turned_on))
@@ -139,6 +150,10 @@
 
 	else
 		grilled_result = new cook_result(original_object.loc)
+		if(istype(original_object, /obj/item/food) && istype(grilled_result, /obj/item/food))
+			var/obj/item/food/original_food = original_object
+			var/obj/item/food/grilled_food = grilled_result
+			LAZYADD(grilled_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
 		grilled_result.set_custom_materials(original_object.custom_materials)
 
 	if(IsEdible(grilled_result) && positive_result)

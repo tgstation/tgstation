@@ -273,6 +273,14 @@
 	name = "Holodisk"
 	item_path = /obj/item/disk/holodisk
 
+/datum/loadout_item/pocket_items/mug_nt
+	name = "Nanotrasen Mug"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/nanotrasen
+
+/datum/loadout_item/pocket_items/britcup
+	name = "British Flag Cup"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/britcup
+
 // The wallet loadout item is special, and puts the player's ID and other small items into it on initialize (fancy!)
 /datum/loadout_item/pocket_items/wallet
 	name = "Wallet"

@@ -2,9 +2,6 @@
 "aa" = (
 /turf/open/space/basic,
 /area/space)
-"ad" = (
-/turf/open/space,
-/area/space)
 "ak" = (
 /obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -1601,7 +1598,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "hx" = (
-/obj/machinery/photocopier/prebuilt,
+/obj/machinery/photocopier/gratis/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
 "hz" = (
@@ -3146,10 +3143,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "ou" = (
-/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/photocopier/gratis/prebuilt,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "ov" = (
@@ -4545,7 +4542,7 @@
 	shuttle_id = "emergency_away";
 	width = 50
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "uA" = (
 /obj/structure/chair{
@@ -5548,7 +5545,7 @@
 	shuttle_id = "cargo_away";
 	width = 20
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "yW" = (
 /obj/item/kirbyplants/organic/plant21,
@@ -7353,7 +7350,6 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
 "HY" = (
-/obj/machinery/photocopier/prebuilt,
 /obj/machinery/button/door/indestructible{
 	id = "CCsec3";
 	name = "CC Shutter 3 Control";
@@ -7377,6 +7373,7 @@
 	pixel_x = -9;
 	pixel_y = 32
 	},
+/obj/machinery/photocopier/gratis/prebuilt,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "HZ" = (
@@ -7453,7 +7450,7 @@
 	shuttle_id = "ferry_away";
 	width = 21
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "Ip" = (
 /obj/structure/chair/stool/bar/directional/east,
@@ -65296,7 +65293,7 @@ aa
 aa
 aa
 aa
-ad
+aa
 aa
 aa
 aa

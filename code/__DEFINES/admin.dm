@@ -74,7 +74,7 @@
 /// Displays "(SHOW)" in the chat, when clicked it tries to show atom(paper). First you need to set the request_state variable to TRUE for the paper.
 #define ADMIN_SHOW_PAPER(atom) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];show_paper=[REF(atom)]'>SHOW</a>)"
 /// Displays "(PRINT)" in the chat, when clicked it will try to print the atom(paper) on the CentCom/Syndicate fax machine.
-#define ADMIN_PRINT_FAX(atom, sender, destination) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];print_fax=[REF(atom)];sender_name=[sender];destination=[destination]'>PRINT</a>)"
+#define ADMIN_PRINT_FAX(atom, sender, destination) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];print_fax=[REF(atom)];sender_name=[url_encode(sender)];destination=[url_encode(destination)]'>PRINT</a>)"
 /// Displays "(PLAY)" in the chat, when clicked it tries to play internet sounds from the request.
 #define ADMIN_PLAY_INTERNET(text, credit) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];play_internet=[url_encode(text)];credit=[credit]'>PLAY</a>)"
 /// Displays "(SEE Z-LEVEL LAYOUT)" in the chat, when clicked it shows the z-level layouts for the current world state.

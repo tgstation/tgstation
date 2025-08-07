@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - refactor: "Fucked with admin rank setup very slightly, please yell at me if anything is wrong."
-  - admin: "Updated the permissions panel to be a good bit more user friendly, added rank management support to it."
-  - server: "I've added code that gives the game modification/deletion perms for the rank table, be made aware."

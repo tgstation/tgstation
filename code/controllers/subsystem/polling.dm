@@ -63,7 +63,11 @@ SUBSYSTEM_DEF(polling)
 		question = "Do you want to play as [span_notice(role_name_text)]?"
 	if(!question)
 		question = "Do you want to play as a special role?"
-	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [DisplayTimeText(poll_time)] seconds")
+	log_ghost_poll("Candidate poll started.", data = list(
+		"role name" = role_name_text,
+		"poll question" = question,
+		"poll duration" = DisplayTimeText(poll_time),
+	))
 
 	// Start firing
 	total_polls++
@@ -302,7 +306,14 @@ SUBSYSTEM_DEF(polling)
 	// Trim players who aren't eligible anymore
 	var/length_pre_trim = length(finishing_poll.signed_up)
 	finishing_poll.trim_candidates()
-	log_game("Candidate poll [finishing_poll.role ? "for [finishing_poll.role]" : "\"[finishing_poll.question]\""] finished. [length_pre_trim] players signed up, [length(finishing_poll.signed_up)] after trimming")
+
+	log_ghost_poll("Candidate poll completed.", data = list(
+		"role name" = finishing_poll.role,
+		"poll question" = finishing_poll.question,
+		"signed up count" = length_pre_trim,
+		"trimmed candidate count" = length(finishing_poll.signed_up)
+	))
+
 	finishing_poll.finished = TRUE
 
 	// Take care of updating the remaining screen alerts if a similar poll is found, or deleting them.

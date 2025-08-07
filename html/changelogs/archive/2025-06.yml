@@ -696,3 +696,34 @@
   san7890:
   - refactor: Soulscythes have undergone a mild refactor, but everything should work
       as it should. Report any issues.
+2025-06-30:
+  Krysonism:
+  - rscdel: Del removed the emergency sutures.
+  - balance: Emergency medkits now have a bandage instead of an emergency suture stack.
+  - balance: the lead pipe is now fire and acid proof.
+  LemonInTheDark:
+  - refactor: Fucked with admin rank setup very slightly, please yell at me if anything
+      is wrong.
+  - admin: Updated the permissions panel to be a good bit more user friendly, added
+      rank management support to it.
+  - server: I've added code that gives the game modification/deletion perms for the
+      rank table, be made aware.
+  Melbert:
+  - qol: Quirks spam you less on roundstart or latejoin
+  - bugfix: Multiple high impact rulesets will no longer roll simultaneously unless
+      dynamic picks "high chaos"
+  - rscdel: '"Cyborg Pre-screened dogtag" quirk. It''s a loadout item now.'
+  SmArtKar:
+  - balance: Healium bolts now heal and knock out overtime while being embedded instead
+      of being instant.
+  - balance: Healium bolts dissolve after being embedded for 6 seconds and don't work
+      on corpses
+  - bugfix: Healium bolts no longer ignore being blocked/parried/reflected
+  - bugfix: Fixed space in Meta Central virtual domain not having teleport prevention
+  Twaticus:
+  - image: resprites the schoolgirl outfit using GAGs
+  grungussuss:
+  - refactor: refactored how sfx with multiple variants are coded, report any issues
+      with sounds not playing!
+  lelandkemble:
+  - bugfix: makes raw meatpizza appear correctly in cooking menu

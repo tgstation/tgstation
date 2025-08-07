@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Healium bolts now heal and knock out overtime while being embedded instead of being instant."
-  - balance: "Healium bolts dissolve after being embedded for 6 seconds and don't work on corpses"
-  - bugfix: "Healium bolts no longer ignore being blocked/parried/reflected"

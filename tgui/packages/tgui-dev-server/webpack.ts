@@ -1,65 +1,39 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
+import { createRequire } from 'node:module';
 
-import { createRequire } from 'module';
-
+import { config } from '../../rspack.config-dev';
 import { loadSourceMaps } from './link/retrace';
 import { broadcastMessage, setupLink } from './link/server';
-import { createLogger } from './logging.js';
-import { reloadByondCache } from './reloader.js';
+import { createLogger } from './logging';
+import { reloadByondCache } from './reloader';
 import { resolveGlob } from './util';
 
-const logger = createLogger('webpack');
+const logger = createLogger('rspack');
 
-export async function createCompiler(
-  options: Record<string, any>,
-): Promise<WebpackCompiler> {
-  const compiler = new WebpackCompiler();
-  await compiler.setup(options);
+export class RspackCompiler {
+  rspack: any;
+  config: any;
+  bundleDir: string;
 
-  return compiler;
-}
-
-type WebpackImport = typeof import('webpack');
-
-class WebpackCompiler {
-  public webpack: WebpackImport;
-  public config: Record<string, any>;
-  public bundleDir: string;
-
-  async setup(options: Record<string, any>): Promise<void> {
+  async setup() {
     // Create a require context that is relative to project root
     // and retrieve all necessary dependencies.
-    const requireFromRoot = createRequire(import.meta.dirname + '/../../..');
-    const webpack: WebpackImport = await requireFromRoot('webpack');
+    const requireFromRoot = createRequire(`${import.meta.dirname}/../../..`);
+    const rspack = await requireFromRoot('@rspack/core');
 
-    const createConfig = await requireFromRoot('./webpack.config.js');
-    const config = createConfig({}, options);
-
-    // Inject the HMR plugin into the config if we're using it
-    if (options.hot) {
-      config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    }
-
-    this.webpack = webpack;
+    this.rspack = rspack;
     this.config = config;
-    this.bundleDir = config.output.path;
+    this.bundleDir = config.output?.path || '';
   }
 
-  async watch(): Promise<void> {
+  async watch() {
     logger.log('setting up');
-    // Setup link
-    const link = setupLink();
+    setupLink();
     // Instantiate the compiler
-    const compiler = this.webpack.webpack(this.config);
+    const compiler = this.rspack.rspack(this.config);
 
     // Clear garbage before compiling
     compiler.hooks.watchRun.tapPromise('tgui-dev-server', async () => {
       const files = await resolveGlob(this.bundleDir, '*.hot-update.*');
-      logger.log(`clearing garbage (${files.length} files)`);
       for (const file of files) {
         await Bun.file(file).delete();
       }
@@ -77,7 +51,6 @@ class WebpackCompiler {
         type: 'hotUpdate',
       });
     });
-
     // Start watching
     logger.log('watching for changes');
     compiler.watch({}, (err, stats) => {
@@ -86,7 +59,7 @@ class WebpackCompiler {
         return;
       }
       stats
-        ?.toString(this.config.devServer?.stats)
+        ?.toString(this.config.stats)
         .split('\n')
         .forEach((line) => logger.log(line));
     });

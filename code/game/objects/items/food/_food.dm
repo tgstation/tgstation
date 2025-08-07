@@ -19,7 +19,7 @@
 	 * stops food *normally* containing meat from having redundant prefixes, an unfitting appearance and too much meatiness overall.
 	 * However, the same material effects will apply on a fruit or a vegetable.
 	 */
-	var/list/intrisic_food_materials
+	var/list/intrinsic_food_materials
 	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
@@ -72,9 +72,9 @@
 		for(var/mat_type in custom_materials)
 			if(custom_materials[mat_type] > mat_amount)
 				main_mat_type = mat_type
-		LAZYADD(intrisic_food_materials, main_mat_type)
-	if(intrisic_food_materials)
-		intrisic_food_materials = typecacheof(intrisic_food_materials)
+		LAZYADD(intrinsic_food_materials, main_mat_type)
+	if(intrinsic_food_materials)
+		intrinsic_food_materials = typecacheof(intrinsic_food_materials)
 
 	. = ..()
 
@@ -96,7 +96,7 @@
 /obj/item/food/apply_material_effects(list/materials)
 	if(!HAS_TRAIT(src, TRAIT_INGREDIENTS_HOLDER)) //ingredients holder handle prefixes and colors differently
 		var/datum/material/main_material = materials[1] //The list is sorted by amount so the first of the list is the main mat
-		if(!is_type_in_typecache(main_material, intrisic_food_materials))
+		if(!is_type_in_typecache(main_material, intrinsic_food_materials))
 			material_flags |= MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_ADD_PREFIX|MATERIAL_COLOR
 	else
 		//food items with the ingredients holders component are still affected by the materials stats and effects wise.
@@ -126,6 +126,11 @@
 
 /obj/item/food/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
+	for(var/obj/item/item in components) // parent proc assumes machinery or structures in components are used, so we should be fine to assume only items from here
+		if(!istype(item, /obj/item/food))
+			continue
+		var/obj/item/food/food_component = item
+		LAZYADD(intrinsic_food_materials, food_component.intrinsic_food_materials)
 	var/mob/living/user = crafter
 	if(istype(user) && !isnull(user.mind))
 		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
@@ -147,7 +152,7 @@
 /// This proc handles the microwave component. Overwrite if you want special microwave results.
 /// By default, all food is microwavable. However, they will be microwaved into a bad recipe (burnt mess).
 /obj/item/food/proc/make_microwaveable()
-	AddElement(/datum/element/microwavable)
+	AddElement(/datum/element/microwavable, /obj/item/food/badrecipe, skip_matcheck = TRUE)
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
 /obj/item/food/proc/make_leave_trash()
@@ -181,3 +186,11 @@
 	final_foodtypes &= ~current_recipe.removed_foodtypes
 	///Update the foodtypes
 	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = final_foodtypes)
+
+/obj/item/food/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
+	. = ..()
+	if(!istype(original_atom, /obj/item/food))
+		return
+	var/obj/item/food/original_food = original_atom
+	if(original_food.intrinsic_food_materials)
+		LAZYADD(intrinsic_food_materials, original_food.intrinsic_food_materials)

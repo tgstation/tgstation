@@ -3706,7 +3706,7 @@
 /area/virtual_domain)
 "Fd" = (
 /turf/open/space/basic,
-/area/space)
+/area/space/virtual_domain)
 "Ff" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/railing{
@@ -4408,12 +4408,12 @@
 /area/virtual_domain)
 "Lq" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/glasses/night/colorless{
+/obj/item/clothing/glasses/night{
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/clothing/glasses/night/colorless,
-/obj/item/clothing/glasses/night/colorless{
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/night{
 	pixel_x = -5;
 	pixel_y = -3
 	},

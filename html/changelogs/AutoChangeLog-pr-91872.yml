@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "makes raw meatpizza appear correctly in cooking menu"

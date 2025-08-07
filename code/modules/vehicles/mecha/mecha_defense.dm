@@ -192,6 +192,12 @@
 		diag_hud_set_camera()
 		addtimer(CALLBACK(chassis_camera, TYPE_PROC_REF(/obj/machinery/camera/exosuit, emp_refocus), src), 10 SECONDS / severity)
 
+	for(var/obj/item/mecha_parts/mecha_tracking/tracker in trackers) // Go through our list of trackers and potentially delete our trackers due to an EMP.
+		if(prob(MECH_EMP_BEACON_DESTRUCTION_PROB / severity))
+			if((mecha_flags & SILICON_PILOT) && tracker.ai_beacon) // ignore any beacons which allows our AI pilot to be in the mech. Even if it isn't using a beacon, let's just do this to be safe. The code doesn't make a distinction! YAY!
+				continue // Does this mean that a AI tracking beacon can be EMP'd over and over without risk of self-destruction? Yes. Is this a nerf to silicon mechs? I guess. Do I care? No.
+			qdel(tracker)
+
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)

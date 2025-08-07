@@ -58,6 +58,9 @@ jobs:
       - name: Give Linters A Go
         id: linter-setup
         run: ":"
+      - name: Ensure genesis_call.dme is unchanged
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: bash tools/ci/check_genesis.sh
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh

@@ -52,3 +52,13 @@
  * This is only used explicitly because some interactions may not want to ever be skipped.
  */
 #define SHOULD_SKIP_INTERACTION(target, item, user) (HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && user.combat_mode)
+
+// Used by the decal painter to get information about the decal being painted
+/// Icon state to paint
+#define DECAL_INFO_ICON_STATE "icon_state"
+/// Color to paint the decal with
+#define DECAL_INFO_COLOR "color"
+/// Dir of the decal sprite
+#define DECAL_INFO_DIR "dir"
+/// Alpha of the decal
+#define DECAL_INFO_ALPHA "alpha"

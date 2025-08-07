@@ -320,9 +320,11 @@
 						if(num2text(channel["freq"]) != freq && channel["name"] == new_name)
 							return
 				info["name"] = new_name
-				var/new_color = input(usr, "Choose color for frequency", "Modifying Frequency Information", info["color"]) as color|null
-				if(new_color)
-					info["color"] = new_color
+				// No color changing for channels with theme settings
+				if(!GLOB.freqtospan["[freq]"])
+					var/new_color = input(usr, "Choose color for frequency", "Modifying Frequency Information", info["color"]) as color|null
+					if(new_color)
+						info["color"] = new_color
 				frequency_infos[params["freq"]] = info
 				. = TRUE
 		if("add_freq_info")
