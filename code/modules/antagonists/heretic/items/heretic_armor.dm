@@ -486,6 +486,7 @@
 	icon_state = "lock_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	armor_type = /datum/armor/eldritch_armor/lock
+	flags_inv = parent_type::flags_inv | HIDEMUTWINGS
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_gained(mob/user)
 	. = ..()
