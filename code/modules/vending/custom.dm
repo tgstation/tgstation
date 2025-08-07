@@ -23,6 +23,16 @@
 /obj/machinery/vending/custom/on_deconstruction(disassembled)
 	var/obj/item/vending_refill/custom/installed_refill = locate() in component_parts
 
+	if(linked_account)
+		//we delete the canister so players don't resell our products as their own
+		component_parts -= installed_refill
+		qdel(installed_refill)
+
+		//self destruct protocol for unauthorized destruction
+		explosion(get_turf(src), devastation_range = -1, light_impact_range = 3)
+
+		return
+
 	//copy product hash keys
 	installed_refill.products.Cut()
 	installed_refill.products += products
@@ -30,10 +40,6 @@
 	//move products to canister
 	for(var/obj/item/stored_item in contents - component_parts)
 		stored_item.forceMove(installed_refill)
-
-	//self destruct protocol for unauthorized destruction
-	if(linked_account)
-		explosion(get_turf(src), devastation_range = -1, light_impact_range = 3)
 
 /obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(panel_open && istype(held_item, refill_canister))
@@ -55,7 +61,7 @@
 /obj/machinery/vending/custom/examine(mob/user)
 	. = ..()
 	if(linked_account)
-		. += span_warning("Machine is ID locked. Destruction of machine will result in an explosion.")
+		. += span_warning("Machine is ID locked. Be sure to unlink before deconstructing the machine.")
 
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()
