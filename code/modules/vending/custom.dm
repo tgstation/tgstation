@@ -166,7 +166,6 @@
 			span_warning("Security warning"),
 			span_warning("Unauthorized deconstruction of vending machine is prohibited. Please read the warning alert")
 		)
-
 		if(tgui_alert(user, "Vending machine is ID locked.\
 		Deconstruction will result in an catrostrophic self destruct.\
 		If you are the owner of this machine please unlink your account with an ID swipe before proceeding.\
