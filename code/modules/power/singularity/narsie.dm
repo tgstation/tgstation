@@ -37,6 +37,7 @@
 	var/soul_goal = 0
 	var/souls = 0
 	var/resolved = FALSE
+	COOLDOWN_DECLARE(harvester_cooldown)
 
 /obj/narsie/Initialize(mapload)
 	. = ..()
@@ -147,6 +148,10 @@
 	start_ending_the_round()
 
 /obj/narsie/attack_ghost(mob/user)
+	if(!COOLDOWN_FINISHED(src, harvester_cooldown))
+		to_chat(user, span_warning("Nar'Sie has recently created a shell. Please wait [round(COOLDOWN_TIMELEFT(src, harvester_cooldown))/10] seconds!"))
+		return
+	COOLDOWN_START(src, harvester_cooldown, 10 SECONDS)
 	make_new_construct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
 
 /obj/narsie/process()
