@@ -222,7 +222,6 @@
 					. += "[t_He] [t_is] flushed and wheezing."
 				if (bodytemperature < dna.species.bodytemp_cold_damage_limit)
 					. += "[t_He] [t_is] shivering."
-
 				if(HAS_TRAIT(src, TRAIT_EVIL))
 					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
 					if(living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
