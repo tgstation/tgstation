@@ -193,16 +193,7 @@
 	flags_inv = NONE
 	icon_state = "cage"
 	inhand_icon_state = null
-	armor_type = /datum/armor/helmet_cage
 	worn_y_offset = 7
-
-/datum/armor/helmet_cage
-	melee = 60
-	bullet = 10
-	laser = 10
-	energy = 10
-	fire = 80
-	acid = 80
 
 /obj/item/clothing/head/helmet/chaplain/ancient
 	name = "ancient helmet"
