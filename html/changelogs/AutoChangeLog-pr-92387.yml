@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "The Chain of Command will give a speed bonus to other players when right-clicking them."
