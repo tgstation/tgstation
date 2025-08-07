@@ -80,6 +80,18 @@
 	blend_mode = BLEND_ADD
 	critical = PLANE_CRITICAL_DISPLAY
 
+/atom/movable/screen/plane_master/rendering_plate/turf_lighting/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	/// We get affected by cutoff but not by the contrast that overlay lights get
+	/// So flashlights seem to reflect "better"
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
+		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
+	))
+
 /atom/movable/screen/plane_master/rendering_plate/emissive_slate
 	name = "Emissive Plate"
 	documentation = "This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.\
@@ -109,7 +121,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
-	render_target = EMISSIVE_BLOOM_MASK_TARGET
+	render_target = EMISSIVE_BLOOM_MASK_RENDER_TARGET
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_bloom
@@ -125,8 +137,32 @@
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_bloom/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOOM_MASK_TARGET, offset)))
+	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOOM_MASK_RENDER_TARGET, offset)))
 	add_filter("emissive_bloom", 2, bloom_filter(threshold = COLOR_BLACK, size = 2, offset = 1))
+
+/atom/movable/screen/plane_master/rendering_plate/specular_mask
+	name = "Specular mask plate"
+	documentation = "Plate used to generate the specular mask for the specular plate effect."
+	plane = RENDER_PLANE_SPECULAR_MASK
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = SPECULAR_MASK_RENDER_TARGET
+	render_relay_planes = list()
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/specular
+	name = "Specular plate"
+	documentation = "Plate used to artificially increase lighting on certain pixels to poorly mimic shiny surfaces."
+	plane = RENDER_PLANE_SPECULAR
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_ADD
+	render_relay_planes = list(RENDER_PLANE_GAME)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/specular/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("specular_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(SPECULAR_MASK_RENDER_TARGET, offset)))
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/rendering_plate/lighting

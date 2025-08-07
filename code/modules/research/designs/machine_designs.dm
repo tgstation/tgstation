@@ -1395,3 +1395,23 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/netpod
+	name = "Netpod Board"
+	desc = "The circuit board for a netpod."
+	id = "netpod"
+	build_path = /obj/item/circuitboard/machine/netpod
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CARGO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/byteforge
+	name = "Byteforge Board"
+	desc = "Allows for the construction of circuit boards used to build a Byteforge."
+	id = "byteforge"
+	build_path = /obj/item/circuitboard/machine/byteforge
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
