@@ -4603,10 +4603,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"bvs" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "bvt" = (
 /obj/machinery/telecomms/server/presets/security,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -8561,8 +8557,8 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "cAs" = (
-/obj/item/banner,
 /obj/structure/disposalpipe/segment,
+/obj/item/banner/command/mundane,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "cAv" = (
@@ -30693,9 +30689,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"iZH" = (
-/turf/open/space,
-/area/space)
 "iZI" = (
 /obj/machinery/computer/bank_machine,
 /obj/machinery/light_switch/directional/west{
@@ -41200,7 +41193,9 @@
 /area/station/cargo/warehouse)
 "mdn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/banner/red,
+/obj/item/banner/red{
+	inspiration_available = 0
+	},
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "mdp" = (
@@ -64079,7 +64074,9 @@
 /area/station/security/courtroom)
 "sTK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/banner/blue,
+/obj/item/banner/blue{
+	inspiration_available = 0
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties,
@@ -113039,7 +113036,7 @@ oTK
 tQI
 eLU
 eLU
-iZH
+dcE
 gmE
 bYe
 ltW
@@ -113295,8 +113292,8 @@ iis
 iis
 iis
 aWV
-bvs
-bvs
+heR
+heR
 gmE
 rgb
 qeX
@@ -113552,7 +113549,7 @@ dNc
 rPQ
 qCe
 aWV
-iZH
+dcE
 gmE
 gmE
 bTU
@@ -113809,7 +113806,7 @@ mYf
 qSv
 sSY
 lll
-iZH
+dcE
 gmE
 rVE
 eRs
@@ -114066,7 +114063,7 @@ wTU
 vCW
 jkn
 lll
-bvs
+heR
 gmE
 mcX
 eRs
@@ -114323,7 +114320,7 @@ duE
 ibO
 ibO
 lll
-iZH
+dcE
 gmE
 mbY
 eRs
@@ -114580,7 +114577,7 @@ sAm
 wtz
 iXw
 lll
-bvs
+heR
 gmE
 czp
 aZd
@@ -114837,7 +114834,7 @@ cSO
 jMo
 lmA
 gDc
-iZH
+dcE
 gmE
 irL
 lbT
@@ -115094,7 +115091,7 @@ yes
 xvw
 tRt
 lll
-bvs
+heR
 gmE
 xef
 vFZ
@@ -115351,7 +115348,7 @@ aNb
 gzt
 jFp
 lll
-iZH
+dcE
 gmE
 eqa
 vFZ
@@ -115608,7 +115605,7 @@ nFA
 oSb
 gBG
 aWV
-iZH
+dcE
 gmE
 gmE
 ruc
@@ -115865,8 +115862,8 @@ nIo
 aWV
 aWV
 aWV
-bvs
-bvs
+heR
+heR
 gmE
 fQQ
 qeX
@@ -116122,8 +116119,8 @@ aNb
 opj
 wXU
 aWV
-iZH
-iZH
+dcE
+dcE
 gmE
 lsW
 njT
