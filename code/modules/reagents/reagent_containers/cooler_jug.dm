@@ -4,7 +4,8 @@
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "cooler_jug"
 	volume = 200
-	reagent_flags = REFILLABLE | DRAINABLE | INJECTABLE | DRAWABLE | TRANSPARENT
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4)
+	reagent_flags = REFILLABLE | DRAINABLE | INJECTABLE | DRAWABLE | TRANSPARENT | SMART_CAP
 	spillable = TRUE
 	has_variable_transfer_amount = FALSE
 	interaction_flags_click = NEED_DEXTERITY
@@ -20,5 +21,5 @@
 
 /obj/item/reagent_containers/cooler_jug/punch
 	name = "punch jug"
-	desc = "A jug meant for storing fruit punch. It's covered in dozens of warning labels and scary-looking symbols you don't understand. The smell of sweet punch sticks to the mouth of the jug."
+	desc = "A jug meant for storing fruit punch. It's covered in dozens of warning labels and scary-looking symbols you don't recognize. The smell of sweet punch sticks to the mouth of the jug."
 	list_reagents = list(/datum/reagent/consumable/fruit_punch = 200)

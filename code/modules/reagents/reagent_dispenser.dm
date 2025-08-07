@@ -371,6 +371,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
 	. = ..()
+	if(prob(1) && mapload)
+		reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
 	create_jug()
 	refresh_appearance()
 
@@ -575,12 +577,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler/jugless/create_jug()
 	return
-
-///Punch cooler. Starts full of healing juice.
-/obj/structure/reagent_dispensers/water_cooler/punch_cooler
-	name = "punch cooler"
-	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
-	reagent_id = /datum/reagent/consumable/fruit_punch
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
