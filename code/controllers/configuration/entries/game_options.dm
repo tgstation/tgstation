@@ -520,6 +520,6 @@
 	default = 2 // every 2 hours
 	min_val = -1
 /// The maximum amount of autosaves to store (set to -1 to never delete any autosaves)
-/datum/config_entry/number/persistent_autosave_period
+/datum/config_entry/number/persistent_max_autosaves
 	default = -1
 	min_val = -1
