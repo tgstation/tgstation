@@ -241,6 +241,9 @@
 		to_chat(convertee, span_boldwarning("You feel shielded from something." ))
 		return FALSE
 
+	if(!convertee.mind)
+		return FALSE
+
 	var/datum/antagonist/lunatic/lunatic = convertee.mind.add_antag_datum(/datum/antagonist/lunatic)
 	lunatic.set_master(user.mind, user)
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(convertee.drop_location())
