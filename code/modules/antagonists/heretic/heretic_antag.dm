@@ -423,7 +423,7 @@
 	heretic_mob.cut_overlay(eldritch_overlay)
 
 	if(!unlimited_blades || HAS_TRAIT(heretic_mob, TRAIT_HERETIC_AURA_HIDDEN))
-		return FALSE // No aura if we don't have the trait
+		return FALSE // No aura if we have the trait or is too early still
 	if(feast_of_owls)
 		return FALSE // No use in giving the aura to a heretic that can't ascend
 	if(heretic_path?.route == PATH_LOCK)
