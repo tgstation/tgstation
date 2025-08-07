@@ -183,12 +183,12 @@
 
 //Roroco Factory IDs
 /datum/id_trim/away/roroco
-	assignment = "RoroCo Employee"
+	assignment = "Glove Packer"
 	department_color = COLOR_ENGINEERING_ORANGE
 	access = list(ACCESS_ROROCO)
 
 /datum/id_trim/away/roroco/boss
-	assignment = "RoroCo Executive"
+	assignment = "Fabric Technician"
 	access = list(ACCESS_ROROCO, ACCESS_ROROCO_SECURE)
 	big_pointer = TRUE
 

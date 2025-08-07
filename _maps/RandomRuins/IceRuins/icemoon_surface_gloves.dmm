@@ -60,7 +60,12 @@
 "cR" = (
 /obj/structure/closet/l3closet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer/corner{
+	dir = 8
+	},
 /area/ruin/roroco/extraction)
 "cU" = (
 /obj/machinery/light/small/red/directional/east,
@@ -90,9 +95,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer/edge{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/dark_blue/half,
+/turf/open/floor/iron/freezer/half,
 /area/ruin/roroco/extraction)
 "dD" = (
 /obj/structure/closet/firecloset,
@@ -107,6 +111,9 @@
 	dir = 1
 	},
 /obj/machinery/duct,
+/obj/effect/decal/cleanable/blood/trail{
+	dir = 10
+	},
 /turf/open/floor/iron/freezer,
 /area/ruin/roroco/extraction)
 "ed" = (
@@ -117,7 +124,10 @@
 	dir = 8
 	},
 /obj/machinery/duct,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/half,
+/turf/open/floor/iron/freezer/edge{
+	dir = 2
+	},
 /area/ruin/roroco/extraction)
 "ee" = (
 /obj/machinery/door/airlock{
@@ -163,7 +173,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/duct,
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/iron/freezer/large,
 /area/ruin/roroco/harvesting)
 "eS" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -202,8 +212,14 @@
 /obj/structure/closet/l3closet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/small/directional/east,
-/obj/item/card/id/away/roroco/boss,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/roroco_processing,
+/turf/open/floor/iron/freezer/edge{
+	dir = 4
+	},
 /area/ruin/roroco/extraction)
 "hS" = (
 /obj/structure/cable,
@@ -286,9 +302,8 @@
 /obj/effect/decal/cleanable/blood/trail,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer/edge{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/dark_blue/half,
+/turf/open/floor/iron/freezer/edge,
 /area/ruin/roroco/extraction)
 "kh" = (
 /obj/structure/cable,
@@ -315,11 +330,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/cardboard,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /obj/item/crowbar,
+/obj/structure/closet/cardboard/roroco,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/packing)
 "lm" = (
@@ -327,6 +342,9 @@
 	dir = 1
 	},
 /obj/machinery/duct,
+/obj/effect/decal/cleanable/blood/trail{
+	dir = 1
+	},
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -337,7 +355,10 @@
 "lO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/anticorner,
+/turf/open/floor/iron/freezer/corner{
+	dir = 1
+	},
 /area/ruin/roroco/extraction)
 "lY" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -492,15 +513,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer/edge{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/dark_blue/half,
+/turf/open/floor/iron/freezer/edge,
 /area/ruin/roroco/extraction)
 "qN" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/structure/sink/directional/east,
+/obj/structure/sink/directional/south,
 /turf/open/floor/plating/rust,
 /area/ruin/roroco/janitor)
 "rd" = (
@@ -509,12 +526,12 @@
 /area/ruin/roroco/maintenance)
 "rp" = (
 /obj/machinery/firealarm/directional/west,
-/obj/structure/closet/cardboard,
 /obj/effect/decal/cleanable/crayon/puzzle/pin{
 	puzzle_id = "roro_factory"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/south,
+/obj/structure/closet/cardboard/roroco,
 /turf/open/floor/catwalk_floor,
 /area/ruin/roroco/packing)
 "rw" = (
@@ -543,7 +560,12 @@
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 1
 	},
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 8
+	},
 /area/ruin/roroco/extraction)
 "sH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -647,7 +669,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "roro_maint"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/rust,
 /area/ruin/roroco/maintenance)
 "uW" = (
 /obj/effect/turf_decal/tile/brown,
@@ -714,7 +736,10 @@
 /obj/item/circular_saw{
 	pixel_y = 2
 	},
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/corner,
 /area/ruin/roroco/extraction)
 "wU" = (
 /turf/closed/wall/rust,
@@ -723,7 +748,12 @@
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer/corner{
+	dir = 4
+	},
 /area/ruin/roroco/extraction)
 "xI" = (
 /turf/closed/wall,
@@ -738,7 +768,12 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/freezer/edge,
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
 /area/ruin/roroco/extraction)
 "xT" = (
 /obj/machinery/conveyor/auto{
@@ -835,7 +870,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco/harvesting)
 "AL" = (
-/obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/item/card/id/away/roroco,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -849,6 +883,9 @@
 /obj/structure/mop_bucket/janitorialcart,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/roroco/janitor)
 "Bh" = (
@@ -952,7 +989,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer,
+/turf/open/floor/iron/freezer/large,
 /area/ruin/roroco/extraction)
 "EA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1016,7 +1053,12 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/freezer/edge,
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
 /area/ruin/roroco/extraction)
 "GC" = (
 /turf/closed/wall/rust,
@@ -1025,6 +1067,12 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/roroco)
+"Hk" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mob_spawn/corpse/human/roroco_packing,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "Ho" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
@@ -1060,7 +1108,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/anticorner,
+/turf/open/floor/iron/freezer/corner{
+	dir = 1
+	},
 /area/ruin/roroco/extraction)
 "Lb" = (
 /obj/structure/rack,
@@ -1077,7 +1128,15 @@
 	dir = 8
 	},
 /obj/machinery/duct,
-/turf/open/floor/iron/freezer,
+/obj/effect/decal/cleanable/blood/trail{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
 /area/ruin/roroco/extraction)
 "LE" = (
 /obj/machinery/modular_computer/preset/civilian,
@@ -1129,7 +1188,12 @@
 	pixel_x = 9
 	},
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer/corner{
+	dir = 8
+	},
 /area/ruin/roroco/extraction)
 "Nf" = (
 /obj/structure/tank_holder/extinguisher,
@@ -1167,7 +1231,6 @@
 /area/ruin/roroco/maintenance)
 "OF" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/roroco/janitor)
@@ -1176,7 +1239,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/full,
-/turf/open/floor/iron/freezer/edge,
+/turf/open/floor/iron/freezer/edge{
+	dir = 1
+	},
 /area/ruin/roroco/extraction)
 "Pj" = (
 /obj/structure/reagent_dispensers/plumbed{
@@ -1291,7 +1356,7 @@
 	piping_layer = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/rust,
 /area/ruin/roroco/maintenance)
 "Sr" = (
 /obj/structure/cable,
@@ -1460,7 +1525,10 @@
 /obj/machinery/door/puzzle/keycard/roro,
 /obj/machinery/door/firedoor,
 /obj/machinery/duct,
-/turf/open/floor/iron/freezer,
+/obj/effect/decal/cleanable/blood/trail{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/large,
 /area/ruin/roroco/extraction)
 "YV" = (
 /obj/structure/cable,
@@ -1472,6 +1540,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/roroco/maintenance)
+"Zi" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "Zs" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -1623,9 +1695,9 @@ UV
 UV
 UV
 UV
-UV
-UV
-UV
+Hk
+Zi
+Zi
 xK
 xK
 xK
@@ -1680,7 +1752,7 @@ PY
 PY
 UV
 UV
-AL
+UV
 UV
 UV
 eq
@@ -1709,7 +1781,7 @@ BS
 BS
 mm
 UV
-UV
+AL
 UV
 UV
 zN
@@ -2026,7 +2098,7 @@ xK
 (20,1,1) = {"
 PY
 PY
-zJ
+wU
 wU
 zJ
 Ce
@@ -2040,7 +2112,7 @@ Xm
 oa
 Oq
 Pj
-zJ
+wU
 eS
 zJ
 xK
@@ -2056,7 +2128,7 @@ PY
 PY
 zJ
 zq
-zJ
+wU
 Ho
 uv
 vG
