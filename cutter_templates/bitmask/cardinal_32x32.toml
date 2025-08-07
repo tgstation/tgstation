@@ -10,7 +10,7 @@ mode = "BitmaskSlice"
 # CardinalsRotated -> 1 direction per frame, will be expanded in the dmi to be Cardinals, with each
 #   ... direction being that base junction, rotated in whatever way. Exists mostly so client.dir supporting states
 #   ... can be created. Creates a lot of duplicate blocks otherwise.
-directional_strategy  = "Standard"
+directional_strategy = "Standard"
 # We smooth only with our cardinal neighbors, not the ones on the diagonal
 output_type = "Cardinal"
 
