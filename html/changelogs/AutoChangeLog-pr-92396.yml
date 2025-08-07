@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "Action button binding works again"
