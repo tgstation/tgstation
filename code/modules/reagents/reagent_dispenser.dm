@@ -462,7 +462,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		return NONE
 
 	. = ITEM_INTERACT_BLOCKING
-	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+	if(default_unfasten_wrench(user, tool, time = 6 SECONDS) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand_secondary(mob/user, modifiers)
@@ -543,7 +543,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 	if(throw_away)
 		var/turf/turf_to_throw_at = get_ranged_target_turf(src, pick(GLOB.alldirs), 2)
-		our_jug.throw_at(turf_to_throw_at, 3, 3)
+		our_jug.throw_at(turf_to_throw_at, 2, 3)
 		reagents.remove_all(tank_volume) //Gets spilled on floor during boom()
 	else
 		reagents.trans_to(our_jug.reagents, tank_volume)
