@@ -356,7 +356,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "water cooler"
-	desc = "A machine that dispenses water to drink. It appears docile."
+	desc = "A machine that cools and dispenses liquids to drink. The 'hot' handle doesn't seem to do anything."
 	icon_state = "water_cooler"
 	anchored = TRUE
 	tank_volume = 200
@@ -455,7 +455,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 			mixcolor = BlendRGB(chosen_color, mixcolor, vol_temp/vol_counter)
 
 	if(mixcolor)
-		var/mutable_appearance/tank_overlay = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay")
+		var/overlay_tag
+		if(vol_counter > 100)
+			overlay_tag = "100"
+		else
+			overlay_tag = "50" //Can't be 0, because there'd be no mixcolor
+		var/mutable_appearance/tank_overlay = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay[overlay_tag]")
 		tank_overlay.color = mixcolor
 		. += tank_overlay
 

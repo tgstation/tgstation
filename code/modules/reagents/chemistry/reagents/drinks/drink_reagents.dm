@@ -1322,7 +1322,7 @@
 /datum/reagent/consumable/fruit_punch/on_mob_life(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-	if(locate(/obj/structure/reagent_dispensers/water_cooler) in range(6, affected_mob))
+	if(locate(/obj/structure/reagent_dispensers/water_cooler) in range(4, affected_mob))
 		affected_mob.clear_alert("punch_bad")
 		affected_mob.throw_alert("punch_good", /atom/movable/screen/alert/fruit_punch_good)
 		need_mob_update = affected_mob.adjustToxLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)

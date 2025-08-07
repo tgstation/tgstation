@@ -876,7 +876,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	inhand_icon_state = "sheet-plastic"
-	mats_per_unit = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	throwforce = 7
 	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic
