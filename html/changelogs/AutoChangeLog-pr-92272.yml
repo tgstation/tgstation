@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Added specular overlays - some items like hazard vests or firefighter suits no longer outright glow in the dark, but instead amplify existing light to shine brighter than their surroundings."
-  - rscadd: "Redid unrestricted access airlock overlays to look less bad"
-  - bugfix: "Fixed unrestricted access overlays not showing up on windoors."

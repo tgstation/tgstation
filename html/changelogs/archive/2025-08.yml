@@ -124,3 +124,29 @@
       into closets.
   - code_imp: cleaned up closet see through code. It's documented & slightly faster
       performance wise
+2025-08-07:
+  Arturlang:
+  - code_imp: action's now pass down the clicker via the first arg of Trigger()
+  - code_imp: antagonist ui_act now ensures that the owners of the antag datum thesmelves
+      can only do stuff in the UI
+  - bugfix: admins giving out heretic antag no longer opens it for them.
+  - bugfix: Action button binding works again
+  Exester509:
+  - qol: Made angel wings more maneuverable
+  - spellcheck: The cytology crate no longer references the non-existent research
+      plumbing constructor.
+  FalloutFalcon:
+  - map: converts all non-basic space turfs to space/basic
+  Majkl-J:
+  - rscadd: Redesigned the Icebox, Tram, and Wawa gardens, adding fishing pools to
+      them
+  Rhials:
+  - balance: The Chain of Command will give a speed bonus to other players when right-clicking
+      them.
+  SmArtKar:
+  - rscadd: Added specular overlays - some items like hazard vests or firefighter
+      suits no longer outright glow in the dark, but instead amplify existing light
+      to shine brighter than their surroundings.
+  - rscadd: Redid unrestricted access airlock overlays to look less bad
+  - bugfix: Fixed unrestricted access overlays not showing up on windoors.
+  - bugfix: Fixed blood/glass floor glow going over objects
