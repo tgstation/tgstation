@@ -3308,11 +3308,11 @@
 	toxpwr = 3
 	color = "#BC46D4"
 	overdose_threshold = 30
-	metabolization_rate = 6 * REAGENTS_METABOLISM
+	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "plasma, sugar and this are indescribable"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/liquid_plasma/on_mob_life(mob/living/carbon/affected_mob)
+/datum/reagent/toxin/liquid_plasma/on_mob_life(mob/living/carbon/affected_mob)
 	. = ..()
 	if(is_species(affected_mob, /datum/species/plasmaman))
 		affected_mob.add_traits(TRAIT_NO_BREATHLESS_DAMAGE, type)
