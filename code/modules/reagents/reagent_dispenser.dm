@@ -518,7 +518,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(reagents.total_volume)
 		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
 		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50), adminlog=(liquid_amount<25))
-	eject_jug(throw_away = TRUE) //Maybe, you could just call parent and have the chemical reactions sorted there? You could make welding coolers explode like they should?
+	eject_jug(throw_away = TRUE)
 	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
 	tip_over()
 
@@ -582,6 +582,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler/jugless/create_jug()
 	return
+
+///Punch cooler. Starts full of healing juice. In case anyone wants to map one somewhere as a healing station.
+/obj/structure/reagent_dispensers/water_cooler/punch_cooler
+	name = "punch cooler"
+	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
+	reagent_id = /datum/reagent/consumable/fruit_punch
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"

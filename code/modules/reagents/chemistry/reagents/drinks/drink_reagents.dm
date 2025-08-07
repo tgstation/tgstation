@@ -1322,27 +1322,40 @@
 /datum/reagent/consumable/fruit_punch/on_mob_life(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-	if(locate(/obj/structure/reagent_dispensers/water_cooler) in range(4, affected_mob))
+	var/found_valid_cooler = FALSE
+	for(var/obj/structure/reagent_dispensers/water_cooler/found_cooler in range(4, affected_mob))
+		if(found_cooler.anchored)
+			found_valid_cooler = TRUE
+			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(found_cooler))
+			heal_effect.color = "#f7b2e3"
+			break
+
+	if(found_valid_cooler)
 		affected_mob.clear_alert("punch_bad")
 		affected_mob.throw_alert("punch_good", /atom/movable/screen/alert/fruit_punch_good)
 		need_mob_update = affected_mob.adjustToxLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update = affected_mob.adjustBruteLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update = affected_mob.adjustFireLoss(-0.8 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
 	else
 		affected_mob.clear_alert("punch_good")
 		affected_mob.throw_alert("punch_bad", /atom/movable/screen/alert/fruit_punch_bad)
 		need_mob_update = affected_mob.apply_damage(2 * REM * seconds_per_tick, TOX)
+		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
 		if(prob(10))
 			affected_mob.Knockdown(3 SECONDS, 6 SECONDS) //Gives daze effect. Using the cooler is a commitment and if you get jumped during it or have to run away to fight something, you should be vulnerable.
 			to_chat(affected_mob, span_warning("The overwhelming sweetness of the fruit punch disorients and confounds you!"))
-
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
+
+/datum/movespeed_modifier/punch_punishment
+	multiplicative_slowdown = 0.30
 
 /datum/reagent/consumable/fruit_punch/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.clear_alert("punch_bad")
 	affected_mob.clear_alert("punch_good")
+	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
 
 /atom/movable/screen/alert/fruit_punch_good
 	name = "Fruit Punch Blessing"
