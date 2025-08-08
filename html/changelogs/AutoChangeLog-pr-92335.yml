@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "CRAB-17 machines will now hold onto funds internally if they cannot find the original user's bank account to transfer them to."
