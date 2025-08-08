@@ -284,3 +284,5 @@
 			. = "#ffc905"
 		if("green")
 			. = "#a8e61d"
+		if("pink") // troutstation edit
+			. = "#ff99fc" // troutstation edit
