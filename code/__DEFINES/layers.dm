@@ -13,8 +13,8 @@
 #define PLANE_SPACE -21
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -12
-#define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
+#define DISPLACEMENT_PLANE -12
+#define DISPLACEMENT_RENDER_TARGET "*DISPLACEMENT_RENDER_TARGET"
 
 #define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
 
@@ -47,56 +47,59 @@
 #define O_LIGHTING_VISUAL_RENDER_TARGET "*O_LIGHT_VISUAL_PLANE"
 
 // Render plate used by overlay lighting to mask turf lights
-#define TURF_LIGHTING_PLATE 12
+#define RENDER_PLANE_TURF_LIGHTING 12
 
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
-#define EMISSIVE_RENDER_PLATE 14
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+#define RENDER_PLANE_EMISSIVE 14
+#define EMISSIVE_RENDER_TARGET "*RENDER_PLANE_EMISSIVE"
 // Ensures all the render targets that point at the emissive plate layer correctly
 #define EMISSIVE_Z_BELOW_LAYER 1
 #define EMISSIVE_FLOOR_LAYER 2
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
 
-#define EMISSIVE_BLOOM_MASK_PLATE 15
-#define EMISSIVE_BLOOM_MASK_TARGET "*EMISSIVE_BLOOM_MASK_PLATE"
-#define EMISSIVE_BLOOM_PLATE 16
+#define RENDER_PLANE_EMISSIVE_BLOOM_MASK 15
+#define EMISSIVE_BLOOM_MASK_RENDER_TARGET "*RENDER_PLANE_EMISSIVE_BLOOM_MASK"
+#define RENDER_PLANE_EMISSIVE_BLOOM 16
 
-//-------------------- Game plane assembly ---------------------
-
-#define RENDER_PLANE_GAME 17
-/// If fov is enabled we'll draw game to this and do shit to it
-#define RENDER_PLANE_GAME_MASKED 18
-/// The bit of the game plane that is let alone is sent here
-#define RENDER_PLANE_GAME_UNMASKED 19
+#define RENDER_PLANE_SPECULAR_MASK 17
+#define SPECULAR_MASK_RENDER_TARGET "*RENDER_PLANE_SPECULAR_MASK"
 
 //-------------------- Lighting ---------------------
+
+/// Main game plane to which everything renders, which then is multiplied by light
+/// Should not be lit directly as it is sourced for emissive bloom
+#define RENDER_PLANE_UNLIT_GAME 19
 
 #define RENDER_PLANE_LIGHTING 20
 
 /// Masks the lighting plane with turfs, so we never light up the void
 /// Failing that, masks emissives and the overlay lighting plane
-#define LIGHT_MASK_PLANE 21
-#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
+#define RENDER_PLANE_LIGHT_MASK 21
+#define LIGHT_MASK_RENDER_TARGET "*RENDER_PLANE_LIGHT_MASK"
 
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 22
+/// We cannot render speculars to ABOVE_LIGHTING, as then they give it alpha and end up masking things in darkness
+/// So we need to render it directly to RENDER_PLANE_GAME above RENDER_PLANE_LIGHTING
+#define RENDER_PLANE_SPECULAR 22
 
-#define WEATHER_GLOW_PLANE 23
+/// Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 23
+
+#define WEATHER_GLOW_PLANE 24
 
 ///---------------- MISC -----------------------
 
 ///Pipecrawling images
-#define PIPECRAWL_IMAGES_PLANE 24
+#define PIPECRAWL_IMAGES_PLANE 25
 
 ///AI Camera Static
-#define CAMERA_STATIC_PLANE 25
+#define CAMERA_STATIC_PLANE 26
 
 ///Anything that wants to be part of the game plane, but also wants to draw above literally everything else
-#define HIGH_GAME_PLANE 26
+#define HIGH_GAME_PLANE 27
 
-#define FULLSCREEN_PLANE 27
+#define FULLSCREEN_PLANE 28
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
@@ -116,7 +119,12 @@
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
-#define LIT_GAME_RENDER_PLATE 40
+#define RENDER_PLANE_GAME 40
+/// If fov is enabled we'll draw game to this and do shit to it
+#define RENDER_PLANE_GAME_MASKED 41
+/// The bit of the game plane that is let alone is sent here
+#define RENDER_PLANE_GAME_UNMASKED 42
+
 #define RENDER_PLANE_NON_GAME 45
 
 // Only VERY special planes should be here, as they are above not just the game, but the UI planes as well.
@@ -151,6 +159,9 @@
 // NOTICE: we break from the pattern of increasing in steps of like 0.01 here
 // Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
 
+// Must be equal to the offset of the highest topdown layer
+#define TOPDOWN_LAYER_COUNT 18
+
 //lower than LOW_FLOOR_LAYER, for turfs with stuff on the edge that should be covered by other turfs
 #define LOWER_FLOOR_LAYER (1 + TOPDOWN_LAYER)
 #define LOW_FLOOR_LAYER (2 + TOPDOWN_LAYER)
@@ -170,7 +181,7 @@
 #define ABOVE_OPEN_TURF_LAYER (15 + TOPDOWN_LAYER)
 #define LOWER_RUNE_LAYER (16 + TOPDOWN_LAYER)
 #define RUNE_LAYER (17 + TOPDOWN_LAYER)
-#define CLEANABLE_FLOOR_OBJECT_LAYER (21 + TOPDOWN_LAYER)
+#define CLEANABLE_FLOOR_OBJECT_LAYER (18 + TOPDOWN_LAYER)
 
 //Placeholders in case the game plane and possibly other things between it and the floor plane are ever made into topdown planes
 
@@ -186,6 +197,8 @@
 // GAME_PLANE layers
 #define BULLET_HOLE_LAYER 2.06
 #define ABOVE_NORMAL_TURF_LAYER 2.08
+#define FLOOR_EMISSIVE_START_LAYER 2.09
+#define FLOOR_EMISSIVE_END_LAYER 2.26
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define WIRE_BRIDGE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
@@ -228,6 +241,7 @@
 #define BELOW_MOB_LAYER 3.7
 #define LOW_MOB_LAYER 3.75
 #define LYING_MOB_LAYER 3.8
+#define ABOVE_LYING_MOB_LAYER 3.85
 #define VEHICLE_LAYER 3.9
 #define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define

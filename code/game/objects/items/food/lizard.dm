@@ -88,6 +88,7 @@
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/shredded_lungs
 	name = "crispy shredded lung stirfry"
@@ -266,6 +267,7 @@
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/kebab/picoss_skewers
 	name = "picoss skewer"
@@ -711,7 +713,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2.25)
 
 /obj/item/food/honey_roll
 	name = "honey sweetroll"

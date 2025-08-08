@@ -255,6 +255,7 @@
 
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
+#define BRAIN_DAMAGE_ASYNC_BLINKING 60
 #define BRAIN_DAMAGE_SEVERE 100
 #define BRAIN_DAMAGE_DEATH 200
 
@@ -465,7 +466,7 @@
 #define APPRENTICE_AGE_MIN 29 //youngest an apprentice can be
 #define SHOES_SLOWDOWN 0 //How much shoes slow you down by default. Negative values speed you up
 #define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
-#define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
+#define DOOR_CRUSH_DAMAGE 20 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
 #define ETHEREAL_DISCHARGE_RATE (1e-3 * STANDARD_ETHEREAL_CHARGE) // Rate at which ethereal stomach charge decreases
@@ -820,7 +821,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
 	// BODY_LAYER (body markings (full body), underwear (full body))
-	"[EYES_LAYER]" = EYES_LAYER, // looks fine with but no need to filter it, so we can save on perf (eyes and eyelids)
+	// EYES_LAYER,
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
