@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "code for copying reagents has been refactored. Please report bugs on github"

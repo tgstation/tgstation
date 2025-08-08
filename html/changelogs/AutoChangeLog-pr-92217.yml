@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "moved designs & circuitboards for bitrunning into their correct files"
-  - qol: "adds examines & screentips for bitrunning netpod, bitforge & server on how to deconstruct them"
-  - bugfix: "bitforge can be deconstructed with a screwdriver & crowbar"
