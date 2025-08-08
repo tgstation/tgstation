@@ -7,15 +7,17 @@
 
 /obj/item/portable_recharger
 	name = "backpack recharger"
-	icon = 'icons/obj/bed.dmi'
-	icon_state = "pillow_1_t"
-	base_icon_state = "pillow_1_t"
+	icon = 'icons/obj/wind_turbine.dmi'
+	icon_state = "icon"
+	base_icon_state = "icon"
 	desc = "A portable backpack charging dock for energy based weaponry, PDAs, and other devices."
-	inhand_icon_state = "pillow_1_t"
 	worn_icon = 'icons/obj/wind_turbine.dmi'
 	worn_icon_state = "turbine_0"
-	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	inhand_icon_state = "wind_turbine"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 	force = 5
 	throwforce = 6
@@ -74,12 +76,13 @@
 		// UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/portable_recharger/proc/set_rotor_tick(new_tick)
-	var/last_rotor_tick = rotor_tick
+	var/last_rotor_tick = floor(rotor_tick)
 	rotor_tick = new_tick
 	if (rotor_tick >= TURBINE_ANIMATION_TICKS)
-		rotor_tick = 0
-	if (floor(rotor_tick) != floor(last_rotor_tick))
-		worn_icon_state = "turbine_[floor(rotor_tick)]"
+		rotor_tick = rotor_tick % TURBINE_ANIMATION_TICKS
+	var/rounded_rotor_tick = floor(rotor_tick)
+	if (rounded_rotor_tick != last_rotor_tick)
+		worn_icon_state = "turbine_[rounded_rotor_tick]"
 		update_appearance()
 		if(ishuman(loc)) //worn
 			var/mob/living/carbon/human/human = loc
