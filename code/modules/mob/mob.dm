@@ -1502,7 +1502,7 @@
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
-/// Update equipment when something is equipped/dropped, to be overriden by children
+/// Update mob stats based on equipment we are wearing when an item is equipped/dropped, to be overriden by children
 /// source - Item that caused the update by being equipped/dropped
 /mob/proc/update_equipment(obj/item/source)
 	update_equipment_speed_mods()
