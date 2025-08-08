@@ -453,10 +453,10 @@ Behavior that's still missing from this component that original food items had t
 				if(food.snout_eat_message_category)
 					snout_message_category = food.snout_eat_message_category
 			var/snout_broadcast_category = "[snout_message_category][SNOUT_EAT_MESSAGE_BROADCAST_SUFFIX]"
-			message_to_consumer = pick_list_replacements(SNOUT_EAT_MESSAGE_FILE, snout_message_category)
-			message_to_consumer = REPLACE_PRONOUNS(replacetext(message_to_consumer, "%FOOD", "\the [parent]"), eater)
-			message_to_nearby_audience = pick_list_replacements(SNOUT_EAT_MESSAGE_FILE, snout_broadcast_category)
-			message_to_nearby_audience = REPLACE_PRONOUNS(replacetext(message_to_nearby_audience, "%FOOD", "\the [parent]"), eater)
+			message_to_consumer = replacetext(pick_list_replacements(SNOUT_EAT_MESSAGE_FILE, snout_message_category), "%FOOD", "\the [parent]")
+			message_to_consumer = span_notice(REPLACE_PRONOUNS(message_to_consumer, eater))
+			message_to_nearby_audience = replacetext(pick_list_replacements(SNOUT_EAT_MESSAGE_FILE, snout_broadcast_category), "%FOOD", "\the [parent]")
+			message_to_nearby_audience = span_notice("[eater] [REPLACE_PRONOUNS(message_to_nearby_audience, eater)]")
 			if(!(snout_broadcast_category in SNOUT_EAT_QUIETLY_LIST))
 				message_to_blind_nearby_audience = "You hear an anteater struggling with food."
 
