@@ -1,5 +1,6 @@
 #define MAX_STORED_POWER (0.1 * STANDARD_CELL_CHARGE)
-
+#define TURBINE_ANIMATION_TICKS_PER_TILE (1)
+#define TURBINE_ANIMATION_TICKS 2
 #define CHARGE_PER_TILE (0.005 * MAX_STORED_POWER)
 
 /obj/item/portable_recharger
@@ -9,6 +10,8 @@
 	base_icon_state = "pillow_1_t"
 	desc = "A portable backpack charging dock for energy based weaponry, PDAs, and other devices."
 	inhand_icon_state = "pillow_1_t"
+	worn_icon = 'icons/obj/wind_turbine.dmi'
+	worn_icon_state = "turbine_0"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
@@ -59,7 +62,14 @@
 	if (!user)
 		return
 	var/distance = get_dist(old_loc, user.loc)
-	rotor_tick += distance
+	var/last_rotor_tick = rotor_tick
+	rotor_tick = (rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE) % TURBINE_ANIMATION_TICKS
+	if (floor(rotor_tick) != floor(last_rotor_tick))
+		worn_icon_state = "turbine_[floor(rotor_tick)]"
+		update_appearance()
+		if(ishuman(loc)) //worn
+			var/mob/living/carbon/human/human = loc
+			human.update_worn_back()
 	var/power_to_generate = distance * CHARGE_PER_TILE
 	available_power = min(available_power + power_to_generate, MAX_STORED_POWER)
 
