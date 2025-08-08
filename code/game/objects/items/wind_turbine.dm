@@ -88,8 +88,14 @@
 	if (!user)
 		return
 	var/distance = get_dist(old_loc, user.loc)
-	set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE)
-	var/power_to_generate = distance * CHARGE_PER_TILE
+	var/turf/open/open_turf = get_turf(user)
+	if (!istype(open_turf))
+		return
+	var/pressure_factor = open_turf.air.return_pressure() / 101
+	if (pressure_factor <= 0)
+		return
+	set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE * pressure_factor)
+	var/power_to_generate = distance * CHARGE_PER_TILE * pressure_factor
 	available_power = min(available_power + power_to_generate, MAX_STORED_POWER)
 
 /obj/item/portable_recharger/wrench_act(mob/living/user, obj/item/tool)
