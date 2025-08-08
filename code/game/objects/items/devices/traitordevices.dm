@@ -517,34 +517,35 @@ effective or pretty fucking useless.
 /obj/item/pen/penbang/proc/detonate(mob/user)
 	var/obj/item/grenade/flashbang/bang = new(get_turf(src))
 	bang.detonate()
+	qdel(src)
 
 /// A camera disguised as a flash
 /obj/item/camera/flash
 	/// The flash we use to flash people with
 	var/obj/item/assembly/flash/handheld/internal_flash
 
-/obj/item/assembly/flash/handheld/camera/Initialize(mapload)
+/obj/item/camera/flash/Initialize(mapload)
 	. = ..()
 	internal_flash = new(src)
 
-/obj/item/assembly/flash/handheld/camera/Destroy()
+/obj/item/camera/flash/Destroy()
 	QDEL_NULL(internal_flash)
 	return ..()
 
-/obj/item/assembly/flash/handheld/camera/Exited(atom/movable/gone, direction)
+/obj/item/camera/flash/Exited(atom/movable/gone, direction)
 	. = ..()
 	// i guess this is a normal camera now. shouldn't happen, though
 	if(gone == internal_flash)
 		internal_flash = null
 		qdel(src)
 
-/obj/item/assembly/flash/handheld/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/camera/flash/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	return ..()
 
-/obj/item/assembly/flash/handheld/camera/attack(mob/living/M, mob/user)
+/obj/item/camera/flash/attack(mob/living/M, mob/user)
 	return internal_flash.attack(M, user)
 
 /// Jackboots with a dagger embedded into them - changes your kicks to be stab attacks, potetnially causing bleeding
@@ -552,15 +553,15 @@ effective or pretty fucking useless.
 	/// List of bodyparts modified by the dagger
 	var/list/modified_bodyparts = list()
 
-/obj/item/clothing/shoes/jackboots/dagger/equipped(mob/user, slot)
+/obj/item/clothing/shoes/jackboots/dagger/equipped(mob/living/user, slot)
 	. = ..()
-	if(!(slot & ITEM_SLOT_FEET))
+	if(!(slot & ITEM_SLOT_FEET) || !istype(user))
 		modified_bodyparts += user.get_bodypart(BODY_ZONE_L_LEG)
 		modified_bodyparts += user.get_bodypart(BODY_ZONE_R_LEG)
 		for(var/obj/item/bodypart/bodypart in modified_bodyparts)
 			bodypart.unarmed_sharpness |= SHARP_EDGED
 			bodypart.unarmed_attack_effect = ATTACK_EFFECT_SLASH
-			RegisterSignal(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
+			RegisterSignals(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
 		RegisterSignal(user, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(modify_legs))
 
 /obj/item/clothing/shoes/jackboots/dagger/dropped(mob/user)
