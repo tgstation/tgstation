@@ -42,3 +42,7 @@
 /datum/loadout_item/shoes/glow_shoes
 	name = "Shoes (Glowing, Colourable)"
 	item_path = /obj/item/clothing/shoes/glow
+
+/datum/loadout_item/shoes/jackboots
+	name = "Workboots (Black)"
+	item_path = /obj/item/clothing/shoes/workboots/black
