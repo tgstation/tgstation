@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Mood threshold to become \"crazy\" changed from -7 (one moderately bad event) to -15 (two moderately bad events)."

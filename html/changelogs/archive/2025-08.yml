@@ -150,3 +150,36 @@
   - rscadd: Redid unrestricted access airlock overlays to look less bad
   - bugfix: Fixed unrestricted access overlays not showing up on windoors.
   - bugfix: Fixed blood/glass floor glow going over objects
+2025-08-08:
+  Arturlang:
+  - bugfix: ghosts can't buy heretic powers
+  Melbert:
+  - balance: Airlock crushing now does 20 damage, up from 15. Also may uncommonly
+      cause wounds. Also is properly affected by damage reduction or modifiers.
+  - balance: Mood threshold to become "crazy" changed from -7 (one moderately bad
+      event) to -15 (two moderately bad events).
+  SmArtKar:
+  - balance: Fluoride Stare quirk now takes much longer to start damaging your eyes,
+      and deals less eye damage per second
+  - bugfix: Fixed lizard blinking constantly freezing one of their eyes
+  - bugfix: Fixed brain damage not updating your blinking to be async when you get
+      stupid enough
+  - bugfix: Fixed species changing breaking passive blinking
+  lelandkemble:
+  - qol: informs changelings they can't absorb people they've already taken the DNA
+      of
+  - spellcheck: changelings refer to themselves in second-person less
+  necromanceranne:
+  - balance: Gravity anomalies can be properly clicked. Rather than chain stunning
+      you, the anomaly will knock you down. You can avoid the negatives of gravity
+      anomalies by wearing magboots. (Yes, it did not really protect you until now)
+  - balance: Flux anomalies detonate in a much smaller explosion, but release a wide
+      EMP as well.
+  - balance: Long range gas analyzers can now scan anomalies.
+  panvxv:
+  - rscadd: Bone bracers to Divine Adept kit
+  - qol: Adept robes doesn't cover arms, hands and feet as to match the sprite
+  - qol: Ancient armour doesn't cover hands as to match the sprite
+  - qol: Divine Archer coat doesn't cover arms, hands and feet as to match the sprite
+  - qol: Divine Archer bracers now have the same armor as Divine Archer coat
+  - balance: Divine Archer boots have their own unique armor

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Airlock crushing now does 20 damage, up from 15. Also may uncommonly cause wounds. Also is properly affected by damage reduction or modifiers."

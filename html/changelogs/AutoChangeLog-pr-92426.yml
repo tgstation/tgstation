@@ -1,7 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Fluoride Stare quirk now takes much longer to start damaging your eyes, and deals less eye damage per second"
-  - bugfix: "Fixed lizard blinking constantly freezing one of their eyes"
-  - bugfix: "Fixed brain damage not updating your blinking to be async when you get stupid enough"
-  - bugfix: "Fixed species changing breaking passive blinking"
