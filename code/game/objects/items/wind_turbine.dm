@@ -1,6 +1,7 @@
 #define MAX_STORED_POWER (0.2 * STANDARD_CELL_CHARGE)
 #define TURBINE_ANIMATION_TICKS_PER_TILE (1)
-#define TURBINE_ANIMATION_TICKS 2
+#define TURBINE_ANIMATION_TICKS_PER_KPA (0.5)
+#define TURBINE_ANIMATION_TICKS (2)
 #define CHARGE_PER_TILE (0.005 * MAX_STORED_POWER)
 #define TURBINE_ANCHORED_POWER_PER_KPA (CHARGE_PER_TILE / 2)
 
@@ -61,6 +62,7 @@
 	if (!turbine)
 		return
 	turbine.available_power += TURBINE_ANCHORED_POWER_PER_KPA * pressure_difference
+	set_rotor_tick(rotor_tick + pressure_difference * TURBINE_ANIMATION_TICKS_PER_KPA)
 
 /obj/item/portable_recharger/equipped(mob/user, slot, initial)
 	. = ..()
@@ -71,19 +73,22 @@
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 		// UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
-/obj/item/portable_recharger/proc/on_move(atom/thing, atom/old_loc, dir)
-	var/mob/user = thing
-	if (!user)
-		return
-	var/distance = get_dist(old_loc, user.loc)
+/obj/item/portable_recharger/proc/set_rotor_tick(new_tick)
 	var/last_rotor_tick = rotor_tick
-	rotor_tick = (rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE) % TURBINE_ANIMATION_TICKS
+	rotor_tick = new_tick % TURBINE_ANIMATION_TICKS
 	if (floor(rotor_tick) != floor(last_rotor_tick))
 		worn_icon_state = "turbine_[floor(rotor_tick)]"
 		update_appearance()
 		if(ishuman(loc)) //worn
 			var/mob/living/carbon/human/human = loc
 			human.update_worn_back()
+
+/obj/item/portable_recharger/proc/on_move(atom/thing, atom/old_loc, dir)
+	var/mob/user = thing
+	if (!user)
+		return
+	var/distance = get_dist(old_loc, user.loc)
+	set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE)
 	var/power_to_generate = distance * CHARGE_PER_TILE
 	available_power = min(available_power + power_to_generate, MAX_STORED_POWER)
 
@@ -148,16 +153,13 @@
 
 /obj/item/portable_recharger/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
-		if(user.get_slot_by_item(src) & slot_flags)
-			take_charging_out(user)
-		else
-			balloon_alert(user, "equip it first!")
+		take_charging_out(user)
 		return TRUE
 
 	add_fingerprint(user)
 	return ..()
 
-/obj/item/portable_recharger/deconstruct(dissassembled)
+/obj/item/portable_recharger/handle_deconstruct(dissassembled)
 	charging?.forceMove(drop_location())
 	return ..()
 
