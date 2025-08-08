@@ -1,0 +1,174 @@
+#define MAX_STORED_POWER = 0.1 * STANDARD_CELL_CHARGE
+
+/obj/item/portable_recharger
+	name = "backpack recharger"
+	icon = 'icons/obj/bed.dmi'
+	icon_state = "pillow_1_t"
+	base_icon_state = "pillow_1_t"
+	desc = "A portable backpack charging dock for energy based weaponry, PDAs, and other devices."
+	inhand_icon_state = "pillow_1_t"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
+	force = 5
+	throwforce = 6
+	w_class = WEIGHT_CLASS_BULKY
+	///What item is being charged currently?
+	var/obj/item/charging = null
+	///Did we put power into "charging" last process()?
+	var/using_power = FALSE
+	///Did we finish recharging the currently inserted item?
+	var/finished_recharging = FALSE
+
+	var/available_power = 0
+
+	var/static/list/allowed_devices = typecacheof(list(
+		/obj/item/gun/energy,
+		/obj/item/melee/baton/security,
+		/obj/item/ammo_box/magazine/recharge,
+		/obj/item/modular_computer,
+	))
+
+/obj/item/portable_recharger/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/drag_pickup)
+	update_appearance()
+
+/obj/item/portable_recharger/loaded/Initialize(mapload)
+	. = ..()
+	// TODO
+
+/obj/item/portable_recharger/Destroy()
+	return ..()
+
+/obj/item/portable_recharger/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot & slot_flags)
+		// RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
+	else
+		// UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
+
+/obj/item/portable_recharger/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
+
+/obj/item/portable_recharger/examine(mob/user)
+	. = ..()
+
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		. += span_warning("You're too far away to examine [src]'s contents! You can still watch it spin so wonderfully!")
+		return
+
+	if(charging)
+		. += {"[span_notice("\The [src] contains:")]
+		[span_notice("- \A [charging].")]"}
+
+/obj/item/portable_recharger/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(is_type_in_typecache(arrived, allowed_devices))
+		charging = arrived
+		START_PROCESSING(SSmachines, src)
+		finished_recharging = FALSE
+		using_power = TRUE
+		update_appearance()
+	return ..()
+
+/obj/item/portable_recharger/Exited(atom/movable/gone, direction)
+	if(gone == charging)
+		if(!QDELING(charging))
+			charging.update_appearance()
+		charging = null
+		using_power = FALSE
+		update_appearance()
+	return ..()
+
+/obj/item/portable_recharger/attackby(obj/item/attacking_item, mob/user, params)
+	if(!is_type_in_typecache(attacking_item, allowed_devices))
+		return ..()
+	if(charging)
+		return TRUE
+	if(istype(attacking_item, /obj/item/gun/energy))
+		var/obj/item/gun/energy/energy_gun = attacking_item
+		if(!energy_gun.can_charge)
+			balloon_alert(user, "not rechargable!")
+			return TRUE
+	user.transferItemToLoc(attacking_item, src)
+	return TRUE
+
+/obj/item/portable_recharger/screwdriver_act(mob/living/user, obj/item/tool)
+	// TODO
+	return FALSE
+
+/obj/item/portable_recharger/attack_hand(mob/user, list/modifiers)
+	if(loc == user)
+		if(user.get_slot_by_item(src) & slot_flags)
+			take_charging_out(user)
+		else
+			balloon_alert(user, "equip it first!")
+		return TRUE
+
+	add_fingerprint(user)
+	return ..()
+
+/obj/item/portable_recharger/deconstruct(dissassembled)
+	charging?.forceMove(drop_location())
+	return ..()
+
+///Takes charging item out if there is one
+/obj/item/portable_recharger/proc/take_charging_out(mob/user)
+	if(isnull(charging) || user.put_in_hands(charging))
+		return
+	charging.forceMove(drop_location())
+
+/obj/item/portable_recharger/attack_tk(mob/user)
+	if(isnull(charging))
+		return
+	charging.forceMove(drop_location())
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/item/portable_recharger/process(seconds_per_tick)
+	using_power = FALSE
+	if(isnull(charging))
+		return PROCESS_KILL
+	var/obj/item/stock_parts/power_store/cell/charging_cell = charging.get_cell()
+	if(charging_cell)
+		var/wanted_power = min(charging_cell.maxcharge - charging_cell.charge, charging_cell.chargerate)
+		if(wanted_power > 0)
+			using_power = TRUE
+			var/power_to_give = min(available_power, wanted_power) * seconds_per_tick / 2
+			if (power_to_give > 0)
+				charging_cell.give(power_to_give)
+				available_power -= power_to_give
+		update_appearance()
+
+	if(istype(charging, /obj/item/ammo_box/magazine/recharge)) //if you add any more snowflake ones, make sure to update the examine messages too.
+		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
+		if(power_pack.stored_ammo.len < power_pack.max_ammo)
+			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
+			available_power -= charging_cell.charge
+			using_power = TRUE
+		update_appearance()
+		return
+	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
+		finished_recharging = TRUE
+		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+		say("[charging] has finished recharging!")
+
+/obj/item/portable_recharger/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_CONTENTS)
+		return
+
+	if(istype(charging, /obj/item/gun/energy))
+		var/obj/item/gun/energy/energy_gun = charging
+		energy_gun?.cell.emp_act(severity)
+
+	else if(istype(charging, /obj/item/melee/baton/security))
+		var/obj/item/melee/baton/security/batong = charging
+		batong?.cell.charge = 0
+
+/obj/item/portable_recharger/update_overlays()
+	. = ..()
+
+	var/icon_to_use = "[base_icon_state]-[isnull(charging) ? "empty" : (using_power ? "charging" : "full")]"
+	. += mutable_appearance(icon, icon_to_use, alpha = src.alpha)
+	. += emissive_appearance(icon, icon_to_use, src, alpha = src.alpha)
