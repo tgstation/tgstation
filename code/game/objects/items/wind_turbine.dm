@@ -2,6 +2,7 @@
 #define TURBINE_ANIMATION_TICKS_PER_TILE (1)
 #define TURBINE_ANIMATION_TICKS 2
 #define CHARGE_PER_TILE (0.005 * MAX_STORED_POWER)
+#define TURBINE_ANCHORED_POWER_PER_KPA (CHARGE_PER_TILE / 2)
 
 /obj/item/portable_recharger
 	name = "backpack recharger"
@@ -39,6 +40,7 @@
 /obj/item/portable_recharger/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
+	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_anchor))
 	update_appearance()
 
 /obj/item/portable_recharger/loaded/Initialize(mapload)
@@ -47,6 +49,18 @@
 
 /obj/item/portable_recharger/Destroy()
 	return ..()
+
+/obj/item/portable_recharger/proc/on_anchor(atom/source, is_anchored)
+	if (is_anchored)
+		RegisterSignal(src, COMSIG_MOVABLE_RESISTED_SPACEWIND, PROC_REF(on_space_wind))
+	else
+		UnregisterSignal(src, COMSIG_MOVABLE_RESISTED_SPACEWIND)
+
+/obj/item/portable_recharger/proc/on_space_wind(atom/source, pressure_difference, pressure_direction)
+	var/obj/item/portable_recharger/turbine = source
+	if (!turbine)
+		return
+	turbine.available_power += TURBINE_ANCHORED_POWER_PER_KPA * pressure_difference
 
 /obj/item/portable_recharger/equipped(mob/user, slot, initial)
 	. = ..()
@@ -72,6 +86,15 @@
 			human.update_worn_back()
 	var/power_to_generate = distance * CHARGE_PER_TILE
 	available_power = min(available_power + power_to_generate, MAX_STORED_POWER)
+
+/obj/item/portable_recharger/wrench_act(mob/living/user, obj/item/tool)
+	. = NONE
+	switch(default_unfasten_wrench(user, tool, 4 SECONDS))
+		if(SUCCESSFUL_UNFASTEN)
+			return ITEM_INTERACT_SUCCESS
+		if(FAILED_UNFASTEN)
+			return ITEM_INTERACT_BLOCKING
+	return .
 
 /obj/item/portable_recharger/dropped(mob/user, silent)
 	. = ..()
