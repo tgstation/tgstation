@@ -75,7 +75,9 @@
 
 /obj/item/portable_recharger/proc/set_rotor_tick(new_tick)
 	var/last_rotor_tick = rotor_tick
-	rotor_tick = new_tick % TURBINE_ANIMATION_TICKS
+	rotor_tick = new_tick
+	if (rotor_tick >= TURBINE_ANIMATION_TICKS)
+		rotor_tick = 0
 	if (floor(rotor_tick) != floor(last_rotor_tick))
 		worn_icon_state = "turbine_[floor(rotor_tick)]"
 		update_appearance()
@@ -91,7 +93,7 @@
 	var/turf/open/open_turf = get_turf(user)
 	if (!istype(open_turf))
 		return
-	var/pressure_factor = open_turf.air.return_pressure() / 101
+	var/pressure_factor = open_turf.air.return_pressure() / 101.0
 	if (pressure_factor <= 0)
 		return
 	set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE * pressure_factor)
@@ -158,10 +160,9 @@
 	return FALSE
 
 /obj/item/portable_recharger/attack_hand(mob/user, list/modifiers)
-	if(loc == user)
+	if(loc == user || (istype(loc, /turf) && !isnull(charging)))
 		take_charging_out(user)
 		return TRUE
-
 	add_fingerprint(user)
 	return ..()
 
