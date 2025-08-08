@@ -537,7 +537,6 @@ effective or pretty fucking useless.
 	// i guess this is a normal camera now. shouldn't happen, though
 	if(gone == internal_flash)
 		internal_flash = null
-		qdel(src)
 
 /obj/item/camera/flash/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isliving(interacting_with))
@@ -546,7 +545,7 @@ effective or pretty fucking useless.
 	return ..()
 
 /obj/item/camera/flash/attack(mob/living/M, mob/user)
-	return internal_flash.attack(M, user)
+	return internal_flash?.attack(M, user)
 
 /// Jackboots with a dagger embedded into them - changes your kicks to be stab attacks, potetnially causing bleeding
 /obj/item/clothing/shoes/jackboots/dagger
