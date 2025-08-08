@@ -5,7 +5,9 @@
 	var/warn_grace = FALSE
 	var/warn_dying = FALSE
 	var/last_blink
-	var/check_every = 20 SECONDS
+	/// How long can you not blink before you get a warning?
+	var/warning_delay = 20 SECONDS
+	/// Delay between getting a warning and you starting to take eye damage
 	var/grace_period = 6 SECONDS
 	/// Organ damage taken per tick
 	var/damage_rate = 1
@@ -15,12 +17,12 @@
 	var/display_message = TRUE
 	var/list/valid_emotes = list(/datum/emote/living/carbon/human/blink, /datum/emote/living/carbon/human/blink_r)
 
-/datum/component/manual_blinking/Initialize(damage_rate = 1, check_every = 20 SECONDS, grace_period = 6 SECONDS, display_message = TRUE)
+/datum/component/manual_blinking/Initialize(damage_rate = 1, warning_delay = 20 SECONDS, grace_period = 6 SECONDS, display_message = TRUE)
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.damage_rate = damage_rate
-	src.check_every = check_every
+	src.warning_delay = warning_delay
 	src.grace_period = grace_period
 	src.display_message = display_message
 
@@ -70,12 +72,12 @@
 	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_blinking/process()
-	if(world.time > (last_blink + check_every + grace_period))
+	if(world.time > (last_blink + warning_delay + grace_period))
 		if(!warn_dying)
 			to_chat(parent, span_userdanger("Your eyes begin to wither, you need to blink!"))
 			warn_dying = TRUE
 		parent_eyes.apply_organ_damage(damage_rate)
-	else if(world.time > (last_blink + check_every))
+	else if(world.time > (last_blink + warning_delay))
 		if(!warn_grace)
 			to_chat(parent, span_danger("You feel a need to blink!"))
 			warn_grace = TRUE

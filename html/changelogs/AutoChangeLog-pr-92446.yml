@@ -1,9 +1,0 @@
-author: "panvxv"
-delete-after: True
-changes:
-  - rscadd: "Bone bracers to Divine Adept kit"
-  - qol: "Adept robes doesn't cover arms, hands and feet as to match the sprite"
-  - qol: "Ancient armour doesn't cover hands as to match the sprite"
-  - qol: "Divine Archer coat doesn't cover arms, hands and feet as to match the sprite"
-  - qol: "Divine Archer bracers now have the same armor as Divine Archer coat"
-  - balance: "Divine Archer boots have their own unique armor"
