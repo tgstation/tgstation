@@ -1,4 +1,6 @@
-#define MAX_STORED_POWER = 0.1 * STANDARD_CELL_CHARGE
+#define MAX_STORED_POWER (0.1 * STANDARD_CELL_CHARGE)
+
+#define CHARGE_PER_TILE (0.005 * MAX_STORED_POWER)
 
 /obj/item/portable_recharger
 	name = "backpack recharger"
@@ -20,6 +22,7 @@
 	///Did we finish recharging the currently inserted item?
 	var/finished_recharging = FALSE
 
+	var/rotor_tick = 0
 	var/available_power = 0
 
 	var/static/list/allowed_devices = typecacheof(list(
@@ -44,9 +47,20 @@
 /obj/item/portable_recharger/equipped(mob/user, slot, initial)
 	. = ..()
 	if(slot & slot_flags)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 		// RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
 	else
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 		// UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
+
+/obj/item/portable_recharger/proc/on_move(atom/thing, atom/old_loc, dir)
+	var/mob/user = thing
+	if (!user)
+		return
+	var/distance = get_dist(old_loc, user.loc)
+	rotor_tick += distance
+	var/power_to_generate = distance * CHARGE_PER_TILE
+	available_power = min(available_power + power_to_generate, MAX_STORED_POWER)
 
 /obj/item/portable_recharger/dropped(mob/user, silent)
 	. = ..()
