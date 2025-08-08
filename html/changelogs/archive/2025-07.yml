@@ -723,3 +723,54 @@
   - balance: Sphere MODule bombs no longer hit NODE drones and minebots
   - balance: Ice demon/ice demon cube afterimages can now be walked through by players
   - bugfix: Sphere MODule bombs now aggro basicmobs hit by their explosions
+2025-07-30:
+  Bisar:
+  - qol: Power cells and megacells now take much less time to print.
+  - balance: Power cells now take the base-item time-to-print ( 10 seconds -> 3.2
+      seconds ), WITHOUT the stock-item print speed increase.
+  - balance: Megacells now take 5 seconds to print ( 10 seconds -> 5 seconds), WITHOUT
+      the stock-item print speed increase.
+  Rhials:
+  - balance: Nightmares/Shadowpeople are no longer stunned by intense flashes like
+      flashbangs or handheld flashes.
+  - balance: Nightmares/Shadowpeople are now harmed and confused by ALL flash sources,
+      including welding or other sources of flash-like flashing.
+  - sound: Nightmares now have a wretched hiss as their default scream sound. Spooky!
+  TealSeer:
+  - refactor: refactored custom vending machine brand code, a new var on /obj/machinery/vending
+      called allow_custom now determines whether the machine can be chosen when screwdrivering
+      the circuit board
+2025-07-31:
+  Aliceee2ch:
+  - bugfix: Tier 3 cyber heart now prevents bleeding as intended
+  Bisar:
+  - bugfix: Fixed a couple of missing entries for user_data
+  - code_imp: Ore silo logs will now generate an entry for a failed ID_DATA entry
+      instead of not generating anything if the initial provided user_data wasn't
+      valid.
+  - bugfix: The calculation for discharged energy when committing suicide with a power
+      storage part should now be correctly evaluated.
+  Ghommie:
+  - bugfix: Fixes a few dishes getting a bit too, uh, meaty when cut.
+  - bugfix: Fixes being able to turn different types of cooked spaghetti into generic
+      cooked spaghetti with an oven.
+  JohnFulpWillard:
+  - rscadd: Added a new role to Mafia; the Coroner, which takes the Chaplain's ability
+      to see dead people's roles.
+  - rscadd: Mafia Chaplains now speak with the dead at night instead, and the dead
+      are corpselocked to prevent cheating.
+  - bugfix: Mafia's HoS doesn't kill himself when executing non-townies.
+  - qol: You can now update your notes & send them in chat while dead, as well as
+      look up the descriptions of other roles.
+  LemonInTheDark:
+  - bugfix: Distortion/fov effects now properly impact the full game world
+  Melbert:
+  - qol: Adds some wardrobes and backpacks to Catwalk laundry + dorms
+  MelokG and KREKS:
+  - image: resprited all RPEDs
+  - image: RPEDs now play an animation when replacing parts
+  SmArtKar:
+  - bugfix: Fixed fly infusion deleting the last infused organ upon activation
+  Thunder12345:
+  - map: Tramstation's xenobiology now receives xeno eggs in the middle of the chamber
+      instead of tucked away at the back.
