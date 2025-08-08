@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - admin: "MC tab renders without jumping around constantly now, some labels are more readable"

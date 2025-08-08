@@ -186,6 +186,10 @@
 	if(!isobj(interacting_with) || iseffect(interacting_with))
 		return NONE
 
+	if(HAS_TRAIT(interacting_with, TRAIT_DUCT_TAPE_UNREPAIRABLE))
+		user.balloon_alert(user, "cannot be repaired with duct tape!")
+		return ITEM_INTERACT_BLOCKING
+
 	var/obj/item/object_to_repair = interacting_with
 	var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity
 

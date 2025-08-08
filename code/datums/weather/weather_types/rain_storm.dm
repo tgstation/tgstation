@@ -129,11 +129,11 @@
 	GLOB.wizard_rain_reagents |= allowed_medicine
 
 	// One randomized type is allowed so the whitelist isn't spammed with subtypes
-	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/glitter))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/mutationtoxin))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/plantnutriment))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/impurity))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/glitter/random))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/uranium))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/luminescent_fluid))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/carpet))
