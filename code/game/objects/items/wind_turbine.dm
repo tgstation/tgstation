@@ -6,11 +6,11 @@
 #define TURBINE_ANCHORED_POWER_PER_KPA (CHARGE_PER_TILE / 2)
 
 /obj/item/portable_recharger
-	name = "backpack recharger"
+	name = "portable wind turbine"
 	icon = 'icons/obj/wind_turbine.dmi'
 	icon_state = "icon"
 	base_icon_state = "icon"
-	desc = "A portable backpack charging dock for energy based weaponry, PDAs, and other devices."
+	desc = "A portable wind turbine that can charge attached energy based weaponry, PDAs, and other devices."
 	worn_icon = 'icons/obj/wind_turbine.dmi'
 	worn_icon_state = "turbine_0"
 	inhand_icon_state = "wind_turbine"
