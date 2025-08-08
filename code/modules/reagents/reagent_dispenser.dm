@@ -675,3 +675,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	accepts_rig = TRUE
 
 #undef REAGENT_SPILL_DIVISOR
+#undef COOLER_JUG_EJECT_TIME
