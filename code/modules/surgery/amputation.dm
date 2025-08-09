@@ -51,7 +51,7 @@
 		/obj/item/hatchet = 40,
 		/obj/item/knife/butcher = 25,
 	)
-	time = 64
+	time = 6.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	surgery_effects_mood = TRUE
@@ -78,7 +78,7 @@
 		/obj/item/hatchet = 75,
 		TOOL_SCALPEL = 25,
 	)
-	time = 30
+	time = 3 SECONDS
 	preop_sound = 'sound/items/handling/surgery/saw.ogg'
 	success_sound = 'sound/items/handling/materials/wood_drop.ogg'
 

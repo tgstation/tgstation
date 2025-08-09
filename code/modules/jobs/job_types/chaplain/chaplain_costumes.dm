@@ -14,8 +14,8 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/chaplainsuit_armor
-	strip_delay = 80
-	equip_delay_other = 60
+	strip_delay = 8 SECONDS
+	equip_delay_other = 6 SECONDS
 
 /datum/armor/chaplainsuit_armor
 	melee = 50
@@ -165,7 +165,7 @@
 	armor_type = /datum/armor/helmet_chaplain
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 
 /datum/armor/helmet_chaplain

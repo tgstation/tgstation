@@ -37,7 +37,7 @@
 		/obj/item/hatchet = 35,
 		/obj/item/knife/butcher = 25,
 	)
-	time = 64
+	time = 6.4 SECONDS
 	surgery_effects_mood = TRUE
 	preop_sound = list(
 		/obj/item/circular_saw = 'sound/items/handling/surgery/saw.ogg',
@@ -87,7 +87,7 @@
 		TOOL_SCREWDRIVER = 45,
 		TOOL_WIRECUTTER = 35,
 	)
-	time = 32
+	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 
