@@ -34,9 +34,11 @@
 
 /obj/item/gun/energy/wiremod_gun/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(
+	var/datum/component/shell/shell = AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/wiremod_gun()
 	), SHELL_CAPACITY_MEDIUM)
+
+	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_ATTACHED, PROC_REF(on_circuit_attached))
 
 /obj/item/circuit_component/wiremod_gun
 	display_name = "Gun"
@@ -61,6 +63,18 @@
 
 /obj/item/circuit_component/wiremod_gun/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_GUN_CHAMBER_PROCESSED))
+
+/obj/item/gun/energy/wiremod_gun/proc/on_circuit_attached(datum/component/shell/source)
+	SIGNAL_HANDLER
+
+	if (istype(source, /datum/component/shell))
+		var/datum/component/shell/comp = source
+		var/obj/item/integrated_circuit/circuit = comp.attached_circuit
+		if (!circuit.cell)
+			return
+		var/transferred = src.cell.give(min(0.1 * STANDARD_CELL_CHARGE, circuit.cell.charge))
+		if (transferred)
+			circuit.cell.use(transferred, force=TRUE)
 
 /**
  * Called when the shell item shoots something
