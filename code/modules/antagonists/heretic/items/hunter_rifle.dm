@@ -24,9 +24,7 @@
 	name = "lionhunter rifle internal magazine"
 	ammo_type = /obj/item/ammo_casing/strilka310/lionhunter
 	caliber = CALIBER_STRILKA310
-	armour_penetration = 100
 	max_ammo = 3
-	multiload = TRUE
 
 /obj/item/ammo_casing/strilka310/lionhunter
 	projectile_type = /obj/projectile/bullet/strilka310/lionhunter

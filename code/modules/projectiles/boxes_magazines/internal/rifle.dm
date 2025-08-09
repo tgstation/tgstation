@@ -4,7 +4,6 @@
 	ammo_type = /obj/item/ammo_casing/strilka310
 	caliber = CALIBER_STRILKA310
 	max_ammo = 5
-	multiload = TRUE
 
 /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	ammo_type = /obj/item/ammo_casing/strilka310/surplus
@@ -69,7 +68,6 @@
 	ammo_type = /obj/item/ammo_casing/strilka310
 	caliber = CALIBER_STRILKA310
 	max_ammo = 10
-	multiload = TRUE
 
 /obj/item/ammo_box/magazine/internal/sks/empty
 	start_empty = TRUE
