@@ -20,7 +20,7 @@
 		return
 	var/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/blood_drunk_miner = owner
 	blood_drunk_miner.miner_saw.attack_self(owner)
-	var/saw_open = HAS_TRAIT(miner_saw, TRAIT_TRANSFORM_ACTIVE)
+	var/saw_open = HAS_TRAIT(blood_drunk_miner.miner_saw, TRAIT_TRANSFORM_ACTIVE)
 	blood_drunk_miner.rapid_melee = saw_open ? 3 : 5
 	blood_drunk_miner.icon_state = "miner[saw_open ? "_transformed":""]"
 	blood_drunk_miner.icon_living = "miner[saw_open ? "_transformed":""]"
