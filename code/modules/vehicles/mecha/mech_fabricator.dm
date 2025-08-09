@@ -53,9 +53,6 @@
 	/// Looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
 
-	/// Local designs that only this mechfab have(using when mechfab emaged so it's illegal designs).
-	var/list/datum/design/illegal_local_designs
-
 	/// Direction the produced items will drop (0 means on top of us)
 	var/drop_direction = SOUTH
 
@@ -63,7 +60,6 @@
 	print_sound = new(src,  FALSE)
 	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
-	illegal_local_designs = list()
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/Destroy()
@@ -153,27 +149,6 @@
 	drop_direction = direction
 	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
-/obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(obj_flags & EMAGGED)
-		return FALSE
-	if(!HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
-		to_chat(user, span_warning("You're unsure about [emag_card ? "where to swipe [emag_card] over" : "how to override"] [src] for any effect. Maybe if you had more knowledge of robotics..."))
-
-		return FALSE
-	obj_flags |= EMAGGED
-	for(var/found_illegal_mech_nods in SSresearch.techweb_nodes)
-		var/datum/techweb_node/illegal_mech_node = SSresearch.techweb_nodes[found_illegal_mech_nods]
-		if(!illegal_mech_node?.illegal_mech_node)
-			continue
-		for(var/id in illegal_mech_node.design_ids)
-			var/datum/design/illegal_mech_design = SSresearch.techweb_design_by_id(id)
-			illegal_local_designs |= illegal_mech_design
-			cached_designs |= illegal_mech_design
-	say("R$c!i&ed ERROR de#i$ns. C@n%ec$%ng to ~NULL~ se%ve$s.")
-	playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 50, TRUE)
-	update_static_data_for_all_viewers()
-	return TRUE
-
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
  */
@@ -186,9 +161,6 @@
 
 		if(design.build_type & MECHFAB)
 			cached_designs |= design
-
-	for(var/datum/design/illegal_disign in illegal_local_designs)
-		cached_designs |= illegal_disign
 
 	var/design_delta = cached_designs.len - previous_design_count
 
@@ -458,7 +430,7 @@
 				if(!istext(design_id))
 					continue
 
-				if(!(stored_research.researched_designs.Find(design_id) || is_type_in_list(SSresearch.techweb_design_by_id(design_id), illegal_local_designs)))
+				if(!stored_research.researched_designs.Find(design_id))
 					continue
 
 				var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
