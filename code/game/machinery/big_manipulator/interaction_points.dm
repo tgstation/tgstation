@@ -11,6 +11,8 @@
 	var/filters_status = FILTERS_SKIPPED
 	/// How should this point be interacted with?
 	var/interaction_mode = INTERACT_DROP
+	/// How should the monkey worker (if there is one) interact with the target point?
+	var/worker_interaction
 	/// How far should the manipulator throw the object?
 	var/throw_range = 1
 	/// Which items are supposed to be picked up from `interaction_turf` if this is a pickup point
@@ -19,6 +21,8 @@
 	/// If this is a dropoff point, influences which interaction endpoints are preferred over which
 	/// by the manipulator.
 	var/list/interaction_priorities = list()
+	/// Should the manipulator overflow this interaction point if there are already atoms on this turf?
+	var/should_overflow
 	/// Which object category should the filters be looking out for.
 	var/filtering_mode = TAKE_ITEMS
 	/// List of types that can be picked up from this point

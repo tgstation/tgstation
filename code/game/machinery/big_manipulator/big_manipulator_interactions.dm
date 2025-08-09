@@ -278,11 +278,11 @@
 	var/obj/obj_resolve = held_object.resolve()
 	var/turf/drop_turf = drop_point.interaction_turf
 
-	// if(worker_interaction == WORKER_SINGLE_USE && item_used) TODO: Proper point handling here
-	// 	obj_resolve.forceMove(drop_turf)
-	// 	obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
-	// 	finish_manipulation()
-	// 	return
+	if(drop_point.worker_interaction == WORKER_SINGLE_USE && item_used)
+		obj_resolve.forceMove(drop_turf)
+		obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
+		finish_manipulation()
+		return
 
 	if(!on || drop_point.interaction_mode != INTERACT_USE)
 		finish_manipulation()
@@ -340,9 +340,9 @@
 
 /// Checks if we should continue using the empty hand after interaction
 /obj/machinery/big_manipulator/proc/check_end_of_use_for_use_with_empty_hand(datum/interaction_point/destination_point, item_was_used = TRUE)
-	// if(!on || (worker_interaction != WORKER_EMPTY_USE && interaction_mode == INTERACT_USE)) TODO: should use the point data
-		// finish_manipulation()
-		// return
+	if(!on || (destination_point.worker_interaction != WORKER_EMPTY_USE && destination_point.interaction_mode == INTERACT_USE))
+		finish_manipulation()
+		return
 
 	if(!item_was_used)
 		finish_manipulation()

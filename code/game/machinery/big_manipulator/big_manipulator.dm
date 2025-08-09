@@ -401,7 +401,7 @@
 		try_begin_full_cycle()
 
 	else
-		drop_held_object()
+		drop_held_atom()
 		on = new_power_state
 		remove_all_huds()
 		end_current_task()
@@ -430,7 +430,7 @@
 		balloon_alert(user, "deactivated")
 
 /// Drop item that manipulator is manipulating.
-/obj/machinery/big_manipulator/proc/drop_held_object()
+/obj/machinery/big_manipulator/proc/drop_held_atom()
 	if(isnull(held_object))
 		return
 	var/obj/obj_resolve = held_object?.resolve()
@@ -505,24 +505,35 @@
 	if(.)
 		return
 	switch(action)
-		if("on")
+		if("run_cycle")
 			try_press_on(ui.user)
 			return TRUE
-		if("drop")
-			drop_held_object()
+
+		if("drop_held_atom")
+			drop_held_atom()
 			return TRUE
-		if("changeDelay")
+
+		if("create_pickup_point")
+			create_new_interaction_point(null, list(), FALSE, null, TRANSFER_TYPE_PICKUP)
+			return TRUE
+
+		if("create_dropoff_point")
+			create_new_interaction_point(null, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
+			return TRUE
+
+		if("adjust_interaction_delay")
 			var/new_delay = text2num(params["new_delay"])
 			if(isnull(new_delay))
 				return FALSE
 			var/min_d = BASE_INTERACTION_TIME * minimal_interaction_multiplier
-			var/max_d = MAX_DELAY
-			interaction_delay = clamp(new_delay, min_d, max_d)
+			interaction_delay = clamp(new_delay, min_d, MAX_DELAY)
 			SStgui.update_uis(src)
 			return TRUE
+
 		if("highest_priority_change")
 			override_priority = !override_priority
 			return TRUE
+
 		if("worker_interaction_change")
 			// TODO: cycle interaction on the interaction point
 			return TRUE
@@ -535,14 +546,9 @@
 						break
 			return TRUE
 		if("change_throw_range")
-			// cycle_throw_range() should be handled in interaction_points.dm
+			// cycle_throw_range() TODO: should be handled in interaction_points.dm
 			return TRUE
-		if("create_pickup_point")
-			create_new_interaction_point(null, list(), FALSE, null, TRANSFER_TYPE_PICKUP)
-			return TRUE
-		if("create_dropoff_point")
-			create_new_interaction_point(null, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
-			return TRUE
+
 		if("move_point")
 			var/index = params["index"]
 			var/dx = text2num(params["dx"])
@@ -565,49 +571,57 @@
 			point.interaction_turf = new_turf
 			update_hud_for_point(point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
 			return TRUE
-		if("change_pickup_type")
-			var/index = params["index"]
-			if(index < 1 || index > length(pickup_points))
-				return FALSE
-			var/datum/interaction_point/point = pickup_points[index]
-			point.filtering_mode = cycle_value(point.filtering_mode, list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS))
+
+
+/obj/machinery/big_manipulator/proc/adjust_param_for_point(point_ref, param, value, mob/user)
+	if(!param) // there may be no value if we're resetting stuff
+		return FALSE
+
+	var/datum/interaction_point/target_point = locate(point_ref)
+	if(!target_point)
+		return FALSE
+
+	switch(param)
+		if("set_name")
+			target_point.name = "[value]"
 			return TRUE
-		if("toggle_item_filter")
-			var/index = params["index"]
-			var/list/all_points = pickup_points + dropoff_points
-			if(index < 1 || index > length(all_points))
-				return FALSE
-			var/datum/interaction_point/point = all_points[index]
-			point.atom_filters = list()
+
+		if("reset_atom_filters")
+			target_point.atom_filters = list()
 			return TRUE
-		if("toggle_filters_skip")
-			var/index = params["index"]
-			if(index < 1 || index > length(pickup_points))
-				return FALSE
-			var/datum/interaction_point/point = pickup_points[index]
-			point.filters_status = !point.filters_status
+
+		if("toggle_dropoff_point_overflow")
+			target_point.should_overflow = !target_point.should_overflow
 			return TRUE
-		if("change_dropoff_mode")
-			var/index = params["index"]
-			if(index < 1 || index > length(dropoff_points))
-				return FALSE
-			var/datum/interaction_point/point = dropoff_points[index]
-			point.interaction_mode = cycle_value(point.interaction_mode, list(INTERACT_DROP, INTERACT_USE, INTERACT_THROW))
+
+		if("cycle_dropoff_point_interaction")
+			target_point.interaction_mode = cycle_value(target_point.interaction_mode, list(INTERACT_DROP, INTERACT_USE, INTERACT_THROW))
 			return TRUE
-		if("toggle_overflow")
-			var/index = params["index"]
-			if(index < 1 || index > length(dropoff_points))
-				return FALSE
-			var/datum/interaction_point/point = dropoff_points[index]
-			// Здесь можно добавить логику для переполнения, если она нужна
+
+		if("toggle_filter_skip")
+			target_point.filters_status = !target_point.filters_status
 			return TRUE
-		if("toggle_dropoff_filters")
-			var/index = params["index"]
-			if(index < 1 || index > length(dropoff_points))
-				return FALSE
-			var/datum/interaction_point/point = dropoff_points[index]
-			point.atom_filters = list()
+
+		if("cycle_pickup_point_type")
+			target_point.filtering_mode = cycle_value(target_point.filtering_mode, list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS))
 			return TRUE
+
+		if("cycle_worker_interaction")
+			target_point.worker_interaction = cycle_value(target_point.worker_interaction, list(WORKER_NORMAL_USE, WORKER_SINGLE_USE, WORKER_EMPTY_USE))
+			return TRUE
+
+		if("set_throw_range")
+			target_point.throw_range = clamp(text2num(value), 1, 7)
+			return TRUE
+
+		if("add_atom_filter_from_held")
+			var/obj/item/held_item = user.get_active_held_item()
+			if(held_item)
+				target_point.atom_filters += WEAKREF(held_item)
+			return TRUE
+
+
+
 
 /// Cycles the given value in the given list. Retuns the next value in the list, or the first one if the list isn't long enough.
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
