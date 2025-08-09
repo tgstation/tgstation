@@ -156,6 +156,7 @@
 			balloon_alert(user, "not rechargable!")
 			return TRUE
 	user.transferItemToLoc(attacking_item, src)
+	update_appearance()
 	return TRUE
 
 /obj/item/portable_recharger/screwdriver_act(mob/living/user, obj/item/tool)
@@ -178,6 +179,7 @@
 	if(isnull(charging) || user.put_in_hands(charging))
 		return
 	charging.forceMove(drop_location())
+	update_appearance()
 
 /obj/item/portable_recharger/attack_tk(mob/user)
 	if(isnull(charging))
@@ -228,7 +230,21 @@
 
 /obj/item/portable_recharger/update_overlays()
 	. = ..()
+	if (isnull(charging))
+		return
+	if (istype(charging, /obj/item/melee/baton/security/))
+		. += mutable_appearance(icon, "baton")
+	else
+		// TODO
 
-	var/icon_to_use = "[base_icon_state]-[isnull(charging) ? "empty" : (using_power ? "charging" : "full")]"
-	. += mutable_appearance(icon, icon_to_use, alpha = src.alpha)
-	. += emissive_appearance(icon, icon_to_use, src, alpha = src.alpha)
+/obj/item/portable_recharger/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if (isnull(charging))
+		return
+	if (isinhands)
+		return
+	if (istype(charging, /obj/item/melee/baton/security/))
+		var/mutable_appearance/baton_overlay = mutable_appearance(icon, "baton")
+		. += baton_overlay
+	else
+		// TODO
