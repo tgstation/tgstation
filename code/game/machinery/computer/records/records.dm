@@ -91,6 +91,7 @@
 				balloon_alert(user, "records purged")
 				playsound(src, 'sound/machines/terminal/terminal_off.ogg', 70, TRUE)
 				investigate_log("[key_name(user)] purged all records.", INVESTIGATE_RECORDS)
+				handle_traitor_objective(user)
 			else
 				balloon_alert(user, "interrupted!")
 
