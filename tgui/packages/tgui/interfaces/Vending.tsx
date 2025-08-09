@@ -393,7 +393,7 @@ const ProductPrice = (props: ProductPriceProps) => {
   const { discount, free, product, redPrice } = props;
   let standardPrice = product.price + '';
   if (free) {
-    standardPrice = 'Free';
+    standardPrice = 'FREE';
   } else if (discount) {
     standardPrice = redPrice + '';
   }
