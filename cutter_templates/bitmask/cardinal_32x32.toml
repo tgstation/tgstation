@@ -1,9 +1,18 @@
 mode = "BitmaskSlice"
 
-# Don't try and put directions in our icon states
-produce_dirs = false
+# Dictates what sort of directions this dmi will have.
+# There are currently 4 possible values:
+# Standard (Default, used if none is specified) -> only 1 direction per frame
+# Cardinals -> 4 directions per frame, arranged as duplicates of the full input set out to the right
+#   ... in order SOUTH, NORTH, EAST, WEST
+# All -> 8 directions per frame, arranged in the same pattern as cardinals
+#   ... in order SOUTH, NORTH, EAST, WEST, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST
+# CardinalsRotated -> 1 direction per frame, will be expanded in the dmi to be Cardinals, with each
+#   ... direction being that base junction, rotated in whatever way. Exists mostly so client.dir supporting states
+#   ... can be created. Creates a lot of duplicate blocks otherwise.
+directional_strategy = "Standard"
 # We smooth only with our cardinal neighbors, not the ones on the diagonal
-smooth_diagonally = false
+output_type = "Cardinal"
 
 # Take as input a set of 32x32 blocks
 [icon_size]
