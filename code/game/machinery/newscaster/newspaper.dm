@@ -268,10 +268,10 @@
 			var/has_image = FALSE
 			if(feed_messages.img)
 				has_image = TRUE
-				user << browse_rsc(feed_messages.img, "tmp_photo[feed_messages.message_ID].png")
+				user << browse_rsc(feed_messages.img, "tmp_photo[feed_messages.message_id].png")
 			channel_data["channel_messages"] += list(list(
 				"message" = "-[feed_messages.return_body(censored_check(feed_messages.body_censor_time))]",
-				"photo" = (has_image ? "tmp_photo[feed_messages.message_ID].png" : null),
+				"photo" = (has_image ? "tmp_photo[feed_messages.message_id].png" : null),
 				"author" = feed_messages.return_author(censored_check(feed_messages.author_censor_time)),
 			))
 	data["channel_data"] = list(channel_data)

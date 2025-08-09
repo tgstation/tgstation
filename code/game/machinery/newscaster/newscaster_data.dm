@@ -42,9 +42,9 @@ GLOBAL_LIST_EMPTY(request_list)
 	///Referece to the photo used in picture messages.
 	var/photo_file
 	///What is the channel ID of the parent channel?
-	var/parent_ID
+	var/parent_id
 	///What number message is this? IE: The first message sent in a round including automated messages is message 1.
-	var/message_ID
+	var/message_id
 
 /datum/feed_message/proc/return_author(censor)
 	if(censor == -1)
@@ -99,36 +99,12 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/author_censor
 	/// Is this an admin channel? Allows for actions to be taken by the admin only.
 	var/is_admin_channel = FALSE
-	/// Channel ID is a random number sequence similar to account ID number that allows for us to link messages to the proper channels through the UI backend.
-	var/channel_ID
+	/// Channel ID is a unique number sequence similar to account ID number that allows for us to link messages to the proper channels through the UI backend.
+	var/channel_id
 	/// Should this channel send cross-server messages?
 	var/cross_sector = FALSE
 	/// Is this a cross-sector channel? If so, this channel can only receive messages via topics
 	var/receiving_cross_sector = FALSE
-
-/datum/feed_channel/New()
-	. = ..()
-	channel_ID = random_channel_id_setup()
-
-/**
- * This proc assigns each feed_channel a random integer, from 1-999 as a unique identifier.
- * Using this value, the TGUI window has a unique identifier to attach to messages that can be used to reattach them
- * to their parent channels back in dreammaker.
- * Based on implementation, we're limiting ourselves to only 998 player made channels maximum. How we'd use all of them, I don't know.
- */
-/datum/feed_channel/proc/random_channel_id_setup()
-	if(!GLOB.news_network)
-		return //Should only apply to channels made before setup is finished, use hardset_channel for these
-	if(!GLOB.news_network.channel_IDs)
-		GLOB.news_network.channel_IDs += rand(1,999)
-		return //This will almost always be the station announcements channel here.
-	var/channel_id
-	for(var/i in 1 to 10000)
-		channel_id = rand(1, 999)
-		if(!GLOB.news_network.channel_IDs["[channel_ID]"])
-			break
-	channel_ID = channel_id
-	return channel_ID
 
 /datum/feed_channel/proc/return_author(censor)
 	if(censor == -1)
@@ -173,36 +149,47 @@ GLOBAL_LIST_EMPTY(request_list)
 /datum/feed_network
 	/// All the feed channels that have been made on the feed network.
 	var/list/datum/feed_channel/network_channels = list()
+	/// Associative list of all the feed channels that have been made on the feed network, from channel ID to channel.
+	var/list/datum/feed_channel/network_channels_by_id = list()
+	/// Associative list of all the feed channels that have been made on the feed network, from channel name to channel.
+	var/list/datum/feed_channel/network_channels_by_name = list()
 	/// What is the wanted issue being sent out to all newscasters.
 	var/datum/wanted_message/wanted_issue
 	/// What time was the last action taken on the feed_network?
 	var/last_action
 	/// What does this feed network say when a message/author is redacted?
 	var/redacted_text = "\[REDACTED\]"
-	/// List of all the network_channels Channel Id numbers, kept in a global easy to find place.
-	var/list/channel_IDs = list()
+	/// Channel ID to use when next making a new channel, to maintain unique IDs.
+	var/next_channel_id = 1
 	/// How many messages currently exist on this feed_network? Increments as new messages are written.
 	var/message_count = 0
 
 /datum/feed_network/New()
-	create_feed_channel(NEWSCASTER_STATION_ANNOUNCEMENTS, "SS13", "Company news, staff announcements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
-	create_feed_channel(NEWSCASTER_SPACE_BETTING, "NtOS", "News from the SpaceBet PDA App! Download now and make your own bets!", locked = TRUE, hardset_channel = 1001)
+	create_feed_channel(NEWSCASTER_STATION_ANNOUNCEMENTS, "SS13", "Company news, staff announcements, and all the latest information. Have a secure shift!", locked = TRUE)
+	create_feed_channel(NEWSCASTER_SPACE_BETTING, "NtOS", "News from the SpaceBet PDA App! Download now and make your own bets!", locked = TRUE)
 	wanted_issue = new /datum/wanted_message
 
-/datum/feed_network/proc/create_feed_channel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel = null, author_ckey = null, cross_sector = FALSE, cross_sector_delay = null, receiving_cross_sector = FALSE)
-	var/datum/feed_channel/newChannel = new /datum/feed_channel
-	newChannel.channel_name = channel_name
-	newChannel.author = author
-	newChannel.channel_desc = desc
-	newChannel.locked = locked
-	newChannel.is_admin_channel = adminChannel
-	newChannel.receiving_cross_sector = receiving_cross_sector
-	if(hardset_channel)
-		newChannel.channel_ID = hardset_channel
-	network_channels += newChannel
+/datum/feed_network/proc/add_feed_channel(datum/feed_channel/new_channel)
+	network_channels += new_channel
+	network_channels_by_id["[new_channel.channel_id]"] = new_channel
+	network_channels_by_name["[new_channel.channel_name]"] = new_channel
+
+/datum/feed_network/proc/create_feed_channel(channel_name, author, desc, locked, adminChannel = FALSE, author_ckey = null, cross_sector = FALSE, cross_sector_delay = null, receiving_cross_sector = FALSE)
+	var/datum/feed_channel/new_channel = new /datum/feed_channel
+	new_channel.channel_name = channel_name
+	new_channel.author = author
+	new_channel.channel_desc = desc
+	new_channel.locked = locked
+	new_channel.is_admin_channel = adminChannel
+	new_channel.receiving_cross_sector = receiving_cross_sector
+	new_channel.channel_id = next_channel_id
+	next_channel_id++
+
+	add_feed_channel(new_channel)
+
 	if(!cross_sector)
 		return
-	newChannel.cross_sector = TRUE
+	new_channel.cross_sector = TRUE
 	var/list/payload = list(
 		"author" = author,
 		"author_ckey" = author_ckey,
@@ -212,31 +199,32 @@ GLOBAL_LIST_EMPTY(request_list)
 	send2otherserver(html_decode(station_name()), channel_name, "create_news_channel", additional_data = payload)
 
 /datum/feed_network/proc/submit_article(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE, mob/author_mob = null)
-	var/datum/feed_message/newMsg = new /datum/feed_message
-	newMsg.author = author
-	newMsg.body = msg
-	newMsg.time_stamp = "[station_time_timestamp()]"
-	newMsg.is_admin_message = adminMessage
-	newMsg.locked = !allow_comments
+	var/datum/feed_channel/chosen_channel = network_channels_by_name[channel_name]
+	if(isnull(chosen_channel))
+		stack_trace("Article submitted to non-existent newscaster channel: [channel_name]")
+		return
+
+	var/datum/feed_message/new_article = new /datum/feed_message
+	new_article.author = author
+	new_article.body = msg
+	new_article.time_stamp = "[station_time_timestamp()]"
+	new_article.is_admin_message = adminMessage
+	new_article.locked = !allow_comments
 
 	message_count++
 	last_action++
-	newMsg.creation_time = last_action
-	newMsg.message_ID = message_count
+	new_article.creation_time = last_action
+	new_article.message_id = message_count
 
 	if(picture)
-		newMsg.img = picture.picture_image
-		newMsg.caption = picture.caption
-		newMsg.photo_file = save_photo(picture.picture_image)
+		new_article.img = picture.picture_image
+		new_article.caption = picture.caption
+		new_article.photo_file = save_photo(picture.picture_image)
 
-	for(var/datum/feed_channel/channel in network_channels)
-		if(channel.channel_name != channel_name)
-			continue
+	chosen_channel.messages += new_article
+	new_article.parent_id = chosen_channel.channel_id
 
-		channel.messages += newMsg
-		newMsg.parent_ID = channel.channel_ID
-		if (!channel.cross_sector)
-			break
+	if(chosen_channel.cross_sector)
 		// Newscaster articles could be huge, and usefulness of first 50 symbols is dubious
 		message_admins(span_adminnotice("Outgoing cross-sector newscaster article by [key_name(author_mob) || author] in channel [channel_name]."))
 		var/list/payload = list(
@@ -245,11 +233,10 @@ GLOBAL_LIST_EMPTY(request_list)
 			"msg" = msg,
 		)
 		send2otherserver(html_decode(station_name()), channel_name, "create_news_article", additional_data = payload)
-		break
 
 	for(var/obj/machinery/newscaster/caster in GLOB.allCasters)
 		caster.news_alert(channel_name, update_alert)
-	return newMsg
+	return new_article
 
 ///Submits a comment on the news network
 /datum/feed_network/proc/submit_comment(mob/user, comment_text, newscaster_username, datum/feed_message/current_message)
