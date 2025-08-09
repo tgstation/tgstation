@@ -50,6 +50,35 @@
 	need_mob_update += source.adjustStaminaLoss(-10 * delta_time, updating_stamina = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
+		new /obj/effect/temp_visual/heal(get_turf(source), COLOR_BROWN)
+	// Reduces duration of stuns/etc
+	source.AdjustAllImmobility((-0.5 SECONDS) * delta_time)
+	// Heals blood loss
+	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
+		source.blood_volume += 2.5 * delta_time
+	// Slowly regulates your body temp
+	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature) / 5)
+
+// Minor variant which heals slightly less and no baton resistance
+/datum/element/leeching_walk/minor/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
+	return FALSE
+
+/datum/element/leeching_walk/minor/on_life(mob/living/source, seconds_per_tick, times_fired)
+	var/turf/our_turf = get_turf(source)
+	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
+		return
+
+	// Heals all damage + Stamina
+	var/need_mob_update = FALSE
+	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
+	need_mob_update += source.adjustBruteLoss(-1 * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-1 * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-1 * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(-1 * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-5 * delta_time, updating_stamina = FALSE)
+	if(need_mob_update)
+		source.updatehealth()
+		new /obj/effect/temp_visual/heal(get_turf(source), COLOR_BROWN)
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility((-0.5 SECONDS) * delta_time)
 	// Heals blood loss

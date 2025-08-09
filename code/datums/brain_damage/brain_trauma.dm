@@ -6,14 +6,22 @@
 /datum/brain_trauma
 	var/name = "Brain Trauma"
 	var/desc = "A trauma caused by brain damage, which causes issues to the patient."
-	var/scan_desc = "generic brain trauma" //description when detected by a health scanner
-	var/mob/living/carbon/owner //the poor bastard
-	var/obj/item/organ/brain/brain //the poor bastard's brain
+	/// Description when detected by a health scanner
+	var/scan_desc = "generic brain trauma"
+	/// The poor bastard
+	var/mob/living/carbon/owner
+	/// The poor bastard's brain
+	var/obj/item/organ/brain/brain
+	/// Message sent in chat when trauma is gained
 	var/gain_text = span_notice("You feel traumatized.")
+	/// Message sent in chat when trauma is lost
 	var/lose_text = span_notice("You no longer feel traumatized.")
+	/// If the trauma can be gained, checked in can_gain_trauma
 	var/can_gain = TRUE
-	var/random_gain = TRUE //can this be gained through random traumas?
-	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
+	/// If this trauma can be gained randomly
+	var/random_gain = TRUE
+	/// How hard is this to cure?
+	var/resilience = TRAUMA_RESILIENCE_BASIC
 
 	/// Tracks abstract types of brain traumas, useful for determining traumas that should not exist
 	var/abstract_type = /datum/brain_trauma
