@@ -202,6 +202,8 @@
 
 ///Registers the signals from the immerse element and calls dip_in if the movable has the required trait.
 /turf/open/water/hot_spring/proc/enter_hot_spring(atom/movable/movable)
+	if(is_type_in_typecache(movable, GLOB.immerse_ignored_movable)) // So we don't immerse weird things like turf decals/effects, projectiles, etc
+		return FALSE
 	RegisterSignal(movable, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
 	if(isliving(movable)) //so far, exiting a hot spring only has effects on living mobs.
 		RegisterSignal(movable, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(dip_out))
