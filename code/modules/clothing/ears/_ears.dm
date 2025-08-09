@@ -25,7 +25,7 @@
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/earhealing)
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
 
 /obj/item/clothing/ears/earmuffs/debug

@@ -3,10 +3,10 @@
 	mobtype = /mob/living/carbon
 	proctype = PROC_REF(reducebang)
 	var/reduce_amount = 1
+	valid_slots = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 
-/datum/component/wearertargeting/earprotection/Initialize(valid_slots, reduce_amount = 1)
+/datum/component/wearertargeting/earprotection/Initialize(reduce_amount = 1)
 	. = ..()
-	src.valid_slots = valid_slots
 	if(reduce_amount)
 		src.reduce_amount = reduce_amount
 

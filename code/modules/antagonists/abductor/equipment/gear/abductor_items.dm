@@ -520,7 +520,7 @@ Return to step 11 of normal process."}
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 	make_syndie()
 
 // Stops humans from disassembling abductor headsets.
