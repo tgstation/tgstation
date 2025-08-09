@@ -245,6 +245,18 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JOKE,
 	)
 
+/datum/design/portable_wind_turbine
+	name = "Portable Wind Turbine"
+	id = "portable_wind_turbine"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1)
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MACHINERY,
+	)
+	build_path = /obj/item/portable_wind_turbine
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/beaker
 	name = "Beaker"
 	id = "beaker"

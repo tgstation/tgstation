@@ -5,7 +5,7 @@
 #define TURBINE_ANCHORED_POWER_PER_KPA (CHARGE_PER_TILE * 2)
 #define MIN_SECONDS_BETWEEN_SOUNDS (0.33 SECONDS)
 
-/obj/item/portable_recharger
+/obj/item/portable_wind_turbine
 	name = "portable wind turbine"
 	icon = 'icons/obj/wind_turbine.dmi'
 	icon_state = "icon"
@@ -44,21 +44,21 @@
 		/obj/item/stock_parts/power_store/cell,
 	))
 
-/obj/item/portable_recharger/Initialize(mapload)
+/obj/item/portable_wind_turbine/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
 	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_anchor))
 	RegisterSignal(src, COMSIG_ATOM_PRE_DIR_CHANGE, PROC_REF(block_dir_changes_unanchored))
 	update_appearance()
 
-/obj/item/portable_recharger/loaded/Initialize(mapload)
+/obj/item/portable_wind_turbine/loaded/Initialize(mapload)
 	. = ..()
 	// TODO
 
-/obj/item/portable_recharger/Destroy()
+/obj/item/portable_wind_turbine/Destroy()
 	return ..()
 
-/obj/item/portable_recharger/proc/on_anchor(atom/source, is_anchored)
+/obj/item/portable_wind_turbine/proc/on_anchor(atom/source, is_anchored)
 	if (is_anchored)
 		RegisterSignal(src, COMSIG_MOVABLE_RESISTED_SPACEWIND, PROC_REF(on_space_wind))
 		UnregisterSignal(src, COMSIG_ATOM_PRE_DIR_CHANGE)
@@ -70,21 +70,21 @@
 		UnregisterSignal(src, COMSIG_MOVABLE_RESISTED_SPACEWIND)
 		RegisterSignal(src, COMSIG_ATOM_PRE_DIR_CHANGE, PROC_REF(block_dir_changes_unanchored))
 
-/obj/item/portable_recharger/proc/block_dir_changes_unanchored(atom/source, old_dir, new_dir)
+/obj/item/portable_wind_turbine/proc/block_dir_changes_unanchored(atom/source, old_dir, new_dir)
 	return COMPONENT_ATOM_BLOCK_DIR_CHANGE
 
-/obj/item/portable_recharger/proc/on_space_wind(atom/source, pressure_difference, pressure_direction)
-	var/obj/item/portable_recharger/turbine = source
+/obj/item/portable_wind_turbine/proc/on_space_wind(atom/source, pressure_difference, pressure_direction)
+	var/obj/item/portable_wind_turbine/turbine = source
 	if (!turbine)
 		return
 	turbine.available_power += TURBINE_ANCHORED_POWER_PER_KPA * pressure_difference
 	set_rotor_tick(rotor_tick + 1)
 
-/obj/item/portable_recharger/update_appearance(updates)
+/obj/item/portable_wind_turbine/update_appearance(updates)
 	. = ..()
 	update_back()
 
-/obj/item/portable_recharger/equipped(mob/user, slot, initial)
+/obj/item/portable_wind_turbine/equipped(mob/user, slot, initial)
 	. = ..()
 	update_appearance()
 	if(slot & slot_flags)
@@ -94,22 +94,22 @@
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 		UnregisterSignal(user, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 
-/obj/item/portable_recharger/proc/on_dir_change(datum/source, old_dir, new_dir)
+/obj/item/portable_wind_turbine/proc/on_dir_change(datum/source, old_dir, new_dir)
 	update_appearance()
 
 ///Updates the worn back icon for a specific user
-/obj/item/portable_recharger/proc/update_back()
+/obj/item/portable_wind_turbine/proc/update_back()
 	if (ishuman(loc))
 		var/mob/living/carbon/human/human = loc
 		human.update_worn_back()
 
-/obj/item/portable_recharger/proc/try_playsound()
+/obj/item/portable_wind_turbine/proc/try_playsound()
 	if ((world.time - last_sound_time) < MIN_SECONDS_BETWEEN_SOUNDS)
 		return
 	playsound(src, 'sound/machines/woosh.ogg', 20, FALSE)
 	last_sound_time = world.time
 
-/obj/item/portable_recharger/proc/set_rotor_tick(new_tick)
+/obj/item/portable_wind_turbine/proc/set_rotor_tick(new_tick)
 	var/last_rotor_tick = floor(rotor_tick)
 	rotor_tick = new_tick
 	if (rotor_tick >= TURBINE_ANIMATION_TICKS)
@@ -119,7 +119,7 @@
 	if (rounded_rotor_tick != last_rotor_tick)
 		update_appearance()
 
-/obj/item/portable_recharger/proc/on_move(atom/thing, atom/old_loc, dir)
+/obj/item/portable_wind_turbine/proc/on_move(atom/thing, atom/old_loc, dir)
 	var/mob/user = thing
 	if (!user)
 		return
@@ -134,7 +134,7 @@
 	var/power_to_generate = distance * CHARGE_PER_TILE * pressure_factor
 	available_power = min(available_power + power_to_generate, MAX_STORED_POWER)
 
-/obj/item/portable_recharger/wrench_act(mob/living/user, obj/item/tool)
+/obj/item/portable_wind_turbine/wrench_act(mob/living/user, obj/item/tool)
 	. = NONE
 	switch(default_unfasten_wrench(user, tool, 4 SECONDS))
 		if(SUCCESSFUL_UNFASTEN)
@@ -143,11 +143,11 @@
 			return ITEM_INTERACT_BLOCKING
 	return .
 
-/obj/item/portable_recharger/dropped(mob/user, silent)
+/obj/item/portable_wind_turbine/dropped(mob/user, silent)
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
-/obj/item/portable_recharger/examine(mob/user)
+/obj/item/portable_wind_turbine/examine(mob/user)
 	. = ..()
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
@@ -158,7 +158,7 @@
 		. += {"[span_notice("\The [src] contains:")]
 		[span_notice("- \A [charging].")]"}
 
-/obj/item/portable_recharger/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/item/portable_wind_turbine/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(is_type_in_typecache(arrived, allowed_devices))
 		charging = arrived
 		START_PROCESSING(SSmachines, src)
@@ -167,7 +167,7 @@
 		update_appearance()
 	return ..()
 
-/obj/item/portable_recharger/Exited(atom/movable/gone, direction)
+/obj/item/portable_wind_turbine/Exited(atom/movable/gone, direction)
 	if(gone == charging)
 		if(!QDELING(charging))
 			charging.update_appearance()
@@ -176,7 +176,7 @@
 		update_appearance()
 	return ..()
 
-/obj/item/portable_recharger/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/portable_wind_turbine/attackby(obj/item/attacking_item, mob/user, params)
 	if(!is_type_in_typecache(attacking_item, allowed_devices))
 		return ..()
 	if(charging)
@@ -191,35 +191,35 @@
 	charging = attacking_item
 	return TRUE
 
-/obj/item/portable_recharger/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/portable_wind_turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	// TODO
 	return FALSE
 
-/obj/item/portable_recharger/attack_hand(mob/user, list/modifiers)
+/obj/item/portable_wind_turbine/attack_hand(mob/user, list/modifiers)
 	if(loc == user || (istype(loc, /turf) && !isnull(charging)))
 		take_charging_out(user)
 		return TRUE
 	add_fingerprint(user)
 	return ..()
 
-/obj/item/portable_recharger/handle_deconstruct(dissassembled)
+/obj/item/portable_wind_turbine/handle_deconstruct(dissassembled)
 	charging?.forceMove(drop_location())
 	return ..()
 
 ///Takes charging item out if there is one
-/obj/item/portable_recharger/proc/take_charging_out(mob/user)
+/obj/item/portable_wind_turbine/proc/take_charging_out(mob/user)
 	if(isnull(charging) || user.put_in_hands(charging))
 		return
 	charging.forceMove(drop_location())
 	update_appearance()
 
-/obj/item/portable_recharger/attack_tk(mob/user)
+/obj/item/portable_wind_turbine/attack_tk(mob/user)
 	if(isnull(charging))
 		return
 	charging.forceMove(drop_location())
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/item/portable_recharger/process(seconds_per_tick)
+/obj/item/portable_wind_turbine/process(seconds_per_tick)
 	using_power = FALSE
 	if(isnull(charging))
 		return PROCESS_KILL
@@ -249,7 +249,7 @@
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 		say("[charging] has finished recharging!")
 
-/obj/item/portable_recharger/emp_act(severity)
+/obj/item/portable_wind_turbine/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_CONTENTS)
 		return
@@ -262,7 +262,7 @@
 		var/obj/item/melee/baton/security/batong = charging
 		batong?.cell.charge = 0
 
-/obj/item/portable_recharger/update_overlays()
+/obj/item/portable_wind_turbine/update_overlays()
 	. = ..()
 	var/mutable_appearance/rotor = mutable_appearance(worn_icon, "rotor_[floor(rotor_tick)]")
 	rotor.pixel_y -= 8
@@ -272,7 +272,7 @@
 	if (istype(charging, /obj/item/melee/baton/security/))
 		. += mutable_appearance(icon, "baton")
 
-/obj/item/portable_recharger/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/portable_wind_turbine/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if (isinhands)
 		return
