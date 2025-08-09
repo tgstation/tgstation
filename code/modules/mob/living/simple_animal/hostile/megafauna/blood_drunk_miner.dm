@@ -46,7 +46,6 @@ Difficulty: Medium
 	achievement_type = /datum/award/achievement/boss/blood_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	score_achievement_type = /datum/award/score/blood_miner_score
-	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
@@ -61,10 +60,12 @@ Difficulty: Medium
 	var/datum/action/cooldown/mob_cooldown/dash_attack/dash_attack
 	/// Transform weapon ability
 	var/datum/action/cooldown/mob_cooldown/transform_weapon/transform_weapon
-
+	/// Ref to their saw
+	var/datum/weakref/miner_saw_ref
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize(mapload)
 	. = ..()
-	miner_saw = new(src)
+	var/obj/item/melee/cleaving_saw/miner/miner_saw = new(src)
+	miner_saw_ref = WEAKREF(mining_saw)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 	dash = new /datum/action/cooldown/mob_cooldown/dash
@@ -83,6 +84,7 @@ Difficulty: Medium
 	kinetic_accelerator = null
 	dash_attack = null
 	transform_weapon = null
+	miner_saw_ref = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
@@ -146,14 +148,22 @@ Difficulty: Medium
 			devour(living_target)
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
-	miner_saw.melee_attack_chain(src, target)
+	var/obj/item/melee/cleaving_saw/miner/miner_saw = miner_saw_ref?.resolve()
+	if(QDELETED(miner_saw))
+		miner_saw_ref = null
+	else
+		miner_saw.melee_attack_chain(src, target)
 	if(guidance)
 		adjustHealth(-2)
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item && !isturf(attacked_atom))
-		used_item = miner_saw
+		var/obj/item/melee/cleaving_saw/miner/miner_saw = miner_saw_ref?.resolve()
+		if(QDELETED(miner_saw))
+			miner_saw_ref = null
+		else
+			used_item = miner_saw
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/GiveTarget(new_target)
