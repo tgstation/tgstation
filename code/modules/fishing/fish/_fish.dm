@@ -1217,7 +1217,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	health_change *= seconds_per_tick
 	if(health_change < 0)
-		damage_fish(health_change)
+		damage_fish(-health_change)
 	else
 		repair_damage(health_change)
 
