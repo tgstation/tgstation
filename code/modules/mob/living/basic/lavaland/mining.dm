@@ -51,9 +51,8 @@
 		throw_blocked_message = throw_blocked_message,\
 	)
 
-/mob/living/basic/mining/proc/check_ashwalker_peace_violation(datum/source, mob/living/carbon/human/possible_ashwalker)
+/mob/living/basic/mining/proc/check_ashwalker_peace_violation(datum/source, mob/living/possible_ashwalker)
 	SIGNAL_HANDLER
-
-	if(!isashwalker(possible_ashwalker) || !(FACTION_ASHWALKER in faction))
+	if(!(possible_ashwalker.faction.Find(FACTION_ASHWALKER)) || !(FACTION_ASHWALKER in faction))
 		return
 	faction.Remove(FACTION_ASHWALKER)

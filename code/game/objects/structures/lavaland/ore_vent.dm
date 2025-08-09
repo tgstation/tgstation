@@ -600,6 +600,31 @@
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 
+/obj/structure/ore_vent/random/rainworld
+	defending_mobs = list(
+		/mob/living/basic/mining/lobstrosity,
+		/mob/living/basic/mining/hivelord,
+		/mob/living/basic/mining/basilisk,
+	)
+	ore_vent_options = list(
+		SMALL_VENT_TYPE = 3,
+		MEDIUM_VENT_TYPE = 5,
+		LARGE_VENT_TYPE = 7,
+	)
+	unique_vent = 1
+	mineral_breakdown = list(
+		/datum/material/iron = 150,
+		/datum/material/glass = 140,
+		/datum/material/plasma = 10,
+		/datum/material/titanium = 8,
+		/datum/material/silver = 6,
+		/datum/material/gold = 4,
+		/datum/material/diamond = 2,
+		/datum/material/uranium = 4,
+		/datum/material/bluespace = 2,
+		/datum/material/plastic = 1,
+	)
+
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START

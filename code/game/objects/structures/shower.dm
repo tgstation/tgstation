@@ -419,6 +419,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/effect/mist/rainworld
+	opacity = TRUE
+
 #undef SHOWER_MODE_UNTIL_EMPTY
 #undef SHOWER_MODE_TIMED
 #undef SHOWER_MODE_FOREVER

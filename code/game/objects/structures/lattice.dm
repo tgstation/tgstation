@@ -156,6 +156,11 @@
 /obj/structure/lattice/catwalk/mining/deconstruction_hints(mob/user)
 	return
 
+/obj/structure/lattice/water
+	name = "waterproof support lattice"
+	desc = "A specialized support beam for building across water. Watch your step."
+	give_turf_traits = list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
+
 /obj/structure/lattice/lava
 	name = "heatproof support lattice"
 	desc = "A specialized support beam for building across lava. Watch your step."
