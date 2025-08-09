@@ -60,12 +60,13 @@ Difficulty: Medium
 	var/datum/action/cooldown/mob_cooldown/dash_attack/dash_attack
 	/// Transform weapon ability
 	var/datum/action/cooldown/mob_cooldown/transform_weapon/transform_weapon
-	/// Ref to their saw
-	var/datum/weakref/miner_saw_ref
+	/// Their little saw
+	var/obj/item/melee/cleaving_saw/miner/miner_saw
+
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize(mapload)
 	. = ..()
-	var/obj/item/melee/cleaving_saw/miner/miner_saw = new(src)
-	miner_saw_ref = WEAKREF(miner_saw)
+	miner_saw = new(src)
+	RegisterSignal(mining_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 	dash = new /datum/action/cooldown/mob_cooldown/dash
@@ -79,12 +80,20 @@ Difficulty: Medium
 
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
 
+/// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
+	SIGNAL_HANDLER
+
+	if(!force)
+		return TRUE
+
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
 	dash = null
 	kinetic_accelerator = null
 	dash_attack = null
 	transform_weapon = null
-	miner_saw_ref = null
+	UnregisterSignal(miner_saw, COMSIG_PREQDELETED) // unblock deletion, we are dead.
+	QDEL_NULL(miner_saw)
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
@@ -148,22 +157,14 @@ Difficulty: Medium
 			devour(living_target)
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
-	var/obj/item/melee/cleaving_saw/miner/miner_saw = miner_saw_ref?.resolve()
-	if(QDELETED(miner_saw))
-		miner_saw_ref = null
-	else
-		miner_saw.melee_attack_chain(src, target)
+	miner_saw.melee_attack_chain(src, target)
 	if(guidance)
 		adjustHealth(-2)
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item && !isturf(attacked_atom))
-		var/obj/item/melee/cleaving_saw/miner/miner_saw = miner_saw_ref?.resolve()
-		if(QDELETED(miner_saw))
-			miner_saw_ref = null
-		else
-			used_item = miner_saw
+		used_item = miner_saw
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/GiveTarget(new_target)

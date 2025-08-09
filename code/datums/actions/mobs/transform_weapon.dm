@@ -19,11 +19,7 @@
 	if(!istype(owner, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner))
 		return
 	var/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/blood_drunk_miner = owner
-	var/obj/item/melee/cleaving_saw/miner/miner_saw = blood_drunk_miner.miner_saw_ref?.resolve()
-	if(QDELETED(miner_saw))
-		blood_drunk_miner.miner_saw_ref = null
-	else
-		miner_saw.attack_self(owner)
+	blood_drunk_miner.miner_saw.attack_self(owner)
 	var/saw_open = HAS_TRAIT(miner_saw, TRAIT_TRANSFORM_ACTIVE)
 	blood_drunk_miner.rapid_melee = saw_open ? 3 : 5
 	blood_drunk_miner.icon_state = "miner[saw_open ? "_transformed":""]"
