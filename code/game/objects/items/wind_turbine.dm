@@ -175,6 +175,7 @@
 	if(cap)
 		. += span_info("Click it with a screwdriver to eject the [cap].")
 	. += span_info("Wrench it on a tile to anchor it and harness space wind.")
+	. += span_info("The wind turbine is currently storing [available_power / 1000]kJ.")
 	if(charging)
 		. += {"[span_notice("\The [src] contains:")]
 		[span_notice("- \A [charging].")]"}
