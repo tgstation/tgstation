@@ -43,7 +43,7 @@
 	beam.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, beam)
 
-/mob/living/basic/mining/brimdemon/Destroy()
+/mob/living/basic/mining/brimdemon/Destroy(force)
 	QDEL_NULL(beam)
 	return ..()
 
