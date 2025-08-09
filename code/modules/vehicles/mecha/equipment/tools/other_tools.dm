@@ -526,6 +526,16 @@
 	if(!locate(/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay) in mech.contents) //if no others exist
 		mech.mech_type &= ~EXOSUIT_MODULE_CONCEALED_WEP_BAY
 
+/obj/item/mecha_parts/mecha_equipment/ejector_seat
+	name = "ejector seat"
+	desc = "A modification to an exosuit's pilot cabin that allows for emergency ejection without falling unconscious."
+	icon_state = "mecha_ejector_seat"
+	equipment_slot = MECHA_UTILITY
+	unstackable = TRUE
+
+/obj/item/mecha_parts/mecha_equipment/ejector_seat/justice
+	detachable = FALSE
+
 /obj/item/mecha_parts/camera_kit
 	name = "exosuit-mounted camera"
 	desc = "A security camera meant for exosuit-mounted surveillance-on-the-go."

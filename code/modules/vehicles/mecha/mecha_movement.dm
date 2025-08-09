@@ -9,6 +9,12 @@
 	SIGNAL_HANDLER
 
 	collect_ore()
+
+	if(mecha_flags & QUIET_STEPS)
+		return
+	// if we are on the second step of the diagonal movement, don't play step sound
+	if(src.moving_diagonally == SECOND_DIAG_STEP)
+		return
 	play_stepsound()
 
 ///Collects ore when we move, if there is an orebox and it is functional
@@ -27,13 +33,6 @@
 
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
-	if(mecha_flags & QUIET_STEPS)
-		return
-
-	// if we are on the second step of the diagonal movement, don't play step sound
-	if(src.moving_diagonally == SECOND_DIAG_STEP)
-		return
-
 	playsound(src, stepsound, 40, TRUE)
 
 // Do whatever you do to mobs to these fuckers too

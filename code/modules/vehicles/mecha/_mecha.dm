@@ -149,6 +149,12 @@
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = CLICK_CD_SLOW
+	/// Sharpness of melee attacks
+	var/melee_sharpness = NONE
+	/// Lower end of damage dealt in a melee attack. Multiplier on force
+	var/melee_lower_damage_range = 0.5
+	/// Armor penetration of melee attacks
+	var/melee_armor_penetration = 0
 
 	///TIme taken to leave the mech
 	var/exit_delay = 2 SECONDS
@@ -330,6 +336,7 @@
 	loc.assume_air(cabin_air)
 
 	var/mob/living/silicon/ai/unlucky_ai
+	var/has_ejector = has_ejector_seat()
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
@@ -340,9 +347,11 @@
 			else
 				mob_exit(ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
-		else
-			mob_exit(occupant, forced = TRUE)
-			if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+		mob_exit(occupant, forced = TRUE)
+		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+			if(has_ejector)
+				occupant.emote("flip")
+			else
 				occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
@@ -506,6 +515,9 @@
 			examine_text = "It's falling apart."
 
 	return examine_text
+
+/obj/vehicle/sealed/mecha/proc/has_ejector_seat()
+	return !!(locate(/obj/item/mecha_parts/mecha_equipment/ejector_seat) in flat_equipment)
 
 ///Locate an internal tack in the utility modules
 /obj/vehicle/sealed/mecha/proc/get_internal_tank()
@@ -912,8 +924,9 @@
 		balloon_alert(occupant, "lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
 		act.build_all_button_icons()
 
-/obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, heavy)
-	if(heavy)
+/obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, damage, def_zone)
+	// (based on base force, NOT damage dealt)
+	if(force >= 35) // heavy mechs
 		victim.Unconscious(2 SECONDS)
-	else
+	else if(force >= 20 && !victim.IsKnockdown()) // medium mechs
 		victim.Knockdown(4 SECONDS)
