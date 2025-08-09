@@ -87,7 +87,7 @@ Difficulty: Medium
 	if(!force)
 		return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy(force)
 	dash = null
 	kinetic_accelerator = null
 	dash_attack = null
