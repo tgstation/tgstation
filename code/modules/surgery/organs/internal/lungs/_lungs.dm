@@ -19,7 +19,6 @@
 	high_threshold_cleared = span_info("The constriction around your chest loosens as your breathing calms down.")
 
 	var/failed = FALSE
-	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/medicine/salbutamol = 5)
 

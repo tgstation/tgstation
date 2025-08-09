@@ -143,12 +143,16 @@
 /// Additional revival effects if the target has a brain
 /datum/surgery/revival/carbon
 	possible_locs = list(BODY_ZONE_HEAD)
+	organ_to_manipulate = ORGAN_SLOT_BRAIN
 	target_mobtypes = list(/mob/living/carbon)
 	surgery_flags = parent_type::surgery_flags | SURGERY_REQUIRE_LIMB
 
 /datum/surgery/revival/carbon/is_valid_target(mob/living/carbon/patient)
-	var/obj/item/organ/brain/target_brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
-	return !isnull(target_brain)
+	if (!iscarbon(patient))
+		return FALSE
+	if (!(patient.mob_biotypes & (MOB_ORGANIC|MOB_HUMANOID)))
+		return FALSE
+	return TRUE
 
 /datum/surgery_step/revive/carbon
 
