@@ -199,6 +199,7 @@
 		tool.play_tool_sound(src, 50)
 		user.balloon_alert(user, "capacitor removed")
 		cap.forceMove(drop_location())
+		available_power = 0
 		cap = null
 		return TRUE
 	else
