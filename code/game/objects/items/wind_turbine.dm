@@ -1,8 +1,8 @@
 #define MAX_STORED_POWER (0.2 * STANDARD_CELL_CHARGE)
 #define TURBINE_ANIMATION_TICKS_PER_TILE (1)
 #define TURBINE_ANIMATION_TICKS_PER_KPA (0.5)
-#define TURBINE_ANIMATION_TICKS (2)
-#define CHARGE_PER_TILE (0.005 * MAX_STORED_POWER)
+#define TURBINE_ANIMATION_TICKS (4)
+#define CHARGE_PER_TILE (0.01 * MAX_STORED_POWER)
 #define TURBINE_ANCHORED_POWER_PER_KPA (CHARGE_PER_TILE / 2)
 
 /obj/item/portable_recharger
@@ -12,7 +12,7 @@
 	base_icon_state = "icon"
 	desc = "A portable wind turbine that can charge attached energy based weaponry, PDAs, and other devices."
 	worn_icon = 'icons/obj/wind_turbine.dmi'
-	worn_icon_state = "turbine_0"
+	worn_icon_state = "base_turbine"
 	inhand_icon_state = "wind_turbine"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -68,25 +68,33 @@
 
 /obj/item/portable_recharger/equipped(mob/user, slot, initial)
 	. = ..()
+	update_appearance()
 	if(slot & slot_flags)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+		RegisterSignal(user, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 		// RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
 	else
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+		UnregisterSignal(user, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 		// UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
+
+/obj/item/portable_recharger/proc/on_dir_change(datum/source, old_dir, new_dir)
+	update_back(loc)
+
+///Updates the worn back icon for a specific user
+/obj/item/portable_recharger/proc/update_back(atom/user)
+	if (ishuman(user))
+		var/mob/living/carbon/human/human = user
+		human.update_worn_back()
 
 /obj/item/portable_recharger/proc/set_rotor_tick(new_tick)
 	var/last_rotor_tick = floor(rotor_tick)
 	rotor_tick = new_tick
 	if (rotor_tick >= TURBINE_ANIMATION_TICKS)
-		rotor_tick = rotor_tick % TURBINE_ANIMATION_TICKS
+		rotor_tick -= floor(rotor_tick / TURBINE_ANIMATION_TICKS) * TURBINE_ANIMATION_TICKS
 	var/rounded_rotor_tick = floor(rotor_tick)
 	if (rounded_rotor_tick != last_rotor_tick)
-		worn_icon_state = "turbine_[rounded_rotor_tick]"
-		update_appearance()
-		if(ishuman(loc)) //worn
-			var/mob/living/carbon/human/human = loc
-			human.update_worn_back()
+		update_back(loc)
 
 /obj/item/portable_recharger/proc/on_move(atom/thing, atom/old_loc, dir)
 	var/mob/user = thing
@@ -102,6 +110,8 @@
 	set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE * pressure_factor)
 	var/power_to_generate = distance * CHARGE_PER_TILE * pressure_factor
 	available_power = min(available_power + power_to_generate, MAX_STORED_POWER)
+	if (available_power >= MAX_STORED_POWER)
+		balloon_alert_to_viewers("maxed")
 
 /obj/item/portable_recharger/wrench_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -134,6 +144,7 @@
 		finished_recharging = FALSE
 		using_power = TRUE
 		update_appearance()
+		update_back(loc)
 	return ..()
 
 /obj/item/portable_recharger/Exited(atom/movable/gone, direction)
@@ -143,6 +154,7 @@
 		charging = null
 		using_power = FALSE
 		update_appearance()
+		update_back(loc)
 	return ..()
 
 /obj/item/portable_recharger/attackby(obj/item/attacking_item, mob/user, params)
@@ -156,7 +168,7 @@
 			balloon_alert(user, "not rechargable!")
 			return TRUE
 	user.transferItemToLoc(attacking_item, src)
-	update_appearance()
+	charging = attacking_item
 	return TRUE
 
 /obj/item/portable_recharger/screwdriver_act(mob/living/user, obj/item/tool)
@@ -234,17 +246,22 @@
 		return
 	if (istype(charging, /obj/item/melee/baton/security/))
 		. += mutable_appearance(icon, "baton")
-	else
-		// TODO
 
 /obj/item/portable_recharger/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
-	if (isnull(charging))
-		return
 	if (isinhands)
+		return
+	var/mutable_appearance/rotor = mutable_appearance(worn_icon, "rotor_[floor(rotor_tick)]")
+	if (ishuman(loc))
+		var/mob/living/carbon/human/user = loc
+		if (user.dir & NORTH)
+			var/mutable_appearance/just_render_above_other_things = mutable_appearance(worn_icon, worn_icon_state)
+			just_render_above_other_things.layer = ABOVE_MOB_LAYER
+			rotor.layer = ABOVE_MOB_LAYER
+			. += just_render_above_other_things
+	. += rotor
+	if (isnull(charging))
 		return
 	if (istype(charging, /obj/item/melee/baton/security/))
 		var/mutable_appearance/baton_overlay = mutable_appearance(icon, "baton")
 		. += baton_overlay
-	else
-		// TODO
