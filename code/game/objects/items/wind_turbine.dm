@@ -1,9 +1,9 @@
-#define MAX_STORED_POWER (0.2 * STANDARD_CELL_CHARGE)
+#define TURBINE_MAX_STORED_POWER (0.2 * STANDARD_CELL_CHARGE)
 #define TURBINE_ANIMATION_TICKS_PER_TILE (1)
 #define TURBINE_ANIMATION_TICKS (4)
-#define CHARGE_PER_TILE (0.002 * STANDARD_CELL_CHARGE)
-#define TURBINE_ANCHORED_POWER_PER_KPA (CHARGE_PER_TILE * 2)
-#define MIN_SECONDS_BETWEEN_SOUNDS (0.33 SECONDS)
+#define TURBINE_CHARGE_PER_TILE (0.002 * STANDARD_CELL_CHARGE)
+#define TURBINE_ANCHORED_POWER_PER_KPA (TURBINE_CHARGE_PER_TILE * 2)
+#define TURBINE_MIN_SECONDS_BETWEEN_SOUNDS (0.33 SECONDS)
 
 /obj/item/portable_wind_turbine
 	name = "portable wind turbine"
@@ -114,7 +114,7 @@
 
 ///Tries to play the woosh sound effect. May not play it if it's been too soon since the last call.
 /obj/item/portable_wind_turbine/proc/try_playsound()
-	if ((world.time - last_sound_time) < MIN_SECONDS_BETWEEN_SOUNDS)
+	if ((world.time - last_sound_time) < TURBINE_MIN_SECONDS_BETWEEN_SOUNDS)
 		return
 	playsound(src, 'sound/machines/woosh.ogg', 20, FALSE)
 	last_sound_time = world.time
@@ -135,7 +135,7 @@
 	if (ignore_cap)
 		available_power += power
 	else
-		available_power = min(available_power + power, MAX_STORED_POWER * (isnull(cap?.rating) ?  1 : cap.rating))
+		available_power = min(available_power + power, TURBINE_MAX_STORED_POWER * (isnull(cap?.rating) ?  1 : cap.rating))
 
 ///Called when the thing HOLDING the turbine moves
 /obj/item/portable_wind_turbine/proc/on_move(atom/thing, atom/old_loc, dir)
@@ -152,7 +152,7 @@
 	if (pressure_factor <= 0)
 		return
 	set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE * pressure_factor)
-	add_power(distance * CHARGE_PER_TILE * pressure_factor * cap.rating)
+	add_power(distance * TURBINE_CHARGE_PER_TILE * pressure_factor * cap.rating)
 
 /obj/item/portable_wind_turbine/wrench_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -339,3 +339,10 @@
 	if (istype(charging, /obj/item/melee/baton/security/))
 		var/mutable_appearance/baton_overlay = mutable_appearance(icon, "baton")
 		. += baton_overlay
+
+#undef TURBINE_MAX_STORED_POWER
+#undef TURBINE_ANIMATION_TICKS_PER_TILE
+#undef TURBINE_ANIMATION_TICKS
+#undef TURBINE_CHARGE_PER_TILE
+#undef TURBINE_ANCHORED_POWER_PER_KPA
+#undef TURBINE_MIN_SECONDS_BETWEEN_SOUNDS
