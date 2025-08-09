@@ -774,7 +774,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = null, \
 		charges = maxHealth * 0.1, \
-		drain_antimagic = CALLBACK(src, PROC_REF(on_drain_magic)), \
+		block_magic = CALLBACK(src, PROC_REF(on_drain_magic)), \
 		expiration = CALLBACK(src, PROC_REF(on_expire)), \
 	)
 
