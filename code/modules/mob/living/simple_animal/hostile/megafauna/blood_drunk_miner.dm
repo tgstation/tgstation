@@ -65,7 +65,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize(mapload)
 	. = ..()
 	var/obj/item/melee/cleaving_saw/miner/miner_saw = new(src)
-	miner_saw_ref = WEAKREF(mining_saw)
+	miner_saw_ref = WEAKREF(miner_saw)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 	dash = new /datum/action/cooldown/mob_cooldown/dash
