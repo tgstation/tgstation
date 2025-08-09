@@ -490,19 +490,20 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(!has_dna())
 		return
 
-/mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
+/mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE, datum/dna/passed_dna)
 	. = ..()
+	passed_dna ||= dna
 	for(var/block_type in GLOB.dna_identity_blocks)
 		var/datum/dna_block/identity/block_to_apply = GLOB.dna_identity_blocks[block_type]
-		block_to_apply.apply_to_mob(src, dna.unique_identity)
+		block_to_apply.apply_to_mob(src, passed_dna.unique_identity)
 
 	for(var/block_type in GLOB.dna_feature_blocks)
 		var/datum/dna_block/feature/block_to_apply = GLOB.dna_feature_blocks[block_type]
 		if(dna.features[block_to_apply.feature_key])
-			block_to_apply.apply_to_mob(src, dna.unique_features)
+			block_to_apply.apply_to_mob(src, passed_dna.unique_features)
 
 	for(var/obj/item/organ/organ in organs)
-		organ.mutate_feature(dna.unique_features, src)
+		organ.mutate_feature(passed_dna.unique_features, src)
 
 	if(icon_update)
 		update_body(is_creating = mutcolor_update)
