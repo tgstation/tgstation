@@ -62,6 +62,8 @@
 
 ///Called when src is anchored
 /obj/item/portable_wind_turbine/proc/on_anchor(atom/source, is_anchored)
+	SIGNAL_HANDLER
+
 	if (is_anchored)
 		RegisterSignal(src, COMSIG_MOVABLE_RESISTED_SPACEWIND, PROC_REF(on_space_wind))
 		UnregisterSignal(src, COMSIG_ATOM_PRE_DIR_CHANGE)
@@ -75,10 +77,14 @@
 
 ///Called when src changes direction when not equipped
 /obj/item/portable_wind_turbine/proc/block_dir_changes_unanchored(atom/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	return COMPONENT_ATOM_BLOCK_DIR_CHANGE
 
 ///Called when this resists space wind
 /obj/item/portable_wind_turbine/proc/on_space_wind(atom/source, pressure_difference, pressure_direction)
+	SIGNAL_HANDLER
+
 	var/obj/item/portable_wind_turbine/turbine = source
 	if (!turbine)
 		return
@@ -104,6 +110,8 @@
 
 ///Called when the thing HOLDING the turbine changes direction
 /obj/item/portable_wind_turbine/proc/on_dir_change(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	update_appearance()
 
 ///Updates the worn back icon for the current loc
@@ -139,6 +147,8 @@
 
 ///Called when the thing HOLDING the turbine moves
 /obj/item/portable_wind_turbine/proc/on_move(atom/thing, atom/old_loc, dir)
+	SIGNAL_HANDLER
+
 	var/mob/user = thing
 	if (!user)
 		return
