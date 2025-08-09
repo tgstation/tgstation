@@ -460,7 +460,7 @@ That prevents a few funky behaviors.
 			return
 	//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
-		AI.control_disabled = FALSE
+		AI.set_control_disabled(FALSE)
 		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
 		to_chat(AI, span_notice("You have been uploaded to a stationary terminal. Remote device connection restored."))
