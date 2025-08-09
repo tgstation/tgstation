@@ -18,6 +18,10 @@
 	var/visor_toggle_down_sound = null
 	///Sound this item makes when its visor is flipped up
 	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
