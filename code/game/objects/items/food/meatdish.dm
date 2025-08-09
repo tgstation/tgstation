@@ -1041,7 +1041,7 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * (4/3))
 
 /obj/item/food/korta_wellington
-	name = "Kotra wellington"
+	name = "Korta wellington"
 	desc = "A luxurious log of beef, covered in a fine mushroom duxelle and pancetta ham, then bound in korta pastry."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "korta_wellington"
