@@ -9,7 +9,7 @@
 	var/implement_type = null //the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
 	var/accept_hand = FALSE //does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = FALSE //does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
-	var/time = 10 //how long does the step take?
+	var/time = 1 SECONDS //how long does the step take?
 	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or else the surgeon will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?

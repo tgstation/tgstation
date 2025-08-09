@@ -6,7 +6,7 @@
 		TOOL_SCALPEL = 75, // med borgs could try to unscrew shell with scalpel
 		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
@@ -36,7 +36,7 @@
 		TOOL_SCALPEL = 75,
 		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
@@ -64,7 +64,7 @@
 	implements = list(
 		TOOL_MULTITOOL = 100,
 		TOOL_HEMOSTAT = 75)
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 
@@ -84,7 +84,7 @@
 	implements = list(
 		TOOL_WRENCH = 100,
 		TOOL_RETRACTOR = 75)
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 
 /datum/surgery_step/mechanic_unwrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -109,7 +109,7 @@
 	implements = list(
 		TOOL_WRENCH = 100,
 		TOOL_RETRACTOR = 75)
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 
 /datum/surgery_step/mechanic_wrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -132,7 +132,7 @@
 /datum/surgery_step/open_hatch
 	name = "open the hatch (hand)"
 	accept_hand = TRUE
-	time = 10
+	time = 1 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 

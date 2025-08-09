@@ -6,8 +6,8 @@
 	icon_state = "wizard"
 	inhand_icon_state = "wizhat"
 	armor_type = /datum/armor/head_wizard
-	strip_delay = 50
-	equip_delay_other = 50
+	strip_delay = 5 SECONDS
+	equip_delay_other = 5 SECONDS
 	clothing_flags = SNUG_FIT | CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
@@ -119,8 +119,8 @@
 	armor_type = /datum/armor/suit_wizrobe
 	allowed = list(/obj/item/teleportation_scroll, /obj/item/highfrequencyblade/wizard)
 	flags_inv = HIDEJUMPSUIT
-	strip_delay = 50
-	equip_delay_other = 50
+	strip_delay = 5 SECONDS
+	equip_delay_other = 5 SECONDS
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	///How much this robe affects fishing difficulty

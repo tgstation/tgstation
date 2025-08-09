@@ -18,7 +18,7 @@
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 45,
 		/obj/item/pen = 25)
-	time = 64
+	time = 6.4 SECONDS
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	return target.get_organ_slot(ORGAN_SLOT_EYES) && ..()

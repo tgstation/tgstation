@@ -428,7 +428,7 @@
 /datum/crafting_recipe/iv_drip
 	name = "IV drip"
 	result = /obj/machinery/iv_drip
-	time = 30
+	time = 3 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	reqs = list(
 		/obj/item/stack/rods = 2,

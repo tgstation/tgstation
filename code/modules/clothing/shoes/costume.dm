@@ -3,8 +3,8 @@
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
 	inhand_icon_state = "wizshoe"
-	strip_delay = 100
-	equip_delay_other = 100
+	strip_delay = 10 SECONDS
+	equip_delay_other = 10 SECONDS
 	armor_type = /datum/armor/shoes_roman
 	fastening_type = SHOES_STRAPS
 
@@ -27,13 +27,13 @@
 	name = "yellow performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "ysing"
-	equip_delay_other = 50
+	equip_delay_other = 5 SECONDS
 
 /obj/item/clothing/shoes/singerb
 	name = "blue performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
-	equip_delay_other = 50
+	equip_delay_other = 5 SECONDS
 
 /obj/item/clothing/shoes/bronze
 	name = "bronze boots"

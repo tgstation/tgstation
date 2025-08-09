@@ -151,7 +151,7 @@
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
 	result = /obj/item/organ/eyes/robotic/flashlight
-	time = 10
+	time = 1 SECONDS
 	reqs = list(
 		/obj/item/flashlight = 2,
 		/obj/item/restraints/handcuffs/cable = 1
@@ -225,7 +225,7 @@
 /datum/crafting_recipe/ghettojetpack
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised
-	time = 30
+	time = 3 SECONDS
 	reqs = list(
 		/obj/item/tank/internals/oxygen = 2,
 		/obj/item/extinguisher = 1,
@@ -262,7 +262,7 @@
 /datum/crafting_recipe/rebar_quiver
 	name = "Rebar Storage Quiver"
 	result = /obj/item/storage/bag/rebar_quiver
-	time = 10
+	time = 1 SECONDS
 	reqs = list(
 		/obj/item/tank/internals/oxygen = 1,
 		/obj/item/stack/cable_coil = 15,
@@ -273,7 +273,7 @@
 /datum/crafting_recipe/arrow_quiver
 	name = "Archery Quiver"
 	result = /obj/item/storage/bag/quiver/lesser
-	time = 10
+	time = 1 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/leather = 4,
 		/obj/item/stack/sheet/cardboard = 4

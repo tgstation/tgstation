@@ -155,11 +155,11 @@
 	/// The click cooldown on secondary attacks. Lower numbers mean faster attacks. Will use attack_speed if undefined.
 	var/secondary_attack_speed
 	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
-	var/equip_delay_self = 0
+	var/equip_delay_self = 0 SECONDS
 	///In deciseconds, how long an item takes to put on another person
-	var/equip_delay_other = 20
+	var/equip_delay_other = 2 SECONDS
 	///In deciseconds, how long an item takes to remove from another person
-	var/strip_delay = 40
+	var/strip_delay = 4 SECONDS
 	///How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
 

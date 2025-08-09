@@ -95,8 +95,8 @@
 	icon_state = "concussive_gauntlets"
 	inhand_icon_state = null
 	toolspeed = 0.1
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS

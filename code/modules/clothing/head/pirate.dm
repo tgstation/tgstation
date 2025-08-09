@@ -25,8 +25,8 @@
 
 /obj/item/clothing/head/costume/pirate/armored
 	armor_type = /datum/armor/pirate_armored
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 
 /datum/armor/pirate_armored
 	melee = 30
@@ -51,8 +51,8 @@
 
 /obj/item/clothing/head/costume/pirate/bandana/armored
 	armor_type = /datum/armor/bandana_armored
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 
 /datum/armor/bandana_armored
 	melee = 30

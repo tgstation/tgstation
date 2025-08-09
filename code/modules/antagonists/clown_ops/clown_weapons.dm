@@ -19,7 +19,7 @@
 	slowdown = SHOES_SLOWDOWN
 	body_parts_covered = FEET|LEGS
 	armor_type = /datum/armor/clown_shoes_combat
-	strip_delay = 70
+	strip_delay = 7 SECONDS
 	resistance_flags = NONE
 
 /datum/armor/clown_shoes_combat
@@ -47,7 +47,7 @@
 	desc = "The culmination of years of clown combat research, these shoes leave a trail of chaos in their wake. They will slowly recharge themselves over time, or can be manually charged with bananium."
 	slowdown = SHOES_SLOWDOWN
 	armor_type = /datum/armor/banana_shoes_combat
-	strip_delay = 70
+	strip_delay = 7 SECONDS
 	resistance_flags = NONE
 	always_noslip = TRUE
 	body_parts_covered = FEET|LEGS

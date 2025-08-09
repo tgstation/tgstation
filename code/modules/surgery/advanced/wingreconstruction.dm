@@ -23,7 +23,7 @@
 		TOOL_HEMOSTAT = 85,
 		TOOL_SCREWDRIVER = 35,
 		/obj/item/pen = 15)
-	time = 200
+	time = 20 SECONDS
 	chems_needed = list(/datum/reagent/medicine/c2/synthflesh)
 	require_all_chems = FALSE
 

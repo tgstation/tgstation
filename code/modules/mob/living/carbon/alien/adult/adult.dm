@@ -13,7 +13,7 @@
 	var/alt_icon = 'icons/mob/nonhuman-player/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 30
+	var/pounce_cooldown_time = 3 SECONDS
 	death_sound = 'sound/mobs/non-humanoids/hiss/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
