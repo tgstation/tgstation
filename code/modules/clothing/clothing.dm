@@ -540,7 +540,17 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
+	var message
+	if(up)
+		message = src.alt_toggle_message
+		if(!message)
+			message = "You push [src] out of the way."
+	else
+		message = src.toggle_message
+		if(!message)
+			message = "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
 
 	//play sounds when toggling the visor up or down (if there is any)
 	if(visor_toggle_up_sound && up)
