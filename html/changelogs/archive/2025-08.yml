@@ -183,3 +183,19 @@
   - qol: Divine Archer coat doesn't cover arms, hands and feet as to match the sprite
   - qol: Divine Archer bracers now have the same armor as Divine Archer coat
   - balance: Divine Archer boots have their own unique armor
+2025-08-09:
+  Cirrial:
+  - balance: You will no longer be allergic to saline-glucose solution.
+  LemonInTheDark:
+  - admin: MC tab renders without jumping around constantly now, some labels are more
+      readable
+  Melbert:
+  - rscadd: Adds Black Workboots to Loadout
+  SmArtKar:
+  - refactor: Refactored how human names are updated, yell at us on our github if
+      you spot any bugs!
+  - bugfix: Fixed slimepeople regenerating blood while dead
+  - bugfix: Rescued the station from a time-space bubble
+  Thunder12345:
+  - bugfix: CRAB-17 machines will now hold onto funds internally if they cannot find
+      the original user's bank account to transfer them to.

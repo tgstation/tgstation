@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Refactored how human names are updated, yell at us on our github if you spot any bugs!"
-  - bugfix: "Fixed slimepeople regenerating blood while dead"
