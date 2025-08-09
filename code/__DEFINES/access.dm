@@ -160,6 +160,8 @@
 #define ACCESS_AWAY_GENERIC2 "away_generic2"
 #define ACCESS_AWAY_GENERIC3 "away_generic3"
 #define ACCESS_AWAY_GENERIC4 "away_generic4"
+#define ACCESS_ROROCO "roroco"
+#define ACCESS_ROROCO_SECURE "roroco_secure"
 
 /// - - - MECH - - -
 	// Mech Access, allows maintanenace of internal components and altering keycard requirements.

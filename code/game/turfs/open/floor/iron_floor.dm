@@ -420,9 +420,29 @@
 
 
 /turf/open/floor/iron/freezer
-	icon_state = "freezerfloor"
-	base_icon_state = "freezerfloor"
+	icon_state = "freezer"
+	base_icon_state = "freezer"
 	floor_tile = /obj/item/stack/tile/iron/freezer
+
+/turf/open/floor/iron/freezer/edge
+	icon_state = "freezer_edge"
+	base_icon_state = "freezer_edge"
+	floor_tile = /obj/item/stack/tile/iron/freezer/edge
+
+/turf/open/floor/iron/freezer/half
+	icon_state = "freezer_half"
+	base_icon_state = "freezer_half"
+	floor_tile = /obj/item/stack/tile/iron/freezer/half
+
+/turf/open/floor/iron/freezer/corner
+	icon_state = "freezer_corner"
+	base_icon_state = "freezer_corner"
+	floor_tile = /obj/item/stack/tile/iron/freezer/corner
+
+/turf/open/floor/iron/freezer/large
+	icon_state = "freezer_large"
+	base_icon_state = "freezer_large"
+	floor_tile = /obj/item/stack/tile/iron/freezer/large
 
 /turf/open/floor/iron/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -445,8 +465,8 @@
 	floor_tile = /obj/item/stack/tile/iron/dark/textured
 
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
-	icon_state = "freezerfloor"
-	base_icon_state = "freezerfloor"
+	icon_state = "freezer"
+	base_icon_state = "freezer"
 	floor_tile = /obj/item/stack/tile/iron/freezer
 
 /turf/open/floor/iron/grimy
