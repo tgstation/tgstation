@@ -14,10 +14,33 @@
 		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
-	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door ID", id, 100)
-	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	var/list/door_ids = list()
+	var/list/display_ids = list("UNIQUE")
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+		if(!M.id || (M.id in door_ids))
+			continue
+		door_ids += "[M.id]"
+		if(M.owner?.resolve() != user)
+			continue
+		var/area/door_area = get_area(M)
+		display_ids += "[door_area.name]([M.id])"
+
+	var/change_id = tgui_input_list(user, "Set Controller ID", "Controller ID", display_ids)
+	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-	id = change_id
+
+	if(change_id == "UNIQUE")
+		var/door_id = 0
+		while("[door_id]" in door_ids)
+			door_id += 1
+		id = "[door_id]"
+	else
+		var/start = findtext(change_id, "(") + 1
+		var/end = length(change_id) - 1
+		if(start == end)
+			id = "[change_id[start]]"
+		else
+			id = copytext(change_id, start, end)
 	balloon_alert(user, "id changed")
 	to_chat(user, span_notice("You change the ID to [id]."))
 
