@@ -66,7 +66,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize(mapload)
 	. = ..()
 	miner_saw = new(src)
-	RegisterSignal(mining_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
+	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 	dash = new /datum/action/cooldown/mob_cooldown/dash
