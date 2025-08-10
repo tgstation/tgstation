@@ -6,7 +6,18 @@
 	var/id = -1
 	/// Cooldown of the door's controller. Updates when pressed (activate())
 	var/cooldown = FALSE
+	/// Should we toggle open/close of doors based on their current state
 	var/sync_doors = TRUE
+
+/obj/item/assembly/control/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/assembly/control/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(istype(held_item, /obj/item/assembly/control))
+		context[SCREENTIP_CONTEXT_LMB] = "Copy ID"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
@@ -15,6 +26,7 @@
 			. += span_notice("Its channel ID is '[id]'.")
 		else
 			. += span_notice("Interact with pod door to generate an new id")
+	. += span_notice("You can interact with another controller to copy its ID.")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
 	var/list/door_ids = list()
