@@ -2649,10 +2649,10 @@
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
 "aWg" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/botanist,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "aWl" = (
@@ -7459,10 +7459,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"cEv" = (
-/obj/structure/water_source/puddle,
-/turf/open/floor/grass,
-/area/station/service/hydroponics)
 "cEx" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -8058,6 +8054,7 @@
 	name = "Kentucky";
 	real_name = "Kentucky"
 	},
+/obj/structure/flora/bush/fullgrass,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "cSg" = (
@@ -9222,8 +9219,8 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "dmy" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "dmK" = (
@@ -13965,6 +13962,14 @@
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"eSf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "eSl" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/purple{
@@ -14008,6 +14013,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"eTc" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
+/area/station/service/hydroponics)
 "eTg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15470,6 +15479,11 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/cargo/warehouse)
+"fqr" = (
+/obj/machinery/smartfridge,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/service/hydroponics)
 "fqB" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -16785,6 +16799,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fSJ" = (
@@ -23951,6 +23966,16 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"iqR" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "iqU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -35604,6 +35629,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "mrG" = (
@@ -38182,6 +38208,9 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/structure/flora/bush/flowers_yw,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "nkq" = (
@@ -39566,6 +39595,7 @@
 "nGo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/east,
+/obj/machinery/hydroponics/soil,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "nGp" = (
@@ -43502,9 +43532,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "pdl" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "pdx" = (
@@ -48481,7 +48511,10 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "qOM" = (
-/turf/open/floor/grass,
+/obj/structure/water_source/puddle{
+	pixel_y = 5
+	},
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "qOO" = (
 /obj/structure/disposalpipe/trunk{
@@ -53200,7 +53233,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "sve" = (
-/obj/structure/sink/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54090,10 +54122,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"sLE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/service/hydroponics)
 "sLF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -55264,10 +55292,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"teq" = (
-/obj/structure/flora/bush/fullgrass,
-/turf/open/floor/grass,
-/area/station/service/hydroponics)
 "tew" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -57230,6 +57254,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/clothing/head/costume/scarecrow_hat,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tNM" = (
@@ -60405,6 +60430,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"uPs" = (
+/mob/living/basic/sheep{
+	name = "Wooly";
+	real_name = "Wooly"
+	},
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "uPJ" = (
 /obj/structure/table,
 /obj/item/food/grown/wheat,
@@ -63040,10 +63073,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "vIB" = (
-/obj/structure/flora/grass/jungle/b/style_random,
-/mob/living/basic/sheep{
-	name = "Wooly";
-	real_name = "Wooly"
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
@@ -102743,10 +102774,10 @@ htd
 htd
 cfe
 ddO
-sLE
-cEv
+kMG
+eTc
 qOM
-eeT
+eTc
 tUn
 hKV
 fWK
@@ -103000,8 +103031,8 @@ dGD
 ayO
 ayO
 mTV
-sLE
-tpN
+kMG
+vIB
 vIB
 nkp
 tUn
@@ -103257,10 +103288,10 @@ kSP
 fCt
 uDr
 uDr
-sLE
-teq
-qOM
-qOM
+kMG
+eeT
+uPs
+tpN
 tUn
 ftj
 wXF
@@ -103511,7 +103542,7 @@ eQE
 hcm
 fEg
 wYB
-kMG
+fqr
 wSI
 oBM
 kCZ
@@ -104030,7 +104061,7 @@ cAG
 hbM
 hbM
 hbM
-hbM
+iqR
 fSz
 mrC
 gIM
@@ -104801,7 +104832,7 @@ gFL
 byW
 byW
 byW
-nDO
+eSf
 gtR
 tUn
 hKV
