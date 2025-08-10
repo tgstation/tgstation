@@ -199,3 +199,10 @@
   Thunder12345:
   - bugfix: CRAB-17 machines will now hold onto funds internally if they cannot find
       the original user's bank account to transfer them to.
+2025-08-10:
+  Mickyan:
+  - rscdel: Reduces mood penalty from Empaths examining people with the Fundamentally
+      Evil quirk
+  vinylspiders:
+  - code_imp: adds support to check for a required_bodytype or required_organ_flag
+      for the damage getter procs
