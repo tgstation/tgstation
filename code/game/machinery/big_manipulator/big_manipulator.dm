@@ -38,8 +38,6 @@
 	var/datum/weakref/id_lock = null
 	/// The manipulator's arm.
 	var/obj/effect/big_manipulator_arm/manipulator_arm
-	/// Overrides the priority selection, only accessing the top priority list element.
-	var/override_priority = FALSE
 	/// Is the power access wire cut? Disables the power button if `TRUE`.
 	var/power_access_wire_cut = FALSE
 
@@ -454,16 +452,18 @@
 /obj/machinery/big_manipulator/ui_data(mob/user)
 	var/list/data = list()
 	data["active"] = on
-	data["highest_priority"] = override_priority
 	data["current_task_type"] = current_task_type
 	data["current_task_duration"] = current_task_duration
 	data["min_delay"] = minimal_interaction_multiplier
 	data["manipulator_position"] = "[x],[y]"
+	data["pickup_tasking"] = pickup_tasking
+	data["dropoff_tasking"] = dropoff_tasking
 
 	var/list/pickup_points_data = list()
 	for(var/datum/interaction_point/point in pickup_points)
 		var/list/point_data = list()
 		point_data["name"] = point.name
+		point_data["id"] = REF(point)
 		point_data["turf"] = "[point.interaction_turf.x],[point.interaction_turf.y]"
 		point_data["mode"] = "PICK"
 		point_data["filters"] = point.type_filters
@@ -476,21 +476,13 @@
 	for(var/datum/interaction_point/point in dropoff_points)
 		var/list/point_data = list()
 		point_data["name"] = point.name
+		point_data["id"] = REF(point)
 		point_data["turf"] = "[point.interaction_turf.x],[point.interaction_turf.y]"
 		point_data["mode"] = point.interaction_mode
 		point_data["filters"] = point.type_filters
 		point_data["item_filters"] = point.atom_filters
 		dropoff_points_data += list(point_data)
 	data["dropoff_points"] = dropoff_points_data
-
-	var/list/priority_list = list()
-	for(var/datum/interaction_point/point in pickup_points)
-		for(var/datum/manipulator_priority/priority in point.get_sorted_priorities())
-			var/list/priority_data = list()
-			priority_data["name"] = priority.name
-			priority_data["priority_width"] = priority.number
-			priority_list += list(priority_data)
-	data["settings_list"] = priority_list
 
 	return data
 
@@ -521,6 +513,17 @@
 			create_new_interaction_point(null, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
 			return TRUE
 
+		if("cycle_tasking_schedule")
+			var/new_schedule = params["new_schedule"]
+			var/is_pickup = params["is_pickup"]
+			if(new_schedule in list("Round Robin", "Strict Robin", "Prefer First"))
+				if(is_pickup)
+					pickup_tasking = new_schedule
+				else
+					dropoff_tasking = new_schedule
+				SStgui.update_uis(src)
+			return TRUE
+
 		if("adjust_interaction_delay")
 			var/new_delay = text2num(params["new_delay"])
 			if(isnull(new_delay))
@@ -530,47 +533,25 @@
 			SStgui.update_uis(src)
 			return TRUE
 
-		if("highest_priority_change")
-			override_priority = !override_priority
-			return TRUE
+		if("adjust_point_param")
+			return adjust_param_for_point(params["pointId"], params["param"], params["value"], ui.user)
 
-		if("worker_interaction_change")
-			// TODO: cycle interaction on the interaction point
-			return TRUE
-		if("change_priority")
-			var/new_priority_number = params["priority"]
-			for(var/datum/interaction_point/point in pickup_points)
-				for(var/datum/manipulator_priority/priority in point.interaction_priorities)
-					if(priority.number == new_priority_number)
-						point.update_priority(priority, new_priority_number - 1)
-						break
-			return TRUE
-		if("change_throw_range")
-			// cycle_throw_range() TODO: should be handled in interaction_points.dm
-			return TRUE
+			// var/list/points = is_pickup ? pickup_points : dropoff_points
+			// if(index < 1 || index > length(points))
+			// 	return FALSE
 
-		if("move_point")
-			var/index = params["index"]
-			var/dx = text2num(params["dx"])
-			var/dy = text2num(params["dy"])
-			var/is_pickup = params["is_pickup"] == "true"
+			// var/datum/interaction_point/point = points[index]
+			// var/turf/new_turf = locate(x + dx, y + dy, z)
 
-			var/list/points = is_pickup ? pickup_points : dropoff_points
-			if(index < 1 || index > length(points))
-				return FALSE
+			// if(!new_turf || isclosedturf(new_turf))
 
-			var/datum/interaction_point/point = points[index]
-			var/turf/new_turf = locate(x + dx, y + dy, z)
+			// 	return FALSE
 
-			if(!new_turf || isclosedturf(new_turf))
-
-				return FALSE
-
-			// Remove old HUD for this point before moving
-			remove_hud_for_point(point)
-			point.interaction_turf = new_turf
-			update_hud_for_point(point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
-			return TRUE
+			// // Remove old HUD for this point before moving
+			// remove_hud_for_point(point)
+			// point.interaction_turf = new_turf
+			// update_hud_for_point(point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
+			// return TRUE
 
 
 /obj/machinery/big_manipulator/proc/adjust_param_for_point(point_ref, param, value, mob/user)
@@ -618,6 +599,51 @@
 			var/obj/item/held_item = user.get_active_held_item()
 			if(held_item)
 				target_point.atom_filters += WEAKREF(held_item)
+			return TRUE
+
+		if("move_to")
+			var/button_number = text2num(value["buttonNumber"])
+			var/is_pickup = value["is_pickup"]
+
+			var/dx = 0
+			var/dy = 0
+			switch(button_number)
+				if(1)
+					dx = -1
+					dy = 1
+				if(2)
+					dx = 0
+					dy = 1
+				if(3)
+					dx = 1
+					dy = 1
+				if(4)
+					dx = -1
+					dy = 0
+				if(5)
+					dx = 0
+					dy = 0
+				if(6)
+					dx = 1
+					dy = 0
+				if(7)
+					dx = -1
+					dy = -1
+				if(8)
+					dx = 0
+					dy = -1
+				if(9)
+					dx = 1
+					dy = -1
+
+			var/turf/new_turf = locate(x + dx, y + dy, z)
+			if(!new_turf || isclosedturf(new_turf))
+				return FALSE
+
+			// Remove old HUD for this point before moving
+			remove_hud_for_point(target_point)
+			target_point.interaction_turf = new_turf
+			update_hud_for_point(target_point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
 			return TRUE
 
 

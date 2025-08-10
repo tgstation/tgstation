@@ -7,6 +7,7 @@ export interface PrioritySettings {
 
 export type InteractionPoint = {
   name: string;
+  id: string;
   turf: string;
   mode: string;
   filters: string[];
@@ -33,4 +34,6 @@ export interface ManipulatorData {
   pickup_points: InteractionPoint[];
   dropoff_points: InteractionPoint[];
   manipulator_position: string;
+  pickup_tasking: string;
+  dropoff_tasking: string;
 };

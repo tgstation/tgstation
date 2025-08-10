@@ -223,7 +223,7 @@
 /// If the turf has an atom with fitting `atom_storage` that corresponds to the
 /// priority settings, it will attempt to insert the held item.
 /obj/machinery/big_manipulator/proc/try_drop_thing(datum/interaction_point/destination_point)
-	var/drop_endpoint = destination_point.find_type_priority(override_priority)
+	var/drop_endpoint = destination_point.find_type_priority()
 	var/obj/actual_held_object = held_object?.resolve()
 
 	if(isnull(drop_endpoint))
@@ -257,7 +257,7 @@
 		return FALSE
 
 	var/obj/item/held_item = obj_resolve
-	var/atom/type_to_use = destination_point.find_type_priority(override_priority)
+	var/atom/type_to_use = destination_point.find_type_priority()
 
 	if(isnull(type_to_use))
 		check_for_cycle_end_drop(destination_point, FALSE)
@@ -319,7 +319,7 @@
 		finish_manipulation()
 		return
 
-	var/atom/type_to_use = destination_point.find_type_priority(override_priority)
+	var/atom/type_to_use = destination_point.find_type_priority()
 	if(isnull(type_to_use))
 		check_end_of_use_for_use_with_empty_hand(destination_point, FALSE)
 		return

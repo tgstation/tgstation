@@ -58,11 +58,9 @@
 	interaction_priorities = fill_priority_list()
 
 /// Finds the type priority of the interaction point.
-/datum/interaction_point/proc/find_type_priority(override = FALSE)
+/datum/interaction_point/proc/find_type_priority()
 	var/lazy_counter = 1
 	for(var/datum/manipulator_priority/take_type in interaction_priorities)
-		if(lazy_counter > 1 && override)
-			return null
 
 		if(take_type.what_type == /turf)
 			return interaction_turf
@@ -74,7 +72,7 @@
 				continue
 			if(isliving(type_in_priority))
 				var/mob/living/living_target = type_in_priority
-				if(living_target.stat == DEAD) // Пропускаем мертвых
+				if(living_target.stat == DEAD)
 					continue
 			return type_in_priority
 

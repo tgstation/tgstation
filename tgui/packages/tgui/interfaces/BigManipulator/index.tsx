@@ -16,7 +16,13 @@ import { Window } from '../../layouts';
 
 import type { ManipulatorData, PrioritySettings, InteractionPoint } from './types';
 
-const taskingSchedules = {
+const taskingSchedules = [
+  "Round Robin",
+  "Strict Robin",
+  "Prefer First",
+]
+
+const taskingScheduleIcons = {
   "Round Robin": "list-ol",
   "Strict Robin": "arrows-spin",
   "Prefer First": "arrow-down-1-9"
@@ -133,45 +139,52 @@ const PointSection = (props: {
   const [editingPoint, setEditingPoint] = useState<InteractionPoint | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
+  const isPickup = title === 'Pickup Points';
+  const currentTasking = isPickup ? data.pickup_tasking : data.dropoff_tasking;
+  const currentIcon = taskingScheduleIcons[currentTasking] || "clipboard-list";
+
+  const cycleTaskingSchedule = () => {
+    const currentIndex = taskingSchedules.indexOf(currentTasking);
+    const nextIndex = (currentIndex + 1) % taskingSchedules.length;
+    const newTasking = taskingSchedules[nextIndex];
+    act('cycle_tasking_schedule', { new_schedule: newTasking, is_pickup: isPickup });
+  };
+
+  const adjustPoint = (pointId: string, param: string, value?: any) => {
+    act('adjust_point_param', {pointId, param, value})
+  }
+
   const handleEditPoint = (point: InteractionPoint, index: number) => {
     setEditingPoint(point);
     setEditingIndex(index);
   };
 
-  const handleDirectionClick = (dx: number, dy: number) => {
+  const handleDirectionClick = (buttonNumber: number) => {
     if (!editingPoint || editingIndex === null) return;
 
-    const [baseX, baseY] = data.manipulator_position.split(',').map(Number);
-
-    const newX = baseX + dx;
-    const newY = baseY + dy;
-    const newTurf = `${newX},${newY}`;
-
-    setEditingPoint({
-      ...editingPoint,
-      turf: newTurf,
-    });
-
-    act('move_point', {
-      index: editingIndex + 1,
-      dx: dx,
-      dy: dy,
-      is_pickup: title === 'Pickup Points',
-    });
+    adjustPoint(editingPoint.id, 'move_to', { buttonNumber, is_pickup: title === 'Pickup Points' })
   };
 
-  const getPointDirection = (
-    point: InteractionPoint,
-  ): { dx: number; dy: number } | null => {
+  const getPointButtonNumber = (point: InteractionPoint): number | null => {
     if (!point || !point.turf) return null;
 
     const [pointX, pointY] = point.turf.split(',').map(Number);
     const [baseX, baseY] = data.manipulator_position.split(',').map(Number);
 
-    const dx = Math.sign(pointX - baseX);
-    const dy = Math.sign(pointY - baseY);
+    const dx = pointX - baseX;
+    const dy = pointY - baseY;
 
-    return { dx, dy };
+    if (dx === -1 && dy === 1) return 1;
+    if (dx === 0 && dy === 1) return 2;
+    if (dx === 1 && dy === 1) return 3;
+    if (dx === -1 && dy === 0) return 4;
+    if (dx === 0 && dy === 0) return 5;
+    if (dx === 1 && dy === 0) return 6;
+    if (dx === -1 && dy === -1) return 7;
+    if (dx === 0 && dy === -1) return 8;
+    if (dx === 1 && dy === -1) return 9;
+
+    return null;
   };
 
   const getFilteringModeText = (mode: number) => {
@@ -196,16 +209,14 @@ const PointSection = (props: {
       filtering_mode: newMode,
     });
 
-    act('change_pickup_type', {
-      index: editingIndex + 1,
-    });
+    adjustPoint(editingPoint.id, 'cycle_filtering_mode')
   };
 
   return (
     <>
       <Section
         title={title}
-        buttons={<><Button tooltip="Cycle tasking schedule" icon="clipboard-list" color="transparent">Round Robin</Button> <Button icon="plus" color="transparent" onClick={onAdd} /></>}
+        buttons={<><Button tooltip="Cycle tasking schedule" onClick={cycleTaskingSchedule} icon={currentIcon} color="transparent">{currentTasking || "Round Robin"}</Button> <Button icon="plus" color="transparent" onClick={onAdd} /></>}
       >
         <Stack vertical>
           {points.map((point, index) => (
@@ -287,44 +298,18 @@ const PointSection = (props: {
                     marginRight: '10px',
                   }}
                 >
-                  {[
-                    [-1, 1],
-                    [0, 1],
-                    [1, 1],
-                    [-1, 0],
-                    [0, 0],
-                    [1, 0],
-                    [-1, -1],
-                    [0, -1],
-                    [1, -1],
-                  ].map(([dx, dy]) => {
-                    const isCenter = dx === 0 && dy === 0;
-                    let icon;
-                    if (dx === 1 && dy === 1) icon = 'arrow-up-right';
-                    else if (dx === 0 && dy === 1) icon = 'arrow-up';
-                    else if (dx === -1 && dy === 1) icon = 'arrow-up-left';
-                    else if (dx === 1 && dy === 0) icon = 'arrow-right';
-                    else if (dx === -1 && dy === 0) icon = 'arrow-left';
-                    else if (dx === 1 && dy === -1) icon = 'arrow-down-right';
-                    else if (dx === 0 && dy === -1) icon = 'arrow-down';
-                    else if (dx === -1 && dy === -1) icon = 'arrow-down-left';
-                    else if (dx === 0 && dy === 0) icon = 'location-dot';
-
-                    const currentDirection = getPointDirection(editingPoint);
-                    const isCurrentDirection =
-                      currentDirection &&
-                      dx === currentDirection.dx &&
-                      dy === currentDirection.dy;
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((buttonNumber) => {
+                    const isCenter = buttonNumber === 5;
+                    const currentButton = getPointButtonNumber(editingPoint);
+                    const isCurrentButton = currentButton === buttonNumber;
 
                     return (
                       <Button
-                        key={`${dx},${dy}`}
-                        icon={icon}
+                        key={buttonNumber}
+                        content={buttonNumber}
                         disabled={isCenter}
-                        color={isCurrentDirection ? 'good' : 'default'}
-                        onClick={() =>
-                          !isCenter && handleDirectionClick(dx, dy)
-                        }
+                        color={isCurrentButton ? 'good' : 'default'}
+                        onClick={() => !isCenter && handleDirectionClick(buttonNumber)}
                         style={{
                           margin: '0px',
                           textAlign: 'center',
@@ -354,21 +339,13 @@ const PointSection = (props: {
                             ? 'ACTIVE'
                             : 'INACTIVE'
                         }
-                        onClick={() =>
-                          act('toggle_item_filter', {
-                            index: editingIndex + 1,
-                          })
-                        }
+                        onClick={() => adjustPoint(editingPoint.id, 'reset_atom_filters')}
                         tooltip="Toggle item filters"
                       />
                       <ConfigRow
                         label="Skip Item Filters"
                         content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
-                        onClick={() =>
-                          act('toggle_filters_skip', {
-                            index: editingIndex + 1,
-                          })
-                        }
+                        onClick={() => adjustPoint(editingPoint.id, 'toggle_filters_skip')}
                         tooltip="Toggle filter skipping"
                       />
                     </>
@@ -377,21 +354,13 @@ const PointSection = (props: {
                       <ConfigRow
                         label="Mode"
                         content={editingPoint.mode.toUpperCase()}
-                        onClick={() =>
-                          act('change_dropoff_mode', {
-                            index: editingIndex + 1,
-                          })
-                        }
+                        onClick={() => adjustPoint(editingPoint.id, 'cycle_interaction_mode')}
                         tooltip="Change dropoff mode"
                       />
                       <ConfigRow
                         label="Overflow"
                         content="OFF"
-                        onClick={() =>
-                          act('toggle_overflow', {
-                            index: editingIndex + 1,
-                          })
-                        }
+                        onClick={() => adjustPoint(editingPoint.id, 'toggle_overflow')}
                         tooltip="Toggle overflow"
                       />
                       <ConfigRow
@@ -401,11 +370,7 @@ const PointSection = (props: {
                             ? 'ACTIVE'
                             : 'INACTIVE'
                         }
-                        onClick={() =>
-                          act('toggle_dropoff_filters', {
-                            index: editingIndex + 1,
-                          })
-                        }
+                        onClick={() => adjustPoint(editingPoint.id, 'reset_atom_filters')}
                         tooltip="Toggle filters"
                       />
                     </>
