@@ -124,8 +124,7 @@
 			balloon_alert(user, "open the panel first!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/assembly/control/controller_item = tool
-		id = controller_item.id
-		if(id == -1)
+		if(controller_item.id == -1)
 			//collect existing ids
 			var/list/door_ids = list()
 			for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
@@ -134,11 +133,11 @@
 				door_ids += "[M.id]"
 
 			//create new id
-			id = 0
-			while("[id]" in door_ids)
-				id += 1
-			id = "[id]"
-			controller_item.id = id
+			var/new_id = 0
+			while("[new_id]" in door_ids)
+				new_id += 1
+			controller_item.id = "[new_id]"
+		id = controller_item.id
 		owner = WEAKREF(user)
 		balloon_alert(user, "id changed to [id]")
 		return ITEM_INTERACT_SUCCESS

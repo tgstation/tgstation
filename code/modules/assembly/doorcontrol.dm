@@ -47,6 +47,13 @@
 	else
 		to_chat(user, span_notice("You now must interact with an pod door to generate an unique ID."))
 
+/obj/item/assembly/control/interact_with_atom(obj/item/assembly/control/interacting_with, mob/living/user, list/modifiers)
+	. = NONE
+	if(istype(interacting_with))
+		id = interacting_with.id
+		balloon_alert(user, "id changed")
+		return ITEM_INTERACT_SUCCESS
+
 /obj/item/assembly/control/activate()
 	var/openclose
 	if(cooldown)
