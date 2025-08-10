@@ -19,7 +19,7 @@
 	/// The current deconstruction step
 	var/deconstruction = BLASTDOOR_FINISHED
 	/// The door's ID (used for buttons, etc to control the door)
-	var/id = 1
+	var/id = null
 	/// The sound that plays when the door opens/closes
 	var/animation_sound = 'sound/machines/blastdoor.ogg'
 	var/show_nav_computer_icon = TRUE
