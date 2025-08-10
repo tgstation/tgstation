@@ -90,7 +90,7 @@ Things you **CAN'T** do:
 - [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
 - Close issues purely for breaking a template if the same information is contained without it.
 
-For more information reference the [Issue Manager Guide](./guides/ISSUE_MANAGER.md).
+For more information reference the [Issue Manager Guide](./guides/ISSUE_MANAGER.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/ISSUE_MANAGER.md).
 
 </details>
 
@@ -102,28 +102,28 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 
 #### Writing readable code
 
-[Style guide](./guides/STYLE.md)
+[Style guide](./guides/STYLE.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/STYLE.md)
 
 #### Writing sane code
 
-[Code standards](./guides/STANDARDS.md)
+[Code standards](./guides/STANDARDS.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/STANDARDS.md)
 
 #### Writing understandable code
 
-[Autodocumenting code](./guides/AUTODOC.md)
+[Autodocumenting code](./guides/AUTODOC.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/AUTODOC.md)
 
 #### Misc
 
-- [AI Datums](../code/datums/ai/learn_ai.md)
-- [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md)
-- [Hard Deletes](./guides/HARDDELETES.md)
-- [MC Tab Guide](./guides/MC_tab.md)
-- [Policy Configuration System](./guides/POLICYCONFIG.md)
-- [Quickly setting up a development database with ezdb](./guides/EZDB.md)
-- [Required Tests (Continuous Integration)](./guides/CI.md)
-- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
-- [UI Development](../tgui/README.md)
-- [Visual Effects and Systems](./guides/VISUALS.md)
+- [AI Datums](../code/datums/ai/learn_ai.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/code/datums/ai/learn_ai.md)
+- [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/tgui/docs/chat-embedded-components.md)
+- [Hard Deletes](./guides/HARDDELETES.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/HARDDELETES.md)
+- [MC Tab Guide](./guides/MC_tab.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/MC_tab.md)
+- [Policy Configuration System](./guides/POLICYCONFIG.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/POLICYCONFIG.md)
+- [Quickly setting up a development database with ezdb](./guides/EZDB.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/EZDB.md)
+- [Required Tests (Continuous Integration)](./guides/CI.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/CI.md)
+- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/ATOMIZATION.md)
+- [UI Development](../tgui/README.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/tgui/README.md)
+- [Visual Effects and Systems](./guides/VISUALS.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/VISUALS.md)
 
 ## Pull Request Process
 
