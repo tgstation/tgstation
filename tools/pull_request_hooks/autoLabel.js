@@ -109,7 +109,7 @@ async function check_diff_files_for_labels(github, context) {
 
   try {
     // Use github.paginate to fetch all files (up to ~3000 max)
-    const all_files = await github.paginate(
+    const { status, data } = await github.paginate(
       github.rest.pulls.listFiles,
       {
         owner: context.repo.owner,
@@ -119,10 +119,18 @@ async function check_diff_files_for_labels(github, context) {
       }
     );
 
-    if (!all_files) throw new Error("Response does not contain any data!");
+    // Check if the response status is 200 OK and if data is present
+    if (status !== 200) {
+      console.error(`Failed to get file list: ${status}`);
+      return { labels_to_add, labels_to_remove };
+    }
+    if (!data) {
+      console.error("Response does not contain any data!");
+      return { labels_to_add, labels_to_remove };
+    }
 
     // Changed filenames for quick lookup
-    const changed_files = new Set(all_files.map((f) => f.filename));
+    const changed_files = new Set(data.map((f) => f.filename));
 
     for (const [label, { filepaths, add_only }] of Object.entries(
       fileLabelFilepathSets
