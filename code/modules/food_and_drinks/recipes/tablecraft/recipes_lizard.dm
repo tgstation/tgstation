@@ -487,6 +487,8 @@
 	result = /obj/item/food/rootbread_peanut_butter_banana
 	added_foodtypes = FRUIT
 	category = CAT_LIZARD
+	crafting_flags = CRAFT_CLEARS_REAGENTS
+
 // Soups
 
 /datum/crafting_recipe/food/reaction/soup/atrakor_dumplings
