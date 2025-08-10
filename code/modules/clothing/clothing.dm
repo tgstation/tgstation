@@ -544,15 +544,11 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	var message
+	var/message
 	if(up)
-		message = src.alt_toggle_message
-		if(!message)
-			message = "You push [src] out of the way."
+		message = src.alt_toggle_message || "You push [src] out of the way."
 	else
-		message = src.toggle_message
-		if(!message)
-			message = "You push [src] back into place."
+		message = src.toggle_message || "You push [src] back into place."
 
 	to_chat(user, span_notice("[message]"))
 
