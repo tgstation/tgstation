@@ -514,10 +514,12 @@
 /datum/config_entry/flag/persistent_save_mining_z_levels
 /// Whether to include transitional z levels used for shuttle movement (by default this is turned off)
 /datum/config_entry/flag/persistent_save_transitional_z_levels
+/// Whether to include away mission (gateway) z levels (by default this is turned off)
+/datum/config_entry/flag/persistent_save_away_z_levels
 /// Period of time in hours between map autosaves (set to -1 to only allow saving when server reboots)
 /datum/config_entry/number/persistent_autosave_period
 	integer = FALSE
-	default = 2 // every 2 hours
+	default = 4 // every 4 hours
 	min_val = -1
 /// The maximum amount of autosaves to store (set to -1 to never delete any autosaves)
 /datum/config_entry/number/persistent_max_autosaves

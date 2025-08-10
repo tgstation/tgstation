@@ -242,6 +242,8 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		else if(!CONFIG_GET(flag/persistent_save_transitional_z_levels) && is_reserved_level(z)) // for shuttles in transit (hyperspace)
 			continue
+		else if(!CONFIG_GET(flag/persistent_save_away_z_levels) && is_away_level(z)) // gateway away missions
+			continue
 
 		if(is_multi_z_level(z))
 			if(!SSmapping.level_trait(z, ZTRAIT_UP) && SSmapping.level_trait(z, ZTRAIT_DOWN))
