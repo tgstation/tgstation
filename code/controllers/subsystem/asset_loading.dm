@@ -13,16 +13,19 @@ SUBSYSTEM_DEF(asset_loading)
 	while(length(generate_queue))
 		var/datum/asset/to_load = generate_queue[generate_queue.len]
 
+		last_queue_len = length(generate_queue)
+		generate_queue.len--
+
 		to_load.queued_generation()
 
 		if(MC_TICK_CHECK)
 			return
-		last_queue_len = length(generate_queue)
-		generate_queue.len--
+
 	// We just emptied the queue
 	if(last_queue_len && !length(generate_queue))
 		// Clean up cached icons, freeing memory.
 		rustg_iconforge_cleanup()
+		last_queue_len = 0
 
 /datum/controller/subsystem/asset_loading/proc/queue_asset(datum/asset/queue)
 #ifdef DO_NOT_DEFER_ASSETS
