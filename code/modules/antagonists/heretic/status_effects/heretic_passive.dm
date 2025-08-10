@@ -103,7 +103,7 @@
 	name = "Dance of the Brand"
 	id = "blade_passive"
 	passive_descriptions = list(
-		"Riposte with a 20 seconds cooldown, it now counts as a block.",
+		"Being attacked while wielding a Heretic Blade in either hand will deliver a free, instant counterattack to the attacker. This effect can only trigger once every 20 seconds.",
 		"Immunity to fall damage.",
 		"Cooldown of the riposte reduced to 10 seconds."
 	)
@@ -264,7 +264,7 @@
 	passive_descriptions = list(
 		"Immunity to Diseases, Disgust and space ants.",
 		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
-		"Gain a flat 25% damage and stamina damage reduction when fat and baton resistance as well."
+		"Gain a flat 25% damage and stamina damage reduction when fat as well as baton resistance."
 	)
 
 /datum/status_effect/heretic_passive/flesh/on_apply()
@@ -399,9 +399,9 @@
 	name = "Do You Hear The Voices Too?"
 	id = "moon_passive"
 	passive_descriptions = list(
-		"Can no longer develop brain traumas except for special ones, passively regenerates brain health, (this bonus is halved in combat).",
+		"Can no longer develop brain traumas, passively regenerates brain health, (this bonus is halved in combat).",
 		"Sleep immunity, increases the ratio at which your brain damage regenerates.",
-		"Mind gate and Ringleader's rise will channel the moon amulet effects."
+		"Mind gate and Ringleader's rise will channel the moon amulet effects, further inreases brain regeneration."
 	)
 	/// Built-in moon amulet which channels through your spells
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
@@ -462,8 +462,8 @@
 	id = "rust_passive"
 	passive_descriptions = list(
 		"Standing on Rusted tiles heals and purge chems off your body.",
-		"Standing on Rusted tiles closes up your wounds and heals your organs, you may now rust reinforced floors and walls.",
-		"Standing on Rusted tiles regenerates your limbs, you may now rust titanium and plastitanium walls."
+		"Standing on Rusted tiles closes up your wounds and heals your organs, you may now rust reinforced floors and walls, healing effect increased.",
+		"Standing on Rusted tiles regenerates your limbs, you may now rust titanium and plastitanium walls, healing effect increased."
 	)
 
 /datum/status_effect/heretic_passive/rust/on_apply()
@@ -558,7 +558,7 @@
 	passive_descriptions = list(
 		"Cold and low pressure immunity.",
 		"You no longer need to breathe.",
-		"Water, ice and slippery surfaces no longer slow you down."
+		"Water, ice and slippery surfaces no slip you."
 	)
 
 /datum/status_effect/heretic_passive/void/on_apply()
