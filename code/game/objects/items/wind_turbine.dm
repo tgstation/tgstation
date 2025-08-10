@@ -130,16 +130,19 @@
 	playsound(src, 'sound/machines/woosh.ogg', 20, FALSE)
 	last_sound_time = world.time
 
-///Sets the rotor animation tick to a new value
+///Sets the rotor animation tick to a new value. Returns TRUE if the rotor made a full rotation.
 /obj/item/portable_wind_turbine/proc/set_rotor_tick(new_tick)
 	var/last_rotor_tick = floor(rotor_tick)
 	rotor_tick = new_tick
+	var/made_full_rotation = FALSE
 	if (rotor_tick >= TURBINE_ANIMATION_TICKS)
 		rotor_tick -= floor(rotor_tick / TURBINE_ANIMATION_TICKS) * TURBINE_ANIMATION_TICKS
 		try_playsound()
+		made_full_rotation = TRUE
 	var/rounded_rotor_tick = floor(rotor_tick)
 	if (rounded_rotor_tick != last_rotor_tick)
 		update_appearance()
+	return made_full_rotation
 
 ///Adds a certain amount of power to the internal buffer
 /obj/item/portable_wind_turbine/proc/add_power(power, ignore_cap = FALSE)
@@ -152,7 +155,7 @@
 /obj/item/portable_wind_turbine/proc/on_move(atom/thing, atom/old_loc, dir)
 	SIGNAL_HANDLER
 
-	var/mob/user = thing
+	var/mob/living/user = thing
 	if (!user)
 		return
 	if (isnull(cap))
@@ -164,8 +167,21 @@
 	var/pressure_factor = open_turf.air.return_pressure() / 101.0
 	if (pressure_factor <= 0)
 		return
-	set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE * pressure_factor)
+	var/made_full_rotation = set_rotor_tick(rotor_tick + distance * TURBINE_ANIMATION_TICKS_PER_TILE * pressure_factor)
 	add_power(distance * TURBINE_CHARGE_PER_TILE * pressure_factor * cap.rating)
+	if (!made_full_rotation)
+		return
+	if (!HAS_TRAIT(user, TRAIT_CLUMSY))
+		return
+	var/obj/item/bodypart/head/head_to_bash = user.get_bodypart(BODY_ZONE_HEAD)
+	if (!head_to_bash)
+		return
+	user.Paralyze(5)
+	user.Knockdown(10)
+	user.visible_message(span_danger("[user] gets whacked in the head by the [src]'s spinning blades!"), span_userdanger("You get hit in the head by the [src] and fall over!"))
+	user.emote("scream")
+	user.apply_damage(5, BRUTE, head_to_bash, attacking_item=src)
+	playsound(source = src, soundin = 'sound/items/weapons/smash.ogg', vol = src.get_clamped_volume(), vary = TRUE)
 
 /obj/item/portable_wind_turbine/wrench_act(mob/living/user, obj/item/tool)
 	. = NONE
