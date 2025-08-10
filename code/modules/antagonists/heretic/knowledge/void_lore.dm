@@ -95,7 +95,7 @@
 
 /datum/heretic_knowledge/spell/void_prison
 	name = "Void Prison"
-	desc = "Grants you Void Prison, a spell that places your victim into ball, making them unable to do anything or speak. \
+	desc = "Grants you Void Prison, a spell that places your victim into a ball, making them unable to do anything or speak. \
 		Applies void chill afterwards."
 	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
 		I try to yell, grab hold of this fool and tell them to run. \

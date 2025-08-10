@@ -53,7 +53,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
 	desc = "Opens up the Path of Moon to you. \
-		Allows you to transmute 2 sheets of iron and a knife into an Lunar Blade. \
+		Allows you to transmute 2 sheets of glass and a knife into an Lunar Blade. \
 		You can only create two at a time."
 	gain_text = "Under the light of the moon the laughter echoes."
 	required_atoms = list(
@@ -88,7 +88,7 @@
 
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
-	desc = "Grants you Mind Gate, a spell which inflicts hallucinations, \
+	desc = "Grants you Mind Gate, a spell which mutes,deafens, blinds, inflicts hallucinations, \
 		confusion, oxygen loss and brain damage to its target over 10 seconds.\
 		The caster takes 20 brain damage per use."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
@@ -117,7 +117,7 @@
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/armor/moon
-	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of iron to create a Resplendant Regalia, this robe will render the user   fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and render him unable to use ranged weapons (Moon blade will bypass pacifism). \
+	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of glass to create a Resplendant Regalia, this robe will render the user   fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and render him unable to use ranged weapons (Moon blade will bypass pacifism). \
 			Acts as a focus while hooded."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
 				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
@@ -182,7 +182,7 @@
 	desc = "The ascension ritual of the Path of Moon. \
 		Bring 3 corpses with more than 50 brain damage to a transmutation rune to complete the ritual. \
 		When completed, you become a harbinger of madness gaining and aura of passive sanity decrease, \
-		confusion increase and, if their sanity is low enough, brain damage and blindness. \
+		crewmembers with low enough sanity will be converted into acolytes. \
 		1/5th of the crew will turn into acolytes and follow your command, they will all receive moonlight amulets."
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \

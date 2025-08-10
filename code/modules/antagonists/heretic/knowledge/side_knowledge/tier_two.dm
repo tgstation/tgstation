@@ -38,7 +38,7 @@
 
 /datum/heretic_knowledge/greaves_of_the_prophet
 	name = "Greaves Of The Prophet"
-	desc = "Allows you to combine a pair of shoes and 2 sheets of titanium or silver into a pair of Armored Greaves, they confer to the user fully immunity to slips."
+	desc = "Allows you to combine a pair of shoes and 2 sheets of titanium or silver into a pair of Armored Greaves, they confer to the user full immunity to slips."
 	gain_text = " \
 		Gristle churns into joint, a pop, and the fool twists a blackened foot from the \
 		jaws of another. At their game for centuries, this mangled tree of limbs twists, \
