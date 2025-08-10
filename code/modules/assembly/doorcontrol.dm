@@ -3,7 +3,7 @@
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
 	/// The ID of the blast door electronics to match to the ID of the blast door being used.
-	var/id = null
+	var/id = -1
 	/// Cooldown of the door's controller. Updates when pressed (activate())
 	var/cooldown = FALSE
 	var/sync_doors = TRUE
@@ -11,7 +11,10 @@
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
 	if(id)
-		. += span_notice("Its channel ID is '[id]'.")
+		if(id != -1)
+			. += span_notice("Its channel ID is '[id]'.")
+		else
+			. += span_notice("Interact with pod door to generate an new id")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
 	var/list/door_ids = list()
@@ -30,10 +33,7 @@
 		return
 
 	if(change_id == "UNIQUE")
-		var/door_id = 0
-		while("[door_id]" in door_ids)
-			door_id += 1
-		id = "[door_id]"
+		id = -1
 	else
 		var/start = findtext(change_id, "(") + 1
 		var/end = length(change_id) - 1
@@ -42,7 +42,10 @@
 		else
 			id = copytext(change_id, start, end)
 	balloon_alert(user, "id changed")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	if(id != -1)
+		to_chat(user, span_notice("You change the ID to [id]."))
+	else
+		to_chat(user, span_notice("You now must interact with an pod door to generate an unique ID."))
 
 /obj/item/assembly/control/activate()
 	var/openclose
