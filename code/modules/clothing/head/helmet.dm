@@ -226,8 +226,8 @@
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down on"
-	alt_toggle_message = "You push the visor up on"
+	toggle_message = "You pull the visor down"
+	alt_toggle_message = "You push the visor up"
 	armor_type = /datum/armor/toggleable_riot
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 80
