@@ -862,7 +862,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/item/radio/intercom/directional/west,
-/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "aog" = (
@@ -21795,18 +21794,6 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/atmos/pumproom)
-"gcY" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "gcZ" = (
 /obj/structure/table,
 /obj/item/storage/bag/tray,
@@ -21932,8 +21919,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "geZ" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/dark,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "gfb" = (
 /turf/closed/wall/r_wall,
@@ -35417,10 +35404,8 @@
 /area/mine/laborcamp)
 "kby" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/hydroponics/constructable,
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/railing,
-/turf/open/floor/iron/dark,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "kbJ" = (
 /obj/machinery/field/generator,
@@ -43743,8 +43728,8 @@
 "mut" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/newscaster/directional/east,
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/dark,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "muv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -52337,7 +52322,7 @@
 	},
 /obj/machinery/status_display/ai/directional/east,
 /obj/structure/water_source/puddle,
-/turf/open/floor/grass,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "oLn" = (
 /obj/structure/cable,
@@ -79492,16 +79477,6 @@
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"wDf" = (
-/obj/structure/sink/directional/south,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "wDg" = (
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
@@ -232750,9 +232725,9 @@ bln
 mQb
 kXI
 lJO
-wDf
 sAR
-gcY
+sAR
+sAR
 lCn
 kPy
 dQI

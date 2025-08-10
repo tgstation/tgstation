@@ -66290,8 +66290,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/sink/directional/south,
-/obj/structure/mirror/directional/north,
 /obj/machinery/button/door/directional/north{
 	id = "hydropony_shutters";
 	name = "hydroponics shutters control";

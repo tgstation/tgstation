@@ -34905,7 +34905,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sink/kitchen/directional/north,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
 "maA" = (

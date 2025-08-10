@@ -2500,6 +2500,9 @@
 /obj/effect/turf_decal/trimline/neutral/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "akM" = (
@@ -16820,9 +16823,6 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
 "ePd" = (
-/obj/structure/sink{
-	pixel_y = 15
-	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
@@ -27021,14 +27021,11 @@
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "iHr" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
 /obj/effect/turf_decal/trimline/neutral/line,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "iHG" = (
@@ -29803,10 +29800,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "jBy" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -34916,8 +34909,8 @@
 /area/station/security/prison/workout)
 "lkp" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/dark,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "lku" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -37731,6 +37724,7 @@
 /area/station/ai_monitored/command/storage/eva)
 "mdY" = (
 /obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "meb" = (
@@ -39778,8 +39772,8 @@
 	},
 /area/station/service/chapel)
 "mTS" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/dark,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "mUd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
@@ -40176,6 +40170,9 @@
 /area/station/maintenance/tram/left)
 "ncI" = (
 /obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
 /turf/open/floor/iron,
