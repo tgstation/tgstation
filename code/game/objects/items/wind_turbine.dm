@@ -40,8 +40,11 @@
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
+		/obj/item/compact_remote,
+		/obj/item/controller,
+		/obj/item/organ/cyberimp/bci,
+		/obj/item/integrated_circuit,
 		/obj/item/melee/baton/security,
-		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
 		/obj/item/stock_parts/power_store/cell,
 	))
@@ -283,8 +286,11 @@
 		// TODO
 		return
 	var/obj/item/stock_parts/power_store/cell/charging_cell = charging.get_cell()
-	if (!charging_cell)
+	if (!charging_cell && istype(charging, /obj/item/stock_parts/power_store/cell))
 		charging_cell = charging
+	if (!charging_cell)
+		var/datum/component/shell/shell = charging.GetComponent(/datum/component/shell)
+		charging_cell = shell?.attached_circuit?.get_cell()
 	if(charging_cell)
 		var/wanted_power = min(charging_cell.maxcharge - charging_cell.charge, charging_cell.chargerate)
 		if(wanted_power > 0)
@@ -295,14 +301,6 @@
 				available_power -= power_to_give
 		update_appearance()
 
-	if(istype(charging, /obj/item/ammo_box/magazine/recharge)) //if you add any more snowflake ones, make sure to update the examine messages too.
-		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
-		if(power_pack.stored_ammo.len < power_pack.max_ammo)
-			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			available_power -= charging_cell.charge
-			using_power = TRUE
-		update_appearance()
-		return
 	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
 		finished_recharging = TRUE
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
