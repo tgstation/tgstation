@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - code_imp: "adds support to check for a required_bodytype or required_organ_flag for the damage getter procs"
