@@ -19971,12 +19971,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"eWj" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/structure/sign/poster/official/report_crimes/directional/west,
-/turf/open/floor/plating,
-/area/station/security/checkpoint/medical/medsci)
 "eWr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "transitlock";
@@ -32897,13 +32891,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
-"igE" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/report_crimes/directional/west,
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "igI" = (
 /obj/machinery/newscaster/directional/north,
 /obj/structure/cable,
@@ -135069,7 +135056,7 @@ kdq
 shU
 bbj
 dZc
-igE
+lhC
 uGE
 qmu
 qfi
@@ -135326,7 +135313,7 @@ xWf
 uZs
 xWf
 dQT
-eWj
+qfi
 qfi
 qfi
 dQT
