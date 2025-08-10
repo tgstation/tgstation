@@ -108,20 +108,21 @@ async function check_diff_files_for_labels(github, context) {
   const labels_to_remove = [];
 
   try {
-    const { status, data } = await github.rest.pulls.listFiles({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      pull_number: context.payload.pull_request.number,
-    });
+    // Use github.paginate to fetch all files (up to ~3000 max)
+    const all_files = await github.paginate(
+      github.rest.pulls.listFiles,
+      {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        pull_number: context.payload.pull_request.number,
+        per_page: 100, // max per request
+      }
+    );
 
-    if (status !== 200) {
-      console.error(`Failed to get file list: ${status}`);
-      return { labels_to_add, labels_to_remove };
-    }
-    if (!data) throw new Error("Response does not contain any data!");
+    if (!all_files) throw new Error("Response does not contain any data!");
 
-    // Store changed filenames in a Set for O(1) lookup
-    const changed_files = new Set(data.map((f) => f.filename));
+    // Changed filenames for quick lookup
+    const changed_files = new Set(all_files.map((f) => f.filename));
 
     for (const [label, { filepaths, add_only }] of Object.entries(
       fileLabelFilepathSets
