@@ -92,7 +92,7 @@
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
 	//Heads up to other binary chat listeners that a new AI is online and listening to Binary.
-	if(announce_init_to_others && !(z == 1)) //Skip new syndicate AIs and also new AIs on centcom Z
+	if(announce_init_to_others && !is_centcom_level(z)) //Skip new syndicate AIs and also new AIs on centcom Z
 		for(var/mob/McMobby in GLOB.player_list)
 			if(McMobby == src)
 				continue
