@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "deconstructing material platforms drops the correct sheet types"
-  - bugfix: "certain material platforms now have the correct amount of custom materials in them"

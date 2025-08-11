@@ -206,3 +206,13 @@
   vinylspiders:
   - code_imp: adds support to check for a required_bodytype or required_organ_flag
       for the damage getter procs
+2025-08-11:
+  Axidyuwu:
+  - bugfix: after lizard raid on the popular chef show "Kotra Wellington" was renamed
+      to "Korta Wellington"
+  Melbert:
+  - qol: Grand Pianos can be climbed on
+  SyncIt21:
+  - bugfix: deconstructing material platforms drops the correct sheet types
+  - bugfix: certain material platforms now have the correct amount of custom materials
+      in them
