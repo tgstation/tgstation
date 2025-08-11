@@ -25,7 +25,6 @@ SUBSYSTEM_DEF(asset_loading)
 	if(last_queue_len && !length(generate_queue))
 		// Clean up cached icons, freeing memory.
 		rustg_iconforge_cleanup()
-		last_queue_len = 0
 
 /datum/controller/subsystem/asset_loading/proc/queue_asset(datum/asset/queue)
 #ifdef DO_NOT_DEFER_ASSETS
