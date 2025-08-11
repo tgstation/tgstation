@@ -599,7 +599,7 @@ PERSISTENT_SAVE_STATION_Z_LEVELS
 PERSISTENT_SAVE_SPACE_Z_LEVELS
 ## Whether to include mining z levels
 #PERSISTENT_SAVE_MINING_Z_LEVELS
-## Whether to include transitional z levels used for shuttle movement (by default this is turned off)
+## Whether to include transitional z levels used for shuttle movement
 #PERSISTENT_SAVE_TRANSITIONAL_Z_LEVELS
 ## Whether to include away gateway misisons z levels
 #PERSISTENT_SAVE_AWAY_Z_LEVELS
