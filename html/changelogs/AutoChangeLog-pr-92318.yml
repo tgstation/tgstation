@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed tables allowing people standing on them to climb over things freely when deconstructed"

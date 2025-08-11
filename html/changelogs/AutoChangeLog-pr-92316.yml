@@ -1,4 +1,0 @@
-author: "dj-34"
-delete-after: True
-changes:
-  - rscdel: "Removed duplicate code of banner icons"

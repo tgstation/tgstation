@@ -97,18 +97,13 @@
 	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_UNAFFECTED_BY_METABOLISM
 	metabolization_rate = 1 * REM
 
-/datum/reagent/inverse/cryostylane/on_transfer(atom/transfered_thing, methods, trans_volume)
+/datum/reagent/inverse/cryostylane/expose_mob(mob/living/carbon/human/human_thing, methods, reac_volume, show_message, touch_protection)
 	. = ..()
-	if(methods & INGEST)
+	if((methods & INGEST) || !ishuman(human_thing))
 		return
-
-	if(!ishuman(transfered_thing))
-		return
-
-	var/mob/living/carbon/human/human_thing = transfered_thing
 
 	if(HAS_TRAIT(human_thing, TRAIT_RESISTCOLD))
-		holder.remove_reagent(type, volume)
+		holder.del_reagent(type)
 		return
 
 	human_thing.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)

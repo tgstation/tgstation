@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - rscadd: "Recovered Crew have been added to the ghostrole spawner menu"
-  - rscadd: "Orbiting Recovered Crew corpses will make them twitch to indicate a soul is available"
