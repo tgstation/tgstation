@@ -262,6 +262,14 @@
 /obj/effect/turf_decal/caution/red,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"ch" = (
+/obj/structure/table/wood,
+/obj/machinery/light/directional/south,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
 "cj" = (
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -3690,6 +3698,19 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"Fa" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/night{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/night{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Fc" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
@@ -4406,19 +4427,6 @@
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"Lq" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/night{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/night,
-/obj/item/clothing/glasses/night{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/turf/template_noop,
-/area/virtual_domain/safehouse)
 "Ls" = (
 /obj/modular_map_root/safehouse{
 	key = "shuttle_space"
@@ -4520,15 +4528,6 @@
 /area/virtual_domain)
 "Mj" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
-/area/virtual_domain)
-"Mk" = (
-/obj/structure/table/wood,
-/obj/machinery/light/directional/south,
-/obj/item/papercutter{
-	pixel_x = -4
-	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Ml" = (
@@ -6727,7 +6726,7 @@ uS
 uS
 ML
 DP
-Mk
+ch
 uS
 ND
 AP
@@ -7277,7 +7276,7 @@ oD
 pB
 hX
 zQ
-Lq
+Fa
 hX
 hX
 hX

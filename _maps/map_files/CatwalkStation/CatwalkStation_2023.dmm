@@ -8556,11 +8556,6 @@
 /obj/machinery/light/directional,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
-"cAs" = (
-/obj/structure/disposalpipe/segment,
-/obj/item/banner/command/mundane,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "cAv" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -11219,17 +11214,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"doU" = (
-/obj/structure/table,
-/obj/effect/spawner/random/bureaucracy/paper,
-/obj/item/paper/fluff/ids_for_dummies{
-	pixel_x = -6;
-	pixel_y = 14
-	},
-/obj/item/pen,
-/obj/structure/sign/poster/contraband/missing_gloves/directional/west,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "dpo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -19123,6 +19107,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
+"fHm" = (
+/obj/structure/table,
+/obj/effect/spawner/random/bureaucracy/paper,
+/obj/item/pen,
+/obj/structure/sign/poster/contraband/missing_gloves/directional/west,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "fHp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/showcase/machinery/oldpod{
@@ -28722,23 +28713,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/abandoned)
-"iwY" = (
-/obj/structure/table/wood,
-/obj/item/paper/fluff/ids_for_dummies{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/paper_bin{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/stamp/head/hop{
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/hop)
 "ixf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -33879,6 +33853,15 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood/large,
 /area/station/service/library/private)
+"jTT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/banner/blue{
+	inspiration_available = 0
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/eighties,
+/area/station/maintenance/hallway/abandoned_recreation)
 "jTZ" = (
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 4
@@ -41191,13 +41174,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/cargo/warehouse)
-"mdn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/banner/red{
-	inspiration_available = 0
-	},
-/turf/open/floor/eighties,
-/area/station/maintenance/hallway/abandoned_recreation)
 "mdp" = (
 /obj/structure/closet,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -41642,6 +41618,11 @@
 /obj/structure/broken_flooring/corner/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"mjk" = (
+/obj/structure/disposalpipe/segment,
+/obj/item/banner/command/mundane,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "mjm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
@@ -64072,15 +64053,6 @@
 "sTv" = (
 /turf/closed/wall,
 /area/station/security/courtroom)
-"sTK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/banner/blue{
-	inspiration_available = 0
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/eighties,
-/area/station/maintenance/hallway/abandoned_recreation)
 "sTT" = (
 /obj/structure/railing/corner/end/flip{
 	dir = 4
@@ -77016,6 +76988,19 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/station/service/chapel)
+"wJu" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/hop{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/hop)
 "wJI" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/siding/dark{
@@ -77935,6 +77920,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"wXR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/banner/red{
+	inspiration_available = 0
+	},
+/turf/open/floor/eighties,
+/area/station/maintenance/hallway/abandoned_recreation)
 "wXU" = (
 /obj/item/bedsheet/captain,
 /obj/structure/bed,
@@ -107609,7 +107601,7 @@ jBd
 lOd
 nKj
 jIX
-sTK
+jTT
 vYH
 cFL
 xAj
@@ -109198,7 +109190,7 @@ bFe
 rPE
 srD
 jDx
-cAs
+mjk
 ovx
 tRJ
 dWj
@@ -113279,7 +113271,7 @@ dDX
 vuO
 ugN
 tGb
-iwY
+wJu
 loc
 ltm
 kRk
@@ -119686,7 +119678,7 @@ pRO
 mcY
 tFy
 qNn
-doU
+fHm
 clF
 pRO
 ntw
@@ -170578,7 +170570,7 @@ eIJ
 eIJ
 nKj
 ipm
-mdn
+wXR
 lOd
 gPW
 wKg
