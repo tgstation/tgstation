@@ -35,7 +35,7 @@
 		content.forceMove(mech)
 	mech.locate_parts()
 	SSblackbox.record_feedback("tally", "mechas_created", 1, mech.name)
-	ADD_TRAIT(mech, TRAIT_MECHA_CREATED_NORMALLY, mech)
+	ADD_TRAIT(mech, TRAIT_MECHA_CREATED_NORMALLY, REF(mech))
 	QDEL_NULL(parent)
 
 // Default proc to generate mech steps.
