@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(explosions)
 
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
-	msg += "C:{"
+	msg += "\n  Cost:{"
 	msg += "LT:[round(cost_lowturf,1)]|"
 	msg += "MT:[round(cost_medturf,1)]|"
 	msg += "HT:[round(cost_highturf,1)]|"
@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(explosions)
 
 	msg += "} "
 
-	msg += "AMT:{"
+	msg += "\n  Count:{"
 	msg += "LT:[lowturf.len]|"
 	msg += "MT:[medturf.len]|"
 	msg += "HT:[highturf.len]|"
@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(explosions)
 	msg += "TO:[throwturf.len]"
 	msg += "HTO:[held_throwturf.len]"
 
-	msg += "} "
+	msg += "}"
 	return ..()
 
 /datum/controller/subsystem/explosions/proc/is_exploding()

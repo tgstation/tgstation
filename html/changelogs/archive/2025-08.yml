@@ -39,3 +39,180 @@
   - bugfix: Cyborgs correctly take burn damage from EMP again.
   - bugfix: EMP Flashlights work on cyborgs for non-combat mode as well as combat
       mode
+2025-08-02:
+  Aliceee2ch:
+  - bugfix: Fixed the nukies outpost chemical locker not having beakers inside of
+      a beaker box
+  SmArtKar:
+  - bugfix: Fixed fire arrow ritual not being accessible
+  - bugfix: Fixed certain nullrod types not being usable for certain holy and unholy
+      interactions
+  - bugfix: Fixed emissive bloom being all white
+  - bugfix: Fixed M90 underbarrel having its separate inaccessible firing pin
+  SyncIt21:
+  - bugfix: reagent transfer amounts with multiplier applied(e.g. cryotubes) have
+      been corrected
+  ZeWaka:
+  - bugfix: tgui windows should now stop flashing for a single frame elsewhere when
+      opening
+  necromanceranne:
+  - bugfix: Swimming now no longer punishes you with less gains for swimming in heavy
+      gravity, but also weirdly easier to swim in.
+  subject217:
+  - spellcheck: fixed a typo in the operative bomb implant manual
+2025-08-03:
+  SmArtKar:
+  - qol: Monster cores now display above corpses when dropped
+  Thunder12345:
+  - rscadd: Glitter can now be made from plastic polymers and aluminium.
+  - rscadd: Plastic polymer can be made at any temperature, and then heated to produce
+      sheets.
+  - rscadd: Glitter can now be made any colour, mix 10 units each of glitter and acetone
+      to change its colour to that of the other reagents in the beaker.
+  - rscadd: Mixing different colours of glitter will cause a random selection of those
+      colours to appear on the floor when released.
+  - rscadd: Being exposed to glitter in reagent form causes you to cough up more glitter
+      onto the floor
+  - rscadd: Dragging glittery crates will now spread a trail of glitter and angry
+      janitors behind them.
+  - image: Added new glitter sprites (that don't look like gasses)
+2025-08-04:
+  carpotoxin:
+  - qol: Mobs entangled within spacevines are layered above the spacevines for as
+      long as they stay buckled
+2025-08-05:
+  FalloutFalcon:
+  - code_imp: debug proc for painting the world based on spatial grid.
+  IgiariValkyr:
+  - bugfix: Fixes the void eater's right-hand sprite
+  OnlineGirlfriend:
+  - image: update barnyard spellbook
+  Pickle-Coding:
+  - bugfix: Fixes BZ formation not actually creating the nitrogen and oxygen when
+      it decomposes nitrous oxide.
+  SmArtKar:
+  - bugfix: Fixed style meter text going out of bounds
+  - bugfix: Fixed recovered crew bodybags being foldable while there's a "corpse"
+      inside
+  - bugfix: Knocking someone out cold now properly stops their panic attack
+  - bugfix: Fixed portable atmospheric machines trying to add themselves to SSair
+      queue when destroyed
+  TheEmber:
+  - bugfix: Fixed bitrunning psyker
+2025-08-06:
+  Bisar:
+  - bugfix: Correct a few banners on Catwalk Station to be mundane banners, and not
+      the magic barriers that heal you and remove your stuns.
+  Ghommie:
+  - bugfix: Shooting a fish with a laser gun or otherwise damaging it like any other
+      item or object will reduce its health.
+  Rhials:
+  - balance: Dragon rifts no longer take damage from telekinesis-ed objects. Get in
+      there and fight like a man!
+  SmArtKar:
+  - bugfix: Fixed All-in-One tcomms servers not translating radio frequencies
+  - bugfix: Fixed RPD causing runtimes when placing atmos components for the first
+      time.
+  SyncIt21:
+  - code_imp: moved designs & circuitboards for bitrunning into their correct files
+  - qol: adds examines & screentips for bitrunning netpod, bitforge & server on how
+      to deconstruct them
+  - bugfix: bitforge can be deconstructed with a screwdriver & crowbar
+  - refactor: code for copying reagents has been refactored. Please report bugs on
+      github
+  - bugfix: You can no longer see parallel universes when 2 or more people gets shoved
+      into closets.
+  - code_imp: cleaned up closet see through code. It's documented & slightly faster
+      performance wise
+2025-08-07:
+  Arturlang:
+  - code_imp: action's now pass down the clicker via the first arg of Trigger()
+  - code_imp: antagonist ui_act now ensures that the owners of the antag datum thesmelves
+      can only do stuff in the UI
+  - bugfix: admins giving out heretic antag no longer opens it for them.
+  - bugfix: Action button binding works again
+  Exester509:
+  - qol: Made angel wings more maneuverable
+  - spellcheck: The cytology crate no longer references the non-existent research
+      plumbing constructor.
+  FalloutFalcon:
+  - map: converts all non-basic space turfs to space/basic
+  Majkl-J:
+  - rscadd: Redesigned the Icebox, Tram, and Wawa gardens, adding fishing pools to
+      them
+  Rhials:
+  - balance: The Chain of Command will give a speed bonus to other players when right-clicking
+      them.
+  SmArtKar:
+  - rscadd: Added specular overlays - some items like hazard vests or firefighter
+      suits no longer outright glow in the dark, but instead amplify existing light
+      to shine brighter than their surroundings.
+  - rscadd: Redid unrestricted access airlock overlays to look less bad
+  - bugfix: Fixed unrestricted access overlays not showing up on windoors.
+  - bugfix: Fixed blood/glass floor glow going over objects
+2025-08-08:
+  Arturlang:
+  - bugfix: ghosts can't buy heretic powers
+  Melbert:
+  - balance: Airlock crushing now does 20 damage, up from 15. Also may uncommonly
+      cause wounds. Also is properly affected by damage reduction or modifiers.
+  - balance: Mood threshold to become "crazy" changed from -7 (one moderately bad
+      event) to -15 (two moderately bad events).
+  SmArtKar:
+  - balance: Fluoride Stare quirk now takes much longer to start damaging your eyes,
+      and deals less eye damage per second
+  - bugfix: Fixed lizard blinking constantly freezing one of their eyes
+  - bugfix: Fixed brain damage not updating your blinking to be async when you get
+      stupid enough
+  - bugfix: Fixed species changing breaking passive blinking
+  lelandkemble:
+  - qol: informs changelings they can't absorb people they've already taken the DNA
+      of
+  - spellcheck: changelings refer to themselves in second-person less
+  necromanceranne:
+  - balance: Gravity anomalies can be properly clicked. Rather than chain stunning
+      you, the anomaly will knock you down. You can avoid the negatives of gravity
+      anomalies by wearing magboots. (Yes, it did not really protect you until now)
+  - balance: Flux anomalies detonate in a much smaller explosion, but release a wide
+      EMP as well.
+  - balance: Long range gas analyzers can now scan anomalies.
+  panvxv:
+  - rscadd: Bone bracers to Divine Adept kit
+  - qol: Adept robes doesn't cover arms, hands and feet as to match the sprite
+  - qol: Ancient armour doesn't cover hands as to match the sprite
+  - qol: Divine Archer coat doesn't cover arms, hands and feet as to match the sprite
+  - qol: Divine Archer bracers now have the same armor as Divine Archer coat
+  - balance: Divine Archer boots have their own unique armor
+2025-08-09:
+  Cirrial:
+  - balance: You will no longer be allergic to saline-glucose solution.
+  LemonInTheDark:
+  - admin: MC tab renders without jumping around constantly now, some labels are more
+      readable
+  Melbert:
+  - rscadd: Adds Black Workboots to Loadout
+  SmArtKar:
+  - refactor: Refactored how human names are updated, yell at us on our github if
+      you spot any bugs!
+  - bugfix: Fixed slimepeople regenerating blood while dead
+  - bugfix: Rescued the station from a time-space bubble
+  Thunder12345:
+  - bugfix: CRAB-17 machines will now hold onto funds internally if they cannot find
+      the original user's bank account to transfer them to.
+2025-08-10:
+  Mickyan:
+  - rscdel: Reduces mood penalty from Empaths examining people with the Fundamentally
+      Evil quirk
+  vinylspiders:
+  - code_imp: adds support to check for a required_bodytype or required_organ_flag
+      for the damage getter procs
+2025-08-11:
+  Axidyuwu:
+  - bugfix: after lizard raid on the popular chef show "Kotra Wellington" was renamed
+      to "Korta Wellington"
+  Melbert:
+  - qol: Grand Pianos can be climbed on
+  SyncIt21:
+  - bugfix: deconstructing material platforms drops the correct sheet types
+  - bugfix: certain material platforms now have the correct amount of custom materials
+      in them
