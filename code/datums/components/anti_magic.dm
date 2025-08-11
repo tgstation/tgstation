@@ -29,6 +29,7 @@
  * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
  * * block_magic (optional) The proc that is triggered when an object blocks magic
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
+ * * check_blocking (optional) The proc that is triggered to check if we can block magic
  * *
  * antimagic bitflags: (see code/__DEFINES/magic.dm)
  * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
