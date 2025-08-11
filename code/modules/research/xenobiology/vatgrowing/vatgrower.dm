@@ -139,9 +139,9 @@
 	var/static/image/off_overlay
 	var/static/image/emissive_overlay
 	if(isnull(on_overlay))
-		on_overlay = iconstate2appearance(icon, icon_state + "_on")
-		off_overlay = iconstate2appearance(icon, icon_state + "_off")
-		emissive_overlay = emissive_appearance(icon, icon_state + "_glow", src, alpha = src.alpha)
+		on_overlay = iconstate2appearance(icon, "[icon_state]_on")
+		off_overlay = iconstate2appearance(icon, "[icon_state]_off")
+		emissive_overlay = emissive_appearance(icon, "[icon_state]_glow", src, alpha = src.alpha)
 	. += emissive_overlay
 	if(is_operational)
 		if(resampler_active)
@@ -151,11 +151,11 @@
 	if(!reagents.total_volume)
 		return
 	var/reagentcolor = mix_color_from_reagents(reagents.reagent_list)
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, icon_state + "_reagent", appearance_flags = RESET_COLOR|KEEP_APART)
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "[icon_state]_reagent", appearance_flags = RESET_COLOR|KEEP_APART)
 	base_overlay.color = reagentcolor
 	. += base_overlay
 	if(biological_sample && is_operational)
-		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, icon_state + "_bubbles")
+		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "[icon_state]_bubbles")
 		. += bubbles_overlay
 
 /obj/machinery/vatgrower/emag_act(mob/user, obj/item/card/emag/emag_card)
