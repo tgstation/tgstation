@@ -3,7 +3,7 @@
 /turf/closed/indestructible/rock,
 /area/space/nearstation)
 "ab" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ac" = (
 /turf/closed/mineral/volcanic,
@@ -40,7 +40,7 @@
 	},
 /obj/item/veilrender/honkrender,
 /obj/item/clothing/mask/gas/clown_hat,
-/obj/item/organ/internal/heart/demon,
+/obj/item/organ/heart/demon,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "av" = (
@@ -340,7 +340,6 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cN" = (
 /obj/machinery/door/window/left/directional/east,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cP" = (
@@ -353,10 +352,6 @@
 /area/awaymission/caves/research)
 "cS" = (
 /obj/machinery/door/window/right/directional/east,
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
-"cV" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cX" = (
@@ -576,10 +571,6 @@
 /obj/effect/landmark/awaystart,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
-"eg" = (
-/obj/effect/decal/cleanable/robot_debris/old,
-/turf/open/floor/iron,
-/area/awaymission/caves/listeningpost)
 "eh" = (
 /obj/structure/table,
 /obj/item/radio,
@@ -688,10 +679,6 @@
 /area/awaymission/caves/listeningpost)
 "eL" = (
 /obj/machinery/vending/sovietsoda,
-/turf/open/floor/iron,
-/area/awaymission/caves/listeningpost)
-"eN" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eO" = (
@@ -1023,10 +1010,10 @@
 "ki" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
-/obj/item/organ/internal/eyes/robotic/thermals,
 /obj/item/slimepotion/fireproof,
 /obj/item/gun/energy/e_gun/mini,
 /obj/item/gun/energy/laser/musket,
+/obj/item/organ/eyes/robotic/thermals,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "kE" = (
@@ -1400,11 +1387,6 @@
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_three)
-"JP" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
 "Kq" = (
 /obj/structure/sign/departments/exam_room/directional/north,
 /turf/open/floor/iron,
@@ -1581,10 +1563,6 @@
 "XR" = (
 /obj/structure/spider/stickyweb,
 /mob/living/basic/spider/giant/hunter/away_caves,
-/turf/open/misc/asteroid/basalt,
-/area/awaymission/caves/bmp_asteroid/level_three)
-"YG" = (
-/obj/item/organ/internal/brain/alien,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_three)
 "YZ" = (
@@ -4497,7 +4475,7 @@ hr
 hr
 hq
 Xs
-YG
+hq
 ac
 ac
 ac
@@ -8974,7 +8952,7 @@ cr
 cA
 cr
 cR
-cV
+cr
 cr
 cg
 bL
@@ -9228,11 +9206,11 @@ bL
 bL
 ch
 cs
-JP
+Wx
 cN
 cS
 Wx
-JP
+Wx
 cg
 bL
 bL
@@ -11052,7 +11030,7 @@ eH
 eL
 eJ
 eW
-eN
+eJ
 eJ
 eO
 fh
@@ -11300,7 +11278,7 @@ BK
 BK
 bL
 eF
-eg
+eJ
 lE
 eJ
 eJ
@@ -11559,7 +11537,7 @@ bL
 eG
 eh
 fm
-eg
+eJ
 eJ
 eF
 eI
@@ -11820,7 +11798,7 @@ fm
 eJ
 eG
 eJ
-eN
+eJ
 eJ
 eF
 sw
@@ -12339,7 +12317,7 @@ eJ
 eJ
 eJ
 eJ
-eN
+eJ
 fh
 BK
 BK
