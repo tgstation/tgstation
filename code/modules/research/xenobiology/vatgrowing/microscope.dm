@@ -120,6 +120,9 @@
 	balloon_alert(user, "dish removed")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/structure/microscope/unanchored
+	anchored = FALSE
+
 /datum/crafting_recipe/microscope
 	name = "Microscope"
 	result = /obj/structure/microscope

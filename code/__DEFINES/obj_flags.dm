@@ -53,6 +53,8 @@
 #define SKIP_FANTASY_ON_SPAWN (1<<20)
 /// If the item can attack people despite the attacker being a pacifist
 #define BYPASSES_PACIFISM (1<<21)
+/// If an item has had its /datum/element/weapon_description initialized or not.
+#define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

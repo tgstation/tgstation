@@ -1,0 +1,6 @@
+author: "Cameron-The-Raven"
+delete-after: True
+changes:
+  - bugfix: "Nar'Sie can no longer be spam-clicked as a ghost and destroy ears via infinite shell creation."
+  - bugfix: "Cult-banned players can no longer interact with Nar'Sie"
+  - qol: "Interacting with Nar'Sie as a ghost no longer creates a ghost query and instead allows you to immediately become a harvester after confirming you wish to become a harvester."

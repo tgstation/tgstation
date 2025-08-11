@@ -280,8 +280,6 @@
 		if(damtype == BRUTE)
 			hitsound = SFX_SWING_HIT
 
-	add_weapon_description()
-
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 
 	setup_reskinning()
@@ -474,6 +472,13 @@
 
 /obj/item/examine_descriptor(mob/user)
 	return "item"
+
+/obj/item/examine(mob/user)
+	// lazily initialize the weapon description element if it hasn't been already
+	if(!(item_flags & WEAPON_DESCRIPTION_INITIALIZED))
+		add_weapon_description()
+		item_flags |= WEAPON_DESCRIPTION_INITIALIZED
+	return ..()
 
 /obj/item/examine_more(mob/user)
 	. = ..()
@@ -751,7 +756,7 @@
 	SEND_SIGNAL(user, COMSIG_MOB_DROPPED_ITEM, src)
 	if(!silent && drop_sound)
 		play_drop_sound(DROP_SOUND_VOLUME)
-	user?.update_equipment_speed_mods()
+	user?.update_equipment(src)
 
 /// called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -814,7 +819,7 @@
 	item_flags |= IN_INVENTORY
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)), PROC_REF(update_slot_icon), override = TRUE)
 
-	user.update_equipment_speed_mods()
+	user.update_equipment(src)
 
 	if(!initial && (slot_flags & slot) && (play_equip_sound()))
 		return
