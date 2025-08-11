@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - code_imp: "Item weapon description elements are now initialized when first examined, instead of immediately upon initialization."
