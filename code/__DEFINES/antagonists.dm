@@ -453,6 +453,12 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// Very difficult to accomplish, almost guaranteed to require crew conflict
 #define SPY_DIFFICULTY_HARD "Hard"
 
+/// special class for spy bounties locked behind other rewards
+#define SPY_BOUNTIES_RESTRICTED "Restricted"
+
+/// Chance that an item is removed from the pool after being put as reward for a spy bounty
+#define SPY_REWARD_REMOVAL_CHANCE 80
+
 /// Camera net used by battle royale objective
 #define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"
 

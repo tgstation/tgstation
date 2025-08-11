@@ -34,12 +34,17 @@
 	/// What uplink item the bounty will reward on completion.
 	VAR_FINAL/datum/uplink_item/reward_item
 
-/datum/spy_bounty/New(datum/spy_bounty_handler/handler)
+	//if true, try to clear (probability check) the item from the spy bounty pool if it's been claimed.
+	var/clear_post_claim = FALSE
+
+/datum/spy_bounty/New(datum/spy_bounty_handler/handler, datum/uplink_item/item_override)
 	if(!init_bounty(handler))
 		return
 
 	initalized = TRUE
-	select_reward(handler)
+	reward_item = item_override || select_reward(handler)
+	if(item_override)
+		clear_post_claim = TRUE
 
 /// Helper that translates the bounty into UI data for TGUI
 /datum/spy_bounty/proc/to_ui_data(mob/user)
@@ -73,12 +78,15 @@
 	var/list/loot_pool = handler.possible_uplink_items[difficulty]
 
 	if(!length(loot_pool))
-		reward_item = /datum/uplink_item/bundles_tc/telecrystal
-		return // future todo : add some junk items for when we run out of items
+		return (locate(/datum/uplink_item/bundles_tc/telecrystal) in SStraitor.uplink_items) // future todo : add some junk items for when we run out of items
 
-	reward_item = pick(loot_pool)
-	if(prob(80))
-		loot_pool -= reward_item
+	var/list/loot_pool_copy = loot_pool.Copy()
+	loot_pool_copy -= handler.possible_uplink_items[SPY_BOUNTIES_RESTRICTED]
+	var/return_reward = pick(loot_pool_copy)
+	if(prob(SPY_REWARD_REMOVAL_CHANCE))
+		loot_pool -= return_reward
+
+	return return_reward
 
 /**
  * Checks if the passed movable is a valid target for this bounty.

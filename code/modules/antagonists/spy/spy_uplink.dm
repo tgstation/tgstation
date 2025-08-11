@@ -10,6 +10,8 @@
 	var/datum/weakref/spy_ref
 	/// The handler which manages all bounties across all spies.
 	var/static/datum/spy_bounty_handler/handler
+	/// To be filled with the typepaths of the various rewards (the items, rather than their uplink representation)
+	var/list/rewards_received = list()
 
 /datum/component/spy_uplink/Initialize(datum/antagonist/spy/spy)
 	if(!isitem(parent))
@@ -155,6 +157,9 @@
 	bounty.claimed = TRUE
 
 	var/atom/movable/reward = bounty.reward_item.spawn_item_for_generic_use(spy)
+	rewards_received += reward.type
+	if(bounty.clear_post_claim && prob(SPY_REWARD_REMOVAL_CHANCE))
+		handler.possible_uplink_items[SPY_BOUNTIES_RESTRICTED] -= reward
 	if(isitem(reward))
 		spy.put_in_hands(reward)
 
@@ -187,7 +192,9 @@
 
 	data["bounties"] = list()
 	for(var/datum/spy_bounty/bounty as anything in handler.get_all_bounties())
-		UNTYPED_LIST_ADD(data["bounties"], bounty.to_ui_data(user))
+		if(bounty.reward_item.spy_bounty_requirements && !(rewards_received & bounty.reward_item.spy_bounty_requirements))
+			continue //hide them from the uplink. It's still possible to claim it, however you'd need someone else to reveal you what the bounty even is.
+		UNTYPED_LIST_ADD(data["bounties"], bounty.to_ui_data())
 	data["time_left"] = timeleft(handler.refresh_timer)
 
 	return data

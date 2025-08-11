@@ -13,6 +13,7 @@
 	cost = 2
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	purchasable_from = ~UPLINK_SERIOUS_OPS
+	spy_bounty_requirements = /obj/item/storage/toolbox/guncase/traitor/donksoft
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Magazine Case"
@@ -22,30 +23,32 @@
 	cost = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
+	spy_bounty_requirements = /obj/item/storage/toolbox/guncase/traitor
 
-/datum/uplink_item/ammo/pistolap
+/datum/uplink_item/ammo/pistol/New()
+	..()
+	spy_bounty_requirements -= subtypesof(/obj/item/storage/toolbox/guncase/traitor) //Only makarov guncase accepted
+
+/datum/uplink_item/ammo/pistol/ap
 	name = "9mm Armour Piercing Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m9mm/ap
 	cost = 2
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
-/datum/uplink_item/ammo/pistolhp
+/datum/uplink_item/ammo/pistol/hp
 	name = "9mm Hollow Point Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m9mm/hp
 	cost = 3
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
-/datum/uplink_item/ammo/pistolfire
+/datum/uplink_item/ammo/pistol/fire
 	name = "9mm Incendiary Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			Loaded with incendiary rounds which inflict little damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/m9mm/fire
 	cost = 2
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
@@ -53,5 +56,6 @@
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
 	cost = 4
-	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY) //nukies get their own version
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
+	spy_bounty_requirements = /obj/item/gun/ballistic/revolver
