@@ -179,7 +179,9 @@
 	user.Paralyze(5)
 	user.Knockdown(10)
 	user.visible_message(span_danger("[user] gets whacked in the head by the [src]'s spinning blades!"), span_userdanger("You get hit in the head by the [src] and fall over!"))
-	user.emote("scream")
+	// imaginary friends call sleep in their emotes
+	// even though imaginary friends can't put on a wind turbine I still have to do this
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/, emote), "scream")
 	user.apply_damage(5, BRUTE, head_to_bash, attacking_item=src)
 	playsound(source = src, soundin = 'sound/items/weapons/smash.ogg', vol = src.get_clamped_volume(), vary = TRUE)
 
