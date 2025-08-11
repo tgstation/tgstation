@@ -223,7 +223,7 @@
  */
 /datum/song/proc/sync_play()
 	for(var/datum/song/other_instrument as anything in SSinstruments.songs)
-		if(other_instrument == src || LOWER_TEXT(other_instrument.id) != LOWER_TEXT(id))
+		if(other_instrument == src || other_instrument.id != id)
 			continue
 		if(other_instrument.playing)
 			continue

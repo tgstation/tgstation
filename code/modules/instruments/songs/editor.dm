@@ -73,7 +73,7 @@
 				stop_playing()
 			return TRUE
 		if("set_instrument_id")
-			var/new_id = reject_bad_name(params["id"], max_length = 20, allow_numbers = TRUE, cap_after_symbols = FALSE)
+			var/new_id = reject_bad_name(LOWER_TEXT(params["id"]), max_length = 20, allow_numbers = TRUE, cap_after_symbols = FALSE)
 			if(new_id)
 				id = new_id
 			return TRUE
