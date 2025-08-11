@@ -50,7 +50,7 @@
 	#define COMPONENT_HANDLED_GRILLING (1<<0)
 ///Called when an object is turned into another item through grilling ontop of a griddle
 #define COMSIG_ITEM_GRILLED "item_grill_completed"
-///Sent to the newly spawned object when it's grilled on a grilled.
+///Sent to the newly spawned object when it's grilled on a griddle.
 #define COMSIG_ITEM_GRILLED_RESULT "item_grilled_result"
 
 ///Called when the object is grilled by the grill (not to be confused by the griddle, but oh gee the two should be merged in one)
