@@ -114,7 +114,7 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 
 #### Misc
 
-- [AI Datums](../code/datums/ai/learn_ai.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/code/datums/ai/learn_ai.md)
+- [AI Datums](/code/datums/ai/learn_ai.md)
 - [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/tgui/docs/chat-embedded-components.md)
 - [Hard Deletes](./guides/HARDDELETES.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/HARDDELETES.md)
 - [MC Tab Guide](./guides/MC_tab.md) | [Web Link](https://github.com/tgstation/tgstation/blob/master/.github/guides/MC_tab.md)
