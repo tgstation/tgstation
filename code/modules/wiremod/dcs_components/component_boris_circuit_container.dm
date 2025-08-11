@@ -60,7 +60,7 @@
 	var/list/choices = list()
 	var/list/choice_map = list()
 	var/source_in_choices = FALSE
-	for(var/obj/item/circuit_component/mmi/mmi_component in mmi_components)
+	for(var/obj/item/circuit_component/mmi/mmi_component as anything in mmi_components)
 		if(mmi_component.occupant)
 			continue
 		var/atom/movable/shell = mmi_component.parent.shell
