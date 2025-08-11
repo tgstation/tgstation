@@ -25,7 +25,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = ITEM_SLOT_HEAD, \
 		charges = 6, \
-		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
 		expiration = CALLBACK(src, PROC_REF(warp_up)) \
 	)
 
