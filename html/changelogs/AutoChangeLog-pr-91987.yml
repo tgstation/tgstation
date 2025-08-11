@@ -1,0 +1,16 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "cleaned up vending machine code"
+  - qol: "vending machines now have more product slogans you never heard before"
+  - qol: "custom & normal vending machines now have more feedback on why an item could not be loaded"
+  - qol: "vending machines now display random ads on the UI"
+  - qol: "custom vending machines can be deconstructed via crowbar safely only after unlinking your account from the machine."
+  - qol: "upon deconstructing a custom vendor all its products are moved into its refill canister & it will be restored when reconstructing the machine elsewhere"
+  - bugfix: "Returned items to the vending machine now show up as free in the UI and won't be greyed out if you don't have credits to get them back"
+  - bugfix: "items that leave the vending machine by any means will update the UI in all cases"
+  - bugfix: "loading items by hand to the vending machine now respects the max_amount for that category"
+  - bugfix: "custom vendors can now actually be used by players who are not the owner thus enabling them to transfer credits to the owner during purchases & basically they do their job again"
+  - bugfix: "custom vendors now show the correct icon for inserted items"
+  - bugfix: "Items with different names & custom prices now show up in unique rows in custom vendors"
+  - refactor: "separated custom & normal vending machine code. Reduced UI code & improved attack chain"
