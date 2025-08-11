@@ -439,7 +439,7 @@
 /mob/living/proc/setOrganLoss(slot, amount, maximum, required_organ_flag)
 	return
 
-/mob/living/proc/get_organ_loss(slot)
+/mob/living/proc/get_organ_loss(slot, required_organ_flag)
 	return
 
 /mob/living/proc/getStaminaLoss()

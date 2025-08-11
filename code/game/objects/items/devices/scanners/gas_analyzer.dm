@@ -148,6 +148,10 @@
 	ui_interact(user)
 
 /obj/item/analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/effect/anomaly) && can_see(user, interacting_with, ranged_scan_distance))
+		var/obj/effect/anomaly/ranged_anomaly = interacting_with
+		ranged_anomaly.analyzer_act(user, src)
+		return ITEM_INTERACT_SUCCESS
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

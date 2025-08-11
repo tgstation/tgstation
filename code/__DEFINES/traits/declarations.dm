@@ -941,6 +941,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_WORN_ICON "no_worn_icon"
 /// Items with this trait will not appear when examined.
 #define TRAIT_EXAMINE_SKIP "examine_skip"
+/// Objects with this trait cannot be repaired with duct tape
+#define TRAIT_DUCT_TAPE_UNREPAIRABLE "duct_tape_unrepairable"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"

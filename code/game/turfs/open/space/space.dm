@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
-	icon_state = "space"
+	MAP_SWITCH(icon_state = "space", icon_state = "space_map")
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
@@ -74,6 +74,9 @@ GLOBAL_LIST_EMPTY(starlight)
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
+
+/turf/open/space/basic
+	MAP_SWITCH(icon_state = "space", icon_state = "space_basic_map")
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
