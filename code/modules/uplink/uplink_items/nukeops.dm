@@ -757,6 +757,15 @@
 	cant_discount = TRUE
 	refundable = TRUE
 
+/datum/uplink_item/suits/screamer_module
+	name = "MODsuit Screamer Module"
+	desc = "An indescribably terrifying module recreated from Lovecraft's secret blueprints, causing involuntary screams within sight after activation. Only compatible with Syndicate modsuits."
+	item = /obj/item/mod/module/syndicate_screamer
+	cost = 2
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
+	cant_discount = TRUE
+	refundable = TRUE
+
 // Devices
 
 /datum/uplink_item/device_tools/assault_pod

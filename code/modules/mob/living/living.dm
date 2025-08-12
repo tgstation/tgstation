@@ -2721,11 +2721,18 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	mob_mood.add_mood_event(arglist(args))
 
+/// Check a having mood category from the mob
+/mob/living/proc/has_mood_of_category(category)
+	if(QDELETED(mob_mood))
+		return
+	return mob_mood.has_mood_of_category(category)
+
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
 	if(QDELETED(mob_mood))
 		return
 	mob_mood.clear_mood_event(category)
+
 
 /// This should be called by games when the gamer reaches a winning state, just sends a signal
 /mob/living/proc/won_game()

@@ -551,3 +551,45 @@
 		Most point fingers at Cybersun Industries, but murmurs suggest it could even be even more clandestine organizations amongst the Syndicate branches. \
 		Whatever the case, if you are looking at one of these right now, don't show it to a space ninja." \
 	)
+
+
+/obj/item/mod/module/syndicate_screamer
+	name = "MOD Screamer Module"
+	desc = "An indescribable, terrifying module that strikes fear into those unprepared to view it. Only compatible with Syndicate modsuits."
+	icon_state = "brain_hurties"
+	complexity = 1
+	module_type = MODULE_TOGGLE
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	required_slots = list(ITEM_SLOT_HEAD)
+
+	var/list/allowed_mod_themes = list(
+		/datum/mod_theme/syndicate,
+		/datum/mod_theme/elite,
+		/datum/mod_theme/infiltrator
+	)
+
+/obj/item/mod/module/syndicate_screamer/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
+	RegisterSignal(src, COMSIG_HUMAN_VIEW_EQUIPMENT, PROC_REF(on_view_equipment))
+
+/obj/item/mod/module/syndicate_screamer/proc/on_module_triggered(datum/source)
+	SIGNAL_HANDLER
+
+	if(!(is_type_in_list(mod.theme, allowed_mod_themes)))
+		balloon_alert(mod.wearer, "only compatible with Syndicate modsuits!")
+		return MOD_ABORT_USE
+
+/obj/item/mod/module/syndicate_screamer/proc/on_view_equipment(datum/source, mob/living/carbon/human/viewer)
+	// SIGNAL_HANDLER
+
+	var/mood_category = "scream module"
+
+	if(active && !viewer.has_mood_of_category(mood_category))
+		to_chat(viewer, span_notice("You see indescribable horror."))
+		viewer.add_mood_event(mood_category, /datum/mood_event/scream_module)
+		viewer.emote("scream")
+
+/datum/mood_event/scream_module
+	description = "I cannot forget the horror I experienced."
+	timeout = 1 MINUTES
