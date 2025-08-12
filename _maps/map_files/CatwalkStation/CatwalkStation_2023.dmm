@@ -35901,6 +35901,7 @@
 	network = list("ss13","medbay");
 	c_tag = "Medbay - Upper Morgue"
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "kwQ" = (
