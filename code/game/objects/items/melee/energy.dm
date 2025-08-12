@@ -380,7 +380,7 @@
 
 /obj/item/melee/energy/sword/surplus
 	name = "surplus energy sword"
-	desc = "Oversized, overengineered, and mass-produced. Supposedly, the two blades is to make up for the poor cutting plane the emitter generates. \
+	desc = "Oversized, overengineered, and mass-produced. Supposedly, the two blades are to make up for the poor cutting plane the emitter generates. \
 		These swords are given out to grunts who 'have a low probability of surviving in an an actual battle'. Which may include you."
 	icon_state = "surplus_e_sword"
 	inhand_icon_state = "surplus_e_sword"
