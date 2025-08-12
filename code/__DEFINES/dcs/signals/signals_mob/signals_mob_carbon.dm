@@ -177,3 +177,6 @@
 
 /// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
 #define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"
+
+///from mob/living/carbon/human/viewed_by_human(). Takes mob/living/carbon/human as argument
+#define COMSIG_HUMAN_VIEW_EQUIPMENT "human_view_equipment"

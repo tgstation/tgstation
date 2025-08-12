@@ -102,6 +102,7 @@
 	update_speed()
 	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_potion))
+	RegisterSignal(src, COMSIG_HUMAN_VIEW_EQUIPMENT, PROC_REF(on_view_equipment))
 	for(var/obj/item/mod/module/module as anything in theme.inbuilt_modules)
 		module = new module(src)
 		install(module)
@@ -772,3 +773,9 @@
 	if (length(overrides))
 		return overrides[1]
 	return mutable_appearance(worn_icon, "[skin]-helmet-visor", layer = standing.layer + 0.1)
+
+/obj/item/mod/control/proc/on_view_equipment(datum/source, mob/living/carbon/human/viewer)
+	SIGNAL_HANDLER
+
+	for(var/obj/item/mod/module/module as anything in modules)
+		SEND_SIGNAL(module, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)

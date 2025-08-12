@@ -1076,6 +1076,57 @@
 		return FALSE
 	return head_covered || HAS_TRAIT(src, TRAIT_HEAD_ATMOS_SEALED)
 
+/mob/living/carbon/human/proc/view_humans_around()
+	for(var/mob/living/carbon/human/viewer as anything in GLOB.human_list)
+		if(src == viewer)
+			continue
+
+		// if src inside closet/box
+		var/turf/real_src_turf = get_turf(src.loc)
+
+		if(src.stat in list(CONSCIOUS, SOFT_CRIT)) // in conscious
+			if(!(src.is_blind())) // can see
+				if(!(viewer.invisibility || viewer.alpha <= 50)) //cloaked
+					if(isturf(viewer.loc)) // on a turf, because they could be in a closet, disposals, or a vehicle.
+						if(can_see(real_src_turf, viewer, 7))
+							viewer.viewed_by_human(src)
+
+		// if viewer inside closet/box
+		var/turf/real_viewer_turf = get_turf(viewer.loc)
+
+		if(viewer.stat in list(CONSCIOUS, SOFT_CRIT)) // in conscious
+			if(!(viewer.is_blind())) // can see
+				if(!(src.invisibility || src.alpha <= 50)) // cloaked
+					if(isturf(src.loc)) // on a turf, because they could be in a closet, disposals, or a vehicle.
+						if(can_see(real_viewer_turf, src, 7))
+							src.viewed_by_human(viewer)
+
+/mob/living/carbon/human/proc/viewed_by_human(mob/living/carbon/human/viewer)
+	if(head)
+		SEND_SIGNAL(head, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(wear_mask)
+		SEND_SIGNAL(wear_mask, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(glasses)
+		SEND_SIGNAL(glasses, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(ears)
+		SEND_SIGNAL(ears, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(wear_neck)
+		SEND_SIGNAL(wear_neck, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(wear_suit)
+		SEND_SIGNAL(wear_suit, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(w_uniform)
+		SEND_SIGNAL(w_uniform, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(back)
+		SEND_SIGNAL(back, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(gloves)
+		SEND_SIGNAL(gloves, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(belt)
+		SEND_SIGNAL(belt, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(wear_id)
+		SEND_SIGNAL(wear_id, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+	if(shoes)
+		SEND_SIGNAL(shoes, COMSIG_HUMAN_VIEW_EQUIPMENT, viewer)
+
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
 

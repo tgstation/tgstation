@@ -24,9 +24,17 @@
 /mob/living/carbon/human/mob_negates_gravity()
 	return dna.species.negates_gravity(src) || ..()
 
+
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
+
+	view_humans_around()
+
 	if(shoes && body_position == STANDING_UP && has_gravity(loc))
 		if((. && !moving_diagonally) || (!. && moving_diagonally == SECOND_DIAG_STEP))
 			SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
+/mob/living/carbon/human/forceMove(atom/destination)
+	. = ..()
+
+	view_humans_around()
