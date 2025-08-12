@@ -1,43 +1,129 @@
+/**
+ * Wish Granter, gives a simple antagonist status to any who touches it, as long as it has charge left.
+ *
+ * If you want the lore breakdown, the wishgranter was a type of Devil that links its own soul to those of its victims
+ * rather than doing it through a contract. Now left as remains after pesky Lawyers managed to best it,
+ * they were left on Lavaland. There, the devil tried to trick Bubblegum into giving it a way out,
+ * resulting in Bubblegum's soul being linked and now constantly drains the Wish Granter of power.
+ * The Wish Granter now seeks only to prolong its own life, and plays into the player's delusional wishes,
+ * turning you into their Avatar as a way of some extra energy to feed to Bubblegum.
+ * It will reward you if you manage to defeat bubblegum and turn the rewards in (It is not expecting you to do this though)
+ * with some extra power, but it will still be too weak to do anything more for the rest of the round.
+ *
+ * Gameplay impacts:
+ * - The constant sucking of energy causes it to speak very weakly but still with great strength as it is still a powerful being.
+ * - The Wish Granter will reward you if you turn in Bubblegum's loot.
+ */
 /obj/machinery/wish_granter
 	name = "wish granter"
 	desc = "You're not so sure about this, anymore..."
 	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
-
+	base_icon_state = "syndbeacon"
 	use_power = NO_POWER_USE
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF | BOMB_PROOF
 
+	///Whether or not the reward has been granted to the user.
+	var/reward_granted = FALSE
+	///How many uses we got left before becoming dormant.
 	var/charges = 1
-	var/insisting = 0
+	///Weakref to the last user to have touched the wishgranter; new players will be 'insisted' on the first touch.
+	var/datum/weakref/insisted_player
+	///List of things the wishgranter will say to the avatar if prompted to. Will only say one of each.
+	var/list/things_to_say = list(
+		"dur 1",
+		"dur 2",
+		"dur 3",
+		"dur 4",
+	)
 
-/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user, list/modifiers)
+/obj/machinery/wish_granter/Destroy(force)
+	insisted_player = null
+	return ..()
+
+/obj/machinery/wish_granter/update_icon_state()
+	. = ..()
+	if(isnull(insisted_player))
+		return .
+	var/mob/living/person_insisted = insisted_player?.resolve()
+	if(person_insisted.stat)
+		icon_state = "[base_icon_state]-destroyed"
+	else
+		icon_state = base_icon_state
+
+/obj/machinery/wish_granter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(!(tool.type in GLOB.bubblegum_loot))
+		return
+	reward_granted = TRUE
+	playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
+	say("...you've done well... i grant you weapons... without restriction...")
+	REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
+
+/obj/machinery/wish_granter/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
+	if(user?.mind.has_antag_datum(/datum/antagonist/wishgranter))
+		on_wishgranter_interact(user)
+		return
 	if(charges <= 0)
-		to_chat(user, span_boldnotice("The Wish Granter lies silent."))
+		balloon_alert(user, "doesn't react...")
 		return
-
-	else if(!ishuman(user))
-		to_chat(user, span_boldnotice("You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."))
+	if(!ishuman(user))
+		to_chat(user, span_boldnotice("You feel a dark stirring inside of [src], something you want nothing of. Your instincts are better than any man's."))
 		return
-
-	else if(user.is_antag())
+	if(user.is_antag())
 		to_chat(user, span_boldnotice("Even to a heart as dark as yours, you know nothing good will come of this. Something instinctual makes you pull away."))
+		return
+	var/mob/living/person_insisted = insisted_player?.resolve()
+	if(isnull(insisted_player) || person_insisted != user)
+		playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 80)
+		say("...is this really what you want..?")
+		insisted_player = WEAKREF(user)
+		return
+	var/list/player_words = list(
+		"I want the station to disappear.",
+		"I want to be marked in history.",
+		"Humanity is corrupt and mankind must be destroyed.",
+		"I want to be rich.",
+		"I want to rule the world.",
+		"I want immortality.",
+	)
+	user.say(pick(player_words), bubble_type = "wishgranter")
+	addtimer(CALLBACK(src, PROC_REF(give_antagonist_status), user), 5 SECONDS, TIMER_UNIQUE | TIMER_DELETE_ME)
 
-	else if (!insisting)
-		to_chat(user, span_boldnotice("Your first touch makes the Wish Granter stir, listening to you. Are you really sure you want to do this?"))
-		insisting++
+///The wish granter gives all its ability to the player.
+/obj/machinery/wish_granter/proc/give_antagonist_status(mob/living/user)
+	to_chat(user, span_boldnotice("Your head pounds for a moment, before your vision clears. You are the avatar of [src], and your power is LIMITLESS! And it's all yours. You need to make sure no one can take it from you. No one can know, first."))
+	charges--
+	user.mind.add_antag_datum(/datum/antagonist/wishgranter)
+	addtimer(CALLBACK(src, PROC_REF(give_final_warning), user), 2 SECONDS, TIMER_UNIQUE | TIMER_DELETE_ME)
+	for(var/turf/closed/indestructible/riveted/indestructible_walls in oview(3))
+		indestructible_walls.ScrapeAway()
+	RegisterSignals(user, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE), PROC_REF(on_avatar_stat_change))
 
+///Small flavortext showing the player's "old" self is now gone.
+/obj/machinery/wish_granter/proc/give_final_warning(mob/living/user)
+	to_chat(user, span_warning("A part of you gets a spike of regret, then the presence dissipates."))
+
+/obj/machinery/wish_granter/proc/on_wishgranter_interact(mob/user)
+	var/mob/living/person_insisted = insisted_player?.resolve()
+	if(person_insisted != user)
+		to_chat(user, span_boldnotice("[src] recognizes you as an Avatar of another, and refuses to speak with you."))
+		return
+	if(reward_granted)
+		say("...thank you...")
+		playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
+		return
+	if(!length(things_to_say))
+		say("...that demon...")
 	else
-		to_chat(user, span_boldnotice("You speak. [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")]. The Wish Granter answers."))
-		to_chat(user, span_boldnotice("Your head pounds for a moment, before your vision clears. You are the avatar of the Wish Granter, and your power is LIMITLESS! And it's all yours. You need to make sure no one can take it from you. No one can know, first."))
+		say(pick_n_take(things_to_say))
+	playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
 
-		charges--
-		insisting = 0
-
-		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
-
-		to_chat(user, span_warning("You have a very bad feeling about this."))
-
-	return
+///Called when the Avatar dies or is revived. The wishgranter, with not enough fuel to keep itself alive, starts collapsing.
+/obj/machinery/wish_granter/proc/on_avatar_stat_change(atom/source)
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON)

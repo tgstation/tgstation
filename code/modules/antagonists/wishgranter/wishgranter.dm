@@ -4,6 +4,7 @@
 	show_name_in_check_antagonists = TRUE
 	hijack_speed = 2 //You literally are here to do nothing else. Might as well be fast about it.
 	suicide_cry = "HAHAHAHAHA!!"
+	stinger_sound = 'sound/items/knell/knell2.ogg'
 
 /datum/antagonist/wishgranter/forge_objectives()
 	var/datum/objective/hijack/hijack = new
