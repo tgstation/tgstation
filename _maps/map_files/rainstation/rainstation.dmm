@@ -26879,11 +26879,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"bMC" = (
-/obj/structure/lattice,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/turf/open/space,
-/area/rainworld/surface)
 "bMD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -108752,7 +108747,7 @@ dvO
 xGM
 xGM
 xGM
-bMC
+xGM
 xGM
 xeP
 bHm
