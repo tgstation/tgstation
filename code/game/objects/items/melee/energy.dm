@@ -431,6 +431,10 @@
 /obj/item/melee/energy/sword/surplus/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(target))
 		return ..()
+
+	if(sharpness == NONE)
+		return ..()
+
 	var/mob/living/living_target = target
 	var/vulnerable_target = FALSE
 
