@@ -474,6 +474,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	charge = max_charge
 	user.balloon_alert(user, "recharge successful")
+	playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/melee/energy/sword/surplus/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
@@ -498,5 +499,6 @@
 		return TRUE
 
 	user.Shake(2, 1, 0.3 SECONDS, shake_interval = 0.1 SECONDS)
+	playsound(src, 'sound/items/baton/telescopic_baton_folded_pickup.ogg', 40, TRUE)
 	COOLDOWN_START(src, jiggle_cooldown, 1 SECONDS)
 	return TRUE
