@@ -647,7 +647,7 @@
 	consumable = FALSE
 
 /obj/item/emitter_disk/sanity
-	name = "Diode Disk: Psychosiphoning"
+	name = "/improper Diode Disk: Psychosiphoning"
 	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will depress living creatures and calm supermatter crystals."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/psy
 	consumed_on_removal = FALSE
