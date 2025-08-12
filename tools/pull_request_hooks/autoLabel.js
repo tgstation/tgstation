@@ -33,10 +33,10 @@ const titleKeywordSets = (() => {
  */
 const fileLabelFilepathSets = (() => {
   const map = {};
-  for (const [label, { filepaths, add_only }] of Object.entries(
+  for (const [label, { filepaths = [], file_extensions = [], add_only }] of Object.entries(
     autoLabelConfig.file_labels
   )) {
-    map[label] = { filepaths: new Set(filepaths), add_only };
+    map[label] = { filepaths: new Set(filepaths), file_extensions: new Set(file_extensions), add_only };
   }
   return map;
 })();
@@ -127,22 +127,19 @@ async function check_diff_files_for_labels(github, context) {
     // Set of changed filenames for quick lookup
     const changedFiles = new Set(allFiles.map((f) => f.filename));
 
-    for (const [label, { filepaths = [], file_extensions = [], add_only }] of Object.entries(
+    for (const [label, { filepaths = new Set(), file_extensions = new Set(), add_only }] of Object.entries(
       fileLabelFilepathSets
     )) {
       let found = false;
 
-      // Filepath-based pattern matching
-      for (const filepath of filepaths) {
-        if ([...changedFiles].some((filename) => filename.includes(filepath))) {
-          found = true;
-          break;
-        }
+      // Filepath-based matching
+      if ([...changedFiles].some((filename) => [...filepaths].some((path) => filename.includes(path)))) {
+        found = true;
       }
 
-      if (!found && file_extensions.length) {
-        // File extension-based matching
-        if ([...changedFiles].some((filename) => file_extensions.some((ext) => filename.endsWith(ext)))) {
+      // File extension-based matching
+      if (!found && file_extensions.size) {
+        if ([...changedFiles].some((filename) => [...file_extensions].some((ext) => filename.endsWith(ext)))) {
           found = true;
         }
       }
