@@ -133,14 +133,26 @@ async function check_diff_files_for_labels(github, context) {
       let found = false;
 
       // Filepath-based matching
-      if ([...changedFiles].some((filename) => [...filepaths].some((path) => filename.includes(path)))) {
-        found = true;
+      for (const filename of changedFiles) {
+        for (const path of filepaths) {
+          if (filename.includes(path)) {
+            found = true;
+            break;
+          }
+        }
+        if (found) break;
       }
 
       // File extension-based matching
       if (!found && file_extensions.size) {
-        if ([...changedFiles].some((filename) => [...file_extensions].some((ext) => filename.endsWith(ext)))) {
-          found = true;
+        for (const filename of changedFiles) {
+          for (const ext of file_extensions) {
+            if (filename.endsWith(ext)) {
+              found = true;
+              break;
+            }
+          }
+          if (found) break;
         }
       }
 
