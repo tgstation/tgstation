@@ -661,7 +661,7 @@
 	consumable = FALSE
 
 /obj/item/emitter_disk/blast
-	name = "Diode Disk: Hyperconcussive"
+	name = "/improper Diode Disk: Hyperconcussive"
 	desc = "This disk, loaded with proprietary syndicate firmware, can be used on an emitter with an open panel to make it shoot beams of concussive force which will cause small explosions."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/blast
 	consumed_on_removal = FALSE
