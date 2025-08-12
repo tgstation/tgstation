@@ -156,7 +156,6 @@
 		"manusorter",
 		"manurouter",
 		"mailsorter",
-		"portable_wind_turbine",
 	)
 
 /datum/techweb_node/energy_manipulation
