@@ -633,7 +633,7 @@
 	consumable = FALSE
 
 /obj/item/emitter_disk/healing
-	name = "Diode Disk: Bioregenerative"
+	name = "/improper Diode Disk: Bioregenerative"
 	desc = "This disk can be installed into an emitter with an open panel to make it shoot lasers which will heal the physical damages of living creatures."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/bioregen
 	consumed_on_removal = FALSE
