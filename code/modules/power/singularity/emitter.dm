@@ -640,7 +640,7 @@
 	consumable = FALSE
 
 /obj/item/emitter_disk/incendiary
-	name = "Diode Disk: Conflagratory"
+	name = "/improper Diode Disk: Conflagratory"
 	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will set living creatures ablaze."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/incend
 	consumed_on_removal = FALSE
