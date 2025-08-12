@@ -188,7 +188,7 @@
 	average_weight = 10
 	sprite_width = 3
 	sprite_height = 1
-	health = 50
+	max_integrity = 100
 	feeding_frequency = 1.5 MINUTES
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
 	required_temperature_max = MIN_AQUARIUM_TEMP+20

@@ -54,6 +54,13 @@
 		return
 	SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED
 	SSshuttle.unload_preview()
+	// We need to move our docking port back in case a crashlanding shuttle has been purchased previously
+	for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary_docking_ports)
+		if(port.shuttle_id != "emergency_home")
+			continue
+		var/turf/initial_loc = locate(port.initial_x, port.initial_y, port.initial_z)
+		port.forceMove(initial_loc)
+		break
 	SSshuttle.existing_shuttle = SSshuttle.emergency
 	SSshuttle.action_load(new_shuttle, replace = TRUE)
 	log_shuttle("Shuttle Catastrophe set a new shuttle, [new_shuttle.name].")

@@ -74,7 +74,7 @@
 	mytray.mutation_roll(user)
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
-/datum/reagent/mutagen/used_on_fish(obj/item/fish/fish)
+/datum/reagent/toxin/mutagen/used_on_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_MUTAGENIC, type)
 	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_MUTAGENIC, type), fish.feeding_frequency * 0.8, TIMER_UNIQUE|TIMER_OVERRIDE)
 	return TRUE
@@ -1269,7 +1269,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
-		fish.adjust_health(fish.health - 30)
+		fish.damage_fish(30)
 		return TRUE
 
 /datum/reagent/toxin/bungotoxin
