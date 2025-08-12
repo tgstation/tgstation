@@ -120,20 +120,20 @@
 
 /// Same as update_atom_color, but simplifies overlay coloring
 /atom/proc/color_atom_overlay(mutable_appearance/overlay)
-    overlay.color = color
-    if (!cached_color_filter)
-        return overlay
-    // Apply the atom's color filter to the overlay using named filters so that
-    // later calls to add_filter/update_filters (e.g., height displacement filters)
-    // do not wipe out our coloration. Mirror prior behavior by propagating to
-    // child overlays unless KEEP_TOGETHER is present.
-    overlay.add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, cached_color_filter)
+	overlay.color = color
+	if (!cached_color_filter)
+		return overlay
+	// Apply the atom's color filter to the overlay using named filters so that
+	// later calls to add_filter/update_filters (e.g., height displacement filters)
+	// do not wipe out our coloration. Mirror prior behavior by propagating to
+	// child overlays unless KEEP_TOGETHER is present.
+	overlay.add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, cached_color_filter)
 
-    if(!(overlay.appearance_flags & KEEP_TOGETHER))
-        // Recursively ensure any nested overlays/underlays also get the color filter
-        for(var/mutable_appearance/child_overlay as anything in overlay.overlays)
-            color_atom_overlay(child_overlay)
-        for(var/mutable_appearance/child_underlay as anything in overlay.underlays)
-            color_atom_overlay(child_underlay)
+	if(!(overlay.appearance_flags & KEEP_TOGETHER))
+		// Recursively ensure any nested overlays/underlays also get the color filter
+		for(var/mutable_appearance/child_overlay as anything in overlay.overlays)
+			color_atom_overlay(child_overlay)
+		for(var/mutable_appearance/child_underlay as anything in overlay.underlays)
+			color_atom_overlay(child_underlay)
 
-    return overlay
+	return overlay
