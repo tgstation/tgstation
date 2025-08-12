@@ -57,9 +57,9 @@
 	if(!(tool.type in GLOB.bubblegum_loot))
 		return
 	reward_granted = TRUE
-	playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
 	say("...you've done well... i grant you weapons... without restriction...")
 	REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
+	qdel(tool)
 
 /obj/machinery/wish_granter/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -79,17 +79,16 @@
 		return
 	var/mob/living/person_insisted = insisted_player?.resolve()
 	if(isnull(insisted_player) || person_insisted != user)
-		playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 80)
 		say("...is this really what you want..?")
 		insisted_player = WEAKREF(user)
 		return
 	var/list/player_words = list(
 		"I want the station to disappear.",
 		"I want to be marked in history.",
-		"Humanity is corrupt and mankind must be destroyed.",
 		"I want to be rich.",
 		"I want to rule the world.",
 		"I want immortality.",
+		"I want everyone to know my name",
 	)
 	user.say(pick(player_words), bubble_type = "wishgranter")
 	addtimer(CALLBACK(src, PROC_REF(give_antagonist_status), user), 5 SECONDS, TIMER_UNIQUE | TIMER_DELETE_ME)
@@ -115,15 +114,29 @@
 		return
 	if(reward_granted)
 		say("...thank you...")
-		playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
 		return
 	if(!length(things_to_say))
 		say("...that demon...")
 	else
 		say(pick_n_take(things_to_say))
-	playsound(user, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
 
 ///Called when the Avatar dies or is revived. The wishgranter, with not enough fuel to keep itself alive, starts collapsing.
 /obj/machinery/wish_granter/proc/on_avatar_stat_change(atom/source)
 	SIGNAL_HANDLER
 	update_appearance(UPDATE_ICON)
+
+/obj/machinery/wish_granter/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7, 
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
+	. = ..()
+	playsound(loc, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
