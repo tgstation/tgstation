@@ -365,7 +365,7 @@
 			user.put_in_hands(diskie)
 			balloon_alert(user, "disks swapped!")
 		else
-			balloon_alert(user, "disk inserted!")
+			balloon_alert(user, "disk inserted")
 		diskie = config_disk
 		projectile_type = diskie.stored_proj
 		projectile_sound = diskie.stored_sound
