@@ -216,3 +216,89 @@
   - bugfix: deconstructing material platforms drops the correct sheet types
   - bugfix: certain material platforms now have the correct amount of custom materials
       in them
+2025-08-12:
+  Absolucy:
+  - code_imp: Item weapon description elements are now initialized when first examined,
+      instead of immediately upon initialization.
+  Aliceee2ch:
+  - bugfix: Removed floating posters in DeltaStation science
+  Cameron-The-Raven:
+  - bugfix: Nar'Sie can no longer be spam-clicked as a ghost and destroy ears via
+      infinite shell creation.
+  - bugfix: Cult-banned players can no longer interact with Nar'Sie
+  - qol: Interacting with Nar'Sie as a ghost no longer creates a ghost query and instead
+      allows you to immediately become a harvester after confirming you wish to become
+      a harvester.
+  Exester509:
+  - rscdel: The Justice mech has been removed.
+  Ghommie:
+  - bugfix: burned mess made with a microwave, oven or griddle once again toxins.
+  Hatterhat:
+  - code_imp: Ammo boxes' multiload variable is now a bitflag that determines if a
+      magazine can be multiloaded into or out of. Ammo boxes can multiload in or out,
+      while magazines can only multiload in.
+  - image: .223 ammo now has a distinct casing icon.
+  - bugfix: Foam force magazines now have a proper description.
+  L0pz:
+  - image: Resprited the whip, chain, cat o' nine tails and liz o' nine tails
+  LemonInTheDark:
+  - bugfix: Using fake space tiles on icebox will no longer summon the endless void
+  Maximal08:
+  - bugfix: manufacturing lathe now prints items according to their quantity in the
+      autolathe
+  - bugfix: night vision module can now be activated and turned off again.
+  Melbert:
+  - qol: The access changing software (the HoP console) now has ID two slots again
+      (one for the HoP's id and one for the ID being changed). You can insert IDs
+      in the secondary slot via the UI or right click, and remove them via the UI
+      or alt-right click.
+  - qol: If your PDA is destroyed via acid or bombs, your ID (and similar contents
+      such as disks) are spit out instead of being deleted
+  - rscdel: Deletes the "New IDs and you" memo in the HoP's office. They haven't been
+      new for 4 years.
+  - bugfix: Engineering sub-tab in the access changing software no longer looks messed
+      up
+  - bugfix: Fix reversed alt-click logic for mod pcs
+  SSensum13:
+  - bugfix: fixed incorrect use of bit flags in some components.
+  SmArtKar:
+  - bugfix: Shuttle catastrophe should no longer cause random unintended crashlandings
+  - bugfix: Fixed light flickering potentially causing lag
+  - bugfix: Fixed fishes not dying on dry land
+  SyncIt21:
+  - code_imp: cleaned up vending machine code
+  - qol: vending machines now have more product slogans you never heard before
+  - qol: custom & normal vending machines now have more feedback on why an item could
+      not be loaded
+  - qol: vending machines now display random ads on the UI
+  - qol: custom vending machines can be deconstructed via crowbar safely only after
+      unlinking your account from the machine.
+  - qol: upon deconstructing a custom vendor all its products are moved into its refill
+      canister & it will be restored when reconstructing the machine elsewhere
+  - bugfix: Returned items to the vending machine now show up as free in the UI and
+      won't be greyed out if you don't have credits to get them back
+  - bugfix: items that leave the vending machine by any means will update the UI in
+      all cases
+  - bugfix: loading items by hand to the vending machine now respects the max_amount
+      for that category
+  - bugfix: custom vendors can now actually be used by players who are not the owner
+      thus enabling them to transfer credits to the owner during purchases & basically
+      they do their job again
+  - bugfix: custom vendors now show the correct icon for inserted items
+  - bugfix: Items with different names & custom prices now show up in unique rows
+      in custom vendors
+  - refactor: separated custom & normal vending machine code. Reduced UI code & improved
+      attack chain
+  Thunder12345:
+  - bugfix: Chaplain helmets and clockwork armour now have the same wound protection
+      as the other chaplain body armours.
+  Time-Green:
+  - rscadd: Adds an organ growing kit to medical cargo orders. Grow your very own
+      evolved hearts at home!
+  - bugfix: Mutagen can now mutate fish
+  tonyhawq:
+  - bugfix: fixes circuit gun not recharging it's internal cell when an integrated
+      circuit is inserted
+  trazodont:
+  - bugfix: added the CRAFT_CLEARS_REAGENTS flag to the rootdough recipes, bananas
+      + water will no longer doom lizard food ever again

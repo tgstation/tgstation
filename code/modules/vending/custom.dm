@@ -324,6 +324,11 @@
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
 
+/obj/item/vending_refill/custom/get_part_rating()
+	. = 0
+	for(var/key in products)
+		. += products[key]
+
 /obj/machinery/vending/custom/unbreakable
 	name = "Indestructible Vendor"
 	resistance_flags = INDESTRUCTIBLE
