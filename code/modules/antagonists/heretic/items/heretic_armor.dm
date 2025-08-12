@@ -11,7 +11,7 @@
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEBELT
 	body_parts_covered = CHEST | GROIN | LEGS | FEET | ARMS
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION
 	transparent_protection = HIDEGLOVES | HIDESUITSTORAGE | HIDEJUMPSUIT | HIDESHOES | HIDENECK
 	cold_protection = FULL_BODY
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -88,7 +88,7 @@
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF
 	flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	clothing_flags = THICKMATERIAL | SNUG_FIT
+	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | SNUG_FIT
 	armor_type = /datum/armor/eldritch_armor
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
@@ -347,7 +347,7 @@
 	icon_state = "cosmic_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic
 	armor_type = /datum/armor/eldritch_armor/cosmic
-	clothing_flags = THICKMATERIAL | STOPSPRESSUREDAMAGE
+	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	actions_types = list(/datum/action/item_action/toggle/gravity)
@@ -400,7 +400,7 @@
 			Gazing upon the robe, you cannot help but feel noticed."
 	icon_state = "cosmic_armor"
 	armor_type = /datum/armor/eldritch_armor/cosmic
-	clothing_flags = THICKMATERIAL | STOPSPRESSUREDAMAGE
+	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 
