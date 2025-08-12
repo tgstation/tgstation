@@ -385,19 +385,24 @@
 /datum/fish_source/vending/custom
 	catalog_description = null //no duplicate entries on autowiki or catalog
 
-/datum/fish_source/vending/custom/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/location)
+/datum/fish_source/vending/custom/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/custom/location)
 	var/list/table = list()
 	///Create a list of products, ordered by price from highest to lowest
-	var/list/products = location.vending_machine_input.Copy()
+	var/list/products = location.contents - location.component_parts
 	sortTim(products, GLOBAL_PROC_REF(cmp_item_vending_prices))
 
 	var/bait_value = rod.bait?.get_item_credit_value() || 1
 
 	var/highest_record_price = 0
 	for(var/obj/item/stocked as anything in products)
-		if(location.vending_machine_input[stocked] <= 0)
-			products -= stocked
-			table[FISHING_DUD] += PAYCHECK_LOWER //it gets harder the emptier the machine is
+		//count how many items of this type are in the machine
+		var/item_count = 1
+		for(var/obj/item/thing as anything in products)
+			if(stocked.type == thing.type)
+				item_count += 1
+		//find what percentage of the total storage space this item occupies.
+		if(ROUND_UP((item_count / location.max_loaded_items) * 100) <= 20)
+			table[FISHING_DUD] += PAYCHECK_LOWER //it gets harder if it occupies less than 20% of the available space i.e the more free space is inside this machine
 			continue
 		if(!highest_record_price)
 			highest_record_price = stocked.custom_price
@@ -405,7 +410,7 @@
 		var/low = min(highest_record_price, bait_value)
 
 		//the smaller the difference between product price and bait value, the more likely you're to get it.
-		table[stocked] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
+		table[stocked] = (low / high) * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
 
 	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
 	return table
