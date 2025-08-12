@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - code_imp: "Converted a lot of time-based variables to be expressed with time defines."

@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "prevents inputting letters into the abandoned crate puzzle"
