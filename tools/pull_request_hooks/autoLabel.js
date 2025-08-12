@@ -119,23 +119,34 @@ async function check_diff_files_for_labels(github, context) {
       }
     );
 
-    if (!allFiles || allFiles.length === 0) {
+    if (!allFiles?.length) {
       console.error("No files returned in pagination.");
       return { labels_to_add, labels_to_remove };
     }
 
-    const changed_files = new Set(allFiles.map((f) => f.filename));
+    // Set of changed filenames for quick lookup
+    const changedFiles = new Set(allFiles.map((f) => f.filename));
 
-    for (const [label, { filepaths, add_only }] of Object.entries(
+    for (const [label, { filepaths = [], file_extensions = [], add_only }] of Object.entries(
       fileLabelFilepathSets
     )) {
       let found = false;
+
+      // Path-based pattern matching
       for (const filepath of filepaths) {
-        if ([...changed_files].some((filename) => filename.includes(filepath))) {
+        if ([...changedFiles].some((filename) => filename.includes(filepath))) {
           found = true;
           break;
         }
       }
+
+      if (!found && file_extensions.length) {
+        // File extension-based matching
+        if ([...changedFiles].some((filename) => file_extensions.some((ext) => filename.endsWith(ext)))) {
+          found = true;
+        }
+      }
+
       if (found) {
         labels_to_add.push(label);
       } else if (!add_only) {

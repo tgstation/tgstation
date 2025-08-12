@@ -14,6 +14,7 @@ export const file_labels = {
   },
   "Map Edit": {
     filepaths: ["_maps/"],
+    file_extensions: [".dmm"],
   },
   Tools: {
     filepaths: ["tools/"],
@@ -24,6 +25,7 @@ export const file_labels = {
   },
   Sprites: {
     filepaths: ["icons/"],
+    file_extensions: [".dmi"],
     add_only: true,
   },
   Sound: {
