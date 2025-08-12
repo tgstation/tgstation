@@ -1,0 +1,9 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - image: "The tesla cannon has new sprites."
+  - image: "The tesla parts kit has new sprites."
+  - image: "The tesla cannon has a new shocking beam effect when firing."
+  - sound: "The tesla cannon has new sounds."
+  - balance: "The tesla cannon must now be unfolded to fire."
+  - bugfix: "looping sounds now stop playing sounds when commaned to do so."
