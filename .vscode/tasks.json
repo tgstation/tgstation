@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"type": "process",
-			"command": "tools/build/build",
+			"command": "tools/build/build.sh",
 			"windows": {
 				"command": ".\\tools\\build\\build.bat"
 			},
@@ -22,7 +22,7 @@
 		},
 		{
 			"type": "process",
-			"command": "tools/build/build",
+			"command": "tools/build/build.sh",
 			"args": ["-DLOWMEMORYMODE"],
 			"windows": {
 				"command": ".\\tools\\build\\build.bat",
@@ -42,7 +42,7 @@
 		},
 		{
 			"type": "process",
-			"command": "tools/build/build",
+			"command": "tools/build/build.sh",
 			"args": [
 				"-DTESTING",
 				"-DREAGENTS_TESTING",
@@ -72,7 +72,7 @@
 		},
 		{
 			"type": "process",
-			"command": "tools/build/build",
+			"command": "tools/build/build.sh",
 			"args": [
 				"-DLOWMEMORYMODE",
 				"-DTESTING",
@@ -104,7 +104,7 @@
 		},
 		{
 			"type": "process",
-			"command": "tools/build/build",
+			"command": "tools/build/build.sh",
 			"args": ["-DTESTING", "-DMAP_TEST"],
 			"windows": {
 				"command": ".\\tools\\build\\build.bat",

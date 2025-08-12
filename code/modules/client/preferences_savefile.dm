@@ -1,11 +1,22 @@
-//This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
+/// Placeholder to check against the SAVE_DATA_EMPTY and SAVE_DATA_OBSOLETE values.
+/// _Any_ generated save data version will be zero or a positive integer, so it's only necessary to check against this value for anything negative (error states).
+#define SAVE_DATA_NO_ERROR 0
+/// Typically signifies an empty list, where the savefile is not loaded or the character is new. Will just trigger a regeneration.
+#define SAVE_DATA_EMPTY -1
+/// The save data is below the accepted minimum and should be reset.
+#define SAVE_DATA_OBSOLETE -2
+
+/// This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
 #define SAVEFILE_VERSION_MIN 32
 
-//This is the current version, anything below this will attempt to update (if it's not obsolete)
-// You do not need to raise this if you are adding new values that have sane defaults.
-// Only raise this value when changing the meaning/format/name/layout of an existing value
-// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 48
+/// This is the current version, anything below this will attempt to update (if it's not obsolete)
+/// You do not need to raise this if you are adding new values that have sane defaults.
+/// Only raise this value when changing the meaning/format/name/layout of an existing value
+/// where you would want the updater procs below to run
+#define SAVEFILE_VERSION_MAX 49
+
+#define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
+#define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -23,14 +34,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
-/datum/preferences/proc/save_data_needs_update(list/save_data)
-	if(!save_data) // empty list, either savefile isnt loaded or its a new char
-		return -1
-	if(save_data["version"] < SAVEFILE_VERSION_MIN)
-		return -2
-	if(save_data["version"] < SAVEFILE_VERSION_MAX)
-		return save_data["version"]
-	return -1
+/datum/preferences/proc/check_savedata_version(list/save_data)
+	if(!save_data)
+		return SAVE_DATA_EMPTY
+	var/save_version = save_data["version"]
+
+	if(save_version < SAVEFILE_VERSION_MIN)
+		return SAVE_DATA_OBSOLETE
+	if(save_version < SAVEFILE_VERSION_MAX)
+		return save_version
+	return SAVE_DATA_EMPTY
 
 //should these procs get fairly long
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -119,6 +132,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			quirk_to_migrate = "Colorist",
 			new_typepath = /obj/item/dyespray,
 		)
+	if(current_version < 49)
+		migrate_quirk_to_loadout(
+			quirk_to_migrate = "Cyborg Pre-screened dogtag",
+			new_typepath = /obj/item/clothing/accessory/dogtag/borg_ready,
+		)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -180,8 +198,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			stack_trace("Failed to load the savefile for [parent] after manually calling load_savefile; something is very wrong.")
 			return FALSE
 
-	var/needs_update = save_data_needs_update(savefile.get_entry())
-	if(load_and_save && (needs_update == -2)) //fatal, can't load any data
+	var/data_validity_integer = check_savedata_version(savefile.get_entry())
+	if(load_and_save && IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
@@ -216,12 +234,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
 	//try to fix any outdated data if necessary
-	if(needs_update >= 0)
+	if(SHOULD_UPDATE_DATA(data_validity_integer))
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
-		update_preferences(needs_update, savefile) //needs_update = savefile_version if we need an update (positive integer)
+		update_preferences(data_validity_integer, savefile)
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
@@ -234,7 +252,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
-	if(needs_update >= 0) //save the updated version
+	if(SHOULD_UPDATE_DATA(data_validity_integer)) //save the updated version
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
 
@@ -295,8 +313,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
-	var/needs_update = save_data_needs_update(save_data)
-	if(needs_update == -2) //fatal, can't load any data
+	var/data_validity_integer = check_savedata_version(save_data)
+	if(IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
 		return FALSE
 
 	// Read everything into cache
@@ -319,8 +337,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
-	if(needs_update >= 0)
-		update_character(needs_update, save_data) //needs_update == savefile_version if we need an update (positive integer)
+	if(SHOULD_UPDATE_DATA(data_validity_integer))
+		update_character(data_validity_integer, save_data)
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
@@ -432,3 +450,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
+#undef SAVE_DATA_NO_ERROR
+#undef SAVE_DATA_EMPTY
+#undef SAVE_DATA_OBSOLETE
+#undef IS_DATA_OBSOLETE
+#undef SHOULD_UPDATE_DATA

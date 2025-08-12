@@ -1,11 +1,11 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import { AnimatedNumber, Button, Flex } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
 
 import { MaterialIcon } from './MaterialIcon';
-import { Material } from './Types';
+import type { Material } from './Types';
 
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up
@@ -55,19 +55,19 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
 
   return (
     <Flex wrap>
-      {sortBy(availableMaterials, (m: Material) => MATERIAL_RARITY[m.name]).map(
-        (material) => (
-          <Flex.Item grow basis={4.5} key={material.name}>
-            <MaterialCounter
-              material={material}
-              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
-              onEjectRequested={(quantity) =>
-                onEjectRequested && onEjectRequested(material, quantity)
-              }
-            />
-          </Flex.Item>
-        ),
-      )}
+      {sortBy(availableMaterials, [
+        (m: Material) => MATERIAL_RARITY[m.name],
+      ]).map((material) => (
+        <Flex.Item grow basis={4.5} key={material.name}>
+          <MaterialCounter
+            material={material}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+            onEjectRequested={(quantity) =>
+              onEjectRequested?.(material, quantity)
+            }
+          />
+        </Flex.Item>
+      ))}
     </Flex>
   );
 };

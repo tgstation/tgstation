@@ -29,7 +29,7 @@ fi
 echo "Deploying rust-g..."
 git checkout "$RUST_G_VERSION"
 env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
-mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
+cp -f target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
 #
@@ -50,10 +50,10 @@ fi
 echo "Deploying Dreamlaua..."
 git checkout "$DREAMLUAU_VERSION"
 env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
-mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
+cp -f target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 cd ..
 
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
-env TG_BOOTSTRAP_CACHE="$original_dir" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$original_dir" CBT_BUILD_MODE="TGS" tools/bootstrap/javascript.sh tools/build/build.ts

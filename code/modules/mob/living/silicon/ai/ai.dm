@@ -923,7 +923,7 @@
 		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 
-	malf_picker.processing_time += 10
+	malf_picker.processing_time += max(0, 9 - hacked_apcs.len) // Less resources for each apc hacked, 9 instead of 10 is because you will get 1 as soon as the hacked apc processes
 	var/area/apcarea = apc.area
 	var/datum/ai_module/malf/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/malf/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
 	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
@@ -989,7 +989,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_shell"
 
-/datum/action/innate/deploy_shell/Trigger(trigger_flags)
+/datum/action/innate/deploy_shell/Trigger(mob/clicker, trigger_flags)
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
@@ -1002,7 +1002,7 @@
 	button_icon_state = "ai_last_shell"
 	var/mob/living/silicon/robot/last_used_shell
 
-/datum/action/innate/deploy_last_shell/Trigger(trigger_flags)
+/datum/action/innate/deploy_last_shell/Trigger(mob/clicker, trigger_flags)
 	if(!owner)
 		return
 	if(last_used_shell)

@@ -2,8 +2,8 @@ import * as autoLabelConfig from "./autoLabelConfig.js";
 
 function keyword_to_cl_label() {
   const keyword_to_cl_label = {};
-  for (let label in autoLabelConfig.changelog_labels) {
-    for (let keyword of autoLabelConfig.changelog_labels[label].keywords) {
+  for (const label in autoLabelConfig.changelog_labels) {
+    for (const keyword of autoLabelConfig.changelog_labels[label].keywords) {
       keyword_to_cl_label[keyword] = label;
     }
   }
@@ -23,7 +23,7 @@ function check_body_for_labels(body) {
   const keywords = keyword_to_cl_label();
 
   let found_cl = false;
-  for (let line of body.split("\n")) {
+  for (const line of body.split("\n")) {
     if (line.startsWith(":cl:")) {
       found_cl = true;
       continue;
@@ -53,9 +53,9 @@ function check_body_for_labels(body) {
 function check_title_for_labels(title) {
   const labels_to_add = [];
   const title_lower = title.toLowerCase();
-  for (let label in autoLabelConfig.title_labels) {
+  for (const label in autoLabelConfig.title_labels) {
     let found = false;
-    for (let keyword of autoLabelConfig.title_labels[label].keywords) {
+    for (const keyword of autoLabelConfig.title_labels[label].keywords) {
       if (title_lower.includes(keyword)) {
         found = true;
         break;
@@ -81,10 +81,10 @@ async function check_diff_for_labels(diff_url) {
     const diff = await fetch(diff_url);
     if (diff.ok) {
       const diff_txt = await diff.text();
-      for (let label in autoLabelConfig.file_labels) {
+      for (const label in autoLabelConfig.file_labels) {
         let found = false;
         const { filepaths, add_only } = autoLabelConfig.file_labels[label];
-        for (let filepath of filepaths) {
+        for (const filepath of filepaths) {
           if (check_diff_line_for_element(diff_txt, filepath)) {
             found = true;
             break;
@@ -115,30 +115,30 @@ export async function get_updated_label_set({ github, context }) {
     title = "",
   } = pull_request;
 
-  let updated_labels = new Set();
-  for (let label of labels) {
+  const updated_labels = new Set();
+  for (const label of labels) {
     updated_labels.add(label.name);
   }
 
   // diff is always checked
   if (diff_url) {
     const diff_tags = await check_diff_for_labels(diff_url);
-    for (let label of diff_tags.labels_to_add) {
+    for (const label of diff_tags.labels_to_add) {
       updated_labels.add(label);
     }
-    for (let label of diff_tags.labels_to_remove) {
+    for (const label of diff_tags.labels_to_remove) {
       updated_labels.delete(label);
     }
   }
   // body and title are only checked on open, not on sync
   if (action === "opened") {
     if (title) {
-      for (let label of check_title_for_labels(title)) {
+      for (const label of check_title_for_labels(title)) {
         updated_labels.add(label);
       }
     }
     if (body) {
-      for (let label of check_body_for_labels(body)) {
+      for (const label of check_body_for_labels(body)) {
         updated_labels.add(label);
       }
     }

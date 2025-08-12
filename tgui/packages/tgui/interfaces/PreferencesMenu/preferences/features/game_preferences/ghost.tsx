@@ -1,16 +1,16 @@
 import { binaryInsertWith } from 'common/collections';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Dropdown, Flex } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { PreferencesMenuData } from '../../../types';
+import type { PreferencesMenuData } from '../../../types';
 import {
   CheckboxInput,
-  FeatureChoiced,
-  FeatureChoicedServerData,
-  FeatureToggle,
-  FeatureValueProps,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
+  type FeatureToggle,
+  type FeatureValueProps,
 } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
@@ -37,7 +37,7 @@ function GhostFormInput(
 
   const serverData = props.serverData;
   if (!serverData) {
-    return <> </>;
+    return;
   }
 
   const displayNames = serverData.display_names;

@@ -1,7 +1,9 @@
 // A dummy parent type used for easily making components that target an item's wearer rather than the item itself.
 
 /datum/component/wearertargeting
-	var/list/valid_slots = list()
+	/// Bitflag value of valid slots.
+	/// You can find all slot bitflags in code/__DEFINES/inventory.dm
+	var/valid_slots = NONE
 	var/list/signals = list()
 	var/proctype = GLOBAL_PROC_REF(pass)
 	var/mobtype = /mob/living
@@ -15,7 +17,7 @@
 /datum/component/wearertargeting/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if((slot in valid_slots) && istype(equipper, mobtype))
+	if((valid_slots & slot) && istype(equipper, mobtype))
 		RegisterSignals(equipper, signals, proctype, TRUE)
 	else
 		UnregisterSignal(equipper, signals)

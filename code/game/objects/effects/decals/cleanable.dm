@@ -94,7 +94,7 @@
 	if (!istype(tool, /obj/item/reagent_containers/cup) || istype(tool, /obj/item/rag))
 		return NONE
 
-	if (!lazy_init_reagents())
+	if (!lazy_init_reagents()?.total_volume)
 		to_chat(user, span_notice("[src] isn't thick enough to scoop up!"))
 		return ITEM_INTERACT_BLOCKING
 
@@ -134,3 +134,7 @@
 	if (existing)
 		return existing
 	return new cleanable_type(checkturf)
+
+/turf/proc/spawn_glitter(glitter_colors)
+	var/obj/effect/decal/cleanable/glitter/new_glitter = spawn_unique_cleanable(/obj/effect/decal/cleanable/glitter)
+	new_glitter.color = pick_weight(glitter_colors)

@@ -1,4 +1,4 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Button,
@@ -195,7 +195,7 @@ export const ShuttleManipulatorModification = (props) => {
           {existingShuttle ? (
             <Section
               level={2}
-              title={'Existing Shuttle: ' + existingShuttle.name}
+              title={`Existing Shuttle: ${existingShuttle.name}`}
             >
               <LabeledList>
                 <LabeledList.Item

@@ -1,4 +1,4 @@
-import { Component, MouseEvent } from 'react';
+import { Component, type MouseEvent } from 'react';
 import {
   Box,
   Button,
@@ -7,7 +7,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -38,7 +38,7 @@ type BitflagToString = {
 };
 
 export class CircuitSignalHandler extends Component<
-  {},
+  any,
   CircuitSignalHandlerState
 > {
   bitflags: BitflagToString;

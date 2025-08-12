@@ -29,3 +29,5 @@ GLOBAL_VAR(station_level_z_scratch)
 #define is_away_level(z) SSmapping.level_trait(z, ZTRAIT_AWAY)
 
 #define is_secret_level(z) SSmapping.level_trait(z, ZTRAIT_SECRET)
+
+#define is_multi_z_level(z) (SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN))

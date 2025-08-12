@@ -4,7 +4,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
-/datum/action/innate/brain_undeployment/Trigger(trigger_flags)
+/datum/action/innate/brain_undeployment/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/brain/cybernetic/ai/shell_to_disconnect = owner.get_organ_by_type(/obj/item/organ/brain/cybernetic/ai)
@@ -151,7 +151,7 @@
 		implant.radio.command = TRUE
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
-			implant.radio.secure_radio_connections[channel] = add_radio(implant.radio, GLOB.radiochannels[channel])
+			implant.radio.secure_radio_connections[channel] = add_radio(implant.radio, GLOB.default_radio_channels[channel])
 
 /obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER

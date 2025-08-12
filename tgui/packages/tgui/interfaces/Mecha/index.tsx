@@ -11,9 +11,10 @@ import { formatSiUnit } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { logger } from '../../logging';
 import { AccessConfig } from '../common/AccessConfig';
 import { AlertPane } from './AlertPane';
-import { MainData } from './data';
+import type { MainData } from './data';
 import { ModulesPane } from './ModulesPane';
 
 export const Mecha = (props) => {
@@ -40,7 +41,9 @@ export const Content = (props) => {
     accesses,
     diagnostic_status,
   } = data;
-  const id_lock = mecha_flags & mechflag_keys['ID_LOCK_ON'];
+  logger.log(mechflag_keys);
+
+  const id_lock = mecha_flags & mechflag_keys.ID_LOCK_ON;
   return (
     <Stack fill>
       <Stack.Item grow={1}>
@@ -212,8 +215,8 @@ const IntegrityBar = (props) => {
 const LightsBar = (props) => {
   const { act, data } = useBackend<MainData>();
   const { power_level, power_max, mecha_flags, mechflag_keys } = data;
-  const has_lights = mecha_flags & mechflag_keys['HAS_LIGHTS'];
-  const lights_on = mecha_flags & mechflag_keys['LIGHTS_ON'];
+  const has_lights = mecha_flags & mechflag_keys.HAS_LIGHTS;
+  const lights_on = mecha_flags & mechflag_keys.LIGHTS_ON;
   return (
     <LabeledList.Item label="Lights">
       <Button
