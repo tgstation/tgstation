@@ -220,7 +220,7 @@
 
 /datum/design/diode_disk_stamina
 	name = "Electrodisruptive Diode Disk"
-	desc = "A stamina damaging and SM healing Diode Disk."
+	desc = "A stamina damaging and supermatter crystal healing Diode Disk."
 	id = "diode_disk_stamina"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/gold =SMALL_MATERIAL_AMOUNT)
