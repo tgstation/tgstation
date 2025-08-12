@@ -132,7 +132,7 @@ async function check_diff_files_for_labels(github, context) {
     )) {
       let found = false;
 
-      // Path-based pattern matching
+      // Filepath-based pattern matching
       for (const filepath of filepaths) {
         if ([...changedFiles].some((filename) => filename.includes(filepath))) {
           found = true;
