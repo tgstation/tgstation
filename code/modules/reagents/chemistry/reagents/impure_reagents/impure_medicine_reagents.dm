@@ -952,8 +952,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
-	// Slows down any active surgeries
-	exposed_carbon.set_maximum_surgery_speeds(0.3)
+	// Speeds up any active surgeries by up to 30%
+	exposed_carbon.set_minimum_surgery_speeds(0.3)
 
 /datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

@@ -367,8 +367,8 @@
 				to_chat(exposed_mob, span_warning("Your stomach feels empty and cramps!"))
 
 	if(methods & (PATCH|TOUCH))
-		// Slows down the speed of any active surgeries
-		exposed_mob.set_maximum_surgery_speeds(0.9)
+		// Increase the speed of active surgeries by up to 10%
+		exposed_mob.set_minimum_surgery_speeds(0.1)
 		if(show_message)
 			to_chat(exposed_mob, span_danger("You feel your injuries fade away to nothing!") )
 
@@ -1221,8 +1221,8 @@
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
-	// Adjusts the speeds of any active surgeries to a certain maximum.
-	exposed_carbon.adjust_surgery_speeds(0.1, maximum = 1.1)
+	// Slow down the speed of active surgeries by -10% per exposure, down to -90%.
+	exposed_carbon.adjust_surgery_speeds(-0.1, minimum = -0.9)
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"

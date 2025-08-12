@@ -529,11 +529,12 @@
  *
  * Arguments:
  * * amount - The number which will be added to each surgery's speed_modifier.
- * * maximum - The maximum number each surgery's speed_modifier will set adjusted to, if they are above this number.
+ * * maximum - The maximum number each surgery's speed_modifier will be increased to.
+ * * minimum - The minumum number each surgery's speed_modifier will be decreased to.
  */
-/mob/living/proc/adjust_surgery_speeds(amount = 0, maximum)
+/mob/living/proc/adjust_surgery_speeds(amount = 0, minimum, maximum)
 	for(var/datum/surgery/surgery as anything in surgeries)
-		surgery.speed_modifier = min(surgery.speed_modifier + amount, maximum)
+		surgery.speed_modifier = clamp(surgery.speed_modifier + amount, minimum, maximum)
 /**
  * Sets the minimum speed_modifier of all active surgeries to the given amount.
  *
