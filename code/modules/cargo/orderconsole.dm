@@ -378,7 +378,8 @@
 					requisition_paper.update_appearance()
 
 				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
+				var/arrives_in_minutes = SSshuttle.supply.timeLeft(600)
+				say("The supply shuttle has been called and will arrive in [arrives_in_minutes] minute[arrives_in_minutes == 1 ? "" : "s"].")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 
 			. = TRUE
