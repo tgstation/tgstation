@@ -567,6 +567,14 @@
 			target_point.name = "[value]"
 			return TRUE
 
+		if("remove_point")
+			if(value)
+				pickup_points -= target_point
+			else
+				dropoff_points -= target_point
+
+			qdel(target_point)
+
 		if("reset_atom_filters")
 			target_point.atom_filters = list()
 			return TRUE

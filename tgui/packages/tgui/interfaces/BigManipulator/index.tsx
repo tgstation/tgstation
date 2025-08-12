@@ -48,6 +48,7 @@ const MasterControls = () => {
       <Stack.Item grow>
         <Slider
           style={{ marginTop: '-5px' }}
+          lineHeight={1}
           step={delay_step}
           my={1}
           value={interaction_delay}
@@ -216,7 +217,7 @@ const PointSection = (props: {
     <>
       <Section
         title={title}
-        buttons={<><Button tooltip="Cycle tasking schedule" onClick={cycleTaskingSchedule} icon={currentIcon} color="transparent">{currentTasking || "Round Robin"}</Button> <Button icon="plus" color="transparent" onClick={onAdd} /></>}
+        buttons={<><Button tooltip="Cycle tasking schedule" onClick={cycleTaskingSchedule} icon={currentIcon} color="transparent">{currentTasking}</Button> <Button icon="plus" color="transparent" onClick={onAdd} /></>}
       >
         <Stack vertical>
           {points.map((point, index) => (
@@ -251,7 +252,7 @@ const PointSection = (props: {
                         icon="trash"
                         color="transparent"
                         onClick={() =>
-                          act('remove_point', { index: index + 1 })
+                          act('adjust_point_param', { point_id: point.id, is_pickup: title === 'Pickup Points' })
                         }
                       />
                     </Stack.Item>
@@ -440,7 +441,7 @@ export const BigManipulator = () => {
               <Button
                 icon={active ? 'stop' : 'play'}
                 color={active ? 'bad' : 'good'}
-                onClick={() => act('on')}
+                onClick={() => act('run_cycle')}
               >
                 {active ? 'Stop' : 'Run'}
               </Button>
