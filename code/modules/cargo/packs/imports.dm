@@ -67,10 +67,10 @@
 
 /datum/supply_pack/imports/wind_turbine
 	name = "Wind Turbine Crate"
-	desc = "Includes two portable wind turbines for charging small devices and appliances. Considered obsolete in the frontier, \
+	desc = "Includes a portable wind turbine for charging small devices and appliances. Considered obsolete in the frontier, \
 		but perfect for officers who think walking laps around the station is 'innovative engineering'."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/portable_wind_turbine/loaded = 2)
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/portable_wind_turbine/loaded)
 	crate_name = "wind turbine crate"
 
 /datum/supply_pack/imports/bananium
