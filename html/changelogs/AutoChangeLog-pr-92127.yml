@@ -1,0 +1,15 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Refactored say modes (i.e. robotic talk, drone chat, hivemind speak), custom say verbs (i.e. `says in a custom way*The spoken thing.`), and quoted messages. Please report any issues."
+  - rscadd: "You can now use custom say verbs with robotic talk, drone chat, alien hivemind talk, AI holograms, holopad calls, modlink/scryer calls, imaginary friends, and blob telepathy."
+  - rscadd: "Message spans like from say modifiers carry over through robotic talk, drone chat, alien hivemind talk, AI holograms, holopad calls, and modlink/scryer calls."
+  - bugfix: "Languages and say verbs carry over through holopad calls and modlink/scryer calls."
+  - bugfix: "You can use custom say verbs when using the department radio key."
+  - bugfix: "Drone chat now counts as a radio message for chat settings, parallel to binary chat."
+  - bugfix: "No longer highlight messages you sent yourself over drone chat, blob telepathy, and speaking as revenant."
+  - admin: "Removed a redundant emote log entry for custom say verbs/'radio emotes' accompanying a message. Instead it's only logged as part of the message it accompanied in the say logs."
+  - admin: "Pure custom say verbs without accompanying messages are now similarly tagged with their type (i.e. robotic talk, drone chat, imaginary friend) in the emote logs."
+  - admin: "Pure custom say verbs without accompanying messages are properly logged if somehow forced."
+  - admin: "Alien hivemind talk logs are properly tagged as alien hivemind talk."
+  - admin: "Drone chat is properly logged."
