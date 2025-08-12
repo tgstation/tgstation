@@ -151,15 +151,14 @@
 		They have a long snout and a large tail, and are known for their ability to eat space ants."
 
 /datum/species/anteater/get_species_description()
-	return "(EARLY ACCESS PREVIEW) \n\
-		Local to this sector of space, the anteaters helped with the financing of the \
+	return "Local to this sector of space, the anteaters helped with the financing of the \
 		construction of the station in exchange for a presence in NT operations here."
 
 /datum/species/anteater/get_species_lore()
 	return list(
-		"(no lore here yet :C)",
+		"Locals to this part of space, the Antan have allowed Nanotrasen the right to run a plasma research station at prime rates... provided that they allow any of their kind that wish to work there to do so.",
 
-		"Allen please add details."
+		"Nanotrasen agreed, as it doesn't cost anything to hire cheap labor and then not-support their biological needs.",
 	)
 
 /datum/species/anteater/create_pref_unique_perks()
@@ -169,7 +168,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_BUG,
 			SPECIES_PERK_NAME = "Ant Eater",
-			SPECIES_PERK_DESC = "You can eat space ants with no ill effect. Using an empty hand on space ants will let you eat them.",
+			SPECIES_PERK_DESC = "You can eat space ants with no ill effect. Using an empty hand on space ants on the floor will let you eat them.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
