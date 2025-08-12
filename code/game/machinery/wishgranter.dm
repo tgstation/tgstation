@@ -3,7 +3,7 @@
  *
  * If you want the lore breakdown, the wishgranter was a type of Devil that links its own soul to those of its victims
  * rather than doing it through a contract. Now left as remains after pesky Lawyers managed to best it,
- * they were left on Lavaland. There, the devil tried to trick Bubblegum into giving it a way out,
+ * it was left on Lavaland. There, the devil tried to trick Bubblegum into giving it a way out,
  * resulting in Bubblegum's soul being linked and now constantly drains the Wish Granter of power.
  * The Wish Granter now seeks only to prolong its own life, and plays into the player's delusional wishes,
  * turning you into their Avatar as a way of some extra energy to feed to Bubblegum.
@@ -26,6 +26,7 @@
 	verb_ask = "questions"
 	verb_exclaim = "denounces"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF | BOMB_PROOF
+	gender = NEUTER
 
 	///Whether or not the reward has been granted to the user.
 	var/reward_granted = FALSE
