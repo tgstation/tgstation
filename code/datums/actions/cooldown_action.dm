@@ -215,14 +215,14 @@
 	for(var/datum/action/cooldown/cd_action in owner.actions)
 		cd_action.disable()
 
-/datum/action/cooldown/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/Trigger(mob/clicker, trigger_flags, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(!owner)
 		return FALSE
 
-	var/mob/user = usr || owner
+	var/mob/user = clicker || owner
 
 	// If our cooldown action is a click_to_activate action:
 	// The actual action is activated on whatever the user clicks on -

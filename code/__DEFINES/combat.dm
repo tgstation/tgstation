@@ -233,6 +233,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Ammo box will have a different sprite for any ammo at all, and no ammo, <icon_state>-full <icon_state>-empty
 #define AMMO_BOX_FULL_EMPTY 2
 
+// Ammo box multiload defines
+/// Ammo box does not accept multiload in or out, e.g. ammo box CANNOT transfer multiple casings in one action, either IN or OUT.
+#define AMMO_BOX_MULTILOAD_NONE	0
+/// Ammo box accepts multiload going in, e.g. ammo box can transfer multiple casings IN at once.
+#define AMMO_BOX_MULTILOAD_IN	(1 << 0)
+/// Ammo box accepts multiload going out, e.g. ammo box can transfer multiple casings OUT at once.
+#define AMMO_BOX_MULTILOAD_OUT	(1 << 1)
+/// Ammo box accepts multiload in AND out, e.g. ammo box can transfer multiple casings IN at once *and* OUT at once.
+#define AMMO_BOX_MULTILOAD_BOTH	AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT
+
+DEFINE_BITFIELD(ammo_box_multiload, list(
+	"LOAD_IN" = AMMO_BOX_MULTILOAD_IN,
+	"LOAD_OUT" = AMMO_BOX_MULTILOAD_OUT,
+))
+
 #define SUPPRESSED_NONE 0
 #define SUPPRESSED_QUIET 1 ///standard suppressed
 #define SUPPRESSED_VERY 2 /// no message
