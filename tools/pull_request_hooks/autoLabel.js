@@ -109,7 +109,7 @@ async function check_diff_files_for_labels(github, context) {
 
   try {
     // Use github.paginate to fetch all files (up to ~3000 max)
-    const { status, data } = await github.paginate(
+    const allFiles = await github.paginate(
       github.rest.pulls.listFiles,
       {
         owner: context.repo.owner,
@@ -119,31 +119,22 @@ async function check_diff_files_for_labels(github, context) {
       }
     );
 
-    // Check if the response status is 200 OK and if data is present
-    if (status !== 200) {
-      console.error(`Failed to get file list: ${status}`);
-      return { labels_to_add, labels_to_remove };
-    }
-    if (!data) {
-      console.error("Response does not contain any data!");
+    if (!allFiles || allFiles.length === 0) {
+      console.error("No files returned in pagination.");
       return { labels_to_add, labels_to_remove };
     }
 
-    // Changed filenames for quick lookup
-    const changed_files = new Set(data.map((f) => f.filename));
+    const changed_files = new Set(allFiles.map((f) => f.filename));
 
     for (const [label, { filepaths, add_only }] of Object.entries(
       fileLabelFilepathSets
     )) {
       let found = false;
       for (const filepath of filepaths) {
-        for (const filename of changed_files) {
-          if (filename.includes(filepath)) {
-            found = true;
-            break;
-          }
+        if ([...changed_files].some((filename) => filename.includes(filepath))) {
+          found = true;
+          break;
         }
-        if (found) break;
       }
       if (found) {
         labels_to_add.push(label);
@@ -151,8 +142,8 @@ async function check_diff_files_for_labels(github, context) {
         labels_to_remove.push(label);
       }
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error("Error fetching paginated files:", error);
   }
 
   return { labels_to_add, labels_to_remove };
