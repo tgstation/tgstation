@@ -161,11 +161,11 @@
 	acid = 70
 
 ///Needed by machine frame & flatpacker i.e the named arg board
-/obj/machinery/New(loc, obj/item/circuitboard/board, ...)
+/obj/machinery/New(location, obj/item/circuitboard/board, ...)
 	if(istype(board))
 		circuit = board
 		//we don't want machines that override Initialize() have the board passed as a param e.g. atmos
-		return ..(loc)
+		return ..(location)
 
 	return ..()
 
@@ -636,7 +636,8 @@
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
-	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
+	var/try_use_signal = SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) | SEND_SIGNAL(src, COMSIG_TRY_USE_MACHINE, user)
+	if(try_use_signal & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
 
 	if(isAdminGhostAI(user))
@@ -1122,7 +1123,7 @@
 	RefreshParts()
 
 	if(shouldplaysound)
-		replacer_tool.play_rped_sound()
+		replacer_tool.play_rped_effect()
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)

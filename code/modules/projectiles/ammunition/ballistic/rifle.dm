@@ -2,7 +2,7 @@
 
 /obj/item/ammo_casing/strilka310
 	name = ".310 Strilka bullet casing"
-	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, it's just a block of red powder."
+	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib; there is no case, it's just a block of red powder."
 	icon_state = "310-casing"
 	caliber = CALIBER_STRILKA310
 	projectile_type = /obj/projectile/bullet/strilka310
@@ -14,7 +14,7 @@
 
 /obj/item/ammo_casing/strilka310/surplus
 	name = ".310 Strilka surplus bullet casing"
-	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, it's just a block of red powder. Damp red powder at that."
+	desc = parent_type::desc + " Damp red powder at that."
 	projectile_type = /obj/projectile/bullet/strilka310/surplus
 
 /obj/item/ammo_casing/strilka310/enchanted
@@ -22,13 +22,14 @@
 
 /obj/item/ammo_casing/strilka310/phasic
 	name = ".310 Strilka phasic bullet casing"
-	desc = "A phasic .310 Strilka bullet casing. "
+	desc = "A phasic .310 Strilka bullet casing."
 	projectile_type = /obj/projectile/bullet/strilka310/phasic
 // .223 (M-90gl Carbine)
 
 /obj/item/ammo_casing/a223
 	name = ".223 bullet casing"
 	desc = "A .223 bullet casing."
+	icon_state = "223-casing"
 	caliber = CALIBER_A223
 	projectile_type = /obj/projectile/bullet/a223
 

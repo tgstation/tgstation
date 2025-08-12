@@ -24,7 +24,6 @@ function statusToColor(status: number): string {
       return 'good';
     case UI_UPDATE:
       return 'average';
-    case UI_DISABLED:
     default:
       return 'bad';
   }

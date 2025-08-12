@@ -23,7 +23,6 @@
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 	AddComponent(/datum/component/personal_crafting, ui_human_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
@@ -75,7 +74,7 @@
 	//Update med hud images...
 	..()
 	//...sec hud images...
-	sec_hud_set_ID()
+	update_ID_card()
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
 	//...fan gear
@@ -902,7 +901,7 @@
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space
 	var/fitness_level = mind?.get_skill_level(/datum/skill/athletics) - 1
-	var/experience_reward = 5
+	var/experience_reward = ATHLETICS_SKILL_MISC_EXP
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay -= 2 SECONDS
 		experience_reward *= 3
@@ -934,7 +933,7 @@
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
-	mind?.adjust_experience(/datum/skill/athletics, experience_reward) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
+	mind?.adjust_experience(/datum/skill/athletics, round(experience_reward/(fitness_level || 1), 1)) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
 
 	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 

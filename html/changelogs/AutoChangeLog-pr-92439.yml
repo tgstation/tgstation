@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - bugfix: "manufacturing lathe now prints items according to their quantity in the autolathe"

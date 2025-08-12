@@ -125,7 +125,7 @@
 /obj/item/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	. = CLEAN_ALLOWED
 	if(!check_allowed_items(atom_to_clean))
-		. |= CLEAN_NO_XP
+		. |= CLEAN_NO_XP|CLEAN_NO_WASH
 
 /**
  * Decrease the number of uses the bar of soap has.
