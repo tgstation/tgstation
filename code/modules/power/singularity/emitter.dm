@@ -614,7 +614,7 @@
 	use_power = NO_POWER_USE
 
 /obj/item/emitter_disk
-	name = "Diode Disk: Debugger"
+	name = "/improper Diode Disk: Debugger"
 	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk6"
