@@ -41,9 +41,13 @@
 		"...allies we don't need... kill them all...",
 		"...i trust you will do well...",
 		"...the demon in pink... bring their loot to me...",
-		"...the one in pink... bring them to me...",
 		"...greater power... awaits you... bubblegum...",
 	)
+
+/obj/machinery/wish_granter/Initialize(mapload)
+	. = ..()
+	for(var/obj/item/bubblegum_loot as anything in GLOB.bubblegum_loot)
+		things_to_say += "...[bubblegum_loot::name]... i need it..."
 
 /obj/machinery/wish_granter/Destroy(force)
 	insisted_player = null
@@ -53,8 +57,8 @@
 	. = ..()
 	if(isnull(insisted_player))
 		return .
-	var/mob/living/person_insisted = insisted_player?.resolve()
-	if(person_insisted.stat)
+	var/mob/living/avatar = insisted_player?.resolve()
+	if(avatar.stat && !reward_granted)
 		icon_state = "[base_icon_state]_broken"
 	else
 		icon_state = base_icon_state
@@ -73,15 +77,20 @@
 	list/message_mods = list(),
 )
 	. = ..()
-	playsound(loc, 'sound/ambience/earth_rumble/earth_rumble.ogg', 30)
+	playsound(loc, 'sound/ambience/earth_rumble/earth_rumble.ogg', 20)
 
 #define REWARD_CHUNKY_FINGERS 0
 #define REWARD_LASER_EYES 1
 
-/obj/machinery/wish_granter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/wish_granter/item_interaction(mob/living/carbon/user, obj/item/tool, list/modifiers)
 	. = ..()
+	if(isnull(insisted_player))
+		return .
+	var/mob/living/avatar = insisted_player?.resolve()
+	if(user != avatar)
+		return .
 	if(!(tool.type in GLOB.bubblegum_loot) || reward_granted)
-		return
+		return .
 	reward_granted = TRUE
 	var/reward_to_give = pick(REWARD_CHUNKY_FINGERS, REWARD_LASER_EYES)
 	switch(reward_to_give)
@@ -97,7 +106,7 @@
 #undef REWARD_CHUNKY_FINGERS
 #undef REWARD_LASER_EYES
 
-/obj/machinery/wish_granter/attack_hand(mob/living/user, list/modifiers)
+/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -107,17 +116,20 @@
 	if(charges <= 0)
 		balloon_alert(user, "doesn't react...")
 		return
-	if(!ishuman(user))
-		to_chat(user, span_boldnotice("You feel a dark stirring inside of [src], something you want nothing of. Your instincts are better than any man's."))
+	if(!iscarbon(user))
+		to_chat(user, span_boldnotice("You feel a dark stirring inside of [src], something you want nothing of. \
+			Your instincts are better than any man's."))
 		return
 	if(user.is_antag())
-		to_chat(user, span_boldnotice("Even to a heart as dark as yours, you know nothing good will come of this. Something instinctual makes you pull away."))
+		to_chat(user, span_boldnotice("Even to a heart as dark as yours, you know nothing good will come of this. \
+			Something instinctual makes you pull away."))
 		return
 	var/mob/living/person_insisted = insisted_player?.resolve()
 	if(isnull(insisted_player) || person_insisted != user)
 		say("...is this really what you want..?")
 		insisted_player = WEAKREF(user)
 		return
+	charges--
 	var/list/player_words = list(
 		"I want the station to disappear.",
 		"I want to be marked in history.",
@@ -132,9 +144,10 @@
 
 ///The wish granter gives all its ability to the player and opens itself for future interactions,
 ///as well as showing other players it's been interacted with.
-/obj/machinery/wish_granter/proc/give_antagonist_status(mob/living/user)
-	to_chat(user, span_boldnotice("Your head pounds for a moment, before your vision clears. You are the avatar of [src], and your power is LIMITLESS! And it's all yours. You need to make sure no one can take it from you. No one can know, first."))
-	charges--
+/obj/machinery/wish_granter/proc/give_antagonist_status(mob/living/carbon/user)
+	to_chat(user, span_boldnotice("Your head pounds for a moment, before your vision clears. \
+		You are the avatar of [src], and your power is LIMITLESS! And it's all yours. \
+		You need to make sure no one can take it from you. No one can know, first."))
 	user.mind.add_antag_datum(/datum/antagonist/wishgranter)
 	addtimer(CALLBACK(src, PROC_REF(give_final_warning), user), 2 SECONDS, TIMER_UNIQUE | TIMER_DELETE_ME)
 	for(var/turf/closed/indestructible/riveted/indestructible_walls in oview(3))
@@ -142,13 +155,13 @@
 	RegisterSignals(user, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE), PROC_REF(on_avatar_stat_change))
 
 ///Small flavortext showing the player's "old" self is now gone.
-/obj/machinery/wish_granter/proc/give_final_warning(mob/living/user)
+/obj/machinery/wish_granter/proc/give_final_warning(mob/living/carbon/user)
 	to_chat(user, span_warning("A part of you gets a spike of regret, then the presence dissipates."))
 
 ///Called when a wishgranter interacts with us, we speak to our (and only our) avatar.
 /obj/machinery/wish_granter/proc/on_wishgranter_interact(mob/user)
-	var/mob/living/person_insisted = insisted_player?.resolve()
-	if(person_insisted != user)
+	var/mob/living/avatar = insisted_player?.resolve()
+	if(avatar != user)
 		to_chat(user, span_boldnotice("[src] recognizes you as an Avatar of another, and refuses to speak with you."))
 		return
 	if(reward_granted)
