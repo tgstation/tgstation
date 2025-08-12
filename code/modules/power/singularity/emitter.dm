@@ -654,7 +654,7 @@
 	consumable = FALSE
 
 /obj/item/emitter_disk/magnetic
-	name = "Diode Disk: Magnetogenerative"
+	name = "/improper Diode Disk: Magnetogenerative"
 	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will attract nearby objects."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/magnetic
 	consumed_on_removal = FALSE
