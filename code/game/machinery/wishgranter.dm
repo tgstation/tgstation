@@ -22,6 +22,9 @@
 	base_icon_state = "syndbeacon"
 	use_power = NO_POWER_USE
 	density = TRUE
+	verb_say = "decrees"
+	verb_ask = "questions"
+	verb_exclaim = "denounces"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF | BOMB_PROOF
 
 	///Whether or not the reward has been granted to the user.
@@ -31,11 +34,15 @@
 	///Weakref to the last user to have touched the wishgranter; new players will be 'insisted' on the first touch.
 	var/datum/weakref/insisted_player
 	///List of things the wishgranter will say to the avatar if prompted to. Will only say one of each.
+	///Either flavortext of some BS the wishgranter wants the player to believe, or mentioning the bubblegum rewards.
 	var/list/things_to_say = list(
-		"dur 1",
-		"dur 2",
-		"dur 3",
-		"dur 4",
+		"...go on, my avatar...",
+		"...the power i grant... much to take in... i take it..?",
+		"...allies we don't need... kill them all...",
+		"...i trust you will do well...",
+		"...the demon in pink... bring their loot to me...",
+		"...the one in pink... bring them to me...",
+		"...greater power... awaits you... bubblegum...",
 	)
 
 /obj/machinery/wish_granter/Destroy(force)
@@ -48,18 +55,47 @@
 		return .
 	var/mob/living/person_insisted = insisted_player?.resolve()
 	if(person_insisted.stat)
-		icon_state = "[base_icon_state]-destroyed"
+		icon_state = "[base_icon_state]_broken"
 	else
 		icon_state = base_icon_state
 
+/obj/machinery/wish_granter/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
+	. = ..()
+	playsound(loc, 'sound/ambience/earth_rumble/earth_rumble.ogg', 30)
+
+#define REWARD_CHUNKY_FINGERS 0
+#define REWARD_LASER_EYES 1
+
 /obj/machinery/wish_granter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(!(tool.type in GLOB.bubblegum_loot))
+	if(!(tool.type in GLOB.bubblegum_loot) || reward_granted)
 		return
 	reward_granted = TRUE
-	say("...you've done well... i grant you weapons... without restriction...")
-	REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
+	var/reward_to_give = pick(REWARD_CHUNKY_FINGERS, REWARD_LASER_EYES)
+	switch(reward_to_give)
+		if(REWARD_CHUNKY_FINGERS)
+			say("...you've done remarkable work... i grant you weapons... without restriction...")
+			REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
+		if(REWARD_LASER_EYES)
+			say("...you've done remarkable work... i grant you a new power... never seen before...")
+			user.dna.add_mutation(/datum/mutation/laser_eyes, MUTATION_SOURCE_WISHGRANTER)
 	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
+
+#undef REWARD_CHUNKY_FINGERS
+#undef REWARD_LASER_EYES
 
 /obj/machinery/wish_granter/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -88,12 +124,14 @@
 		"I want to be rich.",
 		"I want to rule the world.",
 		"I want immortality.",
-		"I want everyone to know my name",
+		"I want everyone to know my name.",
+		"I want power.",
 	)
-	user.say(pick(player_words), bubble_type = "wishgranter")
+	user.say("#[pick(player_words)]", bubble_type = "wishgranter")
 	addtimer(CALLBACK(src, PROC_REF(give_antagonist_status), user), 5 SECONDS, TIMER_UNIQUE | TIMER_DELETE_ME)
 
-///The wish granter gives all its ability to the player.
+///The wish granter gives all its ability to the player and opens itself for future interactions,
+///as well as showing other players it's been interacted with.
 /obj/machinery/wish_granter/proc/give_antagonist_status(mob/living/user)
 	to_chat(user, span_boldnotice("Your head pounds for a moment, before your vision clears. You are the avatar of [src], and your power is LIMITLESS! And it's all yours. You need to make sure no one can take it from you. No one can know, first."))
 	charges--
@@ -107,6 +145,7 @@
 /obj/machinery/wish_granter/proc/give_final_warning(mob/living/user)
 	to_chat(user, span_warning("A part of you gets a spike of regret, then the presence dissipates."))
 
+///Called when a wishgranter interacts with us, we speak to our (and only our) avatar.
 /obj/machinery/wish_granter/proc/on_wishgranter_interact(mob/user)
 	var/mob/living/person_insisted = insisted_player?.resolve()
 	if(person_insisted != user)
@@ -124,19 +163,3 @@
 /obj/machinery/wish_granter/proc/on_avatar_stat_change(atom/source)
 	SIGNAL_HANDLER
 	update_appearance(UPDATE_ICON)
-
-/obj/machinery/wish_granter/say(
-	message,
-	bubble_type,
-	list/spans = list(),
-	sanitize = TRUE,
-	datum/language/language,
-	ignore_spam = FALSE,
-	forced,
-	filterproof = FALSE,
-	message_range = 7, 
-	datum/saymode/saymode,
-	list/message_mods = list(),
-)
-	. = ..()
-	playsound(loc, 'sound/ambience/earth_rumble/earth_rumble.ogg', 40)
