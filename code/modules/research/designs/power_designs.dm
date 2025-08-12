@@ -259,7 +259,7 @@
 
 /datum/design/diode_disk_sanity
 	name = "Psychosiphoning Diode Disk"
-	desc = "An SM comforting creature depressing Diode Disk."
+	desc = "An supermatter comforting creature depressing Diode Disk."
 	id = "diode_disk_sanity"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 0.5) //Uranium, the metal of love and warmth (from decay heat).
