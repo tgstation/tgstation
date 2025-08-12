@@ -30,6 +30,7 @@ export const file_labels = {
   },
   Sound: {
     filepaths: ["sound/"],
+    file_extensions: [".ogg"],
     add_only: true,
   },
   UI: {
