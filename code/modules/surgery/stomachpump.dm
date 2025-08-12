@@ -35,7 +35,7 @@
 	name = "pump stomach (hand)"
 	accept_hand = TRUE
 	repeatable = TRUE
-	time = 20
+	time = 2 SECONDS
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
 /datum/surgery_step/stomach_pump/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
