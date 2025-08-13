@@ -34,7 +34,10 @@
 		return
 
 	//copy product hash keys
-	installed_refill.products.Cut()
+	if(installed_refill.products)
+		installed_refill.products.Cut()
+	else
+		installed_refill.products = list()
 	installed_refill.products += products
 
 	//move products to canister
