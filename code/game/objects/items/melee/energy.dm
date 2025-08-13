@@ -379,9 +379,13 @@
 	icon_angle = 0
 
 /obj/item/melee/energy/sword/surplus
-	name = "surplus energy sword"
-	desc = "Oversized, overengineered, and mass-produced. Supposedly, the two blades are to make up for the poor cutting plane the emitter generates. \
-		These swords are given out to grunts who 'have a low probability of surviving in an an actual battle'. Which may include you."
+	name = "\improper Type I 'Iaito' energy sword"
+	desc = "Oversized, overengineered, and mass-produced. The two blades are to make up for the poor cutting plane the emitter generates. Hopefully. \
+		Supposedly, this version of the energy sword was a Waffle Corp prototype that was first trialed in a variety of armed conflicts around the interstellar \
+		frontier. The success rate, and survival of its users, were abysmally low. To make matters worse, they had made so many of these swords (accidentally) that \
+		it would cost the company more disposing of them than trying to offload them to raise a quick buck. Thus, the 'Iaito' was 'born'. Often found in the hands of \
+		grunts, mooks, goons, criminals, wannabe assassins or lunatics. You may or may not fit into one of these categories if you are genuinely attempting to kill someone\
+		with this sword."
 	icon_state = "surplus_e_sword"
 	inhand_icon_state = "surplus_e_sword"
 	base_icon_state = "surplus_e_sword"

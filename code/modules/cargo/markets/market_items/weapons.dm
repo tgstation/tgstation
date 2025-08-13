@@ -145,8 +145,8 @@
 	availability_prob = 35
 
 /datum/market_item/weapon/surplus_esword
-	name = "Surplus Energy Sword"
-	desc = "A surplus energy sword. It is functionally worse than a milspec energy sword commonly found amongst paramilitary organizations. \
+	name = "Type I 'Iaito' Energy Sword"
+	desc = "A mass-produced energy sword. It is functionally worse than a milspec energy sword commonly found amongst paramilitary organizations. \
 		But hey, better than nothing. Does have some power supply problems, but nothing that a bit of percussive maintenance can't fix."
 	item = /obj/item/melee/energy/sword/surplus
 	price_min = CARGO_CRATE_VALUE * 2
