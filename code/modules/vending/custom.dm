@@ -34,10 +34,7 @@
 		return
 
 	//copy product hash keys
-	if(installed_refill.products)
-		installed_refill.products.Cut()
-	else
-		installed_refill.products = list()
+	installed_refill.products.Cut()
 	installed_refill.products += products
 
 	//move products to canister
@@ -131,6 +128,8 @@
 /obj/machinery/vending/custom/restock(obj/item/vending_refill/canister)
 	. = 0
 	if(!canister.products?.len)
+		if(!canister.products)
+			canister.products = list()
 		return
 
 	var/update_static_data = FALSE
