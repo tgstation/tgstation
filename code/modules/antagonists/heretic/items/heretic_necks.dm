@@ -153,39 +153,18 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
-	actions_types = list(/datum/action/item_action/toggle)
-	/// If the amulet is toggled, on by default
-	var/currently_channeling = TRUE
 	/// How much damage does this item do to the targets sanity?
 	var/sanity_damage = 20
-
-/obj/item/clothing/neck/heretic_focus/moon_amulet/attack_self(mob/user, modifiers)
-	. = ..()
-	if(!IS_HERETIC(user))
-		return
-	currently_channeling = !currently_channeling
-	if(!currently_channeling)
-		balloon_alert(user, "disabled")
-		on_amulet_deactivate(user)
-	else
-		balloon_alert(user, "enabled")
-		if(!(slot_flags & user.get_slot_by_item(src))) // You can toggle the amulet without wearing it
-			return
-		on_amulet_activate(user)
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
 	if(!IS_HERETIC(user) && (slot_flags & slot))
 		channel_amulet(user)
 		return // Equipping the amulet as a non-heretic will give you a fat mood debuff and nothing else
-
 	if(!(slot_flags & slot))
 		on_amulet_deactivate(user)
 		return
-	if(currently_channeling)
-		on_amulet_activate(user)
-	else
-		on_amulet_deactivate(user)
+	on_amulet_activate(user)
 
 /// Modifies any blades you hold/pickup/drop when the amulet is enabled
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_amulet_activate(mob/living/user)
@@ -195,6 +174,11 @@
 	// Just make sure we pacify blades potentially in our hands when we put on the amulet
 	on_equip_item(user, user.get_active_held_item(), ITEM_SLOT_HANDS)
 	on_equip_item(user, user.get_inactive_held_item(), ITEM_SLOT_HANDS)
+	ADD_TRAIT(user, TRAIT_THERMAL_VISION, REF(src))
+	user.update_sight()
+	// If the equipper is a moon heretic, we buff their passive
+	var/datum/status_effect/heretic_passive/moon/moon_passive = user.has_status_effect(/datum/status_effect/heretic_passive/moon)
+	moon_passive?.amulet_equipped = TRUE
 
 /// Modifies any blades you hold/pickup/drop when the amulet is disabled
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_amulet_deactivate(mob/living/user)
@@ -202,6 +186,10 @@
 	on_dropped_item(user, user.get_active_held_item())
 	on_dropped_item(user, user.get_inactive_held_item())
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM))
+	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, REF(src))
+	user.update_sight()
+	var/datum/status_effect/heretic_passive/moon/moon_passive = user.has_status_effect(/datum/status_effect/heretic_passive/moon)
+	moon_passive?.amulet_equipped = FALSE
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/dropped(mob/living/user)
 	on_amulet_deactivate(user)
@@ -262,11 +250,32 @@
 		blade.wound_bonus = 0
 		blade.exposed_wound_bonus = 0
 		blade.armour_penetration = 200
+		RegisterSignal(blade, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, PROC_REF(modify_attack_message))
 		return
 	blade.force = initial(blade.force)
 	blade.wound_bonus = initial(blade.wound_bonus)
 	blade.exposed_wound_bonus = initial(blade.exposed_wound_bonus)
 	blade.armour_penetration = initial(blade.armour_penetration)
+	UnregisterSignal(blade, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT)
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/modify_attack_message(obj/item/weapon, mob/living/victim, mob/living/attacker)
+	SIGNAL_HANDLER
+
+	var/list/attack_list = list(
+	"You sweep [weapon] towards [victim], splitting [victim.p_Their()] image in two.",
+	"You strike [victim] with [weapon], spilling forth a cascade from within. Immaculate.",
+	"As it bite deep, your [weapon] unburdens [victim] of unneeded thought.",
+	)
+	to_chat(attacker, span_danger(pick(attack_list)))
+
+	var/list/victim_list = list(
+	"You are struck by [attacker], but the [weapon] tears away something more than parts of your body.",
+	"You see an arch of light as [attacker]'s [weapon] twists towards you, and you see the world briefly in tetrachrome.",
+	"As [attacker] carves into you with [weapon], you lose something deep within. The agony is worse than any wound.",
+	)
+	to_chat(victim, span_userdanger(pick(victim_list)))
+	// JAKETODO | XANTODO Add the sounds here for amulet'd blade hitting someone
+	return SIGNAL_MESSAGE_MODIFIED
 
 /// Modifies any blades that we drop while wearing the amulet
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_dropped_item(mob/user, obj/item/dropped_item)
@@ -277,3 +286,4 @@
 	dropped_item.wound_bonus = initial(dropped_item.wound_bonus)
 	dropped_item.exposed_wound_bonus = initial(dropped_item.exposed_wound_bonus)
 	dropped_item.armour_penetration = initial(dropped_item.armour_penetration)
+	UnregisterSignal(dropped_item, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT)

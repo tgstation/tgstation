@@ -233,7 +233,6 @@
 	icon_state = "moon_blade"
 	inhand_icon_state = "moon_blade"
 	after_use_message = "The Moon hears your call..."
-	item_flags = BYPASSES_PACIFISM // Moon robes will pacify you
 
 // Path of Nar'Sie's blade
 // What!? This blade is given to cultists as an altar item when they sacrifice a heretic.

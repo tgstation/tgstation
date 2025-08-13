@@ -51,8 +51,6 @@
 #define NO_BLOOD_ON_ITEM (1 << 19)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
 #define SKIP_FANTASY_ON_SPAWN (1<<20)
-/// If the item can attack people despite the attacker being a pacifist
-#define BYPASSES_PACIFISM (1<<21)
 /// If an item has had its /datum/element/weapon_description initialized or not.
 #define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
 

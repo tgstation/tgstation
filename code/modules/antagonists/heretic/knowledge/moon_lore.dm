@@ -101,7 +101,8 @@
 	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulet. \
 			If the item is used on someone with low sanity they go berserk attacking everyone, \
 			if their sanity isn't low enough it decreases their mood. \
-			Wearing this will make your blades harmless, they will instead directly attack their mind."
+			Wearing this will make your blades harmless, they will instead directly attack their mind. \
+			Provides thermal vision and doubles the brain regen of a moon heretic while worn."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 
 	required_atoms = list(
@@ -141,9 +142,9 @@
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
-	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage."
+	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage. \
+			Deals more brain damage if your victim is insane or unconscious."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
-
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_moon"
@@ -155,13 +156,16 @@
 	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 		return
 
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 100)
 	target.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
 	target.mob_mood?.adjust_sanity(-10)
+	if(target.stat == CONSCIOUS && target.mob_mood?.sanity >= SANITY_NEUTRAL)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
+		return
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"

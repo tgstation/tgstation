@@ -563,13 +563,14 @@
 		"You notice that a button has popped off your collar. How did that happen? Maybe %ATTACKER is to blame.",
 		"%ATTACKER isn't very funny, and you're struggling to see the punchline.",
 	)
-	/// Message sent to blind people nearyb
+	/// Message sent to blind people nearby
 	var/static/list/blind_message_list = list(
 		"You hear echoing laughter.",
 		"You hear a distance chorus.",
 		"You hear the sound of bells and whistles.",
 		"You hear the clack of a tambourine.",
 	)
+	/// List of all signals registered, used for cleanup
 	var/signal_registered = list()
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/user, slot, initial) // Special handling, because non-heretics also gain the effects
@@ -582,7 +583,6 @@
 
 	// Non-Heretic equipped the robes? Grant them the effects :)
 	on_robes_gained(user)
-	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_robes_deleted))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_robes_lost))
 	signal_registered += list(COMSIG_PREQDELETED, COMSIG_MOB_DROPPED_ITEM)
 
@@ -619,8 +619,8 @@
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	signal_registered += COMSIG_LIVING_DEATH
 
-	RegisterSignal(user, COMSIG_SEND_ITEM_ATTACK_MESSAGE, PROC_REF(item_attack_response))
-	signal_registered += COMSIG_SEND_ITEM_ATTACK_MESSAGE
+	RegisterSignal(user, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, PROC_REF(item_attack_response))
+	signal_registered += COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON
 
 	var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
@@ -711,6 +711,9 @@
 	if(damage <= 0)
 		return SUCCESSFUL_BLOCK
 
+	// Any hit you block (AKA Attacks) will do 15% more damage
+	damage *= 1.15
+
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage)
 	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200 && !braindead)
 		braindead = TRUE
@@ -719,12 +722,16 @@
 		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 	return SUCCESSFUL_BLOCK
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(mob/living/user)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(mob/living/victim, obj/item/weapon, mob/living/attacker)
 	var/visible_message = pick(visible_message_list)
+	visible_message = replacetext(visible_message, "%USER", victim.get_visible_name())
+	visible_message = replacetext(visible_message, "%ATTACKER", attacker.get_visible_name())
+
 	var/self_message = pick(self_message_list)
+	self_message = replacetext(self_message_list, "%ATTACKER", attacker.get_visible_name())
+
 	var/blind_message = pick(blind_message_list)
-	user.visible_message(visible_message, self_message, blind_message)
-	//XANTODO Figure this out
+	victim.visible_message(span_danger(visible_message), span_userdanger(self_message), span_danger(blind_message))
 	return SIGNAL_MESSAGE_MODIFIED
 
 /**

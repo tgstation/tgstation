@@ -409,6 +409,8 @@
 	var/last_attack = 0
 	/// How long the combat tag lasts for
 	var/combat_lockout = 5 SECONDS
+	/// Boolean if you are wearing the moon amulet
+	var/amulet_equipped = FALSE
 
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
@@ -427,6 +429,8 @@
 	var/healing_amount = ((world.time > last_attack + combat_lockout) ? -1 * passive_level * seconds_between_ticks : -2 * passive_level * seconds_between_ticks)
 	if(heretic_datum.ascended)
 		healing_amount = -15 * seconds_between_ticks
+	if(!amulet_equipped)
+		healing_amount *= 0.5 // Half healing if you dont have the moon amulet
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, healing_amount)
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
