@@ -200,9 +200,6 @@ export async function get_updated_label_set({ github, context }) {
   if (body)
     check_body_for_labels(body).forEach((label) => updated_labels.add(label));
 
-  // Always remove Test Merge Candidate
-  updated_labels.delete("Test Merge Candidate");
-
   // Keep track of labels that were manually added by maintainers in the events.
   // And make sure they -stay- added.
   try {
@@ -228,6 +225,9 @@ export async function get_updated_label_set({ github, context }) {
   } catch (error) {
     console.error("Error fetching paginated events:", error);
   }
+
+  // Always remove Test Merge Candidate
+  updated_labels.delete("Test Merge Candidate");
 
   // Handle merge conflict label
   let merge_conflict = mergeable === false;
