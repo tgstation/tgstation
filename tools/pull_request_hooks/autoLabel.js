@@ -192,15 +192,13 @@ export async function get_updated_label_set({ github, context }) {
     labels_to_remove.forEach((label) => updated_labels.delete(label));
   }
 
-  // Check body/title only when PR is opened, not on sync
-  if (action === "opened") {
-    if (title)
-      check_title_for_labels(title).forEach((label) =>
-        updated_labels.add(label)
-      );
-    if (body)
-      check_body_for_labels(body).forEach((label) => updated_labels.add(label));
-  }
+  // Always check body/title (otherwise we can lose the changelog labels)
+  if (title)
+    check_title_for_labels(title).forEach((label) =>
+      updated_labels.add(label)
+    );
+  if (body)
+    check_body_for_labels(body).forEach((label) => updated_labels.add(label));
 
   // Always remove Test Merge Candidate
   updated_labels.delete("Test Merge Candidate");
