@@ -203,6 +203,22 @@ export async function get_updated_label_set({ github, context }) {
   // Always remove Test Merge Candidate
   updated_labels.delete("Test Merge Candidate");
 
+  // Keep track of labels that were manually added by maintainers
+  const events = await github.rest.issues.listEventsForTimeline({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    pull_number: context.payload.pull_request.number,
+    per_page: 100,
+  });
+  for (const eventData of events.data) {
+    if (
+      eventData.event === "labeled" &&
+      eventData.actor?.login !== context.actor
+    ) {
+      updated_labels.add(eventData.label.name);
+    }
+  }
+
   // Handle merge conflict label
   let merge_conflict = mergeable === false;
   // null means it was not reported yet
