@@ -302,3 +302,68 @@
   trazodont:
   - bugfix: added the CRAFT_CLEARS_REAGENTS flag to the rootdough recipes, bananas
       + water will no longer doom lizard food ever again
+2025-08-13:
+  00-Steven:
+  - refactor: Refactored say modes (i.e. robotic talk, drone chat, hivemind speak),
+      custom say verbs (i.e. `says in a custom way*The spoken thing.`), and quoted
+      messages. Please report any issues.
+  - rscadd: You can now use custom say verbs with robotic talk, drone chat, alien
+      hivemind talk, AI holograms, holopad calls, modlink/scryer calls, imaginary
+      friends, and blob telepathy.
+  - rscadd: Message spans like from say modifiers carry over through robotic talk,
+      drone chat, alien hivemind talk, AI holograms, holopad calls, and modlink/scryer
+      calls.
+  - bugfix: Languages and say verbs carry over through holopad calls and modlink/scryer
+      calls.
+  - bugfix: You can use custom say verbs when using the department radio key.
+  - bugfix: Drone chat now counts as a radio message for chat settings, parallel to
+      binary chat.
+  - bugfix: No longer highlight messages you sent yourself over drone chat, blob telepathy,
+      and speaking as revenant.
+  - admin: Removed a redundant emote log entry for custom say verbs/'radio emotes'
+      accompanying a message. Instead it's only logged as part of the message it accompanied
+      in the say logs.
+  - admin: Pure custom say verbs without accompanying messages are now similarly tagged
+      with their type (i.e. robotic talk, drone chat, imaginary friend) in the emote
+      logs.
+  - admin: Pure custom say verbs without accompanying messages are properly logged
+      if somehow forced.
+  - admin: Alien hivemind talk logs are properly tagged as alien hivemind talk.
+  - admin: Drone chat is properly logged.
+  - refactor: Refactored how the newscaster network keeps track of channels. Please
+      report any issues.
+  - bugfix: Newscaster channels no longer have an increasing random chance of breaking
+      whenever a new channel is made.
+  Aliceee2ch:
+  - balance: Paramedic now has extra access to pharmacy on skeleton crew station.
+  Krysonism:
+  - image: The tesla cannon has new sprites.
+  - image: The tesla parts kit has new sprites.
+  - image: The tesla cannon has a new shocking beam effect when firing.
+  - sound: The tesla cannon has new sounds.
+  - balance: The tesla cannon must now be unfolded to fire.
+  - bugfix: looping sounds now stop playing sounds when commaned to do so.
+  Melbert:
+  - bugfix: Bashing vendors works good again
+  SyncIt21:
+  - bugfix: product category vendors start out correctly filled & can be refilled
+      with cargo ordered vending canisters again
+  TealSeer:
+  - bugfix: fixed firelocks spawning with no area name or ID
+  Thunder12345:
+  - code_imp: Reduced the number of files named misc.dm or similar by 14%.
+  - code_imp: Converted a lot of time-based variables to be expressed with time defines.
+  kuricityy:
+  - balance: Buffs godslayer armor values to be worth the effort you have to put in
+      to getting it.
+  lelandkemble:
+  - spellcheck: whispering now spelled correctly
+  - bugfix: prevents inputting letters into the abandoned crate puzzle
+  throwawayuseless:
+  - rscadd: New Diode Disks which allow you to configurate emitters with special functions.
+  - rscadd: New Engi & CE exclusive traitor item, a diode disk that causes an emitter
+      to create low radius explosions when it hits things. Note that this will reduce
+      the fire-rate of your emitter.
+  uaioy:
+  - qol: All coroner's offices that lacked a cabinet will now have one, coroner's
+      organ fridge is now more accessible

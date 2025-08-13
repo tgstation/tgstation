@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - code_imp: "Reduced the number of files named misc.dm or similar by 14%."

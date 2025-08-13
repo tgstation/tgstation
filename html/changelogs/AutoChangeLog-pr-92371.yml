@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - refactor: "Refactored how the newscaster network keeps track of channels. Please report any issues."
-  - bugfix: "Newscaster channels no longer have an increasing random chance of breaking whenever a new channel is made."

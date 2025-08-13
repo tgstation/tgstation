@@ -1,5 +1,0 @@
-author: "throwawayuseless"
-delete-after: True
-changes:
-  - rscadd: "New Diode Disks which allow you to configurate emitters with special functions."
-  - rscadd: "New Engi & CE exclusive traitor item, a diode disk that causes an emitter to create low radius explosions when it hits things. Note that this will reduce the fire-rate of your emitter."
