@@ -1211,7 +1211,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "auo" = (
-/obj/structure/table,
 /obj/item/cultivator,
 /obj/item/hatchet,
 /obj/item/paper/guides/jobs/hydroponics,
@@ -1220,6 +1219,7 @@
 	spawn_random_offset = 4
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/table/wood/shuttle_bar,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
 "auB" = (
@@ -6384,6 +6384,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/spawner/random/food_or_drink/seed_flowers,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
 "clY" = (
@@ -7428,11 +7429,11 @@
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
+/obj/structure/table/wood/shuttle_bar,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
 "cHP" = (
@@ -10036,7 +10037,7 @@
 "dAa" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "dAe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -10537,7 +10538,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "dIe" = (
 /obj/structure/table/wood,
@@ -18256,7 +18257,7 @@
 "gsm" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "gsn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -21661,7 +21662,7 @@
 "hzh" = (
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "hzn" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
@@ -27232,7 +27233,7 @@
 "jyV" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "jza" = (
 /turf/closed/wall/r_wall,
@@ -28857,14 +28858,11 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jZK" = (
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/item/storage/bag/plants,
+/obj/structure/table/wood/shuttle_bar,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
 "jZN" = (
@@ -32898,7 +32896,7 @@
 "lpE" = (
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "lpF" = (
 /obj/machinery/fax{
@@ -49624,6 +49622,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rfd" = (
@@ -61104,7 +61103,7 @@
 /area/space)
 "uXt" = (
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "uXw" = (
 /obj/machinery/camera/autoname/directional/west{
@@ -64572,7 +64571,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "wlN" = (
-/obj/structure/table,
 /obj/item/hatchet,
 /obj/item/cultivator,
 /obj/item/crowbar,
@@ -64581,8 +64579,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/storage/bag/plants/portaseeder,
 /obj/machinery/light/small/directional/east,
+/obj/structure/table/wood/shuttle_bar,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
 "wlO" = (
@@ -66257,23 +66255,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "wOm" = (
-/obj/structure/table,
-/obj/item/food/grown/wheat,
-/obj/item/food/grown/watermelon,
-/obj/item/food/grown/citrus/orange,
-/obj/item/food/grown/grapes,
-/obj/item/food/grown/cocoapod,
-/obj/item/food/grown/apple,
-/obj/item/food/grown/chili,
-/obj/item/food/grown/cherries,
-/obj/item/food/grown/soybeans,
-/obj/item/food/grown/citrus/lime,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/spawner/random/food_or_drink/plant_produce,
+/obj/structure/table/wood/shuttle_bar,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
 "wOn" = (

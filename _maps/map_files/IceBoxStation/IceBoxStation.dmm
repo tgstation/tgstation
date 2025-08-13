@@ -8172,7 +8172,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "cgw" = (
-/obj/structure/table/glass,
 /obj/item/hatchet,
 /obj/item/cultivator,
 /obj/item/crowbar,
@@ -8182,6 +8181,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "cgC" = (
@@ -14700,6 +14700,7 @@
 "dZJ" = (
 /obj/machinery/seed_extractor,
 /obj/machinery/status_display/evac/directional/north,
+/obj/effect/spawner/random/food_or_drink/seed_flowers,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "dZN" = (
@@ -21920,7 +21921,7 @@
 /area/station/maintenance/aft/lesser)
 "geZ" = (
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "gfb" = (
 /turf/closed/wall/r_wall,
@@ -35405,7 +35406,7 @@
 "kby" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "kbJ" = (
 /obj/machinery/field/generator,
@@ -43729,7 +43730,7 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "muv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -45637,7 +45638,6 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
 "mZu" = (
-/obj/structure/table/glass,
 /obj/item/cultivator,
 /obj/item/hatchet,
 /obj/item/crowbar,
@@ -45646,6 +45646,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "mZG" = (
@@ -52322,7 +52323,7 @@
 	},
 /obj/machinery/status_display/ai/directional/east,
 /obj/structure/water_source/puddle,
-/turf/open/misc/sandy_dirt,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "oLn" = (
 /obj/structure/cable,
@@ -70561,13 +70562,13 @@
 /turf/open/floor/iron/textured,
 /area/station/service/kitchen/coldroom)
 "tTc" = (
-/obj/item/storage/bag/plants/portaseeder,
-/obj/structure/table/glass,
-/obj/item/plant_analyzer,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/table/wood,
+/obj/item/storage/bag/plants,
+/obj/item/plant_analyzer,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "tTK" = (
@@ -78817,17 +78818,11 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "wtr" = (
-/obj/structure/table/glass,
-/obj/item/food/grown/wheat,
-/obj/item/food/grown/watermelon,
-/obj/item/food/grown/watermelon,
-/obj/item/food/grown/watermelon,
-/obj/item/food/grown/citrus/orange,
-/obj/item/food/grown/grapes,
-/obj/item/food/grown/cocoapod,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/plant_produce,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "wtv" = (
@@ -79424,11 +79419,11 @@
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/east,
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "wCN" = (
