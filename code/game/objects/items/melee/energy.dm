@@ -380,7 +380,7 @@
 
 /obj/item/melee/energy/sword/surplus
 	name = "\improper Type I 'Iaito' energy sword"
-	desc = "Oversized, overengineered, and mass-produced. The two blades are to make up for the poor cutting plane the emitter generates. Hopefully. \
+	desc = "Oversized, overengineered, and mass-produced. The two blades help make up for the poor cutting plane the emitter generates. Hopefully. \
 		Supposedly, this version of the energy sword was a Waffle Corp prototype that was first trialed in a variety of armed conflicts around the interstellar \
 		frontier. The success rate, and survival of its users, were abysmally low. To make matters worse, they had made so many of these swords (accidentally) that \
 		it would cost the company more disposing of them than trying to offload them to raise a quick buck. Thus, the 'Iaito' was 'born'. Often found in the hands of \
