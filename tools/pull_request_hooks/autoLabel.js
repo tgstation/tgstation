@@ -207,13 +207,13 @@ export async function get_updated_label_set({ github, context }) {
   const events = await github.rest.issues.listEventsForTimeline({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    pull_number: context.payload.pull_request.number,
+    issue_number: context.payload.pull_request.number,
     per_page: 100,
   });
   for (const eventData of events.data) {
     if (
       eventData.event === "labeled" &&
-      eventData.actor?.login !== context.actor
+      eventData.actor?.login !== "github-actions"
     ) {
       updated_labels.add(eventData.label.name);
     }
