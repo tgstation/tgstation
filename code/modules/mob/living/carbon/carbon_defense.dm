@@ -517,17 +517,17 @@
 		var/deaf = deafen_pwr * effect_amount
 		ears.adjustEarDamage(ear_damage,deaf)
 
-		if(ears.damage >= 15)
-			to_chat(src, span_warning("Your ears start to ring badly!"))
-			if(prob(ears.damage - 5))
-				to_chat(src, span_userdanger("You can't hear anything!"))
-				// Makes you deaf, enough that you need a proper source of healing, it won't self heal
-				// you need earmuffs, inacusiate, or replacement
-				ears.set_organ_damage(ears.maxHealth)
-		else if(ears.damage >= 5)
-			to_chat(src, span_warning("Your ears start to ring!"))
+		. = effect_amount //how soundbanged we are
 		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
-	return effect_amount //how soundbanged we are
+		
+		if(ears.damage < 5)
+		    return
+		if(ears.damage >= 15 && prob(ears.damage - 5))
+			to_chat(src, span_userdanger("You can't hear anything!"))
+			// Makes you deaf, enough that you need a proper source of healing, it won't self heal
+			// you need earmuffs, inacusiate, or replacement
+			ears.set_organ_damage(ears.maxHealth)
+		to_chat(src, span_warning("Your ears start to ring[ears.damage >= 15 ? " badly!":"!"]"))
 
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
