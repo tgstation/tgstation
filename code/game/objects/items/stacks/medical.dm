@@ -781,10 +781,10 @@
 	inhand_icon_state = "bandage"
 	novariants = TRUE
 	amount = 1
-	max_amount = 1
+	max_amount = 4
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_brute = 25
+	heal_brute = 20
 	stop_bleeding = 0.2
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
@@ -792,6 +792,9 @@
 	apply_verb = "applying to"
 	pickup_sound = SFX_CLOTH_PICKUP
 	// add a better drop sound more fitting for a lil' itty bitty band-aid
+
+/obj/item/stack/medical/bandage/stack
+	amount = 4
 
 /obj/item/stack/medical/bandage/makeshift
 	name = "makeshift bandage"
