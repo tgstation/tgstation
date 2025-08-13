@@ -74,6 +74,9 @@
 	/// This number will override that calculation with a set value - used for testing and debugging.
 	var/num_attempts_override = 0
 
+	/// List of typepaths of the rewards from all claimed bounties (the items, rather than their uplink representations), used for restricted bounties.
+	var/list/claimed_bounty_rewards = list()
+
 	/// Assoc list that dictates how much of each bounty difficulty to give out at once.
 	/// Modified by the number of times we have refreshed bounties.
 	VAR_PRIVATE/list/base_bounties_to_give = list(
@@ -146,7 +149,9 @@
 /datum/spy_bounty_handler/proc/get_all_bounties() as /list
 	var/list/all_bounties = list()
 	for(var/difficulty in bounties)
-		all_bounties += bounties[difficulty]
+		for(var/datum/spy_bounty/bounty as anything in bounties[difficulty])
+			if(!bounty.reward_item.spy_bounty_requirements || (claimed_bounty_rewards & bounty.reward_item.spy_bounty_requirements))
+				all_bounties += bounty
 
 	return all_bounties
 
