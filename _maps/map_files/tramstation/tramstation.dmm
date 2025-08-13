@@ -3741,8 +3741,8 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
 "axE" = (
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/trimline/neutral/warning,
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "axG" = (
@@ -48717,7 +48717,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/right)
 "qfS" = (
-/obj/machinery/smartfridge/organ,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)

@@ -6028,8 +6028,8 @@
 /area/station/service/library)
 "ceF" = (
 /obj/structure/table,
-/obj/item/paper_bin/carbon,
 /obj/machinery/light_switch/directional/east,
+/obj/item/flashlight/lamp,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ceN" = (
@@ -59600,8 +59600,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "uvn" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "uvx" = (
