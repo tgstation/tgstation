@@ -3,8 +3,8 @@
 	desc = "For when you're expecting to get slapped on the wrist. Offers modest protection to your arms."
 	icon_state = "bracers"
 	inhand_icon_state = null
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	body_parts_covered = ARMS
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

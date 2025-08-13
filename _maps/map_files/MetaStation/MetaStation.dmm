@@ -20397,8 +20397,8 @@
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "hif" = (
-/obj/structure/mannequin/skeleton,
 /obj/machinery/status_display/evac/directional/north,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "hio" = (
@@ -28294,6 +28294,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "jLD" = (
