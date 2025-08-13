@@ -1,0 +1,4 @@
+author: "plsleavemealon"
+delete-after: True
+changes:
+  - rscadd: "Adds a new bounty app to the PDA allowing you to remotely check your bounties"
