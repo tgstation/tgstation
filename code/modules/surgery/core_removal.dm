@@ -24,7 +24,7 @@
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_CROWBAR = 100)
-	time = 16
+	time = 1.6 SECONDS
 
 /datum/surgery_step/extract_core/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

@@ -19968,12 +19968,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"eWj" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/structure/sign/poster/official/report_crimes/directional/west,
-/turf/open/floor/plating,
-/area/station/security/checkpoint/medical/medsci)
 "eWr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "transitlock";
@@ -32889,13 +32883,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
-"igE" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/report_crimes/directional/west,
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "igI" = (
 /obj/machinery/newscaster/directional/north,
 /obj/structure/cable,
@@ -49496,8 +49483,6 @@
 /area/station/hallway/primary/central/aft)
 "mmf" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 10
@@ -49507,6 +49492,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "mmq" = (
@@ -65978,11 +65964,11 @@
 /obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 4
 	},
-/obj/machinery/smartfridge/organ,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "qqe" = (
@@ -135068,7 +135054,7 @@ kdq
 shU
 bbj
 dZc
-igE
+lhC
 uGE
 qmu
 qfi
@@ -135325,7 +135311,7 @@ xWf
 uZs
 xWf
 dQT
-eWj
+qfi
 qfi
 qfi
 dQT

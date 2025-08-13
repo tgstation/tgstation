@@ -10,7 +10,7 @@
 	armor_type = /datum/armor/clothing_under/plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	can_adjust = FALSE
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
