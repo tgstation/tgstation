@@ -30048,6 +30048,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
+"huQ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/sink/directional/south,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "huR" = (
 /obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -127751,7 +127758,7 @@ bxp
 dlz
 jWG
 oYs
-csh
+huQ
 jHi
 sAU
 iKr

@@ -85,7 +85,7 @@
 /obj/effect/spawner/random/food_or_drink/plant_produce
 	name = "plant produce spawner"
 	icon_state = "seed"
-	spawn_loot_count = 8 // will select 8 random plants to spawn
+	spawn_loot_count = 8 // will select 8 random produce
 	loot = list( // Just some random grown basic plants
 		/obj/item/food/grown/banana,
 		/obj/item/food/grown/soybeans,
@@ -119,6 +119,7 @@
 		/obj/item/food/grown/peas,
 		/obj/item/grown/cotton,
 		/obj/item/food/grown/herbs,
+		/obj/item/grown/log,
 	)
 
 /obj/effect/spawner/random/food_or_drink/soup

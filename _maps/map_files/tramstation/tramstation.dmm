@@ -16840,6 +16840,7 @@
 	pixel_x = 23;
 	pixel_y = -8
 	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ePi" = (
