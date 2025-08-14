@@ -5977,11 +5977,6 @@
 "bPW" = (
 /turf/closed/wall,
 /area/station/commons/fitness/recreation)
-"bPZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
 "bQe" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance)
@@ -9247,6 +9242,9 @@
 /obj/item/reagent_containers/spray/pestspray{
 	pixel_x = 10;
 	pixel_y = -14
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
@@ -12848,6 +12846,13 @@
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
+"dOC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics/garden/abandoned)
 "dOG" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -14874,6 +14879,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
 "esb" = (
@@ -22178,6 +22184,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
 "gBf" = (
@@ -22411,6 +22419,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
 "gEN" = (
@@ -28564,6 +28573,12 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"itU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/closed/wall,
+/area/station/service/hydroponics/garden/abandoned)
 "itV" = (
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = -5;
@@ -33616,6 +33631,11 @@
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/wood/large,
 /area/station/service/library)
+"jPB" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/starboard/aft)
 "jPC" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -55809,6 +55829,8 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "qvd" = (
@@ -64155,6 +64177,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
 "sUV" = (
@@ -64619,6 +64643,9 @@
 /obj/item/plant_analyzer,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
@@ -69651,6 +69678,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
 "uAO" = (
@@ -71784,6 +71812,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
 "vhJ" = (
@@ -81890,6 +81920,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden/abandoned)
 "yiy" = (
@@ -122082,7 +122113,7 @@ oJz
 eyb
 frP
 wNo
-frP
+unM
 mqT
 hFi
 hFi
@@ -122338,7 +122369,7 @@ owf
 kRI
 oYp
 jvo
-bPZ
+qVm
 cWk
 cWk
 cWk
@@ -123879,7 +123910,7 @@ tVR
 kEn
 kbi
 eNm
-eNm
+dOC
 uAF
 fxX
 uVg
@@ -124133,7 +124164,7 @@ jmh
 rOn
 iXD
 kiu
-fxX
+itU
 tcv
 cJi
 qMa
@@ -127731,7 +127762,7 @@ jmh
 wKb
 dGu
 gdG
-gdG
+jPB
 jcQ
 jcQ
 jcQ
