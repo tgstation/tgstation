@@ -61,6 +61,8 @@
 	product = /obj/item/food/grown/rice
 	mutatelist = null
 	growthstages = 3
+	genes = list(/datum/plant_gene/trait/semiaquatic)
+
 
 /obj/item/food/grown/rice
 	seed = /obj/item/seeds/wheat/rice
