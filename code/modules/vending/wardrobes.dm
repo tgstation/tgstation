@@ -158,7 +158,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "AtmosDrobe"
 	desc = "This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job."
 	icon_state = "atmosdrobe"
-	product_ads = "Get your inflammable clothing right here!!!"
+	product_slogans = "Get your inflammable clothing right here!!!"
 	vend_reply = "Thank you for using the AtmosDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 3,
@@ -322,7 +322,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "CuraDrobe"
 	desc = "A low-stock vendor only capable of vending clothing for curators and librarians."
 	icon_state = "curadrobe"
-	product_ads = "Glasses for your eyes and literature for your soul, Curadrobe has it all!; Impress & enthrall your library guests with Curadrobe's extended line of pens!"
+	product_slogans = "Glasses for your eyes and literature for your soul, Curadrobe has it all!; Impress & enthrall your library guests with Curadrobe's extended line of pens!"
 	vend_reply = "Thank you for using the CuraDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 2,
@@ -663,7 +663,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "ViroDrobe"
 	desc = "An unsterilized machine for dispensing virology related clothing."
 	icon_state = "virodrobe"
-	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"
+	product_slogans = " Viruses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(
 		/obj/item/clothing/mask/surgical = 2,

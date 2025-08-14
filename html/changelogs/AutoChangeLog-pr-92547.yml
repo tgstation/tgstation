@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - balance: "Uplink price on the suppressor has been lowered from 3 to 1 TC."

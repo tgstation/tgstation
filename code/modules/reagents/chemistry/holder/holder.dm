@@ -325,12 +325,14 @@
  *
  * * [source_reagent_typepath][/datum/reagent] - the typepath of the reagent you are trying to convert
  * * [target_reagent_typepath][/datum/reagent] - the final typepath the source_reagent_typepath will be converted into
+ * * conversion_volume - how much of the reagent volume to convert. -1 for all
  * * multiplier - the multiplier applied on the source_reagent_typepath volume before converting
  * * include_source_subtypes- if TRUE will convert all subtypes of source_reagent_typepath into target_reagent_typepath as well
  */
 /datum/reagents/proc/convert_reagent(
 	datum/reagent/source_reagent_typepath,
 	datum/reagent/target_reagent_typepath,
+	conversion_volume = -1,
 	multiplier = 1,
 	include_source_subtypes = FALSE,
 	keep_data = FALSE,
@@ -356,6 +358,17 @@
 			if(cached_reagent.type != source_reagent_typepath)
 				continue
 		else if(!istype(cached_reagent, source_reagent_typepath))
+			continue
+
+		if(conversion_volume != -1)
+			if(cached_reagent.volume > conversion_volume)
+				remove_reagent(cached_reagent.type, conversion_volume)
+				weighted_volume += conversion_volume
+				break
+
+			weighted_volume += cached_reagent.volume
+			conversion_volume -= cached_reagent.volume
+			del_reagent(cached_reagent.type)
 			continue
 
 		//compute average of everything

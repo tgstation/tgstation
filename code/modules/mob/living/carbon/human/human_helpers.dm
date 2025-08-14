@@ -104,7 +104,7 @@
 	else
 		var/obj/item/card/id/id = astype(wear_id, /obj/item/card/id) \
 			|| astype(wear_id, /obj/item/storage/wallet)?.front_id \
-			|| astype(wear_id, /obj/item/modular_computer)?.computer_id_slot
+			|| astype(wear_id, /obj/item/modular_computer)?.stored_id
 		. = id?.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
