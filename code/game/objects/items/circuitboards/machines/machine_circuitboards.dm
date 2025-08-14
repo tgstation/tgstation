@@ -672,14 +672,21 @@
 				valid_vendor_names_paths[vendor_type::name] = vendor_type
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_FAILURE
 	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return
-	if(isnull(valid_vendor_names_paths[choice]))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	set_type(valid_vendor_names_paths[choice])
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
+/**
+ * Sets circuitboard details based on the vending machine type to create
+ *
+ * Arguments
+ * * obj/machinery/vending/typepath - the vending machine type to create
+*/
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[typepath::name] Vendor"
@@ -687,11 +694,7 @@
 	flatpack_components = list(initial(typepath.refill_canister))
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
-	for(var/key in valid_vendor_names_paths)
-		// == instead of istype so subtypes don't pass check for their supertypes
-		if(machine.type == valid_vendor_names_paths[key])
-			set_type(valid_vendor_names_paths[key])
-			break
+	set_type(machine.type)
 	return ..()
 
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
@@ -1888,3 +1891,35 @@
 /obj/item/circuitboard/machine/engine/propulsion
 	name = "Shuttle Engine Propulsion"
 	build_path = /obj/machinery/power/shuttle_engine/propulsion
+
+/obj/item/circuitboard/machine/quantum_server
+	name = "Quantum Server"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/quantum_server
+	req_components = list(
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/capacitor = 1,
+	)
+
+/obj/item/circuitboard/machine/netpod
+	name = "Netpod"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/netpod
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 2,
+	)
+
+/obj/item/circuitboard/computer/quantum_console
+	name = "Quantum Console"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/quantum_console
+
+/obj/item/circuitboard/machine/byteforge
+	name = "Byteforge"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/byteforge
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+	)

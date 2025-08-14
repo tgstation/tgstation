@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	icon_state = "syndicate"
 	inhand_icon_state = "syndicate_gasmask"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	w_class = WEIGHT_CLASS_SMALL
 	fishing_modifier = 0
 	pepper_tint = FALSE

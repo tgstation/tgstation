@@ -150,18 +150,22 @@
 	RegisterSignal(user, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(holder_updated_overlays))
 	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(holder_checked_name))
 	user.update_appearance(UPDATE_OVERLAYS)
-	user.name = user.get_visible_name()
 	if (!punctured)
 		user.add_fov_trait(REF(src), FOV_REVERSE_270_DEGRESS)
+	if (ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
 
 /// Called when you stop doing that
 /obj/item/newspaper/proc/on_unwielded(obj/item/source, mob/living/user)
 	REMOVE_TRAIT(user, TRAIT_FACE_COVERED, REF(src))
 	UnregisterSignal(user, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_HUMAN_GET_VISIBLE_NAME))
 	user.update_appearance(UPDATE_OVERLAYS)
-	user.name = user.get_visible_name()
 	if (!punctured)
 		user.remove_fov_trait(REF(src), FOV_REVERSE_270_DEGRESS)
+	if (ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
 
 /// Called when we're being read and overlays are updated, we should show a big newspaper over the reader
 /obj/item/newspaper/proc/holder_updated_overlays(atom/reader, list/overlays)
@@ -264,10 +268,10 @@
 			var/has_image = FALSE
 			if(feed_messages.img)
 				has_image = TRUE
-				user << browse_rsc(feed_messages.img, "tmp_photo[feed_messages.message_ID].png")
+				user << browse_rsc(feed_messages.img, "tmp_photo[feed_messages.message_id].png")
 			channel_data["channel_messages"] += list(list(
 				"message" = "-[feed_messages.return_body(censored_check(feed_messages.body_censor_time))]",
-				"photo" = (has_image ? "tmp_photo[feed_messages.message_ID].png" : null),
+				"photo" = (has_image ? "tmp_photo[feed_messages.message_id].png" : null),
 				"author" = feed_messages.return_author(censored_check(feed_messages.author_censor_time)),
 			))
 	data["channel_data"] = list(channel_data)
