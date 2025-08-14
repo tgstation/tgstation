@@ -93,7 +93,7 @@
 
 	//Heads up to other binary chat listeners that a new AI is online and listening to Binary.
 	if(announce_init_to_others && !is_centcom_level(z)) //Skip new syndicate AIs and also new AIs on centcom Z
-		for(var/mob/McMobby in GLOB.player_list)
+		for(var/mob/McMobby as anything in GLOB.player_list)
 			if(McMobby == src)
 				continue
 			if(!McMobby.binarycheck())
