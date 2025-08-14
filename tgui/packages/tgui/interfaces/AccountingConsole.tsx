@@ -11,7 +11,7 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -56,7 +56,7 @@ export const AccountingConsole = () => {
     pic_file_format = 'png',
     young_ian = false,
   } = data;
-  const [screenmode, setScreenmode] = useLocalState('screen', SCREENS.none);
+  const [screenmode, setScreenmode] = useSharedState('screen', SCREENS.none);
 
   const ianFileName = young_ian
     ? `Ian's first birthday.${pic_file_format}`
@@ -390,15 +390,15 @@ const UsersScreen = () => {
   const { act, data } = useBackend<Data>();
   const { crashing, accounts, max_pay_mod, min_pay_mod, max_advances } = data;
 
-  const [accountNameSorting, setAccountNameSorting] = useLocalState(
+  const [accountNameSorting, setAccountNameSorting] = useSharedState(
     'sorting_account_name',
     SORTING.ascending,
   );
-  const [balanceSorting, setBalanceSorting] = useLocalState(
+  const [balanceSorting, setBalanceSorting] = useSharedState(
     'sorting_balance',
     SORTING.none,
   );
-  const [jobSorting, setJobSorting] = useLocalState(
+  const [jobSorting, setJobSorting] = useSharedState(
     'sorting_job',
     SORTING.none,
   );
