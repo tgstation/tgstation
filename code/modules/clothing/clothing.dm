@@ -18,6 +18,10 @@
 	var/visor_toggle_down_sound = null
 	///Sound this item makes when its visor is flipped up
 	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -540,7 +544,13 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
+	var/message
+	if(up)
+		message = src.alt_toggle_message || "You push [src] out of the way."
+	else
+		message = src.toggle_message || "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
 
 	//play sounds when toggling the visor up or down (if there is any)
 	if(visor_toggle_up_sound && up)
