@@ -507,7 +507,7 @@
 		)
 	return TRUE
 
-/obj/machinery/light/proc/flicker(amount = rand(3, 7))
+/obj/machinery/light/proc/flicker(amount = 1)
 	set waitfor = FALSE
 	if(flickering || !on || status != LIGHT_OK)
 		return
