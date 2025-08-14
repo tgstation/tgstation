@@ -19437,7 +19437,7 @@
 "ftE" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/newscaster/directional/east,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ftJ" = (
@@ -41446,7 +41446,7 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "lJc" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "lJg" = (
@@ -84143,7 +84143,7 @@
 /area/station/hallway/primary/port)
 "xSM" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "xTp" = (

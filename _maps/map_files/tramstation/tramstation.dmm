@@ -18126,7 +18126,7 @@
 /area/station/maintenance/tram/right)
 "fmG" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "fmJ" = (
@@ -43383,7 +43383,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/auxlab/firing_range)
 "ogY" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ohd" = (

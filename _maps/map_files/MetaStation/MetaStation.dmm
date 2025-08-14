@@ -1152,7 +1152,7 @@
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
 "avC" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "avK" = (
@@ -9141,7 +9141,7 @@
 /area/station/hallway/primary/port)
 "dkh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "dkx" = (
@@ -10309,7 +10309,7 @@
 "dHP" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "dHY" = (

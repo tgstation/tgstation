@@ -20822,7 +20822,7 @@
 	pixel_x = -8
 	},
 /obj/machinery/light/small/directional/north,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "fiI" = (
@@ -27506,7 +27506,7 @@
 /area/station/command/meeting_room/council)
 "gKN" = (
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "gKW" = (
@@ -42812,7 +42812,7 @@
 /area/station/security/detectives_office)
 "kBi" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "kBz" = (
@@ -44702,7 +44702,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "lbN" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "lbR" = (
@@ -86770,7 +86770,7 @@
 "vuC" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/newscaster/directional/south,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "vuE" = (

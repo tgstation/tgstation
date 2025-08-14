@@ -3004,7 +3004,7 @@
 /area/station/cargo/storage)
 "aZw" = (
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "aZK" = (
@@ -10921,7 +10921,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "dPF" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "dPG" = (
@@ -16730,7 +16730,7 @@
 /area/station/engineering/lobby)
 "fQX" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "fQZ" = (
@@ -16776,7 +16776,7 @@
 	pixel_x = 12
 	},
 /obj/structure/cable,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "fSb" = (
@@ -26516,7 +26516,7 @@
 /area/station/ai_monitored/turret_protected/aisat/uppersouth)
 "jlU" = (
 /obj/machinery/newscaster/directional/south,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "jlW" = (
@@ -65718,7 +65718,7 @@
 /area/station/security/office)
 "wDX" = (
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "wEc" = (
@@ -69376,7 +69376,7 @@
 /area/station/hallway/primary/central)
 "xSN" = (
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/hydroponics/soil,
+/obj/machinery/hydroponics/soil/rich,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "xSW" = (

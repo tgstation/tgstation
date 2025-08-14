@@ -1174,7 +1174,7 @@
 	use_power = NO_POWER_USE
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
-	maxnutri = 20
+	maxnutri = 15
 
 /obj/machinery/hydroponics/soil/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	return NONE
@@ -1204,6 +1204,12 @@
 
 /obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)
+
+/obj/machinery/hydroponics/soil/rich
+	name = "rich soil"
+	desc = "A rich patch of dirt, usually used in gardens."
+	icon_state = "rich_soil"
+	maxnutri = 20
 
 ///The usb port circuit
 
