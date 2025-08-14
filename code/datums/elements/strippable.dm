@@ -45,6 +45,7 @@
 
 	// Snowflake for bots buckling people by dragging them onto them, unless in combat mode.
 	if(isbot(user))
+		var/mob/living/simple_animal/bot/bot_user = user
 		if (!bot_user.combat_mode)
 			return
 	// Snowflake for cyborgs buckling people by dragging them onto them, unless in combat mode.
