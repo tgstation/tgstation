@@ -79,7 +79,7 @@
 
 /datum/map_generator/cave_generator/icemoon/surface/rocky
 	initial_closed_chance = 53
-	mob_spawn_chance = = 0.5
+	mob_spawn_chance = 0.5
 
 /datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 
