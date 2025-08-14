@@ -43,7 +43,7 @@
 	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 		return
 
-	// Snowflake for bots buckling people by dragging them onto them.
+	// Snowflake for bots buckling people by dragging them onto them, unless in combat mode.
 	if(isbot(user))
 		if (!bot_user.combat_mode)
 			return
