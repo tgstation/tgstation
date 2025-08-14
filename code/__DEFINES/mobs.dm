@@ -922,6 +922,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_STUN)
 /// The vomit you've all come to know and love, but with a little extra "spice" (blood)
 #define VOMIT_CATEGORY_BLOOD (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_BLOOD)
+/// The bloody vomit, but without the stunning
+#define VOMIT_CATEGORY_BLOOD_STUNLESS (VOMIT_CATEGORY_BLOOD & ~MOB_VOMIT_STUN)
 /// Another vomit variant that causes you to get knocked down instead of just only getting a stun. Standard otherwise.
 #define VOMIT_CATEGORY_KNOCKDOWN (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_KNOCKDOWN)
 

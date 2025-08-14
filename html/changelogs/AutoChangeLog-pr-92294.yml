@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "The effects of flashbangs become less severe the further away you are from the flashbang."
+  - balance: "The bang effect of flashbangs cannot affect you in a vacuum. The flash still functions in a vacuum."
