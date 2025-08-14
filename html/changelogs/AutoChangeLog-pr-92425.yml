@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Removes the hunger protection settlers get."
+  - balance: "Removes the items that settlers spawn with."
