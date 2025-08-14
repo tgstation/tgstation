@@ -16,8 +16,8 @@
 	pickup_sound = 'sound/items/handling/glove_pick_up.ogg'
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
-	strip_delay = 20
-	equip_delay_other = 40
+	strip_delay = 2 SECONDS
+	equip_delay_other = 4 SECONDS
 	article = "a pair of"
 
 	// Path variable. If defined, will produced the type through interaction with wirecutters.

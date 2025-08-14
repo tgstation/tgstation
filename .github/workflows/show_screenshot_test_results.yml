@@ -25,7 +25,7 @@ jobs:
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.secrets_set.outputs.SECRETS_ENABLED
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Prepare module
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |

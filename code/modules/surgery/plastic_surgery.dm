@@ -59,7 +59,7 @@
 		TOOL_SCALPEL = 100,
 		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
-	time = 64
+	time = 6.4 SECONDS
 	surgery_effects_mood = TRUE
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
