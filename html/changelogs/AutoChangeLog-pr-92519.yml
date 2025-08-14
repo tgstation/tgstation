@@ -1,0 +1,5 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - balance: "Removes Sinks from botany/garden"
+  - balance: "Replaces all Garden trays with soil"
