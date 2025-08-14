@@ -367,3 +367,6 @@
   uaioy:
   - qol: All coroner's offices that lacked a cabinet will now have one, coroner's
       organ fridge is now more accessible
+2025-08-14:
+  plsleavemealon:
+  - rscadd: Adds a new bounty app to the PDA allowing you to remotely check your bounties
