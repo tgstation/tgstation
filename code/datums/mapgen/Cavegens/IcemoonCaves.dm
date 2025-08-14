@@ -36,7 +36,7 @@
 
 /datum/map_generator/cave_generator/icemoon/surface
 	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
-	flora_spawn_chance = 4
+	flora_spawn_chance = 60
 	weighted_mob_spawn_list = null
 	initial_closed_chance = 0
 	birth_limit = 5
@@ -54,7 +54,7 @@
 
 	weighted_flora_spawn_list = list(
 		/obj/structure/flora/ash/chilly = 2,
-		/obj/structure/flora/grass/both/style_random = 6,
+		/obj/structure/flora/grass/both/style_random = 20,
 		/obj/structure/flora/tree/pine/style_random = 2,
 	)
 
@@ -76,6 +76,9 @@
 
 	mob_spawn_chance = 0.2
 	weighted_mob_spawn_list = list(/mob/living/basic/deer/ice = 99, /mob/living/basic/tree = 1, /obj/effect/spawner/random/lavaland_mob/raptor = 15)
+
+/datum/map_generator/cave_generator/icemoon/surface/rocky
+	initial_closed_chance = 53
 
 /datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 
