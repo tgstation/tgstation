@@ -35,26 +35,23 @@
 	. = ..()
 	name = "\improper [machine_name] restocking unit"
 
-	if(istype(loc, /obj/machinery/vending))
-		var/obj/machinery/vending/vendor = loc
-		products = vendor.products.Copy()
-		contraband = vendor.contraband.Copy()
-		premium = vendor.premium.Copy()
-	else
-		products = list()
-		contraband = list()
-		premium = list()
-
 /obj/item/vending_refill/examine(mob/user)
 	. = ..()
+
 	var/num = get_part_rating()
 	if (!num)
-		. += "It's empty!"
+		. += span_notice("It's empty!")
+	else if(num == INFINITY)
+		. += span_notice("It's full of supplies!")
 	else
-		. += "It can restock [num] item\s."
+		. += span_notice("It can restock [num] item\s.")
 
 /obj/item/vending_refill/get_part_rating()
 	. = 0
+	//first time needs to be filled by the vending machine
+	if(!products)
+		return INFINITY
+
 	for(var/key in products)
 		. += products[key]
 	for(var/key in contraband)
