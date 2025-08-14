@@ -20,9 +20,9 @@
 	if(!user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 
-	var/mob/living/M = interacting_with
+	var/mob/living/scanned = interacting_with
 
-	if(M.stat != DEAD && !HAS_TRAIT(M, TRAIT_FAKEDEATH)) // good job, you found a loophole
+	if(scanned.stat != DEAD && !HAS_TRAIT(scanned, TRAIT_FAKEDEATH)) // good job, you found a loophole
 		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -38,10 +38,10 @@
 				\n[span_info("Body temperature: ???")]")
 		return
 
-	user.visible_message(span_notice("[user] scans [M]'s cadaver."))
+	user.visible_message(span_notice("[user] scans [scanned]'s cadaver."))
 	to_chat(user, span_deadsay("[icon2html(src, user)] ANALYZING CADAVER."))
 
-	healthscan(user, M, advanced = TRUE)
+	healthscan(user, scanned, advanced = TRUE)
 
 	add_fingerprint(user)
 
