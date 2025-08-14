@@ -1,0 +1,4 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - bugfix: "knifed up cleanbots will now read your id card rather than your mind when stealing valor"
