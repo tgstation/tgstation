@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import {
   Blink,
   Box,
   Button,
   DmIcon,
-  Flex,
   Modal,
   NumberInput,
   Section,
@@ -13,7 +11,7 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -58,7 +56,7 @@ export const AccountingConsole = () => {
     pic_file_format = 'png',
     young_ian = false,
   } = data;
-  const [screenmode, setScreenmode] = useState(SCREENS.none);
+  const [screenmode, setScreenmode] = useLocalState('screen', SCREENS.none);
 
   const ianFileName = young_ian
     ? `Ian's first birthday.${pic_file_format}`
@@ -69,8 +67,8 @@ export const AccountingConsole = () => {
       <Window.Content fontFamily="Tahoma">
         <Stack vertical fill>
           <Stack.Item>
-            <Flex height="355px">
-              <Flex.Item width="100px">
+            <Stack height="355px">
+              <Stack.Item width="100px">
                 <Stack mt={1} ml={2}>
                   <Stack.Item>
                     <Stack vertical align="center">
@@ -116,52 +114,45 @@ export const AccountingConsole = () => {
                     </Stack>
                   </Stack.Item>
                 </Stack>
-              </Flex.Item>
+              </Stack.Item>
               {screenmode === SCREENS.users && (
-                <Flex.Item grow ml={3}>
+                <Stack.Item grow ml={3}>
                   <FakeWindow
                     name="Crew Account Summary"
                     setScreenmode={setScreenmode}
                   >
                     <UsersScreen />
                   </FakeWindow>
-                </Flex.Item>
+                </Stack.Item>
               )}
               {screenmode === SCREENS.audit && (
-                <Flex.Item grow ml={3}>
+                <Stack.Item grow ml={3}>
                   <FakeWindow name="Audit Log" setScreenmode={setScreenmode}>
                     <AuditScreen />
                   </FakeWindow>
-                </Flex.Item>
+                </Stack.Item>
               )}
               {screenmode === SCREENS.ian && (
-                <Flex.Item ml={10}>
+                <Stack.Item ml={10}>
                   <FakeWindowIan
                     name={ianFileName}
                     setScreenmode={setScreenmode}
                   />
-                </Flex.Item>
+                </Stack.Item>
               )}
-            </Flex>
+            </Stack>
           </Stack.Item>
           <Stack.Item
             grow
-            color="grey"
-            backgroundColor="rgb(195, 195, 195)"
             mt={1}
             p={0.5}
             ml={-1}
             mr={-1}
             mb={-1}
-            style={{
-              outline: 'solid 1px',
-              outlineStyle: 'outset',
-              outlineWidth: '2px',
-              outlineColor: 'hsl(0, 0%, 85%)',
-            }}
+            className="Accounting__Toolbar"
           >
-            <Flex>
-              <Flex.Item mr={1}>
+            <Stack>
+              <Stack.Item mr={1}>
                 <Button
                   disabled
                   textColor="black"
@@ -171,38 +162,38 @@ export const AccountingConsole = () => {
                   pr={1}
                   iconSize={1.25}
                 />
-              </Flex.Item>
-              <Flex.Item mr={1}>
+              </Stack.Item>
+              <Stack.Item mr={1}>
                 <FakeToolbarButton
                   name="Account Management"
                   currentScreenMode={screenmode}
                   setScreenmode={setScreenmode}
                   ownerScreenMode={SCREENS.users}
                 />
-              </Flex.Item>
-              <Flex.Item mr={1}>
+              </Stack.Item>
+              <Stack.Item mr={1}>
                 <FakeToolbarButton
                   name="Audit Log"
                   currentScreenMode={screenmode}
                   setScreenmode={setScreenmode}
                   ownerScreenMode={SCREENS.audit}
                 />
-              </Flex.Item>
-              <Flex.Item mr={1}>
+              </Stack.Item>
+              <Stack.Item mr={1}>
                 <FakeToolbarButton
                   name={ianFileName}
                   currentScreenMode={screenmode}
                   setScreenmode={setScreenmode}
                   ownerScreenMode={SCREENS.ian}
                 />
-              </Flex.Item>
-              <Flex.Item grow />
-              <Flex.Item>
+              </Stack.Item>
+              <Stack.Item grow />
+              <Stack.Item>
                 <Button p={0.75} pl={1} pr={1} disabled textColor="black">
                   {station_time} ST
                 </Button>
-              </Flex.Item>
-            </Flex>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -256,21 +247,16 @@ const FakeWindow = (
 
   return (
     <Stack
-      style={{
-        flexDirection: 'column',
-        outline: 'solid 1px black',
-        outlineStyle: 'outset',
-        outlineWidth: '2px',
-        outlineColor: 'hsl(0, 0%, 85%)',
-        backgroundColor: 'rgb(195, 195, 195)',
-      }}
+      vertical
+      className="Accounting__Window"
+      backgroundColor="rgb(195, 195, 195)"
     >
       <Stack.Item>
-        <Flex height="30px" backgroundColor="hsl(240, 100%, 25.1%)">
-          <Flex.Item grow p={1}>
+        <Stack height="30px" backgroundColor="hsl(240, 100%, 25.1%)">
+          <Stack.Item grow p={1}>
             <Box color="white">{name}</Box>
-          </Flex.Item>
-          <Flex.Item>
+          </Stack.Item>
+          <Stack.Item>
             <Button
               icon="times"
               mr={0.75}
@@ -280,35 +266,30 @@ const FakeWindow = (
                 act('typesound');
               }}
             />
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
-      <Stack.Item grow mt={-1}>
-        <Box p={1}>
-          <Box
-            height="100%"
-            style={{
-              backgroundColor: 'white',
-              outline: 'solid',
-              outlineStyle: 'outset',
-              outlineWidth: '2px',
-              outlineColor: 'hsl(0, 0%, 85%)',
-            }}
-          >
-            {children}
-          </Box>
+      <Stack.Item grow mt={-1} p={1}>
+        <Box
+          height="100%"
+          className="Accounting__WindowContent"
+          backgroundColor="white"
+        >
+          {children}
         </Box>
       </Stack.Item>
     </Stack>
   );
 };
 
-const FakeDesktopButton = (props: {
+type FakeDesktopButtonProps = {
   children: React.ReactNode;
   name: string;
   setScreenmode: (mode: SCREENS) => void;
   ownerScreenMode: SCREENS;
-}) => {
+};
+
+const FakeDesktopButton = (props: FakeDesktopButtonProps) => {
   const { act } = useBackend();
   const { children, name, setScreenmode, ownerScreenMode } = props;
 
@@ -332,12 +313,14 @@ const FakeDesktopButton = (props: {
   );
 };
 
-const FakeToolbarButton = (props: {
+type FakeToolbarButtonProps = {
   name: string;
   currentScreenMode: SCREENS;
   setScreenmode: (mode: SCREENS) => void;
   ownerScreenMode: SCREENS;
-}) => {
+};
+
+const FakeToolbarButton = (props: FakeToolbarButtonProps) => {
   const { act } = useBackend();
   const { name, currentScreenMode, setScreenmode, ownerScreenMode } = props;
 
@@ -367,11 +350,14 @@ enum SORTING {
   none,
 }
 
-const SortButton = (props: {
+type SortButtonProps = {
   sorting: SORTING;
   setSorting: (sorting: SORTING) => void;
   otherSorters: ((sorting: SORTING) => void)[];
-}) => {
+};
+
+const SortButton = (props: SortButtonProps) => {
+  const { act } = useBackend();
   const { sorting, setSorting, otherSorters } = props;
 
   return (
@@ -380,6 +366,7 @@ const SortButton = (props: {
       fontSize="10px"
       ml={1}
       onClick={() => {
+        act('typesound');
         if (sorting === SORTING.none) {
           setSorting(SORTING.ascending);
         } else if (sorting === SORTING.ascending) {
@@ -403,11 +390,18 @@ const UsersScreen = () => {
   const { act, data } = useBackend<Data>();
   const { crashing, accounts, max_pay_mod, min_pay_mod, max_advances } = data;
 
-  const [accountNameSorting, setAccountNameSorting] = useState(
+  const [accountNameSorting, setAccountNameSorting] = useLocalState(
+    'sorting_account_name',
     SORTING.ascending,
   );
-  const [balanceSorting, setBalanceSorting] = useState(SORTING.none);
-  const [jobSorting, setJobSorting] = useState(SORTING.none);
+  const [balanceSorting, setBalanceSorting] = useLocalState(
+    'sorting_balance',
+    SORTING.none,
+  );
+  const [jobSorting, setJobSorting] = useLocalState(
+    'sorting_job',
+    SORTING.none,
+  );
 
   const accountsSorted = accounts.sort((a, b) => {
     if (accountNameSorting === SORTING.ascending) {
@@ -438,40 +432,40 @@ const UsersScreen = () => {
       <Table>
         <Table.Row>
           <Table.Cell bold>
-            <Flex>
-              <Flex.Item>Account</Flex.Item>
-              <Flex.Item>
+            <Stack>
+              <Stack.Item>Account</Stack.Item>
+              <Stack.Item>
                 <SortButton
                   sorting={accountNameSorting}
                   setSorting={setAccountNameSorting}
                   otherSorters={[setBalanceSorting, setJobSorting]}
                 />
-              </Flex.Item>
-            </Flex>
+              </Stack.Item>
+            </Stack>
           </Table.Cell>
           <Table.Cell bold>
-            <Flex>
-              <Flex.Item>Balance</Flex.Item>
-              <Flex.Item>
+            <Stack>
+              <Stack.Item>Balance</Stack.Item>
+              <Stack.Item>
                 <SortButton
                   sorting={balanceSorting}
                   setSorting={setBalanceSorting}
                   otherSorters={[setAccountNameSorting, setJobSorting]}
                 />
-              </Flex.Item>
-            </Flex>
+              </Stack.Item>
+            </Stack>
           </Table.Cell>
           <Table.Cell bold>
-            <Flex>
-              <Flex.Item>Job</Flex.Item>
-              <Flex.Item>
+            <Stack>
+              <Stack.Item>Job</Stack.Item>
+              <Stack.Item>
                 <SortButton
                   sorting={jobSorting}
                   setSorting={setJobSorting}
                   otherSorters={[setAccountNameSorting, setBalanceSorting]}
                 />
-              </Flex.Item>
-            </Flex>
+              </Stack.Item>
+            </Stack>
           </Table.Cell>
           <Table.Cell bold>Pay</Table.Cell>
           <Table.Cell bold>Advances</Table.Cell>
@@ -479,34 +473,16 @@ const UsersScreen = () => {
         {accountsSorted.map((account, index) => (
           <Table.Row
             key={`account_${account.id}_${index}`}
-            style={{
-              borderStyle: 'solid',
-              borderWidth: '2px',
-              borderLeft: '0px',
-              borderRight: '0px',
-              borderBottom: '0px',
-            }}
+            className="Accounting__TableHeader"
           >
             <Table.Cell>{account.name}</Table.Cell>
-            <Table.Cell
-              style={{
-                borderStyle: 'solid',
-                borderWidth: '1px',
-                borderTop: '0px',
-                borderBottom: '0px',
-              }}
-            >
+            <Table.Cell className="Accounting__TableCellSides">
               {account.balance} cr
             </Table.Cell>
-            <Table.Cell>{account.job}</Table.Cell>
-            <Table.Cell
-              style={{
-                borderStyle: 'solid',
-                borderWidth: '1px',
-                borderTop: '0px',
-                borderBottom: '0px',
-              }}
-            >
+            <Table.Cell className="Accounting__TableCellSides">
+              {account.job}
+            </Table.Cell>
+            <Table.Cell className="Accounting__TableCellSides">
               <NumberInput
                 value={account.modifier}
                 minValue={min_pay_mod}
@@ -520,12 +496,10 @@ const UsersScreen = () => {
                 }
               />
             </Table.Cell>
-            <Table.Cell>
-              <Flex>
-                <Flex.Item>
-                  <Box>{account.num_advances}</Box>
-                </Flex.Item>
-                <Flex.Item>
+            <Table.Cell className="Accounting__TableCellSides">
+              <Stack>
+                <Stack.Item>{account.num_advances}</Stack.Item>
+                <Stack.Item>
                   <Button
                     ml={2}
                     height="12px"
@@ -540,8 +514,8 @@ const UsersScreen = () => {
                   >
                     +
                   </Button>
-                </Flex.Item>
-              </Flex>
+                </Stack.Item>
+              </Stack>
             </Table.Cell>
           </Table.Row>
         ))}
@@ -571,39 +545,15 @@ const AuditScreen = (props) => {
           <Table.Cell bold>Timestamp</Table.Cell>
         </Table.Row>
         {audit_log.map((purchase, index) => (
-          <Table.Row
-            key={`audit_${index}`}
-            style={{
-              borderStyle: 'solid',
-              borderWidth: '2px',
-              borderLeft: '0px',
-              borderRight: '0px',
-              borderBottom: '0px',
-            }}
-          >
+          <Table.Row key={`audit_${index}`} className="Accounting__TableHeader">
             <Table.Cell p={0.5}>{purchase.account}</Table.Cell>
-            <Table.Cell
-              p={0.5}
-              style={{
-                borderStyle: 'solid',
-                borderWidth: '1px',
-                borderTop: '0px',
-                borderBottom: '0px',
-              }}
-            >
+            <Table.Cell p={0.5} className="Accounting__TableCellSides">
               {purchase.cost} cr
             </Table.Cell>
-            <Table.Cell p={0.5}>{purchase.vendor}</Table.Cell>
-            <Table.Cell
-              p={0.5}
-              style={{
-                borderStyle: 'solid',
-                borderWidth: '1px',
-                borderTop: '0px',
-                borderBottom: '0px',
-                borderRight: '0px',
-              }}
-            >
+            <Table.Cell p={0.5} className="Accounting__TableCellSides">
+              {purchase.vendor}
+            </Table.Cell>
+            <Table.Cell p={0.5} className="Accounting__TableCellSides">
               {purchase.stationtime || '00:00'} ST
             </Table.Cell>
           </Table.Row>
