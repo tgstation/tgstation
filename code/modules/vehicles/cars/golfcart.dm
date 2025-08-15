@@ -48,34 +48,36 @@
 	update_parent_layer_and_offsets(cart.dir)
 	return TRUE
 
-/obj/vehicle/ridden/golfcart/Move(newloc, newdir)
-	var/atom/behind = get_step(new_loc, turn(newdir, 180))
-	if ((!behind.Enter(child, child.loc)) && behind != get_step(src, 0))
-		return FALSE
-	. = ..()
-	if (!.)
-		behind = get_step(loc, turn(dir, 180))
-		if (child.loc != behind)
-			child.loc = behind
-		return .
-	child.loc = behind
-	return .
-
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
 
 	// see if space behind new loc is free
 	var/atom/behind = get_step(new_loc, turn(dir, 180))
-	//if ((!behind.Enter(child, child.loc)) && behind != get_step(src, 0))
-		//return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	if ((!behind.Enter(child, child.loc)) && behind != get_step(src, 0))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	// otherwise permit move
 	return
 
-/obj/vehicle/ridden/golfcart/proc/post_move(atom/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-
+/obj/vehicle/ridden/golfcart/Move(newloc, newdir)
+	var/atom/old_loc = get_turf(src)
+	var/old_dir = dir
+	if (get_turf(child) == newloc)
+		var/old_child_loc = child.loc
+		child.loc = null
+		. = ..(newloc, turn(newdir, 180))
+		child.loc = old_child_loc
+	else
+		. = ..()
 	var/atom/behind = get_step(src, turn(dir, 180))
-	child.loc = old_loc
+	if (old_dir != dir && get_turf(src) == old_loc)
+		if (!behind.Enter(child, child.loc))
+			setDir(old_dir)
+			behind = get_step(src, turn(dir, 180))
+	if (!.)
+		child.loc = behind
+		return .
+	child.loc = behind
+	return .
 
 /datum/component/riding/vehicle/golfcart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
@@ -109,7 +111,6 @@
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/golfcart)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(post_move))
 	child = new /obj/golfcart_rear(mapload, src)
 	child.loc = get_step(src, NORTH)
 
