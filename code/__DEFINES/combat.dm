@@ -252,7 +252,7 @@ DEFINE_BITFIELD(ammo_box_multiload, list(
 #define SUPPRESSED_QUIET 1 ///standard suppressed
 #define SUPPRESSED_VERY 2 /// no message
 
-//His Grace.
+//Her Grace.
 #define HER_GRACE_SATIATED 0 //She hungers not. If bloodthirst is set to this, Her Grace is asleep.
 #define HER_GRACE_PECKISH 20 //Slightly hungry.
 #define HER_GRACE_HUNGRY 60 //Getting closer. Increases damage up to a minimum of 20.
