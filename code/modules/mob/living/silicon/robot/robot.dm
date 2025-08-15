@@ -35,12 +35,9 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	if(lawupdate)
-		make_laws()
-		for (var/law in laws.inherent)
-			lawcheck += law
-		if(!TryConnectToAI())
-			lawupdate = FALSE
+	make_laws()
+	if(lawupdate && !TryConnectToAI())
+		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new(src)
@@ -986,18 +983,11 @@
 /mob/living/silicon/robot/proc/TryConnectToAI()
 	set_connected_ai(select_active_ai_with_fewest_borgs(z))
 	if(connected_ai)
-		lawsync()
+		sync_to_ai()
 		lawupdate = TRUE
 		return TRUE
-	picturesync()
-	return FALSE
 
-/mob/living/silicon/robot/proc/picturesync()
-	if(connected_ai?.aicamera && aicamera)
-		for(var/i in aicamera.stored)
-			connected_ai.aicamera.stored[i] = TRUE
-		for(var/i in connected_ai.aicamera.stored)
-			aicamera.stored[i] = TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick, repairs, sendmats)
 	SIGNAL_HANDLER
@@ -1015,14 +1005,13 @@
 /mob/living/silicon/robot/proc/set_connected_ai(new_ai)
 	if(connected_ai == new_ai)
 		return
-	. = connected_ai
+	var/mob/living/silicon/ai/old_ai = connected_ai
 	connected_ai = new_ai
-	if(.)
-		var/mob/living/silicon/ai/old_ai = .
+	if(old_ai)
 		old_ai.connected_robots -= src
 		// if the borg has a malf AI zeroth law and has been unsynced from the malf AI, then remove the law
 		if(isnull(connected_ai) && IS_MALF_AI(old_ai) && !isnull(laws?.zeroth))
-			clear_zeroth_law(FALSE, TRUE)
+			laws.clear_zeroth_law(force = TRUE)
 	lamp_doom = FALSE
 	if(connected_ai)
 		connected_ai.connected_robots |= src
