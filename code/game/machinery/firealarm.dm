@@ -517,7 +517,7 @@
 // Taking melee damage always triggers the alarm if panel is open
 /obj/machinery/firealarm/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!. || !panel_open || buildstage != FIRE_ALARM_BUILD_SECURED)
+	if(. <= 0 || !panel_open || buildstage != FIRE_ALARM_BUILD_SECURED)
 		return
 	alarm()
 

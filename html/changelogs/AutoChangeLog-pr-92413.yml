@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Instruments now have an ID field - Instruments with IDs will sync song and tempo with other instruments of the same ID in view when any one starts to play."
-  - bugfix: "Grand pianos no longer continue playing for people who move away from them or are stunned."
