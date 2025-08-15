@@ -51,7 +51,7 @@
 	icon_state = "medbriefcase"
 	inhand_icon_state = "medkit-emergency"
 	name = "emergency medkit"
-	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
+	desc = "A simple first aid kit for dealing with a variety of wounds and injuries caused by common workplace hazards."
 
 /obj/item/storage/medkit/emergency/PopulateContents()
 	if(empty)
@@ -59,7 +59,25 @@
 	var/static/items_inside = list(
 		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/bandage/stack = 1,
+		/obj/item/stack/medical/skinspray = 1,
+		/obj/item/stack/medical/ointment = 1,
+		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
+		/obj/item/storage/pill_bottle/iron = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/hazard
+	icon_state = "medbriefcase_switzerland"
+	inhand_icon_state = "medkit-emergency"
+	name = "hazard medkit"
+	desc = "A simple first aid kit for dealing with a variety of wounds and injuries.  caused by common workplace hazards."
+/obj/item/storage/medkit/emergency/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/healthanalyzer/simple = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/bandage/timmy = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
 		/obj/item/storage/pill_bottle/iron = 1,
