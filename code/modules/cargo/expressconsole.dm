@@ -37,7 +37,7 @@
 		WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 		landingzone = get_area(src)
 
-/obj/machinery/computer/cargo/express/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/computer/cargo/express/on_construction(mob/user)
 	. = ..()
 	packin_up()
 

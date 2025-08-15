@@ -123,7 +123,7 @@
 			return
 
 	var/damage = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
-	if (mecha_attacker.damtype == BRUTE || mecha_attacker.damtype == FIRE)
+	if (mecha_attacker.damtype == BRUTE || mecha_attacker.damtype == BURN)
 		var/def_zone = get_random_valid_zone(user.zone_selected, even_weights = TRUE)
 		var/zone_readable = parse_zone_with_bodypart(def_zone)
 		apply_damage(damage, mecha_attacker.damtype, def_zone, run_armor_check(

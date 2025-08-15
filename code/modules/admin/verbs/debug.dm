@@ -139,7 +139,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 		if(worn)
 			if(istype(worn, /obj/item/modular_computer))
 				var/obj/item/modular_computer/worn_computer = worn
-				worn_computer.InsertID(id, H)
+				worn_computer.insert_id(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
@@ -570,7 +570,7 @@ ADMIN_VERB(debug_plane_masters, R_DEBUG, "Edit/Debug Planes", "Edit and visualiz
 	holder.plane_debug.ui_interact(mob)
 
 ADMIN_VERB(debug_huds, R_DEBUG, "Debug HUDs", "Debug the data or antag HUDs.", ADMIN_CATEGORY_DEBUG, i as num)
-	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/debug_variables, GLOB.huds[i])
+	user.debug_variables(GLOB.huds[i])
 
 ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed ruins to teleport to.", ADMIN_CATEGORY_DEBUG)
 	var/list/names = list()

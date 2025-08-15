@@ -119,11 +119,11 @@
 		return
 
 	if(terror_buildup >= TERROR_BUILDUP_HEART_ATTACK)
-		examine_list += span_danger("[source.p_They()] [source.p_are()] are seizing up, about to collapse in fear!")
+		examine_list += span_danger("[source.p_They()] [source.p_are()] seizing up, about to collapse in fear!")
 	else if(terror_buildup > TERROR_BUILDUP_PANIC)
-		examine_list += span_boldwarning("[source.p_They()] [source.p_are()] are trembling and shaking, barely standing upright!")
+		examine_list += span_boldwarning("[source.p_They()] [source.p_are()] trembling and shaking, barely standing upright!")
 	else if(terror_buildup >= TERROR_BUILDUP_TERROR)
-		examine_list += span_boldwarning("[source] is visibly trembling and twitching. [source.p_They()] [source.p_are()] are clearly in distress!")
+		examine_list += span_boldwarning("[source] is visibly trembling and twitching. [source.p_They()] [source.p_are()] clearly in distress!")
 	else if(terror_buildup >= TERROR_BUILDUP_FEAR)
 		examine_list += span_warning("[source] looks very worried about something. [capitalize(source.p_are())] [source.p_they()] alright?")
 	else if (terror_buildup)

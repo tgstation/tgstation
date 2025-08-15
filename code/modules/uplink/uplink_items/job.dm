@@ -298,15 +298,15 @@
 	car.visible_message(span_notice("[key] drops out of [car] onto the floor."))
 	return car
 
-/datum/uplink_item/role_restricted/his_grace
-	name = "His Grace"
-	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
-	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
-	However, if left alone for long enough, He will fall back to slumber. \
-	To activate His Grace, simply unlatch Him."
+/datum/uplink_item/role_restricted/her_grace
+	name = "Her Grace"
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, She will thirst for blood and must be used to kill to sate that thirst. \
+	Her Grace grants gradual regeneration and complete stun immunity to Her wielder, but be wary: if She gets too hungry, She will become impossible to drop and eventually kill you if not fed. \
+	However, if left alone for long enough, She will fall back to slumber. \
+	To activate Her Grace, simply unlatch Her."
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
-	item = /obj/item/his_grace
+	item = /obj/item/her_grace
 	cost = 20
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
@@ -397,3 +397,10 @@
 	progression_minimum = 30 MINUTES
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
+/datum/uplink_item/role_restricted/concussivedisk
+	name = "Hyperconcussive Diode Disk"
+	desc = "A diode configuration disk that allows an emitter to shoot potent explosive lasers. \
+	Please note that this will halve the fire-rate of the emitter."
+	item = /obj/item/emitter_disk/blast
+	cost = 5
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)

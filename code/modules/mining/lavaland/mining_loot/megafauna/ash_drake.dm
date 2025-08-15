@@ -171,17 +171,17 @@
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
 			consumer.dna.features = list(
-				"mcolor" = "#A02720",
-				"tail_lizard" = "Dark Tiger",
-				"tail_human" = "None",
-				"snout" = "Sharp",
-				"horns" = "Curled",
-				"ears" = "None",
-				"wings" = "None",
-				"frills" = "None",
-				"spines" = "Long",
-				"lizard_markings" = "Dark Tiger Body",
-				"legs" = DIGITIGRADE_LEGS,
+				FEATURE_MUTANT_COLOR = "#A02720",
+				FEATURE_TAIL_LIZARD = "Dark Tiger",
+				FEATURE_TAIL = "None",
+				FEATURE_SNOUT = "Sharp",
+				FEATURE_HORNS = "Curled",
+				FEATURE_EARS = "None",
+				FEATURE_WINGS = "None",
+				FEATURE_FRILLS = "None",
+				FEATURE_SPINES = "Long",
+				FEATURE_LIZARD_MARKINGS = "Dark Tiger Body",
+				FEATURE_LEGS = DIGITIGRADE_LEGS,
 			)
 			consumer.set_eye_color("#FEE5A3")
 			consumer.set_species(/datum/species/lizard)

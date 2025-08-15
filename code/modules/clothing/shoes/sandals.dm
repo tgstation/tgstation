@@ -5,8 +5,8 @@
 	inhand_icon_state = "wizshoe"
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 0.5)
 	resistance_flags = FLAMMABLE
-	strip_delay = 5
-	equip_delay_other = 50
+	strip_delay = 0.5 SECONDS
+	equip_delay_other = 5 SECONDS
 	armor_type = /datum/armor/shoes_sandal
 	fastening_type = SHOES_SLIPON
 	species_exception = list(/datum/species/golem)

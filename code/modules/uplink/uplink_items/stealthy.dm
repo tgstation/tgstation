@@ -48,7 +48,7 @@
 	name = "Suppressor"
 	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
 	item = /obj/item/suppressor
-	cost = 3
+	cost = 1
 	surplus = 10
 	purchasable_from = ~UPLINK_CLOWN_OPS
 

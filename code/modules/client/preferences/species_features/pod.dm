@@ -28,4 +28,4 @@
 	return pick(assoc_to_keys_features(SSaccessories.pod_hair_list))
 
 /datum/preference/choiced/pod_hair/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["pod_hair"] = value
+	target.dna.features[FEATURE_POD_HAIR] = value

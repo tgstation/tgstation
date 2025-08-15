@@ -2,7 +2,7 @@ import { useBackend } from 'tgui/backend';
 import { getGasColor, getGasLabel } from 'tgui/constants';
 import { Box, Button, Icon, Table, Tooltip } from 'tgui-core/components';
 
-import { HypertorusData } from '.';
+import type { HypertorusData } from '.';
 
 type Recipe = {
   param: string;
@@ -88,7 +88,7 @@ const recipe_effect_structure: Recipe[] = [
     override_base: 0.85,
     scale: 1.15,
     tooltip: (v, d) =>
-      'Maximum: ' + (d.baseMaxTemperature * v).toExponential() + ' K',
+      `Maximum: ${(d.baseMaxTemperature * v).toExponential()} K`,
   },
 ];
 
@@ -210,7 +210,7 @@ export const HypertorusRecipes = (props: RecipeProps) => {
                     return (
                       <Table.Cell key={param}>
                         <Tooltip
-                          content={(tooltip || ((v) => 'x' + v))(value, rest)}
+                          content={(tooltip || ((v) => `x${v}`))(value, rest)}
                         >
                           <Icon
                             className="hypertorus-recipes__icon"

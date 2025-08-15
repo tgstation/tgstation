@@ -229,7 +229,7 @@
 
 			if(mode == SCANNER_VERBOSE)
 				// Follow same body zone list every time so it's consistent across all humans
-				for(var/zone in GLOB.all_body_zones)
+				for(var/zone in carbontarget.get_all_limbs())
 					var/obj/item/bodypart/limb = carbontarget.get_bodypart(zone)
 					if(isnull(limb))
 						dmgreport += "<tr>"

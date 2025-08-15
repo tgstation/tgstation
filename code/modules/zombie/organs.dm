@@ -6,11 +6,11 @@
 	icon_state = "blacktumor"
 	var/causes_damage = TRUE
 	var/datum/species/old_species = /datum/species/human
-	var/living_transformation_time = 30
+	var/living_transformation_time = 3 SECONDS
 	var/converts_living = FALSE
 
-	var/revive_time_min = 450
-	var/revive_time_max = 700
+	var/revive_time_min = 45 SECONDS
+	var/revive_time_max = 70 SECONDS
 	var/timer_id
 
 /obj/item/organ/zombie_infection/Initialize(mapload)
@@ -36,7 +36,9 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	if(iszombie(new_owner) && old_species && !special)
-		new_owner.set_species(old_species)
+		// There isn't a clean way to change species during organ or bodypart removals. In lieau of a beter solution, this will do
+		spawn(0)
+			new_owner.set_species(old_species)
 	if(timer_id)
 		deltimer(timer_id)
 	UnregisterSignal(new_owner, COMSIG_LIVING_DEATH)

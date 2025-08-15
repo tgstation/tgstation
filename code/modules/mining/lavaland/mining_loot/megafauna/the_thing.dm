@@ -4,7 +4,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
-/datum/action/innate/brain_undeployment/Trigger(trigger_flags)
+/datum/action/innate/brain_undeployment/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/brain/cybernetic/ai/shell_to_disconnect = owner.get_organ_by_type(/obj/item/organ/brain/cybernetic/ai)
@@ -61,11 +61,9 @@
 		QDEL_NULL(radio)
 	connected_ai = null
 
-/obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
+/obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, antag_flag)
 	SIGNAL_HANDLER
-	if(ispath(antagonist, /datum/antagonist/malf_ai))
-		return
-	return CANCEL_ROLL
+	return antag_flag == ROLE_MALF ? NONE : CANCEL_ROLL
 
 /obj/item/organ/brain/cybernetic/ai/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
@@ -153,7 +151,7 @@
 		implant.radio.command = TRUE
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
-			implant.radio.secure_radio_connections[channel] = add_radio(implant.radio, GLOB.radiochannels[channel])
+			implant.radio.secure_radio_connections[channel] = add_radio(implant.radio, GLOB.default_radio_channels[channel])
 
 /obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER

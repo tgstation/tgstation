@@ -1,7 +1,7 @@
 /datum/antagonist/paradox_clone
 	name = "\improper Paradox Clone"
 	roundend_category = "Paradox Clone"
-	job_rank = ROLE_PARADOX_CLONE
+	pref_flag = ROLE_PARADOX_CLONE
 	antagpanel_category = ANTAG_GROUP_PARADOX
 	antag_hud_name = "paradox_clone"
 	show_to_ghosts = TRUE
@@ -27,17 +27,6 @@
 	qdel(clone)
 
 	return clone_icon
-
-/datum/antagonist/paradox_clone/on_gain()
-	owner.special_role = ROLE_PARADOX_CLONE
-	return ..()
-
-/datum/antagonist/paradox_clone/on_removal()
-	//don't null it if we got a different one added on top, somehow.
-	if(owner.special_role == ROLE_PARADOX_CLONE)
-		owner.special_role = null
-	original_ref = null
-	return ..()
 
 /datum/antagonist/paradox_clone/Destroy()
 	original_ref = null
@@ -94,7 +83,7 @@
 	if(!target?.current)
 		explanation_text = "Free Objective"
 		CRASH("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
-	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
+	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
 
 ///Static bluespace stream used in its ghost poll icon.
 /obj/effect/bluespace_stream

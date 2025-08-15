@@ -11,17 +11,18 @@
 	reagent.expose_mob(L, VAPOR, BLOB_REAGENTATK_VOL, TRUE, mob_protection, overmind)
 	send_message(L)
 
-/datum/blobstrain/reagent/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
-	if(!isliving(attacking))
+/datum/blobstrain/reagent/blobbernaut_attack(mob/living/blobbernaut, atom/victim)
+	..()
+	if(!isliving(victim))
 		return
 
-	var/mob/living/living_attacking = attacking
-	var/mob_protection = living_attacking.getarmor(null, BIO) * 0.01
-	reagent.expose_mob(living_attacking, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL+blobbernaut_reagentatk_bonus, FALSE, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+	var/mob/living/living_victim = victim
+	var/mob_protection = living_victim.getarmor(null, BIO) * 0.01
+	reagent.expose_mob(living_victim, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL+blobbernaut_reagentatk_bonus, FALSE, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
-/datum/blobstrain/reagent/on_sporedeath(mob/living/basic/spore)
-	var/burst_range = (spore.type == /mob/living/basic/blob_minion/spore) ? 1 : 0
-	do_chem_smoke(range = burst_range, holder = spore, location = get_turf(spore), reagent_type = reagent.type)
+/datum/blobstrain/reagent/on_sporedeath(mob/living/dead_minion, death_cloud_size)
+	do_chem_smoke(range = death_cloud_size, holder = dead_minion, location = get_turf(dead_minion), reagent_type = reagent.type, reagent_volume = BLOBMOB_CLOUD_REAGENT_VOLUME, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/medium)
+	playsound(dead_minion, 'sound/mobs/non-humanoids/blobmob/blob_spore_burst.ogg', vol = 100, vary = TRUE)
 
 // These can only be applied by blobs. They are what (reagent) blobs are made out of.
 /datum/reagent/blob
@@ -30,7 +31,6 @@
 	color = COLOR_WHITE
 	taste_description = "bad code and slime"
 	chemical_flags = NONE
-	penetrates_skin = NONE
 
 
 /datum/reagent/blob/New()

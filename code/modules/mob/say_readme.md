@@ -53,7 +53,7 @@ global procs
 		languages live either in datum/languages_holder or in the mind.
 
 	verb_say/verb_ask/verb_exclaim/verb_yell/verb_sing
-		These determine what the verb is for their respective action. Used in say_quote().
+		These determine what the verb is for their respective action. Used in generate_messagepart().
 
 	say(message, bubble_type, var/list/spans, sanitize, datum/language/language, ignore_spam, forced)
 		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
@@ -82,15 +82,15 @@ global procs
 		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
 		Called on the hearer.
 
-	say_quote(input, spans, list/message_mods)
-		Adds a verb and quotes to a message. Also attaches span classes to a message.
+	generate_messagepart(input, spans, list/message_mods)
+		Either adds a lone custom say verb, or a verb and quotes to a message. Also attaches span classes to a message.
 		Verbs are determined by verb_say/verb_ask/verb_yell/verb_sing variables. Called on the speaker.
 
 /mob
 	say_dead(message)
 		Sends a message to all dead people. Does not use Hear().
 
-	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods)
+	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, freq_name, freq_color, spans, list/message_mods)
 		Composes the message mobs see on their screen when they hear something.
 
 	compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)

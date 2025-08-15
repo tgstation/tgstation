@@ -1,7 +1,6 @@
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	clothing_flags = CLOTHING_MOD_OVERSLOTTING
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	inhand_icon_state = "greyscale_gloves"
@@ -17,8 +16,8 @@
 	pickup_sound = 'sound/items/handling/glove_pick_up.ogg'
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
-	strip_delay = 20
-	equip_delay_other = 40
+	strip_delay = 2 SECONDS
+	equip_delay_other = 4 SECONDS
 	article = "a pair of"
 
 	// Path variable. If defined, will produced the type through interaction with wirecutters.

@@ -1,5 +1,6 @@
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
+	desc = "A magazine specifically designed for foam force \"firearms\". Probably not great for actually killing your fellow spaceman."
 	ammo_type = /obj/item/ammo_casing/foam_dart
 	caliber = CALIBER_FOAM
 

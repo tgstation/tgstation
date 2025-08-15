@@ -1,7 +1,7 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 
 import { useBackend } from '../../backend';
-import { NodeCache, TechWebData } from './types';
+import type { NodeCache, TechWebData } from './types';
 
 type Cost = {
   type: string;
@@ -34,7 +34,7 @@ function selectRemappedStaticData(data: TechWebData) {
   // decompress the node IDs
   const node_cache = {} as RemappedNode;
 
-  for (let id of Object.keys(data.static_data.node_cache)) {
+  for (const id of Object.keys(data.static_data.node_cache)) {
     const node = data.static_data.node_cache[id];
 
     const costs = Object.keys(node.costs || {}).map((x) => ({
@@ -56,7 +56,7 @@ function selectRemappedStaticData(data: TechWebData) {
 
   // Do the same as the above for the design cache
   const design_cache = {} as RemappedDesignCache;
-  for (let id of Object.keys(data.static_data.design_cache)) {
+  for (const id of Object.keys(data.static_data.design_cache)) {
     const [name, classes] = data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
       name: name,

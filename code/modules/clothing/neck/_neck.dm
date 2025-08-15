@@ -4,8 +4,8 @@
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
 	interaction_flags_click = NEED_DEXTERITY
-	strip_delay = 40
-	equip_delay_other = 40
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
 
 /obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -131,7 +131,7 @@
 		icon_state = "tie_greyscale_untied"
 		strip_delay = 1 SECONDS
 		equip_delay_other = 1 SECONDS
-		equip_delay_self = 0
+		equip_delay_self = 0 SECONDS
 
 /obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -222,11 +222,6 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-
-/obj/item/clothing/neck/maid
-	name = "maid neck cover"
-	desc = "A neckpiece for a maid costume, it smells faintly of disappointment."
-	icon_state = "maid_neck"
 
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"

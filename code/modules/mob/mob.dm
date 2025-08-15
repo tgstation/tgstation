@@ -1297,7 +1297,7 @@
 	var/pen_info = writing_instrument.get_writing_implement_details()
 	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
 		if(!silent_if_not_writing_tool)
-			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+			to_chat(src, span_warning("You can't write with \the [writing_instrument]!"))
 		return FALSE
 
 	if(!is_literate())
@@ -1314,7 +1314,7 @@
 	var/obj/item/pen/pen = writing_instrument
 
 	if(istype(pen) && pen.requires_gravity)
-		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
+		to_chat(src, span_warning("You try to write, but \the [writing_instrument] doesn't work in zero gravity!"))
 		return FALSE
 
 	return TRUE
@@ -1502,7 +1502,12 @@
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
-///Apply a proper movespeed modifier based on items we have equipped
+/// Update mob stats based on equipment we are wearing when an item is equipped/dropped, to be overriden by children
+/// source - Item that caused the update by being equipped/dropped
+/mob/proc/update_equipment(obj/item/source)
+	update_equipment_speed_mods()
+
+/// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = 0
 	var/immutable_speedies = 0

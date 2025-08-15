@@ -82,6 +82,7 @@
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ANOSMIA, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
 /mob/living/silicon/Destroy()

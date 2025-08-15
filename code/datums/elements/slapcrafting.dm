@@ -41,9 +41,10 @@
 	if(isnull(slapcraft_recipes))
 		CRASH("NULL SLAPCRAFT RECIPES?")
 
+	//mobs that can't craft (ex: borgs) can't slapcraft.
 	var/datum/component/personal_crafting/craft_sheet = user.GetComponent(/datum/component/personal_crafting)
 	if(!craft_sheet)
-		CRASH("No craft sheet on user ??")
+		return
 
 	var/list/valid_recipes
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)

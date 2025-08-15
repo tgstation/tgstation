@@ -278,6 +278,8 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
+/// Checks if the given mob is a wizard apprentice
+#define IS_WIZARD_APPRENTICE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard/apprentice))
 
 /// Checks if the given mob is a revolutionary. Will return TRUE for rev heads as well.
 #define IS_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev))
@@ -332,6 +334,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define DESTROY_AI_PROB(denominator) (100 / denominator)
 /// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
 #define MAROON_PROB 30
+/// Probability that any job related objective is picked
+#define JOB_PROB 40
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
@@ -397,8 +401,13 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_CREW "Deviant Crew"
 
 
-// This flag disables certain checks that presume antagonist datums mean 'baddie'.
-#define FLAG_FAKE_ANTAG (1 << 0)
+/// Used to denote an antag datum that either isn't necessarily "evil" (like Valentines)
+/// or isn't necessarily a "real" antag (like Ashwalkers)
+#define ANTAG_FAKE (1 << 0)
+/// Antag is not added to the global list of antags
+#define ANTAG_SKIP_GLOBAL_LIST (1 << 1)
+/// Antag's panel action button and the UI therein is viewable by observers
+#define ANTAG_OBSERVER_VISIBLE_PANEL (1 << 2)
 
 #define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
@@ -446,3 +455,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 /// Camera net used by battle royale objective
 #define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"
+
+#define MALF_MAX_PP 400
+
+//Uplink spawn loc
+#define UPLINK_PDA "PDA"
+#define UPLINK_RADIO "Radio"
+#define UPLINK_PEN "Pen" //like a real spy!
+#define UPLINK_IMPLANT "Implant"

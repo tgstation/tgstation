@@ -42,7 +42,7 @@
 /datum/computer_file/program/nt_pay/ui_data(mob/user)
 	var/list/data = list()
 
-	current_user = computer.computer_id_slot?.registered_account || null
+	current_user = computer.stored_id?.registered_account || null
 	if(!current_user)
 		data["name"] = null
 	else
@@ -127,14 +127,14 @@
 	var/obj/item/modular_computer/modpc = associated_program.computer
 	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, PROC_REF(on_payment_done))
 	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_INSERTED_ID, PROC_REF(register_id))
-	if(modpc.computer_id_slot)
-		register_id(inserted_id = modpc.computer_id_slot)
+	if(modpc.stored_id)
+		register_id(inserted_id = modpc.stored_id)
 
 /obj/item/circuit_component/mod_program/nt_pay/unregister_shell()
 	var/obj/item/modular_computer/modpc = associated_program.computer
 	UnregisterSignal(modpc, list(COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, COMSIG_MODULAR_COMPUTER_INSERTED_ID))
-	if(modpc.computer_id_slot)
-		UnregisterSignal(modpc.computer_id_slot, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
+	if(modpc.stored_id)
+		UnregisterSignal(modpc.stored_id, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
 	return ..()
 
 /obj/item/circuit_component/mod_program/nt_pay/proc/register_id(datum/source, obj/item/card/inserted_id, mob/user)

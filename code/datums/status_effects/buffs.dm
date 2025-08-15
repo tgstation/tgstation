@@ -1,47 +1,47 @@
 //Largely beneficial effects go here, even if they have drawbacks.
 
-/datum/status_effect/his_grace
-	id = "his_grace"
+/datum/status_effect/her_grace
+	id = "her_grace"
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.4 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/his_grace
+	alert_type = /atom/movable/screen/alert/status_effect/her_grace
 	var/bloodlust = 0
 
-/atom/movable/screen/alert/status_effect/his_grace
-	name = "His Grace"
-	desc = "His Grace hungers, and you must feed Him."
-	icon_state = "his_grace"
-	alerttooltipstyle = "hisgrace"
+/atom/movable/screen/alert/status_effect/her_grace
+	name = "Her Grace"
+	desc = "Her Grace hungers, and you must feed Her."
+	icon_state = "her_grace"
+	alerttooltipstyle = "hergrace"
 
-/atom/movable/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
+/atom/movable/screen/alert/status_effect/her_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
-	var/datum/status_effect/his_grace/HG = attached_effect
+	var/datum/status_effect/her_grace/HG = attached_effect
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
-	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
-	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
+	<br>Becomes undroppable at <b>[HER_GRACE_FAMISHED]</b>\
+	<br>Will consume you at <b>[HER_GRACE_CONSUME_OWNER]</b>"
 	return ..()
 
-/datum/status_effect/his_grace/on_apply()
+/datum/status_effect/her_grace/on_apply()
 	owner.add_stun_absorption(
 		source = id,
 		priority = 3,
-		self_message = span_boldwarning("His Grace protects you from the stun!"),
+		self_message = span_boldwarning("Her Grace protects you from the stun!"),
 	)
 	return ..()
 
-/datum/status_effect/his_grace/on_remove()
+/datum/status_effect/her_grace/on_remove()
 	owner.remove_stun_absorption(id)
 
-/datum/status_effect/his_grace/tick(seconds_between_ticks)
+/datum/status_effect/her_grace/tick(seconds_between_ticks)
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	for(var/obj/item/her_grace/HG in owner.held_items)
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
 		if(HG.awakened)
 			graces++
 	if(!graces)
-		owner.apply_status_effect(/datum/status_effect/his_wrath)
+		owner.apply_status_effect(/datum/status_effect/her_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.02
@@ -392,12 +392,12 @@
 
 /datum/status_effect/lightningorb/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/yellow_orb)
 	to_chat(owner, span_notice("You feel fast!"))
 
 /datum/status_effect/lightningorb/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/yellow_orb)
 	to_chat(owner, span_notice("You slow down."))
 
 /atom/movable/screen/alert/status_effect/lightningorb
@@ -454,18 +454,22 @@
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
 	alert_type = null
+	///What speed datum do we apply?
+	var/move_datum = /datum/movespeed_modifier/status_speed_boost
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	new_owner.do_alert_animation()
+	playsound(new_owner, 'sound/machines/chime.ogg', 50, FALSE, -5)
 	. = ..()
 
 /datum/status_effect/speed_boost/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	owner.add_movespeed_modifier(move_datum, update = TRUE)
 	return ..()
 
 /datum/status_effect/speed_boost/on_remove()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	owner.remove_movespeed_modifier(move_datum, update = TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
 	multiplicative_slowdown = -1

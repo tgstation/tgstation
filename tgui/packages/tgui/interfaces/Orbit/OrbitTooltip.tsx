@@ -1,6 +1,6 @@
 import { LabeledList, NoticeBox } from 'tgui-core/components';
 
-import { Antagonist, Observable } from './types';
+import type { Antagonist, Observable } from './types';
 
 type Props = {
   item: Observable | Antagonist;

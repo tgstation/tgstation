@@ -64,14 +64,11 @@
 /datum/proximity_monitor/advanced/gravity/warns_on_entrance/proc/clear_recent_warning(mob_ref_key)
 	LAZYREMOVE(recently_warned, mob_ref_key)
 
-/obj/gravity_fluff_field
+/obj/effect/gravity_fluff_field
 	icon = 'icons/obj/smooth_structures/grav_field.dmi'
 	icon_state = "grav_field-0"
 	base_icon_state = "grav_field"
-	obj_flags = NONE
 	anchored = TRUE
-	move_resist = INFINITY
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pass_flags_self = LETPASSCLICKS
 	smoothing_flags = SMOOTH_BITMASK
@@ -82,7 +79,7 @@
 	var/mutable_appearance/emissive
 	var/particles/particle_type
 
-/obj/gravity_fluff_field/Initialize(mapload, strength)
+/obj/effect/gravity_fluff_field/Initialize(mapload, strength)
 	. = ..()
 	if(isnull(strength))
 		return INITIALIZE_HINT_QDEL
@@ -102,12 +99,12 @@
 		color = particle_type::color
 	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smoothed))
 
-/obj/gravity_fluff_field/Destroy(force)
+/obj/effect/gravity_fluff_field/Destroy(force)
 	remove_shared_particles(particle_type)
 	emissive = null
 	return ..()
 
-/obj/gravity_fluff_field/proc/smoothed(datum/source)
+/obj/effect/gravity_fluff_field/proc/smoothed(datum/source)
 	SIGNAL_HANDLER
 	cut_overlay(emissive)
 	// because it uses a different name
@@ -121,8 +118,8 @@
 	. = ..()
 	if(!isopenturf(target))
 		return
-	new /obj/gravity_fluff_field(target, gravity_value)
+	new /obj/effect/gravity_fluff_field(target, gravity_value)
 
 /datum/proximity_monitor/advanced/gravity/subtle_effect/cleanup_field_turf(turf/target)
 	. = ..()
-	qdel(locate(/obj/gravity_fluff_field) in target)
+	qdel(locate(/obj/effect/gravity_fluff_field) in target)

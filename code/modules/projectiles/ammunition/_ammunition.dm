@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	override_notes = TRUE
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
@@ -147,7 +147,7 @@
 					continue
 			if (boolets > 0)
 				box.update_appearance()
-				to_chat(user, span_notice("You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s."))
+				to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
 			else
 				to_chat(user, span_warning("You fail to collect anything!"))
 	else

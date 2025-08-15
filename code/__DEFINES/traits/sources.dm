@@ -33,6 +33,8 @@
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
+///Comes from a holy source.
+#define HOLY_TRAIT "holy"
 
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
@@ -126,7 +128,7 @@
 #define CHRONO_GUN_TRAIT "chrono-gun"
 #define REVERSE_BEAR_TRAP_TRAIT "reverse-bear-trap"
 #define CURSED_MASK_TRAIT "cursed-mask"
-#define HIS_GRACE_TRAIT "his-grace"
+#define HER_GRACE_TRAIT "her-grace"
 #define HAND_REPLACEMENT_TRAIT "magic-hand"
 #define HOT_POTATO_TRAIT "hot-potato"
 #define SABRE_SUICIDE_TRAIT "sabre-suicide"

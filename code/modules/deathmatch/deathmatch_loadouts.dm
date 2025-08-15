@@ -298,7 +298,7 @@
 	desc = "What"
 
 	l_hand = /obj/item/toy/katana
-	uniform = /obj/item/clothing/under/costume/schoolgirl
+	uniform = /obj/item/clothing/under/costume/seifuku
 	suit = /obj/item/clothing/suit/costume/joker
 	shoes = /obj/item/clothing/shoes/clown_shoes/meown_shoes
 	head = /obj/item/clothing/head/costume/kitty
@@ -585,7 +585,7 @@
 	neck = /obj/item/bedsheet/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/captain
-	belt = /obj/item/storage/belt/sabre
+	belt = /obj/item/storage/belt/sheath/sabre
 	l_hand = /obj/item/gun/energy/laser/captain
 	r_pocket = /obj/item/assembly/flash
 	l_pocket = /obj/item/melee/baton/telescopic
@@ -941,8 +941,8 @@
 	uniform = /obj/item/clothing/under/color/black
 	id_trim = null
 	belt = /obj/item/melee/cultblade/dagger
-	l_pocket = /obj/item/flashlight/flare/culttorch
-	r_pocket = /obj/item/flashlight/flare/culttorch
+	l_pocket = /obj/item/flashlight/flare/torch/red/on
+	r_pocket = /obj/item/flashlight/flare/torch/red/on
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/cult/alt
 	l_hand = /obj/item/shield/mirror // the dreaded return!!
@@ -962,15 +962,15 @@
 	desc = "Prove Nar'sie's superiority with your well-balanced blood magicks."
 	//species_override = /datum/species/plasmaman
 
-	head = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
+	head = /obj/item/clothing/head/hooded/cult_hoodie
 	neck = /obj/item/clothing/neck/heretic_focus/crimson_medallion
-	suit = /obj/item/clothing/suit/hooded/cultrobes/berserker
+	suit = /obj/item/clothing/suit/hooded/cultrobes
 	suit_store = /obj/item/melee/sickly_blade/cursed
 	uniform = /obj/item/clothing/under/color/red
 	id_trim = null
 	belt = /obj/item/melee/cultblade/dagger
-	l_pocket = /obj/item/flashlight/flare/culttorch
-	r_pocket = /obj/item/flashlight/flare/culttorch
+	l_pocket = /obj/item/flashlight/flare/torch/red/on
+	r_pocket = /obj/item/flashlight/flare/torch/red/on
 	gloves = /obj/item/clothing/gloves/color/red
 	shoes = /obj/item/clothing/shoes/cult
 	l_hand = null

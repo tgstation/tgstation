@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "You can nullify mutations that are either scrambled (mutagen etc.) or from a mutator (not activator) again."
-  - bugfix: "Mutations with applied chromosomes won't display \"no chromosome applied\" when saved or have zero instability among other things."

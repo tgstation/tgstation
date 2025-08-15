@@ -60,37 +60,6 @@
 			return TRUE
 	return FALSE
 
-/*
-	Removes antag type's references from a mind.
-	objectives, uplinks, powers etc are all handled.
-*/
-
-/datum/mind/proc/remove_changeling()
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
-	if(C)
-		remove_antag_datum(/datum/antagonist/changeling)
-		special_role = null
-
-/datum/mind/proc/remove_traitor()
-	remove_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/remove_nukeop()
-	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	if(nuke)
-		remove_antag_datum(nuke.type)
-		special_role = null
-
-/datum/mind/proc/remove_wizard()
-	remove_antag_datum(/datum/antagonist/wizard)
-	special_role = null
-
-/datum/mind/proc/remove_rev()
-	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		remove_antag_datum(rev.type)
-		special_role = null
-
-
 /datum/mind/proc/remove_antag_equip()
 	if(!current)
 		return
@@ -226,7 +195,7 @@
 	current.log_message("has been enslaved to [key_name(creator)].", LOG_GAME)
 	log_admin("[key_name(current)] has been enslaved to [key_name(creator)].")
 
-	if(creator.mind?.special_role)
+	if(creator.is_antag())
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, span_userdanger("Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed."))
 
@@ -273,32 +242,11 @@
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
 
-/datum/mind/proc/make_traitor()
-	if(!(has_antag_datum(/datum/antagonist/traitor)))
-		add_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/make_changeling()
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
-	if(!C)
-		C = add_antag_datum(/datum/antagonist/changeling)
-		special_role = ROLE_CHANGELING
-	return C
-
-
 /datum/mind/proc/make_wizard()
 	if(has_antag_datum(/datum/antagonist/wizard))
 		return
 	set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
-	special_role = ROLE_WIZARD
 	add_antag_datum(/datum/antagonist/wizard)
-
-
-/datum/mind/proc/make_rev()
-	var/datum/antagonist/rev/head/head = new()
-	head.give_flash = TRUE
-	head.give_hud = TRUE
-	add_antag_datum(head)
-	special_role = ROLE_REV_HEAD
 
 /// Sets our can_hijack to the fastest speed our antag datums allow.
 /datum/mind/proc/get_hijack_speed()

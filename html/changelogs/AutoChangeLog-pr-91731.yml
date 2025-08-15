@@ -1,4 +1,0 @@
-author: "KazooBard"
-delete-after: True
-changes:
-  - bugfix: "Rust Spirit -> Rust Walker in ghost poll menu"

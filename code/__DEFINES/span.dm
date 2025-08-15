@@ -4,6 +4,7 @@
 // Sorted alphabetically
 #define span_abductor(str) ("<span class='abductor'>" + str + "</span>")
 #define span_admin(str) ("<span class='admin'>" + str + "</span>")
+#define span_adminprefix(str) ("<span class='admin prefix'>" + str + "</span>")
 #define span_adminhelp(str) ("<span class='adminhelp'>" + str + "</span>")
 #define span_adminnotice(str) ("<span class='adminnotice'>" + str + "</span>")
 #define span_adminobserverooc(str) ("<span class='adminobserverooc'>" + str + "</span>")
@@ -71,7 +72,7 @@
 #define span_hierophant(str) ("<span class='hierophant'>" + str + "</span>")
 #define span_hierophant_warning(str) ("<span class='hierophant_warning'>" + str + "</span>")
 #define span_highlight(str) ("<span class='highlight'>" + str + "</span>")
-#define span_his_grace(str) ("<span class='his_grace'>" + str + "</span>")
+#define span_her_grace(str) ("<span class='her_grace'>" + str + "</span>")
 #define span_holoparasite(str) ("<span class='holoparasite'>" + str + "</span>")
 #define span_boldholoparasite(str) ("<span class='holoparasite bold'>" + str + "</span>")
 #define span_hypnophrase(str) ("<span class='hypnophrase'>" + str + "</span>")

@@ -53,7 +53,7 @@
 			new /obj/item/flashlight/emp(src) // 4 tc
 
 		if(KIT_BLOODY_SPAI)
-			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
@@ -124,7 +124,7 @@
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
-			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 
 		if(KIT_LORD_SINGULOTH) //currently disabled, i might return with another anti-engine kit
 			new /obj/item/sbeacondrop(src) // 10 tc
@@ -201,7 +201,7 @@
 			new /obj/item/suppressor(src) // 3 tc
 			new /obj/item/ammo_box/magazine/m9mm(src) // 1 tc
 			new /obj/item/ammo_box/magazine/m9mm(src)
-			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 			new /obj/item/clothing/under/chameleon(src) // 1 tc
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			new /obj/item/rag(src)
@@ -218,7 +218,7 @@
 				new /obj/item/throwing_star(src) // 1 tc
 			new /obj/item/storage/belt/chameleon(src) // worth some fraction of a tc
 			new /obj/item/chameleon(src) // 7 tc
-			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/book/granter/action/spell/smoke(src) // ninja smoke bomb. 1 tc
 			new /obj/item/clothing/shoes/bhop(src) // mining item, lets you jump at people, at least 2 tc
@@ -227,7 +227,7 @@
 			new /obj/item/dualsaber/red(src) // 16 tc
 			new /obj/item/dnainjector/telemut/darkbundle(src) // ~ 4 tc for tk
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) //2 tc ,because slipping while being a dark lord sucks
 			new /obj/item/book/granter/action/spell/summonitem(src) // ~2 tc
 			new /obj/item/book/granter/action/spell/lightningbolt(src) // 4 tc
@@ -289,7 +289,7 @@
 				new /obj/item/clothing/neck/collar_bomb(src) // These let you remotely kill people with a signaler, though you have to get them first.
 			new /obj/item/storage/box/syndie_kit/signaler(src)
 			new /obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie(src) // basically a snowflake yet better elite modsuit, so like, 8 + 5 tc.
-			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
+			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 			new /obj/item/clothing/mask/chameleon(src)
 			new /obj/item/melee/baton/telescopic/contractor_baton(src) // 7 tc
 			new /obj/item/jammer(src) // 5 tc
@@ -300,7 +300,7 @@
 			new /obj/item/clothing/suit/armor/vest/marine/pmc(src) //The armor kit is comparable to the infiltrator, 6 TC
 			new /obj/item/clothing/head/helmet/marine/pmc(src)
 			new /obj/item/clothing/mask/gas/sechailer(src)
-			new /obj/item/clothing/glasses/night/colorless(src) // 3~ TC
+			new /obj/item/clothing/glasses/night(src) // 3~ TC
 			new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
 			new /obj/item/clothing/shoes/jackboots(src)
 			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC
@@ -459,6 +459,8 @@
 /obj/item/storage/box/syndie_kit/smoke/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/smokebomb(src)
+	new /obj/item/implanter/smoke(src)
+	new /obj/item/clothing/mask/gas(src)
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
@@ -626,6 +628,14 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/manhacks(src)
 
+/obj/item/storage/box/syndie_kit/feral_cat_grenades/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/spawnergrenade/cat(src)
+
+/obj/item/storage/box/syndie_kit/frag_grenades/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/frag(src)
+
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
 	new /obj/item/reagent_containers/cup/glass/mug/coco(src)
@@ -736,7 +746,7 @@
 	// The necessary equipment to help secure that disky.
 	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
 	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
-	new /obj/item/card/id/advanced/chameleon(src) // 2 TC / Free for nukies
+	new /obj/item/card/id/advanced/chameleon/elite(src) // 2 TC / Free for nukies
 	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
 	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
 	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
@@ -788,13 +798,7 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
-	var/faker
-	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
-			faker = TRUE
-
-	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(!human_target.is_antag()) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
@@ -870,7 +874,7 @@
 	new /obj/item/clothing/suit/space/syndicate/contract(src)
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/card/id/advanced/chameleon(src)
+	new /obj/item/card/id/advanced/chameleon/elite(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	new /obj/item/storage/toolbox/syndicate(src)
 	new /obj/item/jammer(src)

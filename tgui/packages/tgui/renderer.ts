@@ -1,6 +1,6 @@
 import { perf } from 'common/perf';
-import { ReactNode } from 'react';
-import { createRoot, Root } from 'react-dom/client';
+import type { ReactNode } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
 
 import { createLogger } from './logging';
 

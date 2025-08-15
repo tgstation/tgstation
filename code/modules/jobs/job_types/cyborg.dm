@@ -35,3 +35,6 @@
 
 /datum/job/cyborg/get_radio_information()
 	return "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>"
+
+/datum/job/cyborg/on_respawn(mob/new_character)
+	new_character.Robotize(TRUE)

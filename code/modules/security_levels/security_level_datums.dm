@@ -35,6 +35,8 @@
 	var/lowering_to_configuration_key
 	/// Our configuration key for elevating to text, if set, will override the default elevating to announcement.
 	var/elevating_to_configuration_key
+	/// if TRUE, stops mail shipments from being sent during this security level
+	var/disables_mail = FALSE
 
 /datum/security_level/New()
 	. = ..()
@@ -92,7 +94,7 @@
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
 	shuttle_call_time_mod = ALERT_COEFF_RED
-
+	disables_mail = TRUE
 /**
  * DELTA
  *
@@ -108,3 +110,4 @@
 	fire_alarm_light_color = LIGHT_COLOR_INTENSE_RED
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
 	shuttle_call_time_mod = ALERT_COEFF_DELTA
+	disables_mail = TRUE
