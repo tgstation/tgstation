@@ -186,10 +186,10 @@
 				failed_attempts -= 1
 				qdel(bounty)
 
-	//Hand out restricted bounties if we have any, which are locked behind other rewards.
-	var/amount_to_give = bounties_to_give[SPY_BOUNTIES_RESTRICTED]
-	var/list/restricted_items = possible_uplink_items[SPY_BOUNTIES_RESTRICTED]
+	//Hand out restricted bounties if we have any (but not always), which are locked behind other rewards.
+	var/amount_to_give = rand(0, bounties_to_give[SPY_BOUNTIES_RESTRICTED])
 	if(amount_to_give > 0 && length(restricted_items))
+		var/list/restricted_items = rand(0, possible_uplink_items[SPY_BOUNTIES_RESTRICTED])
 		var/attempts_left = num_attempts_override || amount_to_give * 3 //less wiggle room as these aren't fundamental
 		while(attempts_left > 0)
 			attempts_left--
