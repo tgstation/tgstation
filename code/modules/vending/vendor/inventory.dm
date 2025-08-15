@@ -93,6 +93,13 @@
  */
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
 	. = 0
+
+	//to initialize product category & cargo ordered canisters for the 1st time
+	if(!canister.products)
+		canister.products = products.Copy()
+		canister.contraband = contraband.Copy()
+		canister.premium = premium.Copy()
+
 	var/list/datum/data/vending_product/record_list
 	var/list/canister_list
 
