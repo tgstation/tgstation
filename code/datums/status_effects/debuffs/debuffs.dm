@@ -307,19 +307,19 @@
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
 
-/datum/status_effect/his_wrath //does minor damage over time unless holding Her Grace
-	id = "his_wrath"
+/datum/status_effect/her_wrath //does minor damage over time unless holding Her Grace
+	id = "her_wrath"
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.4 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/his_wrath
+	alert_type = /atom/movable/screen/alert/status_effect/her_wrath
 
-/atom/movable/screen/alert/status_effect/his_wrath
+/atom/movable/screen/alert/status_effect/her_wrath
 	name = "Her Wrath"
-	desc = "You fled from Her Grace instead of feeding Him, and now you suffer."
+	desc = "You fled from Her Grace instead of feeding Her, and now you suffer."
 	icon_state = "her_grace"
 	alerttooltipstyle = "hergrace"
 
-/datum/status_effect/his_wrath/tick(seconds_between_ticks)
+/datum/status_effect/her_wrath/tick(seconds_between_ticks)
 	for(var/obj/item/her_grace/HG in owner.held_items)
 		qdel(src)
 		return
