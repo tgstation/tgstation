@@ -18,6 +18,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/iron = 5)
 	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
+	cell_line = CELL_LINE_ORGAN_LIVER
+	cells_minimum = 1
+	cells_maximum = 2
+
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
 	/// The maximum volume of toxins the liver will ignore
@@ -327,6 +331,60 @@
 		organ_owner.adjustFireLoss(2 * REM * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
+
+/obj/item/organ/liver/evolved
+	name = "evolved liver"
+	desc = "A more robust liver, better at everything."
+
+	icon_state = "evolved-liver"
+
+	alcohol_tolerance = ALCOHOL_RATE * 0.5
+	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
+	toxTolerance = 6 //can shrug off up to 6u of toxins
+	liver_resistance = 1.5 * LIVER_DEFAULT_TOX_RESISTANCE
+
+/obj/item/organ/liver/bloody
+	name = "leaky liver"
+	desc = "An extra spongy liver, only slightly better than a normal liver, but with an increased ability to replenish blood."
+
+	icon_state = "leaky-liver"
+
+	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
+	alcohol_tolerance = ALCOHOL_RATE * 0.8
+	toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE + 1
+	liver_resistance = 1.1 * LIVER_DEFAULT_TOX_RESISTANCE
+
+/obj/item/organ/liver/bloody/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+		owner.blood_volume += 4 * seconds_per_tick
+
+/// Convert all non-alcoholic drinks into alcohol
+/obj/item/organ/liver/distillery
+	name = "alcoholics delight"
+	desc = "The perfect liver, distilling non-alcoholic reagents into alcohol whenever possible."
+
+	icon_state = "liver-distillery"
+
+	organ_traits = list(TRAIT_ALCOHOL_TOLERANCE)
+
+	alcohol_tolerance = ALCOHOL_RATE * 0.1
+
+	/// Volume that is converted per second
+	var/ethanol_conversion = 0.2
+	/// What to convert stuff into
+	var/convert_into = /datum/reagent/consumable/ethanol
+
+/obj/item/organ/liver/distillery/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+		// Already alcohol
+		if(istype(reagent, convert_into))
+			continue
+
+		owner.reagents.convert_reagent(reagent.type, convert_into, ethanol_conversion)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

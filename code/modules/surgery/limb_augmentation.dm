@@ -9,7 +9,7 @@
 	implements = list(
 		/obj/item/bodypart = 100,
 		/obj/item/borg/apparatus/organ_storage = 100)
-	time = 32
+	time = 3.2 SECONDS
 	var/obj/item/bodypart/target_limb
 
 

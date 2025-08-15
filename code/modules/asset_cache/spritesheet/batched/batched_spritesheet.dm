@@ -232,7 +232,7 @@
 		CRASH("Error during spritesheet generation for [name]: [data["error"]]")
 
 /datum/asset/spritesheet_batched/queued_generation()
-	realize_spritesheets(yield = TRUE)
+	INVOKE_ASYNC(src, PROC_REF(realize_spritesheets), TRUE) // The proc is called inside a subsystem and waits with an UNTIL
 
 /datum/asset/spritesheet_batched/ensure_ready()
 	if(!fully_generated)

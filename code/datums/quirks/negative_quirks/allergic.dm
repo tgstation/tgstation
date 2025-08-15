@@ -21,7 +21,7 @@
 		/datum/reagent/medicine/synaphydramine,
 		/datum/reagent/medicine/diphenhydramine,
 		/datum/reagent/medicine/sansufentanyl,
-		/datum/reagent/medicine/salglu_solution
+		/datum/reagent/medicine/salglu_solution,
 		)
 	var/allergy_string
 

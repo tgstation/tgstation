@@ -14,8 +14,8 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/chaplainsuit_armor
-	strip_delay = 80
-	equip_delay_other = 60
+	strip_delay = 8 SECONDS
+	equip_delay_other = 6 SECONDS
 
 /datum/armor/chaplainsuit_armor
 	melee = 50
@@ -130,19 +130,9 @@
 	desc = "It has the unyielding gaze of a god eternally forgotten."
 	icon_state = "clockwork_helmet"
 	inhand_icon_state = null
-	armor_type = /datum/armor/chaplain_clock
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	strip_delay = 8 SECONDS
 	dog_fashion = null
-
-/datum/armor/chaplain_clock
-	melee = 50
-	bullet = 10
-	laser = 10
-	energy = 10
-	fire = 80
-	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock
 	name = "forgotten armour"
@@ -162,19 +152,11 @@
 	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 	icon_state = "knight_templar"
 	inhand_icon_state = null
-	armor_type = /datum/armor/helmet_chaplain
+	armor_type = /datum/armor/chaplainsuit_armor
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
-
-/datum/armor/helmet_chaplain
-	melee = 50
-	bullet = 10
-	laser = 10
-	energy = 10
-	fire = 80
-	acid = 80
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar
 	name = "crusader armour"

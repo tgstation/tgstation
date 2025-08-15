@@ -6,7 +6,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	body_parts_covered = FEET|LEGS
 	armor_type = /datum/armor/shoes_combat
-	strip_delay = 40
+	strip_delay = 4 SECONDS
 	resistance_flags = NONE
 	lace_time = 12 SECONDS
 
@@ -47,8 +47,8 @@
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	strip_delay = 30
-	equip_delay_other = 50
+	strip_delay = 3 SECONDS
+	equip_delay_other = 5 SECONDS
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
 	fastening_type = SHOES_SLIPON
@@ -136,8 +136,8 @@
 	inhand_icon_state = "jackboots"
 	armor_type = /datum/armor/shoes_workboots
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	strip_delay = 20
-	equip_delay_other = 40
+	strip_delay = 2 SECONDS
+	equip_delay_other = 4 SECONDS
 	lace_time = 8 SECONDS
 
 /datum/armor/shoes_workboots
@@ -196,7 +196,7 @@
 
 /obj/item/clothing/shoes/pirate/armored
 	armor_type = /datum/armor/shoes_pirate
-	strip_delay = 40
+	strip_delay = 4 SECONDS
 	resistance_flags = NONE
 	lace_time = 12 SECONDS
 	body_parts_covered = FEET|LEGS

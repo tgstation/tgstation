@@ -68,6 +68,12 @@
 	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
 	/// Assoc list of alternate zones where this can organ be slotted to organ slot for that zone
 	var/list/valid_zones = null
+	/// The cell line we can spawn on us
+	var/cell_line = null
+	/// The minimum cells we can spawn
+	var/cells_minimum = 0
+	/// The maximum cells we can spawn
+	var/cells_maximum = 0
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -90,6 +96,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(bodypart_overlay)
 		setup_bodypart_overlay()
+
+	if(cell_line && (organ_flags & ORGAN_ORGANIC))
+		AddElement(/datum/element/swabable, cell_line, cell_line_amount = rand(cells_minimum, cells_maximum))
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()

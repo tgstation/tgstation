@@ -43,7 +43,7 @@
 		/obj/item/shard = 25,
 		/obj/item = 20,
 	)
-	time = 100
+	time = 10 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'

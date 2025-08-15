@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(lighting)
 #endif
 
 /datum/controller/subsystem/lighting/stat_entry(msg)
-	msg = "L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]"
+	msg = "\n  Sources:[length(sources_queue)]|Corners:[length(corners_queue)]|Objects:[length(objects_queue)]"
 	return ..()
 
 

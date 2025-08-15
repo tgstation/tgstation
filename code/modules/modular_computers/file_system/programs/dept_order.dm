@@ -64,7 +64,7 @@ GLOBAL_VAR(department_cd_override)
 /datum/computer_file/program/department_order/ui_data(mob/user)
 	var/list/data = list()
 	data["no_link"] = !linked_department
-	data["id_inside"] = !!computer.computer_id_slot
+	data["id_inside"] = !!computer.stored_id
 	data["time_left"] = department_cooldowns[linked_department] ? DisplayTimeText(max(department_cooldowns[linked_department] - world.time, 0), 1) : null
 	data["can_override"] = !!department_order
 	return data
@@ -142,7 +142,7 @@ GLOBAL_VAR(department_cd_override)
 		if(!isnull(linked_department))
 			return TRUE
 
-		var/new_dept_type = find_department_to_link(computer.computer_id_slot)
+		var/new_dept_type = find_department_to_link(computer.stored_id)
 		if(isnull(new_dept_type))
 			computer.physical.balloon_alert(orderer, "no department found!")
 			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
@@ -155,7 +155,7 @@ GLOBAL_VAR(department_cd_override)
 	if(isnull(linked_department))
 		return TRUE
 
-	var/obj/item/card/id/id_card = computer.computer_id_slot || orderer.get_idcard(hand_first = TRUE)
+	var/obj/item/card/id/id_card = computer.stored_id || orderer.get_idcard(hand_first = TRUE)
 	var/list/id_card_access = id_card?.GetAccess() || list()
 
 	if(length(use_access & id_card_access) <= 0)

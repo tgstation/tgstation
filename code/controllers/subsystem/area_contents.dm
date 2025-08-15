@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(area_contents)
 				total_to_clear += length(to_clear.turfs_to_uncontain_by_zlevel[area_zlevel])
 				if (length(to_clear.turfs_by_zlevel) >= area_zlevel) //this should always be true, but stat_entry is no place for runtimes. fire() can handle that
 					total_clearing_from += length(to_clear.turfs_by_zlevel[area_zlevel])
-	msg = "A:[length(currentrun)] MR:[length(marked_for_clearing)] TC:[total_to_clear] CF:[total_clearing_from]"
+	msg = "\n  A:[length(currentrun)] MR:[length(marked_for_clearing)] TC:[total_to_clear] CF:[total_clearing_from]"
 	return ..()
 
 

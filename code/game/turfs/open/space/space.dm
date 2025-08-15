@@ -54,10 +54,6 @@ GLOBAL_LIST_EMPTY(starlight)
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
-	var/destination_z
-	var/destination_x
-	var/destination_y
-
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
 	// We do NOT want atmos adjacent turfs
 	init_air = FALSE
@@ -86,12 +82,6 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/Destroy()
 	GLOB.starlight -= src
 	return ..()
-
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/turf/open/space/attack_ghost(mob/dead/observer/user)
-	if(destination_z)
-		var/turf/T = locate(destination_x, destination_y, destination_z)
-		user.forceMove(T)
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -132,11 +122,6 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/turf/open/space/proc/CanBuildHere()
-	if(destination_z)
-		return FALSE
-	return TRUE
-
 /turf/open/space/handle_slip()
 	return
 
@@ -149,40 +134,6 @@ GLOBAL_LIST_EMPTY(starlight)
 	else if(ismetaltile(attacking_item))
 		build_with_floor_tiles(attacking_item, user)
 
-
-/turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(!arrived || src != arrived.loc)
-		return
-
-	if(destination_z && destination_x && destination_y && !arrived.pulledby && !arrived.currently_z_moving)
-		var/tx = destination_x
-		var/ty = destination_y
-		var/turf/DT = locate(tx, ty, destination_z)
-		var/itercount = 0
-		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
-			if (itercount++ >= 100)
-				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [arrived] within 100 iterations.")
-				break
-			if (tx < 128)
-				tx++
-			else
-				tx--
-			if (ty < 128)
-				ty++
-			else
-				ty--
-			DT = locate(tx, ty, destination_z)
-
-		arrived.zMove(null, DT, ZMOVE_ALLOW_BUCKLED)
-
-		var/atom/movable/current_pull = arrived.pulling
-		while (current_pull)
-			var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
-			current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
-			current_pull = current_pull.pulling
-
-
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
@@ -194,11 +145,6 @@ GLOBAL_LIST_EMPTY(starlight)
 		return TRUE
 	return FALSE
 
-/turf/open/space/is_transition_turf()
-	if(destination_x || destination_y || destination_z)
-		return TRUE
-
-
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return FALSE
 
@@ -208,9 +154,6 @@ GLOBAL_LIST_EMPTY(starlight)
 
 
 /turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	if(the_rcd.mode == RCD_TURF)
 		if(the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)

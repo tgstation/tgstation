@@ -5,13 +5,26 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	possible_fuse_time = list("3", "4", "5")
-	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
+	//how many tiles away the mob will be affected by the flashbang.
+	var/flashbang_range = 7
+	//The devision for the sweetspot culations. if set to 1, the sweetspot is ostensibly the flashbang range.
+	var/sweetspot_divider = 3
+	//The light emitted by this flashbang to indicate the sweetspot.
+	var/flashbang_light = LIGHT_COLOR_INTENSE_RED
 
 /obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)
 	flashbang_range = modify_fantasy_variable("flashbang_range", flashbang_range, quality)
 
 /obj/item/grenade/flashbang/remove_grenade_fantasy_bonuses(quality)
 	flashbang_range = reset_fantasy_variable("flashbang_range", flashbang_range)
+
+/obj/item/grenade/flashbang/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
+	. = ..()
+	if(!.)
+		return
+
+	var/sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
+	set_light(sweetspot_range, sweetspot_range, flashbang_light)
 
 /obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
 	. = ..()
@@ -34,22 +47,38 @@
 		return
 	living_mob.show_message(span_warning("BANG"), MSG_AUDIBLE)
 	var/distance = max(0, get_dist(get_turf(src), turf))
+	var/sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
 
 //Flash
-	if(living_mob.flash_act(affect_silicon = 1))
-		living_mob.Paralyze(max(20/max(1, distance), 5))
-		living_mob.Knockdown(max(200/max(1, distance), 60))
+	var/attempt_flash = living_mob.flash_act(affect_silicon = 1)
+	if(attempt_flash == FLASH_COMPLETED)
+		if(distance <= sweetspot_range || issilicon(living_mob))
+			living_mob.Paralyze(max(20/max(1, distance), 5))
+			living_mob.Knockdown(max(200/max(1, distance), 60))
+		else
+			living_mob.adjust_dizzy_up_to(max(200/max(1, distance), 5), 20 SECONDS)
+		living_mob.dropItemToGround(living_mob.get_active_held_item())
+		living_mob.dropItemToGround(living_mob.get_inactive_held_item())
 
 //Bang
 	if(!distance || loc == living_mob || loc == living_mob.loc)
-		living_mob.Paralyze(20)
-		living_mob.Knockdown(200)
-		living_mob.soundbang_act(1, 200, 10, 15)
-	else
-		if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
-			living_mob.Paralyze(5)
-			living_mob.Knockdown(30)
+		living_mob.soundbang_act(2, 20 SECONDS, 10, 15)
+		return
+
+	if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
+		living_mob.soundbang_act(2, 3 SECONDS, 5)
+		return
+
+	if(distance <= sweetspot_range)
 		living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
+		return
+
+	if(!living_mob.soundbang_act(1, 0, rand(0, 2)))
+		return
+
+	living_mob.adjust_staggered_up_to(max(200/max(1, distance), 5), 10 SECONDS)
+	living_mob.dropItemToGround(living_mob.get_active_held_item())
+	living_mob.dropItemToGround(living_mob.get_inactive_held_item())
 
 /obj/item/grenade/stingbang
 	name = "stingbang"

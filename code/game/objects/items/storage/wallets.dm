@@ -51,7 +51,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearing_human = loc
 		if(wearing_human.wear_id == src)
-			wearing_human.sec_hud_set_ID()
+			wearing_human.update_ID_card()
 
 	update_label()
 	update_appearance(UPDATE_ICON)
@@ -98,14 +98,14 @@
 /obj/item/storage/wallet/GetID()
 	return front_id
 
-/obj/item/storage/wallet/RemoveID()
+/obj/item/storage/wallet/remove_id()
 	if(!front_id)
 		return
 	. = front_id
 	front_id.forceMove(get_turf(src))
 
-/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+/obj/item/storage/wallet/insert_id(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.remove_id()
 	if(!inserting_id)
 		return FALSE
 	attackby(inserting_id)

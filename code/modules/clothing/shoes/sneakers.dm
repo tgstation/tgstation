@@ -196,8 +196,8 @@
 	greyscale_config = /datum/greyscale_config/sneakers_marisa
 	greyscale_config_worn = /datum/greyscale_config/sneakers_marisa/worn
 	greyscale_colors = "#2d2d33#ffffff"
-	strip_delay = 5
-	equip_delay_other = 50
+	strip_delay = 0.5 SECONDS
+	equip_delay_other = 5 SECONDS
 	fastening_type = SHOES_SLIPON
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 

@@ -39,7 +39,7 @@
 		TOOL_SCALPEL = 85,
 		TOOL_SAW = 60,
 		TOOL_WIRECUTTER = 40)
-	time = 30
+	time = 3 SECONDS
 	repeatable = TRUE
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
@@ -134,7 +134,7 @@
 	implements = list(
 		/obj/item/stack/medical/gauze = 100,
 		/obj/item/stack/sticky_tape/surgical = 100)
-	time = 40
+	time = 4 SECONDS
 	/// How much sanitization is added
 	var/sanitization_added = 3
 	/// How much flesh healing is added

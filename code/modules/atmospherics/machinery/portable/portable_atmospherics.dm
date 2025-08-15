@@ -315,7 +315,7 @@
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/item, mob/user)
 	. = ..()
-	if(!.)
+	if(. <= 0)
 		return
 	investigate_log("was smacked with \a [item] by [key_name(user)].", INVESTIGATE_ATMOS)
 	add_hiddenprint(user)

@@ -181,6 +181,17 @@
 	access = list(ACCESS_SYNDICATE, ACCESS_AWAY_COMMAND)
 	big_pointer = TRUE
 
+//Roroco Factory IDs
+/datum/id_trim/away/roroco
+	assignment = "Glove Packer"
+	department_color = COLOR_ENGINEERING_ORANGE
+	access = list(ACCESS_ROROCO)
+
+/datum/id_trim/away/roroco/boss
+	assignment = "Fabric Technician"
+	access = list(ACCESS_ROROCO, ACCESS_ROROCO_SECURE)
+	big_pointer = TRUE
+
 //Film Studio Trims
 /datum/id_trim/away/actor
 	assignment = "Actor"

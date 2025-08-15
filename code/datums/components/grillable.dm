@@ -164,6 +164,7 @@
 			grilled_result.reagents.add_reagent_list(added_reagents)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
+	SEND_SIGNAL(grilled_result, COMSIG_ITEM_GRILLED_RESULT, parent)
 	if(who_placed_us)
 		ADD_TRAIT(grilled_result, TRAIT_FOOD_CHEF_MADE, who_placed_us)
 

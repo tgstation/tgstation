@@ -38,7 +38,7 @@
 		TOOL_SCREWDRIVER = 35,
 		/obj/item/pen = 15,
 	)
-	time = 40
+	time = 4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'

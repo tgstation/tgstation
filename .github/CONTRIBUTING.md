@@ -63,7 +63,7 @@ These are the few directives we have for project maintainers.
   - Emergency fixes.
     - Try to get secondary maintainer approval before merging if you are able to.
   - PRs with empty commits intended to generate a changelog.
-- Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
+- Do not merge PRs that contain content from the [banned content list](/CONTRIBUTING.md#banned-content).
 - Do not close PRs purely for breaking a template if the same information is contained without it.
 
 These are not steadfast rules as maintainers are expected to use their best judgement when operating.
@@ -90,7 +90,7 @@ Things you **CAN'T** do:
 - [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
 - Close issues purely for breaking a template if the same information is contained without it.
 
-For more information reference the [Issue Manager Guide](./guides/ISSUE_MANAGER.md).
+For more information reference the [Issue Manager Guide](/guides/ISSUE_MANAGER.md)
 
 </details>
 
@@ -102,28 +102,28 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 
 #### Writing readable code
 
-[Style guide](./guides/STYLE.md)
+[Style guide](/.github/guides/STYLE.md)
 
 #### Writing sane code
 
-[Code standards](./guides/STANDARDS.md)
+[Code standards](/.github/guides/STANDARDS.md)
 
 #### Writing understandable code
 
-[Autodocumenting code](./guides/AUTODOC.md)
+[Autodocumenting code](/.github/guides/AUTODOC.md)
 
 #### Misc
 
-- [AI Datums](../code/datums/ai/learn_ai.md)
-- [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md)
-- [Hard Deletes](./guides/HARDDELETES.md)
-- [MC Tab Guide](./guides/MC_tab.md)
-- [Policy Configuration System](./guides/POLICYCONFIG.md)
-- [Quickly setting up a development database with ezdb](./guides/EZDB.md)
-- [Required Tests (Continuous Integration)](./guides/CI.md)
-- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
-- [UI Development](../tgui/README.md)
-- [Visual Effects and Systems](./guides/VISUALS.md)
+- [AI Datums](/code/datums/ai/learn_ai.md)
+- [Embedding TGUI Components in Chat](/tgui/docs/chat-embedded-components.md)
+- [Hard Deletes](/.github/guides/HARDDELETES.md)
+- [MC Tab Guide](/.github/guides/MC_tab.md)
+- [Policy Configuration System](/.github/guides/POLICYCONFIG.md)
+- [Quickly setting up a development database with ezdb](/.github/guides/EZDB.md)
+- [Required Tests (Continuous Integration)](/.github/guides/CI.md)
+- [Splitting up pull requests, aka atomization](/.github/guides/ATOMIZATION.md)
+- [UI Development](/.github/tgui/README.md)
+- [Visual Effects and Systems](/.github/guides/VISUALS.md)
 
 ## Pull Request Process
 

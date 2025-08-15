@@ -842,3 +842,8 @@
 /datum/sound_effect/cig_pack_throw_drop
 	key = SFX_CIG_PACK_THROW_DROP
 	file_paths = list('sound/items/cigs/cig_pack_throw_drop1.ogg')
+
+/datum/sound_effect/roro_warble
+	key = SFX_RORO_WARBLE
+	file_paths = list(
+		'sound/mobs/non-humanoids/roro/roro_warble.ogg')

@@ -34,7 +34,12 @@
 		return pda.saved_identification
 	return if_no_id
 
-//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
+/// Used to update our name based on whether our face is obscured/disfigured
+/mob/living/carbon/human/proc/update_visible_name()
+	SIGNAL_HANDLER
+	name = get_visible_name()
+
+/// Combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
 	var/list/identity = list(null, null, null)
 	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
@@ -99,7 +104,7 @@
 	else
 		var/obj/item/card/id/id = astype(wear_id, /obj/item/card/id) \
 			|| astype(wear_id, /obj/item/storage/wallet)?.front_id \
-			|| astype(wear_id, /obj/item/modular_computer)?.computer_id_slot
+			|| astype(wear_id, /obj/item/modular_computer)?.stored_id
 		. = id?.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable

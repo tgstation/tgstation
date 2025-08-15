@@ -236,3 +236,5 @@ sound/effects/siren.ogg -- siren.wav by IFartInUrGeneralDirection -- https://fre
 sound/mobs/non-humanoids/stoats/stoat_sound.ogg -- https://suche.tierstimmenarchiv.de/
 
 sounds/mobs/humanoids/shadow/shadow_wail.ogg -- https://freesound.org/people/Robinhood76/sounds/585631/ -- License: Attribution 4.0
+
+sound/mobs/non-humanoids/roro/roro_warble.ogg -- Made by cutting, adjusting pitch, and adding echo of https://freesound.org/people/danlucaz/sounds/517734/ -- License: Creating Commons 0

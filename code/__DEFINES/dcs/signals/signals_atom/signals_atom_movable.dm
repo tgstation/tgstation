@@ -105,7 +105,7 @@
 	/// Return to prevent the movable from talking into the radio.
 	#define COMPONENT_CANNOT_USE_RADIO (1<<0)
 
-/// Sent from /atom/movable/proc/say_quote() after say verb is chosen and before spans are applied.
+/// Sent from /atom/movable/proc/generate_messagepart() generating a quoted message, after say verb is chosen and before spans are applied.
 #define COMSIG_MOVABLE_SAY_QUOTE "movable_say_quote"
 	// Used to access COMSIG_MOVABLE_SAY_QUOTE argslist
 	/// The index of args that corresponds to the actual message

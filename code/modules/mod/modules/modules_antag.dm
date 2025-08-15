@@ -465,7 +465,7 @@
 	device = /obj/item/gun/medbeam/mod
 	incompatible_modules = list(/obj/item/mod/module/medbeam)
 	removable = TRUE
-	cooldown_time = 0.5
+	cooldown_time = 0.05 SECONDS
 	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/gun/medbeam/mod

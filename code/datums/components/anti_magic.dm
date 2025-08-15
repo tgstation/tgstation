@@ -7,10 +7,12 @@
 	var/charges
 	/// The inventory slot the object must be located at in order to activate
 	var/inventory_flags
-	/// The callback invoked when we have been drained a antimagic charge
-	var/datum/callback/drain_antimagic
+	/// The callback invoked when we block magic
+	var/datum/callback/block_magic
 	/// The callback invoked when twe have been depleted of all charges
 	var/datum/callback/expiration
+	/// Callback to invoke to see if we can block magic
+	var/datum/callback/check_blocking
 	/// Whether we should, on equipping, alert the caster that this item can block any of their spells
 	/// This changes between true and false on equip and drop, don't set it outright to something
 	var/alert_caster_on_equip = TRUE
@@ -25,8 +27,9 @@
  * * antimagic_flags (optional) A bitflag with the types of magic resistance on the object
  * * charges (optional) The amount of times the object can protect the user from magic
  * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
- * * drain_antimagic (optional) The proc that is triggered when an object has been drained a antimagic charge
+ * * block_magic (optional) The proc that is triggered when an object blocks magic
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
+ * * check_blocking (optional) The proc that is triggered to check if we can block magic
  * *
  * antimagic bitflags: (see code/__DEFINES/magic.dm)
  * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
@@ -37,8 +40,9 @@
 		antimagic_flags = MAGIC_RESISTANCE,
 		charges = INFINITY,
 		inventory_flags = ALL,
-		datum/callback/drain_antimagic,
+		datum/callback/block_magic,
 		datum/callback/expiration,
+		datum/callback/check_blocking,
 	)
 
 
@@ -67,11 +71,12 @@
 	src.antimagic_flags = antimagic_flags
 	src.charges = charges
 	src.inventory_flags = inventory_flags
-	src.drain_antimagic = drain_antimagic
+	src.block_magic = block_magic
 	src.expiration = expiration
+	src.check_blocking = check_blocking
 
 /datum/component/anti_magic/Destroy(force)
-	drain_antimagic = null
+	block_magic = null
 	expiration = null
 	return ..()
 
@@ -124,6 +129,9 @@
 /datum/component/anti_magic/proc/block_receiving_magic(mob/living/carbon/source, casted_magic_flags, charge_cost, list/antimagic_sources)
 	SIGNAL_HANDLER
 
+	if(check_blocking && !check_blocking.Invoke())
+		return NONE
+
 	// We do not block this type of magic, good day
 	if(!(casted_magic_flags & antimagic_flags))
 		return NONE
@@ -135,8 +143,8 @@
 	// Block success! Add this parent to the list of antimagic sources
 	antimagic_sources += parent
 
+	block_magic?.Invoke(source, parent)
 	if((charges != INFINITY) && charge_cost > 0)
-		drain_antimagic?.Invoke(source, parent)
 		charges -= charge_cost
 		if(charges <= 0)
 			expiration?.Invoke(source, parent)

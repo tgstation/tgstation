@@ -92,9 +92,9 @@
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
 /obj/item/mod/module/night/on_activation()
-	mod.wearer.add_traits(TRAIT_TRUE_NIGHT_VISION, REF(src))
+	ADD_TRAIT(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
 	mod.wearer.update_sight()
 
 /obj/item/mod/module/night/on_deactivation(display_message = TRUE, deleting = FALSE)
-	mod.wearer.remove_traits(TRAIT_TRUE_NIGHT_VISION, REF(src))
+	REMOVE_TRAIT(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
 	mod.wearer.update_sight()

@@ -34,7 +34,7 @@ jobs:
           dotnet-quality: ga
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build Tgstation.DiscordDiscussions
         run: dotnet publish -c Release -o discord_discussions_bins tools/Tgstation.DiscordDiscussions/Tgstation.DiscordDiscussions.csproj

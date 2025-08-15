@@ -5,6 +5,7 @@
 	"map_file": "IceBoxStation.dmm",
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
+	"wilderness_levels": 2,
 	"planetary": 1,
 	"give_players_hooks": 1,
 	"shuttles": {
@@ -12,6 +13,14 @@
 		"ferry": "ferry_fancy",
 		"whiteship": "whiteship_box",
 		"emergency": "emergency_box"
+	},
+	"wilderness": {
+		"directory": "map_files/IceWilderness",
+		"rocky_planes.dmm": 10,
+		"snow_planes.dmm": 1,
+		"ice_planes.dmm": 1,
+		"mountain.dmm": 1,
+		"forest.dmm": 3
 	},
 	"traits": [
 		{
@@ -32,7 +41,7 @@
 		},
 		{
 			"Mining": true,
-			"Linkage": null,
+			"Linkage": "Grid",
 			"Gravity": true,
 			"Ice Ruins": true,
 			"Weather_Snowstorm": true,

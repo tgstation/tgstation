@@ -15,7 +15,7 @@
 	var/datum/beam/tether_beam
 	/// Tether module if we were created by one
 	var/obj/item/mod/module/tether/parent_module
-	/// Source, if any, for TRAIT_TETHER_ATTACHED we add
+	/// Ref of source, if any, for TRAIT_TETHER_ATTACHED we add
 	var/tether_trait_source
 	/// If TRUE, only add TRAIT_TETHER_ATTACHED to our parent
 	var/no_target_trait
@@ -23,6 +23,9 @@
 /datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, \
 	parent_module = null, tether_trait_source = null, no_target_trait = FALSE)
 	if(!ismovable(parent) || !istype(tether_target) || !tether_target.loc)
+		return COMPONENT_INCOMPATIBLE
+	if(isatom(tether_trait_source))
+		stack_trace("Tried to add a [src.type] with a tether_trait_source that is a hard ref! Use REF() first before passing!")
 		return COMPONENT_INCOMPATIBLE
 
 	src.tether_target = tether_target

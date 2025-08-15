@@ -29,14 +29,15 @@
 	var/multiple_sprite_use_base = FALSE
 	///String, used for checking if ammo of different types but still fits can fit inside it; generally used for magazines
 	var/caliber
-	///Allows multiple bullets to be loaded in from one click of another box/magazine
-	var/multiload = TRUE
+	/// Determines whether ammo boxes can multiload in or out.
+	var/ammo_box_multiload = AMMO_BOX_MULTILOAD_BOTH
+
 	///Whether the magazine should start with nothing in it
 	var/start_empty = FALSE
 
 	/// If this and ammo_band_icon aren't null, run update_ammo_band(). Is the color of the band, such as blue on the detective's Iceblox.
 	var/ammo_band_color
-	/// If this and ammo_band_color aren't null, run update_ammo_band() Is the greyscale icon used for the ammo band.
+	/// If this and ammo_band_color aren't null, run update_ammo_band(). Is the greyscale icon used for the ammo band.
 	var/ammo_band_icon
 	/// Is the greyscale icon used for the ammo band when it's empty of bullets, only if it's not null.
 	var/ammo_band_icon_empty
@@ -161,8 +162,7 @@
 /obj/item/ammo_box/proc/can_load(mob/user)
 	return TRUE
 
-/obj/item/ammo_box/attackby(obj/item/tool, mob/user, params, silent = FALSE, replace_spent = 0)
-
+/obj/item/ammo_box/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(IS_WRITING_UTENSIL(tool))
 		if(!ammo_band_icon)
 			balloon_alert(user, "no indicator support!")
@@ -173,6 +173,10 @@
 		update_appearance()
 		return
 
+	if(try_load(user, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/ammo_box/proc/try_load(mob/living/user, obj/item/tool, silent = FALSE, replace_spent = FALSE)
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
@@ -184,7 +188,7 @@
 			if(did_load)
 				other_box.stored_ammo -= casing
 				num_loaded++
-			if(!did_load || !multiload)
+			if(!did_load || !(ammo_box_multiload & AMMO_BOX_MULTILOAD_IN) || !(other_box.ammo_box_multiload & AMMO_BOX_MULTILOAD_OUT))
 				break
 
 		if(num_loaded)
@@ -253,7 +257,8 @@
 
 /obj/item/ammo_box/magazine
 	name = "A magazine (what?)"
-	desc = "A magazine of rounds, they look like error signs..."
+	desc = "A magazine of rounds, they look like error signs... this should probably be reported somewhere."
+	ammo_box_multiload = AMMO_BOX_MULTILOAD_IN // so you can't use a magazine like a bootleg speedloader
 	drop_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_pickup1.ogg'
 

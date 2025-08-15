@@ -8,7 +8,7 @@
 	icon_state = "roman"
 	inhand_icon_state = "armor"
 	can_adjust = FALSE
-	strip_delay = 100
+	strip_delay = 10 SECONDS
 	resistance_flags = NONE
 
 /obj/item/clothing/under/costume/jabroni
@@ -297,7 +297,7 @@
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/clothing_under/costume_russian_officer
-	strip_delay = 50
+	strip_delay = 5 SECONDS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	can_adjust = FALSE

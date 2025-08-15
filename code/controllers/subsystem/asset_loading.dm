@@ -13,12 +13,14 @@ SUBSYSTEM_DEF(asset_loading)
 	while(length(generate_queue))
 		var/datum/asset/to_load = generate_queue[generate_queue.len]
 
+		last_queue_len = length(generate_queue)
+		generate_queue.len--
+
 		to_load.queued_generation()
 
 		if(MC_TICK_CHECK)
 			return
-		last_queue_len = length(generate_queue)
-		generate_queue.len--
+
 	// We just emptied the queue
 	if(last_queue_len && !length(generate_queue))
 		// Clean up cached icons, freeing memory.

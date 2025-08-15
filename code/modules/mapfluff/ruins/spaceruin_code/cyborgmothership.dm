@@ -15,7 +15,7 @@
 	width = 23
 	height = 23
 	launch_status = 0
-	callTime = 250
+	callTime = 25 SECONDS
 	movement_force = list("KNOCKDOWN" = 0,"THROW" = 0)
 
 /obj/item/circuitboard/computer/cyborg_mothership
