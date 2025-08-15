@@ -18,6 +18,37 @@
 	armor_type = /datum/armor
 	integrity_failure = 0.5
 	var/obj/golfcart_rear/child = null
+	var/obj/structure/closet/crate/crate = null
+
+/obj/vehicle/ridden/golfcart/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if (!crate)
+		return
+	var/list/candidates = list(
+		get_step(child, turn(dir, 180)),
+		get_step(child, turn(dir, 90)),
+		get_step(child, turn(dir, 270)),
+	)
+	for (var/atom/turf in candidates)
+		if (turf.Enter(crate, src))
+			crate.forceMove(turf)
+			crate = null
+			return ITEM_INTERACT_SUCCESS
+	crate.forceMove(get_turf(child))
+	crate = null
+	return ITEM_INTERACT_SUCCESS
+
+/obj/vehicle/ridden/golfcart/mouse_drop_receive(atom/dropped, mob/user, params)
+	if (!istype(dropped, /obj/structure/closet/crate))
+		return ..()
+	var/obj/structure/closet/crate/dropped_crate = dropped
+	balloon_alert_to_viewers(dropped_crate)
+	if (crate)
+		balloon_alert_to_viewers("already has crate")
+		return
+	dropped_crate.forceMove(src)
+	crate = dropped_crate
+	balloon_alert_to_viewers("attached crate")
 
 /datum/component/riding/vehicle/golfcart
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
@@ -58,6 +89,11 @@
 	// otherwise permit move
 	return
 
+/obj/vehicle/ridden/golfcart/proc/on_canreach(mob/source, atom/target)
+	SIGNAL_HANDLER
+
+	return min(get_dist(source.loc, src.loc), get_dist(source.loc, child.loc))
+
 /obj/vehicle/ridden/golfcart/Move(newloc, newdir)
 	var/atom/old_loc = get_turf(src)
 	var/old_dir = dir
@@ -87,7 +123,7 @@
 		TEXT_WEST =  list(0, 4),
 	)
 
-/datum/component/riding/vehicle/atv/get_parent_offsets_and_layers()
+/datum/component/riding/vehicle/golfcart/get_parent_offsets_and_layers()
 	return list(
 		TEXT_NORTH = list(0, 0, OBJ_LAYER),
 		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
@@ -111,6 +147,7 @@
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/golfcart)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
+	RegisterSignal(src, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
 	child = new /obj/golfcart_rear(mapload, src)
 	child.loc = get_step(src, NORTH)
 
