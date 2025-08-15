@@ -2494,7 +2494,7 @@
 #include "code\game\objects\items\gun_maintenance.dm"
 #include "code\game\objects\items\hand_items.dm"
 #include "code\game\objects\items\handcuffs.dm"
-#include "code\game\objects\items\his_grace.dm"
+#include "code\game\objects\items\her_grace.dm"
 #include "code\game\objects\items\holosign_creator.dm"
 #include "code\game\objects\items\hot_potato.dm"
 #include "code\game\objects\items\hourglass.dm"

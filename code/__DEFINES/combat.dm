@@ -253,15 +253,15 @@ DEFINE_BITFIELD(ammo_box_multiload, list(
 #define SUPPRESSED_VERY 2 /// no message
 
 //His Grace.
-#define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
-#define HIS_GRACE_PECKISH 20 //Slightly hungry.
-#define HIS_GRACE_HUNGRY 60 //Getting closer. Increases damage up to a minimum of 20.
-#define HIS_GRACE_FAMISHED 100 //Dangerous. Increases damage up to a minimum of 25 and cannot be dropped.
-#define HIS_GRACE_STARVING 120 //Incredibly close to breaking loose. Increases damage up to a minimum of 30.
-#define HIS_GRACE_CONSUME_OWNER 140 //His Grace consumes His owner at this point and becomes aggressive.
-#define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, He falls asleep and resets.
+#define HER_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, Her Grace is asleep.
+#define HER_GRACE_PECKISH 20 //Slightly hungry.
+#define HER_GRACE_HUNGRY 60 //Getting closer. Increases damage up to a minimum of 20.
+#define HER_GRACE_FAMISHED 100 //Dangerous. Increases damage up to a minimum of 25 and cannot be dropped.
+#define HER_GRACE_STARVING 120 //Incredibly close to breaking loose. Increases damage up to a minimum of 30.
+#define HER_GRACE_CONSUME_OWNER 140 //Her Grace consumes their owner at this point and becomes aggressive.
+#define HER_GRACE_FALL_ASLEEP 160 //If it reaches this point, Shee falls asleep and resets.
 
-#define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
+#define HER_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
 
 /// ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
 #define EXPLODE_GIB_THRESHOLD 50

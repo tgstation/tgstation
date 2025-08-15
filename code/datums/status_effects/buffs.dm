@@ -1,41 +1,41 @@
 //Largely beneficial effects go here, even if they have drawbacks.
 
-/datum/status_effect/his_grace
-	id = "his_grace"
+/datum/status_effect/her_grace
+	id = "her_grace"
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.4 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/his_grace
+	alert_type = /atom/movable/screen/alert/status_effect/her_grace
 	var/bloodlust = 0
 
-/atom/movable/screen/alert/status_effect/his_grace
-	name = "His Grace"
-	desc = "His Grace hungers, and you must feed Him."
-	icon_state = "his_grace"
-	alerttooltipstyle = "hisgrace"
+/atom/movable/screen/alert/status_effect/her_grace
+	name = "Her Grace"
+	desc = "Her Grace hungers, and you must feed Him."
+	icon_state = "her_grace"
+	alerttooltipstyle = "hergrace"
 
-/atom/movable/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
+/atom/movable/screen/alert/status_effect/her_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
-	var/datum/status_effect/his_grace/HG = attached_effect
+	var/datum/status_effect/her_grace/HG = attached_effect
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
-	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
-	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
+	<br>Becomes undroppable at <b>[HER_GRACE_FAMISHED]</b>\
+	<br>Will consume you at <b>[HER_GRACE_CONSUME_OWNER]</b>"
 	return ..()
 
-/datum/status_effect/his_grace/on_apply()
+/datum/status_effect/her_grace/on_apply()
 	owner.add_stun_absorption(
 		source = id,
 		priority = 3,
-		self_message = span_boldwarning("His Grace protects you from the stun!"),
+		self_message = span_boldwarning("Her Grace protects you from the stun!"),
 	)
 	return ..()
 
-/datum/status_effect/his_grace/on_remove()
+/datum/status_effect/her_grace/on_remove()
 	owner.remove_stun_absorption(id)
 
-/datum/status_effect/his_grace/tick(seconds_between_ticks)
+/datum/status_effect/her_grace/tick(seconds_between_ticks)
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	for(var/obj/item/her_grace/HG in owner.held_items)
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
 		if(HG.awakened)

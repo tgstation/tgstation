@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"Hierophant" = "hierophant",
 	"Hierophant Warning" = "hierophant_warning",
 	"Highlight" = "highlight",
-	"His Grace" = "his_grace",
+	"Her Grace" = "her_grace",
 	"Holoparasite" = "holoparasite",
 	"Holoparasite Bold" = "holoparasite bold",
 	"Hypnosis" = "hypnophrase",
