@@ -6709,6 +6709,7 @@
 #include "troutstation\code\datums\bodypart_overlays\markings_bodypart_overlay.dm"
 #include "troutstation\code\datums\dna\blocks\dna_features_block.dm"
 #include "troutstation\code\datums\elements\food\processable_callback.dm"
+#include "troutstation\code\datums\mood_events\food_events.dm"
 #include "troutstation\code\datums\status_effects\buffs\food\speech.dm"
 #include "troutstation\code\game\machinery\computer\orders\order_items\cook\order_reagents.dm"
 #include "troutstation\code\game\objects\effects\decals\cleanable\misc.dm"

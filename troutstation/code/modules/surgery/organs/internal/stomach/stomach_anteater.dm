@@ -31,3 +31,5 @@
 	var/amount_added = ants_amount * ant_digestion_efficiency
 	source_reagents.add_reagent(/datum/reagent/consumable/nutriment, amount_added)
 	to_chat(exposed_mob, span_notice("Yum, ants!"))
+	exposed_mob.add_mood_event("anteater_eat_ants", /datum/mood_event/anteater_eat_ants)
+
