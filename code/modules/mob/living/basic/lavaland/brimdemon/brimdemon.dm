@@ -43,6 +43,10 @@
 	beam.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, beam)
 
+/mob/living/basic/mining/brimdemon/Destroy(force)
+	QDEL_NULL(beam)
+	return ..()
+
 /mob/living/basic/mining/brimdemon/RangedAttack(atom/target, modifiers)
 	beam.Trigger(target = target)
 
