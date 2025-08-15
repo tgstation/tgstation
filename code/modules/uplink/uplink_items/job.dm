@@ -301,9 +301,9 @@
 /datum/uplink_item/role_restricted/her_grace
 	name = "Her Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, She will thirst for blood and must be used to kill to sate that thirst. \
-	Her Grace grants gradual regeneration and complete stun immunity to their wielder, but be wary: if She gets too hungry, She will become impossible to drop and eventually kill you if not fed. \
+	Her Grace grants gradual regeneration and complete stun immunity to Her wielder, but be wary: if She gets too hungry, She will become impossible to drop and eventually kill you if not fed. \
 	However, if left alone for long enough, She will fall back to slumber. \
-	To activate Her Grace, simply unlatch Him."
+	To activate Her Grace, simply unlatch Her."
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	item = /obj/item/her_grace

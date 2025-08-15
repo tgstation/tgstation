@@ -9,7 +9,7 @@
 
 /atom/movable/screen/alert/status_effect/her_grace
 	name = "Her Grace"
-	desc = "Her Grace hungers, and you must feed Him."
+	desc = "Her Grace hungers, and you must feed Her."
 	icon_state = "her_grace"
 	alerttooltipstyle = "hergrace"
 
@@ -41,7 +41,7 @@
 		if(HG.awakened)
 			graces++
 	if(!graces)
-		owner.apply_status_effect(/datum/status_effect/his_wrath)
+		owner.apply_status_effect(/datum/status_effect/her_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.02
