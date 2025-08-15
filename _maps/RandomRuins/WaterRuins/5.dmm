@@ -1,0 +1,170 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors/nospawn)
+"b" = (
+/turf/closed/mineral/random/rainworld,
+/area/rainworld/surface/outdoors/nospawn)
+"c" = (
+/turf/open/water/hot_spring/cursed{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
+/area/rainworld/surface/outdoors/nospawn)
+"d" = (
+/obj/item/paper/crumpled{
+	default_raw_text = "When one falls into this hot spring, they shall forever be turned into..."
+	},
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors/nospawn)
+"l" = (
+/obj/structure/chair/plastic,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors/nospawn)
+"G" = (
+/obj/item/storage/toolbox/fishing,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors/nospawn)
+
+(1,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+a
+a
+a
+a
+a
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+a
+a
+a
+a
+a
+a
+a
+b
+b
+"}
+(4,1,1) = {"
+b
+a
+a
+a
+c
+c
+c
+a
+a
+a
+b
+"}
+(5,1,1) = {"
+b
+a
+G
+c
+c
+c
+c
+c
+a
+a
+b
+"}
+(6,1,1) = {"
+b
+a
+l
+c
+c
+c
+c
+c
+a
+a
+b
+"}
+(7,1,1) = {"
+b
+a
+a
+c
+c
+c
+c
+c
+a
+a
+b
+"}
+(8,1,1) = {"
+b
+a
+a
+a
+c
+c
+c
+a
+a
+a
+b
+"}
+(9,1,1) = {"
+b
+b
+a
+a
+a
+d
+a
+a
+a
+b
+b
+"}
+(10,1,1) = {"
+b
+b
+b
+a
+a
+a
+a
+a
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}

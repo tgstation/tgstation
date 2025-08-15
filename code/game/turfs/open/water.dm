@@ -79,6 +79,41 @@
 		AddElement(/datum/element/swimming_tile, stamina_entry_cost, ticking_stamina_cost, ticking_oxy_damage, exhaust_swimmer_prob)
 	return TRUE
 
+/turf/open/water/attackby(obj/item/C, mob/user, list/modifiers)
+	..()
+	if(C.type == /obj/item/stack/rods)
+		var/obj/structure/lattice/water/H = locate(/obj/structure/lattice/water, src)
+		if(H)
+			to_chat(user, span_warning("There is already a lattice here!"))
+			return
+		else
+			to_chat(user, span_warning("You need to use waterproof rods to build lattice here."))
+		return
+	if(istype(C, /obj/item/stack/rods/water))
+		var/obj/item/stack/rods/water/R = C
+		var/obj/structure/lattice/water/H = locate(/obj/structure/lattice/water, src)
+		if(H)
+			to_chat(user, span_warning("There is already a lattice here!"))
+			return
+		if(R.use(1))
+			to_chat(user, span_notice("You construct a lattice."))
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+			new /obj/structure/lattice/water(locate(x, y, z))
+		else
+			to_chat(user, span_warning("You need one rod to build a waterproof lattice."))
+		return
+
+/turf/open/water/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
+		return list("delay" = 0, "cost" = 3)
+	return FALSE
+
+/turf/open/water/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		return TRUE
+	return FALSE
+
 /turf/open/water/Destroy()
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	return ..()
@@ -105,6 +140,19 @@
 	ticking_stamina_cost = 15
 	ticking_oxy_damage = 2
 	exhaust_swimmer_prob = 100
+
+/turf/open/water/no_planet_atmos/deep/rainworld
+	name = "deep water"
+	desc = "Less shallow water."
+	icon_state = "deep_riverwater_motion"
+	immerse_overlay = "immerse_deep"
+	planetary_atmos = TRUE
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+	baseturfs = /turf/open/water/no_planet_atmos/deep/rainworld
+	stamina_entry_cost = 15
+	ticking_stamina_cost = 10
+	ticking_oxy_damage = 4
+	exhaust_swimmer_prob = 50
 
 /turf/open/water/beach
 	planetary_atmos = FALSE

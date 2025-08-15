@@ -187,3 +187,7 @@
 
 /datum/movespeed_modifier/tail_dragger
 	multiplicative_slowdown = 4
+
+/datum/movespeed_modifier/wet_scug
+	blacklisted_movetypes = MOVETYPES_NOT_TOUCHING_GROUND
+	multiplicative_slowdown = -1.75

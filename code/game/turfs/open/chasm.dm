@@ -145,3 +145,48 @@
 	else if(ismetaltile(item))
 		return
 	return ..()
+
+/turf/open/chasm/rainworld
+	name = "deep water"
+	gender = PLURAL
+	desc = "Is it though?"
+	icon = 'icons/turf/floors.dmi'
+	baseturfs = /turf/open/chasm/rainworld
+	slowdown = 1
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null //needs a splashing sound one day.
+	turf_flags = NO_RUST
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	icon_state = "deep_riverwater_motion"
+	base_icon_state = null
+	smoothing_flags = null
+	smoothing_groups = null
+	canSmoothWith = null
+	planetary_atmos = TRUE
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
+	bullet_bounce_sound = null //abandon all hope ye who enter
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+
+/turf/open/chasm/rainworld/Initialize(mapload)
+	. = ..()
+	set_random_target()
+
+/turf/open/chasm/rainworld/can_cross_safely(atom/movable/crossing)
+	return FALSE
+
+/turf/open/chasm/rainworld/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	return FALSE
+
+/turf/open/chasm/rainworld/proc/set_random_target()
+	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
+	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_OCEAN_RUINS)
+	var/turf/dest
+	if(length(levels))
+		dest = locate(rand(50,200), rand(50,200), pick(levels))
+	chasm_component.target_turf = dest
+

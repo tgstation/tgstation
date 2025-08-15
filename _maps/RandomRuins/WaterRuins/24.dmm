@@ -1,0 +1,228 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/structure/window/reinforced/shuttle/survival_pod,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"n" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"p" = (
+/obj/item/radio/intercom/syndicate/freerange/directional/east,
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/light/floor,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"q" = (
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/rainworld/surface/outdoors)
+"t" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/clothing/gloves/tackler/rocket,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"u" = (
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/ruin/powered)
+"I" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/binoculars,
+/obj/item/syndicate_teleporter{
+	name = "damp experimental teleporter";
+	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. This one seems to be suffering from water damage.";
+	charges = 1;
+	max_charges = 1;
+	parallel_teleport_distance = 1;
+	minimum_teleport_distance = 2;
+	maximum_teleport_distance = 3;
+	bleed_amount = 120;
+	color = "#A52A2A"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"O" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"S" = (
+/turf/closed/mineral/random/rainworld,
+/area/rainworld/surface/outdoors)
+"T" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/table_clock,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+S
+S
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+S
+S
+S
+a
+a
+S
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+S
+S
+S
+S
+S
+S
+S
+S
+S
+a
+"}
+(5,1,1) = {"
+a
+S
+S
+S
+S
+S
+S
+S
+q
+q
+a
+a
+"}
+(6,1,1) = {"
+a
+S
+e
+e
+u
+u
+S
+S
+q
+S
+S
+a
+"}
+(7,1,1) = {"
+a
+a
+e
+I
+O
+u
+S
+q
+q
+S
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+e
+t
+p
+n
+q
+q
+S
+S
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+e
+T
+O
+u
+S
+S
+S
+S
+S
+a
+"}
+(10,1,1) = {"
+S
+S
+e
+e
+u
+u
+S
+S
+S
+S
+S
+a
+"}
+(11,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+S
+S
+S
+a
+S
+S
+S
+a
+a
+a
+a
+"}

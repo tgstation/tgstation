@@ -1,0 +1,125 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"i" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/rainworld/surface/outdoors)
+"u" = (
+/obj/structure/railing/wooden_fence{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"w" = (
+/obj/structure/railing/wooden_fence,
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"F" = (
+/obj/structure/railing/wooden_fence{
+	dir = 10
+	},
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"G" = (
+/turf/open/floor/wood/parquet,
+/area/rainworld/surface/outdoors)
+"H" = (
+/obj/structure/railing/wooden_fence{
+	dir = 9
+	},
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"K" = (
+/obj/machinery/computer/old{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"N" = (
+/obj/structure/railing/wooden_fence{
+	dir = 6
+	},
+/obj/item/clothing/shoes/pirate/armored,
+/obj/item/clothing/suit/costume/pirate/captain/armored,
+/obj/item/clothing/head/costume/pirate/armored,
+/obj/structure/closet/crate/wooden,
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"P" = (
+/obj/item/storage/bag/money/dutchmen,
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"R" = (
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"T" = (
+/obj/structure/railing/wooden_fence{
+	dir = 5
+	},
+/turf/open/floor/wood/tile,
+/area/rainworld/surface/outdoors)
+"X" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak/mining,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/rainworld/surface/outdoors)
+
+(1,1,1) = {"
+a
+a
+X
+a
+a
+"}
+(2,1,1) = {"
+a
+H
+K
+F
+a
+"}
+(3,1,1) = {"
+a
+u
+R
+w
+a
+"}
+(4,1,1) = {"
+a
+G
+G
+G
+a
+"}
+(5,1,1) = {"
+a
+u
+P
+w
+a
+"}
+(6,1,1) = {"
+a
+u
+R
+w
+a
+"}
+(7,1,1) = {"
+a
+T
+R
+N
+a
+"}
+(8,1,1) = {"
+a
+i
+a
+i
+a
+"}

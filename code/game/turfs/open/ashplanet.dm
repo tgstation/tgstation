@@ -66,6 +66,16 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 
+/turf/open/misc/ashplanet/rocky/rainworld
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+	slowdown = 0
+	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
+
+/turf/open/misc/ashplanet/wateryrock/rainworld
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
+	slowdown = 0
+	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
+
 /turf/open/misc/ashplanet/wateryrock/Initialize(mapload)
 	icon_state = "[icon_state][rand(1, 9)]"
 	. = ..()

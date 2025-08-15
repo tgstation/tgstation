@@ -34,6 +34,10 @@
 	equip_delay_other = 2 SECONDS
 	fishing_modifier = -3
 
+/obj/item/clothing/suit/space/pirate/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/diving_gear)
+
 /obj/item/clothing/head/helmet/space/pirate/tophat
 	name = "designer pirate helmet"
 	desc = "A modified EVA helmet with a five-thousand credit Lizzy Vuitton hat affixed to the top, proving that working in deep space is no excuse for being poor."
