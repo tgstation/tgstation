@@ -81,3 +81,15 @@
 /obj/item/reagent_containers/cup/blastoff_ampoule/Initialize(mapload, vol)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
+/obj/item/food/drug/meth_crystal
+	name = "crystal meth"
+	desc = "A clear, sad looking crystal substance."
+	icon_state = "meth_crystal1"
+	food_reagents = list(/datum/reagent/drug/methamphetamine = 10)
+
+/obj/item/food/drug/meth_crystal/Initialize(mapload)
+	. = ..()
+	icon_state = pick("meth_crystal1", "meth_crystal2", "meth_crystal3", "meth_crystal4")
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOONICORN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)

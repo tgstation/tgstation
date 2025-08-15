@@ -76,6 +76,8 @@
 		/obj/item/storage/pill_bottle/happy,
 		/obj/item/storage/pill_bottle/lsd,
 		/obj/item/storage/pill_bottle/psicodine,
+		/obj/item/storage/box/flat/fentanylpatches,
+		/obj/item/food/drug/meth_crystal,
 	)
 
 /obj/effect/spawner/random/contraband/permabrig_weapon
