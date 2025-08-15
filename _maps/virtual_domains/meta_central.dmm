@@ -94,19 +94,6 @@
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"aG" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/night{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/night,
-/obj/item/clothing/glasses/night{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/turf/template_noop,
-/area/virtual_domain/safehouse)
 "aO" = (
 /obj/structure/toilet{
 	pixel_y = 13
@@ -307,6 +294,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
+/area/virtual_domain)
+"cs" = (
+/obj/structure/table/wood,
+/obj/machinery/light/directional/south,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
+/turf/open/floor/wood,
 /area/virtual_domain)
 "cw" = (
 /obj/effect/turf_decal/stripes/line{
@@ -737,15 +732,6 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/decal/cleanable/glass,
 /obj/item/clothing/head/costume/party,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"fH" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/law/malf,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "fK" = (
@@ -4419,6 +4405,19 @@
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"Lq" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/night{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/night{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Ls" = (
 /obj/modular_map_root/safehouse{
 	key = "shuttle_space"
@@ -4442,6 +4441,15 @@
 /obj/structure/lattice,
 /obj/item/gun/ballistic/rifle/boltaction/surplus,
 /turf/open/space/basic,
+/area/virtual_domain)
+"LC" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "LD" = (
 /obj/item/kirbyplants/random/dead/research_director,
@@ -4520,15 +4528,6 @@
 /area/virtual_domain)
 "Mj" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
-/area/virtual_domain)
-"Mk" = (
-/obj/structure/table/wood,
-/obj/machinery/light/directional/south,
-/obj/item/papercutter{
-	pixel_x = -4
-	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Ml" = (
@@ -6727,7 +6726,7 @@ uS
 uS
 ML
 DP
-Mk
+cs
 uS
 ND
 AP
@@ -7003,7 +7002,7 @@ HM
 ps
 hV
 Hd
-fH
+LC
 hZ
 ii
 SN
@@ -7277,7 +7276,7 @@ oD
 pB
 hX
 zQ
-aG
+Lq
 hX
 hX
 hX

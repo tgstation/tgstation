@@ -4,10 +4,10 @@
 /area/space)
 "ab" = (
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ac" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ad" = (
 /obj/effect/turf_decal/stripes/line,
@@ -17,7 +17,7 @@
 "ae" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "af" = (
 /obj/effect/turf_decal/stripes/line{
@@ -48,12 +48,12 @@
 /area/station/engineering/atmos)
 "an" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ap" = (
 /obj/structure/closet/secure_closet/engineering_electrical{
@@ -876,9 +876,6 @@
 	width = 28
 	},
 /turf/open/space/basic,
-/area/space)
-"fg" = (
-/turf/open/space,
 /area/space)
 "fh" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -2534,7 +2531,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "TY" = (
 /obj/machinery/button/door/directional/south{
@@ -6682,7 +6679,7 @@ dZ
 cN
 Tt
 bL
-fg
+aa
 aa
 aa
 aa
@@ -6774,7 +6771,7 @@ dL
 cN
 dd
 bL
-fg
+aa
 aa
 aa
 aa
@@ -6866,7 +6863,7 @@ dL
 cN
 Tt
 bL
-fg
+aa
 aa
 aa
 aa
@@ -6958,7 +6955,7 @@ dL
 cN
 Tt
 Rb
-fg
+aa
 aa
 aa
 aa
@@ -7050,7 +7047,7 @@ dL
 cN
 Tt
 Rb
-fg
+aa
 aa
 aa
 bs
@@ -7142,7 +7139,7 @@ cZ
 cN
 Tt
 Rb
-fg
+aa
 aa
 aa
 aa
@@ -8766,9 +8763,9 @@ aa
 aa
 aa
 aa
-fg
-fg
-fg
+aa
+aa
+aa
 aI
 af
 aX

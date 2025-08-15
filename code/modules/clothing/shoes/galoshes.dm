@@ -5,8 +5,8 @@
 	inhand_icon_state = "galoshes"
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	slowdown = SHOES_SLOWDOWN+1
-	strip_delay = 30
-	equip_delay_other = 50
+	strip_delay = 3 SECONDS
+	equip_delay_other = 5 SECONDS
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_galoshes
 	can_be_bloody = FALSE

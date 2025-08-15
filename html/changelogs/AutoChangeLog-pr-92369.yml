@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Swimming now no longer punishes you with less gains for swimming in heavy gravity, but also weirdly easier to swim in."
