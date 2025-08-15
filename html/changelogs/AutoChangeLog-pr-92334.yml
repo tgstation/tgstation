@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - rscadd: "AIs now get an alert when a new (non-syndicate) AI is brought online."

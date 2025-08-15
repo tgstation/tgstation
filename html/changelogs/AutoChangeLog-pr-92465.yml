@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed constable helmet not having any armor"
-  - bugfix: "Fixed some hair masks not working"

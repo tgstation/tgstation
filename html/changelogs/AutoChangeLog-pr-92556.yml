@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - admin: "Renamed \"Tick Overrun\" in MC overview to \"Subsystem Overtime\" to be true as to what it actually displays"

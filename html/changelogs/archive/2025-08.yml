@@ -370,3 +370,43 @@
 2025-08-14:
   plsleavemealon:
   - rscadd: Adds a new bounty app to the PDA allowing you to remotely check your bounties
+2025-08-15:
+  EnterTheJake:
+  - balance: Uplink price on the suppressor has been lowered from 3 to 1 TC.
+  Ezel:
+  - balance: Removes Sinks from botany/garden
+  - balance: Replaces all Garden trays with soil
+  Melbert:
+  - qol: Instruments now have an ID field - Instruments with IDs will sync song and
+      tempo with other instruments of the same ID in view when any one starts to play.
+  - bugfix: Grand pianos no longer continue playing for people who move away from
+      them or are stunned.
+  OnlineGirlfriend:
+  - image: updates basic book sprites
+  SmArtKar:
+  - admin: Renamed "Tick Overrun" in MC overview to "Subsystem Overtime" to be true
+      as to what it actually displays
+  - bugfix: Fixed constable helmet not having any armor
+  - bugfix: Fixed some hair masks not working
+  Thunder12345:
+  - image: Super and hyper-tier megacells now match the appearance of their smaller
+      cousins.
+  - rscadd: A new insulated glove factory has popped up on the ice moon.
+  - rscadd: Freezer floor tiles now come in the full range of shapes.
+  Wallem:
+  - image: Readjusts the Bluespace RPED sprite to fit into a 32x32 space to fix multiple
+      oversights.
+  moocowswag:
+  - bugfix: knifed up cleanbots will now read your id card rather than your mind when
+      stealing valor
+  necromanceranne:
+  - balance: The effects of flashbangs become less severe the further away you are
+      from the flashbang.
+  - balance: The bang effect of flashbangs cannot affect you in a vacuum. The flash
+      still functions in a vacuum.
+  - balance: Removes the hunger protection settlers get.
+  - balance: Removes the items that settlers spawn with.
+  panvxv:
+  - qol: Swat and welding helmets give proper messages when adjusting visors.
+  zxaber:
+  - rscadd: AIs now get an alert when a new (non-syndicate) AI is brought online.

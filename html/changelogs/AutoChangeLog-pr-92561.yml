@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes:
-  - image: "Readjusts the Bluespace RPED sprite to fit into a 32x32 space to fix multiple oversights."
