@@ -62,6 +62,24 @@
 	desc = "You have a bad feeling about this."
 	alpha = 0
 
+/obj/effect/forcefield/mime/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_MOUSEDROPPED_ONTO = PROC_REF(mousedrop_receive),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/forcefield/mime/proc/mousedrop_receive(atom/source, atom/movable/dropped, mob/user, params)
+	SIGNAL_HANDLER
+	// Reroute the call to ourselves so leanable component can trigger
+	if (dropped == user)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, mouse_drop_receive), dropped, user, params)
+		return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
+
+/obj/effect/forcefield/mime/mouse_drop_receive(mob/living/dropping, mob/user, params)
+	. = ..()
+	LoadComponent(/datum/component/leanable, dropping)
+
 /obj/effect/forcefield/mime/advanced
 	name = "invisible blockade"
 	desc = "You're gonna be here awhile."
@@ -84,7 +102,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "cosmic_carpet"
 	anchored = TRUE
-	layer = BELOW_OBJ_LAYER
+	layer = GIB_LAYER
 	density = FALSE
 	can_atmos_pass = ATMOS_PASS_NO
 	initial_duration = 30 SECONDS

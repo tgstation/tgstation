@@ -72,62 +72,67 @@ If you make a derivative work from this code, you must include this notification
 	button_icon_state = "wrassle_slam"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/slam/Trigger(trigger_flags)
+/datum/action/slam/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
+	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to BODY SLAM!"), "<b><i>Your next attack will be a BODY SLAM.</i></b>")
-	owner.mind.martial_art.streak = "slam"
+	source.streak = "slam"
 
 /datum/action/throw_wrassle
 	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
 	button_icon_state = "wrassle_throw"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/throw_wrassle/Trigger(trigger_flags)
+/datum/action/throw_wrassle/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
+	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to THROW!"), "<b><i>Your next attack will be a THROW.</i></b>")
-	owner.mind.martial_art.streak = "throw"
+	source.streak = "throw"
 
 /datum/action/kick
 	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	button_icon_state = "wrassle_kick"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS // This is supposed to be usable while cuffed but it probably isn't
 
-/datum/action/kick/Trigger(trigger_flags)
+/datum/action/kick/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
+	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to KICK!"), "<b><i>Your next attack will be a KICK.</i></b>")
-	owner.mind.martial_art.streak = "kick"
+	source.streak = "kick"
 
 /datum/action/strike
 	name = "Strike - Hit a neaby opponent with a quick attack."
 	button_icon_state = "wrassle_strike"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/strike/Trigger(trigger_flags)
+/datum/action/strike/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
+	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to STRIKE!"), "<b><i>Your next attack will be a STRIKE.</i></b>")
-	owner.mind.martial_art.streak = "strike"
+	source.streak = "strike"
 
 /datum/action/drop
 	name = "Drop - Smash down onto an opponent."
 	button_icon_state = "wrassle_drop"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED
 
-/datum/action/drop/Trigger(trigger_flags)
+/datum/action/drop/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
+	var/datum/martial_art/source = target
 	owner.visible_message(span_danger("[owner] prepares to LEG DROP!"), "<b><i>Your next attack will be a LEG DROP.</i></b>")
-	owner.mind.martial_art.streak = "drop"
+	source.streak = "drop"
 
-/datum/martial_art/wrestling/on_teach(mob/living/new_holder)
+/datum/martial_art/wrestling/activate_style(mob/living/new_holder)
 	. = ..()
 	to_chat(new_holder, span_userdanger("SNAP INTO A THIN TIM!"))
 	to_chat(new_holder, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
@@ -137,7 +142,7 @@ If you make a derivative work from this code, you must include this notification
 	throw_wrassle.Grant(new_holder)
 	strike.Grant(new_holder)
 
-/datum/martial_art/wrestling/on_remove(mob/living/remove_from)
+/datum/martial_art/wrestling/deactivate_style(mob/living/remove_from)
 	to_chat(remove_from, span_userdanger("You no longer feel that the tower of power is too sweet to be sour..."))
 	drop?.Remove(remove_from)
 	kick?.Remove(remove_from)

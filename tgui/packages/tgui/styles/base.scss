@@ -1,27 +1,16 @@
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ *
+ * If you're looking for a color palette,
+ * see tgui-core - https://github.com/tgstation/tgui-core/tree/main/styles
+ * Files: vars-colors.scss | vars-components.scss | vars-vaules.scss
  */
 
-@use 'sass:color';
 @use 'sass:math';
-
-$color-fg: hsl(0, 0%, 100%) !default;
-$color-bg: hsl(0, 0%, 14%) !default;
-$color-bg-section: rgba(0, 0, 0, 0.33) !default;
-$color-bg-grad-spread: 2% !default;
-$color-bg-start: color.adjust(
-  $color-bg,
-  $lightness: $color-bg-grad-spread
-) !default;
-$color-bg-end: color.adjust(
-  $color-bg,
-  $lightness: -$color-bg-grad-spread
-) !default;
 
 $unit: 12px;
 $font-size: 1 * $unit !default;
-$border-radius: 0.16em !default;
 
 @function em($px) {
   @return 1em * math.div($px, $unit);

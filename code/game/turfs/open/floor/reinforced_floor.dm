@@ -6,7 +6,6 @@
 	holodeck_compatible = TRUE
 	thermal_conductivity = 0.01
 	heat_capacity = INFINITY
-	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -14,7 +13,9 @@
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
 	rust_resistance = RUST_RESISTANCE_REINFORCED
-
+	floor_tile = /obj/item/stack/rods
+	/// How many `floor_tile` do you get when you deconstruct the floor
+	var/floor_tile_amount = 2
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
@@ -34,7 +35,7 @@
 		return ..()
 	return //unplateable
 
-/turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
 	return
 
 /turf/open/floor/engine/crowbar_act(mob/living/user, obj/item/I)
@@ -47,7 +48,7 @@
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
 		if(floor_tile)
-			new floor_tile(src, 2)
+			new floor_tile(src, floor_tile_amount)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
@@ -227,3 +228,11 @@
 
 /turf/open/floor/engine/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/floor/engine/insulation
+	name = "hyper-insulated floor"
+	desc = "Sturdy and completely heat-proof."
+	icon_state = "insulation"
+	thermal_conductivity = 0
+	floor_tile = /obj/item/stack/sheet/mineral/plastitanium
+	floor_tile_amount = 1 // Made with 1 sheet, deconstructs into 1 sheet

@@ -4,13 +4,13 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
  * Fireaxe
  */
 /obj/item/fireaxe  // DEM AXES MAN, marker -Agouri
+	name = "fire axe"
+	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	icon = 'icons/obj/weapons/fireaxe.dmi'
 	icon_state = "fireaxe0"
 	base_icon_state = "fireaxe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
-	name = "fire axe"
-	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
 	throwforce = 15
 	demolition_mod = 1.25
@@ -24,7 +24,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	armor_type = /datum/armor/item_fireaxe
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -15
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	/// How much damage to do unwielded
 	var/force_unwielded = 5
 	/// How much damage to do wielded
@@ -53,6 +53,9 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 		GLOB.bridge_axe = null
 	return ..()
 
+/obj/item/fireaxe/get_demolition_modifier(obj/target)
+	return HAS_TRAIT(src, TRAIT_WIELDED) ? demolition_mod : 0.8
+
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
@@ -61,7 +64,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/fireaxe/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/fireaxe/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE)
@@ -73,10 +76,11 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
  * Bone Axe
  */
 /obj/item/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
-	icon_state = "bone_axe0"
-	base_icon_state = "bone_axe"
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
+	icon_state = "bone_axe0"
+	base_icon_state = "bone_axe"
+	icon_angle = 180
 	force_unwielded = 5
 	force_wielded = 23
 
@@ -84,10 +88,11 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
  * Metal Hydrogen Axe
  */
 /obj/item/fireaxe/metal_h2_axe
-	icon_state = "metalh2_axe0"
-	base_icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
 	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades its heft as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
+	icon_state = "metalh2_axe0"
+	base_icon_state = "metalh2_axe"
+	icon_angle = -45
 	force_unwielded = 5
 	force_wielded = 15
 	demolition_mod = 2
@@ -97,10 +102,10 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 
 //boarding axe
 /obj/item/fireaxe/boardingaxe
-	icon_state = "boarding_axe0"
-	base_icon_state = "boarding_axe"
 	name = "boarding axe"
 	desc = "A hulking cleaver that feels like a burden just looking at it. Seems excellent at halving obstacles like windows, airlocks, barricades and people."
+	icon_state = "boarding_axe0"
+	base_icon_state = "boarding_axe"
 	force_unwielded = 5
 	force_wielded = 30
 	demolition_mod = 3

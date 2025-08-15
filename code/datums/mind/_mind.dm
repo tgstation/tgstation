@@ -48,11 +48,7 @@
 
 	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
 	var/datum/job/assigned_role
-	var/special_role
-	var/list/restricted_roles = list()
 
-	/// Martial art on this mind
-	var/datum/martial_art/martial_art
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
@@ -91,7 +87,9 @@
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
 
-	/// A lazy list of statuses to add next to this mind in the traitor panel
+	/// A lazy list of roles to display that this mind has, stuff like "Traitor" or "Special Creature"
+	var/list/special_roles
+	/// A lazy list of statuses to display that this mind has, stuff like "Infected" or "Mindshielded"
 	var/list/special_statuses
 
 	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
@@ -111,7 +109,7 @@
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	QDEL_NULL(antag_hud)
-	QDEL_LIST(memories)
+	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
 	set_current(null)
@@ -124,10 +122,9 @@
 	.["name"] = name
 	.["ghostname"] = ghostname
 	.["memories"] = memories
-	.["martial_art"] = martial_art
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
-	.["special_role"] = special_role
+	.["special_role"] = jointext(get_special_roles(), " | ")
 	.["assigned_role"] = assigned_role.title
 	.["current"] = current
 
@@ -141,6 +138,9 @@
 	switch(var_name)
 		if(NAMEOF(src, assigned_role))
 			set_assigned_role(var_value)
+			. = TRUE
+		if(NAMEOF(src, holy_role))
+			set_holy_role(var_value)
 			. = TRUE
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -205,7 +205,7 @@
 
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
-		new_character.key = key //now transfer the key to link the client to our new body
+		new_character.PossessByPlayer(key) //now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
@@ -408,41 +408,6 @@
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
-	else if(href_list["edit_obj_tc"])
-		var/datum/traitor_objective/objective = locate(href_list["edit_obj_tc"])
-		if(!istype(objective))
-			return
-		var/telecrystal = input("Set new telecrystal reward for [objective.name]","Syndicate uplink", objective.telecrystal_reward) as null | num
-		if(isnull(telecrystal))
-			return
-		objective.telecrystal_reward = telecrystal
-		message_admins("[key_name_admin(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
-		log_admin("[key_name(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
-	else if(href_list["edit_obj_pr"])
-		var/datum/traitor_objective/objective = locate(href_list["edit_obj_pr"])
-		if(!istype(objective))
-			return
-		var/progression = input("Set new progression reward for [objective.name]","Syndicate uplink", objective.progression_reward) as null | num
-		if(isnull(progression))
-			return
-		objective.progression_reward = progression
-		message_admins("[key_name_admin(usr)] changed [objective]'s progression reward count to [progression].")
-		log_admin("[key_name(usr)] changed [objective]'s progression reward count to [progression].")
-	else if(href_list["fail_objective"])
-		var/datum/traitor_objective/objective = locate(href_list["fail_objective"])
-		if(!istype(objective))
-			return
-		var/performed = objective.objective_state == OBJECTIVE_STATE_INACTIVE? "skipped" : "failed"
-		message_admins("[key_name_admin(usr)] forcefully [performed] [objective].")
-		log_admin("[key_name(usr)] forcefully [performed] [objective].")
-		objective.fail_objective()
-	else if(href_list["succeed_objective"])
-		var/datum/traitor_objective/objective = locate(href_list["succeed_objective"])
-		if(!istype(objective))
-			return
-		message_admins("[key_name_admin(usr)] forcefully succeeded [objective].")
-		log_admin("[key_name(usr)] forcefully succeeded [objective].")
-		objective.succeed_objective()
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -478,26 +443,6 @@
 				uplink.uplink_handler.progression_points = progression
 				message_admins("[key_name_admin(usr)] changed [current]'s progression point count to [progression].")
 				log_admin("[key_name(usr)] changed [current]'s progression point count to [progression].")
-				uplink.uplink_handler.update_objectives()
-				uplink.uplink_handler.generate_objectives()
-			if("give_objective")
-				if(!check_rights(R_FUN))
-					return
-				var/datum/component/uplink/uplink = find_syndicate_uplink()
-				if(!uplink || !uplink.uplink_handler)
-					return
-				var/list/all_objectives = subtypesof(/datum/traitor_objective)
-				var/objective_typepath = tgui_input_list(usr, "Select objective", "Select objective", all_objectives)
-				if(!objective_typepath)
-					return
-				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath, force = TRUE)
-				if(objective)
-					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective_typepath]).")
-					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective_typepath]).")
-				else
-					to_chat(usr, span_warning("Failed to generate the objective!"))
-					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
-					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 			if("uplink")
 				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 				if(!give_uplink(antag_datum = traitor_datum || null))
@@ -540,14 +485,6 @@
 	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
 	return affected_addiction.on_lose_addiction_points(src)
 
-/// Whether or not we can roll for midrounds, specifically checking if we have any major antag datums that should block it
-/datum/mind/proc/can_roll_midround()
-	for(var/datum/antagonist/antag as anything in antag_datums)
-		if(antag.block_midrounds)
-			return FALSE
-
-	return TRUE
-
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)
 	if(assigned_role == new_role)
@@ -556,6 +493,22 @@
 		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
+
+///Sets your holy role, giving/taking away traits related to if you're gaining/losing it.
+/datum/mind/proc/set_holy_role(new_holy_role)
+	if(holy_role == new_holy_role)
+		return
+	var/was_holy = holy_role
+	holy_role = new_holy_role
+	if(holy_role)
+		ADD_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_HOLY_ROLE, new_holy_role)
+	//the signal stops tracking when losing holy roles, but since we're gaining it, give us our HUDs if we're becoming holy.
+	if(!was_holy && holy_role)
+		for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+			blessed_hud.check_hud(current)
 
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,

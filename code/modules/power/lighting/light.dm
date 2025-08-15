@@ -229,14 +229,16 @@
 			color_set = fire_colour
 			power_set = fire_power
 			brightness_set = fire_brightness
+		else if (major_emergency)
+			color_set = bulb_emergency_colour
+			brightness_set = brightness * bulb_major_emergency_brightness_mul
 		else if (nightshift_enabled)
 			brightness_set = nightshift_brightness
 			power_set = nightshift_light_power
 			if(!color)
 				color_set = nightshift_light_color
-		else if (major_emergency)
-			color_set = bulb_low_power_colour
-			brightness_set = brightness * bulb_major_emergency_brightness_mul
+		if (cached_color_filter)
+			color_set = apply_matrix_to_color(color_set, cached_color_filter["color"], cached_color_filter["space"] || COLORSPACE_RGB)
 		var/matching = light && brightness_set == light.light_range && power_set == light.light_power && color_set == light.light_color
 		if(!matching)
 			switchcount++
@@ -345,7 +347,7 @@
 
 // attack with item - insert light (if right type), otherwise try to break the light
 
-/obj/machinery/light/attackby(obj/item/tool, mob/living/user, params)
+/obj/machinery/light/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	// attempt to insert light
 	if(istype(tool, /obj/item/light))
 		if(status == LIGHT_OK)
@@ -427,14 +429,17 @@
 		real_cell.forceMove(new_light)
 		cell = null
 
-/obj/machinery/light/attacked_by(obj/item/attacking_object, mob/living/user)
-	..()
+/obj/machinery/light/attacked_by(obj/item/attacking_object, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(. <= 0)
+		return
 	if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 		return
 	if(!on || !(attacking_object.obj_flags & CONDUCTS_ELECTRICITY))
 		return
-	if(prob(12))
-		electrocute_mob(user, get_area(src), src, 0.3, TRUE)
+	if(!prob(12))
+		return
+	electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 
 /obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -495,25 +500,26 @@
 		)
 	return TRUE
 
-
 /obj/machinery/light/proc/flicker(amount = rand(10, 20))
 	set waitfor = FALSE
-	if(flickering)
+	if(flickering || !on || status != LIGHT_OK)
 		return
+
+	. = TRUE // did we actually flicker? Send this now because we expect immediate response, before sleeping.
 	flickering = TRUE
-	if(on && status == LIGHT_OK)
-		for(var/i in 1 to amount)
-			if(status != LIGHT_OK || !has_power())
-				break
-			on = !on
-			update(FALSE)
-			sleep(rand(5, 15))
-		if(has_power())
-			on = (status == LIGHT_OK)
-		else
-			on = FALSE
+	for(var/i in 1 to amount)
+		if(status != LIGHT_OK || !has_power())
+			break
+		on = !on
 		update(FALSE)
-		. = TRUE //did we actually flicker?
+		stoplag(rand(0.5 SECONDS, 1.5 SECONDS))
+
+	if(has_power())
+		on = (status == LIGHT_OK)
+	else
+		on = FALSE
+
+	update(FALSE)
 	flickering = FALSE
 
 // ai attack - make lights flicker, because why not
@@ -573,7 +579,7 @@
 
 	if(protected || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		to_chat(user, span_notice("You remove the light [fitting]."))
-	else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
+	else if(istype(user) && user.dna.check_mutation(/datum/mutation/telekinesis))
 		to_chat(user, span_notice("You telekinetically remove the light [fitting]."))
 	else
 		var/obj/item/bodypart/affecting = user.get_active_hand()
@@ -719,7 +725,7 @@
 	icon_state = "floor"
 	brightness = 4
 	light_angle = 360
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

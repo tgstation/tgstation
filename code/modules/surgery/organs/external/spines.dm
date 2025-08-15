@@ -9,7 +9,7 @@
 
 	preference = "feature_lizard_spines"
 
-	dna_block = DNA_SPINES_BLOCK
+	dna_block = /datum/dna_block/feature/spine
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/spines
@@ -31,16 +31,19 @@
 ///Bodypart overlay for spines
 /datum/bodypart_overlay/mutant/spines
 	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND
-	feature_key = "spines"
+	feature_key = FEATURE_SPINES
 	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/spines/get_global_feature_list()
 	return SSaccessories.spines_list
 
-/datum/bodypart_overlay/mutant/spines/can_draw_on_bodypart(mob/living/carbon/human/human)
-	. = ..()
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
+/datum/bodypart_overlay/mutant/spines/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
+	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
+	return TRUE
 
 /datum/bodypart_overlay/mutant/spines/set_dye_color(new_color, obj/item/organ/tail/organ)
 	var/obj/item/organ/tail/tail = organ?.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)

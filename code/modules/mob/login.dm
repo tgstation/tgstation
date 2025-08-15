@@ -31,6 +31,8 @@
 		return FALSE
 
 	canon_client = client
+	client.persistent_client.set_mob(src)
+
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
@@ -92,8 +94,7 @@
 
 	//Reload alternate appearances
 	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
-		if(!alt_hud.apply_to_new_mob(src))
-			alt_hud.hide_from(src, absolute = TRUE)
+		alt_hud.check_hud(src)
 
 	update_client_colour()
 	update_mouse_pointer()
@@ -103,18 +104,14 @@
 		stop_sound_channel(CHANNEL_AMBIENCE)
 
 	if(client)
-		if(client.view_size)
-			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
-		else
-			client.change_view(getScreenSize(client.prefs.read_preference(/datum/preference/toggle/widescreen)))
+		client.view_size?.resetToDefault() // Resets the client.view in case it was changed.
 
-		if(client.player_details.player_actions.len)
-			for(var/datum/action/A in client.player_details.player_actions)
-				A.Grant(src)
+		for(var/datum/action/A as anything in persistent_client.player_actions)
+			A.Grant(src)
 
-		for(var/foo in client.player_details.post_login_callbacks)
-			var/datum/callback/CB = foo
+		for(var/datum/callback/CB as anything in persistent_client.post_login_callbacks)
 			CB.Invoke()
+
 		log_played_names(
 			client.ckey,
 			list(
@@ -131,6 +128,9 @@
 	client.init_verbs()
 
 	AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	AddElement(/datum/element/weather_listener, /datum/weather/rain_storm, ZTRAIT_RAINSTORM, GLOB.rain_storm_sounds)
+	AddElement(/datum/element/weather_listener, /datum/weather/sand_storm, ZTRAIT_SANDSTORM, GLOB.sand_storm_sounds)
+	AddElement(/datum/element/weather_listener, /datum/weather/snow_storm, ZTRAIT_SNOWSTORM, GLOB.snowstorm_sounds)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)
 
@@ -141,7 +141,7 @@
  * Checks if the attached client is an admin and may deadmin them
  *
  * Configs:
- * * flag/auto_deadmin_players
+ * * flag/auto_deadmin_always
  * * client.prefs?.toggles & DEADMIN_ALWAYS
  * * User is antag and flag/auto_deadmin_antagonists or client.prefs?.toggles & DEADMIN_ANTAGONIST
  * * or if their job demands a deadminning SSjob.handle_auto_deadmin_roles()
@@ -151,7 +151,7 @@
 /mob/proc/auto_deadmin_on_login() //return true if they're not an admin at the end.
 	if(!client?.holder)
 		return TRUE
-	if(CONFIG_GET(flag/auto_deadmin_players) || (client.prefs?.toggles & DEADMIN_ALWAYS))
+	if(CONFIG_GET(flag/auto_deadmin_always) || (client.prefs?.toggles & DEADMIN_ALWAYS))
 		return client.holder.auto_deadmin()
 	if(mind.has_antag_datum(/datum/antagonist) && (CONFIG_GET(flag/auto_deadmin_antagonists) || client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		return client.holder.auto_deadmin()

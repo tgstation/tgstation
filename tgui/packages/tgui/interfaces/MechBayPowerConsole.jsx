@@ -5,16 +5,16 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
+import { formatEnergy } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
-import { formatEnergy } from '../format';
 import { Window } from '../layouts';
 
 export const MechBayPowerConsole = (props) => {
   const { act, data } = useBackend();
   const { recharge_port } = data;
-  const mech = recharge_port && recharge_port.mech;
-  const cell = mech && mech.cell;
+  const mech = recharge_port?.mech;
+  const cell = mech?.cell;
   return (
     <Window width={400} height={200}>
       <Window.Content>

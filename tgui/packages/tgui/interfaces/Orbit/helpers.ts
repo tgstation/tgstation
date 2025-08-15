@@ -1,5 +1,5 @@
 import { DEPARTMENT2COLOR, HEALTH, THREAT, VIEWMODE } from './constants';
-import { AntagGroup, Antagonist, Observable, ViewMode } from './types';
+import type { AntagGroup, Antagonist, Observable, ViewMode } from './types';
 
 /** Return a map of strings with each antag in its antag_category */
 export function getAntagCategories(antagonists: Antagonist[]): AntagGroup[] {
@@ -120,18 +120,19 @@ export function getDisplayColor(
 }
 
 /** Checks if a full name or job title matches the search. */
-export function isJobOrNameMatch(
+export function isJobCkeyOrNameMatch(
   observable: Observable,
   searchQuery: string,
 ): boolean {
   if (!searchQuery) return true;
 
-  const { full_name, job, name } = observable;
+  const { full_name, job, name, ckey } = observable;
 
   return (
     full_name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     job?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    ckey?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     false
   );
 }

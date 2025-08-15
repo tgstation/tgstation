@@ -309,7 +309,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "K" = (
-/mob/living/simple_animal/hostile/dark_wizard,
+/mob/living/basic/dark_wizard,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 

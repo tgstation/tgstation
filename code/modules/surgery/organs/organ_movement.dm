@@ -144,6 +144,8 @@
 	if(bodypart_overlay)
 		limb.add_bodypart_overlay(bodypart_overlay)
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_BODYPART_INSERTED, limb, movement_flags)
+
 /*
  * Remove the organ from the select mob.
  *
@@ -233,12 +235,14 @@
 
 	return TRUE
 
-/// Called on limb removal to remove limb specific limb effects or statusses
+/// Called on limb removal to remove limb specific limb effects or statuses
 /obj/item/organ/proc/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
-		AddElement(/datum/element/decal/blood)
+		var/blood_color = get_color_from_blood_list(blood_dna_info)
+		if (blood_color)
+			AddElement(/datum/element/decal/blood, _color = blood_color)
 
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
@@ -280,10 +284,29 @@
 /obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
-	RemoveElement(/datum/element/decal/blood)
+	RemoveElement(/datum/element/decal/blood, _color = old_owner.get_bloodtype()?.get_color() || BLOOD_COLOR_RED)
 /**
  * Proc that gets called when the organ is surgically inserted by someone. Seem familiar?
  */
 /obj/item/organ/proc/on_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_INSERTED, user, new_owner, target_zone, tool)
+
+/// Proc that gets called when someone starts surgically inserting the organ
+/obj/item/organ/proc/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
+	if (!valid_zones)
+		return TRUE
+
+	// Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
+	if (!valid_zones[target_zone])
+		return FALSE
+
+	swap_zone(target_zone)
+	return TRUE
+
+/// Readjusts the organ to fit into a different body zone/slot
+/obj/item/organ/proc/swap_zone(target_zone)
+	if (!valid_zones[target_zone])
+		CRASH("[src]'s ([type]) swap_zone was called with invalid zone [target_zone]")
+	zone = target_zone
+	slot = valid_zones[zone]

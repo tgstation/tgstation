@@ -7,6 +7,7 @@
 	name = "voltaic combat cyberheart"
 	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
 	icon_state = "anomalock_heart"
+	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	bleed_prevention = TRUE
 	toxification_probability = 0
 
@@ -39,7 +40,6 @@
 	add_lightning_overlay(30 SECONDS)
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 	organ_owner.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
-	organ_owner.apply_status_effect(/datum/status_effect/stabilized/yellow, src)
 	RegisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(activate_survival))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
@@ -49,11 +49,10 @@
 		return
 	UnregisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION))
 	organ_owner.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
-	organ_owner.remove_status_effect(/datum/status_effect/stabilized/yellow)
 	tesla_zap(source = organ_owner, zap_range = 20, power = 2.5e5, cutoff = 1e3)
 	qdel(src)
 
-/obj/item/organ/heart/cybernetic/anomalock/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/organ/heart/cybernetic/anomalock/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(target_mob != user || !istype(target_mob) || !core)
 		return ..()
 
@@ -96,10 +95,28 @@
 
 /obj/item/organ/heart/cybernetic/anomalock/on_life(seconds_per_tick, times_fired)
 	. = ..()
+	if(!core)
+		return
+
 	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += 5 * seconds_per_tick
+
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
+
+	if(times_fired % (1 SECONDS))
+		return
+
+	var/list/batteries = list()
+	for(var/obj/item/stock_parts/power_store/cell in owner.get_all_contents())
+		if(cell.used_charge())
+			batteries += cell
+
+	if(!length(batteries))
+		return
+
+	var/obj/item/stock_parts/power_store/cell = pick(batteries)
+	cell.give(cell.max_charge() * 0.1)
 
 ///Does a few things to try to help you live whatever you may be going through
 /obj/item/organ/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
@@ -113,12 +130,8 @@
 
 ///Alerts our owner that the organ is ready to do its thing again
 /obj/item/organ/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
-	balloon_alert(organ_owner, "your heart strenghtens")
+	balloon_alert(organ_owner, "your heart strengthtens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
-
-///Returns the mob we are implanted in so that the electricity effect doesn't runtime
-/obj/item/organ/heart/cybernetic/anomalock/proc/get_held_mob()
-	return owner
 
 /obj/item/organ/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, required_anomaly))
@@ -185,23 +198,27 @@
 	owner.reagents.add_reagent(/datum/reagent/medicine/coagulant, 5)
 	owner.add_filter("emp_shield", 2, outline_filter(1, "#639BFF"))
 	to_chat(owner, span_revendanger("You feel a burst of energy! It's do or die!"))
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.gain_trauma(/datum/brain_trauma/special/tenacity, TRAUMA_RESILIENCE_ABSOLUTE)
+	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
 
 /datum/status_effect/voltaic_overdrive/on_remove()
 	. = ..()
 	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_filter("emp_shield")
 	owner.balloon_alert(owner, "your heart weakens")
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.cure_trauma_type(/datum/brain_trauma/special/tenacity, TRAUMA_RESILIENCE_ABSOLUTE)
-
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
 	icon_state = "anomalock_heart"
 	desc = "Voltaic energy is flooding your muscles, keeping your body upright. You have 30 seconds before it falters!"
+
+/obj/item/organ/heart/cybernetic/anomalock/hear_beat_noise(mob/living/hearer)
+	if(prob(1))
+		to_chat(hearer, span_danger("Yeah. Press a metal disk to the chest of a living arc flash hazard. See what that gets you.")) //the guy is LITERALLY sparking like a tesla coil.
+	else
+		to_chat(hearer, span_danger("An electrical arc strikes your stethoscope, conducting into you!"))
+	if(hearer.electrocute_act(15, "stethoscope", flags = SHOCK_NOGLOVES)) //the stethoscope is in your ears. (returns true if it does damage so we only scream in that case)
+		hearer.emote("scream")
+	return span_danger("[owner.p_Their()] heart produces [beat_noise].")
 
 #undef DOAFTER_IMPLANTING_HEART

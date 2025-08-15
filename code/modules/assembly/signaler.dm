@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1.2)
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_ALL
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
@@ -26,6 +26,8 @@
 	var/hearing_range = 1
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
+	/// Signal range, see /datum/radio_frequency/proc/post_signal
+	var/range = 0 //Everywhere
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
@@ -120,7 +122,7 @@
 
 	update_appearance()
 
-/obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(issignaler(W))
 		var/obj/item/assembly/signaler/signaler2 = W
 		if(secured && signaler2.secured)
@@ -146,14 +148,14 @@
 	if(!radio_connection)
 		return
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime, "hh:mm:ss", TIMEZONE_UTC)
 	var/turf/T = get_turf(src)
 
 	var/logging_data = "[time] <B>:</B> [key_name(usr)] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
 	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
-	radio_connection.post_signal(src, signal)
+	radio_connection.post_signal(src, signal, range = range)
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
@@ -182,7 +184,7 @@
 
 /obj/item/assembly/signaler/cyborg
 
-/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
 /obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
@@ -193,7 +195,7 @@
 /obj/item/assembly/signaler/internal/ui_state(mob/user)
 	return GLOB.inventory_state
 
-/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/assembly/signaler/internal/screwdriver_act(mob/living/user, obj/item/I)
@@ -203,3 +205,8 @@
 	if(ispAI(user))
 		return TRUE
 	. = ..()
+
+/obj/item/assembly/signaler/low_range
+	name = "low-power remote signaling device"
+	desc = "Used to remotely activate devices, within a small range of 9 tiles. Allows for syncing when using a secure signaler on another."
+	range = 9

@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,8 +8,11 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
-import { formatPower } from '../format';
+} from 'tgui-core/components';
+import { formatPower } from 'tgui-core/format';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -180,7 +180,7 @@ export const SolarControl = (props) => {
               )}
               {tracking_state === 2 && (
                 <Box inline color="label" mt="3px">
-                  {azimuth_current + ' °'} (auto)
+                  {`${azimuth_current} °`} (auto)
                 </Box>
               )}
             </LabeledList.Item>

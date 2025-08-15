@@ -59,6 +59,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 	CELL_LINE_TABLE_PUG = list(/datum/micro_organism/cell_line/pug = 1),
 	CELL_LINE_TABLE_SLIME = list(/datum/micro_organism/cell_line/slime = 1),
 	CELL_LINE_TABLE_SNAKE = list(/datum/micro_organism/cell_line/snake = 1),
+	CELL_LINE_TABLE_SNAIL = list(/datum/micro_organism/cell_line/snail = 1),
 	CELL_LINE_TABLE_VATBEAST = list(/datum/micro_organism/cell_line/vat_beast = 1),
 	CELL_LINE_TABLE_NETHER = list(/datum/micro_organism/cell_line/netherworld = 1),
 	CELL_LINE_TABLE_CLOWN = list(
@@ -68,6 +69,8 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 	),
 
 	CELL_LINE_TABLE_GLUTTON = list(/datum/micro_organism/cell_line/clown/glutton = 1),
+	CELL_LINE_TABLE_CLOWNANA = list(/datum/micro_organism/cell_line/clown/bananaclown = 1),
+	CELL_LINE_TABLE_LONGFACE = list(/datum/micro_organism/cell_line/clown/longclown = 1),
 	CELL_LINE_TABLE_FROG = list(/datum/micro_organism/cell_line/frog = 1),
 	CELL_LINE_TABLE_AXOLOTL = list(/datum/micro_organism/cell_line/axolotl = 1),
 	CELL_LINE_TABLE_WALKING_MUSHROOM = list(/datum/micro_organism/cell_line/walking_mushroom = 1),
@@ -82,7 +85,29 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/snake = 1,
 		/datum/micro_organism/cell_line/walking_mushroom = 2,
 		/datum/micro_organism/cell_line/axolotl = 1,
-	)
+	),
+	CELL_LINE_ORGAN_HEART = list(
+		/datum/micro_organism/cell_line/organs/heart = 3,
+		/datum/micro_organism/cell_line/organs/heart/evolved = 1,
+	),
+	CELL_LINE_ORGAN_HEART_CURSED = list(
+		/datum/micro_organism/cell_line/organs/heart/corrupt = 1,
+		/datum/micro_organism/cell_line/organs/heart/sacred = 1,
+	),
+	CELL_LINE_ORGAN_LUNGS = list(
+		/datum/micro_organism/cell_line/organs/lungs = 3,
+		/datum/micro_organism/cell_line/organs/lungs/evolved = 1,
+	),
+	CELL_LINE_ORGAN_LIVER = list(
+		/datum/micro_organism/cell_line/organs/liver = 3,
+		/datum/micro_organism/cell_line/organs/liver/evolved = 1,
+		/datum/micro_organism/cell_line/organs/liver/bloody = 1,
+		/datum/micro_organism/cell_line/organs/liver/distillery = 1,
+	),
+	CELL_LINE_ORGAN_STOMACH = list(
+		/datum/micro_organism/cell_line/organs/stomach = 3,
+		/datum/micro_organism/cell_line/organs/stomach/evolved = 1,
+	),
 ))
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus

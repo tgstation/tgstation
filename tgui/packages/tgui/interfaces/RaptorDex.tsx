@@ -1,21 +1,28 @@
+import {
+  Image,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Image, LabeledList, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
   raptor_attack: number;
   raptor_health: number;
   raptor_speed: number;
-  raptor_color: String;
-  raptor_image: String;
-  raptor_gender: String;
-  raptor_happiness: String;
-  raptor_description: String;
+  raptor_color: string;
+  raptor_image: string;
+  raptor_gender: string;
+  raptor_happiness: string;
+  raptor_description: string;
   inherited_attack: number;
   inherited_attack_max: number;
   inherited_health: number;
   inherited_health_max: number;
-  inherited_traits: String[];
+  inherited_traits: string[];
 };
 
 export const RaptorDex = (props) => {

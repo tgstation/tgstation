@@ -1,7 +1,5 @@
 //CONTAINS: Detective's Scanner
 
-// TODO: Split everything into easy to manage procs.
-
 /obj/item/detective_scanner
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
@@ -17,30 +15,17 @@
 	slot_flags = ITEM_SLOT_BELT
 	/// if the scanner is currently busy processing
 	var/scanner_busy = FALSE
-	var/list/log = list()
+	var/list/log_data = list()
 	var/range = 8
 	var/view_check = TRUE
 	var/forensicPrintCount = 0
-	actions_types = list(/datum/action/item_action/display_detective_scan_results)
 
-/datum/action/item_action/display_detective_scan_results
-	name = "Display Forensic Scanner Results"
-
-/datum/action/item_action/display_detective_scan_results/Trigger(trigger_flags)
-	var/obj/item/detective_scanner/scanner = target
-	if(istype(scanner))
-		scanner.display_detective_scan_results(usr)
-
-/obj/item/detective_scanner/attack_self(mob/user)
-	if(!LAZYLEN(log))
-		balloon_alert(user, "no logs!")
-		return
-	if(scanner_busy)
-		balloon_alert(user, "scanner busy!")
-		return
-	scanner_busy = TRUE
-	balloon_alert(user, "printing report...")
-	addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 10 SECONDS)
+/obj/item/detective_scanner/interact(mob/user)
+	. = ..()
+	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+		return ITEM_INTERACT_BLOCKING
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * safe_print_report - a wrapper proc for print_report
@@ -59,11 +44,51 @@
 	var/frNum = ++forensicPrintCount
 
 	report_paper.name = "FR-[frNum] 'Forensic Record'"
-	var/report_text = "<center><B>Forensic Record - (FR-[frNum])</B></center><HR><BR>"
-	report_text += jointext(log, "<BR>")
-	report_text += "<HR><B>Notes:</B><BR>"
+	var/list/report_text = list("<H1>Forensic Record - (FR-[frNum])</H1><HR>")
 
-	report_paper.add_raw_text(report_text)
+	for(var/list/log in log_data)
+		report_text += "<H2>[capitalize(log["scan_target"])] scan at [log["scan_time"]]</H2><DL>"
+
+		if(!log[DETSCAN_CATEGORY_FIBER] && !log[DETSCAN_CATEGORY_BLOOD] && !log[DETSCAN_CATEGORY_FINGERS] && !log[DETSCAN_CATEGORY_DRINK] && !log[DETSCAN_CATEGORY_ACCESS])
+			report_text += "No forensic traces found.<HR>"
+			continue
+
+		if(log[DETSCAN_CATEGORY_FIBER])
+			report_text += "<DT><B>[DETSCAN_CATEGORY_FIBER]</B></DT><DD>"
+			for(var/fibers in log[DETSCAN_CATEGORY_FIBER])
+				report_text += fibers + "<BR>"
+			report_text += "</DD>"
+
+		if(log[DETSCAN_CATEGORY_BLOOD])
+			report_text += "<DT><B>[DETSCAN_CATEGORY_BLOOD]</B></DT><DD>"
+			for(var/blood in log[DETSCAN_CATEGORY_BLOOD])
+				report_text += "[blood], [log[DETSCAN_CATEGORY_BLOOD][blood]]<BR>"
+			report_text += "</DD>"
+
+		if(log[DETSCAN_CATEGORY_FINGERS])
+			report_text += "<DT><B>[DETSCAN_CATEGORY_FINGERS]</B></DT><DD>"
+			for(var/fingers in log[DETSCAN_CATEGORY_FINGERS])
+				report_text += fingers + "<BR>"
+			report_text += "</DD>"
+
+		if(log[DETSCAN_CATEGORY_DRINK])
+			report_text += "<DT><B>[DETSCAN_CATEGORY_DRINK]</B></DT><DD>"
+			for(var/reagent in log[DETSCAN_CATEGORY_DRINK])
+				report_text += "<B>[reagent]</B>: [log[DETSCAN_CATEGORY_DRINK][reagent]] u.<BR>"
+			report_text += "</DD>"
+
+		if(log[DETSCAN_CATEGORY_ACCESS])
+			report_text += "<DT><B>[DETSCAN_CATEGORY_ACCESS]</B></DT><DD>"
+			for(var/region in log[DETSCAN_CATEGORY_ACCESS])
+				var/list/access_list = log[DETSCAN_CATEGORY_ACCESS][region]
+				report_text += "<B>[region]</B>: [access_list.Join(", ")]<BR>"
+			report_text += "</DD>"
+
+		report_text += "</DL><HR>"
+
+	report_text += "<H1>Notes:</H1><BR>"
+
+	report_paper.add_raw_text(report_text.Join())
 	report_paper.update_appearance()
 
 	if(ismob(loc))
@@ -72,7 +97,7 @@
 		balloon_alert(printer, "logs cleared")
 
 	// Clear the logs
-	log = list()
+	log_data = list()
 
 /obj/item/detective_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
@@ -92,6 +117,7 @@
 /obj/item/detective_scanner/proc/safe_scan(mob/user, atom/atom_to_scan)
 	set waitfor = FALSE
 	if(scanner_busy)
+		balloon_alert(user, "scanner busy!")
 		return
 	if(!scan(user, atom_to_scan)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
@@ -115,7 +141,7 @@
 
 
 	user.visible_message(
-		span_notice("\The [user] points the [src.name] at \the [scanned_atom] and performs a forensic scan."),
+		span_notice("\The [user] points \the [src] at \the [scanned_atom] and performs a forensic scan."),
 		ignored_mobs = user
 	)
 	to_chat(user, span_notice("You scan \the [scanned_atom]. The scanner is now analysing the results..."))
@@ -123,30 +149,31 @@
 
 	// GATHER INFORMATION
 
-	//Make our assoc list array
-	// The keys are the headers used for it, and the value is a list of each line printed
-	var/list/det_data = list()
-	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
-	det_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_FIBRES(scanned_atom)
-
-	var/target_name = scanned_atom.name
+	var/list/log_entry_data = list()
 
 	// Start gathering
 
-	if(ishuman(scanned_atom))
+	log_entry_data["scan_target"] = scanned_atom.name
+	log_entry_data["scan_time"] = station_time_timestamp()
 
+	log_entry_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_FIBRES(scanned_atom)
+
+	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
+	if(length(blood))
+		LAZYADD(log_entry_data[DETSCAN_CATEGORY_BLOOD], blood)
+
+	if(ishuman(scanned_atom))
 		var/mob/living/carbon/human/scanned_human = scanned_atom
 		if(!scanned_human.gloves)
-			LAZYADD(det_data[DETSCAN_CATEGORY_FINGERS], md5(scanned_human.dna?.unique_identity))
+			LAZYADD(log_entry_data[DETSCAN_CATEGORY_FINGERS], md5(scanned_human.dna?.unique_identity))
 
 	else if(!ismob(scanned_atom))
 
-		det_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(scanned_atom)
+		log_entry_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(scanned_atom)
 
 		// Only get reagents from non-mobs.
 		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
-			LAZYADD(det_data[DETSCAN_CATEGORY_DRINK], \
-				"Reagent: <font color='red'>[present_reagent.name]</font> Volume: <font color='red'>[present_reagent.volume]</font>")
+			LAZYADD(log_entry_data[DETSCAN_CATEGORY_DRINK], list(present_reagent.name = present_reagent.volume))
 
 			// Get blood data from the blood reagent.
 			if(!istype(present_reagent, /datum/reagent/blood))
@@ -165,92 +192,76 @@
 			var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
 			if(!length(access_in_region))
 				continue
-			LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], "[region]:")
 			var/list/access_names = list()
 			for(var/access_num in access_in_region)
 				access_names += SSid_access.get_access_desc(access_num)
-			LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], english_list(access_names))
-
-
-	for(var/bloodtype in blood)
-		LAZYADD(det_data[DETSCAN_CATEGORY_BLOOD], \
-		"Type: <font color='red'>[blood[bloodtype]]</font> DNA (UE): <font color='red'>[bloodtype]</font>")
+			LAZYADD(log_entry_data[DETSCAN_CATEGORY_ACCESS], region)
+			LAZYADD(log_entry_data[DETSCAN_CATEGORY_ACCESS][region], english_list(access_names))
 
 	// sends it off to be modified by the items
-	SEND_SIGNAL(scanned_atom, COMSIG_DETECTIVE_SCANNED, user, det_data)
+	SEND_SIGNAL(scanned_atom, COMSIG_DETECTIVE_SCANNED, user, log_entry_data)
 
-	// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
-
-	var/found_something = FALSE
-	add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
-
-	for(var/category in DETSCAN_DEFAULT_ORDER())
-		if(!LAZYLEN(det_data[category]))
-			continue  // no data found, move to next category
-		sleep(3 SECONDS)
-		add_log(span_info("<B>[category]:</B>"))
-		for(var/line in det_data[category])
-			add_log(line)
-		found_something = TRUE
-
-	// Make sure the original user is still holding the scanner before sending them the results
-	var/mob/holder = null
-	if(src.loc == user)
-		holder = user
-	else if(ismob(src.loc))
-		holder = src.loc
-
-	if(!found_something)
-		add_log("<I># No forensic traces found #</I>", 0) // Don't display this to the holder user
-		if(holder)
-			to_chat(holder, span_warning("Unable to locate any fingerprints, materials, fibers, or blood on \the [target_name]!"))
-	else
-		if(holder)
-			to_chat(holder, span_notice("You finish scanning \the [target_name]."))
-
-	add_log("---------------------------------------------------------", 0)
+	stoplag(3 SECONDS)
+	log_data += list(log_entry_data)
 	return TRUE
 
-/obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)
-	if(scanner_busy)
-		if(broadcast && ismob(loc))
-			var/mob/logger = loc
-			to_chat(logger, msg)
-		log += "&nbsp;&nbsp;[msg]"
-	else
-		CRASH("[src] [REF(src)] is adding a log when it was never put in scanning mode!")
-
-/proc/get_timestamp()
-	return time2text(world.time + 432000, ":ss")
-
 /obj/item/detective_scanner/click_alt(mob/living/user)
-	if(!LAZYLEN(log))
-		balloon_alert(user, "no logs!")
-		return CLICK_ACTION_BLOCKING
-	if(scanner_busy)
-		balloon_alert(user, "scanner busy!")
-		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "deleting logs...")
-	if(!do_after(user, 3 SECONDS, target = src))
-		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "logs cleared")
-	log = list()
-	return CLICK_ACTION_SUCCESS
-
+	return clear_logs()
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(log) && !scanner_busy)
+	if(LAZYLEN(log_data) && !scanner_busy)
 		. += span_notice("Alt-click to clear scanner logs.")
 
-/obj/item/detective_scanner/proc/display_detective_scan_results(mob/living/user)
-	// No need for can-use checks since the action button should do proper checks
-	if(!LAZYLEN(log))
-		balloon_alert(user, "no logs!")
+
+/obj/item/detective_scanner/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ForensicScanner", "Forensic Scanner")
+		ui.open()
+
+/obj/item/detective_scanner/ui_data(mob/user)
+	var/list/data = list()
+	data["log_data"] = log_data
+	return data
+
+/obj/item/detective_scanner/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
 		return
+	switch(action)
+		if("clear")
+			clear_logs(ui.user)
+			ui.send_update()
+		if("delete")
+			var/index = params["index"] + 1
+			if(!log_data[index])
+				return
+			if(scanner_busy)
+				balloon_alert(ui.user, "scanner busy!")
+				return
+			log_data.Cut(index, index + 1)
+			balloon_alert(ui.user, "log deleted")
+			ui.send_update()
+		if("print")
+			if(!LAZYLEN(log_data))
+				balloon_alert(ui.user, "no logs!")
+				return
+			if(scanner_busy)
+				balloon_alert(ui.user, "scanner busy!")
+				return
+			scanner_busy = TRUE
+			playsound(src, 'sound/machines/printer.ogg', 50)
+			balloon_alert(ui.user, "printing report...")
+			addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 3 SECONDS)
+
+/obj/item/detective_scanner/proc/clear_logs(mob/living/user)
+	if(!LAZYLEN(log_data))
+		balloon_alert(user, "no logs!")
+		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
-		return
-	to_chat(user, span_notice("<B>Scanner Report</B>"))
-	for(var/iterLog in log)
-		to_chat(user, iterLog)
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "logs cleared")
+	log_data = list()
+	return CLICK_ACTION_SUCCESS

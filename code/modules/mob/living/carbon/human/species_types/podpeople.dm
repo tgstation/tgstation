@@ -16,10 +16,20 @@
 	heatmod = 1.5
 	payday_modifier = 1.0
 	meat = /obj/item/food/meat/slab/human/mutant/plant
-	exotic_blood = /datum/reagent/water
+	exotic_bloodtype = BLOOD_TYPE_H2O
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
+
+	mutantappendix = /obj/item/organ/appendix/pod
+	mutantbrain = /obj/item/organ/brain/pod
+	mutantears = /obj/item/organ/ears/pod
+	mutanteyes = /obj/item/organ/eyes/pod
+	mutantheart = /obj/item/organ/heart/pod
+	mutantliver = /obj/item/organ/liver/pod
+	mutantlungs = /obj/item/organ/lungs/pod
+	mutantstomach = /obj/item/organ/stomach/pod
 	mutanttongue = /obj/item/organ/tongue/pod
+
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/pod,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/pod,
@@ -29,40 +39,9 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
 	)
 
-/datum/species/pod/spec_life(mob/living/carbon/human/podperson, seconds_per_tick, times_fired)
-	. = ..()
-	if(podperson.stat == DEAD)
-		return
-
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(podperson.loc)) //else, there's considered to be no light
-		var/turf/turf_loc = podperson.loc
-		light_amount = min(1, turf_loc.get_lumcount()) - 0.5
-		podperson.adjust_nutrition(5 * light_amount * seconds_per_tick)
-		if(light_amount > 0.2) //if there's enough light, heal
-			var/need_mob_update = FALSE
-			need_mob_update += podperson.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-			need_mob_update += podperson.adjustToxLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
-			need_mob_update += podperson.adjustOxyLoss(-0.5 * seconds_per_tick, updating_health = FALSE)
-			if(need_mob_update)
-				podperson.updatehealth()
-
-	if(podperson.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
-		podperson.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
-
-	if(podperson.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		podperson.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-
-/datum/species/pod/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/plantbgone)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
-
 /datum/species/pod/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.dna.features["mcolor"] = "#886600"
-	human.dna.features["pod_hair"] = "Rose"
+	human.dna.features[FEATURE_MUTANT_COLOR] = "#886600"
+	human.dna.features[FEATURE_POD_HAIR] = "Rose"
 	human.update_body(is_creating = TRUE)
 
 /datum/species/pod/get_physical_attributes()
@@ -87,7 +66,7 @@
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "lightbulb",
 		SPECIES_PERK_NAME = "Photosynthetic",
-		SPECIES_PERK_DESC = "As long as you are concious, and within a well-lit area, you will slowly heal brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
+		SPECIES_PERK_DESC = "As long as you are conscious, and within a well-lit area, you will slowly heal brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
 		However, if you are LOW on nutrition, you will progressively take brute damage until you die or enter the light once more."
 	))
 

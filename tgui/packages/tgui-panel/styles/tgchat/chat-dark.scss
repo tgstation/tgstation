@@ -22,24 +22,34 @@ img {
 img.icon {
   height: 1em;
   min-height: 16px;
+  min-width: 16px;
   width: auto;
   vertical-align: bottom;
 }
 
 a {
-  color: hsl(201.7, 48.6%, 43.5%);
+  cursor: var(--cursor-pointer);
+  color: var(--color-hyperlink);
+  transition: color var(--transition-time-medium);
+
+  &:hover {
+    color: hsl(from var(--color-hyperlink) h s calc(l + var(--adjust-hover)));
+  }
 }
 
-a.visited {
-  color: hsl(272.3, 100%, 45.1%);
-}
-
+a.visited,
 a:visited {
-  color: hsl(272.3, 100%, 45.1%);
+  color: var(--color-hyperlink-visited);
+
+  &:hover {
+    color: hsl(
+      from var(--color-hyperlink-visited) h s calc(l + var(--adjust-hover))
+    );
+  }
 }
 
-a.popt {
-  text-decoration: none;
+.center {
+  text-align: center;
 }
 
 /* POPUPS */
@@ -48,15 +58,15 @@ a.popt {
   position: fixed;
   top: 50%;
   left: 50%;
-  background: #ddd;
+  background: hsl(0, 0%, 86.7%);
 }
 
 .popup .close {
   position: absolute;
-  background: #aaa;
+  background: hsl(0, 0%, 66.7%);
   top: 0;
   right: 0;
-  color: #333;
+  color: hsl(0, 0%, 20%);
   text-decoration: none;
   z-index: 2;
   padding: 0 10px;
@@ -65,12 +75,12 @@ a.popt {
 }
 
 .popup .close:hover {
-  background: #999;
+  background: hsl(0, 0%, 60%);
 }
 
 .popup .head {
-  background: #999;
-  color: #ddd;
+  background: hsl(0, 0%, 60%);
+  color: hsl(0, 0%, 86.7%);
   padding: 0 10px;
   height: 30px;
   line-height: 30px;
@@ -81,12 +91,12 @@ a.popt {
 }
 
 .popup input {
-  border: 1px solid #999;
-  background: #fff;
+  border: 1px solid hsl(0, 0%, 60%);
+  background: hsl(0, 0%, 100%);
   margin: 0;
   padding: 5px;
   outline: none;
-  color: #333;
+  color: hsl(0, 0%, 20%);
 }
 
 .popup input[type='text']:hover,
@@ -97,8 +107,8 @@ a.popt {
 
 .popup input[type='submit'] {
   padding: 5px 10px;
-  background: #999;
-  color: #ddd;
+  background: hsl(0, 0%, 60%);
+  color: hsl(0, 0%, 86.7%);
   text-transform: uppercase;
   font-size: 0.9em;
   font-weight: bold;
@@ -107,7 +117,7 @@ a.popt {
 .popup input[type='submit']:hover,
 .popup input[type='submit']:focus,
 .popup input[type='submit']:active {
-  background: #aaa;
+  background: hsl(0, 0%, 66.7%);
   cursor: pointer;
 }
 
@@ -119,11 +129,11 @@ a.popt {
   display: block;
   text-decoration: none;
   padding: 3px;
-  color: #333;
+  color: hsl(0, 0%, 20%);
 }
 
 .changeFont a:hover {
-  background: #ccc;
+  background: hsl(0, 0%, 80%);
 }
 
 .highlightPopup {
@@ -149,7 +159,7 @@ a.popt {
 /* ADMIN CONTEXT MENU */
 
 .contextMenu {
-  background-color: #ddd;
+  background-color: hsl(0, 0%, 86.7%);
   position: fixed;
   margin: 2px;
   width: 150px;
@@ -159,11 +169,11 @@ a.popt {
   display: block;
   padding: 2px 5px;
   text-decoration: none;
-  color: #333;
+  color: hsl(0, 0%, 20%);
 }
 
 .contextMenu a:hover {
-  background-color: #ccc;
+  background-color: hsl(0, 0%, 80%);
 }
 
 /* ADMIN FILTER MESSAGES MENU */
@@ -357,6 +367,10 @@ em {
   color: hsl(88.1, 60.6%, 40.8%);
 }
 
+.enteradio {
+  color: hsl(157.1, 39.6%, 62.4%);
+}
+
 .syndradio {
   color: hsl(359.1, 31.8%, 42.5%);
 }
@@ -373,10 +387,6 @@ em {
   color: hsl(332.2, 59.6%, 60.2%);
 }
 
-.enteradio {
-  color: hsl(157.1, 39.6%, 62.4%);
-}
-
 .redteamradio {
   color: hsl(0, 100%, 63.3%) !important;
 }
@@ -391,6 +401,10 @@ em {
 
 .yellowteamradio {
   color: hsl(60, 98%, 59.8%) !important;
+}
+
+.captaincast {
+  color: hsl(157.1, 39.6%, 62.4%);
 }
 
 .yell {
@@ -575,6 +589,11 @@ em {
 .boldnicegreen {
   color: hsl(132.8, 93.4%, 29.6%);
   font-weight: bold;
+}
+
+.tinynicegreen {
+  color: hsl(132.8, 93.4%, 29.6%);
+  font-size: 85%;
 }
 
 .blob {
@@ -767,6 +786,10 @@ em {
 
 .small {
   font-size: 60%;
+}
+
+.smaller {
+  font-size: 90%;
 }
 
 .slightly_larger {
@@ -966,16 +989,65 @@ em {
   margin-left: 2.5em;
 }
 
-.examine_block {
-  background: hsl(220, 5.3%, 11.2%);
-  border: 1px solid hsl(213.6, 37.9%, 74.1%);
-  margin: 0.5em;
-  padding: 0.5em 0.75em;
-}
-
 .tooltip {
   font-style: italic;
-  border-bottom: 1px dashed #fff;
+  border-bottom: 1px dashed;
+}
+
+.fieldset_legend {
+  position: relative;
+  max-width: 95%;
+  font-size: 120%;
+  background-color: var(--color-section);
+  padding: var(--space-s) var(--space-m);
+  border-color: inherit;
+  z-index: 0;
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: var(--border-thickness-tiny) solid;
+    border-color: inherit;
+    border-radius: var(--border-radius-medium);
+    mask-image: linear-gradient(to top, black 50%, transparent 50%);
+    z-index: -1;
+  }
+}
+
+.boxed_message {
+  background: hsl(220, 10%, 10%);
+  border: var(--border-thickness-tiny) solid;
+  border-left: var(--border-thickness-large) solid;
+  border-color: hsla(220, 40%, 75%, 0.25);
+  margin: var(--space-m) 0;
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--border-radius-medium);
+
+  &.red_box {
+    background: hsl(0, 20%, 10%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 20%, 10%);
+    border-color: hsla(120, 100%, 50%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 20%, 10%);
+    border-color: hsla(225, 90%, 65%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 25%, 12.5%);
+    border-color: hsla(260, 100%, 75%, 0.5);
+  }
+
+  hr {
+    margin: var(--space-m) -0.75em;
+    border-color: inherit;
+  }
 }
 
 // Provides a horizontal bar with text in the middle
@@ -1182,10 +1254,18 @@ $border-width-px: $border-width * 1px;
   }
 
   .chat_alert_#{$color-name} .minor_announcement_text {
-    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+    background-color: color.adjust(
+      map.get($alert-stripe-colors, $color-name),
+      $lightness: -5%,
+      $space: hsl
+    );
   }
 
   .chat_alert_#{$color-name} .major_announcement_text {
-    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+    background-color: color.adjust(
+      map.get($alert-stripe-colors, $color-name),
+      $lightness: -5%,
+      $space: hsl
+    );
   }
 }

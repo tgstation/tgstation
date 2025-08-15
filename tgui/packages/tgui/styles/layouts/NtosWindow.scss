@@ -12,8 +12,8 @@
   right: 0;
   height: 2em;
   line-height: 1.928em;
-  background-color: hsla(0, 0, 0, 0.5);
-  font-family: Consolas, monospace;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  font-family: var(--font-family-mono);
   font-size: base.em(14px);
   user-select: none;
   -ms-user-select: none;
@@ -21,6 +21,6 @@
 
 .NtosWindow__content .Layout__content {
   margin-top: 2em;
-  font-family: Consolas, monospace;
+  font-family: var(--font-family-mono);
   font-size: base.em(14px);
 }

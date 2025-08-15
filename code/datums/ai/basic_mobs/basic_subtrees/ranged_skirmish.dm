@@ -18,7 +18,7 @@
 
 /// How often will we try to perform our ranged attack?
 /datum/ai_behavior/ranged_skirmish
-	action_cooldown = 1 SECONDS
+	action_cooldown = 0.5 SECONDS
 
 /datum/ai_behavior/ranged_skirmish/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, max_range, min_range)
 	. = ..()
@@ -45,3 +45,6 @@
 
 	controller.ai_interact(target = target, combat_mode = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/ai_planning_subtree/ranged_skirmish/no_minimum
+	min_range = 0

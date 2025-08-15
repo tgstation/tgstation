@@ -1,6 +1,3 @@
-#define NEXT_PAGE_ID "__next__"
-#define DEFAULT_CHECK_DELAY 20
-
 GLOBAL_LIST_EMPTY(radial_menus)
 
 /atom/movable/screen/radial
@@ -26,6 +23,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/choice
 	var/next_page = FALSE
 	var/tooltips = FALSE
+	var/tooltip_theme
 
 /atom/movable/screen/radial/slice/set_parent(new_value)
 	. = ..()
@@ -39,7 +37,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	else
 		icon_state = "[parent.radial_slice_icon]_focus"
 	if(tooltips)
-		openToolTip(usr, src, params, title = name)
+		openToolTip(usr, src, params, title = name, theme = tooltip_theme)
 	if (click_on_hover && !isnull(usr) && !isnull(parent))
 		Click(location, control, params)
 
@@ -113,7 +111,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	var/hudfix_method = TRUE //TRUE to change anchor to user, FALSE to shift by py_shift
 	var/py_shift = 0
-	var/entry_animation = TRUE
+	var/button_animation_flags = BUTTON_SLIDE_IN
 
 	///A replacement icon state for the generic radial slice bg icon. Doesn't affect the next page nor the center buttons
 	var/radial_slice_icon
@@ -163,6 +161,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			var/atom/movable/screen/radial/slice/new_element = new /atom/movable/screen/radial/slice
 			new_element.tooltips = use_tooltips
 			new_element.set_parent(src)
+			if(button_animation_flags & BUTTON_FADE_IN)
+				new_element.alpha = 0
 			elements += new_element
 
 	var/page = 1
@@ -186,9 +186,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	page_data[page] = current
 	pages = page
 	current_page = clamp(set_page, 1, pages)
-	update_screen_objects(entry_animation, click_on_hover)
+	update_screen_objects(button_animation_flags, click_on_hover)
 
-/datum/radial_menu/proc/update_screen_objects(anim = FALSE, click_on_hover = FALSE)
+/datum/radial_menu/proc/update_screen_objects(anim_flag = NONE, click_on_hover = FALSE)
 	var/list/page_choices = page_data[current_page]
 	var/angle_per_element = round(zone / page_choices.len)
 	for(var/i in 1 to elements.len)
@@ -198,11 +198,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			HideElement(element)
 			element.click_on_hover = FALSE
 		else
-			SetElement(element,page_choices[i],angle,anim = anim,anim_order = i)
+			SetElement(element,page_choices[i],angle,anim_flag = anim_flag,anim_order = i)
 			// Only activate click on hover after the animation plays
 			if (!click_on_hover)
 				continue
-			if (anim)
+			if (anim_flag)
 				addtimer(VARSET_CALLBACK(element, click_on_hover, TRUE), i * 0.5)
 			else
 				element.click_on_hover = TRUE
@@ -217,11 +217,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	E.choice = null
 	E.next_page = FALSE
 
-/datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/E,choice_id,angle,anim,anim_order)
+/datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/E, choice_id, angle, anim_flag, anim_order)
 	//Position
 	var/py = round(cos(angle) * radius) + py_shift
 	var/px = round(sin(angle) * radius)
-	if(anim)
+	if(anim_flag & BUTTON_SLIDE_IN)
 		var/timing = anim_order * 0.5
 		var/matrix/starting = matrix()
 		starting.Scale(0.1,0.1)
@@ -232,8 +232,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.pixel_y = py
 		E.pixel_x = px
 
-	//Visuals
-	E.alpha = 255
+	if(anim_flag & BUTTON_FADE_IN)
+		animate(E, alpha = 255, time = 0.15 SECONDS, easing = EASE_OUT)
+	else
+		E.alpha = 255
+
 	E.mouse_opacity = MOUSE_OPACITY_ICON
 	E.cut_overlays()
 	E.vis_contents.Cut()
@@ -256,17 +259,22 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			var/atom/movable/AM = choices_values[choice_id] //Movables only
 			E.name = AM.name
 		E.choice = choice_id
+		E.tooltip_theme = choice_datum?.tooltip_theme
 		E.maptext = null
 		E.next_page = FALSE
 		if(choices_icons[choice_id])
 			E.add_overlay(choices_icons[choice_id])
 		if (choice_datum?.info)
 			var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
+			info_button.name = "Info: [E.name]"
+			info_button.tooltip_theme = choice_datum.tooltip_theme
 			SET_PLANE_EXPLICIT(info_button, ABOVE_HUD_PLANE, anchor)
 			info_button.layer = RADIAL_CONTENT_LAYER
 			E.vis_contents += info_button
 
-/datum/radial_menu/New()
+/datum/radial_menu/New(display_close_button)
+	if(!display_close_button)
+		return
 	close_button = new
 	close_button.set_parent(src)
 
@@ -324,10 +332,15 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		return
 	current_user = M.client
 	//Blank
-	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER, pixel_x = offset_x, pixel_y = offset_y)
+	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER)
+	menu_holder.pixel_w = offset_x
+	menu_holder.pixel_z = offset_y
+
 	SET_PLANE_EXPLICIT(menu_holder, ABOVE_HUD_PLANE, M)
 	menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
-	menu_holder.vis_contents += elements + close_button
+	menu_holder.vis_contents += elements
+	if(!isnull(close_button))
+		menu_holder.vis_contents += close_button
 	current_user.images += menu_holder
 
 /datum/radial_menu/proc/hide()
@@ -345,6 +358,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 				next_check = world.time + check_delay
 		stoplag(1)
 
+/datum/radial_menu/proc/remove_menu()
+	if(!(button_animation_flags & BUTTON_FADE_OUT))
+		qdel(src)
+		return
+	for(var/atom/movable/element as anything in elements)
+		animate(element, alpha = 0, time = 0.15 SECONDS)
+	QDEL_IN(src, 0.5 SECONDS)
+
 /datum/radial_menu/Destroy()
 	Reset()
 	hide()
@@ -356,11 +377,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, entry_animation = TRUE, click_on_hover = FALSE, user_space = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, button_animation_flags = BUTTON_SLIDE_IN, click_on_hover = FALSE, user_space = FALSE, check_delay = DEFAULT_CHECK_DELAY, display_close_button = TRUE, radial_menu_offset = list(0, 0))
 	if(!user || !anchor || !length(choices))
 		return
 
-	if(length(choices)==1 && autopick_single_option)
+	if(length(choices) == 1 && autopick_single_option)
 		return choices[1]
 
 	if(!uniqueid)
@@ -372,8 +393,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			menu.finished = TRUE
 		return
 
-	var/datum/radial_menu/menu = new
-	menu.entry_animation = entry_animation
+	var/datum/radial_menu/menu = new(display_close_button)
+	menu.button_animation_flags = button_animation_flags
+	menu.check_delay = check_delay
 	GLOB.radial_menus[uniqueid] = menu
 	if(radius)
 		menu.radius = radius
@@ -390,10 +412,12 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		var/turf/anchor_turf = get_turf(anchor)
 		offset_x = (anchor_turf.x - user_turf.x) * ICON_SIZE_X + anchor.pixel_x - user.pixel_x
 		offset_y = (anchor_turf.y - user_turf.y) * ICON_SIZE_Y + anchor.pixel_y - user.pixel_y
+	offset_x += radial_menu_offset[1]
+	offset_y += radial_menu_offset[2]
 	menu.show_to(user, offset_x, offset_y)
 	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice
-	qdel(menu)
+	menu.remove_menu()
 	GLOB.radial_menus -= uniqueid
 	if(require_near && !in_range(anchor, user))
 		return
@@ -412,6 +436,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	/// If provided, will display an info button that will put this text in your chat
 	var/info
+
+	/// If provided, changes the tooltip theme for this choice
+	var/tooltip_theme
 
 /datum/radial_menu_choice/Destroy(force)
 	. = ..()

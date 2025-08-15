@@ -8,6 +8,7 @@
 	base_icon_state = "hygienebot"
 	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = MOB_UPPER_LAYER
+	gender = MALE
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -122,7 +123,6 @@
 
 	for(var/mob/living/carbon/human in loc)
 		commence_wash(human)
-
 
 /mob/living/basic/bot/hygienebot/proc/generate_ai_speech()
 	ai_controller.set_blackboard_key(BB_WASH_FOUND, found_announcements)

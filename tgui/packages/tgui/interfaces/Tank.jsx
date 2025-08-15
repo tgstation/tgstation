@@ -1,19 +1,19 @@
-import { toFixed } from 'common/math';
-
-import { useBackend } from '../backend';
 import {
   Button,
   LabeledControls,
   NumberInput,
   RoundGauge,
   Section,
-} from '../components';
-import { formatSiUnit } from '../format';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };

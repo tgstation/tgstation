@@ -57,7 +57,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	wound_bonus = -25
-	bare_wound_bonus = 45
+	exposed_wound_bonus = 45
 	sharpness = SHARP_EDGED
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list(FACTION_HOSTILE)
@@ -90,7 +90,7 @@
 	health = 50
 	maxHealth = 50
 	gender = NEUTER
-	damage_coeff = list(BRUTE = 3, BURN = 3, TOX = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 3, BURN = 3, TOX = 1, STAMINA = 1, OXY = 1)
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/breadslice/plain = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
@@ -98,8 +98,10 @@
 	attacked_sound = 'sound/items/eatfood.ogg'
 	held_state = "breaddog"
 	worn_slot_flags = ITEM_SLOT_HEAD
+	//just ensuring the mats contained by the dog when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 3)
 
-/mob/living/basic/pet/dog/breaddog/CheckParts(list/parts)
+/mob/living/basic/pet/dog/breaddog/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
 	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
@@ -109,7 +111,7 @@
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free bread to the station!	'I’m not alone, and you aren’t either'</b>")
 	var/default_name = "Kobun"
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are \the [src]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
@@ -117,7 +119,9 @@
 
 /mob/living/basic/pet/dog/breaddog/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(stat)
+	if(!.) //dead or deleted
+		return
+	if(stat) // consciousness check
 		return
 
 	if(health < maxHealth)

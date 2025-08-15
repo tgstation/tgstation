@@ -155,8 +155,10 @@
 	if(destroy_objects)
 		if(isturf(target))
 			SSexplosions.medturf += target
-		if(isobj(target) && target.density)
-			SSexplosions.med_mov_atom += target
+		if(isobj(target) && target.density && !ismecha(target))
+			target.take_damage(charge_damage)
+		if(ismecha(target))
+			target.take_damage(charge_damage)
 
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	try_hit_target(source, target)
@@ -216,7 +218,7 @@
 	var/mob/living/living_target = target
 	if(ishuman(living_target))
 		var/mob/living/carbon/human/human_target = living_target
-		if(human_target.check_block(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
+		if(human_target.check_block(source, 0, "\the [source]", attack_type = LEAP_ATTACK) && living_source)
 			living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 			return
 

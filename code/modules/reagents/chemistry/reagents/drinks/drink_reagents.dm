@@ -228,7 +228,7 @@
 
 /datum/reagent/milk/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
-		fish.adjust_health(fish.health + initial(fish.health) * max(fish.get_hunger() * 0.5, 0.12))
+		fish.repair_damage(fish.max_integrity * max(fish.get_hunger() * 0.5, 0.12))
 		fish.sate_hunger()
 		return TRUE
 
@@ -700,7 +700,6 @@
 /datum/reagent/consumable/ice
 	name = "Ice"
 	description = "Frozen water, your dentist wouldn't like you chewing this."
-	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -995,6 +994,18 @@
 	taste_description = "sweet pomegranates"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/grenadine/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	if(IS_REVOLUTIONARY(drinker))
+		to_chat(drinker, span_warning("Antioxidants are weakening your radical spirit!"))
+
+/datum/reagent/consumable/grenadine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	if(IS_REVOLUTIONARY(drinker))
+		drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
+		if(drinker.getStaminaLoss() < 80)
+			drinker.adjustStaminaLoss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.
+
 /datum/reagent/consumable/parsnipjuice
 	name = "Parsnip Juice"
 	description = "Why..."
@@ -1072,7 +1083,7 @@
 	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
 	if(SPT_PROB(23, seconds_per_tick))
-		affected_mob.sneeze()
+		affected_mob.emote("sneeze")
 
 /datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1297,4 +1308,4 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.02 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 20 * ETHEREAL_DISCHARGE_RATE)

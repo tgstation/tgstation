@@ -2,6 +2,8 @@
 
 /obj/item/skillchip/matrix_taunt
 	name = "BULLET_DODGER skillchip"
+	desc = "Overclock, override and overload your kinesthesic senses, proprioception and reflexes for a small window of time to \
+		automatically dodge fired projectiles. Activated by performing a taunt."
 	skill_name = "Taunt 2 Dodge"
 	skill_description = "At the cost of stamina, your taunts can also be used to dodge incoming projectiles."
 	skill_icon = FA_ICON_SPINNER

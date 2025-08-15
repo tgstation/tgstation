@@ -36,7 +36,7 @@
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
 		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
-		new /obj/item/stack/package_wrap(turf_loc, 1)
+		new /obj/item/stack/package_wrap(turf_loc)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 
@@ -73,22 +73,22 @@
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag
 
-/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/object)
+/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/container)
 	if(ismovable(loc))
 		var/atom/movable/movable_loc = loc //can't unwrap the wrapped container if it's inside something.
-		movable_loc.relay_container_resist_act(user, object)
+		movable_loc.relay_container_resist_act(user, container)
 		return
-	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 5 SECONDS, target = object))
-		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
+	to_chat(user, span_notice("You lean on the back of [container] and start pushing to rip the wrapping around it."))
+	if(do_after(user, 5 SECONDS, target = container))
+		if(!user || user.stat != CONSCIOUS || user.loc != container || container.loc != src)
 			return
-		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))
-		object.forceMove(loc)
+		to_chat(user, span_notice("You successfully removed [container]'s wrapping!"))
+		container.forceMove(loc)
 		unwrap_contents()
 		post_unwrap_contents(user)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, span_warning("You fail to remove [object]'s wrapping!"))
+			to_chat(user, span_warning("You fail to remove [container]'s wrapping!"))
 
 /obj/item/delivery/update_icon_state()
 	. = ..()
@@ -103,7 +103,7 @@
 	if(sticker)
 		. += "[base_icon_state]_barcode"
 
-/obj/item/delivery/attackby(obj/item/item, mob/user, params)
+/obj/item/delivery/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/dest_tagger = item
 
@@ -352,7 +352,7 @@
 	if(payments_acc)
 		. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
-/obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, params)
+/obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(isidcard(item))
 		var/obj/item/card/id/potential_acc = item

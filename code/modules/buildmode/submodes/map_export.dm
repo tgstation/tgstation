@@ -14,6 +14,7 @@
 		"Area Saving" = SAVE_AREAS,
 		"Space Turf Saving" = SAVE_SPACE,
 		"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
+		"Atmos Saving" = SAVE_ATMOS,
 	)
 	var/what_to_change = tgui_input_list(builder, "What export setting would you like to toggle?", "Map Exporter", options)
 	if (!what_to_change)
@@ -22,7 +23,7 @@
 	to_chat(builder, span_notice("[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"]."))
 
 /datum/buildmode_mode/map_export/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Select corner")] -> Left Mouse Button on obj/turf/mob\n\
 		[span_bold("Set export options")] -> Right Mouse Button on buildmode button"))
 	)
@@ -84,7 +85,7 @@ GLOBAL_VAR_INIT(map_writing_running, FALSE)
 	var/dat = write_map(minx, miny, minz, maxx, maxy, maxz, save_flag, shuttle_flag)
 
 	//Step 2: Write the data to a file and give map to client
-	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
+	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss", TIMEZONE_UTC)
 	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exported_map_[date]"))
 	send_exported_map(usr, file_name, dat)
 	to_chat(usr, span_green("The map was successfully saved!"))

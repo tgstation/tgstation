@@ -3,7 +3,7 @@
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*8, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 2)
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_TOGGLEABLE_INPUT
 
 	var/scanning = FALSE
 	var/health_scan

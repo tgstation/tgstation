@@ -1,17 +1,16 @@
 /datum/looping_sound/reverse_bear_trap
 	mid_sounds = list('sound/effects/clock_tick.ogg' = 1)
-	mid_length = 3.5
+	mid_length = 0.35 SECONDS
 	volume = 25
-
 
 /datum/looping_sound/reverse_bear_trap_beep
 	mid_sounds = list('sound/machines/beep/beep.ogg' = 1)
-	mid_length = 60
+	mid_length = 6 SECONDS
 	volume = 10
 
 /datum/looping_sound/siren
 	mid_sounds = list('sound/items/weeoo1.ogg' = 1)
-	mid_length = 15
+	mid_length = 1.5 SECONDS
 	volume = 20
 
 /datum/looping_sound/tape_recorder_hiss
@@ -48,3 +47,15 @@
 /datum/looping_sound/zipline
 	mid_sounds = list('sound/items/weapons/zipline_mid.ogg' = 1)
 	volume = 5
+
+/datum/looping_sound/tesla_cannon
+	start_sound = list('sound/items/weapons/gun/tesla/tesla_start.ogg' = 1)
+	start_volume = 100
+	start_length = 200 MILLISECONDS
+	mid_sounds = list('sound/items/weapons/gun/tesla/tesla_loop.ogg' = 1)
+	mid_length = 3.8 SECONDS
+	volume = 100
+	end_sound = list('sound/items/weapons/gun/tesla/power_breaker_fan.ogg' = 1)
+	end_volume = 15
+	ignore_walls = FALSE
+	reserve_random_channel = TRUE

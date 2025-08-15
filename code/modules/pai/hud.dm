@@ -2,6 +2,7 @@
 
 /atom/movable/screen/pai
 	icon = 'icons/hud/screen_pai.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/required_software
 
 /atom/movable/screen/pai/Click()

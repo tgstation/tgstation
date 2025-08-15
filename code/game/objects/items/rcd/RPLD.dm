@@ -92,10 +92,6 @@
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
 
-/obj/item/construction/plumbing/cyborg_unequip(mob/user)
-	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
-	return ..()
-
 /obj/item/construction/plumbing/attack_self(mob/user)
 	. = ..()
 	ui_interact(user)
@@ -113,7 +109,7 @@
 
 /obj/item/construction/plumbing/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/plumbing),
+		get_asset_datum(/datum/asset/spritesheet_batched/plumbing),
 	)
 
 /obj/item/construction/plumbing/ui_static_data(mob/user)
@@ -262,7 +258,12 @@
 				balloon_alert(user, "unanchor first!")
 				return ITEM_INTERACT_BLOCKING
 			if(do_after(user, 2 SECONDS, target = interacting_with))
-				machine_target.deconstruct() //Let's not substract matter
+				var/design_cost = designs[machine_target.type]
+				var/to_return = min(design_cost, max_matter - matter) // Give back matter was used to create smth
+				if(to_return < design_cost)
+					balloon_alert(user, "storage full!")
+				matter += to_return
+				machine_target.deconstruct()
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
 

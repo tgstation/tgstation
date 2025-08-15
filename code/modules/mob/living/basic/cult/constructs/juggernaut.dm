@@ -44,8 +44,8 @@
 
 	apply_damage(bullet.damage * 0.5, bullet.damage_type)
 	visible_message(
-		span_danger("The [bullet.name] is reflected by [src]'s armored shell!"),
-		span_userdanger("The [bullet.name] is reflected by your armored shell!"),
+		span_danger("\The [bullet] is reflected by [src]'s armored shell!"),
+		span_userdanger("\The [bullet] is reflected by your armored shell!"),
 	)
 
 	bullet.reflect(src)
@@ -54,6 +54,7 @@
 
 // Alternate juggernaut themes
 /mob/living/basic/construct/juggernaut/angelic
+	faction = list(FACTION_HOLY)
 	theme = THEME_HOLY
 
 /mob/living/basic/construct/juggernaut/angelic/Initialize(mapload)
@@ -61,4 +62,5 @@
 	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
 
 /mob/living/basic/construct/juggernaut/mystic
+	faction = list(ROLE_WIZARD)
 	theme = THEME_WIZARD

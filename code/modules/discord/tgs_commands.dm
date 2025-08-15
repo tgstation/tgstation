@@ -3,7 +3,7 @@
 	help_text = "Gets the playercount, gamemode, and address of the server"
 
 /datum/tgs_chat_command/tgscheck/Run(datum/tgs_chat_user/sender, params)
-	var/server = CONFIG_GET(string/server)
+	var/server = CONFIG_GET(string/public_address) || CONFIG_GET(string/server)
 	return new /datum/tgs_message_content("[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.current_map.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]")
 
 /datum/tgs_chat_command/gameversion
@@ -38,7 +38,7 @@
 	help_text = "Pings the invoker when the round ends"
 
 /datum/tgs_chat_command/notify/Run(datum/tgs_chat_user/sender, params)
-	if(!CONFIG_GET(string/channel_announce_new_game))
+	if(!CONFIG_GET(str_list/channel_announce_new_game))
 		return new /datum/tgs_message_content("Notifcations are currently disabled")
 
 	for(var/member in SSdiscord.notify_members) // If they are in the list, take them out

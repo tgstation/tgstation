@@ -12,7 +12,6 @@ import {
 import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -51,15 +50,18 @@ export const CheckboxInput = (props) => {
 
     setSelections(newSelections);
   };
-  const selectionIndexes = selections.map(
-    (selected: string) => items.indexOf(selected) + 1,
-  );
+
+  const selectionsWithIndexes = (
+    selections: string[],
+    items: string[],
+  ): [string, number][] =>
+    selections.map((selected) => [selected, items.indexOf(selected) + 1]);
 
   return (
     <Window title={title} width={425} height={300}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content>
-        <Stack fill vertical>
+        <Stack fill vertical g={0}>
           <Stack.Item>
             <NoticeBox info textAlign="center">
               {decodeHtmlEntities(message)}{' '}
@@ -67,12 +69,12 @@ export const CheckboxInput = (props) => {
               {max_checked < 50 && ` (Max: ${max_checked})`}
             </NoticeBox>
           </Stack.Item>
-          <Stack.Item grow mt={0}>
+          <Stack.Item grow>
             <Section fill scrollable>
               <Table>
                 {toDisplay.map((item, index) => (
-                  <TableRow className="candystripe" key={index}>
-                    <TableCell>
+                  <Table.Row className="candystripe" key={index}>
+                    <Table.Cell>
                       <Button.Checkbox
                         checked={selections.includes(item)}
                         disabled={
@@ -84,29 +86,25 @@ export const CheckboxInput = (props) => {
                       >
                         {item}
                       </Button.Checkbox>
-                    </TableCell>
-                  </TableRow>
+                    </Table.Cell>
+                  </Table.Row>
                 ))}
               </Table>
             </Section>
           </Stack.Item>
-          <Stack m={1} mb={0}>
+          <Stack m={1}>
             <Stack.Item>
               <Tooltip content="Search" position="bottom">
                 <Icon name="search" mt={0.5} />
               </Tooltip>
             </Stack.Item>
             <Stack.Item grow>
-              <Input
-                fluid
-                value={searchQuery}
-                onInput={(_, value) => setSearchQuery(value)}
-              />
+              <Input fluid value={searchQuery} onChange={setSearchQuery} />
             </Stack.Item>
           </Stack>
-          <Stack.Item mt={0.7}>
+          <Stack.Item>
             <Section>
-              <InputButtons input={[selections, selectionIndexes]} />
+              <InputButtons input={selectionsWithIndexes(selections, items)} />
             </Section>
           </Stack.Item>
         </Stack>

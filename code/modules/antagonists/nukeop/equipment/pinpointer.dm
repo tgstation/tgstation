@@ -43,7 +43,10 @@
 			for(var/V in GLOB.ai_list)
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
-					target = A
+					if(A.linked_core)
+						target = A.linked_core
+					else
+						target = A
 			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 				if(apc.malfhack && apc.occupier)
 					target = apc
@@ -70,10 +73,6 @@
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
 	flags_1 = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
-/obj/item/pinpointer/syndicate_cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pinpointer/syndicate_cyborg/cyborg_unequip(mob/user)
 	if(!active)

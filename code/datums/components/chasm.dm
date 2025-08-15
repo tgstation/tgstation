@@ -10,6 +10,7 @@
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/docking_port,
 		/obj/effect/abstract,
+		/obj/effect/atmos_shield,
 		/obj/effect/collapse,
 		/obj/effect/constructing_effect,
 		/obj/effect/dummy/phased_mob,
@@ -67,7 +68,7 @@
 	drop_stuff(movable)
 
 /datum/component/chasm/proc/block_teleport()
-	return COMPONENT_BLOCK_TELEPORT
+	return TRUE
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER

@@ -86,7 +86,7 @@
 	suffix = null
 	if(name == "\improper MULEbot")
 		name = "\improper MULEbot [id]"
-	set_home(loc)
+	set_home(get_turf(src))
 
 /mob/living/simple_animal/bot/mulebot/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -101,12 +101,12 @@
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
-			. += span_notice("It has \a [cell] installed.")
+			. += span_notice("[p_They()] [p_have()] \a [cell] installed.")
 			. += span_info("You can use a <b>crowbar</b> to remove it.")
 		else
-			. += span_notice("It has an empty compartment where a <b>power cell</b> can be installed.")
+			. += span_notice("[p_They()] [p_have()] an empty compartment where a <b>power cell</b> can be installed.")
 	if(load) //observer check is so we don't show the name of the ghost that's sitting on it to prevent metagaming who's ded.
-		. += span_notice("\A [isobserver(load) ? "ghostly figure" : load] is on its load platform.")
+		. += span_notice("\A [isobserver(load) ? "ghostly figure" : load] is on [p_their()] load platform.")
 
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
@@ -178,7 +178,7 @@
 	diag_hud_set_mulebotcell()
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
+/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/stock_parts/power_store/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
@@ -226,7 +226,7 @@
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
-	load_overlay.pixel_y = initial(load.pixel_y) + 11
+	load_overlay.pixel_z = initial(load.pixel_z) + 11
 	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -757,7 +757,7 @@
 		cell.forceMove(Tsec)
 		cell = null
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/mulebot/remove_air(amount) //To prevent riders suffocating
@@ -853,7 +853,7 @@
 	if(!isobserver(load))
 		return
 	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
-	ghost_overlay.pixel_y = 12
+	ghost_overlay.pixel_z = 12
 	. += ghost_overlay
 
 /mob/living/simple_animal/bot/mulebot/paranormal/get_load_name() //Don't reveal the name of ghosts so we can't metagame who died and all that.

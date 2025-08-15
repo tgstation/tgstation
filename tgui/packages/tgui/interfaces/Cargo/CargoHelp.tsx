@@ -1,4 +1,4 @@
-import { Box, NoticeBox, Section, Stack } from '../../components';
+import { Box, NoticeBox, Section, Stack } from 'tgui-core/components';
 
 const ORDER_TEXT = `Each department on the station will order crates from their own personal
         consoles. These orders are ENTIRELY FREE! They do not come out of

@@ -47,10 +47,17 @@
 
 /obj/item/antag_spawner/contract/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(used || polling || !ishuman(usr))
+	if(.)
 		return
-	INVOKE_ASYNC(src, PROC_REF(poll_for_student), usr, params["school"])
-	SStgui.close_uis(src)
+	switch(action)
+		if("buy")
+			if(used || polling || !ishuman(ui.user))
+				return
+			var/selected_school = params["school"]
+			if(!(selected_school in ALL_APPRENTICE_TYPES))
+				return
+			INVOKE_ASYNC(src, PROC_REF(poll_for_student), ui.user, params["school"])
+			SStgui.close_uis(src)
 
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, "contacting apprentice...")
@@ -69,7 +76,7 @@
 	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
-	M.key = C.key
+	M.PossessByPlayer(C.key)
 	var/datum/mind/app_mind = M.mind
 
 	var/datum/antagonist/wizard/apprentice/app = new()
@@ -84,7 +91,6 @@
 		master_wizard.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
 	app_mind.set_assigned_role(SSjob.get_job_type(/datum/job/wizard_apprentice))
-	app_mind.special_role = ROLE_WIZARD_APPRENTICE
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 
 ///////////BORGS AND OPERATIVES
@@ -99,7 +105,7 @@
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
 	/// The name of the special role given to the recruit
-	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
+	var/special_role_name = ROLE_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
 	/// The antag datum applied
@@ -157,7 +163,7 @@
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
-	op_mind.special_role = special_role_name
+	LAZYADD(op_mind.special_roles, special_role_name)
 
 	if(outfit)
 		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(antag_datum)
@@ -240,10 +246,10 @@
 	borg.mmi.brainmob.name = brainopsname
 	borg.real_name = borg.name
 
-	borg.key = C.key
+	borg.PossessByPlayer(C.key)
 
 	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
-	borg.mind.special_role = special_role_name
+	LAZYADD(borg.mind.special_roles, special_role_name)
 	borg.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
@@ -281,9 +287,9 @@
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	var/mob/living/basic/demon/spawned = new demon_type(T)
-	new /obj/effect/dummy/phased_mob(T, spawned)
+	new /obj/effect/dummy/phased_mob/blood(T, spawned)
 
-	spawned.key = C.key
+	spawned.PossessByPlayer(C.key)
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -387,7 +393,7 @@
 
 		human_mob.equipOutfit(outfit)
 
-	op_mind.special_role = role_to_play
+	LAZYADD(op_mind.special_roles, role_to_play)
 
 	do_special_things(spawned_mob, user)
 
@@ -459,4 +465,3 @@
 	internals_slot = NONE
 	belt = /obj/item/lighter/skull
 	r_hand = /obj/item/food/grown/banana
-

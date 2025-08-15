@@ -10,7 +10,7 @@
 	///Distance we can teleport someone passively
 	var/teleport_distance = 4
 
-/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan)
 	. = ..()
 	apply_wibbly_filters(src)
 
@@ -40,8 +40,7 @@
 			continue
 		if(is_centcom_level(turf.z) || is_away_level(turf.z))
 			continue
-		var/area/area = get_area(turf)
-		if(!area || (area.area_flags & NOTELEPORT))
+		if(!check_teleport_valid(src, turf))
 			continue
 		possible += beacon
 
@@ -98,7 +97,7 @@
 	teleport_distance = 12
 	anomaly_core = null
 
-/obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	transform *= 3

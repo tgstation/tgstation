@@ -12,8 +12,8 @@
 	var/datum/antagonist/obsessed/antagonist
 	var/viewing = FALSE //it's a lot better to store if the owner is watching the obsession than checking it twice between two procs
 
-	var/total_time_creeping = 0 //just for round end fun
-	var/time_spent_away = 0
+	var/total_time_creeping = 0 SECONDS //just for round end fun
+	var/time_spent_away = 0 SECONDS
 	var/obsession_hug_count = 0
 
 /datum/brain_trauma/special/obsessed/on_gain()
@@ -22,14 +22,13 @@
 		obsession = find_obsession()
 		if(!obsession)//we didn't find one
 			lose_text = ""
-			qdel(src)
-			return
+			return FALSE
 	gain_text = span_warning("You hear a sickening, raspy voice in your head. It wants one small task of you...")
 	owner.mind.add_antag_datum(/datum/antagonist/obsessed)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/obsessed)
 	antagonist.trauma = src
 	RegisterSignal(obsession, COMSIG_MOB_EYECONTACT, PROC_REF(stare))
-	..()
+	. = ..()
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
@@ -51,15 +50,15 @@
 	if(viewing)
 		owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
 		total_time_creeping += seconds_per_tick SECONDS
-		time_spent_away = 0
+		time_spent_away = 0 SECONDS
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
 			attachedobsessedobj.timer -= seconds_per_tick SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 
 /datum/brain_trauma/special/obsessed/proc/out_of_view()
-	time_spent_away += 20
-	if(time_spent_away > 1800) //3 minutes
+	time_spent_away += 2 SECONDS
+	if(time_spent_away > 3 MINUTES) //3 minutes
 		owner.add_mood_event("creeping", /datum/mood_event/notcreepingsevere, obsession.name)
 	else
 		owner.add_mood_event("creeping", /datum/mood_event/notcreeping, obsession.name)

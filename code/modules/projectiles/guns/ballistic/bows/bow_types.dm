@@ -37,7 +37,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/gun/ballistic/bow/divine/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
 	SIGNAL_HANDLER

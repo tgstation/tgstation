@@ -9,7 +9,7 @@
 /obj/machinery/computer/arcade/amputation/attack_tk(mob/user)
 	return //that's a pretty damn big guillotine
 
-/obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
+/obj/machinery/computer/arcade/amputation/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!iscarbon(user))
 		return

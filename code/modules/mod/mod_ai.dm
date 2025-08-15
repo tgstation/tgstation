@@ -144,7 +144,7 @@
 		return FALSE
 	else if(!wearer && (!has_gravity() || !isturf(loc)))
 		return FALSE
-	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown_active)
+	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown_deployed)
 	subtract_charge(CHARGE_PER_STEP)
 	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg', 25, TRUE)
 	if(ismovable(wearer?.loc))

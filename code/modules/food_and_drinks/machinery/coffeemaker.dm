@@ -3,12 +3,13 @@
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "A Modello 3 Coffeemaker that brews coffee and holds it at the perfect temperature of 176 fahrenheit. Made by Piccionaia Home Appliances."
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_nopot_nocart"
 	base_icon_state = "coffeemaker"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
 	anchored_tabletop_offset = 4
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
@@ -148,7 +149,10 @@
 /obj/machinery/coffeemaker/proc/overlay_checks()
 	. = list()
 	if(coffeepot)
-		. += "coffeemaker_pot"
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "coffeemaker_pot_bluespace"
+		else
+			. += "coffeemaker_pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(cartridge)
 		. += "coffeemaker_cartidge"
 	return .
@@ -179,7 +183,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
+/obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	//You can only screw open empty grinder
 	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item))
 		return FALSE
@@ -418,6 +422,7 @@
 	operate_for(brew_time)
 	coffeepot.reagents.add_reagent_list(cartridge.drink_type)
 	cartridge.charges--
+	update_appearance(UPDATE_OVERLAYS)
 
 //Coffee Cartridges: like toner, but for your coffee!
 /obj/item/coffee_cartridge
@@ -481,17 +486,13 @@
 	name = "coffeemaker cartridge rack"
 	desc = "A small rack for storing coffeemaker cartridges."
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "coffee_cartrack4"
+	icon_state = "coffee_cartrack1"
 	base_icon_state = "coffee_cartrack"
 	contents_tag = "coffee cartridge"
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	spawn_type = /obj/item/coffee_cartridge
 	spawn_count = 1
-
-/obj/item/storage/fancy/coffee_cart_rack/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 4
-	atom_storage.set_holdable(/obj/item/coffee_cartridge)
+	storage_type = /datum/storage/coffee_cart_rack
 
 /*
  * impressa coffee maker
@@ -501,7 +502,6 @@
 /obj/machinery/coffeemaker/impressa
 	name = "impressa coffeemaker"
 	desc = "An industry-grade Impressa Modello 5 Coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
-	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_impressa"
 	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
 	initial_cartridge = null //no cartridge, just coffee beans
@@ -521,13 +521,13 @@
 
 /obj/machinery/coffeemaker/impressa/Destroy()
 	QDEL_NULL(coffeepot)
-	QDEL_NULL(coffee)
+	QDEL_LIST(coffee)
 	return ..()
 
 /obj/machinery/coffeemaker/impressa/examine(mob/user)
 	. = ..()
 	if(coffee)
-		. += span_notice("The internal grinder contains [coffee.len] scoop\s of coffee beans")
+		. += span_notice("The internal grinder contains [length(coffee)] scoop\s of coffee beans")
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()
@@ -536,10 +536,10 @@
 /obj/machinery/coffeemaker/impressa/overlay_checks()
 	. = list()
 	if(coffeepot)
-		if(coffeepot.reagents.total_volume > 0)
-			. += "pot_full"
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "pot_bluespace"
 		else
-			. += "pot_empty"
+			. += "pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(coffee_cups > 0)
 		if(coffee_cups >= max_coffee_cups/3)
 			if(coffee_cups > max_coffee_cups/1.5)
@@ -582,7 +582,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/coffeemaker/impressa/attackby(obj/item/attack_item, mob/living/user, params)
+/obj/machinery/coffeemaker/impressa/attackby(obj/item/attack_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	//You can only screw open empty grinder
 	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item))
 		return

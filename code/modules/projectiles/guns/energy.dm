@@ -29,6 +29,8 @@
 	var/single_shot_type_overlay = TRUE
 	///Should we give an overlay to empty guns?
 	var/display_empty = TRUE
+	///If we have an additional overlay based on our shot type while active
+	var/shot_type_fluff_overlay = FALSE
 
 	///whether the gun's cell drains the cyborg user's cell to recharge
 	var/use_cyborg_cell = FALSE
@@ -91,6 +93,9 @@
 		cell = new(src)
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
+	if(cell && resistance_flags & INDESTRUCTIBLE)
+		cell.resistance_flags |= INDESTRUCTIBLE
+	cell.resistance_flags |= BOMB_PROOF
 	update_ammo_types()
 	recharge_newshot(TRUE)
 	if(selfcharge)
@@ -174,9 +179,12 @@
 		update_appearance()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
+	. = ..()
+	if(.)
+		return
+
 	if(ammo_type.len > 1 && can_select)
 		select_fire(user)
-	return ..()
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -256,8 +264,9 @@
 		return
 
 	var/overlay_icon_state = "[icon_state]_charge"
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+
 	if(modifystate)
-		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		if(single_shot_type_overlay)
 			. += "[icon_state]_[initial(shot.select_name)]"
 		overlay_icon_state += "_[initial(shot.select_name)]"
@@ -266,13 +275,17 @@
 	if(ratio == 0 && display_empty)
 		. += "[icon_state]_empty"
 		return
+
+	if(shot_type_fluff_overlay)
+		. += "[icon_state]_[initial(shot.select_name)]_extra"
+
 	if(shaded_charge)
 		. += "[icon_state]_charge[ratio]"
 		return
 	var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
 	for(var/i = ratio, i >= 1, i--)
-		charge_overlay.pixel_x = ammo_x_offset * (i - 1)
-		charge_overlay.pixel_y = ammo_y_offset * (i - 1)
+		charge_overlay.pixel_w = ammo_x_offset * (i - 1)
+		charge_overlay.pixel_z = ammo_y_offset * (i - 1)
 		. += new /mutable_appearance(charge_overlay)
 
 
@@ -336,7 +349,7 @@
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
-			. = span_danger("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
+			. = span_rose("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
 
 /obj/item/gun/energy/proc/instant_recharge()
 	SIGNAL_HANDLER

@@ -2,6 +2,8 @@
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
+///from base of atom/movable/Moved(): (/atom, newloc, direction)
+#define COMSIG_MOVABLE_ATTEMPTED_MOVE "movable_attempted_move"
 ///from base of atom/movable/Moved(): (/atom)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE (1<<0)
@@ -29,6 +31,7 @@
 #define COMSIG_MOVABLE_IMPACT "movable_impact"
 ///from base of mob/living/hitby(): (mob/living/target, hit_zone, blocked, datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"
+	#define MOVABLE_IMPACT_ZONE_OVERRIDE (1<<0)
 ///from /atom/movable/proc/buckle_mob(): (mob/living/M, force, check_loc, buckle_mob_flags)
 #define COMSIG_MOVABLE_PREBUCKLE "prebuckle" // this is the last chance to interrupt and block a buckle before it finishes
 	#define COMPONENT_BLOCK_BUCKLE (1<<0)
@@ -52,6 +55,10 @@
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
 ///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
+/// from /atom/movable/can_z_move(): (turf/start, turf/destination)
+#define COMSIG_CAN_Z_MOVE "movable_can_z_move"
+	/// Return to block z movement
+	#define COMPONENT_CANT_Z_MOVE (1<<0)
 ///called before hearing a message from atom/movable/Hear():
 #define COMSIG_MOVABLE_PRE_HEAR "movable_pre_hear"
 	///cancel hearing the message because we're doing something else presumably
@@ -63,9 +70,11 @@
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
 	#define HEARING_RADIO_FREQ 5
-	#define HEARING_SPANS 6
-	#define HEARING_MESSAGE_MODE 7
-	#define HEARING_RANGE 8
+	#define HEARING_RADIO_FREQ_NAME 6
+	#define HEARING_RADIO_FREQ_COLOR 7
+	#define HEARING_SPANS 8
+	#define HEARING_MESSAGE_MODE 9
+	#define HEARING_RANGE 10
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
@@ -81,8 +90,6 @@
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 ///Called before a movable is being teleported from `check_teleport_valid()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTING "movable_teleporting"
-///Called when a movable is being teleported from `do_teleport()`: (destination, channel)
-#define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
 ///Called after a movable is teleported from `do_teleport()`: ()
 #define COMSIG_MOVABLE_POST_TELEPORT "movable_post_teleport"
 /// from /mob/living/can_z_move, sent to whatever the mob is buckled to. Only ridable movables should be ridden up or down btw.
@@ -98,7 +105,7 @@
 	/// Return to prevent the movable from talking into the radio.
 	#define COMPONENT_CANNOT_USE_RADIO (1<<0)
 
-/// Sent from /atom/movable/proc/say_quote() after say verb is chosen and before spans are applied.
+/// Sent from /atom/movable/proc/generate_messagepart() generating a quoted message, after say verb is chosen and before spans are applied.
 #define COMSIG_MOVABLE_SAY_QUOTE "movable_say_quote"
 	// Used to access COMSIG_MOVABLE_SAY_QUOTE argslist
 	/// The index of args that corresponds to the actual message
@@ -131,4 +138,3 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
-

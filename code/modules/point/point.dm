@@ -53,8 +53,8 @@
 	if (!isnull(hover_outline_index))
 		pointed_atom_appearance.filters.Cut(hover_outline_index, hover_outline_index + 1)
 
-	thought_bubble.pixel_x = 16
-	thought_bubble.pixel_y = 32
+	thought_bubble.pixel_w = 16
+	thought_bubble.pixel_z = 32
 	thought_bubble.alpha = 200
 
 	var/mutable_appearance/point_visual = mutable_appearance(

@@ -80,10 +80,6 @@
 		human_target.update_worn_oversuit()
 	update_item_action_buttons()
 
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return TRUE
-
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
 
@@ -91,15 +87,17 @@
 	if(disguise == null)
 		return
 	stealth_active = TRUE
-	if(ishuman(loc))
-		var/mob/living/carbon/human/wearer = loc
-		new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(wearer), wearer.dir)
-		RegisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(return_disguise_name))
-		wearer.icon = disguise.icon
-		wearer.icon_state = disguise.icon_state
-		wearer.cut_overlays()
-		wearer.add_overlay(disguise.overlays)
-		wearer.update_held_items()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/wearer = loc
+	new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(wearer), wearer.dir)
+	RegisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(return_disguise_name))
+	wearer.icon = disguise.icon
+	wearer.icon_state = disguise.icon_state
+	wearer.cut_overlays()
+	wearer.add_overlay(disguise.overlays)
+	wearer.update_held_items()
+	wearer.update_visible_name()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/return_disguise_name(mob/living/carbon/human/source, list/identity)
 	SIGNAL_HANDLER
@@ -112,12 +110,14 @@
 	if(!stealth_active)
 		return
 	stealth_active = FALSE
-	if(ishuman(loc))
-		var/mob/living/carbon/human/wearer = loc
-		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(wearer), wearer.dir)
-		UnregisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME)
-		wearer.cut_overlays()
-		wearer.regenerate_icons()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/wearer = loc
+	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(wearer), wearer.dir)
+	UnregisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME)
+	wearer.cut_overlays()
+	wearer.regenerate_icons()
+	wearer.update_visible_name()
 
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	DeactivateStealth()

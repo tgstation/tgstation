@@ -33,6 +33,14 @@
 	force = 0
 	worn_icon_state = "nothing"
 
+	/// Can this toy be placed on the floor?
+	var/floor_placeable = FALSE
+
+/obj/item/toy/Initialize(mapload)
+	. = ..()
+	if(floor_placeable)
+		AddElement(/datum/element/floor_placeable)
+
 /*
  * Balloons
  */
@@ -67,7 +75,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/reagent_containers/cup))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
@@ -156,7 +164,7 @@
 	)
 
 
-/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
 		return ..()
 
@@ -179,7 +187,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/balloon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
 		pop_balloon(monkey_pop = TRUE)
 	else
@@ -292,6 +300,7 @@
 	throw_speed = 2
 	throw_range = 5
 	force = 0
+	floor_placeable = TRUE
 
 /obj/item/toy/balloon_animal/guy
 	name = "balloon guy"
@@ -325,7 +334,7 @@
 
 /obj/item/toy/balloon_animal/ai
 	name = "balloon ai core"
-	desc = "A somewhat unrealistic balloon effigy of the station's AI core. Actual AI propably wouldn't smile like this."
+	desc = "A somewhat unrealistic balloon effigy of the station's AI core. Actual AI probably wouldn't smile like this."
 	icon_state = "balloon_ai"
 
 /obj/item/toy/balloon_animal/dog
@@ -355,7 +364,7 @@
 
 /obj/item/toy/balloon_animal/moth
 	name = "balloon moth"
-	desc = "A balloon effigy of a common member of moth flotillas. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-dissapearing' acts."
+	desc = "A balloon effigy of a common member of moth flotillas. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-disappearing' acts."
 	icon_state = "balloon_moth"
 
 /obj/item/toy/balloon_animal/ethereal
@@ -502,7 +511,7 @@
 	. = ..()
 	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
-/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
+/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
@@ -542,7 +551,7 @@
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
-	desc = "Make sure to recyle the box in an autolathe when it gets empty."
+	desc = "Make sure to recycle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
@@ -565,6 +574,7 @@
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
 	inhand_icon_state = "e_sword"
+	icon_angle = -45
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -652,7 +662,7 @@
 
 
 // Copied from /obj/item/melee/energy/sword/attackby
-/obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
+/obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/toy/sword))
 		var/obj/item/toy/sword/attatched_sword = weapon
 		if(HAS_TRAIT(weapon, TRAIT_NODROP))
@@ -682,6 +692,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "foamblade"
 	inhand_icon_state = "arm_blade"
+	icon_angle = -180
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	attack_verb_continuous = list("pricks", "absorbs", "gores")
@@ -694,7 +705,7 @@
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
-	inhand_icon_state = "artistic_toolbox"
+	inhand_icon_state = "toolbox_green"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	hitsound = 'sound/items/weapons/smash.ogg'
@@ -781,6 +792,7 @@
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -788,9 +800,17 @@
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices")
-	attack_verb_simple = list("attack", "slash", "stab", "slice")
+	attack_verb_continuous = list("attacks", "slashes", "slices")
+	attack_verb_simple = list("attack", "slash", "slice")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/toy/katana/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /*
  * Snap pops
@@ -857,6 +877,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "owlprize"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
@@ -956,6 +977,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -1000,6 +1022,7 @@
 	icon_state = "minimeteor"
 	inhand_icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 
 /obj/item/toy/minimeteor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
@@ -1026,6 +1049,7 @@
 	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 
 /obj/item/toy/redbutton/attack_self(mob/user)
@@ -1121,6 +1145,7 @@
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -1134,6 +1159,7 @@
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)
@@ -1158,8 +1184,8 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "toy_mouse"
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
 	resistance_flags = FLAMMABLE
+	floor_placeable = TRUE
 
 
 /*
@@ -1169,10 +1195,11 @@
 	name = "\improper Non-Specific Action Figure action figure"
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoy"
+	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/figure/Initialize(mapload)
 	. = ..()
@@ -1405,6 +1432,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "puppet"
 	inhand_icon_state = "puppet"
+	floor_placeable = TRUE
 	var/doll_name = "Dummy"
 
 //Add changing looks when i feel suicidal about making 20 inhands for these.
@@ -1428,6 +1456,7 @@
 	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
 	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "shell1"
+	floor_placeable = TRUE
 	var/static/list/possible_colors = list("" = 2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 
 /obj/item/toy/seashell/Initialize(mapload)
@@ -1472,7 +1501,7 @@
  */
 /obj/item/toy/eldritch_book
 	name = "Codex Cicatrix"
-	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
+	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge googly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
 	icon = 'icons/obj/antags/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
@@ -1521,14 +1550,6 @@
 	icon_state = "pierced_illusion"
 	item_flags = NO_PIXEL_RANDOM_DROP
 
-/obj/item/storage/box/heretic_box
-	name = "box of pierced realities"
-	desc = "A box containing toys resembling pierced realities."
-
-/obj/item/storage/box/heretic_box/PopulateContents()
-	for(var/i in 1 to rand(1,4))
-		new /obj/item/toy/reality_pierce(src)
-
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
@@ -1546,18 +1567,18 @@
 	COOLDOWN_START(src, foamfinger_cooldown, 5 SECONDS)
 	user.manual_emote("waves around the foam finger.")
 	var/direction = prob(50) ? -1 : 1
-	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
-		animate(user, pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+	if(NSCOMPONENT(user.dir))
+		animate(user, pixel_w = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_w = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_w = (2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_w = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_w = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
 	else
-		animate(user, pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(user, pixel_z = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_z = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = (2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
 	user.changeNext_move(CLICK_CD_MELEE)
 
 ///All people who have used an Intento this round along with their high scores.
@@ -1586,7 +1607,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento
 	name = "\improper Intento"
-	desc = "Fundamentally useless for all intentsive purposes."
+	desc = "Fundamentally useless for all intents and purposes."
 	icon = 'icons/obj/toys/intents.dmi'
 	icon_state = "blank"
 	custom_price = PAYCHECK_COMMAND * 1.25

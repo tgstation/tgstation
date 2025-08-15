@@ -92,6 +92,7 @@
 		/obj/item/food/grown/onion = 1,
 	)
 	result = /obj/item/food/spaghetti/shoyu_tonkotsu_ramen
+	removed_foodtypes = BREAKFAST
 	category = CAT_SPAGHETTI
 
 /datum/crafting_recipe/food/kitakata_ramen
@@ -168,4 +169,5 @@
 		/datum/reagent/consumable/blackpepper = 2,
 	)
 	result = /obj/item/food/spaghetti/carbonara
+	removed_foodtypes = BREAKFAST|RAW
 	category = CAT_SPAGHETTI

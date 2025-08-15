@@ -5,47 +5,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
+	storage_type = /datum/storage/wallet
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
 	var/overlay_icon_state = "wallet_overlay"
-
-/obj/item/storage/wallet/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 4
-	atom_storage.set_holdable(list(
-		/obj/item/stack/spacecash,
-		/obj/item/holochip,
-		/obj/item/card,
-		/obj/item/cigarette,
-		/obj/item/clothing/accessory/dogtag,
-		/obj/item/coin,
-		/obj/item/coupon,
-		/obj/item/dice,
-		/obj/item/disk,
-		/obj/item/flashlight/pen,
-		/obj/item/folder/biscuit,
-		/obj/item/food/chococoin,
-		/obj/item/implanter,
-		/obj/item/laser_pointer,
-		/obj/item/lighter,
-		/obj/item/lipstick,
-		/obj/item/match,
-		/obj/item/paper,
-		/obj/item/pen,
-		/obj/item/photo,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/pill,
-		/obj/item/screwdriver,
-		/obj/item/seeds,
-		/obj/item/spess_knife,
-		/obj/item/stack/medical,
-		/obj/item/stamp,
-		/obj/item/toy/crayon),
-		list(/obj/item/screwdriver/power))
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -86,7 +51,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearing_human = loc
 		if(wearing_human.wear_id == src)
-			wearing_human.sec_hud_set_ID()
+			wearing_human.update_ID_card()
 
 	update_label()
 	update_appearance(UPDATE_ICON)
@@ -133,14 +98,14 @@
 /obj/item/storage/wallet/GetID()
 	return front_id
 
-/obj/item/storage/wallet/RemoveID()
+/obj/item/storage/wallet/remove_id()
 	if(!front_id)
 		return
 	. = front_id
 	front_id.forceMove(get_turf(src))
 
-/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+/obj/item/storage/wallet/insert_id(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.remove_id()
 	if(!inserting_id)
 		return FALSE
 	attackby(inserting_id)

@@ -9,14 +9,14 @@ export const THEMES = ['light', 'dark'];
 const COLORS = {
   DARK: {
     BG_BASE: '#202020',
-    BG_SECOND: '#171717',
-    BUTTON: '#494949',
-    TEXT: '#A4BAD6',
+    BG_SECOND: '#151515',
+    BUTTON: '#404040',
+    TEXT: '#A6A6A6',
   },
   LIGHT: {
     BG_BASE: '#EEEEEE',
     BG_SECOND: '#FFFFFF',
-    BUTTON: 'none',
+    BUTTON: '#FFFFFF',
     TEXT: '#000000',
   },
 };
@@ -49,8 +49,11 @@ export const setClientTheme = (name) => {
 
   return Byond.winset({
     // Main windows
+    'infobuttons.background-color': themeColor.BG_BASE,
+    'infobuttons.text-color': themeColor.TEXT,
     'infowindow.background-color': themeColor.BG_BASE,
     'infowindow.text-color': themeColor.TEXT,
+    'info_and_buttons.background-color': themeColor.BG_BASE,
     'info.background-color': themeColor.BG_BASE,
     'info.text-color': themeColor.TEXT,
     'browseroutput.background-color': themeColor.BG_BASE,

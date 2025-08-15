@@ -1,6 +1,6 @@
 /obj/item/holochip
 	name = "credit holochip"
-	desc = "A hard-light chip encoded with an amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and viceversa. Keep away from magnets."
+	desc = "A hard-light chip encoded with an amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and vice-versa. Keep away from magnets."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "holochip"
 	base_icon_state = "holochip"
@@ -13,17 +13,25 @@
 
 /obj/item/holochip/Initialize(mapload, amount = 1)
 	. = ..()
-	if(amount)
+	if(!credits && amount)
 		credits = amount
 	if(credits <= 0 && !mapload)
 		stack_trace("Holochip created with 0 or less credits in [get_area_name(src)]!")
 		return INITIALIZE_HINT_QDEL
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 	update_appearance()
+	register_context()
 
 /obj/item/holochip/examine(mob/user)
 	. = ..()
 	. += "[span_notice("It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]")]\n"+\
 	span_notice("Alt-Click to split.")
+
+/obj/item/holochip/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(istype(held_item, /obj/item/holochip))
+		context[SCREENTIP_CONTEXT_LMB] = "Merge Into"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Extract Credits"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/holochip/get_item_credit_value()
 	return credits
@@ -94,14 +102,16 @@
 	else
 		return 0
 
-/obj/item/holochip/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/holochip))
-		var/obj/item/holochip/H = I
-		credits += H.credits
-		to_chat(user, span_notice("You insert the credits into [src]."))
-		update_appearance()
-		qdel(H)
+/obj/item/holochip/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/holochip))
+		return NONE
+
+	var/obj/item/holochip/merged_holochip = tool
+	credits += merged_holochip.credits
+	balloon_alert(user, "merged!")
+	update_appearance()
+	qdel(merged_holochip)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holochip/click_alt(mob/user)
 	if(loc != user)

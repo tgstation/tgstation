@@ -26,6 +26,7 @@
 	alerts = null
 	screens = null
 	client_colours = null
+	color_filter_store = null
 	hud_possible = null
 	/// references to everything "on" the turf we are assigned to, that we care about. populated in assign() and cleared in unassign().
 	/// movables iside of other movables count as being "on" if they have get_turf(them) == our turf. intentionally not a lazylist
@@ -78,8 +79,9 @@
  *
  * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
  */
-/proc/get_hearers_in_view(view_radius, atom/source)
+/proc/get_hearers_in_view(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -88,12 +90,12 @@
 
 	if(view_radius <= 0)//special case for if only source cares
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
 			if(recursive_contents)
 				. += recursive_contents
 		return .
 
-	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, view_radius)
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
@@ -126,8 +128,9 @@
  *
  * * radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
  */
-/proc/get_hearers_in_range(range, atom/source)
+/proc/get_hearers_in_range(range, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -136,12 +139,12 @@
 
 	if(range <= 0)//special case for if only source cares
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
 			if(recursive_contents)
 				. += recursive_contents
 		return .
 
-	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, range)
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, range)
 
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
@@ -161,7 +164,7 @@
  * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  */
-/proc/get_hearers_in_LOS(view_radius, atom/source)
+/proc/get_hearers_in_LOS(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -169,12 +172,12 @@
 	if(view_radius <= 0)//special case for if only source cares
 		. = list()
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/hearing_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/hearing_contents = target.important_recursive_contents?[contents_type]
 			if(hearing_contents)
 				. += hearing_contents
 		return
 
-	. = SSspatial_grid.orthogonal_range_search(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius)
+	. = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	for(var/atom/movable/target as anything in .)
 		var/turf/target_turf = get_turf(target)
@@ -209,7 +212,7 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
-		. |= get_hearers_in_LOS(radio.canhear_range, radio, FALSE)
+		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
 //Used when converting pixels to tiles to make them accurate
 #define OFFSET_X (0.5 / ICON_SIZE_X)
@@ -440,6 +443,16 @@
 		get_area(get_ranged_target_turf(center, SOUTH, 1)),
 		get_area(get_ranged_target_turf(center, EAST, 1)),
 		get_area(get_ranged_target_turf(center, WEST, 1))
+		)
+	list_clear_nulls(.)
+
+///Returns a list of all turfs that are adjacent to the center atom's turf, clear the list of nulls at the end.
+/proc/get_adjacent_turfs(atom/center)
+	. = list(
+		get_step(center, NORTH),
+		get_step(center, SOUTH),
+		get_step(center, EAST),
+		get_step(center, WEST)
 		)
 	list_clear_nulls(.)
 

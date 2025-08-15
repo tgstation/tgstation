@@ -38,6 +38,7 @@
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_UNDEAD|MOB_MINING
 	speed = 5
 	ranged = TRUE
 	del_on_death = TRUE

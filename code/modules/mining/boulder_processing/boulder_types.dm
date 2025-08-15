@@ -75,6 +75,6 @@
 ///lowgrade boulder, most commonly spawned
 /obj/item/boulder/shabby
 	name = "shabby boulder"
-	desc = "A bizzare, twisted boulder. Wait, wait no, it's just a rock."
+	desc = "A bizarre, twisted boulder. Wait, wait no, it's just a rock."
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 	durability = 1

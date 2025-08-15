@@ -77,7 +77,7 @@
 			if(brainmob.mind)
 				brainmob.mind.transfer_to(brain_owner)
 			else
-				brain_owner.key = brainmob.key
+				brain_owner.PossessByPlayer(brainmob.key)
 
 			brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
@@ -98,7 +98,8 @@
 			continue
 
 		trauma.owner = brain_owner
-		trauma.on_gain()
+		if(!trauma.on_gain())
+			qdel(trauma)
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	if(!special && !(brain_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
@@ -163,7 +164,7 @@
 		L.mind.transfer_to(brainmob)
 		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/brain/attackby(obj/item/item, mob/user, params)
+/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(istype(item, /obj/item/borg/apparatus/organ_storage))
@@ -235,6 +236,8 @@
 		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
 		. += span_notice("It is bigger than average...")
+	if(GetComponent(/datum/component/ghostrole_on_revive))
+		. += span_notice("Its soul might yet come back...")
 
 /// Needed so subtypes can override examine text while still calling parent
 /obj/item/organ/brain/proc/brain_damage_examine()
@@ -269,6 +272,17 @@
 		LAZYADD(trauma_text, trauma_desc)
 	if(LAZYLEN(trauma_text))
 		return "Mental trauma: [english_list(trauma_text, and_text = ", and ")]."
+
+/obj/item/organ/brain/feel_for_damage(self_aware)
+	if(damage < low_threshold)
+		return ""
+	if(self_aware)
+		if(damage < high_threshold)
+			return span_warning("Your brain hurts a bit.")
+		return span_warning("Your brain hurts a lot.")
+	if(damage < high_threshold)
+		return span_warning("It feels a bit fuzzy.")
+	return span_warning("It aches incessantly.")
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -323,9 +337,15 @@
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
-	//if we're not more injured than before, return without gambling for a trauma
+	// If we crossed blinking brain damage thresholds either way, update our blinking
+	if ((prev_damage > BRAIN_DAMAGE_ASYNC_BLINKING && damage < BRAIN_DAMAGE_ASYNC_BLINKING) || (prev_damage < BRAIN_DAMAGE_ASYNC_BLINKING && damage > BRAIN_DAMAGE_ASYNC_BLINKING))
+		var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
+		eyes?.animate_eyelids(owner)
+
+	// If we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
 		return
+
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
@@ -339,20 +359,22 @@
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
 
-	if (owner)
-		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
-			var/brain_message
-			if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
-				brain_message = span_warning("You feel lightheaded.")
-			else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
-				brain_message = span_warning("You feel less in control of your thoughts.")
-			else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
-				brain_message = span_warning("You can feel your mind flickering on and off...")
+	if (!owner || owner.stat > UNCONSCIOUS)
+		return
 
-			if(.)
-				. += "\n[brain_message]"
-			else
-				return brain_message
+	// Conscious or soft-crit
+	var/brain_message
+	if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
+		brain_message = span_warning("You feel lightheaded.")
+	else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
+		brain_message = span_warning("You feel less in control of your thoughts.")
+	else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
+		brain_message = span_warning("You can feel your mind flickering on and off...")
+
+	if(.)
+		. += "\n[brain_message]"
+	else
+		return brain_message
 
 /obj/item/organ/brain/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()
@@ -467,10 +489,25 @@
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
 
-/obj/item/organ/brain/lizard //A bit smaller than average
+// Sometimes, felinids go a bit haywire and bite people. Based entirely on mania and hunger.
+/obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)
+	var/starving_cat_bonus = owner.nutrition <= NUTRITION_LEVEL_HUNGRY ? 1 : 10
+	var/crazy_feral_cat = clamp((starving_cat_bonus * owner.mob_mood?.sanity_level), 0, 100)
+	if(prob(crazy_feral_cat) || HAS_TRAIT(owner, TRAIT_FERAL_BITER))
+		return owner.get_bodypart(BODY_ZONE_HEAD) || ..()
+	return ..()
+
+/obj/item/organ/brain/lizard
 	name = "lizard brain"
-	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
+	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
 	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
+
+/obj/item/organ/brain/ghost
+	name = "ghost brain"
+	desc = "How are you even able to hold this?"
+	icon_state = "brain-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 /obj/item/organ/brain/abductor
 	name = "grey brain"
@@ -544,7 +581,7 @@
 //Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
 /obj/item/organ/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
-		return FALSE
+		return null
 
 	var/datum/brain_trauma/actual_trauma
 	if(ispath(trauma))
@@ -557,13 +594,17 @@
 
 	if(actual_trauma.brain) //we don't accept used traumas here
 		WARNING("gain_trauma was given an already active trauma.")
-		return FALSE
+		return null
 
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
-		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
-		actual_trauma.on_gain()
+		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
+			qdel(actual_trauma)
+			return null
+		if(!actual_trauma.on_gain())
+			qdel(actual_trauma)
+			return null
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
 		actual_trauma.resilience = resilience
@@ -622,6 +663,11 @@
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
+	if(HAS_TRAIT(owner, TRAIT_FERAL_BITER)) //Feral biters will always prefer biting.
+		var/obj/item/bodypart/head/found_head = owner.get_bodypart(BODY_ZONE_HEAD)
+		return found_head || active_hand // If we are a feral biter, return a usable head.
+	if(target.pulledby == owner) // if we're grabbing our target we're beating them to death with our bare hands
+		return active_hand
 	if(target.body_position == LYING_DOWN && owner.usable_legs)
 		var/obj/item/bodypart/found_bodypart = owner.get_bodypart(IS_LEFT_INDEX(active_hand.held_index) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		return found_bodypart || active_hand
@@ -633,3 +679,9 @@
 	old_brain.Remove(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	return Insert(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER | DELETE_IF_REPLACED)
+
+/obj/item/organ/brain/pod
+	name = "pod nucleus"
+	desc = "The brain of a pod person, it's a bit more plant-like than a human brain."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME

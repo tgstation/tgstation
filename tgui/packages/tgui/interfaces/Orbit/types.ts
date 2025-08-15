@@ -1,8 +1,12 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { VIEWMODE } from './constants';
+import type { VIEWMODE } from './constants';
 
-export type Antagonist = Observable & { antag: string; antag_group: string };
+export type Antagonist = Observable & {
+  antag: string;
+  antag_group: string;
+  antag_icon: string;
+};
 
 export type AntagGroup = [string, Antagonist[]];
 
@@ -16,6 +20,7 @@ export type OrbitData = {
   misc: Observable[];
   npcs: Observable[];
   orbiting: Observable | null;
+  can_observe: BooleanLike;
 };
 
 export type Observable = {
@@ -32,6 +37,7 @@ export type Observable = {
   mind_job: string;
   name: string;
   orbiters: number;
+  ckey: string;
 }>;
 
 type Critical = {

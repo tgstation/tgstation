@@ -1,8 +1,9 @@
 /mob/living/carbon/human/register_init_signals()
 	. = ..()
 
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_UNKNOWN), SIGNAL_REMOVETRAIT(TRAIT_UNKNOWN)), PROC_REF(on_unknown_trait))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_UNKNOWN), SIGNAL_REMOVETRAIT(TRAIT_UNKNOWN)), PROC_REF(update_ID_card))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_DWARF), SIGNAL_REMOVETRAIT(TRAIT_DWARF)), PROC_REF(on_dwarf_trait))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_TOO_TALL), SIGNAL_REMOVETRAIT(TRAIT_TOO_TALL)), PROC_REF(on_tootall_trait))
 	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(get_name_part))
 
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
@@ -10,24 +11,33 @@
 
 	RegisterSignal(src, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(check_pocket_weght))
 
-/// Gaining or losing [TRAIT_UNKNOWN] updates our name and our sechud
-/mob/living/carbon/human/proc/on_unknown_trait(datum/source)
-	SIGNAL_HANDLER
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 
-	name = get_visible_name()
-	sec_hud_set_ID()
+	// List of signals which force a visible name update
+	// TRAIT_UNKNOWN is excluded as it calls update_ID_card which also calls update_visible_name
+	var/static/list/name_update_signals = list(
+		SIGNAL_ADDTRAIT(TRAIT_INVISIBLE_MAN),
+		SIGNAL_REMOVETRAIT(TRAIT_INVISIBLE_MAN),
+		SIGNAL_ADDTRAIT(TRAIT_DISFIGURED),
+		SIGNAL_REMOVETRAIT(TRAIT_DISFIGURED),
+	)
+	RegisterSignals(src, name_update_signals, PROC_REF(update_visible_name))
 
-/// Gaining or losing [TRAIT_DWARF] updates our height
+/// Gaining or losing [TRAIT_DWARF] updates our height and grants passtable
 /mob/living/carbon/human/proc/on_dwarf_trait(datum/source)
 	SIGNAL_HANDLER
 
-	// We need to regenerate everything for height
-	regenerate_icons()
+	update_mob_height()
 	// Toggle passtable
 	if(HAS_TRAIT(src, TRAIT_DWARF))
 		passtable_on(src, TRAIT_DWARF)
 	else
 		passtable_off(src, TRAIT_DWARF)
+
+/// Gaining or losing [TRAIT_TOO_TALL] updates our height
+/mob/living/carbon/human/proc/on_tootall_trait(datum/source)
+	SIGNAL_HANDLER
+	update_mob_height()
 
 ///From compose_message(). Snowflake code converted into its own signal proc
 /mob/living/carbon/human/proc/get_name_part(datum/source, list/stored_name, visible_name)
@@ -46,7 +56,7 @@
 
 /mob/living/carbon/human/proc/on_fat(datum/source)
 	SIGNAL_HANDLER
-	hud_used?.hunger?.update_appearance()
+	hud_used?.hunger?.update_hunger_bar()
 	mob_mood?.update_nutrition_moodlets()
 
 	if(HAS_TRAIT(src, TRAIT_FAT))
@@ -63,7 +73,7 @@
 		overeatduration = 0
 		remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 	else
-		hud_used?.hunger?.update_appearance()
+		hud_used?.hunger?.update_hunger_bar()
 		mob_mood?.update_nutrition_moodlets()
 
 /// Signal proc for [COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED] to check if an item is suddenly too heavy for our pockets

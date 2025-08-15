@@ -1,9 +1,10 @@
+import { Icon, Stack, Tabs } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../../backend';
-import { Icon, Stack, Tabs } from '../../components';
 import { AnnouncementTab } from './AnnouncementTab';
 import { MessageViewTab } from './MessageViewTab';
 import { MessageWriteTab } from './MessageWriteTab';
-import { RequestsData, RequestTabs } from './types';
+import { type RequestsData, RequestTabs } from './types';
 
 export const RequestMainScreen = (props) => {
   const { act, data } = useBackend<RequestsData>();

@@ -1,5 +1,6 @@
+import { Box, Button, Flex } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Flex } from '../../components';
 
 type InputButtonsData = {
   large_buttons: boolean;
@@ -7,16 +8,19 @@ type InputButtonsData = {
 };
 
 type InputButtonsProps = {
-  input: string | number | string[] | [string[], number[]];
-  on_submit?: () => void;
-  on_cancel?: () => void;
-  message?: string;
-};
+  input: string | number | string[] | [string, number][];
+} & Partial<{
+  on_submit: () => void;
+  on_cancel: () => void;
+  message: string;
+  /** Disables the submit button */
+  disabled: boolean;
+}>;
 
 export const InputButtons = (props: InputButtonsProps) => {
   const { act, data } = useBackend<InputButtonsData>();
   const { large_buttons, swapped_buttons } = data;
-  const { input, message, on_submit, on_cancel } = props;
+  const { input, message, on_submit, on_cancel, disabled } = props;
 
   let on_submit_actual = on_submit;
   if (!on_submit_actual) {
@@ -35,6 +39,7 @@ export const InputButtons = (props: InputButtonsProps) => {
   const submitButton = (
     <Button
       color="good"
+      disabled={disabled}
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
       onClick={on_submit_actual}

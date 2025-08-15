@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_injured)) // this means we got hurt and it's go time
 	RegisterSignal(src, COMSIG_ANIMAL_PET, PROC_REF(on_pet))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_item_on_signal))
+	ADD_TRAIT(src, TRAIT_CAN_MOUNT_HUMANS, INNATE_TRAIT)
 
 /mob/living/basic/parrot/Destroy()
 	// should have cleaned these up on death, but let's be super safe in case that didn't happen
@@ -170,7 +171,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(ears)
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 		return ITALICS | REDUCE_RANGE
-	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		if(ears)
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
@@ -264,12 +265,18 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	UnregisterSignal(src, COMSIG_LIVING_SET_BUCKLED)
 	toggle_perched(perched = FALSE)
 
+#define PERCH_SOURCE "perched"
+
 /mob/living/basic/parrot/proc/toggle_perched(perched)
 	if(!perched)
-		REMOVE_TRAIT(src, TRAIT_PARROT_PERCHED, TRAIT_GENERIC)
+		REMOVE_TRAIT(src, TRAIT_PARROT_PERCHED, PERCH_SOURCE)
+		remove_offsets(PERCH_SOURCE)
 	else
-		ADD_TRAIT(src, TRAIT_PARROT_PERCHED, TRAIT_GENERIC)
+		ADD_TRAIT(src, TRAIT_PARROT_PERCHED, PERCH_SOURCE)
+		add_offsets(PERCH_SOURCE, y_add = 9)
 	update_appearance(UPDATE_ICON_STATE)
+
+#undef PERCH_SOURCE
 
 /// Master proc which will determine the intent of OUR attacks on an object and summon the relevant procs accordingly.
 /// This is pretty much meant for players, AI will use the task-specific procs instead.
@@ -326,7 +333,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	return FALSE
 
 /// If we're right-clicked on with a cracker, we eat the cracker.
-/mob/living/basic/parrot/proc/on_attacked(mob/living/basic/source, obj/item/thing, mob/living/attacker, params)
+/mob/living/basic/parrot/proc/on_attacked(mob/living/basic/source, obj/item/thing, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
 	if(!istype(thing, /obj/item/food/cracker)) // Poly wants a cracker
 		return

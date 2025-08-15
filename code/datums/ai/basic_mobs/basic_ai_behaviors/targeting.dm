@@ -164,3 +164,6 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(length(priority_targets))
 		return pick(priority_targets)
 	return ..()
+
+/datum/ai_behavior/find_potential_targets/bigger_range
+	vision_range = 16

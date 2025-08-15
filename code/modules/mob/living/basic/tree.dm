@@ -61,7 +61,9 @@
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 
 /mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
+	. = ..()
+	if(!.) //dead or deleted
+		return
 	if(!isopenturf(loc))
 		return
 	var/turf/open/our_turf = src.loc
@@ -106,6 +108,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/tree,

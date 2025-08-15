@@ -92,6 +92,7 @@ SUBSYSTEM_DEF(tutorials)
 	)
 
 	if (!select_tutorials_for_ckey.Execute())
+		qdel(select_tutorials_for_ckey)
 		return
 
 	while (select_tutorials_for_ckey.NextRow())

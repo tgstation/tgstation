@@ -4,7 +4,7 @@
 	icon_state = "cowboy_brown"
 	armor_type = /datum/armor/shoes_cowboy
 	custom_price = PAYCHECK_CREW
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 
 	var/max_occupants = 4
@@ -18,16 +18,12 @@
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
-
-	if(prob(2))
-		//There's a snake in my boot
+	if(prob(2)) //There's a snake in my boot
 		new /mob/living/basic/snake(src)
-
 	if(has_spurs)
 		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)
-
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
@@ -110,3 +106,13 @@
 	armor_type = /datum/armor/shoes_combat
 	has_spurs = TRUE
 	body_parts_covered = FEET|LEGS
+
+// Laced variants for loadout
+/obj/item/clothing/shoes/cowboy/laced
+	fastening_type = SHOES_LACED
+
+/obj/item/clothing/shoes/cowboy/white/laced
+	fastening_type = SHOES_LACED
+
+/obj/item/clothing/shoes/cowboy/black/laced
+	fastening_type = SHOES_LACED

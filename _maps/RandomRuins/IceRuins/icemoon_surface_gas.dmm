@@ -13,7 +13,7 @@
 "bn" = (
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "bJ" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/plating/snowed/icemoon,
@@ -77,7 +77,7 @@
 "ed" = (
 /obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "es" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -179,7 +179,7 @@
 "kI" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "kS" = (
 /obj/machinery/duct,
 /turf/open/floor/iron,
@@ -195,7 +195,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "lK" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -211,7 +211,7 @@
 "mE" = (
 /obj/structure/bonfire/prelit,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "oo" = (
 /turf/closed/wall,
 /area/ruin/powered/lizard_gas)
@@ -236,7 +236,7 @@
 "pO" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "qM" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/duct,
@@ -267,16 +267,16 @@
 "sQ" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "sU" = (
 /obj/structure/barricade/wooden/snowed,
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "tx" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "tW" = (
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
@@ -287,11 +287,11 @@
 /area/ruin/powered/lizard_gas)
 "ur" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "uv" = (
 /obj/structure/shipping_container/donk_co,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "vA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/jim_nortons/directional/south,
@@ -307,7 +307,7 @@
 "wN" = (
 /obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "wU" = (
 /obj/structure/table/reinforced,
 /obj/item/food/croissant{
@@ -358,7 +358,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "zm" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -390,11 +390,11 @@
 "El" = (
 /obj/structure/table,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Ez" = (
 /obj/structure/billboard/roadsign/twothousand,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Fp" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating/snowed/icemoon,
@@ -419,7 +419,7 @@
 "GO" = (
 /obj/structure/water_source/puddle,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "HE" = (
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/powered/lizard_gas)
@@ -437,31 +437,31 @@
 /area/ruin/powered/lizard_gas)
 "Ji" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Jv" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/lizard_gas)
 "KG" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Lh" = (
 /obj/structure/barricade/wooden/snowed,
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "LG" = (
 /obj/structure/billboard/lizards_gas,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "LP" = (
 /obj/structure/mop_bucket,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Md" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Mz" = (
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/plating/snowed/icemoon,
@@ -535,7 +535,7 @@
 "Rc" = (
 /obj/structure/shipping_container/nanotrasen,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Rs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
@@ -562,12 +562,12 @@
 "RW" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "SZ" = (
 /obj/structure/table,
 /obj/item/mop,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Tz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -612,7 +612,7 @@
 /area/ruin/powered/lizard_gas)
 "Vq" = (
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 "Ww" = (
 /obj/machinery/duct,
 /turf/open/floor/plating/snowed/icemoon,
@@ -645,7 +645,7 @@
 "YC" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
 gv

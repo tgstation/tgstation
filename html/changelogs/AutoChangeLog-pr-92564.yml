@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Item on-attack effects will trigger as expected when hitting a limb at damage cap"

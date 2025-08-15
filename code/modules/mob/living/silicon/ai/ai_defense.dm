@@ -1,5 +1,5 @@
 
-/mob/living/silicon/ai/attackby(obj/item/W, mob/user, params)
+/mob/living/silicon/ai/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/ai_module))
 		var/obj/item/ai_module/MOD = W
 		disconnect_shell()

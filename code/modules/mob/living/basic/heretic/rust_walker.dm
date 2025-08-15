@@ -39,8 +39,9 @@
 	icon_living = icon_state
 
 /mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(stat == DEAD)
-		return ..()
+	. = ..()
+	if(!.) //dead or deleted
+		return
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		adjustBruteLoss(-3 * seconds_per_tick)
@@ -56,6 +57,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/rust
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/use_mob_ability/rust_walker,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability,

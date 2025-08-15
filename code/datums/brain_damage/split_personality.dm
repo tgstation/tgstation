@@ -13,14 +13,20 @@
 	var/mob/living/split_personality/owner_backseat
 	///The role to display when polling ghost
 	var/poll_role = "split personality"
+	///How long do we give ghosts to respond?
+	var/poll_time = 20 SECONDS
 
 /datum/brain_trauma/severe/split_personality/on_gain()
-	var/mob/living/M = owner
-	if(M.stat == DEAD || !M.client) //No use assigning people to a corpse or braindead
-		qdel(src)
-		return
-	..()
+	var/mob/living/brain_owner = owner
+	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch)) //No use assigning people to a corpse or braindead
+		return FALSE
+	. = ..()
 	make_backseats()
+
+#ifdef UNIT_TESTS
+	return // There's no ghosts in the unit test
+#endif
+
 	get_ghost()
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
@@ -37,7 +43,7 @@
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
 		check_jobban = ROLE_PAI,
-		poll_time = 20 SECONDS,
+		poll_time = poll_time,
 		checked_target = owner,
 		ignore_category = POLL_IGNORE_SPLITPERSONALITY,
 		alert_pic = owner,
@@ -51,7 +57,7 @@
 		qdel(src)
 		return
 
-	stranger_backseat.key = ghost.key
+	stranger_backseat.PossessByPlayer(ghost.ckey)
 	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
@@ -176,7 +182,7 @@
 	to_chat(src, span_warning("You cannot speak, your other self is controlling your body!"))
 	return FALSE
 
-/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
+/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
 	return FALSE
 
 ///////////////BRAINWASHING////////////////////
@@ -204,7 +210,7 @@
 			| strings("ion_laws.json", "iondrinks"))
 
 /datum/brain_trauma/severe/split_personality/brainwashing/on_gain()
-	..()
+	. = ..()
 	var/mob/living/split_personality/traitor/traitor_backseat = stranger_backseat
 	traitor_backseat.codeword = codeword
 	traitor_backseat.objective = objective
@@ -217,7 +223,7 @@
 	set waitfor = FALSE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
 	if(chosen_one)
-		stranger_backseat.key = chosen_one.key
+		stranger_backseat.PossessByPlayer(chosen_one.ckey)
 	else
 		qdel(src)
 
@@ -260,6 +266,7 @@
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
 	random_gain = FALSE
+	poll_time = 10 SECONDS
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
 	var/duration_in_seconds = 180
 
@@ -271,16 +278,20 @@
 
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
 	notify_ghosts(
-		"[owner] is blacking out!",
+		"[owner.real_name] is blacking out!",
 		source = owner,
 		header = "Bro I'm not even drunk right now",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
+	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
+	inebriation?.iron_liver = TRUE
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
 	owner.add_mood_event("hang_over", /datum/mood_event/hang_over)
 	UnregisterSignal(owner, COMSIG_ATOM_SPLASHED)
+	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
+	inebriation?.iron_liver = FALSE
 
 /datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
 	SIGNAL_HANDLER

@@ -120,5 +120,5 @@
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["total"]
 	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
+	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(FALSE, TRUE, FALSE)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
 	return new /datum/tgs_message_content(status)

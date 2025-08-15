@@ -68,7 +68,7 @@
 //Bitflags defining which status effects could be or are inflicted on a mob
 /// If set, this mob can be stunned.
 #define CANSTUN (1<<0)
-/// If set, this mob can be knocked down (or stamcrit)
+/// If set, this mob can be knocked down
 #define CANKNOCKDOWN (1<<1)
 /// If set, this mob can be knocked unconscious via status effect.
 /// NOTE, does not mean immune to sleep. Unconscious and sleep are two different things.
@@ -98,6 +98,7 @@ DEFINE_BITFIELD(status_flags, list(
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_HYPER_RAPID 1
 #define CLICK_CD_SLOW 10
+#define CLICK_CD_ACTIVATE_ABILITY 1
 
 #define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
@@ -138,6 +139,8 @@ DEFINE_BITFIELD(status_flags, list(
 #define THROWN_PROJECTILE_ATTACK 4
 /// We're being tackled or leaped at.
 #define LEAP_ATTACK 5
+/// We're being attacked with an oversized object, perhaps a road roller. Not that anyone use such a thing as a waepon. So only relevant for certain mech based attacks.
+#define OVERWHELMING_ATTACK 6
 
 /// Used in check block to get what mob is attacking the blocker.
 #define GET_ASSAILANT(weapon) (get(weapon, /mob/living))
@@ -153,6 +156,14 @@ DEFINE_BITFIELD(status_flags, list(
 #define ATTACK_EFFECT_MECHFIRE "mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
+#define ATTACK_EFFECT_VOID "void"
+
+/// Attack animation for sharp items
+#define ATTACK_ANIMATION_SLASH "slash"
+/// Attack animation for pointy items
+#define ATTACK_ANIMATION_PIERCE "pierce"
+/// Animation for blunt attacks
+#define ATTACK_ANIMATION_BLUNT "blunt"
 
 //the define for visible message range in combat
 #define SAMETILE_MESSAGE_RANGE 1
@@ -175,6 +186,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //The define for base unarmed miss chance
 #define UNARMED_MISS_CHANCE_BASE 20
 #define UNARMED_MISS_CHANCE_MAX 80
+//Minimum value used to determine if a punched target can be affected by a stagger combo from a punch
+#define UNARMED_COMBO_HIT_HEALTH_BASE 40
 
 //Combat object defines
 /// The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
@@ -219,6 +232,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define AMMO_BOX_PER_BULLET 1
 /// Ammo box will have a different sprite for any ammo at all, and no ammo, <icon_state>-full <icon_state>-empty
 #define AMMO_BOX_FULL_EMPTY 2
+
+// Ammo box multiload defines
+/// Ammo box does not accept multiload in or out, e.g. ammo box CANNOT transfer multiple casings in one action, either IN or OUT.
+#define AMMO_BOX_MULTILOAD_NONE	0
+/// Ammo box accepts multiload going in, e.g. ammo box can transfer multiple casings IN at once.
+#define AMMO_BOX_MULTILOAD_IN	(1 << 0)
+/// Ammo box accepts multiload going out, e.g. ammo box can transfer multiple casings OUT at once.
+#define AMMO_BOX_MULTILOAD_OUT	(1 << 1)
+/// Ammo box accepts multiload in AND out, e.g. ammo box can transfer multiple casings IN at once *and* OUT at once.
+#define AMMO_BOX_MULTILOAD_BOTH	AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT
+
+DEFINE_BITFIELD(ammo_box_multiload, list(
+	"LOAD_IN" = AMMO_BOX_MULTILOAD_IN,
+	"LOAD_OUT" = AMMO_BOX_MULTILOAD_OUT,
+))
 
 #define SUPPRESSED_NONE 0
 #define SUPPRESSED_QUIET 1 ///standard suppressed
@@ -310,20 +338,17 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
 #define MARTIAL_ATTACK_SUCCESS COMPONENT_CANCEL_ATTACK_CHAIN
 
+/// Get the active martial art of a mob.
+#define GET_ACTIVE_MARTIAL_ART(goku) (LAZYACCESS(goku.martial_arts, 1))
+/// Get what martial art will be used after cycling through the active martial art.
+#define GET_NEXT_MARTIAL_ART(goku) (LAZYACCESS(goku.martial_arts, 2))
+
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2
 /// Armor can't block more than this as a percentage
 #define ARMOR_MAX_BLOCK 90
 /// Calculates the new armour value after armour penetration. Can return negative values, and those must be caught.
 #define PENETRATE_ARMOUR(armour, penetration) (penetration == 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
-
-/// Return values used in item/melee/baton/baton_attack.
-/// Does a normal item attack.
-#define BATON_DO_NORMAL_ATTACK 1
-/// The attack has been stopped. Either because the user was clumsy or the attack was blocked.
-#define BATON_ATTACK_DONE 2
-/// The baton attack is still going. baton_effect() is called.
-#define BATON_ATTACKING 3
 
 // Defines for combo attack component
 /// LMB Attack
@@ -362,3 +387,53 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 #define JOULES_PER_DAMAGE (25 KILO JOULES)
 /// Calculates the amount of burn force when applying this much energy to a mob via electrocution from an energy source.
 #define ELECTROCUTE_DAMAGE(energy) (energy >= 1 KILO JOULES ? clamp(20 + round(energy / JOULES_PER_DAMAGE), 20, 195) + rand(-5,5) : 0)
+
+// Attack chain attack_modifier modifiers
+/// Sets the weapon's base force to this. Use carefully (as multiple overrides may collide). Set via [SET_ATTACK_FORCE]
+#define FORCE_OVERRIDE "force_override"
+/// Flat addition or subtration to the weapon's force. Set via [MODIFY_ATTACK_FORCE]
+#define FORCE_MODIFIER "force_modifier"
+/// Multiplication of the weapon's force. Applied AFTER [FORCE_MODIFIER]. Set via [MODIFY_ATTACK_FORCE_MULTIPLIER]
+#define FORCE_MULTIPLIER "force_multiplier"
+/// If set in modifiers, default messages ("You hit the thing with the thing") are silenced
+#define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
+/// If set in modifiers, default hitsound is silenced
+#define SILENCE_HITSOUND "silence_hitsound"
+
+/// Used in attack chain to set the force of the attack without changing the base force of the item.
+#define SET_ATTACK_FORCE(atk_mods, value) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[FORCE_OVERRIDE] = value;
+
+/// Used in attack chain to add or remove force from the attack without changing the base force of the item.
+#define MODIFY_ATTACK_FORCE(atk_mods, amount) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[FORCE_MODIFIER] += amount;
+
+/// Used in attack chain to multiply the force of the attack without changing the base force of the item.
+#define MODIFY_ATTACK_FORCE_MULTIPLIER(atk_mods, amount) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	if(!(FORCE_MULTIPLIER in atk_mods)) { atk_mods[FORCE_MULTIPLIER] = 1 }; \
+	atk_mods[FORCE_MULTIPLIER] *= amount;
+
+/// Used in attack chain to prevent hitsounds on attack (to allow for custom sounds)
+#define MUTE_ATTACK_HITSOUND(atk_mods) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[SILENCE_HITSOUND] = TRUE;
+
+/// Used in attack chain to prevent default visible messages from being sent (to allow for custom messages)
+#define HIDE_ATTACK_MESSAGES(atk_mods) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[SILENCE_DEFAULT_MESSAGES] = TRUE;
+
+/// Calculates the final force of some item based on atk_mods
+/// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
+#define CALCULATE_FORCE(some_item, atk_mods) \
+	((((FORCE_OVERRIDE in atk_mods) ? atk_mods[FORCE_OVERRIDE] : some_item.force) + (atk_mods?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in atk_mods) ? atk_mods[FORCE_MULTIPLIER] : 1))
+
+/// Return from attacked_by to indicate the attack did not connect
+/// A negative number is used here to people can easily check "attacks that failed or did 0 damage" with <= 0
+#define ATTACK_FAILED -1
+
+///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown?
+#define FLASH_COMPLETED "flash_completed"

@@ -4,6 +4,7 @@ This file has the basic atom/movable level speech procs.
 And the base of the send_speech() proc, which is the core of saycode.
 */
 GLOBAL_LIST_INIT(freqtospan, list(
+	"[FREQ_COMMON]" = "radio",
 	"[FREQ_SCIENCE]" = "sciradio",
 	"[FREQ_MEDICAL]" = "medradio",
 	"[FREQ_ENGINEERING]" = "engradio",
@@ -19,8 +20,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_RED]" = "redteamradio",
 	"[FREQ_CTF_BLUE]" = "blueteamradio",
 	"[FREQ_CTF_GREEN]" = "greenteamradio",
-	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
-	))
+	"[FREQ_CTF_YELLOW]" = "yellowteamradio",
+	"[FREQ_STATUS_DISPLAYS]" = "captaincast",
+))
 
 /**
  * What makes things... talk.
@@ -59,14 +61,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!message || message == "")
 		return
 	spans |= speech_span
-	if(!language)
-		language = get_selected_language()
-	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	language ||= get_selected_language()
+	if(!message_mods[SAY_MOD_VERB])
+		message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced)
 
 /// Called when this movable hears a message from a source.
 /// Returns TRUE if the message was received and understood.
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	return TRUE
 
@@ -117,7 +119,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
-		if(hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range))
+		if(hearing_movable.Hear(null, src, message_language, message, null, null, null, spans, message_mods, range))
 			listened += hearing_movable
 		if(!found_client && length(hearing_movable.client_mobs_in_contents))
 			found_client = TRUE
@@ -134,38 +136,48 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		filter += tts_filter.Join(",")
 
 	if(voice && found_client)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = range, pitch = pitch)
+		if (!CONFIG_GET(flag/tts_no_whisper) || (CONFIG_GET(flag/tts_no_whisper) && !message_mods[WHISPER_MODE]))
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = range, pitch = pitch)
 
-/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), visible_name = FALSE)
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), visible_name = FALSE)
 	//This proc uses [] because it is faster than continually appending strings. Thanks BYOND.
 	//Basic span
-	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
+	var/freq_color = get_radio_color(radio_freq, radio_freq_color)
+	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]' [freq_color ? "style='color:[freq_color];'" : ""]>"
 	//Start name span.
 	var/spanpart2 = "<span class='name'>"
 	//Radio freq/name display
-	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
+	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq, radio_freq_name)]\] " : ""
 	//Speaker name
 	var/namepart
 	var/list/stored_name = list(null)
-	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
+
+	if(iscarbon(speaker)) //First, try to pull the modified title from a carbon's ID. This will override both visual and audible names.
+		var/mob/living/carbon/carbon_human = speaker
+		var/obj/item/id_slot = carbon_human.get_item_by_slot(ITEM_SLOT_ID)
+		if(id_slot)
+			var/obj/item/card/id/id_card = id_slot?.GetID()
+			if(id_card)
+				SEND_SIGNAL(id_card, COMSIG_ID_GET_HONORIFIC, stored_name, carbon_human)
+
+	if(!stored_name[NAME_PART_INDEX]) //Otherwise, we just use whatever the name signal gives us.
+		SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
+
 	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
 
 	//End name span.
 	var/endspanpart = "</span>"
 
-	//Message
-	var/messagepart
+	// Language icon.
 	var/languageicon = ""
-	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
-	else
-		messagepart = speaker.say_quote(raw_message, spans, message_mods)
-
+	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
 		if(istype(dialect) && dialect.display_icon(src))
 			languageicon = "[dialect.get_icon()] "
 
-	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
+	// The actual message part.
+	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)
+	messagepart = " <span class='message'>[messagepart]</span></span>"
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
@@ -205,14 +217,20 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return verb_say
 
 /**
- * This prock is used to generate a message for chat
- * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`.
+ * This proc is used to generate the 'message' part of a chat message.
+ * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`,
+ * or the `taps their microphone.` part of `Grey Tider taps their microphone.`.
  *
  * input - The message to be said
  * spans - A list of spans to attach to the message. Includes the atom's speech span by default
  * message_mods - A list of message modifiers, i.e. whispering/singing
  */
-/atom/movable/proc/say_quote(input, list/spans = list(speech_span), list/message_mods = list())
+/atom/movable/proc/generate_messagepart(input, list/spans = list(speech_span), list/message_mods = list())
+	// If we only care about the emote part, early return.
+	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		return apply_message_emphasis(message_mods[MODE_CUSTOM_SAY_EMOTE])
+
+	// Otherwise, we format our full quoted message.
 	if(!input)
 		input = "..."
 
@@ -223,20 +241,26 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
 
-	var/spanned = attach_spans(input, spans)
-	return "[say_mod], \"[spanned]\""
+	/* all inputs should be fully figured out past this point */
 
-/// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
+	var/processed_input = apply_message_emphasis(input) //This MUST be done first so that we don't get clipped by spans
+	processed_input = attach_spans(processed_input, spans)
+
+	var/processed_say_mod = apply_message_emphasis(say_mod)
+
+	return "[processed_say_mod], \"[processed_input]\""
+
+/// Transforms the message emphasis mods from [/atom/proc/apply_message_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
 	input = varname.Replace_char(input, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
 
-/// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
-/atom/movable/proc/say_emphasis(input)
+/// Scans the input sentence for message emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
+/atom/proc/apply_message_emphasis(input)
 	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
 	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
-	ENCODE_HTML_EMPHASIS(input, "_", "u", underline)
-	var/static/regex/remove_escape_backlashes = regex("\\\\(_|\\+|\\|)", "g") // Removes backslashes used to escape text modification.
+	ENCODE_HTML_EMPHASIS(input, "\\_", "u", underline)
+	var/static/regex/remove_escape_backlashes = regex("\\\\(\\_|\\+|\\|)", "g") // Removes backslashes used to escape text modification.
 	input = remove_escape_backlashes.Replace_char(input, "$1")
 	return input
 
@@ -248,8 +272,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "makes a strange sound."
 
 	if(!has_language(language))
+		var/list/mutual_languages
+		// Get what we can kinda understand, factor in any bonuses passed in from say mods
+		var/list/partially_understood_languages = get_partially_understood_languages()
+		if(LAZYLEN(partially_understood_languages))
+			mutual_languages = partially_understood_languages.Copy()
+			for(var/bonus_language in message_mods[LANGUAGE_MUTUAL_BONUS])
+				mutual_languages[bonus_language] = max(message_mods[LANGUAGE_MUTUAL_BONUS][bonus_language], mutual_languages[bonus_language])
+
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble(raw_message)
+		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
 
 	return raw_message
 
@@ -259,11 +291,29 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return returntext
 	return "radio"
 
-/proc/get_radio_name(freq)
-	var/returntext = GLOB.reverseradiochannels["[freq]"]
-	if(returntext)
-		return returntext
+/proc/get_radio_name(freq, freq_name)
+	if(freq_name)
+		return freq_name
+	var/name = GLOB.reserved_radio_frequencies["[freq]"]
+	if(name)
+		return name
 	return "[copytext_char("[freq]", 1, 4)].[copytext_char("[freq]", 4, 5)]"
+
+/proc/get_radio_color(freq, freq_color)
+	if(freq)
+		// No custom colors for channels with theme settings
+		if(GLOB.freqtospan["[freq]"])
+			return ""
+		// No color overrides for commonn channel color (for freqs like 145.3)
+		if(freq_color == RADIO_COLOR_COMMON)
+			return ""
+		if(freq_color)
+			return freq_color
+		var/color = GLOB.reserved_radio_colors[get_radio_name(freq, null)]
+		if(color)
+			return color
+		return RADIO_COLOR_COMMON
+	return ""
 
 /proc/attach_spans(input, list/spans)
 	return "[message_spans_start(spans)][input]</span>"

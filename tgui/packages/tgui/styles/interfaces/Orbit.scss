@@ -1,9 +1,9 @@
 .JobIcon {
-  background: black;
-  height: 20px;
-  padding: 1px 1px 0 1px;
-  overflow: hidden;
+  background: var(--color-black);
   width: 20px;
+  height: 20px;
+  padding: var(--space-xxs) var(--space-xxs) 0;
+  overflow: hidden;
 }
 
 .OrbitItem__selected {

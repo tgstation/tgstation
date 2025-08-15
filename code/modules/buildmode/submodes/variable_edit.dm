@@ -10,7 +10,7 @@
 	return ..()
 
 /datum/buildmode_mode/varedit/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Select var(type) & value")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Set var(type) & value")] -> Left Mouse Button on turf/obj/mob\n\
 		[span_bold("Reset var's value")] -> Right Mouse Button on turf/obj/mob"))

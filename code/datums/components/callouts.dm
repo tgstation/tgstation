@@ -61,7 +61,10 @@
 /datum/component/callouts/proc/on_ctrl_click(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isitem(parent))
+	if (!isitem(parent))
+		return
+
+	if (user.incapacitated)
 		return
 
 	var/obj/item/item_parent = parent
@@ -96,6 +99,9 @@
 	if (!LAZYACCESS(modifiers, SHIFT_CLICK) || !LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 
+	if (user.incapacitated)
+		return
+
 	if (!active)
 		return
 
@@ -111,7 +117,7 @@
 	for(var/datum/callout_option/callout_option as anything in callout_options)
 		callout_items[callout_option] = image(icon = 'icons/hud/radial.dmi', icon_state = callout_option::icon_state)
 
-	var/datum/callout_option/selection = show_radial_menu(user, get_turf(clicked_atom), callout_items, entry_animation = FALSE, click_on_hover = TRUE, user_space = TRUE)
+	var/datum/callout_option/selection = show_radial_menu(user, get_turf(clicked_atom), callout_items, button_animation_flags = NONE, click_on_hover = TRUE, user_space = TRUE)
 	if (!selection)
 		return
 

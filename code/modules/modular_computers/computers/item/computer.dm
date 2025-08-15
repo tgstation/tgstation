@@ -15,7 +15,9 @@
 	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
 
 	///The ID currently stored in the computer.
-	var/obj/item/card/id/computer_id_slot
+	var/obj/item/card/id/stored_id
+	///The alt slot, only used by certain UIs like the access app.
+	var/obj/item/card/id/alt_stored_id
 	///The disk in this PDA. If set, this will be inserted on Initialize.
 	var/obj/item/computer_disk/inserted_disk
 	///The power cell the computer uses to run on.
@@ -121,6 +123,9 @@
 	 */
 	var/datum/component/shell/shell
 
+	/// This is where our overlays reside
+	var/overlays_icon = 'icons/obj/machines/computer.dmi'
+
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20
@@ -186,19 +191,20 @@
 		QDEL_NULL(inserted_disk)
 	if(istype(inserted_pai))
 		QDEL_NULL(inserted_pai)
-	if(computer_id_slot)
-		QDEL_NULL(computer_id_slot)
+
+	QDEL_NULL(stored_id)
+	QDEL_NULL(alt_stored_id)
 
 	shell = null
 	physical = null
 	return ..()
 
-/obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
-	if(active_program?.tap(A, user, params))
-		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
+/obj/item/modular_computer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(active_program?.tap(interacting_with, user, modifiers))
+		user.do_attack_animation(interacting_with) //Emulate this animation since we kill the attack in three lines
 		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 // shameless copy of newscaster photo saving
@@ -227,7 +233,7 @@
 	if(issilicon(user))
 		return NONE
 
-	if(RemoveID(user))
+	if(remove_id(user))
 		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
@@ -236,22 +242,31 @@
 
 	return CLICK_ACTION_BLOCKING
 
+/obj/item/modular_computer/click_alt_secondary(mob/user)
+	if(issilicon(user))
+		return NONE
+
+	if(remove_secondary_id(user))
+		return CLICK_ACTION_SUCCESS
+
+	return NONE
+
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
-	if(computer_id_slot)
-		return computer_id_slot.GetAccess()
+	if(stored_id)
+		return stored_id.GetAccess()
 	return ..()
 
 /obj/item/modular_computer/GetID()
-	if(computer_id_slot)
-		return computer_id_slot
+	if(stored_id)
+		return stored_id
 	return ..()
 
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
-	if(computer_id_slot)
-		. += "[src] is displaying [computer_id_slot]:"
-		. += computer_id_slot.get_id_examine_strings(user)
+	if(stored_id)
+		. += "[src] is displaying [stored_id]:"
+		. += stored_id.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
 	if(!stored_paper)
@@ -266,23 +281,23 @@
 	return TRUE
 
 /**
- * InsertID
  * Attempt to insert the ID in either card slot, if ID is present - attempts swap
+ *
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
-/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
+/obj/item/modular_computer/insert_id(obj/item/card/inserting_id, mob/user)
 	if(!isnull(user) && !user.transferItemToLoc(inserting_id, src))
 		return FALSE
 
 	else
 		inserting_id.forceMove(src)
 
-	if(!isnull(computer_id_slot))
-		RemoveID(user, silent = TRUE)
+	if(!isnull(stored_id))
+		remove_id(user, silent = TRUE)
 
-	computer_id_slot = inserting_id
+	stored_id = inserting_id
 
 	if(!isnull(user))
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
@@ -293,7 +308,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
-			human_wearer.sec_hud_set_ID()
+			human_wearer.update_ID_card()
 
 	update_appearance()
 	update_slot_icon()
@@ -301,34 +316,83 @@
 	return TRUE
 
 /**
+ * Attempts to insert a secondary ID card into the computer. If there is already a secondary ID card, attempts to swap
+ *
+ * Args:
+ * * secondary_id - The ID card to insert into the secondary slot.
+ * * user - The mob trying to insert the ID, if there is one.
+ */
+/obj/item/modular_computer/proc/insert_secondary_id(obj/item/card/id/secondary_id, mob/user)
+	if(!isnull(alt_stored_id))
+		remove_secondary_id(user, silent = TRUE)
+
+	if(!user.transferItemToLoc(secondary_id, src))
+		return FALSE
+
+	alt_stored_id = secondary_id
+	if(!isnull(user))
+		to_chat(user, span_notice("You insert \the [secondary_id] into the secondary card slot."))
+		balloon_alert(user, "inserted secondary ID")
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+
+	return TRUE
+
+/**
+ * Removes the alt ID card from the computer, and puts it in loc's hand if it's a mob
+ *
+ * Args:
+ * * user - The mob trying to remove the ID, if there is one
+ * * silent - Boolean, determines whether fluff text would be printed
+ */
+/obj/item/modular_computer/proc/remove_secondary_id(mob/user, silent = FALSE)
+	if(!alt_stored_id)
+		return FALSE
+
+	if(!issilicon(user) && in_range(src, user))
+		user.put_in_hands(alt_stored_id)
+	else
+		alt_stored_id.forceMove(drop_location())
+
+	var/obj/item/lost_id = alt_stored_id
+	alt_stored_id = null
+
+	if(!silent && !isnull(user))
+		to_chat(user, span_notice("You remove \the [lost_id] from the secondary card slot."))
+		balloon_alert(user, "removed secondary ID")
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+
+	return TRUE
+
+/**
  * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
  * Args:
- * user - The mob trying to remove the ID, if there is one
- * silent - Boolean, determines whether fluff text would be printed
+ * * user - The mob trying to remove the ID, if there is one
+ * * silent - Boolean, determines whether fluff text would be printed
  */
-/obj/item/modular_computer/RemoveID(mob/user, silent = FALSE)
-	if(!computer_id_slot)
+/obj/item/modular_computer/remove_id(mob/user, silent = FALSE)
+	if(!stored_id)
 		return ..()
 
 	if(crew_manifest_update)
-		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
+		GLOB.manifest.modify(stored_id.registered_name, stored_id.assignment, stored_id.get_trim_assignment())
 
 	if(user && !issilicon(user) && in_range(src, user))
-		user.put_in_hands(computer_id_slot)
+		user.put_in_hands(stored_id)
 	else
-		computer_id_slot.forceMove(drop_location())
+		stored_id.forceMove(drop_location())
 
-	computer_id_slot = null
+	var/obj/item/lost_id = stored_id
+	stored_id = null
 
 	if(!silent && !isnull(user))
-		to_chat(user, span_notice("You remove the card from the card slot."))
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+		to_chat(user, span_notice("You remove \the [lost_id] from the card slot."))
 		balloon_alert(user, "removed ID")
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
-			human_wearer.sec_hud_set_ID()
+			human_wearer.update_ID_card()
 
 	update_slot_icon()
 	update_appearance()
@@ -388,15 +452,20 @@
 		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
 	. += span_notice("It has [max_capacity] GQ of storage capacity.")
 
-	if(computer_id_slot)
+	if(stored_id)
 		if(Adjacent(user))
-			. += "It has \the [computer_id_slot] card installed in its card slot."
+			. += "It has \the [stored_id] card inserted in its card slot.[alt_stored_id ? "" : " [span_info("Alt-click to eject it.")]"]"
 		else
 			. += "Its identification card slot is currently occupied."
-		. += span_info("Alt-click [src] to eject the identification card.")
+
+	if(alt_stored_id)
+		if(Adjacent(user))
+			. += "It has \the [alt_stored_id] card stored in its secondary card slot. [span_info("Alt-click to eject it.")]"
+		else
+			. += "Its secondary identification card slot is currently occupied."
 
 	if(internal_cell)
-		. += span_info("Right-click it with a screwdriver to eject the [internal_cell]")
+		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -412,8 +481,10 @@
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if(computer_id_slot && isidcard(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Swap ID"
+	if(isidcard(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = stored_id ? "Swap ID" : "Insert ID"
+		if(HAS_TRAIT(src, TRAIT_MODPC_TWO_ID_SLOTS))
+			context[SCREENTIP_CONTEXT_RMB] = alt_stored_id ? "Swap Secondary ID" : "Insert Secondary ID"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && internal_cell)
@@ -423,7 +494,10 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(computer_id_slot) // ID get removed first before pAIs
+	if(alt_stored_id)
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove Secondary ID"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(stored_id) // ID get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(inserted_pai)
@@ -443,27 +517,25 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
-	if(!init_icon)
-		return
-
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_open_overlay) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += mutable_appearance(init_icon, "bsod")
-		. += mutable_appearance(init_icon, "broken")
+		. += mutable_appearance(overlays_icon, "bsod")
+		. += mutable_appearance(overlays_icon, "broken")
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
 		internal_cell = null
 		if(enabled && !use_energy())
 			shutdown_computer()
-	if(computer_id_slot == gone)
-		computer_id_slot = null
+	if(stored_id == gone)
+		stored_id = null
 		update_slot_icon()
 		if(ishuman(loc))
 			var/mob/living/carbon/human/human_wearer = loc
-			human_wearer.sec_hud_set_ID()
+			human_wearer.update_ID_card()
+	if(alt_stored_id == gone)
+		alt_stored_id = null
 	if(inserted_pai == gone)
 		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
@@ -549,11 +621,11 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/call_source, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
+	if(!call_source || !call_source.alert_able || call_source.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
-	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
+	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [call_source.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
 	if(!use_energy())
@@ -620,7 +692,7 @@
 	data["PC_programheaders"] = program_headers
 
 	data["PC_stationtime"] = station_time_timestamp()
-	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [CURRENT_STATION_YEAR]"
+	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]"
 	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
 
@@ -719,8 +791,8 @@
 ///Imprints name and job into the modular computer, and calls back to necessary functions.
 ///Acts as a replacement to directly setting the imprints fields. All fields are optional, the proc will try to fill in missing gaps.
 /obj/item/modular_computer/proc/imprint_id(name = null, job_name = null)
-	saved_identification = name || computer_id_slot?.registered_name || saved_identification
-	saved_job = job_name || computer_id_slot?.assignment || saved_job
+	saved_identification = name || stored_id?.registered_name || saved_identification
+	saved_job = job_name || stored_id?.assignment || saved_job
 	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, saved_identification, saved_job)
 	UpdateDisplay()
 
@@ -824,9 +896,15 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/modular_computer/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(isidcard(tool) && HAS_TRAIT(src, TRAIT_MODPC_TWO_ID_SLOTS))
+		return insert_secondary_id(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	return item_interaction(user, tool, modifiers)
+
 /obj/item/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isidcard(tool))
-		return InsertID(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		return insert_id(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	if(iscash(tool))
 		return money_act(user, tool)
@@ -855,8 +933,10 @@
 	if(istype(tool, /obj/item/computer_disk))
 		return computer_disk_act(user, tool)
 
+	return NONE
+
 /obj/item/modular_computer/proc/money_act(mob/user, obj/item/money)
-	var/obj/item/card/id/inserted_id = computer_id_slot?.GetID()
+	var/obj/item/card/id/inserted_id = stored_id?.GetID()
 	if(!inserted_id)
 		balloon_alert(user, "no ID!")
 		return ITEM_INTERACT_BLOCKING
@@ -901,6 +981,7 @@
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "inserted paper")
 	qdel(new_paper)
+	playsound(src, 'sound/machines/computer/paper_insert.ogg', 40, vary = TRUE)
 	stored_paper++
 	return ITEM_INTERACT_SUCCESS
 
@@ -917,6 +998,7 @@
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "inserted paper")
 	to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
+	playsound(src, 'sound/machines/computer/paper_insert.ogg', 40, vary = TRUE)
 	bin.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -926,21 +1008,23 @@
 	if(inserted_disk)
 		user.put_in_hands(inserted_disk)
 		balloon_alert(user, "disks swapped")
+	else
+		balloon_alert(user, "disk inserted")
 	inserted_disk = disk
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/atom_deconstruct(disassembled = TRUE)
+	var/atom/droploc = drop_location()
 	remove_pai()
 	eject_aicard()
-	if (disassembled)
-		internal_cell?.forceMove(drop_location())
-		computer_id_slot?.forceMove(drop_location())
-		inserted_disk?.forceMove(drop_location())
-		new /obj/item/stack/sheet/iron(drop_location(), steel_sheet_cost)
-	else
+	internal_cell?.forceMove(droploc)
+	stored_id?.forceMove(droploc)
+	alt_stored_id?.forceMove(droploc)
+	inserted_disk?.forceMove(droploc)
+	if (!disassembled)
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
-		new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost * 0.5))
+	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
 	relay_qdel()
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
@@ -983,6 +1067,30 @@
 	if(!include_disk_files || !inserted_disk)
 		return stored_files
 	return stored_files + inserted_disk.stored_files
+
+/// Returns how relevant the current security level is:
+#define ALERT_RELEVANCY_SAFE 0 /// * 0: User is not in immediate danger and not needed for some station-critical task.
+#define ALERT_RELEVANCY_WARN 1 /// * 1: Danger is around, but the user is not directly needed to handle it.
+#define ALERT_RELEVANCY_PERTINENT 2/// * 2: Danger is around and the user is responsible for handling it.
+/obj/item/modular_computer/proc/get_security_level_relevancy()
+	switch(SSsecurity_level.get_current_level_as_number())
+		if(SEC_LEVEL_DELTA)
+			return ALERT_RELEVANCY_PERTINENT
+		if(SEC_LEVEL_RED) // all-hands-on-deck situations, everyone is responsible for combatting a threat
+			return ALERT_RELEVANCY_PERTINENT
+		if(SEC_LEVEL_BLUE) // suspected threat. security needs to be alert and possibly preparing for it, no further concerns
+			if(ACCESS_SECURITY in stored_id?.access)
+				return ALERT_RELEVANCY_PERTINENT
+			else
+				return ALERT_RELEVANCY_WARN
+		if(SEC_LEVEL_GREEN) // no threats, no concerns
+			return ALERT_RELEVANCY_SAFE
+
+	return 0
+
+#undef ALERT_RELEVANCY_SAFE
+#undef ALERT_RELEVANCY_WARN
+#undef ALERT_RELEVANCY_PERTINENT
 
 /**
  * Debug ModPC

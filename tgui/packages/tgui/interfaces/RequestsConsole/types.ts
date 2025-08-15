@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export type RequestsData = {
   authentication_data: AuthenticationData;

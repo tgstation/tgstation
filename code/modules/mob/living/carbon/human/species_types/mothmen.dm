@@ -3,8 +3,13 @@
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	body_markings = list(/datum/bodypart_overlay/simple/body_marking/moth = "None")
-	mutant_organs = list(/obj/item/organ/wings/moth = "Plain", /obj/item/organ/antennae = "Plain")
+	body_markings = list(
+		/datum/bodypart_overlay/simple/body_marking/moth = SPRITE_ACCESSORY_NONE,
+	)
+	mutant_organs = list(
+		/obj/item/organ/wings/moth = "Plain",
+		/obj/item/organ/antennae = "Plain",
+	)
 	meat = /obj/item/food/meat/slab/human/mutant/moth
 	mutanttongue = /obj/item/organ/tongue/moth
 	mutanteyes = /obj/item/organ/eyes/moth
@@ -40,7 +45,7 @@
 
 /datum/species/moth/randomize_features()
 	var/list/features = ..()
-	features["moth_markings"] = pick(SSaccessories.moth_markings_list)
+	features[FEATURE_MOTH_MARKINGS] = pick(SSaccessories.moth_markings_list)
 	return features
 
 /datum/species/moth/get_scream_sound(mob/living/carbon/human/moth)

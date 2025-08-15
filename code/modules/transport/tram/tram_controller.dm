@@ -89,7 +89,7 @@
 	else
 		serial_number = "LT306TG[rand(000000, 999999)]"
 
-	mfg_date = "[CURRENT_STATION_YEAR]-[time2text(world.timeofday, "MM-DD")]"
+	mfg_date = "[CURRENT_STATION_YEAR]-[time2text(world.timeofday, "MM-DD", NO_TIMEZONE)]"
 	install_location = specific_transport_id
 
 /datum/tram_mfg_info/proc/load_from_json(list/json_data)
@@ -200,7 +200,7 @@
 	SIGNAL_HANDLER
 
 	travel_remaining = 0
-	bumped_atom.visible_message(span_userdanger("The [bumped_atom.name] crashes into the field violently!"))
+	bumped_atom.visible_message(span_userdanger("\The [bumped_atom] crashes into the field violently!"))
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules)
 		transport_module.set_travelling(FALSE)
 		for(var/explosive_target in transport_module.transport_contents)
@@ -845,7 +845,7 @@
 		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Left-click.")]")
 
 
-/obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(user.combat_mode || cover_open)
 		return ..()
 
@@ -946,7 +946,7 @@
 		new /obj/item/wallframe/tram/controller(drop_location)
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
-		new /obj/item/stack/sheet/iron(drop_location, 1)
+		new /obj/item/stack/sheet/iron(drop_location)
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
@@ -1152,7 +1152,7 @@
 /// Controller that sits in the telecoms room
 /obj/machinery/transport/tram_controller/tcomms
 	name = "tram central controller"
-	desc = "This semi-conductor is half of the brains controlling the tram and its auxillary equipment."
+	desc = "This semiconductor is half of the brains controlling the tram and its auxiliary equipment."
 	icon_state = "home-controller"
 	base_icon_state = "home"
 	density = TRUE

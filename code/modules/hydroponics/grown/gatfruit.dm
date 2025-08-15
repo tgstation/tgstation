@@ -6,7 +6,7 @@
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
 	plantname = "Gatfruit Tree"
-	product = /obj/item/food/grown/shell/gatfruit
+	product = /obj/item/food/grown/gatfruit
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
@@ -19,7 +19,7 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	reagents_add = list(/datum/reagent/sulfur = 0.1, /datum/reagent/carbon = 0.1, /datum/reagent/nitrogen = 0.07, /datum/reagent/potassium = 0.05, /datum/reagent/toxin/gatfruit = 0.3)
 
-/obj/item/food/grown/shell/gatfruit
+/obj/item/food/grown/gatfruit
 	seed = /obj/item/seeds/gatfruit
 	name = "gatfruit"
 	desc = "It smells like burning gunpowder."
@@ -30,11 +30,11 @@
 	tastes = list("gunpowder" = 1)
 	wine_power = 90 //It burns going down, too.
 
-/obj/item/food/grown/shell/gatfruit/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/food/grown/gatfruit/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	reagents.flags &= ~INJECTABLE //id rather not have this be filled with initropidril without effort
 
-/obj/item/food/grown/shell/gatfruit/generate_trash(atom/location)
+/obj/item/food/grown/gatfruit/generate_trash(atom/location)
 	//if you set this to anything but the revolver i will find you... and... downvote your pr...
 	var/obj/item/gun/ballistic/revolver/peashooter/gun = new trash_type(location || drop_location())
 	var/potency_percentage = CLAMP01(seed.potency / 100)

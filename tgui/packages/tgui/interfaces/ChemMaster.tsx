@@ -15,12 +15,12 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Beaker, BeakerReagent } from './common/BeakerDisplay';
+import type { Beaker, BeakerReagent } from './common/BeakerDisplay';
 
 type Container = {
   icon: string;
@@ -55,13 +55,16 @@ type Data = {
   isPrinting: BooleanLike;
   printingProgress: number;
   printingTotal: number;
+  selectedPillDuration: number;
   maxPrintable: number;
+  maxPillDuration: number;
   beaker: AnalyzableBeaker;
   buffer: AnalyzableBeaker;
   isTransfering: BooleanLike;
   suggestedContainerRef: string;
   selectedContainerRef: string;
   selectedContainerVolume: number;
+  selectedContainerCategory?: string;
 };
 
 export const ChemMaster = (props) => {
@@ -95,12 +98,15 @@ const ChemMasterContent = (props: {
     isPrinting,
     printingProgress,
     printingTotal,
+    selectedPillDuration,
     maxPrintable,
+    maxPillDuration,
     isTransfering,
     beaker,
     buffer,
     categories,
     selectedContainerVolume,
+    selectedContainerCategory,
   } = data;
 
   const [itemCount, setItemCount] = useState<number>(1);
@@ -206,6 +212,20 @@ const ChemMasterContent = (props: {
                     setItemCount(value);
                   }}
                 />
+                {selectedContainerCategory === 'pills' && (
+                  <NumberInput
+                    unit="s"
+                    step={1}
+                    value={selectedPillDuration}
+                    minValue={0}
+                    maxValue={maxPillDuration}
+                    onChange={(value) => {
+                      act('setPillDuration', {
+                        duration: value,
+                      });
+                    }}
+                  />
+                )}
                 <Box inline mx={1}>
                   {`${
                     Math.round(
@@ -294,7 +314,7 @@ const ReagentEntry = (props: ReagentProps) => {
       <Table.Cell color="label">
         {`${chemical.name} `}
         <AnimatedNumber value={chemical.volume} initial={0} />
-        {`u`}
+        {'u'}
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
@@ -417,7 +437,7 @@ const ContainerButton = (props: CategoryButtonProps) => {
         />
       </Button>
     </Tooltip>
-  ) as any;
+  );
 };
 
 const AnalysisResults = (props: {
@@ -497,5 +517,5 @@ const GroupTitle = ({ title }) => {
         <Divider />
       </Stack.Item>
     </Stack>
-  ) as any;
+  );
 };

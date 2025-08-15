@@ -4,7 +4,7 @@
 	var/rating = null
 
 /datum/buildmode_mode/tweakcomps/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Choose the rating of the components")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Sets the chosen rating of the components on the machinery")] -> Left Mouse Button on machinery"))
 	)

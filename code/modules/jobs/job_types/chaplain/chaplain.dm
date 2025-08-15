@@ -45,7 +45,7 @@
 	var/obj/item/book/bible/booze/holy_bible = new
 	if(GLOB.religion)
 		if(human_spawned.mind)
-			human_spawned.mind.holy_role = HOLY_ROLE_PRIEST
+			human_spawned.mind.set_holy_role(HOLY_ROLE_PRIEST)
 		holy_bible.deity_name = GLOB.deity
 		holy_bible.name = GLOB.bible_name
 		// These checks are important as there's no guarantee the "HOLY_ROLE_HIGHPRIEST" chaplain has selected a bible skin.
@@ -54,7 +54,7 @@
 		if(GLOB.bible_inhand_icon_state)
 			holy_bible.inhand_icon_state = GLOB.bible_inhand_icon_state
 		to_chat(human_spawned, span_boldnotice("There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain."))
-		human_spawned.equip_to_slot_or_del(holy_bible, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		human_spawned.equip_to_storage(holy_bible, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/nullrod = new nrt(human_spawned)
 		human_spawned.put_in_hands(nullrod)
@@ -62,7 +62,7 @@
 			GLOB.religious_sect.on_conversion(human_spawned)
 		return
 	if(human_spawned.mind)
-		human_spawned.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+		human_spawned.mind.set_holy_role(HOLY_ROLE_HIGHPRIEST)
 
 	var/new_religion = player_client?.prefs?.read_preference(/datum/preference/name/religion) || DEFAULT_RELIGION
 	var/new_deity = player_client?.prefs?.read_preference(/datum/preference/name/deity) || DEFAULT_DEITY
@@ -105,7 +105,7 @@
 	GLOB.bible_name = new_bible
 	GLOB.deity = holy_bible.deity_name
 
-	human_spawned.equip_to_slot_or_del(holy_bible, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	human_spawned.equip_to_storage(holy_bible, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
 
 	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)

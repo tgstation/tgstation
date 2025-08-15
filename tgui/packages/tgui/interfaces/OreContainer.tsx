@@ -1,7 +1,4 @@
-import { createSearch, toTitleCase } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   DmIcon,
@@ -10,7 +7,10 @@ import {
   Input,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { createSearch, toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Ores = {
@@ -45,12 +45,9 @@ export const OreContainer = (props) => {
                 mt={0.5}
                 bottom="5%"
                 height="20px"
-                width="150px"
                 placeholder="Search Ore..."
                 value={searchItem}
-                onInput={(e, value) => {
-                  setSearchItem(value);
-                }}
+                onChange={setSearchItem}
                 fluid
               />
             </Section>

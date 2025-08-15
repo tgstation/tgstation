@@ -1,6 +1,6 @@
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
-	ammo_type = /obj/item/ammo_casing/a357
+	ammo_type = /obj/item/ammo_casing/c357
 	caliber = CALIBER_357
 	max_ammo = 7
 
@@ -44,9 +44,9 @@
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if (istype(bullet) && bullet.loaded_projectile)
+		if(bullet && (!istype(bullet) || bullet.loaded_projectile))
 			continue
-		// found a spent ammo
+		// empty or spent
 		stored_ammo[i] = R
 		R.forceMove(src)
 

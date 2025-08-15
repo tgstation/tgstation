@@ -37,7 +37,7 @@
 					/obj/item/clothing/suit/caution = 3,
 					/obj/item/storage/bag/trash,
 					/obj/item/reagent_containers/spray/cleaner,
-					/obj/item/reagent_containers/cup/rag,
+					/obj/item/rag,
 					/obj/item/grenade/chem_grenade/cleaner = 3,
 				)
 	crate_name = "janitorial supplies crate"
@@ -307,3 +307,10 @@
 	)
 	crate_name = "bowmaking starter kit crate"
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/service/mousetraps
+	name = "Pest-B-Gon Mousetraps"
+	desc = "Three boxes of handy little spring-loaded traps for catching pesty rodents. Keep out of reach of children!"
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/box/mousetraps = 3)
+	crate_name = "mousetraps crate"

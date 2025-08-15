@@ -143,7 +143,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		ui.open()
 
 /datum/request_manager/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/request_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())
@@ -153,6 +153,10 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	if (!check_rights(R_ADMIN))
 		to_chat(usr, "You do not have permission to do this, you require +ADMIN", confidential = TRUE)
 		return
+
+	if (action == "toggleprint")
+		GLOB.fax_autoprinting = !GLOB.fax_autoprinting
+		return TRUE
 
 	// Get the request this relates to
 	var/id = params["id"] != null ? text2num(params["id"]) : null
@@ -228,9 +232,20 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if(request.req_type != REQUEST_FAX)
 				to_chat(usr, "Request doesn't have a paper to read.", confidential = TRUE)
 				return TRUE
-			var/obj/item/paper/request_message = request.additional_information
+			var/obj/item/paper/request_message = request.additional_information["paper"]
 			request_message.ui_interact(usr)
 			return TRUE
+		if ("print")
+			if (request.req_type != REQUEST_FAX)
+				to_chat(usr, "Request doesn't have a paper to print.", confidential = TRUE)
+				return TRUE
+			for(var/obj/machinery/fax/admin/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax/admin))
+				if(FAX.fax_id != request.additional_information["destination_id"])
+					continue
+				var/obj/item/paper/request_message = request.additional_information["paper"]
+				var/sender_name = request.additional_information["sender_name"]
+				FAX.receive(request_message, sender_name)
+				return TRUE
 		if ("play")
 			if(request.req_type != REQUEST_INTERNET_SOUND)
 				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
@@ -257,6 +272,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				"timestamp" = request.timestamp,
 				"timestamp_str" = gameTimestamp(wtime = request.timestamp)
 			))
+	data["fax_autoprinting"] = GLOB.fax_autoprinting
 	return data
 
 #undef REQUEST_PRAYER

@@ -3,7 +3,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 SUBSYSTEM_DEF(admin_verbs)
 	name = "Admin Verbs"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_ADMIN_VERBS
+	init_stage = INITSTAGE_EARLY
 	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
 	/// A list of all admin verbs indexed by their visibility flag.
@@ -22,7 +22,8 @@ SUBSYSTEM_DEF(admin_verbs)
 	admin_verbs_by_type = SSadmin_verbs.admin_verbs_by_type
 
 /datum/controller/subsystem/admin_verbs/stat_entry(msg)
-	return "[..()] | V: [length(admin_verbs_by_type)]"
+	msg = "V:[length(admin_verbs_by_type)]"
+	return ..()
 
 /datum/controller/subsystem/admin_verbs/proc/process_pending_admins()
 	var/list/pending_admins = admins_pending_subsytem_init

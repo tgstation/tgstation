@@ -84,9 +84,6 @@
 
 	switch(action)
 		if("callbot") //Command a bot to move to a selected location.
-			if(owner.call_bot_cooldown > world.time)
-				to_chat(our_user, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
-				return
 			if(isbasicbot(bot))
 				var/mob/living/basic/bot/basic_bot = bot
 				if(!(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED))
@@ -97,7 +94,7 @@
 					return
 
 			owner.bot_ref = WEAKREF(bot)
-			owner.waypoint_mode = TRUE
+			owner.setting_waypoint = TRUE
 			to_chat(our_user, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
 		if("interface") //Remotely connect to a bot!
 			owner.bot_ref = WEAKREF(bot)

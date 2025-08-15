@@ -4,6 +4,7 @@
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "singularity_hammer0"
 	base_icon_state = "singularity_hammer"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
@@ -56,7 +57,7 @@
 				step_towards(A,pull)
 				step_towards(A,pull)
 
-/obj/item/singularityhammer/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/singularityhammer/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return
 	if(!charged)
@@ -77,6 +78,7 @@
 	icon_state = "mjollnir0"
 	base_icon_state = "mjollnir"
 	worn_icon_state = "mjollnir"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY

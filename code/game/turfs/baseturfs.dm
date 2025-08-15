@@ -34,13 +34,15 @@
 	new_baseturfs.Add(baseturfs)
 	if(isopenturf(src))
 		new_baseturfs.Add(type)
+	var/area/our_area = get_area(src)
+	flags = our_area.place_on_top_react(new_baseturfs, added_layer, flags)
 
 	return ChangeTurf(added_layer, new_baseturfs, flags)
 
 /// Places a turf on top - for map loading
 /turf/proc/load_on_top(turf/added_layer, flags)
 	var/area/our_area = get_area(src)
-	flags = our_area.PlaceOnTopReact(list(baseturfs), added_layer, flags)
+	flags = our_area.place_on_top_react(list(baseturfs), added_layer, flags)
 
 	if(flags & CHANGETURF_SKIP) // We haven't been initialized
 		if(flags_1 & INITIALIZED_1)
@@ -66,7 +68,7 @@
 
 // Copy an existing turf and put it on top
 // Returns the new turf
-/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY, copy_air = FALSE)
+/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom = 1, depth = INFINITY, copy_air = FALSE, flags = null)
 	var/list/new_baseturfs = list()
 	new_baseturfs += baseturfs
 	new_baseturfs += type
@@ -83,9 +85,9 @@
 			target_baseturfs -= new_baseturfs & GLOB.blacklisted_automated_baseturfs
 			new_baseturfs += target_baseturfs
 
-	var/turf/newT = copytarget.copyTurf(src, copy_air)
-	newT.baseturfs = baseturfs_string_list(new_baseturfs, newT)
-	return newT
+	var/turf/new_turf = copytarget.copyTurf(src, copy_air, flags)
+	new_turf.baseturfs = baseturfs_string_list(new_baseturfs, new_turf)
+	return new_turf
 
 /// Tries to find the given type in baseturfs.
 /// If found, returns how deep it is for use in other baseturf procs, or null if it cannot be found.
@@ -112,17 +114,16 @@
 /// Replaces all instances of needle_type in baseturfs with replacement_type
 /turf/proc/replace_baseturf(needle_type, replacement_type)
 	if (islist(baseturfs))
-		var/list/new_baseturfs
+		var/list/new_baseturfs = baseturfs.Copy()
 
-		while (TRUE)
-			var/found_index = baseturfs.Find(needle_type)
+		for(var/base_i in 1 to length(new_baseturfs))
+			var/found_index = new_baseturfs.Find(needle_type)
 			if (found_index == 0)
 				break
 
-			new_baseturfs ||= baseturfs.Copy()
 			new_baseturfs[found_index] = replacement_type
 
-		if (!isnull(new_baseturfs))
+		if (length(new_baseturfs))
 			baseturfs = baseturfs_string_list(new_baseturfs, src)
 	else if (baseturfs == needle_type)
 		baseturfs = replacement_type
@@ -170,3 +171,13 @@
 	var/floor_position = baseturfs.Find(floor)
 	if(floor_position != 0)
 		insert_baseturf(floor_position + 1, roof)
+
+/// Places a baseturf below a searched for baseturf.
+/turf/proc/stack_below_baseturf(search_type, stack_type)
+	if(!islist(baseturfs))
+		baseturfs = list(baseturfs)
+	var/search_position = baseturfs.Find(search_type)
+	if(search_position != 0)
+		insert_baseturf(search_position, stack_type)
+	else if(type == search_type)
+		insert_baseturf(turf_type = stack_type)

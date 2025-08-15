@@ -40,6 +40,8 @@
 	var/detonation_timer
 	/// When do we beep next?
 	var/next_beep
+	/// If TRUE, more boom wires are added based on the timer set.
+	var/add_boom_wires = TRUE
 	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
 	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
@@ -65,13 +67,7 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
-		end_processing()
-		detonation_timer = null
-		next_beep = null
-		countdown.stop()
-		if(payload in src)
-			payload.defuse()
-		return
+		return PROCESS_KILL
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
@@ -193,7 +189,7 @@
 	return TRUE
 
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
+/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
@@ -226,19 +222,46 @@
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	// 2 booms, 0 duds at lowest timer
+	// 12 booms, 6 duds at ~9 minutes
+	var/datum/wires/syndicatebomb/bomb_wires = wires
+	if(add_boom_wires)
+		var/boom_wires = clamp(round(timer_set / 45, 1), 2, 12)
+		var/dud_wires = 0
+		if(boom_wires >= 3)
+			dud_wires = floor(boom_wires / 2)
+			boom_wires -= dud_wires
+		bomb_wires.setup_wires(num_booms = boom_wires, num_duds = dud_wires)
+	else
+		bomb_wires.setup_wires(num_booms = 2, num_duds = 0)
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	update_appearance()
+
+/obj/machinery/syndicatebomb/proc/defuse()
+	active = FALSE
+	delayedlittle = FALSE
+	delayedbig = FALSE
+	examinable_countdown = TRUE
+	end_processing()
+	detonation_timer = null
+	next_beep = null
+	countdown.stop()
+	if(payload in src)
+		payload.defuse()
+	var/datum/wires/syndicatebomb/bomb_wires = wires
+	bomb_wires.setup_wires(num_booms = 2)
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
-	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
+	var/new_timer = tgui_input_number(user, "Set the timer[add_boom_wires ? " (the longer the timer, the harder to defuse!)" : ""]", "Countdown", timer_set, maximum_timer, minimum_timer)
 	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
-	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
+	visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
-	if(choice != "Yes")
+	if(choice != "Yes" || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(active)
 		to_chat(user, span_warning("The bomb is already active!"))
@@ -257,7 +280,7 @@
 	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
 	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
-	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+	payload.adminlog = "\The [src] that [key_name(user)] had primed detonated!"
 	user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)
 
 ///Bomb Subtypes///
@@ -294,6 +317,17 @@
 	timer_set = 120
 
 /obj/machinery/syndicatebomb/empty/Initialize(mapload)
+	. = ..()
+	wires.cut_all()
+
+/obj/machinery/syndicatebomb/nukie/empty
+	name = "syndicate bomb"
+	desc = "An menancing looking device designed to detonate an explosive payload. Can be botled down using a wrench."
+	payload = null
+	open_panel = TRUE
+	timer_set = 120
+
+/obj/machinery/syndicatebomb/nukie/empty/Initialize(mapload)
 	. = ..()
 	wires.cut_all()
 
@@ -510,7 +544,7 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
-/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
+/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
 		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
@@ -528,45 +562,46 @@
 			return
 	..()
 
-/obj/item/bombcore/chemical/CheckParts(list/parts_list)
-	..()
+/obj/item/bombcore/chemical/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	// Using different grenade casings, causes the payload to have different properties.
-	var/obj/item/stock_parts/matter_bin/MB = locate(/obj/item/stock_parts/matter_bin) in src
-	if(MB)
-		max_beakers += MB.rating // max beakers = 2-5.
-		qdel(MB)
-	for(var/obj/item/grenade/chem_grenade/G in src)
+	var/obj/item/stock_parts/matter_bin/bin = locate(/obj/item/stock_parts/matter_bin) in components
+	if(bin)
+		max_beakers += bin.rating // max beakers = 2-5.
+	for(var/obj/item/grenade/chem_grenade/nade in components)
 
-		if(istype(G, /obj/item/grenade/chem_grenade/large))
-			var/obj/item/grenade/chem_grenade/large/LG = G
+		if(istype(nade, /obj/item/grenade/chem_grenade/large))
 			max_beakers += 1 // Adding two large grenades only allows for a maximum of 7 beakers.
 			spread_range += 2 // Extra range, reduced density.
 			temp_boost += 50 // maximum of +150K blast using only large beakers. Not enough to self ignite.
-			for(var/obj/item/slime_extract/S in LG.beakers) // And slime cores.
+			for(var/obj/item/slime_extract/slime in nade.beakers) // And slime cores.
 				if(beakers.len < max_beakers)
-					beakers += S
-					S.forceMove(src)
+					beakers += slime
+					slime.forceMove(src)
 				else
-					S.forceMove(drop_location())
+					slime.forceMove(drop_location())
 
-		if(istype(G, /obj/item/grenade/chem_grenade/cryo))
+		if(istype(nade, /obj/item/grenade/chem_grenade/cryo))
 			spread_range -= 1 // Reduced range, but increased density.
 			temp_boost -= 100 // minimum of -150K blast.
 
-		if(istype(G, /obj/item/grenade/chem_grenade/pyro))
+		if(istype(nade, /obj/item/grenade/chem_grenade/pyro))
 			temp_boost += 150 // maximum of +350K blast, which is enough to self ignite. Which means a self igniting bomb can't take advantage of other grenade casing properties. Sorry?
 
-		if(istype(G, /obj/item/grenade/chem_grenade/adv_release))
-			time_release += 50 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
+		if(istype(nade, /obj/item/grenade/chem_grenade/adv_release))
+			time_release += 5 SECONDS // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
-		for(var/obj/item/reagent_containers/cup/B in G)
+		for(var/obj/item/reagent_containers/cup/beaker in nade)
 			if(beakers.len < max_beakers)
-				beakers += B
-				B.forceMove(src)
+				beakers += beaker
+				beaker.forceMove(src)
 			else
-				B.forceMove(drop_location())
+				beaker.forceMove(drop_location())
 
-		qdel(G)
+	return ..()
+
+/obj/item/bombcore/chemical/nukie
+	icon_state = "nukie_chemcore"
+	max_beakers = 5
 
 /obj/item/bombcore/emp
 	name = "EMP payload"
@@ -594,6 +629,21 @@
 /obj/item/bombcore/dimensional/Destroy()
 	chosen_theme = null
 	return ..()
+
+/obj/item/bombcore/dimensional/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	range_heavy = 13
+	for(var/obj/item/grenade/chem_grenade/nade in components)
+		if(istype(nade, /obj/item/grenade/chem_grenade/large) || istype(nade, /obj/item/grenade/chem_grenade/adv_release))
+			range_heavy += 1
+		for(var/obj/item/thing as anything in nade.beakers) //remove beakers, then delete the grenade.
+			thing.forceMove(drop_location())
+	var/obj/item/gibtonite/ore = locate() in components
+	switch(ore.quality)
+		if(GIBTONITE_QUALITY_LOW)
+			range_heavy -= 2
+		if(GIBTONITE_QUALITY_HIGH)
+			range_heavy += 4
 
 /obj/item/bombcore/dimensional/examine(mob/user)
 	. = ..()
@@ -638,9 +688,9 @@
 		if(!theme_to_use.can_convert(affected))
 			continue
 		num_affected++
-		var/skip_sound = TRUE
+		var/skip_sound = FALSE
 		if(num_affected % 5) //makes it play the sound more sparingly
-			skip_sound = FALSE
+			skip_sound = TRUE
 		var/time_mult = round(get_dist_euclidean(get_turf(src), affected)) + 1
 		addtimer(CALLBACK(theme_to_use, TYPE_PROC_REF(/datum/dimension_theme, apply_theme), affected, skip_sound, TRUE), 0.1 SECONDS * time_mult)
 	qdel(src)

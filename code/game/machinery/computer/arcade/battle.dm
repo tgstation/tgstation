@@ -118,13 +118,15 @@
 			all_gear[template::name] = new template
 		battle_arcade_gear_list = all_gear
 
-/obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
+	name = make_boss_name_with_verb()
+
+/obj/machinery/computer/arcade/battle/emag_act(mob/living/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
 	balloon_alert(user, "hard mode enabled")
 	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
-	setup_new_opponent()
+	setup_new_opponent(user)
 	feedback_message = "If you die in the game, you die for real!"
 	SStgui.update_uis(src)
 	return TRUE
@@ -144,37 +146,49 @@
 	equipped_gear = list(WEAPON_SLOT = null, ARMOR_SLOT = null)
 	return ..()
 
-///Sets up a new opponent depending on what stage they are at.
-/obj/machinery/computer/arcade/battle/proc/setup_new_opponent(enemy_gets_first_move = FALSE)
-	var/name_adjective
-	var/new_name
-
+/obj/machinery/computer/arcade/battle/proc/make_boss_name_with_verb(boss_verb)
 	if(check_holidays(HALLOWEEN))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_halloween")
 	else if(check_holidays(CHRISTMAS))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_xmas")
 	else if(check_holidays(VALENTINES))
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action_valentines")
 	else
-		name_adjective = pick_list(ARCADE_FILE, "rpg_adjective")
-		new_name = pick_list(ARCADE_FILE, "rpg_enemy")
+		boss_verb ||= pick_list(ARCADE_FILE, "rpg_action")
 
+	return "[boss_verb] [make_boss_name()]"
+
+/obj/machinery/computer/arcade/battle/proc/make_boss_name(boss_name, boss_adjective)
+	if(check_holidays(HALLOWEEN))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_halloween")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+	else if(check_holidays(CHRISTMAS))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_xmas")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+	else if(check_holidays(VALENTINES))
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+	else
+		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective")
+		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy")
+
+	return "The [boss_adjective] [boss_name]"
+
+///Sets up a new opponent depending on what stage they are at.
+/obj/machinery/computer/arcade/battle/proc/setup_new_opponent(mob/living/user, enemy_gets_first_move = FALSE)
 	enemy_hp = round(rand(90, 125) * all_worlds[player_current_world], 1)
 	enemy_mp = round(rand(20, 30) * all_worlds[player_current_world], 1)
 	enemy_gold_reward = rand((DEFAULT_ITEM_PRICE / 2), DEFAULT_ITEM_PRICE)
 
 	// there's only one boss in each stage (except the last)
-	if((player_current_world == latest_unlocked_world) && enemies_defeated == WORLD_ENEMY_BOSS)
+	var/boss = (player_current_world == latest_unlocked_world) && enemies_defeated == WORLD_ENEMY_BOSS
+	if(boss)
 		enemy_mp *= 1.25
 		enemy_hp *= 1.25
 		enemy_gold_reward *= 1.5
-		name_adjective = "Big Boss"
 
 	enemy_icon_id = rand(1,6)
-	enemy_name = "The [name_adjective] [new_name]"
+	enemy_name = make_boss_name(boss_adjective = (boss ? "Big Boss" : null))
 	feedback_message = "New game started against [enemy_name]"
 
 	if(obj_flags & EMAGGED)
@@ -187,7 +201,7 @@
 	ui_panel = UI_PANEL_BATTLE
 
 	if(enemy_gets_first_move)
-		perform_enemy_turn()
+		perform_enemy_turn(user)
 
 /**
  * on_battle_win
@@ -196,7 +210,7 @@
  * It also handles clearing the enemy out for the next one, and unlocking new worlds.
  * We stop at BATTLE_WORLD_NINE because it is the last stage, and has infinite bosses.
  */
-/obj/machinery/computer/arcade/battle/proc/on_battle_win(mob/user)
+/obj/machinery/computer/arcade/battle/proc/on_battle_win(mob/living/user)
 	enemy_name = null
 	feedback_message = null
 	player_turn = TRUE
@@ -215,8 +229,8 @@
 		bomb_cooldown = initial(bomb_cooldown)
 		new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
 		new /obj/item/clothing/head/collectable/petehat(loc)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-		usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
+		message_admins("[ADMIN_LOOKUPFLW(user)] has outbombed Cuban Pete and been awarded a bomb.")
+		user.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
 	else
 		visible_message(span_notice("[src] dispenses 2 tickets!"))
 		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
@@ -231,15 +245,15 @@
 		ui_panel = UI_PANEL_BETWEEN_FIGHTS
 
 ///Called when a mob loses at the battle arcade.
-/obj/machinery/computer/arcade/battle/proc/lose_game(mob/user)
-	if(obj_flags & EMAGGED)
-		var/mob/living/living_user = user
-		if(istype(living_user))
-			living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
-			living_user.gib(DROP_ALL_REMAINS)
-	user.lost_game()
+/obj/machinery/computer/arcade/battle/proc/lose_game(mob/living/user)
 	SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 	SStgui.update_uis(src)
+	if (!user)
+		return
+	user.lost_game()
+	if(obj_flags & EMAGGED)
+		user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
+		user.gib(DROP_ALL_REMAINS)
 
 ///Called when the enemy attacks you.
 /obj/machinery/computer/arcade/battle/proc/user_take_damage(mob/user, base_damage_taken)
@@ -252,10 +266,11 @@
 		say("You have been crushed! GAME OVER.")
 		playsound(loc, 'sound/machines/arcade/lose.ogg', 40, TRUE)
 		lose_game(user)
-	else
-		feedback_message = "User took [damage_taken] damage!"
-		playsound(loc, 'sound/machines/arcade/hit.ogg', 40, TRUE, extrarange = -3)
-		SStgui.update_uis(src)
+		return
+
+	feedback_message = "User took [damage_taken] damage!"
+	playsound(loc, 'sound/machines/arcade/hit.ogg', 40, TRUE, extrarange = -3)
+	SStgui.update_uis(src)
 
 ///Called when you attack the enemy.
 /obj/machinery/computer/arcade/battle/proc/process_player_attack(mob/user, attack_type)
@@ -325,7 +340,7 @@
  * if they lack the MP, then it's rolling to steal MP from the player.
  * After, we will roll to see if the player counterattacks the enemy (if set), otherwise we will attack normally.
  */
-/obj/machinery/computer/arcade/battle/proc/perform_enemy_turn(mob/user, defending_flags = NONE)
+/obj/machinery/computer/arcade/battle/proc/perform_enemy_turn(mob/living/user, defending_flags = NONE)
 	player_turn = TRUE
 	var/chance_to_magic = round(max((-(enemy_hp - enemy_max_hp) / 2), 75), 1)
 	if((enemy_hp != enemy_max_hp) && prob(chance_to_magic))
@@ -424,6 +439,7 @@
 	if(!istype(gamer))
 		return
 
+	gamer.played_game()
 	switch(ui_panel)
 		if(UI_PANEL_GAMEOVER)
 			switch(action)
@@ -464,7 +480,7 @@
 						say("That world is not unlocked yet!")
 						return TRUE
 					player_current_world = all_worlds[world_travelling]
-					setup_new_opponent()
+					setup_new_opponent(gamer)
 					return TRUE
 				if("enter_inn")
 					ui_panel = UI_PANEL_SHOP
@@ -472,7 +488,7 @@
 		if(UI_PANEL_BETWEEN_FIGHTS)
 			switch(action)
 				if("continue_without_rest")
-					setup_new_opponent()
+					setup_new_opponent(gamer)
 					return TRUE
 				if("continue_with_rest")
 					if(prob(60))
@@ -486,9 +502,9 @@
 							player_gold /= 2
 						else
 							//You got ambushed, the enemy gets the first hit.
-							setup_new_opponent(enemy_gets_first_move = TRUE)
+							setup_new_opponent(gamer, enemy_gets_first_move = TRUE)
 							return TRUE
-					setup_new_opponent()
+					setup_new_opponent(gamer)
 					return TRUE
 				if("abandon_quest")
 					if(player_current_world == latest_unlocked_world)

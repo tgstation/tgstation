@@ -3,52 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use '../base';
-
-$scrollbar-color-multiplier: 1 !default;
-
-.Layout,
-.Layout * {
-  // Fancy scrollbar
-  scrollbar-base-color: color.scale(
-    base.$color-bg,
-    $lightness: -25% * $scrollbar-color-multiplier
-  );
-  scrollbar-face-color: color.scale(
-    base.$color-bg,
-    $lightness: 10% * $scrollbar-color-multiplier
-  );
-  scrollbar-3dlight-color: color.scale(
-    base.$color-bg,
-    $lightness: 0% * $scrollbar-color-multiplier
-  );
-  scrollbar-highlight-color: color.scale(
-    base.$color-bg,
-    $lightness: 0% * $scrollbar-color-multiplier
-  );
-  scrollbar-track-color: color.scale(
-    base.$color-bg,
-    $lightness: -25% * $scrollbar-color-multiplier
-  );
-  scrollbar-arrow-color: color.scale(
-    base.$color-bg,
-    $lightness: 50% * $scrollbar-color-multiplier
-  );
-  scrollbar-shadow-color: color.scale(
-    base.$color-bg,
-    $lightness: 10% * $scrollbar-color-multiplier
-  );
-}
-
 .Layout__content {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   overflow-x: hidden;
   overflow-y: hidden;
+  position: absolute;
+  inset: 0;
 }
 
 .Layout__content--scrollable {

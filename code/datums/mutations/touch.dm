@@ -1,4 +1,4 @@
-/datum/mutation/human/shock
+/datum/mutation/shock
 	name = "Shock Touch"
 	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others. Mostly harmless! Mostly... "
 	quality = POSITIVE
@@ -11,7 +11,7 @@
 	energy_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/shock/modify()
+/datum/mutation/shock/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/touch/shock/to_modify =.
 
@@ -82,7 +82,7 @@
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"
 
-/datum/mutation/human/lay_on_hands
+/datum/mutation/lay_on_hands
 	name = "Mending Touch"
 	desc = "The affected can lay their hands on other people to transfer a small amount of their injuries to themselves."
 	quality = POSITIVE
@@ -96,7 +96,7 @@
 	power_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/lay_on_hands/modify()
+/datum/mutation/lay_on_hands/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/touch/lay_on_hands/to_modify =.
 
@@ -317,8 +317,11 @@
 		var/blood_to_hurtguy = min(max_blood_transfer, max_blood_to_hurtguy)
 		if(!blood_to_hurtguy)
 			return .
+
 		// We ignore incompatibility here.
-		mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE)
+		if(!mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE))
+			return
+
 		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
 		. = TRUE
 		// Because we do our own spin on it!
@@ -327,23 +330,28 @@
 			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
 		else
 			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
+		return
+
+	if(hurtguy.blood_volume < BLOOD_VOLUME_MAXIMUM)
+		return
 
 	// Too MUCH blood
-	if(hurtguy.blood_volume > BLOOD_VOLUME_MAXIMUM)
-		var/max_blood_to_mendicant = BLOOD_VOLUME_EXCESS - hurtguy.blood_volume
-		var/blood_to_mendicant = min(max_blood_transfer, max_blood_to_mendicant)
-		// mender always gonna have blood
+	var/max_blood_to_mendicant = BLOOD_VOLUME_EXCESS - hurtguy.blood_volume
+	var/blood_to_mendicant = min(max_blood_transfer, max_blood_to_mendicant)
+	// mender always gonna have blood
 
-		// We ignore incompatibility here.
-		hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE)
-		to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
-		. = TRUE
-		// Because we do our own spin on it!
-		if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
-			mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
-			to_chat(mendicant, span_notice("Your veins swell and itch!"))
-		else
-			to_chat(mendicant, span_notice("Your veins swell!"))
+	// We ignore incompatibility here.
+	if(!hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE))
+		return
+
+	to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
+	. = TRUE
+	// Because we do our own spin on it!
+	if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
+		mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
+		to_chat(mendicant, span_notice("Your veins swell and itch!"))
+	else
+		to_chat(mendicant, span_notice("Your veins swell!"))
 
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
@@ -419,3 +427,4 @@
 	icon_state = "greyscale"
 	color = COLOR_VERY_PALE_LIME_GREEN
 	inhand_icon_state = "greyscale"
+	item_flags = parent_type::item_flags & ~NEEDS_PERMIT

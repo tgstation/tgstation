@@ -118,7 +118,7 @@
 
 	check_examine_award(user)
 
-/obj/effect/meteor/attackby(obj/item/I, mob/user, params)
+/obj/effect/meteor/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_MINING)
 		make_debris()
 		qdel(src)
@@ -240,7 +240,7 @@
 //Flaming meteor
 /obj/effect/meteor/flaming
 	name = "flaming meteor"
-	desc = "An veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
+	desc = "A veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
 	icon_state = "flaming"
 	hits = 5
 	heavy = TRUE
@@ -356,7 +356,7 @@
 
 /obj/effect/meteor/banana/ram_turf(turf/bumped)
 	for(var/mob/living/slipped in get_turf(bumped))
-		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE)
 		slipped.visible_message(span_warning("[src] honks [slipped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
 	get_hit()
 
@@ -429,7 +429,7 @@
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))
-		new /obj/effect/decal/cleanable/xenoblood(T)
+		new /obj/effect/decal/cleanable/blood/xeno(T)
 
 //Station buster Tunguska
 /obj/effect/meteor/tunguska

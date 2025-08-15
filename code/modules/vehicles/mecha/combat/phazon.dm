@@ -41,8 +41,10 @@
 	name = "Reconfigure arm microtool arrays"
 	button_icon_state = "mech_damtype_brute"
 
-/datum/action/vehicle/sealed/mecha/mech_switch_damtype/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+/datum/action/vehicle/sealed/mecha/mech_switch_damtype/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	var/new_damtype
 	switch(chassis.damtype)
@@ -64,8 +66,10 @@
 	name = "Toggle Phasing"
 	button_icon_state = "mech_phasing_off"
 
-/datum/action/vehicle/sealed/mecha/mech_toggle_phasing/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+/datum/action/vehicle/sealed/mecha/mech_toggle_phasing/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	chassis.phasing = chassis.phasing ? "" : "phasing"
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"

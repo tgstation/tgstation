@@ -5,3 +5,5 @@ computer_clicks_4.ogg - made by sadboysuss, license: CC-by-SA
 computer_clicks_5.ogg - made by sadboysuss, license: CC-by-SA
 computer_clicks_6.ogg - made by sadboysuss, license: CC-by-SA
 computer_clicks_7.ogg - made by sadboysuss, license: CC-by-SA
+paper_insert.ogg - cut and mixed from a sound made by dersuperanton on freesound.org:
+https://freesound.org/people/dersuperanton/sounds/166690/ (CC-BY 4.0)

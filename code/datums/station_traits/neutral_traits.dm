@@ -234,7 +234,7 @@
 	))
 	hat = new hat(spawned_mob)
 	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
-		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned_mob.equip_to_storage(hat, ITEM_SLOT_BACK, indirect_action = TRUE)
 	var/obj/item/toy = pick_weight(list(
 		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
 		/obj/item/toy/balloon = 2,
@@ -246,12 +246,12 @@
 	if(istype(toy, /obj/item/toy/balloon))
 		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_HANDS) //Balloons do not fit inside of backpacks.
 	else
-		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned_mob.equip_to_storage(toy, ITEM_SLOT_BACK, indirect_action = TRUE)
 	if(birthday_person_name) //Anyone who joins after the annoucement gets one of these.
 		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
 		birthday_invite.setup_card(birthday_person_name)
 		if(!spawned_mob.equip_to_slot_if_possible(birthday_invite, ITEM_SLOT_HANDS, disable_warning = TRUE))
-			spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_BACKPACK) //Just incase someone spawns with both hands full.
+			spawned_mob.equip_to_storage(birthday_invite, ITEM_SLOT_BACK, indirect_action = TRUE) //Just incase someone spawns with both hands full.
 
 /obj/item/birthday_invite
 	name = "birthday invitation"
@@ -311,9 +311,10 @@
 	// Put their silly little scarf or necktie somewhere else
 	var/obj/item/silly_little_scarf = humanspawned.wear_neck
 	if(silly_little_scarf)
+		var/list/backup_slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_BACKPACK)
 		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
 		silly_little_scarf.forceMove(get_turf(humanspawned))
-		humanspawned.equip_in_one_of_slots(silly_little_scarf, ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET, qdel_on_fail = FALSE, indirect_action = TRUE)
+		humanspawned.equip_in_one_of_slots(silly_little_scarf, backup_slots, qdel_on_fail = FALSE)
 
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
 	new_scryer.label = spawned.name
@@ -477,7 +478,7 @@
 
 	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
 		var/obj/item/storage/box/stickers/skub/boxie = new(spawned.loc)
-		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned.equip_to_storage(boxie, ITEM_SLOT_BACK, indirect_action = TRUE)
 		if(ishuman(spawned))
 			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
 			if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
@@ -485,44 +486,12 @@
 		return
 
 	var/obj/item/storage/box/stickers/anti_skub/boxie = new(spawned.loc)
-	spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	spawned.equip_to_storage(boxie, ITEM_SLOT_BACK, indirect_action = TRUE)
 	if(!ishuman(spawned))
 		return
 	var/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti/shirt = new(spawned.loc)
 	if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
 		shirt.forceMove(boxie)
-
-/// A box containing a skub, for easier carry because skub is a bulky item.
-/obj/item/storage/box/stickers/skub
-	name = "skub fan pack"
-	desc = "A vinyl pouch to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
-	icon_state = "skubpack"
-	illustration = "label_skub"
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/box/stickers/skub/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 3
-	atom_storage.exception_hold = typecacheof(list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
-
-/obj/item/storage/box/stickers/skub/PopulateContents()
-	new /obj/item/skub(src)
-	new /obj/item/sticker/skub(src)
-	new /obj/item/sticker/skub(src)
-
-/obj/item/storage/box/stickers/anti_skub
-	name = "anti-skub stickers pack"
-	desc = "The enemy may have been given a skub and a shirt, but I've got more stickers! Plus the pack can hold my anti-skub shirt."
-	icon_state = "skubpack"
-	illustration = "label_anti_skub"
-
-/obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
-	. = ..()
-	atom_storage.exception_hold = typecacheof(list(/obj/item/clothing/suit/costume/wellworn_shirt/skub))
-
-/obj/item/storage/box/stickers/anti_skub/PopulateContents()
-	for(var/i in 1 to 4)
-		new /obj/item/sticker/anti_skub(src)
 
 #undef PRO_SKUB
 #undef ANTI_SKUB
@@ -532,16 +501,27 @@
 /// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
 /datum/station_trait/background_checks
 	name = "Station-Wide Background Checks"
-	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! That said, our enemies may just find another way to infiltrate the station, so be careful."
+	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! \
+		That said, our enemies may just find another way to infiltrate the station, so be careful."
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
 	show_in_report = TRUE
 	can_revert = FALSE
 
-	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
-	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
 
+/datum/station_trait/background_checks/New()
+	. = ..()
+	RegisterSignal(SSdynamic, COMSIG_DYNAMIC_PRE_ROUNDSTART, PROC_REF(modify_config))
+
+/datum/station_trait/background_checks/proc/modify_config(datum/source, list/dynamic_config)
+	SIGNAL_HANDLER
+
+	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		if(ruleset.ruleset_flags & RULESET_INVADER)
+			continue
+		dynamic_config[initial(ruleset.config_tag)] ||= list()
+		dynamic_config[initial(ruleset.config_tag)][NAMEOF(ruleset, weight)] = 0
 
 /datum/station_trait/pet_day
 	name = "Bring Your Pet To Work Day"
@@ -585,3 +565,15 @@
 
 /datum/station_trait/pet_day/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	overlays += "select_pet"
+
+/// We're pulling a Jim Kramer with this one boys
+/datum/station_trait/gmm_spotlight
+	name = "GMM Economic Spotlight"
+	report_message = "This shift, the Galactic Mineral Market is doing a showcase on your crew's affulence! Every paycheck, the station newscasters will alert the crew who has the most credits."
+	trait_type = STATION_TRAIT_NEUTRAL
+	trait_to_give = STATION_TRAIT_ECONOMY_ALERTS
+	weight = 2
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+
+	dynamic_threat_id = "GMM Econ Spotlight"

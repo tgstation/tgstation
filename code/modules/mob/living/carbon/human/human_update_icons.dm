@@ -91,7 +91,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(uniform.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_ICLOTHING)
+		if(HAS_TRAIT(uniform, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_ICLOTHING))
 			return
 
 		var/target_overlay = uniform.icon_state
@@ -104,7 +104,7 @@ There are several things that need to be remembered:
 		//icon_file MUST be set to null by default, or it causes issues.
 		//handled_by_bodyshape MUST be set to FALSE under the if(!icon_exists()) statement, or everything breaks.
 		//"override_file = handled_by_bodyshape ? icon_file : null" MUST be added to the arguments of build_worn_icon()
-		//Friendly reminder that icon_exists(file, state, scream = TRUE) is your friend when debugging this code.
+		//Friendly reminder that icon_exists_or_scream(file, state) is your friend when debugging this code.
 		var/handled_by_bodyshape = TRUE
 		var/icon_file
 		var/woman
@@ -152,6 +152,9 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+			return
+
 		var/icon_file = 'icons/mob/clothing/id.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
@@ -175,57 +178,60 @@ There are several things that need to be remembered:
 
 	//Bloody hands begin
 	if(isnull(gloves))
-		if(blood_in_hands && num_hands > 0)
-			// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
-			var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
-			if(has_left_hand(check_disabled = FALSE))
-				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
-			if(has_right_hand(check_disabled = FALSE))
-				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
-			overlays_standing[GLOVES_LAYER] = hands_combined
-			apply_overlay(GLOVES_LAYER)
+		if(!blood_in_hands || !num_hands || !GET_ATOM_BLOOD_DECAL_LENGTH(src))
+			return
+		// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
+		var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
+		if(has_left_hand(check_disabled = FALSE))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+			blood_overlay.color = get_blood_dna_color()
+			hands_combined.overlays += blood_overlay
+		if(has_right_hand(check_disabled = FALSE))
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+			blood_overlay.color = get_blood_dna_color()
+			hands_combined.overlays += blood_overlay
+		overlays_standing[GLOVES_LAYER] = hands_combined
+		apply_overlay(GLOVES_LAYER)
 		return
 	// Bloody hands end
 
-	if(gloves)
-		var/obj/item/worn_item = gloves
-		update_hud_gloves(worn_item)
+	var/obj/item/worn_item = gloves
+	update_hud_gloves(worn_item)
 
-		if(update_obscured)
-			update_obscured_slots(worn_item.flags_inv)
+	if(update_obscured)
+		update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_GLOVES)
-			return
+	if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_GLOVES))
+		return
 
-		var/icon_file = 'icons/mob/clothing/hands.dmi'
+	var/icon_file = 'icons/mob/clothing/hands.dmi'
 
-		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
+	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
 
-		var/feature_y_offset = 0
-		//needs to be typed, hand_bodyparts can have nulls
-		for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
-			var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
-			if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
-				feature_y_offset = glove_offset["y"]
+	var/feature_y_offset = 0
+	//needs to be typed, hand_bodyparts can have nulls
+	for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
+		var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
+		if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
+			feature_y_offset = glove_offset["y"]
 
-		gloves_overlay.pixel_y += feature_y_offset
+	gloves_overlay.pixel_z += feature_y_offset
 
-		// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
-		// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
-		// (unless admins mess with this then its their fault)
-		if(num_hands < default_num_hands)
-			var/static/atom/movable/alpha_filter_target
-			if(isnull(alpha_filter_target))
-				alpha_filter_target = new(null)
-			alpha_filter_target.icon = 'icons/effects/effects.dmi'
-			alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
-			alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
-			gloves_overlay.add_overlay(alpha_filter_target)
-			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+	// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
+	// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
+	// (unless admins mess with this then its their fault)
+	if(num_hands < default_num_hands)
+		var/static/atom/movable/alpha_filter_target
+		if(isnull(alpha_filter_target))
+			alpha_filter_target = new(null)
+		alpha_filter_target.icon = 'icons/effects/effects.dmi'
+		alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
+		alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
+		gloves_overlay.add_overlay(alpha_filter_target)
+		gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
 
-		overlays_standing[GLOVES_LAYER] = gloves_overlay
+	overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
-
 
 /mob/living/carbon/human/update_worn_glasses(update_obscured = TRUE)
 	remove_overlay(GLASSES_LAYER)
@@ -245,7 +251,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EYES)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_EYES))
 			return
 
 		var/icon_file = 'icons/mob/clothing/eyes.dmi'
@@ -254,7 +260,6 @@ There are several things that need to be remembered:
 		my_head.worn_glasses_offset?.apply_offset(glasses_overlay)
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
-
 
 /mob/living/carbon/human/update_worn_ears(update_obscured = TRUE)
 	remove_overlay(EARS_LAYER)
@@ -274,7 +279,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EARS)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_EARS))
 			return
 
 		var/icon_file = 'icons/mob/clothing/ears.dmi'
@@ -298,7 +303,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_NECK)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_NECK))
 			return
 
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
@@ -327,7 +332,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_FEET))
 			return
 
 		var/icon_file = DEFAULT_SHOES_FILE
@@ -345,7 +350,7 @@ There are several things that need to be remembered:
 			if (foot_offset && foot_offset["y"] > feature_y_offset)
 				feature_y_offset = foot_offset["y"]
 
-		shoes_overlay.pixel_y += feature_y_offset
+		shoes_overlay.pixel_z += feature_y_offset
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
@@ -365,7 +370,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_SUITSTORE))
 			return
 
 		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
@@ -376,7 +381,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_worn_head(update_obscured = TRUE)
 	remove_overlay(HEAD_LAYER)
-	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
+	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
 		inv.update_icon()
 
@@ -387,7 +392,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_HEAD)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_HEAD))
 			return
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
@@ -414,7 +419,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_BELT)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_BELT))
 			return
 
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
@@ -439,6 +444,9 @@ There are several things that need to be remembered:
 
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
+
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+			return
 
 		var/icon_file = DEFAULT_SUIT_FILE
 
@@ -489,7 +497,7 @@ There are several things that need to be remembered:
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
 
-		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_MASK)
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (check_obscured_slots() & ITEM_SLOT_MASK))
 			return
 
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
@@ -515,6 +523,9 @@ There are several things that need to be remembered:
 
 		if(update_obscured)
 			update_obscured_slots(worn_item.flags_inv)
+
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+			return
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 
@@ -801,7 +812,7 @@ generate/load female uniform sprites matching all previously decided variables
 	var/mob/living/carbon/wearer = loc
 	var/is_digi = istype(wearer) && (wearer.bodyshape & BODYSHAPE_DIGITIGRADE) && !wearer.is_digitigrade_squished()
 
-	var/mutable_appearance/standing // this is the actual resulting MA
+	var/mutable_appearance/draw_target // MA of the item itself, not the final result
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
 	if(female_uniform)
 		building_icon = wear_female_version(
@@ -818,26 +829,36 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_colors = greyscale_colors,
 		)
 	if(building_icon)
-		standing = mutable_appearance(building_icon, layer = -layer2use)
-
-	// no special handling done, default it
-	standing ||= mutable_appearance(file2use, t_state, layer = -layer2use)
+		draw_target = mutable_appearance(building_icon, layer = -layer2use)
+	else
+		draw_target = mutable_appearance(file2use, t_state, layer = -layer2use)
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
+	var/list/worn_overlays = worn_overlays(draw_target, isinhands, file2use)
 	if(length(worn_overlays))
-		standing.overlays += worn_overlays
+		draw_target.overlays += worn_overlays
+	draw_target = color_atom_overlay(draw_target)
+
+	// Okay so this has to be done because some overlays, like blood, want to be KEEP_APART
+	// but KEEP_APART breaks float layering, so what we need to do is make fake KEEP_APART for us to use
+	var/mutable_appearance/standing = mutable_appearance(layer = -layer2use, appearance_flags = KEEP_TOGETHER)
+	standing.overlays += draw_target
+	var/list/separate_overlays = separate_worn_overlays(standing, draw_target, isinhands, file2use)
+	if(length(separate_overlays))
+		standing.overlays += separate_overlays
+	else // Don't nest overlays if there's nothing to nest against
+		standing.overlays -= draw_target
+		standing = draw_target
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
 	//Worn offsets
 	var/list/offsets = get_worn_offsets(isinhands)
-	standing.pixel_x += offsets[1]
-	standing.pixel_y += offsets[2]
+	standing.pixel_w += offsets[1]
+	standing.pixel_z += offsets[2]
 
 	standing.alpha = alpha
-	standing.color = color
 
 	return standing
 
@@ -892,7 +913,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	my_head.update_limb(is_creating = update_limb_data)
 
-	add_overlay(my_head.get_limb_icon())
+	add_overlay(my_head.get_limb_icon(dropped = FALSE, update_on = src))
 	update_worn_head()
 	update_worn_mask()
 
@@ -939,7 +960,7 @@ generate/load female uniform sprites matching all previously decided variables
 // Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
 // So instead we have to pass them through an offset, which is close enough to look good.
 /mob/living/carbon/human/apply_overlay(cache_index)
-	if(get_mob_height() == HUMAN_HEIGHT_MEDIUM)
+	if(mob_height == HUMAN_HEIGHT_MEDIUM)
 		return ..()
 
 	var/raw_applied = overlays_standing[cache_index]
@@ -967,7 +988,7 @@ generate/load female uniform sprites matching all previously decided variables
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
 /mob/living/carbon/human/proc/apply_height_offsets(image/appearance, upper_torso)
-	var/height_to_use = num2text(get_mob_height())
+	var/height_to_use = num2text(mob_height)
 	var/final_offset = 0
 	switch(upper_torso)
 		if(UPPER_BODY)
@@ -977,7 +998,7 @@ generate/load female uniform sprites matching all previously decided variables
 		else
 			return
 
-	appearance.pixel_y += final_offset
+	appearance.pixel_z += final_offset
 	return appearance
 
 /**
@@ -1002,7 +1023,7 @@ generate/load female uniform sprites matching all previously decided variables
 		"Monkey_Gnome_Cut_Legs",
 	))
 
-	switch(get_mob_height())
+	switch(mob_height)
 		// Don't set this one directly, use TRAIT_DWARF
 		if(MONKEY_HEIGHT_DWARF)
 			appearance.add_filters(list(

@@ -61,7 +61,6 @@
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
-	reagent_state = SOLID
 	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -96,9 +95,9 @@
 
 	data = counterlist_normalise(supplied_data)
 
-/datum/reagent/consumable/nutriment/on_merge(list/newdata, newvolume)
+/datum/reagent/consumable/nutriment/on_merge(list/mix_data, amount)
 	. = ..()
-	if(!islist(newdata) || !newdata.len)
+	if(!islist(mix_data) || !mix_data.len)
 		return
 
 	// data for nutriment is one or more (flavour -> ratio)
@@ -110,8 +109,8 @@
 
 	counterlist_scale(taste_amounts, volume)
 
-	var/list/other_taste_amounts = newdata.Copy()
-	counterlist_scale(other_taste_amounts, newvolume)
+	var/list/other_taste_amounts = mix_data.Copy()
+	counterlist_scale(other_taste_amounts, amount)
 
 	counterlist_combine(taste_amounts, other_taste_amounts)
 
@@ -129,7 +128,6 @@
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
 	brute_heal = 1
 	burn_heal = 1
 
@@ -141,7 +139,7 @@
 /// The basic resource of vat growing.
 /datum/reagent/consumable/nutriment/protein
 	name = "Protein"
-	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
+	description = "A natural polyamide made up of amino acids. An essential constituent of most known forms of life."
 	taste_description = "chalk"
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 //45% as calorie dense as oil.
@@ -174,7 +172,7 @@
 
 	exposed_obj.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
 	exposed_obj.AddElement(/datum/element/fried_item, volume SECONDS)
-	exposed_obj.reagents.add_reagent(src.type, reac_volume, reagtemp = holder.chem_temp)
+	exposed_obj.reagents.add_reagent(type, reac_volume, data, holder.chem_temp)
 
 /datum/reagent/consumable/nutriment/fat/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
@@ -185,16 +183,17 @@
 	if(methods & TOUCH)
 		burn_damage *= max(1 - touch_protection, 0)
 	var/FryLoss = round(min(38, burn_damage * reac_volume))
-	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
-		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
-		span_userdanger("You're covered in boiling oil!"))
-		if(FryLoss)
-			exposed_mob.emote("scream")
-		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
-		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
+	if(HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
+		return
+
+	exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
+	span_userdanger("You're covered in boiling oil!"))
 	if(FryLoss)
+		exposed_mob.emote("scream")
 		exposed_mob.adjustFireLoss(FryLoss)
+	playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+	ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
+	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 2 SECONDS)
 
 /datum/reagent/consumable/nutriment/fat/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -292,7 +291,6 @@
 /datum/reagent/consumable/sugar
 	name = "Sugar"
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
-	reagent_state = SOLID
 	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
 	nutriment_factor = 2
@@ -472,7 +470,6 @@
 /datum/reagent/consumable/salt
 	name = "Table Salt"
 	description = "A salt made of sodium chloride. Commonly used to season food."
-	reagent_state = SOLID
 	color = COLOR_WHITE // rgb: 255,255,255
 	taste_description = "salt"
 	penetrates_skin = NONE
@@ -523,7 +520,6 @@
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
-	reagent_state = SOLID
 	// no color (ie, black)
 	taste_description = "pepper"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -532,7 +528,6 @@
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
 	description = "A fatty, bitter paste made from coco beans."
-	reagent_state = SOLID
 	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
@@ -609,7 +604,6 @@
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
-	reagent_state = SOLID
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "dry and cheap noodles"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -651,7 +645,6 @@
 /datum/reagent/consumable/flour
 	name = "Flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
-	reagent_state = SOLID
 	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
@@ -715,7 +708,6 @@
 /datum/reagent/consumable/rice
 	name = "Rice"
 	description = "tiny nutritious grains"
-	reagent_state = SOLID
 	nutriment_factor = 3
 	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "rice"
@@ -725,7 +717,6 @@
 /datum/reagent/consumable/rice_flour
 	name = "Rice Flour"
 	description = "Flour mixed with Rice"
-	reagent_state = SOLID
 	color = COLOR_WHITE // rgb: 0, 0, 0
 	taste_description = "chalky wheat with rice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -733,7 +724,7 @@
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
 	description = "A fatty, bitter paste made from vanilla pods."
-	reagent_state = SOLID
+
 	nutriment_factor = 5
 	color = "#FFFACD"
 	taste_description = "vanilla"
@@ -844,7 +835,7 @@
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = max(0.6, surgery.speed_modifier)
+		surgery.speed_modifier = min(0.4, surgery.speed_modifier)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
@@ -891,8 +882,7 @@
 
 /datum/reagent/consumable/nutriment/stabilized
 	name = "Stabilized Nutriment"
-	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
-	reagent_state = SOLID
+	description = "A bioengineered protein-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
 	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -990,7 +980,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.03 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 30 * ETHEREAL_DISCHARGE_RATE)
 
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1002,10 +992,9 @@
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
-	description = "A space age artifical sweetener."
+	description = "A space age artificial sweetener."
 	nutriment_factor = 0
 	metabolization_rate = 2 * REAGENTS_METABOLISM
-	reagent_state = SOLID
 	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 8
 	taste_description = "sweetness"
@@ -1046,7 +1035,6 @@
 	color = "#D98736"
 	taste_mult = 2
 	taste_description = "caramel"
-	reagent_state = SOLID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/caramel/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -1057,7 +1045,6 @@
 /datum/reagent/consumable/char
 	name = "Char"
 	description = "Essence of the grill. Has strange properties when overdosed."
-	reagent_state = LIQUID
 	nutriment_factor = 5
 	color = "#C8C8C8"
 	taste_mult = 6
@@ -1139,7 +1126,7 @@
 
 /datum/reagent/consumable/korta_flour
 	name = "Korta Flour"
-	description = "A coarsely ground, peppery flour made from korta nut shells."
+	description = "A coarsely-ground, peppery flour made from korta nut shells."
 	taste_description = "earthy heat"
 	color = "#EEC39A"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1172,7 +1159,6 @@
 	name = "Peanut Butter"
 	description = "A rich, creamy spread produced by grinding peanuts."
 	taste_description = "peanuts"
-	reagent_state = SOLID
 	color = "#D9A066"
 	nutriment_factor = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -15,7 +15,7 @@ ADMIN_VERB(get_current_logs, R_ADMIN, "Get Current Logs", "View or retrieve logf
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	switch(tgui_alert(usr,"View (in game), Open (in your system's text editor), or Download?", path, list("View", "Open", "Download")))
 		if ("View")
-			src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>", list2params(list("window" = "viewfile.[path]")))
+			src << browse(HTML_SKELETON("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>"), list2params(list("window" = "viewfile.[path]")))
 		if ("Open")
 			src << run(file(path))
 		if ("Download")

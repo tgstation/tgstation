@@ -1,6 +1,6 @@
 /datum/quirk/snob
 	name = "Snob"
-	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
+	desc = "You care about the finer things, if a room doesn't look nice it's just not really worth it, is it?"
 	icon = FA_ICON_USER_TIE
 	value = 0
 	gain_text = span_notice("You feel like you understand what things should look like.")

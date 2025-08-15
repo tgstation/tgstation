@@ -31,6 +31,14 @@
 	fishing_difficulty_modifier = 5
 	beauty = FISH_BEAUTY_GREAT
 
+// become lubeman. but you suicide
+/obj/item/fish/clownfish/lube/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] covers themselves in [src]'s residue, then swallows it whole! It looks like [user.p_theyre()] trying to commit lubide!"))
+	user.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
+	user.AddElement(/datum/element/lube_walking)
+	qdel(src)
+	return OXYLOSS
+
 /obj/item/fish/cardinal
 	name = "cardinalfish"
 	fish_id = "cardinal"
@@ -95,6 +103,10 @@
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
 	beauty = FISH_BEAUTY_GOOD
 
+/obj/item/fish/pufferfish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] bites into [src] and starts sucking on it! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return TOXLOSS
+
 /obj/item/fish/lanternfish
 	name = "lanternfish"
 	fish_id = "lanternfish"
@@ -144,10 +156,10 @@
 	attack_speed = 1 SECONDS
 	block_chance = 50
 	wound_bonus = 10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 75
-	base_pixel_x = -18
-	pixel_x = -18
+	base_pixel_w = -18
+	pixel_w = -18
 	sprite_width = 13
 	sprite_height = 6
 	stable_population = 3
@@ -155,7 +167,7 @@
 	average_weight = 4000
 	breeding_timeout = 4.5 MINUTES
 	feeding_frequency = 4 MINUTES
-	health = 180
+	max_integrity = 360
 	beauty = FISH_BEAUTY_EXCELLENT
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -179,28 +191,28 @@
 			block_chance -= 45
 			armour_penetration -= 20
 			wound_bonus -= 15
-			bare_wound_bonus -= 20
+			exposed_wound_bonus -= 20
 		if(WEIGHT_CLASS_SMALL)
 			force -= 8
 			attack_speed -= 0.3 SECONDS
 			block_chance -= 30
 			armour_penetration -= 15
 			wound_bonus -= 10
-			bare_wound_bonus -= 20
+			exposed_wound_bonus -= 20
 		if(WEIGHT_CLASS_NORMAL)
 			force -= 5
 			attack_speed -= 0.2 SECONDS
 			block_chance -= 20
 			armour_penetration -= 10
 			wound_bonus -= 10
-			bare_wound_bonus -= 15
+			exposed_wound_bonus -= 15
 		if(WEIGHT_CLASS_BULKY)
 			force -= 3
 			attack_speed -= 0.1 SECONDS
 			block_chance -= 10
 			armour_penetration -= 5
 			wound_bonus -= 5
-			bare_wound_bonus -= 10
+			exposed_wound_bonus -= 10
 		if(WEIGHT_CLASS_GIGANTIC)
 			force += 5
 			attack_speed += 0.2 SECONDS
@@ -208,20 +220,20 @@
 			block_chance += 10
 			armour_penetration += 5
 			wound_bonus += 5
-			bare_wound_bonus += 10
+			exposed_wound_bonus += 10
 
 	if(status == FISH_DEAD)
 		force -= 4 + w_class
 		block_chance -= 25
 		armour_penetration -= 30
 		wound_bonus -= 10
-		bare_wound_bonus -= 10
+		exposed_wound_bonus -= 10
 
 /obj/item/fish/swordfish/calculate_fish_force_bonus(bonus_malus)
 	. = ..()
 	armour_penetration += bonus_malus * 5
 	wound_bonus += bonus_malus * 3
-	bare_wound_bonus += bonus_malus * 5
+	exposed_wound_bonus += bonus_malus * 5
 	block_chance += bonus_malus * 7
 
 /obj/item/fish/squid
@@ -239,6 +251,31 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/ink, /datum/fish_trait/camouflage, /datum/fish_trait/wary)
+
+/obj/item/fish/squid/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] points [src]'s ink glands at their face and presses INCREDIBLY hard! It looks like [user.p_theyre()] trying to commit squidcide!"))
+
+	// No head? Bozo.
+	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head))
+		user.visible_message(span_suicide("[user] has no head! The ink goes flying by!"))
+		return SHAME
+
+	// get inked.
+	user.visible_message(span_warning("[user] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	user.AddComponent(/datum/component/face_decal/splat, \
+		color = COLOR_NEARLY_ALL_BLACK, \
+		memory_type = /datum/memory/witnessed_inking, \
+		mood_event_type = /datum/mood_event/inked, \
+	)
+	playsound(user, SFX_DESECRATION, 50, TRUE)
+
+	if(!HAS_TRAIT(user, TRAIT_STRENGTH) && !HAS_TRAIT(user, TRAIT_HULK))
+		return OXYLOSS
+
+	head.dismember(silent = FALSE)
+	user.visible_message(span_suicide("[user]'s head goes FLYING OFF from the overpressurized ink jet!"))
+	return MANUAL_SUICIDE
 
 /obj/item/fish/squid/get_fish_taste()
 	return list("raw mollusk" = 2)

@@ -23,7 +23,7 @@
 
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
-	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
+	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
 
 /datum/job/prisoner/New()
 	. = ..()
@@ -59,6 +59,7 @@
 	belt = null
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange
+	box = /obj/item/storage/box/survival/prisoner
 
 /datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
 	..()

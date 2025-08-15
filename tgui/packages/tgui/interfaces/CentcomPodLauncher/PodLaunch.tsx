@@ -1,7 +1,8 @@
+import { Box, Button } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button } from '../../components';
 import { useCompact } from './hooks';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function PodLaunch(props) {
   const { act, data } = useBackend<PodLauncherData>();

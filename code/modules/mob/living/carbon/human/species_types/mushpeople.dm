@@ -33,29 +33,18 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/mushroom,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
 	)
+	/// Martial art for the mushpeople
 	var/datum/martial_art/mushpunch/mush
-
-/datum/species/mush/check_roundstart_eligible()
-	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
-	if(ishuman(C))
-		mush = new()
-		mush.teach(C)
-		mush.allow_temp_override = FALSE
+	mush = new(src)
+	mush.locked_to_use = TRUE
+	mush.teach(C)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.fully_remove(C)
 	QDEL_NULL(mush)
-
-/datum/species/mush/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/mush/get_fixed_hair_color(mob/living/carbon/human/for_mob)
 	return "#FF4B19" //cap color, spot color uses eye color
@@ -72,7 +61,7 @@
 
 	preference = "feature_mushperson_cap"
 
-	dna_block = DNA_MUSHROOM_CAPS_BLOCK
+	dna_block = /datum/dna_block/feature/mush_cap
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/mushroom_cap
@@ -82,16 +71,18 @@
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
 	layers = EXTERNAL_ADJACENT
-	feature_key = "caps"
+	feature_key = FEATURE_MUSH_CAP
 	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()
 	return SSaccessories.caps_list
 
-/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
-
 	return TRUE
 
 /datum/bodypart_overlay/mutant/mushroom_cap/override_color(obj/item/bodypart/bodypart_owner)

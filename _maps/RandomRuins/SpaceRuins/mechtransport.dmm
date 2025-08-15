@@ -18,13 +18,13 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "dW" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "gK" = (
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "hq" = (
 /obj/item/stack/tile/iron/smooth,
@@ -51,7 +51,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "jI" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "jZ" = (
@@ -112,7 +112,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "lP" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "mU" = (
@@ -127,7 +127,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "qH" = (
 /obj/structure/mecha_wreckage/durand,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "rD" = (
 /obj/machinery/door/airlock/hatch{
@@ -148,7 +148,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "uF" = (
 /obj/structure/mecha_wreckage/clarke,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "uN" = (
 /obj/structure/closet/crate/secure/loot,
@@ -215,7 +215,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "CT" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "DD" = (
@@ -223,7 +223,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "DM" = (
 /obj/structure/mecha_wreckage/odysseus,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ga" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -249,7 +249,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/titanium/Airless,
+/turf/open/floor/catwalk_floor/titanium/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Il" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -274,13 +274,13 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Mn" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "NG" = (
 /obj/vehicle/sealed/mecha/ripley,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Oh" = (
 /obj/machinery/mech_bay_recharge_port{
@@ -289,11 +289,11 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ov" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "OJ" = (
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "PG" = (
 /obj/item/stack/rods,
@@ -303,7 +303,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
 	dir = 8
 	},
-/turf/open/floor/catwalk_floor/titanium/Airless,
+/turf/open/floor/catwalk_floor/titanium/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ry" = (
 /obj/structure/closet/crate/secure/loot,
@@ -311,7 +311,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Te" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/turf_decal/stripes/full,
@@ -334,7 +334,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "WN" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/effect/turf_decal/stripes/full,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4

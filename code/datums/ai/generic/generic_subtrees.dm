@@ -22,6 +22,14 @@
 	if(!song_player.song.playing) //we may stop playing if we weren't playing before, were setting up dk theme, or ran out of repeats (also causing setup behavior)
 		controller.queue_behavior(/datum/ai_behavior/play_instrument, BB_SONG_INSTRUMENT)
 
+/datum/ai_planning_subtree/generic_play_instrument/end_planning
+
+/datum/ai_planning_subtree/generic_play_instrument/end_planning/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	. = ..()
+	if (controller.blackboard_key_exists(BB_SONG_INSTRUMENT))
+		return SUBTREE_RETURN_FINISH_PLANNING // Don't plan anything else if we're playing an instrument
+
+
 /**
  * Generic Resist Subtree, resist if it makes sense to!
  *

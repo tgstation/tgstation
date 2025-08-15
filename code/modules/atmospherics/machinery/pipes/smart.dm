@@ -20,12 +20,16 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 
 	//find all directions this pipe is connected with other nodes
 	connections = NONE
+	var/new_volume = 0
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
 		var/connected_dir = get_dir(src, node)
 		connections |= connected_dir
+		new_volume += UNARY_PIPE_VOLUME
+	new_volume = max(new_volume, UNARY_PIPE_VOLUME * 2)
+	set_volume(new_volume)
 
 	//set the correct direction for this node in case of binary directions
 	switch(connections)
@@ -63,9 +67,18 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 
 /obj/machinery/atmospherics/pipe/smart/set_init_directions(init_dir)
 	if(init_dir)
+		var/new_volume = 0
 		initialize_directions = init_dir
+		var/j = 1
+		for (var/i in 1 to 4)
+			if (init_dir & j)
+				new_volume += UNARY_PIPE_VOLUME
+			j <<= 1
+		new_volume = max(new_volume, UNARY_PIPE_VOLUME * 2) // Minimum 2 directions
+		set_volume(new_volume)
 	else
 		initialize_directions = ALL_CARDINALS
+		set_volume(UNARY_PIPE_VOLUME * 4)
 
 //mapping helpers
 /obj/machinery/atmospherics/pipe/smart/simple

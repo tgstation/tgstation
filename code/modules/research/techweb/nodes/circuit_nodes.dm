@@ -73,7 +73,6 @@
 		"comp_soundemitter",
 		"comp_species",
 		"comp_speech",
-		"comp_speech",
 		"comp_split",
 		"comp_string_contains",
 		"comp_tempsensor",
@@ -86,6 +85,10 @@
 		"comp_typecast",
 		"comp_typecheck",
 		"comp_view_sensor",
+		"comp_wire_bundle",
+		"comp_wirenet_receive",
+		"comp_wirenet_send",
+		"comp_wirenet_send_literal",
 	)
 
 /datum/techweb_node/circuit_shells
@@ -105,6 +108,8 @@
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",
+		"undertile_shell",
+		"wallmount_shell",
 		"comp_equip_action",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

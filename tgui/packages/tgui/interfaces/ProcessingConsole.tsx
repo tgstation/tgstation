@@ -1,6 +1,3 @@
-import { toTitleCase } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,10 +7,13 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
-import { formatSiUnit } from '../format';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type IconData = {
   id: string;

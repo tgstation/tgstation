@@ -39,7 +39,7 @@ MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 
 /datum/controller/subsystem/movement/newtonian_movement/proc/fire_moveloop(datum/move_loop/loop)
 	// Loop isn't even running right now
-	if(!(loop.status & MOVELOOP_STATUS_QUEUED) || isnull(loop.queued_time))
+	if(!(loop.status & MOVELOOP_STATUS_QUEUED))
 		return
 	// Drop the loop, process it, and if its still valid - queue it again
 	dequeue_loop(loop)

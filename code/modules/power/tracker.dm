@@ -22,6 +22,8 @@
 	var/obj/effect/overlay/tracker_dish_edge
 	var/azimuth_current
 
+
+
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
@@ -90,7 +92,7 @@
 
 	// actually flip to other direction?
 	if(abs(angle - azimuth_current) > 180)
-		mid_azimuth = reverse_angle(mid_azimuth)
+		mid_azimuth = REVERSE_ANGLE(mid_azimuth)
 
 	// Split into 2 parts so it doesn't distort on large changes
 	animate(part,
@@ -123,9 +125,7 @@
 	S.forceMove(src)
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] begins to take the glass off [src]."), span_notice("You begin to take the glass off [src]..."))
-	if(I.use_tool(src, user, 50))
+	if(I.use_tool(src, user, 0))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
 		deconstruct(TRUE)
@@ -138,15 +138,23 @@
 		unset_control()
 
 /obj/machinery/power/tracker/on_deconstruction(disassembled)
+	var/datum/material/material_type = /datum/material/glass
 	if(disassembled)
-		var/obj/item/solar_assembly/S = locate() in src
-		if(S)
-			S.forceMove(loc)
-			S.give_glass(machine_stat & BROKEN)
+		var/obj/item/solar_assembly/assembly = locate() in src
+		if(assembly)
+			assembly.forceMove(loc)
+			if(machine_stat & BROKEN)
+				new material_type.shard_type(get_turf(src))
+				new material_type.shard_type(get_turf(src))
+			else
+				new material_type.sheet_type(get_turf(src))
+				new material_type.sheet_type(get_turf(src))
 	else
+		//When smashed to bits
 		playsound(src, SFX_SHATTER, 70, TRUE)
-		new /obj/item/shard(src.loc)
-		new /obj/item/shard(src.loc)
+
+		new material_type.shard_type(get_turf(src))
+		new material_type.shard_type(get_turf(src))
 
 // Tracker Electronic
 

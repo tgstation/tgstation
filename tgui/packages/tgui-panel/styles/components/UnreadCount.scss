@@ -1,0 +1,12 @@
+.UnreadCount {
+  pointer-events: none;
+  position: absolute;
+  top: calc(-1 * var(--space-s));
+  right: calc(-1 * var(--space-s));
+  font-size: 0.65em;
+  padding: 0 var(--space-s);
+  border-radius: var(--border-radius-small);
+  line-height: 1.25em;
+  background-color: var(--color-red);
+  color: var(--color-white);
+}

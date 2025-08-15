@@ -10,7 +10,6 @@
 	name = "Sneezing"
 	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally. Sneezes from this symptom will spread the virus in a 4 meter cone in front of the host."
 	illness = "Bard Flu"
-	weight = 2
 	stealth = -2
 	resistance = 3
 	stage_speed = 0
@@ -53,8 +52,8 @@
 			if(!suppress_warning)
 				affected_mob.emote("sniff")
 		else
-			if(affected_mob.can_spread_airborne_diseases()) //don't spread germs if they covered their mouth
-				affected_mob.infectious_sneeze(active_disease, TRUE, range = spread_range)
+			affected_mob.emote("sneeze")
+			active_disease.airborne_spread(spread_range = src.spread_range, force_spread = TRUE, require_facing = TRUE)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
 				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you

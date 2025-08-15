@@ -17,6 +17,7 @@
 	icon_state = "energy_katana"
 	inhand_icon_state = "energy_katana"
 	worn_icon_state = "energy_katana"
+	icon_angle = 35
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 30
@@ -28,12 +29,13 @@
 	pickup_sound = 'sound/items/unsheath.ogg'
 	drop_sound = 'sound/items/sheath.ogg'
 	block_sound = 'sound/items/weapons/block_blade.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	item_flags = NEEDS_PERMIT
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt
 
@@ -45,8 +47,10 @@
 	spark_system.attach(src)
 
 /obj/item/energy_katana/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!interacting_with.density)
-		jaunt?.teleport(user, interacting_with)
+	if(isliving(interacting_with))
+		jaunt.attack_teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	if(jaunt.teleport(user, interacting_with))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
@@ -77,3 +81,15 @@
 
 /datum/action/innate/dash/ninja/HideFrom(mob/viewer)
 	return
+
+/// Teleports to a tile adjacent to a mob, then attacks it
+/datum/action/innate/dash/ninja/proc/attack_teleport(mob/living/user, mob/living/stabbing)
+	var/list/turf/line = get_line(user, stabbing)
+	var/obj/item/sword = target
+	if(length(line) <= 1 || !teleport(user, line[length(line) - 1])) // teleports to the second last turf, should be adjacent to the target
+		return
+	if(!user.CanReach(stabbing, target))
+		return
+	sword.melee_attack_chain(user, stabbing)
+	if(prob(5) && check_holidays(APRIL_FOOLS))
+		user.say("Heh, nothin' personnel kid!", forced = "*teleports behind you**")

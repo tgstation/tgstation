@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
@@ -1689,7 +1689,7 @@
 "hn" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)

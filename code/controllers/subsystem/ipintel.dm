@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(ipintel)
 	name = "XKeyScore"
-	init_order = INIT_ORDER_XKEYSCORE
 	flags = SS_NO_INIT|SS_NO_FIRE
 	/// The threshold for probability to be considered a VPN and/or bad IP
 	var/probability_threshold
@@ -42,7 +41,8 @@ SUBSYSTEM_DEF(ipintel)
 		))
 
 /datum/controller/subsystem/ipintel/stat_entry(msg)
-	return "[..()] | M: [CONFIG_GET(number/ipintel_rate_minute) - rate_limit_minute]"
+	msg = "M:[CONFIG_GET(number/ipintel_rate_minute) - rate_limit_minute]"
+	return ..()
 
 
 /datum/controller/subsystem/ipintel/proc/is_enabled()
@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(ipintel)
 	)
 	query.warn_execute()
 	query.sync()
-	qdel(query)
+	QDEL_NULL(query)
 
 /datum/controller/subsystem/ipintel/proc/fetch_cached_ip_intel(address)
 	if (!SSdbcore.Connect())
@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(ipintel)
 
 	query.NextRow()
 	var/list/data = query.item
-	qdel(query)
+	QDEL_NULL(query)
 	if(isnull(data))
 		return null
 
@@ -192,7 +192,7 @@ SUBSYSTEM_DEF(ipintel)
 		return FALSE
 	query.NextRow()
 	. = !!query.item // if they have a row, they are whitelisted
-	qdel(query)
+	QDEL_NULL(query)
 
 
 ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL, ckey as text)
@@ -216,7 +216,7 @@ ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to conn
 	)
 	query.warn_execute()
 	query.sync()
-	qdel(query)
+	QDEL_NULL(query)
 	message_admins("IPINTEL: [key_name_admin(user)] has whitelisted '[ckey]'")
 
 ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a player's VPN whitelist.", ADMIN_CATEGORY_IPINTEL, ckey as text)
@@ -232,7 +232,7 @@ ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a playe
 	)
 	query.warn_execute()
 	query.sync()
-	qdel(query)
+	QDEL_NULL(query)
 	message_admins("IPINTEL: [key_name_admin(user)] has revoked the VPN whitelist for '[ckey]'")
 
 /client/proc/check_ip_intel()

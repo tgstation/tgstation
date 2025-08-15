@@ -41,6 +41,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			continue
 		if(extraction_point.beacon_network in beacon_networks)
 			possible_beacons += extraction_point
+
 	if(!length(possible_beacons))
 		balloon_alert(user, "no beacons")
 		return
@@ -67,11 +68,18 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		balloon_alert(user, "not linked!")
 		beacon_ref = null
 		return .
+	var/area/area = get_area(thing)
 	if(!can_use_indoors)
-		var/area/area = get_area(thing)
 		if(!area.outdoors)
 			balloon_alert(user, "not outdoors!")
 			return .
+	if(area.area_flags & NOTELEPORT)
+		balloon_alert(user, "unable to activate!")
+		return
+	var/area/target_area = get_area(beacon)
+	if(area != target_area && ((area.area_flags & LOCAL_TELEPORT) || (target_area.area_flags & LOCAL_TELEPORT)))
+		balloon_alert(user, "unable to activate!")
+		return
 	if(!safe_for_living_creatures && check_for_living_mobs(thing))
 		to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 		balloon_alert(user, "not safe!")
@@ -111,17 +119,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/obj/effect/extraction_holder/holder_obj = new(get_turf(thing))
 	holder_obj.appearance = thing.appearance
 	thing.forceMove(holder_obj)
-	var/mutable_appearance/balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand", layer = VEHICLE_LAYER)
-	balloon2.pixel_y = 10
-	balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	var/mutable_appearance/balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand", layer = VEHICLE_LAYER, appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART)
+	balloon2.pixel_z = 10
 	holder_obj.add_overlay(balloon2)
 	addtimer(CALLBACK(src, PROC_REF(create_balloon), thing, user, holder_obj, balloon2), 0.4 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/extraction_pack/proc/create_balloon(atom/movable/thing, mob/living/user, obj/effect/extraction_holder/holder_obj, mutable_appearance/balloon2)
-	var/mutable_appearance/balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon", layer = VEHICLE_LAYER)
-	balloon.pixel_y = 10
-	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	var/mutable_appearance/balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon", layer = VEHICLE_LAYER, appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART)
+	balloon.pixel_z = 10
 	holder_obj.cut_overlay(balloon2)
 	holder_obj.add_overlay(balloon)
 	playsound(holder_obj.loc, 'sound/items/fulton/fultext_deploy.ogg', vol = 50, vary = TRUE, extrarange = -3)
@@ -162,9 +168,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	sleep(7 SECONDS)
 
-	var/mutable_appearance/balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract", layer = VEHICLE_LAYER)
-	balloon3.pixel_y = 10
-	balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	var/mutable_appearance/balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract", layer = VEHICLE_LAYER, appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART)
+	balloon3.pixel_z = 10
 	holder_obj.cut_overlay(balloon)
 	holder_obj.add_overlay(balloon3)
 
@@ -189,10 +194,17 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon_state = "folded_extraction"
 
 /obj/item/fulton_core/attack_self(mob/user)
-	if(do_after(user, 1.5 SECONDS, target = user) && !QDELETED(src))
-		new /obj/structure/extraction_point(get_turf(user))
-		playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
-		qdel(src)
+	var/area/user_area = get_area(user)
+	if(user_area.area_flags & NOTELEPORT)
+		balloon_alert(user, "unable to deploy!")
+		return
+
+	if(!do_after(user, 1.5 SECONDS, target = user) || QDELETED(src))
+		return
+
+	new /obj/structure/extraction_point(get_turf(user))
+	playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+	qdel(src)
 
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"

@@ -1,0 +1,1 @@
+export const TEXTAREA_INPUT_HEIGHT = 200;

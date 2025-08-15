@@ -1,11 +1,16 @@
-/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
+//the following 2 procs are staying here because its for AI and its shells (also AI controlled)
+/mob/living/silicon/compose_track_href(atom/movable/speaker, namepart)
+	if(!HAS_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE))
+		return ""
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+		return "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	return ""
 
-/mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/silicon/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
+	if(!HAS_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE))
+		return ""
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
@@ -30,32 +35,31 @@
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
 		return NOPASS
-	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return NOPASS
 	return FALSE
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message, language)
+/mob/living/silicon/ai/proc/holopad_talk(message, list/spans = list(), language, list/message_mods = list())
 	message = trim(message)
 
 	if (!message)
 		return
 
 	var/obj/machinery/holopad/active_pad = current
-	if(istype(active_pad) && active_pad.masters[src])//If there is a hologram and its master is the user.
-		var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
-		var/turf/padturf = get_turf(active_pad)
-		var/padloc
-		if(padturf)
-			padloc = AREACOORD(padturf)
-		else
-			padloc = "(UNKNOWN)"
-		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		ai_holo.say(message, sanitize = FALSE, language = language)
-	else
+	// Only continue if there is a hologram and its master is the user.
+	if(!istype(active_pad) || !active_pad.masters[src])
 		to_chat(src, span_alert("No holopad connected."))
+		return
+
+	var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
+	var/turf/pad_turf = get_turf(active_pad)
+	var/pad_loc = pad_turf ? AREACOORD(pad_turf) : "(UNKNOWN)"
+
+	log_sayverb_talk(message, message_mods, tag = "HOLOPAD in [pad_loc]")
+	ai_holo.say(message, spans = spans, sanitize = FALSE, language = language, message_mods = message_mods)
 
 
 // Make sure that the code compiles with AI_VOX undefined
@@ -84,7 +88,7 @@
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
 		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='byond://?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
 		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
@@ -161,28 +165,32 @@
 	if(GLOB.vox_sounds[word])
 
 		var/sound_file = GLOB.vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
-		voice.status = SOUND_STREAM
 
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
-				if(!player_mob.can_hear() || !safe_read_pref(player_mob.client, /datum/preference/toggle/sound_ai_vox))
+				var/pref_volume = safe_read_pref(player_mob.client, /datum/preference/numeric/volume/sound_ai_vox)
+				if(!player_mob.can_hear() || !pref_volume)
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)
 				if(!is_valid_z_level(ai_turf, player_turf))
 					continue
 
+				var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX, volume = pref_volume)
+				voice.status = SOUND_STREAM
 				SEND_SOUND(player_mob, voice)
 		else
+			var/pref_volume = safe_read_pref(only_listener.client, /datum/preference/numeric/volume/sound_ai_vox)
+			var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX, volume = pref_volume)
+			voice.status = SOUND_STREAM
 			SEND_SOUND(only_listener, voice)
 		return TRUE
 	return FALSE
 
 /proc/does_target_have_vox_off(mob/target)
-	return !safe_read_pref(target.client, /datum/preference/toggle/sound_ai_vox)
+	return !safe_read_pref(target.client, /datum/preference/numeric/volume/sound_ai_vox)
 
 #undef VOX_DELAY
 #endif

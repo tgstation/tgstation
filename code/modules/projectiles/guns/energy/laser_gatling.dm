@@ -53,7 +53,7 @@
 	else
 		..()
 
-/obj/item/minigunpack/attackby(obj/item/W, mob/user, params)
+/obj/item/minigunpack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else
@@ -83,9 +83,9 @@
 	gun.forceMove(src)
 	armed = FALSE
 	if(user)
-		to_chat(user, span_notice("You attach the [gun.name] to the [name]."))
+		to_chat(user, span_notice("You attach \the [gun] to \the [src]."))
 	else
-		src.visible_message(span_warning("The [gun.name] snaps back onto the [name]!"))
+		src.visible_message(span_warning("\The [gun] snaps back onto \the [src]!"))
 	update_appearance()
 	user.update_worn_back()
 
@@ -135,7 +135,9 @@
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
 		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
-	..()
+	. = ..()
+	if(!.)
+		return
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)

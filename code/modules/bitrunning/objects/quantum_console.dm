@@ -10,11 +10,16 @@
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
-	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
+	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanotrasen is still using REST APIs. How grim."
 
 /obj/machinery/computer/quantum_console/post_machine_initialize()
 	. = ..()
 	find_server()
+
+/obj/machinery/computer/quantum_console/examine(mob/user)
+	. = ..()
+	if(!server_ref)
+		. += span_warning("Please install an quantum server in any tile next to this console.")
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

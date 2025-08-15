@@ -9,6 +9,7 @@
 /datum/surgery/advanced/brainwashing
 	name = "Brainwashing"
 	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
+	surgery_flags = SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -47,7 +48,7 @@
 		TOOL_WIRECUTTER = 50,
 		/obj/item/stack/package_wrap = 35,
 		/obj/item/stack/cable_coil = 15)
-	time = 200
+	time = 20 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'

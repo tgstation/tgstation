@@ -8,6 +8,7 @@
 	var/mob/owner = null //Carp doesn't attack owner, set when using in hand
 	var/mobtype = /mob/living/basic/carp //So admins can change what mob spawns via var fuckery
 	var/swelling = FALSE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 //Attack self
 /obj/item/toy/plush/carpplushie/dehy_carp/attack_self(mob/user)
@@ -62,6 +63,7 @@
 	//Make carp non-hostile to user
 	if(owner)
 		spawned_mob.faction = list("[REF(owner)]")
+		spawned_mob.grant_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_ATOM)
 	for(var/mob/living/viewer in viewers(5, get_turf(src)))
 		to_chat(viewer, viewer == owner ? span_notice("The newly grown [spawned_mob.name] looks up at you with friendly eyes.") : span_warning("You have a bad feeling about this."))
 	qdel(src)
@@ -74,3 +76,4 @@
 
 /obj/item/toy/plush/carpplushie/dehy_carp/peaceful
 	mobtype = /mob/living/basic/carp/passive
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1

@@ -1,61 +1,35 @@
-import { classes } from 'common/react';
-import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
 import {
-  Box,
   Button,
   Icon,
-  LabeledList,
+  ImageButton,
+  Input,
   NoticeBox,
   Section,
   Stack,
-  Table,
 } from 'tgui-core/components';
+import { capitalizeAll, createSearch } from 'tgui-core/string';
 
-import { createSearch } from '../../common/string';
 import { useBackend } from '../backend';
-import { DmIcon, Input } from '../components';
 import { Window } from '../layouts';
+import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
-type VendingData = {
-  all_products_free: boolean;
-  onstation: boolean;
-  department: string;
-  jobDiscount: number;
-  displayed_currency_icon: string;
-  displayed_currency_name: string;
-  product_records: ProductRecord[];
-  coin_records: CoinRecord[];
-  hidden_records: HiddenRecord[];
-  user: UserData;
-  stock: Record<string, StockItem>[];
-  extended_inventory: boolean;
-  access: boolean;
-  vending_machine_input: CustomInput[];
-  categories: Record<string, Category>;
-};
-
-type Category = {
-  icon: string;
+type StockItem = {
+  amount: number;
+  free: boolean;
 };
 
 type ProductRecord = {
   path: string;
   name: string;
   price: number;
-  max_amount: number;
   ref: string;
   category: string;
+  colorable: boolean;
+  premium: boolean;
+  image?: string;
   icon?: string;
   icon_state?: string;
-};
-
-type CoinRecord = ProductRecord & {
-  premium: boolean;
-};
-
-type HiddenRecord = ProductRecord & {
-  premium: boolean;
 };
 
 type UserData = {
@@ -65,25 +39,34 @@ type UserData = {
   department: string;
 };
 
-type StockItem = {
-  name: string;
-  path: string;
-  amount: number;
-  colorable: boolean;
+type Category = {
+  icon: string;
 };
 
-type CustomInput = {
-  path: string;
-  name: string;
-  price: number;
-  img: string;
+type VendingData = {
+  all_products_free: boolean;
+  onstation: boolean;
+  ad: string;
+  department: string;
+  jobDiscount: number;
+  displayed_currency_icon: string;
+  displayed_currency_name: string;
+  product_records: ProductRecord[];
+  coin_records: ProductRecord[];
+  hidden_records: ProductRecord[];
+  user: UserData;
+  stock: Record<string, StockItem>[];
+  extended_inventory: boolean;
+  access: boolean;
+  categories: Record<string, Category>;
 };
 
-export const Vending = (props) => {
+export const Vending = () => {
   const { data } = useBackend<VendingData>();
 
   const {
     onstation,
+    ad,
     product_records = [],
     coin_records = [],
     hidden_records = [],
@@ -97,19 +80,12 @@ export const Vending = (props) => {
   const [stockSearch, setStockSearch] = useState('');
   const stockSearchFn = createSearch(
     stockSearch,
-    (item: ProductRecord | CustomInput) => item.name,
+    (item: ProductRecord) => item.name,
   );
 
-  let inventory: (ProductRecord | CustomInput)[];
-  let custom = false;
-  if (data.vending_machine_input) {
-    inventory = data.vending_machine_input;
-    custom = true;
-  } else {
-    inventory = [...product_records, ...coin_records];
-    if (data.extended_inventory) {
-      inventory = [...inventory, ...hidden_records];
-    }
+  let inventory: ProductRecord[] = [...product_records, ...coin_records];
+  if (data.extended_inventory) {
+    inventory = [...inventory, ...hidden_records];
   }
 
   // Just in case we still have undefined values in the list
@@ -132,7 +108,7 @@ export const Vending = (props) => {
   );
 
   return (
-    <Window width={450} height={600}>
+    <Window width={431} height={635}>
       <Window.Content>
         <Stack fill vertical>
           {!!onstation && (
@@ -140,14 +116,17 @@ export const Vending = (props) => {
               <UserDetails />
             </Stack.Item>
           )}
+          {ad && (
+            <Stack.Item>
+              <AdSection AdDisplay={ad} />
+            </Stack.Item>
+          )}
           <Stack.Item grow>
             <ProductDisplay
-              custom={custom}
               inventory={inventory}
               stockSearch={stockSearch}
               setStockSearch={setStockSearch}
               selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
             />
           </Stack.Item>
 
@@ -168,55 +147,47 @@ export const Vending = (props) => {
 };
 
 /** Displays user details if an ID is present and the user is on the station */
-export const UserDetails = (props) => {
+export const UserDetails = () => {
   const { data } = useBackend<VendingData>();
   const { user } = data;
 
-  if (!user) {
-    return (
-      <Section>
-        <NoticeBox>No ID detected! Contact the Head of Personnel.</NoticeBox>
-      </Section>
-    );
-  } else {
-    return (
-      <Section>
-        <Stack>
-          <Stack.Item>
-            <Icon name="id-card" size={3} mr={1} />
-          </Stack.Item>
-          <Stack.Item>
-            <LabeledList>
-              <LabeledList.Item label="User">{user.name}</LabeledList.Item>
-              <LabeledList.Item label="Occupation">
-                {user.job || 'Unemployed'}
-              </LabeledList.Item>
-            </LabeledList>
-          </Stack.Item>
-        </Stack>
-      </Section>
-    );
-  }
+  return (
+    <NoticeBox m={0} color={user && 'blue'}>
+      <Stack align="center">
+        <Stack.Item>
+          <Icon name="id-card" size={1.5} />
+        </Stack.Item>
+        <Stack.Item>
+          {user
+            ? `${user.name || 'Unknown'} | ${user.job}`
+            : 'No ID detected! Contact the Head of Personnel.'}
+        </Stack.Item>
+      </Stack>
+    </NoticeBox>
+  );
+};
+
+const AdSection = (props: { AdDisplay: string }) => {
+  const { AdDisplay } = props;
+
+  return (
+    <NoticeBox m={0} color={'yellow'}>
+      <Stack align="center">
+        <Stack.Item>{AdDisplay}</Stack.Item>
+      </Stack>
+    </NoticeBox>
+  );
 };
 
 /** Displays  products in a section, with user balance at top */
 const ProductDisplay = (props: {
-  custom: boolean;
-  inventory: (ProductRecord | CustomInput)[];
+  inventory: ProductRecord[];
   stockSearch: string;
   setStockSearch: (search: string) => void;
   selectedCategory: string | null;
-  setSelectedCategory: (category: string) => void;
 }) => {
   const { data } = useBackend<VendingData>();
-  const {
-    custom,
-    inventory,
-    stockSearch,
-    setStockSearch,
-    selectedCategory,
-    setSelectedCategory,
-  } = props;
+  const { inventory, stockSearch, setStockSearch, selectedCategory } = props;
   const {
     stock,
     all_products_free,
@@ -224,6 +195,7 @@ const ProductDisplay = (props: {
     displayed_currency_icon,
     displayed_currency_name,
   } = data;
+  const [toggleLayout, setToggleLayout] = useState(getLayoutState(LAYOUT.Grid));
 
   return (
     <Section
@@ -234,196 +206,202 @@ const ProductDisplay = (props: {
         <Stack>
           {!all_products_free && user && (
             <Stack.Item fontSize="16px" color="green">
-              {(user && user.cash) || 0}
-              {displayed_currency_name}{' '}
+              {user?.cash || 0}
+              {displayed_currency_name}
               <Icon name={displayed_currency_icon} color="gold" />
             </Stack.Item>
           )}
           <Stack.Item>
             <Input
-              onInput={(_, value) => setStockSearch(value)}
+              onChange={setStockSearch}
+              expensive
               placeholder="Search..."
               value={stockSearch}
             />
           </Stack.Item>
+          <LayoutToggle state={toggleLayout} setState={setToggleLayout} />
         </Stack>
       }
     >
-      <Table>
-        {inventory
-          .filter((product) => {
-            if (!stockSearch && 'category' in product) {
-              return product.category === selectedCategory;
-            } else {
-              return true;
-            }
-          })
-          .map((product) => (
-            <VendingRow
-              key={product.path}
-              custom={custom}
-              product={product}
-              productStock={stock[product.path]}
-            />
-          ))}
-      </Table>
+      {inventory
+        .filter((product) => {
+          if (!stockSearch && 'category' in product) {
+            return product.category === selectedCategory;
+          } else {
+            return true;
+          }
+        })
+        .map((product) => (
+          <Product
+            key={product.path}
+            fluid={toggleLayout === LAYOUT.List}
+            product={product}
+            productStock={stock[product.path]}
+          />
+        ))}
     </Section>
   );
 };
 
-/** An individual listing for an item.
- * Uses a table layout. Labeledlist might be better,
- * but you cannot use item icons as labels currently.
+type ProductProps = {
+  product: ProductRecord;
+  productStock: StockItem;
+  fluid: boolean;
+};
+
+/**
+ * An individual listing for an item.
  */
-const VendingRow = (props) => {
-  const { data } = useBackend<VendingData>();
-  const { custom, product, productStock } = props;
-  const { access, department, jobDiscount, all_products_free, user } = data;
-  const free = all_products_free || product.price === 0;
+const Product = (props: ProductProps) => {
+  const { act, data } = useBackend<VendingData>();
+  const { product, productStock, fluid } = props;
+  const { department, jobDiscount, all_products_free, user } = data;
+
+  const colorable = !!product.colorable;
+  const free = all_products_free || productStock.free || product.price === 0;
   const discount = !product.premium && department === user?.department;
-  const remaining = custom ? product.amount : productStock.amount;
+  const remaining = productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled =
     remaining === 0 ||
     (!all_products_free && !user) ||
-    (!all_products_free &&
-      !access &&
-      (discount ? redPrice : product.price) > user?.cash);
+    (!free && (discount ? redPrice : product.price) > user?.cash);
 
-  return (
-    <Table.Row height="32px">
-      <Table.Cell collapsing width="36px">
-        <ProductImage product={product} />
-      </Table.Cell>
-      <Table.Cell verticalAlign="middle" bold>
-        {capitalizeAll(product.name)}
-      </Table.Cell>
-      <Table.Cell verticalAlign="middle">
-        {!!productStock?.colorable && (
-          <ProductColorSelect disabled={disabled} product={product} />
-        )}
-      </Table.Cell>
-      <Table.Cell collapsing textAlign="right" verticalAlign="middle">
-        <ProductStock custom={custom} product={product} remaining={remaining} />
-      </Table.Cell>
-      <Table.Cell collapsing textAlign="center" verticalAlign="middle">
-        <ProductButton
-          custom={custom}
-          disabled={disabled}
-          discount={discount}
-          free={free}
-          product={product}
-          redPrice={redPrice}
-        />
-      </Table.Cell>
-    </Table.Row>
+  const baseProps = {
+    base64: product.image,
+    dmIcon: product.icon,
+    dmIconState: product.icon_state,
+    asset: ['vending32x32', product.path],
+    disabled: disabled,
+    tooltipPosition: 'bottom',
+    buttons: colorable && (
+      <ProductColorSelect disabled={disabled} product={product} fluid={fluid} />
+    ),
+    product: product,
+    colorable: colorable,
+    remaining: remaining,
+    onClick: () => {
+      act('vend', {
+        ref: product.ref,
+        discountless: !!product.premium,
+      });
+    },
+  };
+
+  const priceProps = {
+    discount: discount,
+    free: free,
+    product: product,
+    redPrice: redPrice,
+  };
+
+  return fluid ? (
+    <ProductList {...baseProps} {...priceProps} />
+  ) : (
+    <ProductGrid {...baseProps} {...priceProps} />
   );
 };
 
-/** Displays the product image. Displays a default if there is none. */
-const ProductImage = (props) => {
-  const { product } = props;
+const ProductGrid = (props: any) => {
+  const { product, remaining, ...baseProps } = props;
+  const { ...priceProps } = props;
 
   return (
-    <Box width="32px" height="32px">
-      {product.img ? (
-        <img
-          src={`data:image/jpeg;base64,${product.img}`}
-          style={{
-            verticalAlign: 'middle',
-          }}
-        />
-      ) : product.icon && product.icon_state ? (
-        <DmIcon
-          icon={product.icon}
-          icon_state={product.icon_state}
-          fallback={<Icon name="spinner" size={2} spin />}
-        />
-      ) : (
-        <span
-          className={classes(['vending32x32', product.path])}
-          style={{
-            verticalAlign: 'middle',
-          }}
-        />
-      )}
-    </Box>
+    <ImageButton
+      {...baseProps}
+      tooltip={capitalizeAll(product.name)}
+      buttonsAlt={
+        <Stack fontSize={0.8}>
+          <Stack.Item grow textAlign={'left'}>
+            <ProductPrice {...priceProps} />
+          </Stack.Item>
+          <Stack.Item color={'lightgray'}>x{remaining}</Stack.Item>
+        </Stack>
+      }
+    >
+      {capitalizeAll(product.name)}
+    </ImageButton>
   );
 };
 
-/** In the case of customizable items, ie: shoes,
+const ProductList = (props: any) => {
+  const { colorable, product, remaining, ...baseProps } = props;
+  const { ...priceProps } = props;
+
+  return (
+    <ImageButton {...baseProps} fluid imageSize={32}>
+      <Stack textAlign={'right'} align="center">
+        <Stack.Item grow textAlign={'left'}>
+          {capitalizeAll(product.name)}
+        </Stack.Item>
+        <Stack.Item
+          width={3.5}
+          fontSize={0.8}
+          color={'rgba(255, 255, 255, 0.5)'}
+        >
+          {remaining} left
+        </Stack.Item>
+        <Stack.Item
+          width={3.5}
+          style={{ marginRight: !colorable ? '32px' : '' }}
+        >
+          <ProductPrice {...priceProps} />
+        </Stack.Item>
+      </Stack>
+    </ImageButton>
+  );
+};
+
+/**
+ * In the case of customizable items, ie: shoes,
  * this displays a color wheel button that opens another window.
  */
-const ProductColorSelect = (props) => {
+
+type ProductColorSelectProps = {
+  disabled: boolean;
+  product: ProductRecord;
+  fluid: boolean;
+};
+
+const ProductColorSelect = (props: ProductColorSelectProps) => {
   const { act } = useBackend<VendingData>();
-  const { disabled, product } = props;
+  const { disabled, product, fluid } = props;
 
   return (
     <Button
-      icon="palette"
-      tooltip="Change color"
-      width="24px"
-      disabled={disabled}
+      width={fluid ? '32px' : '20px'}
+      icon={'palette'}
+      color={'transparent'}
+      tooltip={'Change color'}
+      style={disabled ? { pointerEvents: 'none', opacity: 0.5 } : {}}
       onClick={() => act('select_colors', { ref: product.ref })}
     />
   );
 };
 
-/** Displays a colored indicator for remaining stock */
-const ProductStock = (props) => {
-  const { custom, product, remaining } = props;
-
-  return (
-    <Box
-      color={
-        (remaining <= 0 && 'bad') ||
-        (!custom && remaining <= product.max_amount / 2 && 'average') ||
-        'good'
-      }
-    >
-      {remaining} left
-    </Box>
-  );
+type ProductPriceProps = {
+  discount: boolean;
+  free: boolean;
+  product: ProductRecord;
+  redPrice: number;
 };
 
 /** The main button to purchase an item. */
-const ProductButton = (props) => {
-  const { act, data } = useBackend<VendingData>();
-  const { access, displayed_currency_name } = data;
-  const { custom, discount, disabled, free, product, redPrice } = props;
-  const customPrice = access ? 'FREE' : product.price;
-  let standardPrice = product.price;
+const ProductPrice = (props: ProductPriceProps) => {
+  const { data } = useBackend<VendingData>();
+  const { displayed_currency_name } = data;
+  const { discount, free, product, redPrice } = props;
+  let standardPrice = product.price + '';
   if (free) {
     standardPrice = 'FREE';
   } else if (discount) {
-    standardPrice = redPrice;
+    standardPrice = redPrice + '';
   }
-  return custom ? (
-    <Button
-      fluid
-      disabled={disabled}
-      onClick={() =>
-        act('dispense', {
-          item: product.path,
-        })
-      }
-    >
-      {customPrice}
-      {!access && displayed_currency_name}
-    </Button>
-  ) : (
-    <Button
-      fluid
-      disabled={disabled}
-      onClick={() =>
-        act('vend', {
-          ref: product.ref,
-        })
-      }
-    >
+  return (
+    <Stack.Item fontSize={0.85} color={'gold'}>
       {standardPrice}
       {!free && displayed_currency_name}
-    </Button>
+    </Stack.Item>
   );
 };
 

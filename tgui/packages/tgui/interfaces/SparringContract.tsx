@@ -1,8 +1,14 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+import {
+  BlockQuote,
+  Button,
+  Dropdown,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const weaponlist = [
@@ -212,7 +218,7 @@ export const SparringContract = (props) => {
                   <Button
                     tooltip={
                       (in_area &&
-                        'Both participants are present in the ' + area + '.') ||
+                        `Both participants are present in the ${area}.`) ||
                       'Both participants need to be in the arena!'
                     }
                     color={(in_area && 'green') || 'red'}

@@ -1,7 +1,13 @@
 import { useState } from 'react';
+import {
+  Button,
+  DmIcon,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, DmIcon, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {

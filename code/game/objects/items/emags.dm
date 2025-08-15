@@ -176,6 +176,12 @@
 	. = ..()
 	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all acceptable typepaths that this device can affect
 
+/obj/item/card/emag/doorjack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// only for doorjacks since regular emags still need to be able to break locks on storage items
+	if(interacting_with.atom_storage)
+		return NONE
+	. = ..()
+
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
 	to_chat(user, span_notice("You use [src]. It now has [charges] charge[charges == 1 ? "" : "s"] remaining."))

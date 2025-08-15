@@ -48,7 +48,7 @@
 	///What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown = 0
 	///How long, in deciseconds, the cooldown of ranged attacks is
-	var/ranged_cooldown_time = 30
+	var/ranged_cooldown_time = 3 SECONDS
 	///if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/ranged_ignores_vision = FALSE
 	///Should the ranged mob check for friendlies when shooting
@@ -71,7 +71,7 @@
 	///Timer for regaining our old search_objects value after being attacked
 	var/search_objects_timer_id
 	///The delay between being attacked and gaining our old search_objects value back
-	var/search_objects_regain_time = 30
+	var/search_objects_regain_time = 3 SECONDS
 	///A typecache of objects types that will be checked against to attack, should we have search_objects enabled
 	var/list/wanted_objects = list()
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
@@ -90,7 +90,7 @@
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
-	var/lose_patience_timeout = 300
+	var/lose_patience_timeout = 30 SECONDS
 
 /mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
@@ -264,6 +264,8 @@
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check_atom(L)
+			if(L.has_status_effect(/datum/status_effect/shapechange_mob))
+				faction_check = FALSE
 			if(robust_searching)
 				if(faction_check && !attack_same)
 					return FALSE
@@ -396,10 +398,10 @@
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget(atom/attacked_target)
 	in_melee = TRUE
-	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, attacked_target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
-	var/result = target.attack_animal(src)
-	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
+	var/result = attacked_target.attack_animal(src)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, attacked_target, result)
 	return result
 
 /mob/living/simple_animal/hostile/proc/Aggro()
@@ -639,6 +641,11 @@
 	target = null
 	LoseTarget()
 
+/mob/living/simple_animal/hostile/proc/handle_friend_del(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_QDELETING)
+	friends -= source
+
 /mob/living/simple_animal/hostile/proc/add_target(new_target)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_FOUND_TARGET, new_target)
 	if(target)
@@ -652,6 +659,7 @@
 	if (!.)
 		return
 	friends += new_friend
+	RegisterSignal(new_friend, COMSIG_QDELETING, PROC_REF(handle_friend_del))
 	faction = new_friend.faction.Copy()
 
 /mob/living/simple_animal/hostile/lazarus_revive(mob/living/reviver, malfunctioning)

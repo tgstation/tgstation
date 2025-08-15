@@ -17,6 +17,7 @@
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
+		/obj/item/gun/ballistic/automatic/battle_rifle,
 	))
 
 /obj/machinery/recharger/RefreshParts()
@@ -55,6 +56,11 @@
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
 		. += span_notice("- \The [charging]'s cell is at <b>[PERCENT(power_pack.stored_ammo.len/power_pack.max_ammo)]%</b>.")
 		return
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+		. += span_notice("- \The [charging]'s system degradation is at stage [recalibrating_gun.degradation_stage] of [recalibrating_gun.degradation_stage_max]</b>.")
+		. += span_notice("- \The [charging]'s degradation buffer is at <b>[PERCENT(recalibrating_gun.shots_before_degradation/recalibrating_gun.max_shots_before_degradation)]%</b>.")
+		return
 	. += span_notice("- \The [charging] is not reporting a power level.")
 
 /obj/machinery/recharger/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -77,7 +83,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/recharger/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/recharger/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!is_type_in_typecache(attacking_item, allowed_devices))
 		return ..()
 
@@ -152,12 +158,31 @@
 
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge)) //if you add any more snowflake ones, make sure to update the examine messages too.
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
-		if(power_pack.stored_ammo.len < power_pack.max_ammo)
+		for(var/charge_iterations in 1 to recharge_coeff)
+			if(power_pack.stored_ammo.len >= power_pack.max_ammo)
+				break
 			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			use_energy(active_power_usage * seconds_per_tick)
 			using_power = TRUE
 		update_appearance()
 		return
+
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+
+		if(recalibrating_gun.degradation_stage)
+			recalibrating_gun.attempt_recalibration(FALSE)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			using_power = TRUE
+
+		else if(recalibrating_gun.shots_before_degradation < recalibrating_gun.max_shots_before_degradation)
+			recalibrating_gun.attempt_recalibration(TRUE, 1 * recharge_coeff)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			using_power = TRUE
+
+		update_appearance()
+		return
+
 	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
 		finished_recharging = TRUE
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)

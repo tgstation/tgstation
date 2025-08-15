@@ -23,7 +23,8 @@
 	var/keyword
 	var/log = TRUE
 	var/key_valid
-	var/require_comms_key = FALSE
+	/// If the comms.txt config key is required. If you flip this to false, ensure the code is correct and the query you receive is legit.
+	var/require_comms_key = TRUE
 
 /datum/world_topic/proc/TryRun(list/input)
 	key_valid = (CONFIG_GET(string/comms_key) == input["key"]) && CONFIG_GET(string/comms_key) && input["key"]
@@ -42,11 +43,18 @@
 /datum/world_topic/proc/Run(list/input)
 	CRASH("Run() not implemented for [type]!")
 
-// TOPICS
+/** TOPICS
+ * These are the handlers for world.Export() -> World.Topic() server communication.
+ * Double check to ensure any calls are correct and the query is legit.
+ * World.Topic() exploits can be very devastating since these can be called via a normal player connection without a client.
+ * https://secure.byond.com/docs/ref/index.html#/world/proc/Topic
+*/
 
+// If you modify the protocol for this, update tools/Tgstation.PRAnnouncer
 /datum/world_topic/ping
 	keyword = "ping"
 	log = FALSE
+	require_comms_key = FALSE
 
 /datum/world_topic/ping/Run(list/input)
 	. = 0
@@ -56,13 +64,14 @@
 /datum/world_topic/playing
 	keyword = "playing"
 	log = FALSE
+	require_comms_key = FALSE
 
 /datum/world_topic/playing/Run(list/input)
 	return GLOB.player_list.len
 
+// If you modify the protocol for this, update tools/Tgstation.PRAnnouncer
 /datum/world_topic/pr_announce
 	keyword = "announce"
-	require_comms_key = TRUE
 	var/static/list/PRcounts = list() //PR id -> number of times announced this round
 
 /datum/world_topic/pr_announce/Run(list/input)
@@ -81,14 +90,12 @@
 
 /datum/world_topic/ahelp_relay
 	keyword = "Ahelp"
-	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
 	relay_msg_admins(span_adminnotice("<b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b>"))
 
 /datum/world_topic/comms_console
 	keyword = "Comms_Console"
-	require_comms_key = TRUE
 
 	var/list/timers
 
@@ -114,8 +121,8 @@
 
 	var/message = "<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
 			the following message (will autoapprove in [soft_filter_passed ? "[extended_time_display]" : "[normal_time_display]"]): \
-			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
-			[html_encode(input["message"])]"
+			<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br><br>\
+			[input["message"]]"
 
 	if(soft_filter_passed)
 		message += "<br><br><b>NOTE: This message passed the soft filter on the origin server! The time was automatically expanded to [extended_time_display].</b>"
@@ -159,21 +166,18 @@
 
 /datum/world_topic/news_report
 	keyword = "News_Report"
-	require_comms_key = TRUE
 
 /datum/world_topic/news_report/Run(list/input)
 	minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"
-	require_comms_key = TRUE
 
 /datum/world_topic/adminmsg/Run(list/input)
 	return TgsPm(input[keyword], input["msg"], input["sender"])
 
 /datum/world_topic/namecheck
 	keyword = "namecheck"
-	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
 	log_admin("world/Topic Name Check: [input["sender"]] on [input["namecheck"]]")
@@ -183,13 +187,13 @@
 
 /datum/world_topic/adminwho
 	keyword = "adminwho"
-	require_comms_key = TRUE
 
 /datum/world_topic/adminwho/Run(list/input)
 	return tgsadminwho()
 
 /datum/world_topic/status
 	keyword = "status"
+	require_comms_key = FALSE
 
 /datum/world_topic/status/Run(list/input)
 	. = list()
@@ -204,6 +208,10 @@
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
 	.["identifier"] = CONFIG_GET(string/serversqlname)
+
+	var/public_address = CONFIG_GET(string/public_address)
+	if(public_address)
+		.["public_address"] = public_address
 
 
 	var/list/adm = get_admin_counts()
@@ -239,3 +247,66 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
+
+/datum/world_topic/create_news_channel
+	keyword = "create_news_channel"
+	/// Lazylist of timers for actually creating the channel to give admins some time
+	var/list/timers
+
+/datum/world_topic/create_news_channel/Run(list/input)
+	var/message_delay = text2num(input["delay"])
+	var/timer_id = addtimer(CALLBACK(src, PROC_REF(create_channel), input), message_delay)
+	input["timer_id"] = timer_id
+	LAZYADD(timers, timer_id)
+
+	var/message = "<b color='orange'>Cross-sector channel creation (Incoming):</b> [input["author_ckey"]] is about to create a cross-sector \
+			newscaster channel \"[input["message"]]\" (will autoapprove in [DisplayTimeText(message_delay)]): \
+			<b><a href='byond://?src=[REF(src)];reject_channel_creation=[timer_id]'>REJECT</a></b>"
+
+	message_admins(span_adminnotice(message))
+
+/datum/world_topic/create_news_channel/Topic(href, list/href_list)
+	. = ..()
+	if (.)
+		return
+
+	var/timer_id = href_list["reject_channel_creation"]
+	if (!timer_id)
+		return
+
+	if (!usr.client?.holder)
+		log_game("tried to reject the creation of an incoming cross-sector newscaster channel without being an admin.", LOG_ADMIN)
+		message_admins("[key_name(usr)] tried to reject the creation of an incoming cross-sector newscaster channel without being an admin.")
+		return
+
+	if (!(timer_id in timers))
+		to_chat(usr, span_warning("It's too late!"))
+		return
+
+	deltimer(timer_id)
+	LAZYREMOVE(timers, timer_id)
+
+	log_admin("[key_name(usr)] has cancelled the creation of an incoming cross-sector newscaster channel.")
+	message_admins("[key_name(usr)] has cancelled the creation of an incoming cross-sector newscaster channel.")
+	return TRUE
+
+/datum/world_topic/create_news_channel/proc/create_channel(list/input)
+	LAZYREMOVE(timers, input["timer_id"])
+	message_admins("[input["author_ckey"]] has crated a cross-sector newscaster channel titled \"[input["message"]]\"")
+	GLOB.news_network.create_feed_channel(input["message"], input["author"], input["desc"], locked = TRUE, receiving_cross_sector = TRUE)
+
+/datum/world_topic/create_news_article
+	keyword = "create_news_article"
+
+/datum/world_topic/create_news_article/Run(list/input)
+	var/msg = input["msg"]
+	var/author = input["author"]
+	var/author_key = input["author_ckey"]
+	var/channel_name = input["message"]
+
+	var/datum/feed_channel/chosen_channel = GLOB.news_network.network_channels_by_name[channel_name]
+	if(isnull(chosen_channel)) // No channel with a matching name, abort
+		return
+
+	message_admins(span_adminnotice("Incoming cross-sector newscaster article by [author_key] in channel [channel_name]."))
+	GLOB.news_network.submit_article(msg, author, channel_name)

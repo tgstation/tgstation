@@ -208,7 +208,7 @@
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='byond://?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
 
 /obj/item/circuit_component/bci_core/Topic(href, list/href_list)
 	..()
@@ -250,7 +250,7 @@
 
 	return ..()
 
-/datum/action/innate/bci_charge_action/Trigger(trigger_flags)
+/datum/action/innate/bci_charge_action/Trigger(mob/clicker, trigger_flags)
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
@@ -357,7 +357,7 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	var/obj/item/organ/cyberimp/bci/new_bci = weapon
 	if (istype(new_bci))
 		if (!(locate(/obj/item/integrated_circuit) in new_bci))
@@ -379,7 +379,7 @@
 
 	return ..()
 
-/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -505,7 +505,7 @@
 	return ..()
 
 /obj/item/circuitboard/machine/bci_implanter
-	name = "Brain-Computer Interface Manipulation Chamber (Machine Board)"
+	name = "Brain-Computer Interface Manipulation Chamber"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/bci_implanter
 	req_components = list(

@@ -1,8 +1,8 @@
-import { classes } from 'common/react';
+import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Box, Button, Image, Section, Stack } from '../../components';
 import {
   CLEAR_GENE,
   GENE_COLORS,
@@ -37,7 +37,7 @@ const GenomeImage = (props) => {
 const GeneCycler = (props) => {
   const { act } = useBackend();
   const { alias, gene, index, disabled, ...rest } = props;
-  const color = (disabled && GENE_COLORS['X']) || GENE_COLORS[gene];
+  const color = (disabled && GENE_COLORS.X) || GENE_COLORS[gene];
   return (
     <Button
       {...rest}

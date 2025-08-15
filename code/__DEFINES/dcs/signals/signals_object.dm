@@ -47,6 +47,12 @@
 	/// Can't use tools on the machine
 	#define COMPONENT_CANT_USE_MACHINE_TOOLS (1<<1)
 
+#define COMSIG_ORE_SILO_PERMISSION_CHECKED "ore_silo_permission_checked"
+	/// The ore silo is not allowed to be used
+	#define COMPONENT_ORE_SILO_DENY (1<<0)
+	/// The ore silo is allowed to be used
+	#define COMPONENT_ORE_SILO_ALLOW (1<<1)
+
 ///from obj/machinery/iv_drip/IV_attach(target, usr) : (attachee)
 #define COMSIG_IV_ATTACH "iv_attach"
 ///from obj/machinery/iv_drip/IV_detach() : (detachee)
@@ -133,7 +139,7 @@
 #define COMSIG_ITEM_ON_GRIND "on_grind"
 ///from base of obj/item/on_juice(): ()
 #define COMSIG_ITEM_ON_JUICE "on_juice"
-///from /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params) when an object is used as compost: (mob/user)
+///from /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers) when an object is used as compost: (mob/user)
 #define COMSIG_ITEM_ON_COMPOSTED "on_composted"
 ///Called when an item is dried by a drying rack
 #define COMSIG_ITEM_DRIED "item_dried"
@@ -179,18 +185,20 @@
 #define COMSIG_ARMOR_PLATED "armor_plated"
 ///Called when an item gets recharged by the ammo powerup
 #define COMSIG_ITEM_RECHARGED "item_recharged"
-///Called when an item is being offered, from [/obj/item/proc/on_offered(mob/living/carbon/offerer)]
+///Called when an item is being offered, from [/obj/item/proc/on_offered(mob/living/offerer)]
 #define COMSIG_ITEM_OFFERING "item_offering"
 	///Interrupts the offer proc
 	#define COMPONENT_OFFER_INTERRUPT (1<<0)
-///Called when an someone tries accepting an offered item, from [/obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)]
+///Called when an someone tries accepting an offered item, from [/obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)]
 #define COMSIG_ITEM_OFFER_TAKEN "item_offer_taken"
 	///Interrupts the offer acceptance
 	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
-/// sent from obj/effect/attackby(): (/obj/effect/hit_effect, /mob/living/attacker, params)
+/// sent from obj/effect/attackby(): (/obj/effect/hit_effect, /mob/living/attacker, list/modifiers)
 #define COMSIG_ITEM_ATTACK_EFFECT "item_effect_attacked"
 /// Called by /obj/item/proc/worn_overlays(list/overlays, mutable_appearance/standing, isinhands, icon_file)
 #define COMSIG_ITEM_GET_WORN_OVERLAYS "item_get_worn_overlays"
+/// Called by /obj/item/proc/separate_worn_overlays(list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+#define COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS "item_get_separate_worn_overlays"
 
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"
@@ -198,8 +206,6 @@
 #define COMSIG_TOOL_START_USE "tool_start_use"
 /// From /obj/item/multitool/remove_buffer(): (buffer)
 #define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"
-///from [/obj/item/proc/disableEmbedding]:
-#define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
@@ -263,8 +269,10 @@
 
 /// Called on component/uplink/OnAttackBy(..)
 #define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
-///Called when a holoparasite/guardiancreator is used.
+/// Called when a holoparasite/guardiancreator is used.
 #define COMSIG_TRAITOR_ITEM_USED(type) "traitor_item_used_[type]"
+/// Called after an item is refunded
+#define COMSIG_ITEM_TC_REIMBURSED "item_tc_reimbursed"
 
 // /obj/item/clothing signals
 
@@ -331,9 +339,11 @@
 
 // /obj/item/gun signals
 
+///called in /obj/item/gun/try_fire_gun (user, src, target, flag, params)
+#define COMSIG_MOB_TRYING_TO_FIRE_GUN "mob_trying_to_fire_gun"
 ///called in /obj/item/gun/fire_gun (user, target, flag, params)
 #define COMSIG_GUN_TRY_FIRE "gun_try_fire"
-	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0) /// Also returned to cancel COMSIG_MOB_TRYING_TO_FIRE_GUN
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override, bonus_spread_values)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 	#define MIN_BONUS_SPREAD_INDEX 1
@@ -348,6 +358,12 @@
 #define COMSIG_GUN_BEING_SAWNOFF "gun_being_sawnoff"
 	#define COMPONENT_CANCEL_SAWING_OFF (1<<0)
 #define COMSIG_GUN_SAWN_OFF "gun_sawn_off"
+
+///called in /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun): (obj/item/firing_pin/pin, mob/living/user)
+#define COMSIG_GUN_PIN_INSERTED "gun_pin_inserted"
+
+///called in /obj/item/firing_pin/proc/gun_remove(mob/living/user): (obj/item/firing_pin/pin, mob/living/user)
+#define COMSIG_GUN_PIN_REMOVED "gun_pin_removed"
 
 // Jetpack things
 // Please kill me
@@ -404,10 +420,7 @@
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
 ///from the base of /obj/projectile/process(): ()
 #define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
-///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
-#define COMSIG_EMBED_TRY_FORCE "item_try_embed"
-	#define COMPONENT_EMBED_SUCCESS (1<<1)
-// FROM [/obj/item/proc/updateEmbedding] sent when an item's embedding properties are changed : ()
+// FROM [/obj/item/proc/set_embed] sent when an item's embedding properties are changed : ()
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
 ///sent to targets during the process_hit proc of projectiles
@@ -418,9 +431,9 @@
 
 ///sent to the projectile after an item is spawned by the projectile_drop element: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
-///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
+///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item, victim)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
-///sent to the projectile when successfully embedding into something
+///sent to the projectile when successfully embedding into something: (new_item, victim)
 #define COMSIG_PROJECTILE_ON_EMBEDDED "projectile_on_embedded"
 
 // /obj/vehicle/sealed/car/vim signals
@@ -436,6 +449,10 @@
 #define COMSIG_COMPUTER_RECEIVED_MESSAGE "computer_received_message"
 ///from /datum/computer_file/program/virtual_pet/proc/handle_level_up
 #define COMSIG_VIRTUAL_PET_LEVEL_UP "virtual_pet_level_up"
+///from /datum/computer_file/program/virtual_pet/proc/release_pet
+#define COMSIG_VIRTUAL_PET_SUMMONED "virtual_pet_summoned"
+///from /datum/computer_file/program/virtual_pet/proc/recall_pet
+#define COMSIG_VIRTUAL_PET_RECALLED "virtual_pet_recalled"
 
 // /obj/vehicle/sealed/mecha signals
 
@@ -458,31 +475,31 @@
 	/// Prevents click from happening.
 	#define COMPONENT_CANCEL_EQUIPMENT_CLICK (1<<0)
 
-///from base of /obj/item/attack(): (mob/living, mob/living, params)
+///from base of /obj/item/attack(): (mob/living, mob/living, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_ATTACK "item_attack"
 ///from base of obj/item/attack_self(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF_SECONDARY "item_attack_self_secondary"
-///from base of obj/item/attack_atom(): (/atom, /mob)
+///from base of obj/item/attack_atom(): (/atom, /mob, list/modifiers)
 #define COMSIG_ITEM_ATTACK_ATOM "item_attack_atom"
-///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
+///from base of obj/item/pre_attack(): (atom/target, mob/user, list/modifiers)
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
-/// From base of [/obj/item/proc/pre_attack_secondary()]: (atom/target, mob/user, params)
+/// From base of [/obj/item/proc/pre_attack_secondary()]: (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_PRE_ATTACK_SECONDARY "item_pre_attack_secondary"
 	#define COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN (1<<0)
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
-/// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
+/// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
-///from base of [obj/item/attack()]: (atom/target, mob/user, proximity_flag, click_parameters)
+///from base of [obj/item/attack()]: (atom/target, mob/user, proximity_flag, list/modifiers)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
-///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
+///from base of datum/embedding/proc/embed_into(): (mob/living/carbon/victim, obj/item/bodypart/limb)
 #define COMSIG_ITEM_EMBEDDED "item_embedded"
-///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)
+///from base of datum/embedding/proc/remove_embedding(): (mob/living/carbon/victim, obj/item/bodypart/limb)
 #define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
-/// from base of obj/item/failedEmbed()
-#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
+///from base of datum/embedding/proc/failed_embed(): (mob/living/carbon/victim, hit_zone)
+#define COMSIG_ITEM_FAILED_EMBED "item_unembedded"
 
 /// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
 #define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
@@ -500,9 +517,6 @@
 /// from base of /obj/item/slimepotion/speed/interact_with_atom(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
-
-/// from /obj/structure/sign/poster/trap_succeeded() : (mob/user)
-#define COMSIG_POSTER_TRAP_SUCCEED "poster_trap_succeed"
 
 /// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
 #define COMSIG_DETECTIVE_SCANNED "det_scanned"
@@ -541,13 +555,66 @@
 /// Sent from /obj/item/update_weight_class(), to its loc. (obj/item/changed_item, old_w_class, new_w_class)
 #define COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED "atom_contents_weight_class_changed"
 
+/// Sent from /obj/item/proc/animate_attack() : (atom/movable/attacker, atom/attacked_atom, animation_type, list/image_override, list/animation_override, list/angle_override)
+#define COMSIG_ITEM_ATTACK_ANIMATION "item_attack_animation"
+
 ///Sent from /obj/item/skillchip/on_implant()
 #define COMSIG_SKILLCHIP_IMPLANTED "skillchip_implanted"
 
 ///Sent from /obj/item/skillchip/on_remove()
 #define COMSIG_SKILLCHIP_REMOVED "skillchip_removed"
 
+/// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
+#define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
+
 /// Sent from /obj/item/organ/wings/functional/proc/open_wings(): (mob/living/carbon/owner)
 #define COMSIG_WINGS_OPENED "wings_opened"
 /// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
 #define COMSIG_WINGS_CLOSED "wings_closed"
+
+/// Sent from /obj/item/assembly/on_attach(): (atom/holder)
+#define COMSIG_ASSEMBLY_ATTACHED "assembly_attached"
+
+/// Sent from /obj/item/assembly/on_detach(): (atom/holder)
+#define COMSIG_ASSEMBLY_DETACHED "assembly_detached"
+
+/*
+ * The following four signals are separate from the above two because buttons and pressure plates don't set the holder of the inserted assembly.
+ * This causes subtle behavioral differences that future handlers for these signals may need to account for,
+ * even if none of the currently implemented handlers do.
+ */
+
+/// Sent when an assembly is added to a button : (obj/machinery/button/button, mob/user)
+#define COMSIG_ASSEMBLY_ADDED_TO_BUTTON "assembly_added_to_button"
+
+/// Sent when an assembly is removed from a button : (obj/machinery/button/button, mob/user)
+#define COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON "assembly_removed_from_button"
+
+/// Sent when an assembly is added to a pressure plate : (obj/item/pressureplate/pressure_plate, mob/user)
+#define COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE "assembly_added_to_pressure_plate"
+
+/// Sent when an assembly is removed from a pressure plate : (obj/item/pressureplate/pressure_plate, mob/user)
+#define COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE "assembly_removed_from_pressure_playe"
+
+/// Sent from /datum/powernet/add_cable()
+#define COMSIG_CABLE_ADDED_TO_POWERNET "cable_added_to_powernet"
+
+/// Sent from /datum/powernet/remove_cable()
+#define COMSIG_CABLE_REMOVED_FROM_POWERNET "cable_removed_from_powernet"
+
+/// Sent from /datum/wires/attach_assembly() : (atom/holder)
+#define COMSIG_ASSEMBLY_PRE_ATTACH "assembly_pre_attach"
+	#define COMPONENT_CANCEL_ATTACH (1<<0)
+
+/// Before an item has been equipped as a prosthetic limb
+#define COMSIG_ITEM_PRE_USED_AS_PROSTHETIC "item_used_as_prosthetic"
+/// After an item has been equipped as a prosthetic limb
+#define COMSIG_ITEM_POST_USED_AS_PROSTHETIC "item_post_used_as_prosthetic"
+/// Item has been unequipped from a mob as a prosthetic limb
+#define COMSIG_ITEM_DROPPED_FROM_PROSTHETIC "item_dropped_from_prosthetic"
+
+/// Sent from /obj/item/kinetic_crusher/proc/fire_kinetic_blast() : (atom/target, mob/living/user, obj/projectile/destabilizer/destabilizer)
+#define COMSIG_CRUSHER_FIRED_BLAST "crusher_fired_blast"
+
+/// Sent from /obj/machinert/console/camera_advanced/attack_hand() : (mob/eye/camera/remote/new_camera)
+#define COMSIG_ADVANCED_CAMERA_EYE_CREATED "advanced_camera_eye_created"

@@ -1,12 +1,17 @@
-import { createContext, Dispatch, SetStateAction, useState } from 'react';
-import { Stack } from 'tgui/components';
+import {
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useState,
+} from 'react';
 import { Window } from 'tgui/layouts';
+import { Stack } from 'tgui-core/components';
 
 import { VIEWMODE } from './constants';
 import { OrbitBlade } from './OrbitBlade';
 import { OrbitContent } from './OrbitContent';
 import { OrbitSearchBar } from './OrbitSearchBar';
-import { ViewMode } from './types';
+import type { ViewMode } from './types';
 
 export function Orbit(props) {
   const [autoObserve, setAutoObserve] = useState(false);

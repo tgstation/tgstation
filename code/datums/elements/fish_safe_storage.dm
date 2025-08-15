@@ -15,15 +15,17 @@
 	RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_enter))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 	RegisterSignal(target, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_init_on))
+	ADD_TRAIT(target, TRAIT_STOP_FISH_FLOPPING, REF(src))
 	for(var/obj/item/fish/fish in target)
 		tracked_fish |= fish
-		fish.enter_stasis()
+		ADD_TRAIT(fish, TRAIT_FISH_STASIS, REF(src))
 
 /datum/element/fish_safe_storage/Detach(atom/source)
 	for(var/obj/item/fish/fish in source)
 		tracked_fish -= fish
 		REMOVE_TRAIT(fish, TRAIT_FISH_STASIS, REF(src))
 	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	REMOVE_TRAIT(source, TRAIT_STOP_FISH_FLOPPING, REF(src))
 	return ..()
 
 /datum/element/fish_safe_storage/proc/on_enter(datum/source, obj/item/fish/arrived)
@@ -49,5 +51,5 @@
 		///Keep delaying hunger and breeding while in stasis, and also heal them.
 		fish.last_feeding += seconds_per_tick SECONDS
 		fish.breeding_wait += seconds_per_tick SECONDS
-		if(fish.health < initial(fish.health) * 0.65)
-			fish.adjust_health(fish.health + 0.75 * seconds_per_tick)
+		if(fish.get_health_percentage() < 0.65)
+			fish.repair_damage(0.75 * seconds_per_tick)

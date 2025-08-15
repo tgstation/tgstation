@@ -38,6 +38,7 @@
 		loadouts = GLOB.deathmatch_game.loadouts
 	add_player(player, loadouts[1], TRUE)
 	ui_interact(player)
+	addtimer(CALLBACK(src, PROC_REF(lobby_afk_probably)), 5 MINUTES) // being generous here
 
 /datum/deathmatch_lobby/Destroy(force, ...)
 	. = ..()
@@ -140,14 +141,14 @@
 	new_player.dna.update_dna_identity()
 	new_player.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	new_player.add_traits(list(TRAIT_CANNOT_CRYSTALIZE, TRAIT_PERMANENTLY_MORTAL, TRAIT_TEMPORARY_BODY), INNATE_TRAIT)
-	if(!isnull(observer.mind) && observer.mind?.current)
+	if(observer.mind)
 		new_player.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = observer.mind, \
 			old_body = observer.mind.current, \
 		)
 	new_player.equipOutfit(loadout) // Loadout
-	new_player.key = ckey
+	new_player.PossessByPlayer(ckey)
 	players_info["mob"] = new_player
 
 	for(var/datum/deathmatch_modifier/modifier as anything in modifiers)
@@ -168,6 +169,12 @@
 		return
 	announce(span_reallybig("The players have took too long! Game ending!"))
 	end_game()
+
+/datum/deathmatch_lobby/proc/lobby_afk_probably()
+	if (QDELING(src) || playing)
+		return
+	announce(span_warning("Lobby ([host]) was closed due to not starting after 5 minutes, being potentially AFK. Please be faster next time."))
+	GLOB.deathmatch_game.remove_lobby(host)
 
 /datum/deathmatch_lobby/proc/end_game()
 	if (!location)
@@ -306,7 +313,7 @@
 	var/max_players = map.max_players
 	for (var/possible_unlucky_loser in players)
 		max_players--
-		if (max_players <= 0)
+		if (max_players < 0)
 			var/loser_mob = players[possible_unlucky_loser]["mob"]
 			remove_ckey_from_play(possible_unlucky_loser)
 			add_observer(loser_mob)

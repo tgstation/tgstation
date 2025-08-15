@@ -13,6 +13,8 @@
 
 	var/obj/item/surgery_tool = parent
 	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	///Make sure we can use the surgery UI while laying down
+	surgery_tool.interaction_flags_atom |= INTERACT_ATOM_IGNORE_MOBILITY
 
 /datum/component/surgery_initiator/Destroy(force)
 	last_user_ref = null
@@ -88,7 +90,7 @@
 			continue
 		if(!is_type_in_list(target, surgery.target_mobtypes))
 			continue
-		if(user == target && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
+		if(user == target && !HAS_TRAIT(user, TRAIT_SELF_SURGERY) && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
 			continue
 
 		if(isnull(affecting))
@@ -117,7 +119,6 @@
 
 	if(the_surgery.status == 1)
 		patient.surgeries -= the_surgery
-		REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 		user.visible_message(
 			span_notice("[user] removes [parent] from [patient]'s [patient.parse_zone_with_bodypart(selected_zone)]."),
 			span_notice("You remove [parent] from [patient]'s [patient.parse_zone_with_bodypart(selected_zone)]."),
@@ -142,7 +143,6 @@
 		the_surgery.operated_bodypart.adjustBleedStacks(-5)
 
 	patient.surgeries -= the_surgery
-	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, ELEMENT_TRAIT(type))
 
 	user.visible_message(
 		span_notice("[user] closes [patient]'s [patient.parse_zone_with_bodypart(selected_zone)] with [close_tool] and removes [parent]."),
@@ -307,7 +307,6 @@
 	ui_close()
 
 	var/datum/surgery/procedure = new surgery.type(target, selected_zone, affecting_limb)
-	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
 	target.balloon_alert(user, "starting \"[LOWER_TEXT(procedure.name)]\"")
 

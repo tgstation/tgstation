@@ -18,6 +18,14 @@
 /// Small vents, giving small boulders.
 #define SMALL_VENT_TYPE "small"
 
+//gibtonite strength
+/// Gibtonite was deactivated right before it could explode
+#define GIBTONITE_QUALITY_HIGH 3
+/// Gibtonite was deactivated a few seconds before it could explode
+#define GIBTONITE_QUALITY_MEDIUM 2
+/// Gibtonite was deactivated right after it was struck.
+#define GIBTONITE_QUALITY_LOW 1
+
 // Timers for the ore vents to perform wave defense.
 /// Duration for wave defense for a small vent.
 #define WAVE_DURATION_SMALL 60 SECONDS

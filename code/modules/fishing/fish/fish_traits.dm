@@ -28,9 +28,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	///A list of traits fish cannot have in conjunction with this trait.
 	var/list/incompatible_traits
 	/// The probability this trait can be inherited by offsprings when both mates have it
-	var/inheritability = 100
-	/// Same as above, but for when only one has it.
-	var/diff_traits_inheritability = 50
+	var/inheritability = 50
 	/// A list of fish types and traits that they can spontaneously manifest with associated probabilities
 	var/list/spontaneous_manifest_types
 	/// An optional whitelist of fish that can get this trait
@@ -73,7 +71,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /// Proc used by both the predator and necrophage traits.
 /datum/fish_trait/proc/eat_fish(obj/item/fish/predator, obj/item/fish/prey)
-	var/message = prey.status == FISH_DEAD ? "[src] eats [prey]'s carcass." : "[src] hunts down and eats [prey]."
+	var/message = prey.status == FISH_DEAD ? "[predator] eats [prey]'s carcass." : "[predator] hunts down and eats [prey]."
 	predator.loc.visible_message(span_warning(message))
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
@@ -120,12 +118,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/shiny_lover
 	name = "Shiny Lover"
-	catalog_description = "This fish loves shiny things, shiny lure recommended."
+	catalog_description = "This fish loves shiny things and money, shiny lure recommended."
 
 /datum/fish_trait/shiny_lover/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	// These fish are easier to catch with shiny hook
-	if(HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
+	if(HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS) || (rod.bait?.get_item_credit_value() >= PAYCHECK_CREW))
 		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/shiny_lover/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -189,7 +187,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/turf/turf = get_turf(source)
 	var/light_amount = turf.get_lumcount()
 	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
-		source.adjust_health(source.health - 0.5 * seconds_per_tick)
+		source.damage_fish(0.5 * seconds_per_tick)
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
 	. = ..()
@@ -209,7 +207,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/light_amount = our_turf.get_lumcount()
 
 	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		mob.apply_status_effect(/datum/status_effect/shadow_regeneration)
+		mob.apply_status_effect(/datum/status_effect/shadow/regeneration)
 
 /datum/fish_trait/heavy
 	name = "Demersal"
@@ -286,11 +284,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/emulsijack
 	name = "Emulsifier"
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
+	var/list/resistance_traits = list(TRAIT_RESIST_EMULSIFY, TRAIT_FISH_TOXIN_IMMUNE)
+	var/trait_to_add = TRAIT_RESIST_EMULSIFY
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
-	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, trait_to_add, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -298,12 +298,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	var/emulsified = FALSE
 	for(var/obj/item/fish/victim in source.loc)
-		if(HAS_TRAIT(victim, TRAIT_RESIST_EMULSIFY) || HAS_TRAIT(victim, TRAIT_FISH_TOXIN_IMMUNE)) //no team killing
-			continue
-		victim.adjust_health(victim.health - 3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
+		for(var/trait in resistance_traits)
+			if(HAS_TRAIT(victim, trait))
+				continue
+		victim.damage_fish(3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 		emulsified = TRUE
 	if(emulsified)
-		source.adjust_health(source.health + 3 * seconds_per_tick)
+		source.repair_damage(3 * seconds_per_tick)
 		source.sate_hunger()
 
 /datum/fish_trait/emulsijack/apply_to_mob(mob/living/basic/mob)
@@ -321,6 +322,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	stench.gases[/datum/gas/miasma][MOLES] = MIASMA_CORPSE_MOLES * 2 * seconds_per_tick
 	stench.temperature = mob.bodytemperature
 	our_turf.assume_air(stench)
+
+/datum/fish_trait/emulsijack/psychic
+	name = "Psychic Aura"
+	catalog_description = "This fish emits an almost unblockable psychic aura that assaults minds, slowly killing all nearby fish and making humanoids have a bad time."
+	resistance_traits = list(TRAIT_RESIST_PSYCHIC)
+	trait_to_add = TRAIT_RESIST_PSYCHIC
+
+/datum/fish_trait/emulsijack/psychic/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick)
+	return
 
 /datum/fish_trait/necrophage
 	name = "Necrophage"
@@ -344,8 +354,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/parthenogenesis
 	name = "Parthenogenesis"
 	catalog_description = "This fish can reproduce asexually, without the need of a mate."
-	inheritability = 80
-	diff_traits_inheritability = 25
+	inheritability = 40
 
 /datum/fish_trait/parthenogenesis/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -374,14 +383,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/recessive
 	name = "Recessive"
 	catalog_description = "If crossbred, offsprings will always be of the mate species, unless it also possess the trait."
-	diff_traits_inheritability = 0
+	inheritability = 0
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_RECESSIVE, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/revival
-	diff_traits_inheritability = 15
 	name = "Self-Revival"
 	catalog_description = "This fish shows a peculiar ability of reviving itself a minute or two after death."
 	spontaneous_manifest_types = list(/obj/item/fish/boned = 100, /obj/item/fish/mastodon = 100)
@@ -448,7 +456,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/toxic
 	name = "Toxic"
 	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not recommended."
-	diff_traits_inheritability = 25
 	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 1)
 	infusion_entry = /datum/infuser_entry/ttx_healing
 	///The amount of venom injected if the fish has a stinger is multiplied by this value.
@@ -480,7 +487,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic/proc/damage_predator(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	source.adjust_health(source.health - 3 * seconds_per_tick)
+	source.damage_fish(3 * seconds_per_tick)
 
 /datum/fish_trait/toxic/proc/stop_damaging(obj/item/fish/source)
 	SIGNAL_HANDLER
@@ -494,7 +501,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/toxic/carpotoxin
 	name = "Carpotoxic"
 	catalog_description = "This fish contains carpotoxin. Definitely not safe for consumption."
-	diff_traits_inheritability = 50
 	reagents_to_add = list(/datum/reagent/toxin/carpotoxin = 4)
 	infusion_entry = null
 	venom_mult = 6
@@ -502,7 +508,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/toxin_immunity
 	name = "Toxin Immunity"
 	catalog_description = "This fish has developed an ample-spected immunity to toxins."
-	diff_traits_inheritability = 40
 
 /datum/fish_trait/toxin_immunity/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -511,8 +516,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/crossbreeder
 	name = "Crossbreeder"
 	catalog_description = "This fish's adaptive genetics allows it to crossbreed with other fish species."
-	inheritability = 80
-	diff_traits_inheritability = 20
+	inheritability = 40
 	incompatible_traits = list(/datum/fish_trait/no_mating)
 
 /datum/fish_trait/crossbreeder/apply_to_fish(obj/item/fish/fish)
@@ -521,8 +525,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/territorial
 	name = "Territorial"
-	inheritability = 80
-	diff_traits_inheritability = 40
 	catalog_description = "This fish will start attacking other fish if the aquarium has five or more."
 
 /datum/fish_trait/territorial/apply_to_fish(obj/item/fish/fish)
@@ -541,13 +543,11 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 			continue
 		source.loc.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
 		var/damage = round(rand(4, 20) * (source.size / victim.size)) //smaller fishes take extra damage.
-		victim.adjust_health(victim.health - damage)
+		victim.damage_fish(damage)
 		return
 
 /datum/fish_trait/lubed
 	name = "Lubed"
-	inheritability = 90
-	diff_traits_inheritability = 45
 	spontaneous_manifest_types = list(/obj/item/fish/clownfish/lube = 100)
 	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's recommended not to step on it."
 	added_difficulty = 5
@@ -572,8 +572,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/amphibious
 	name = "Amphibious"
-	inheritability = 80
-	diff_traits_inheritability = 40
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
 	infusion_entry = /datum/infuser_entry/amphibious
 
@@ -583,10 +581,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 
+/datum/fish_trait/amphibious/apply_to_mob(mob/living/basic/mob)
+	. = ..()
+	ADD_TRAIT(mob, TRAIT_NODROWN, FISH_TRAIT_DATUM)
+
 /datum/fish_trait/mixotroph
 	name = "Mixotroph"
-	inheritability = 75
-	diff_traits_inheritability = 25
 	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
 
@@ -596,8 +596,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/antigrav
 	name = "Anti-Gravity"
-	inheritability = 75
-	diff_traits_inheritability = 25
 	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
 	added_difficulty = 20
 	reagents_to_add = list(/datum/reagent/gravitum = 2.3)
@@ -618,9 +616,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 ///This is just barely enough to crossbreed out of anxiety, but it severely limits the potential of
 /datum/fish_trait/anxiety
 	name = "Anxiety"
-	inheritability = 100
-	diff_traits_inheritability = 70
 	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
+
+/datum/fish_trait/anxiety/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
+	. = ..()
+	// Anxious fish are easier with a cloaked line.
+	if(rod.line && (rod.line.fishing_line_traits & FISHING_LINE_CLOAKED))
+		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -641,8 +643,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/electrogenesis
 	name = "Electrogenesis"
-	inheritability = 60
-	diff_traits_inheritability = 30
 	catalog_description = "This fish is electroreceptive, and will generate electric fields. Can be harnessed inside a bioelectric generator."
 	reagents_to_add = list(/datum/reagent/consumable/liquidelectricity = 1.5)
 
@@ -657,7 +657,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(cooked_time >= FISH_SAFE_COOKING_DURATION)
 		fish.reagents.del_reagent(/datum/reagent/consumable/liquidelectricity)
 	else
-		fish.reagents.multiply_single_reagent(/datum/reagent/consumable/liquidelectricity, 0.66)
+		fish.reagents.multiply(0.66, /datum/reagent/consumable/liquidelectricity)
 
 /datum/fish_trait/electrogenesis/add_reagents(obj/item/fish/fish, list/reagents)
 	. = ..()
@@ -689,7 +689,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This chrab's development is stunted, and will not properly reach adulthood."
 	spontaneous_manifest_types = list(/obj/item/fish/chasm_crab = 12)
 	fish_whitelist = list(/obj/item/fish/chasm_crab, /obj/item/fish/chasm_crab/ice)
-	diff_traits_inheritability = 40
 
 /datum/fish_trait/stunted/apply_to_mob(mob/living/basic/mob)
 	. = ..()
@@ -697,8 +696,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/stinger
 	name = "Stinger"
-	inheritability = 80
-	diff_traits_inheritability = 35
 	catalog_description = "This fish is equipped with a sharp stringer or bill capable of delivering damage and toxins."
 	spontaneous_manifest_types = list(
 		/obj/item/fish/stingray = 100,
@@ -718,7 +715,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic_barbs
 	name = "Toxic Barbs"
-	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effetive venom."
+	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effective venom."
 	spontaneous_manifest_types = list(/obj/item/fish/stingray = 35)
 
 /datum/fish_trait/toxic_barbs/apply_to_fish(obj/item/fish/fish)
@@ -750,10 +747,29 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(!HAS_TRAIT(src, TRAIT_FOOD_FRIED) && !HAS_TRAIT(src, TRAIT_FOOD_BBQ_GRILLED))
 		return ..()
 
+/datum/fish_trait/hallucinogenic/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, PROC_REF(make_venomous))
+	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_status_change))
+
+/datum/fish_trait/hallucinogenic/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		///Remove the trait from the fish so it doesn't show on the analyzer as it doesn't do anything on stingerless ones.
+		source.fish_traits -= type
+		UnregisterSignal(source, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED))
+		return
+	add_venom(source, /datum/reagent/toxin/mindbreaker/fish, new_weight, mult = source.status == FISH_DEAD ? 0.3 : 0.7)
+
+/datum/fish_trait/hallucinogenic/proc/on_status_change(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	change_venom_on_death(source, /datum/reagent/toxin/mindbreaker/fish, 0.7, 0.3)
+
 /datum/fish_trait/ink
 	name = "Ink Production"
 	catalog_description = "This fish possess a sac that produces ink."
-	diff_traits_inheritability = 70
 	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
 	infusion_entry = /datum/infuser_entry/squid
 

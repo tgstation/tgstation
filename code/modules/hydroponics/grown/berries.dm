@@ -214,7 +214,7 @@
 /obj/item/food/grown/lanternfruit
 	seed = /obj/item/seeds/lanternfruit
 	name = "lanternfruits"
-	desc = "A sofly glowing fruit with a handle-shaped stem, an Ethereal favorite!"
+	desc = "A softly glowing fruit with a handle-shaped stem, an Ethereal favorite!"
 	icon_state = "lanternfruit"
 	foodtypes = FRUIT
 	tastes = list("tv static" = 1, "sour pear" = 1, "grapefruit" = 1)

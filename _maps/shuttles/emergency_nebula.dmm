@@ -864,6 +864,7 @@
 	name = "Emergency Recovery Airlock"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "sI" = (

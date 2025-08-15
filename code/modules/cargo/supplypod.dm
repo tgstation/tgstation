@@ -82,7 +82,7 @@
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
-	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
+	desc = "A specialised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
 	specialised = TRUE
 	style = /datum/pod_style/syndicate
 	bluespace = TRUE
@@ -259,7 +259,10 @@
 	return
 
 ///Called by the drop pods that return captured crewmembers from the ninja den.
-/obj/structure/closet/supplypod/proc/return_from_capture(mob/living/victim, turf/destination = get_safe_random_station_turf())
+/obj/structure/closet/supplypod/proc/return_from_capture(
+	mob/living/victim,
+	turf/destination = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
+)
 	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
 		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
 			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
@@ -302,7 +305,7 @@
 
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
 	var/turf/turf_underneath = get_turf(src)
-	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
+	var/list/boom = explosionSize
 	resistance_flags = initial(resistance_flags)
 	set_density(TRUE) //Density is originally false so the pod doesn't block anything while it's still falling through the air
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
@@ -340,9 +343,11 @@
 				target_living.gib(DROP_ALL_REMAINS) //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		else
 			target_living.adjustBruteLoss(damage)
-	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
-	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
-		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src) //less advanced equipment than bluespace pod, so larger explosion when landing
+
+	if (boom?.len == 4)
+		boom.len += 1
+	if (!isnull(boom) && (boom[1] + boom[2] + boom[3] + boom[4] + boom[5])) // spawn explosion only if there is actual explosion range
+		explosion(turf_underneath, boom[1], boom[2], boom[3], flame_range = boom[4], flash_range = boom[5], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src)
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
 	if (landingSound)
@@ -674,7 +679,7 @@
 		stack_trace("Pod landingzone created with no pod")
 		return INITIALIZE_HINT_QDEL
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
-		podParam = new podParam() //If its just a path, instantiate it
+		podParam = new podParam() //If it's just a path, instantiate it
 	pod = podParam
 	pod.resistance_flags |= (INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF)
 	if (!pod.effectStealth)
@@ -686,6 +691,8 @@
 			var/datum/supply_order/SO = single_order
 			if (SO.pack.crate_type)
 				SO.generate(pod)
+			else if (SO.pack.goody) //Goody orders lack a crate_type and need special handling
+				SO.generateCombo(pod, SO.orderer, SO.pack.contains, SO.pack.cost)
 		else if (istype(single_order, /atom/movable))
 			var/atom/movable/O = single_order
 			O.forceMove(pod)
@@ -700,8 +707,7 @@
 	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
 	if (soundStartTime < 0)
 		soundStartTime = 1
-	if (!pod.effectQuiet && !(pod.pod_flags & FIRST_SOUNDS))
-		addtimer(CALLBACK(src, PROC_REF(playFallingSound)), soundStartTime)
+	addtimer(CALLBACK(src, PROC_REF(playFallingSound)), soundStartTime)
 	addtimer(CALLBACK(src, PROC_REF(beginLaunch), pod.effectCircle), pod.delays[POD_TRANSIT])
 
 /obj/effect/pod_landingzone/proc/playFallingSound()

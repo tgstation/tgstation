@@ -3,16 +3,16 @@
 	var/trait = TRAIT_DUMB // You need to override this
 
 /datum/status_effect/food/trait/on_apply()
-	if(!HAS_TRAIT_FROM(owner, trait, type)) // Check if trait was already applied
-		ADD_TRAIT(owner, trait, type)
+	if(!HAS_TRAIT_FROM(owner, trait, TRAIT_STATUS_EFFECT(id))) // Check if trait was already applied
+		ADD_TRAIT(owner, trait, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/trait/be_replaced()
-	REMOVE_TRAIT(owner, trait, type)
+	REMOVE_TRAIT(owner, trait, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/trait/on_remove()
-	REMOVE_TRAIT(owner, trait, type)
+	REMOVE_TRAIT(owner, trait, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/trait/shockimmune

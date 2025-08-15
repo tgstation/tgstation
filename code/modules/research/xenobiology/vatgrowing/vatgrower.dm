@@ -15,13 +15,16 @@
 	var/datum/biological_sample/biological_sample
 	///If the vat will restart the sample upon completion
 	var/resampler_active = FALSE
+	/// Whether or not to add the plumbing component and related stuff
+	var/use_plumbing = TRUE
 
 /obj/machinery/vatgrower/Initialize(mapload, bolt, layer)
 	. = ..()
 	create_reagents(reagent_volume, reagent_flags)
 
-	AddComponent(/datum/component/simple_rotation)
-	AddComponent(/datum/component/plumbing/simple_demand)
+	if(use_plumbing)
+		AddComponent(/datum/component/simple_rotation)
+		AddComponent(/datum/component/plumbing/simple_demand)
 
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/petri_dish = list(
@@ -36,14 +39,7 @@
 
 /obj/machinery/vatgrower/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
-/// Handles properly detaching signal hooks.
-/obj/machinery/vatgrower/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
-	return NONE
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
 /obj/machinery/vatgrower/process(seconds_per_tick)
@@ -132,10 +128,9 @@
 		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
 
 /// Call update icon when reagents change to update the reagent content icons. Eats signal args.
-/obj/machinery/vatgrower/proc/on_reagent_change(datum/reagents/holder, ...)
+/obj/machinery/vatgrower/proc/on_reagent_change(datum/reagents/holder)
 	SIGNAL_HANDLER
 	update_appearance()
-	return NONE
 
 ///Adds overlays to show the reagent contents
 /obj/machinery/vatgrower/update_overlays()
@@ -144,9 +139,9 @@
 	var/static/image/off_overlay
 	var/static/image/emissive_overlay
 	if(isnull(on_overlay))
-		on_overlay = iconstate2appearance(icon, "growing_vat_on")
-		off_overlay = iconstate2appearance(icon, "growing_vat_off")
-		emissive_overlay = emissive_appearance(icon, "growing_vat_glow", src, alpha = src.alpha)
+		on_overlay = iconstate2appearance(icon, "[icon_state]_on")
+		off_overlay = iconstate2appearance(icon, "[icon_state]_off")
+		emissive_overlay = emissive_appearance(icon, "[icon_state]_glow", src, alpha = src.alpha)
 	. += emissive_overlay
 	if(is_operational)
 		if(resampler_active)
@@ -156,12 +151,11 @@
 	if(!reagents.total_volume)
 		return
 	var/reagentcolor = mix_color_from_reagents(reagents.reagent_list)
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "vat_reagent")
-	base_overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "[icon_state]_reagent", appearance_flags = RESET_COLOR|KEEP_APART)
 	base_overlay.color = reagentcolor
 	. += base_overlay
 	if(biological_sample && is_operational)
-		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
+		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "[icon_state]_bubbles")
 		. += bubbles_overlay
 
 /obj/machinery/vatgrower/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -178,5 +172,44 @@
 	if(resampler_active)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
-		return SPARE_SAMPLE
-	UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	else
+		QDEL_NULL(biological_sample)
+	update_appearance()
+
+/obj/machinery/vatgrower/small
+	name = "small growing vat"
+	desc = "Tastes just like the chef's soup. Fit for growing organ tissue samples."
+	icon_state = "growing_vat_small"
+	density = FALSE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
+	circuit = null
+
+	anchored_tabletop_offset = 4
+	pass_flags = PASSTABLE
+	use_plumbing = FALSE
+
+	reagent_volume = 50
+
+/obj/machinery/vatgrower/small/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return
+
+/obj/machinery/vatgrower/small/deposit_sample(mob/user, obj/item/petri_dish/petri)
+	. = ..()
+
+	if(. != ITEM_INTERACT_SUCCESS)
+		return
+
+	RegisterSignal(biological_sample, COMSIG_SAMPLE_DEPOSITED, PROC_REF(on_sample_deposited))
+
+/obj/machinery/vatgrower/small/proc/on_sample_deposited(datum/biological_sample/sample, atom/thing)
+	SIGNAL_HANDLER
+
+	if(isliving(thing))
+		var/mob/living/living_type = thing
+		if(living_type.mob_size > MOB_SIZE_SMALL)
+			explosion(src, light_impact_range = 2, explosion_cause = "growing vat too small")
+			qdel(src)
+			return
+
+/obj/machinery/vatgrower/small/unanchored
+	anchored = FALSE

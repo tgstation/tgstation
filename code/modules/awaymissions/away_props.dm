@@ -56,7 +56,7 @@
 	name = "pit grate"
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice-255"
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
@@ -108,7 +108,7 @@
 
 /obj/structure/pitgrate/proc/reset_plane()
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CATWALK_LAYER
 
 /obj/structure/pitgrate/Destroy()
 	if(hidden)

@@ -12,6 +12,9 @@
 	return GLOB.language_menu_state
 
 /datum/language_menu/ui_interact(mob/user, datum/tgui/ui)
+	if(isnull(language_holder.selected_language))
+		language_holder.get_selected_language()
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LanguageMenu")
@@ -21,38 +24,28 @@
 	var/list/data = list()
 
 	var/atom/movable/speaker = language_holder.owner
-	data["is_living"] = isliving(speaker)
+	var/list/partial_languages = speaker?.get_partially_understood_languages()
 	data["languages"] = list()
 	for(var/datum/language/language as anything in GLOB.all_languages)
-		var/result = language_holder.has_language(language) || language_holder.has_language(language, SPOKEN_LANGUAGE)
-		if(!result)
-			continue
 		var/list/lang_data = list()
 
 		lang_data["name"] = initial(language.name)
 		lang_data["desc"] = initial(language.desc)
 		lang_data["key"] = initial(language.key)
 		lang_data["is_default"] = (language == language_holder.selected_language)
+		lang_data["icon"] = initial(language.icon)
+		lang_data["icon_state"] = initial(language.icon_state)
 		if(speaker)
-			lang_data["can_speak"] = speaker.can_speak_language(language)
-			lang_data["can_understand"] = speaker.has_language(language)
+			lang_data["can_speak"] = !!speaker.has_language(language, SPOKEN_LANGUAGE)
+			lang_data["could_speak"] = !!(language_holder.omnitongue || speaker.could_speak_language(language))
+			lang_data["can_understand"] = !!speaker.has_language(language, UNDERSTOOD_LANGUAGE)
+			lang_data["partial_understanding"] = partial_languages?[language] || 0
 
 		UNTYPED_LIST_ADD(data["languages"], lang_data)
 
-	if(check_rights_for(user.client, R_ADMIN) || isobserver(speaker))
-		data["admin_mode"] = TRUE
-		data["omnitongue"] = language_holder.omnitongue
-		data["unknown_languages"] = list()
-		for(var/datum/language/language as anything in GLOB.all_languages)
-			if(language_holder.has_language(language) || language_holder.has_language(language, SPOKEN_LANGUAGE))
-				continue
-			var/list/lang_data = list()
-
-			lang_data["name"] = initial(language.name)
-			lang_data["desc"] = initial(language.desc)
-			lang_data["key"] = initial(language.key)
-
-			UNTYPED_LIST_ADD(data["unknown_languages"], lang_data)
+	data["is_living"] = isliving(speaker)
+	data["admin_mode"] = check_rights_for(user.client, R_ADMIN) || isobserver(speaker)
+	data["omnitongue"] = language_holder.omnitongue
 
 	return data
 
@@ -60,7 +53,8 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/user = usr
+
+	var/mob/user = ui.user
 	var/atom/movable/speaker = language_holder.owner
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
 	var/language_name = params["language_name"]
@@ -89,10 +83,16 @@
 					if("Both")
 						adding_flags |= ALL
 
-				if(LAZYACCESS(language_holder.blocked_languages, language_datum))
-					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", list("Yes", "No"))
+				var/ask_to_remove_block
+				var/list/block_being_removed_on = list()
+				if(adding_flags & SPOKEN_LANGUAGE && LAZYACCESS(language_holder.blocked_speaking, language_datum))
+					ask_to_remove_block = TRUE
+					block_being_removed_on += "spoken"
+
+				if(ask_to_remove_block)
+					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be [block_being_removed_on.Join(" or ")]?", "[language_datum]", list("Yes", "No"))
 					if(choice == "Yes")
-						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
+						language_holder.remove_blocked_language(language_datum, adding_flags, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, adding_flags)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(speaker)].")

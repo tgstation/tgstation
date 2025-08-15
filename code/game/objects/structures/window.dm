@@ -9,7 +9,6 @@
 	flags_1 = ON_BORDER_1
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	max_integrity = 50
-	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/structure_window
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -31,8 +30,6 @@
 	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 	var/hit_sound = 'sound/effects/glass/glasshit.ogg'
-	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
-	var/bloodied = FALSE
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
 	/// Whether or not we're disappearing but dramatically
@@ -82,12 +79,11 @@
 
 /obj/structure/window/mouse_drop_receive(atom/dropping, mob/user, params)
 	. = ..()
-	if (added_leaning || (flags_1 & ON_BORDER_1))
+	if (flags_1 & ON_BORDER_1)
 		return
-	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
-	AddComponent(/datum/component/leanable, 11)
-	added_leaning = TRUE
-	dropping.base_mouse_drop_handler(src, null, null, params)
+
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -215,8 +211,7 @@
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
-		atom_integrity = max_integrity
-		update_nearby_icons()
+		repair_damage(max_integrity)
 		to_chat(user, span_notice("You repair [src]."))
 	return ITEM_INTERACT_SUCCESS
 
@@ -283,7 +278,7 @@
 
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/window/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/window/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 
@@ -325,6 +320,10 @@
 	. = ..()
 	if(.) //received damage
 		update_nearby_icons()
+
+/obj/structure/window/repair_damage(amount)
+	. = ..()
+	update_nearby_icons()
 
 /obj/structure/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -376,15 +375,18 @@
 	. = ..()
 	if(!(clean_types & CLEAN_SCRUB))
 		return
-	set_opacity(initial(opacity))
-	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	var/initial_opacity = initial(opacity)
+	if(opacity != initial_opacity)
+		set_opacity(initial_opacity)
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 	for(var/atom/movable/cleanables as anything in src)
 		if(cleanables == src)
 			continue
-		if(!cleanables.wash(clean_types))
+		var/cleanable_washed = cleanables.wash(clean_types)
+		if(!cleanable_washed)
 			continue
+		. |= cleanable_washed
 		vis_contents -= cleanables
-	bloodied = FALSE
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)
@@ -451,7 +453,7 @@
 		// slowly drain our total health for the illusion of shattering
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, take_damage), floor(atom_integrity / (time_to_go / time_interval))), time_interval * damage_step)
 
-	//dissapear in 1 second
+	//disappear in 1 second
 	dramatically_disappearing = TRUE
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, break_sound, 70, TRUE), time_to_go) //SHATTER SOUND
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
@@ -512,7 +514,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 		return list("delay" = 3 SECONDS, "cost" = 15)
 	return FALSE
 
-/obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
+/obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(resistance_flags & INDESTRUCTIBLE)
 		balloon_alert(user, "too resilient!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -622,7 +624,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner,
 	AddElement(/datum/element/rust)
 	set_armor(/datum/armor/none)
 	take_damage(get_integrity() * 0.5)
-	modify_max_integrity(max_integrity * 0.5)
+	modify_max_integrity(initial(max_integrity) * 0.2)
 
 /obj/structure/window/plasma
 	name = "plasma window"
@@ -861,7 +863,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
-	desc = "A durable looking window made of an alloy of of plasma and titanium."
+	desc = "A durable looking window made of an alloy of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window-0"
 	base_icon_state = "plastitanium_window"
@@ -884,7 +886,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible
 	name = "plastitanium window"
-	desc = "A durable looking window made of an alloy of of plasma and titanium."
+	desc = "A durable looking window made of an alloy of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window-0"
 	base_icon_state = "plastitanium_window"

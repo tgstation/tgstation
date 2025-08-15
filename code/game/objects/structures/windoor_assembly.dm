@@ -97,7 +97,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
+/obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
 	switch(state)
@@ -267,15 +267,12 @@
 				if(!electronics)
 					to_chat(usr, span_warning("The assembly is missing electronics!"))
 					return
-				user << browse(null, "window=windoor_access")
 				user.visible_message(span_notice("[user] pries the windoor into the frame."),
 					span_notice("You start prying the windoor into the frame..."))
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
 					set_density(TRUE) //Shouldn't matter but just incase
-
 					to_chat(user, span_notice("You finish the windoor."))
-
 					finish_door()
 
 			else
@@ -324,7 +321,7 @@
 	if(created_name)
 		windoor.name = created_name
 	else if(electronics.passed_name)
-		windoor.name = electronics.passed_name
+		windoor.name = sanitize(electronics.passed_name)
 	if(electronics.one_access)
 		windoor.req_one_access = electronics.accesses
 	else

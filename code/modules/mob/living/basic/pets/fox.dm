@@ -31,9 +31,10 @@
 	///list of our pet commands we follow
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/follow/start_active,
+		/datum/pet_command/attack,
 		/datum/pet_command/perform_trick_sequence,
 	)
 
@@ -68,6 +69,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,

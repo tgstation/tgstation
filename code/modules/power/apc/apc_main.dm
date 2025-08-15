@@ -140,6 +140,8 @@
 	var/no_charge = FALSE
 	/// Used for apc helper called full_charge to make apc's charge at 100% meter.
 	var/full_charge = FALSE
+	///When did the apc generate last malf ai processing time.
+	COOLDOWN_DECLARE(malf_ai_pt_generation)
 	armor_type = /datum/armor/power_apc
 
 /datum/armor/power_apc
@@ -150,6 +152,26 @@
 	bomb = 30
 	fire = 90
 	acid = 50
+
+/obj/machinery/power/apc/get_save_vars()
+	. = ..()
+	if(!auto_name)
+		. -= NAMEOF(src, name)
+	. += NAMEOF(src, opened)
+	. += NAMEOF(src, coverlocked)
+	. += NAMEOF(src, lighting)
+	. += NAMEOF(src, equipment)
+	. += NAMEOF(src, environ)
+
+	. += NAMEOF(src, cell_type)
+	if(cell_type)
+		start_charge = cell.charge / cell.maxcharge // only used in Initialize() so direct edit is fine
+		. += NAMEOF(src, start_charge)
+
+	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
+	//. += NAMEOF(src, shorted)
+	//. += NAMEOF(src, locked)
+	return .
 
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
@@ -174,8 +196,11 @@
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
 
+	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
+	hud_image.pixel_w = pixel_x
+	hud_image.pixel_z = pixel_y
 	hud_list = list(
-		MALF_APC_HUD = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked", pixel_x = src.pixel_x, pixel_y = src.pixel_y)
+		MALF_APC_HUD = hud_image
 	)
 
 	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
@@ -240,8 +265,6 @@
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai)
-		if(operating)
-			malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 		malfai.hacked_apcs -= src
 		malfai = null
 	disconnect_from_area()
@@ -338,8 +361,6 @@
 /obj/machinery/power/apc/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		if(malfai && operating)
-			malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 		operating = FALSE
 		if(occupier)
 			malfvacate(TRUE)
@@ -512,19 +533,26 @@
 			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
-			for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
-				for(var/turf/area_turf as anything in zlevel_turfs)
-					for(var/obj/machinery/light/area_light in area_turf)
-						if(!initial(area_light.no_low_power)) //If there was an override set on creation, keep that override
-							area_light.no_low_power = emergency_lights
-							INVOKE_ASYNC(area_light, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
-					CHECK_TICK
+			for(var/obj/machinery/light/area_light as anything in get_lights())
+				if(!initial(area_light.no_low_power)) //If there was an override set on creation, keep that override
+					area_light.no_low_power = emergency_lights
+					INVOKE_ASYNC(area_light, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
+				CHECK_TICK
 	return TRUE
 
 /obj/machinery/power/apc/ui_close(mob/user)
 	. = ..()
 	if(user == remote_control_user)
 		disconnect_remote_access()
+
+/// Returns a list of lights powered/controlled by src
+/obj/machinery/power/apc/proc/get_lights()
+	var/list/lights = list()
+	for(var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/light/found_light in area_turf)
+				lights += found_light
+	return lights
 
 /**
  * APC early processing. This gets processed after any other machine on the powernet does.
@@ -566,6 +594,11 @@
 		hacked_flicker_counter = hacked_flicker_counter - 1
 		if(hacked_flicker_counter <= 0)
 			flicker_hacked_icon()
+		if(COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(60 KILO JOULES)>0 && malfai.malf_picker.processing_time<MALF_MAX_PP) // Over time generation of malf points for the ai controlling it, costs a bit of power
+			COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
+			malfai.malf_picker.processing_time += 1
+
+
 
 	//dont use any power from that channel if we shut that power channel off
 	if(operating)
@@ -703,12 +736,10 @@
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
-	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
-		for(var/turf/area_turf as anything in zlevel_turfs)
-			for(var/obj/machinery/light/breaked_light in area_turf)
-				breaked_light.on = TRUE
-				breaked_light.break_light_tube()
-				stoplag()
+	for(var/obj/machinery/light/breaked_light as anything in get_lights())
+		breaked_light.on = TRUE
+		breaked_light.break_light_tube()
+		CHECK_TICK
 
 /obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 2000)

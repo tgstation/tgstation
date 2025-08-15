@@ -1,24 +1,34 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
+//Methods to interact with reagents in the holder
+/// Makes it possible to add reagents through droppers and syringes.
+#define INJECTABLE (1<<0)
+/// Makes it possible to remove reagents through syringes.
+#define DRAWABLE (1<<1)
+/// Makes it possible to add reagents through any reagent container.
+#define REFILLABLE (1<<2)
+/// Makes it possible to remove reagents through any reagent container.
+#define DRAINABLE (1<<3)
+/// Allows items to be dunked into this container for transfering reagents. Used in conjunction with the dunkable component.
+#define DUNKABLE (1<<4)
 
-#define INJECTABLE (1<<0) // Makes it possible to add reagents through droppers and syringes.
-#define DRAWABLE (1<<1) // Makes it possible to remove reagents through syringes.
+//Methods to examine reagents in the container
+/// Used on containers which you want to be able to see the reagents of.
+#define TRANSPARENT (1<<5)
+/// For non-transparent containers that still have the general amount of reagents in them visible.
+#define AMOUNT_VISIBLE (1<<6)
 
-#define REFILLABLE (1<<2) // Makes it possible to add reagents through any reagent container.
-#define DRAINABLE (1<<3) // Makes it possible to remove reagents through any reagent container.
-#define DUNKABLE (1<<4) // Allows items to be dunked into this container for transfering reagents. Used in conjunction with the dunkable component.
-
-#define TRANSPARENT (1<<5) // Used on containers which you want to be able to see the reagents of.
-#define AMOUNT_VISIBLE (1<<6) // For non-transparent containers that still have the general amount of reagents in them visible.
-#define NO_REACT (1<<7) // Applied to a reagent holder, the contents will not react with each other.
-#define REAGENT_HOLDER_INSTANT_REACT (1<<8)  // Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+//Reaction flags
+/// Applied to a reagent holder, the contents will not react with each other.
+#define NO_REACT (1<<7)
+/// Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+#define REAGENT_HOLDER_INSTANT_REACT (1<<8)
 ///If the holder is "alive" (i.e. mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
 #define REAGENT_HOLDER_ALIVE (1<<9)
 
-///If the holder a sealed container - Used if you don't want reagent contents boiling out (plasma, specifically, in which case it only bursts out when at ignition temperatures)
+//Special properties
+///If the holder is a sealed container - Used if you don't want reagent contents boiling out (plasma, specifically, in which case it only bursts out when at ignition temperatures)
 #define SEALED_CONTAINER (1<<10)
-
+/// Prevents spilling and splashing but does prevent pouring and drinking reagents like the badly named spillable var.
+#define SMART_CAP (1<<11)
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
 
@@ -38,6 +48,9 @@
 /// Used by smoke or inhaling from a source. Smoke and cigarettes.
 #define INHALE (1<<6)
 
+///Smoke machines are both touch and inhaling
+#define SMOKE_MACHINE (TOUCH | INHALE)
+
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1
 
@@ -46,7 +59,8 @@
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone
-#define SYNTHFLESH_UNHUSK_AMOUNT 100
+#define SYNTHFLESH_UNHUSK_AMOUNT 60
+#define SYNTHFLESH_UNHUSK_MAX 100
 
 //used by chem masters and pill presses
 // The categories of reagent packaging
@@ -88,31 +102,29 @@
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
 #define REAGENT_DEAD_PROCESS (1<<0)
-///Do not split the chem at all during processing - ignores all purity effects
-#define REAGENT_DONOTSPLIT (1<<1)
 ///Doesn't appear on handheld health analyzers.
-#define REAGENT_INVISIBLE (1<<2)
+#define REAGENT_INVISIBLE (1<<1)
 ///When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SNEAKYNAME (1<<3)
+#define REAGENT_SNEAKYNAME (1<<2)
 ///Retains initial volume of chem when splitting for purity effects
-#define REAGENT_SPLITRETAINVOL (1<<4)
+#define REAGENT_SPLITRETAINVOL (1<<3)
 ///Lets a given reagent be synthesized important for random reagents and things like the odysseus syringe gun(Replaces the old can_synth variable)
-#define REAGENT_CAN_BE_SYNTHESIZED (1<<5)
+#define REAGENT_CAN_BE_SYNTHESIZED (1<<4)
 ///Allows a reagent to work on a mob regardless of stasis
-#define REAGENT_IGNORE_STASIS (1<<6)
+#define REAGENT_IGNORE_STASIS (1<<5)
 ///This reagent won't be used in most randomized recipes. Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
-#define REAGENT_NO_RANDOM_RECIPE (1<<7)
+#define REAGENT_NO_RANDOM_RECIPE (1<<6)
 ///Does this reagent clean things?
-#define REAGENT_CLEANS (1<<8)
+#define REAGENT_CLEANS (1<<7)
 ///Does this reagent affect wounds? Used to check if some procs should be ran.
-#define REAGENT_AFFECTS_WOUNDS (1<<9)
+#define REAGENT_AFFECTS_WOUNDS (1<<8)
 /// If present, when metabolizing out of a mob, we divide by the mob's metabolism rather than multiply.
 /// Without this flag: Higher metabolism means the reagent exits the system faster.
 /// With this flag: Higher metabolism means the reagent exits the system slower.
-#define REAGENT_REVERSE_METABOLISM (1<<10)
+#define REAGENT_REVERSE_METABOLISM (1<<9)
 /// If present, this reagent will not be affected by the mob's metabolism at all, meaning it exits at a fixed rate for all mobs.
 /// Supercedes [REAGENT_REVERSE_METABOLISM].
-#define REAGENT_UNAFFECTED_BY_METABOLISM (1<<11)
+#define REAGENT_UNAFFECTED_BY_METABOLISM (1<<10)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
@@ -232,3 +244,13 @@
 #define GRENADE_WIRED 2
 /// Grenade is ready to be finished
 #define GRENADE_READY 3
+
+/// Maximum amount of layers a pill can hold, aka maximum number of seconds a pill takes to dissolve
+#define PILL_MAX_LAYERS 60
+/// Maximum amount of layers above which you cannot taste the pill's contents
+#define PILL_MAX_TASTE_LAYERS 20
+/// Maximum amount of layers that a ChemMaster can produce
+#define PILL_MAX_PRINTABLE_LAYERS 30
+
+/// Cooldown between patch reagent messages
+#define PATCH_MESSAGE_COOLDOWN 10 SECONDS

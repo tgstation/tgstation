@@ -95,8 +95,6 @@
 #define BB_WHELP_STRAIGHTLINE_FIRE "BB_whelp_straightline_fire"
 ///whelp's secondary enraged ability
 #define BB_WHELP_WIDESPREAD_FIRE "BB_whelp_widespread_fire"
-///how enraged the whelp is
-#define BB_WHELP_ENRAGED "BB_whelp_enraged"
 ///the target rock we will attempt to create a sculpture out of
 #define BB_TARGET_ROCK "BB_target_rock"
 ///the cannibal target we shall consume
@@ -304,3 +302,31 @@
 #define BB_DEER_RESTING "deer_resting"
 ///time till our next rest duration
 #define BB_DEER_NEXT_REST_TIMER "deer_next_rest_timer"
+
+//the thing boss
+#define BB_THETHING_CHARGE "BB_THETHING_CHARGE"
+#define BB_THETHING_DECIMATE "BB_THETHING_DECIMATE"
+#define BB_THETHING_BIGTENDRILS "BB_THETHING_BIGTENDRILS"
+#define BB_THETHING_SHRIEK "BB_THETHING_SHRIEK"
+#define BB_THETHING_CARDTENDRILS "BB_THETHING_CARDTENDRILS"
+#define BB_THETHING_ACIDSPIT "BB_THETHING_ACIDSPIT"
+/// Blackboard key for The Thing boss that determines attack mode. TRUE means it will focus on closing the distance and murdering the person in question. Otherwise AOE.
+#define BB_THETHING_ATTACKMODE "BB_THETHING_ATTACKMODE"
+/// The Thing will be in attack mode forever if true
+#define BB_THETHING_NOAOE "BB_THETHING_NOAOE"
+/// What (first in combo) attack was last executed
+#define BB_THETHING_LASTAOE "BB_THETHING_LASTAOE"
+
+//turtle
+///our tree's ability
+#define BB_TURTLE_TREE_ABILITY "turtle_tree_ability"
+///people we headbutt!
+#define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"
+///flore we must smell
+#define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
+
+#define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
+
+//snails
+///snails retreat ability
+#define BB_SNAIL_RETREAT_ABILITY "snail_retreat_ability"

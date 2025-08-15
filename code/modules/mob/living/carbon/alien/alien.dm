@@ -19,7 +19,6 @@
 	var/leaping = FALSE
 	///The speed this alien should move at.
 	var/alien_speed = 0
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|princess|queen)( \\(\\d+\\))?")
@@ -32,6 +31,15 @@
 		/obj/item/hand_item,
 		/obj/item/queen_promotion,
 	))
+
+	var/list/default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+	)
 
 /mob/living/carbon/alien/Initialize(mapload)
 	add_verb(src, /mob/living/proc/mob_sleep)
@@ -52,14 +60,11 @@
 		span_alien("Your claws lack the dexterity to hold %TARGET."), \
 		CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_has_trait), src, TRAIT_ADVANCEDTOOLUSER))
 
-/mob/living/carbon/alien/create_internal_organs()
-	organs += new /obj/item/organ/brain/alien
-	organs += new /obj/item/organ/alien/hivenode
-	organs += new /obj/item/organ/tongue/alien
-	organs += new /obj/item/organ/eyes/alien
-	organs += new /obj/item/organ/liver/alien
-	organs += new /obj/item/organ/ears
-	..()
+/mob/living/carbon/alien/proc/create_internal_organs()
+	for(var/slot in default_organ_types_by_slot)
+		var/organ_type = default_organ_types_by_slot[slot]
+		var/obj/item/organ/organ = new organ_type()
+		organ.Insert(src, special = TRUE)
 
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
@@ -68,44 +73,39 @@
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()
-
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		//Body temperature is too hot.
-		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
-		switch(bodytemperature)
-			if(360 to 400)
-				apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
-			if(400 to 460)
-				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
-			if(460 to INFINITY)
-				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3 * seconds_per_tick, BURN)
-				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
-	else
+	if(bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
 		clear_alert(ALERT_XENO_FIRE)
+		return
 
-/mob/living/carbon/alien/getTrail()
-	if(getBruteLoss() < 200)
-		return pick (list("xltrails_1", "xltrails2"))
-	else
-		return pick (list("xttrails_1", "xttrails2"))
+	//Body temperature is too hot.
+	throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
+	switch(bodytemperature)
+		if(360 to 400)
+			apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
+		if(400 to 460)
+			apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
+		if(460 to INFINITY)
+			if(on_fire)
+				apply_damage(HEAT_DAMAGE_LEVEL_3 * seconds_per_tick, BURN)
+			else
+				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
+
+/mob/living/carbon/alien/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_XENO)
 
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
-	if (client)
-		for (var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
-			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/body_egg/alien_embryo/A = L.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo)
-				if(A)
-					var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = L, icon_state = "infected[A.stage]")
-					client.images += I
-	return
+	if (!client)
+		return
 
+	for (var/mob/living/target as anything in GLOB.mob_living_list)
+		if(HAS_TRAIT(target, TRAIT_XENO_HOST))
+			var/obj/item/organ/body_egg/alien_embryo/embryo = target.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo)
+			if(embryo)
+				client.images += image('icons/mob/nonhuman-player/alien.dmi', loc = target, icon_state = "infected[embryo.stage]")
 
 /*----------------------------------------
 Proc: RemoveInfectionImages()
@@ -144,6 +144,24 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
+
+	for(var/slot in (organs_slot | default_organ_types_by_slot))
+		var/obj/item/organ/old_organ = get_organ_slot(slot)
+		var/obj/item/organ/new_organ = new_xeno.get_organ_slot(slot)
+		if(old_organ)
+			// Transfer any organs that differ from their intended original type
+			// Also transfer brains regardless - if we somehow put skillchips or traumas into xeno brains, those should carry over
+			if(istype(old_organ, /obj/item/organ/brain) || (old_organ.type != default_organ_types_by_slot[slot]))
+				if(new_organ)
+					new_organ.Remove(new_xeno, special = TRUE, movement_flags = NO_ID_TRANSFER)
+					qdel(new_organ)
+				old_organ.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
+				old_organ.Insert(new_xeno, special = TRUE, movement_flags = NO_ID_TRANSFER)
+		else
+			// If we don't have an organ in a slot that should have one in both the old and new xeno, remove the organ from that slot in the new xeno
+			if(default_organ_types_by_slot[slot] && new_xeno.default_organ_types_by_slot[slot] && new_organ)
+				new_organ.Remove(new_xeno, special = TRUE)
+				qdel(new_organ)
 
 	var/obj/item/organ/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/obj/item/organ/stomach/alien/frying_pan = new_xeno.get_organ_slot(ORGAN_SLOT_STOMACH)

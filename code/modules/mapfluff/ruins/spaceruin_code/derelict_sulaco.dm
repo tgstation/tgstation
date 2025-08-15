@@ -16,7 +16,7 @@
 
 /obj/item/clothing/suit/armor/vest/marine/sulaco
 	name = "damaged tactical armor vest"
-	desc = "An old, roughed up set of the finest mass produced, stamped plasteel armor. This piece of equipment has lost most of its protective qualities to time, yet it is still more than serviceable for giving xenos the middle finger."
+	desc = "An old, roughed-up set of the finest mass produced, stamped plasteel armor. This piece of equipment has lost most of its protective qualities to time, yet it is still more than serviceable for giving xenos the middle finger."
 	armor_type = /datum/armor/derelict_marine
 
 /obj/item/clothing/head/helmet/marine/sulaco

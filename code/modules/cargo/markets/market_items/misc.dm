@@ -24,7 +24,7 @@
 
 /datum/market_item/misc/cap_gun
 	name = "Cap Gun"
-	desc = "Prank your friends with this harmless gun! Harmlessness guranteed."
+	desc = "Prank your friends with this harmless gun! Harmlessness guaranteed."
 	item = /obj/item/toy/gun
 
 	price_min = CARGO_CRATE_VALUE * 0.25
@@ -44,7 +44,7 @@
 
 /datum/market_item/misc/donk_recycler
 	name = "MOD Riot Foam Dart Recycler Module"
-	desc = "If you love toy guns, hate cleaning and got a MODsuit, this module is a must have."
+	desc = "If you love toy guns, hate cleaning and got a MODsuit, this module is a must-have."
 	item = /obj/item/mod/module/recycler/donk
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 4.5
@@ -136,7 +136,7 @@
 
 /datum/market_item/misc/jawed_hook
 	name = "Jawed Fishing Hook"
-	desc = "The thing ya use if y'are strugglin' with fishes. Just rememeber to whoop yer rod before it's too late, 'cause this thing's gonna hurt them like an Arkansas toothpick."
+	desc = "The thing ya use if y'are strugglin' with fishes. Just remember to whoop yer rod before it's too late, 'cause this thing's gonna hurt them like an Arkansas toothpick."
 	item = /obj/item/fishing_hook/jaws
 	price_min = CARGO_CRATE_VALUE * 0.75
 	price_max = CARGO_CRATE_VALUE * 2
@@ -172,3 +172,52 @@
 	stock_min = 3
 	stock_max = 8
 	availability_prob = 90
+
+/datum/market_item/misc/girlypop
+	name = "Girlypop Posters"
+	desc = "A collection of cute and adorable posters. Girl power!"
+	price_min = PAYCHECK_CREW * 2
+	price_max = PAYCHECK_CREW * 5
+	item = /obj/item/poster/contraband/heart // gives it the rolled poster icon in the menu
+	stock_min = 1
+	stock_max = 3
+	availability_prob = 90
+
+/datum/market_item/misc/girlypop/spawn_item(loc, datum/market_purchase/purchase)
+	. = ..()
+	var/obj/structure/closet/crate/glitter/C = new(loc)
+	for (var/type in list(
+		/obj/item/poster/contraband/dream,
+		/obj/item/poster/contraband/beekind,
+		/obj/item/poster/contraband/heart,
+		/obj/item/poster/contraband/dolphin,
+		/obj/item/poster/contraband/principles,
+		/obj/item/poster/contraband/trigger,
+		/obj/item/poster/contraband/barbaro,
+		/obj/item/poster/contraband/seabiscuit,
+		/obj/item/poster/contraband/pharlap,
+		/obj/item/poster/contraband/waradmiral,
+		/obj/item/poster/contraband/silver,
+		/obj/item/poster/contraband/jovial,
+		/obj/item/poster/contraband/bojack,
+	))
+		new type(C)
+	return C
+
+/datum/market_item/misc/self_surgery_skillchip
+	name = /obj/item/skillchip/self_surgery::name
+	desc = "Man, the insurance companies HATE this one. Damn fat-cats can't stand the idea of people treating their own illnesses - \
+	they'd rather you go to THEIR doctors, who THEY convinced to charge EXTORTIONARY prices the average Joe can't afford, all so you \
+	gotta sign on to THEIR packages. Most people end up paying for NOTHING for YEARS just so that they have a CHANCE at being able to afford \
+	treatment when they actually NEED it. \n\n Uh, what was I talking about again... Oh, yeah. This here skillchip'll let you put yourself under the knife. \
+	A must-have for the person who can't rely on anyone else."
+	item = /obj/item/skillchip/self_surgery
+	price_min = CARGO_CRATE_VALUE * 5
+	price_max = CARGO_CRATE_VALUE * 10
+	stock_max = 1
+	availability_prob = 15
+
+/datum/market_item/misc/self_surgery_skillchip/buy(obj/item/market_uplink/uplink, mob/buyer, shipping_method, legal_status)
+	. = ..()
+	if(.)
+		availability_prob *= 0.5

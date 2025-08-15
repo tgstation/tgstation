@@ -181,10 +181,6 @@
 /obj/structure/holobox,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
-"aE" = (
-/obj/machinery/photocopier,
-/turf/open/floor/iron/grimy,
-/area/ruin/space/has_grav/hellfactoryoffice)
 "aF" = (
 /obj/item/trash/can,
 /turf/open/floor/iron/grimy,
@@ -871,6 +867,10 @@
 /obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
+"qY" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/hellfactoryoffice)
 "sk" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -926,6 +926,14 @@
 /obj/structure/sign/warning/chem_diamond,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hellfactory)
+"Ia" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hellfactory)
+"KJ" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
 "KZ" = (
 /obj/machinery/modular_computer/preset/civilian,
 /turf/open/floor/iron,
@@ -960,14 +968,6 @@
 /obj/item/stack/wrapping_paper,
 /obj/item/stack/package_wrap,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hellfactory)
-"Sz" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
-"UK" = (
-/obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "UN" = (
@@ -1156,7 +1156,7 @@ bV
 cf
 aA
 aA
-UK
+KJ
 bL
 cs
 aW
@@ -1438,7 +1438,7 @@ aa
 aa
 ah
 ay
-aE
+qY
 aP
 aP
 ah
@@ -1507,7 +1507,7 @@ GE
 iE
 iE
 by
-Sz
+Ia
 by
 cM
 cN

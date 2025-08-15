@@ -310,7 +310,7 @@
 	base_icon_state = "recharge_floor"
 	floor_tile = /obj/item/stack/tile/iron/recharge_floor
 
-/turf/open/floor/iron/recharge_floor/Airless
+/turf/open/floor/iron/recharge_floor/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/recharge_floor/asteroid
@@ -420,9 +420,29 @@
 
 
 /turf/open/floor/iron/freezer
-	icon_state = "freezerfloor"
-	base_icon_state = "freezerfloor"
+	icon_state = "freezer"
+	base_icon_state = "freezer"
 	floor_tile = /obj/item/stack/tile/iron/freezer
+
+/turf/open/floor/iron/freezer/edge
+	icon_state = "freezer_edge"
+	base_icon_state = "freezer_edge"
+	floor_tile = /obj/item/stack/tile/iron/freezer/edge
+
+/turf/open/floor/iron/freezer/half
+	icon_state = "freezer_half"
+	base_icon_state = "freezer_half"
+	floor_tile = /obj/item/stack/tile/iron/freezer/half
+
+/turf/open/floor/iron/freezer/corner
+	icon_state = "freezer_corner"
+	base_icon_state = "freezer_corner"
+	floor_tile = /obj/item/stack/tile/iron/freezer/corner
+
+/turf/open/floor/iron/freezer/large
+	icon_state = "freezer_large"
+	base_icon_state = "freezer_large"
+	floor_tile = /obj/item/stack/tile/iron/freezer/large
 
 /turf/open/floor/iron/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -434,9 +454,19 @@
 	name = "cold room floor"
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
 
+/turf/open/floor/iron/kitchen_coldroom/dark
+	icon_state = "darkfull"
+	base_icon_state = "darkfull"
+	floor_tile = /obj/item/stack/tile/iron/dark
+
+/turf/open/floor/iron/kitchen_coldroom/dark/textured
+	icon_state = "textured_dark"
+	base_icon_state = "textured_dark"
+	floor_tile = /obj/item/stack/tile/iron/dark/textured
+
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
-	icon_state = "freezerfloor"
-	base_icon_state = "freezerfloor"
+	icon_state = "freezer"
+	base_icon_state = "freezer"
 	floor_tile = /obj/item/stack/tile/iron/freezer
 
 /turf/open/floor/iron/grimy

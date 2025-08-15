@@ -65,11 +65,9 @@
 	)
 
 	AddComponent(/datum/component/ai_target_timer)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		var/static/list/food_types = list(/obj/item/food/grown/ash_flora)
-		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 10, bonus_tame_chance = 5)
+		AddComponent(/datum/component/tameable, tame_chance = 10, bonus_tame_chance = 5)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -85,20 +83,26 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(goliath_foods))
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
 
+/mob/living/basic/mining/goliath/Destroy()
+	QDEL_NULL(tentacles)
+	QDEL_NULL(melee_tentacles)
+	QDEL_NULL(tentacle_line)
+	return ..()
+
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
 	if (saddled)
 		. += span_info("Someone appears to have attached a saddle to this one.")
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
-/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 	. = ..()
 	if (. <= 0)
 		return
 	if (tentacles.cooldown_time > 1 SECONDS)
 		tentacles.cooldown_time -= 1 SECONDS
 
-/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!istype(attacking_item, /obj/item/goliath_saddle))
 		return ..()
 	if (!tameable)
@@ -152,6 +156,8 @@
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction = new_friend.faction.Copy()
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)

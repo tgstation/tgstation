@@ -23,7 +23,7 @@
 
 /datum/deathmatch_controller/proc/create_new_lobby(mob/host)
 	lobbies[host.ckey] = new /datum/deathmatch_lobby(host)
-	deadchat_broadcast(" has opened a new deathmatch lobby. <a href=?src=[REF(lobbies[host.ckey])];join=1>(Join)</a>", "<B>[host]</B>")
+	deadchat_broadcast(" has opened a new deathmatch lobby. <a href=byond://?src=[REF(lobbies[host.ckey])];join=1>(Join)</a>", "<B>[host]</B>")
 
 /datum/deathmatch_controller/proc/remove_lobby(ckey)
 	var/lobby = lobbies[ckey]

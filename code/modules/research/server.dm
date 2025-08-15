@@ -158,14 +158,14 @@
 	if(!tool.tool_behaviour)
 		return ..()
 	// Only antags are given the training and knowledge to disassemble this thing.
-	if(!is_special_character(user))
+	if(!user.is_antag())
 		if(user.combat_mode)
 			return ITEM_INTERACT_SKIP_TO_ATTACK
 		balloon_alert(user, "you can't find an obvious maintenance hatch!")
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
-/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))
 		switch(deconstruction_state)
 			if(HDD_PANEL_CLOSED)

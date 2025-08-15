@@ -165,7 +165,7 @@
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
 
-/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, params)
+/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/gun/energy/dueling))
 		var/obj/item/gun/energy/dueling/other_gun = W
 
@@ -298,15 +298,17 @@
 
 /obj/item/ammo_casing/energy/duel/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	. = ..()
-	var/obj/projectile/energy/duel/D = loaded_projectile
-	D.setting = setting
-	D.update_appearance()
+	var/obj/projectile/energy/duel/dueling_projectile = loaded_projectile
+	dueling_projectile.setting = setting
+	dueling_projectile.update_appearance()
+	if(!isturf(target))
+		dueling_projectile.set_homing_target(target)
 
 /obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
-	var/obj/effect/temp_visual/dueling_chaff/C = new(get_turf(user))
-	C.setting = setting
-	C.update_appearance()
+	var/obj/effect/temp_visual/dueling_chaff/chaff = new(get_turf(user))
+	chaff.setting = setting
+	chaff.update_appearance()
 
 //Projectile
 
@@ -314,7 +316,6 @@
 	name = "dueling beam"
 	icon_state = "declone"
 	reflectable = FALSE
-	homing = TRUE
 	var/setting
 
 /obj/projectile/energy/duel/update_icon()
@@ -350,34 +351,6 @@
 	var/obj/item/bodypart/B = L.get_bodypart(BODY_ZONE_HEAD)
 	B.dismember()
 	qdel(B)
-
-//Storage case.
-/obj/item/storage/lockbox/dueling
-	name = "dueling pistol case"
-	desc = "Let's solve this like gentlespacemen."
-	icon_state = "medalbox+l"
-	inhand_icon_state = "syringe_kit"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
-	req_access = list(ACCESS_CAPTAIN)
-	icon_locked = "medalbox+l"
-	icon_closed = "medalbox"
-	icon_broken = "medalbox+b"
-	base_icon_state = "medalbox"
-	icon_open = "medalboxopen"
-
-/obj/item/storage/lockbox/dueling/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 2
-	atom_storage.set_holdable(/obj/item/gun/energy/dueling)
-
-/obj/item/storage/lockbox/dueling/PopulateContents()
-	. = ..()
-	var/obj/item/gun/energy/dueling/gun_A = new(src)
-	var/obj/item/gun/energy/dueling/gun_B = new(src)
-	new /datum/duel(gun_A, gun_B)
 
 #undef DUEL_IDLE
 #undef DUEL_PREPARATION

@@ -20,13 +20,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
-"e" = (
-/obj/item/mop{
-	pixel_x = -1;
-	pixel_y = -30
-	},
-/turf/closed/wall,
-/area/station/maintenance/starboard/greater)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/girder,
@@ -228,6 +221,7 @@
 	pixel_x = -10;
 	pixel_y = 18
 	},
+/obj/item/mop,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "H" = (
@@ -760,7 +754,7 @@ K
 K
 A
 j
-e
+K
 G
 K
 Z

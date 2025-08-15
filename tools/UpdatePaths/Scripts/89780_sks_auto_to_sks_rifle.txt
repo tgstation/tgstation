@@ -1,0 +1,1 @@
+/obj/item/gun/ballistic/automatic/sks/@SUBTYPES : /obj/item/gun/ballistic/rifle/sks/@SUBTYPES{@OLD}

@@ -1,4 +1,3 @@
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -10,7 +9,9 @@ import {
   NumberInput,
   Section,
   Stack,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
 import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 
@@ -278,7 +279,7 @@ const PulseBoard = (props) => {
     }
   }
   return (
-    <Section title={'Unique ' + name} minHeight="100%" position="relative">
+    <Section title={`Unique ${name}`} minHeight="100%" position="relative">
       <Box mx="-1px">{blocks}</Box>
     </Section>
   );

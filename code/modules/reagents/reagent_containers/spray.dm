@@ -132,7 +132,7 @@
 		current_range = spray_range
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
-/obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
@@ -148,7 +148,7 @@
 			return
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool the [name] with the [I]!"))
+		to_chat(user, span_notice("You cool \the [src] with the [I]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
 
@@ -268,7 +268,7 @@
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube
 	name = "clown flower"
-	desc = "A delightly devilish flower... you got a feeling where this is going."
+	desc = "A delightfully devilish flower... you've got a feeling where this is going."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "clownflower"
 	volume = 30
@@ -393,7 +393,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	reagent_flags = NONE
-	list_reagents = list(/datum/reagent/glitter/confetti = 15)
+	list_reagents = list(/datum/reagent/confetti = 15)
 	volume = 15
 	amount_per_transfer_from_this = 5
 	can_toggle_range = FALSE

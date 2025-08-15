@@ -26,7 +26,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
-/obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	user.visible_message(
 		span_warning("[user] baps [target_mob] on the head with [src]!"),
@@ -63,6 +63,9 @@
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/stack/wrapping_paper/xmas"
+	post_init_icon_state = "wrap_paper"
 	greyscale_colors = "#00FF00#FF0000"
 
 /obj/item/stack/wrapping_paper/use(used, transfer, check = TRUE)
@@ -224,11 +227,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
-/obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	user.visible_message(
 		span_warning("[user] baps [target_mob] on the head with [src]!"),
 		span_warning("You bap [target_mob] on the head with [src]!"),
 	)
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
-

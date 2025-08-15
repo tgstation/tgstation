@@ -1,17 +1,19 @@
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	icon_state = "sneakers"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
+	icon_state = "/obj/item/clothing/shoes/wheelys"
+	post_init_icon_state = "sneakers"
 	worn_icon_state = "wheelys"
 	inhand_icon_state = "sneakers_back"
-	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_wheelys
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
-	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
+	greyscale_colors = "#545454#ffffff"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
+	clothing_flags = parent_type::clothing_flags | LARGE_WORN_ICON
 	actions_types = list(/datum/action/item_action/wheelys)
 	///False means wheels are not popped out
 	var/wheelToggle = FALSE
@@ -61,7 +63,9 @@
 /obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "rollerskates"
+	post_init_icon_state = null
 	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null
@@ -74,7 +78,9 @@
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "skishoes"
+	post_init_icon_state = null
 	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null

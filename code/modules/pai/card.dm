@@ -14,8 +14,8 @@
 
 	/// Spam alert prevention
 	var/alert_cooldown
-	/// The emotion icon displayed.
-	var/emotion_icon = "off"
+	/// The icon displayed on the card's screen.
+	var/datum/pai_screen_image/screen_image = /datum/pai_screen_image/off
 	/// Any pAI personalities inserted
 	var/mob/living/silicon/pai/pai
 	/// Prevents a crew member from hitting "request pAI" repeatedly
@@ -28,12 +28,12 @@
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
-/obj/item/pai_card/attackby(obj/item/used, mob/user, params)
+/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
 			return
-		pai.radio.attackby(used, user, params)
+		pai.radio.attackby(used, user, modifiers)
 		to_chat(user, span_notice("You insert [used] into the [src]."))
 		return
 	return ..()
@@ -67,7 +67,7 @@
 	if(QDELETED(src))
 		return
 	pai = null
-	emotion_icon = initial(emotion_icon)
+	screen_image = initial(screen_image)
 	update_appearance()
 
 /obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
@@ -81,13 +81,13 @@
 
 /obj/item/pai_card/update_overlays()
 	. = ..()
-	. += "pai-[emotion_icon]"
+	. += image(icon = screen_image.icon, icon_state = screen_image.icon_state)
 	if(pai?.hacking_cable)
 		. += "[initial(icon_state)]-connector"
 
 /obj/item/pai_card/vv_edit_var(vname, vval)
 	. = ..()
-	if(vname == NAMEOF(src, emotion_icon))
+	if(vname == NAMEOF(src, screen_image))
 		update_appearance()
 
 /obj/item/pai_card/ui_interact(mob/user, datum/tgui/ui)
@@ -212,7 +212,7 @@
 	var/mob/living/silicon/pai/new_pai = new(src)
 	new_pai.name = candidate.name || pick(GLOB.ninja_names)
 	new_pai.real_name = new_pai.name
-	new_pai.key = candidate.ckey
+	new_pai.PossessByPlayer(candidate.ckey)
 	set_personality(new_pai)
 	SSpai.candidates -= ckey
 	return TRUE
@@ -239,7 +239,7 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
 
 	notify_ghosts(
-		"[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
+		"[user.real_name] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
 		source = user,
 		header = "pAI Request!",
 		alert_overlay = alert_overlay,
@@ -283,7 +283,7 @@
 		return FALSE
 	pai = downloaded
 	RegisterSignal(pai, COMSIG_QDELETING, PROC_REF(on_pai_del))
-	emotion_icon = "null"
+	screen_image = /datum/pai_screen_image/neutral
 	update_appearance()
 	playsound(src, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("[src] plays a cheerful startup noise!")

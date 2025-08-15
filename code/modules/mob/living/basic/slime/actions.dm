@@ -77,6 +77,7 @@
 
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
+
 	if(stat != CONSCIOUS)
 		balloon_alert(src, "not conscious!")
 		return
@@ -90,6 +91,19 @@
 
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		balloon_alert(src, "need growth!")
+		return
+
+	var/list/friends_list = list()
+	for(var/mob/living/basic/slime/friend in loc)
+		if(QDELETED(friend))
+			continue
+		if(friend == src)
+			continue
+		friends_list += friend
+
+	overcrowded = length(friends_list) >= SLIME_OVERCROWD_AMOUNT
+	if(overcrowded)
+		balloon_alert(src, "overcrowded!")
 		return
 
 	var/list/babies = list()
@@ -128,14 +142,17 @@
 			baby.befriend(slime_friend)
 
 		babies += baby
-		baby.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
+		if(mutation_chance == 0)
+			baby.mutation_chance = 0
+		else
+			baby.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
 		SSblackbox.record_feedback("tally", "slime_babies_born", 1, baby.slime_type.colour)
 
 	var/mob/living/basic/slime/new_slime = pick(babies) // slime that the OG slime will move into.
 	new_slime.set_combat_mode(TRUE)
 
 	if(isnull(mind))
-		new_slime.key = key
+		new_slime.PossessByPlayer(key)
 	else
 		mind.transfer_to(new_slime)
 

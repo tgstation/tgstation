@@ -53,6 +53,7 @@
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
+	phased_mob_icon_state = "purple_laser"
 	/// Max amount of light permitted before being kicked out
 	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)

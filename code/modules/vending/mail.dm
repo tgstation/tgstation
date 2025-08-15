@@ -14,7 +14,6 @@
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.33
-	req_access = list(ACCESS_CARGO)
 	circuit = /obj/item/circuitboard/machine/mailsorter
 
 	var/light_mask = "mailsorter-light-mask"
@@ -46,11 +45,13 @@
 /obj/machinery/mailsorter/proc/get_unload_turf()
 	return get_step(src, output_dir)
 
+/// Opening the maintenance panel.
 /obj/machinery/mailsorter/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "[base_icon_state]-off", base_icon_state, tool)
 	update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 
+/// Deconstructing the mail sorter.
 /obj/machinery/mailsorter/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)
 	return ITEM_INTERACT_SUCCESS
@@ -63,11 +64,15 @@
 		. += span_notice("Alt-click to rotate the output direction.")
 
 /obj/machinery/mailsorter/Destroy()
+	QDEL_LIST(mail_list)
+	. = ..()
+
+/obj/machinery/mailsorter/on_deconstruction(disassembled)
 	drop_all_mail()
 	. = ..()
 
-/// Drops all enevlopes on the machine turf. Only occurs when the machine is broken.
-/obj/machinery/mailsorter/proc/drop_all_mail(damage_flag)
+/// Drops all enevlopes on the machine turf.
+/obj/machinery/mailsorter/proc/drop_all_mail()
 	if(!isturf(get_turf(src)))
 		QDEL_LIST(mail_list)
 		return
@@ -90,18 +95,11 @@
 /obj/machinery/mailsorter/proc/accept_check(obj/item/weapon)
 	var/static/list/accepted_items = list(
 		/obj/item/mail,
-		/obj/item/mail/envelope,
-		/obj/item/mail/junkmail,
-		/obj/item/mail/mail_strike,
-		/obj/item/mail/traitor,
 		/obj/item/paper,
 	)
 	return is_type_in_list(weapon, accepted_items)
 
 /obj/machinery/mailsorter/interact(mob/user)
-	if (!allowed(user))
-		to_chat(user, span_warning("Access denied."))
-		return
 	if (currentstate != STATE_IDLE)
 		return
 	if (length(mail_list) == 0)
@@ -151,10 +149,13 @@
 		if (some_recipient)
 			var/datum/job/recipient_job = some_recipient.assigned_role
 			var/datum/job_department/primary_department = recipient_job.departments_list?[1]
-			var/datum/job_department/main_department = primary_department.department_name
-			if (main_department == sorting_dept)
-				sorted_mail.Add(some_mail)
-				sorted ++
+			if (primary_department == null)	// permabrig is temporary, tide is forever
+				unable_to_sort ++
+			else
+				var/datum/job_department/main_department = primary_department.department_name
+				if (main_department == sorting_dept)
+					sorted_mail.Add(some_mail)
+					sorted ++
 		else
 			unable_to_sort ++
 	if (length(sorted_mail) == 0)
@@ -277,17 +278,17 @@
 		var/image/mail_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[output_dir]")
 		switch(output_dir)
 			if(NORTH)
-				mail_output.pixel_y = 32
+				mail_output.pixel_z = 32
 			if(SOUTH)
-				mail_output.pixel_y = -32
+				mail_output.pixel_z = -32
 			if(EAST)
-				mail_output.pixel_x = 32
+				mail_output.pixel_w = 32
 			if(WEST)
-				mail_output.pixel_x = -32
+				mail_output.pixel_w = -32
 		mail_output.color = COLOR_CRAYON_ORANGE
 		var/mutable_appearance/light_out = emissive_appearance(mail_output.icon, mail_output.icon_state, offset_spokesman = src, alpha = mail_output.alpha)
-		light_out.pixel_y = mail_output.pixel_y
-		light_out.pixel_x = mail_output.pixel_x
+		light_out.pixel_z = mail_output.pixel_z
+		light_out.pixel_w = mail_output.pixel_w
 		. += mail_output
 		. += light_out
 		. += mutable_appearance(base_icon_state, currentstate)

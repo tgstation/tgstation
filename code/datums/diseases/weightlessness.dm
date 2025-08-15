@@ -10,7 +10,7 @@
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	spreading_modifier = 0.5
 	cure_chance = 4
-	desc = "This disease results in a low level rewrite of the patient's bio-electric signature, causing them to reject the phenomena of \"weight\". Injestion of liquid dark matter tends to stabilize the field."
+	desc = "This disease results in a low level rewrite of the patient's bioelectric signature, causing them to reject the phenomena of \"weight\". Ingestion of liquid dark matter tends to stabilize the field."
 	severity = DISEASE_SEVERITY_MEDIUM
 	infectable_biotypes = MOB_ORGANIC
 

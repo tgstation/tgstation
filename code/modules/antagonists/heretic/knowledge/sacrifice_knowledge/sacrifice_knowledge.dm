@@ -426,7 +426,7 @@
 		var/obj/item/organ/to_give = new organ_path
 		to_give.Insert(sac_target)
 
-	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target), sac_target)
 	sac_target.visible_message(span_boldwarning("Several organs force themselves out of [sac_target]!"))
 
 /**
@@ -519,7 +519,7 @@
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
-	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf_equal_weight()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)
@@ -632,7 +632,7 @@
 		span_userdanger("Your organs are violently pulled out of your chest by shadowy hands!")
 	)
 
-	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target), sac_target)
 
 #undef SACRIFICE_SLEEP_DURATION
 #undef SACRIFICE_REALM_DURATION

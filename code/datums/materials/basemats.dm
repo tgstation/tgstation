@@ -531,7 +531,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/wood
 	name = "wood"
-	desc = "Flexible, durable, but flamable. Hard to come across in space."
+	desc = "Flexible, durable, but flammable. Hard to come across in space."
 	color = "#855932"
 	strength_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/mineral/wood

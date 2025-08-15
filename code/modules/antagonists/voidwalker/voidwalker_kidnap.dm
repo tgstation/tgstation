@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	driver.add_traits(wisp_driver_traits, REF(src))
 	add_atom_colour(random_color(), FIXED_COLOUR_PRIORITY)
 
-	addtimer(CALLBACK(driver, TYPE_PROC_REF(/atom/movable, forceMove), get_safe_random_station_turf()), 60 SECONDS)
+	addtimer(CALLBACK(driver, TYPE_PROC_REF(/atom/movable, forceMove), get_safe_random_station_turf_equal_weight()), 60 SECONDS)
 
 /obj/effect/wisp_mobile/relaymove(mob/living/user, direction)
 	if(can_move >= world.time)
@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	. = ..()
 
 	gone.remove_traits(wisp_driver_traits, REF(src))
-	to_chat(gone, span_boldwarning("You feel it would be very bad to get caught again."))
+	to_chat(gone, span_boldwarning("You feel watched."))
 	qdel(src)
 
 /// Loop us around, maybe, if we're going to bump into a wall

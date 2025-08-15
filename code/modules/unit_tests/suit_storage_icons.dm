@@ -10,7 +10,7 @@
 			continue
 		wearable_item_paths |= item_path
 
-	for(var/obj/item/clothing/clothing_path in (subtypesof(/obj/item/clothing) - typesof(/obj/item/clothing/head/mob_holder) - typesof(/obj/item/clothing/suit/space/santa))) //mob_holder is a psuedo abstract item. santa suit is a VERY SNOWFLAKE admin spawn suit that can hold /every/ possible item.
+	for(var/obj/item/clothing/clothing_path in (subtypesof(/obj/item/clothing) - typesof(/obj/item/clothing/suit/space/santa))) //santa suit is a VERY SNOWFLAKE admin spawn suit that can hold /every/ possible item.
 		for(var/path in clothing_path::allowed) //find all usable suit storage stuff.
 			wearable_item_paths |= path
 
@@ -35,12 +35,12 @@
 			continue
 
 		if(worn_icon) //easiest to check since we override everything.
-			if(!(icon_state in icon_states(worn_icon)))
+			if(!icon_exists(worn_icon, icon_state))
 				log_test("\t[count] - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
 				count++
 			continue
 
-		if(!(icon_state in icon_states('icons/mob/clothing/belt_mirror.dmi')))
+		if(!icon_exists('icons/mob/clothing/belt_mirror.dmi', icon_state))
 			already_warned_icons += icon_state
 			log_test("\t[count] - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\"")
 			count++

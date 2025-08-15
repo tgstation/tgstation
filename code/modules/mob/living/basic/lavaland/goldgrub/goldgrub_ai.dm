@@ -10,6 +10,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/burrow_through_ground,
@@ -34,6 +35,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/dig_away_from_danger,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores,
@@ -211,6 +213,8 @@
 
 /datum/pet_command/grub_spit
 	command_name = "Spit"
+	radial_icon = 'icons/obj/ore.dmi'
+	radial_icon_state = "uranium"
 	command_desc = "Ask your grub pet to spit out its ores."
 	speech_commands = list("spit", "ores")
 
@@ -221,5 +225,8 @@
 	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_SPIT_ABILITY)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/pet_command/grub_spit/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to spit its ores!"
 
 #undef BURROW_RANGE

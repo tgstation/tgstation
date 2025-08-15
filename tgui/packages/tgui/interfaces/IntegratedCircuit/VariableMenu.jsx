@@ -1,6 +1,4 @@
-import { shallowDiffers } from 'common/react';
 import { Component } from 'react';
-
 import {
   Box,
   Button,
@@ -9,7 +7,9 @@ import {
   Input,
   Section,
   Stack,
-} from '../../components';
+} from 'tgui-core/components';
+import { shallowDiffers } from 'tgui-core/react';
+
 import {
   VARIABLE_ASSOC_LIST,
   VARIABLE_LIST,
@@ -134,9 +134,9 @@ export class VariableMenu extends Component {
                   <Input
                     placeholder="Name"
                     fluid
-                    onChange={(e, nameVal) =>
+                    onChange={(val) =>
                       this.setState({
-                        variable_name: nameVal,
+                        variable_name: val,
                       })
                     }
                   />

@@ -1,7 +1,7 @@
-import { KeyboardEvent, useState } from 'react';
+import { type KeyboardEvent, useState } from 'react';
 import { Autofocus, Box, Button, Section, Stack } from 'tgui-core/components';
 import { isEscape, KEY } from 'tgui-core/keys';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -33,10 +33,29 @@ export function AlertModal(props) {
     title,
   } = data;
 
+  // Stolen wholesale from fontcode
+  function textWidth(text: string, font: string, fontsize: number) {
+    // default font height is 12 in tgui
+    font = `${fontsize}px ${font}`;
+    const c = document.createElement('canvas');
+    const ctx = c.getContext('2d') as CanvasRenderingContext2D;
+    ctx.font = font;
+    return ctx.measureText(text).width;
+  }
+
   const [selected, setSelected] = useState(0);
 
+  const windowWidth = 345 + (buttons.length > 2 ? 55 : 0);
+
+  // very accurate estimate of padding for each num of buttons
+  const paddingMagicNumber = 67 / buttons.length + 23;
+
   // At least one of the buttons has a long text message
-  const isVerbose = buttons.some((button) => button.length > 10);
+  const isVerbose = buttons.some(
+    (button) =>
+      textWidth(button, 'Verdana, Geneva', large_buttons ? 14 : 12) > // 14 is the larger font size for large buttons
+      windowWidth / buttons.length - paddingMagicNumber,
+  );
   const largeSpacing = isVerbose && large_buttons ? 20 : 15;
 
   // Dynamically sets window dimensions
@@ -45,8 +64,6 @@ export function AlertModal(props) {
     (isVerbose ? largeSpacing * buttons.length : 0) +
     (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
     (message.length && large_buttons ? 5 : 0);
-
-  const windowWidth = 345 + (buttons.length > 2 ? 55 : 0);
 
   /** Changes button selection, etc */
   function keyDownHandler(event: KeyboardEvent<HTMLDivElement>) {

@@ -11,11 +11,11 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 body {
-  background: #fff;
+  background: hsl(0, 0%, 100%);
   font-family: Verdana, sans-serif;
   font-size: 13px;
   line-height: 1.2;
@@ -45,36 +45,36 @@ img.icon {
 }
 
 a {
-  color: hsl(240, 100%, 50%);
+  color: hsl(from var(--color-hyperlink) h s calc(l - 40));
+
+  &:hover {
+    color: hsl(from var(--color-hyperlink) h s calc(l - 20));
+  }
 }
 
-a.visited {
-  color: hsl(300, 100%, 50%);
-}
-
+a.visited,
 a:visited {
-  color: hsl(300, 100%, 50%);
-}
+  color: hsl(from var(--color-hyperlink-visited) h s calc(l - 40));
 
-a.popt {
-  text-decoration: none;
+  &:hover {
+    color: hsl(from var(--color-hyperlink-visited) h s calc(l - 20));
+  }
 }
 
 /* POPUPS */
-
 .popup {
   position: fixed;
   top: 50%;
   left: 50%;
-  background: #ddd;
+  background: hsl(0, 0%, 86.7%);
 }
 
 .popup .close {
   position: absolute;
-  background: #aaa;
+  background: hsl(0, 0%, 66.7%);
   top: 0;
   right: 0;
-  color: #333;
+  color: hsl(0, 0%, 20%);
   text-decoration: none;
   z-index: 2;
   padding: 0 10px;
@@ -83,12 +83,12 @@ a.popt {
 }
 
 .popup .close:hover {
-  background: #999;
+  background: hsl(0, 0%, 60%);
 }
 
 .popup .head {
-  background: #999;
-  color: #ddd;
+  background: hsl(0, 0%, 60%);
+  color: hsl(0, 0%, 86.7%);
   padding: 0 10px;
   height: 30px;
   line-height: 30px;
@@ -99,12 +99,12 @@ a.popt {
 }
 
 .popup input {
-  border: 1px solid #999;
-  background: #fff;
+  border: 1px solid hsl(0, 0%, 60%);
+  background: hsl(0, 0%, 100%);
   margin: 0;
   padding: 5px;
   outline: none;
-  color: #333;
+  color: hsl(0, 0%, 20%);
 }
 
 .popup input[type='text']:hover,
@@ -115,8 +115,8 @@ a.popt {
 
 .popup input[type='submit'] {
   padding: 5px 10px;
-  background: #999;
-  color: #ddd;
+  background: hsl(0, 0%, 60%);
+  color: hsl(0, 0%, 86.7%);
   text-transform: uppercase;
   font-size: 0.9em;
   font-weight: bold;
@@ -125,7 +125,7 @@ a.popt {
 .popup input[type='submit']:hover,
 .popup input[type='submit']:focus,
 .popup input[type='submit']:active {
-  background: #aaa;
+  background: hsl(0, 0%, 66.7%);
   cursor: pointer;
 }
 
@@ -137,11 +137,11 @@ a.popt {
   display: block;
   text-decoration: none;
   padding: 3px;
-  color: #333;
+  color: hsl(0, 0%, 20%);
 }
 
 .changeFont a:hover {
-  background: #ccc;
+  background: hsl(0, 0%, 80%);
 }
 
 .highlightPopup {
@@ -167,7 +167,7 @@ a.popt {
 /* ADMIN CONTEXT MENU */
 
 .contextMenu {
-  background-color: #ddd;
+  background-color: hsl(0, 0%, 86.7%);
   position: fixed;
   margin: 2px;
   width: 150px;
@@ -177,11 +177,11 @@ a.popt {
   display: block;
   padding: 2px 5px;
   text-decoration: none;
-  color: #333;
+  color: hsl(0, 0%, 20%);
 }
 
 .contextMenu a:hover {
-  background-color: #ccc;
+  background-color: hsl(0, 0%, 80%);
 }
 
 /* ADMIN FILTER MESSAGES MENU */
@@ -279,7 +279,7 @@ h6 {
 
 h1.alert,
 h2.alert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 em {
@@ -329,7 +329,7 @@ em {
 
 .binarysay {
   color: hsl(114, 86.5%, 40.8%);
-  background-color: hsl(0, 0%, 0%);
+  background-color: var(--color-black);
   display: block;
 }
 
@@ -374,6 +374,10 @@ em {
   color: hsl(88.6, 58.9%, 42%);
 }
 
+.enteradio {
+  color: hsl(176.1, 20%, 45.1%);
+}
+
 .syndradio {
   color: hsl(358.7, 26.7%, 33.7%);
 }
@@ -388,10 +392,6 @@ em {
 
 .aiprivradio {
   color: hsl(300, 100%, 50%);
-}
-
-.enteradio {
-  color: hsl(176.1, 20%, 45.1%);
 }
 
 .redteamradio {
@@ -410,6 +410,10 @@ em {
   color: hsl(52.1, 72%, 47.6%) !important;
 }
 
+.captaincast {
+  color: hsl(157.1, 39.6%, 62.4%);
+}
+
 .yell {
   font-weight: bold;
 }
@@ -420,7 +424,7 @@ em {
 
 h1.alert,
 h2.alert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
 }
 
 .userdanger {
@@ -481,12 +485,12 @@ h2.alert {
 }
 
 .minoralert {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
   font-size: 125%;
 }
 
 .priorityannounce {
-  color: hsl(0, 0%, 0%);
+  color: var(--color-black);
   font-weight: bold;
   font-size: 225%;
 }
@@ -593,6 +597,11 @@ h2.alert {
 .boldnicegreen {
   color: hsl(132.6, 78.7%, 36.9%);
   font-weight: bold;
+}
+
+.tinynicegreen {
+  color: hsl(132.6, 78.7%, 36.9%);
+  font-size: 85%;
 }
 
 .cult {
@@ -984,16 +993,42 @@ h2.alert {
   margin-left: 3em;
 }
 
-.examine_block {
-  background: hsl(202.5, 44.4%, 96.5%);
-  border: 1px solid hsl(215.5, 39.3%, 11%);
-  margin: 0.5em;
-  padding: 0.5em 0.75em;
-}
-
 .tooltip {
   font-style: italic;
-  border-bottom: 1px dashed #000;
+  border-bottom: 1px dashed;
+}
+
+.fieldset_legend {
+  background: hsl(0, 0%, 100%); // Chat background color
+
+  &:before {
+    background: hsl(0, 0%, 100%); // Chat background color
+  }
+}
+
+.boxed_message {
+  background: hsl(220, 100%, 97.5%);
+  border-color: hsla(220, 75%, 25%, 0.5);
+
+  &.red_box {
+    background: hsl(0, 100%, 97.5%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 100%, 97.5%);
+    border-color: hsl(120, 100%, 33%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 100%, 97.5%);
+    border-color: hsla(225, 100%, 50%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 100%, 97.5%);
+    border-color: hsla(260, 100%, 50%, 0.5);
+  }
 }
 
 // Provides a horizontal bar with text in the middle
@@ -1200,16 +1235,18 @@ $border-width-px: $border-width * 1px;
   }
 
   .chat_alert_#{$color-name} .minor_announcement_text {
-    background-color: lighten(
+    background-color: color.adjust(
       map.get($alert-stripe-alternate-colors, $color-name),
-      5
+      $lightness: 5%,
+      $space: hsl
     );
   }
 
   .chat_alert_#{$color-name} .major_announcement_text {
-    background-color: lighten(
+    background-color: color.adjust(
       map.get($alert-stripe-alternate-colors, $color-name),
-      5
+      $lightness: 5%,
+      $space: hsl
     );
   }
 }

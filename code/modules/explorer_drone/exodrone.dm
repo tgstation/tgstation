@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Crashes the drone somewhere random if there's no launchpad to be found.
 /obj/item/exodrone/proc/drop_somewhere_on_station()
-	var/turf/random_spot = get_safe_random_station_turf()
+	var/turf/random_spot = get_safe_random_station_turf_equal_weight()
 
 	var/obj/structure/closet/supplypod/pod = podspawn(list(
 		"target" = random_spot,
@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(fuel_canister)
 		. += span_notice("You can remove the [fuel_canister] with a <b>prying tool</b>.")
 
-/obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/fuel_pellet))
 		if(fuel_canister)
 			to_chat(user, span_warning("There's already fuel loaded inside [src]!"))

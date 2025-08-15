@@ -1,6 +1,7 @@
 /// A hallucination that makes us and (possibly) other people look like something else.
 /datum/hallucination/delusion
 	abstract_hallucination_parent = /datum/hallucination/delusion
+	hallucination_tier = HALLUCINATION_TIER_UNCOMMON
 
 	/// The duration of the delusions
 	var/duration = 30 SECONDS
@@ -28,8 +29,8 @@
 	/// The name of the delusion image
 	var/delusion_name
 
-	/// A list of all images we've made
-	var/list/image/delusions
+	/// An assoc list of affected mobs -> delusions of them we've made
+	var/list/delusions
 
 /datum/hallucination/delusion/New(
 	mob/living/hallucinator,
@@ -55,7 +56,7 @@
 
 /datum/hallucination/delusion/Destroy()
 	if(!QDELETED(hallucinator) && LAZYLEN(delusions))
-		hallucinator.client?.images -= delusions
+		hallucinator.client?.images -= flatten_list(delusions)
 		LAZYNULL(delusions)
 
 	return ..()
@@ -65,6 +66,9 @@
 		return FALSE
 
 	feedback_details += "Delusion: [delusion_name]"
+	hallucinator.mob_flags |= MOB_HAS_SCREENTIPS_NAME_OVERRIDE
+	RegisterSignal(hallucinator, COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, PROC_REF(screentip_name_override))
+	RegisterSignal(hallucinator, COMSIG_LIVING_PERCEIVE_EXAMINE_NAME, PROC_REF(examine_name_override))
 
 	var/list/mob/living/carbon/human/funny_looking_mobs = list()
 
@@ -73,9 +77,8 @@
 		funny_looking_mobs |= GLOB.human_list.Copy()
 
 	// The delusion includes us - we might be in it already, we might not
-	if(affects_us)
+	if(affects_us && ishuman(hallucinator))
 		funny_looking_mobs |= hallucinator
-
 	// The delusion should not inlude us
 	else
 		funny_looking_mobs -= hallucinator
@@ -87,9 +90,11 @@
 				continue
 			funny_looking_mobs -= nearby_human
 
-	for(var/mob/living/carbon/human/found_human in funny_looking_mobs)
+	for(var/mob/living/carbon/human/found_human as anything in funny_looking_mobs)
 		var/image/funny_image = make_delusion_image(found_human)
-		LAZYADD(delusions, funny_image)
+		RegisterSignal(found_human, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
+		RegisterSignal(found_human, COMSIG_QDELETING, PROC_REF(on_mob_delete), TRUE)
+		LAZYSET(delusions, found_human, funny_image)
 		hallucinator.client.images |= funny_image
 
 	if(play_wabbajack)
@@ -108,7 +113,41 @@
 		funny_image = image(delusion_icon_file, over_who, delusion_icon_state)
 	funny_image.name = delusion_name
 	funny_image.override = TRUE
+	SET_PLANE_EXPLICIT(funny_image, ABOVE_GAME_PLANE, over_who)
 	return funny_image
+
+/datum/hallucination/delusion/proc/on_mob_delete(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+
+	if (source == hallucinator)
+		qdel(src)
+		return
+
+	hallucinator.client.images -= delusions[source]
+	LAZYREMOVE(delusions, source)
+
+/datum/hallucination/delusion/proc/on_z_change(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+	var/image/funny_image = delusions[source]
+	SET_PLANE_EXPLICIT(funny_image, ABOVE_GAME_PLANE, source)
+
+/datum/hallucination/delusion/proc/examine_name_override(datum/source, mob/living/examined, visible_name, list/name_override)
+	SIGNAL_HANDLER
+
+	if(!ishuman(examined) || !LAZYACCESS(delusions, examined))
+		return NONE
+
+	name_override[1] = delusion_name
+	return COMPONENT_EXAMINE_NAME_OVERRIDEN
+
+/datum/hallucination/delusion/proc/screentip_name_override(datum/source, list/returned_name, obj/item/held_item, atom/hovered)
+	SIGNAL_HANDLER
+
+	if(!ishuman(hovered) || !LAZYACCESS(delusions, hovered))
+		return NONE
+
+	returned_name[1] = delusion_name
+	return SCREENTIP_NAME_SET
 
 /// Used for making custom delusions.
 /datum/hallucination/delusion/custom
@@ -211,6 +250,7 @@
 	delusion_name = "Syndicate"
 	affects_others = TRUE
 	affects_us = FALSE
+	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/delusion/preset/syndies/make_delusion_image(mob/over_who)
 	delusion_appearance = get_dynamic_human_appearance(
@@ -228,6 +268,22 @@
 		),
 	)
 
+	return ..()
+
+/datum/hallucination/delusion/preset/seccies
+	dynamic_delusion = TRUE
+	random_hallucination_weight = 0
+	delusion_name = "Security"
+	affects_others = TRUE
+	affects_us = FALSE
+
+/datum/hallucination/delusion/preset/seccies/make_delusion_image(mob/over_who)
+	delusion_appearance = get_dynamic_human_appearance(
+		outfit_path = /datum/outfit/job/security,
+		bloody_slots = prob(5) ? ALL : NONE,
+		r_hand = prob(15) ? /obj/item/melee/baton/security/loaded : null,
+		l_hand = prob(15) ? /obj/item/melee/baton/security/loaded : null,
+	)
 	return ..()
 
 /// Hallucination used by the nightmare vision goggles to turn everyone except you into mares

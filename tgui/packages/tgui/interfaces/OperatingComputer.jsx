@@ -1,4 +1,3 @@
-import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Button,
@@ -7,7 +6,9 @@ import {
   ProgressBar,
   Section,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 const damageTypes = [
@@ -106,7 +107,7 @@ const PatientStateView = (props) => {
             </LabeledList.Item>
             {procedure.chems_needed && (
               <LabeledList.Item label="Required Chems">
-                <NoticeBox success={procedure.chems_present ? true : false}>
+                <NoticeBox success={!!procedure.chems_present}>
                   {procedure.chems_needed}
                 </NoticeBox>
               </LabeledList.Item>
@@ -118,7 +119,7 @@ const PatientStateView = (props) => {
             )}
             {procedure.alt_chems_needed && (
               <LabeledList.Item label="Required Chems">
-                <NoticeBox success={procedure.alt_chems_present ? true : false}>
+                <NoticeBox success={!!procedure.alt_chems_present}>
                   {procedure.alt_chems_needed}
                 </NoticeBox>
               </LabeledList.Item>

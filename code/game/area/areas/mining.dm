@@ -135,6 +135,7 @@
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_LAVALAND
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	allow_shuttle_docking = TRUE
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -146,8 +147,6 @@
 	requires_power = TRUE
 	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/lavaland/underground
 	name = "Lavaland Caves"
@@ -159,8 +158,6 @@
 	power_light = FALSE
 	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/lavaland/surface/outdoors
 	name = "Lavaland Wastes"
@@ -196,6 +193,7 @@
 	ambience_index = AMBIENCE_ICEMOON
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	allow_shuttle_docking = TRUE
 
 /area/icemoon/surface
 	name = "Icemoon"
@@ -206,8 +204,6 @@
 	power_light = FALSE
 	requires_power = TRUE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/icemoon/surface/outdoors // parent that defines if something is on the exterior of the station.
 	name = "Icemoon Wastes"
@@ -221,8 +217,10 @@
 /// this is the area you use for stuff to not spawn, but if you still want weather.
 /area/icemoon/surface/outdoors/nospawn
 
-// unless you roll forested trait lol (fuck you time green)
-/area/icemoon/surface/outdoors/nospawn/New()
+/area/icemoon/surface/outdoors/less_spawns
+	icon_state = "less_spawns"
+
+/area/icemoon/surface/outdoors/less_spawns/New()
 	. = ..()
 	// this area SOMETIMES does map generation. Often it doesn't at all
 	// so it SHOULD NOT be used with the genturf turf type, as it is not always replaced
@@ -230,6 +228,16 @@
 		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
 		// flip this on, the generator has already disabled dangerous fauna
 		area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED
+
+/area/icemoon/surface/outdoors/always_forested
+	icon_state = "forest"
+	map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+	area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED | CAVES_ALLOWED
+
+/area/icemoon/surface/outdoors/rocky
+	icon_state = "rocky"
+	map_generator = /datum/map_generator/cave_generator/icemoon/surface/rocky
+	area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED | CAVES_ALLOWED
 
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NOTELEPORT
@@ -269,8 +277,6 @@
 	power_equip = FALSE
 	power_light = FALSE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"

@@ -1,7 +1,7 @@
-import { toFixed } from 'common/math';
+import { Button, NumberInput, Section, Stack } from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

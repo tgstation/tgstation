@@ -1,7 +1,3 @@
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,9 +6,13 @@ import {
   RoundGauge,
   Section,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { toFixed } from 'tgui-core/math';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { getGasLabel } from '../constants';
-import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 type Data = {
@@ -38,7 +38,7 @@ type Filter = {
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };

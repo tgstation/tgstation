@@ -50,7 +50,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
 	zipped = !zipped
 	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
-	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
+	worn_icon_state = "[initial(post_init_icon_state) || initial(icon_state)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 
 	if(ishuman(loc))
@@ -68,7 +68,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEEARS
-	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	hair_mask = /datum/hair_mask/winterhood
 	armor_type = /datum/armor/hooded_winterhood
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
@@ -214,8 +214,13 @@
 	bomb = 10
 	acid = 35
 
+/obj/item/clothing/suit/hooded/wintercoat/hop/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_wintercoat_allowed
+
 /obj/item/clothing/head/hooded/winterhood/hop
 	icon_state = "hood_hop"
+	armor_type =/datum/armor/wintercoat_hop
 
 // Botanist
 /obj/item/clothing/suit/hooded/wintercoat/hydro
@@ -301,7 +306,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
@@ -390,7 +395,7 @@
 // Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
 	name = "virology winter coat"
-	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
+	desc = "A white winter coat with green markings. Warm, but won't fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
 	icon_state = "coatviro"
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
@@ -430,7 +435,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/bag/xeno,
 		/obj/item/storage/pill_bottle,
@@ -531,7 +536,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/head/hooded/winterhood/engineering
 	desc = "A yellow winter coat hood. Definitely not a replacement for a hard hat."
@@ -544,7 +549,7 @@
 /obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 // Chief Engineer
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce
@@ -651,10 +656,13 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/custom"
+	post_init_icon_state = "coatwinter"
 	hood_down_overlay_suffix = ""
-	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
+	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
 	flags_1 = IS_PLAYER_COLORABLE_1
 

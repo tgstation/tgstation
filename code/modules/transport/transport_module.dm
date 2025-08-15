@@ -136,7 +136,7 @@
 
 /obj/structure/transport/linear/proc/add_item_on_transport(datum/source, atom/movable/new_transport_contents)
 	SIGNAL_HANDLER
-	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/eye))
+	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/eye, /obj/effect/gravity_fluff_field))
 	if(is_type_in_typecache(new_transport_contents, blacklisted_types) || new_transport_contents.invisibility == INVISIBILITY_ABSTRACT || HAS_TRAIT(new_transport_contents, TRAIT_UNDERFLOOR)) //prevents the tram from stealing things like landmarks
 		return FALSE
 	if(new_transport_contents in transport_contents)
@@ -304,15 +304,16 @@
 	var/x_offset = ROUND_UP(bound_width / ICON_SIZE_X) - 1 //how many tiles our horizontally farthest edge is from us
 	var/y_offset = ROUND_UP(bound_height / ICON_SIZE_Y) - 1 //how many tiles our vertically farthest edge is from us
 
+	var/destination_x = destination.x
+	var/destination_y = destination.y
+	var/destination_z = destination.z
 	//the x coordinate of the edge furthest from our future destination, which would be our right hand side
-	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
-	var/upper_edge_y = destination.y + y_offset
-
-	var/turf/upper_right_corner = locate(min(world.maxx, back_edge_x), min(world.maxy, upper_edge_y), destination.z)
+	var/back_edge_x = destination_x + x_offset//if we arent multitile this should just be destination.x
+	var/upper_edge_y = destination_y + y_offset
 
 	var/list/dest_locs = block(
-		destination,
-		upper_right_corner
+		destination_x, destination_y, destination_z,
+		back_edge_x, upper_edge_y, destination_z
 	)
 
 	var/list/entering_locs = dest_locs - locs
@@ -380,13 +381,13 @@
 				var/turf/closed/mineral/dest_mineral_turf = dest_turf
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(dest_mineral_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
 					shake_camera(client_mob, duration = 2, strength = 3)
-				dest_mineral_turf.gets_drilled(give_exp = FALSE)
+				dest_mineral_turf.gets_drilled()
 
 			for(var/obj/structure/victim_structure in dest_turf.contents)
 				if(QDELING(victim_structure))
 					continue
 				if(!is_type_in_typecache(victim_structure, transport_controller_datum.ignored_smashthroughs))
-					if((victim_structure.plane == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || (victim_structure.plane == GAME_PLANE && victim_structure.layer > LOW_OBJ_LAYER) )
+					if((PLANE_TO_TRUE(victim_structure.plane) == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || (PLANE_TO_TRUE(victim_structure.plane) == GAME_PLANE && victim_structure.layer > LOW_OBJ_LAYER) )
 						if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
 							visible_message(span_danger("[src] smashes through [victim_structure]!"))
 							victim_structure.deconstruct(FALSE)
@@ -416,9 +417,11 @@
 				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
 				if(speed_limiter == 0.5) // slow trams don't cause extra damage
 					for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
+						if(istype(victim_living.buckled, /obj/structure/fluff/tram_rail))
+							extra_ouch = TRUE
+							break
 						if(get_dist(my_spoiler, victim_living) != 1)
 							continue
-
 						if(my_spoiler.deployed)
 							extra_ouch = TRUE
 							break
@@ -426,31 +429,31 @@
 				if(transport_controller_datum.ignored_smashthroughs[victim_living.type])
 					continue
 				to_chat(victim_living, span_userdanger("[src] collides into you!"))
+				SEND_SIGNAL(victim_living, COMSIG_LIVING_HIT_BY_TRAM, src)
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 				var/damage = 0
-				switch(extra_ouch)
-					if(TRUE)
-						playsound(src, 'sound/effects/grillehit.ogg', 50, TRUE)
-						var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
-						if(head)
-							log_combat(src, victim_living, "beheaded")
-							head.dismember()
-							victim_living.regenerate_icons()
-							add_overlay(mutable_appearance(icon, "blood_overlay"))
-							register_collision(points = 3)
 
-					if(FALSE)
-						log_combat(src, victim_living, "collided with")
-						if(prob(15)) //sorry buddy, luck wasn't on your side
-							damage = 29 * collision_lethality * damage_multiplier
-						else
-							damage = rand(7, 21) * collision_lethality * damage_multiplier
-						victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-						victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+				log_combat(src, victim_living, "collided with")
+				if(prob(15)) //sorry buddy, luck wasn't on your side
+					damage = 29 * collision_lethality * damage_multiplier
+				else
+					damage = rand(7, 21) * collision_lethality * damage_multiplier
+				victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+				victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+
+				if (extra_ouch)
+					playsound(src, 'sound/effects/grillehit.ogg', 50, TRUE)
+					var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
+					if(head)
+						log_combat(src, victim_living, "beheaded")
+						head.dismember()
+						victim_living.regenerate_icons()
+						add_overlay(mutable_appearance(icon, "blood_overlay"))
+						register_collision(points = 3)
 
 				if(QDELETED(victim_living)) //in case it was a mob that dels on death
 					continue
@@ -742,7 +745,7 @@
 
 	return open_lift_radial(user)
 
-/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!radial_travel)
 		return ..()
 

@@ -7,6 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*2)
 
 /obj/item/trash/Initialize(mapload)
 	var/turf/T = get_turf(src)
@@ -23,6 +24,7 @@
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
 	icon_state= "4no_raisins"
+	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2)
 
 /obj/item/trash/candy
 	name = "candy"
@@ -57,6 +59,7 @@
 /obj/item/trash/popcorn
 	name = "popcorn"
 	icon_state = "popcorn"
+	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2)
 
 /obj/item/trash/popcorn/caramel
 	name = "empty caramel popcorn"
@@ -75,6 +78,7 @@
 /obj/item/trash/syndi_cakes
 	name = "syndi-cakes"
 	icon_state = "syndi_cakes"
+	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2)
 
 /obj/item/trash/energybar
 	name = "energybar wrapper"
@@ -84,6 +88,7 @@
 	name = "surplus fleet wrapper"
 	desc = "In the Mothic Fleet every individual wrapper is carefully recycled and repurposed into fresh material. Over here they are more commonly dropped directly onto the floor."
 	icon_state = "moth_ration"
+	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2)
 
 /obj/item/trash/pistachios
 	name = "pistachios pack"
@@ -96,27 +101,36 @@
 /obj/item/trash/semki/healthy
 	name = "nibbled sunflower seeds"
 	icon_state = "sunseeds"
+	custom_materials = null
 
 /obj/item/trash/tray
 	name = "tray"
 	icon_state = "tray"
 	resistance_flags = NONE
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*4)
 
 /obj/item/trash/candle
 	name = "melted candle"
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle4"
+	custom_materials = null
+
+/obj/item/trash/candle/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/floor_placeable)
 
 /obj/item/trash/flare
 	name = "burnt flare"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flare-empty"
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2,/datum/material/glass=SMALL_MATERIAL_AMOUNT,)
 
 /obj/item/trash/can
 	name = "crushed can"
 	icon_state = "cola"
 	resistance_flags = NONE
 	grind_results = list(/datum/reagent/aluminium = 10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2)
 
 /obj/item/trash/can/food
 	icon = 'icons/obj/food/canned.dmi'
@@ -196,6 +210,7 @@
 /obj/item/trash/sticko
 	name = "\improper Sticko box"
 	icon_state = "sticko"
+	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2)
 
 /obj/item/trash/sticko/matcha
 	icon_state = "sticko_matcha"

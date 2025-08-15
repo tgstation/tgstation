@@ -6,7 +6,7 @@
 /datum/element/crusher_loot
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// Path of the trophy dropped
+	/// Path of the trophy dropped (or list of trophies)
 	var/trophy_type
 	/// chance to drop the trophy, lowered by the mob only taking partial crusher damage instead of full
 	/// for example, 25% would mean ~4 mobs need to die before you find one.
@@ -36,7 +36,14 @@
 
 	var/datum/status_effect/crusher_damage/damage = target.has_status_effect(/datum/status_effect/crusher_damage)
 	if(damage && prob((damage.total_damage/target.maxHealth) * drop_mod)) //on average, you'll need to kill 4 creatures before getting the item. by default.
-		if(drop_immediately)
-			new trophy_type(get_turf(target))
-		else
-			target.butcher_results[trophy_type] = 1
+		if(islist(trophy_type))
+			for(var/trophypath in trophy_type)
+				make_path(target, trophypath)
+			return
+		make_path(target, trophy_type)
+
+/datum/element/crusher_loot/proc/make_path(mob/living/target, path)
+	if(drop_immediately)
+		new path(get_turf(target))
+	else
+		target.butcher_results[path] = 1

@@ -1,6 +1,6 @@
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
-	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare putting it on a pizza!?"
+	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare put it on a pizza!?"
 	icon = FA_ICON_THUMBS_DOWN
 	value = 0
 	gain_text = span_notice("You find yourself pondering what kind of idiot actually enjoys pineapples...")

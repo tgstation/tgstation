@@ -38,6 +38,8 @@
 			var/length_input = length(input)
 			for(var/i = 1, i <= length_input, i += length(char)) //put the guess into a list
 				char = input[i]
+				if(!(char >= "0" && char <= "9"))
+					sanitycheck = FALSE //if a non-digit is found, reject the input
 				sanitised += text2num(char)
 			for(var/i in 1 to length(sanitised) - 1) //compare each digit in the guess to all those following it
 				for(var/j in i + 1 to length(sanitised))
@@ -188,7 +190,7 @@
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			var/obj/item/gibtonite/free_bomb = new /obj/item/gibtonite(src)
-			free_bomb.quality = rand(1, 3)
+			free_bomb.quality = rand(GIBTONITE_QUALITY_LOW, GIBTONITE_QUALITY_HIGH)
 			free_bomb.GibtoniteReaction(null, "A secure loot closet has spawned a live")
 		if(69 to 70)
 			new /obj/item/stack/ore/bluespace_crystal(src, 5)
@@ -225,13 +227,13 @@
 			new /obj/item/dnainjector/wackymut(src)
 		if(91)
 			for(var/i in 1 to 30)
-				new /mob/living/basic/cockroach(src)
+				new /mob/living/basic/cockroach/bloodroach(src)
 		if(92)
 			new /obj/item/katana(src)
 		if(93)
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
-			new /mob/living/simple_animal/hostile/mimic/crate(src)
+			new /mob/living/basic/mimic/crate(src)
 			qdel_on_open = TRUE
 		if(95)
 			new /obj/item/toy/plush/nukeplushie(src)

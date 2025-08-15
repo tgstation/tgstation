@@ -17,13 +17,13 @@
 	create_storage(
 		max_slots = 1,
 		max_specific_storage = WEIGHT_CLASS_NORMAL,
+		rustle_sound = 'sound/items/evidence_bag/evidence_bag_zip.ogg',
+		remove_rustle_sound = 'sound/items/evidence_bag/evidence_bag_unzip.ogg',
 	)
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.collection_mode = COLLECT_ONE
 	RegisterSignal(atom_storage, COMSIG_STORAGE_STORED_ITEM, PROC_REF(on_insert))
 	RegisterSignal(atom_storage, COMSIG_STORAGE_REMOVED_ITEM, PROC_REF(on_remove))
-	atom_storage.rustle_sound = 'sound/items/evidence_bag/evidence_bag_zip.ogg'
-	atom_storage.remove_rustle_sound = 'sound/items/evidence_bag/evidence_bag_unzip.ogg'
 
 /obj/item/evidencebag/update_desc(updates)
 	. = ..()
@@ -62,9 +62,7 @@
 	SIGNAL_HANDLER
 
 	if(!atom_storage.get_total_weight())
-		return
-
-	update_weight_class(WEIGHT_CLASS_TINY)
+		update_weight_class(WEIGHT_CLASS_TINY)
 
 /obj/item/evidencebag/attack_self(mob/user)
 	if(!atom_storage.get_total_weight())
@@ -74,11 +72,3 @@
 	span_hear("You hear someone rustle around in a plastic bag, and remove something."))
 	playsound(src,'sound/items/evidence_bag/evidence_bag_unzip.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	atom_storage.remove_all()
-
-/obj/item/storage/box/evidence
-	name = "evidence bag box"
-	desc = "A box claiming to contain evidence bags."
-
-/obj/item/storage/box/evidence/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/evidencebag(src)

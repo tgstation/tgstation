@@ -63,7 +63,11 @@ SUBSYSTEM_DEF(polling)
 		question = "Do you want to play as [span_notice(role_name_text)]?"
 	if(!question)
 		question = "Do you want to play as a special role?"
-	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [DisplayTimeText(poll_time)] seconds")
+	log_ghost_poll("Candidate poll started.", data = list(
+		"role name" = role_name_text,
+		"poll question" = question,
+		"poll duration" = DisplayTimeText(poll_time),
+	))
 
 	// Start firing
 	total_polls++
@@ -148,14 +152,25 @@ SUBSYSTEM_DEF(polling)
 		var/custom_link_style_start = "<style>a:visited{color:Crimson !important}</style>"
 		var/custom_link_style_end = "style='color:DodgerBlue;font-weight:bold;-dm-text-outline: 1px black'"
 		if(isatom(alert_pic) && isobserver(candidate_mob))
-			act_jump = "[custom_link_style_start]<a href='?src=[REF(poll_alert_button)];jump=1'[custom_link_style_end]>\[Teleport\]</a>"
-		var/act_signup = "[custom_link_style_start]<a href='?src=[REF(poll_alert_button)];signup=1'[custom_link_style_end]>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
+			act_jump = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];jump=1'[custom_link_style_end]>\[Teleport\]</a>"
+		var/act_signup = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];signup=1'[custom_link_style_end]>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
 		var/act_never = ""
 		if(ignore_category)
-			act_never = "[custom_link_style_start]<a href='?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
+			act_never = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
 
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
-			SEND_SOUND(candidate_mob, 'sound/announcer/notice/notice2.ogg')
+
+			// ghost poll prompt sound handling
+			var/polling_sound_pref = candidate_mob.client?.prefs.read_preference(/datum/preference/choiced/sound_ghost_poll_prompt)
+			var/polling_sound_volume = candidate_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_ghost_poll_prompt_volume)
+			if(polling_sound_pref != GHOST_POLL_PROMPT_DISABLED && polling_sound_volume)
+				var/polling_sound
+				if(polling_sound_pref == GHOST_POLL_PROMPT_1)
+					polling_sound = 'sound/misc/prompt1.ogg'
+				else
+					polling_sound = 'sound/misc/prompt2.ogg'
+				SEND_SOUND(candidate_mob, sound(polling_sound, volume = polling_sound_volume))
+
 			var/surrounding_icon
 			if(chat_text_border_icon)
 				var/image/surrounding_image
@@ -165,7 +180,7 @@ SUBSYSTEM_DEF(polling)
 				else
 					surrounding_image = image(chat_text_border_icon)
 				surrounding_icon = icon2html(surrounding_image, candidate_mob, extra_classes = "bigicon")
-			var/final_message =  examine_block("<span style='text-align:center;display:block'>[surrounding_icon] <span style='font-size:1.2em'>[span_ooc(question)]</span> [surrounding_icon]\n[act_jump]      [act_signup]      [act_never]</span>")
+			var/final_message =  boxed_message("<span style='text-align:center;display:block'>[surrounding_icon] <span style='font-size:1.2em'>[span_ooc(question)]</span> [surrounding_icon]\n[act_jump]      [act_signup]      [act_never]</span>")
 			to_chat(candidate_mob, final_message)
 
 		// Start processing it so it updates visually the timer
@@ -274,11 +289,10 @@ SUBSYSTEM_DEF(polling)
 	if(the_ignore_category)
 		if(potential_candidate.ckey in GLOB.poll_ignore[the_ignore_category])
 			return FALSE
-	if(role)
+	if(role && potential_candidate.client)
 		if(!(role in potential_candidate.client.prefs.be_special))
 			return FALSE
-		var/required_time = GLOB.special_roles[role] || 0
-		if(potential_candidate.client && potential_candidate.client.get_remaining_days(required_time) > 0)
+		if(potential_candidate.client.get_days_to_play_antag(role) > 0)
 			return FALSE
 
 	if(check_jobban)
@@ -292,7 +306,14 @@ SUBSYSTEM_DEF(polling)
 	// Trim players who aren't eligible anymore
 	var/length_pre_trim = length(finishing_poll.signed_up)
 	finishing_poll.trim_candidates()
-	log_game("Candidate poll [finishing_poll.role ? "for [finishing_poll.role]" : "\"[finishing_poll.question]\""] finished. [length_pre_trim] players signed up, [length(finishing_poll.signed_up)] after trimming")
+
+	log_ghost_poll("Candidate poll completed.", data = list(
+		"role name" = finishing_poll.role,
+		"poll question" = finishing_poll.question,
+		"signed up count" = length_pre_trim,
+		"trimmed candidate count" = length(finishing_poll.signed_up)
+	))
+
 	finishing_poll.finished = TRUE
 
 	// Take care of updating the remaining screen alerts if a similar poll is found, or deleting them.
@@ -307,7 +328,7 @@ SUBSYSTEM_DEF(polling)
 	QDEL_IN(finishing_poll, 0.5 SECONDS)
 
 /datum/controller/subsystem/polling/stat_entry(msg)
-	msg += "Active: [length(currently_polling)] | Total: [total_polls]"
+	msg = "\n  Active: [length(currently_polling)] | Total: [total_polls]"
 	var/datum/candidate_poll/soonest_to_complete = get_next_poll_to_finish()
 	if(soonest_to_complete)
 		msg += " | Next: [DisplayTimeText(soonest_to_complete.time_left())] ([length(soonest_to_complete.signed_up)] candidates)"

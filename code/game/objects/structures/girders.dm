@@ -1,11 +1,16 @@
 /obj/structure/girder
+	icon = 'icons/obj/smooth_structures/girder.dmi'
 	name = "girder"
-	icon_state = "girder"
+	base_icon_state = "girder"
+	icon_state = "girder-0"
 	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_GIRDER
+	canSmoothWith = SMOOTH_GROUP_GIRDER + SMOOTH_GROUP_WALLS
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
@@ -38,7 +43,7 @@
 		if(GIRDER_TRAM)
 			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
 
-/obj/structure/girder/attackby(obj/item/W, mob/user, params)
+/obj/structure/girder/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
 		platingmodifier = 0.7
@@ -89,11 +94,14 @@
 					transfer_fingerprints_to(FW)
 					qdel(src)
 					return
+			else if(state == GIRDER_REINF)
+				balloon_alert(user, "need plasteel sheet!")
+				return
 			else
 				if(rod.get_amount() < amount)
 					balloon_alert(user, "need [amount] rods!")
 					return
-				balloon_alert(user, "adding plating...")
+				balloon_alert(user, "adding rods...")
 				if(do_after(user, 4 SECONDS, target = src))
 					if(rod.get_amount() < amount)
 						return
@@ -212,9 +220,25 @@
 					qdel(src)
 				return
 
+		if(istype(sheets, /obj/item/stack/sheet/mineral/plastitanium))
+			if(state == GIRDER_REINF)
+				if(sheets.get_amount() < 1)
+					return
+				balloon_alert(user, "adding plating...")
+				if(do_after(user, 50*platingmodifier, target = src))
+					if(sheets.get_amount() < 1)
+						return
+					sheets.use(1)
+					var/turf/T = get_turf(src)
+					T.place_on_top(/turf/closed/wall/r_wall/plastitanium)
+					transfer_fingerprints_to(T)
+					qdel(src)
+				return
+			// No return here because generic material construction handles making normal plastitanium walls
+
 		if(!sheets.has_unique_girder && sheets.material_type)
 			if(istype(src, /obj/structure/girder/reinforced))
-				balloon_alert(user, "need plasteel!")
+				balloon_alert(user, "need plasteel or plastitanium!")
 				return
 
 			var/M = sheets.sheettype
@@ -288,7 +312,7 @@
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
 		if (P.pipe_type in list(0, 1, 5)) //simple pipes, simple bends, and simple manifolds.
-			if(!user.transferItemToLoc(P, drop_location()))
+			if(!user.transfer_item_to_turf(P, drop_location()))
 				return
 			balloon_alert(user, "inserted pipe")
 	else
@@ -394,15 +418,21 @@
 
 /obj/structure/girder/displaced
 	name = "displaced girder"
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
 	anchored = FALSE
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
 	max_integrity = 120
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
-	icon_state = "reinforced"
+	icon = 'icons/obj/smooth_structures/reinforced_girder.dmi'
+	icon_state = "reinforced-0"
+	base_icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
 	max_integrity = 350
@@ -410,9 +440,13 @@
 /obj/structure/girder/tram
 	name = "tram girder"
 	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "tram"
 	state = GIRDER_TRAM
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/girder/tram/corner
 	name = "tram frame corner"
@@ -425,8 +459,11 @@
 	icon = 'icons/obj/antags/cult/structures.dmi'
 	icon_state= "cultgirder"
 	can_displace = FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
-/obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
+/obj/structure/girder/cult/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=1))
@@ -460,7 +497,7 @@
 	return
 
 /obj/structure/girder/cult/atom_deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
+	new /obj/item/stack/sheet/runed_metal(drop_location())
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -494,10 +531,14 @@
 /obj/structure/girder/bronze
 	name = "wall gear"
 	desc = "A girder made out of sturdy bronze, made to resemble a gear."
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "wall_gear"
 	can_displace = FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
-/obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))

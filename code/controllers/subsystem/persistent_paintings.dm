@@ -93,8 +93,10 @@
 
 SUBSYSTEM_DEF(persistent_paintings)
 	name = "Persistent Paintings"
-	init_order = INIT_ORDER_PERSISTENT_PAINTINGS
 	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/persistence,
+	)
 
 	/// A list of painting frames that this controls
 	var/list/obj/structure/sign/painting/painting_frames = list()
@@ -245,7 +247,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 			new_data["title"] = old_data["title"] || "Untitled Artwork"
 			new_data["creator_ckey"] = old_data["ckey"] || ""
 			new_data["creator_name"] = "Anonymous"
-			new_data["creation_date"] = time2text(world.realtime) // Could use creation/modified file helpers in rustg
+			new_data["creation_date"] = time2text(world.realtime, "DDD MMM DD hh:mm:ss YYYY", TIMEZONE_UTC) // Could use creation/modified file helpers in rustg
 			new_data["creation_round_id"] = GLOB.round_id
 			new_data["tags"] = list(category,"Migrated from version 0")
 			new_data["patron_ckey"] = ""

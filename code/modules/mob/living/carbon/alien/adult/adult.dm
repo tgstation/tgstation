@@ -13,7 +13,7 @@
 	var/alt_icon = 'icons/mob/nonhuman-player/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 30
+	var/pounce_cooldown_time = 3 SECONDS
 	death_sound = 'sound/mobs/non-humanoids/hiss/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
@@ -22,6 +22,16 @@
 		/obj/item/bodypart/arm/right/alien,
 		/obj/item/bodypart/leg/right/alien,
 		/obj/item/bodypart/leg/left/alien,
+	)
+
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
 	)
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
@@ -35,10 +45,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
-
-/mob/living/carbon/alien/adult/create_internal_organs()
-	organs += new /obj/item/organ/stomach/alien()
-	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
 	playsound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free

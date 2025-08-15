@@ -9,7 +9,7 @@
 			"type": "icon_state",
 			"icon_state": "tos_color",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -22,7 +22,7 @@
 			"type": "icon_state",
 			"icon_state": "tos_color",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -45,7 +45,7 @@
 			"type": "icon_state",
 			"icon_state": "tos_color",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -69,7 +69,7 @@
 			"type": "icon_state",
 			"icon_state": "next_color",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -88,7 +88,7 @@
 			"type": "icon_state",
 			"icon_state": "voy_color",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -107,7 +107,7 @@
 			"type": "icon_state",
 			"icon_state": "ent_color",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

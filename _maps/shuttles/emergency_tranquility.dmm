@@ -1597,7 +1597,7 @@
 	pixel_x = 6;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = -2
 	},
 /turf/open/floor/sepia,

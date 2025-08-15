@@ -8,7 +8,7 @@
 	// icon_aggro = "hivelord_alert"
 	icon_dead = "hivelord_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = MOB_ORGANIC
+	mob_biotypes = MOB_ORGANIC|MOB_MINING
 	speed = 2
 	maxHealth = 75
 	health = 75
@@ -98,7 +98,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	density = FALSE
-	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile
 
 /mob/living/basic/hivelord_brood/Initialize(mapload)
 	. = ..()

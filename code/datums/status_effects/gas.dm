@@ -76,7 +76,7 @@
 		CRASH("[type] status effect added to non-human owner: [owner ? owner.type : "null owner"]")
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium) //small slowdown as a tradeoff
-	ADD_TRAIT(human_owner, TRAIT_NOFIRE, type)
+	ADD_TRAIT(human_owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/hypernob_protection/on_remove()
@@ -84,4 +84,4 @@
 		stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
-	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, type)
+	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT(id))

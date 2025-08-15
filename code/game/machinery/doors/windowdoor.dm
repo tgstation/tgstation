@@ -119,21 +119,25 @@
 	switch(dir)
 		if(NORTH,SOUTH)
 			if(unres_sides & NORTH)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
-				side_overlay.pixel_y = dir == NORTH ? 31 : 6
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_1", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_z = dir == NORTH ? 31 : 6
 				. += side_overlay
 			if(unres_sides & SOUTH)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
-				side_overlay.pixel_y = dir == NORTH ? -6 : -31
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_2", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_z = dir == NORTH ? -6 : -31
 				. += side_overlay
 		if(EAST,WEST)
 			if(unres_sides & EAST)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
-				side_overlay.pixel_x = dir == EAST ? 31 : 6
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_4", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_w = dir == EAST ? 31 : 6
 				. += side_overlay
 			if(unres_sides & WEST)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
-				side_overlay.pixel_x = dir == EAST ? -6 : -31
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_8", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_w = dir == EAST ? -6 : -31
 				. += side_overlay
 
 /obj/machinery/door/window/proc/open_and_close()
@@ -355,7 +359,7 @@
 	AddElement(/datum/element/rust)
 	set_armor(/datum/armor/none)
 	take_damage(get_integrity() * 0.5)
-	modify_max_integrity(max_integrity * 0.5)
+	modify_max_integrity(initial(max_integrity) * 0.2)
 
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
@@ -403,8 +407,8 @@
 	if(!panel_open || density || operating)
 		return
 	add_fingerprint(user)
-	user.visible_message(span_notice("[user] removes the electronics from the [name]."), \
-	span_notice("You start to remove electronics from the [name]..."))
+	user.visible_message(span_notice("[user] removes the electronics from \the [src]."), \
+	span_notice("You start to remove electronics from \the [src]..."))
 	if(!tool.use_tool(src, user, 40, volume=50))
 		return
 	if(!panel_open || density || operating || !loc)
@@ -525,3 +529,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 /obj/machinery/door/window/brigdoor/security/holding/right
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
+
+/*
+ * Subtype used in unit tests to ensure instant windoor open/close
+*/
+/obj/machinery/door/window/instant
+
+/obj/machinery/door/window/instant/open(forced = DEFAULT_DOOR_CHECKS)
+	if(!density || operating || !try_to_force_door_open(forced))
+		return FALSE
+
+	operating = TRUE
+
+	set_density(FALSE)
+	air_update_turf(TRUE, FALSE)
+	update_freelook_sight()
+
+	operating = FALSE
+	update_appearance()
+
+	return TRUE
+
+/obj/machinery/door/window/instant/close(forced = DEFAULT_DOOR_CHECKS)
+	if(density || operating || !try_to_force_door_shut(forced))
+		return FALSE
+
+	operating = TRUE
+
+	set_density(TRUE)
+	air_update_turf(TRUE, TRUE)
+	update_freelook_sight()
+
+	operating = FALSE
+	update_appearance()
+
+	return TRUE

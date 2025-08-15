@@ -96,7 +96,7 @@
 
 	if(carbon_occupant.stat < UNCONSCIOUS)
 		notify_ghosts(
-			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
+			"[carbon_occupant.real_name] is about to be ground up by a malfunctioning organ harvester!",
 			source = src,
 			header = "Gruesome!",
 		)
@@ -104,7 +104,7 @@
 	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
-	visible_message(span_notice("The [name] begins warming up!"))
+	visible_message(span_notice("\The [src] begins warming up!"))
 	say("Initializing harvest protocol.")
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)

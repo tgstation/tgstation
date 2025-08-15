@@ -4,6 +4,13 @@
 #define FISHING_RANDOM_SEED "Random seed"
 ///Used in the surgery fishing spot to define a random organ reward
 #define FISHING_RANDOM_ORGAN "Random organ"
+///Used in the dimensional rift fishing spot to define influence gain
+#define FISHING_INFLUENCE "Influence"
+///Used in the dimensional rift fishing spot to define arm procurement
+#define FISHING_RANDOM_ARM "arm"
+
+///Represents the chance of getting squashed by the vending machine from the vending machine fish source
+#define FISHING_VENDING_CHUCK "thinkfastchucklenuts"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
@@ -179,6 +186,9 @@
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
 #define NEW_FISH_LAST_FEEDING_MULT 0.33
 
+///If get_hunger is above this value, the fish is considered to be starving and will slowly lose health because of it
+#define FISH_STARVING_THRESHOLD 1
+
 //IF YOU ADD ANY NEW FLAG, ADD IT TO THE RESPECTIVE BITFIELD in _globalvars/bitfields.dm TOO!
 
 ///This fish is shown in the catalog and on the wiki (this only matters as an initial, compile-time value)
@@ -219,6 +229,13 @@
 
 ///Fluff. The name of the aquarium company shown in the fish catalog
 #define AQUARIUM_COMPANY "Aquatech Ltd."
+
+///aquarium mode where you've to manage food, fluid type and temperature to keep fish alive
+#define AQUARIUM_MODE_MANUAL "Manual"
+///Aquarium mode where the code tries to determine what fluid type and temperature to use. Default.
+#define AQUARIUM_MODE_AUTO "Assisted"
+///Prevents fish from dying because of temp/fluid settings and starvation but stops growth.
+#define AQUARIUM_MODE_SAFE "Stasis"
 
 /// how long between electrogenesis zaps
 #define ELECTROGENESIS_DURATION 40 SECONDS
@@ -272,6 +289,8 @@
 #define FISH_SOURCE_FLAG_NO_BLUESPACE_ROD (1<<1)
 /// When examined by someone with enough fishing skill, this will also display fish that doesn't have FISH_FLAG_SHOW_IN_CATALOG
 #define FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG (1<<2)
+/// This fish source will not spawn fish on explosions
+#define FISH_SOURCE_FLAG_EXPLOSIVE_NONE (1<<3)
 
 /**
  * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have

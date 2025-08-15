@@ -1,0 +1,10 @@
+{
+bandage_begin1.ogg
+bandage_begin2.ogg
+bandage_begin3.ogg
+bandage_begin4.ogg
+bandage_end1.ogg
+bandage_end2.ogg
+bandage_end3.ogg
+bandage_end4.ogg
+} - made by sadboyssuss

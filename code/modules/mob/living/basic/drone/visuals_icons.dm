@@ -18,7 +18,7 @@
 		update_worn_mask()
 	if(slot_flags & ITEM_SLOT_HANDS)
 		update_held_items()
-	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_BACKPACK|ITEM_SLOT_DEX_STORAGE))
+	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_DEX_STORAGE))
 		update_inv_internal_storage()
 
 /mob/living/basic/drone/proc/update_inv_internal_storage()
@@ -38,7 +38,7 @@
 		if(istype(head, /obj/item/clothing/mask))
 			used_head_icon = 'icons/mob/clothing/mask.dmi'
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = DRONE_HEAD_LAYER, default_icon_file = used_head_icon)
-		head_overlay.pixel_y -= 15
+		head_overlay.pixel_z -= 15
 
 		drone_overlays[DRONE_HEAD_LAYER] = head_overlay
 

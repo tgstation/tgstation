@@ -77,10 +77,13 @@
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = AI_READY_CORE
+	var/mob/living/silicon/ai/attached_ai
 
-/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE)
+/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE, linked_ai)
 	. = ..()
 	circuit = new(src)
+	if(linked_ai)
+		attached_ai = linked_ai
 	if(skip_mmi_creation)
 		return
 	if(posibrain)
@@ -89,6 +92,16 @@
 		core_mmi = new(src)
 		core_mmi.brain = new(core_mmi)
 		core_mmi.update_appearance()
+
+/obj/structure/ai_core/deactivated/Destroy()
+	if(attached_ai)
+		attached_ai.linked_core = null
+		attached_ai = null
+	. = ..()
+
+/obj/structure/ai_core/deactivated/proc/disable_doomsday(datum/source)
+	SIGNAL_HANDLER
+	attached_ai.ShutOffDoomsdayDevice()
 
 /obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"
@@ -136,7 +149,7 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, params)
+/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(tool.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
 		to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
@@ -166,7 +179,7 @@
 			balloon_alert(user, "connected neural network")
 			return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, params)
+/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(remote_ai)
 		to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
 	if(!anchored)
@@ -375,6 +388,8 @@
 	if(malf_datum)
 		malf_datum.add_law_zero()
 
+	if(!isnull(the_brainmob.client))
+		ai_mob.set_gender(the_brainmob.client)
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"

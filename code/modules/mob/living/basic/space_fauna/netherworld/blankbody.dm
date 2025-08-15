@@ -26,7 +26,8 @@
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 40
 
-	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 /mob/living/basic/blankbody/Initialize(mapload)
 	. = ..()

@@ -53,7 +53,7 @@
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
 	name = "spaceman's trumpet seed pack"
-	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."
+	desc = "A plant sculpted by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."
 	icon_state = "seed-trumpet"
 	species = "spacemanstrumpet"
 	plantname = "Spaceman's Trumpet Plant"
@@ -124,9 +124,6 @@
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_colors = null
 
 // Harebell
 /obj/item/seeds/harebell

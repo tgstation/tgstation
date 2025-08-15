@@ -42,7 +42,7 @@
 
 #define PLATE_REINFORCE_COST 2
 
-/turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
+/turf/open/floor/plating/attackby(obj/item/C, mob/user, list/modifiers)
 	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods) && attachment_holes)
@@ -96,13 +96,34 @@
 					return
 				sheets.use(PLATE_REINFORCE_COST)
 				playsound(src, 'sound/machines/creak.ogg', 100, vary = TRUE)
-				place_on_top(/turf/open/floor/plating/reinforced)
+				place_on_top(/turf/open/floor/plating/reinforced, CHANGETURF_INHERIT_AIR)
 		else
 			if(!iscyborg(user))
 				balloon_alert(user, "too damaged, use a welding tool!")
 			else
 				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
-
+	else if(istype(C, /obj/item/stack/sheet/mineral/plastitanium) && attachment_holes)
+		if(broken || burnt)
+			if(!iscyborg(user))
+				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+			else
+				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage."))
+			return
+		var/obj/item/stack/sheet/mineral/plastitanium/sheet = C
+		if (sheet.get_amount() < 1)
+			to_chat(user, span_warning("You are literally holding nothing."))
+			return
+		else
+			balloon_alert(user, "insulating flooring...")
+			if(!do_after(user, 1.5 SECONDS, target = src))
+				return
+			if(sheet.get_amount() < 1 || istype(src, /turf/open/floor/engine/insulation))
+				return
+			place_on_top(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
+			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+			sheet.use(1)
+			to_chat(user, span_notice("You insulate the floor."))
+			balloon_alert(user, "insulated!")
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -135,26 +156,28 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/iron))
-		var/obj/item/stack/tile/iron/P = I
-		if(P.use(1))
-			var/obj/L = locate(/obj/structure/lattice) in src
-			if(L)
-				qdel(L)
-			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
-			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+	if(ismetaltile(attacking_item))
+		var/obj/item/stack/tile/tiles = attacking_item
+		if(!tiles.use(1))
+			return
+		var/obj/lattice = locate(/obj/structure/lattice) in src
+		if(lattice)
+			qdel(lattice)
+		to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+		playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
+		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		return
+
+	playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(prob(attacking_item.force * 20 - 25))
+		user.visible_message(span_danger("[user] smashes through [src]!"), \
+						span_danger("You smash through [src] with [attacking_item]!"))
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else
-		playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if(prob(I.force * 20 - 25))
-			user.visible_message(span_danger("[user] smashes through [src]!"), \
-							span_danger("You smash through [src] with [I]!"))
-			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		else
-			to_chat(user, span_danger("You hit [src], to no effect!"))
+		to_chat(user, span_danger("You hit [src], to no effect!"))
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
@@ -212,7 +235,7 @@
 	icon_state = "r_plate-[deconstruction_state]"
 	return ..()
 
-/turf/open/floor/plating/reinforced/attackby(obj/item/tool_used, mob/user, params)
+/turf/open/floor/plating/reinforced/attackby(obj/item/tool_used, mob/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))

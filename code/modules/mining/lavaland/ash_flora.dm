@@ -190,6 +190,7 @@
 	max_integrity = 100
 	seed = /obj/item/seeds/lavaland/polypore
 	wine_power = 20
+	foodtypes = VEGETABLES
 
 /obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
@@ -226,6 +227,7 @@
 	icon_state = "cactus_fruit"
 	seed = /obj/item/seeds/lavaland/cactus
 	wine_power = 50
+	foodtypes = FRUIT
 
 /obj/item/food/grown/ash_flora/seraka
 	name = "seraka cap"
@@ -375,7 +377,7 @@
 	name = "Mushroom Bowl"
 	result = /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	reqs = list(/obj/item/food/grown/ash_flora/shavings = 5)
-	time = 30
+	time = 3 SECONDS
 	category = CAT_CONTAINERS
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl

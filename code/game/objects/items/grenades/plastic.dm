@@ -58,7 +58,7 @@
 	to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
 	return TRUE
 
-/obj/item/grenade/c4/attackby(obj/item/item, mob/user, params)
+/obj/item/grenade/c4/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_wire_tool(item))
 		wires.interact(user)
 	else
@@ -130,7 +130,7 @@
 	target_icon.Blend(icon(icon, icon_state), ICON_OVERLAY)
 	var/mutable_appearance/bomb_target_image = mutable_appearance(target_icon)
 	notify_ghosts(
-		"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
+		"[user.real_name] has planted \a [src] on [target] with a [det_time] second fuse!",
 		source = bomb_target,
 		header = "Explosive Planted",
 		alert_overlay = bomb_target_image,
@@ -143,8 +143,7 @@
 		var/obj/item/thrown_weapon = bomb_target
 		thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
 		thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
-		if(thrown_weapon.get_embed())
-			thrown_weapon.set_embed(thrown_weapon.get_embed().generate_with_values(embed_chance = 0))
+		thrown_weapon.get_embed()?.embed_chance = 0
 	else if(isliving(bomb_target))
 		plastic_overlay.layer = FLOAT_LAYER
 
@@ -189,4 +188,4 @@
 	inhand_icon_state = "plasticx4"
 	worn_icon_state = "x4"
 	directional = TRUE
-	boom_sizes = list(0, 2, 5)
+	boom_sizes = list(0, 5, 7)

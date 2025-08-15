@@ -4,25 +4,25 @@
 			"type": "icon_state",
 			"icon_state": "housing",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "bristles",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "accent",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "light",
 			"blend_mode": "overlay",
-			"color_ids": [ 4 ]
+			"color_ids": [4]
 		}
 	]
 }

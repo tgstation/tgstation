@@ -324,7 +324,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
+/obj/machinery/porta_turret/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(machine_stat & BROKEN)
 		if(I.tool_behaviour == TOOL_CROWBAR)
 			//If the turret is destroyed, you can remove it with a crowbar to
@@ -483,13 +483,17 @@ DEFINE_BITFIELD(turret_flags, list(
 
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			//If not emagged, only target carbons that can use items
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || !(C.mobility_flags & MOBILITY_USE)))
-				continue
-
-			//If emagged, target all but dead carbons
-			if(mode == TURRET_LETHAL && C.stat == DEAD)
-				continue
+			switch(mode)
+				//If not emagged, only target carbons that can use items
+				if(TURRET_STUN)
+					if(!(C.mobility_flags & MOBILITY_USE))
+						continue
+					if(HAS_TRAIT(C, TRAIT_INCAPACITATED))
+						continue
+				//If emagged, target all but dead carbons
+				if(TURRET_LETHAL)
+					if(C.stat == DEAD)
+						continue
 
 			//if the target is a human and not in our faction, analyze threat level
 			if(ishuman(C) && !in_faction(C))
@@ -677,7 +681,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
-/datum/action/turret_toggle/Trigger(trigger_flags)
+/datum/action/turret_toggle/Trigger(mob/clicker, trigger_flags)
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
@@ -688,7 +692,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
 
-/datum/action/turret_quit/Trigger(trigger_flags)
+/datum/action/turret_quit/Trigger(mob/clicker, trigger_flags)
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
@@ -726,13 +730,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	remote_controller = null
 	return TRUE
 
-/obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+/obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/clicker, params, atom/A)
 	if(!manual_control)
 		return FALSE
-	if(!can_interact(caller))
+	if(!can_interact(clicker))
 		remove_control()
 		return FALSE
-	log_combat(caller,A,"fired with manual turret control at")
+	log_combat(clicker, A, "fired with manual turret control at")
 	target(A)
 	return TRUE
 
@@ -758,6 +762,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/syndicate/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "turret", FALSE)
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
@@ -774,6 +779,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile_sound = 'sound/items/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
 	armor_type = /datum/armor/syndicate_turret
+
+/obj/machinery/porta_turret/syndicate/energy/ruin/assess_perp(mob/living/carbon/human/perp)
+	if (!check_access(perp.wear_id?.GetID()))
+		return 10
+	return 0
 
 /datum/armor/syndicate_turret
 	melee = 40
@@ -840,6 +850,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return TRUE
 
 /obj/machinery/porta_turret/ai
+	scan_range = /obj/projectile/energy/electrode/ai_turrets::range + 1
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
@@ -985,7 +996,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(machine_stat & BROKEN)
 		return
 

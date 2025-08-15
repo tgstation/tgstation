@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Blink,
   BlockQuote,
   Collapsible,
   Modal,
@@ -7,7 +8,7 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -81,7 +82,7 @@ const UsersScreen = (props) => {
       {PlayerAccounts.map((account) => (
         <Collapsible
           key={account.index}
-          title={account.name + ' the ' + account.job}
+          title={`${account.name} the ${account.job}`}
         >
           <Stack vertical>
             <BlockQuote>
@@ -125,7 +126,7 @@ const MarketCrashing = (props) => {
   }
   return (
     <Modal textAlign="center" mr={1.5}>
-      <blink>OH GOD THE ECONOMY IS RUINED.</blink>
+      <Blink>OH GOD THE ECONOMY IS RUINED.</Blink>
     </Modal>
   );
 };

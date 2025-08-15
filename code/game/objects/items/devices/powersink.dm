@@ -125,7 +125,7 @@
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
 			user.log_message("activated a powersink", LOG_GAME)
 			notify_ghosts(
-				"[user] has activated a power sink!",
+				"[user.real_name] has activated a power sink!",
 				source = src,
 				header = "Shocking News!",
 			)
@@ -151,7 +151,7 @@
 		air_update_turf(FALSE, FALSE)
 	if(warning_given && internal_heat < max_heat * 0.75)
 		warning_given = FALSE
-		message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has cooled down and will not explode.")
+		message_admins("Power sink at ([x],[y],[z] - <A href='byond://?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has cooled down and will not explode.")
 	if(mode != OPERATING && internal_heat < MINIMUM_HEAT)
 		internal_heat = 0
 		STOP_PROCESSING(SSobj, src)
@@ -188,7 +188,7 @@
 	if(internal_heat > max_heat * ALERT / 100)
 		if (!warning_given)
 			warning_given = TRUE
-			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached [ALERT]% of max heat. Explosion imminent.")
+			message_admins("Power sink at ([x],[y],[z] - <A href='byond://?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached [ALERT]% of max heat. Explosion imminent.")
 			notify_ghosts(
 				"[src] is about to reach critical heat capacity!",
 				source = src,

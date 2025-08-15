@@ -23,9 +23,7 @@
 	payment_department = ACCOUNT_MED
 	var/obj/item/scanner_wand
 	/// How much it costs to use the kiosk by default.
-	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
-	/// How much it currently costs to use the kiosk.
-	var/active_price = 15           //Change by using a multitool on the board.
+	var/default_price = 15
 	/// Makes the TGUI display gibberish and/or incorrect/erratic information.
 	var/pandemonium = FALSE //AKA: Emag mode.
 
@@ -42,7 +40,7 @@
 
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
-	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
+	AddComponent(/datum/component/payment, get_cost(), SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	register_context()
 	scanner_wand = new/obj/item/scanner_wand(src)
 
@@ -78,7 +76,6 @@
 		use_energy(active_power_usage)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
-		RefreshParts()
 		return
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
@@ -87,7 +84,6 @@
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
-	RefreshParts()
 	return
 
 /obj/machinery/medical_kiosk/proc/clearScans() //Called it enough times to be it's own proc
@@ -110,14 +106,15 @@
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/medical_kiosk/RefreshParts()
-	. = ..()
-	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
-	if(board)
-		active_price = board.custom_cost
-	return
+///Returns the active cost of the board
+/obj/machinery/medical_kiosk/proc/get_cost()
+	PRIVATE_PROC(TRUE)
 
-/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
+	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
+
+	return board.custom_cost
+
+/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", O))
 		return
 	else if(default_deconstruction_crowbar(O))
@@ -178,7 +175,7 @@
 			user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"))
 		balloon_alert(user, "sensors overloaded")
 	obj_flags |= EMAGGED
-	var/obj/item/circuitboard/computer/cargo/board = circuit
+	var/obj/item/circuitboard/board = circuit
 	board.obj_flags |= EMAGGED //Mirrors emag status onto the board as well.
 	pandemonium = TRUE
 	return TRUE
@@ -212,7 +209,6 @@
 		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
 		icon_state = "[base_icon_state]_active"
-		RefreshParts()
 		var/mob/living/carbon/human/paying = user
 		paying_ref = WEAKREF(paying)
 
@@ -236,8 +232,9 @@
 
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
-	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
-	var/blood_type = patient.dna.blood_type
+	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+	var/datum/blood_type/blood_type = patient.get_bloodtype()
+	var/blood_name = "error"
 	var/blood_warning = " "
 	var/blood_alcohol = patient.get_blood_alcohol_content()
 
@@ -247,14 +244,30 @@
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(!HAS_TRAIT(patient, TRAIT_GENELESS) && !HAS_TRAIT(patient, TRAIT_NOBLOOD)) //Blood levels Information
+	if(patient.can_bleed()) //Blood levels Information
+		blood_name = LOWER_TEXT(blood_type.get_blood_name())
 		if(patient.is_bleeding())
-			bleed_status = "Patient is currently bleeding!"
+			bleed_status = " Patient is currently bleeding!"
+
 		if(blood_percent <= 80)
-			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
-		if(blood_percent <= 60)
-			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
-		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
+			blood_warning = " Patient has [blood_percent <= 60 ? "DANGEROUSLY low" : "low"] [blood_name] levels."
+			var/list/treatments = list()
+			if(blood_percent <= 60)
+				treatments += "[blood_name] transfusion"
+			else if(!HAS_TRAIT(patient, TRAIT_NOHUNGER))
+				treatments += "a large meal"
+			if(blood_type.restoration_chem)
+				treatments += "[LOWER_TEXT(blood_type.restoration_chem::name)] supplements"
+				if(blood_percent <= 60 && blood_type.restoration_chem == /datum/reagent/iron)
+					treatments += "saline-glucose immediately"
+
+			if (length(treatments))
+				blood_warning += " Seek [english_list(treatments, and_text = " or ")]"
+
+			if (blood_percent <= 60)
+				blood_warning += " Ignoring treatment may lead to death!"
+
+		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_type() ? " Patient has [blood_type.get_type()] type [blood_name]." : ""][blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)
@@ -339,7 +352,7 @@
 	else if(user.has_status_effect(/datum/status_effect/hallucination))
 		chaos_modifier = 0.3
 
-	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
+	data["kiosk_cost"] = get_cost() + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
 	data["patient_health"] = round(((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100, 0.001)
 	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001) //To break this down for easy reading, all health values are rounded to the .001 place
@@ -353,6 +366,7 @@
 	data["patient_illness"] = sickness
 	data["illness_info"] = sickness_data
 	data["bleed_status"] = bleed_status
+	data["blood_name"] = capitalize(blood_name)
 	data["blood_levels"] = blood_percent - (chaos_modifier * (rand(1,35)))
 	data["blood_status"] = blood_status
 	data["blood_alcohol"] = blood_alcohol
@@ -367,7 +381,7 @@
 	data["active_status_4"] = scan_active & KIOSK_SCANNING_REAGENTS // Reagents/hallucination Scan Check
 	return data
 
-/obj/machinery/medical_kiosk/ui_act(action,active)
+/obj/machinery/medical_kiosk/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

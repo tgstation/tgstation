@@ -4,7 +4,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_language_holder = /datum/language_holder/synthetic
+	initial_language_holder = /datum/language_holder/synthetic/silicon
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
@@ -40,7 +40,7 @@
 	var/list/silicon_huds = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_DIAGNOSTIC)
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/builtInCamera = null
+	var/obj/machinery/camera/silicon/builtInCamera
 	var/updating = FALSE //portable camera camerachunk update
 	///Whether we have been emagged
 	var/emagged = FALSE
@@ -82,6 +82,7 @@
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ANOSMIA, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
 /mob/living/silicon/Destroy()
@@ -93,6 +94,16 @@
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+///Sets cyborg gender from preferences. Expects a client.
+/mob/living/silicon/proc/set_gender(client/player_client)
+	var/silicon_pronouns = player_client.prefs.read_preference(/datum/preference/choiced/silicon_gender)
+	if(silicon_pronouns == /datum/preference/choiced/silicon_gender::use_character_gender)
+		gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
+		return
+	var/silicon_gender = /datum/preference/choiced/silicon_gender::pronouns_to_genders[silicon_pronouns]
+	if(!isnull(silicon_gender))
+		gender = silicon_gender
 
 /mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
 	SIGNAL_HANDLER
@@ -154,7 +165,7 @@
 		for(var/alarm_type in alarm_types_show)
 			msg += "[uppertext(alarm_type)]: [alarm_types_show[alarm_type]] alarms detected. - "
 
-		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
+		msg += "<A href=byond://?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
 
 	if(length(alarms_to_clear) < 3)
@@ -167,7 +178,7 @@
 		for(var/alarm_type in alarm_types_clear)
 			msg += "[uppertext(alarm_type)]: [alarm_types_clear[alarm_type]] alarms cleared. - "
 
-		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
+		msg += "<A href=byond://?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
 
 
@@ -243,6 +254,21 @@
 			return
 		to_chat(usr, href_list["printlawtext"])
 
+	if(href_list["track"])
+		if(!can_track(href_list["track"]))
+			to_chat(src, span_info("This person is not currently on cameras."))
+			return
+		var/mob/living/silicon/ai/AI
+		var/mob/living/silicon/robot/shell/shell
+		if(!isAI(src))
+			shell = src
+			AI = shell.mainframe
+			AI.deployed_shell.undeploy()
+		else
+			AI = src
+
+		AI.ai_tracking_tool.track_name(src, href_list["track"])
+
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)
@@ -309,13 +335,13 @@
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
 	laws_sanity_check()
-	var/list = "<meta charset='UTF-8'><b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	var/law_display = "Yes"
 	if (laws.zeroth)
 		if (!(laws.zeroth in lawcheck))
 			law_display = "No"
-		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
+		list += {"<a href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</a> <font color='#ff0000'><b>[laws.zeroth]</b></font><br>"}
 
 	for (var/index in 1 to length(laws.hacked))
 		law_display = "Yes"
@@ -323,7 +349,7 @@
 		if (length(law) > 0)
 			if (!(law in hackedcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</a> <font color='#660000'>[law]</font><br>"}
 
 	for (var/index in 1 to length(laws.ion))
 		law_display = "Yes"
@@ -331,7 +357,7 @@
 		if (length(law) > 0)
 			if(!(law in ioncheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</A> <font color='#547DFE'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</a> <font color='#547DFE'>[law]</font><br>"}
 
 	var/number = 1
 	for (var/index in 1 to length(laws.inherent))
@@ -340,7 +366,7 @@
 		if (length(law) > 0)
 			if (!(law in lawcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</A> [law]<BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</a> [law]<br>"}
 			number++
 
 	for (var/index in 1 to length(laws.supplied))
@@ -349,19 +375,17 @@
 		if (length(law) > 0)
 			if (!(law in lawcheck))
 				law_display = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</A> <font color='#990099'>[law]</font><BR>"}
+			list += {"<a href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</a> <font color='#990099'>[law]</font><br>"}
 			number++
-	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
+	list += {"<br><br><a href='byond://?src=[REF(src)];laws=1'>State Laws</a>"}
 
-	usr << browse(list, "window=laws")
+	var/datum/browser/browser = new(usr, "laws")
+	browser.set_content(list)
+	browser.open()
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)
 		return
-	if(world.time < client.crew_manifest_delay)
-		return
-	client.crew_manifest_delay = world.time + (1 SECONDS)
-
 	GLOB.manifest.ui_interact(src)
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
@@ -493,3 +517,6 @@
 	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 	for(var/borg_laws in law_list)
 		. += borg_laws
+
+/mob/living/silicon/get_access()
+	return REGION_ACCESS_ALL_STATION

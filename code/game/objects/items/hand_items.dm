@@ -10,6 +10,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC)
 
+/obj/item/hand_item/attack(mob/living/target_mob, mob/living/user)
+	. = ..()
+	SEND_SIGNAL(user, COMSIG_LIVING_HAND_ITEM_ATTACK, target_mob)
+
 /obj/item/hand_item/circlegame
 	name = "circled hand"
 	desc = "If somebody looks at this while it's below your waist, you get to bop them."
@@ -217,6 +221,7 @@
 	AddElement(/datum/element/high_fiver)
 
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
+	. = ..()
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 	SEND_SIGNAL(slapped, COMSIG_LIVING_SLAPPED, user)
 
@@ -282,14 +287,14 @@
 	playsound(slapped, 'sound/items/weapons/slap.ogg', slap_volume, TRUE, -1)
 	return
 
-/obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
+/obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
 	slam_table(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/hand_item/slapper/pre_attack(atom/target, mob/living/user, params)
+/obj/item/hand_item/slapper/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
@@ -327,7 +332,7 @@
 // Successful takes will qdel our hand after
 /obj/item/hand_item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	qdel(src)
@@ -338,7 +343,7 @@
 	desc = "Sometimes, you just want to act gentlemanly."
 	inhand_icon_state = "nothing"
 
-/obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, params)
+/obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, list/modifiers, list/attack_modifiers)
 	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
 		return ..()
 
@@ -347,7 +352,7 @@
 		return TRUE
 
 
-/obj/item/hand_item/hand/pre_attack_secondary(mob/living/carbon/help_target, mob/living/carbon/helper, params)
+/obj/item/hand_item/hand/pre_attack_secondary(mob/living/carbon/help_target, mob/living/carbon/helper, list/modifiers, list/attack_modifiers)
 	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
 		return ..()
 
@@ -358,7 +363,7 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 
-/obj/item/hand_item/hand/attack(mob/living/carbon/target_mob, mob/living/carbon/user, params)
+/obj/item/hand_item/hand/attack(mob/living/carbon/target_mob, mob/living/carbon/user, list/modifiers, list/attack_modifiers)
 	if(!loc.Adjacent(target_mob) || !istype(user) || !istype(target_mob))
 		return TRUE
 
@@ -394,7 +399,11 @@
 
 
 /obj/item/hand_item/hand/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
-	. = TRUE
+	. = ..()
+	if(!offerer || !taker)
+		return TRUE // this doesn't make sense unless both are carbons
+	if(.)
+		return
 
 	if(taker.body_position == LYING_DOWN)
 		taker.help_shake_act(offerer)
@@ -440,7 +449,7 @@
 	attack_verb_continuous = list("steals")
 	attack_verb_simple = list("steal")
 
-/obj/item/hand_item/stealer/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/hand_item/stealer/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (!ishuman(target_mob))
 		return
@@ -480,12 +489,6 @@
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/hand_item/kisser/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
-		kiss_type = /obj/projectile/kiss/french
-
-	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
-		kiss_type = /obj/projectile/kiss/chef
-
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
@@ -510,12 +513,16 @@
 	return TRUE
 
 /obj/item/hand_item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = ..()
+	if(.)
+		return
+
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(offerer))
 	offerer.visible_message("<b>[offerer]</b> gives [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!!", span_notice("You give [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"), ignored_mobs = taker)
 	to_chat(taker, span_nicegreen("[offerer] gives you \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"))
 	offerer.face_atom(taker)
 	taker.face_atom(offerer)
-	offerer.do_item_attack_animation(taker, used_item=src)
+	offerer.do_item_attack_animation(taker, used_item = src, animation_type = ATTACK_ANIMATION_BLUNT)
 	//We're still firing a shot here because I don't want to deal with some weird edgecase where direct impacting them with the projectile causes it to freak out because there's no angle or something
 	blown_kiss.original = taker
 	blown_kiss.fired_from = offerer
@@ -538,6 +545,24 @@
 	desc = "oooooo you like syndicate ur a syndiekisser"
 	color = COLOR_SYNDIE_RED
 	kiss_type = /obj/projectile/kiss/syndie
+
+/obj/item/hand_item/kisser/ink
+	name = "ink kiss"
+	desc = "Is that a blot of ink in your pocket or are you just happy to see me?"
+	color = COLOR_ALMOST_BLACK
+	kiss_type = /obj/projectile/kiss/ink
+
+/obj/item/hand_item/kisser/french
+	name = "french kiss"
+	desc = "You really should brush your teeth."
+	color = COLOR_GRAY
+	kiss_type = /obj/projectile/kiss/french
+
+/obj/item/hand_item/kisser/chef
+	name = "chef's kiss"
+	desc = "The secret ingridient is love. And opium, but mostly love."
+	color = COLOR_LIGHT_PINK
+	kiss_type = /obj/projectile/kiss/chef
 
 /obj/projectile/kiss
 	name = "kiss"
@@ -639,6 +664,24 @@
 	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.apply_organ_damage(999)
 
+/obj/projectile/kiss/ink
+	name = "ink kiss"
+	color = COLOR_ALMOST_BLACK
+	damage = /obj/projectile/ink_spit::damage
+	damage_type = /obj/projectile/ink_spit::damage_type
+	armor_flag = /obj/projectile/ink_spit::armor_flag
+	armour_penetration = /obj/projectile/ink_spit::armour_penetration
+	impact_effect_type = /obj/projectile/ink_spit::impact_effect_type
+	hitsound = /obj/projectile/ink_spit::hitsound
+	hitsound_wall = /obj/projectile/ink_spit::hitsound_wall
+
+/obj/projectile/kiss/ink/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/obj/projectile/ink_spit/ink_spit =  new (target)
+	ink_spit.on_hit(target)
+	if(!QDELETED(ink_spit)) // in case it somehow remains around
+		qdel(ink_spit)
+
 // Based on energy gun characteristics
 /obj/projectile/kiss/syndie
 	name = "syndie kiss"
@@ -649,7 +692,7 @@
 	armour_penetration = 0
 	damage = 25
 	wound_bonus = -20
-	bare_wound_bonus = 40
+	exposed_wound_bonus = 40
 	silent_blown = TRUE
 
 /obj/projectile/kiss/french

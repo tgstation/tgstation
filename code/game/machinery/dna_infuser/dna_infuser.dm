@@ -161,7 +161,7 @@
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
 
-/obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, params)
+/obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
 	if(infusing)
 		return
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, used))//sent icon_state is irrelevant...

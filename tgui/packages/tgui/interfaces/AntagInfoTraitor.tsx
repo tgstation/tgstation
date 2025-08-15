@@ -1,15 +1,9 @@
-import {
-  BlockQuote,
-  Button,
-  Dimmer,
-  Section,
-  Stack,
-} from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import { BlockQuote, Button, Section, Stack } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 const allystyle = {
   fontWeight: 'bold',
@@ -36,8 +30,6 @@ type Info = {
   intro: string;
   code: string;
   failsafe_code: string;
-  replacement_code: string;
-  replacement_frequency: string;
   has_uplink: BooleanLike;
   uplink_intro: string;
   uplink_unlock_info: string;
@@ -92,7 +84,7 @@ const EmployerSection = (props) => {
               <BlockQuote>{allies}</BlockQuote>
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item>
+            <Stack.Item mb={1}>
               <span style={goalstyle}>
                 Employer thoughts:
                 <br />
@@ -108,37 +100,12 @@ const EmployerSection = (props) => {
 
 const UplinkSection = (props) => {
   const { data } = useBackend<Info>();
-  const {
-    has_uplink,
-    uplink_intro,
-    uplink_unlock_info,
-    code,
-    failsafe_code,
-    replacement_code,
-    replacement_frequency,
-  } = data;
+  const { has_uplink, uplink_intro, uplink_unlock_info, code, failsafe_code } =
+    data;
   return (
     <Section title="Uplink" mb={!has_uplink && -1}>
       <Stack fill>
-        {(!has_uplink && (
-          <Dimmer>
-            <Stack.Item fontSize="16px">
-              <Section textAlign="Center">
-                Your uplink is missing or destroyed. <br />
-                Craft a Syndicate Uplink Beacon and then speak
-                <br />
-                <span style={goalstyle}>
-                  <b>{replacement_code}</b>
-                </span>{' '}
-                on frequency{' '}
-                <span style={goalstyle}>
-                  <b>{replacement_frequency}</b>
-                </span>{' '}
-                after synchronizing with the beacon.
-              </Section>
-            </Stack.Item>
-          </Dimmer>
-        )) || (
+        {
           <>
             <Stack.Item bold>
               {uplink_intro}
@@ -150,33 +117,20 @@ const UplinkSection = (props) => {
               )}
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item mt="1%">
+            <Stack.Item align="center">
               <BlockQuote>{uplink_unlock_info}</BlockQuote>
             </Stack.Item>
           </>
-        )}
+        }
       </Stack>
       <br />
-      {(has_uplink && (
-        <Section textAlign="Center">
-          If you lose your uplink, you can craft a Syndicate Uplink Beacon and
-          then speak{' '}
-          <span style={goalstyle}>
-            <b>{replacement_code}</b>
-          </span>{' '}
-          on radio frequency{' '}
-          <span style={goalstyle}>
-            <b>{replacement_frequency}</b>
-          </span>{' '}
-          after synchronizing with the beacon.
-        </Section>
-      )) || (
+      {
         <Section>
           {' '}
           <br />
           <br />
         </Section>
-      )}
+      }
     </Section>
   );
 };

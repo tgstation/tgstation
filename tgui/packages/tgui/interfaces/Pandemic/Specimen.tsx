@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui/components';
+import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui-core/components';
 
 import { SymptomDisplay } from './Symptom';
-import { Data } from './types';
+import type { Data } from './types';
 import { VirusDisplay } from './Virus';
 
 export const SpecimenDisplay = (props) => {

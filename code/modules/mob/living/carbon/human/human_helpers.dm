@@ -34,7 +34,12 @@
 		return pda.saved_identification
 	return if_no_id
 
-//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
+/// Used to update our name based on whether our face is obscured/disfigured
+/mob/living/carbon/human/proc/update_visible_name()
+	SIGNAL_HANDLER
+	name = get_visible_name()
+
+/// Combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
 	var/list/identity = list(null, null, null)
 	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
@@ -45,7 +50,7 @@
 		return signal_face // no need to null-check, because force_set will always set a signal_face
 	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
 	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
-	if (force_real_name)
+	if(force_real_name)
 		var/fake_name
 		if (face_name && face_name != real_name)
 			fake_name = face_name
@@ -90,25 +95,19 @@
 	return
 
 /mob/living/carbon/human/get_id_name(if_no_id = "Unknown")
-	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/modular_computer/pda = wear_id
-	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
 		var/list/identity = list(null, null, null)
 		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
 		if(identity[VISIBLE_NAME_FORCED])
-			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
-			return
-	if(istype(wallet))
-		id = wallet.front_id
-	if(istype(id))
-		. = id.registered_name
-	else if(istype(pda) && pda.computer_id_slot)
-		. = pda.computer_id_slot.registered_name
+			return identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
+	else
+		var/obj/item/card/id/id = astype(wear_id, /obj/item/card/id) \
+			|| astype(wear_id, /obj/item/storage/wallet)?.front_id \
+			|| astype(wear_id, /obj/item/modular_computer)?.stored_id
+		. = id?.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
-	return
 
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)
 	. = ..()
@@ -167,8 +166,7 @@
 	for(var/i in missing_bodyparts)
 		var/datum/scar/scaries = new
 		scars += "[scaries.format_amputated(i)]"
-	for(var/i in all_scars)
-		var/datum/scar/iter_scar = i
+	for(var/datum/scar/iter_scar as anything in all_scars)
 		if(!iter_scar.fake)
 			scars += "[iter_scar.format()];"
 	return scars
@@ -260,47 +258,28 @@
 	fully_replace_character_name(real_name, generate_random_mob_name())
 
 /**
- * Setter for mob height
+ * Setter for mob height - updates the base height of the mob (which is then adjusted by traits or species)
  *
  * Exists so that the update is done immediately
  *
  * Returns TRUE if changed, FALSE otherwise
  */
 /mob/living/carbon/human/proc/set_mob_height(new_height)
-	if(mob_height == new_height)
-		return FALSE
-	if(new_height == HUMAN_HEIGHT_DWARF || new_height == MONKEY_HEIGHT_DWARF)
-		CRASH("Don't set height to dwarf height directly, use dwarf trait instead.")
-	if(new_height == MONKEY_HEIGHT_MEDIUM)
-		CRASH("Don't set height to monkey height directly, use monkified gene/species instead.")
-
-	mob_height = new_height
-	regenerate_icons()
-	return TRUE
+	base_mob_height = new_height
+	update_mob_height()
 
 /**
- * Getter for mob height
+ * Updates the mob's height
  *
  * Mainly so that dwarfism can adjust height without needing to override existing height
  *
  * Returns a mob height num
  */
-/mob/living/carbon/human/proc/get_mob_height()
-	if(HAS_TRAIT(src, TRAIT_DWARF))
-		if(ismonkey(src))
-			return MONKEY_HEIGHT_DWARF
-		else
-			return HUMAN_HEIGHT_DWARF
-	if(HAS_TRAIT(src, TRAIT_TOO_TALL))
-		if(ismonkey(src))
-			return MONKEY_HEIGHT_TALL
-		else
-			return HUMAN_HEIGHT_TALLEST
-
-	else if(ismonkey(src))
-		return MONKEY_HEIGHT_MEDIUM
-
-	return mob_height
+/mob/living/carbon/human/proc/update_mob_height()
+	var/old_height = mob_height
+	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
+	if(old_height != mob_height)
+		regenerate_icons()
 
 /**
  * Makes a full copy of src and returns it.
@@ -320,17 +299,14 @@
 	clone.age = age
 	clone.voice = voice
 	clone.pitch = pitch
-	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
+	dna.copy_dna(clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
 
 	clone.dress_up_as_job(SSjob.get_job(job))
 
 	for(var/datum/quirk/original_quircks as anything in quirks)
-		clone.add_quirk(original_quircks.type, override_client = client)
-	for(var/datum/mutation/human/mutations in dna.mutations)
-		clone.dna.add_mutation(mutations, MUT_NORMAL)
+		clone.add_quirk(original_quircks.type, override_client = client, announce = FALSE)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
-	clone.domutcheck()
 
 	return clone
 
@@ -390,3 +366,17 @@
 	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
 		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
 	return TRUE
+
+/// Sets both mob's and eye organ's eye color values
+/// If color_right is not passed, its assumed to be the same as color_left
+/mob/living/carbon/human/proc/set_eye_color(color_left, color_right)
+	if (!color_right)
+		color_right = color_left
+	eye_color_left = color_left
+	eye_color_right = color_right
+	// Doesn't assign eye color if they already have one from their type
+	var/obj/item/organ/eyes/eyes = get_organ_by_type(/obj/item/organ/eyes)
+	if (istype(eyes) && !initial(eyes.eye_color_left) && !initial(eyes.eye_color_right))
+		eyes.eye_color_left = color_left
+		eyes.eye_color_right = color_right
+		eyes.refresh(src, FALSE)

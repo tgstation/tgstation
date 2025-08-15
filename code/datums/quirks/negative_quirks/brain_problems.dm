@@ -14,24 +14,20 @@
 	hardcore_value = 12
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/storage/pill_bottle/mannitol/braintumor)
+	no_process_traits = list(TRAIT_TUMOR_SUPPRESSED)
 
 /datum/quirk/item_quirk/brainproblems/add_unique(client/client_source)
 	give_item_to_holder(
 		/obj/item/storage/pill_bottle/mannitol/braintumor,
 		list(
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
+			LOCATION_LPOCKET,
+			LOCATION_RPOCKET,
+			LOCATION_BACKPACK,
+			LOCATION_HANDS,
 		),
 		flavour_text = "These will keep you alive until you can secure a supply of medication. Don't rely on them too much!",
+		notify_player = TRUE,
 	)
 
 /datum/quirk/item_quirk/brainproblems/process(seconds_per_tick)
-	if(quirk_holder.stat == DEAD)
-		return
-
-	if(HAS_TRAIT(quirk_holder, TRAIT_TUMOR_SUPPRESSED))
-		return
-
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * seconds_per_tick)

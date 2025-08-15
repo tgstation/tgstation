@@ -47,7 +47,6 @@
 
 /obj/item/reagent_containers/cup/soup_pot/Initialize(mapload, vol)
 	. = ..()
-	RegisterSignal(reagents, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_cleared))
 	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
 	register_context()
 
@@ -143,7 +142,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
-/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return
@@ -203,15 +202,14 @@
 		return FALSE
 	return TRUE
 
-/obj/item/reagent_containers/cup/soup_pot/proc/on_reagents_cleared(datum/source, datum/reagent/changed)
-	SIGNAL_HANDLER
-
-	dump_ingredients()
+/obj/item/reagent_containers/cup/soup_pot/try_splash(mob/user, atom/target)
+	. = ..()
+	if(!. && LAZYLEN(added_ingredients))
+		dump_ingredients()
 
 /obj/item/reagent_containers/cup/soup_pot/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
 	. = ..()
 	if(!. && LAZYLEN(added_ingredients))
-		// Clearing reagents Will do this for us already, but if we have no reagents this is a failsafe
 		dump_ingredients()
 
 /**

@@ -46,6 +46,8 @@
 		return
 	var/atom/pickup_zone = drop_location()
 	for(var/atom/movable/to_pickup in pickup_zone)
+		if(to_pickup == src)
+			continue
 		to_pickup.forceMove(src)
 	flick("tube_down", src)
 	scanning = TRUE
@@ -102,7 +104,7 @@
 	. = ..()
 	icon_state = scanning ? "tube_on" : "tube_open"
 
-/obj/machinery/destructive_scanner/attackby(obj/item/object, mob/user, params)
+/obj/machinery/destructive_scanner/attackby(obj/item/object, mob/user, list/modifiers, list/attack_modifiers)
 	if (!scanning && default_deconstruction_screwdriver(user, "tube_open", "tube_open", object) || default_deconstruction_crowbar(object))
 		update_icon()
 		return

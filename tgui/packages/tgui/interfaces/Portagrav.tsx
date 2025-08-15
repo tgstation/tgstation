@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
+import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -27,11 +27,11 @@ export const Portagrav = (props) => {
           textAlign="center"
         >
           {!wiremode && percentage !== undefined
-            ? percentage + '%'
+            ? `${percentage}%`
             : wiremode
               ? 'WIRE POWERED'
               : 'NO CELL'}
-          {' - ' + gravity + 'G'}
+          {` - ${gravity}G`}
         </Box>
         <Box
           width="100%"

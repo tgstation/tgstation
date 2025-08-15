@@ -94,16 +94,16 @@
 	if(removable)
 		examine_list += span_info("[bayonet] looks like it can be <b>unscrewed</b> from [bayonet].")
 
-/datum/component/bayonet_attachable/proc/on_pre_attack(obj/item/source, atom/target, mob/living/user, params)
+/datum/component/bayonet_attachable/proc/on_pre_attack(obj/item/source, atom/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if (isnull(bayonet) || !user.combat_mode)
 		return NONE
 
-	INVOKE_ASYNC(bayonet, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, params)
+	INVOKE_ASYNC(bayonet, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, modifiers)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/bayonet_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, params)
+/datum/component/bayonet_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!is_type_in_typecache(attacking_item, valid_bayonets))
@@ -178,8 +178,8 @@
 		return
 
 	var/mutable_appearance/bayonet_appearance = mutable_appearance(bayonet_overlay_icon, bayonet_overlay)
-	bayonet_appearance.pixel_x = offset_x
-	bayonet_appearance.pixel_y = offset_y
+	bayonet_appearance.pixel_w = offset_x
+	bayonet_appearance.pixel_z = offset_y
 	overlays += bayonet_appearance
 
 /datum/component/bayonet_attachable/proc/on_update_icon_state(obj/item/source)

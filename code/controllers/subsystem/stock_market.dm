@@ -2,7 +2,6 @@
 SUBSYSTEM_DEF(stock_market)
 	name = "Stock Market"
 	wait = 60 SECONDS
-	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 
 	/// Associated list of materials and their prices at the given time.

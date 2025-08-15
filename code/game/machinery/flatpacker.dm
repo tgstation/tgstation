@@ -19,6 +19,8 @@
 	var/datum/component/material_container/materials
 	/// The inserted board
 	var/obj/item/circuitboard/machine/inserted_board
+	/// List of components that need to be packed along with the circuitboard
+	var/list/obj/item/flatpacked_components = list()
 	/// Materials needed to print this board
 	var/list/needed_mats = list()
 	/// The highest tier of this board
@@ -44,12 +46,18 @@
 /obj/machinery/flatpacker/Destroy()
 	materials = null
 	QDEL_NULL(inserted_board)
+	QDEL_LIST(flatpacked_components)
 	. = ..()
 
 /obj/machinery/flatpacker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(!QDELETED(inserted_board))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject board"
+
+		if(!isnull(held_item) && (held_item.type in inserted_board.flatpack_components))
+			context[SCREENTIP_CONTEXT_LMB] = "Insert flatpack component"
+			return CONTEXTUAL_SCREENTIP_SET
+
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(!isnull(held_item))
@@ -78,12 +86,54 @@
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
 	if(!QDELETED(inserted_board))
 		. += span_notice("The board can be ejected via [EXAMINE_HINT("Ctrl Click")]")
+		if(length(inserted_board.flatpack_components))
+			var/list/obj/item/to_insert
+			for(var/obj/item/component as anything in inserted_board.flatpack_components)
+				var/inserted = get_flatpack_component_count(component)
+				var/required = inserted_board.req_components[component]
+				if(inserted == required)
+					continue
+				LAZYADDASSOC(to_insert, get_flatpack_component_name(component), "[inserted]/[required]")
+			if(length(to_insert))
+				. += span_warning("The following components must be inserted by hand before packaging")
+				for(var/component_name in to_insert)
+					. += span_warning("[component_name]:[to_insert[component_name]]")
 
 /obj/machinery/flatpacker/update_overlays()
 	. = ..()
 
 	if(!QDELETED(inserted_board))
 		. += mutable_appearance(icon, "[base_icon_state]_c")
+
+/**
+ * Returns the name of this component. Vending canistors & maybe other types in the future require special parsing
+ *
+ * Arguments
+ * * obj/item/component - the component typepath we are trying to get the name
+ */
+/obj/machinery/flatpacker/proc/get_flatpack_component_name(obj/item/component)
+	PRIVATE_PROC(TRUE)
+
+	if(ispath(component, /obj/item/vending_refill))
+		var/obj/item/vending_refill/canister = component
+
+		return "\improper [canister::machine_name] restocking unit"
+
+	return component::name
+
+/**
+ * Returns count of inserted flatpack component parts
+ *
+ * Arguments
+ * * obj/item/type - the component type we are trying to count
+ */
+/obj/machinery/flatpacker/proc/get_flatpack_component_count(obj/item/type)
+	PRIVATE_PROC(TRUE)
+
+	. = 0
+	for(var/obj/item/test as anything in flatpacked_components)
+		if(test.type == type)
+			. += 1
 
 /obj/machinery/flatpacker/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -92,6 +142,8 @@
 		needed_mats.Cut()
 		print_tier = 1
 		update_appearance(UPDATE_OVERLAYS)
+	if(gone in flatpacked_components)
+		flatpacked_components -= gone
 
 /obj/machinery/flatpacker/RefreshParts()
 	. = ..()
@@ -133,10 +185,11 @@
  * Otherwise, the typepath is created in nullspace and fetches materials from the initialized one, then deleted.
  *
  * Args:
- * part_type - Typepath of the item we are trying to find the costs of
- * costs - Assoc list we modify and return
+ * * part_type - Typepath of the item we are trying to find the costs of
+ * * costs - Assoc list we modify and return
+ * * count - the number of parts to compute the cost of
  */
-/obj/machinery/flatpacker/proc/analyze_cost(part_type, costs)
+/obj/machinery/flatpacker/proc/analyze_cost(part_type, costs, count)
 	PRIVATE_PROC(TRUE)
 
 	var/comp_type = part_type
@@ -159,7 +212,7 @@
 			mat_list = null_comp.custom_materials
 
 	for(var/atom/mat as anything in mat_list)
-		CREATE_AND_INCREMENT(costs, mat.type, mat_list[mat] * inserted_board.req_components[part_type])
+		CREATE_AND_INCREMENT(costs, mat.type, mat_list[mat] * count)
 
 	if(null_comp)
 		qdel(null_comp)
@@ -183,13 +236,27 @@
 
 		//compute the needed mats from its stock parts
 		for(var/type as anything in inserted_board.req_components)
-			needed_mats = analyze_cost(type, needed_mats)
+			//these don't count to the final cost as they have to inserted manually
+			if(type in inserted_board.flatpack_components)
+				continue
+			needed_mats = analyze_cost(type, needed_mats, inserted_board.req_components[type])
 
 		// 5 sheets of iron and 5 of cable coil
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20))
 
 		update_appearance(UPDATE_OVERLAYS)
+		return ITEM_INTERACT_SUCCESS
+	else if(!QDELETED(inserted_board) && (attacking_item.type in inserted_board.flatpack_components))
+		if(get_flatpack_component_count(attacking_item.type) == inserted_board.req_components[attacking_item.type])
+			balloon_alert(user, "max count reached!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck in hand!"))
+			return ITEM_INTERACT_BLOCKING
+
+		LAZYADD(flatpacked_components, attacking_item)
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()
@@ -212,8 +279,8 @@
 
 /obj/machinery/flatpacker/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 /obj/machinery/flatpacker/ui_static_data(mob/user)
@@ -237,16 +304,20 @@
 		var/atom/build = initial(inserted_board.build_path)
 
 		var/disableReason = ""
-		var/has_materials = materials.has_materials(needed_mats, creation_efficiency)
-		if(!has_materials)
-			disableReason += "Not enough materials. "
 		if(print_tier > max_part_tier)
-			disableReason += "This design is too advanced for this machine. "
+			disableReason = "This design is too advanced for this machine. "
+		else if(!materials.has_materials(needed_mats, creation_efficiency))
+			disableReason = "Not enough materials. "
+		else
+			for(var/obj/item/component as anything in inserted_board.flatpack_components)
+				var/diff = inserted_board.req_components[component] - get_flatpack_component_count(component)
+				if(diff)
+					disableReason = "Please insert [diff] [get_flatpack_component_name(component)]"
+					break
 		design = list(
 			"name" = initial(build.name),
 			"requiredMaterials" = cost_mats,
 			"icon" = icon2base64(icon(initial(build.icon), initial(build.icon_state), frame = 1)),
-			"canPrint" = has_materials && print_tier <= max_part_tier,
 			"disableReason" = disableReason
 		)
 	.["design"] = design
@@ -266,6 +337,10 @@
 			if(print_tier > max_part_tier)
 				say("Design too complex.")
 				return
+			for(var/obj/item/component as anything in inserted_board.flatpack_components)
+				if(inserted_board.req_components[component] != get_flatpack_component_count(component))
+					say("Not enough [get_flatpack_component_name(component)].")
+					return
 			if(!materials.has_materials(needed_mats, creation_efficiency))
 				say("Not enough materials to begin production.")
 				return
@@ -313,7 +388,9 @@
 	busy = FALSE
 
 	materials.use_materials(needed_mats, creation_efficiency)
-	new /obj/item/flatpack(drop_location(), board)
+	var/obj/item/flatpack/box = new (drop_location(), board)
+	for(var/obj/item/component as anything in flatpacked_components)
+		component.forceMove(box)
 
 	SStgui.update_uis(src)
 
@@ -322,164 +399,10 @@
 		return CLICK_ACTION_BLOCKING
 
 	try_put_in_hand(inserted_board, user)
+	var/drop = drop_location()
+	for(var/obj/item/component as anything in flatpacked_components)
+		component.forceMove(drop)
 
 	return CLICK_ACTION_SUCCESS
 
 #undef CREATE_AND_INCREMENT
-
-/obj/item/flatpack
-	name = "flatpack"
-	desc = "A box containing a compactly packed machine. Use multitool to deploy."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
-	icon_state = "flatpack"
-	density = TRUE
-	w_class = WEIGHT_CLASS_HUGE //cart time
-	throw_range = 2
-	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
-	slowdown = 2.5
-	drag_slowdown = 3.5 //use the cart stupid
-
-	/// The board we deploy
-	var/obj/item/circuitboard/machine/board
-
-/obj/item/flatpack/Initialize(mapload, obj/item/circuitboard/machine/new_board)
-	if(isnull(board) && isnull(new_board))
-		return INITIALIZE_HINT_QDEL //how
-
-	. = ..()
-
-	var/static/list/tool_behaviors = list(
-			TOOL_MULTITOOL = list(
-				SCREENTIP_CONTEXT_LMB = "Deploy",
-			),
-		)
-	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
-
-	board = !isnull(new_board) ? new_board : new board(src) // i got board
-	if(board.loc != src)
-		board.forceMove(src)
-	var/obj/machinery/build = initial(board.build_path)
-	name += " ([initial(build.name)])"
-
-/obj/item/flatpack/Destroy()
-	QDEL_NULL(board)
-	. = ..()
-
-/obj/item/flatpack/examine(mob/user)
-	. = ..()
-	if(!in_range(user, src) && !isobserver(user))
-		return
-
-	if(loc == user)
-		. += span_warning("You can't deploy while holding it in your hand.")
-	else if(isturf(loc))
-		var/turf/location = loc
-		if(!isopenturf(location))
-			. += span_warning("Can't deploy in this location")
-		else if(location.is_blocked_turf(source_atom = src))
-			. += span_warning("No space for deployment")
-
-/obj/item/flatpack/multitool_act(mob/living/user, obj/item/tool)
-	. = NONE
-
-	if(isnull(board))
-		return ITEM_INTERACT_BLOCKING
-	if(loc == user)
-		balloon_alert(user, "can't deploy in hand")
-		return ITEM_INTERACT_BLOCKING
-	else if(isturf(loc))
-		var/turf/location = loc
-		if(!isopenturf(location))
-			balloon_alert(user, "can't deploy here")
-			return ITEM_INTERACT_BLOCKING
-		else if(location.is_blocked_turf(source_atom = src))
-			balloon_alert(user, "no space for deployment")
-			return ITEM_INTERACT_BLOCKING
-	balloon_alert_to_viewers("deploying!")
-	if(!do_after(user, 1 SECONDS, target = src))
-		return ITEM_INTERACT_BLOCKING
-
-	new /obj/effect/temp_visual/mook_dust(loc)
-	var/obj/machinery/new_machine = new board.build_path(loc)
-	loc.visible_message(span_warning("[src] deploys!"))
-	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
-	new_machine.on_construction(user)
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
-
-///Maximum number of flatpacks in a cart
-#define MAX_FLAT_PACKS 3
-
-/obj/structure/flatpack_cart
-	name = "flatpack cart"
-	desc = "A cart specifically made to hold flatpacks from a flatpacker, evenly distributing weight. Convenient!"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "flatcart"
-	density = TRUE
-	opacity = FALSE
-
-/obj/structure/flatpack_cart/Initialize(mapload)
-	. = ..()
-
-	register_context()
-
-	AddElement(/datum/element/noisy_movement, volume = 45) // i hate noise
-
-/obj/structure/flatpack_cart/atom_deconstruct(disassembled)
-	for(var/atom/movable/content as anything in contents)
-		content.forceMove(drop_location())
-
-/obj/structure/flatpack_cart/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = NONE
-	if(isnull(held_item))
-		return
-
-	if(istype(held_item, /obj/item/flatpack))
-		context[SCREENTIP_CONTEXT_LMB] = "Load pack"
-		return CONTEXTUAL_SCREENTIP_SET
-
-/obj/structure/flatpack_cart/examine(mob/user)
-	. = ..()
-	if(!in_range(user, src) && !isobserver(user))
-		return
-
-	. += "From bottom to top, this cart contains:"
-	for(var/obj/item/flatpack as anything in contents)
-		. += flatpack.name
-
-/obj/structure/flatpack_cart/update_overlays()
-	. = ..()
-
-	var/offset = 0
-	for(var/item in contents)
-		var/mutable_appearance/flatpack_overlay = mutable_appearance(icon, "flatcart_flat", layer = layer + (offset * 0.01))
-		flatpack_overlay.pixel_y = offset
-		offset += 4
-		. += flatpack_overlay
-
-/obj/structure/flatpack_cart/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	user.put_in_hands(contents[length(contents)]) //topmost box
-	update_appearance(UPDATE_OVERLAYS)
-
-/obj/structure/flatpack_cart/item_interaction(mob/living/user, obj/item/attacking_item, params)
-	if(!istype(attacking_item, /obj/item/flatpack) || user.combat_mode || attacking_item.flags_1 & HOLOGRAM_1 || attacking_item.item_flags & ABSTRACT)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-
-	if (length(contents) >= MAX_FLAT_PACKS)
-		balloon_alert(user, "full!")
-		return ITEM_INTERACT_BLOCKING
-	if (!user.transferItemToLoc(attacking_item, src))
-		return ITEM_INTERACT_BLOCKING
-	update_appearance(UPDATE_OVERLAYS)
-	return ITEM_INTERACT_SUCCESS
-
-#undef MAX_FLAT_PACKS
-
-/obj/item/flatpack/flatpacker // a roundstart flatpacker is NICE you can gahdamn tell the time and everythin'
-	board = /obj/item/circuitboard/machine/flatpacker
-
-/obj/item/flatpack/mailsorter // to have a roundstart mail sorter at cargo
-	board = /obj/item/circuitboard/machine/mailsorter

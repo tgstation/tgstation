@@ -1,8 +1,6 @@
-import { filter, map, sortBy, uniq } from 'common/collections';
-import { createSearch } from 'common/string';
+import { sortBy, uniq } from 'es-toolkit';
+import { filter, map } from 'es-toolkit/compat';
 import { useState } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +10,10 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 // here's an important mental define:
@@ -53,9 +54,11 @@ export const SelectEquipment = (props) => {
       filter(outfits, (entry) => entry.category === tab),
       searchFilter,
     ),
-    (entry) => !entry.favorite,
-    (entry) => !entry.priority,
-    (entry) => entry.name,
+    [
+      (entry) => !entry.favorite,
+      (entry) => !entry.priority,
+      (entry) => entry.name,
+    ],
   );
 
   const getOutfitEntry = (current_outfit) =>
@@ -75,13 +78,13 @@ export const SelectEquipment = (props) => {
                   autoFocus
                   placeholder="Search"
                   value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
+                  onChange={setSearchText}
                 />
               </Stack.Item>
               <Stack.Item>
                 <DisplayTabs categories={categories} />
               </Stack.Item>
-              <Stack.Item mt={0} grow={1} basis={0}>
+              <Stack.Item grow={1} basis={0}>
                 <OutfitDisplay entries={visibleOutfits} currentTab={tab} />
               </Stack.Item>
             </Stack>

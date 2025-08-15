@@ -3,6 +3,7 @@
 	var/datum/hud/our_hud
 	var/actiontooltipstyle = ""
 	screen_loc = null
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 	/// The icon state of our active overlay, used to prevent re-applying identical overlays
 	var/active_overlay_icon_state
@@ -20,6 +21,8 @@
 	var/datum/weakref/last_hovored_ref
 	/// overlay for keybind maptext
 	var/mutable_appearance/keybind_maptext
+	/// if observers can trigger this action at any time
+	var/allow_observer_click = FALSE
 
 /atom/movable/screen/movable/action_button/Destroy()
 	if(our_hud)
@@ -35,6 +38,8 @@
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
 	if(isobserver(user))
 		var/mob/dead/observer/dead_mob = user
+		if(allow_observer_click)
+			return TRUE
 		if(dead_mob.observetarget) // Observers can only click on action buttons if they're not observing something
 			return FALSE
 
@@ -46,12 +51,12 @@
 	return TRUE
 
 /atom/movable/screen/movable/action_button/Click(location,control,params)
-	if (!can_use(usr))
+	if(!can_use(usr))
 		return FALSE
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		begin_creating_bind(usr)
+		linked_action?.begin_creating_bind(src, usr)
 		return TRUE
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		var/datum/hud/our_hud = usr.hud_used
@@ -63,16 +68,8 @@
 	var/trigger_flags
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		trigger_flags |= TRIGGER_SECONDARY_ACTION
-	linked_action.Trigger(trigger_flags = trigger_flags)
+	linked_action.Trigger(usr, trigger_flags = trigger_flags)
 	return TRUE
-
-/atom/movable/screen/movable/action_button/proc/begin_creating_bind(mob/user)
-	if(!isnull(linked_action.full_key))
-		linked_action.full_key = null
-		linked_action.update_button_status(src)
-		return
-	linked_action.full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
-	linked_action.update_button_status(src)
 
 // Entered and Exited won't fire while you're dragging something, because you're still "holding" it
 // Very much byond logic, but I want nice behavior, so we fake it with drag
@@ -109,32 +106,37 @@
 	last_hovored_ref = null
 	if(!can_use(usr))
 		return
+
 	var/datum/hud/our_hud = usr.hud_used
 	if(over_object == src)
 		our_hud.hide_landings()
 		return
+
 	if(istype(over_object, /atom/movable/screen/action_landing))
 		var/atom/movable/screen/action_landing/reserve = over_object
 		reserve.hit_by(src)
-		our_hud.hide_landings()
 		save_position()
+		our_hud.hide_landings()
 		return
 
-	our_hud.hide_landings()
 	if(istype(over_object, /atom/movable/screen/button_palette) || istype(over_object, /atom/movable/screen/palette_scroll))
 		our_hud.position_action(src, SCRN_OBJ_IN_PALETTE)
 		save_position()
+		our_hud.hide_landings()
 		return
+
 	if(istype(over_object, /atom/movable/screen/movable/action_button))
 		var/atom/movable/screen/movable/action_button/button = over_object
 		our_hud.position_action_relative(src, button)
 		save_position()
+		our_hud.hide_landings()
 		return
 
 	. = ..()
 
 	our_hud.position_action(src, screen_loc)
 	save_position()
+	our_hud.hide_landings()
 
 /atom/movable/screen/movable/action_button/proc/save_position()
 	var/mob/user = our_hud.mymob
@@ -269,6 +271,7 @@
 	icon = 'icons/hud/64x16_actions.dmi'
 	icon_state = "screen_gen_palette"
 	screen_loc = ui_action_palette
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/hud/our_hud
 	var/expanded = FALSE
 	/// Id of any currently running timers that set our color matrix
@@ -288,6 +291,7 @@
 /atom/movable/screen/button_palette/proc/set_hud(datum/hud/our_hud)
 	src.our_hud = our_hud
 	refresh_owner()
+	disable_landing() // If our hud already has elements, don't force hide us
 
 /atom/movable/screen/button_palette/update_name(updates)
 	. = ..()
@@ -308,6 +312,21 @@
 	var/ui_name = ui_paths[length(ui_paths)]
 
 	icon_state = "[ui_name]_palette"
+
+/atom/movable/screen/button_palette/proc/activate_landing()
+	// Reveal ourselves to the user
+	invisibility = INVISIBILITY_NONE
+
+/atom/movable/screen/button_palette/proc/disable_landing()
+	// If we have no elements in the palette, hide your ugly self please
+	if (!length(our_hud.palette_actions?.actions) && !length(our_hud.floating_actions))
+		invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/button_palette/proc/update_state()
+	if (length(our_hud.floating_actions))
+		activate_landing()
+	else
+		disable_landing()
 
 /atom/movable/screen/button_palette/MouseEntered(location, control, params)
 	. = ..()
@@ -394,6 +413,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 /atom/movable/screen/palette_scroll
 	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = ui_palette_scroll
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// How should we move the palette's actions?
 	/// Positive scrolls down the list, negative scrolls back
 	var/scroll_direction = 0

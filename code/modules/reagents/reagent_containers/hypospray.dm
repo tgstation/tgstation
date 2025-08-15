@@ -55,7 +55,7 @@
 				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
 			else
 				reagents.expose(affected_mob, INJECT, fraction)
-				trans = reagents.copy_to(affected_mob, amount_per_transfer_from_this)
+				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, methods = INJECT, copy_only = TRUE)
 			to_chat(user, span_notice("[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src]."))
 			log_combat(user, affected_mob, "injected", src, "([contained])")
 		return TRUE
@@ -279,7 +279,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	name = "luxury medipen"
-	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard environments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"
@@ -289,11 +289,11 @@
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
-	desc = "A rapid way to save a person from a critical injury state!"
+	desc = "A rapid way to save a person from a critical injury state! Additionally contains a powerful coagulant to prevent blood loss."
 	icon_state = "atropen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
-	list_reagents = list(/datum/reagent/medicine/atropine = 10)
+	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"
@@ -344,7 +344,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/mutadone
 	name = "mutadone autoinjector"
-	desc = "An mutadone medipen to assist in curing genetic errors in one single injector."
+	desc = "A mutadone medipen to assist in curing genetic errors in one single injector."
 	icon_state = "penacid"
 	inhand_icon_state = "penacid"
 	base_icon_state = "penacid"

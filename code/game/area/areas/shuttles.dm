@@ -17,14 +17,21 @@
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 
-/area/shuttle/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+/area/shuttle/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	. = ..()
-	if(length(new_baseturfs) > 1 || fake_turf_type)
-		return // More complicated larger changes indicate this isn't a player
-	if(ispath(new_baseturfs[1], /turf/open/floor/plating))
+	if(ispath(added_layer, /turf/open/floor/plating))
+		new_baseturfs.Add(/turf/baseturf_skipover/shuttle)
+		. |= CHANGETURF_GENERATE_SHUTTLE_CEILING
+	else if(ispath(new_baseturfs[1], /turf/open/floor/plating))
 		new_baseturfs.Insert(1, /turf/baseturf_skipover/shuttle)
+		. |= CHANGETURF_GENERATE_SHUTTLE_CEILING
 
-////////////////////////////Multi-area shuttles////////////////////////////
+////////////////////////////Custom Shuttles////////////////////////////
+
+/area/shuttle/custom
+	requires_power = TRUE
+
+////////////////////////////Multi-area shuttles//////////////////////////////
 
 ////////////////////////////Syndicate infiltrator////////////////////////////
 
@@ -121,8 +128,8 @@
 
 /area/shuttle/arrival/on_joining_game(mob/living/boarder)
 	if(SSshuttle.arrivals?.mode == SHUTTLE_CALL)
-		var/atom/movable/screen/splash/Spl = new(null, boarder.client, TRUE)
-		Spl.Fade(TRUE)
+		var/atom/movable/screen/splash/Spl = new(null, null, boarder.client, TRUE)
+		Spl.fade(TRUE)
 		boarder.playsound_local(get_turf(boarder), 'sound/announcer/ApproachingTG.ogg', 25)
 	boarder.update_parallax_teleport()
 

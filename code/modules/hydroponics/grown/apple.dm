@@ -29,6 +29,36 @@
 /obj/item/food/grown/apple/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/appleslice, 5, 20, screentip_verb = "Slice")
 
+/obj/item/food/grown/apple/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if (.) //it's been caught.
+		return
+	if (!ishuman(hit_atom))
+		return
+	var/mob/living/carbon/human/einstein = hit_atom
+	var/obj/item/organ/liver/liver_organ = einstein.get_organ_slot(ORGAN_SLOT_LIVER)
+	if (isnull(liver_organ))
+		return
+	if (HAS_TRAIT(liver_organ, TRAIT_MEDICAL_METABOLISM))
+		einstein.apply_damage(2, BRUTE, throwingdatum.target_zone)
+	else if (HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && throwingdatum.target_zone == BODY_ZONE_HEAD && prob(2))
+		gravity_reminder(einstein)
+
+/obj/item/food/grown/apple/onZImpact(turf/impacted_turf, levels, impact_flags)
+	. = ..()
+	var/mob/living/carbon/human/einstein = locate(/mob/living/carbon/human) in impacted_turf
+	if (isnull(einstein))
+		return
+	var/obj/item/organ/liver/liver_organ = einstein.get_organ_slot(ORGAN_SLOT_LIVER)
+	if (liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(40))
+		gravity_reminder(einstein)
+
+/// Provide an important insight
+/obj/item/food/grown/apple/proc/gravity_reminder(mob/living/einstein)
+	einstein.do_alert_animation()
+	playsound(einstein, 'sound/machines/chime.ogg', 50, TRUE)
+	einstein.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "apple inspiration")
+
 // Gold Apple
 /obj/item/seeds/apple/gold
 	name = "golden apple seed pack"

@@ -49,7 +49,7 @@
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
 			if(has_job_loyalties && (H.mind.assigned_role.departments_bitflags & job_loyalties))
 				inspired += H
-			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
+			else if(has_role_loyalties && length(H.mind.get_special_roles() & role_loyalties))
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
@@ -85,8 +85,6 @@
 	desc = "The banner of Securistan, ruling the station with an iron fist."
 	icon_state = "banner_security"
 	inhand_icon_state = "banner_security"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
 /obj/item/banner/security/Initialize(mapload)
@@ -99,7 +97,7 @@
 /datum/crafting_recipe/security_banner
 	name = "Securistan Banner"
 	result = /obj/item/banner/security/mundane
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/security/officer = 1)
 	category = CAT_MISC
@@ -109,8 +107,6 @@
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
 	inhand_icon_state = "banner_medical"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "No wounds cannot be healed!"
 
 /obj/item/banner/medical/Initialize(mapload)
@@ -126,7 +122,7 @@
 /datum/crafting_recipe/medical_banner
 	name = "Meditopia Banner"
 	result = /obj/item/banner/medical/mundane
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/medical/doctor = 1)
 	category = CAT_MISC
@@ -144,8 +140,6 @@
 	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
 	icon_state = "banner_science"
 	inhand_icon_state = "banner_science"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "For Cuban Pete!"
 
 /obj/item/banner/science/Initialize(mapload)
@@ -161,7 +155,7 @@
 /datum/crafting_recipe/science_banner
 	name = "Sciencia Banner"
 	result = /obj/item/banner/science/mundane
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/rnd/scientist = 1)
 	category = CAT_MISC
@@ -171,8 +165,6 @@
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
 	icon_state = "banner_cargo"
 	inhand_icon_state = "banner_cargo"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "Hail Cargonia!"
 
 /obj/item/banner/cargo/Initialize(mapload)
@@ -185,7 +177,7 @@
 /datum/crafting_recipe/cargo_banner
 	name = "Cargonia Banner"
 	result = /obj/item/banner/cargo/mundane
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/cargo/tech = 1)
 	category = CAT_MISC
@@ -195,8 +187,6 @@
 	desc = "The banner of Engitopia, wielders of limitless power."
 	icon_state = "banner_engineering"
 	inhand_icon_state = "banner_engineering"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "All hail lord Singuloth!!"
 
 /obj/item/banner/engineering/Initialize(mapload)
@@ -212,14 +202,14 @@
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
 	result = /obj/item/banner/engineering/mundane
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/engineering/engineer = 1)
 	category = CAT_MISC
 
 /obj/item/banner/command
 	name = "command banner"
-	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
+	desc = "The banner of Command, a staunch and ancient line of bureaucratic kings and queens."
 	//No icon state here since the default one is the NT banner
 	warcry = "Hail Nanotrasen!"
 
@@ -236,7 +226,7 @@
 /datum/crafting_recipe/command_banner
 	name = "Command Banner"
 	result = /obj/item/banner/command/mundane
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/obj/item/stack/rods = 2,
 				/obj/item/clothing/under/rank/captain/parade = 1)
 	category = CAT_MISC
@@ -337,6 +327,7 @@
 	desc = "It's a stick..?"
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "godstaff-red"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	var/conversion_color = "#ffffff"
@@ -410,25 +401,19 @@
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
 
-/obj/item/storage/box/itemset/crusader/blue/PopulateContents()
-	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)
-	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
-	new /obj/item/clothing/gloves/plate/blue(src)
-	new /obj/item/clothing/shoes/plate/blue(src)
-
-/obj/item/storage/box/itemset/crusader/red/PopulateContents()
-	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/red(src)
-	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
-	new /obj/item/clothing/gloves/plate/red(src)
-	new /obj/item/clothing/shoes/plate/red(src)
-
 /obj/item/claymore/weak
 	desc = "This one is rusted."
 	force = 24
 	armour_penetration = 10
+
+/obj/item/claymore/weak/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -9)
 
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	force = 15
 	block_chance = 30
 	armour_penetration = 5
+
+/obj/item/claymore/weak/ceremonial/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)

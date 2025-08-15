@@ -22,6 +22,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	health = 25
 	maxHealth = 25
+	max_stamina = 120
 	pressure_resistance = 200
 	combat_mode = TRUE
 	obj_damage = 50
@@ -40,6 +41,7 @@
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
+	initial_language_holder = /datum/language_holder/carp
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
@@ -59,7 +61,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack
+		/datum/pet_command/attack,
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -104,6 +106,7 @@
 		AddElement(/datum/element/ai_flee_while_injured)
 	setup_eating()
 
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	AddComponent(/datum/component/profound_fisher)
@@ -118,6 +121,10 @@
 	teleport.Grant(src)
 	ai_controller.set_blackboard_key(BB_CARP_RIFT, teleport)
 	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETING_WHITELIST, allowed_obstacle_targets)
+
+/mob/living/basic/carp/Destroy()
+	QDEL_NULL(teleport)
+	return ..()
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
@@ -172,13 +179,17 @@
  * Holographic carp from the holodeck
  */
 /mob/living/basic/carp/holographic
-	icon_state = "holocarp"
+	icon_state = "base_friend"
 	icon_living = "holocarp"
 	gold_core_spawnable = NO_SPAWN
 	greyscale_config = NONE
 	basic_mob_flags = DEL_ON_DEATH
 	cell_line = NONE
 	regenerate_colour = "#ffffff"
+
+/mob/living/basic/carp/holographic/Initialize(mapload, mob/tamer)
+	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 
 /// Holocarp don't eat food
 /mob/living/basic/carp/holographic/setup_eating()
@@ -192,6 +203,7 @@
 	gold_core_spawnable = NO_SPAWN
 	gender = FEMALE // Both current existing pet carp are female but you can remove this if someone else gets a male one?
 	ai_controller = /datum/ai_controller/basic_controller/carp/pet
+	initial_language_holder = /datum/language_holder/carp/hear_common
 
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()
@@ -209,10 +221,10 @@
 	faction = list(FACTION_NEUTRAL)
 	maxHealth = 200
 	health = 200
+	icon_state = "magicarp"
 	icon_dead = "magicarp_dead"
 	icon_gib = "magicarp_gib"
 	icon_living = "magicarp"
-	icon_state = "magicarp"
 	greyscale_config = NONE
 
 /// Boosted chance for Cayenne to be silver
@@ -283,7 +295,6 @@
 /mob/living/basic/carp/passive
 	name = "false carp"
 	desc = "A close relative of the space carp which is entirely toothless and feeds by stealing its cousin's leftovers."
-
 	icon_state = "base_friend"
 	icon_living = "base_friend"
 	icon_dead = "base_friend_dead"

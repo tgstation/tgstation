@@ -1,32 +1,35 @@
-import { classes } from '../../../common/react';
-import { useBackend } from '../../backend';
-import { Box, Button } from '../../components';
-import { DataCase } from './DataTypes';
+import { Box, Button } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-type BoardTabsData = {
+import { useBackend } from '../../backend';
+import type { DataCase } from './types';
+
+type Data = {
   cases: DataCase[];
   current_case: number;
 };
 
-const BoardTab = (props) => {
-  const { color, selected, onClick = () => {}, children } = props;
+function BoardTab(props) {
+  const { color, selected, onClick, children } = props;
+
   return (
     <Box
       onClick={onClick}
       className={classes([
         'BoardTab',
         selected ? 'BoardTab__Selected' : 'BoardTab__Perspective',
-        !selected && 'BoardTab__' + color,
+        !selected && `BoardTab__${color}`,
       ])}
     >
       <Box className={'BoardTab__Contain'}>{children}</Box>
     </Box>
   );
-};
+}
 
-export const BoardTabs = (props) => {
-  const { act, data } = useBackend<BoardTabsData>();
+export function BoardTabs(props) {
+  const { act, data } = useBackend<Data>();
   const { cases, current_case } = data;
+
   return (
     <Box className="BoardTabs">
       {cases?.map((item, index) => (
@@ -60,4 +63,4 @@ export const BoardTabs = (props) => {
       <Button color="transparent" icon="plus" onClick={() => act('add_case')} />
     </Box>
   );
-};
+}

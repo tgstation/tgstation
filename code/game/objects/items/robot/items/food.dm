@@ -237,19 +237,19 @@
 	var/head_color
 
 /obj/projectile/bullet/lollipop/harmful
-	embed_type = /datum/embed_data/lollipop
+	embed_type = /datum/embedding/lollipop
 	damage = 10
 	shrapnel_type = /obj/item/food/lollipop/cyborg
 	embed_falloff_tile = 0
 
-/datum/embed_data/lollipop
+/datum/embedding/lollipop
 	embed_chance = 35
 	fall_chance = 2
 	jostle_chance = 0
 	ignore_throwspeed_threshold = TRUE
 	pain_stam_pct = 0.5
 	pain_mult = 3
-	rip_time = 10
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/lollipop/Initialize(mapload)
 	. = ..()
@@ -288,9 +288,5 @@
 	cooking.ui_interact(user)
 
 /obj/item/borg/cookbook/dropped(mob/user, silent)
-	SStgui.close_uis(cooking)
-	return ..()
-
-/obj/item/borg/cookbook/cyborg_unequip(mob/user)
 	SStgui.close_uis(cooking)
 	return ..()

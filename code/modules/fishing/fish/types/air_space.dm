@@ -51,7 +51,7 @@
 /obj/item/fish/bumpy
 	name = "bump-fish"
 	fish_id = "bumpy"
-	desc = "An misshapen fish-thing all covered in stubby little tendrils"
+	desc = "A misshapen fish-thing all covered in stubby little tendrils."
 	icon_state = "bumpy"
 	sprite_height = 4
 	sprite_width = 5
@@ -89,6 +89,7 @@
 	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+	compatible_types = list(/obj/item/fish/starfish/chrystarfish)
 	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/starfish/Initialize(mapload, apply_qualities = TRUE)
@@ -97,12 +98,25 @@
 
 /obj/item/fish/starfish/update_overlays()
 	. = ..()
+	. += add_emissive()
+
+/obj/item/fish/starfish/proc/add_emissive()
 	if(status == FISH_ALIVE)
-		. += emissive_appearance(icon, "starfish_emissive", src)
+		return emissive_appearance(icon, "starfish_emissive", src, effect_type = EMISSIVE_NO_BLOOM)
 
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()
 	DO_FLOATING_ANIM(src)
+
+/obj/item/fish/starfish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src], and looks upwards..."))
+	user.say("I must go. My people need me.", forced = "starfish suicide")
+	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/starfish/proc/ascension(mob/living/user)
+	user.apply_status_effect(/datum/status_effect/go_away/deletes_mob)
+	qdel(src)
 
 /obj/item/fish/baby_carp
 	name = "baby space carp"
@@ -149,13 +163,44 @@
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 	update_appearance(UPDATE_OVERLAYS)
 
+/obj/item/fish/baby_carp/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole!"))
+	src.forceMove(user)
+	if(status == FISH_DEAD)
+		user.emote("gasp")
+		user.visible_message(span_suicide("[user] chokes on [src] and dies!"))
+		return OXYLOSS
+
+	// the fish grows
+	addtimer(CALLBACK(src, PROC_REF(gestation), user), 20 SECONDS)
+	user.visible_message(span_suicide("[user] starts growing unnaturally..."))
+
+	var/matrix/M = matrix()
+	M.Scale(1.8, 1.2)
+	animate(user, time = 20 SECONDS, transform = M, easing = SINE_EASING)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/baby_carp/proc/gestation(mob/living/user)
+	if(QDELETED(user) || QDELETED(src))
+		return
+	// carp grow big and strong inside the nutritious innards of the human
+	var/mob/living/basic/carp/mega/babby = new(get_turf(user))
+	babby.name = user.name + " Jr."
+
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+	if(chest)
+		babby.set_greyscale(chest.species_color) // this isn't working. why isnt this working
+
+	user.gib()
+	qdel(src)
+
 /obj/item/fish/baby_carp/update_overlays()
 	. = ..()
 	var/mutable_appearance/eyes = mutable_appearance(icon, "baby_carp_eyes")
 	if(status == FISH_DEAD)
 		eyes.icon_state += "_dead"
 	else
-		eyes.appearance_flags = RESET_COLOR
+		eyes.appearance_flags = RESET_COLOR|KEEP_APART
 	. += eyes
 
 ///Determines the speed at which the carp grows based on how big it's
@@ -170,7 +215,7 @@
 /obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
-	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
+	if(get_health_percentage() <= 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		return COMPONENT_DONT_GROW
 
 	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
@@ -185,3 +230,13 @@
 	SIGNAL_HANDLER
 	//yes, this means that if we use a spraycan on the fish, the resulting space carp will be of spraycan color
 	result.set_greyscale(colors = list(color))
+
+#define PERSISTENCE_FISH_CARP_COLOR "carp_color"
+
+/obj/item/fish/baby_carp/persistence_save(list/data)
+	data[PERSISTENCE_FISH_CARP_COLOR] = color
+
+/obj/item/fish/baby_carp/persistence_load(list/data)
+	add_atom_colour(data[PERSISTENCE_FISH_CARP_COLOR], FIXED_COLOUR_PRIORITY)
+
+#undef PERSISTENCE_FISH_CARP_COLOR

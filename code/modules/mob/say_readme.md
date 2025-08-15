@@ -1,6 +1,7 @@
 # Say code basics
 
 This document is a little dated but I believe it's accurate mostly (oranges 2019)
+
 # MIAUW'S SAY REWRITE
 
 This is a basic explanation of how say() works. Read this if you don't understand something.
@@ -16,7 +17,9 @@ To have things react when other things speak around them, add the HEAR_1 flag to
 override their Hear() proc.
 
 # PROCS & VARIABLES
+
 Here follows a list of say()-related procs and variables.
+
 ```
 global procs
 	get_radio_span(freq)
@@ -50,7 +53,7 @@ global procs
 		languages live either in datum/languages_holder or in the mind.
 
 	verb_say/verb_ask/verb_exclaim/verb_yell/verb_sing
-		These determine what the verb is for their respective action. Used in say_quote().
+		These determine what the verb is for their respective action. Used in generate_messagepart().
 
 	say(message, bubble_type, var/list/spans, sanitize, datum/language/language, ignore_spam, forced)
 		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
@@ -79,15 +82,15 @@ global procs
 		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
 		Called on the hearer.
 
-	say_quote(input, spans, list/message_mods)
-		Adds a verb and quotes to a message. Also attaches span classes to a message.
+	generate_messagepart(input, spans, list/message_mods)
+		Either adds a lone custom say verb, or a verb and quotes to a message. Also attaches span classes to a message.
 		Verbs are determined by verb_say/verb_ask/verb_yell/verb_sing variables. Called on the speaker.
 
 /mob
 	say_dead(message)
 		Sends a message to all dead people. Does not use Hear().
 
-	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods)
+	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, freq_name, freq_color, spans, list/message_mods)
 		Composes the message mobs see on their screen when they hear something.
 
 	compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -142,6 +145,7 @@ global procs
 		Intercepts say() after it's done all of it's message building.
 		If this returns true we stop say(), if it returns false we keep going
 ```
+
 # RADIOS
 
 I did not want to interfere with radios too much, but I sort of had to.
@@ -159,8 +163,10 @@ To add a radio, simply use add_radio(radio, frequency). To remove a radio, use r
 To remove a radio from ALL frequencies, use remove_radio_all(radio).
 
 ## VIRTUAL SPEAKERS:
+
 Virtual speakers are simply atom/movables with a few extra variables.
 If radio_freq is not null, the code will rely on the fact that the speaker is virtual. This means that several procs will return something:
+
 ```
 	(all of these procs are defined at the atom/movable level and return "" at that level.)
 	GetJob()
@@ -172,6 +178,7 @@ If radio_freq is not null, the code will rely on the fact that the speaker is vi
 	GetRadio()
 		Returns the radio that was spoken through by the source. Needed for AI tracking.
 ```
+
 This is fairly hacky, but it means that I can advoid using istypes. It's mainly relevant for AI tracking and AI job display.
 
 That's all, folks!

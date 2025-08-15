@@ -47,6 +47,8 @@
 #define MATCONTAINER_ANY_INTENT (1<<2)
 ///If the user won't receive a warning when attacking the container with an unallowed item.
 #define MATCONTAINER_SILENT (1<<3)
+///Alloys won't be disassembled in its components when inserted.
+#define MATCONTAINER_ACCEPT_ALLOYS (1<<4)
 
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
 #define MATERIAL_EFFECTS (1<<0)
@@ -60,6 +62,11 @@
 #define MATERIAL_GREYSCALE (1<<4)
 /// Materials like plasteel and alien alloy won't apply slowdowns.
 #define MATERIAL_NO_SLOWDOWN (1<<5)
+/**
+ * This item is not affected by the standard food-related effects of materials like meat and pizza.
+ * Necessary for the edible component counterparts, on_edible_applied() and on_edible_removed()
+ */
+#define MATERIAL_NO_EDIBILITY (1<<6)
 
 //Special return values of [/datum/component/material_container/insert_item]
 /// No material was found inside them item
@@ -102,5 +109,5 @@
 #define MATERIAL_LIST_OPTIMAL_AMOUNT "optimal_amount"
 ///The key to access the multiplier used to selectively control effects and modifiers of a material.
 #define MATERIAL_LIST_MULTIPLIER "multiplier"
-///A macro that ensures some multiplicative modifiers higher than 1 don't become lower than 1 and viceversa because of the multiplier.
+///A macro that ensures some multiplicative modifiers higher than 1 don't become lower than 1 and vice-versa because of the multiplier.
 #define GET_MATERIAL_MODIFIER(modifier, multiplier) (modifier >= 1 ? 1 + ((modifier) - 1) * (multiplier) : (modifier)**(multiplier))

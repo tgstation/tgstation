@@ -53,7 +53,7 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/poster/attackby(obj/item/I, mob/user, params)
+/obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/shard))
 		return ..()
 
@@ -65,7 +65,7 @@
 		return
 
 	poster_structure.trap = WEAKREF(I)
-	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	to_chat(user, span_notice("You conceal \the [I] inside the rolled up poster."))
 
 /obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -172,7 +172,7 @@
 	desc = holi_data.poster_desc
 	icon_state = holi_data.poster_icon
 
-/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, params)
+/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(tool.tool_behaviour == TOOL_WIRECUTTER)
 		tool.play_tool_sound(src, 100)
 		if(ruined)
@@ -195,17 +195,16 @@
 		return FALSE
 	return TRUE
 
+// HO-HO-HOHOHO HU HU-HU HU-HU
 /obj/structure/sign/poster/proc/spring_trap(mob/user)
 	var/obj/item/shard/payload = trap?.resolve()
 	if (!payload)
 		return
 
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
-	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), forced = TRUE))
+	if(!can_embed_trap(user) || !payload.force_embed(user, user.get_active_hand()))
 		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
 		payload.forceMove(user.drop_location())
-	else
-		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
@@ -215,10 +214,15 @@
 /obj/structure/sign/poster/proc/roll_and_drop(atom/location, mob/user)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/rolled_poster = new poster_item_type(location, src) // /obj/structure/sign/poster/wanted/roll_and_drop() has some snowflake handling due to icon memes, if you make a major change to this, don't forget to update it too. <3
+	var/obj/item/poster/rolled_poster = return_to_poster_item(location, src)
 	if(!user?.put_in_hands(rolled_poster))
 		forceMove(rolled_poster)
 	return rolled_poster
+
+
+/// Re-creates the poster item from the poster structure
+/obj/structure/sign/poster/proc/return_to_poster_item(atom/location)
+	return new poster_item_type(location, src)
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/proc/place_poster(obj/item/poster/rolled_poster, mob/user)
@@ -296,5 +300,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
 	)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+
+/obj/structure/sign/poster/greenscreen
+	name = "greenscreen"
+	desc = "Used to create a convincing illusion of a different background."
+	icon_state = "greenscreen"
+	poster_item_name = "greenscreen"
+	poster_item_desc = "Used to create a convincing illusion of a different background."
+	never_random = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/greenscreen, 32)
 
 #undef PLACE_SPEED

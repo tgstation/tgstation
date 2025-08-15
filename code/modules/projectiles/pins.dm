@@ -20,6 +20,11 @@
 	var/pin_removable = TRUE
 	var/obj/item/gun/gun
 
+/obj/item/firing_pin/Destroy()
+	if(gun)
+		gun_remove()
+	return ..()
+
 /obj/item/firing_pin/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isgun(interacting_with))
 		return NONE
@@ -57,10 +62,12 @@
 	gun = new_gun
 	forceMove(gun)
 	gun.pin = src
+	SEND_SIGNAL(gun, COMSIG_GUN_PIN_INSERTED, src, user)
 	return TRUE
 
 /obj/item/firing_pin/proc/gun_remove(mob/living/user)
 	gun.pin = null
+	SEND_SIGNAL(gun, COMSIG_GUN_PIN_REMOVED, src, user)
 	gun = null
 	return
 
@@ -259,7 +266,7 @@
 	gun.desc = gun::desc
 	..()
 
-/obj/item/firing_pin/paywall/attackby(obj/item/M, mob/living/user, params)
+/obj/item/firing_pin/paywall/attackby(obj/item/M, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(isidcard(M))
 		var/obj/item/card/id/id = M
 		if(!id.registered_account)
@@ -331,7 +338,7 @@
 // Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
 /obj/item/firing_pin/explorer
 	name = "outback firing pin"
-	desc = "A firing pin used by the austrailian defense force, retrofit to prevent weapon discharge on the station."
+	desc = "A firing pin used by the Australian defense force, retrofit to prevent weapon discharge on the station."
 	icon_state = "firing_pin_explorer"
 	fail_message = "cannot fire while on station, mate!"
 
@@ -380,9 +387,3 @@
 		playsound(src, SFX_SCREECH, 75, TRUE)
 		return FALSE
 	return TRUE
-
-/obj/item/firing_pin/Destroy()
-	if(gun)
-		gun.pin = null
-		gun = null
-	return ..()

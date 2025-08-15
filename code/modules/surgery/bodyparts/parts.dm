@@ -94,6 +94,14 @@
 	acceptable_bodyshape = BODYSHAPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 
+/obj/item/bodypart/chest/monkey/Initialize(mapload)
+	worn_neck_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_NECK,
+		offset_y = list("south" = 1),
+	)
+	return ..()
+
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -105,6 +113,7 @@
 	should_draw_greyscale = FALSE
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = LIMB_MAX_HP_ALIEN_CORE
+	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	acceptable_bodyshape = BODYSHAPE_HUMANOID
 	wing_types = null
 
@@ -117,6 +126,7 @@
 	should_draw_greyscale = FALSE
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = LIMB_MAX_HP_ALIEN_LARVA
+	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
 	wing_types = null
@@ -132,9 +142,12 @@
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	can_be_disabled = TRUE
 	unarmed_attack_verbs = list("punch") /// The classic punch, wonderfully classic and completely random
+	unarmed_attack_verbs_continuous = list("punches")
 	grappled_attack_verb = "pummel"
+	grappled_attack_verb_continuous = "pummels"
 	unarmed_damage_low = 5
 	unarmed_damage_high = 10
+	unarmed_pummeling_bonus = 1.5
 	body_zone = BODY_ZONE_L_ARM
 	/// Datum describing how to offset things worn on the hands of this arm, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_glove_offset
@@ -280,6 +293,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
 	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
+	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE
 	appendage_noun = "scythe-like hand"
 
@@ -378,6 +392,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
 	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
+	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE
 	appendage_noun = "scythe-like hand"
 
@@ -393,6 +408,7 @@
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
 	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs_continuous = list("kicks")
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15
@@ -512,6 +528,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
 	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
+	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right
@@ -602,4 +619,5 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
 	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
+	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE

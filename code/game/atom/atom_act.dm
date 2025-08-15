@@ -150,7 +150,7 @@
 		step(harmed_atom, REVERSE_DIR(harmed_atom.dir))
 
 ///Handle the atom being slipped over
-/atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, force_drop)
+/atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, daze, force_drop)
 	return
 
 ///Used for making a sound when a mob involuntarily falls into the ground.

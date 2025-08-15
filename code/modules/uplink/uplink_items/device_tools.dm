@@ -14,12 +14,28 @@
 	surplus = 50
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
-/datum/uplink_item/device_tools/surgerybag
-	name = "Syndicate Surgery Duffel Bag"
-	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
-	cost = 4
+/datum/uplink_item/device_tools/duffelbag
+	name = "Suspicous Duffel Bag"
+	desc = "A large duffel bag for holding extra tactical supplies. It contains an oiled plastitanium zipper for maximum speed tactical zipping, \
+			and is better balanced on your back than an average duffelbag. Can hold two bulky items!"
+	item = /obj/item/storage/backpack/duffelbag/syndie
+	cost = 2
+	surplus = 50
+
+/datum/uplink_item/device_tools/tactical_medkit
+	name = "combat first aid kit"
+	desc = "An medkit meant for combat support, it contains. Two medicated sutures and mesh, Gauze, Advanced health analyzer, And as last atropine medipen"
+	item = /obj/item/storage/medkit/tactical_lite
+	cost = 3
+	surplus = 72
+	purchasable_from = UPLINK_TRAITORS
+
+/datum/uplink_item/device_tools/surgery_syndie
+	name = "Full Syndicate Surgery Medkit"
+	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
+			a syringe, and some sedatives."
+	item = /obj/item/storage/medkit/surgery_syndie
+	cost = 3
 	surplus = 66
 
 /datum/uplink_item/device_tools/encryptionkey
@@ -36,8 +52,10 @@
 	name = "Syndicate Tome"
 	desc = "Using rare artifacts acquired at great cost, the Syndicate has reverse engineered \
 			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
-			of the originals, these inferior copies are still quite useful, being able to provide \
-			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
+			of the originals, these inferior copies are still quite useful. \
+			Often used by agents to protect themselves against foes who rely on magic while it's held. \
+			Though, it can be used to heal and harm other people with decent effectiveness much like a regular bible. \
+			Can also be used in-hand to 'claim' it, granting you priest-like abilities -- no training required!"
 	item = /obj/item/book/bible/syndicate
 	cost = 5
 
@@ -256,6 +274,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
+	limited_stock = 1
 
 /datum/uplink_item/device_tools/syndicate_contacts
 	name = "Polarized Contact Lenses"

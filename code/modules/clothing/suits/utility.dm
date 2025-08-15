@@ -35,8 +35,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	strip_delay = 60
-	equip_delay_other = 60
+	strip_delay = 6 SECONDS
+	equip_delay_other = 6 SECONDS
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/utility/fire/Initialize(mapload)
@@ -56,7 +56,7 @@
 /obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
@@ -99,15 +99,14 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	strip_delay = 70
-	equip_delay_other = 70
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
 /obj/item/clothing/head/utility/bomb_hood/Initialize(mapload)
 	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+	AddComponent(/datum/component/clothing_dirt, "bomb_dirt")
 	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
@@ -135,8 +134,8 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	strip_delay = 70
-	equip_delay_other = 70
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
 	resistance_flags = NONE
 
 /obj/item/clothing/suit/utility/bomb_suit/Initialize(mapload)
@@ -180,26 +179,22 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	armor_type = /datum/armor/utility_radiation
-	strip_delay = 60
-	equip_delay_other = 60
+	strip_delay = 6 SECONDS
+	equip_delay_other = 6 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
 /obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 	AddComponent(/datum/component/adjust_fishing_difficulty, 7)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/clothing_dirt, "rad_dirt")
 
 /datum/armor/utility_radiation
 	bio = 60
 	fire = 30
 	acid = 30
-
-/obj/item/clothing/head/utility/radiation/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/utility/radiation
 	name = "radiation suit"
@@ -216,8 +211,8 @@
 		)
 	slowdown = 1.5
 	armor_type = /datum/armor/utility_radiation
-	strip_delay = 60
-	equip_delay_other = 60
+	strip_delay = 6 SECONDS
+	equip_delay_other = 6 SECONDS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 

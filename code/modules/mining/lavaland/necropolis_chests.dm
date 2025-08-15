@@ -16,7 +16,7 @@
 	/// var to check if it got opened by a key
 	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, params)
+/obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return ..()
 	var/loot = rand(1,21)
@@ -27,7 +27,7 @@
 		if(2)
 			new /obj/item/soulstone/anybody/mining(src)
 		if(3)
-			new /obj/item/organ/cyberimp/arm/shard/katana(src)
+			new /obj/item/organ/cyberimp/arm/toolkit/shard/katana(src)
 		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(5)
@@ -123,8 +123,8 @@
 	icon_state = "necro_bubblegum"
 	base_icon_state = "necro_bubblegum"
 	lid_icon_state = "necro_bubblegum_lid"
-	lid_x = -26
-	lid_y = 2
+	lid_w = -26
+	lid_z = 2
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)
@@ -155,6 +155,7 @@
 	var/random_crystal = pick(choices)
 	new random_crystal(src)
 	new /obj/item/organ/vocal_cords/colossus(src)
+	new /obj/item/cain_and_abel(src)
 
 /obj/structure/closet/crate/necropolis/colossus/crusher
 	name = "angelic colossus chest"

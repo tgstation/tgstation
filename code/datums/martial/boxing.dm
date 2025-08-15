@@ -16,14 +16,15 @@
 	/// Balloon alert cooldown for warning our boxer to alternate their blows to get more damage
 	COOLDOWN_DECLARE(warning_cooldown)
 
-/datum/martial_art/boxing/teach(mob/living/new_holder, make_temporary)
-	if(!ishuman(new_holder))
-		return FALSE
+/datum/martial_art/boxing/can_teach(mob/living/new_holder)
+	return ishuman(new_holder)
+
+/datum/martial_art/boxing/activate_style(mob/living/new_holder)
+	. = ..()
 	new_holder.add_traits(boxing_traits, BOXING_TRAIT)
 	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
-	return ..()
 
-/datum/martial_art/boxing/on_remove(mob/living/remove_from)
+/datum/martial_art/boxing/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(boxing_traits, BOXING_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_CHECK_BLOCK))
 	return ..()
@@ -111,7 +112,7 @@
 		if(istype(potential_spine))
 			strength_bonus *= potential_spine.strength_bonus
 
-		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus)
+		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus, 1)
 		grant_experience = TRUE
 
 	var/current_atk_verb = atk_verb
@@ -149,7 +150,7 @@
 	to_chat(attacker, span_danger("You [current_atk_verbed] [defender]!"))
 
 	// Determines the total amount of experience earned per punch
-	var/experience_earned = round(damage * 0.25, 0.1)
+	var/experience_earned = round(damage/4, 1)
 
 	defender.apply_damage(damage, damage_type, affecting, armor_block)
 
@@ -168,7 +169,7 @@
 	var/defender_athletics_skill =  clamp(defender.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER), 0, 100)
 
 	//Determine our final probability, using a clamp to stop any prob() weirdness.
-	var/final_knockout_probability = clamp(round(attacker_athletics_skill - defender_athletics_skill), 0 , 100)
+	var/final_knockout_probability = clamp(round(attacker_athletics_skill - defender_athletics_skill, 1), 0 , 100)
 
 	if(!prob(final_knockout_probability))
 		return TRUE
@@ -222,10 +223,10 @@
 /// Handles our instances of experience gain while boxing. It also applies the exercised status effect.
 /datum/martial_art/boxing/proc/skill_experience_adjustment(mob/living/boxer, experience_value)
 	//Boxing in heavier gravity gives you more experience
-	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 0.5
+	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 2
 
 	//You gotta sleep before you get any experience!
-	boxer.mind?.adjust_experience(/datum/skill/athletics, round(experience_value * gravity_modifier, 0.1))
+	boxer.mind?.adjust_experience(/datum/skill/athletics, round(experience_value / gravity_modifier, 1))
 	boxer.apply_status_effect(/datum/status_effect/exercised)
 
 /// Handles our blocking signals, similar to hit_reaction() on items. Only blocks while the boxer is in throw mode.
@@ -254,7 +255,7 @@
 	if(!honor_check(attacker))
 		return NONE
 
-	var/experience_earned = round(damage * 0.25, 0.1)
+	var/experience_earned = round(damage/4, 1)
 
 	if(!damage)
 		experience_earned = 2
@@ -306,7 +307,7 @@
 	default_damage_type = BRUTE
 	boxing_traits = list(TRAIT_BOXING_READY)
 	/// The mobs we are looking for to pass the honor check
-	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG
+	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG | MOB_MINING
 	/// Our crit shout words. First word is then paired with a second word to form an attack name.
 	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
 	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
@@ -346,16 +347,17 @@
 		human_attacker.say("[first_word_pick][second_word_pick]!!!", forced = "hunter boxing enthusiastic battlecry")
 	defender.apply_status_effect(/datum/status_effect/rebuked)
 	defender.apply_damage(damage * 2, default_damage_type, BODY_ZONE_CHEST, armor_block) //deals double our damage AGAIN
-	attacker.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood, 3) //Get a little healing in return for a successful crit
+
+	var/healing_factor = round(damage/3, 1)
+	attacker.heal_overall_damage(healing_factor, healing_factor, healing_factor)
 	log_combat(attacker, defender, "hunter crit punched (boxing)")
 
-// Our hunter boxer speeds up their attacks when completing a combo against a valid target, and does a sizable amount of extra damage.
+// Our hunter boxer does a sizable amount of extra damage on a successful combo or block
 
 /datum/martial_art/boxing/hunter/perform_extra_effect(mob/living/attacker, mob/living/defender)
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
 		return // Does not apply to humans (who aren't megafauna)
 
-	attacker.changeNext_move(CLICK_CD_RAPID)
 	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
 
 #undef LEFT_RIGHT_COMBO

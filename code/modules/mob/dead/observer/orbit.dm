@@ -38,7 +38,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			user.reset_perspective(null)
 			user.orbiting_ref = ref
 			if (auto_observe)
-				user.do_observe(poi)
+				if (poi != user)
+					user.do_observe(poi)
 			return TRUE
 		if ("refresh")
 			ui.send_full_update()
@@ -59,6 +60,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 /datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
+	var/is_admin = user?.client?.holder
 
 	var/list/alive = list()
 	var/list/antagonists = list()
@@ -78,6 +80,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["full_name"] = name
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
+
+		if (is_admin)
+			serialized["ckey"] = mob_poi.ckey
 
 		if(mob_poi.GetComponent(/datum/component/deadchat_control))
 			deadchat_controlled += list(serialized)
@@ -104,7 +109,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)
 
-		var/list/antag_data = get_antag_data(mob_poi.mind)
+		var/list/antag_data = get_antag_data(mob_poi.mind, is_admin)
 		if(length(antag_data))
 			serialized += antag_data
 			antagonists += list(serialized)
@@ -142,6 +147,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		"ghosts" = ghosts,
 		"misc" = misc,
 		"npcs" = npcs,
+		"can_observe" = !HAS_TRAIT(user, TRAIT_NO_OBSERVE),
 	)
 
 
@@ -151,17 +157,16 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 
 /// Helper function to get threat type, group, overrides for job and icon
-/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind) as /list
+/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind, is_admin) as /list
 	var/list/serialized = list()
 
 	for(var/datum/antagonist/antag as anything in poi_mind.antag_datums)
-		if(!antag.show_to_ghosts)
+		if(!antag.show_to_ghosts && !is_admin)
 			continue
 
 		serialized["antag"] = antag.name
 		serialized["antag_group"] = antag.antagpanel_category
-		serialized["job"] = antag.name
-		serialized["icon"] = antag.antag_hud_name
+		serialized["antag_icon"] = antag.antag_hud_name
 
 		return serialized
 

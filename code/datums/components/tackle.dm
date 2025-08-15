@@ -106,7 +106,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/items/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
-	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
+	var/leap_word = isfelinid(user) || HAS_TRAIT(user, TRAIT_TACKLING_TAILED_POUNCE) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
 	if(can_see(user, clicked_atom, 7))
 		user.visible_message(span_warning("[user] [leap_word]s at [clicked_atom]!"), span_danger("You [leap_word] at [clicked_atom]!"))
 	else
@@ -274,6 +274,7 @@
 	user.visible_message(span_warning("[user] lands a [tackle_word] on [target], briefly staggering them both!"), span_userdanger("You land a [tackle_word] on [target], briefly staggering [target.p_them()] and yourself!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[user] lands a [tackle_word] on you, briefly staggering you both!"))
 
+	user.SetKnockdown(0, ignore_canstun = TRUE)
 	user.get_up(TRUE)
 	user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 	target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS) //okay maybe slightly good for the sacker, it's a mild benefit okay?
@@ -389,7 +390,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/tackle_target = target
 
-		if(tackle_target.get_mob_height() <= HUMAN_HEIGHT_SHORTEST) //WHO ARE YOU CALLING SHORT?
+		if(tackle_target.mob_height <= HUMAN_HEIGHT_SHORTEST) //WHO ARE YOU CALLING SHORT?
 			defense_mod -= 2
 
 		if(isnull(tackle_target.wear_suit) && isnull(tackle_target.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
@@ -433,6 +434,10 @@
 	if(HAS_TRAIT(sacker, TRAIT_NOGUNS)) //Those dedicated to martial combat are particularly skilled tacklers
 		attack_mod += 2
 
+	if(HAS_TRAIT(sacker, TRAIT_TACKLING_TAILED_POUNCE))
+		var/obj/item/organ/tail/lizard/sacker_tail = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		attack_mod += sacker_tail ? 2 : -2
+
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
 		var/obj/item/organ/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(!sacker_moth_wing || sacker_moth_wing.burnt)
@@ -448,7 +453,7 @@
 	if(ishuman(sacker))
 		var/mob/living/carbon/human/human_sacker = sacker
 
-		if(human_sacker.get_mob_height() <= HUMAN_HEIGHT_SHORTEST) //JUST YOU WAIT TILL I FIND A CHAIR, BUDDY, THEN YOU'LL BE SORRY
+		if(human_sacker.mob_height <= HUMAN_HEIGHT_SHORTEST) //JUST YOU WAIT TILL I FIND A CHAIR, BUDDY, THEN YOU'LL BE SORRY
 			attack_mod -= 2
 
 		if(human_sacker.mob_mood.sanity_level == SANITY_LEVEL_INSANE) //I've gone COMPLETELY INSANE
@@ -594,32 +599,37 @@
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
 ///A special case for splatting for handling windows
-/datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
+/datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/windscreen_casualty)
 	playsound(user, 'sound/effects/glass/Glasshit.ogg', 140, TRUE)
 
-	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
+	if(windscreen_casualty.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.set_embed(/datum/embed_data/glass_candy)
+			var/datum/embedding/embed = shard.get_embed()
+			embed.embed_chance = 100
+			embed.ignore_throwspeed_threshold = TRUE
+			embed.impact_pain_mult = 1
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.set_embed(initial(shard.embed_type))
-		W.atom_destruction()
+			embed.embed_chance = initial(embed.embed_chance)
+			embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+			embed.impact_pain_mult = initial(embed.impact_pain_mult)
+		windscreen_casualty.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(3 SECONDS)
-		user.visible_message(span_danger("[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [W] and shatter it, shredding yourself with glass!"))
+		user.visible_message(span_danger("[user] smacks into [windscreen_casualty] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [windscreen_casualty] and shatter it, shredding yourself with glass!"))
 
 	else
-		user.visible_message(span_danger("[user] smacks into [W] like a bug!"), span_userdanger("You smacks into [W] like a bug!"))
+		user.visible_message(span_danger("[user] smacks into [windscreen_casualty] like a bug!"), span_userdanger("You smacks into [windscreen_casualty] like a bug!"))
 		user.Paralyze(1 SECONDS)
 		user.Knockdown(3 SECONDS)
-		W.take_damage(30 * speed)
+		windscreen_casualty.take_damage(30 * speed)
 		user.adjustStaminaLoss(10 * speed, updating_stamina=FALSE)
 		user.adjustBruteLoss(5 * speed)
 
-/datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
-	if(W)
-		W.atom_destruction()
-		playsound(W, SFX_SHATTER, 70, TRUE)
+/datum/component/tackler/proc/delayedSmash(obj/structure/window/windscreen_casualty)
+	if(windscreen_casualty)
+		windscreen_casualty.atom_destruction()
+		playsound(windscreen_casualty, SFX_SHATTER, 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
@@ -628,8 +638,8 @@
 	if(!tackling)
 		return
 
-	var/turf/T = get_turf(owner)
-	var/obj/structure/table/kevved = locate(/obj/structure/table) in T.contents
+	var/turf/our_turf = get_turf(owner)
+	var/obj/structure/table/kevved = locate(/obj/structure/table) in our_turf.contents
 	if(!kevved)
 		return
 
@@ -637,9 +647,9 @@
 
 	// we split the mess-making into two parts (check what we're gonna send flying, intermission for dealing with the tackler, then actually send stuff flying) for the benefit of making sure the face-slam text
 	// comes before the list of stuff that goes flying, but can still adjust text + damage to how much of a mess it made
-	for(var/obj/item/I in T.contents)
-		if(!I.anchored)
-			messes += I
+	for(var/obj/item/item_in_turf in our_turf.contents)
+		if(!item_in_turf.anchored)
+			messes += item_in_turf
 			if(messes.len >= MAX_TABLE_MESSES)
 				break
 
@@ -664,13 +674,15 @@
 	owner.Knockdown(2 SECONDS + 0.4 SECONDS * messes.len) // 2 seconds of knockdown after the paralyze
 	owner.updatehealth()
 
-	for(var/obj/item/I in messes)
-		var/dist = rand(1, 3)
-		var/sp = 2
+	for(var/obj/item/item_in_mess in messes)
+		// The amount of distance the object flies away when launched by our tackle
+		var/item_launch_distance = rand(1, 3)
+		// The transfered speed at which an item is launched by our tackle
+		var/item_launch_speed = 2
 		if(prob(25 * (src.speed - 1))) // if our tackle speed is higher than 1, with chance (speed - 1 * 25%), throw the thing at our tackle speed + 1
-			sp = speed + 1
-		I.throw_at(get_ranged_target_turf(I, pick(GLOB.alldirs), range = dist), range = dist, speed = sp)
-		I.visible_message(span_danger("[I] goes flying[sp > 3 ? " dangerously fast" : ""]!")) // standard embed speed
+			item_launch_speed = speed + 1
+		item_in_mess.throw_at(get_ranged_target_turf(item_in_mess, pick(GLOB.alldirs), range = item_launch_distance), range = item_launch_distance, speed = item_launch_speed)
+		item_in_mess.visible_message(span_danger("[item_in_mess] goes flying[item_launch_speed < EMBED_THROWSPEED_THRESHOLD ? "" : " dangerously fast" ]!")) // standard embed speed
 
 	var/datum/thrownthing/tackle = tackle_ref?.resolve()
 

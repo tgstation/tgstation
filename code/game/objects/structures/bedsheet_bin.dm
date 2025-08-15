@@ -12,8 +12,8 @@ LINEN BINS
 	righthand_file = 'icons/mob/inhands/items/bedsheet_righthand.dmi'
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = SFX_CLOTH_PICKUP
 	slot_flags = ITEM_SLOT_NECK
 	layer = BELOW_MOB_LAYER
 	throwforce = 0
@@ -65,10 +65,9 @@ LINEN BINS
 	var/mob/living/to_cover = interacting_with
 	if(to_cover.body_position != LYING_DOWN)
 		return ITEM_INTERACT_BLOCKING
-	if(!user.dropItemToGround(src))
+	if(!user.transfer_item_to_turf(src, get_turf(to_cover)))
 		return ITEM_INTERACT_BLOCKING
 
-	forceMove(get_turf(to_cover))
 	balloon_alert(user, "covered")
 	coverup(to_cover)
 	add_fingerprint(user)
@@ -97,7 +96,7 @@ LINEN BINS
 		return
 	if(user.body_position != LYING_DOWN)
 		return
-	if(!user.dropItemToGround(src))
+	if(!user.transfer_item_to_turf(src, get_turf(src)))
 		return
 
 	coverup(user)

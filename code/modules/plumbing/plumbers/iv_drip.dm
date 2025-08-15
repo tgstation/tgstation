@@ -14,16 +14,13 @@
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(attachment)
-		context[SCREENTIP_CONTEXT_RMB] = "Take needle out"
-	else if(reagent_container && !use_internal_storage)
-		context[SCREENTIP_CONTEXT_RMB] = "Eject container"
-	else if(!inject_only)
-		context[SCREENTIP_CONTEXT_RMB] = "Change direction"
-
+	. = ..()
+	if(held_item.tool_behaviour != TOOL_WRENCH)
+		return
+	context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/iv_drip/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+/obj/machinery/iv_drip/plumbing/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...", "plunging iv drip...")
 	if(do_after(user, 3 SECONDS, target = src))
 		user.balloon_alert_to_viewers("finished plunging")
@@ -31,13 +28,10 @@
 		reagents.clear_reagents()
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
-	. = ITEM_INTERACT_BLOCKING
-	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		if(anchored)
-			begin_processing()
-		else
-			end_processing()
-		return ITEM_INTERACT_SUCCESS
+	if(default_unfasten_wrench(user, tool) != SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_BLOCKING
+	if(anchored)
+		begin_processing()
+	else
+		end_processing()
+	return ITEM_INTERACT_SUCCESS

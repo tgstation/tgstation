@@ -25,7 +25,7 @@
 		// With tongs in hand!
 		BB_TARGET_HELD_ITEM = /obj/item/kitchen/tongs,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/dog),
-		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/dog/corgi/puppy = 95, /mob/living/basic/pet/dog/corgi/puppy/void = 5),
+		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/dog/corgi),
 	)
 
 	planning_subtrees = list(

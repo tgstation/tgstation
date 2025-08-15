@@ -8,9 +8,9 @@
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
 	armor_type = /datum/armor/clothing_under/plasmaman
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	can_adjust = FALSE
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
@@ -43,7 +43,7 @@
 	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
 	// This is why we're ignoring source and instead checking by loc
 	var/mob/living/carbon/human/owner = loc
-	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, alt_flags = TRUE))
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
@@ -79,19 +79,19 @@
 
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"
-	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differenciating the two with the length of their pant legs."
+	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differentiating the two with the length of their pant legs."
 	icon_state = "cargo_envirosuit"
 	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/mining
 	name = "mining plasma envirosuit"
-	desc = "An air-tight khaki suit designed for operations on lavaland by plasmamen."
+	desc = "An airtight khaki suit designed for operations on lavaland by plasmamen."
 	icon_state = "explorer_envirosuit"
 	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/chef
 	name = "chef's plasma envirosuit"
-	desc = "A white plasmaman envirosuit designed for cullinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
+	desc = "A white plasmaman envirosuit designed for culinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
 	icon_state = "chef_envirosuit"
 	inhand_icon_state = null
 
@@ -163,7 +163,7 @@
 	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
 	// This is why we're ignoring source and instead checking by loc
 	var/mob/living/carbon/human/owner = loc
-	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, alt_flags = TRUE))
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))

@@ -27,6 +27,8 @@
 /obj/structure/destructible/eldritch_crucible/process(seconds_per_tick)
 	if(COOLDOWN_TIMELEFT(src, refill_cooldown))
 		return
+	if(current_mass >= max_mass)
+		return
 	COOLDOWN_START(src, refill_cooldown, 30 SECONDS)
 	current_mass++
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
@@ -75,37 +77,37 @@
 /obj/structure/destructible/eldritch_crucible/rust_heretic_act()
 	return
 
-/obj/structure/destructible/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
-	if(!iscarbon(user))
-		return ..()
-
-	if(!IS_HERETIC_OR_MONSTER(user))
-		bite_the_hand(user)
-		return TRUE
-
-	if(isbodypart(weapon))
-
-		var/obj/item/bodypart/consumed = weapon
+/obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isbodypart(tool))
+		var/obj/item/bodypart/consumed = tool
 		if(!IS_ORGANIC_LIMB(consumed))
 			balloon_alert(user, "not organic!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
 		consume_fuel(user, consumed)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(isorgan(weapon))
-		var/obj/item/organ/consumed = weapon
+	if(isorgan(tool))
+		var/obj/item/organ/consumed = tool
 		if(!IS_ORGANIC_ORGAN(consumed))
 			balloon_alert(user, "not organic!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(consumed.organ_flags & ORGAN_VITAL) // Basically, don't eat organs like brains
 			balloon_alert(user, "invalid organ!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
 		consume_fuel(user, consumed)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
@@ -122,7 +124,7 @@
 			balloon_alert(user, "flask is full!")
 			return ITEM_INTERACT_SUCCESS
 		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
-		do_item_attack_animation(src, used_item = tool)
+		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
 		current_mass--
 		balloon_alert(user, "refilled flask")
 		return ITEM_INTERACT_SUCCESS
@@ -211,7 +213,7 @@
 	if(QDELETED(arm))
 		return
 
-	to_chat(user, span_userdanger("[src] grabs your [arm.name]!"))
+	to_chat(user, span_userdanger("[src] grabs your [arm.plaintext_zone]!"))
 	arm.dismember()
 	consume_fuel(consumed = arm)
 
@@ -245,6 +247,8 @@
 	desc = "You should never see this"
 	icon = 'icons/obj/antags/eldritch.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 	/// When a heretic examines a mawed crucible, shows a list of possible potions by name + includes this tip to explain what it does.
 	var/crucible_tip = "Doesn't do anything."
 	/// Typepath to the status effect this applies
@@ -290,21 +294,21 @@
 
 /obj/item/eldritch_potion/crucible_soul
 	name = "brew of the crucible soul"
-	desc = "A glass bottle contianing a bright orange, translucent liquid."
+	desc = "A glass bottle containing a bright orange, translucent liquid."
 	icon_state = "crucible_soul"
 	status_effect = /datum/status_effect/crucible_soul
 	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 15 seconds."
 
 /obj/item/eldritch_potion/duskndawn
 	name = "brew of dusk and dawn"
-	desc = "A glass bottle contianing a dull yellow liquid. It seems to fade in and out with regularity."
+	desc = "A glass bottle containing a dull yellow liquid. It seems to fade in and out with regularity."
 	icon_state = "clarity"
 	status_effect = /datum/status_effect/duskndawn
 	crucible_tip = "Allows you to see through walls and objects. Lasts 90 seconds."
 
 /obj/item/eldritch_potion/wounded
 	name = "brew of the wounded soldier"
-	desc = "A glass bottle contianing a colorless, dark liquid."
+	desc = "A glass bottle containing a colorless, dark liquid."
 	icon_state = "marshal"
 	status_effect = /datum/status_effect/marshal
 	crucible_tip = "Causes all wounds you are experiencing to begin to heal you. Fractures, sprains, cuts, and punctures will heal bruises, \

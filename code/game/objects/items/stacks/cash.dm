@@ -17,6 +17,7 @@
 
 /obj/item/stack/spacecash/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 	update_desc()
 
 /obj/item/stack/spacecash/update_desc()
@@ -27,7 +28,7 @@
 /obj/item/stack/spacecash/get_item_credit_value()
 	return (amount*value)
 
-/obj/item/stack/spacecash/merge(obj/item/stack/S)
+/obj/item/stack/spacecash/merge(obj/item/stack/target_stack, limit)
 	. = ..()
 	update_desc()
 

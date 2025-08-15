@@ -132,7 +132,11 @@
 	return "\a [src]"
 
 /mob/living/get_examine_name(mob/user)
-	return get_visible_name()
+	var/visible_name = get_visible_name()
+	var/list/name_override = list(visible_name)
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PERCEIVE_EXAMINE_NAME, src, visible_name, name_override) & COMPONENT_EXAMINE_NAME_OVERRIDEN)
+		return name_override[1]
+	return visible_name
 
 /// Icon displayed in examine
 /atom/proc/get_examine_icon(mob/user)

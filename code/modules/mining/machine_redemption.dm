@@ -297,7 +297,7 @@
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
 			if(isnull(user_id_card))
-				to_chat(usr, span_warning("No valid ID detected."))
+				say("No ID card found.")
 				return FALSE
 
 			//we have points
@@ -310,8 +310,8 @@
 		if("Release")
 			if(!mat_container)
 				return
-			if(materials.on_hold())
-				to_chat(usr, span_warning("Mineral access is on hold, please contact the quartermaster."))
+			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
+				return
 			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, span_warning("Required access not found."))
 			else
@@ -327,13 +327,12 @@
 
 				var/desired = text2num(params["sheets"])
 				var/sheets_to_remove = round(min(desired, 50, stored_amount))
-				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir))
+				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir), user_data = ID_DATA(usr))
 			return TRUE
 		if("Smelt")
 			if(!mat_container)
 				return
-			if(materials.on_hold())
-				to_chat(usr, span_warning("Mineral access is on hold, please contact the quartermaster."))
+			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
@@ -345,7 +344,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets")
+				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets", user_data = ID_DATA(usr))
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)
@@ -373,26 +372,26 @@
 
 	switch(input_dir)
 		if(NORTH)
-			ore_input.pixel_y = 32
-			ore_output.pixel_y = -32
+			ore_input.pixel_z = 32
+			ore_output.pixel_z = -32
 		if(SOUTH)
-			ore_input.pixel_y = -32
-			ore_output.pixel_y = 32
+			ore_input.pixel_z = -32
+			ore_output.pixel_z = 32
 		if(EAST)
-			ore_input.pixel_x = 32
-			ore_output.pixel_x = -32
+			ore_input.pixel_w = 32
+			ore_output.pixel_w = -32
 		if(WEST)
-			ore_input.pixel_x = -32
-			ore_output.pixel_x = 32
+			ore_input.pixel_w = -32
+			ore_output.pixel_w = 32
 
 	ore_input.color = COLOR_MODERATE_BLUE
 	ore_output.color = COLOR_SECURITY_RED
 	var/mutable_appearance/light_in = emissive_appearance(ore_input.icon, ore_input.icon_state, offset_spokesman = src, alpha = ore_input.alpha)
-	light_in.pixel_y = ore_input.pixel_y
-	light_in.pixel_x = ore_input.pixel_x
+	light_in.pixel_z = ore_input.pixel_z
+	light_in.pixel_w = ore_input.pixel_w
 	var/mutable_appearance/light_out = emissive_appearance(ore_output.icon, ore_output.icon_state, offset_spokesman = src, alpha = ore_output.alpha)
-	light_out.pixel_y = ore_output.pixel_y
-	light_out.pixel_x = ore_output.pixel_x
+	light_out.pixel_z = ore_output.pixel_z
+	light_out.pixel_w = ore_output.pixel_w
 	. += ore_input
 	. += ore_output
 	. += light_in

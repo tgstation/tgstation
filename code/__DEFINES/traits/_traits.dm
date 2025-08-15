@@ -1,5 +1,5 @@
-#define SIGNAL_ADDTRAIT(trait_ref) "addtrait [trait_ref]"
-#define SIGNAL_REMOVETRAIT(trait_ref) "removetrait [trait_ref]"
+#define SIGNAL_ADDTRAIT(trait_ref) ("addtrait " + trait_ref)
+#define SIGNAL_REMOVETRAIT(trait_ref) ("removetrait " + trait_ref)
 
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
@@ -74,7 +74,9 @@
 		var/list/_S = sources; \
 		if (_L) { \
 			for (var/_T in _L) { \
-				_L[_T] &= _S;\
+				if (_L[_T]) { \
+					_L[_T] &= _S; \
+				}; \
 				if (!length(_L[_T])) { \
 					_L -= _T; \
 					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T), _T); \
@@ -97,7 +99,9 @@
 		}; \
 		if (_L) { \
 			for (var/_T in _L) { \
-				_L[_T] -= _S;\
+				if (_L[_T]) { \
+					_L[_T] -= _S; \
+				}; \
 				if (!length(_L[_T])) { \
 					_L -= _T; \
 					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \

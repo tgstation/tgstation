@@ -128,7 +128,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	to_chat(user, span_notice("The water temperature seems to be [current_temperature]."))
 	return TRUE
 
-/obj/machinery/shower/attackby(obj/item/tool, mob/user, params)
+/obj/machinery/shower/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
+	user.balloon_alert_to_viewers("furiously plunging...", "plunging shower...")
+	if(do_after(user, 3 SECONDS, target = src))
+		user.balloon_alert_to_viewers("finished plunging")
+		reagents.expose(get_turf(src), TOUCH) //splash on the floor
+		reagents.clear_reagents()
+
+/obj/machinery/shower/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		if(has_water_reclaimer)
 			to_chat(user, span_warning("There is already has a water recycler installed."))
@@ -193,7 +200,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 	if(!actually_on)
 		return
-	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
 	switch(dir)
 		if(NORTH)
@@ -237,7 +244,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	SIGNAL_HANDLER
 
 	if(actually_on && reagents.total_volume)
-		wash_atom(enterer)
+		expose_to_reagents(enterer)
 
 /obj/machinery/shower/proc/on_exited(datum/source, atom/movable/exiter)
 	SIGNAL_HANDLER
@@ -251,29 +258,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	var/mob/living/take_his_status_effect = exiter
 	take_his_status_effect.remove_status_effect(/datum/status_effect/washing_regen)
 
-/obj/machinery/shower/proc/wash_atom(atom/target)
+/obj/machinery/shower/proc/expose_to_reagents(atom/target)
 	var/purity_volume = reagents.total_volume*0.70 	// need 70% of total reagents
 	var/datum/reagent/blood/bloody_shower = reagents.has_reagent(/datum/reagent/blood, amount=purity_volume)
 	var/datum/reagent/water/clean_shower = reagents.has_reagent(/datum/reagent/water, amount=purity_volume)
-
-	// radiation my beloved
-	var/rad_purity_volume = reagents.total_volume*0.20 // need 20% of total reagents
-	var/radium_volume = reagents.get_reagent_amount(/datum/reagent/uranium/radium)
-	var/uranium_volume = reagents.get_reagent_amount(/datum/reagent/uranium)
-	var/polonium_volume = reagents.get_reagent_amount(/datum/reagent/toxin/polonium) * 3 // highly radioactive
-	var/total_radiation_volume = (radium_volume + uranium_volume + polonium_volume)
-	var/radioactive_shower = total_radiation_volume >= rad_purity_volume
-
 	// we only care about blood and h20 for mood/status effect
 	var/datum/reagent/shower_reagent = bloody_shower || clean_shower || null
-
-	var/wash_flags = NONE
-	if(clean_shower)
-		wash_flags |= CLEAN_WASH
-	if(!radioactive_shower)
-		// note it is possible to have a clean_shower that is radioactive (+70% water mixed with +20% radiation)
-		wash_flags |= CLEAN_RAD
-	target.wash(wash_flags)
 
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(!isliving(target))
@@ -342,13 +332,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 		// FOREVER mode stays processing so it can cycle back on.
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
+	// Assemble cleaning flags
+	var/purity_volume = reagents.total_volume*0.70 	// need 70% of total reagents
+	var/datum/reagent/water/clean_shower = reagents.has_reagent(/datum/reagent/water, amount=purity_volume)
+
+	// radiation my beloved
+	var/rad_purity_volume = reagents.total_volume*0.20 // need 20% of total reagents
+	var/radium_volume = reagents.get_reagent_amount(/datum/reagent/uranium/radium)
+	var/uranium_volume = reagents.get_reagent_amount(/datum/reagent/uranium)
+	var/polonium_volume = reagents.get_reagent_amount(/datum/reagent/toxin/polonium) * 3 // highly radioactive
+	var/total_radiation_volume = (radium_volume + uranium_volume + polonium_volume)
+	var/radioactive_shower = total_radiation_volume >= rad_purity_volume
+
+	var/wash_flags = NONE
+	if(clean_shower)
+		wash_flags |= CLEAN_WASH
+	if(!radioactive_shower)
+		// note it is possible to have a clean_shower that is radioactive (+70% water mixed with +20% radiation)
+		wash_flags |= CLEAN_RAD
 
 	// Wash up.
-	wash_atom(loc)
+	loc.wash(wash_flags, TRUE)
+	expose_to_reagents(loc)
 	for(var/atom/movable/movable_content as anything in loc)
-		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
-
+		expose_to_reagents(movable_content) // Wash the items on the turf (=expose them to the shower reagent)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)
@@ -378,7 +385,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, params)
+/obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		qdel(tool)
 		var/obj/machinery/shower/shower = new(loc, REVERSE_DIR(dir), TRUE)

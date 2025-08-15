@@ -42,7 +42,7 @@
 
 /obj/projectile/beam/event_horizon
 	name = "anti-existential beam"
-	icon = null
+	icon_state = null
 	hitsound = 'sound/effects/explosion/explosion3.ogg'
 	damage = 100 // Does it matter?
 	damage_type = BURN

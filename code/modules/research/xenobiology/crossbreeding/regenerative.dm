@@ -128,13 +128,13 @@ Regenerative extracts:
 	if(fireproofed)
 		target.visible_message(span_notice("Some of [target]'s clothing gets coated in the goo, and turns blue!"))
 
-/obj/item/slimecross/regenerative/darkblue/proc/fireproof(obj/item/clothing/C)
-	C.name = "fireproofed [C.name]"
-	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
-	C.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	C.heat_protection = C.body_parts_covered
-	C.resistance_flags |= FIRE_PROOF
+/obj/item/slimecross/regenerative/darkblue/proc/fireproof(obj/item/clothing/clothing_piece)
+	clothing_piece.name = "fireproofed [clothing_piece.name]"
+	clothing_piece.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	clothing_piece.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
+	clothing_piece.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	clothing_piece.heat_protection = clothing_piece.body_parts_covered
+	clothing_piece.resistance_flags |= FIRE_PROOF
 
 /obj/item/slimecross/regenerative/silver
 	colour = SLIME_TYPE_SILVER
@@ -188,7 +188,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pyrite/core_effect(mob/living/target, mob/user)
 	target.visible_message(span_warning("The milky goo coating [target] leaves [target.p_them()] a different color!"))
-	target.add_atom_colour(rgb(rand(0,255),rand(0,255),rand(0,255)),WASHABLE_COLOUR_PRIORITY)
+	target.add_atom_colour(color_transition_filter(rgb(rand(0,255), rand(0,255), rand(0,255)), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/slimecross/regenerative/red
 	colour = SLIME_TYPE_RED
@@ -244,17 +244,17 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/black/core_effect_before(mob/living/target, mob/user)
 	var/dummytype = target.type
-	if(ismegafauna(target)) //Prevents megafauna duping in a lame way
+	if(target.mob_biotypes & MOB_SPECIAL) //Prevents megafauna and voidwalker duping in a lame way
 		dummytype = /mob/living/basic/slime
 		to_chat(user, span_warning("The milky goo flows over [target], falling into a weak puddle."))
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, span_notice("The milky goo flows from your skin, forming an imperfect copy of you."))
-	if(iscarbon(target))
-		var/mob/living/carbon/T = target
-		var/mob/living/carbon/D = dummy
-		T.dna.transfer_identity(D)
-		D.updateappearance(mutcolor_update=1)
-		D.real_name = T.real_name
+	if(iscarbon(target) && iscarbon(dummy))
+		var/mob/living/carbon/carbon_target = target
+		var/mob/living/carbon/carbon_dummy = dummy
+		carbon_dummy.real_name = carbon_target.real_name
+		carbon_target.dna.copy_dna(carbon_dummy.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		carbon_dummy.updateappearance(mutcolor_update = TRUE)
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())
 	dummy.adjustToxLoss(target.getToxLoss())

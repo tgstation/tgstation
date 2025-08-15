@@ -16,21 +16,65 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/toggle/jacket
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/toy,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/lighter,
+		/obj/item/radio,
+		/obj/item/storage/belt/holster,
+		)
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	species_exception = list(/datum/species/golem)
+
 /obj/item/clothing/suit/toggle/jacket/sweater
 	name = "sweater jacket"
 	desc = "A sweater jacket."
-	icon_state = "sweater"
-	icon = 'icons/obj/clothing/suits/jacket.dmi'
-	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/toggle/jacket/sweater"
+	post_init_icon_state = "sweater"
 	greyscale_config = /datum/greyscale_config/sweater
 	greyscale_config_worn = /datum/greyscale_config/sweater/worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/toggle/jacket/trenchcoat
+	name = "trenchcoat"
+	desc = "A multi-purpose trenchcoat."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/toggle/jacket/trenchcoat"
+	post_init_icon_state = "trenchcoat"
+	greyscale_config = /datum/greyscale_config/trenchcoat
+	greyscale_config_worn = /datum/greyscale_config/trenchcoat/worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	blood_overlay_type = "coat"
+	flags_inv = HIDEBELT
+
+/obj/item/clothing/suit/jacket/blazer
+	name = "blazer jacket"
+	desc = "A blazer jacket."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/jacket/blazer"
+	post_init_icon_state = "blazer"
+	greyscale_config = /datum/greyscale_config/blazer
+	greyscale_config_worn = /datum/greyscale_config/blazer/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/jacket/oversized
 	name = "oversized jacket"
 	desc = "An oversized jacket."
-	icon_state = "jacket_oversized"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/jacket/oversized"
+	post_init_icon_state = "jacket_oversized"
 	greyscale_config = /datum/greyscale_config/jacket_oversized
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized/worn
 	greyscale_colors = "#414344"
@@ -39,7 +83,9 @@
 /obj/item/clothing/suit/jacket/fancy
 	name = "fancy fur coat"
 	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
-	icon_state = "fancy_coat"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/jacket/fancy"
+	post_init_icon_state = "fancy_coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT

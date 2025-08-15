@@ -3,7 +3,10 @@
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
-	init_order = INIT_ORDER_PERSISTENCE
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
 	flags = SS_NO_FIRE
 
 	///instantiated wall engraving components
@@ -42,6 +45,9 @@ SUBSYSTEM_DEF(persistence)
 	var/datum/json_database/piggy_banks_database
 	/// List of persistene ids which piggy banks.
 	var/list/queued_broken_piggy_ids
+
+	/// json database linking to data/trophy_fishes.json, for persistent trophy fish mount.
+	var/datum/json_database/trophy_fishes_database
 
 	var/rounds_since_engine_exploded = 0
 	var/delam_highscore = 0

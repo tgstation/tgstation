@@ -119,7 +119,7 @@
 		update_appearance()
 		return TRUE
 
-/obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
+/obj/item/flamethrower/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(isigniter(W))
 		var/obj/item/assembly/igniter/I = W
 		if(I.secured)
@@ -193,8 +193,8 @@
 	set_light_on(lit)
 	update_appearance()
 
-/obj/item/flamethrower/CheckParts(list/parts_list)
-	..()
+/obj/item/flamethrower/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. =..()
 	weldtool = locate(/obj/item/weldingtool) in contents
 	igniter = locate(/obj/item/assembly/igniter) in contents
 	weldtool.status = FALSE

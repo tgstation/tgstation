@@ -1,0 +1,360 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"b" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"c" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"g" = (
+/obj/effect/decal/cleanable/blood/trail_holder,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/falsewall/titanium,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"h" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"j" = (
+/obj/modular_map_connector,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"k" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"l" = (
+/obj/structure/table/reinforced,
+/obj/item/crowbar{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/knife/kitchen{
+	pixel_x = 8
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"o" = (
+/obj/machinery/light/small/directional/north,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"r" = (
+/obj/machinery/power/shuttle_engine/propulsion/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"t" = (
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head"=/obj/item/clothing/head/costume/ushanka)
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"v" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"w" = (
+/obj/machinery/light/small/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"z" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/template_noop,
+/area/template_noop)
+"B" = (
+/obj/machinery/power/shuttle_engine/propulsion/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"C" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table/reinforced,
+/obj/item/kitchen/fork{
+	pixel_x = 5
+	},
+/obj/item/kitchen/spoon/soup_ladle{
+	pixel_y = -8;
+	pixel_x = -3
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"D" = (
+/obj/effect/decal/cleanable/blood/trail_holder,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/comfy/carp,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"E" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"F" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"G" = (
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/structure/closet/crate/trashcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"I" = (
+/obj/structure/table/reinforced,
+/obj/item/chainsaw{
+	pixel_y = 6
+	},
+/obj/machinery/light/small/blacklight/directional/east,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"J" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"K" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/decal/cleanable/glass/plastitanium,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"L" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"M" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 10
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"O" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/apron/chef{
+	pixel_x = 9
+	},
+/obj/item/hatchet/wooden{
+	pixel_x = -3
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Q" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"T" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 5
+	},
+/obj/item/stack/tile/iron,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"U" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/emergency{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/storage/medkit/emergency{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"W" = (
+/obj/structure/girder,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Y" = (
+/obj/structure/closet/cabinet,
+/obj/item/organ/brain,
+/obj/item/organ/tongue/lizard,
+/obj/item/organ/stomach,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Z" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/machinery/vending/wallmed/directional/south{
+	use_power = 0
+	},
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+c
+c
+a
+z
+a
+k
+e
+c
+"}
+(2,1,1) = {"
+c
+w
+a
+x
+x
+Q
+J
+r
+"}
+(3,1,1) = {"
+c
+c
+b
+Q
+c
+Q
+J
+B
+"}
+(4,1,1) = {"
+c
+M
+a
+k
+k
+k
+K
+B
+"}
+(5,1,1) = {"
+c
+E
+b
+x
+Q
+Q
+c
+c
+"}
+(6,1,1) = {"
+c
+Z
+j
+k
+x
+W
+c
+c
+"}
+(7,1,1) = {"
+c
+E
+v
+v
+C
+O
+a
+c
+"}
+(8,1,1) = {"
+a
+F
+h
+a
+L
+l
+J
+r
+"}
+(9,1,1) = {"
+a
+o
+T
+g
+D
+t
+J
+B
+"}
+(10,1,1) = {"
+a
+Y
+G
+a
+U
+I
+J
+B
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+c
+"}

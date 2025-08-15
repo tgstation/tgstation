@@ -256,18 +256,32 @@
 	. = ..()
 	var/kiss_type = /obj/item/hand_item/kisser
 
+	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
+		kiss_type = /obj/item/hand_item/kisser/french
+
+	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
+		kiss_type = /obj/item/hand_item/kisser/chef
+
 	if(HAS_TRAIT(user, TRAIT_SYNDIE_KISS))
 		kiss_type = /obj/item/hand_item/kisser/syndie
 
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/hand_item/kisser/death
 
+	var/datum/action/cooldown/ink_spit/ink_action = locate() in user.actions
+	if(ink_action?.IsAvailable())
+		kiss_type = /obj/item/hand_item/kisser/ink
+	else
+		ink_action = null
+
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))
 		to_chat(user, span_notice("You ready your kiss-blowing hand."))
-	else
-		qdel(kiss_blower)
-		to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
+		ink_action?.StartCooldown()
+		return
+
+	qdel(kiss_blower)
+	to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
 
 /datum/emote/living/laugh
 	key = "laugh"
@@ -415,11 +429,12 @@
 #define SHIVER_LOOP_DURATION (1 SECONDS)
 /datum/emote/living/shiver/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+
+	animate(user, pixel_w = 1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	for(var/i in 1 to SHIVER_LOOP_DURATION / (0.2 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
-		animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-		animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+		animate(pixel_w = -2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+		animate(pixel_w = 2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+	animate(pixel_w = -1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 #undef SHIVER_LOOP_DURATION
 
 /datum/emote/living/sigh
@@ -520,11 +535,12 @@
 
 /datum/emote/living/sway/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x + 2, time = 0.5 SECONDS)
+
+	animate(user, pixel_w = 2, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	for(var/i in 1 to 2)
-		animate(pixel_x = user.pixel_x - 4, time = 1.0 SECONDS)
-		animate(pixel_x = user.pixel_x + 4, time = 1.0 SECONDS)
-	animate(pixel_x = user.pixel_x - 2, time = 0.5 SECONDS)
+		animate(pixel_w = -6, time = 1.0 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+		animate(pixel_w = 6, time = 1.0 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+	animate(pixel_w = -2, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
 /datum/emote/living/tilt
 	key = "tilt"
@@ -539,11 +555,12 @@
 #define TREMBLE_LOOP_DURATION (4.4 SECONDS)
 /datum/emote/living/tremble/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
+
+	animate(user, pixel_w = 2, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	for(var/i in 1 to TREMBLE_LOOP_DURATION / (0.4 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
-		animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
-		animate(pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
-	animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
+		animate(pixel_w = -4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+		animate(pixel_w = 4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_CONTINUE)
+	animate(pixel_w = -2, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
 #undef TREMBLE_LOOP_DURATION
 
 /datum/emote/living/twitch
@@ -553,11 +570,12 @@
 
 /datum/emote/living/twitch/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+
+	animate(user, pixel_w = 1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_w = -2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(pixel_w = 2, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(pixel_w = -1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 
 /datum/emote/living/twitch_s
 	key = "twitch_s"
@@ -566,8 +584,9 @@
 
 /datum/emote/living/twitch_s/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
-	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+
+	animate(user, pixel_w = -1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_w = 1, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 
 /datum/emote/living/wave
 	key = "wave"
@@ -671,23 +690,6 @@
 		to_chat(user, span_boldwarning("You cannot send IC messages (muted)."))
 		return FALSE
 
-/datum/emote/living/custom/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	var/our_message = params ? params : get_custom_emote_from_user()
-
-	if(!emote_is_valid(user, our_message))
-		return FALSE
-
-	if(!params)
-		var/user_emote_type = get_custom_emote_type_from_user()
-
-		if(!user_emote_type)
-			return FALSE
-
-		emote_type = user_emote_type
-
-	message = our_message
-
 /datum/emote/living/custom/proc/emote_is_valid(mob/user, input)
 	// We're assuming clientless mobs custom emoting is something codebase-driven and not player-driven.
 	// If players ever get the ability to force clientless mobs to emote, we'd need to reconsider this.
@@ -727,6 +729,10 @@
 
 	return TRUE
 
+/datum/emote/living/custom/get_message_flags(intentional)
+	. = ..()
+	return .|WITH_EMPHASIS_MESSAGE
+
 /datum/emote/living/custom/proc/get_custom_emote_from_user()
 	return copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
 
@@ -745,9 +751,25 @@
 			return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
-	if(params && type_override)
+	var/our_message = params ? params : get_custom_emote_from_user()
+
+	if(!emote_is_valid(user, our_message))
+		return FALSE
+
+	if(type_override)
 		emote_type = type_override
+
+	if(!params)
+		var/user_emote_type = get_custom_emote_type_from_user()
+
+		if(!user_emote_type)
+			return FALSE
+
+		emote_type = user_emote_type
+
+	message = our_message
 	. = ..()
+
 	///Reset the message and emote type after it's run.
 	message = null
 	emote_type = EMOTE_VISIBLE

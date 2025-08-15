@@ -27,7 +27,7 @@ Difficulty: Medium
 	icon_living = "miner"
 	icon = 'icons/mob/simple/broadMobs.dmi'
 	health_doll_icon = "miner"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL|MOB_MINING
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	speak_emote = list("roars")
 	speed = 3
@@ -37,7 +37,7 @@ Difficulty: Medium
 	rapid_melee = 5 // starts fast because the saw's closed. gets reduced appropriately when extended, see their transform_weapon ability
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
+	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
 	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
@@ -46,7 +46,6 @@ Difficulty: Medium
 	achievement_type = /datum/award/achievement/boss/blood_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	score_achievement_type = /datum/award/score/blood_miner_score
-	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
@@ -61,10 +60,13 @@ Difficulty: Medium
 	var/datum/action/cooldown/mob_cooldown/dash_attack/dash_attack
 	/// Transform weapon ability
 	var/datum/action/cooldown/mob_cooldown/transform_weapon/transform_weapon
+	/// Their little saw
+	var/obj/item/melee/cleaving_saw/miner/miner_saw
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize(mapload)
 	. = ..()
 	miner_saw = new(src)
+	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 	dash = new /datum/action/cooldown/mob_cooldown/dash
@@ -78,11 +80,20 @@ Difficulty: Medium
 
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
+/// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
+	SIGNAL_HANDLER
+
+	if(!force)
+		return TRUE
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy(force)
 	dash = null
 	kinetic_accelerator = null
 	dash_attack = null
 	transform_weapon = null
+	UnregisterSignal(miner_saw, COMSIG_PREQDELETED) // unblock deletion, we are dead.
+	QDEL_NULL(miner_saw)
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()

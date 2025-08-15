@@ -47,6 +47,8 @@
 	var/list/color = rgb2num(HTMLstring)
 	return rgb(255 - color[1], 255 - color[2], 255 - color[3])
 
+#define TEMP_COLOR_SOURCE "temp_flash"
+
 ///Flash a color on the passed mob
 /proc/flash_color(mob_or_client, flash_color=COLOR_CULT_RED, flash_time=20)
 	var/mob/flashed_mob
@@ -60,11 +62,13 @@
 		return
 
 	var/datum/client_colour/temp/temp_color = new(flashed_mob)
-	temp_color.colour = flash_color
+	temp_color.color = flash_color
 	temp_color.fade_in = flash_time * 0.25
 	temp_color.fade_out = flash_time * 0.25
 	QDEL_IN(temp_color, (flash_time * 0.5) + 1)
-	flashed_mob.add_client_colour(temp_color)
+	flashed_mob.add_client_colour(temp_color, TEMP_COLOR_SOURCE)
+
+#undef TEMP_COLOR_SOURCE
 
 /// Blends together two colors (passed as 3 or 4 length lists) using the screen blend mode
 /// Much like multiply, screen effects the brightness of the resulting color
@@ -148,3 +152,116 @@
 			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
+/* Generates an HSL color transition matrix filter which nicely paints an object
+ * without making it a deep fried blob of color
+ * saturation_behavior determines how we handle color saturation:
+ * SATURATION_MULTIPLY - Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+ * SATURATION_OVERRIDE- Affects original lightness/saturation to ensure that pale objects still get doused in color
+ */
+/proc/color_transition_filter(new_color, saturation_behavior = SATURATION_MULTIPLY)
+	if (islist(new_color))
+		new_color = rgb(new_color[1], new_color[2], new_color[3])
+	new_color = rgb2num(new_color, COLORSPACE_HSL)
+	var/hue = new_color[1] / 360
+	var/saturation = new_color[2] / 100
+	var/added_saturation = 0
+	var/deducted_light = 0
+	if (saturation_behavior == SATURATION_OVERRIDE)
+		added_saturation = saturation * 0.75
+		deducted_light = saturation * 0.5
+		saturation = min(saturation, 1 - added_saturation)
+
+	var/list/new_matrix = list(
+		0, 0, 0, 0, // Ignore original hue
+		0, saturation, 0, 0, // Multiply the saturation by ours
+		0, 0, 1 - deducted_light, 0, // If we're highly saturated then remove a bit of lightness to keep some color in
+		0, 0, 0, 1, // Preserve alpha
+		hue, added_saturation, 0, 0, // And apply our preferred hue and some saturation if we're oversaturated
+	)
+	return color_matrix_filter(new_matrix, FILTER_COLOR_HSL)
+
+/// Applies a color filter to a hex/RGB list color
+/proc/apply_matrix_to_color(color, list/matrix, colorspace = COLORSPACE_HSL)
+	if (islist(color))
+		color = rgb(color[1], color[2], color[3], color[4])
+	color = rgb2num(color, colorspace)
+	// Pad alpha if we're lacking it
+	if (length(color) < 4)
+		color += 255
+
+	// Do we have a constants row?
+	var/has_constants = FALSE
+	// Do we have an alpha row/parameters?
+	var/has_alpha = FALSE
+
+	switch (length(matrix))
+		if (9)
+			has_constants = FALSE
+			has_alpha = FALSE
+		if (12)
+			has_constants = TRUE
+			has_alpha = FALSE
+		if (16)
+			has_constants = FALSE
+			has_alpha = TRUE
+		if (20)
+			has_constants = TRUE
+			has_alpha = TRUE
+		else
+			CRASH("Matrix of invalid length [length(matrix)] was passed into apply_matrix_to_color!")
+
+	var/list/new_color = list(0, 0, 0, 0)
+	var/row_length = 3
+	if (has_alpha)
+		row_length = 4
+	else
+		new_color[4] = 255
+
+	for (var/row_index in 1 to length(matrix) / row_length)
+		for (var/row_elem in 1 to row_length)
+			var/elem = matrix[(row_index - 1) * row_length + row_elem]
+			if (!has_constants || row_index != (length(matrix) / row_length))
+				new_color[row_index] += color[row_elem] * elem
+				continue
+
+			// Constant values at the end of the list (if we have such)
+			if (colorspace != COLORSPACE_HSV && colorspace != COLORSPACE_HCY && colorspace != COLORSPACE_HSL)
+				new_color[row_elem] += elem * 255
+				continue
+
+			// HSV/HSL/HCY have non-255 maximums for their values
+			var/multiplier = 255
+			switch (row_elem)
+				// Hue goes from 0 to 360
+				if (1)
+					multiplier = 360
+				// Value, luminance, chroma, etc go from 0 to 100
+				if (2 to 3)
+					multiplier = 100
+				// Alpha still goes from 0 to 255
+				if (4)
+					multiplier = 255
+			new_color[row_elem] += elem * multiplier
+
+	var/rgbcolor = rgb(new_color[1], new_color[2], new_color[3], new_color[4], space = colorspace)
+	return rgbcolor
+
+/// Recursively applies a filter to a passed in static appearance, returns the modified appearance
+/proc/filter_appearance_recursive(mutable_appearance/filter, filter_to_apply)
+	var/mutable_appearance/modify = new(filter)
+	var/list/existing_filters = modify.filters.Copy()
+	modify.filters = list(filter_to_apply) + existing_filters
+
+	// Ideally this should be recursive to check for KEEP_APART elements that need this applied to it
+	// and RESET_COLOR flags but this is much simpler, and hopefully we don't have that point of layering here
+	if(modify.appearance_flags & KEEP_TOGETHER)
+		return modify
+
+	for(var/overlay_index in 1 to length(modify.overlays))
+		modify.overlays[overlay_index] = filter_appearance_recursive(modify.overlays[overlay_index], filter_to_apply)
+
+	for(var/underlay_index in 1 to length(modify.underlays))
+		modify.underlays[underlay_index] = filter_appearance_recursive(modify.underlays[underlay_index], filter_to_apply)
+
+	return modify

@@ -6,90 +6,28 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-@use '~tgui/styles/colors.scss' with (
-  $primary: hsl(0, 0%, 100%),
-  $bg-lightness: -25%,
-  $fg-lightness: -10%,
-  $label: hsl(0, 0%, 23.1%),
-  // Makes button look actually grey due to weird maths.
-  $grey: hsl(0, 0%, 100%),
-  // Commenting out color maps will adjust all colors based on the lightness
-  // settings above, but will add extra 10KB to the theme.
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
-);
-@use '~tgui/styles/base.scss' with (
-  $color-fg: hsl(0, 0%, 0%),
-  $color-bg: hsl(0, 0%, 93.3%),
-  $color-bg-grad-spread: 0%
-);
+.theme-light:root {
+  --chat-text-color: var(--color-black);
 
-// A fat warning to anyone who wants to use this: this only half works.
-// It was made almost purely for the nuke ui, and requires a good amount of manual hacks to get it working as intended.
-.theme-light {
-  // Atomic classes
-  @include meta.load-css('~tgui/styles/atomic/color.scss');
+  // Base
+  --color-base: hsl(0, 0%, 93%);
+  --color-section: var(--color-white);
+  --color-text: var(--color-black);
+  --color-label: hsl(0, 0%, 33%);
+  --color-action: hsl(0, 0%, 90%);
+  --color-scrollbar-thumb: var(--color-light-gray);
+  --primary-lightness: 60%;
+  --primary-saturation: 60%;
+  --border-primary-alpha: 0.66;
 
   // Components
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Tabs',
-    $with: (
-      'text-color': rgba(0, 0, 0, 0.5),
-      'color-default': rgba(0, 0, 0, 1),
-      'tab-color-selected': rgba(0, 0, 0, 0.125),
-      'tab-color-hovered': rgba(0, 0, 0, 0.075)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
-    $with: ('background-color': hsl(0, 0%, 100%))
-  );
+  --button-background-selected: hsl(from var(--color-primary) h 100 l);
+  --button-background-caution: hsl(27.5, 90%, 38%);
+  --button-background-danger: hsl(60, 100%, 30%);
+  --tab-color-selected: var(--color-black);
+  --input-background: var(--color-base);
+  --tooltip-background-lightness: 90;
 
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
-    $with: (
-      'color-default': hsl(0, 0%, 73.3%),
-      'color-disabled': hsl(0, 0%, 21.2%),
-      'color-selected': hsl(204, 94%, 35.3%),
-      'color-caution': hsl(28, 91%, 38.2%),
-      'color-danger': hsl(62, 100%, 30.2%),
-      'color-transparent-text': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Input',
-    $with: (
-      'border-color': colors.fg(colors.$label),
-      'background-color': hsl(0, 0%, 90.2%)
-    )
-  );
-  @include meta.load-css('pkg:tgui-styles/components/NumberInput');
-  @include meta.load-css('pkg:tgui-styles/components/TextArea');
-  @include meta.load-css('pkg:tgui-styles/components/Knob');
-  @include meta.load-css('pkg:tgui-styles/components/Slider');
-  @include meta.load-css('pkg:tgui-styles/components/ProgressBar');
-
-  // Components specific to tgui-panel
-  @include meta.load-css(
-    '../components/Chat.scss',
-    $with: ('text-color': hsl(0, 0%, 0%))
-  );
-
-  // Layouts
-  @include meta.load-css(
-    '~tgui/styles/layouts/Layout.scss',
-    $with: ('scrollbar-color-multiplier': -1)
-  );
-  @include meta.load-css('~tgui/styles/layouts/Window.scss');
-  @include meta.load-css(
-    '~tgui/styles/layouts/TitleBar.scss',
-    $with: (
-      'text-color': rgba(0, 0, 0, 0.75),
-      'background-color': base.$color-bg,
-      'shadow-color-core': rgba(0, 0, 0, 0.25)
-    )
-  );
-
-  // tgchat styles
+  // Chat styles
   @include meta.load-css('../tgchat/chat-light.scss');
 }

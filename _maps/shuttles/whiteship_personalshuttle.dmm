@@ -146,7 +146,7 @@
 /area/shuttle/abandoned/bridge)
 "dx" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -162,15 +162,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/zombie{
-	desc = "This undead fiend looks to be badly decomposed.";
-	environment_smash = 0;
-	health = 60;
-	melee_damage_lower = 11;
-	melee_damage_upper = 11;
-	name = "Rotting Carcass";
-	outfit = /datum/outfit/corpse_assistant
-	},
+/mob/living/basic/zombie/rotten/assistant,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/engine)
 "gG" = (
@@ -195,15 +187,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/zombie{
-	desc = "This undead fiend looks to be badly decomposed.";
-	environment_smash = 0;
-	health = 60;
-	melee_damage_lower = 11;
-	melee_damage_upper = 11;
-	name = "Rotting Carcass";
-	outfit = /datum/outfit/corpse_assistant
-	},
+/mob/living/basic/zombie/rotten/assistant,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "nI" = (
@@ -260,15 +244,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/chair/comfy/shuttle,
-/mob/living/simple_animal/hostile/zombie{
-	desc = "This undead fiend looks to be badly decomposed.";
-	environment_smash = 0;
-	health = 60;
-	melee_damage_lower = 11;
-	melee_damage_upper = 11;
-	name = "Rotting Carcass";
-	outfit = /datum/outfit/corpse_assistant
-	},
+/mob/living/basic/zombie/rotten/assistant,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
 "pS" = (
@@ -312,7 +288,7 @@
 /area/shuttle/abandoned/bridge)
 "sw" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},

@@ -1,5 +1,5 @@
 #define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
-#define FUNCTIONAL_WING_STABILIZATION 1.2 NEWTONS
+#define FUNCTIONAL_WING_STABILIZATION 4.5 NEWTONS
 
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
@@ -42,6 +42,7 @@
 		COMSIG_WINGS_OPENED, \
 		COMSIG_WINGS_CLOSED, \
 		null, \
+		CALLBACK(src, PROC_REF(can_fly)), \
 		CALLBACK(src, PROC_REF(can_fly)), \
 	)
 
@@ -207,7 +208,7 @@
 ///robotic wings, which relate to androids.
 /obj/item/organ/wings/functional/robotic
 	name = "robotic wings"
-	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
+	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gather enough of them, and you can lift impressively large things."
 	organ_flags = ORGAN_ROBOTIC
 	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 

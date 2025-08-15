@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { ReactNode } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
+import type { ReactNode } from 'react';
 import {
   Box,
   Button,
@@ -13,7 +10,10 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 enum SpellCategory {
@@ -626,7 +626,7 @@ const CategoryDisplay = (props: { ActiveCat: TabType }) => {
           </Stack.Item>
         )}
         <Stack.Item>
-          {(ActiveCat.component && ActiveCat.component()) || (
+          {ActiveCat.component?.() || (
             <SpellTabDisplay TabSpells={TabSpells} PointOffset={38} />
           )}
         </Stack.Item>
@@ -648,7 +648,7 @@ export const Spellbook = (props) => {
 
   // Has a chance of selecting a random funny verb instead of "Searching"
   const SelectSearchVerb = () => {
-    let found = Math.random();
+    const found = Math.random();
     if (found <= 0.03) {
       return 'Seeking';
     }
@@ -772,14 +772,14 @@ export const Spellbook = (props) => {
               <Stack>
                 <Stack.Item grow>
                   <ProgressBar value={points / 10}>
-                    {points + ' points left to spend.'}
+                    {`${points} points left to spend.`}
                   </ProgressBar>
                 </Stack.Item>
                 <Stack.Item>
                   <Input
                     width={15}
                     placeholder="Search for a spell..."
-                    onInput={(e, val) => setSpellSearch(val)}
+                    onChange={setSpellSearch}
                   />
                 </Stack.Item>
               </Stack>

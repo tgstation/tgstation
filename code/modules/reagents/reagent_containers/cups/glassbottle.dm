@@ -10,6 +10,7 @@
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "glassbottle"
 	worn_icon_state = "bottle"
+	icon_angle = 90
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = PAYCHECK_CREW * 1.1
 	amount_per_transfer_from_this = 10
@@ -57,12 +58,9 @@
 			update_icon(UPDATE_OVERLAYS)
 	return ..()
 
-/obj/item/reagent_containers/cup/glass/bottle/CheckParts(list/parts_list)
+/obj/item/reagent_containers/cup/glass/bottle/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
-	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
-	if(bottle.message_in_a_bottle)
-		message_in_a_bottle = bottle.message_in_a_bottle
-		bottle.message_in_a_bottle.forceMove(src)
+	message_in_a_bottle?.forceMove(drop_location())
 
 /obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
 	. = ..()
@@ -121,12 +119,12 @@
 	volume = 50
 	custom_price = PAYCHECK_CREW * 0.9
 
-/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE, break_top)
-	if(bartender_check(target) && ranged)
+/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
+	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	SplashReagents(target, ranged, override_spillable = TRUE)
+	SplashReagents(target, throwingdatum, override_spillable = TRUE)
 	var/obj/item/broken_bottle/broken = new(drop_location())
-	if(!ranged && thrower)
+	if(!throwingdatum && thrower)
 		thrower.put_in_hands(broken)
 	broken.mimic_broken(src, target, break_top)
 	broken.inhand_icon_state = broken_inhand_icon_state
@@ -227,8 +225,8 @@
 			intensity_state = "high"
 	///The froth fountain that we are sticking onto the bottle
 	var/mutable_appearance/froth = mutable_appearance('icons/obj/drinks/drink_effects.dmi', "froth_bottle_[intensity_state]")
-	froth.pixel_x = offset_x
-	froth.pixel_y = offset_y
+	froth.pixel_w = offset_x
+	froth.pixel_z = offset_y
 	add_overlay(froth)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), froth), 2 SECONDS)
 
@@ -623,6 +621,9 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/bitters = 30)
 	drink_type = ALCOHOL
+	//allows for single unit dispensing
+	possible_transfer_amounts = list(1, 2, 3, 4, 5)
+	amount_per_transfer_from_this = 5
 
 /obj/item/reagent_containers/cup/glass/bottle/curacao
 	name = "Beekhof Blauw Curaçao"
@@ -693,13 +694,13 @@
 	if(do_after(user, 1 SECONDS, src))
 		return pop_cork(user, sabrage = FALSE, froth_severity = pick(0, 1))
 
-/obj/item/reagent_containers/cup/glass/bottle/champagne/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/item/reagent_containers/cup/glass/bottle/champagne/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(spillable)
 		return
 
-	if(attacking_item.sharpness != SHARP_EDGED)
+	if(attacking_item.get_sharpness() != SHARP_EDGED)
 		return
 
 	if(attacking_item != user.get_active_held_item()) //no TK allowed
@@ -744,7 +745,7 @@
 			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"),
 			)
 		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
-		return smash(target = user, ranged = FALSE, break_top = TRUE)
+		return smash(target = user, break_top = TRUE)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
@@ -850,7 +851,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/moonshine
 	name = "moonshine jug"
-	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
+	desc = "It is said that the ancient Appalachians used these stoneware jugs to capture lightning in a bottle."
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
 	drink_type = ALCOHOL
@@ -912,21 +913,21 @@
 		/datum/reagent/toxin/spore_burning,
 	)
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/CheckParts(list/parts_list)
-	. = ..()
-	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+/obj/item/reagent_containers/cup/glass/bottle/molotov/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in components
 	if(!bottle)
-		return
+		return ..()
 	icon_state = bottle.icon_state
-	bottle.reagents.copy_to(src, 100)
+	bottle.reagents.trans_to(src, 100, copy_only = TRUE)
 	if(istype(bottle, /obj/item/reagent_containers/cup/glass/bottle/juice))
 		desc += " You're not sure if making this out of a carton was the brightest idea."
 		isGlass = FALSE
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = FALSE)
 	..(hit_atom, throwingdatum, do_splash = FALSE)
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, ranged = FALSE)
+/obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
 	var/firestarter = 0
 	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
 		for(var/accelerant_type in accelerants)
@@ -938,13 +939,13 @@
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.get_temperature() && !active)
 		active = TRUE
 		log_bomber(user, "has primed a", src, "for detonation")
 
 		to_chat(user, span_info("You light [src] on fire."))
-		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		add_overlay(custom_fire_overlay() || GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, PROC_REF(explode)), 5 SECONDS)
 
@@ -966,7 +967,7 @@
 			to_chat(user, span_danger("The flame's spread too far on it!"))
 			return
 		to_chat(user, span_info("You snuff out the flame on [src]."))
-		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		cut_overlay(custom_fire_overlay() || GLOB.fire_overlay)
 		active = FALSE
 		return
 	return ..()

@@ -1,6 +1,6 @@
 /obj/item/market_uplink
 	name = "\improper Market Uplink"
-	desc = "An market uplink. Usable with markets. You probably shouldn't have this!"
+	desc = "A market uplink. Usable with markets. You probably shouldn't have this!"
 	icon = 'icons/obj/devices/blackmarket.dmi'
 	icon_state = "uplink"
 
@@ -165,7 +165,7 @@
 /datum/crafting_recipe/blackmarket_uplink
 	name = "Black Market Uplink"
 	result = /obj/item/market_uplink/blackmarket
-	time = 30
+	time = 3 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 	reqs = list(
 		/obj/item/stock_parts/micro_laser = 1,

@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const tgui_fancy: FeatureToggle = {
   name: 'Enable fancy TGUI',
@@ -32,6 +32,13 @@ export const tgui_lock: FeatureToggle = {
   name: 'Lock TGUI to main monitor',
   category: 'UI',
   description: 'Locks TGUI windows to your main monitor.',
+  component: CheckboxInput,
+};
+
+export const ui_scale: FeatureToggle = {
+  name: 'Toggle UI scaling',
+  category: 'UI',
+  description: 'If UIs should scale up to match your monitor scaling.',
   component: CheckboxInput,
 };
 

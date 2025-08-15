@@ -1,12 +1,12 @@
-import { sortBy } from 'common/collections';
-import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'common/keycodes';
-import { BooleanLike } from 'common/react';
+import { sortBy } from 'es-toolkit';
 import { Component } from 'react';
+import { Button, KeyListener, Stack } from 'tgui-core/components';
+import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'tgui-core/keycodes';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Button, KeyListener, Stack } from '../components';
 import { Window } from '../layouts';
-import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
+import { type BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
 
 type Surgery = {
   name: string;
@@ -20,7 +20,7 @@ type SurgeryInitiatorData = {
 };
 
 const sortSurgeries = (array: Surgery[]) =>
-  sortBy(array, (surgery) => surgery.name);
+  sortBy(array, [(surgery) => surgery.name]);
 
 type SurgeryInitiatorInnerState = {
   selectedSurgeryIndex: number;
@@ -75,7 +75,7 @@ class SurgeryInitiatorInner extends Component<
 
     return (
       <Window width={400} height={350} title={`Surgery on ${target_name}`}>
-        <Window.Content>
+        <Window.Content scrollable>
           <Stack fill height="100%">
             <Stack.Item width="30%">
               <BodyZoneSelector

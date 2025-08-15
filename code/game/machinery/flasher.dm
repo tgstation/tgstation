@@ -62,7 +62,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	return ..()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/flasher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if (attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 		if (bulb)
@@ -185,7 +185,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if(vname == NAMEOF(src, flash_range))
 		proximity_monitor?.set_range(flash_range)
 
-/obj/machinery/flasher/portable/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/flasher/portable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (attacking_item.tool_behaviour == TOOL_WRENCH)
 		attacking_item.play_tool_sound(src, 100)
 

@@ -4,7 +4,6 @@
 	ammo_type = /obj/item/ammo_casing/strilka310
 	caliber = CALIBER_STRILKA310
 	max_ammo = 5
-	multiload = TRUE
 
 /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	ammo_type = /obj/item/ammo_casing/strilka310/surplus
@@ -62,3 +61,13 @@
 	caliber = CALIBER_REBAR
 	ammo_type = /obj/item/ammo_casing/rebar/syndie
 
+
+/obj/item/ammo_box/magazine/internal/sks
+	name = "\improper SKS rifle internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/strilka310
+	caliber = CALIBER_STRILKA310
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/internal/sks/empty
+	start_empty = TRUE

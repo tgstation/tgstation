@@ -1,14 +1,11 @@
 #define ICON_STATE_CHECKED 1 /// this dmi is checked. We don't check this one anymore.
 #define ICON_STATE_NULL 2 /// this dmi has null-named icon_state, allowing it to show a sprite on vv editor.
 
-ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the variables of a datum.", ADMIN_CATEGORY_DEBUG, datum/thing in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", datum/thing in world)
 	user.debug_variables(thing)
 // This is kept as a separate proc because admins are able to show VV to non-admins
 
-/client/proc/debug_variables(datum/thing in world)
-	set category = "Debug"
-	set name = "View Variables"
-	//set src in world
+/client/proc/debug_variables(datum/thing)
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder) //This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
@@ -54,7 +51,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 			else // it means: icon_state=""
 				if(!dmi_nullstate_checklist[icon_filename_text])
 					dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_CHECKED
-					if("" in icon_states(image_object.icon))
+					if(icon_exists(image_object.icon, ""))
 						// this dmi has nullstate. We'll allow "icon_state=null" to show image.
 						dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_NULL
 
@@ -114,6 +111,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 
 	sleep(1 TICKS)
 
+	var/ui_scale = prefs?.read_preference(/datum/preference/toggle/ui_scale)
+
 	var/list/variable_html = list()
 	if(islist)
 		var/list/list_value = thing
@@ -135,6 +134,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>[title]</title>
 		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("view_variables.css")]">
+		[!ui_scale && window_scaling ? "<style>body {zoom: [100 / window_scaling]%;}</style>" : ""]
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">
@@ -257,7 +257,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 					</td>
 					<td width='50%'>
 						<div align='center'>
-							<a id='refresh_link' href='?_src_=vars;
+							<a id='refresh_link' href='byond://?_src_=vars;
 datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 							<form>
 								<select name="file" size="1"
@@ -303,7 +303,11 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 	</body>
 </html>
 "}
-	src << browse(html, "window=variables[refid];size=475x650")
+	var/size_string = "size=475x650";
+	if(ui_scale && window_scaling)
+		size_string = "size=[475 * window_scaling]x[650 * window_scaling]"
+
+	src << browse(html, "window=variables[refid];[size_string]")
 
 /client/proc/vv_update_display(datum/thing, span, content)
 	src << output("[span]:[content]", "variables[REF(thing)].browser:replace_span")

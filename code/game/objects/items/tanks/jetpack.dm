@@ -53,6 +53,7 @@
 		COMSIG_JETPACK_DEACTIVATED, \
 		JETPACK_ACTIVATION_FAILED, \
 		thrust_callback, \
+		thrust_callback, \
 		/datum/effect_system/trail_follow/ion, \
 	)
 
@@ -61,10 +62,6 @@
 			ADD_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
 		else
 			REMOVE_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
-
-/obj/item/tank/jetpack/item_action_slot_check(slot)
-	if(slot & slot_flags)
-		return TRUE
 
 /obj/item/tank/jetpack/equipped(mob/user, slot, initial)
 	. = ..()

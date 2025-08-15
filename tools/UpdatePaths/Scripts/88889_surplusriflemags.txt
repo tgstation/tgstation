@@ -1,0 +1,3 @@
+#comment Repaths the 10mm surplus rifle's magazines from m10mm/rifle to sr10mm, so it doesn't show up as an Ansem magazine subtype.
+
+/obj/item/ammo_box/magazine/m10mm/rifle : /obj/item/ammo_box/magazine/sr10mm{@OLD}

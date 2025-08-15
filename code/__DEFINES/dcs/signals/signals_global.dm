@@ -43,8 +43,6 @@
 #define COMSIG_GLOB_RANDOM_EVENT "!random_event"
 	/// Do not allow this random event to continue.
 	#define CANCEL_RANDOM_EVENT (1<<0)
-/// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
-#define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
 /// a trapdoor remote has sent out a signal to link with a trapdoor
 #define COMSIG_GLOB_TRAPDOOR_LINK "!trapdoor_link"
 	///successfully linked to a trapdoor!
@@ -106,3 +104,7 @@
 
 /// Global signal sent when a mob is spawned from a ghost in a dynamic ruleset (mob/spawned_mob)
 #define COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS "!ruleset_body_generated_from_ghosts"
+
+/// Global signal whenever a camera network broadcast is started/stopped/updated: (camera_net, is_show_active, announcement)
+#define COMSIG_GLOB_NETWORK_BROADCAST_UPDATED "!network_broadcast_updated"
+

@@ -20,6 +20,7 @@
 
 /mob/living/basic/construct/wraith/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SEE_BLESSED_TILES, INNATE_TRAIT)
 	var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/jaunt = locate() in actions
 	if(isnull(jaunt))
 		return .
@@ -32,6 +33,7 @@
 
 // Alternate wraith themes
 /mob/living/basic/construct/wraith/angelic
+	faction = list(FACTION_HOLY)
 	theme = THEME_HOLY
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/angelic,
@@ -43,6 +45,7 @@
 	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
 
 /mob/living/basic/construct/wraith/mystic
+	faction = list(ROLE_WIZARD)
 	theme = THEME_WIZARD
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/mystic,

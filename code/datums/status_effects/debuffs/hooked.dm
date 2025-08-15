@@ -12,14 +12,8 @@
 /datum/status_effect/grouped/hooked/proc/still_exists()
 	return !QDELETED(src)
 
-/datum/status_effect/grouped/hooked/on_creation(mob/living/new_owner, datum/beam/fishing_line/source)
-	. = ..()
-	if(!.) //merged with an existing effect
-		return
+/datum/status_effect/grouped/hooked/source_added(datum/beam/fishing_line/source)
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
-
-/datum/status_effect/grouped/hooked/merge_with_existing(datum/status_effect/grouped/hooked/existing, datum/beam/fishing_line/source)
-	existing.RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
 
 /datum/status_effect/grouped/hooked/proc/on_fishing_line_deleted(datum/source)
 	SIGNAL_HANDLER

@@ -1,12 +1,13 @@
+import { Button, ByondUi, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, ByondUi, Section, Stack } from '../../components';
 import { POD_GREY, TABPAGES } from './constants';
 import { useTab } from './hooks';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function ViewTabHolder(props) {
   const { act, data } = useBackend<PodLauncherData>();
-  const { mapRef, customDropoff, effectReverse, renderLighting } = data;
+  const { mapRef, customDropoff, effectReverse } = data;
 
   const [tab, setTab] = useTab();
 
@@ -52,19 +53,6 @@ export function ViewTabHolder(props) {
             tooltip="View Source Bay"
           />
           <span style={POD_GREY}>|</span>
-          {!!customDropoff && !!effectReverse && (
-            <Button
-              color="transparent"
-              icon="lightbulb"
-              inline
-              onClick={() => {
-                act('renderLighting');
-                act('refreshView');
-              }}
-              selected={renderLighting}
-              tooltip="Render Lighting for the dropoff view"
-            />
-          )}
           <Button
             color="transparent"
             icon="sync-alt"

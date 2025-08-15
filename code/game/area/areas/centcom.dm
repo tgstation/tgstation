@@ -209,6 +209,10 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+/area/centcom/syndicate_mothership/expansion_custodialcloset
+	name = "Syndicate Custodial Closet"
+	icon_state = "syndie-elite"
+
 //MAFIA
 /area/centcom/mafia
 	name = "Mafia Minigame"
@@ -278,8 +282,6 @@
 	ambience_index = AMBIENCE_MINING
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_ASTEROID
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/centcom/asteroid/nearstation
 	static_lighting = TRUE

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Jukebox now has context tips, balloon alerts over messages to chat, and can now RMB to quick toggle music from playing."

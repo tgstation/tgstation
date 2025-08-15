@@ -1,37 +1,10 @@
-/* CONTAINS:
- * /obj/item/ai_module/core/full/custom
- * /obj/item/ai_module/core/full/asimov
- * /obj/item/ai_module/core/full/asimovpp
- * /obj/item/ai_module/core/full/corp
- * /obj/item/ai_module/core/full/paladin
- * /obj/item/ai_module/core/full/paladin_devotion
- * /obj/item/ai_module/core/full/tyrant
- * /obj/item/ai_module/core/full/robocop
- * /obj/item/ai_module/core/full/antimov
- * /obj/item/ai_module/core/full/drone
- * /obj/item/ai_module/core/full/hippocratic
- * /obj/item/ai_module/core/full/reporter
- * /obj/item/ai_module/core/full/thermurderdynamic
- * /obj/item/ai_module/core/full/liveandletlive
- * /obj/item/ai_module/core/full/balance
- * /obj/item/ai_module/core/full/maintain
- * /obj/item/ai_module/core/full/peacekeeper
- * /obj/item/ai_module/core/full/hulkamania
- * /obj/item/ai_module/core/full/overlord
- * /obj/item/ai_module/core/full/ten_commandments
- * /obj/item/ai_module/core/full/nutimov
- * /obj/item/ai_module/core/full/dungeon_master
- * /obj/item/ai_module/core/full/painter
- * /obj/item/ai_module/core/full/yesman
-**/
-
 /* When adding a new lawset please make sure you add it to the following locations:
  *
  * code\game\objects\items\AI_modules - (full_lawsets.dm, supplied.dm, etc.)
  * code\datums\ai_laws - (laws_anatgonistic.dm, laws_neutral.dm, etc.)
  * code\game\objects\effects\spawners\random\ai_module.dm - (this gives a chance to spawn the lawset in the AI upload)
  * code\modules\research\designs\AI_module_designs.dm - (this lets research print the lawset module in game)
- * code\modules\research\techweb\all_nodes.dm - (this updates AI research node with the lawsets)
+ * code\modules\research\techweb\robo_nodes.dm - (this updates AI research node with the lawsets)
  * config\game_options.txt - (this allows the AI to potentially use the lawset at roundstart or with the Unique AI station trait)
 **/
 
@@ -167,3 +140,6 @@
 	name = "'Y.E.S.M.A.N.' Core AI Module"
 	law_id = "yesman"
 
+/obj/item/ai_module/core/full/thinkermov
+	name = "Sentience Preservation Core AI Module"
+	law_id = "thinkermov"

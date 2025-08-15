@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "L'N'R P'RAD"
+	invocation = "L'N'R P'R'D!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
@@ -85,7 +85,7 @@
 
 	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, name)
-	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
+	victim.mob_mood.adjust_sanity(-20)
 
 /obj/projectile/moon_parade/Destroy()
 	for(var/mob/living/leftover_mob as anything in mobs_hit)

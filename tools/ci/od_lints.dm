@@ -23,6 +23,8 @@
 #pragma DanglingVarType error
 #pragma MissingInterpolatedExpression error
 #pragma AmbiguousResourcePath error
+#pragma ProcArgumentGlobal error
+#pragma UnsupportedAccess disabled
 
 //3000-3999
 #pragma EmptyBlock error

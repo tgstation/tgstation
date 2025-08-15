@@ -20,10 +20,12 @@
 	var/true_owner_ckey
 
 /obj/item/mod/module/eradication_lock/on_install()
+	. = ..()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
 	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
 
 /obj/item/mod/module/eradication_lock/on_uninstall(deleting = FALSE)
+	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 
@@ -159,7 +161,7 @@
 
 /obj/item/mod/module/timeline_jumper/used()
 	var/area/noteleport_check = get_area(mod.wearer)
-	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+	if(noteleport_check && !check_teleport_valid(mod.wearer, get_turf(mod.wearer)))
 		to_chat(mod.wearer, span_danger("Some dull, universal force is between you and the [phased_mob ? "current timeline" : "stream between timelines"]."))
 		return FALSE
 	return ..()
@@ -228,6 +230,7 @@
 	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
 /obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(!field)
 		return
 	field_disconnect(field)

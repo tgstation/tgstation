@@ -4,6 +4,7 @@
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	base_icon_state = "nothingwand"

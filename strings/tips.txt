@@ -44,6 +44,7 @@ As a Geneticist, T goes to A, and G goes to C.
 As a Ghost, you can both start and join capture the flag games through the minigames menu, or by clicking on one of the team spawners, which can be found under the "Misc" section of the orbit menu.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
+As a Heretic, you can locate an influence by dreaming about random objects around it when you sleep.
 As a Heretic, the Path of Ash focuses on stealth and disorientation, but as you progress, sheds this playstyle in favor of a more aggressive, fiery finale.
 As a Heretic, the Path of Moon will literally drive people around you crazy - perhaps crazy enough to become your allies should you succeed.
 As a Heretic, the Path of Lock is an Assistant's best friend, and can open many pathways. Including ones beyond the veil...
@@ -73,6 +74,7 @@ As a Medical Doctor, you must target the correct limb and not be in combat mode 
 As a Medical Doctor, when messing with viruses, remember that robotic organs can give immunity to disease effects and transmissibility. Make use of the inorganic biology symptom to bypass the protection.
 As a Medical Doctor, while there's an pandemic, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
 As a Medical Doctor, try messing with the virology lab sometime! Viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
+As a Medical Doctor, you can cure a heart attack by repeatedly shocking the victim with a defibrillator!
 As a Monkey, you can crawl through air or scrubber vents by alt+left clicking them. You must drop everything you are wearing and holding to do this, however.
 As a Monkey, you can still wear a few human items, such as backpacks, gas masks and hats, and still have two free hands.
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
@@ -109,6 +111,7 @@ As a Security Officer, remember that correlation does not equal causation. Someo
 As a Security Officer, remember that you can attach a sec-lite to your disabler or your helmet!
 As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. You can tell by the flashing blue outline around their job icon. Use this to your advantage in a revolution to definitively tell who is on your side!
 As a Security Officer, you have a special pen in your PDA that you can use to prompt people to surrender. This will stun them without the need to use a baton!
+As a Security Officer, you can treat or even cure a heart attack with repeated blows from a stunbaton. Emphasis on *repeated*.
 As a Service Cyborg, your spray can knocks people down. However, it is blocked by masks and glasses.
 As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
 As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to minimize damage from the encounters.
@@ -227,6 +230,7 @@ Basketball requires skill. Spinning drains stamina, reduces accuracy, but gives 
 Basketball requires teamwork. Passing the ball with LMB is instant and costs no stamina.
 Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
+Spears are capable of breaking into secure lockers by striking them in melee!
 Don't be afraid to ask for help, whether from your peers or from admins.
 Experiment with different setups of the Supermatter engine to maximize output, but don't risk the crew's safety to do so!
 Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
@@ -290,7 +294,6 @@ Modular computers are compatible with integrated circuits, but most of the progr
 You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.
 As a Bitrunner, upgrading your quantum server will increase rewards and reduce downtime.
 As a Bitrunner, your avatar has a domain info ability which will give you clues to help complete virtual domains.
-Bitrunning is a crime.
 You can right click someone with wire cutters, jaws of life, and box cutters to instantly snap cablecuffs or zipties. The jaws can even instantly break handcuffs!
 You can alt-click tank transfer valves to remove a tank from them.
 You can use a multitool in your hand to track the area's local APC.

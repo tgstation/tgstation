@@ -2,13 +2,9 @@
 
 SUBSYSTEM_DEF(queuelinks)
 	name = "Queue Links"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_QUEUELINKS
+	flags = SS_NO_FIRE | SS_NO_INIT
 	///assoc list of pending queues, id = /datum/queue_link
 	var/list/queues = list()
-
-/datum/controller/subsystem/queuelinks/Initialize()
-	return SS_INIT_SUCCESS
 
 ///Creates or adds to a queue with the id supplied, if the queue is now or above the size of the queue, calls MatchedLinks and clears queue.
 /// queues with a size of 0 wait never pop until something is added with an actual queue_max
@@ -60,6 +56,7 @@ SUBSYSTEM_DEF(queuelinks)
 	if(what in partners)
 		return
 	partners += what
+	RegisterSignal(what, COMSIG_QDELETING, PROC_REF(link_object_deleted))
 
 	if(queue_max != 0 && max != 0 && max != queue_max)
 		CRASH("Tried to change queue size to [max] from [queue_max]!")
@@ -76,6 +73,10 @@ SUBSYSTEM_DEF(queuelinks)
 	for(var/atom/item as anything in partners)
 		item.MatchedLinks(id, partners - item)
 	qdel(src)
+
+/datum/queue_link/proc/link_object_deleted(datum/source) // because CI and stuff
+	SIGNAL_HANDLER
+	partners -= source
 
 /datum/queue_link/Destroy()
 	. = ..()

@@ -12,7 +12,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
-	invocation = "Mo'N S'M'LE"
+	invocation = "M'N S'M'LE!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 	cast_range = 6
@@ -51,5 +51,5 @@
 	if(cast_on.mob_mood.sanity < 40)
 		cast_on.AdjustKnockdown(2 SECONDS)
 	//Lowers sanity
-	cast_on.mob_mood.set_sanity(cast_on.mob_mood.sanity - 20)
+	cast_on.mob_mood.adjust_sanity(-20)
 	return TRUE

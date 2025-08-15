@@ -7,10 +7,10 @@ import {
   Section,
   Table,
   Tooltip,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { SOFTWARE_DESC } from './constants';
-import { PaiData } from './types';
+import type { PaiData } from './types';
 
 /**
  * Renders a list of available software and the ram with which to download it

@@ -77,11 +77,11 @@
  * Proc that tries to perform the experiment, and then checks if its completed.
  */
 /datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
-	var/action_succesful = perform_experiment_actions(arglist(args))
+	var/action_successful = perform_experiment_actions(arglist(args))
 	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	if(is_complete())
 		finish_experiment(experiment_handler)
-	return action_succesful
+	return action_successful
 
 /**
  * Attempts to perform the experiment provided some arguments

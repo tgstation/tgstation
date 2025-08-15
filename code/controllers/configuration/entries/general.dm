@@ -7,7 +7,7 @@
 	default = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/flag/auto_deadmin_players
+/datum/config_entry/flag/auto_deadmin_always
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/auto_deadmin_timegate
@@ -18,6 +18,9 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/auto_deadmin_heads
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_on_ready_or_latejoin
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/auto_deadmin_silicons
@@ -118,6 +121,10 @@
 /// log emotes
 /datum/config_entry/flag/log_emote
 
+/// log ghost polling
+/datum/config_entry/flag/log_ghost_poll
+	default = TRUE
+
 /// log economy actions
 /datum/config_entry/flag/log_econ
 
@@ -217,7 +224,7 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/ticklag/TL = config.entries_by_type[/datum/config_entry/number/ticklag]
 		if(!TL.sync_validate)
-			TL.ValidateAndSet(10 / config_entry_value)
+			TL.ValidateAndSet("[10 / config_entry_value]")
 		sync_validate = FALSE
 
 /datum/config_entry/number/ticklag
@@ -235,7 +242,7 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/fps/FPS = config.entries_by_type[/datum/config_entry/number/fps]
 		if(!FPS.sync_validate)
-			FPS.ValidateAndSet(10 / config_entry_value)
+			FPS.ValidateAndSet("[10 / config_entry_value]")
 		sync_validate = FALSE
 
 /datum/config_entry/flag/allow_holidays
@@ -310,10 +317,12 @@
 
 /datum/config_entry/string/server
 
+/datum/config_entry/string/public_address
+
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
-	default = "http://tgstation13.org/wiki"
+	default = "https://wiki.tgstation13.org"
 
 /datum/config_entry/string/forumurl
 	default = "http://tgstation13.org/phpBB/index.php"
@@ -569,25 +578,22 @@
 	integer = FALSE
 
 /datum/config_entry/flag/irc_announce_new_game
-	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+	deprecated_by = /datum/config_entry/str_list/channel_announce_new_game
 
 /datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
 /datum/config_entry/string/chat_announce_new_game
-	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+	deprecated_by = /datum/config_entry/str_list/channel_announce_new_game
 
 /datum/config_entry/string/chat_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
-/datum/config_entry/string/channel_announce_new_game
-	default = null
+/datum/config_entry/str_list/channel_announce_new_game
 
-/datum/config_entry/string/channel_announce_end_game
-	default = null
+/datum/config_entry/str_list/channel_announce_end_game
 
-/datum/config_entry/string/chat_new_game_notifications
-	default = null
+/datum/config_entry/str_list/chat_new_game_notifications
 
 /// validate ownership of admin flags for chat commands
 /datum/config_entry/flag/secure_chat_commands
@@ -627,12 +633,6 @@
 /datum/config_entry/number/rounds_until_hard_restart
 	default = -1
 	min_val = 0
-
-/datum/config_entry/string/default_view
-	default = "15x15"
-
-/datum/config_entry/string/default_view_square
-	default = "15x15"
 
 /datum/config_entry/flag/log_pictures
 
@@ -700,6 +700,9 @@
 /datum/config_entry/string/adminhelp_ahelp_link
 
 /datum/config_entry/flag/cache_assets
+	default = TRUE
+
+/datum/config_entry/flag/smart_cache_assets
 	default = TRUE
 
 /datum/config_entry/flag/save_spritesheets
@@ -770,3 +773,16 @@
 /// If admins with +DEBUG can queue byond-tracy to run the next round.
 /datum/config_entry/flag/allow_tracy_queue
 	protection = CONFIG_ENTRY_LOCKED
+
+/**
+ * Tgui ui_act payloads larger than 2kb are split into chunks a maximum of 1kb in size.
+ * This flag represents the maximum chunk count the server is willing to receive.
+ */
+/datum/config_entry/number/tgui_max_chunk_count
+	default = 32
+
+// If set, enables the "Link forum account" OOC verb
+/datum/config_entry/string/forum_link_uri
+
+/datum/config_entry/flag/generate_assets_in_init
+	default = FALSE

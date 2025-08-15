@@ -1,14 +1,14 @@
 /datum/action/changeling/void_adaption
 	name = "Void Adaption"
 	desc = "We prepare our cells to resist the hostile environment outside of the station. We may freely travel wherever we wish."
-	helptext = "This ability is passive, and will automatically protect you in situations of extreme cold or vacuum, \
-		as well as removing your need to breathe. While it is actively protecting you from temperature or pressure \
-		it reduces your chemical regeneration rate."
+	helptext = "This ability is passive, and will automatically protect us in situations of extreme cold or vacuum, \
+		as well as removing our need to breathe oxygen, although we will still be affected by hazardous gases. \
+		While it is actively protecting us from temperature or pressure it reduces our chemical regeneration rate."
 	owner_has_control = FALSE
 	dna_cost = 2
 
 	/// Traits we apply to become immune to the environment
-	var/static/list/gain_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE)
+	var/static/list/gain_traits = list(TRAIT_NO_BREATHLESS_DAMAGE, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE)
 	/// How much we slow chemical regeneration while active, in chems per second
 	var/recharge_slowdown = 0.25
 	/// Are we currently protecting our user?

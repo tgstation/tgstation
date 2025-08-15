@@ -59,18 +59,20 @@ ADMIN_VERB(debug_controller, R_DEBUG, "Debug Controller", "Debug the various per
 	var/list/controllers = list()
 	var/list/controller_choices = list()
 
-	for (var/datum/controller/controller in world)
-		if (istype(controller, /datum/controller/subsystem))
+	for (var/var_key in global.vars)
+		var/datum/controller/controller = global.vars[var_key]
+		if(!istype(controller) || istype(controller, /datum/controller/subsystem))
 			continue
-		controllers["[controller] (controller.type)"] = controller //we use an associated list to ensure clients can't hold references to controllers
-		controller_choices += "[controller] (controller.type)"
+		controllers[controller.name] = controller //we use an associated list to ensure clients can't hold references to controllers
+		controller_choices += controller.name
 
 	var/datum/controller/controller_string = input("Select controller to debug", "Debug Controller") as null|anything in controller_choices
 	var/datum/controller/controller = controllers[controller_string]
 
 	if (!istype(controller))
 		return
-	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/debug_variables, controller)
+
+	user.debug_variables(controller)
 
 	BLACKBOX_LOG_ADMIN_VERB("Debug Controller")
 	message_admins("Admin [key_name_admin(user)] is debugging the [controller] controller.")

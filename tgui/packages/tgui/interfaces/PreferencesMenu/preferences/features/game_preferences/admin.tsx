@@ -1,8 +1,8 @@
 import {
   CheckboxInput,
-  Feature,
+  type Feature,
   FeatureColorInput,
-  FeatureToggle,
+  type FeatureToggle,
 } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
@@ -51,5 +51,14 @@ export const ghost_roles_as_admin: FeatureToggle = {
 export const comms_notification: FeatureToggle = {
   name: 'Enable comms console sound',
   category: 'ADMIN',
+  component: CheckboxInput,
+};
+
+export const auto_deadmin_on_ready_or_latejoin: FeatureToggle = {
+  name: 'Auto deadmin - Ready or Latejoin',
+  category: 'ADMIN',
+  description: `
+    When enabled, you will automatically deadmin when you click to ready up or latejoin a round.
+`,
   component: CheckboxInput,
 };

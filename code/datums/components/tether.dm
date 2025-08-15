@@ -15,7 +15,7 @@
 	var/datum/beam/tether_beam
 	/// Tether module if we were created by one
 	var/obj/item/mod/module/tether/parent_module
-	/// Source, if any, for TRAIT_TETHER_ATTACHED we add
+	/// Ref of source, if any, for TRAIT_TETHER_ATTACHED we add
 	var/tether_trait_source
 	/// If TRUE, only add TRAIT_TETHER_ATTACHED to our parent
 	var/no_target_trait
@@ -23,6 +23,9 @@
 /datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, \
 	parent_module = null, tether_trait_source = null, no_target_trait = FALSE)
 	if(!ismovable(parent) || !istype(tether_target) || !tether_target.loc)
+		return COMPONENT_INCOMPATIBLE
+	if(isatom(tether_trait_source))
+		stack_trace("Tried to add a [src.type] with a tether_trait_source that is a hard ref! Use REF() first before passing!")
 		return COMPONENT_INCOMPATIBLE
 
 	src.tether_target = tether_target
@@ -62,6 +65,7 @@
 
 	if (!isnull(parent_module))
 		RegisterSignals(parent_module, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOD_TETHER_SNAP), PROC_REF(snap))
+		RegisterSignal(parent_module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_parent_use))
 
 /datum/component/tether/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
@@ -71,11 +75,13 @@
 		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 		if (!isnull(tether_trait_source) && !no_target_trait)
 			REMOVE_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
+		SEND_SIGNAL(tether_target, COMSIG_ATOM_TETHER_SNAPPED, tether_trait_source)
 	if (!QDELETED(tether_beam))
 		UnregisterSignal(tether_beam.visuals, list(COMSIG_CLICK, COMSIG_QDELETING))
 		qdel(tether_beam)
 	if (!QDELETED(embed_target))
 		UnregisterSignal(embed_target, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_QDELETING))
+	SEND_SIGNAL(parent, COMSIG_ATOM_TETHER_SNAPPED, tether_trait_source)
 
 /datum/component/tether/proc/check_tether(atom/source, new_loc)
 	SIGNAL_HANDLER
@@ -143,6 +149,12 @@
 	playsound(atom_target, 'sound/effects/snap.ogg', 50, TRUE)
 	qdel(src)
 
+/datum/component/tether/proc/on_parent_use(obj/item/mod/module/module, atom/target)
+	SIGNAL_HANDLER
+
+	if (get_turf(target) == get_turf(tether_target))
+		return MOD_ABORT_USE
+
 /datum/component/tether/proc/on_delete()
 	SIGNAL_HANDLER
 	qdel(src)
@@ -174,7 +186,7 @@
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		location.balloon_alert(user, "cutting the tether...")
-		if (!do_after(user, 2 SECONDS, user))
+		if (!do_after(user, 2 SECONDS, user, (user == parent || user == tether_target) ? IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE : NONE))
 			return
 
 		qdel(src)
@@ -190,11 +202,11 @@
 		location.balloon_alert(user, "tether extended")
 		return
 
-	if (cur_dist <= 1)
+	if (cur_dist <= 0)
 		location.balloon_alert(user, "too short!")
 		return
 
-	if (cur_dist > get_dist(parent, tether_target))
+	if (cur_dist > CEILING(get_dist(parent, tether_target), 1))
 		cur_dist -= 1
 		location.balloon_alert(user, "tether shortened")
 		return

@@ -35,10 +35,10 @@
 	///calls from a head of staff autoconnect, if the receiving pad is not secure.
 	var/head_call = FALSE
 
-//creates a holocall made by `caller` from `calling_pad` to `callees`
-/datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
+//creates a holocall made by `call_source` from `calling_pad` to `callees`
+/datum/holocall/New(mob/living/call_source, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
 	call_start_time = world.time
-	user = caller
+	user = call_source
 	calling_pad.outgoing_call = src
 	calling_holopad = calling_pad
 	head_call = elevated_access
@@ -232,21 +232,27 @@
 	QDEL_NULL(record)
 	return ..()
 
-/obj/item/disk/holodisk/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/disk/holodisk))
-		var/obj/item/disk/holodisk/holodiskOriginal = W
-		if (holodiskOriginal.record)
-			if (!record)
-				record = new
-			record.caller_name = holodiskOriginal.record.caller_name
-			record.caller_image = holodiskOriginal.record.caller_image
-			record.entries = holodiskOriginal.record.entries.Copy()
-			record.language = holodiskOriginal.record.language
-			to_chat(user, span_notice("You copy the record from [holodiskOriginal] to [src] by connecting the ports!"))
-			name = holodiskOriginal.name
-		else
-			to_chat(user, span_warning("[holodiskOriginal] has no record on it!"))
-	..()
+/obj/item/disk/holodisk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/disk/holodisk))
+		return NONE
+
+	var/obj/item/disk/holodisk/holodisk_original = tool
+
+	if (!holodisk_original.record)
+		to_chat(user, span_warning("[holodisk_original] has no record on it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if (!record)
+		record = new
+
+	record.caller_name = holodisk_original.record.caller_name
+	record.caller_image = holodisk_original.record.caller_image
+	record.entries = holodisk_original.record.entries.Copy()
+	record.language = holodisk_original.record.language
+	to_chat(user, span_notice("You copy the record from [holodisk_original] to [src] by connecting the ports!"))
+	name = holodisk_original.name
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/holodisk/proc/build_record()
 	record = new

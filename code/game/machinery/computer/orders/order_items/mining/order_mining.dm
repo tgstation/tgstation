@@ -38,14 +38,6 @@
 	purchase_path = /obj/item/crusher_trophy/retool_kit
 	cost_per_order = 150
 
-/datum/orderable_item/mining/crusher_retool_kit_harpoon
-	purchase_path = /obj/item/crusher_trophy/retool_kit/harpoon
-	cost_per_order = 150
-
-/datum/orderable_item/mining/crusher_retool_kit_dagger
-	purchase_path = /obj/item/crusher_trophy/retool_kit/dagger
-	cost_per_order = 150
-
 /datum/orderable_item/mining/resonator
 	purchase_path = /obj/item/resonator
 	cost_per_order = 710

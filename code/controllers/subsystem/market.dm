@@ -1,7 +1,9 @@
 SUBSYSTEM_DEF(market)
 	name = "Market"
 	flags = SS_BACKGROUND
-	init_order = INIT_ORDER_DEFAULT
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+	)
 
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(
@@ -70,7 +72,7 @@ SUBSYSTEM_DEF(market)
 
 			// Get random area, throw it somewhere there.
 			if(SHIPPING_METHOD_TELEPORT)
-				var/turf/targetturf = get_safe_random_station_turf()
+				var/turf/targetturf = get_safe_random_station_turf_equal_weight()
 				// This shouldn't happen.
 				if (!targetturf)
 					continue

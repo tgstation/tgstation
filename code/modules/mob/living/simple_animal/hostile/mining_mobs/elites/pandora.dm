@@ -36,6 +36,7 @@
 	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
+	mob_biotypes = MOB_ROBOTIC|MOB_MINING
 	death_sound = 'sound/effects/magic/repulse.ogg'
 	death_message = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
@@ -46,7 +47,7 @@
 								/datum/action/innate/elite_attack/aoe_squares)
 
 	var/sing_shot_length = 8
-	var/cooldown_time = 20
+	var/cooldown_time = 2 SECONDS
 
 /datum/action/innate/elite_attack/singular_shot
 	name = "Singular Shot"

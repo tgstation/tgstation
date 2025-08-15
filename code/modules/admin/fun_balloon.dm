@@ -55,7 +55,7 @@
 	return data
 
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /obj/effect/fun_balloon/sentience/ui_status(mob/user, datum/ui_state/state)
 	if(popped)
@@ -112,7 +112,7 @@
 
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(FALSE)
-		body.key = C.key
+		body.PossessByPlayer(C.key)
 		if (make_antag)
 			body.mind.add_antag_datum(antag_type)
 			continue

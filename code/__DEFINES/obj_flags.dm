@@ -29,23 +29,30 @@
 #define NO_MAT_REDEMPTION (1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define DROPDEL (1<<6) // When dropped, it calls qdel on itself
 #define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
-#define ABSTRACT (1<<9) // for all things that are technically items but used for various different stuff <= wow thanks for the fucking insight sherlock
+/**
+ * for all things that are technically items but don't want to be treated as such, given on a case-by-case basis
+ * examples of use are hand items, omni-toolsets, non-limb limbs (hand eater, mounted chainsaw, many null rods), borg modules, bodyparts, organs, etc.
+ * This is used for general exclusion, such as preventing insertions into other items
+ * Basically, these aren't "real" items. <= wow thanks for the fucking insight sherlock
+*/
+#define ABSTRACT (1<<9)
 #define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, is a lot worse at the job if the target is alive rather than dead
+#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, causes a lot more pain for the patient, and is more efficient in a morbid users hands
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
-#define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
-#define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
-#define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
+#define XENOMORPH_HOLDABLE (1<<15) // A Xenomorph can hold this item.
+#define NO_PIXEL_RANDOM_DROP (1<<16) //if dropped, it wont have a randomized pixel_x/pixel_y
 ///Can be equipped on digitigrade legs.
-#define IGNORE_DIGITIGRADE (1<<18)
+#define IGNORE_DIGITIGRADE (1<<17)
 /// Has contextual screentips when HOVERING OVER OTHER objects
-#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
+#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 18)
 /// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
-#define NO_BLOOD_ON_ITEM (1 << 20)
+#define NO_BLOOD_ON_ITEM (1 << 19)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
-#define SKIP_FANTASY_ON_SPAWN (1<<21)
+#define SKIP_FANTASY_ON_SPAWN (1<<20)
+/// If an item has had its /datum/element/weapon_description initialized or not.
+#define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

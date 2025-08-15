@@ -162,8 +162,9 @@
 
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	GLOB.bots_list += src
+	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
+	LoadComponent(/datum/component/bloodysoles/bot)
 
 	path_hud = new /datum/atom_hud/data/bot_path/private()
 	for(var/hud in path_hud.hud_icons) // You get to see your own path
@@ -232,14 +233,19 @@
 	if (can_announce)
 		COOLDOWN_START(src, offer_ghosts_cooldown, 30 SECONDS)
 
+	if (user)
+		log_silicon("[key_name(user)] enabled sapience for [src] ([initial(src.name)])") // Not technically a silicon but who is counting
+
 /// Disables this bot from being possessed by ghosts
 /mob/living/simple_animal/bot/proc/disable_possession(mob/user)
+	if (user)
+		log_silicon("[key_name(user)] disabled sapience for [src] ([initial(src.name)])")
 	can_be_possessed = FALSE
 	qdel(GetComponent(/datum/component/ghost_direct_control))
 	if (isnull(key))
 		return
 	if (user)
-		log_combat(user, src, "ejected from [initial(src.name)] control.")
+		log_combat(user, src, "ejected [key_name(src)] from control of [src] ([initial(src.name)]).")
 	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
 	ghostize(can_reenter_corpse = FALSE)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
@@ -334,21 +340,21 @@
 			. += "[src]'s parts look very loose!"
 	else
 		. += "[src] is in pristine condition."
-	. += span_notice("Its maintenance panel is [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
+	. += span_notice("[p_Their()] maintenance panel is [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
 	. += span_info("You can use a <b>screwdriver</b> to [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open"] it.")
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-		. += span_notice("Its control panel is [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
+		. += span_notice("[p_Their()] control panel is [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
 		var/is_sillycone = HAS_SILICON_ACCESS(user)
 		if(!(bot_cover_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
-			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
+			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]lock [p_their()] control panel.")
 	if(paicard)
-		. += span_notice("It has a pAI device installed.")
+		. += span_notice("[p_They()] has a pAI device installed.")
 		if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 			. += span_info("You can use a <b>hemostat</b> to remove it.")
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0 && prob(10))
-		new /obj/effect/decal/cleanable/oil(loc)
+		new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/updatehealth()
@@ -456,7 +462,7 @@
 		user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 		return ITEM_INTERACT_SUCCESS
 
-/mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.GetID())
 		unlock_with_id(user)
 		return
@@ -541,7 +547,7 @@
 	else if(message_mods[RADIO_EXTENSION] == MODE_DEPARTMENT)
 		internal_radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 		return REDUCE_RANGE
-	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		internal_radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 		return REDUCE_RANGE
 
@@ -686,8 +692,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		access_card.set_access(prev_access)
 
-/mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)
-	if(isAI(caller) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
+/mob/living/simple_animal/bot/proc/call_bot(summoner, turf/waypoint, message = TRUE)
+	if(isAI(summoner) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		return FALSE
 
 	bot_reset() //Reset a bot before setting it to call mode.
@@ -696,7 +702,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//Easier then building the list ourselves. I'm sorry.
 	var/static/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
 	set_path(get_path_to(src, waypoint, max_distance=200, access = all_access.GetAccess()))
-	calling_ai = caller //Link the AI to the bot!
+	calling_ai = summoner //Link the AI to the bot!
 	ai_waypoint = waypoint
 
 	if(path?.len) //Ensures that a valid path is calculated!
@@ -706,7 +712,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
 			reset_access_timer_id = addtimer(CALLBACK (src, PROC_REF(bot_reset)), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
-			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
+			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[summoner]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
 		if(message)
 			to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination."))
 		pathset = TRUE
@@ -1097,7 +1103,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mind && paicard.pai)
 		mind.transfer_to(paicard.pai)
 	else if(paicard.pai)
-		paicard.pai.key = key
+		paicard.pai.PossessByPlayer(key)
 	else
 		ghostize(FALSE) // The pAI card that just got ejected was dead.
 	key = null
@@ -1156,11 +1162,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 	if(length(newpath))
-		var/mutable_appearance/path_image = new /mutable_appearance()
-		path_image.icon = path_image_icon
-		path_image.icon_state = path_image_icon_state
-		path_image.layer = BOT_PATH_LAYER
-		path_image.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+		var/mutable_appearance/path_image = mutable_appearance(path_image_icon, path_image_icon_state, BOT_PATH_LAYER, appearance_flags = RESET_COLOR|RESET_TRANSFORM|KEEP_APART)
 		path_image.color = path_image_color
 		for(var/i in 1 to newpath.len)
 			var/turf/T = newpath[i]
@@ -1209,9 +1211,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
-
-/mob/living/simple_animal/bot/spawn_gibs(drop_bitflags = NONE)
-	new /obj/effect/gibspawner/robot(drop_location(), src)
 
 /mob/living/simple_animal/bot/get_hit_area_message(input_area)
 	// we just get hit, there's no complexity for hitting an arm (if it exists) or anything.

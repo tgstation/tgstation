@@ -11,11 +11,13 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	// Icon_state passed into clothing dirt component
+	var/dirt_state = "bio_dirt"
 
 /obj/item/clothing/head/bio_hood/Initialize(mapload)
 	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+	if (dirt_state)
+		AddComponent(/datum/component/clothing_dirt, dirt_state)
 	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
@@ -38,8 +40,8 @@
 	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/cup/beaker, /obj/item/gun/syringe)
 	armor_type = /datum/armor/suit_bio_suit
 	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDEBELT
-	strip_delay = 70
-	equip_delay_other = 70
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
 	resistance_flags = ACID_PROOF
 
 /obj/item/clothing/suit/bio_suit/Initialize(mapload)
@@ -133,8 +135,8 @@
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"
 	inhand_icon_state = "bio_suit"
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()

@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(economy)
 	name = "Economy"
 	wait = 5 MINUTES
-	init_order = INIT_ORDER_ECONOMY
 	runlevels = RUNLEVEL_GAME
 	///How many paychecks should players start out the round with?
 	var/roundstart_paychecks = 5
@@ -66,6 +65,8 @@ SUBSYSTEM_DEF(economy)
 	/// Tracks a temporary sum of all money in the system
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
+	/// Determines how many ticks it takes to restock mail
+	var/ticks_per_mail = 2
 
 /datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
@@ -91,7 +92,6 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/seconds_per_tick = wait / (5 MINUTES)
-
 	if(!resumed)
 		temporary_total = 0
 		processing_part = ECON_DEPARTMENT_STEP
@@ -117,8 +117,9 @@ SUBSYSTEM_DEF(economy)
 		if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) && !price_update())
 			return
 
-	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * seconds_per_tick)
+	if(times_fired % ticks_per_mail == 0)
+		var/effective_mailcount = round(living_player_count() / (inflation_value - 0.5)) //More mail at low inflation, and vis versa.
+		mail_waiting += clamp(effective_mailcount, 1, ticks_per_mail * MAX_MAIL_PER_MINUTE * seconds_per_tick)
 
 	SSstock_market.news_string = ""
 
@@ -172,8 +173,23 @@ SUBSYSTEM_DEF(economy)
 		fluff_string = ", but company countermeasures protect <b>YOU</b> from being affected!"
 	else
 		fluff_string = ", and company countermeasures are failing to protect <b>YOU</b> from being affected. We're all doomed!"
-	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>[fluff_string]<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br>[SSstock_market.news_string] That's all from the <i>Nanotrasen Economist Division</i>."
-	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
+	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>[fluff_string]<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br>[SSstock_market.news_string]"
+	var/update_alerts = FALSE
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_ECONOMY_ALERTS))
+		var/datum/bank_account/moneybags
+		var/static/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
+		for(var/i in bank_accounts_by_id)
+			var/datum/bank_account/current_acc = bank_accounts_by_id[i]
+			if(typecache_bank[current_acc.type])
+				continue
+			if(!moneybags || moneybags.account_balance < current_acc.account_balance)
+				moneybags = current_acc
+		if (moneybags)
+			earning_report += "Our GMM Spotlight would like to alert you that <b>[moneybags.account_holder]</b> is your station's most affulent crewmate! They've hit it big with [moneybags.account_balance] credits saved. "
+			update_alerts = TRUE
+			inflict_moneybags(moneybags)
+	earning_report += "That's all from the <i>Nanotrasen Economist Division</i>."
+	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", NEWSCASTER_STATION_ANNOUNCEMENTS, null, update_alert = update_alerts)
 	return TRUE
 
 /**
@@ -228,8 +244,46 @@ SUBSYSTEM_DEF(economy)
 			continue
 		prices_to_update += vending_lad
 	for(var/i in 1 to length(prices_to_update))
-		var/obj/machinery/vending/V = prices_to_update[i]
-		V.reset_prices(V.product_records, V.coin_records)
+		var/obj/machinery/vending/vending = prices_to_update[i]
+		vending.reset_prices(vending.product_records, vending.coin_records + vending.hidden_records)
+
+/**
+ * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
+ *
+ * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+ * Arguments:
+ * * recordlist - the list of standard product datums in the vendor to refresh their prices.
+ * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
+ */
+/obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
+	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
+	default_price = round(initial(default_price) * inflation_value)
+	extra_price = round(initial(extra_price) * inflation_value)
+
+	for(var/datum/data/vending_product/record as anything in recordlist)
+		var/obj/item/potential_product = record.product_path
+		var/custom_price = round(initial(potential_product.custom_price) * inflation_value)
+		record.price = custom_price | default_price
+	for(var/datum/data/vending_product/premium_record as anything in premiumlist)
+		var/obj/item/potential_product = premium_record.product_path
+		var/premium_custom_price = round(initial(potential_product.custom_premium_price) * inflation_value)
+		var/custom_price = initial(potential_product.custom_price)
+		if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
+			premium_record.price = extra_price + round(custom_price * inflation_value)
+		else
+			premium_record.price = premium_custom_price || extra_price
+
+/datum/controller/subsystem/economy/proc/inflict_moneybags(datum/bank_account/moneybags)
+	if(!moneybags)
+		return FALSE
+	var/mob/living/card_holder
+	for(var/obj/card in moneybags?.bank_cards)
+		if(isidcard(card))
+			card_holder = recursive_loc_check(card, /mob/living)
+	if(!isliving(card_holder)) //If on a living mob
+		return FALSE
+	card_holder.adjust_timed_status_effect(wait, /datum/status_effect/spotlight_light)
+	return TRUE
 
 #undef ECON_DEPARTMENT_STEP
 #undef ECON_ACCOUNT_STEP

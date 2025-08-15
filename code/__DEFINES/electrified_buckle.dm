@@ -8,6 +8,8 @@
 #define SHOCK_REQUIREMENT_PARENT_MOB_ISALIVE (1<<3)
 ///a signal can toggle the ability to shock on a timer
 #define SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE (1<<4)
+///electrified buckle requires the area to be powered but not necessarily connected by cable
+#define SHOCK_REQUIREMENT_AREA_POWER (1<<5)
 
 
 ///This trait signifies that the object can be used to electrify things buckled to it

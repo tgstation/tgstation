@@ -34,7 +34,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
-	AddElement(/datum/element/turf_z_transparency)
+	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
@@ -110,21 +110,21 @@
 /turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 
-/turf/open/openspace/proc/CanBuildHere()
+/turf/open/openspace/CanBuildHere()
 	return can_build_on
 
-/turf/open/openspace/attackby(obj/item/C, mob/user, params)
+/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	..()
 	if(!CanBuildHere())
 		return
-	if(istype(C, /obj/item/stack/rods))
-		build_with_rods(C, user)
-	else if(istype(C, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(C, user)
-	else if(istype(C, /obj/item/stack/thermoplastic))
-		build_with_transport_tiles(C, user)
-	else if(istype(C, /obj/item/stack/sheet/mineral/titanium))
-		build_with_titanium(C, user)
+	if(istype(attacking_item, /obj/item/stack/rods))
+		build_with_rods(attacking_item, user)
+	else if(ismetaltile(attacking_item))
+		build_with_floor_tiles(attacking_item, user)
+	else if(istype(attacking_item, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(attacking_item, user)
+	else if(istype(attacking_item, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(attacking_item, user)
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())
@@ -132,9 +132,6 @@
 	return ..()
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
@@ -151,7 +148,7 @@
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	var/atom/movable/our_movable = pass_info.caller_ref.resolve()
+	var/atom/movable/our_movable = pass_info.requester_ref.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
 	return FALSE
@@ -210,3 +207,6 @@
 
 /turf/open/openspace/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/openspace/coldroom
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS

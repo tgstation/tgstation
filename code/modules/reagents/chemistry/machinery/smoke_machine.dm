@@ -35,7 +35,7 @@
 	src.location = get_turf(location)
 	src.amount = amount
 	if(carry)
-		carry.copy_to(chemholder, 20)
+		carry.trans_to(chemholder, 20, copy_only = TRUE)
 		carry.remove_all(amount / efficiency)
 
 /obj/machinery/smoke_machine/Initialize(mapload)
@@ -181,7 +181,7 @@
 
 	var/list/tank_data = list()
 	tank_data["maxVolume"] = reagents.maximum_volume
-	tank_data["currentVolume"] = round(reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+	tank_data["currentVolume"] = reagents.total_volume
 	var/list/tankContents = list()
 	for(var/datum/reagent/reagent in reagents.reagent_list)
 		tankContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)))

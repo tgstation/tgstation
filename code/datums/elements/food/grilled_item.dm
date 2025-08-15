@@ -26,7 +26,7 @@
 			this_food.desc = "A [this_food.name]. Reminds you of your wife, wait, no, it's prettier!"
 
 	if(grill_time > 30 SECONDS && isnull(this_food.GetComponent(/datum/component/edible)))
-		this_food.AddComponent(/datum/component/edible, foodtypes = FRIED)
+		this_food.AddComponentFrom(SOURCE_EDIBLE_GRILLED, /datum/component/edible, foodtypes = FRIED)
 
 	SEND_SIGNAL(this_food, COMSIG_ITEM_BARBEQUE_GRILLED, grill_time)
 	ADD_TRAIT(this_food, TRAIT_FOOD_BBQ_GRILLED, ELEMENT_TRAIT(type))
@@ -34,6 +34,6 @@
 /datum/element/grilled_item/Detach(atom/source, ...)
 	source.name = initial(source.name)
 	source.desc = initial(source.desc)
-	qdel(source.GetComponent(/datum/component/edible)) // Don't care if it was initially edible
+	source.RemoveComponentSource(SOURCE_EDIBLE_GRILLED, /datum/component/edible)
 	REMOVE_TRAIT(src, TRAIT_FOOD_BBQ_GRILLED, ELEMENT_TRAIT(type))
 	return ..()

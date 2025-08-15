@@ -14,7 +14,6 @@
 	objectives += survive
 
 /datum/antagonist/survivalist/on_gain()
-	owner.special_role = "survivalist"
 	forge_objectives()
 	. = ..()
 
@@ -51,11 +50,13 @@
 
 /datum/antagonist/survivalist/magic/on_gain()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(owner.current)
 
 /datum/antagonist/survivalist/magic/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
-	return..()
+	owner.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	return ..()
 
 /// Applied by the battle royale objective
 /datum/antagonist/survivalist/battle_royale
@@ -78,7 +79,7 @@
 		Noncompliance and removal of this implant is not recommended, and remember to smile for the cameras!"))
 
 	return ..()
-	
+
 /datum/antagonist/survivalist/battle_royale/on_removal()
 	if (isnull(owner.current))
 		return ..()
@@ -86,7 +87,7 @@
 	if (owner.current.stat == DEAD)
 		return ..()
 	to_chat(owner, span_notice("Your body is flooded with relief. Against all the odds, you've made it out alive."))
-	owner.current?.mob_mood.add_mood_event("battle_royale", /datum/mood_event/royale_survivor)
+	owner.current?.add_mood_event("battle_royale", /datum/mood_event/royale_survivor)
 	return ..()
 
 /// Add an objective to go to a specific place.

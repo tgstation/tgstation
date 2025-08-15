@@ -17,7 +17,7 @@
 	if(.)
 		return
 	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
-		var/turf/T = zlevels ? find_safe_turf(zlevels=zlevels) : get_safe_random_station_turf()
+		var/turf/T = zlevels ? find_safe_turf(zlevels=zlevels) : get_safe_random_station_turf_equal_weight()
 
 		if(T)
 			var/atom/movable/AM = user.pulling
@@ -30,7 +30,7 @@
 		else
 			to_chat(user, "Nothing happens. You feel that this is a bad sign.")
 
-/obj/structure/signpost/attackby(obj/item/W, mob/user, params)
+/obj/structure/signpost/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_paw(mob/user, list/modifiers)

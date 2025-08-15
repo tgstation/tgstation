@@ -24,6 +24,11 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_POISONOUS_BAIT, INNATE_TRAIT) //bro is fishing using lithium...
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/battery_match)
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /* Cell variants*/
 /obj/item/stock_parts/power_store/cell/empty
@@ -102,6 +107,7 @@
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
+	
 
 /obj/item/stock_parts/power_store/cell/high/empty
 	empty = TRUE

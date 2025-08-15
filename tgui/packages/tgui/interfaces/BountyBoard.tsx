@@ -9,9 +9,9 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
-import { formatMoney } from '../format';
 import { Window } from '../layouts';
 import { UserDetails } from './Vending';
 
@@ -88,7 +88,7 @@ export const BountyBoardContent = (props) => {
                     {request.owner}
                   </Stack.Item>
                   <Stack.Item width="100px">
-                    {formatMoney(request.value) + ' cr'}
+                    {`${formatMoney(request.value)} cr`}
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -161,12 +161,9 @@ export const BountyBoardContent = (props) => {
           <Collapsible title="New Bounty" width="220px" color="green">
             <Section>
               <TextArea
-                fluid
                 height="150px"
                 width="200px"
-                backgroundColor="black"
-                textColor="white"
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('bountyText', {
                     bountytext: value,
                   })

@@ -1,4 +1,7 @@
 {
-  "private": true,
-  "type": "module"
+	"private": true,
+	"type": "module",
+	"devDependencies": {
+		"@types/bun": "^1.2.16"
+	}
 }

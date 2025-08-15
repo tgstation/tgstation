@@ -28,8 +28,8 @@
 	projectile_type = pick(permitted_projectiles)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/InterceptClickOn(mob/living/caller, params, atom/target)
-	if (!caller.combat_mode)
+/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/InterceptClickOn(mob/living/clicker, params, atom/target)
+	if (!clicker.combat_mode)
 		return FALSE
 	return ..()
 
@@ -137,6 +137,7 @@
 	if (isliving(entered_atom))
 		var/mob/living/teleported_mob = entered_atom
 		teleported_mob.changeNext_move(disorient_time)
+		teleported_mob.ai_controller?.CancelActions()
 
 	var/turf/destination = pick(exit_locs)
 	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)

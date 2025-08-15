@@ -28,15 +28,16 @@
 	desc = "Their success will be yours."
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "envyknife"
-	inhand_icon_state = "knife"
+	inhand_icon_state = "envyknife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 18
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/bone=SMALL_MATERIAL_AMOUNT)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
-/obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, click_parameters)
+/obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(!istype(user) || !ishuman(target))
 		return
 
@@ -45,7 +46,7 @@
 		return
 
 	user.real_name = H.dna.real_name
-	H.dna.transfer_identity(user, transfer_SE=1)
+	H.dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	user.updateappearance(mutcolor_update=1)
 	user.domutcheck()
 	user.visible_message(span_warning("[user]'s appearance shifts into [H]'s!"), \

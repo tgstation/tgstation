@@ -71,7 +71,7 @@
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
-	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
+	if(get_health_percentage() <= 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		anger += growth * 2
 		return COMPONENT_DONT_GROW
 
@@ -124,7 +124,7 @@
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	min_pressure = HAZARD_LOW_PRESSURE
-	health = 150
+	max_integrity = 300
 	stable_population = 3
 	grind_results = list(/datum/reagent/bone_dust = 10)
 	fillet_type = /obj/item/stack/sheet/bone
@@ -145,6 +145,23 @@
 
 /obj/item/fish/boned/get_health_warnings(mob/user, always_deep = FALSE)
 	return list(span_deadsay("It's bones."))
+
+/obj/item/fish/boned/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
+	forceMove(user)
+	addtimer(CALLBACK(src, PROC_REF(skeleton_appears), user), 2 SECONDS)
+	return MANUAL_SUICIDE_NONLETHAL // chance not to die
+
+/obj/item/fish/boned/proc/skeleton_appears(mob/living/user)
+	user.visible_message(span_warning("[user]'s skin melts off!"), span_boldwarning("Your skin melts off!"))
+	user.spawn_gibs()
+	user.drop_everything(del_on_drop = FALSE, force = FALSE, del_if_nodrop = FALSE)
+	user.set_species(/datum/species/skeleton)
+	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!", forced = "bone fish suicide")
+	if(prob(90))
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, death)), 3 SECONDS)
+		user.set_suicide(TRUE)
+	qdel(src)
 
 /obj/item/fish/lavaloop
 	name = "lavaloop"

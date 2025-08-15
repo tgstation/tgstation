@@ -17,6 +17,7 @@
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verbs = list("slap")
+	unarmed_attack_verbs_continuous = list("slaps")
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2 //snails are soft and squishy
@@ -26,6 +27,7 @@
 /obj/item/bodypart/arm/right/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verbs = list("slap")
+	unarmed_attack_verbs_continuous = list("slaps")
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2 //snails are soft and squishy
@@ -212,11 +214,17 @@
 	burn_modifier = 1.25
 	head_flags = HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
 
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_PLANT
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/photosynthesis)
+
 /obj/item/bodypart/chest/pod
 	limb_id = SPECIES_PODPERSON
 	is_dimorphic = TRUE
 	burn_modifier = 1.25
 	wing_types = null
+
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_PLANT
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/photosynthesis)
 
 /obj/item/bodypart/chest/pod/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_FLOWERPOT)
@@ -224,28 +232,44 @@
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verbs = list("slash", "lash")
+	unarmed_attack_verbs_continuous = list("slashes", "lashes")
 	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	burn_modifier = 1.25
 
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_PLANT
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/photosynthesis)
+
 /obj/item/bodypart/arm/right/pod
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verbs = list("slash", "lash")
+	unarmed_attack_verbs_continuous = list("slashes", "lashes")
 	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	burn_modifier = 1.25
+
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_PLANT
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/photosynthesis)
 
 /obj/item/bodypart/leg/left/pod
 	limb_id = SPECIES_PODPERSON
 	burn_modifier = 1.25
 
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_PLANT
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/photosynthesis)
+
 /obj/item/bodypart/leg/right/pod
 	limb_id = SPECIES_PODPERSON
 	burn_modifier = 1.25
+
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_PLANT
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/photosynthesis)
 
 ///FLY
 /obj/item/bodypart/head/fly
@@ -287,6 +311,9 @@
 	burn_modifier = 1.5
 	head_flags = NONE
 
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
+
 /obj/item/bodypart/chest/shadow
 	limb_id = SPECIES_SHADOW
 	is_dimorphic = FALSE
@@ -294,31 +321,52 @@
 	burn_modifier = 1.5
 	wing_types = null
 
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
+
 /obj/item/bodypart/arm/left/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
 	burn_modifier = 1.5
+
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
 
 /obj/item/bodypart/arm/right/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
 	burn_modifier = 1.5
 
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
+
 /obj/item/bodypart/leg/left/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
 	burn_modifier = 1.5
+
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
 
 /obj/item/bodypart/leg/right/shadow
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
 	burn_modifier = 1.5
 
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
+
 /obj/item/bodypart/arm/left/shadow/nightmare
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
+
 /obj/item/bodypart/arm/right/shadow/nightmare
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
 
 ///SKELETON
 /obj/item/bodypart/head/skeleton

@@ -1,7 +1,7 @@
 ///commands the chief can pick from
 GLOBAL_LIST_INIT(mook_commands, list(
-	new /datum/pet_command/point_targeting/attack,
-	new /datum/pet_command/point_targeting/fetch,
+	new /datum/pet_command/attack,
+	new /datum/pet_command/fetch,
 ))
 
 /datum/ai_controller/basic_controller/mook
@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/look_for_village,
@@ -218,6 +219,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -270,6 +272,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/acknowledge_chief,
@@ -326,6 +329,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -346,7 +350,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(!locate(/mob/living/basic/mining/mook) in oview(command_distance, controller.pawn))
 		return
 	if(controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targeting/attack)
+		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/attack)
 		return
 
 	var/atom/ore_target = controller.blackboard[BB_ORE_TARGET]
@@ -356,7 +360,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(get_dist(ore_target, living_pawn) <= 1)
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/point_targeting/fetch)
+	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/fetch)
 
 /datum/ai_behavior/issue_commands
 	action_cooldown = 5 SECONDS

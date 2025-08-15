@@ -17,7 +17,6 @@
 	icon_state = "paper"
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
-	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -80,11 +79,23 @@
 	if(can_become_message_in_bottle && !mapload && prob(MESSAGE_BOTTLE_CHANCE))
 		LAZYADD(SSpersistence.queued_message_bottles, src)
 
+	AddElement(/datum/element/burn_on_item_ignition)
+	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(close_paper_ui))
+
 /obj/item/paper/Destroy()
 	camera_holder = null
 	clear_paper()
 	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
 	return ..()
+
+/obj/item/paper/custom_fire_overlay()
+	if (!custom_fire_overlay)
+		custom_fire_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_onfire_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
+	return custom_fire_overlay
+
+/obj/item/paper/proc/close_paper_ui()
+	SIGNAL_HANDLER
+	SStgui.close_uis(src)
 
 /// Determines whether this paper has been written or stamped to.
 /obj/item/paper/proc/is_empty()
@@ -162,7 +173,7 @@
 	new_paper.raw_stamp_data = copy_raw_stamps()
 	new_paper.stamp_cache = stamp_cache?.Copy()
 	new_paper.update_icon_state()
-	copy_overlays(new_paper, TRUE)
+	new_paper.copy_overlays(src)
 	return new_paper
 
 /**
@@ -219,9 +230,9 @@
 	if(is_signature)
 		field_text = signature_name
 	else if(is_date)
-		field_text = "[time2text(world.timeofday, "DD/MM")]/[CURRENT_STATION_YEAR]"
+		field_text = "[time2text(world.timeofday, "DD/MM", NO_TIMEZONE)]/[CURRENT_STATION_YEAR]"
 	else if(is_time)
-		field_text = time2text(world.timeofday, "hh:mm")
+		field_text = time2text(world.timeofday, "hh:mm", NO_TIMEZONE)
 
 	var/field_font = is_signature ? SIGNATURE_FONT : font
 
@@ -278,9 +289,9 @@
 	if(LAZYLEN(stamp_cache) > MAX_PAPER_STAMPS_OVERLAYS)
 		return
 
-	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]")
-	stamp_overlay.pixel_x = rand(-2, 2)
-	stamp_overlay.pixel_y = rand(-3, 2)
+	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]", appearance_flags = KEEP_APART | RESET_COLOR)
+	stamp_overlay.pixel_w = rand(-2, 2)
+	stamp_overlay.pixel_z = rand(-3, 2)
 	add_overlay(stamp_overlay)
 	LAZYADD(stamp_cache, stamp_icon_state)
 
@@ -306,6 +317,8 @@
 /obj/item/paper/update_icon_state()
 	if(LAZYLEN(raw_text_inputs) && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
+	else
+		icon_state = initial(icon_state)
 	return ..()
 
 /obj/item/paper/verb/rename()
@@ -401,39 +414,9 @@
 		user.put_in_hands(new_plane)
 	return new_plane
 
-/obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
-	//can't be put on fire!
-	if((resistance_flags & FIRE_PROOF) || !(resistance_flags & FLAMMABLE))
-		return FALSE
-	//already on fire!
-	if(resistance_flags & ON_FIRE)
-		return FALSE
-	var/ignition_message = attacking_item.ignition_effect(src, user)
-	if(!ignition_message)
-		return FALSE
-	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
-		user.visible_message(span_warning("[user] accidentally ignites [user.p_them()]self!"), \
-							span_userdanger("You miss [src] and accidentally light yourself on fire!"))
-		if(user.is_holding(attacking_item)) //checking if they're holding it in case TK is involved
-			user.dropItemToGround(attacking_item)
-		user.adjust_fire_stacks(attacking_item)
-		user.ignite_mob()
-		return TRUE
-
-	if(user.is_holding(src)) //no TK shit here.
-		user.dropItemToGround(src)
-	user.visible_message(ignition_message)
-	add_fingerprint(user)
-	fire_act(attacking_item.get_temperature())
-	return TRUE
-
-/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(burn_paper_product_attackby_check(attacking_item, user))
-		SStgui.close_uis(src)
-		return
-
-	// Enable picking paper up by clicking on it with the clipboard or folder
-	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/folder) || istype(attacking_item, /obj/item/paper_bin))
+/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	// Enable picking paper up by clicking on it with the clipboard or paper bin
+	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/paper_bin))
 		attacking_item.attackby(src, user)
 		return
 
@@ -524,6 +507,8 @@
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	if(resistance_flags & ON_FIRE)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PaperSheet", name)
@@ -858,12 +843,17 @@
 	)
 
 /obj/item/paper/construction
+	name = "construction paper"
+	icon = 'icons/effects/random_spawners.dmi'
 
 /obj/item/paper/construction/Initialize(mapload)
 	. = ..()
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	color = pick(COLOR_RED, COLOR_LIME, COLOR_LIGHT_ORANGE, COLOR_DARK_PURPLE, COLOR_FADED_PINK, COLOR_BLUE_LIGHT)
+	update_appearance()
 
 /obj/item/paper/natural
+	name = "natural paper"
 	color = COLOR_OFF_WHITE
 
 /obj/item/paper/crumpled

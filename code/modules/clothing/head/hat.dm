@@ -9,7 +9,7 @@
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centhat
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 
 /datum/armor/hats_centhat
 	melee = 30
@@ -22,11 +22,13 @@
 
 /obj/item/clothing/head/costume/constable
 	name = "constable helmet"
-	desc = "A british looking helmet."
+	desc = "A British-looking helmet."
 	icon_state = "constable"
 	inhand_icon_state = null
 	custom_price = PAYCHECK_COMMAND * 1.5
 	worn_y_offset = 4
+	armor_type = /datum/armor/head_helmet
+	hair_mask = /datum/hair_mask/standard_hat_middle
 
 /obj/item/clothing/head/costume/spacepolice
 	name = "space police cap"
@@ -50,6 +52,7 @@
 	icon_state = "mailman"
 	desc = "<i>'Right-on-time'</i> mail service head wear."
 	clothing_traits = list(TRAIT_HATED_BY_DOGS)
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/clothing/head/bio_hood/plague
 	name = "plague doctor's hat"
@@ -59,6 +62,7 @@
 	flags_inv = NONE
 	clothing_flags = SNUG_FIT
 	flags_cover = NONE
+	dirt_state = null
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -81,12 +85,24 @@
 	icon_state = "bearpelt"
 	inhand_icon_state = null
 
+/obj/item/clothing/head/costume/bearpelt/equipped(mob/living/user, slot)
+	..()
+	if(!ishuman(user) || !(slot & ITEM_SLOT_HEAD))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
+	if(!our_suit || !istype(our_suit))
+		return
+
+	our_suit.make_friendly(user, src)
+
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
-	icon_state = "beret_flat"
-	icon_preview = 'icons/obj/clothing/head/beret.dmi'
-	icon_state_preview = "beret_flat"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/flatcap"
+	post_init_icon_state = "beret_flat"
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"
@@ -186,19 +202,23 @@
 /obj/item/clothing/head/costume/santa/gags
 	name = "santa hat"
 	desc = "On the first day of christmas my employer gave to me!"
-	icon_state = "santa_hat"
-	greyscale_colors = "#cc0000#f8f8f8"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/santa/gags"
+	post_init_icon_state = "santa_hat"
 	greyscale_config = /datum/greyscale_config/santa_hat
 	greyscale_config_worn = /datum/greyscale_config/santa_hat/worn
+	greyscale_colors = "#cc0000#f8f8f8"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/jester
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_map"
-	greyscale_colors = "#00ff00#ff0000"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/jester"
+	post_init_icon_state = "jester_map"
 	greyscale_config = /datum/greyscale_config/jester_hat
 	greyscale_config_worn = /datum/greyscale_config/jester_hat/worn
+	greyscale_colors = "#00ff00#ff0000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/jesteralt
@@ -286,7 +306,7 @@
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centcom_cap
-	strip_delay = (8 SECONDS)
+	strip_delay = 8 SECONDS
 
 /datum/armor/hats_centcom_cap
 	melee = 30

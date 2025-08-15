@@ -114,7 +114,7 @@
 	button_icon_state = "blood_effect_falling"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
-	desc = "Rain down poisonous dropplets of blood!"
+	desc = "Rain down poisonous droplets of blood!"
 	cooldown_time = 10 SECONDS
 	click_to_activate = FALSE
 	shared_cooldown = NONE
@@ -239,7 +239,7 @@
 	overlay_icon_state = "bg_revenant_border"
 	spell_requirements = NONE
 	cooldown_time = 30 SECONDS
-	summon_type = list(/mob/living/basic/frog/frog_suicide)
+	summon_type = list(/mob/living/basic/frog/suicide)
 	summon_radius = 2
 	summon_amount = 2
 	max_summons = 2

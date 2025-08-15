@@ -47,7 +47,8 @@
 			name = "Natural " + name
 		if(data["boozepwr"])
 			boozepwr = data["boozepwr"]
-	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
+	if(boozepwr) // anything other than 0
+		LAZYSET(addiction_types, /datum/addiction/alcohol, 0.05 * boozepwr)
 	return ..()
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -102,9 +103,9 @@
 
 	if(methods & (TOUCH|VAPOR|PATCH))
 		exposed_mob.adjust_fire_stacks(reac_volume / 15)
-		var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+		var/sterilizing_power = boozepwr / 650 // Weak alcohol has less sterilizing power
 		for(var/datum/surgery/surgery as anything in exposed_mob.surgeries)
-			surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
+			surgery.speed_modifier = min(1 - sterilizing_power, surgery.speed_modifier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -167,7 +168,7 @@
 	if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 		affected_human.skin_tone = "green"
 	else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Code stolen from spraytan overdose
-		affected_human.dna.features["mcolor"] = "#a8e61d"
+		affected_human.dna.features[FEATURE_MUTANT_COLOR] = "#a8e61d"
 	affected_human.update_body(is_creating = TRUE)
 
 /datum/reagent/consumable/ethanol/kahlua
@@ -277,8 +278,7 @@
 		drinker.set_jitter_if_lower(700 SECONDS)
 
 	if(SPT_PROB(0.5, seconds_per_tick) && iscarbon(drinker))
-		var/datum/disease/heart_attack = new /datum/disease/heart_failure
-		drinker.ForceContractDisease(heart_attack)
+		drinker.apply_status_effect(/datum/status_effect/heart_attack)
 		to_chat(drinker, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		drinker.playsound_local(drinker, 'sound/effects/singlebeat.ogg', 100, 0)
 
@@ -353,12 +353,12 @@
 
 /datum/reagent/consumable/ethanol/rum/aged/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/piratespeak, LANGUAGE_DRINK)
+	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/piratespeak, source = LANGUAGE_DRINK)
 	drinker.grant_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
 
 /datum/reagent/consumable/ethanol/rum/aged/on_mob_end_metabolize(mob/living/drinker)
 	if(!QDELING(drinker))
-		drinker.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_DRINK)
+		drinker.remove_blocked_language(subtypesof(/datum/language), source = LANGUAGE_DRINK)
 		drinker.remove_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
 	return ..()
 
@@ -392,10 +392,10 @@
 	glass_price = DRINK_PRICE_STOCK
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/wine
 
-/datum/reagent/consumable/ethanol/wine/on_merge(data)
+/datum/reagent/consumable/ethanol/wine/on_merge(list/mix_data, amount)
 	. = ..()
-	if(src.data && data && data["vintage"] != src.data["vintage"])
-		src.data["vintage"] = "mixed wine"
+	if(data && mix_data && data["vintage"] != mix_data["vintage"])
+		data["vintage"] = "mixed wine"
 
 /datum/reagent/consumable/ethanol/wine/get_taste_description(mob/living/taster)
 	if(HAS_TRAIT(taster,TRAIT_WINE_TASTER))
@@ -501,14 +501,16 @@
 
 	return ..()
 
-/datum/reagent/consumable/ethanol/goldschlager/on_transfer(atom/atom, methods = TOUCH, trans_volume)
+/datum/reagent/consumable/ethanol/goldschlager/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
 	if(!(methods & INGEST))
-		return ..()
+		return
 
-	var/convert_amount = trans_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
-	atom.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
-	atom.reagents.add_reagent(/datum/reagent/gold, convert_amount)
-	return ..()
+	var/convert_amount = reac_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
+	var/datum/reagents/mob_reagents = exposed_mob.reagents
+
+	mob_reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
+	mob_reagents.add_reagent(/datum/reagent/gold, convert_amount)
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
@@ -614,18 +616,20 @@
 	// We want to turn only base drinking glasses with screwdriver(cocktail) into screwdrivers(tool),
 	// but we can't check style so we have to check type, and we don't want it match subtypes like istype does
 	if(holder?.my_atom && holder.my_atom.type == /obj/item/reagent_containers/cup/glass/drinkingglass/)
-		var/list/reagent_change_signals = list(
-			COMSIG_REAGENTS_ADD_REAGENT,
-			COMSIG_REAGENTS_NEW_REAGENT,
-			COMSIG_REAGENTS_REM_REAGENT,
-		)
-		RegisterSignals(holder, reagent_change_signals, PROC_REF(on_reagent_change))
-		RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
-		RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
+		RegisterSignal(holder, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 		if(src == holder.get_master_reagent())
 			var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
 			drink.tool_behaviour = TOOL_SCREWDRIVER
 			drink.usesound = list('sound/items/tools/screwdriver.ogg', 'sound/items/tools/screwdriver2.ogg')
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/Destroy()
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
+	if(istype(drink))
+		if(drink.tool_behaviour == TOOL_SCREWDRIVER)
+			drink.tool_behaviour = initial(drink.tool_behaviour)
+			drink.usesound = initial(drink.usesound)
+		UnregisterSignal(holder, COMSIG_REAGENTS_HOLDER_UPDATED)
+	return ..()
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
@@ -636,29 +640,6 @@
 	else
 		drink.tool_behaviour = initial(drink.tool_behaviour)
 		drink.usesound = initial(drink.usesound)
-
-/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagents_clear(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	unregister_screwdriver(reagents)
-
-/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
-	SIGNAL_HANDLER
-	if(deleted_reagent != src)
-		return
-	unregister_screwdriver(reagents)
-
-/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/unregister_screwdriver(datum/reagents/reagents)
-	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
-	if(drink.tool_behaviour == TOOL_SCREWDRIVER)
-		drink.tool_behaviour = initial(drink.tool_behaviour)
-		drink.usesound = initial(drink.usesound)
-	UnregisterSignal(reagents, list(
-			COMSIG_REAGENTS_ADD_REAGENT,
-			COMSIG_REAGENTS_NEW_REAGENT,
-			COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_DEL_REAGENT,
-			COMSIG_REAGENTS_CLEAR_REAGENTS,
-		))
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -1916,7 +1897,7 @@
 
 /datum/reagent/consumable/ethanol/fanciulli
 	name = "Fanciulli"
-	description = "What if the Manhattan cocktail ACTUALLY used a bitter herb liquour? Helps you sober up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
+	description = "What if the Manhattan cocktail ACTUALLY used a bitter herb liqueur? Helps you sober up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
 	color = "#CA933F" // rgb: 202, 147, 63
 	boozepwr = -10
 	quality = DRINK_NICE
@@ -1936,7 +1917,7 @@
 
 /datum/reagent/consumable/ethanol/branca_menta
 	name = "Branca Menta"
-	description = "A refreshing mixture of bitter Fernet with mint creme liquour."
+	description = "A refreshing mixture of bitter Fernet with mint creme liqueur."
 	color = "#4B5746" // rgb: 75, 87, 70
 	boozepwr = 35
 	quality = DRINK_GOOD
@@ -1992,25 +1973,25 @@
 	color = data["color"]
 	generate_data_info(data)
 
-/datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/data, amount)
-	..()
+/datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/mix_data, amount)
+	. = ..()
 	var/diff = (amount/volume)
 	if(diff < 1)
-		color = BlendRGB(color, data["color"], diff/2) //The percentage difference over two, so that they take average if equal.
+		color = BlendRGB(color, mix_data["color"], diff/2) //The percentage difference over two, so that they take average if equal.
 	else
-		color = BlendRGB(color, data["color"], (1/diff)/2) //Adjust so it's always blending properly.
+		color = BlendRGB(color, mix_data["color"], (1/diff)/2) //Adjust so it's always blending properly.
 	var/oldvolume = volume-amount
 
-	var/list/cachednames = data["names"]
+	var/list/cachednames = mix_data["names"]
 	for(var/name in names | cachednames)
 		names[name] = ((names[name] * oldvolume) + (cachednames[name] * amount)) / volume
 
-	var/list/cachedtastes = data["tastes"]
+	var/list/cachedtastes = mix_data["tastes"]
 	for(var/taste in tastes | cachedtastes)
 		tastes[taste] = ((tastes[taste] * oldvolume) + (cachedtastes[taste] * amount)) / volume
 
 	boozepwr *= oldvolume
-	var/newzepwr = data["boozepwr"] * amount
+	var/newzepwr = mix_data["boozepwr"] * amount
 	boozepwr += newzepwr
 	boozepwr /= volume //Blending boozepwr to volume.
 	generate_data_info(data)
@@ -2193,7 +2174,7 @@
 	color = "#ffe65b"
 	boozepwr = 60
 	quality = DRINK_GOOD
-	taste_description = "artifical fruityness"
+	taste_description = "artificial fruitiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
@@ -2655,7 +2636,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.001 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 5 * ETHEREAL_DISCHARGE_RATE)
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
@@ -2675,7 +2656,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.008 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 10 * ETHEREAL_DISCHARGE_RATE)
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
@@ -2702,7 +2683,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.03 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 30 * ETHEREAL_DISCHARGE_RATE)
 
 // Welcome to the Blue Room Bar and Grill, home to Mars' finest cocktails
 /datum/reagent/consumable/ethanol/rice_beer

@@ -17,6 +17,7 @@
 		/obj/item/restraints/legcuffs/bola/energy = 7,
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/holosign_creator/security = 2,
+		/obj/item/gun_maintenance_supplies = 2,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
@@ -36,6 +37,7 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND * 1.5
 	payment_department = ACCOUNT_SEC
+	allow_custom = TRUE
 
 /obj/machinery/vending/security/pre_throw(obj/item/thrown_item)
 	if(isgrenade(thrown_item))

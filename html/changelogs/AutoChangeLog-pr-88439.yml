@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "fixed items not falling from a lattice after being deconstructed/destroyed"

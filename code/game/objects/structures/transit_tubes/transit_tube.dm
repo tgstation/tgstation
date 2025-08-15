@@ -32,15 +32,15 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
+/obj/structure/transit_tube/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				to_chat(user, span_warning("Remove the pod first!"))
 				return
-			user.visible_message(span_notice("[user] starts to detach \the [src]."), span_notice("You start to detach the [name]..."))
+			user.visible_message(span_notice("[user] starts to detach \the [src]."), span_notice("You start to detach \the [src]..."))
 			if(W.use_tool(src, user, 2 SECONDS, volume=50))
-				to_chat(user, span_notice("You detach the [name]."))
+				to_chat(user, span_notice("You detach \the [src]."))
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)
 				transfer_fingerprints_to(R)
@@ -146,13 +146,13 @@
 		tube_overlay.icon_state = "decorative_diag"
 		switch(shift_dir)
 			if(NORTH)
-				tube_overlay.pixel_y = 32
+				tube_overlay.pixel_z = 32
 			if(SOUTH)
-				tube_overlay.pixel_y = -32
+				tube_overlay.pixel_z = -32
 			if(EAST)
-				tube_overlay.pixel_x = 32
+				tube_overlay.pixel_w = 32
 			if(WEST)
-				tube_overlay.pixel_x = -32
+				tube_overlay.pixel_w = -32
 	else
 		tube_overlay.icon_state = "decorative"
 

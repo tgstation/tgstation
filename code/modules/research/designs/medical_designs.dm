@@ -59,6 +59,17 @@
 	build_path = /obj/item/reagent_containers/cup/beaker/plastic
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/organ_jar
+	name = "Organ Jar"
+	id = "organ_jar"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
+	)
+	build_path = /obj/item/reagent_containers/cup/beaker/organ_jar
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/meta_beaker
 	name = "Metamaterial Beaker"
 	id = "meta_beaker"
@@ -381,6 +392,24 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/flesh_reshapers
+	name = "Flesh Reshaper"
+	desc = "Reshape those external features!"
+	id = "fleshreshaper"
+	build_path = /obj/item/flesh_shears
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 1)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/flesh_reshapers/medical // slight variant with different color palette
+	name = "Medical Flesh Reshaper"
+	id = "fleshreshapermed"
+	build_path = /obj/item/flesh_shears/medical
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
@@ -409,7 +438,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/cyberimp/arm/surgery
+	build_path = /obj/item/organ/cyberimp/arm/toolkit/surgery
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
@@ -426,7 +455,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/cyberimp/arm/toolset
+	build_path = /obj/item/organ/cyberimp/arm/toolkit/toolset
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
@@ -1083,7 +1112,6 @@
 /datum/design/surgery
 	name = "Surgery Design"
 	desc = "what"
-	id = "surgery_parent"
 	research_icon = 'icons/obj/medical/surgery_ui.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery

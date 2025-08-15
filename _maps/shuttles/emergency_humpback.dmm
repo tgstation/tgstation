@@ -484,9 +484,9 @@
 "CA" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /obj/effect/spawner/random/maintenance/seven,
-/obj/item/reagent_containers/pill/maintenance,
-/obj/item/reagent_containers/pill/maintenance,
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "CH" = (

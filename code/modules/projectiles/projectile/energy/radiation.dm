@@ -9,10 +9,9 @@
 	var/radiation_chance = 30
 
 /obj/projectile/energy/radiation/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
 	if (ishuman(target) && prob(radiation_chance))
 		radiation_pulse(target, max_range = 0, threshold = RAD_FULL_INSULATION)
-
-	..()
 
 /obj/projectile/energy/radiation/weak
 	damage = 9

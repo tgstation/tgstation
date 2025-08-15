@@ -6,7 +6,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	body_parts_covered = FEET|LEGS
 	armor_type = /datum/armor/shoes_combat
-	strip_delay = 40
+	strip_delay = 4 SECONDS
 	resistance_flags = NONE
 	lace_time = 12 SECONDS
 
@@ -22,8 +22,8 @@
 
 /obj/item/clothing/shoes/combat/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -47,11 +47,11 @@
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	strip_delay = 30
-	equip_delay_other = 50
+	strip_delay = 3 SECONDS
+	equip_delay_other = 5 SECONDS
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	body_parts_covered = FEET|LEGS
 
 /datum/armor/shoes_jackboots
@@ -59,8 +59,8 @@
 
 /obj/item/clothing/shoes/jackboots/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -97,8 +97,8 @@
 
 /obj/item/clothing/shoes/winterboots/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/winterboots/ice_boots
 	name = "ice hiking boots"
@@ -117,7 +117,7 @@
 	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = parent_type::clothing_flags | THICKMATERIAL
 	body_parts_covered = FEET|LEGS
 	resistance_flags = NONE
 
@@ -136,8 +136,8 @@
 	inhand_icon_state = "jackboots"
 	armor_type = /datum/armor/shoes_workboots
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	strip_delay = 20
-	equip_delay_other = 40
+	strip_delay = 2 SECONDS
+	equip_delay_other = 4 SECONDS
 	lace_time = 8 SECONDS
 
 /datum/armor/shoes_workboots
@@ -145,14 +145,19 @@
 
 /obj/item/clothing/shoes/workboots/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/shoes/workboots/black
+	name = "tactical work boots"
+	desc = "Lace-up work boots to protect the average grey-collar worker from stepping on hazards, from broken glass to dropped pens."
+	icon_state = "workboots_black"
 
 /obj/item/clothing/shoes/russian
 	name = "russian boots"
@@ -164,8 +169,8 @@
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/discoshoes
 	name = "green lizardskin shoes"
@@ -191,7 +196,7 @@
 
 /obj/item/clothing/shoes/pirate/armored
 	armor_type = /datum/armor/shoes_pirate
-	strip_delay = 40
+	strip_delay = 4 SECONDS
 	resistance_flags = NONE
 	lace_time = 12 SECONDS
 	body_parts_covered = FEET|LEGS

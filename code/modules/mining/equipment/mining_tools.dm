@@ -4,6 +4,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	inhand_icon_state = "pickaxe"
+	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 15
@@ -65,20 +66,12 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	inhand_icon_state = "handdrill"
+	icon_angle = 0
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/items/weapons/drill.ogg'
 	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
-
-/obj/item/pickaxe/drill/cyborg
-	name = "cyborg mining drill"
-	desc = "An integrated electric mining drill."
-	flags_1 = NONE
-
-/obj/item/pickaxe/drill/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
@@ -86,12 +79,6 @@
 	inhand_icon_state = "diamonddrill"
 	toolspeed = 0.2
 	desc = "Yours is the drill that will pierce the heavens!"
-
-/obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
-	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
-	icon_state = "diamonddrill"
-	inhand_icon_state = "diamonddrill"
-	toolspeed = 0.2
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -121,6 +108,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
 	inhand_icon_state = "shovel"
+	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -157,6 +145,7 @@
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	inhand_icon_state = "spade"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	force = 5
@@ -167,6 +156,7 @@
 	name = "cyborg spade"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili_shovel"
+	icon_angle = 0
 	toolspeed = 0.6
 	worn_icon_state = null
 
@@ -212,6 +202,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "trench_tool"
 	inhand_icon_state = "trench_tool"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -301,6 +292,7 @@
 	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
 	icon_state = "giant_wrench"
 	icon = 'icons/obj/weapons/giant_wrench.dmi'
+	icon_angle = 0
 	inhand_icon_state = null
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -381,7 +373,7 @@
 		var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
 		target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
 		target_mob.Knockdown(2 SECONDS)
-	var/body_zone = pick(GLOB.all_body_zones)
+	var/body_zone = pick(user.get_all_limbs())
 	user.apply_damage(force / recoil_factor, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
 	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
 	log_combat(user, user, "recoiled Big Slappy into")

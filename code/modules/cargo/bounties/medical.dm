@@ -104,3 +104,23 @@
 	description = "After a recent influx of infected crew members, we've seen that masks just aren't cutting it alone. Silver operating tables might just do the trick though, send us one to use."
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/structure/table/optable = TRUE)
+
+/datum/bounty/item/medical/scanning
+	name = "Crew Medical Scanning"
+	description = "Conduct a routine medical scan using any health analyzer of a crew member with with a near perfect bill of health or better to ensure the crew is taking their medical care seriously. Then, print the medical report and ship it back to us."
+	reward = CARGO_CRATE_VALUE * 8
+	required_count = 2
+	wanted_types = list(/obj/item/paper/medical_report = TRUE)
+
+/datum/bounty/item/medical/scanning/applies_to(obj/shipped)
+	. = ..()
+	if(!istype(shipped, /obj/item/paper/medical_report))
+		return FALSE
+	var/obj/item/paper/medical_report/report = shipped
+	if(!report)
+		return FALSE
+
+	var/mob/living/patient = report.last_healthy_scanned_mob?.resolve()
+	if(patient)
+		return TRUE
+	return FALSE

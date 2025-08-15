@@ -8,6 +8,8 @@
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 	contents_hidden = TRUE
+	paper_overlay_state = "paperbiscuit_paper"
+	folder_type_name = "biscuit"
 	/// Is biscuit cracked open or not?
 	var/cracked = FALSE
 	/// The paper slip inside, if there is one
@@ -38,18 +40,16 @@
 	playsound(get_turf(user), 'sound/effects/wounds/crackandbleed.ogg', 40, TRUE) //Don't eat plastic cards kids, they get really sharp if you chew on them.
 	return BRUTELOSS
 
-/obj/item/folder/biscuit/update_overlays()
-	. = ..()
-	if(contents.len) //This is to prevent the unsealed biscuit from having the folder_paper overlay when it gets sealed
-		. -= "folder_paper"
-		if(cracked) //Shows overlay only when it has contents and is cracked open
-			. += "paperbiscuit_paper"
+/obj/item/folder/biscuit/get_paper_overlay()
+	if(!cracked)
+		return null
+	return ..()
 
 ///Checks if the biscuit has been already cracked.
 /obj/item/folder/biscuit/proc/crack_check(mob/user)
 	if (cracked)
 		return TRUE
-	balloon_alert(user, "unopened!")
+	balloon_alert(user, "open first!")
 	return FALSE
 
 /obj/item/folder/biscuit/examine()
@@ -60,6 +60,12 @@
 		. += span_notice("You'll need to crack it open to access its contents.")
 		if(contained_slip)
 			. += "This one contains [contained_slip.name]."
+
+/obj/item/folder/biscuit/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if((held_item == src) && !cracked)
+		context[SCREENTIP_CONTEXT_LMB] = "Crack open"
+		return CONTEXTUAL_SCREENTIP_SET
 
 //The next few checks are done to prevent you from reaching the contents or putting anything inside when it's not cracked open
 /obj/item/folder/biscuit/remove_item(obj/item/item, mob/user)
@@ -74,10 +80,14 @@
 
 	return ..()
 
-/obj/item/folder/biscuit/attackby(obj/item/weapon, mob/user, params)
-	if (is_type_in_typecache(weapon, folder_insertables) && !crack_check(user))
-		return
+/obj/item/folder/biscuit/insertables_act(mob/living/user, obj/item/tool)
+	if(!crack_check(user))
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
+/obj/item/folder/biscuit/interact_with_insertables(atom/interacting_with, mob/living/user)
+	if(!crack_check(user))
+		return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/item/folder/biscuit/attack_self(mob/user)
@@ -125,6 +135,12 @@
 	. = ..()
 	if(!has_been_sealed)
 		. += span_notice("This one could be sealed <b>in hand</b>. Once sealed, the contents are inaccessible until cracked open again - but once opened this is irreversible.")
+
+/obj/item/folder/biscuit/unsealed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if((held_item == src) && !has_been_sealed)
+		context[SCREENTIP_CONTEXT_LMB] = "Seal"
+		return CONTEXTUAL_SCREENTIP_SET
 
 //Asks if you want to seal the biscuit, after you do that it behaves like a normal paper biscuit.
 /obj/item/folder/biscuit/unsealed/attack_self(mob/user)

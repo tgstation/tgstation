@@ -8,7 +8,7 @@
 	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE | PIPING_BRIDGE
 	piping_layer = PIPING_LAYER_DEFAULT
 	device_type = 0
-	volume = 260
+	volume = 200
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
@@ -41,7 +41,7 @@
 	nodes = list()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_layer()
-	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? ABOVE_OPEN_TURF_LAYER : initial(layer)) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_overlays()
 	. = ..()
@@ -63,17 +63,20 @@
 
 	if(istype(machine_check, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-			. += get_attached_image(get_dir(src, machine_check), i, COLOR_VERY_LIGHT_GRAY)
+			. += get_attached_image(get_dir(src, machine_check), i, machine_check.pipe_color == pipe_color ? pipe_color : ATMOS_COLOR_OMNI)
 		return
 	if(istype(machine_check, /obj/machinery/atmospherics/components/unary/airlock_pump))
 		. += get_attached_image(get_dir(src, machine_check), 4, COLOR_BLUE)
 		//. += get_attached_image(get_dir(src, machine_check), 2, COLOR_RED) // Only the distro node is added currently to the pipenet, it doesn't merge the pipenet with the waste node
 		return
-	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, machine_check.pipe_color)
+	var/passed_color = machine_check.pipe_color
+	if(istype(machine_check, /obj/machinery/atmospherics/pipe/color_adapter) || machine_check.pipe_color == ATMOS_COLOR_OMNI)
+		passed_color = pipe_color
+	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, passed_color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
 	var/working_layer = FLOAT_LAYER - HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? 1 : 0.01
-	var/mutable_appearance/muta = mutable_appearance('icons/obj/pipes_n_cables/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = working_layer, appearance_flags = RESET_COLOR)
+	var/mutable_appearance/muta = mutable_appearance('icons/obj/pipes_n_cables/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = working_layer, appearance_flags = RESET_COLOR|KEEP_APART)
 	muta.color = p_color
 	return muta
 

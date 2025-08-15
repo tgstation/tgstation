@@ -152,6 +152,14 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(beauty_modifier >= 0.15 && HAS_TRAIT(source, TRAIT_FISHING_BAIT))
 		source.RemoveElement(/datum/element/shiny_bait)
 
+////Called in `/datum/component/edible/proc/on_material_effects`
+/datum/material/proc/on_edible_applied(atom/source, datum/component/edible/edible)
+	return
+
+////Called in `/datum/component/edible/proc/on_remove_material_effects`
+/datum/material/proc/on_edible_removed(atom/source, datum/component/edible/edible)
+	return
+
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
  * Arguments
@@ -168,7 +176,7 @@ Simple datum which is instanced once per type and is used for every object of sa
  * Arguments:
  * - amount: The amount of the material to break down.
  */
-/datum/material/proc/return_composition(amount = 1)
+/datum/material/proc/return_composition(amount = 1, flags)
 	// Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
 	return list((src) = amount)
 

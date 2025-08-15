@@ -5,6 +5,7 @@ $button: hsl(0, 0%, 12.2%);
 $lightMode: hsl(0, 0%, 100%);
 $lightBorder: hsl(0, 0%, 73.3%);
 $lightHover: hsl(0, 0%, 91.8%);
+$scrollbar-color-multiplier: 1 !default;
 
 $_channel_map: (
   'Admin': hsl(300, 100%, 86.7%),
@@ -33,7 +34,7 @@ $channel_keys: map.keys($_channel_map) !default;
 $channel-map: ();
 
 @each $channel in $channel_keys {
-  $channel-map: map-merge(
+  $channel-map: map.merge(
     $channel-map,
     (
       $channel: map.get($_channel_map, $channel),

@@ -7,16 +7,25 @@ SUBSYSTEM_DEF(asset_loading)
 	flags = SS_NO_INIT
 	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	var/list/datum/asset/generate_queue = list()
+	var/assets_generating = 0
+	var/last_queue_len = 0
 
 /datum/controller/subsystem/asset_loading/fire(resumed)
 	while(length(generate_queue))
 		var/datum/asset/to_load = generate_queue[generate_queue.len]
 
+		last_queue_len = length(generate_queue)
+		generate_queue.len--
+
 		to_load.queued_generation()
 
 		if(MC_TICK_CHECK)
 			return
-		generate_queue.len--
+
+	// We just emptied the queue
+	if(last_queue_len && !length(generate_queue) && !assets_generating)
+		// Clean up cached icons, freeing memory.
+		rustg_iconforge_cleanup()
 
 /datum/controller/subsystem/asset_loading/proc/queue_asset(datum/asset/queue)
 #ifdef DO_NOT_DEFER_ASSETS

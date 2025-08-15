@@ -120,10 +120,10 @@
 	status_overlay = mutable_appearance(overlay_file, "[overlay_state][stacks]")
 	status_underlay = mutable_appearance(underlay_file, "[underlay_state][stacks]")
 	var/icon_height = owner.get_cached_height()
-	status_overlay.pixel_x = -owner.pixel_x
-	status_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
+	status_overlay.pixel_w = -owner.pixel_x
+	status_overlay.pixel_z = FLOOR(icon_height * 0.25, 1)
 	status_overlay.transform = matrix() * (icon_height/ICON_SIZE_Y) //scale the status's overlay size based on the target's icon size
-	status_underlay.pixel_x = -owner.pixel_x
+	status_underlay.pixel_w = -owner.pixel_x
 	status_underlay.transform = matrix() * (icon_height/ICON_SIZE_Y) * 3
 	status_underlay.alpha = 40
 	owner.add_overlay(status_overlay)

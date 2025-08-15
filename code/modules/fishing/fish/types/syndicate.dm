@@ -32,6 +32,18 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
 	beauty = FISH_BEAUTY_EXCELLENT
 
+/obj/item/fish/donkfish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(!ishuman(user))
+		return TOXLOSS
+
+	var/mob/living/carbon/human/human_user = user
+	for(var/i in 1 to rand(5, 15))
+		human_user.dir = pick(GLOB.alldirs)
+		human_user.vomit(vomit_flags = pick(VOMIT_CATEGORY_DEFAULT, VOMIT_CATEGORY_BLOOD), distance = rand(1, 7))
+	qdel(src)
+	return TOXLOSS
+
 /obj/item/fish/jumpercable
 	name = "monocloning jumpercable"
 	fish_id = "jumpercable"
@@ -59,6 +71,13 @@
 	//without this, they'd sell for over 6000 each, minimum. That's a lot for a fish that requires no maintance nor partner to farm.
 	return ..() * 0.4
 
+/obj/item/fish/jumpercable/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] hooks both ends of [src] to their chest! It looks like [user.p_theyre()] trying to commit suicide!"))
+	electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE)
+	tesla_zap(source = user, zap_range = 4, power = electrogenesis_power, cutoff = 1e3, zap_flags = ZAP_LOW_POWER_GEN|ZAP_MOB_DAMAGE)
+	playsound(user, 'sound/items/weapons/zapbang.ogg', 75)
+	return OXYLOSS
+
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
 	fish_id = "chainsawfish"
@@ -76,8 +95,8 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
-	base_pixel_x = -16
-	pixel_x = -16
+	base_pixel_w = -16
+	pixel_w = -16
 	sprite_width = 8
 	sprite_height = 5
 	stable_population = 3
@@ -85,7 +104,7 @@
 	average_weight = 2500
 	breeding_timeout = 4.25 MINUTES
 	feeding_frequency = 3 MINUTES
-	health = 180
+	max_integrity = 360
 	beauty = FISH_BEAUTY_GREAT
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -126,7 +145,7 @@
 			block_chance -= 15
 			armour_penetration -= 10
 			wound_bonus -= 10
-			bare_wound_bonus -= 10
+			exposed_wound_bonus -= 10
 			toolspeed += 0.6
 		if(WEIGHT_CLASS_SMALL)
 			force -= 8
@@ -135,7 +154,7 @@
 			block_chance -= 10
 			armour_penetration -= 10
 			wound_bonus -= 10
-			bare_wound_bonus -= 10
+			exposed_wound_bonus -= 10
 			toolspeed += 0.4
 		if(WEIGHT_CLASS_NORMAL)
 			force -= 5
@@ -143,7 +162,7 @@
 			block_chance -= 5
 			armour_penetration -= 5
 			wound_bonus -= 5
-			bare_wound_bonus -= 5
+			exposed_wound_bonus -= 5
 			toolspeed += 0.2
 		if(WEIGHT_CLASS_HUGE)
 			force += 2
@@ -152,7 +171,7 @@
 			armour_penetration += 10
 			block_chance += 10
 			wound_bonus += 10
-			bare_wound_bonus += 5
+			exposed_wound_bonus += 5
 		if(WEIGHT_CLASS_GIGANTIC)
 			force += 4
 			attack_speed += 0.4 SECONDS
@@ -160,7 +179,7 @@
 			block_chance += 20
 			armour_penetration += 20
 			wound_bonus += 15
-			bare_wound_bonus += 10
+			exposed_wound_bonus += 10
 			toolspeed -= 0.1
 
 	if(status == FISH_DEAD)
@@ -170,21 +189,35 @@
 		demolition_mod -= 0.3
 		armour_penetration -= 15
 		wound_bonus -= 5
-		bare_wound_bonus -= 5
+		exposed_wound_bonus -= 5
 		toolspeed += 1
 
 /obj/item/fish/chainsawfish/calculate_fish_force_bonus(bonus_malus)
 	. = ..()
 	armour_penetration += bonus_malus * 3
 	wound_bonus += bonus_malus * 2
-	bare_wound_bonus += bonus_malus * 3
+	exposed_wound_bonus += bonus_malus * 3
 	block_chance += bonus_malus * 2
 	toolspeed -= bonus_malus * 0.1
+
+// you suicide like a real chainsaw
+/obj/item/fish/chainsawfish/suicide_act(mob/living/carbon/user)
+	if(status == FISH_DEAD)
+		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
+		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		return BRUTELOSS
+
+	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(myhead)
+		myhead.dismember()
+	return BRUTELOSS
 
 /obj/item/fish/pike/armored
 	name = "armored pike"
 	fish_id = "armored_pike"
-	desc = "A long-bodied, metal-clad predator with a snout that almost looks like an halberd. Definitely a weapon to swing around."
+	desc = "A long-bodied, metal-clad predator with a snout that almost looks like a halberd. Definitely a weapon to swing around."
 	icon_state = "armored_pike"
 	inhand_icon_state = "armored_pike"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
@@ -196,14 +229,14 @@
 	wound_bonus = -15
 	attack_speed = 1 SECONDS
 	block_chance = 25
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	demolition_mod = 0.8
 	armour_penetration = 10
 	stable_population = 3
 	average_weight = 3000
 	breeding_timeout = 5 MINUTES
 	feeding_frequency = 4 MINUTES
-	health = 180
+	max_integrity = 360
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	beauty = FISH_BEAUTY_GREAT
 	fishing_difficulty_modifier = 20
@@ -232,21 +265,21 @@
 			block_chance -= 25
 			armour_penetration -= 15
 			wound_bonus -= 15
-			bare_wound_bonus -= 30
+			exposed_wound_bonus -= 30
 		if(WEIGHT_CLASS_SMALL)
 			force -= 6
 			attack_speed -= 0.3 SECONDS
 			block_chance -= 20
 			armour_penetration -= 10
 			wound_bonus -= 10
-			bare_wound_bonus -= 25
+			exposed_wound_bonus -= 25
 		if(WEIGHT_CLASS_NORMAL)
 			force -= 4
 			attack_speed -= 0.2 SECONDS
 			block_chance -= 20
 			armour_penetration -= 5
 			wound_bonus -= 10
-			bare_wound_bonus -= 15
+			exposed_wound_bonus -= 15
 		if(WEIGHT_CLASS_HUGE)
 			force += 3
 			attack_speed += 0.2 SECONDS
@@ -254,7 +287,7 @@
 			demolition_mod += 0.1
 			armour_penetration += 5
 			wound_bonus += 10
-			bare_wound_bonus += 5
+			exposed_wound_bonus += 5
 		if(WEIGHT_CLASS_GIGANTIC)
 			force += 7
 			attack_speed += 0.3 SECONDS
@@ -262,18 +295,18 @@
 			block_chance += 20
 			armour_penetration += 10
 			wound_bonus += 15
-			bare_wound_bonus += 10
+			exposed_wound_bonus += 10
 
 	if(status == FISH_DEAD)
 		force -= 5 + w_class
 		block_chance -= 15
 		armour_penetration -= 10
 		wound_bonus -= 5
-		bare_wound_bonus -= 15
+		exposed_wound_bonus -= 15
 
 /obj/item/fish/pike/armored/calculate_fish_force_bonus(bonus_malus)
 	. = ..()
 	armour_penetration += bonus_malus * 3
 	wound_bonus += bonus_malus * 2
-	bare_wound_bonus += bonus_malus * 4
+	exposed_wound_bonus += bonus_malus * 4
 	block_chance += bonus_malus * 4

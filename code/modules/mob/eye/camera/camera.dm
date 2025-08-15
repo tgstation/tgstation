@@ -13,7 +13,7 @@
 	var/use_visibility = TRUE
 	/// List of [camera chunks][/datum/camerachunk] visible to this camera.
 	/// Please don't interface with this directly. Use the [cameranet][/datum/cameranet].
-	var/final/list/datum/camerachunk/visibleCameraChunks = list()
+	VAR_FINAL/list/datum/camerachunk/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
 
@@ -22,10 +22,14 @@
 	GLOB.camera_eyes += src
 
 /mob/eye/camera/Destroy()
-	for(var/datum/camerachunk/chunk in visibleCameraChunks)
-		chunk.remove(src)
+	clear_camera_chunks()
 	GLOB.camera_eyes -= src
 	return ..()
+
+/// Clears us from any visible camera chunks.
+/mob/eye/camera/proc/clear_camera_chunks()
+	for(var/datum/camerachunk/chunk in visibleCameraChunks)
+		chunk.remove(src)
 
 /**
  * Getter proc for getting the current user's client.
@@ -45,7 +49,6 @@
  */
 /mob/eye/camera/proc/setLoc(destination, force_update = FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
 
 	destination = get_turf(destination)
 	if(!force_update && (destination == get_turf(src)))

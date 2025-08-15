@@ -90,6 +90,10 @@
 	name = "Captain %REAL_NAME%"
 	desc = "Probably better than the last captain."
 
+/datum/dog_fashion/head/dragoon
+	name = "Dragoon %REAL_NAME%"
+	desc = "The last living Dragon Knight."
+
 /datum/dog_fashion/head/kitty
 	name = "Runtime"
 	desc = "They're a cute little kitty-cat! ... wait ... what the hell?"
@@ -251,7 +255,7 @@
 
 /datum/dog_fashion/head/holymelon
 	name = "Holymelon Paladin %REAL_NAME%"
-	desc = "Extraterrestial powers beware, %NAME% is here to smite you down!"
+	desc = "Extraterrestrial powers beware, %NAME% is here to smite you down!"
 	obj_icon_state = "holymelon"
 
 /datum/dog_fashion/head/barrelmelon

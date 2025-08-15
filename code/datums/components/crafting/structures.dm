@@ -61,20 +61,6 @@
 	)
 	category = CAT_STRUCTURE
 
-/datum/crafting_recipe/syndicate_uplink_beacon
-	name = "Syndicate Uplink Beacon"
-	result = /obj/structure/syndicate_uplink_beacon
-	tool_behaviors = list(TOOL_SCREWDRIVER)
-	time = 6 SECONDS
-	reqs = list(
-		/obj/item/stack/sheet/iron = 5,
-		/obj/item/stack/cable_coil = 5,
-		/obj/item/beacon = 1,
-		/obj/item/stack/ore/bluespace_crystal = 1,
-	)
-	category = CAT_STRUCTURE
-	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
-
 /datum/crafting_recipe/manucrate
 	name = "Manufacturing Storage Unit"
 	result = /obj/machinery/power/manufacturing/storagebox
@@ -107,4 +93,15 @@
 		/obj/machinery/power/supermatter_crystal = CRAFTING_MACHINERY_CONSUME,
 	)
 	time = 120 SECONDS
+	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/elder_atmosian_statue
+	name = "Elder Atmosian Statue"
+	result = /obj/structure/statue/elder_atmosian
+	time = 6 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/metal_hydrogen = 20,
+		/obj/item/stack/sheet/mineral/zaukerite = 15,
+		/obj/item/stack/sheet/iron = 30,
+	)
 	category = CAT_STRUCTURE

@@ -7,13 +7,14 @@
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1)
+	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/stack/sheet/animalhide/bear = 2)
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 
+	max_stamina = 120
 	maxHealth = 60
 	health = 60
 	speed = 0
@@ -22,7 +23,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	wound_bonus = -5
-	bare_wound_bonus = 10 // BEAR wound bonus am i right
+	exposed_wound_bonus = 10 // BEAR wound bonus am i right
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
@@ -31,7 +32,7 @@
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
 
-	faction = list(FACTION_RUSSIAN)
+	faction = list(FACTION_RUSSIAN, FACTION_BEAR)
 
 	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
@@ -42,7 +43,7 @@
 
 /mob/living/basic/bear/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_FENCE_CLIMBER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SWIMMER, TRAIT_FENCE_CLIMBER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber, climbing_distance = 15)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -88,7 +89,7 @@
 	maxHealth = 250
 	health = 250
 	faction = list(FACTION_NEUTRAL)
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"
@@ -137,6 +138,8 @@
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
+	//just ensuring the mats contained by the bear when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 5)
 
 /mob/living/basic/bear/butter/Initialize(mapload)
 	. = ..()
@@ -158,7 +161,7 @@
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.1)
 
-/mob/living/basic/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
+/mob/living/basic/bear/butter/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	. = ..()
 	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
@@ -170,7 +173,7 @@
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")
 	var/default_name = "Terrygold"
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are \the [src]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name

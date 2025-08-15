@@ -35,11 +35,11 @@ SUBSYSTEM_DEF(mobs)
 	var/times_fired = src.times_fired
 	var/seconds_per_tick = wait / (1 SECONDS)
 	while(currentrun.len)
-		var/mob/living/L = currentrun[currentrun.len]
+		var/mob/living/processing_mob = currentrun[currentrun.len]
 		currentrun.len--
-		if(L)
-			L.Life(seconds_per_tick, times_fired)
+		if(processing_mob)
+			processing_mob.Life(seconds_per_tick, times_fired)
 		else
-			GLOB.mob_living_list.Remove(L)
+			GLOB.mob_living_list.Remove(processing_mob)
 		if (MC_TICK_CHECK)
 			return

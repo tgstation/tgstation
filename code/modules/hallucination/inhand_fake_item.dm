@@ -2,6 +2,7 @@
 /datum/hallucination/fake_item
 	abstract_hallucination_parent = /datum/hallucination/fake_item
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// A flag of slots this fake item can appear in.
 	var/valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_BELT|ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET
@@ -114,11 +115,29 @@
 
 	return hallucinated_item
 
+/datum/hallucination/fake_item/summon_guns
+	hallucination_tier = HALLUCINATION_TIER_RARE
+	valid_slots = ITEM_SLOT_HANDS
+
+/datum/hallucination/fake_item/summon_guns/make_fake_item(where_to_put_it, equip_flags)
+	template_item_type = pick(GLOB.summoned_guns)
+	. = ..()
+	hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/magic/summon_guns.ogg', 50, TRUE)
+
+/datum/hallucination/fake_item/summon_magic
+	hallucination_tier = HALLUCINATION_TIER_RARE
+	valid_slots = ITEM_SLOT_HANDS
+
+/datum/hallucination/fake_item/summon_magic/make_fake_item(where_to_put_it, equip_flags)
+	template_item_type = pick(GLOB.summoned_magic + GLOB.summoned_special_magic)
+	. = ..()
+	hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/magic/summon_magic.ogg', 50, TRUE)
+
 /obj/item/hallucinated
 	name = "mirage"
 	plane = ABOVE_HUD_PLANE
 	interaction_flags_item = NONE
-	item_flags = ABSTRACT | DROPDEL | EXAMINE_SKIP | HAND_ITEM | NOBLUDGEON // Most of these flags don't matter, but better safe than sorry
+	item_flags = ABSTRACT | DROPDEL | HAND_ITEM | NOBLUDGEON // Most of these flags don't matter, but better safe than sorry
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// The hallucination that created us.
 	var/datum/hallucination/parent
@@ -132,7 +151,7 @@
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_deleting))
 	src.parent = parent
 
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROP, TRAIT_EXAMINE_SKIP), INNATE_TRAIT)
 
 /obj/item/hallucinated/Destroy(force)
 	UnregisterSignal(parent, COMSIG_QDELETING)

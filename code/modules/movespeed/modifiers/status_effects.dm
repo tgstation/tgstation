@@ -45,6 +45,9 @@
 /datum/movespeed_modifier/status_effect/midas_blight
 	id = MOVESPEED_ID_MIDAS_BLIGHT
 
+/datum/movespeed_modifier/status_effect/spooked
+	multiplicative_slowdown = 0.25
+
 /datum/movespeed_modifier/status_effect/midas_blight/soft
 	multiplicative_slowdown = 0.25
 
@@ -59,6 +62,10 @@
 
 /datum/movespeed_modifier/status_effect/guardian_shield
 	multiplicative_slowdown = 1
+
+/datum/movespeed_modifier/status_effect/yellow_orb
+	multiplicative_slowdown = -0.65
+	blacklisted_movetypes = (FLYING|FLOATING)
 
 ///movespeed modifier that makes you go faster when wet and lying on the floor once past the fish organ set threshold.
 /datum/movespeed_modifier/fish_flopping
