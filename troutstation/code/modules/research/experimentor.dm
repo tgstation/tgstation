@@ -471,10 +471,11 @@
 				c.blood_volume -= amount
 				to_chat(c, span_bolddanger("[parent_relic] drains some of your succulent lifeforce!"))
 			else if (prob(95)) // Steal a non-brain organ
-				var/obj/item/organ/type_organ = pick(GLOB.bioscrambler_valid_organs)
-				if (c.organs_slot.Find(type_organ.slot))
-					var/obj/item/organ/organ_to_remove = c.organs_slot[type_organ.slot]
-					organ_to_remove.mob_remove(c)
+				var/obj/item/organ/remove_organ_type = pick(GLOB.bioscrambler_valid_organs)
+				if (c.organs_slot.Find(remove_organ_type.slot))
+					var/obj/item/organ/organ = c.organs_slot[remove_organ_type.slot]
+					if (organ?.owner)
+						organ.Remove(c)
 					to_chat(c, span_bolddanger("[parent_relic] demands something more, and you feel a little hollow."))
 				else
 					to_chat(c, span_warning("[parent_relic] demands something more, but you do not have what it wants."))
@@ -497,25 +498,22 @@
 	language = pick(subtypesof(/datum/language/))
 	percent = rand(1, 100)
 
-// The Platforms PR changed how table pushing works and I (Cirr) am pushed for time, so this is getting commented out.
-// FIXME!!!
+/datum/relic_node/tabled
+	desc = "This node slammed things onto a table!"
+	var/grapple_range
+	var/table_range
 
-// /datum/relic_node/tabled
-// 	desc = "This node slammed things onto a table!"
-// 	var/grapple_range
-// 	var/table_range
+/datum/relic_node/tabled/on_generate()
+	grapple_range = rand(1, 4)
+	table_range = rand(6, 15)
 
-// /datum/relic_node/tabled/on_generate()
-// 	grapple_range = rand(1, 4)
-// 	table_range = rand(6, 15)
-
-// /datum/relic_node/tabled/reaction_power(mob/user)
-// 	var/list/table_list = list()
-// 	for (var/obj/structure/table/t in range(table_range, parent_relic))
-// 		table_list.Add(t)
-// 	var/obj/structure/table/chosen_one = pick(table_list)
-// 	for (var/mob/living/m in view(table_range, parent_relic))
-// 		chosen_one.tablepush(m, m)
+/datum/relic_node/tabled/reaction_power(mob/user)
+	var/list/table_list = list()
+	for (var/obj/structure/table/t in range(table_range, parent_relic))
+		table_list.Add(t)
+	var/datum/component/table_smash/chosen_one = pick(table_list).GetComponent(/datum/component/table_smash)
+	for (var/mob/living/m in view(table_range, parent_relic))
+		chosen_one.tablepush(m, m)
 
 /obj/item/relic
 	desc = "What mysteries could this hold? Maybe Research & Development knows how to analyze it...."
@@ -549,7 +547,7 @@
 		/datum/relic_node/dimensional_shift = 10,
 		/datum/relic_node/blood		= 10,
 		/datum/relic_node/rosetta	= 10,
-		// /datum/relic_node/tabled	= 10,
+		/datum/relic_node/tabled	= 10,
 	)
 
 	var/static/list/relic_trans_types = list(
@@ -762,11 +760,18 @@
 	generate()
 ///
 
-
 /datum/supply_pack/imports/relicorder
 	name = "Spare Relic Dodads"
 	desc = "We have zero clue what these do, and frankly they're piling up. Could you take some off our hands?"
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/item/relic = 3, /obj/item/pinpointer/relic = 1, /obj/item/relicanalyzer = 1)
+	crate_name = "Spare Relics Crate"
+	crate_type = /obj/structure/closet/crate/trashcart
+
+/datum/supply_pack/science/relicorder
+	name = "Relic Grab Bag"
+	desc = "We need these unknown objects researched, please buy a few from the stockpile. Please."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/relic = 3)
 	crate_name = "Spare Relics Crate"
 	crate_type = /obj/structure/closet/crate/science
