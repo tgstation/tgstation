@@ -12,8 +12,9 @@
 	icon_state = "default"
 	base_pixel_y = -32
 	base_pixel_x = -32
+	pixel_x = -32
+	pixel_y = -32
 	max_integrity = 150
-	set_dir_on_move = FALSE
 	armor_type = /datum/armor
 	integrity_failure = 0.5
 	var/obj/golfcart_rear/child = null
@@ -47,29 +48,34 @@
 	update_parent_layer_and_offsets(cart.dir)
 	return TRUE
 
-/obj/vehicle/ridden/golfcart/Move(newloc, new_dir)
-	var/old_dir = dir
-	if (!ISDIAGONALDIR(new_dir))
-		var/old_loc = loc
-		. = ..()
-		if (!.)
-			setDir(old_dir)
-			return .
-		child.nudgeto(old_loc, dir)
-		return .
-	if (ISDIAGONALDIR(old_dir))
-		balloon_alert_to_viewers("uh oh")
-	var/atom/newloc_child = get_step(newloc, turn(old_dir, 180))
-	if (!child.loc.Exit(child, new_dir))
-		return FALSE
-	if (!newloc_child.Enter(child))
+/obj/vehicle/ridden/golfcart/Move(newloc, newdir)
+	var/atom/behind = get_step(new_loc, turn(newdir, 180))
+	if ((!behind.Enter(child, child.loc)) && behind != get_step(src, 0))
 		return FALSE
 	. = ..()
 	if (!.)
-		setDir(old_dir)
+		behind = get_step(loc, turn(dir, 180))
+		if (child.loc != behind)
+			child.loc = behind
 		return .
-	setDir(old_dir)
-	child.nudgeto(newloc_child, old_dir)
+	child.loc = behind
+	return .
+
+/obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
+	SIGNAL_HANDLER
+
+	// see if space behind new loc is free
+	var/atom/behind = get_step(new_loc, turn(dir, 180))
+	//if ((!behind.Enter(child, child.loc)) && behind != get_step(src, 0))
+		//return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	// otherwise permit move
+	return
+
+/obj/vehicle/ridden/golfcart/proc/post_move(atom/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+
+	var/atom/behind = get_step(src, turn(dir, 180))
+	child.loc = old_loc
 
 /datum/component/riding/vehicle/golfcart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
@@ -94,7 +100,7 @@
 /obj/golfcart_rear/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE, was_nudged = FALSE)
 	if (was_nudged)
 		return ..(newloc, direct, glide_size_override, update_dir)
-	return parent.Move(step(parent, get_dir(loc, newloc), parent.dir))
+	return parent.Move(get_step(parent, get_dir(loc, newloc)), parent.dir)
 
 /obj/golfcart_rear/proc/nudgeto(atom/new_loc)
 	return Move(new_loc, dir, was_nudged = TRUE)
@@ -102,6 +108,8 @@
 /obj/vehicle/ridden/golfcart/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/golfcart)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(post_move))
 	child = new /obj/golfcart_rear(mapload, src)
 	child.loc = get_step(src, NORTH)
 
