@@ -210,6 +210,7 @@
 	movedelay = 4
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
+	step_energy_drain = 0
 	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	enter_delay = 40
 	silicon_icon_state = null
