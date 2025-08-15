@@ -147,7 +147,7 @@
 	user.visible_message(span_boldwarning("[src] begins to rattle. He thirsts."), span_her_grace("You flick [src]'s latch up. You hope this is a good idea."))
 	name = "Her Grace"
 	desc = "A bloodthirsty artifact created by a profane rite."
-	gender = MALE
+	gender = FEMALE
 	adjust_bloodthirst(1)
 	force_bonus = HER_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	notify_ghosts(
