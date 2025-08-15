@@ -240,6 +240,7 @@
 		/datum/reagent/consumable/nutriment = 5,
 		/datum/reagent/consumable/sprinkles = 2,
 		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/medicine/gaywater = 3,
 	)
 	tastes = list("butter" = 1, "sugar" = 1, "gay" = 1)
 	foodtypes = GRAIN|SUGAR|DAIRY
@@ -261,6 +262,7 @@
 		/datum/reagent/consumable/sugar = 2,
 		/datum/reagent/consumable/hot_coco = 4,
 		/datum/reagent/consumable/caramel = 4,
+		/datum/reagent/medicine/gaywater = 3,
 	)
 	tastes = list("vanilla" = 1, "toffee" = 1, "cream" = 1, "sugar" = 1, "gay" = 1)
 	crafting_complexity = FOOD_COMPLEXITY_4

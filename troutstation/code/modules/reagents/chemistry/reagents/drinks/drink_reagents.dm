@@ -13,13 +13,14 @@
 
 
 /datum/reagent/medicine/gaywater
-    name = "Gay Water"
-    description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen. But gay."
-    color = "#ff99fcfF"
-    taste_description = "gay"
-    var/cooling_temperature = 2
-    chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
-    default_container = /obj/item/reagent_containers/cup/glass/waterbottle
+	name = "Gay Water"
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen. But gay."
+	color = "#ff99fcfF"
+	taste_description = "gay"
+	overdose_threshold = 30
+	var/cooling_temperature = 2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
 
 /datum/reagent/medicine/gaywater/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -28,9 +29,9 @@
 		to_chat(drinker, span_notice("You're gay."))
 
 /datum/glass_style/drinking_glass/gaywater
-    required_drink_type = /datum/reagent/medicine/gaywater
-    name = "glass of gay water"
-    desc = "The queerest of all refreshments."
+	required_drink_type = /datum/reagent/medicine/gaywater
+	name = "glass of gay water"
+	desc = "The queerest of all refreshments."
 
 /datum/reagent/medicine/gaywater/overdose_start(mob/living/carbon/affected_mob)
 	var/mob/living/carbon/human/affected_human = affected_mob
