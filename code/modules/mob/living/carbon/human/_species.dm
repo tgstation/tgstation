@@ -738,7 +738,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a suit before you can attach this [I.name]!"))
 				return FALSE
-			var/any_suit_storage = (is_type_in_list(I, GLOB.any_suit_storage) || I.w_class == WEIGHT_CLASS_TINY)
+			var/any_suit_storage = (is_type_in_typecache(I, GLOB.any_suit_storage) || I.w_class == WEIGHT_CLASS_TINY)
 			if(any_suit_storage)
 				return TRUE
 			if(I.w_class > WEIGHT_CLASS_BULKY)

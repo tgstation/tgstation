@@ -203,7 +203,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 /// or items that are meant to be "suit storage agnostic" as
 /// a benefit, which of the time of this commit only applies
 /// to the captain's jetpack, here
-GLOBAL_LIST_INIT(any_suit_storage, list(
+GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/clipboard,
 	/obj/item/flashlight,
 	/obj/item/tank/internals/emergency_oxygen,
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(any_suit_storage, list(
 	/obj/item/gun/energy/laser/bluetag,
 	/obj/item/gun/energy/laser/redtag,
 	/obj/item/storage/belt/holster
-))
+)))
 
 //Allowed equipment lists for security vests.
 
