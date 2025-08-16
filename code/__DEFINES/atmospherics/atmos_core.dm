@@ -70,7 +70,7 @@
 
 // REACTIONS
 // Return values for reactions (bitflags).
-/// The gas mixture is not reacting.
+/// The gas mixture is not reacting. Not actually a bitflag.
 #define NO_REACTION 0
 /// The gas mixture is reacting.
 #define REACTING (1 << 0)

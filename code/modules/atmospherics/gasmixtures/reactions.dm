@@ -183,7 +183,7 @@
 	)
 
 /datum/gas_reaction/plasmafire/react(datum/gas_mixture/air, datum/holder)
-	. = VOLATILE_REACTION
+	. = NO_REACTION
 	// This reaction should proceed faster at higher temperatures.
 	var/temperature = air.temperature
 	var/temperature_scale = 0
@@ -236,7 +236,7 @@
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 
-	. |= REACTING
+	. |= REACTING | VOLATILE_REACTION
 
 
 /**
@@ -261,7 +261,7 @@
 	)
 
 /datum/gas_reaction/h2fire/react(datum/gas_mixture/air, datum/holder)
-	. = VOLATILE_REACTION
+	. = NO_REACTION
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/old_heat_capacity = air.heat_capacity()
 	var/temperature = air.temperature
@@ -290,7 +290,7 @@
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 
-	. |= REACTING
+	. |= REACTING | VOLATILE_REACTION
 
 
 /**
@@ -316,7 +316,7 @@
 	)
 
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
-	. = VOLATILE_REACTION
+	. = NO_REACTION
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/old_heat_capacity = air.heat_capacity()
 	var/temperature = air.temperature
@@ -354,7 +354,7 @@
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 
-	. |= REACTING
+	. |= REACTING | VOLATILE_REACTION
 
 
 
@@ -380,7 +380,7 @@
 	)
 
 /datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
-	. |= VOLATILE_REACTION
+	. = NO_REACTION
 	var/temperature = air.temperature
 	var/temperature_scale
 	if(temperature < FREON_TERMINAL_TEMPERATURE) //stop the reaction when too cold
@@ -425,7 +425,7 @@
 		if(temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 
-	. |= REACTING
+	. |= REACTING | VOLATILE_REACTION
 
 
 // N2O
@@ -784,7 +784,7 @@
 	)
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
-	. |= VOLATILE_REACTION
+	. = NO_REACTION
 	var/list/cached_gases = air.gases
 	/// List of gases we will assert, and possibly garbage collect.
 	var/list/asserted_gases = list(/datum/gas/hypernoblium, /datum/gas/bz)
@@ -806,7 +806,7 @@
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air.temperature = max(((air.temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
-	. |= REACTING
+	. |= REACTING | VOLATILE_REACTION
 
 
 // Halon
@@ -832,7 +832,7 @@
 	)
 
 /datum/gas_reaction/halon_o2removal/react(datum/gas_mixture/air, datum/holder)
-	. |= VOLATILE_REACTION
+	. = NO_REACTION
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
@@ -861,7 +861,7 @@
 		foaming.set_up(amount = HALON_COMBUSTION_RESIN_VOLUME, holder = holder, location = location)
 		foaming.start()
 
-	. |= REACTING
+	. |= REACTING | VOLATILE_REACTION
 
 
 // Healium
@@ -1193,7 +1193,7 @@
  * Converts all gases into antinoblium.
  */
 /datum/gas_reaction/antinoblium_replication/react(datum/gas_mixture/air, datum/holder)
-	. = VOLATILE_REACTION | REACTING
+	. = REACTING | VOLATILE_REACTION
 	var/list/cached_gases = air.gases
 	var/heat_capacity = air.heat_capacity()
 	var/total_moles = air.total_moles()
@@ -1203,7 +1203,6 @@
 	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
 	if(total_not_antinoblium_moles < MINIMUM_MOLE_COUNT) // Clear up the remaining gases if this condition is met.
 		. = NO_REACTION
-		. &= ~REACTING
 		reaction_rate = total_not_antinoblium_moles
 	for(var/id in cached_gases)
 		if(id == /datum/gas/antinoblium)
