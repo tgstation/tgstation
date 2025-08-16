@@ -86,6 +86,9 @@
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
 			return
+		if(LAZYACCESS(modifiers, ALT_CLICK))
+			AltShiftClickOn(A)
+			return
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
