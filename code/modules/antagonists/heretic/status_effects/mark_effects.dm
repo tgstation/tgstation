@@ -220,7 +220,7 @@
 
 /datum/status_effect/eldritch/cosmic/on_effect()
 	new teleport_effect(get_turf(owner))
-	new /obj/effect/forcefield/cosmic_field(get_turf(owner))
+	create_cosmic_field(get_turf(owner), owner)
 	do_teleport(
 		owner,
 		get_turf(cosmic_diamond),
@@ -263,7 +263,7 @@
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
-	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	return TRUE
 
 /// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
@@ -292,7 +292,7 @@
 
 /datum/status_effect/eldritch/moon/on_remove()
 	. = ..()
-	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// In case the trait was not removed earlier
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
