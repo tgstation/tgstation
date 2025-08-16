@@ -16,6 +16,7 @@
 	pixel_y = -32
 	max_integrity = 150
 	armor_type = /datum/armor
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	integrity_failure = 0.5
 	var/obj/golfcart_rear/child = null
 	var/obj/structure/closet/crate/crate = null
@@ -89,10 +90,22 @@
 	// otherwise permit move
 	return
 
-/obj/vehicle/ridden/golfcart/proc/on_canreach(mob/source, atom/target)
+/obj/vehicle/ridden/golfcart/proc/dist_to(atom/thing)
+	return min(get_dist(thing, loc), get_dist(thing.loc, child.loc))
+
+/obj/vehicle/ridden/golfcart/proc/check_mousedroppable(atom/source, atom/target)
+	balloon_alert_to_viewers("hello")
+	return dist_to(target) > 1 ? COMPONENT_CANCEL_MOUSEDROPPED_ONTO : .
+
+/obj/vehicle/ridden/golfcart/proc/on_canreach(atom/target, mob/source)
 	SIGNAL_HANDLER
 
-	return min(get_dist(source.loc, src.loc), get_dist(source.loc, child.loc))
+	if (!istype(target, /obj/vehicle/ridden/golfcart))
+		return
+
+	if (dist_to(target) <= 1)
+		return COMPONENT_ALLOW_REACH
+	return
 
 /obj/vehicle/ridden/golfcart/Move(newloc, newdir)
 	var/atom/old_loc = get_turf(src)
@@ -147,7 +160,8 @@
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/golfcart)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
+	RegisterSignal(src, COMSIG_ATOM_REACHABLE_BY, PROC_REF(on_canreach))
+	RegisterSignal(src, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(check_mousedroppable))
 	child = new /obj/golfcart_rear(mapload, src)
 	child.loc = get_step(src, NORTH)
 
