@@ -443,13 +443,13 @@
 	var/other_visual = other_link.make_visual_callback.Invoke()
 	get_visual_callback.Invoke(other_visual)
 
-/datum/mod_link/proc/exited_call()
+/datum/mod_link/proc/exiting_call()
 	var/mob/living/old_user = user_in_call_ref?.resolve()
 	if(old_user)
 		REMOVE_TRAIT(old_user, TRAIT_IN_CALL, REF(src))
-	user_in_call_ref = null
 
 	delete_visual_callback.Invoke(old_user)
+	user_in_call_ref = null
 
 /datum/mod_link/proc/on_holder_delete(atom/source)
 	SIGNAL_HANDLER
@@ -472,10 +472,10 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/mod_link_call/Destroy()
+	link_caller.exiting_call()
+	link_receiver.exiting_call()
 	link_caller.link_call = null
 	link_receiver.link_call = null
-	link_caller.exited_call()
-	link_receiver.exited_call()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
