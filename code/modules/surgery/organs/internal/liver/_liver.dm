@@ -29,7 +29,6 @@
 	/// Modifies how much damage toxin deals to the liver
 	var/liver_resistance = LIVER_DEFAULT_TOX_RESISTANCE
 	var/filterToxins = TRUE //whether to filter toxins
-	var/operated = FALSE //whether the liver's been repaired with surgery and can be fixed again or not
 
 /obj/item/organ/liver/Initialize(mapload)
 	. = ..()
