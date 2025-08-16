@@ -59,9 +59,9 @@
 			chest_covered = TRUE
 		if(!head_covered && (equipped.body_parts_covered & HEAD) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
 			head_covered = TRUE
-		if(!hands_covered && (equipped.body_parts_covered & HANDS|ARMS) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+		if(!hands_covered && (equipped.body_parts_covered & (HANDS|ARMS)) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
 			hands_covered = TRUE
-		if(!feet_covered && (equipped.body_parts_covered & FEET|LEGS) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+		if(!feet_covered && (equipped.body_parts_covered & (FEET|LEGS)) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
 			feet_covered = TRUE
 
 	if(chest_covered && head_covered && hands_covered && feet_covered)
