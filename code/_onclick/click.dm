@@ -229,7 +229,7 @@
 
 		checking = next
 
-	if(SEND_SIGNAL(src, COMSIG_ATOM_CANREACH, ultimate_target) & COMPONENT_ALLOW_REACH)
+	if((SEND_SIGNAL(src, COMSIG_ATOM_CANREACH, ultimate_target) & COMPONENT_ALLOW_REACH) || (SEND_SIGNAL(ultimate_target, COMSIG_ATOM_REACHABLE_BY, src) & COMPONENT_ALLOW_REACH))
 		return TRUE
 
 	return FALSE

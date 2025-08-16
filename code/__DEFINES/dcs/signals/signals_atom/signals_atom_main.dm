@@ -76,6 +76,8 @@
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
 #define COMSIG_ATOM_CANREACH "atom_can_reach"
+///inverse of COMSIG_ATOM_CANREACH
+#define COMSIG_ATOM_REACHABLE_BY "atom_reachable_by"
 	#define COMPONENT_ALLOW_REACH (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
