@@ -53,7 +53,7 @@
 		/obj/item/stack/rods,
 	))
 
-/datum/action/repairbot_resources/Trigger(trigger_flags)
+/datum/action/repairbot_resources/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
