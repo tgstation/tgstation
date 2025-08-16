@@ -30,9 +30,9 @@
 #define FILTERS_REQUIRED TRUE
 #define FILTERS_SKIPPED FALSE
 
-#define TASKING_ROUND_ROBIN "ROUND-ROBIN" // 1 - 2 - 3 - 2 - 3
-#define TASKING_STRICT_ROBIN "STRICT R-R" // 1 - 2 - 3 - (waiting for 1) - 1 - 2
-#define TASKING_PREFER_FIRST "PREFER FIRST" // 1 - 2 - 1 - 2 - 3 - 2 - 1 - 3 (first availiable)
+#define TASKING_ROUND_ROBIN "Round Robin" // 1 - 2 - 3 - 2 - 3
+#define TASKING_STRICT_ROBIN "Strict Robin" // 1 - 2 - 3 - (waiting for 1) - 1 - 2
+#define TASKING_PREFER_FIRST "Prefer First" // 1 - 2 - 1 - 2 - 3 - 2 - 1 - 3 (first availiable)
 
 #define TRANSFER_TYPE_PICKUP "pick up"
 #define TRANSFER_TYPE_DROPOFF "drop off"

@@ -28,6 +28,18 @@ const taskingScheduleIcons = {
   "Prefer First": "arrow-down-1-9"
 }
 
+const buttonNumberToIcon = {
+  1: "",
+  2: "arrow-up",
+  3: "",
+  4: "arrow-left",
+  5: "arrows-to-dot",
+  6: "arrow-right",
+  7: "",
+  8: "arrow-down",
+  9: ""
+}
+
 const MasterControls = () => {
   const { act, data } = useBackend<ManipulatorData>();
   const { delay_step, interaction_delay, min_delay, max_delay } = data;
@@ -160,6 +172,16 @@ const PointSection = (props: {
     setEditingIndex(index);
   };
 
+  useEffect(() => {
+    if (editingPoint && editingIndex !== null) {
+      const currentPoints = isPickup ? data.pickup_points : data.dropoff_points;
+      const updatedPoint = currentPoints.find(p => p.id === editingPoint.id);
+      if (updatedPoint) {
+        setEditingPoint(updatedPoint);
+      }
+    }
+  }, [data.pickup_points, data.dropoff_points, editingPoint?.id, editingIndex, isPickup]);
+
   const handleDirectionClick = (buttonNumber: number) => {
     if (!editingPoint || editingIndex === null) return;
 
@@ -203,12 +225,6 @@ const PointSection = (props: {
 
   const handleFilteringModeChange = () => {
     if (!editingPoint || editingIndex === null) return;
-
-    const newMode = (editingPoint.filtering_mode % 3) + 1;
-    setEditingPoint({
-      ...editingPoint,
-      filtering_mode: newMode,
-    });
 
     adjustPoint(editingPoint.id, 'cycle_filtering_mode')
   };
@@ -307,7 +323,6 @@ const PointSection = (props: {
                     return (
                       <Button
                         key={buttonNumber}
-                        content={buttonNumber}
                         disabled={isCenter}
                         color={isCurrentButton ? 'good' : 'default'}
                         onClick={() => !isCenter && handleDirectionClick(buttonNumber)}
@@ -316,6 +331,7 @@ const PointSection = (props: {
                           textAlign: 'center',
                           padding: '0px',
                         }}
+                        icon={buttonNumberToIcon[buttonNumber]}
                       />
                     );
                   })}

@@ -59,13 +59,9 @@
 
 /// Finds the type priority of the interaction point.
 /datum/interaction_point/proc/find_type_priority()
-	var/lazy_counter = 1
 	for(var/datum/manipulator_priority/take_type in interaction_priorities)
-
 		if(take_type.what_type == /turf)
 			return interaction_turf
-
-		lazy_counter++
 
 		for(var/type_in_priority in interaction_turf.contents)
 			if(!istype(type_in_priority, take_type.what_type))

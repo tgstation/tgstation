@@ -73,14 +73,22 @@
 		balloon_alert("not enough power!")
 		return FALSE
 
+	cycle_timer_running = FALSE
 	try_run_full_cycle()
+
+/// Safely schedules the next cycle attempt
+/obj/machinery/big_manipulator/proc/schedule_next_cycle()
+	if(cycle_timer_running)
+		return
+	cycle_timer_running = TRUE
+	addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
 
 /// Attempts to run a full work cycle
 /obj/machinery/big_manipulator/proc/try_run_full_cycle()
 	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
 	if(!origin_point)
 		start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-		addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
+		schedule_next_cycle()
 		return FALSE
 
 	var/turf/origin_turf = origin_point.interaction_turf
@@ -92,7 +100,7 @@
 
 	if(!has_suitable_objects)
 		start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-		addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
+		schedule_next_cycle()
 		return FALSE
 
 	rotate_to_point(origin_point, PROC_REF(try_interact_with_origin_point))
@@ -116,7 +124,7 @@
 		return TRUE
 
 	start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-	addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
+	schedule_next_cycle()
 	return FALSE
 
 /// Attempts to start a work cycle (pick up the object)
@@ -130,7 +138,7 @@
 
 	if(!destination_point)
 		SStgui.update_uis(src)
-		addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
+		schedule_next_cycle()
 		start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
 		return FALSE
 
@@ -154,15 +162,9 @@
 		if(INTERACT_THROW)
 			throw_thing(destination_point)
 
-	var/datum/interaction_point/next_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
-	if(next_point)
-		rotate_to_point(next_point, PROC_REF(try_interact_with_origin_point))
-	else
-		start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-		addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
 	return TRUE
 
-/// Rotates the manipulator arm to face the target point
+/// Rotates the manipulator arm to face the target point.
 /obj/machinery/big_manipulator/proc/rotate_to_point(datum/interaction_point/target_point, callback)
 	if(!target_point)
 		return FALSE
@@ -177,36 +179,40 @@
 
 	start_task("moving to point", total_rotation_time)
 
-	// Если нет необходимости вращаться
+	// If the next point is on the same tile, we don't need to rotate at all
 	if(num_rotations == 0)
 		addtimer(CALLBACK(src, callback, target_point), 0)
 		return TRUE
 
-	// Разбиваем вращение на шаги по 45 градусов
+	// Breaking the angle up into 45 degree steps
 	var/rotation_step = 45 * SIGN(angle_diff)
 	do_step_rotation(target_point, callback, current_angle, target_angle, rotation_step, 0, total_rotation_time)
 
 	return TRUE
 
-/// Выполняет вращение манипулятора на один шаг
+/// Does a 45 degree step, animating the claw
 /obj/machinery/big_manipulator/proc/do_step_rotation(datum/interaction_point/target_point, callback, current_angle, target_angle, rotation_step, elapsed_time, total_time)
-	// Проверяем, нужно ли еще вращаться
+	// Just making sure we're not there already
 	var/angle_diff = closer_angle_difference(current_angle, target_angle)
 	if(abs(angle_diff) < abs(rotation_step))
-		// Последний шаг - поворачиваем точно на целевой угол
+		// If this is the last step, doing a precise degree turn
 		var/matrix/final_matrix = matrix()
 		final_matrix.Turn(target_angle)
 		animate(manipulator_arm, transform = final_matrix, time = interaction_delay)
 		addtimer(CALLBACK(src, callback, target_point), interaction_delay)
 		return
 
-	// Вращаем на один шаг
+	// Animating a single rotation step
+
+	// YES, this has to be done like that because byond or whatever is stupid and animating a 180+ degree turn
+	// fucking fails and squashes the icon vertically (or horizontally, whatever it feels like) instead
+
 	var/next_angle = current_angle + rotation_step
 	var/matrix/next_matrix = matrix()
 	next_matrix.Turn(next_angle)
 	animate(manipulator_arm, transform = next_matrix, time = interaction_delay)
 
-	// Рекурсивно планируем следующий шаг
+	// Recursively planning the next step (yay recursion :yuppie: call me a madman I LOVE recursion)
 	elapsed_time += interaction_delay
 	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_point, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), interaction_delay)
 
@@ -324,7 +330,7 @@
 		check_end_of_use_for_use_with_empty_hand(destination_point, FALSE)
 		return
 
-	// we don't do unarmed attack on items because we will take them
+	// We don't perform an unarmed attack on items because we pick them up duh
 	if(isitem(type_to_use))
 		var/obj/item/interact_with_item = type_to_use
 		var/resolve_loc = interact_with_item.loc
@@ -356,7 +362,7 @@
 	if(!on)
 		return
 
-	try_begin_full_cycle()
+	schedule_next_cycle()
 
 /// Completes the current manipulation action
 /obj/machinery/big_manipulator/proc/finish_manipulation()

@@ -25,6 +25,8 @@
 	var/status = STATUS_IDLE
 	/// Is the manipulator turned on?
 	var/on = FALSE
+	/// Is a cycle timer already running?
+	var/cycle_timer_running = FALSE
 
 	var/current_task_start_time = 0
 	var/current_task_duration = 0
@@ -401,6 +403,7 @@
 	else
 		drop_held_atom()
 		on = new_power_state
+		cycle_timer_running = FALSE
 		remove_all_huds()
 		end_current_task()
 		SStgui.update_uis(src)
@@ -536,24 +539,6 @@
 		if("adjust_point_param")
 			return adjust_param_for_point(params["pointId"], params["param"], params["value"], ui.user)
 
-			// var/list/points = is_pickup ? pickup_points : dropoff_points
-			// if(index < 1 || index > length(points))
-			// 	return FALSE
-
-			// var/datum/interaction_point/point = points[index]
-			// var/turf/new_turf = locate(x + dx, y + dy, z)
-
-			// if(!new_turf || isclosedturf(new_turf))
-
-			// 	return FALSE
-
-			// // Remove old HUD for this point before moving
-			// remove_hud_for_point(point)
-			// point.interaction_turf = new_turf
-			// update_hud_for_point(point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
-			// return TRUE
-
-
 /obj/machinery/big_manipulator/proc/adjust_param_for_point(point_ref, param, value, mob/user)
 	if(!param) // there may be no value if we're resetting stuff
 		return FALSE
@@ -561,6 +546,8 @@
 	var/datum/interaction_point/target_point = locate(point_ref)
 	if(!target_point)
 		return FALSE
+
+	say("[param] changed to [value]")
 
 	switch(param)
 		if("set_name")
@@ -648,7 +635,6 @@
 			if(!new_turf || isclosedturf(new_turf))
 				return FALSE
 
-			// Remove old HUD for this point before moving
 			remove_hud_for_point(target_point)
 			target_point.interaction_turf = new_turf
 			update_hud_for_point(target_point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
@@ -683,7 +669,7 @@
 	current_task_start_time = 0
 	current_task_duration = 0
 	current_task_type = "idle"
-	balloon_alert(usr, "idle")
+	balloon_alert_to_viewers("idle")
 	status = STATUS_IDLE // Set status to IDLE when a task truly ends
 	SStgui.update_uis(src) // Update UI immediately
 
