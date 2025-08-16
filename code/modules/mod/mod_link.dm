@@ -435,8 +435,7 @@
 /datum/mod_link/proc/end_call()
 	QDEL_NULL(link_call)
 
-/datum/mod_link/proc/enter_call(datum/mod_link_call/new_call, datum/mod_link/other_link)
-	link_call = new_call
+/datum/mod_link/proc/entered_call(datum/mod_link/other_link)
 	var/mob/living/user = get_user_callback.Invoke()
 	ADD_TRAIT(user, TRAIT_IN_CALL, REF(src))
 	user_in_call_ref = WEAKREF(user)
@@ -444,14 +443,13 @@
 	var/other_visual = other_link.make_visual_callback.Invoke()
 	get_visual_callback.Invoke(other_visual)
 
-/datum/mod_link/proc/exit_call()
+/datum/mod_link/proc/exited_call()
 	var/mob/living/old_user = user_in_call_ref?.resolve()
 	if(old_user)
 		REMOVE_TRAIT(old_user, TRAIT_IN_CALL, REF(src))
 	user_in_call_ref = null
 
 	delete_visual_callback.Invoke(old_user)
-	link_call = null
 
 /datum/mod_link/proc/on_holder_delete(atom/source)
 	SIGNAL_HANDLER
@@ -467,11 +465,15 @@
 /datum/mod_link_call/New(datum/mod_link/link_caller, datum/mod_link/link_receiver)
 	src.link_caller = link_caller
 	src.link_receiver = link_receiver
-	link_caller.enter_call(src, link_receiver)
-	link_receiver.enter_call(src, link_caller)
+	link_caller.link_call = src
+	link_receiver.link_call = src
+	link_caller.entered_call(src, link_receiver)
+	link_receiver.entered_call(src, link_caller)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/mod_link_call/Destroy()
+	link_caller.link_call = null
+	link_receiver.link_call = null
 	link_caller.exit_call()
 	link_receiver.exit_call()
 	STOP_PROCESSING(SSprocessing, src)
