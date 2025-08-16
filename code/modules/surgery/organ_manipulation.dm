@@ -226,9 +226,17 @@
 			for(var/obj/item/organ/organ in organs)
 				organ.on_find(user)
 				organs -= organ
-				organs[organ.name] = organ
+				organs[organ] = organ
 
-			var/chosen_organ = tgui_input_list(user, "Remove which organ?", "Surgery", sort_list(organs))
+			var/obj/item/organ/chosen_organ = show_radial_menu(
+				user,
+				target,
+				organs,
+				radius = 15 + (length(organs) * 5),
+				require_near = TRUE,
+				tooltips = TRUE,
+				autopick_single_option = FALSE,
+			)
 			if(isnull(chosen_organ))
 				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
