@@ -1342,7 +1342,7 @@
 		affected_mob.throw_alert("punch_bad", /atom/movable/screen/alert/fruit_punch_bad)
 		need_mob_update = affected_mob.apply_damage(1.5 * REM * seconds_per_tick, TOX)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
-		if(prob(10))
+		if(if(SPT_PROB(10, seconds_per_tick)))
 			affected_mob.Knockdown(3 SECONDS, 6 SECONDS) //Gives daze effect. Using the cooler is a commitment and if you get jumped during it or have to run away to fight something, you should be vulnerable.
 			to_chat(affected_mob, span_warning("The overwhelming sweetness of the fruit punch disorients and confounds you!"))
 	if(need_mob_update)

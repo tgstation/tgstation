@@ -371,7 +371,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
 	. = ..()
-	if(prob(1) && mapload)
+	if(prob(2) && mapload)
 		reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
 	create_jug()
 	refresh_appearance()
@@ -431,7 +431,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/vol_counter = 0
 	var/vol_temp
 
-	for(var/datum/reagent/stored_reagent in reagents.reagent_list)
+	for(var/datum/reagent/stored_reagent as anything in reagents.reagent_list)
 		vol_temp = stored_reagent.volume
 		vol_counter += vol_temp
 
