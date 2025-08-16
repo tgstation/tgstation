@@ -109,9 +109,11 @@
 	var/consumed = 0
 	switch(air.temperature)
 		if(-INFINITY to WATER_VAPOR_DEPOSITION_POINT)
-			. |= VOLATILE_REACTION
 			if(location?.freeze_turf())
 				consumed = MOLES_GAS_VISIBLE
+			var/datum/component/wet_floor/wet_floor = location?.GetComponent(/datum/component/wet_floor)
+			if(wet_floor && wet_floor.highest_strength == TURF_WET_PERMAFROST)
+				. |= VOLATILE_REACTION
 		if(WATER_VAPOR_DEPOSITION_POINT to WATER_VAPOR_CONDENSATION_POINT)
 			if(!isgroundlessturf(location) && !isnoslipturf(location))
 				location.water_vapor_gas_act()
@@ -860,8 +862,9 @@
 		var/datum/effect_system/fluid_spread/foam/metal/resin/halon/foaming = new
 		foaming.set_up(amount = HALON_COMBUSTION_RESIN_VOLUME, holder = holder, location = location)
 		foaming.start()
+		. |= VOLATILE_REACTION
 
-	. |= REACTING | VOLATILE_REACTION
+	. |= REACTING
 
 
 // Healium
