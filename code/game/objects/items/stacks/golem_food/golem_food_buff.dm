@@ -17,15 +17,15 @@
 	return !existing || istype(existing, status_effect)
 
 /// Called when someone actually eats this
-/datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer, atom/movable/consumed)
+/datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
 	if (!HAS_TRAIT(consumer, TRAIT_ROCK_METAMORPHIC))
 		return
-	apply_effects(consumer, consumed)
+	apply_effects(consumer, consumed, multiplier)
 
 /// Apply our desired effects to the eater
-/datum/golem_food_buff/proc/apply_effects(mob/living/carbon/consumer, atom/movable/consumed)
+/datum/golem_food_buff/proc/apply_effects(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
 	if (status_effect)
-		consumer.apply_status_effect(status_effect)
+		consumer.apply_status_effect(status_effect, multiplier)
 
 /// Can eat at any time, but isn't very nutritious
 /datum/golem_food_buff/glass
