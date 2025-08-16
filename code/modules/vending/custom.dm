@@ -128,6 +128,8 @@
 /obj/machinery/vending/custom/restock(obj/item/vending_refill/canister)
 	. = 0
 	if(!canister.products?.len)
+		if(!canister.products)
+			canister.products = list()
 		return
 
 	var/update_static_data = FALSE
