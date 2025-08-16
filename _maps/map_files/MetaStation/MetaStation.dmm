@@ -33857,7 +33857,7 @@
 	name = "Shower"
 	},
 /obj/machinery/shower/directional/south,
-/obj/structure/window/spawner/directional/east,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "lHK" = (
@@ -58555,6 +58555,11 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"udB" = (
+/obj/structure/lattice,
+/obj/machinery/duct,
+/turf/open/space/basic,
+/area/space/nearstation)
 "udD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -120949,7 +120954,7 @@ aaa
 aaa
 aaa
 lMJ
-lMJ
+udB
 lMJ
 lMJ
 lMJ
