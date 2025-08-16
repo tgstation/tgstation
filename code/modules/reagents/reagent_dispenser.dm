@@ -1,4 +1,5 @@
 #define REAGENT_SPILL_DIVISOR 200
+#define COOLER_JUG_EJECT_TIME (8 SECONDS)
 
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
@@ -354,13 +355,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	find_and_hang_on_wall()
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "liquid cooler"
-	desc = "A machine that dispenses liquid to drink."
-	icon = 'icons/obj/machines/vending.dmi'
+	name = "water cooler"
+	desc = "A machine that cools and dispenses liquids to drink. The 'hot' handle doesn't seem to do anything."
 	icon_state = "water_cooler"
 	anchored = TRUE
-	tank_volume = 500
-	var/paper_cups = 25 //Paper cups left from the cooler
+	tank_volume = 200
+	can_be_tanked = FALSE
+	max_integrity = 150
+	///Paper cups left from the cooler.
+	var/paper_cups = 25
+	///Reference to our jug.
+	var/obj/item/reagent_containers/cooler_jug/our_jug
+	///Have we been tipped?
+	var/tipped = FALSE
+
+/obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
+	. = ..()
+	if(prob(2) && mapload)
+		reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
+	create_jug()
+	refresh_appearance()
+
+/obj/structure/reagent_dispensers/water_cooler/Destroy()
+	. = ..()
+	our_jug = null
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
@@ -375,13 +393,201 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(.)
 		return
+
+
+	if(tipped)
+		balloon_alert(user, "un-tipping...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		tipped = FALSE
+		refresh_appearance()
+		return
+
+
+	if(user.combat_mode && our_jug)
+		balloon_alert(user, "removing jug...")
+		if(!do_after(user, COOLER_JUG_EJECT_TIME, src))
+			return
+		eject_jug(user)
+		return
+
 	if(!paper_cups)
 		to_chat(user, span_warning("There aren't any cups left!"))
 		return
 	user.visible_message(span_notice("[user] takes a cup from [src]."), span_notice("You take a paper cup from [src]."))
-	var/obj/item/reagent_containers/cup/glass/sillycup/S = new(get_turf(src))
-	user.put_in_hands(S)
+	var/obj/item/reagent_containers/cup/glass/sillycup/new_cup = new(get_turf(src))
+	user.put_in_hands(new_cup)
 	paper_cups--
+
+/obj/structure/reagent_dispensers/water_cooler/update_overlays()
+	. = ..()
+	if(!reagents)
+		return
+
+	if(!reagents.total_volume)
+		return
+
+	var/mixcolor
+	var/vol_counter = 0
+	var/vol_temp
+
+	for(var/datum/reagent/stored_reagent as anything in reagents.reagent_list)
+		vol_temp = stored_reagent.volume
+		vol_counter += vol_temp
+
+		var/chosen_color = stored_reagent.color
+		if(istype(stored_reagent, /datum/reagent/water))
+			if(!mixcolor)
+				mixcolor = "#2694D6" //Override the water to be a nice blue
+				continue
+			else
+				chosen_color = "#2694D6"
+		else
+			if(!mixcolor)
+				mixcolor = stored_reagent.color
+				continue
+			else
+				chosen_color = stored_reagent.color
+
+		if (length(mixcolor) >= length(chosen_color))
+			mixcolor = BlendRGB(mixcolor, chosen_color, vol_temp/vol_counter)
+		else
+			mixcolor = BlendRGB(chosen_color, mixcolor, vol_temp/vol_counter)
+
+	if(mixcolor)
+		var/overlay_tag
+		if(vol_counter > 100)
+			overlay_tag = "100"
+		else
+			overlay_tag = "50" //Can't be 0, because there'd be no mixcolor
+		var/mutable_appearance/tank_overlay = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay[overlay_tag]")
+		tank_overlay.color = mixcolor
+		. += tank_overlay
+
+/obj/structure/reagent_dispensers/water_cooler/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool, time = 6 SECONDS) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/attack_hand_secondary(mob/user, modifiers)
+	if(tipped)
+		balloon_alert(user, "it's already tipped!")
+		return
+
+	if(anchored)
+		balloon_alert(user, "it's anchored!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(!do_after(user, 1.5 SECONDS, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	INVOKE_ASYNC(src, PROC_REF(boom), user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/reagent_dispensers/water_cooler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cooler_jug))
+		return
+
+	if(tipped)
+		balloon_alert(user, "it's tipped!")
+		return
+
+	var/obj/item/reagent_containers/cooler_jug/new_jug = tool
+	balloon_alert(user, "replacing jug...")
+	if(!do_after(user, COOLER_JUG_EJECT_TIME, src))
+		return
+
+	if(!user.transferItemToLoc(new_jug, src))
+		return ITEM_INTERACT_BLOCKING
+
+	eject_jug(user, our_jug)
+	our_jug = new_jug
+	our_jug.reagents.trans_to(reagents, tank_volume)
+	balloon_alert(user, "attached")
+	user.log_message("attached a [new_jug] to [src] at [AREACOORD(src)] containing ([new_jug.reagents.get_reagent_log_string()])", LOG_ATTACK)
+	add_fingerprint(user)
+	refresh_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/boom()
+	if(QDELETED(src))
+		return
+	var/liquid_amount = 0
+	if(reagents.total_volume)
+		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
+		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50), adminlog=(liquid_amount<25))
+	eject_jug(throw_away = TRUE)
+	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
+	tip_over()
+
+/obj/structure/reagent_dispensers/water_cooler/proc/refresh_appearance()
+	if(tipped)
+		icon_state = "water_cooler_disgraced"
+	else
+		if(!our_jug)
+			icon_state = "water_cooler_forlorn"
+		else
+			icon_state = "water_cooler"
+
+	update_overlays()
+	update_appearance()
+
+///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
+/obj/structure/reagent_dispensers/water_cooler/proc/create_jug()
+	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
+
+///Eject the jug in a variety of ways. If there is a user, the jug goes into their hands. throw_away is passed on tip, to empty and throw the jug away. We delete the reagents since we create a splash before this is called.
+/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, throw_away = FALSE)
+	if(!our_jug)
+		return
+
+	if(user)
+		user.put_in_hands(our_jug)
+	else
+		our_jug.forceMove(drop_location())
+
+	if(throw_away)
+		var/turf/turf_to_throw_at = get_ranged_target_turf(src, pick(GLOB.alldirs), 2)
+		our_jug.throw_at(turf_to_throw_at, 2, 3)
+		reagents.remove_all(tank_volume) //Gets spilled on floor during boom()
+	else
+		reagents.trans_to(our_jug.reagents, tank_volume)
+
+	our_jug = null
+	refresh_appearance()
+
+///Handles the visual stuff related to the cooler itself tipping.
+/obj/structure/reagent_dispensers/water_cooler/proc/tip_over()
+	tipped = TRUE
+	refresh_appearance()
+
+///Pre-tipped version for mapping.
+/obj/structure/reagent_dispensers/water_cooler/fallen
+	tipped = TRUE
+	reagent_id = null
+	anchored = FALSE
+
+/obj/structure/reagent_dispensers/water_cooler/fallen/Initialize(mapload)
+	. = ..()
+	tip_over()
+
+/obj/structure/reagent_dispensers/water_cooler/fallen/create_jug()
+	return
+
+/obj/structure/reagent_dispensers/water_cooler/jugless
+	reagent_id = null
+	anchored = FALSE
+
+/obj/structure/reagent_dispensers/water_cooler/jugless/create_jug()
+	return
+
+///Punch cooler. Starts full of healing juice. In case anyone wants to map one somewhere as a healing station.
+/obj/structure/reagent_dispensers/water_cooler/punch_cooler
+	name = "punch cooler"
+	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
+	reagent_id = /datum/reagent/consumable/fruit_punch
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
@@ -469,3 +675,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	accepts_rig = TRUE
 
 #undef REAGENT_SPILL_DIVISOR
+#undef COOLER_JUG_EJECT_TIME
