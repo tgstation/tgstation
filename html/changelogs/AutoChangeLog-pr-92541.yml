@@ -1,5 +1,0 @@
-author: "Needicla"
-delete-after: True
-changes:
-  - bugfix: "Spraycan-painted clothing now displays correctly when worn by short-height characters (e.g., Settler); paint no longer disappears on the mob sprite."
-  - code_imp: "Worn overlay coloration now uses named filters and recurses to child overlays, making it resilient to later filter changes (like height displacement)."

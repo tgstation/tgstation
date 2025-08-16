@@ -1,4 +1,0 @@
-author: "Exester509"
-delete-after: True
-changes:
-  - bugfix: "The death ripley can move again, and thus, kill things that aren't standing still right next to it."
