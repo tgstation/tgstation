@@ -467,8 +467,8 @@
 	src.link_receiver = link_receiver
 	link_caller.link_call = src
 	link_receiver.link_call = src
-	link_caller.entered_call(src, link_receiver)
-	link_receiver.entered_call(src, link_caller)
+	link_caller.entered_call(link_receiver)
+	link_receiver.entered_call(link_caller)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/mod_link_call/Destroy()
