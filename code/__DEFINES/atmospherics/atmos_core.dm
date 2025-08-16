@@ -68,10 +68,10 @@
 /// The total visible states
 #define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
-// REACTIONS
-// Return values for reactions (bitflags).
+//  REACTIONS
+//  Return values for reactions (bitflags).
 /// The gas mixture is not reacting. Not actually a bitflag.
-#define NO_REACTION 0
+#define NO_REACTION NONE
 /// The gas mixture is reacting.
 #define REACTING (1 << 0)
 /// The gas mixture is able to stop all reactions.
