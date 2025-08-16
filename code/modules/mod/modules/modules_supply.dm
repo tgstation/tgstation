@@ -620,12 +620,17 @@
 	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
 	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
 		rock.gets_drilled()
-	for(var/mob/living/mob in range(1, src))
-		mob.apply_damage(damage * (ismining(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
-		if(!ishostile(mob) || !firer)
+	for(var/mob/living/victim in range(1, src))
+		if(HAS_TRAIT(victim, TRAIT_MINING_AOE_IMMUNE))
 			continue
-		var/mob/living/simple_animal/hostile/hostile_mob = mob
-		hostile_mob.GiveTarget(firer)
+		victim.apply_damage(damage * (ismining(victim) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+		if(!firer)
+			continue
+		if(ishostile(victim))
+			var/mob/living/simple_animal/hostile/hostile_mob = victim
+			hostile_mob.GiveTarget(firer)
+		else if(isbasicmob(victim))
+			victim.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, firer)
 	for(var/obj/object in range(1, src))
 		object.take_damage(damage, BRUTE, BOMB)
 	qdel(src)

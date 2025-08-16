@@ -8,7 +8,7 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -168,7 +168,7 @@ function EventSection(props) {
     EVENT_PAGE_ITEMS,
   );
 
-  const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
+  const sectionTitle = searchQuery ? 'Searching...' : `${category.name} Events`;
 
   return (
     <Section scrollable fill title={sectionTitle} buttons={<PanelOptions />}>

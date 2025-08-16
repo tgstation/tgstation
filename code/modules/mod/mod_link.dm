@@ -122,7 +122,7 @@
 	. = ..()
 	if(speaker != wearer && speaker != ai_assistant)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_range = 2, message_mods = message_mods)
 
 /obj/item/mod/control/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -302,7 +302,7 @@
 	. = ..()
 	if(speaker != loc)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 3)
+	mod_link.visual.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_range = 3, message_mods = message_mods)
 
 /obj/item/clothing/neck/link_scryer/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER

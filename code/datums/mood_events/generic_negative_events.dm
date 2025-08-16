@@ -519,7 +519,7 @@
 
 /datum/mood_event/encountered_evil
 	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
-	mood_change = -4
+	mood_change = -1
 	timeout = 1 MINUTES
 
 /datum/mood_event/smoke_in_face

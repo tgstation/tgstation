@@ -741,12 +741,17 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/plastic_polymers
+	results = list(/datum/reagent/plastic_polymers = 10)
 	required_reagents = list(/datum/reagent/fuel/oil = 5, /datum/reagent/toxin/acid = 2, /datum/reagent/ash = 3)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
+/datum/chemical_reaction/plastic_polymer_hardening
+	required_reagents = list(/datum/reagent/plastic_polymers = 10)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
-/datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+/datum/chemical_reaction/plastic_polymer_hardening/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	new /obj/item/stack/sheet/plastic(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/pax
@@ -1046,3 +1051,41 @@
 	thermic_constant = 80
 	H_ion_release = 2
 	reaction_tags = REACTION_TAG_EASY
+
+/datum/chemical_reaction/glitter
+	results = list(/datum/reagent/glitter = 1)
+	required_reagents = list(/datum/reagent/plastic_polymers = 1, /datum/reagent/aluminium = 1)
+	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/glitter_pigmentation
+	results = list(/datum/reagent/glitter = 1)
+	required_reagents = list(/datum/reagent/glitter = 1, /datum/reagent/acetone = 1)
+	mix_message = "the glitter rapidly changes colour!"
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/glitter_pigmentation/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	. = ..()
+
+	var/excluded_volume = 0
+	var/accumulated_color
+
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(is_type_in_list(reagent, required_reagents))
+			excluded_volume += reagent.volume
+
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(!is_type_in_list(reagent, required_reagents))
+
+			if(accumulated_color)
+				accumulated_color = BlendRGB(reagent.color, accumulated_color, (reagent.volume/(holder.total_volume-excluded_volume)))
+			else
+				accumulated_color = reagent.color
+
+	var/datum/reagent/glitter/glitter = locate(/datum/reagent/glitter) in holder.reagent_list
+
+	glitter.data["colors"] = list("[accumulated_color]" = 100)
+	glitter.color = accumulated_color
+
+

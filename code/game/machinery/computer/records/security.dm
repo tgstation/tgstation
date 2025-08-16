@@ -348,7 +348,7 @@
 	switch(params["type"])
 		if("missing")
 			var/obj/item/photo/mugshot = target.get_front_photo()
-			var/obj/item/poster/wanted/missing/missing_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+			var/obj/item/poster/wanted/missing/missing_poster = new(null, null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = missing_poster
 
@@ -367,7 +367,7 @@
 				input_description += "<b>Details:</b> [incident.details]\n"
 
 			var/obj/item/photo/mugshot = target.get_front_photo()
-			var/obj/item/poster/wanted/wanted_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+			var/obj/item/poster/wanted/wanted_poster = new(null, null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = wanted_poster
 

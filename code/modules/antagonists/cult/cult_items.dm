@@ -598,8 +598,6 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-///how many times can the shuttle be cursed?
-#define MAX_SHUTTLE_CURSES 3
 ///if the max number of shuttle curses are used within this duration, the entire cult gets an achievement
 #define SHUTTLE_CURSE_OMFG_TIMESPAN (10 SECONDS)
 
@@ -675,8 +673,6 @@ Striking a noncultist, however, will tear their flesh."}
 					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)
 
 		qdel(src)
-
-#undef MAX_SHUTTLE_CURSES
 
 #define GATEWAY_TURF_SCAN_RANGE 40
 
@@ -810,65 +806,6 @@ Striking a noncultist, however, will tear their flesh."}
 	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-
-/obj/item/flashlight/flare/culttorch
-	name = "void torch"
-	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
-	w_class = WEIGHT_CLASS_SMALL
-	light_range = 1
-	icon_state = "torch"
-	inhand_icon_state = "torch"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	color = "#ff0000"
-	on_damage = 15
-	slot_flags = null
-	var/charges = 5
-	start_on = TRUE
-
-/obj/item/flashlight/flare/culttorch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	var/datum/antagonist/cult/cult = user.mind.has_antag_datum(/datum/antagonist/cult)
-	var/datum/team/cult/cult_team = cult?.get_team()
-	if(isnull(cult_team))
-		to_chat(user, span_warning("That doesn't seem to do anything useful."))
-		return ITEM_INTERACT_BLOCKING
-
-	if(!isitem(interacting_with))
-		to_chat(user, span_warning("[src] can only transport items!"))
-		return ITEM_INTERACT_BLOCKING
-
-	var/list/mob/living/cultists = list()
-	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		if(cult_mind == user.mind)
-			continue
-		if(cult_mind.current?.stat != DEAD)
-			cultists |= cult_mind.current
-
-	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(QDELETED(src) || loc != user || user.incapacitated)
-		return ITEM_INTERACT_BLOCKING
-	if(isnull(cultist_to_receive))
-		to_chat(user, span_cult_italic("You require a destination!"))
-		return ITEM_INTERACT_BLOCKING
-	if(cultist_to_receive.stat == DEAD)
-		to_chat(user, span_cult_italic("[cultist_to_receive] has died!"))
-		return ITEM_INTERACT_BLOCKING
-	if(!(cultist_to_receive.mind in cult_team.members))
-		to_chat(user, span_cult_italic("[cultist_to_receive] is not a follower of the Geometer!"))
-		return ITEM_INTERACT_BLOCKING
-	if(!isturf(interacting_with.loc))
-		to_chat(user, span_cult_italic("[interacting_with] must be on a surface in order to teleport it!"))
-		return ITEM_INTERACT_BLOCKING
-
-	to_chat(user, span_cult_italic("You ignite [interacting_with] with [src], turning it to ash, \
-		but through the torch's flames you see that [interacting_with] has reached [cultist_to_receive]!"))
-	user.log_message("teleported [interacting_with] to [cultist_to_receive] with [src].", LOG_GAME)
-	cultist_to_receive.put_in_hands(interacting_with)
-	charges--
-	to_chat(user, span_notice("[src] now has [charges] charge\s."))
-	if(charges <= 0)
-		qdel(src)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"

@@ -58,17 +58,37 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 
+/obj/effect/projectile/tracer/laser/emitter/bluelens
+	name = "electrodisruptive emitter beam"
+	icon_state = "u_laser"
+
+/obj/effect/projectile/tracer/laser/emitter/redlens
+	name = "hyperenergetic emitter beam"
+	icon_state = "beam_heavy"
+
+/obj/effect/projectile/tracer/laser/emitter/bioregen
+	name = "bioregenerative emitter beam"
+	icon_state = "solar"
+
+/obj/effect/projectile/tracer/laser/emitter/psy
+	name = "psychosiphoning emitter beam"
+	icon_state = "tracer_greyscale"
+	color = COLOR_PINK
+
+/obj/effect/projectile/tracer/laser/emitter/magnetic
+	name = "magnetogenerative emitter beam"
+	icon_state = "tracer_greyscale"
+	color = COLOR_SILVER
+
+/obj/effect/projectile/tracer/laser/emitter/quake
+	name = "seismodisintegrating emitter beam"
+	icon_state = "tracer_greyscale"
+	color = COLOR_BROWNER_BROWN
+
+/obj/effect/projectile/tracer/laser/emitter/blast
+	name = "hyperconcussive emitter beam"
+	icon_state = "tracer_greyscale"
+	color = COLOR_ORANGE
+
 /obj/effect/projectile/tracer/sniper
 	icon_state = "sniper"
-
-/obj/effect/projectile/tracer/lightning
-	icon = 'icons/effects/beam.dmi'
-	icon_state = "lightning2"
-
-/obj/effect/projectile/tracer/lightning/Initialize(mapload)
-	. = ..()
-	update_appearance()
-
-/obj/effect/projectile/tracer/lightning/update_icon_state()
-	. = ..()
-	icon_state = "lightning[rand(1, 12)]"
