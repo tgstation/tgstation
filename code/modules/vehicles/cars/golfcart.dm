@@ -15,7 +15,8 @@
 	pixel_x = -32
 	pixel_y = -32
 	max_integrity = 150
-	armor_type = /datum/armor
+	var/static/base_movedelay = 2
+	armor_type = /datum/armor/none
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	integrity_failure = 0.5
 	var/obj/golfcart_rear/child = null
@@ -107,15 +108,22 @@
 		return COMPONENT_ALLOW_REACH
 	return
 
+/obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
+	movedelay = base_movedelay * modification
+	var/datum/component/riding/comp = GetComponent(/datum/component/riding)
+	comp.vehicle_move_delay = movedelay
+
 /obj/vehicle/ridden/golfcart/Move(newloc, newdir)
 	var/atom/old_loc = get_turf(src)
 	var/old_dir = dir
 	if (get_turf(child) == newloc)
+		set_movedelay_effect(2)
 		var/old_child_loc = child.loc
 		child.loc = null
 		. = ..(newloc, turn(newdir, 180))
 		child.loc = old_child_loc
 	else
+		set_movedelay_effect(1)
 		. = ..()
 	var/atom/behind = get_step(src, turn(dir, 180))
 	if (old_dir != dir && get_turf(src) == old_loc)
@@ -130,16 +138,16 @@
 
 /datum/component/riding/vehicle/golfcart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
-		TEXT_NORTH = list(0, 4),
-		TEXT_SOUTH = list(0, 4),
-		TEXT_EAST =  list(0, 4),
-		TEXT_WEST =  list(0, 4),
+		TEXT_NORTH = list(0, -16),
+		TEXT_SOUTH = list(0, 10),
+		TEXT_EAST =  list(-8, 2),
+		TEXT_WEST =  list(8, 2),
 	)
 
 /datum/component/riding/vehicle/golfcart/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, OBJ_LAYER),
-		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
 		TEXT_EAST =  list(0, 0, OBJ_LAYER),
 		TEXT_WEST =  list(0, 0, OBJ_LAYER),
 	)
@@ -166,6 +174,16 @@
 	child.loc = get_step(src, NORTH)
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
+	if (istype(M, /mob/living/carbon))
+		var/mob/living/carbon/carbon_based_lifeform = M
+		var/list/bodytypes = list()
+		for (var/obj/item/bodypart/leg/leg in carbon_based_lifeform.bodyparts)
+			bodytypes[leg] = leg.bodytype
+			leg.bodytype = NONE
+			leg.is_invisible = TRUE
+		carbon_based_lifeform.update_body_parts(TRUE)
+		for (var/obj/item/bodypart/leg/leg in bodytypes)
+			leg.bodytype = bodytypes[leg]
 	return ..()
 
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
