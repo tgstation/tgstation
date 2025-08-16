@@ -24,6 +24,7 @@ sound: added/modified/removed audio or sound effects
 image: added/modified/removed some icons or images
 map: added/modified/removed map content
 spellcheck: fixed a few typos
+tweak: tweaked a few things
 code: changed some code
 refactor: refactored some code
 config: changed some config setting
