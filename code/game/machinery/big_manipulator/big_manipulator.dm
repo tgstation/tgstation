@@ -642,9 +642,6 @@
 			update_hud_for_point(target_point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
 			return TRUE
 
-
-
-
 /// Cycles the given value in the given list. Retuns the next value in the list, or the first one if the list isn't long enough.
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
 	var/current_index = possible_values.Find(current_value)
@@ -659,7 +656,6 @@
 /// Begins a new task with the specified type and duration
 /obj/machinery/big_manipulator/proc/start_task(task_type, duration)
 	end_current_task() // End any previous task first (momentarily sets IDLE)
-
 	current_task_start_time = world.time
 	current_task_duration = duration / 10 // Duration is in deciseconds for TGUI
 	current_task_type = task_type
@@ -679,13 +675,13 @@
 	if(!point)
 		return
 
-	// Удаляем все HUD-элементы, связанные с этой точкой
+	// Removing all HUDs for this point
 	for(var/image/hud_image in hud_points)
 		var/turf/resolved_turf = point.interaction_turf.resolve()
 	if(hud_image.loc == resolved_turf)
-			hud_points -= hud_image
-			qdel(hud_image)
-			break
+		hud_points -= hud_image
+		qdel(hud_image)
+		break
 
 /obj/machinery/big_manipulator/proc/remove_all_huds()
 	for(var/image/hud_image in hud_points)
