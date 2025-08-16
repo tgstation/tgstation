@@ -74,7 +74,7 @@
 	hud_list[DIAG_LAUNCHPAD_HUD] = holder
 	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', point_type == TRANSFER_TYPE_PICKUP ? "launchpad_pull" : "launchpad_launch", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 
-	var/target_turf = point.interaction_turf
+	var/target_turf = point.interaction_turf.resolve()
 	holder.appearance = target
 	holder.loc = target_turf
 	hud_points += holder
@@ -467,7 +467,8 @@
 		var/list/point_data = list()
 		point_data["name"] = point.name
 		point_data["id"] = REF(point)
-		point_data["turf"] = "[point.interaction_turf.x],[point.interaction_turf.y]"
+		var/turf/resolved_turf = point.interaction_turf.resolve()
+		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = "PICK"
 		point_data["filters"] = point.type_filters
 		point_data["item_filters"] = point.atom_filters
@@ -480,7 +481,8 @@
 		var/list/point_data = list()
 		point_data["name"] = point.name
 		point_data["id"] = REF(point)
-		point_data["turf"] = "[point.interaction_turf.x],[point.interaction_turf.y]"
+		var/turf/resolved_turf = point.interaction_turf.resolve()
+		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = point.interaction_mode
 		point_data["filters"] = point.type_filters
 		point_data["item_filters"] = point.atom_filters
@@ -636,7 +638,7 @@
 				return FALSE
 
 			remove_hud_for_point(target_point)
-			target_point.interaction_turf = new_turf
+			target_point.interaction_turf = WEAKREF(new_turf)
 			update_hud_for_point(target_point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
 			return TRUE
 
@@ -679,7 +681,8 @@
 
 	// Удаляем все HUD-элементы, связанные с этой точкой
 	for(var/image/hud_image in hud_points)
-		if(hud_image.loc == point.interaction_turf)
+		var/turf/resolved_turf = point.interaction_turf.resolve()
+	if(hud_image.loc == resolved_turf)
 			hud_points -= hud_image
 			qdel(hud_image)
 			break

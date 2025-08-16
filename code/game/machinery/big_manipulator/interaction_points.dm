@@ -5,8 +5,8 @@
 /datum/interaction_point
 	var/name = "interaction point"
 
-	/// The turf this interaction point represents.
-	var/turf/interaction_turf
+	/// The weakref to the turf this interaction point represents.
+	var/datum/weakref/interaction_turf
 	/// Should we check our filters while interacting with this point?
 	var/filters_status = FILTERS_SKIPPED
 	/// How should this point be interacted with?
@@ -41,7 +41,7 @@
 		qdel(src)
 		return
 
-	interaction_turf = new_turf
+	interaction_turf = WEAKREF(new_turf)
 
 	if(length(new_filters))
 		atom_filters = new_filters
@@ -61,9 +61,11 @@
 /datum/interaction_point/proc/find_type_priority()
 	for(var/datum/manipulator_priority/take_type in interaction_priorities)
 		if(take_type.what_type == /turf)
-			return interaction_turf
+			return interaction_turf.resolve()
 
-		for(var/type_in_priority in interaction_turf.contents)
+		var/resolved_turf = interaction_turf.resolve()
+
+		for(var/type_in_priority in resolved_turf.contents)
 			if(!istype(type_in_priority, take_type.what_type))
 				continue
 			if(isliving(type_in_priority))
@@ -79,8 +81,10 @@
 
 	// All atoms on the turf that can be interacted with.
 	var/list/fitting_atoms = list()
-	for(var/atom/movable/movable_atom in interaction_turf.contents)
-		fitting_atoms += movable_atom
+	var/turf/resolved_turf = interaction_turf.resolve()
+	if(resolved_turf)
+		for(var/atom/movable/movable_atom in resolved_turf.contents)
+			fitting_atoms += movable_atom
 
 	// If the atom filters are skipped and there are any atoms on the turf, we can (potentially) interact with anything.
 	if(filters_status == FILTERS_SKIPPED && length(fitting_atoms))
@@ -96,10 +100,11 @@
 
 /// Checks if the interaction point is valid.
 /datum/interaction_point/proc/is_valid()
-	if(!interaction_turf)
+	var/turf/resolved_turf = interaction_turf?.resolve()
+	if(!resolved_turf)
 		return FALSE
 
-	if(isclosedturf(interaction_turf))
+	if(isclosedturf(resolved_turf))
 		return FALSE
 
 	return TRUE
