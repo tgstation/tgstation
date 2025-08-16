@@ -93,8 +93,10 @@
 
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
 	var/has_suitable_objects = FALSE
-	if(origin_turf)
-		for(var/atom/movable/movable_atom in origin_turf.contents)
+	if(!origin_turf)
+		return
+
+	for(var/atom/movable/movable_atom in origin_turf.contents)
 		if(origin_point.check_filters_for_atom(movable_atom))
 			has_suitable_objects = TRUE
 			break
@@ -297,7 +299,7 @@
 		return
 
 	if(item_used)
-		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), interaction_delay SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), interaction_delay)
 		return
 
 	finish_manipulation()
@@ -358,7 +360,7 @@
 		finish_manipulation()
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_point), interaction_delay SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_point), interaction_delay)
 
 /// Completes the work cycle and prepares for the next one
 /obj/machinery/big_manipulator/proc/end_work()
@@ -372,4 +374,4 @@
 /obj/machinery/big_manipulator/proc/finish_manipulation()
 	held_object = null
 	manipulator_arm.update_claw(null)
-	addtimer(CALLBACK(src, PROC_REF(end_work)), interaction_delay SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(end_work)), interaction_delay)

@@ -75,7 +75,7 @@
 			return type_in_priority
 
 /// Checks if the interaction point is available - if it has items that can be interacted with.
-/datum/interaction_point/proc/is_available(interaction_mode)
+/datum/interaction_point/proc/is_available(transfer_type)
 	if(!is_valid())
 		return FALSE
 
@@ -86,14 +86,37 @@
 		for(var/atom/movable/movable_atom in resolved_turf.contents)
 			fitting_atoms += movable_atom
 
-	// If the atom filters are skipped and there are any atoms on the turf, we can (potentially) interact with anything.
-	if(filters_status == FILTERS_SKIPPED && length(fitting_atoms))
-		return TRUE
+	// For pickup points, we want points that have items to pick up
+	if(transfer_type == TRANSFER_TYPE_PICKUP)
+		// If the atom filters are skipped and there are any atoms on the turf, check if they match the filtering mode
+		if(filters_status == FILTERS_SKIPPED && length(fitting_atoms))
+			for(var/atom/movable/movable_atom in fitting_atoms)
+				if(check_filters_for_atom(movable_atom))
+					return TRUE
+			return FALSE
 
-	// If the atom filters are required, we need to check if any atom on the turf fits the filters.
-	for(var/atom/movable/movable_atom in fitting_atoms)
-		if(check_filters_for_atom(movable_atom))
-			return interaction_mode == INTERACT_DROP ? FALSE : TRUE
+		// If the atom filters are required, we need to check if any atom on the turf fits the filters.
+		for(var/atom/movable/movable_atom in fitting_atoms)
+			if(check_filters_for_atom(movable_atom))
+				return TRUE
+
+		// No suitable items to pick up - the pickup point is unavailable.
+		return FALSE
+
+	// For dropoff points, we want points that are empty or can accept items
+	if(transfer_type == TRANSFER_TYPE_DROPOFF)
+		// If the atom filters are skipped, the point is always available for dropoff
+		if(filters_status == FILTERS_SKIPPED)
+			return TRUE
+
+		// If the atom filters are required, we need to check if any atom on the turf fits the filters.
+		// For dropoff, we want points that DON'T have items matching our filters
+		for(var/atom/movable/movable_atom in fitting_atoms)
+			if(check_filters_for_atom(movable_atom))
+				return FALSE
+
+		// No conflicting items found - the dropoff point is available.
+		return TRUE
 
 	// No interaction is possible - the interaction point is unavailable.
 	return FALSE
