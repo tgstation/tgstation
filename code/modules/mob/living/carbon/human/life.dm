@@ -5,9 +5,9 @@
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.
-// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
-#define THERMAL_PROTECTION_HEAD 0.3
-#define THERMAL_PROTECTION_CHEST 0.15
+// Hands and feet have 2.5%, arms and legs 7.5%,the torso has 22.5% and the head has 22.5%
+#define THERMAL_PROTECTION_HEAD 0.225
+#define THERMAL_PROTECTION_CHEST 0.225
 #define THERMAL_PROTECTION_GROIN 0.15
 #define THERMAL_PROTECTION_LEG_LEFT 0.075
 #define THERMAL_PROTECTION_LEG_RIGHT 0.075
