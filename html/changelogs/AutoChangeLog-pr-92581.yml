@@ -1,0 +1,4 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - bugfix: "Diode Disks are no longer improperly /improper."

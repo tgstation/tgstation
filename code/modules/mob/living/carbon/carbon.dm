@@ -247,7 +247,6 @@
 				W.layer = initial(W.layer)
 				SET_PLANE_EXPLICIT(W, initial(W.plane), src)
 		changeNext_move(0)
-	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -1321,6 +1320,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(isnull(dna))
+		return
+
+	if(istext(new_blood_type))
+		new_blood_type = get_blood_type(new_blood_type)
+	if(!istype(new_blood_type))
 		return
 
 	if(get_bloodtype() == new_blood_type) // already has this blood type, we don't need to do anything.

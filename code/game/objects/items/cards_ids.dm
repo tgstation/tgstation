@@ -898,7 +898,7 @@
 /obj/item/card/id/GetID()
 	return src
 
-/obj/item/card/id/RemoveID()
+/obj/item/card/id/remove_id()
 	return src
 
 /// Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.
@@ -1650,10 +1650,9 @@
 
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
-	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. \
+	desc = "An advanced chameleon ID card. Swipe this card on another ID card, or a person wearing one, to copy access. \
 		Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
-	wildcard_slots = WILDCARD_LIMIT_GOLD
 	trim_changeable = FALSE
 	actions_types = list(/datum/action/item_action/chameleon/change/id, /datum/action/item_action/chameleon/change/id_trim)
 	action_slots = ALL
@@ -1664,10 +1663,6 @@
 	var/anyone = FALSE
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
-
-/obj/item/card/id/advanced/chameleon/crummy
-	desc = "A surplus version of a chameleon ID card. Can only hold a limited number of access codes."
-	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
@@ -1943,7 +1938,7 @@
 
 	var/mob/living/carbon/human/owner = user
 	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
 
 	if (registered_account)
 		return
@@ -1970,8 +1965,17 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
-/// A special variant of the classic chameleon ID card which is black. Cool!
 /obj/item/card/id/advanced/chameleon/black
+	icon_state = "card_black"
+	assigned_icon_state = "assigned_syndicate"
+
+/// Upgraded variant of agent id, can hold unlimited amount of accesses.
+/obj/item/card/id/advanced/chameleon/elite
+	desc = "A highly advanced chameleon ID card. Swipe this card on another ID card, or a person wearing one, to copy access. \
+		Has special magnetic properties which force it to the front of wallets, and an embedded high-end microchip to hold unlimited access codes."
+	wildcard_slots = WILDCARD_LIMIT_GOLD
+
+/obj/item/card/id/advanced/chameleon/elite/black
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 
@@ -2044,13 +2048,20 @@
 
 /obj/item/card/cardboard/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	if(slot == ITEM_SLOT_ID)
-		RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(return_visible_name))
-		RegisterSignal(user, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(return_message_name_part))
+	if(slot != ITEM_SLOT_ID)
+		return
+	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(return_visible_name))
+	RegisterSignal(user, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(return_message_name_part))
+	if(ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
 
 /obj/item/card/cardboard/dropped(mob/user, silent = FALSE)
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_HUMAN_GET_VISIBLE_NAME, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART))
+	if(ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
 
 /obj/item/card/cardboard/proc/return_visible_name(mob/living/carbon/human/source, list/identity)
 	SIGNAL_HANDLER

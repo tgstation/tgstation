@@ -2,14 +2,14 @@
 	name = "Reaction Agent"
 	description = "Hello! I am a bugged reagent. Please report me for my crimes. Thank you!!"
 
-/datum/reagent/reaction_agent/intercept_reagents_transfer(datum/reagents/target, amount)
+/datum/reagent/reaction_agent/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
 	if(!target)
 		return FALSE
 	if(target.flags & NO_REACT)
 		return FALSE
 	if(target.has_reagent(/datum/reagent/stabilizing_agent))
 		return FALSE
-	if(LAZYLEN(target.reagent_list) == 0)
+	if(!target.total_volume)
 		return FALSE
 	if(LAZYLEN(target.reagent_list) == 1)
 		if(target.has_reagent(type)) //Allow dispensing into self
@@ -27,7 +27,7 @@
 	glass_price = DRINK_PRICE_HIGH
 
 //Consumes self on addition and shifts ph
-/datum/reagent/reaction_agent/acidic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
+/datum/reagent/reaction_agent/acidic_buffer/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
 	. = ..()
 	if(!.)
 		return
@@ -39,11 +39,14 @@
 	else
 		message = "The beaker froths as the pH changes!"
 		target.adjust_all_reagents_ph((-(amount / target.total_volume) * BUFFER_IONIZING_STRENGTH))
+		target.update_total()
 
 	//give feedback & remove from holder because it's not transferred
 	target.my_atom.audible_message(span_warning(message))
 	playsound(target.my_atom, 'sound/effects/chemistry/bufferadd.ogg', 50, TRUE)
-	holder.remove_reagent(type, amount)
+	if(!copy_only)
+		volume -= amount
+		holder.update_total()
 
 /datum/reagent/reaction_agent/basic_buffer
 	name = "Strong Basic Buffer"
@@ -55,7 +58,7 @@
 	fallback_icon_state = "base_buffer_fallback"
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/reaction_agent/basic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
+/datum/reagent/reaction_agent/basic_buffer/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
 	. = ..()
 	if(!.)
 		return
@@ -67,11 +70,14 @@
 	else
 		message = "The beaker froths as the pH changes!"
 		target.adjust_all_reagents_ph(((amount / target.total_volume) * BUFFER_IONIZING_STRENGTH))
+		target.update_total()
 
 	//give feedback & remove from holder because it's not transferred
 	target.my_atom.audible_message(span_warning(message))
 	playsound(target.my_atom, 'sound/effects/chemistry/bufferadd.ogg', 50, TRUE)
-	holder.remove_reagent(type, amount)
+	if(!copy_only)
+		volume -= amount
+		holder.update_total()
 
 //purity testor/reaction agent prefactors
 
@@ -91,7 +97,7 @@
 	ph = 3
 	color = "#ffffff"
 
-/datum/reagent/reaction_agent/purity_tester/intercept_reagents_transfer(datum/reagents/target, amount)
+/datum/reagent/reaction_agent/purity_tester/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
 	. = ..()
 	if(!.)
 		return
@@ -105,7 +111,9 @@
 		playsound(target.my_atom, 'sound/effects/chemistry/bufferadd.ogg', 50, TRUE)
 	else
 		target.my_atom.audible_message(span_warning("The added reagent doesn't seem to do much."))
-	holder.remove_reagent(type, amount)
+	if(!copy_only)
+		volume -= amount
+		holder.update_total()
 
 ///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 1 will be done up to a max of 2x
 #define SPEED_REAGENT_STRENGTH 20
@@ -116,7 +124,7 @@
 	ph = 10
 	color = "#e61f82"
 
-/datum/reagent/reaction_agent/speed_agent/intercept_reagents_transfer(datum/reagents/target, amount)
+/datum/reagent/reaction_agent/speed_agent/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -131,6 +139,8 @@
 		power *= creation_purity
 		power = clamp(power, 0, 2)
 		reaction.react_timestep(power, creation_purity)
-	holder.remove_reagent(type, amount)
+	if(!copy_only)
+		volume -= amount
+		holder.update_total()
 
 #undef SPEED_REAGENT_STRENGTH

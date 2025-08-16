@@ -168,7 +168,7 @@
 	if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 		affected_human.skin_tone = "green"
 	else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Code stolen from spraytan overdose
-		affected_human.dna.features["mcolor"] = "#a8e61d"
+		affected_human.dna.features[FEATURE_MUTANT_COLOR] = "#a8e61d"
 	affected_human.update_body(is_creating = TRUE)
 
 /datum/reagent/consumable/ethanol/kahlua
@@ -501,14 +501,16 @@
 
 	return ..()
 
-/datum/reagent/consumable/ethanol/goldschlager/on_transfer(atom/atom, methods = TOUCH, trans_volume)
+/datum/reagent/consumable/ethanol/goldschlager/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
 	if(!(methods & INGEST))
-		return ..()
+		return
 
-	var/convert_amount = trans_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
-	atom.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
-	atom.reagents.add_reagent(/datum/reagent/gold, convert_amount)
-	return ..()
+	var/convert_amount = reac_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
+	var/datum/reagents/mob_reagents = exposed_mob.reagents
+
+	mob_reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
+	mob_reagents.add_reagent(/datum/reagent/gold, convert_amount)
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"

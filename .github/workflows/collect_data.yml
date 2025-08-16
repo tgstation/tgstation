@@ -27,7 +27,7 @@ jobs:
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Find Maps
         id: map_finder
         run: |

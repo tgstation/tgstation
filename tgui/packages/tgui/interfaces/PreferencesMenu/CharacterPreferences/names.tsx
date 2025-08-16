@@ -14,7 +14,7 @@ import {
   TrackOutsideClicks,
 } from 'tgui-core/components';
 
-import { Name } from '../types';
+import type { Name } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 
 type NameWithKey = {

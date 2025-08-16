@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';

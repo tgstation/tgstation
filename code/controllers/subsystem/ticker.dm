@@ -142,13 +142,15 @@ SUBSYSTEM_DEF(ticker)
 
 		GLOB.syndicate_code_response_regex = codeword_match
 
-	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
+	round_start_time = start_at // May be changed later, but prevents the time from jumping back when the round actually starts
 	if(CONFIG_GET(flag/randomize_shift_time))
-		gametime_offset = rand(0, 23) HOURS
+		gametime_offset = rand(0, 23) * (1 HOURS)
 	else if(CONFIG_GET(flag/shift_time_realtime))
-		gametime_offset = world.timeofday
+		gametime_offset = world.timeofday + GLOB.timezoneOffset
+		station_time_rate_multiplier = 1
 	else
-		gametime_offset = (CONFIG_GET(number/shift_time_start_hour) HOURS)
+		gametime_offset = (CONFIG_GET(number/shift_time_start_hour) * (1 HOURS))
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ticker/fire()
@@ -698,7 +700,7 @@ SUBSYSTEM_DEF(ticker)
 			// Had an emergency reason supplied to pass along
 			if(emergency_reason)
 				news_message = "[decoded_station_name] has been evacuated after transmitting \
-					the following distress beacon:\n\n[Gibberish(decoded_emergency_reason, FALSE, 8)]"
+					the following distress beacon:\n\n[decoded_emergency_reason]"
 			else
 				news_message = "The crew of [decoded_station_name] has been \
 					evacuated amid unconfirmed reports of enemy activity."
@@ -768,7 +770,7 @@ SUBSYSTEM_DEF(ticker)
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [decoded_station_name] \
 				had its navigation protocols corrupted and went off course, but was recovered shortly after. \
-				The following distress beacon was sent prior to evacuation:\n\n[decoded_emergency_reason]"
+				The following distress beacon was sent prior to evacuation:\n\n[Gibberish(decoded_emergency_reason, FALSE, 8)]"
 		// A supermatter cascade triggered
 		if(SUPERMATTER_CASCADE)
 			news_message = "Officials are advising nearby colonies about a newly declared exclusion zone in \

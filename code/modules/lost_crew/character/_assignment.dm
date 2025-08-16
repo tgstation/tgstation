@@ -3,19 +3,23 @@
 	/// Message we send to the player upon revival concerning their job
 	var/job_lore
 	/// Gear to give to the crewie in a special locked box
-	var/list/job_stuffs
+	var/list/protected_job_stuffs
+	/// Gear that arrives with the crewie in the crate
+	var/list/recovered_job_stuffs
 	/// Trim on the ID we give to the revived person (no trim = no id)
 	var/datum/id_trim/trim
 	/// Job datum to apply to the human
 	var/datum/job/job_datum
 
-/datum/corpse_assignment/proc/apply_assignment(mob/living/carbon/human/working_dead, list/job_gear, list/datum/callback/on_revive_and_player_occupancy)
-	if(!job_gear)
+/datum/corpse_assignment/proc/apply_assignment(mob/living/carbon/human/working_dead, list/protected_job_gear, list/recovered_job_gear, list/datum/callback/on_revive_and_player_occupancy)
+	if(!protected_job_gear && !recovered_job_gear && !trim)
 		return
 
-	for(var/item in job_stuffs)
-		job_gear += new item ()
-	job_gear += job_stuffs
+	for(var/item in protected_job_stuffs)
+		protected_job_gear += new item ()
+
+	for(var/item in recovered_job_stuffs)
+		recovered_job_gear += new item ()
 
 	if(job_datum)
 		on_revive_and_player_occupancy += CALLBACK(src, PROC_REF(assign_job), working_dead) //this needs to happen once the body has been successfully occupied and revived
@@ -25,14 +29,15 @@
 		card.registered_name = working_dead.name
 		card.registered_age = working_dead.age
 		SSid_access.apply_trim_to_card(card, trim)
-		job_gear += card
+		protected_job_gear += card
 
 /datum/corpse_assignment/proc/assign_job(mob/living/carbon/human/working_undead)
 	working_undead.mind.set_assigned_role_with_greeting(new job_datum (), working_undead.client)
 
 /datum/corpse_assignment/engineer
 	job_lore = "I was employed as an engineer"
-	job_stuffs = list(/obj/item/clothing/under/rank/engineering/engineer)
+	protected_job_stuffs = list(/obj/item/radio/headset/headset_eng)
+	recovered_job_stuffs = list(/obj/item/clothing/under/rank/engineering/engineer)
 	trim = /datum/id_trim/job/visiting_engineer
 	job_datum = /datum/job/recovered_crew/engineer
 
@@ -50,7 +55,8 @@
 
 /datum/corpse_assignment/medical
 	job_lore = "I was employed as a doctor"
-	job_stuffs = list(/obj/item/clothing/under/rank/medical/doctor)
+	protected_job_stuffs = list(/obj/item/radio/headset/headset_med)
+	recovered_job_stuffs = list(/obj/item/clothing/under/rank/medical/doctor)
 	trim = /datum/id_trim/job/visiting_doctor
 	job_datum = /datum/job/recovered_crew/doctor
 
@@ -67,7 +73,8 @@
 
 /datum/corpse_assignment/security
 	job_lore = "I was employed as security"
-	job_stuffs = list(/obj/item/clothing/under/rank/security/officer)
+	protected_job_stuffs = list(/obj/item/radio/headset/headset_sec)
+	recovered_job_stuffs = list(/obj/item/clothing/under/rank/security/officer)
 	trim = /datum/id_trim/job/visiting_security
 	job_datum = /datum/job/recovered_crew/security
 
@@ -90,7 +97,8 @@
 
 /datum/corpse_assignment/science
 	job_lore = "I was employed as a scientist"
-	job_stuffs = list(/obj/item/clothing/under/rank/rnd/scientist)
+	protected_job_stuffs = list(/obj/item/radio/headset/headset_sci)
+	recovered_job_stuffs = list(/obj/item/clothing/under/rank/rnd/scientist)
 	trim = /datum/id_trim/job/visiting_scientist
 	job_datum = /datum/job/recovered_crew/scientist
 
@@ -107,7 +115,8 @@
 
 /datum/corpse_assignment/cargo
 	job_lore = "I was employed as a technician"
-	job_stuffs = list(/obj/item/clothing/under/rank/cargo/tech)
+	protected_job_stuffs = list(/obj/item/radio/headset/headset_cargo)
+	recovered_job_stuffs = list(/obj/item/clothing/under/rank/cargo/tech)
 	trim = /datum/id_trim/job/visiting_technician
 	job_datum = /datum/job/recovered_crew/cargo
 
@@ -124,7 +133,8 @@
 
 /datum/corpse_assignment/civillian
 	job_lore = "I was employed as a civllian"
-	job_stuffs = list(/obj/item/clothing/under/color/grey)
+	protected_job_stuffs = list(/obj/item/radio/headset)
+	recovered_job_stuffs = list(/obj/item/clothing/under/color/grey)
 	trim = /datum/id_trim/job/visiting_civillian
 	job_datum = /datum/job/recovered_crew/civillian
 

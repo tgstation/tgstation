@@ -1,7 +1,7 @@
 import { map } from 'es-toolkit/compat';
 
 import { useBackend } from '../../backend';
-import { NodeCache, TechWebData } from './types';
+import type { NodeCache, TechWebData } from './types';
 
 type Cost = {
   type: string;

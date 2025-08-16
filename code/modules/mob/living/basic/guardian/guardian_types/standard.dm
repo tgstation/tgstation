@@ -54,7 +54,7 @@
 		return FALSE
 	return ..()
 
-/datum/action/select_guardian_battlecry/Trigger(trigger_flags)
+/datum/action/select_guardian_battlecry/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if (!.)
 		return

@@ -13,7 +13,7 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { setupDrag } from './drag';
 import { focusMap } from './focus';
@@ -209,7 +209,10 @@ export const backendMiddleware = (store) => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
+      // Tiny window to not show previous content when resumed
       Byond.winset(Byond.windowId, {
+        size: '1x1',
+        pos: '1,1',
         'is-visible': false,
       });
       setTimeout(() => focusMap());
@@ -360,7 +363,7 @@ export const sendAct = (action: string, payload: object = {}) => {
 
   const stringifiedPayload = JSON.stringify(payload);
   const urlSize = Object.entries({
-    type: 'act/' + action,
+    type: `act/${action}`,
     payload: stringifiedPayload,
     tgui: 1,
     windowId: Byond.windowId,
@@ -375,14 +378,14 @@ export const sendAct = (action: string, payload: object = {}) => {
     const id = `${Date.now()}`;
     globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
     Byond.sendMessage('oversizedPayloadRequest', {
-      type: 'act/' + action,
+      type: `act/${action}`,
       id,
       chunkCount: chunks.length,
     });
     return;
   }
 
-  Byond.sendMessage('act/' + action, payload);
+  Byond.sendMessage(`act/${action}`, payload);
 };
 
 type BackendState<TData> = {

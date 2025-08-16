@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Mech beacons actually attach again."
-  - bugfix: "You'll get a message about why a beacon failed to attach, if it failed to attach"
-  - bugfix: "Cryo cannons can not be attached to mechs."

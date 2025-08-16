@@ -44,54 +44,39 @@
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
-
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
-
-#define DNA_GENDER_BLOCK 1
-#define DNA_SKIN_TONE_BLOCK 2
-#define DNA_EYE_COLOR_LEFT_BLOCK 3
-#define DNA_EYE_COLOR_RIGHT_BLOCK 4
-#define DNA_HAIRSTYLE_BLOCK 5
-#define DNA_HAIR_COLOR_BLOCK 6
-#define DNA_FACIAL_HAIRSTYLE_BLOCK 7
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 8
-#define DNA_HAIRSTYLE_GRADIENT_BLOCK 9
-#define DNA_HAIR_COLOR_GRADIENT_BLOCK 10
-#define DNA_FACIAL_HAIRSTYLE_GRADIENT_BLOCK 11
-#define DNA_FACIAL_HAIR_COLOR_GRADIENT_BLOCK 12
-
-#define DNA_UNI_IDENTITY_BLOCKS 12
-
-/// This number needs to equal the total number of DNA blocks
-#define DNA_MUTANT_COLOR_BLOCK 1
-#define DNA_ETHEREAL_COLOR_BLOCK 2
-#define DNA_LIZARD_MARKINGS_BLOCK 3
-#define DNA_TAIL_BLOCK 4
-#define DNA_LIZARD_TAIL_BLOCK 5
-#define DNA_SNOUT_BLOCK 6
-#define DNA_HORNS_BLOCK 7
-#define DNA_FRILLS_BLOCK 8
-#define DNA_SPINES_BLOCK 9
-#define DNA_EARS_BLOCK 10
-#define DNA_MOTH_WINGS_BLOCK 11
-#define DNA_MOTH_ANTENNAE_BLOCK 12
-#define DNA_MOTH_MARKINGS_BLOCK 13
-#define DNA_MUSHROOM_CAPS_BLOCK 14
-#define DNA_POD_HAIR_BLOCK 15
-#define DNA_FISH_TAIL_BLOCK 16
-
-// Hey! Listen up if you're here because you're adding a species feature!
-//
-// You don't need to add a DNA block for EVERY species feature!
-// You ONLY need DNA blocks if you intend to allow players to change it via GENETICS!
-// (Which means having a DNA block for a feature tied to a mob without DNA is entirely pointless.)
-
-/// Total amount of DNA blocks, must be equal to the highest DNA block number
-#define DNA_FEATURE_BLOCKS 16
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
+
+//Features - No more magic strings
+//These can't just simply use dna block paths like identities, because there's keys that aren't tied to blocks
+
+// Block tied
+#define FEATURE_MUTANT_COLOR "mcolor"
+#define FEATURE_ETHEREAL_COLOR "ethcolor"
+#define FEATURE_EARS "ears"
+#define FEATURE_TAIL "tail_cat"
+#define FEATURE_TAIL_LIZARD "tail_lizard"
+#define FEATURE_TAIL_FISH "fish_tail"
+#define FEATURE_SNOUT "snout"
+#define FEATURE_LIZARD_MARKINGS "marking_lizard"
+#define FEATURE_HORNS "horns"
+#define FEATURE_FRILLS "frills"
+#define FEATURE_SPINES "spines"
+#define FEATURE_MOTH_WINGS "moth_wings"
+#define FEATURE_MOTH_ANTENNAE "moth_antennae"
+#define FEATURE_MOTH_MARKINGS "moth_markings"
+#define FEATURE_MUSH_CAP "caps"
+#define FEATURE_POD_HAIR "pod_hair"
+
+// Other
+#define FEATURE_WINGS "wings"
+#define FEATURE_TAIL_MONKEY "tail_monkey"
+#define FEATURE_TAIL_XENO "tail_xeno"
+#define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails
+#define FEATURE_LEGS "legs"
 
 ///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
 #define COPY_DNA_SE (1<<0)
