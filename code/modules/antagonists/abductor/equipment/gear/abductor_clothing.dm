@@ -92,6 +92,8 @@
 	var/mob/living/carbon/human/wearer = loc
 	new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(wearer), wearer.dir)
 	RegisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(return_disguise_name))
+	// Reassert disguise after z-level transitions complete
+	RegisterSignal(wearer, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_changed))
 	wearer.icon = disguise.icon
 	wearer.icon_state = disguise.icon_state
 	wearer.cut_overlays()
@@ -115,8 +117,25 @@
 	var/mob/living/carbon/human/wearer = loc
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(wearer), wearer.dir)
 	UnregisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME)
-	wearer.cut_overlays()
+	UnregisterSignal(wearer, COMSIG_MOVABLE_Z_CHANGED)
 	wearer.regenerate_icons()
+	wearer.update_visible_name()
+
+/// After a z-level change, reapply the disguise overlays to override any rebuilt base overlays
+/obj/item/clothing/suit/armor/abductor/vest/proc/on_z_changed(datum/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	if(!stealth_active || !ishuman(loc) || disguise == null)
+		return
+	addtimer(CALLBACK(src, PROC_REF(reassert_disguise)), 0)
+
+/obj/item/clothing/suit/armor/abductor/vest/proc/reassert_disguise()
+	if(!stealth_active || !ishuman(loc) || disguise == null)
+		return
+	var/mob/living/carbon/human/wearer = loc
+	wearer.icon = disguise.icon
+	wearer.icon_state = disguise.icon_state
+	wearer.cut_overlays()
+	wearer.add_overlay(disguise.overlays)
 	wearer.update_visible_name()
 
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
