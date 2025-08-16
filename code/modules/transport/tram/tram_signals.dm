@@ -659,7 +659,7 @@
 
 	for(var/obj/machinery/transport/guideway_sensor/sensor in SStransport.sensors)
 		if(sensor.z == src.z)
-			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
+			if((sensor.x == src.x && sensor.dir & (NORTH|SOUTH)) || (sensor.y == src.y && sensor.dir & (EAST|WEST)))
 				sensor_candidates += sensor
 
 	var/obj/machinery/transport/guideway_sensor/selected_sensor = get_closest_atom(/obj/machinery/transport/guideway_sensor, sensor_candidates, src)
