@@ -474,8 +474,8 @@
 /datum/mod_link_call/Destroy()
 	link_caller.link_call = null
 	link_receiver.link_call = null
-	link_caller.exit_call()
-	link_receiver.exit_call()
+	link_caller.exited_call()
+	link_receiver.exited_call()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
