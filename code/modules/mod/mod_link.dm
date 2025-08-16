@@ -437,19 +437,19 @@
 
 /datum/mod_link/proc/entered_call(datum/mod_link/other_link)
 	var/mob/living/user = get_user_callback.Invoke()
-	ADD_TRAIT(user, TRAIT_IN_CALL, REF(src))
 	user_in_call_ref = WEAKREF(user)
+	ADD_TRAIT(user, TRAIT_IN_CALL, REF(src))
 
 	var/other_visual = other_link.make_visual_callback.Invoke()
 	get_visual_callback.Invoke(other_visual)
 
 /datum/mod_link/proc/exiting_call()
 	var/mob/living/old_user = user_in_call_ref?.resolve()
+	user_in_call_ref = null
 	if(old_user)
 		REMOVE_TRAIT(old_user, TRAIT_IN_CALL, REF(src))
 
 	delete_visual_callback.Invoke(old_user)
-	user_in_call_ref = null
 
 /datum/mod_link/proc/on_holder_delete(atom/source)
 	SIGNAL_HANDLER
