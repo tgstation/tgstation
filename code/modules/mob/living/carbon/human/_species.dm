@@ -1143,7 +1143,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required) The mob we will stabilize
  */
 /datum/species/proc/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
-	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.06 * seconds_per_tick)
+	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.04 * seconds_per_tick)
 	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
 
 /**
@@ -1199,7 +1199,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
 		// change rate of 0.045 to reflect temp back to the skin at the slight higher rate then core to skin
-		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.045 * seconds_per_tick)
+		var/core_skin_change = get_temp_change_amount(core_skin_diff, 0.045 * seconds_per_tick)
 
 		// We do not want to over shoot after using protection
 		if(core_skin_diff > 0)
