@@ -678,10 +678,10 @@
 	// Removing all HUDs for this point
 	for(var/image/hud_image in hud_points)
 		var/turf/resolved_turf = point.interaction_turf.resolve()
-	if(hud_image.loc == resolved_turf)
-		hud_points -= hud_image
-		qdel(hud_image)
-		break
+		if(hud_image.loc == resolved_turf)
+			hud_points -= hud_image
+			qdel(hud_image)
+			break
 
 /obj/machinery/big_manipulator/proc/remove_all_huds()
 	for(var/image/hud_image in hud_points)

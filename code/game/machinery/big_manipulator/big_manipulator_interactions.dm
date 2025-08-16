@@ -115,15 +115,15 @@
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
 	if(origin_turf)
 		for(var/atom/movable/movable_atom in origin_turf.contents)
-		if(!origin_point.check_filters_for_atom(movable_atom))
-			continue
-		if(movable_atom.anchored || HAS_TRAIT(movable_atom, TRAIT_NODROP))
-			continue
-		var/obj/item/movable_atom_item = movable_atom
-		if(movable_atom_item.item_flags & (ABSTRACT|DROPDEL))
-			continue
-		start_work(movable_atom, hand_is_empty)
-		return TRUE
+			if(!origin_point.check_filters_for_atom(movable_atom))
+				continue
+			if(movable_atom.anchored || HAS_TRAIT(movable_atom, TRAIT_NODROP))
+				continue
+			var/obj/item/movable_atom_item = movable_atom
+			if(movable_atom_item.item_flags & (ABSTRACT|DROPDEL))
+				continue
+			start_work(movable_atom, hand_is_empty)
+			return TRUE
 
 	start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
 	schedule_next_cycle()

@@ -63,7 +63,7 @@
 		if(take_type.what_type == /turf)
 			return interaction_turf.resolve()
 
-		var/resolved_turf = interaction_turf.resolve()
+		var/turf/resolved_turf = interaction_turf.resolve()
 
 		for(var/type_in_priority in resolved_turf.contents)
 			if(!istype(type_in_priority, take_type.what_type))
