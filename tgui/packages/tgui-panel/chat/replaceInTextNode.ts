@@ -27,9 +27,9 @@ function regexParseNode(params: ReplaceInTextNodeParams): {
     return { nodes: [], n: 0 };
   }
 
-  const fragment = document.createDocumentFragment();
   const nodes: Node[] = [];
   const textLength = text.length;
+  let fragment: Node | undefined;
   let count = 0;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
@@ -43,6 +43,10 @@ function regexParseNode(params: ReplaceInTextNodeParams): {
     // Safety check to prevent permanent client crashing
     if (++count > 9999) {
       return { nodes: [], n: 0 };
+    }
+    // Lazy init fragment
+    if (!fragment) {
+      fragment = document.createDocumentFragment();
     }
 
     const matchText = captureAdjust ? captureAdjust(match[0]) : match[0];
