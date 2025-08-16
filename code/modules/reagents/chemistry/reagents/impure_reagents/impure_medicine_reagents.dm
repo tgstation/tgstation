@@ -766,7 +766,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	random_span = pick("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia")
+	random_span = pick("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "her_grace", "phobia")
 	RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
 	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off[affected_mob.can_hear() ? "!" : " - wait, that's normal."]"))
 
