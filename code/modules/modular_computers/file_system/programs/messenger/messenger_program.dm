@@ -759,10 +759,10 @@
 			comp.explode(usr, from_message_menu = TRUE)
 
 /datum/computer_file/program/messenger/proc/compare_name(datum/computer_file/program/messenger/rhs)
-	return sorttext(rhs?.computer?.saved_identification, computer?.saved_identification)
+	return sorttext(rhs.computer?.saved_identification, computer?.saved_identification)
 
 /datum/computer_file/program/messenger/proc/compare_job(datum/computer_file/program/messenger/rhs)
-	return sorttext(rhs?.computer?.saved_job, computer?.saved_job)
+	return sorttext(rhs.computer?.saved_job, computer?.saved_job)
 
 #undef PDA_MESSAGE_TIMESTAMP_FORMAT
 #undef MAX_PDA_MESSAGE_LEN
