@@ -183,7 +183,7 @@
 	bloodthirst = 0
 	update_appearance()
 
-/obj/item/her_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
+/obj/item/her_grace/proc/consume(mob/living/meal) //Here's your dinner, Mrs. Grace.
 	if(!meal)
 		return
 	var/victims = 0
