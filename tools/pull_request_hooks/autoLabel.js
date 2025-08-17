@@ -203,33 +203,33 @@ export async function get_updated_label_set({ github, context }) {
   // Keep track of labels that were manually added/removed by maintainers in the events.
   // And make sure they -stay- added/removed.
   try {
-    await github.paginate(
-      github.rest.issues.listEventsForTimeline,
-      {
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        issue_number: context.payload.pull_request.number,
-        per_page: 100,
-      },
-      (response) => {
-        for (const eventData of response.data) {
-          if (
-            eventData.event === "labeled" &&
-            eventData.actor?.login !== "github-actions"
-          ) {
-            updated_labels.add(eventData.label.name);
-          } else if (
-            eventData.event === "unlabeled" &&
-            eventData.actor?.login !== "github-actions"
-          ) {
-            updated_labels.delete(eventData.label.name);
-          }
-        }
-      }
-    );
-  } catch (error) {
-    console.error("Error fetching paginated events:", error);
+  const events = await github.paginate(
+    github.rest.issues.listEventsForTimeline,
+    {
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      issue_number: context.payload.pull_request.number,
+      per_page: 100,
+    }
+  );
+
+  // Ensure we replay history in correct order
+  for (const eventData of events.reverse()) {
+    if (
+      eventData.event === "labeled" &&
+      eventData.actor?.login !== "github-actions"
+    ) {
+      updated_labels.add(eventData.label.name);
+    } else if (
+      eventData.event === "unlabeled" &&
+      eventData.actor?.login !== "github-actions"
+    ) {
+      updated_labels.delete(eventData.label.name);
+    }
   }
+} catch (error) {
+  console.error("Error fetching paginated events:", error);
+}
 
   // Always remove Test Merge Candidate
   updated_labels.delete("Test Merge Candidate");
