@@ -140,7 +140,7 @@
 		else
 			consume(L)
 
-/obj/item/her_grace/proc/awaken(mob/user) //Good morning, Mr. Grace.
+/obj/item/her_grace/proc/awaken(mob/user) //Good morning, Mrs. Grace.
 	if(awakened)
 		return
 	awakened = TRUE
