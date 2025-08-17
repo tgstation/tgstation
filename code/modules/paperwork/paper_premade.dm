@@ -4,7 +4,55 @@
 
 /obj/item/paper/fluff/sop
 	name = "paper- 'Standard Operating Procedure'"
-	default_raw_text = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by resetting the alarm.<BR>\nRed- Ejection/Self-Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time, the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm<BR>\n\t\tMove to a safe area<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alarms in front of ship<BR>\n\t\tMove volatile matter to a fireproof area<BR>\n\t\tGet a fire suit<BR>\n\t\tStay secure until an emergency ship arrives<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area"
+	default_raw_text = {"Alert Levels:
+	<br>Blue- Emergency
+	&emsp;1. Caused by fire
+	&emsp;2. Caused by manual interaction
+	<br>&emsp;Action:
+	&emsp;&emsp;Close all fire doors. These can only be opened by resetting the alarm.
+	<br>Red- Ejection/Self-Destruct
+	&emsp;1. Caused by module operating computer.
+	<br>&emsp;Action:
+	&emsp;&emsp;After the specified time, the module will eject completely.
+	<br>Engine Maintenance Instructions:
+	&emsp;Shut off ignition systems:
+	&emsp;Activate internal power
+	&emsp;Activate orbital balance matrix
+	&emsp;Remove volatile liquids from area
+	&emsp;Wear a fire suit
+	<br>&emsp;After
+	&emsp;&emsp;Decontaminate
+	&emsp;&emsp;Visit medical examiner
+	<br>Toxin Laboratory Procedure:
+	&emsp;Wear a gas mask regardless
+	&emsp;Get an oxygen tank
+	&emsp;Activate internal atmosphere
+	<br>&emsp;After
+	&emsp;&emsp;Decontaminate
+	&emsp;&emsp;Visit medical examiner
+	<br>Disaster Procedure:
+	<br>&emsp;Fire:
+	&emsp;&emsp;Activate sector fire alarm
+	&emsp;&emsp;Move to a safe area
+	&emsp;&emsp;Get a fire suit
+	<br>&emsp;&emsp;After:
+	&emsp;&emsp;&emsp;Assess Damage
+	&emsp;&emsp;&emsp;Repair damages
+	&emsp;&emsp;&emsp;If needed, Evacuate
+	<br>&emsp;Meteor Shower:
+	&emsp;&emsp;Activate fire alarm
+	&emsp;&emsp;Move to the back of ship
+	<br>&emsp;&emsp;After:
+	&emsp;&emsp;&emsp;Repair damage
+	&emsp;&emsp;&emsp;If needed, Evacuate
+	<br>&emsp;Accidental Reentry:
+	&emsp;&emsp;Activate fire alarms in front of ship
+	&emsp;&emsp;Move volatile matter to a fireproof area
+	&emsp;&emsp;Get a fire suit
+	&emsp;&emsp;Stay secure until an emergency ship arrives
+	<br>&emsp;&emsp;If ship does not arrive-
+	&emsp;&emsp;&emsp;Evacuate to a nearby safe area
+	"}
 
 /obj/item/paper/fluff/shuttles/daniel
 	default_raw_text = "i love daniel<br>daniel is my best friend<br><br>you are tearing me apart elise"
@@ -25,7 +73,30 @@
 
 /obj/item/paper/guides/jobs/hydroponics
 	name = "paper- 'Greetings from Billy Bob'"
-	default_raw_text = "<B>Hey fellow botanist!</B><BR>\n<BR>\nI didn't trust the station folk so I left<BR>\na couple of weeks ago. But here's some<BR>\ninstructions on how to operate things here.<BR>\nYou can grow plants and each iteration they become<BR>\nstronger, more potent and have better yield, if you<BR>\nknow which ones to pick. Use your botanist's analyzer<BR>\nfor that. You can turn harvested plants into seeds<BR>\nat the seed extractor, and replant them for better stuff!<BR>\nSometimes if the weed level gets high in the tray<BR>\nmutations into different mushroom or weed species have<BR>\nbeen witnessed. On the rare occasion even weeds mutate!<BR>\n<BR>\nEither way, have fun!<BR>\n<BR>\nBest regards,<BR>\nBilly Bob Johnson.<BR>\n<BR>\nPS.<BR>\nHere's a few tips:<BR>\nIn nettles, potency = damage<BR>\nIn amanitas, potency = deadliness + side effects<BR>\nIn Liberty caps, potency = drug power + effects<BR>\nIn chilies, potency = heat<BR>\n<B>Nutrients keep mushrooms alive!</B><BR>\n<B>Water keeps weeds such as nettles alive!</B><BR>\n<B>All other plants need both.</B>"
+	default_raw_text = {"<B>Hey fellow botanist!</B>
+	<br>I didn't trust the station folk so I left
+	a couple of weeks ago. But here's some
+	instructions on how to operate things here.
+	You can grow plants and each iteration they become
+	stronger, more potent and have better yield, if you
+	know which ones to pick. Use your botanist's analyzer
+	for that. You can turn harvested plants into seeds
+	at the seed extractor, and replant them for better stuff!
+	Sometimes if the weed level gets high in the tray
+	mutations into different mushroom or weed species have
+	been witnessed. On the rare occasion even weeds mutate!
+	<br>Either way, have fun!
+	<br>Best regards,
+	Billy Bob Johnson.
+	<br>PS.
+	Here's a few tips:
+	In nettles, potency = damage
+	In amanitas, potency = deadliness + side effects
+	In Liberty caps, potency = drug power + effects
+	In chilies, potency = heat
+	<B>Nutrients keep mushrooms alive!</B>
+	<B>Water keeps weeds such as nettles alive!</B>
+	<B>All other plants need both.</B>"}
 
 /obj/item/paper/guides/jobs/holopad_hydro
 	name = "paper- 'Holopad Notice'"
@@ -91,11 +162,47 @@
 
 /obj/item/paper/guides/jobs/security/courtroom
 	name = "paper- 'A Crash Course in Legal SOP on SS13'"
-	default_raw_text = "<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written authority from the Detective.<BR>\nThe Captain/HoP/Warden acts as the judicial authority.<BR>\nThe Security Officers are responsible for executing warrants, security during trial, and prisoner transport.<BR>\n<BR>\n<B>Investigative Phase:</B><BR>\nAfter the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did it but what happened. They must take special care to catalogue everything and must not leave anything out. They should write out all the evidence on paper, and make sure they take an appropriate number of fingerprints. If they must ask someone questions, they have permission to confront them. If the person refuses, they can ask a judicial authority to write a subpoena for questioning. If again they fail to respond, that person is to be jailed as insubordinate and obstructing justice. Said person will be released after they cooperate.<BR>\n<BR>\nOnce the FT has a clear idea as to who the criminal is, they are to write an arrest warrant. IT MUST LIST THE CHARGES. The FT is to then go to the judicial authority and explain a small version of their case. If the case is moderately acceptable the authority should sign it. Security must then execute said warrant.<BR>\n<BR>\n<B>Pre-Pre-Trial Phase:</B><BR>\nA legal representative must be provided to the defendant if the defendant requests one. That person and the defendant are then to be given time to meet (in the brig IS ACCEPTABLE). The defendant and their lawyer are then to be given a copy of all the evidence that will be presented at trial (rewriting it all on paper is fine). THIS IS CALLED THE DISCOVERY PACK. With a few exceptions, THIS IS THE ONLY EVIDENCE BOTH SIDES MAY USE AT TRIAL. IF the prosecution will be seeking the death penalty it MUST be stated at this time. ALSO if the defense will be seeking not guilty by mental defect it must state this at this time to allow ample time for examination.<BR>\nAt this time, each side is to compile a list of witnesses. By default, the defendant is on both lists. The defense and prosecution can compile more evidence beforehand BUT in order for it to be admissible the evidence MUST also be given to the other side.\nThe defense has time to compile motions against some evidence here.<BR>\n<B>Possible Motions:</B><BR>\n1. <U>Invalidate Evidence-</U> Something with the evidence is wrong and the evidence is to be thrown out. This includes irrelevance or corrupt security.<BR>\n2. <U>Free Movement-</U> The defendant is to be kept unrestrained before and during the trial.<BR>\n3. <U>Subpoena Witness-</U> If the defense presents good reasons for needing a witness but said person fails to cooperate then a subpoena is issued.<BR>\n4. <U>Drop the Charges-</U> Not enough evidence is presented for a trial so the charges are to be dropped. The FT CAN RETRY but the judicial authority must carefully reexamine the new evidence.<BR>\n5. <U>Declare Incompetent-</U> The defendant is insane. Once this is granted a medical official is to examine the patient. If they are indeed insane, they are to be placed under care of the medical staff until they are deemed competent to stand trial.<BR>\n<BR>\nALL PARTIES MOVE TO A COURTROOM<BR>\n<B>Pre-Trial Hearings:</B><BR>\nA judicial authority and the 2 sides are to meet in the trial room. NO ONE ELSE BESIDES A SECURITY DETAIL IS TO BE PRESENT. The defense submits a plea. If the plea is guilty, then proceed directly to sentencing phase. Now the sides each present their motions to the judicial authority. They rule on them. Each side can debate each motion. Then the judicial authority gets a list of crew members. They first get a chance to look at them all and pick out acceptable and available jurors. Those jurors are then called over. Each side can ask a few questions and dismiss jurors they find too biased. HOWEVER before dismissal the judicial authority MUST agree to the reasoning.<BR>\n<BR>\n<B>The Trial:</B><BR>\nThe trial has three phases.<BR>\n1. <B>Opening Arguments</B>- Each side can give a short speech. They may not present ANY evidence.<BR>\n2. <B>Witness Calling/Evidence Presentation</B>- The prosecution goes first and is able to call the witnesses on their approved list in any order. They can recall them if necessary. During the questioning, the lawyer may use evidence alongside questions to help prove a point. After each witness, the other side has a chance to cross-examine. After both sides are done questioning a witness, the prosecution can present another or recall one (even the EXACT same one again!). After prosecution is done, the defense can call witnesses. After the initial cases are presented, both sides are free to call witnesses on either list.<BR>\nOnce both sides are done calling witnesses, we move onto the next phase.<BR>\n3. <B>Closing Arguments</B>- Same as opening.<BR>\nThe jury then deliberates IN PRIVATE. THEY MUST ALL AGREE on a verdict. REMEMBER: They mix between some charges being guilty and others not guilty (i.e. if you supposedly killed someone with a gun, and you unfortunately picked up a gun without authorization, then you CAN be found not guilty of murder BUT guilty of possession of illegal weaponry.). Once they have agreed, they present their verdict. If the jury votes in majority that they will be unable to unanimously reach a verdict, they call a deadlocked jury and the case restarts at Pre-Trial phase with an entirely new set of jurors.<BR>\n<BR>\n<B>Sentencing Phase:</B><BR>\nIf the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part. <BR>\nI. Each side can present more evidence/witnesses in any order. The prosecution is to submit a suggested penalty. After all the sides are done, the judicial authority is to give a sentence.<BR>\nII. The jury stays and does the same thing as I. Their sole job is to determine if the death penalty is applicable. If not, then the judge selects a sentence.<BR>\n<BR>\nThe trial is now complete. Security then executes the sentence and adds the applicable convictions to the person's record.<BR>\n"
+	default_raw_text = {"<B>Roles:</B>
+	The Detective is basically the investigator and prosecutor.
+	The Staff Assistant can perform these functions with written authority from the Detective.
+	The Captain/HoP/Warden acts as the judicial authority.
+	The Security Officers are responsible for executing warrants, security during trial, and prisoner transport.
+	<br><B>Investigative Phase:</B>
+	After the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did it but what happened. They must take special care to catalogue everything and must not leave anything out. They should write out all the evidence on paper, and make sure they take an appropriate number of fingerprints. If they must ask someone questions, they have permission to confront them. If the person refuses, they can ask a judicial authority to write a subpoena for questioning. If again they fail to respond, that person is to be jailed as insubordinate and obstructing justice. Said person will be released after they cooperate.
+	<br>Once the FT has a clear idea as to who the criminal is, they are to write an arrest warrant. IT MUST LIST THE CHARGES. The FT is to then go to the judicial authority and explain a small version of their case. If the case is moderately acceptable the authority should sign it. Security must then execute said warrant.
+	<br><B>Pre-Pre-Trial Phase:</B>
+	A legal representative must be provided to the defendant if the defendant requests one. That person and the defendant are then to be given time to meet (in the brig IS ACCEPTABLE). The defendant and their lawyer are then to be given a copy of all the evidence that will be presented at trial (rewriting it all on paper is fine). THIS IS CALLED THE DISCOVERY PACK. With a few exceptions, THIS IS THE ONLY EVIDENCE BOTH SIDES MAY USE AT TRIAL. IF the prosecution will be seeking the death penalty it MUST be stated at this time. ALSO if the defense will be seeking not guilty by mental defect it must state this at this time to allow ample time for examination.
+	At this time, each side is to compile a list of witnesses. By default, the defendant is on both lists. The defense and prosecution can compile more evidence beforehand BUT in order for it to be admissible the evidence MUST also be given to the other side.\nThe defense has time to compile motions against some evidence here.
+	<B>Possible Motions:</B>
+	1. <U>Invalidate Evidence-</U> Something with the evidence is wrong and the evidence is to be thrown out. This includes irrelevance or corrupt security.
+	2. <U>Free Movement-</U> The defendant is to be kept unrestrained before and during the trial.
+	3. <U>Subpoena Witness-</U> If the defense presents good reasons for needing a witness but said person fails to cooperate then a subpoena is issued.
+	4. <U>Drop the Charges-</U> Not enough evidence is presented for a trial so the charges are to be dropped. The FT CAN RETRY but the judicial authority must carefully reexamine the new evidence.
+	5. <U>Declare Incompetent-</U> The defendant is insane. Once this is granted a medical official is to examine the patient. If they are indeed insane, they are to be placed under care of the medical staff until they are deemed competent to stand trial.
+	<br>ALL PARTIES MOVE TO A COURTROOM
+	<B>Pre-Trial Hearings:</B>
+	A judicial authority and the 2 sides are to meet in the trial room. NO ONE ELSE BESIDES A SECURITY DETAIL IS TO BE PRESENT. The defense submits a plea. If the plea is guilty, then proceed directly to sentencing phase. Now the sides each present their motions to the judicial authority. They rule on them. Each side can debate each motion. Then the judicial authority gets a list of crew members. They first get a chance to look at them all and pick out acceptable and available jurors. Those jurors are then called over. Each side can ask a few questions and dismiss jurors they find too biased. HOWEVER before dismissal the judicial authority MUST agree to the reasoning.
+	<br><B>The Trial:</B>
+	The trial has three phases.
+	1. <B>Opening Arguments</B>- Each side can give a short speech. They may not present ANY evidence.
+	2. <B>Witness Calling/Evidence Presentation</B>- The prosecution goes first and is able to call the witnesses on their approved list in any order. They can recall them if necessary. During the questioning, the lawyer may use evidence alongside questions to help prove a point. After each witness, the other side has a chance to cross-examine. After both sides are done questioning a witness, the prosecution can present another or recall one (even the EXACT same one again!). After prosecution is done, the defense can call witnesses. After the initial cases are presented, both sides are free to call witnesses on either list.
+	Once both sides are done calling witnesses, we move onto the next phase.
+	3. <B>Closing Arguments</B>- Same as opening.
+	The jury then deliberates IN PRIVATE. THEY MUST ALL AGREE on a verdict. REMEMBER: They mix between some charges being guilty and others not guilty (i.e. if you supposedly killed someone with a gun, and you unfortunately picked up a gun without authorization, then you CAN be found not guilty of murder BUT guilty of possession of illegal weaponry.). Once they have agreed, they present their verdict. If the jury votes in majority that they will be unable to unanimously reach a verdict, they call a deadlocked jury and the case restarts at Pre-Trial phase with an entirely new set of jurors.
+	<br><B>Sentencing Phase:</B>
+	If the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part.
+	I. Each side can present more evidence/witnesses in any order. The prosecution is to submit a suggested penalty. After all the sides are done, the judicial authority is to give a sentence.
+	II. The jury stays and does the same thing as I. Their sole job is to determine if the death penalty is applicable. If not, then the judge selects a sentence.<BR>\n<BR>\nThe trial is now complete. Security then executes the sentence and adds the applicable convictions to the person's record.
+	"}
 
 /obj/item/paper/guides/jobs/security/labor_camp
 	name = "Labor Camp Operating Guide"
-	default_raw_text = "<b>Labor Camp Facility Operation Guide</b><br><br>Hello there, proud operator of an NT-Sec Prisoner Rehabilitation Center.  A solution to rising crime rates and falling productivity, these facilities are specifically designed for the safe, productive imprisonment of your most dangerous criminals.  <br><br>To press a long-term prisoner into the service of the station, replace their equipment with prisoners' garb at one of the prison lockers, as per normal operating procedure.  Before assigning a prisoner their ID, insert the ID into a prisoner management console and assign the prisoner a quota, based on the severity of their crime.  <br>A single sheet of most materials produces five points for the prisoner, and points can be expected to be produced at a rate of about 100 per minute, though punishments as severe as forced labor should be reserved for serious crimes of sentences not less than five minutes long.<br>Once you have prepared the prisoner, place them in the secure northern half of the labor shuttle, and send them to the station.  Once they meet their quota by feeding sheets to the stacker, they will be allowed to return to the station, and will be able to open the secure door to the prisoner release area.<br><br>In the case of dangerous prisoners, surveillance may be needed. To that end, there is a prisoner monitoring room on the mining station, equipped with a remote flasher and a lockdown button.  The mine itself is patrolled by a securibot, so the nearby security records console can also be used to secure hostile prisoners on the mine."
+	default_raw_text = {"<b>Labor Camp Facility Operation Guide</b>
+	<br>Hello there, proud operator of an NT-Sec Prisoner Rehabilitation Center.  A solution to rising crime rates and falling productivity, these facilities are specifically designed for the safe, productive imprisonment of your most dangerous criminals.
+	<br>To press a long-term prisoner into the service of the station, replace their equipment with prisoners' garb at one of the prison lockers, as per normal operating procedure.  Before assigning a prisoner their ID, insert the ID into a prisoner management console and assign the prisoner a quota, based on the severity of their crime.
+	A single sheet of most materials produces five points for the prisoner, and points can be expected to be produced at a rate of about 100 per minute, though punishments as severe as forced labor should be reserved for serious crimes of sentences not less than five minutes long.
+	Once you have prepared the prisoner, place them in the secure northern half of the labor shuttle, and send them to the station.  Once they meet their quota by feeding sheets to the stacker, they will be allowed to return to the station, and will be able to open the secure door to the prisoner release area.
+	<br>In the case of dangerous prisoners, surveillance may be needed. To that end, there is a prisoner monitoring room on the mining station, equipped with a remote flasher and a lockdown button.  The mine itself is patrolled by a securibot, so the nearby security records console can also be used to secure hostile prisoners on the mine."}
 
 /obj/item/paper/fluff/jobs/jobs
 	name = "paper- 'Job Information'"
@@ -111,7 +218,35 @@
 
 /obj/item/paper/fluff/jobs/ordnance/chemical_info
 	name = "paper- 'Chemical Information'"
-	default_raw_text = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in an enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure unconscious and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tt will not cure them or allow them to be cured.<BR>\n\t\tIt can be administered to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units will induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effects are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization."
+	default_raw_text = {"Known Onboard Toxins:
+	&emsp;Grade A Semi-Liquid Plasma:
+	&emsp;&emsp;Highly poisonous. You cannot sustain concentrations above 15 units.
+	&emsp;&emsp;A gas mask fails to filter plasma after 50 units.
+	&emsp;&emsp;Will attempt to diffuse like a gas.
+	&emsp;&emsp;Filtered by scrubbers.
+	&emsp;&emsp;There is a bottled version which is very different
+	&emsp;&emsp;from the version found in canisters!
+	&emsp;&emsp;WARNING: Highly Flammable. Keep away from heat
+	&emsp;&emsp;sources except in an enclosed fire area!
+	&emsp;&emsp;WARNING: It is a crime to use this without authorization.
+	Known Onboard Anti-Toxin:
+	&emsp;Anti-Toxin Type 01P: Works against Grade A Plasma.
+	&emsp;&emsp;Best if injected directly into bloodstream.
+	&emsp;&emsp;A full injection is in every regular Med-Kit.
+	&emsp;&emsp;Special toxin Kits hold around 7.
+	<BR>Known Onboard Chemicals (other):
+	&emsp;Rejuvenation T#001:
+	&emsp;&emsp;Even 1 unit injected directly into the bloodstream
+	&emsp;&emsp;&emsp;will cure unconscious and sleep toxins.
+	&emsp;&emsp;If administered to a dying patient it will prevent
+	&emsp;&emsp;&emsp;further damage for about units*3 seconds.
+	&emsp;&emsp;&emsp;It will not cure them or allow them to be cured.
+	&emsp;&emsp;It can be administered to a non-dying patient
+	&emsp;&emsp;but the chemicals disappear just as fast.
+	&emsp;Morphine T#054:
+	&emsp;&emsp;5 units will induce precisely 1 minute of sleep.
+	&emsp;&emsp;&emsp;The effects are cumulative.
+	&emsp;&emsp;WARNING: It is a crime to use this without authorization."}
 
 /obj/item/paper/fluff/jobs/medical/hippocratic
 	name = "paper- 'Hippocratic Oath'"
