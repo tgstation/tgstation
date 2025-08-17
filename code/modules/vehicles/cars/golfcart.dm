@@ -6,7 +6,7 @@
 	base_pixel_y = -32
 	pixel_x = -32
 	pixel_y = -32
-	alpha = 0.1
+	alpha = 128
 	layer = ABOVE_ALL_MOB_LAYER
 	var/obj/vehicle/ridden/golfcart/parent = null
 
@@ -107,14 +107,21 @@
 /obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
 	movedelay = base_movedelay * modification
 
-/obj/vehicle/ridden/golfcart/Move(newloc, newdir)
+/obj/vehicle/ridden/golfcart/proc/nudgeto(atom/newloc, newdir, glide_size_override=0)
+	return Move(newloc, newdir, glide_size_override=glide_size_override, was_nudged=TRUE)
+
+/obj/vehicle/ridden/golfcart/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE, was_nudged = FALSE)
+	if (was_nudged)
+		. = ..()
+		update_appearance(UPDATE_ICON)
+		return
 	var/atom/old_loc = get_turf(src)
 	var/old_dir = dir
 	if (get_turf(child) == newloc)
 		set_movedelay_effect(2)
 		var/old_child_loc = child.loc
 		child.loc = null
-		. = ..(newloc, turn(newdir, 180))
+		. = ..(newloc, turn(direct, 180))
 		child.loc = old_child_loc
 	else
 		set_movedelay_effect(1)
@@ -151,10 +158,34 @@
 	. = ..()
 	parent = progenitor
 
+/proc/normalize_dir(dir)
+	if(dir & (EAST|WEST))
+		return (dir & EAST) ? EAST : WEST
+	else if(dir & (NORTH|SOUTH))
+		return (dir & NORTH) ? NORTH : SOUTH
+	return dir
+
 /obj/golfcart_rear/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE, was_nudged = FALSE)
 	if (was_nudged)
 		return ..(newloc, direct, glide_size_override, update_dir)
-	return parent.Move(get_step(parent, get_dir(loc, newloc)), parent.dir)
+	if (pulledby)
+		var/atom/oldloc = loc
+		var/olddir = dir
+		. = ..()
+		var/newdir = dir
+		setDir(turn(dir, 180))
+		var/atom/behind = get_step(src, dir)
+		if (normalize_dir(newdir) != normalize_dir(get_dir(src, pulledby)))
+			if (behind.Enter(parent, parent.loc))
+				setDir(olddir)
+		if ((!behind.Enter(parent, parent.loc)))
+			setDir(olddir)
+			behind = get_step(src, dir)
+		parent.loc = behind
+		parent.setDir(dir)
+		parent.update_appearance(UPDATE_ICON)
+		return
+	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
 /obj/golfcart_rear/proc/nudgeto(atom/new_loc)
 	return Move(new_loc, dir, was_nudged = TRUE)
