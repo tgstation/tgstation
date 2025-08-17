@@ -203,30 +203,34 @@ export async function get_updated_label_set({ github, context }) {
   // Keep track of labels that were manually added/removed by maintainers in the events.
   // And make sure they -stay- added/removed.
   try {
-  const events = await github.paginate(
-    github.rest.issues.listEventsForTimeline,
-    {
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      issue_number: context.payload.pull_request.number,
-      per_page: 100,
-    }
-  );
+    const events = await github.paginate(
+      github.rest.issues.listEventsForTimeline,
+      {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: context.payload.pull_request.number,
+        per_page: 100,
+      }
+    );
 
-  // Ensure we replay history in correct order
-  for (const eventData of events.reverse()) {
-    if (
-      eventData.event === "labeled" &&
-      eventData.actor?.login !== "github-actions"
-    ) {
-      updated_labels.add(eventData.label.name);
-    } else if (
-      eventData.event === "unlabeled" &&
-      eventData.actor?.login !== "github-actions"
-    ) {
-      updated_labels.delete(eventData.label.name);
+    // The REST api returns timeline events in reverse chronological order
+    // So let's reverse them to have oldest->newest.
+    // In the end we only want the last state of a given label
+    // That way, if a maintainer removes and then re-adds the same label it
+    // remain as they put it.
+    for (const eventData of events.reverse()) {
+      if (
+        eventData.event === "labeled" &&
+        eventData.actor?.login !== "github-actions"
+      ) {
+        updated_labels.add(eventData.label.name);
+      } else if (
+        eventData.event === "unlabeled" &&
+        eventData.actor?.login !== "github-actions"
+      ) {
+        updated_labels.delete(eventData.label.name);
+      }
     }
-  }
 } catch (error) {
   console.error("Error fetching paginated events:", error);
 }
