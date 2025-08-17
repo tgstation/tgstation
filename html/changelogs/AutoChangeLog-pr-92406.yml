@@ -1,6 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - balance: "Added a list of \"universal\" items that can fit on any suit storage. Mostly low-impact but high-utility items, but of special note: holsters and the captain's jetpack can be worn on any suit storage."
-  - balance: "Any item of size \"tiny\" can now also be worn in suit storage."
-  - qol: "The suit storage change gives some small amount of sanity to wearing things on suit storage, such as emergency oxygen tanks or a pack of smokes."

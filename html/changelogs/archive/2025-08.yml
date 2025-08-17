@@ -432,3 +432,13 @@
   - balance: Reduced cost of Unmelting Protection and Blazing Star
   tonyhawq:
   - spellcheck: shuttles will now say "arriving in 1 minute" instead of "1 minutes"
+2025-08-17:
+  Bisar:
+  - balance: 'Added a list of "universal" items that can fit on any suit storage.
+      Mostly low-impact but high-utility items, but of special note: holsters and
+      the captain''s jetpack can be worn on any suit storage.'
+  - balance: Any item of size "tiny" can now also be worn in suit storage.
+  - qol: The suit storage change gives some small amount of sanity to wearing things
+      on suit storage, such as emergency oxygen tanks or a pack of smokes.
+  throwawayuseless:
+  - bugfix: Diode Disks are no longer improperly /improper.
