@@ -5962,6 +5962,7 @@
 #include "code\modules\reagents\reagent_containers\blood_pack.dm"
 #include "code\modules\reagents\reagent_containers\chem_pack.dm"
 #include "code\modules\reagents\reagent_containers\condiment.dm"
+#include "code\modules\reagents\reagent_containers\cooler_jug.dm"
 #include "code\modules\reagents\reagent_containers\dropper.dm"
 #include "code\modules\reagents\reagent_containers\hypospray.dm"
 #include "code\modules\reagents\reagent_containers\jerrycan.dm"

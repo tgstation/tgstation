@@ -1,0 +1,4 @@
+author: "NoHaxJustPi"
+delete-after: True
+changes:
+  - spellcheck: "Fixes \"It is The bolts on the bottom are...\" in tank holder descriptions, and improves grammar for inserted objects."
