@@ -259,7 +259,7 @@ DEFINE_BITFIELD(ammo_box_multiload, list(
 #define HER_GRACE_FAMISHED 100 //Dangerous. Increases damage up to a minimum of 25 and cannot be dropped.
 #define HER_GRACE_STARVING 120 //Incredibly close to breaking loose. Increases damage up to a minimum of 30.
 #define HER_GRACE_CONSUME_OWNER 140 //Her Grace consumes Her owner at this point and becomes aggressive.
-#define HER_GRACE_FALL_ASLEEP 160 //If it reaches this point, Shee falls asleep and resets.
+#define HER_GRACE_FALL_ASLEEP 160 //If it reaches this point, She falls asleep and resets.
 
 #define HER_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
 
