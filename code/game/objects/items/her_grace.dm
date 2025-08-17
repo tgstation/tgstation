@@ -116,7 +116,7 @@
 			else
 				master.apply_status_effect(/datum/status_effect/her_grace)
 		return
-	forceMove(get_turf(src)) //no you can't puter Grace in a locker you just have to deal with Him
+	forceMove(get_turf(src)) //no you can't put Her Grace in a locker you just have to deal with Her
 	if(bloodthirst < HER_GRACE_CONSUME_OWNER)
 		return
 	if(bloodthirst >= HER_GRACE_FALL_ASLEEP)
