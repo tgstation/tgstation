@@ -88,7 +88,7 @@
 	else
 		. += span_her_grace("[src] is latched closed.")
 
-/obj/item/her_grace/relaymove(mob/living/user, direction) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
+/obj/item/her_grace/relaymove(mob/living/user, direction) //Allows changelings, etc. to climb out of Her after they revive, provided She isn't active
 	if(!awakened)
 		user.forceMove(get_turf(src))
 		user.visible_message(span_warning("[user] scrambles out of [src]!"), span_notice("You climb out of [src]!"))
