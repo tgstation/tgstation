@@ -7,7 +7,7 @@
  * ## the art gallery viewer/printer!
  *
  * Program that lets the curator (or anyone really) browse all of the portraits in the database
- * They are also to print them out as they please if installed on a console with paper in it (no PDAs and laptops).
+ * Stationary consoles can also print them out as they please as long as they've enough paper
  */
 /datum/computer_file/program/portrait_printer
 	filename = "PortraitPrinter"
@@ -31,7 +31,7 @@
 
 /datum/computer_file/program/portrait_printer/ui_static_data(mob/user)
 	. = ..()
-	.["is_console"] = (computer.hardware_flag & PROGRAM_CONSOLE)
+	.["is_console"] = computer.hardware_flag & PROGRAM_CONSOLE
 
 /datum/computer_file/program/portrait_printer/ui_data(mob/user)
 	var/list/data = list()

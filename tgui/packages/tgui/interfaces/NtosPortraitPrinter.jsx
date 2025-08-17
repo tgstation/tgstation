@@ -113,7 +113,7 @@ export const NtosPortraitPrinter = (props) => {
                     <Stack.Item grow={3}>
                       <Button
                         icon="check"
-                        content={is_console ? "View Only" : "Print Portrait"}
+                        content={!is_console ? "View Only" : "Print Portrait"}
                         disabled={!got_paintings || !is_console}
                         onClick={() =>
                           act('select', {
