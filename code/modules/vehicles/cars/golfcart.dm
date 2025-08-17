@@ -6,6 +6,7 @@
 	base_pixel_y = -32
 	pixel_x = -32
 	pixel_y = -32
+	alpha = 0.1
 	layer = ABOVE_ALL_MOB_LAYER
 	var/obj/vehicle/ridden/golfcart/parent = null
 
@@ -77,29 +78,18 @@
 	vehicle_move_delay = 1.5
 
 /datum/component/riding/vehicle/golfcart/driver_move(atom/movable/movable_parent, mob/living/user, direction)
-	// calling parent IS the green light
+	if (!istype(parent, /obj/vehicle/ridden/golfcart))
+		return ..()
+	var/obj/vehicle/ridden/golfcart/cart = parent
+	if (get_turf(cart.child) == get_step(cart, direction))
+		cart.set_movedelay_effect(2)
+	else
+		cart.set_movedelay_effect(1)
+	vehicle_move_delay = cart.movedelay
 	return ..()
 
 /datum/component/riding/vehicle/golfcart/handle_ride(mob/user, direction)
-	var/obj/vehicle/ridden/golfcart/cart = parent
-
-	var/turf/next = get_step(cart, direction)
-	var/turf/current = get_turf(cart)
-	if(!istype(next) || !istype(current))
-		return
-	if(!turf_check(next, current))
-		to_chat(user, span_warning("\The [cart] can not go onto [next]!"))
-		return
-	if(!Process_Spacemove(direction) || !isturf(cart.loc))
-		return
-
-	step(cart, direction)
-	COOLDOWN_START(src, vehicle_move_cooldown, vehicle_move_delay)
-
-	if(QDELETED(src))
-		return
-	update_parent_layer_and_offsets(cart.dir)
-	return TRUE
+	return ..()
 
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
@@ -116,8 +106,6 @@
 
 /obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
 	movedelay = base_movedelay * modification
-	var/datum/component/riding/comp = GetComponent(/datum/component/riding)
-	comp.vehicle_move_delay = movedelay
 
 /obj/vehicle/ridden/golfcart/Move(newloc, newdir)
 	var/atom/old_loc = get_turf(src)
