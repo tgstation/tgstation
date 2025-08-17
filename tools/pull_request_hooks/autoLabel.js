@@ -214,10 +214,9 @@ export async function get_updated_label_set({ github, context }) {
     );
 
     // The REST api returns timeline events in reverse chronological order
-    // So let's reverse them to have oldest->newest.
-    // In the end we only want the last state of a given label
+    // So let's reverse them to have it go from oldest -> newest.
     // That way, if a maintainer removes and then re-adds the same label it
-    // remain as they put it.
+    // remains true to their final intent.
     for (const eventData of events.reverse()) {
       if (
         eventData.event === "labeled" &&
