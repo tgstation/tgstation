@@ -1,5 +1,5 @@
 //Her Grace is a very special weapon granted only to traitor chaplains.
-//When awakened, He thirsts for blood and begins ticking a "bloodthirst" counter.
+//When awakened, She thirsts for blood and begins ticking a "bloodthirst" counter.
 //The wielder of Her Grace is immune to stuns and gradually heals.
 //If the wielder fails to feed Her Grace in time, He will devour them and become incredibly aggressive.
 //Leaving Her Grace alone for some time will reset Her thirst and put Him to sleep.
