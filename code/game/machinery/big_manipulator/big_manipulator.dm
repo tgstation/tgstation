@@ -44,9 +44,9 @@
 	var/power_access_wire_cut = FALSE
 
 	/// History of accessed pickup points for round-robin tasking.
-	var/list/roundrobin_history_pickup = 1
+	var/roundrobin_history_pickup = 1
 	/// History of accessed dropoff points for round-robin tasking.
-	var/list/roundrobin_history_dropoff = 1
+	var/roundrobin_history_dropoff = 1
 	/// Which tasking scenario we use for pickup points?
 	var/pickup_tasking = TASKING_ROUND_ROBIN
 	/// Which tasking scenario we use for dropoff points?

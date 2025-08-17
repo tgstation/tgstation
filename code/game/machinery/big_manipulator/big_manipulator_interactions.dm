@@ -89,6 +89,17 @@
 	schedule_next_cycle()
 	return FALSE
 
+/// Updates the round robin index for the specified transfer type.
+/obj/machinery/big_manipulator/proc/update_roundrobin_index(transfer_type)
+	if(transfer_type == TRANSFER_TYPE_PICKUP)
+		roundrobin_history_pickup += 1
+		if(roundrobin_history_pickup > length(pickup_points))
+			roundrobin_history_pickup = 1
+	else if(transfer_type == TRANSFER_TYPE_DROPOFF)
+		roundrobin_history_dropoff += 1
+		if(roundrobin_history_dropoff > length(dropoff_points))
+			roundrobin_history_dropoff = 1
+
 /// Attempts to actually run a full work cycle.
 /obj/machinery/big_manipulator/proc/try_run_full_cycle()
 	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
@@ -114,6 +125,8 @@
 			var/obj/item/movable_atom_item = movable_atom
 			if(movable_atom_item.item_flags & (ABSTRACT|DROPDEL))
 				continue
+			// Update round robin index after successful interaction
+			update_roundrobin_index(TRANSFER_TYPE_PICKUP)
 			start_work(movable_atom, hand_is_empty)
 			return TRUE
 
@@ -229,7 +242,7 @@
 		return TRUE
 
 	actual_held_object.forceMove(drop_endpoint)
-	finish_manipulation()
+	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 	return TRUE
 
 /// Attempts to use the held object on the atoms of the interaction turf.
@@ -242,11 +255,11 @@
 	var/destination_turf = destination_point.interaction_turf.resolve()
 
 	if(!obj_resolve || !monkey_resolve || !destination_turf) // if something that's supposed to be here is not here anymore
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return FALSE
 
 	if(!(obj_resolve.loc == src && obj_resolve.loc == monkey_resolve)) // if we don't hold the said item or the monkey isn't buckled
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return FALSE
 
 	var/obj/item/held_item = obj_resolve
@@ -274,18 +287,18 @@
 	if(drop_point.worker_interaction == WORKER_SINGLE_USE && item_used)
 		obj_resolve.forceMove(drop_turf)
 		obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
 	if(!on || drop_point.interaction_mode != INTERACT_USE)
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
 	if(item_used)
 		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), interaction_delay)
 		return
 
-	finish_manipulation()
+	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 
 /// Throws the held object in the direction of the interaction point.
 /obj/machinery/big_manipulator/proc/throw_thing(datum/interaction_point/drop_point, atom/movable/target)
@@ -295,7 +308,7 @@
 	if((!(isitem(target) || isliving(target))) && !(obj_flags & EMAGGED))
 		target.forceMove(drop_turf)
 		target.dir = get_dir(get_turf(target), get_turf(src))
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
 	var/obj/object_to_throw = target
@@ -303,13 +316,13 @@
 	object_to_throw.throw_at(get_edge_target_turf(get_turf(src), drop_turf), throw_range, 2)
 	do_attack_animation(drop_turf)
 	manipulator_arm.do_attack_animation(drop_turf)
-	finish_manipulation()
+	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 
 /// Uses the empty hand to interact with objects
 /obj/machinery/big_manipulator/proc/use_thing_with_empty_hand(datum/interaction_point/destination_point)
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
 	if(isnull(monkey_resolve))
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
 	var/atom/type_to_use = destination_point.find_type_priority()
@@ -336,11 +349,11 @@
 /// Checks if we should continue using the empty hand after interaction
 /obj/machinery/big_manipulator/proc/check_end_of_use_for_use_with_empty_hand(datum/interaction_point/destination_point, item_was_used = TRUE)
 	if(!on || (destination_point.worker_interaction != WORKER_EMPTY_USE && destination_point.interaction_mode == INTERACT_USE))
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
 	if(!item_was_used)
-		finish_manipulation()
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
 	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_point), interaction_delay)
@@ -354,7 +367,12 @@
 	schedule_next_cycle()
 
 /// Completes the current manipulation action
-/obj/machinery/big_manipulator/proc/finish_manipulation()
+/obj/machinery/big_manipulator/proc/finish_manipulation(transfer_type = TRANSFER_TYPE_DROPOFF)
 	held_object = null
 	manipulator_arm.update_claw(null)
+
+	// Update round robin index for dropoff points
+	if(transfer_type == TRANSFER_TYPE_DROPOFF)
+		update_roundrobin_index(TRANSFER_TYPE_DROPOFF)
+
 	end_work()
