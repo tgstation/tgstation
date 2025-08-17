@@ -200,8 +200,8 @@ export async function get_updated_label_set({ github, context }) {
   if (body)
     check_body_for_labels(body).forEach((label) => updated_labels.add(label));
 
-  // Keep track of labels that were manually added by maintainers in the events.
-  // And make sure they -stay- added.
+  // Keep track of labels that were manually added/removed by maintainers in the events.
+  // And make sure they -stay- added/removed.
   try {
     await github.paginate(
       github.rest.issues.listEventsForTimeline,
@@ -218,6 +218,11 @@ export async function get_updated_label_set({ github, context }) {
             eventData.actor?.login !== "github-actions"
           ) {
             updated_labels.add(eventData.label.name);
+          } else if (
+            eventData.event === "unlabeled" &&
+            eventData.actor?.login !== "github-actions"
+          ) {
+            updated_labels.delete(eventData.label.name);
           }
         }
       }
