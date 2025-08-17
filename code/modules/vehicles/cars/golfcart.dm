@@ -3,17 +3,14 @@
 	icon = 'icons/obj/toys/golfcart_split.dmi'
 	icon_state = "cybe"
 	density = TRUE
+	layer = 2
 	var/obj/vehicle/ridden/golfcart/parent = null
 
 /obj/vehicle/ridden/golfcart
 	name = "all-terrain vehicle"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
-	icon = 'icons/obj/toys/golfcart_glob.dmi'
-	icon_state = "default"
-	base_pixel_y = -32
-	base_pixel_x = -32
-	pixel_x = -32
-	pixel_y = -32
+	icon = 'icons/obj/toys/golfcart_split.dmi'
+	icon_state = "front"
 	max_integrity = 150
 	var/static/base_movedelay = 2
 	armor_type = /datum/armor/none
@@ -22,35 +19,48 @@
 	var/obj/golfcart_rear/child = null
 	var/obj/structure/closet/crate/crate = null
 
+/obj/vehicle/ridden/golfcart/proc/load(obj/structure/closet/crate/to_load)
+	if (!to_load)
+		if (!crate)
+			return
+		var/list/candidates = list(
+			get_step(child, turn(dir, 180)),
+			get_step(child, turn(dir, 90)),
+			get_step(child, turn(dir, 270)),
+		)
+		for (var/atom/turf in candidates)
+			if (turf.Enter(crate, src))
+				crate.forceMove(turf)
+				crate = null
+				update_appearance(UPDATE_OVERLAYS)
+				return
+		crate.forceMove(get_turf(child))
+		crate = null
+		update_appearance(UPDATE_OVERLAYS)
+		return
+	if (crate)
+		return
+	to_load.close()
+	to_load.forceMove(src)
+	crate = to_load
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/vehicle/ridden/golfcart/proc/unload()
+	return load(null)
+
 /obj/vehicle/ridden/golfcart/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (!crate)
 		return
-	var/list/candidates = list(
-		get_step(child, turn(dir, 180)),
-		get_step(child, turn(dir, 90)),
-		get_step(child, turn(dir, 270)),
-	)
-	for (var/atom/turf in candidates)
-		if (turf.Enter(crate, src))
-			crate.forceMove(turf)
-			crate = null
-			return ITEM_INTERACT_SUCCESS
-	crate.forceMove(get_turf(child))
-	crate = null
+	tool.play_tool_sound(src, 50)
+	unload()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/golfcart/mouse_drop_receive(atom/dropped, mob/user, params)
 	if (!istype(dropped, /obj/structure/closet/crate))
 		return ..()
 	var/obj/structure/closet/crate/dropped_crate = dropped
-	balloon_alert_to_viewers(dropped_crate)
-	if (crate)
-		balloon_alert_to_viewers("already has crate")
-		return
-	dropped_crate.forceMove(src)
-	crate = dropped_crate
-	balloon_alert_to_viewers("attached crate")
+	load(dropped_crate)
 
 /datum/component/riding/vehicle/golfcart
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
@@ -130,6 +140,7 @@
 		if (!behind.Enter(child, child.loc))
 			setDir(old_dir)
 			behind = get_step(src, turn(dir, 180))
+	update_appearance(UPDATE_OVERLAYS)
 	if (!.)
 		child.loc = behind
 		return .
@@ -147,7 +158,7 @@
 /datum/component/riding/vehicle/golfcart/get_parent_offsets_and_layers()
 	return list(
 		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
 		TEXT_EAST =  list(0, 0, OBJ_LAYER),
 		TEXT_WEST =  list(0, 0, OBJ_LAYER),
 	)
@@ -172,18 +183,53 @@
 	RegisterSignal(src, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(check_mousedroppable))
 	child = new /obj/golfcart_rear(mapload, src)
 	child.loc = get_step(src, NORTH)
+	update_appearance()
+
+/obj/vehicle/ridden/golfcart/update_overlays()
+	. = ..()
+	var/mutable_appearance/lower_overlay = mutable_appearance(icon, "lower", OBJ_LAYER)
+	var/mutable_appearance/roof_overlay = null
+	var/mutable_appearance/rear_overlay = mutable_appearance(icon, "rear", layer)
+	var/crate_x_offset = 0
+	var/crate_y_offset = 0
+	var/crate_layer_offset = -0.01
+	if (dir & NORTH)
+		crate_y_offset = -30
+		rear_overlay.pixel_y = -32
+		crate_layer_offset = 0.01
+	else if (dir & SOUTH)
+		crate_y_offset = 30
+		rear_overlay.pixel_y = 32
+		lower_overlay.pixel_y = 32
+	else if (dir & EAST)
+		crate_x_offset = -32
+		rear_overlay.pixel_x = -32
+		lower_overlay.pixel_x = -32
+		lower_overlay.layer += (crate_layer_offset - 0.01)
+		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER)
+		roof_overlay.pixel_y = 31
+		roof_overlay.pixel_x = -10
+	else if (dir & WEST)
+		crate_x_offset = 32
+		rear_overlay.pixel_x = 32
+		lower_overlay.pixel_x = 32
+		lower_overlay.layer += (crate_layer_offset - 0.01)
+		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER)
+		roof_overlay.pixel_y = 31
+		roof_overlay.pixel_x = 10
+	. += lower_overlay
+	. += rear_overlay
+	if (roof_overlay)
+		. += roof_overlay
+	if(!crate) //mob offsets and such are handled by the riding component / buckling
+		return
+	var/mutable_appearance/crate_overlay = mutable_appearance(crate.icon, crate.icon_state, layer + crate_layer_offset)
+	crate_overlay.pixel_z = initial(crate.pixel_z) + 11
+	crate_overlay.pixel_x = crate_x_offset
+	crate_overlay.pixel_y = crate_y_offset
+	. += crate_overlay
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
-	if (istype(M, /mob/living/carbon))
-		var/mob/living/carbon/carbon_based_lifeform = M
-		var/list/bodytypes = list()
-		for (var/obj/item/bodypart/leg/leg in carbon_based_lifeform.bodyparts)
-			bodytypes[leg] = leg.bodytype
-			leg.bodytype = NONE
-			leg.is_invisible = TRUE
-		carbon_based_lifeform.update_body_parts(TRUE)
-		for (var/obj/item/bodypart/leg/leg in bodytypes)
-			leg.bodytype = bodytypes[leg]
 	return ..()
 
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
