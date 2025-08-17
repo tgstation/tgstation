@@ -222,12 +222,10 @@ export async function get_updated_label_set({ github, context }) {
       if (eventData.actor?.login === "github-actions") {
         continue;
       }
-      if (
-        eventData.event === "labeled") {
-          updated_labels.add(eventData.label.name);
-      } else if (
-        eventData.event === "unlabeled") {
-          updated_labels.delete(eventData.label.name);
+      if (eventData.event === "labeled") {
+        updated_labels.add(eventData.label.name);
+      } else if (eventData.event === "unlabeled") {
+        updated_labels.delete(eventData.label.name);
       }
     }
 } catch (error) {
