@@ -1,6 +1,6 @@
 // Interactions moved here to de-clutter the main file
 
-/// Calculates the next interaction point the manipulator should transfer the item to.
+/// Calculates the next interaction point the manipulator should transfer the item to or pick up it from.
 /obj/machinery/big_manipulator/proc/find_next_point(tasking_type, transfer_type)
 	if(!tasking_type)
 		tasking_type = TASKING_PREFER_FIRST
@@ -60,7 +60,7 @@
 				addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
 			return NONE
 
-/// Attempts to begin a full work cycle
+/// Attempts to begin a full work cycle.
 /obj/machinery/big_manipulator/proc/try_begin_full_cycle()
 	if(!on)
 		return FALSE
@@ -76,44 +76,34 @@
 	cycle_timer_running = FALSE
 	try_run_full_cycle()
 
-/// Safely schedules the next cycle attempt
+/// Safely schedules the next cycle attempt to prevent overlapping.
 /obj/machinery/big_manipulator/proc/schedule_next_cycle()
 	if(cycle_timer_running)
 		return
 	cycle_timer_running = TRUE
 	addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
 
-/// Attempts to run a full work cycle
+/// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
+/obj/machinery/big_manipulator/proc/handle_no_work_available()
+	start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
+	schedule_next_cycle()
+	return FALSE
+
+/// Attempts to actually run a full work cycle.
 /obj/machinery/big_manipulator/proc/try_run_full_cycle()
 	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
-	if(!origin_point)
-		start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-		schedule_next_cycle()
-		return FALSE
+	if(!origin_point) // no origin point - nowhere to begin the cycle from
+		return handle_no_work_available()
 
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
-	var/has_suitable_objects = FALSE
 	if(!origin_turf)
 		return
-
-	for(var/atom/movable/movable_atom in origin_turf.contents)
-		if(origin_point.check_filters_for_atom(movable_atom))
-			has_suitable_objects = TRUE
-			break
-
-	if(!has_suitable_objects)
-		start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-		schedule_next_cycle()
-		return FALSE
 
 	rotate_to_point(origin_point, PROC_REF(try_interact_with_origin_point))
 	return TRUE
 
 /// Attempts to interact with the origin point (pick up the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_origin_point(datum/interaction_point/origin_point, hand_is_empty = FALSE)
-	if(!origin_point)
-		return FALSE
-
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
 	if(origin_turf)
 		for(var/atom/movable/movable_atom in origin_turf.contents)
@@ -127,9 +117,7 @@
 			start_work(movable_atom, hand_is_empty)
 			return TRUE
 
-	start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-	schedule_next_cycle()
-	return FALSE
+	return handle_no_work_available()
 
 /// Attempts to start a work cycle (pick up the object)
 /obj/machinery/big_manipulator/proc/start_work(atom/movable/target, hand_is_empty = FALSE)
@@ -142,18 +130,13 @@
 
 	if(!destination_point)
 		SStgui.update_uis(src)
-		schedule_next_cycle()
-		start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-		return FALSE
+		return handle_no_work_available()
 
 	rotate_to_point(destination_point, PROC_REF(try_interact_with_destination_point))
 	return TRUE
 
 /// Attempts to interact with the destination point (drop/use/throw the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_destination_point(datum/interaction_point/destination_point, hand_is_empty = FALSE)
-	if(!destination_point)
-		return FALSE
-
 	if(hand_is_empty)
 		use_thing_with_empty_hand(destination_point)
 		return TRUE
@@ -208,8 +191,8 @@
 
 	// Animating a single rotation step
 
-	// YES, this has to be done like that because byond or whatever is stupid and animating a 180+ degree turn
-	// fucking fails and squashes the icon vertically (or horizontally, whatever it feels like) instead
+	// YES, this has to be done like that because byond or whatever is stupid and `animate`ing a 180+ degree turn
+	// fucking fails and squashes the icon vertically (or horizontally, whichever it feels like) instead
 
 	var/next_angle = current_angle + rotation_step
 	var/matrix/next_matrix = matrix()
@@ -374,4 +357,4 @@
 /obj/machinery/big_manipulator/proc/finish_manipulation()
 	held_object = null
 	manipulator_arm.update_claw(null)
-	addtimer(CALLBACK(src, PROC_REF(end_work)), interaction_delay)
+	end_work()

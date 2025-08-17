@@ -667,7 +667,6 @@
 	current_task_start_time = 0
 	current_task_duration = 0
 	current_task_type = "idle"
-	balloon_alert_to_viewers("idle")
 	status = STATUS_IDLE // Set status to IDLE when a task truly ends
 	SStgui.update_uis(src) // Update UI immediately
 
