@@ -103,9 +103,6 @@
 	src.category = stack_recipe.category || CAT_MISC
 	src.placement_checks = stack_recipe.placement_checks
 
-	if(!(stack_recipe.crafting_flags & CRAFT_APPLIES_MATS))
-		requirements_mats_blacklist = list(material) //the item is not intended to have mats :shrug:
-
 /**
  * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client
  *

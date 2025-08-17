@@ -1,7 +1,8 @@
 /**
  * Check if a generic atom (because both mobs and the crafter machinery can do it) can potentially craft all recipes,
- * with the exact same types required in the recipe, and also compare the materials of crafted result with one of the same type
- * to ansure they match if the recipe has the CRAFT_ENFORCE_MATERIALS_PARITY flag.
+ * with the exact same types required in the recipe.
+ * Then, unless the recipe has the CRAFT_SKIP_MATERIALS_PARITY flag, compare the materials of the
+ * crafted result with a spawned instance of the same type to ensure that they match.
  */
 /datum/unit_test/crafting
 
@@ -134,11 +135,16 @@
 
 	spawned_components += result
 
-	if(!(recipe.crafting_flags & CRAFT_ENFORCE_MATERIALS_PARITY))
+	if(recipe.crafting_flags & CRAFT_SKIP_MATERIALS_PARITY)
 		delete_components(spawned_components)
 		return
 
-	var/atom/copycat = new result.type(turf)
+	var/atom/copycat
+	if(isstack(result))
+		var/obj/item/stack/stack_result = result
+		copycat = new result.type(turf, stack_result.amount)
+	else
+		copycat = new result.type
 	spawned_components += copycat
 
 	// SSmaterials caches the combinations so we don't have to run more complex checks
@@ -153,7 +159,7 @@
 			what_it_should_be += " (you can round values a bit)"
 		TEST_FAIL("[warning]. custom_materials should be [what_it_should_be]. \
 			Otherwise set the requirements_mats_blacklist variable for [recipe] \
-			or remove the CRAFT_ENFORCE_MATERIALS_PARITY crafting flag from it")
+			or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it")
 
 
 	delete_components(spawned_components)
