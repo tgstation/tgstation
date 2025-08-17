@@ -1,7 +1,5 @@
 /obj/golfcart_rear
 	name = "golfcart rear"
-	icon = 'icons/obj/toys/golfcart_split.dmi'
-	icon_state = "cybe"
 	density = TRUE
 	layer = 2
 	var/obj/vehicle/ridden/golfcart/parent = null
@@ -17,14 +15,9 @@
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	integrity_failure = 0.5
+	var/obj/effect/overlay/click_forwarding_overlay/mouse_intercept = null
 	var/obj/golfcart_rear/child = null
 	var/obj/structure/closet/crate/crate = null
-
-/obj/vehicle/ridden/golfcart/attack_hand(mob/user, list/modifiers)
-	if(loc == user || (istype(loc, /turf) && !isnull(crate)))
-		unload()
-		return TRUE
-	return ..()
 
 /obj/vehicle/ridden/golfcart/proc/load(obj/structure/closet/crate/to_load)
 	if (!to_load)
@@ -55,19 +48,25 @@
 /obj/vehicle/ridden/golfcart/proc/unload()
 	return load(null)
 
-/obj/vehicle/ridden/golfcart/crowbar_act(mob/living/user, obj/item/tool)
+/obj/golfcart_rear/attack_hand(mob/user, list/modifiers)
+	if(loc == user || (istype(loc, /turf) && !isnull(parent.crate)))
+		parent.unload()
+		return TRUE
+	return ..()
+
+/obj/golfcart_rear/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if (!crate)
+	if (!parent.crate)
 		return
 	tool.play_tool_sound(src, 50)
-	unload()
+	parent.unload()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/golfcart/mouse_drop_receive(atom/dropped, mob/user, params)
+/obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
 	if (!istype(dropped, /obj/structure/closet/crate))
 		return ..()
 	var/obj/structure/closet/crate/dropped_crate = dropped
-	load(dropped_crate)
+	parent.load(dropped_crate)
 
 /datum/component/riding/vehicle/golfcart
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
@@ -110,20 +109,6 @@
 
 /obj/vehicle/ridden/golfcart/proc/dist_to(atom/thing)
 	return min(get_dist(thing, loc), get_dist(thing.loc, child.loc))
-
-/obj/vehicle/ridden/golfcart/proc/check_mousedroppable(atom/source, atom/target)
-	balloon_alert_to_viewers("hello")
-	return dist_to(target) > 1 ? COMPONENT_CANCEL_MOUSEDROPPED_ONTO : .
-
-/obj/vehicle/ridden/golfcart/proc/on_canreach(atom/target, mob/source)
-	SIGNAL_HANDLER
-
-	if (!istype(target, /obj/vehicle/ridden/golfcart))
-		return
-
-	if (dist_to(target) <= 1)
-		return COMPONENT_ALLOW_REACH
-	return
 
 /obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
 	movedelay = base_movedelay * modification
@@ -182,35 +167,81 @@
 /obj/golfcart_rear/proc/nudgeto(atom/new_loc)
 	return Move(new_loc, dir, was_nudged = TRUE)
 
+/obj/effect/overlay/click_forwarding_overlay
+	mouse_opacity = MOUSE_OPACITY_ICON
+	anchored = TRUE
+	var/atom/target = null
+
+/obj/effect/overlay/click_forwarding_overlay/Initialize(mapload, atom/new_target)
+	. = ..()
+	target = new_target
+
+/obj/effect/overlay/click_forwarding_overlay/Click(location, control, params)
+	return target?.Click(location, control, params)
+
+/obj/effect/overlay/click_forwarding_overlay/MouseDown(location, control, params)
+	return target?.MouseDown(location, control, params)
+
+/obj/effect/overlay/click_forwarding_overlay/DblClick(location, control, params)
+	return target?.DblClick(location, control, params)
+
+/obj/effect/overlay/click_forwarding_overlay/MouseUp(location, control, params)
+	return target?.MouseUp(location, control, params)
+
+/obj/effect/overlay/click_forwarding_overlay/MouseDrag(over_object, src_location, over_location, params)
+	CRASH("uh oh")
+	return target?.MouseDrag(over_object, src_location, over_location, params)
+
+/obj/effect/overlay/click_forwarding_overlay/MouseDrop(over_object, src_location, over_location, params)
+	return target?.MouseDrop(over_object, src_location, over_location, params)
+
+/obj/effect/overlay/click_forwarding_overlay/MouseEntered(location, control, params)
+	return target?.MouseEntered(location, control, params)
+
+/obj/effect/overlay/click_forwarding_overlay/MouseExited(location, control, params)
+	return target?.MouseExited(location, control, params)
+
+/obj/effect/overlay/click_forwarding_overlay/attack_hand(mob/user)
+	return target?.attack_hand(user)
+
+/obj/effect/overlay/click_forwarding_overlay/attackby(obj/item/W, mob/user, params)
+	return target?.attackby(W, user, params)
+
 /obj/vehicle/ridden/golfcart/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/golfcart)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
-	RegisterSignal(src, COMSIG_ATOM_REACHABLE_BY, PROC_REF(on_canreach))
-	RegisterSignal(src, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(check_mousedroppable))
 	child = new /obj/golfcart_rear(mapload, src)
 	child.loc = get_step(src, NORTH)
+	mouse_intercept = new /obj/effect/overlay/click_forwarding_overlay(mapload, child)
+	vis_contents += mouse_intercept
+	mouse_intercept.icon = icon
+	mouse_intercept.icon_state = "rear"
 	update_appearance()
 
 /obj/vehicle/ridden/golfcart/update_overlays()
 	. = ..()
 	var/mutable_appearance/lower_overlay = mutable_appearance(icon, "lower", OBJ_LAYER)
 	var/mutable_appearance/roof_overlay = null
-	var/mutable_appearance/rear_overlay = mutable_appearance(icon, "rear", layer)
+	mouse_intercept.setDir(dir)
+	mouse_intercept.layer = layer
 	var/crate_x_offset = 0
 	var/crate_y_offset = 0
 	var/crate_layer_offset = -0.01
 	if (dir & NORTH)
 		crate_y_offset = -30
-		rear_overlay.pixel_y = -32
+		mouse_intercept.pixel_x = 0
+		mouse_intercept.pixel_y = -32
 		crate_layer_offset = 0.01
 	else if (dir & SOUTH)
 		crate_y_offset = 30
-		rear_overlay.pixel_y = 32
+		mouse_intercept.pixel_x = 0
+		mouse_intercept.pixel_y = 32
 		lower_overlay.pixel_y = 32
 	else if (dir & EAST)
 		crate_x_offset = -32
-		rear_overlay.pixel_x = -32
+		mouse_intercept.pixel_x = -32
+		mouse_intercept.pixel_y = 0
 		lower_overlay.pixel_x = -32
 		lower_overlay.layer += (crate_layer_offset - 0.01)
 		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER)
@@ -218,14 +249,14 @@
 		roof_overlay.pixel_x = -10
 	else if (dir & WEST)
 		crate_x_offset = 32
-		rear_overlay.pixel_x = 32
+		mouse_intercept.pixel_x = 32
+		mouse_intercept.pixel_y = 0
 		lower_overlay.pixel_x = 32
 		lower_overlay.layer += (crate_layer_offset - 0.01)
 		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = 10
 	. += lower_overlay
-	. += rear_overlay
 	if (roof_overlay)
 		. += roof_overlay
 	if(!crate) //mob offsets and such are handled by the riding component / buckling
