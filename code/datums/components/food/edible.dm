@@ -531,15 +531,15 @@ Behavior that's still missing from this component that original food items had t
 	var/is_stack = isstack(owner)
 
 	if(owner.custom_materials) //food may also apply golem buffs if it contains certain materials and the mob has the required trait
-		var/effect_stack_amount = (owner.custom_materials[owner.custom_materials[1]] * fraction) / SHEET_MATERIAL_AMOUNT
-		var/datum/material/main_mat = owner.get_master_material()
-		var/datum/golem_food_buff/effect
-		if(main_mat.sheet_type)
-			effect = GLOB.golem_stack_food_directory[main_mat.sheet_type]
-		if(!effect && main_mat.ore_type)
-			effect = GLOB.golem_stack_food_directory[main_mat.ore_type]
-		if(effect?.can_consume(eater))
-			effect.on_consumption(eater, owner, effect_stack_amount)
+		for(var/datum/material/material as anything in owner.custom_materials)
+			var/effect_stack_amount = (owner.custom_materials[material] * fraction) / SHEET_MATERIAL_AMOUNT
+			var/datum/golem_food_buff/effect
+			if(material.sheet_type)
+				effect = GLOB.golem_stack_food_directory[material.sheet_type]
+			if(!effect && material.ore_type)
+				effect = GLOB.golem_stack_food_directory[material.ore_type]
+			if(effect?.can_consume(eater))
+				effect.on_consumption(eater, owner, effect_stack_amount)
 
 	if(fraction > 1) //don't bother if the item is about to be deleted anyway...
 		return
