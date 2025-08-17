@@ -15,9 +15,16 @@
 	var/static/base_movedelay = 2
 	armor_type = /datum/armor/none
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
+	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	integrity_failure = 0.5
 	var/obj/golfcart_rear/child = null
 	var/obj/structure/closet/crate/crate = null
+
+/obj/vehicle/ridden/golfcart/attack_hand(mob/user, list/modifiers)
+	if(loc == user || (istype(loc, /turf) && !isnull(crate)))
+		unload()
+		return TRUE
+	return ..()
 
 /obj/vehicle/ridden/golfcart/proc/load(obj/structure/closet/crate/to_load)
 	if (!to_load)
