@@ -459,10 +459,15 @@ MINUTE_CLICK_LIMIT 400
 BASE_MC_TICK_RATE 1
 
 ##High population MC tick rate
-##	Byond rounds timer values UP, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
+##	Byond rounds timer values DOWN, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
 ##	will make it run every 2 byond ticks, but will also double the effect of anti-lag heuristics. You can instead set it to something like
-##	1.1 to make it run every 2 byond ticks, but only increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.
+##	1.1 to make it run every 1 byond ticks, but will increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.
 ##	(As an aside, you could in theory also reduce the effect of anti-lag heuristics in the base tick rate by setting it to something like 0.5)
+##
+##	Note: The reason to set this at/above 2 would be to carve out more time for sleeping procs and muck with scheduling the mc.
+##	Basically if set to 2 one tick will be dominated by sleeping procs, and the other has... a chance of being dominated by the mc (a low chance but yaknow)
+##	This is largely deprecated behavior, we have systems that do this automatically and more effectively. I'm keeping this here because of the heuristics stuff
+##	since I have a weaker grasp on that, but it should basically never be set above 2 (guarantees skipped ticks and horrible gameplay)
 HIGH_POP_MC_TICK_RATE 1.1
 
 ##Engage high pop mode if player count raises above this (Player in this context means any connected user. Lobby, ghost or in-game all count)

@@ -11,7 +11,7 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES|EARS_COVERED
 	flags_inv = HIDEHAIR
@@ -213,10 +213,6 @@
 /obj/item/clothing/head/helmet/toggleable
 	visor_vars_to_toggle = NONE
 	dog_fashion = null
-	///chat message when the visor is toggled down.
-	var/toggle_message
-	///chat message when the visor is toggled up.
-	var/alt_toggle_message
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
 	adjust_visor(user)
@@ -230,11 +226,11 @@
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down on"
-	alt_toggle_message = "You push the visor up on"
+	toggle_message = "You pull the visor down"
+	alt_toggle_message = "You push the visor up"
 	armor_type = /datum/armor/toggleable_riot
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE|HIDESNOUT
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
@@ -331,7 +327,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
@@ -379,7 +375,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 
 /datum/armor/helmet_thunderdome
@@ -410,7 +406,7 @@
 	resistance_flags = FIRE_PROOF
 	icon_state = "roman"
 	inhand_icon_state = "roman_helmet"
-	strip_delay = 100
+	strip_delay = 10 SECONDS
 	dog_fashion = null
 
 /datum/armor/helmet_roman
@@ -483,7 +479,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
@@ -523,7 +519,7 @@
 	inhand_icon_state = "durathread_helmet"
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/helmet_durathread
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 
 /datum/armor/helmet_durathread
 	melee = 20
@@ -610,7 +606,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flash_protect = FLASH_PROTECTION_FLASH
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 	armor_type = /datum/armor/helmet_military
 	sound_vary = TRUE
@@ -710,7 +706,7 @@
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_OCLOTHING, \
 		charges = 1, \
-		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
 		expiration = CALLBACK(src, PROC_REF(decay)) \
 	)
 

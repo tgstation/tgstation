@@ -110,7 +110,7 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 300
+	cooldown_time = 30 SECONDS
 
 	invocation = "F'R."
 	invocation_type = INVOCATION_WHISPER

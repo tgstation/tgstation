@@ -38,7 +38,7 @@
 	icon_state = "medical"
 	inhand_icon_state = "m_mask"
 	armor_type = /datum/armor/breath_medical
-	equip_delay_other = 10
+	equip_delay_other = 1 SECONDS
 
 /datum/armor/breath_medical
 	bio = 90
@@ -53,7 +53,7 @@
 	body_parts_covered = NONE
 	flags_cover = NONE
 	armor_type = /datum/armor/breath_muzzle
-	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+	equip_delay_other = 2.5 SECONDS // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
 
 /obj/item/clothing/mask/breath/muzzle/Initialize(mapload)
 	. = ..()
