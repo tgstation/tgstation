@@ -144,7 +144,7 @@
 	if(awakened)
 		return
 	awakened = TRUE
-	user.visible_message(span_boldwarning("[src] begins to rattle. He thirsts."), span_her_grace("You flick [src]'s latch up. You hope this is a good idea."))
+	user.visible_message(span_boldwarning("[src] begins to rattle. She thirsts."), span_her_grace("You flick [src]'s latch up. You hope this is a good idea."))
 	name = "Her Grace"
 	desc = "A bloodthirsty artifact created by a profane rite."
 	gender = FEMALE
