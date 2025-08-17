@@ -72,6 +72,8 @@ SUBSYSTEM_DEF(persistence)
 	 */
 	var/list/queued_message_bottles
 
+	var/list/persistent_save_cache = list()
+
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
 	load_wall_engravings()
@@ -195,6 +197,66 @@ SUBSYSTEM_DEF(persistence)
 		var/oldest_autosave_full_path = MAP_PERSISTENT_DIRECTORY + all_saves[i]
 		to_chat(world, span_boldannounce("Deleted oldest autosave: [oldest_autosave_full_path]"))
 		fdel(oldest_autosave_full_path)
+
+/// Returns the directory path to the last save if it exists
+/datum/controller/subsystem/persistence/proc/get_last_save()
+	var/list/all_saves = get_all_saves(NEWEST)
+	if(!all_saves.len)
+		return // no saves exist yet
+
+	return all_saves[1]
+
+/// Loads the last recent save
+/datum/controller/subsystem/persistence/proc/cache_save_files_z_levels()
+
+
+/// Based on the last recent save, get a list of all z levels as numbers which have the specific trait
+/// Will return null if no traits match or a save file doesn't exist yet
+/datum/controller/subsystem/persistence/proc/levels_by_trait(trait)
+	var/last_save = get_last_save()
+	if(!last_save)
+		return null // no saves exist yet
+
+	var/list/matching_z_levels = list()
+	var/list/last_save_files = flist(last_save)
+	for(var/file in last_save_files)
+		if(copytext("[file]", -5) != ".json")
+			continue
+
+		// make sure it doesn't set JSON to ZTRAIT_STATION by default
+		var/datum/map_config/map_json = load_map_config(file, last_save, TRUE)
+
+		// for persistent autosaves, the name is always a number which indicates the z-level
+		var/current_z = map_json.map_name
+		if(!islist(map_json.traits))
+			CRASH("Missing list of traits in autosave json for [last_save]/[current_z].json")
+			continue
+
+		var/current_multi_z_level = 0
+		// this will probably fuckup on multi-z maps where the traits are mixed
+		// for example ice station has mining z-levels and station z-levels on the same map
+		for(var/level in map_json.traits)
+			if(!CONFIG_GET(flag/persistent_save_centcomm_z_levels) && is_centcom_level(z))
+				continue
+			else if(!CONFIG_GET(flag/persistent_save_station_z_levels) && is_station_level(z))
+				continue
+			else if(!CONFIG_GET(flag/persistent_save_space_z_levels) && is_space_level(z))
+				continue
+			else if(!CONFIG_GET(flag/persistent_save_mining_z_levels) && is_mining_level(z))
+				continue
+			else if(!CONFIG_GET(flag/persistent_save_transitional_z_levels) && is_reserved_level(z)) // for shuttles in transit (hyperspace)
+				continue
+			else if(!CONFIG_GET(flag/persistent_save_away_z_levels) && is_away_level(z)) // gateway away missions
+				continue
+
+			if(trait in level)
+				matching_z_levels += (current_z + current_multi_z_level) // double check the math here
+			current_multi_z_level++
+
+	if(!matching_z_levels.len)
+		return null
+
+	return matching_z_levels
 
 /*
  * Helper proc to get all saves that returns a list of paths relative to MAP_PERSISTENT_DIRECTORY
