@@ -218,16 +218,16 @@ export async function get_updated_label_set({ github, context }) {
     // That way, if a maintainer removes and then re-adds the same label it
     // remains true to their final intent.
     for (const eventData of events.reverse()) {
+      // Skip all bot actions
+      if (eventData.actor?.login === "github-actions") {
+        continue;
+      }
       if (
-        eventData.event === "labeled" &&
-        eventData.actor?.login !== "github-actions"
-      ) {
-        updated_labels.add(eventData.label.name);
+        eventData.event === "labeled") {
+          updated_labels.add(eventData.label.name);
       } else if (
-        eventData.event === "unlabeled" &&
-        eventData.actor?.login !== "github-actions"
-      ) {
-        updated_labels.delete(eventData.label.name);
+        eventData.event === "unlabeled") {
+          updated_labels.delete(eventData.label.name);
       }
     }
 } catch (error) {
