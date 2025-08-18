@@ -142,13 +142,15 @@ SUBSYSTEM_DEF(ticker)
 
 		GLOB.syndicate_code_response_regex = codeword_match
 
-	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
+	round_start_time = start_at // May be changed later, but prevents the time from jumping back when the round actually starts
 	if(CONFIG_GET(flag/randomize_shift_time))
-		gametime_offset = rand(0, 23) HOURS
+		gametime_offset = rand(0, 23) * (1 HOURS)
 	else if(CONFIG_GET(flag/shift_time_realtime))
-		gametime_offset = world.timeofday
+		gametime_offset = world.timeofday + GLOB.timezoneOffset
+		station_time_rate_multiplier = 1
 	else
-		gametime_offset = (CONFIG_GET(number/shift_time_start_hour) HOURS)
+		gametime_offset = (CONFIG_GET(number/shift_time_start_hour) * (1 HOURS))
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ticker/fire()

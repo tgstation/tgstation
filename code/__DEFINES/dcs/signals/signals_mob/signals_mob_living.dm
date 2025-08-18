@@ -14,6 +14,8 @@
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
+/// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
+#define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
 
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
@@ -25,6 +27,8 @@
 #define COMSIG_LIVING_ENTER_STAMCRIT "living_enter_stamcrit"
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
+	/// Stop the door from causing wounds (damage still applies though)
+	#define DOORCRUSH_NO_WOUND (1<<0)
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
 ///from base of mob/living/ignite_mob() (/mob/living)
@@ -336,6 +340,15 @@
 	#define FAIL_PROB_INDEX 1
 	/// Index in modifiers containing the modifer to surgery speed
 	#define SPEED_MOD_INDEX 2
+
+/// From /datum/status_effect/proc/on_creation() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_APPLIED "living_status_applied"
+
+/// From /datum/status_effect/proc/Destroy() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_REMOVED "living_status_removed"
+
+/// From /datum/spawners_menu/ui_static_data(mob/user) : (list/string_info)
+#define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"
 
 ///from mob/living/befriend()
 #define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"

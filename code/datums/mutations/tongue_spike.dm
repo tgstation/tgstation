@@ -159,7 +159,7 @@
 	if(!istype(target, /obj/item/hardened_spike/chem))
 		qdel(src)
 
-/datum/action/send_chems/Trigger(trigger_flags)
+/datum/action/send_chems/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE

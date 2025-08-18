@@ -88,7 +88,7 @@
 
 /datum/crafting_recipe/food/garlicbread
 	name = "Garlic Bread"
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/obj/item/food/grown/garlic = 1,
 				/obj/item/food/breadslice/plain = 1,
 				/obj/item/food/butterslice = 1
@@ -117,7 +117,7 @@
 
 /datum/crafting_recipe/food/baguette
 	name = "Baguette"
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/food/doughslice = 2,

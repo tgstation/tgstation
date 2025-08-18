@@ -36,26 +36,33 @@
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
 	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	ADD_TRAIT(src, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
 
-	if((!GLOB.holy_weapon_type || !station_holy_item) && type == /obj/item/nullrod)
-		var/list/rods = list()
-		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
-			if(!initial(nullrod_type.chaplain_spawnable))
-				continue
-			rods[nullrod_type] = initial(nullrod_type.menu_description)
-		//special non-nullrod subtyped shit
-		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-		rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
-									allowing you to conjure forth a vorpal scythe. \
-									Allows you to behead targets for empowered strikes. \
-									Harms you if you dismiss the scythe without first causing harm to a creature. \
-									The shard also causes you to become Morbid, shifting your interests towards the macabre."
-		rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
-		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
+	if((GLOB.holy_weapon_type && station_holy_item) || type != /obj/item/nullrod)
+		return
+
+	var/list/rods = list()
+	for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
+		if(!initial(nullrod_type.chaplain_spawnable))
+			continue
+		rods[nullrod_type] = initial(nullrod_type.menu_description)
+	//special non-nullrod subtyped shit
+	rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
+	rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
+								allowing you to conjure forth a vorpal scythe. \
+								Allows you to behead targets for empowered strikes. \
+								Harms you if you dismiss the scythe without first causing harm to a creature. \
+								The shard also causes you to become Morbid, shifting your interests towards the macabre."
+	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
+	AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /// Callback for subtype picker, invoked when the chaplain picks a new nullrod
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/new_holy_weapon, mob/living/picker)
-	new_holy_weapon.on_selected(src, picker)
+	// Some nullrod variants aren't nullrod subtypes
+	if(istype(new_holy_weapon))
+		new_holy_weapon.on_selected(src, picker)
+	else // In which case they still need to be marked as one
+		ADD_TRAIT(new_holy_weapon, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
 	if(!station_holy_item)
 		return
 	GLOB.holy_weapon_type = new_holy_weapon.type
