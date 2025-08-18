@@ -363,6 +363,13 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/hooch = 1, /datum/reagent/consumable/ethanol/absinthe = 1, /datum/reagent/consumable/ethanol/manly_dorf = 1, /datum/reagent/consumable/ethanol/syndicatebomb = 1)
 	mix_message = span_warning("The mixture turns to a sickening froth.")
 
+/datum/chemical_reaction/drink/maints_crawler
+	results = list(/datum/reagent/consumable/ethanol/maints_crawler = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/hooch = 1, /datum/reagent/consumable/grey_bull = 1, /datum/reagent/fuel = 1)
+	mix_message = "The mixture lightens from a dark black to a slightly less dark brown-red. How appetizing."
+	mix_sound = 'sound/machines/steam_hiss.ogg'
+	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY
+
 /datum/chemical_reaction/drink/eggnog
 	results = list(/datum/reagent/consumable/ethanol/eggnog = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 2)

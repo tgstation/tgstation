@@ -467,6 +467,32 @@
 	addiction_types = list(/datum/addiction/alcohol = 5, /datum/addiction/maintenance_drugs = 2)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		if(drinker.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
+
+/datum/reagent/consumable/ethanol/maints_crawler
+	name = "Maints Crawler"
+	description = "Despite being made of welding fuel, energy drinks, and terrible booze, it's still better than pruno."
+	color = "#240f18" // rgb: 102, 67, 0
+	boozepwr = 60
+	taste_description = "anarchy"
+	addiction_types = list(/datum/addiction/alcohol = 5, /datum/addiction/maintenance_drugs = 2)
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/maints_crawler/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	//Greytide station wide
+	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		if(drinker.heal_bodypart_damage(brute = 2 * REM * seconds_per_tick, burn = 2 * REM * seconds_per_tick, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
+		drinker.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
+		metabolization_rate *= 0.8
+
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
 	description = "A dark alcoholic beverage made with malted barley and yeast."
