@@ -23,11 +23,18 @@
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	integrity_failure = 0.5
 	var/obj/golfcart_rear/child = null
-	var/obj/structure/closet/crate/crate = null
+	var/static/list/allowed_cargo = typecacheof(list(
+		/obj/structure/closet/crate,
+		/obj/structure/reagent_dispensers,
+	))
+	var/static/list/banned_cargo = typecacheof(list(
+		/obj/structure/reagent_dispensers/wall,
+	))
+	var/obj/cargo = null
 
-/obj/vehicle/ridden/golfcart/proc/load(obj/structure/closet/crate/to_load)
+/obj/vehicle/ridden/golfcart/proc/load(obj/to_load)
 	if (!to_load)
-		if (!crate)
+		if (!cargo)
 			return
 		var/list/candidates = list(
 			get_step(child, turn(dir, 180)),
@@ -35,44 +42,48 @@
 			get_step(child, turn(dir, 270)),
 		)
 		for (var/atom/turf in candidates)
-			if (turf.Enter(crate, src))
-				crate.forceMove(turf)
-				crate = null
+			if (turf.Enter(cargo, src))
+				cargo.forceMove(turf)
+				cargo = null
 				update_appearance(UPDATE_ICON)
 				return
-		crate.forceMove(get_turf(child))
-		crate = null
+		cargo.forceMove(get_turf(child))
+		cargo = null
 		update_appearance(UPDATE_ICON)
 		return
-	if (crate)
+	if (cargo)
 		return
-	to_load.close()
+	if (to_load.anchored)
+		return
+	if (istype(to_load, /obj/structure/closet))
+		var/obj/structure/closet/crate = to_load
+		crate.close()
 	to_load.forceMove(src)
-	crate = to_load
+	cargo = to_load
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/unload()
 	return load(null)
 
 /obj/golfcart_rear/attack_hand(mob/user, list/modifiers)
-	if(loc == user || (istype(loc, /turf) && !isnull(parent.crate)))
+	if(loc == user || (istype(loc, /turf) && !isnull(parent.cargo)))
 		parent.unload()
 		return TRUE
 	return ..()
 
 /obj/golfcart_rear/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if (!parent.crate)
+	if (!parent.cargo)
 		return
 	tool.play_tool_sound(src, 50)
 	parent.unload()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
-	if (!istype(dropped, /obj/structure/closet/crate))
+	if (!is_type_in_typecache(dropped, parent.allowed_cargo) || is_type_in_typecache(dropped, parent.banned_cargo))
 		return ..()
-	var/obj/structure/closet/crate/dropped_crate = dropped
-	parent.load(dropped_crate)
+	var/obj/dropped_obj = dropped
+	return parent.load(dropped_obj)
 
 /datum/component/riding/vehicle/golfcart
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
@@ -191,7 +202,7 @@
 	child.update_appearance(updates)
 
 /obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null)
-	if (!crate)
+	if (!cargo)
 		return
 	if (!layer)
 		layer = src.layer
@@ -200,15 +211,16 @@
 		crate_y_offset += -30
 		crate_layer_offset = 0.01
 	else if (dir & SOUTH)
+		crate_layer_offset = -0.01
 		crate_y_offset += 30
 	else if (dir & EAST)
 		crate_x_offset += -32
 	else if (dir & WEST)
 		crate_x_offset += 32
-	var/mutable_appearance/crate_overlay = mutable_appearance(crate.icon, crate.icon_state, layer + crate_layer_offset)
+	var/mutable_appearance/crate_overlay = mutable_appearance(cargo.icon, cargo.icon_state, layer + crate_layer_offset)
 	crate_overlay.pixel_x = crate_x_offset
 	crate_overlay.pixel_y = crate_y_offset
-	crate_overlay.pixel_z = initial(crate.pixel_z) + 11
+	crate_overlay.pixel_z = initial(cargo.pixel_z) + 11
 	return crate_overlay
 
 /obj/vehicle/ridden/golfcart/proc/get_rear_offset()
@@ -226,7 +238,7 @@
 
 /obj/golfcart_rear/update_overlays()
 	. = ..()
-	if(!parent.crate)
+	if(!parent.cargo)
 		return
 	var/vector/rear_offsets = parent.get_rear_offset()
 	. += parent.generate_cargo_overlay(-rear_offsets.x - base_pixel_x, -rear_offsets.y - base_pixel_y, layer=layer)
@@ -260,7 +272,7 @@
 	. += rear_overlay
 	if (roof_overlay)
 		. += roof_overlay
-	if (crate)
+	if (cargo)
 		. += generate_cargo_overlay()
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
