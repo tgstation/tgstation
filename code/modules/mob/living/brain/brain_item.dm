@@ -423,21 +423,30 @@
 	name = "zombie brain"
 	desc = "This glob of green mass can't have much intelligence inside it."
 	icon_state = "brain-x"
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE)
+
+/obj/item/organ/brain/zombie/Initialize(mapload)
+	. = ..()
+	organ_traits.Remove(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	organ_traits |= list(TRAIT_PRIMITIVE)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
-	organ_traits = list(TRAIT_CAN_STRIP)
+
+/obj/item/organ/brain/alien/Initialize(mapload)
+	. = ..()
+	organ_traits.Remove(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
 
 /obj/item/organ/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
-	organ_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_PRIMITIVE, // No literacy
+
+/obj/item/organ/brain/primitive/Initialize(mapload)
+	. = ..()
+	organ_traits.Remove(TRAIT_LITERATE)
+	organ_traits |= list(
+		TRAIT_PRIMITIVE,
 		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 		TRAIT_EXPERT_FISHER, // live off land, fish from river
 		TRAIT_ROUGHRIDER, // ride beast, chase down prey, flee from danger
@@ -451,14 +460,16 @@
 	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+
+/obj/item/organ/brain/golem/Initialize(mapload)
+	. = ..()
+	organ_traits |= list(TRAIT_ROCK_METAMORPHIC)
 
 /obj/item/organ/brain/lustrous
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	can_smoothen_out = FALSE
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
 // This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
 // Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
@@ -492,7 +503,6 @@
 /obj/item/organ/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
-	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
 
 /obj/item/organ/brain/ghost
 	name = "ghost brain"
@@ -506,7 +516,10 @@
 	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE, TRAIT_REMOTE_TASTING)
+
+/obj/item/organ/brain/abductor/Initialize(mapload)
+	. = ..()
+	organ_traits |= list(TRAIT_REMOTE_TASTING)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

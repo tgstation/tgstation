@@ -7,9 +7,12 @@
 		/datum/action/cooldown/spell/charged/psychic_booster,
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 	var/does_it_blind = FALSE
+
+/obj/item/organ/brain/psyker/Initialize(mapload)
+	. = ..()
+	organ_traits |= list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
