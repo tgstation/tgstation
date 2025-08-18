@@ -106,8 +106,8 @@
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 	reagents.add_reagent(/datum/reagent/medicine/morphine, 10)
 
-/obj/item/food/drug/opium/raw/Initialize(mapload)
+/obj/item/food/drug/opium/raw/Initialize(mapload) //Randomized limited amount for the poppy extraction.
 	. = ..()
 	reagents.clear_reagents()
-	var/amount = rand(1, 5)
+	var/amount = rand(1, 3)
 	reagents.add_reagent(/datum/reagent/medicine/morphine, amount)
