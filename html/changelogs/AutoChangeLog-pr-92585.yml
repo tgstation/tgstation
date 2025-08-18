@@ -1,4 +1,0 @@
-author: "Needicla"
-delete-after: True
-changes:
-  - bugfix: "Abductor agent disguises no longer break when moving between z-levels."
