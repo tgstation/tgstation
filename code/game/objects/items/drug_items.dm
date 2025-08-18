@@ -86,10 +86,28 @@
 	name = "crystal meth"
 	desc = "A clear, sad looking crystal substance."
 	icon_state = "meth_crystal1"
+	tastes = list("awfulness" = 2, "burning" = 1, "chemicals" = 2)
 	food_reagents = list(/datum/reagent/drug/methamphetamine = 10)
 
 /obj/item/food/drug/meth_crystal/Initialize(mapload)
 	. = ..()
 	icon_state = pick("meth_crystal1", "meth_crystal2", "meth_crystal3", "meth_crystal4")
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOONICORN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
+/obj/item/food/drug/opium
+	name = "opium"
+	desc = "A little of it, taken as much as a grain of ervum is a pain-easer, and a sleep-causer, and a digester... but being drank too much it hurts, making spacemen lethargical, and it kills."
+	icon_state = "opium1"
+	tastes = list("amber" = 2, "a bitter vanilla" = 1)
+
+/obj/item/food/drug/opium/Initialize(mapload)
+	. = ..()
+	icon_state = pick("opium1", "opium2", "opium3", "opium4", "opium5")
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+	reagents.add_reagent(/datum/reagent/medicine/morphine, 10)
+
+/obj/item/food/drug/opium/raw/Initialize(mapload)
+	. = ..()
+	reagents.clear_reagents()
+	var/amount = rand(1, 5)
+	reagents.add_reagent(/datum/reagent/medicine/morphine, amount)

@@ -938,6 +938,17 @@
 			to_chat(user, span_warning("This plot is completely devoid of weeds! It doesn't need uprooting."))
 			return
 
+	else if(istype(O, /obj/item/hatchet)) // Allows player to slice a plant during a narrow harvest window for an exclusive, robust product. Can add other plants this too.
+		if(!myseed)
+			return
+		if(istype(myseed, /obj/item/seeds/poppy) && age >= 7 && age <= 19 && !myseed.extracted)
+			myseed.extracted = 1
+			new /obj/item/food/drug/opium/raw(get_turf(src))
+			user.visible_message(
+				span_notice("You carefully slice the poppy pod, collecting fragrant, alluring sap.")
+			)
+		return
+
 	else if(istype(O, /obj/item/secateurs))
 		if(!myseed)
 			to_chat(user, span_notice("This plot is empty."))
