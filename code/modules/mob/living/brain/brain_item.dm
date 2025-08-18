@@ -44,11 +44,17 @@
 	var/can_smoothen_out = TRUE
 	/// We got smooth from being washed
 	var/smooth_brain = FALSE
+	/// Variance in brain traits added by subtypes
+	var/variant_traits_added
+	/// Variance in brain traits removed by subtypes
+	var/variant_traits_removed
 
 /obj/item/organ/brain/Initialize(mapload)
 	. = ..()
 	// Brain size logic
 	transform = transform.Scale(brain_size)
+	organ_traits.Remove(variant_traits_removed)
+	organ_traits |= variant_traits_added
 
 /obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
@@ -431,29 +437,20 @@
 	name = "zombie brain"
 	desc = "This glob of green mass can't have much intelligence inside it."
 	icon_state = "brain-x"
-
-/obj/item/organ/brain/zombie/Initialize(mapload)
-	. = ..()
-	organ_traits.Remove(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
-	organ_traits |= list(TRAIT_PRIMITIVE)
+	variant_traits_added = list(TRAIT_PRIMITIVE)
+	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
-
-/obj/item/organ/brain/alien/Initialize(mapload)
-	. = ..()
-	organ_traits.Remove(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
 
 /obj/item/organ/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
-
-/obj/item/organ/brain/primitive/Initialize(mapload)
-	. = ..()
-	organ_traits.Remove(TRAIT_LITERATE)
-	organ_traits |= list(
+	variant_traits_removed = list(TRAIT_LITERATE)
+	variant_traits_added = list(
 		TRAIT_PRIMITIVE, // No literacy
 		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 		TRAIT_EXPERT_FISHER, // live off land, fish from river
@@ -469,10 +466,7 @@
 	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
-
-/obj/item/organ/brain/golem/Initialize(mapload)
-	. = ..()
-	organ_traits |= TRAIT_ROCK_METAMORPHIC
+	variant_traits_added = list(TRAIT_ROCK_METAMORPHIC)
 
 /obj/item/organ/brain/lustrous
 	name = "lustrous brain"
@@ -512,10 +506,7 @@
 /obj/item/organ/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
-
-/obj/item/organ/brain/lizard/Initialize(mapload)
-	. = ..()
-	organ_traits |= TRAIT_TACKLING_TAILED_DEFENDER
+	variant_traits_added = list(TRAIT_TACKLING_TAILED_DEFENDER)
 
 /obj/item/organ/brain/ghost
 	name = "ghost brain"
@@ -529,10 +520,7 @@
 	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
-
-/obj/item/organ/brain/abductor/Initialize(mapload)
-	. = ..()
-	organ_traits |= TRAIT_REMOTE_TASTING
+	variant_traits_added = list(TRAIT_REMOTE_TASTING)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

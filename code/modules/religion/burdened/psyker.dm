@@ -9,10 +9,7 @@
 	)
 	w_class = WEIGHT_CLASS_NORMAL
 	var/does_it_blind = FALSE
-
-/obj/item/organ/brain/psyker/Initialize(mapload)
-	. = ..()
-	organ_traits |= TRAIT_ANTIMAGIC_NO_SELFBLOCK
+	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
