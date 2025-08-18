@@ -155,7 +155,7 @@
 /obj/item/reagent_containers/applicator/pill/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
 	var/datum/component/edible/edible_component = source_item.GetComponent(/datum/component/edible)
 	var/victim_perceived_quality = edible_component.get_perceived_food_quality(victim)
-	if(victim_perceived_quality < 1) // If you don't like the food then you notice the pill you just swallowed
+	if(victim_perceived_quality < FOOD_QUALITY_NORMAL) // If you don't like the food then you notice the pill you just swallowed
 		to_chat(victim, span_warning("You swallow something small. [source_item ? "Was that in [source_item]?" : ""]"))
 	on_consumption(victim, user)
 	return FALSE
