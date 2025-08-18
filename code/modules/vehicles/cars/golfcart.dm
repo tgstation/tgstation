@@ -17,7 +17,7 @@
 	icon = 'icons/obj/toys/golfcart_split.dmi'
 	icon_state = "front"
 	max_integrity = 150
-	var/static/base_movedelay = 2
+	var/static/base_movedelay = 1.5
 	armor_type = /datum/armor/none
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
@@ -27,10 +27,13 @@
 		/obj/structure/closet/crate,
 		/obj/structure/reagent_dispensers,
 	))
+	var/charge_per_move = STANDARD_CELL_CHARGE / 300
 	var/static/list/banned_cargo = typecacheof(list(
 		/obj/structure/reagent_dispensers/wall,
 	))
 	var/obj/cargo = null
+	var/obj/item/stock_parts/power_store/cell/cell = null
+	var/hood_open = FALSE
 
 /obj/vehicle/ridden/golfcart/proc/load(obj/to_load)
 	if (!to_load)
@@ -65,8 +68,33 @@
 /obj/vehicle/ridden/golfcart/proc/unload()
 	return load(null)
 
+/obj/vehicle/ridden/golfcart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if (!hood_open)
+		return ..()
+	if (!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+		return ..()
+	if (cell)
+		balloon_alert(user, "Already has a cell!")
+		// don't thwack the car
+		return
+	user.transferItemToLoc(attacking_item, src)
+	cell = attacking_item
+	balloon_alert(user, "Installed \the [cell].")
+
+/obj/vehicle/ridden/golfcart/attack_hand(mob/living/user, list/modifiers)
+	if (!hood_open)
+		return ..()
+	if (isnull(cell))
+		return ..()
+	var/obj/item/stock_parts/power_store/cell/cell_to_take = cell
+	cell = null
+	. = TRUE
+	if (user.put_in_hands(cell_to_take))
+		return
+	cell_to_take.forceMove(drop_location())
+
 /obj/golfcart_rear/attack_hand(mob/user, list/modifiers)
-	if(loc == user || (istype(loc, /turf) && !isnull(parent.cargo)))
+	if(!isnull(parent.cargo))
 		parent.unload()
 		return TRUE
 	return ..()
@@ -78,6 +106,27 @@
 	tool.play_tool_sound(src, 50)
 	parent.unload()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/vehicle/ridden/golfcart/proc/open_hood()
+	if (hood_open)
+		return
+	hood_open = TRUE
+	update_appearance(UPDATE_ICON)
+
+/obj/vehicle/ridden/golfcart/proc/close_hood()
+	if (!hood_open)
+		return
+	hood_open = FALSE
+	update_appearance(UPDATE_ICON)
+
+/obj/vehicle/ridden/golfcart/click_alt(mob/user)
+	. = ..()
+	if (hood_open)
+		close_hood()
+		to_chat(user, span_notice("You shut \the [src]'s hood."))
+		return
+	open_hood()
+	to_chat(user, span_notice("You pop \the [src]'s hood."))
 
 /obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
 	if (!is_type_in_typecache(dropped, parent.allowed_cargo) || is_type_in_typecache(dropped, parent.banned_cargo))
@@ -93,6 +142,10 @@
 	if (!istype(parent, /obj/vehicle/ridden/golfcart))
 		return ..()
 	var/obj/vehicle/ridden/golfcart/cart = parent
+	if (!cart.cell)
+		return COMPONENT_DRIVER_BLOCK_MOVE
+	if (cart.cell.charge <= 0)
+		return COMPONENT_DRIVER_BLOCK_MOVE
 	if (get_turf(cart.child) == get_step(cart, direction))
 		cart.set_movedelay_effect(2)
 	else
@@ -101,7 +154,24 @@
 	return ..()
 
 /datum/component/riding/vehicle/golfcart/handle_ride(mob/user, direction)
+	if (!istype(parent, /obj/vehicle/ridden/golfcart))
+		return ..()
+	var/obj/vehicle/ridden/golfcart/cart = parent
+	var/charge_to_use = min(cart.charge_per_move, cart.cell.charge)
+	cart.cell.use(charge_to_use)
 	return ..()
+
+/obj/vehicle/ridden/golfcart/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		. += span_warning("You're too far away to examine [src]'s gauges.")
+		return
+	var/power = 0
+	if (cell)
+		power = floor(cell.charge / cell.maxcharge * 100)
+	. += span_info("\The [src] currently is at [power]% charge.")
+	if (hood_open)
+		. += span_warning("The hood is open[isnull(cell) ? "!" : " and you can see \the [cell] inside!"]")
 
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
@@ -140,6 +210,12 @@
 	update_appearance(UPDATE_ICON)
 	child.forceMove(behind)
 	return .
+
+/datum/component/riding/vehicle/golfcart/update_parent_layer_and_offsets(dir, animate)
+	. = ..()
+	if (istype(parent, /obj))
+		var/obj/objectified = parent
+		objectified.update_appearance(UPDATE_ICON)
 
 /datum/component/riding/vehicle/golfcart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
@@ -194,6 +270,8 @@
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
 	child = new /obj/golfcart_rear(mapload, src)
 	child.loc = get_step(src, NORTH)
+	cell = new /obj/item/stock_parts/power_store/cell/lead(src)
+	cell.charge = cell.maxcharge
 	update_appearance()
 
 /obj/vehicle/ridden/golfcart/update_appearance(updates=ALL)
@@ -270,6 +348,8 @@
 		roof_overlay.pixel_x = 10
 	. += lower_overlay
 	. += rear_overlay
+	if (hood_open)
+		. += mutable_appearance(icon, "hood", layer + 0.01)
 	if (roof_overlay)
 		. += roof_overlay
 	if (cargo)
@@ -281,6 +361,7 @@
 	return ..()
 
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
+	update_appearance(UPDATE_ICON) // because for some reason the overlays aren't properly redrawn
 	return ..()
 
 /obj/vehicle/ridden/golfcart/atom_break()
@@ -291,5 +372,14 @@
 	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
 	return ..()
 
+/obj/golfcart_rear/Destroy()
+	if (QDELETED(parent))
+		return ..()
+	QDEL_NULL(parent)
+
 /obj/vehicle/ridden/golfcart/Destroy()
+	if (!QDELETED(child))
+		QDEL_NULL(child)
+	if (crate && !QDELETED(crate))
+		crate.forceMove(drop_location())
 	return ..()
