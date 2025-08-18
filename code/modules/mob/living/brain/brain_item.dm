@@ -504,6 +504,10 @@
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
 
+/obj/item/organ/brain/lizard/Initialize(mapload)
+	. = ..()
+	organ_traits |= list(TRAIT_TACKLING_TAILED_DEFENDER)
+
 /obj/item/organ/brain/ghost
 	name = "ghost brain"
 	desc = "How are you even able to hold this?"
