@@ -460,14 +460,16 @@
 	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+
+/obj/item/organ/brain/golem/Initialize(mapload)
+	. = ..()
+	organ_traits |= TRAIT_ROCK_METAMORPHIC
 
 /obj/item/organ/brain/lustrous
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	can_smoothen_out = FALSE
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
 // This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
 // Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
@@ -501,7 +503,10 @@
 /obj/item/organ/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE, TRAIT_TACKLING_TAILED_DEFENDER)
+
+/obj/item/organ/brain/lizard/Initialize(mapload)
+	. = ..()
+	organ_traits |= TRAIT_TACKLING_TAILED_DEFENDER
 
 /obj/item/organ/brain/ghost
 	name = "ghost brain"
@@ -515,7 +520,10 @@
 	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE, TRAIT_REMOTE_TASTING)
+
+/obj/item/organ/brain/abductor/Initialize(mapload)
+	. = ..()
+	organ_traits |= TRAIT_REMOTE_TASTING
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
