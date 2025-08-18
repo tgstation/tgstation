@@ -431,7 +431,7 @@
 
 /obj/machinery/light/attacked_by(obj/item/attacking_object, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!.)
+	if(. <= 0)
 		return
 	if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 		return
