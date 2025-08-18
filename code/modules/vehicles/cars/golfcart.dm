@@ -107,14 +107,7 @@
 /obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
 	movedelay = base_movedelay * modification
 
-/obj/vehicle/ridden/golfcart/proc/nudgeto(atom/newloc, newdir, glide_size_override=0)
-	return Move(newloc, newdir, glide_size_override=glide_size_override, was_nudged=TRUE)
-
-/obj/vehicle/ridden/golfcart/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE, was_nudged = FALSE)
-	if (was_nudged)
-		. = ..()
-		update_appearance(UPDATE_ICON)
-		return
+/obj/vehicle/ridden/golfcart/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
 	var/atom/old_loc = get_turf(src)
 	var/old_dir = dir
 	if (get_turf(child) == newloc)
@@ -132,10 +125,7 @@
 			setDir(old_dir)
 			behind = get_step(src, turn(dir, 180))
 	update_appearance(UPDATE_ICON)
-	if (!.)
-		child.loc = behind
-		return .
-	child.loc = behind
+	child.forceMove(behind)
 	return .
 
 /datum/component/riding/vehicle/golfcart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
@@ -165,30 +155,25 @@
 		return (dir & NORTH) ? NORTH : SOUTH
 	return dir
 
-/obj/golfcart_rear/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE, was_nudged = FALSE)
-	if (was_nudged)
-		return ..(newloc, direct, glide_size_override, update_dir)
-	if (pulledby)
-		var/atom/oldloc = loc
+/obj/golfcart_rear/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
+	if(pulledby)
 		var/olddir = dir
+		var/newdir = normalize_dir(direct)
 		. = ..()
-		var/newdir = dir
-		setDir(turn(dir, 180))
+		dir = newdir
+		if (get_step(src, turn(dir, 180)) != get_turf(pulledby))
+			setDir(turn(dir, 180))
 		var/atom/behind = get_step(src, dir)
-		if (normalize_dir(newdir) != normalize_dir(get_dir(src, pulledby)))
-			if (behind.Enter(parent, parent.loc))
-				setDir(olddir)
-		if ((!behind.Enter(parent, parent.loc)))
+		if (!behind.Enter(parent))
 			setDir(olddir)
 			behind = get_step(src, dir)
-		parent.loc = behind
+		parent.set_glide_size(pulledby.glide_size)
+		parent.forceMove(behind)
 		parent.setDir(dir)
 		parent.update_appearance(UPDATE_ICON)
 		return
-	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
-/obj/golfcart_rear/proc/nudgeto(atom/new_loc)
-	return Move(new_loc, dir, was_nudged = TRUE)
+	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
 /obj/vehicle/ridden/golfcart/Initialize(mapload)
 	. = ..()
@@ -252,6 +237,8 @@
 	. += crate_overlay
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
+	if (M.pulling)
+		M.stop_pulling()
 	return ..()
 
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
