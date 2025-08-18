@@ -1432,7 +1432,6 @@
 #include "code\datums\diseases\advance\symptoms\genetics.dm"
 #include "code\datums\diseases\advance\symptoms\hallucigen.dm"
 #include "code\datums\diseases\advance\symptoms\headache.dm"
-#include "code\datums\diseases\advance\symptoms\heal.dm"
 #include "code\datums\diseases\advance\symptoms\itching.dm"
 #include "code\datums\diseases\advance\symptoms\narcolepsy.dm"
 #include "code\datums\diseases\advance\symptoms\oxygen.dm"
