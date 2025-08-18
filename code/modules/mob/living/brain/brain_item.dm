@@ -431,20 +431,29 @@
 	name = "zombie brain"
 	desc = "This glob of green mass can't have much intelligence inside it."
 	icon_state = "brain-x"
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE)
+
+/obj/item/organ/brain/zombie/Initialize(mapload)
+	. = ..()
+	organ_traits.Remove(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	organ_traits |= list(TRAIT_PRIMITIVE)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
-	organ_traits = list(TRAIT_CAN_STRIP)
+
+/obj/item/organ/brain/alien/Initialize(mapload)
+	. = ..()
+	organ_traits.Remove(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
 
 /obj/item/organ/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
-	organ_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
+
+/obj/item/organ/brain/primitive/Initialize(mapload)
+	. = ..()
+	organ_traits.Remove(TRAIT_LITERATE)
+	organ_traits |= list(
 		TRAIT_PRIMITIVE, // No literacy
 		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 		TRAIT_EXPERT_FISHER, // live off land, fish from river
