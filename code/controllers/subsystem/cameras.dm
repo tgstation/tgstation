@@ -22,6 +22,8 @@ SUBSYSTEM_DEF(cameras)
 	var/list/image/obscured_images = list()
 	/// Primarily for debugging, outright prevents all camera chunk updates
 	var/disable_camera_updates = FALSE
+	/// Tracks current subsystem run
+	var/list/current_run = list()
 
 /datum/controller/subsystem/cameras/Initialize()
 	update_offsets(SSmapping.max_plane_offset)
@@ -29,11 +31,14 @@ SUBSYSTEM_DEF(cameras)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
-	while(length(chunks_to_update))
-		var/datum/camerachunk/chunk = chunks_to_update[1]
-		if(length(chunk.update_sources)) // It's possible something forced update before we got to it
-			chunk.update()
-		chunks_to_update.Cut(1, 2)
+	if(!resumed)
+		src.current_run = chunks_to_update.Copy()
+
+	var/list/current_run = src.current_run
+	while(current_run.len)
+		var/datum/camerachunk/chunk = current_run[current_run.len]
+		chunk.force_update(only_if_necessary = TRUE) // Forces an update if necessary
+		chunks_to_update.len--
 		if(MC_TICK_CHECK)
 			break
 
@@ -195,7 +200,7 @@ SUBSYSTEM_DEF(cameras)
 	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
 	if(isnull(chunk))
 		return FALSE
-	chunk.force_update() // Update NOW if necessary
+	chunk.force_update(only_if_necessary = TRUE) // Update NOW if necessary
 	if(chunk.visibleTurfs[position])
 		return TRUE
 	return FALSE
@@ -207,7 +212,7 @@ SUBSYSTEM_DEF(cameras)
 	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
 	if(!chunk)
 		return null
-	chunk.force_update() // Update NOW if necessary
+	chunk.force_update(only_if_necessary = TRUE) // Update NOW if necessary
 	if(chunk.visibleTurfs[position])
 		return chunk
 	return null
