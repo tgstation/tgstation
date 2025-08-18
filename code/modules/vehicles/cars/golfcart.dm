@@ -26,10 +26,13 @@
 	var/static/list/allowed_cargo = typecacheof(list(
 		/obj/structure/closet/crate,
 		/obj/structure/reagent_dispensers,
+		/obj/machinery,
 	))
 	var/charge_per_move = STANDARD_CELL_CHARGE / 300
 	var/static/list/banned_cargo = typecacheof(list(
 		/obj/structure/reagent_dispensers/wall,
+		// i mean it's a fucking door
+		/obj/machinery/door,
 	))
 	var/obj/cargo = null
 	var/obj/item/stock_parts/power_store/cell/cell = null
@@ -163,6 +166,8 @@
 
 /obj/vehicle/ridden/golfcart/examine(mob/user)
 	. = ..()
+	if (cargo)
+		. += span_info("The bed is holding \a [cargo].")
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += span_warning("You're too far away to examine [src]'s gauges.")
 		return
@@ -229,8 +234,8 @@
 	return list(
 		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
 		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_EAST =  list(0, 0, OBJ_LAYER),
-		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+		TEXT_EAST =  list(0, 0, VEHICLE_LAYER),
+		TEXT_WEST =  list(0, 0, VEHICLE_LAYER),
 	)
 
 /obj/golfcart_rear/Initialize(mapload, obj/vehicle/ridden/golfcart/progenitor)
@@ -279,27 +284,45 @@
 	child.setDir(dir)
 	child.update_appearance(updates)
 
-/obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null)
-	if (!cargo)
-		return
-	if (!layer)
-		layer = src.layer
-	var/crate_layer_offset = 0
+/obj/vehicle/ridden/golfcart/proc/get_cargo_offsets(crate_x_offset = 0, crate_y_offset = 0)
 	if (dir & NORTH)
 		crate_y_offset += -30
-		crate_layer_offset = 0.01
 	else if (dir & SOUTH)
-		crate_layer_offset = -0.01
 		crate_y_offset += 30
 	else if (dir & EAST)
 		crate_x_offset += -32
 	else if (dir & WEST)
 		crate_x_offset += 32
-	var/mutable_appearance/crate_overlay = mutable_appearance(cargo.icon, cargo.icon_state, layer + crate_layer_offset)
-	crate_overlay.pixel_x = crate_x_offset
-	crate_overlay.pixel_y = crate_y_offset
-	crate_overlay.pixel_z = initial(cargo.pixel_z) + 11
-	return crate_overlay
+	return vector(crate_x_offset, crate_y_offset)
+
+/obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null)
+	if (!cargo)
+		return
+	if (!layer)
+		layer = src.layer
+	var/vector/offsets = get_cargo_offsets(crate_x_offset, crate_y_offset)
+	var/crate_layer_offset = 0
+	if (dir & NORTH)
+		crate_layer_offset = 0.01
+	else if (dir & SOUTH)
+		crate_layer_offset = -0.01
+	var/list/overlays = list()
+	if (cargo.icon)
+		overlays += mutable_appearance(cargo.icon, cargo.icon_state, cargo.layer)
+	overlays += cargo.update_overlays()
+	for(var/i in 1 to overlays.len)
+		var/entry = overlays[i]
+		var/mutable_appearance/overlay = entry
+		if(istext(entry))
+			overlay = mutable_appearance(cargo.icon, entry, layer + crate_layer_offset)
+			overlays[i] = overlay
+		// nested lists may exist and i can't be asked to flatten them
+		if (!isnull(overlay))
+			overlay.layer = min(layer + crate_layer_offset + (overlay.layer - cargo.layer), ABOVE_MOB_LAYER + 0.01)
+			overlay.pixel_x += offsets.x
+			overlay.pixel_y += offsets.y
+			overlay.pixel_z += 11
+	return overlays
 
 /obj/vehicle/ridden/golfcart/proc/get_rear_offset()
 	var/x = 0
@@ -336,14 +359,14 @@
 		lower_overlay.pixel_x = -32
 		lower_overlay.layer -= 0.02
 
-		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER)
+		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER + 0.02)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = -10
 	else if (dir & WEST)
 		lower_overlay.pixel_x = 32
 		lower_overlay.layer -= 0.02
 
-		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER)
+		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER + 0.02)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = 10
 	. += lower_overlay
