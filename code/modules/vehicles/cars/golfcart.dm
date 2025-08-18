@@ -373,13 +373,19 @@
 	return ..()
 
 /obj/golfcart_rear/Destroy()
-	if (QDELETED(parent))
-		return ..()
-	QDEL_NULL(parent)
+	if (!QDELETED(parent))
+		qdel(parent)
+	parent = null
+	return ..()
 
 /obj/vehicle/ridden/golfcart/Destroy()
 	if (!QDELETED(child))
-		QDEL_NULL(child)
-	if (crate && !QDELETED(crate))
-		crate.forceMove(drop_location())
+		qdel(child)
+	child = null
+	if (cargo && !QDELETED(cargo))
+		cargo.forceMove(drop_location())
+	cargo = null
+	if (!QDELETED(cell))
+		qdel(cell)
+	cell = null
 	return ..()
