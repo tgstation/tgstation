@@ -20,7 +20,7 @@
 
 	if(data_tracker || user.can_dominate_mechs)
 		output += span_notice("[icon2html(src, user)] [name] Exosuit Status Report\n")
-		output += data_tracker.get_mecha_info()
+		output += data_tracker?.get_mecha_info()
 
 	if(user.can_dominate_mechs)
 		if(data_tracker)

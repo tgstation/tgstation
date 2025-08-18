@@ -1073,7 +1073,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "oJ" = (
-/obj/item/stack/medical/suture/emergency,
+/obj/item/stack/medical/bandage,
 /obj/item/stack/medical/gauze/twelve,
 /obj/item/reagent_containers/hypospray/medipen/blood_loss,
 /obj/effect/spawner/random/medical/injector,

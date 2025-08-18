@@ -112,8 +112,8 @@
 		addObjectives()
 	addMemories()
 	equip_space_ninja(owner.current)
-	owner.current.add_quirk(/datum/quirk/freerunning)
-	owner.current.add_quirk(/datum/quirk/light_step)
+	owner.current.add_quirk(/datum/quirk/freerunning, announce = FALSE)
+	owner.current.add_quirk(/datum/quirk/light_step, announce = FALSE)
 	owner.current.mind.set_assigned_role(SSjob.get_job_type(/datum/job/space_ninja))
 	return ..()
 

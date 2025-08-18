@@ -14,3 +14,4 @@
 #define TROPHY_BROOD_TONGUE "trophy brood tongue"
 #define TROPHY_DEMON_CLAWS "trophy demon claws"
 #define TROPHY_LEGIONNAIRE_SPINE "trophy legionnaire spine"
+#define TROPHY_RAPTOR_FEATHER "trophy raptor feather"

@@ -217,17 +217,9 @@
 		return FALSE
 
 	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
-	assume_direct_control(blobber)
+	blobber.AddComponent(/datum/component/blob_minion, new_overmind = src, new_death_cloud_size = blobber.death_cloud_size)
 	factory.assign_blobbernaut(blobber)
 	blobber.assign_key(ghost.key, blobstrain)
-	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
-
-/// When one of our boys attacked something, we sometimes want to perform extra effects
-/mob/eye/blob/proc/on_blobbernaut_attacked(mob/living/basic/blobbynaut, atom/target, success)
-	SIGNAL_HANDLER
-	if (!success)
-		return
-	blobstrain.blobbernaut_attack(target, blobbynaut)
 
 /** Moves the core */
 /mob/eye/blob/proc/relocate_core()

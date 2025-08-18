@@ -187,7 +187,8 @@
 
 //Bottom
 
-/obj/effect/turf_decal/syndicateemblem/bottom/left
+/obj/effect/turf_decal/syndicateemblem/bottom/left/obj/effect/turf_decal/raven/nine
+	icon_state = "RAVEN9"
 	icon_state = "synd1,1"
 
 /obj/effect/turf_decal/syndicateemblem/bottom/middle
@@ -218,6 +219,9 @@
 /obj/effect/turf_decal/syndicateemblem/top/right
 	icon_state = "synd3,3"
 
+
+/obj/effect/turf_decal/roroco
+	icon_state = "roroco"
 
 /obj/effect/turf_decal/mining
 	icon_state = "mining"

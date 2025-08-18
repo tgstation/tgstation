@@ -173,7 +173,7 @@
 	if(!length(access))
 		var/obj/item/card/id/accesscard
 		if(computer)
-			accesscard = computer.computer_id_slot?.GetID()
+			accesscard = computer.stored_id?.GetID()
 
 		if(!accesscard)
 			if(loud && user)
@@ -202,7 +202,7 @@
 	if(!can_run(user, loud = TRUE))
 		return FALSE
 	if(program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		var/obj/item/card/id/ID = computer.stored_id?.GetID()
 		generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
 	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_START, user)
 	return TRUE
@@ -228,7 +228,7 @@
 		return FALSE
 
 	if(program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		var/obj/item/card/id/ID = computer.stored_id?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 
 	computer.update_appearance(UPDATE_ICON)

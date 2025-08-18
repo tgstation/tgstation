@@ -21,6 +21,10 @@
 	// Love is stored in the heart.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/love = 2.5)
 
+	cell_line = CELL_LINE_ORGAN_HEART
+	cells_minimum = 1
+	cells_maximum = 2
+
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 
 	/// Whether the heart is currently beating.
@@ -291,6 +295,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	stabilization_available = TRUE
 	toxification_probability = 0
+	bleed_prevention = TRUE
 	emp_vulnerability = 20
 
 /obj/item/organ/heart/cybernetic/surplus
@@ -334,3 +339,69 @@
 	beat_noise = "the power of the podperson" // makes sense
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+
+/// An improved version of the organic heart, with more health and more "keeping you alive" potential
+/obj/item/organ/heart/evolved
+	name = "evolved heart"
+	desc = "It beats ever strong."
+	icon_state = "heart-evolved-on"
+	base_icon_state = "heart-evolved"
+
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.2
+
+	/// Chance to heal per on_life
+	var/healing_probability = 10
+	/// Base healing we receive per tick at 0 damage and for standard versions
+	var/base_healing = 1
+
+/obj/item/organ/heart/evolved/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	if(prob(healing_probability * seconds_per_tick))
+		var/damage_to_heal = base_healing * ((maxHealth - damage) / initial(maxHealth)) * seconds_per_tick
+		owner.heal_overall_damage(damage_to_heal, damage_to_heal, required_bodytype = BODYTYPE_ORGANIC)
+
+		if(owner.stat == HARD_CRIT && !owner.has_reagent(/datum/reagent/medicine/atropine, 5))
+			owner.reagents.add_reagent(/datum/reagent/medicine/atropine, 1 * seconds_per_tick)
+
+/// A weaker evolved heart, but can block magic in exchange for our organs health!
+/obj/item/organ/heart/evolved/sacred
+	name = "sacred heart"
+	desc = "Your foul magics stand no chance against the power of LOVE!!!"
+
+	icon_state = "heart-sacred-on"
+	base_icon_state = "heart-sacred"
+
+	healing_probability = 5
+	base_healing = 0.5
+
+	// How much damage each magic block deals to us
+	var/damage_per_block = 50
+
+/obj/item/organ/heart/evolved/sacred/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	if(IS_CULTIST(owner))
+		owner.reagents.add_reagent(/datum/reagent/water/holywater, 5 * seconds_per_tick)
+
+/obj/item/organ/heart/evolved/sacred/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
+	. = ..()
+
+	receiver.AddComponent(/datum/component/anti_magic, block_magic = CALLBACK(src, PROC_REF(on_blocked)), check_blocking = CALLBACK(src, PROC_REF(check_block)))
+
+/obj/item/organ/heart/evolved/sacred/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+
+	qdel(organ_owner.GetComponent(/datum/component/anti_magic))
+
+/// When we blocked damage, do PAIN on us
+/obj/item/organ/heart/evolved/sacred/proc/on_blocked()
+	apply_organ_damage(damage_per_block)
+	owner.vomit(VOMIT_CATEGORY_BLOOD)
+	playsound(owner, 'sound/effects/health/slowbeat.ogg', 80)
+
+/// We don't block magic if it would kill our heart
+/obj/item/organ/heart/evolved/sacred/proc/check_block()
+	if(maxHealth - damage <= damage_per_block)
+		return FALSE
+	return TRUE

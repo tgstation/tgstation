@@ -82,7 +82,7 @@
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(rand(uplink_sales_min, uplink_sales_max), /datum/uplink_category/discounts, 1, uplink_items)
+		uplink_handler.extra_purchasable += create_uplink_sales(rand(uplink_sales_min, uplink_sales_max), /datum/uplink_category/discounts, -1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -132,11 +132,14 @@
 		objective_count++
 
 	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
-
+	var/datum/objective/job_objective = forge_job_objective()
 	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
 	// This does not give them 1 fewer objectives than intended.
 	for(var/i in objective_count to objective_limit - 1)
-		objectives += forge_single_generic_objective()
+		var/generated = forge_single_generic_objective(job_objective)
+		if(generated == job_objective)
+			job_objective = null
+		objectives += generated
 
 /**
  * ## forge_ending_objective
@@ -166,7 +169,10 @@
 	ending_objective.owner = owner
 	objectives += ending_objective
 
-/datum/antagonist/traitor/proc/forge_single_generic_objective()
+/datum/antagonist/traitor/proc/forge_single_generic_objective(job_objective)
+	if(prob(JOB_PROB) && job_objective)
+		return job_objective
+
 	if(prob(KILL_PROB))
 		var/list/active_ais = active_ais(skip_syndicate = TRUE)
 		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
@@ -190,6 +196,11 @@
 	steal_objective.owner = owner
 	steal_objective.find_target()
 	return steal_objective
+
+/datum/antagonist/traitor/proc/forge_job_objective()
+	var/datum/objective/job_objective = owner.assigned_role.generate_traitor_objective() // can return null
+	job_objective?.owner = owner
+	return job_objective
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()

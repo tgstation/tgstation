@@ -149,24 +149,26 @@
 	src.cost = cost
 	src.contains = contains
 
-/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+///Alters material amrkey & adjust order quantities if they exceed whats on the market
+/datum/supply_pack/custom/minerals/proc/adjust_market()
+	. = list()
 	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
-		var/material_type = initial(possible_stack.material_type)
+		var/material_type = possible_stack.material_type
 		//in case we ordered more than what's in the market at the time due to market fluctuations
 		//we find the min of what was ordered & what's actually available in the market at this point of time
 		var/market_quantity = SSstock_market.materials_quantity[material_type]
-		var/available_quantity = min(contains[possible_stack], market_quantity)
-		if(!available_quantity)
-			continue
+		var/available_quantity = contains[possible_stack]
+		if(available_quantity > market_quantity)
+			var/message = "[possible_stack::singular_name]: requested=[available_quantity] sheets, available=[market_quantity] sheets, adjusted=[market_quantity - available_quantity] sheets."
+			available_quantity = market_quantity
+			if(!available_quantity)
+				. += "[possible_stack::singular_name]: order cancelled due to insufficient sheets in the market."
+				contains -= possible_stack
+				continue
+			. += message
 
-		//spawn the ordered stack inside the crate
-		var/sheets_to_spawn = available_quantity
-		while(sheets_to_spawn)
-			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
-			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
-			if(admin_spawned)
-				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
-			sheets_to_spawn -= spawn_quantity
+		//adjust the order based ont the available quantity
+		contains[possible_stack] = available_quantity
 
 		//Prices go up as material quantity becomes scarce
 		var/fraction = available_quantity
@@ -176,3 +178,14 @@
 
 		//We decrease the quantity only after adjusting our prices for accurate values
 		SSstock_market.adjust_material_quantity(material_type, -available_quantity)
+
+/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
+		//spawn the ordered stack inside the crate
+		var/sheets_to_spawn = contains[possible_stack]
+		while(sheets_to_spawn)
+			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
+			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
+			if(admin_spawned)
+				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
+			sheets_to_spawn -= spawn_quantity

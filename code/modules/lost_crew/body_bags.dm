@@ -7,15 +7,21 @@
 /obj/structure/closet/body_bag/lost_crew
 	name = "long-term body bag"
 	desc = "A plastic bag designed for the long-term storage and transportation of cadavers."
-
 	icon_state = "bodybag_lost"
-
 	foldedbag_path = /obj/item/bodybag/lost_crew
 
 /// Filled with one body. If folded, gives the parent type so we dont make infinite corpses
 /obj/structure/closet/body_bag/lost_crew/with_body
 	/// Whether or not we spawn a paper with everything thats happened to the body
 	var/debug = FALSE
+	/// Have we spawned a body yet?
+	var/body_spawned = FALSE
+
+/obj/structure/closet/body_bag/lost_crew/with_body/attempt_fold(mob/living/carbon/human/the_folder)
+	if (!body_spawned)
+		to_chat(the_folder, span_warning("The body inside of [src] prevents you from folding it up!"))
+		return FALSE
+	return ..()
 
 /obj/structure/closet/body_bag/lost_crew/with_body/PopulateContents()
 	. = ..()
@@ -26,6 +32,7 @@
 	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, protected_items = protected_items, body_data = lost_crew_data)
 	corpse.mind_initialize()
 	corpse.forceMove(src)
+	body_spawned = TRUE
 
 	// Drop stuff like dropped limbs and organs with them in the bag
 	for(var/obj/object in recovered_items)

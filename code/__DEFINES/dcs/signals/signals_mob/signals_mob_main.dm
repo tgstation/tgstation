@@ -227,6 +227,10 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
+/// from /obj/item/assembly/flash/flash_carbon, to the mob being flashed
+#define COMSIG_MOB_FLASH_OVERRIDE_CHECK "mob_flash_override_check"
+	/// Has the flash effect been overridden?
+	#define FLASH_OVERRIDDEN (1<<0)
 /// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
 #define COMSIG_MOB_PRE_FLASHED_CARBON "mob_pre_flashed_carbon"
 	/// Return to override deviation to be full deviation (fail the flash, usually)
@@ -253,7 +257,7 @@
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
 
 /// from /mob/proc/change_mob_type() : ()
-#define COMSIG_PRE_MOB_CHANGED_TYPE "mob_changed_type"
+#define COMSIG_PRE_MOB_CHANGED_TYPE "pre_mob_changed_type"
 	#define COMPONENT_BLOCK_MOB_CHANGE (1<<0)
 /// from /mob/proc/change_mob_type_unchecked() : ()
 #define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"

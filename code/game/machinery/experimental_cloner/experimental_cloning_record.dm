@@ -70,7 +70,7 @@
 	dna.copy_dna(subject.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 	for (var/quirk_type as anything in quirks)
-		subject.add_quirk(quirk_type, add_unique = FALSE)
+		subject.add_quirk(quirk_type, add_unique = FALSE, announce = FALSE)
 
 	for (var/trauma_type as anything in brain_traumas)
 		subject.gain_trauma(trauma_type)

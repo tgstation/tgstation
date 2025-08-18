@@ -243,11 +243,6 @@
 		user.balloon_alert(user, "destination out of range!")
 		return FALSE
 
-	var/turf/target_turf = get_turf(target)
-	if(target_turf.is_blocked_turf_ignore_climbable())
-		user.balloon_alert(user, "destination blocked!")
-		return FALSE
-
 	. = ..()
 
 	var/obj/item/hierophant_club/club = target

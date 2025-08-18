@@ -63,6 +63,10 @@
 	var/direct
 	/// Sound channel to play on, random if not provided
 	var/sound_channel
+	///If we want to reserve a random channel when we start playing sounds. Good for when there could be several sources of the same looping sound heard by the same
+	var/reserve_random_channel = FALSE
+	//If we reserve a random sound channel, store the channel number here so we can clean it up later.
+	var/reserved_channel
 
 /datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
@@ -91,6 +95,11 @@
 		set_parent(on_behalf_of)
 	if(timer_id)
 		return
+
+	if(!sound_channel && reserve_random_channel)
+		sound_channel = SSsounds.reserve_sound_channel_datumless()
+		reserved_channel = sound_channel
+
 	on_start()
 
 /**
@@ -109,6 +118,11 @@
 	deltimer(timer_id, SSsound_loops)
 	timer_id = null
 	loop_started = FALSE
+
+	if(reserved_channel)
+		sound_channel = null
+		SSsounds.free_sound_channel(reserved_channel)
+
 
 /// The proc that handles starting the actual core sound loop.
 /datum/looping_sound/proc/start_sound_loop()
@@ -165,7 +179,8 @@
 			pressure_affected = pressure_affected,
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
-			use_reverb = use_reverb
+			use_reverb = use_reverb,
+			channel = sound_channel || SSsounds.random_available_channel()
 		)
 
 /// Returns the sound we should now be playing.

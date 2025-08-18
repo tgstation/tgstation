@@ -52,7 +52,7 @@
 	else
 		hallucinator.create_chat_message(mother, understood_language, text, spans)
 
-	var/message = hallucinator.compose_message(mother, understood_language, text, null, spans, visible_name = TRUE)
+	var/message = hallucinator.compose_message(mother, understood_language, text, null, null, null, spans, visible_name = TRUE)
 	to_chat(hallucinator, message)
 
 /datum/hallucination/your_mother/proc/exit()

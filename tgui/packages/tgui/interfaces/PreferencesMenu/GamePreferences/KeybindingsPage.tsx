@@ -1,4 +1,4 @@
-import { range, sortBy } from 'common/collections';
+import { range, sortBy } from 'es-toolkit';
 import { Component } from 'react';
 import { resolveAsset } from 'tgui/assets';
 import { useBackend } from 'tgui/backend';
@@ -10,12 +10,12 @@ import {
   Tooltip,
   TrackOutsideClicks,
 } from 'tgui-core/components';
-import { KeyEvent } from 'tgui-core/events';
+import type { KeyEvent } from 'tgui-core/events';
 import { fetchRetry } from 'tgui-core/http';
 import { isEscape, KEY } from 'tgui-core/keys';
 
 import { LoadingScreen } from '../../common/LoadingScreen';
-import { PreferencesMenuData } from '../types';
+import type { PreferencesMenuData } from '../types';
 import { TabbedMenu } from './TabbedMenu';
 
 type Keybinding = {
@@ -69,15 +69,13 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
 function sortKeybindings(array: [string, Keybinding][]) {
-  return sortBy(array, ([_, keybinding]) => {
-    return keybinding.name;
-  });
+  return sortBy(array, [([, keybinding]) => keybinding.name]);
 }
 
 function sortKeybindingsByCategory(
   array: [string, Record<string, Keybinding>][],
 ) {
-  return sortBy(array, ([category, _]) => category);
+  return sortBy(array, [([category]) => category]);
 }
 
 function formatKeyboardEvent(event: KeyboardEvent): string {
@@ -206,7 +204,7 @@ function ResetToDefaultButton(props: ResetToDefaultButtonProps) {
   );
 }
 
-export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
+export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   cancelNextKeyUp?: number;
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData['keybindings'];

@@ -52,25 +52,25 @@
 
 	switch(action)
 		if("send_message")
-			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
-			if(!istype(MT))
+			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])
+			if(!istype(our_mecha_tracker))
 				return
 			var/message = tgui_input_text(usr, "Input message", "Transmit message", max_length = MAX_MESSAGE_LEN)
-			var/obj/vehicle/sealed/mecha/M = MT.chassis
-			if(trim(message) && M)
-				to_chat(M.occupants, message)
+			var/obj/vehicle/sealed/mecha/our_mecha = our_mecha_tracker.chassis
+			if(trim(message) && our_mecha)
+				to_chat(our_mecha.occupants, message)
 				to_chat(usr, span_notice("Message sent."))
 				. = TRUE
 		if("shock")
-			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
-			if(!istype(MT))
+			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])
+			if(!istype(our_mecha_tracker))
 				return
-			var/obj/vehicle/sealed/mecha/M = MT.chassis
-			if(M)
-				MT.shock()
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
-				usr.log_message("has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
-				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [M][ADMIN_JMP(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(",")][ADMIN_FLW(M)]." : "without a pilot."]")
+			var/obj/vehicle/sealed/mecha/our_mecha = our_mecha_tracker.chassis
+			if(our_mecha)
+				our_mecha_tracker.shock()
+				usr.log_message("has activated remote EMP on exosuit [our_mecha], located at [loc_name(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
+				usr.log_message("has activated remote EMP on exosuit [our_mecha], located at [loc_name(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
+				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [our_mecha][ADMIN_JMP(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(",")][ADMIN_FLW(our_mecha)]." : "without a pilot."]")
 				. = TRUE
 
 /obj/item/mecha_parts/mecha_tracking
@@ -111,11 +111,6 @@
 
 	return jointext(output, "\n")
 
-/obj/item/mecha_parts/mecha_tracking/emp_act(severity)
-	. = ..()
-	if(!(. & EMP_PROTECT_SELF))
-		qdel(src)
-
 /obj/item/mecha_parts/mecha_tracking/Destroy()
 	if(chassis)
 		if(src in chassis.trackers)
@@ -125,7 +120,14 @@
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
 	if(!(mecha_to_attach.mecha_flags & flag_to_check))
+		to_chat(user, span_notice("[src] is incompatible with [mecha_to_attach]."))
 		return
+
+	for(var/obj/item/mecha_parts/mecha_tracking/tracker as anything in mecha_to_attach.trackers)
+		if(tracker.flag_to_check == flag_to_check)
+			to_chat(user, span_notice("There already exists a version of [src] attached to [mecha_to_attach]."))
+			return
+
 	if(!..())
 		return
 	mecha_to_attach.trackers += src
@@ -138,10 +140,11 @@
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	if(recharging)
 		return
-	if(chassis)
-		chassis.emp_act(EMP_HEAVY)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_tracking, recharge)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
-		recharging = TRUE
+	if(!chassis)
+		return
+	chassis.emp_act(EMP_HEAVY)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_tracking, recharge)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	recharging = TRUE
 
 /**
  * Resets recharge variable, allowing tracker to be EMP pulsed again

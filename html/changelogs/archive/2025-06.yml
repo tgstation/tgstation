@@ -619,3 +619,111 @@
   - bugfix: Telekinesis can open public airlocks
   carpotoxin:
   - bugfix: Fixed narcolepsy's odds to put you to sleep scaling infinitely
+2025-06-27:
+  Melbert:
+  - refactor: Dynamic rewritten entirely, report any strange rounds
+  - config: Dynamic config reworked, it's now a TOML file
+  - refactor: Refactored antag roles somewhat, report any oddities
+  - refactor: Refactored Revolution entirely, report any oddities
+  - rscdel: Deleted most midround events that spawn antags - they use dynamic rulesets
+      now
+  - rscadd: Dynamic rulesets can now be false alarms
+  - rscadd: Adds a random event that gives dynamic the ability to run another ruleset
+      later
+  - admin: Adds a panel for messing around with dynamic
+  - admin: Adds a panel for chance for every dynamic ruleset to be selected
+  - admin: You can spawn revs without using dynamic now
+  - bugfix: Nuke team leaders get their fun title back
+  Rhials:
+  - qol: When the ticker announces the end of a round on another server, it will include
+      the shuttle call reason if the shuttle is hijacked.
+  SyncIt21:
+  - bugfix: plumbing reaction chamber UI is scrollable again
+  TealSeer:
+  - bugfix: fixed egalitarian station mode missing airlocks that use req_one_access
+  grungussuss:
+  - bugfix: fixed malf ais not being able to dominate mechs
+  - bugfix: borgs can no longer smell
+  - bugfix: fixed dunking giving you a permanent offset
+  - qol: fasten pipes now has a nicer look to it in visible text message
+  - bugfix: the message for putting dental implants in is now correct
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in the cooking menu.
+2025-06-28:
+  FeudeyTF:
+  - rscadd: Added ability to change existing radio channels and create new
+  - qol: Added color for some buttons in Telecomms UI
+  LemonInTheDark:
+  - bugfix: Fixed your theme being used for ghost language/multiz buttons
+  - image: Updated multiz buttons very slightly
+  - image: Added ghost only language menu/multiz buttons
+  SmArtKar:
+  - bugfix: Fixed jaws of life losing hit sounds when swapped twice
+  carlarctg:
+  - sound: Adds glass sounds to heretic potions
+  necromanceranne:
+  - bugfix: Fixes Phazon fire punches. For real this time. It was tested. It works.
+2025-06-29:
+  EuSouAFazer:
+  - map: The R&D Console and Department Protolathe have been moved from the back to
+      the front desk in Catwalk
+  - map: A new broom closet was added to CatwalkScience, where the R&D console was.
+      Don't get too attached!
+  - map: A new smoking room was added to better connect the lower-left region of Science
+      with the rest of Science
+  - map: Many improvements in Catwalk Robotics - new mech bay power ports and a slightly
+      more efficient layout for surgery
+  - bugfix: Removed a stray surgery tray on the floor in Robotics
+  - map: Removes fake stairs on the main hallways
+  LT3:
+  - bugfix: Fixed incorrect opening case in variable door delay
+  - code_imp: Airlocks can have variable animation delay same as doors
+  Melbert:
+  - qol: Mail is now shipped every 10 minutes rather than every 5 minutes. The amount
+      of mail remains unchanged (so you get 1 crate with 6 mail instead of 2 crates
+      with 3 mail each).
+  - qol: Mail is no longer shipped while the station is on red alert - mail held will
+      be sent if the station returns to blue alert.
+  Rhials:
+  - bugfix: Cardboard boxes are no longer slowed down by speed potions. They are now
+      sped up by them instead.
+  necromanceranne:
+  - balance: Mech hydraulic clamps perform an attack animation and sound when attacking
+      mobs.
+  - balance: Mech hydraulic clamps can be blocked and respect armor.
+  - balance: Mech hydraulic clamps do triple damage to xenomorphs.
+  - bugfix: Some undead spirit mobs are actually undead.
+  san7890:
+  - refactor: Soulscythes have undergone a mild refactor, but everything should work
+      as it should. Report any issues.
+2025-06-30:
+  Krysonism:
+  - rscdel: Del removed the emergency sutures.
+  - balance: Emergency medkits now have a bandage instead of an emergency suture stack.
+  - balance: the lead pipe is now fire and acid proof.
+  LemonInTheDark:
+  - refactor: Fucked with admin rank setup very slightly, please yell at me if anything
+      is wrong.
+  - admin: Updated the permissions panel to be a good bit more user friendly, added
+      rank management support to it.
+  - server: I've added code that gives the game modification/deletion perms for the
+      rank table, be made aware.
+  Melbert:
+  - qol: Quirks spam you less on roundstart or latejoin
+  - bugfix: Multiple high impact rulesets will no longer roll simultaneously unless
+      dynamic picks "high chaos"
+  - rscdel: '"Cyborg Pre-screened dogtag" quirk. It''s a loadout item now.'
+  SmArtKar:
+  - balance: Healium bolts now heal and knock out overtime while being embedded instead
+      of being instant.
+  - balance: Healium bolts dissolve after being embedded for 6 seconds and don't work
+      on corpses
+  - bugfix: Healium bolts no longer ignore being blocked/parried/reflected
+  - bugfix: Fixed space in Meta Central virtual domain not having teleport prevention
+  Twaticus:
+  - image: resprites the schoolgirl outfit using GAGs
+  grungussuss:
+  - refactor: refactored how sfx with multiple variants are coded, report any issues
+      with sounds not playing!
+  lelandkemble:
+  - bugfix: makes raw meatpizza appear correctly in cooking menu

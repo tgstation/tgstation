@@ -5,11 +5,11 @@ import {
   Section,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
-import { GenericUplink, Item } from './Uplink/GenericUplink';
+import { GenericUplink, type Item } from './Uplink/GenericUplink';
 
 type AbductorConsoleData = {
   categories: { name: string; items: ConsoleItem[] }[];
