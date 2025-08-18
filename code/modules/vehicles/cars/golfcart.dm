@@ -190,54 +190,59 @@
 	child.setDir(dir)
 	child.update_appearance(updates)
 
+/obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null)
+	if (!crate)
+		return
+	if (!layer)
+		layer = src.layer
+	var/crate_layer_offset = 0
+	if (dir & NORTH)
+		crate_y_offset += -30
+		crate_layer_offset = 0.01
+	else if (dir & SOUTH)
+		crate_y_offset += 30
+	else if (dir & EAST)
+		crate_x_offset += -32
+	else if (dir & WEST)
+		crate_x_offset += 32
+	var/mutable_appearance/crate_overlay = mutable_appearance(crate.icon, crate.icon_state, layer + crate_layer_offset)
+	crate_overlay.pixel_x = crate_x_offset
+	crate_overlay.pixel_y = crate_y_offset
+	crate_overlay.pixel_z = initial(crate.pixel_z) + 11
+	return crate_overlay
+
+/obj/vehicle/ridden/golfcart/proc/get_rear_offset()
+	var/x = 0
+	var/y = 0
+	if (dir & NORTH)
+		y = -32
+	else if (dir & SOUTH)
+		y = 32
+	else if (dir & EAST)
+		x = -32
+	else if (dir & WEST)
+		x = 32
+	return vector(x, y)
+
 /obj/golfcart_rear/update_overlays()
 	. = ..()
 	if(!parent.crate)
 		return
-	var/crate_x_offset = 0
-	var/crate_y_offset = 0
-	if (dir & NORTH)
-		crate_x_offset = 32
-		crate_y_offset = 2
-	else if (dir & SOUTH)
-		crate_x_offset = 32
-		crate_y_offset = -2
-	else if (dir & EAST)
-		crate_x_offset = 32
-	else if (dir & WEST)
-		crate_x_offset = 32
-	var/mutable_appearance/crate_hitbox = mutable_appearance(parent.crate.icon, parent.crate.icon_state, layer)
-	crate_hitbox.pixel_x = crate_x_offset
-	crate_hitbox.pixel_y = 32 + crate_y_offset
-	crate_hitbox.pixel_z = initial(parent.crate.pixel_z) + 11
-	. += crate_hitbox
+	var/vector/rear_offsets = parent.get_rear_offset()
+	. += parent.generate_cargo_overlay(-rear_offsets.x - base_pixel_x, -rear_offsets.y - base_pixel_y, layer=layer)
 
 /obj/vehicle/ridden/golfcart/update_overlays()
 	. = ..()
 	var/mutable_appearance/lower_overlay = mutable_appearance(icon, "lower", OBJ_LAYER)
 	var/mutable_appearance/roof_overlay = null
 	var/mutable_appearance/rear_overlay = mutable_appearance(icon, "rear", layer)
-	var/crate_x_offset = 0
-	var/crate_y_offset = 0
-	var/crate_layer_offset = -0.01
+	var/vector/rear_offsets = get_rear_offset()
+	rear_overlay.pixel_x = rear_offsets.x
+	rear_overlay.pixel_y = rear_offsets.y
 	if (dir & NORTH)
-		crate_y_offset = -30
-		crate_layer_offset = 0.01
-
-		rear_overlay.pixel_x = 0
-		rear_overlay.pixel_y = -32
 	else if (dir & SOUTH)
-		crate_y_offset = 30
-
-		rear_overlay.pixel_x = 0
-		rear_overlay.pixel_y = 32
 		lower_overlay.pixel_y = 32
 	else if (dir & EAST)
-		crate_x_offset = -32
-
-		rear_overlay.pixel_x = -32
-		rear_overlay.pixel_y = 0
-
 		lower_overlay.pixel_x = -32
 		lower_overlay.layer -= 0.02
 
@@ -245,12 +250,6 @@
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = -10
 	else if (dir & WEST)
-
-		crate_x_offset = 32
-
-		rear_overlay.pixel_x = 32
-		rear_overlay.pixel_y = 0
-
 		lower_overlay.pixel_x = 32
 		lower_overlay.layer -= 0.02
 
@@ -262,11 +261,7 @@
 	if (roof_overlay)
 		. += roof_overlay
 	if (crate)
-		var/mutable_appearance/crate_overlay = mutable_appearance(crate.icon, crate.icon_state, layer + crate_layer_offset)
-		crate_overlay.pixel_x = crate_x_offset
-		crate_overlay.pixel_y = crate_y_offset
-		crate_overlay.pixel_z = initial(crate.pixel_z) + 11
-		. += crate_overlay
+		. += generate_cargo_overlay()
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
 	if (M.pulling)
