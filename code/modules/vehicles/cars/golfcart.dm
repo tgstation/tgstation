@@ -1,19 +1,19 @@
 /obj/golfcart_rear
-	name = "golfcart rear"
+	name = "golf cart bed"
 	icon = 'icons/obj/toys/golfcart_hitbox.dmi'
 	density = TRUE
 	base_pixel_x = -32
 	base_pixel_y = -32
 	pixel_x = -32
 	pixel_y = -32
-	alpha = 128
+	alpha = 1
 	glide_size = MAX_GLIDE_SIZE
 	layer = ABOVE_ALL_MOB_LAYER
 	var/obj/vehicle/ridden/golfcart/parent = null
 
 /obj/vehicle/ridden/golfcart
-	name = "all-terrain vehicle"
-	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
+	name = "golf cart"
+	desc = "An all-purpose cargo hauling vehicle."
 	icon = 'icons/obj/toys/golfcart_split.dmi'
 	icon_state = "front"
 	max_integrity = 150
@@ -27,6 +27,7 @@
 		/obj/structure/closet/crate,
 		/obj/structure/reagent_dispensers,
 		/obj/machinery,
+		/obj/item/kirbyplants,
 	))
 	var/charge_per_move = STANDARD_CELL_CHARGE / 300
 	var/static/list/banned_cargo = typecacheof(list(
@@ -164,12 +165,19 @@
 	cart.cell.use(charge_to_use)
 	return ..()
 
+/obj/golfcart_rear/examine(mob/user)
+	if (!parent)
+		. = ..()
+		. += span_warning("A lone golf cart bed must be a bad omen...")
+		return
+	return parent.examine(user)
+
 /obj/vehicle/ridden/golfcart/examine(mob/user)
 	. = ..()
 	if (cargo)
 		. += span_info("The bed is holding \a [cargo].")
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s gauges.")
+		. += span_warning("You're too far away to examine [src] closely.")
 		return
 	var/power = 0
 	if (cell)
