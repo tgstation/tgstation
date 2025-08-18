@@ -282,3 +282,9 @@ SUBSYSTEM_DEF(cameras)
 	invisibility = INVISIBILITY_ABSTRACT
 
 	plane = CAMERA_STATIC_PLANE
+
+ADMIN_VERB(pause_camera_updates, R_ADMIN, "Toggle Camera Updates", "Stop security cameras from updating, meaning what they see now is what they will see forever.", ADMIN_CATEGORY_DEBUG)
+	SScameras.disable_camera_updates = !SScameras.disable_camera_updates
+	log_admin("[key_name_admin(user)] [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
+	message_admins("Admin [key_name_admin(user)] has [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
+	BLACKBOX_LOG_ADMIN_VERB("Toggle Camera Updates")

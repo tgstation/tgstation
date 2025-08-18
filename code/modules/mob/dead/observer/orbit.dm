@@ -81,6 +81,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
 
+		if (is_admin)
+			serialized["ckey"] = mob_poi.ckey
+
 		if(mob_poi.GetComponent(/datum/component/deadchat_control))
 			deadchat_controlled += list(serialized)
 
@@ -102,9 +105,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		serialized["client"] = !!mob_poi.client
 		serialized["name"] = mob_poi.real_name
-
-		if (is_admin)
-			serialized["ckey"] = mob_poi.ckey
 
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)

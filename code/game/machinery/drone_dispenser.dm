@@ -95,7 +95,7 @@
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting."
 	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/syndrone)
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
-	cooldownTime = 100
+	cooldownTime = 10 SECONDS
 	end_create_message = "dispenses a suspicious drone shell."
 	starting_amount = SHEET_MATERIAL_AMOUNT * 12.5
 
@@ -126,7 +126,7 @@
 	iron_cost = SHEET_MATERIAL_AMOUNT * 5
 	glass_cost = SHEET_MATERIAL_AMOUNT * 2.5
 	starting_amount = 0
-	cooldownTime = 600
+	cooldownTime = 60 SECONDS
 
 /obj/machinery/drone_dispenser/classic
 	name = "classic drone shell dispenser"
@@ -148,7 +148,7 @@
 	iron_cost = 0
 	glass_cost = 0
 	energy_used = 0
-	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
+	cooldownTime = 1 SECONDS //Only 1 second - hivebots are extremely weak
 	dispense_type = list(/mob/living/basic/hivebot)
 	begin_create_message = "closes and begins fabricating something within."
 	end_create_message = "slams open, revealing a hivebot!"
