@@ -421,7 +421,7 @@ const UsersScreen = () => {
   });
 
   return (
-    <Section scrollable fill height="320px">
+    <Section scrollable height="320px">
       {!!crashing && (
         <Modal width="300px" align="center">
           <Blink time={500} interval={500}>
@@ -529,7 +529,7 @@ const AuditScreen = (props) => {
   const { crashing, audit_log } = data;
 
   return (
-    <Section scrollable fill height="320px">
+    <Section scrollable height="320px">
       {!!crashing && (
         <Modal width="300px" align="center">
           <Blink time={500} interval={500}>
