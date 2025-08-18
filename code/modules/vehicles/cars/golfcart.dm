@@ -1,3 +1,7 @@
+#define ENGINE_UNWRENCHED 0
+#define ENGINE_WRENCHED 1
+#define ENGINE_WELDED 2
+
 /obj/golfcart_rear
 	name = "golf cart bed"
 	icon = 'icons/obj/toys/golfcart_hitbox.dmi'
@@ -18,10 +22,13 @@
 	icon_state = "front"
 	max_integrity = 150
 	var/static/base_movedelay = 1.5
+	var/static/hotrod_base_movedelay = 0.75
 	armor_type = /datum/armor/none
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	integrity_failure = 0.5
+	var/obj/item/v8_engine/engine = null
+	var/engine_state = null
 	var/obj/golfcart_rear/child = null
 	var/static/list/allowed_cargo = typecacheof(list(
 		/obj/structure/closet/crate,
@@ -72,22 +79,49 @@
 /obj/vehicle/ridden/golfcart/proc/unload()
 	return load(null)
 
+/obj/vehicle/ridden/golfcart/proc/install_cell(obj/item/stock_parts/power_store/cell/cell_to_install, mob/user)
+	if (cell || engine)
+		balloon_alert(user, "already has an engine!")
+		return FALSE
+	user.transferItemToLoc(cell_to_install, src)
+	cell = cell_to_install
+	balloon_alert(user, "installed \the [cell]")
+	return TRUE
+
+/obj/vehicle/ridden/golfcart/proc/install_engine(obj/item/v8_engine/engine_to_install, mob/user)
+	if (engine || cell)
+		balloon_alert(user, "already has an engine!")
+		return FALSE
+	user.transferItemToLoc(engine_to_install, src)
+	engine = engine_to_install
+	engine_state = ENGINE_UNWRENCHED
+	balloon_alert(user, "installed \the [engine]")
+	return TRUE
+
 /obj/vehicle/ridden/golfcart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = FALSE
 	if (!hood_open)
 		return ..()
-	if (!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
-		return ..()
-	if (cell)
-		balloon_alert(user, "Already has a cell!")
-		// don't thwack the car
-		return
-	user.transferItemToLoc(attacking_item, src)
-	cell = attacking_item
-	balloon_alert(user, "Installed \the [cell].")
+	if (istype(attacking_item, /obj/item/v8_engine))
+		. = install_engine(attacking_item, user)
+	if (istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+		. = install_cell(attacking_item, user)
+	if (!.)
+		. = ..()
+	return
 
 /obj/vehicle/ridden/golfcart/attack_hand(mob/living/user, list/modifiers)
 	if (!hood_open)
 		return ..()
+	if (engine && engine_state == ENGINE_UNWRENCHED)
+		. = TRUE
+		var/obj/item/engine_item = engine
+		engine_state = null
+		engine = null
+		if (user.put_in_hands(engine_item))
+			return
+		engine_item.forceMove(drop_location())
+		return
 	if (isnull(cell))
 		return ..()
 	var/obj/item/stock_parts/power_store/cell/cell_to_take = cell
@@ -102,6 +136,40 @@
 		parent.unload()
 		return TRUE
 	return ..()
+
+/obj/vehicle/ridden/golfcart/proc/can_wrench_engine()
+	return hood_open && engine && (engine_state == ENGINE_UNWRENCHED || engine_state == ENGINE_WRENCHED)
+
+/obj/vehicle/ridden/golfcart/proc/can_weld_engine()
+	return hood_open && engine && (engine_state == ENGINE_WRENCHED || engine_state == ENGINE_WELDED)
+
+/obj/vehicle/ridden/golfcart/proc/set_engine_state(state)
+	engine_state = state
+	update_appearance(UPDATE_ICON)
+
+/obj/vehicle/ridden/golfcart/wrench_act(mob/living/user, obj/item/tool)
+	if (!can_wrench_engine())
+		return ..()
+	tool.play_tool_sound(src, 50)
+	if (!tool.use_tool(src, user, 3 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_wrench_engine))))
+		return ITEM_INTERACT_BLOCKING
+	if (engine_state == ENGINE_WRENCHED)
+		set_engine_state(ENGINE_UNWRENCHED)
+	else if (engine_state == ENGINE_UNWRENCHED)
+		set_engine_state(ENGINE_WRENCHED)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/vehicle/ridden/golfcart/welder_act(mob/living/user, obj/item/tool)
+	if(!tool.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.use_tool(src, user, 3 SECONDS, amount = 1, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_weld_engine))))
+		return ITEM_INTERACT_BLOCKING
+	if (engine_state == ENGINE_WRENCHED)
+		set_engine_state(ENGINE_WELDED)
+	else if (engine_state == ENGINE_WELDED)
+		set_engine_state(ENGINE_WRENCHED)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/golfcart_rear/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -146,10 +214,11 @@
 	if (!istype(parent, /obj/vehicle/ridden/golfcart))
 		return ..()
 	var/obj/vehicle/ridden/golfcart/cart = parent
-	if (!cart.cell)
+	if (!cart.engine && !cart.cell)
 		return COMPONENT_DRIVER_BLOCK_MOVE
-	if (cart.cell.charge <= 0)
-		return COMPONENT_DRIVER_BLOCK_MOVE
+	if (cart.cell)
+		if (cart.cell.charge <= 0)
+			return COMPONENT_DRIVER_BLOCK_MOVE
 	if (get_turf(cart.child) == get_step(cart, direction))
 		cart.set_movedelay_effect(2)
 	else
@@ -161,8 +230,9 @@
 	if (!istype(parent, /obj/vehicle/ridden/golfcart))
 		return ..()
 	var/obj/vehicle/ridden/golfcart/cart = parent
-	var/charge_to_use = min(cart.charge_per_move, cart.cell.charge)
-	cart.cell.use(charge_to_use)
+	if (cart.cell)
+		var/charge_to_use = min(cart.charge_per_move, cart.cell.charge)
+		cart.cell.use(charge_to_use)
 	return ..()
 
 /obj/golfcart_rear/examine(mob/user)
@@ -179,12 +249,23 @@
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += span_warning("You're too far away to examine [src] closely.")
 		return
-	var/power = 0
-	if (cell)
-		power = floor(cell.charge / cell.maxcharge * 100)
-	. += span_info("\The [src] currently is at [power]% charge.")
+	if (!engine)
+		var/power = 0
+		if (cell)
+			power = floor(cell.charge / cell.maxcharge * 100)
+		. += span_info("\The [src] currently is at [power]% charge.")
 	if (hood_open)
-		. += span_warning("The hood is open[isnull(cell) ? "!" : " and you can see \the [cell] inside!"]")
+		. += span_warning("The hood is open!")
+		if (engine)
+			. += span_info("You can see \the [engine] inside.")
+			if (engine_state == ENGINE_UNWRENCHED)
+				. += span_notice("It needs to be [EXAMINE_HINT("wrenched")] into place.")
+			else if (engine_state == ENGINE_WRENCHED)
+				. += span_notice("It needs to be [EXAMINE_HINT("welded")] down.")
+			// last state is ENGINE_WELDED
+		else
+			. += span_info("You can see \the [cell] inside.")
+			. += span_smallnotice("If you remove the cell you could probably install another power source...")
 
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
@@ -200,7 +281,10 @@
 	return min(get_dist(thing, loc), get_dist(thing.loc, child.loc))
 
 /obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
-	movedelay = base_movedelay * modification
+	var/base_movedelay_effect = base_movedelay
+	if (engine && engine_state == ENGINE_WELDED)
+		base_movedelay_effect = hotrod_base_movedelay
+	movedelay = base_movedelay_effect * modification
 	child.set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 
 /obj/vehicle/ridden/golfcart/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
@@ -420,3 +504,7 @@
 		qdel(cell)
 	cell = null
 	return ..()
+
+#undef ENGINE_UNWRENCHED
+#undef ENGINE_WRENCHED
+#undef ENGINE_WELDED
