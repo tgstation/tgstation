@@ -12,6 +12,7 @@
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	processing_flags = START_PROCESSING_MANUALLY
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 	///The amount of fuel gained from stacks or reagents
 	var/grill_fuel = 0

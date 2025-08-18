@@ -213,7 +213,7 @@
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 15
-	custom_materials = null
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /datum/embedding/combat_knife/weak
 	embed_chance = 35

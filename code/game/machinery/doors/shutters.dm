@@ -9,6 +9,7 @@
 	armor_type = /datum/armor/poddoor_shutters
 	max_integrity = 100
 	recipe_type = /datum/crafting_recipe/shutters
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	animation_sound = 'sound/machines/shutter.ogg'
 	show_nav_computer_icon = FALSE
 

@@ -6,6 +6,7 @@
 	base_icon_state = "toiletbong"
 	density = FALSE
 	anchored = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25)
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
@@ -94,9 +95,12 @@
 	if (!do_after(user, 10 SECONDS, target = src))
 		return FALSE
 	new /obj/item/flamethrower(get_turf(src))
-	new /obj/item/stack/sheet/iron(get_turf(src))
 	var/obj/item/tank/internals/plasma/ptank = new /obj/item/tank/internals/plasma(get_turf(src))
 	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
+	for(var/datum/material/material as anything in custom_materials)
+		var/sheets_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1)
+		if(sheets_to_spawn > 0 && material.sheet_type)
+			new material.sheet_type(loc, sheets_to_spawn)
 	qdel(src)
 	return TRUE
 

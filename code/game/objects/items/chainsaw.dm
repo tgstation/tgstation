@@ -24,6 +24,7 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //Turn it on first you dork
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/alloy/plasteel =  SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =  SHEET_MATERIAL_AMOUNT * 3)
 	var/force_on = 24
 	/// The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop

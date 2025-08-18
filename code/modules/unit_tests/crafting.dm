@@ -144,7 +144,7 @@
 		var/obj/item/stack/stack_result = result
 		copycat = new result.type(turf, stack_result.amount)
 	else
-		copycat = new result.type
+		copycat = new result.type(turf)
 	spawned_components += copycat
 
 	// SSmaterials caches the combinations so we don't have to run more complex checks
@@ -156,7 +156,7 @@
 		var/what_it_should_be = result.get_materials_english_list()
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
-			what_it_should_be += " (you can round values a bit)"
+			what_it_should_be += " (you can round values a bit if they're big enough)"
 		TEST_FAIL("[warning]. custom_materials should be [what_it_should_be]. \
 			Otherwise set the requirements_mats_blacklist variable for [recipe] \
 			or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it")

@@ -5,6 +5,7 @@
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
 	pixel_shift = 30
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15 + SMALL_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 10 + SMALL_MATERIAL_AMOUNT)
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -22,6 +23,8 @@
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_bluespace_vendor
 	layer = OBJ_LAYER
+	custom_materials = /obj/item/wallframe/bluespace_vendor_mount::custom_materials
+
 
 	///The bluespace sender that this vendor is connected to
 	var/obj/machinery/atmospherics/components/unary/bluespace_sender/connected_machine

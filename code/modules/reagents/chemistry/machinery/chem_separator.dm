@@ -7,6 +7,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "separator"
 	light_power = 1
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 	///Is the mixture currently boiling
 	var/boiling = FALSE
