@@ -1,7 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "You may now remove water cooler jugs and put whatever you want in them. Go nuts."
-  - rscadd: "Water coolers are now craftable (with plastic), orderable from cargo, and tippable when unanchored."
-  - rscadd: "Rarely, water coolers will spawn full of healing fruit punch instead of water! Be careful not to stray from the cooler while digesting this stuff."
-  - rscadd: "You can also just buy the punch cooler from cargo if you feel like it."

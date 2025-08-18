@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "you can stock more than 30 items from a bag into an vending machine"
-  - bugfix: "fixes runtime when deconstructing custom vending machines"

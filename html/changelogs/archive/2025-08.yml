@@ -442,3 +442,34 @@
       on suit storage, such as emergency oxygen tanks or a pack of smokes.
   throwawayuseless:
   - bugfix: Diode Disks are no longer improperly /improper.
+2025-08-18:
+  00-Steven:
+  - bugfix: Ending a MODlink call in any non-standard way no longer bricks your ability
+      to use MODlinks.
+  - bugfix: Ending a MODlink call in any non-standard way and then giving the item
+      to someone else to call with no longer moves the visuals based on the first
+      person to try to use the item.
+  HurgnDurgn:
+  - rscadd: Cleanbots now clean up used cigarettes.
+  Kashargul:
+  - bugfix: chat highlights
+  Needicla:
+  - bugfix: Abductor agent disguises no longer break when moving between z-levels.
+  NoHaxJustPi:
+  - spellcheck: Fixes "It is The bolts on the bottom are..." in tank holder descriptions,
+      and improves grammar for inserted objects.
+  Rhials:
+  - rscadd: You may now remove water cooler jugs and put whatever you want in them.
+      Go nuts.
+  - rscadd: Water coolers are now craftable (with plastic), orderable from cargo,
+      and tippable when unanchored.
+  - rscadd: Rarely, water coolers will spawn full of healing fruit punch instead of
+      water! Be careful not to stray from the cooler while digesting this stuff.
+  - rscadd: You can also just buy the punch cooler from cargo if you feel like it.
+  SyncIt21:
+  - qol: you can stock more than 30 items from a bag into an vending machine
+  - bugfix: fixes runtime when deconstructing custom vending machines
+  Zytolg:
+  - map: Adjusts Turret Placement in the AI Upload on Nebulastation
+  - map: Adds an External Security Camera to the Starboard Vault Wall overlooking
+      the AI Upload on Nebulastation
