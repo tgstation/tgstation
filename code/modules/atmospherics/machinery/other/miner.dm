@@ -28,6 +28,7 @@
 	var/broken_message = "ERROR"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.5
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	initialize_directions = NONE
 
 /obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()
