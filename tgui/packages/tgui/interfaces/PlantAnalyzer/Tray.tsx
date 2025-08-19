@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   DmIcon,
   Icon,
@@ -8,7 +9,6 @@ import {
   Section,
   Stack,
   Table,
-  Box,
   Tooltip,
 } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
@@ -101,39 +101,41 @@ export function PlantAnalyzerTrayStats(props) {
             >
               {tray_data.reagents.length > 0 ? (
                 <Box>
+                  <ProgressBar
+                    width="234px" // why won't you scale??
+                    position="absolute"
+                    value={0}
+                    color="transparent"
+                    style={{
+                      zIndex: 3,
+                      border: `1px solid ${nutriToColor(tray_data.nutri, tray_data.nutri_max)}`,
+                    }}
+                  >
+                    {tray_data.nutri} / {tray_data.nutri_max}
+                  </ProgressBar>
+                  {tray_data.reagents.map((reagent, i) => (
                     <ProgressBar
-                      width="234px" // why won't you scale??
-                      position="absolute"
-                      value={0}
-                      color='transparent'
-                      style={{ zIndex: 3, border: `1px solid ${nutriToColor(tray_data.nutri, tray_data.nutri_max)}` }}
-                    >
-                      {tray_data.nutri} / {tray_data.nutri_max}
-                    </ProgressBar>
-                {tray_data.reagents.map((reagent, i) => (
-                    <ProgressBar
-                    key={`${i}-${reagent.name}`}
-                        mb={-0.5}
-                        width={`${(reagent.volume / tray_data.nutri_max) * 234}px`}
-                        value={1}
-                        color={reagent.color}
-                        empty
-                    >
-                    </ProgressBar>
-                ))}
+                      key={`${i}-${reagent.name}`}
+                      mb={-0.5}
+                      width={`${(reagent.volume / tray_data.nutri_max) * 234}px`}
+                      value={1}
+                      color={reagent.color}
+                      empty
+                    />
+                  ))}
                 </Box>
-                ) : (
-                    <ProgressBar
-                      value={tray_data.nutri / tray_data.nutri_max}
-                      ranges={{
-                        good: [0.7, Infinity],
-                        average: [0.3, 0.7],
-                        bad: [0, 0.3],
-                      }}
-                    >
-                      {tray_data.nutri} / {tray_data.nutri_max}
-                    </ProgressBar>
-                    )}
+              ) : (
+                <ProgressBar
+                  value={tray_data.nutri / tray_data.nutri_max}
+                  ranges={{
+                    good: [0.7, Infinity],
+                    average: [0.3, 0.7],
+                    bad: [0, 0.3],
+                  }}
+                >
+                  {tray_data.nutri} / {tray_data.nutri_max}
+                </ProgressBar>
+              )}
             </LabeledList.Item>
 
             <LabeledList.Item
@@ -224,14 +226,14 @@ export function PlantAnalyzerTrayChems(props) {
         <Table>
           <Table.Row header>
             <Table.Cell>Reagent</Table.Cell>
-            <Table.Cell >Volume</Table.Cell>
+            <Table.Cell>Volume</Table.Cell>
           </Table.Row>
           {tray_data.reagents.map((reagent, i) => (
             <Table.Row key={i} className="candystripe">
-              <Table.Cell py={0.5} pl={1}>{reagent.name}</Table.Cell>
-              <Table.Cell >
-                {reagent.volume}u
+              <Table.Cell py={0.5} pl={1}>
+                {reagent.name}
               </Table.Cell>
+              <Table.Cell>{reagent.volume}u</Table.Cell>
             </Table.Row>
           ))}
         </Table>
