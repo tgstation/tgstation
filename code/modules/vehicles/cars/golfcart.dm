@@ -79,6 +79,73 @@
 /obj/vehicle/ridden/golfcart/proc/unload()
 	return load(null)
 
+/obj/vehicle/ridden/golfcart/proc/is_hotrod()
+	return engine && engine_state && engine_state == ENGINE_WELDED
+
+/obj/vehicle/ridden/golfcart/proc/thrown_mob_landed(atom/thrown_atom)
+	if (!isliving(thrown_atom))
+		UnregisterSignal(thrown_atom, COMSIG_MOVABLE_THROW_LANDED)
+		return
+	var/mob/living/thrown_mob = thrown_atom
+	thrown_mob.Knockdown(3 SECONDS)
+	UnregisterSignal(thrown_atom, COMSIG_MOVABLE_THROW_LANDED)
+
+/obj/vehicle/ridden/golfcart/Bump(atom/bumped_atom)
+	if (..())
+		return
+	if (!is_hotrod())
+		return
+	if(!isliving(bumped_atom))
+		return
+	var/mob/living/mob = bumped_atom
+	mob.throw_at(get_edge_target_turf(mob, dir), 2, 3)
+	RegisterSignal(mob, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(thrown_mob_landed))
+	mob.visible_message(
+		span_danger("[src] hits [mob] at full speed!"),
+		span_userdanger("[src] slams into you!"),
+	)
+
+/obj/vehicle/ridden/golfcart/proc/run_over(var/mob/living/victim)
+	if (!has_gravity())
+		victim.throw_at(get_edge_target_turf(victim, dir), 4, 3)
+		RegisterSignal(victim, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(thrown_mob_landed))
+		return
+	if (istype(victim, /mob/living/carbon))
+		var/mob/living/carbon/person = victim
+		if (person.body_position == LYING_DOWN)
+			log_combat(src, victim, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
+			playsound(src, 'sound/effects/pop_expl.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+			victim.visible_message(
+				span_danger("[src] drives over [victim]!"),
+				span_userdanger("[src] drives over you!"),
+			)
+
+			var/damage = rand(5, 15)
+			person.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
+			person.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
+			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
+			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG)
+			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM)
+			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM)
+
+			add_mob_blood(person)
+			var/turf/below_us = get_turf(src)
+			below_us.add_mob_blood(person)
+
+			AddComponent(/datum/component/blood_walk, \
+				blood_type = /obj/effect/decal/cleanable/blood/tracks, \
+				target_dir_change = TRUE, \
+				transfer_blood_dna = TRUE, \
+				max_blood = 4)
+
+/obj/vehicle/ridden/golfcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if (!is_hotrod())
+		return
+	for(var/mob/living/future_pancake in loc)
+		run_over(future_pancake)
+
 /obj/vehicle/ridden/golfcart/proc/install_cell(obj/item/stock_parts/power_store/cell/cell_to_install, mob/user)
 	if (cell || engine)
 		balloon_alert(user, "already has an engine!")
@@ -214,7 +281,7 @@
 	if (!istype(parent, /obj/vehicle/ridden/golfcart))
 		return ..()
 	var/obj/vehicle/ridden/golfcart/cart = parent
-	if (!cart.engine && !cart.cell)
+	if (!cart.cell && !cart.is_hotrod())
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	if (cart.cell)
 		if (cart.cell.charge <= 0)
@@ -294,7 +361,7 @@
 
 /obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
 	var/base_movedelay_effect = base_movedelay
-	if (engine && engine_state == ENGINE_WELDED)
+	if (is_hotrod())
 		base_movedelay_effect = hotrod_base_movedelay
 	movedelay = base_movedelay_effect * modification
 	child.set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
@@ -372,6 +439,12 @@
 		return
 
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
+
+/obj/vehicle/ridden/golfcart/hotrod/Initialize(mapload)
+	. = ..()
+	cell = null
+	engine = new /obj/item/v8_engine(src)
+	set_engine_state(ENGINE_WELDED)
 
 /obj/vehicle/ridden/golfcart/Initialize(mapload)
 	. = ..()
