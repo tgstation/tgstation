@@ -20,6 +20,7 @@
 /atom/movable/screen/alert/status_effect/his_grace/her_grace
 	name = "Her Grace"
 	desc = "Her Grace hungers, and you must feed Her."
+	icon_state = "her_grace"
 
 /atom/movable/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
 	desc = initial(desc)

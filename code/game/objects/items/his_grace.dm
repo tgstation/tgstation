@@ -56,6 +56,8 @@
 			gender = FEMALE
 			if(awakened)
 				name = "Her Grace"
+			icon_state = "pink"
+			inhand_icon_state = "toolbox_pink"
 			if(holder)
 				holder.remove_status_effect(/datum/status_effect/his_grace)
 			// remember to update its sprite here if you get one
@@ -74,13 +76,8 @@
 				name = "His Grace"
 			if(holder)
 				holder.remove_status_effect(/datum/status_effect/his_grace/her_grace)
-			/*
-			icon = 'icons/obj/storage/toolbox.dmi'
 			icon_state = "green"
 			inhand_icon_state = "toolbox_green"
-			lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-			righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-			*/
 			T.visible_message(span_boldwarning("[src] begins to look a little more... manly?"))
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
@@ -99,8 +96,15 @@
 	return ..()
 
 /obj/item/his_grace/update_icon_state()
-	icon_state = ascended ? "gold" : "green"
-	inhand_icon_state = ascended ? "toolbox_gold" : "toolbox_green"
+	if(ascended)
+		icon_state = "gold"
+		inhand_icon_state = "toolbox_gold"
+	else if(gender == MALE)
+		icon_state = "green"
+		inhand_icon_state = "toolbox_green"
+	else if(gender == FEMALE)
+		icon_state = "pink"
+		inhand_icon_state = "toolbox_pink"
 	return ..()
 
 /obj/item/his_grace/update_overlays()

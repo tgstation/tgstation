@@ -326,6 +326,7 @@
 /atom/movable/screen/alert/status_effect/his_wrath/her_wrath
 	name = "Her Wrath"
 	desc = "You fled from Her Grace instead of feeding Her, and now you suffer."
+	icon_state = "her_grace"
 
 /datum/status_effect/his_wrath/tick(seconds_between_ticks)
 	for(var/obj/item/his_grace/HG in owner.held_items)
