@@ -244,7 +244,7 @@
 
 /obj/golfcart_rear/examine_more(mob/user)
 	if (!parent)
-		return
+		return ..()
 	return parent.examine_more(user)
 
 /obj/vehicle/ridden/golfcart/examine_more(mob/user)
