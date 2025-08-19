@@ -62,7 +62,6 @@
 			inhand_icon_state = "toolbox_pink"
 			if(holder)
 				holder.remove_status_effect(/datum/status_effect/his_grace)
-			// remember to update its sprite here if you get one
 			T.visible_message(span_boldwarning("[src] starts to look a little... girly?"))
 		else if(gender == FEMALE)
 			pronouns = list(
