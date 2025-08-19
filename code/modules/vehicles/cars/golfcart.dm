@@ -10,10 +10,20 @@
 	base_pixel_y = -32
 	pixel_x = -32
 	pixel_y = -32
+	can_buckle = TRUE
+	max_buckled_mobs = 2
 	alpha = 1
 	glide_size = MAX_GLIDE_SIZE
 	layer = ABOVE_ALL_MOB_LAYER
 	var/obj/vehicle/ridden/golfcart/parent = null
+
+/obj/golfcart_rear/is_buckle_possible(mob/living/target, force, check_loc)
+	if (!parent)
+		return FALSE
+	if (parent.cargo)
+		balloon_alert_to_viewers("no space!")
+		return FALSE
+	return ..()
 
 /obj/vehicle/ridden/golfcart
 	name = "golf cart"
@@ -425,10 +435,6 @@
 		TEXT_WEST =  list(0, 0, VEHICLE_LAYER),
 	)
 
-/obj/golfcart_rear/Initialize(mapload, obj/vehicle/ridden/golfcart/progenitor)
-	. = ..()
-	parent = progenitor
-
 /proc/normalize_dir(dir)
 	if(dir & (EAST|WEST))
 		return (dir & EAST) ? EAST : WEST
@@ -455,6 +461,35 @@
 		return
 
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
+
+/datum/component/riding/golfcart_rear
+	ride_check_flags = RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+
+/datum/component/riding/golfcart_rear/get_parent_offsets_and_layers()
+	return null
+
+/datum/component/riding/golfcart_rear/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	if (pass_index == 0)
+		return list(
+			TEXT_NORTH = list(8, -16),
+			TEXT_SOUTH = list(8, 10),
+			TEXT_EAST =  list(8, 2),
+			TEXT_WEST =  list(8, 2),
+		)
+	else if (pass_index == 1)
+		return list(
+			TEXT_NORTH = list(0, -16),
+			TEXT_SOUTH = list(0, 10),
+			TEXT_EAST =  list(0, 2),
+			TEXT_WEST =  list(0, 2),
+		)
+	else
+		CRASH("Attempted to get rider offsets for rider [pass_index + 1], only 2 are allowed.")
+
+/obj/golfcart_rear/Initialize(mapload, obj/vehicle/ridden/golfcart/progenitor)
+	. = ..()
+	parent = progenitor
+	AddElement(/datum/element/ridable, /datum/component/riding/golfcart_rear)
 
 /obj/vehicle/ridden/golfcart/hotrod/Initialize(mapload)
 	. = ..()
