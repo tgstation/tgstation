@@ -35,6 +35,36 @@
 	M.swap_hand()
 	return TRUE
 
+/datum/keybinding/mob/select_hand
+	var/hand_index = NONE
+
+/datum/keybinding/mob/select_hand/right
+	hotkey_keys = list("Unbound")
+	name = "select_right_hand"
+	full_name = "Swap to Right Hand"
+	keybind_signal = COMSIG_KB_MOB_SELECTRIGHTHAND_DOWN
+	hand_index = RIGHT_HANDS
+
+/datum/keybinding/mob/select_hand/left
+	hotkey_keys = list("Unbound")
+	name = "select_left_hand"
+	full_name = "Swap to Left Hand"
+	keybind_signal = COMSIG_KB_MOB_SELECTLEFTHAND_DOWN
+	hand_index = LEFT_HANDS
+
+/datum/keybinding/mob/select_hand/down(client/user, turf/target)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user_mob = user.mob
+	var/active_hand_set = ceil(user_mob.active_hand_index / 2) - 1 //offset
+	var/desired_hand_index = hand_index + (2 * active_hand_set)
+
+	user_mob.swap_hand(desired_hand_index)
+
+	return TRUE
+
 /datum/keybinding/mob/activate_inhand
 	hotkey_keys = list("Z")
 	name = "activate_inhand"
