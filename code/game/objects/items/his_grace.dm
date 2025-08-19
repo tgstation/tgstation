@@ -120,7 +120,13 @@
 	if(awakened && M.stat)
 		if(gender == FEMALE)
 			var/obj/item/reagent_containers/spray/chemsprayer/party/party_popper = new /obj/item/reagent_containers/spray/chemsprayer/party(get_turf(user))
-			party_popper.spray(M, user)
+			var/dx = M.x - user.x
+			var/dy = M.y - user.y
+			if(dx)
+				dx = dx / abs(dx)
+			if(dy)
+				dy = dy / abs(dy)
+			party_popper.spray(locate(M.x + dx * 2, M.y + dy * 2, M.z), user)
 			qdel(party_popper)
 		consume(M)
 	else
