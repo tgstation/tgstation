@@ -7,6 +7,7 @@
 	equip_delay_other = 10 SECONDS
 	armor_type = /datum/armor/shoes_roman
 	fastening_type = SHOES_STRAPS
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"

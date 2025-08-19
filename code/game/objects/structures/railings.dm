@@ -173,6 +173,7 @@
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()

@@ -214,6 +214,7 @@
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
 	fishing_modifier = -6
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/wood/narsie_act()
 	return

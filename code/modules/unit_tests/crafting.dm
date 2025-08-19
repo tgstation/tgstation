@@ -152,7 +152,7 @@
 		delete_components(spawned_components)
 		return
 	if(!result.compare_materials(copycat))
-		var/recipe_type = ispath(recipe, /datum/crafting_recipe/stack) ? "its stack_recipe datum" : recipe.type
+		var/recipe_type = istype(recipe, /datum/crafting_recipe/stack) ? "its stack_recipe datum" : recipe.type
 		var/warning = "custom_materials of [result.type] when crafted compared to just spawned don't match"
 		var/target_var = "custom_materials"
 		var/mult = 1

@@ -38,6 +38,7 @@
 
 /obj/machinery/door/poddoor/shutters/preopen/deconstructed
 	deconstruction = BLASTDOOR_NEEDS_WIRES
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/machinery/door/poddoor/shutters/indestructible
 	name = "hardened shutters"

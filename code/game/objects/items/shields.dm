@@ -114,7 +114,7 @@
 	desc = "A medieval wooden buckler."
 	icon_state = "buckler"
 	inhand_icon_state = "buckler"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 20)
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	max_integrity = 55

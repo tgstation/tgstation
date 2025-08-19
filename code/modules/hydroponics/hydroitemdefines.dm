@@ -64,7 +64,7 @@
 	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 

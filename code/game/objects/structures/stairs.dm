@@ -202,6 +202,7 @@
 	name = "wooden stairs frame"
 	desc = "Everything you need to build a staircase, minus the actual stairs, this one is made of wood."
 	frame_stack = /obj/item/stack/sheet/mineral/wood
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/structure/stairs_frame/Initialize(mapload)
 	. = ..()

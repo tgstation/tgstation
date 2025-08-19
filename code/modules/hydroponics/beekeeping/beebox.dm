@@ -30,6 +30,7 @@
 	icon_state = "beebox"
 	anchored = TRUE
 	density = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 40)
 	var/mob/living/basic/bee/queen/queen_bee = null
 	var/list/bees = list() //bees owned by the box, not those inside it
 	var/list/honeycombs = list()

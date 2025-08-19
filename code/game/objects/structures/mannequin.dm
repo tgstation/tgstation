@@ -146,6 +146,7 @@
 
 /obj/structure/mannequin/wood
 	material = MANNEQUIN_WOOD
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
