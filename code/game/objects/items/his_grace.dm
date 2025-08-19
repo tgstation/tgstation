@@ -28,15 +28,6 @@
 	var/ascended = FALSE
 	var/victims_needed = 25
 	var/ascend_bonus = 15
-	var/pronouns = list(
-		"his",
-		"His",
-		"Him",
-		"he",
-		"He",
-		"himself",
-	)
-
 
 /obj/item/his_grace/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool,/obj/item/slimepotion/genderchange))
@@ -45,14 +36,6 @@
 		if(istype(loc, /mob/living))
 			holder = loc
 		if(gender == MALE)
-			pronouns = list(
-				"her",
-				"Her",
-				"Her",
-				"she",
-				"She",
-				"herself",
-			)
 			gender = FEMALE
 			if(awakened)
 				name = "Her Grace"
@@ -64,14 +47,6 @@
 				holder.remove_status_effect(/datum/status_effect/his_grace)
 			T.visible_message(span_boldwarning("[src] starts to look a little... girly?"))
 		else if(gender == FEMALE)
-			pronouns = list(
-				"his",
-				"His",
-				"Him",
-				"he",
-				"He",
-				"himself",
-			)
 			gender = MALE
 			if(awakened)
 				name = "His Grace"
@@ -225,8 +200,8 @@
 	if(awakened)
 		return
 	awakened = TRUE
-	user.visible_message(span_boldwarning("[src] begins to rattle. [pronouns[5]] thirsts."), span_his_grace("You flick [src]'s latch up. You hope this is a good idea."))
-	name = pronouns[2] + " Grace"
+	user.visible_message(span_boldwarning("[src] begins to rattle. [p_They()] thirsts."), span_his_grace("You flick [src]'s latch up. You hope this is a good idea."))
+	name = p_Their() + " Grace"
 	desc = "A bloodthirsty artifact created by a profane rite."
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
@@ -251,7 +226,7 @@
 	if(!awakened || ascended)
 		return
 	var/turf/T = get_turf(src)
-	T.visible_message(span_boldwarning("[src] slowly stops rattling and falls still, [pronouns[2]] latch snapping shut."))
+	T.visible_message(span_boldwarning("[src] slowly stops rattling and falls still, [p_Their()] latch snapping shut."))
 	playsound(loc, 'sound/items/weapons/batonextend.ogg', 100, TRUE)
 	name = initial(name)
 	if(gender == MALE)
@@ -307,21 +282,21 @@
 		if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
 			ADD_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 			if(HIS_GRACE_STARVING > prev_bloodthirst)
-				master.visible_message(span_boldwarning("[src] is starving!"), "<span class='his_grace big'>[src]'s bloodlust overcomes you. [src] must be fed, or you will become [pronouns[2]] meal.\
-				[force_bonus < 15 ? " And still, [pronouns[2]] power grows.":""]</span>")
+				master.visible_message(span_boldwarning("[src] is starving!"), "<span class='his_grace big'>[src]'s bloodlust overcomes you. [src] must be fed, or you will become [p_Their()] meal.\
+				[force_bonus < 15 ? " And still, [p_Their()] power grows.":""]</span>")
 				force_bonus = max(force_bonus, 15)
 		if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
 			ADD_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 			if(HIS_GRACE_FAMISHED > prev_bloodthirst)
 				master.visible_message(span_warning("[src] is very hungry!"), "<span class='his_grace big'>Spines sink into your hand. [src] must feed immediately.\
-				[force_bonus < 10 ? " [pronouns[2]] power grows.":""]</span>")
+				[force_bonus < 10 ? " [p_Their()] power grows.":""]</span>")
 				force_bonus = max(force_bonus, 10)
 			if(prev_bloodthirst >= HIS_GRACE_STARVING)
 				master.visible_message(span_warning("[src] is now only very hungry!"), "<span class='his_grace big'>Your bloodlust recedes.</span>")
 		if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
 			if(HIS_GRACE_HUNGRY > prev_bloodthirst)
 				master.visible_message(span_warning("[src] is getting hungry."), "<span class='his_grace big'>You feel [src]'s hunger within you.\
-				[force_bonus < 5 ? " [pronouns[2]] power grows.":""]</span>")
+				[force_bonus < 5 ? " [p_Their()] power grows.":""]</span>")
 				force_bonus = max(force_bonus, 5)
 			if(prev_bloodthirst >= HIS_GRACE_FAMISHED)
 				master.visible_message(span_warning("[src] is now only somewhat hungry."), span_his_grace("[src]'s hunger recedes a little..."))
