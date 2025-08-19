@@ -29,7 +29,7 @@ export function PlantAnalyzerSeedStats(props) {
   ];
 
   return (
-    <Section title={capitalizeFirst(seed_data.name)} scrollable>
+    <Section title={capitalizeFirst(seed_data.name)}>
       <Stack>
         <Stack.Item mx={1}>
           <Stack vertical align="center" width="150px">
@@ -133,18 +133,25 @@ export function PlantAnalyzerSeedStats(props) {
 
             {tray_data && (
               <LabeledList.Item label="Age">
-                <ProgressBar
-                  value={tray_data.plant_age}
-                  maxValue={seed_data.lifespan}
-                  ranges={{
-                    average: [0, seed_data.maturation],
-                    good: [seed_data.maturation, seed_data.lifespan],
-                    bad: [seed_data.lifespan, Infinity],
-                  }}
-                >
-                  {tray_data.plant_age * cycle_seconds} /{' '}
-                  {formatPerSecond(seed_data.lifespan, cycle_seconds, false)}
-                </ProgressBar>
+                {tray_data.is_dead ? (
+                  <NoticeBox color="red" align="center">
+                    <Icon name="skull" mr={1} />
+                    Dead
+                  </NoticeBox>
+                ) : (
+                  <ProgressBar
+                    value={tray_data.plant_age}
+                    maxValue={seed_data.lifespan}
+                    ranges={{
+                      average: [0, seed_data.maturation],
+                      good: [seed_data.maturation, seed_data.lifespan],
+                      bad: [seed_data.lifespan, Infinity],
+                    }}
+                  >
+                    {tray_data.plant_age * cycle_seconds} /{' '}
+                    {formatPerSecond(seed_data.lifespan, cycle_seconds, false)}
+                  </ProgressBar>
+                )}
               </LabeledList.Item>
             )}
 
@@ -164,7 +171,7 @@ export function PlantAnalyzerSeedStats(props) {
 
             <LabeledList.Item
               label="Lifespan"
-              tooltip={`The age at which the plant starts withering, in ${data.cycle_seconds} second long cycles. Improves quality of resulting food & drinks.`}
+              tooltip={`The age at which the plant starts withering. Improves quality of resulting food & drinks.`}
             >
               {formatPerSecond(seed_data.lifespan, cycle_seconds)}
             </LabeledList.Item>
@@ -269,7 +276,7 @@ export function PlantAnalyzerSeedChems(props) {
   );
 
   return (
-    <Section title={seed_data.name + ' Contents'} scrollable>
+    <Section title={capitalizeFirst(seed_data.name + ' Contents')}>
       <Stack>
         <Stack.Item width="100%">
           {seed_data.reagents.length === 0 ? (
@@ -302,7 +309,9 @@ export function PlantAnalyzerSeedChems(props) {
               </Table.Row>
               {seed_data.reagents.map((reagent) => (
                 <Table.Row key={reagent.name} className="candystripe">
-                  <Table.Cell py={0.2}>{reagent.name}</Table.Cell>
+                  <Table.Cell py={0.2} pl={1}>
+                    {reagent.name}
+                  </Table.Cell>
                   <Table.Cell>{reagent.rate * 100}%</Table.Cell>
                   <Table.Cell>
                     ~{expectedReagentVolume(reagent, seed_data)}u
@@ -313,7 +322,9 @@ export function PlantAnalyzerSeedChems(props) {
                 className="candystripe"
                 style={{ borderTop: '2px dotted gray' }}
               >
-                <Table.Cell py={1}>Total</Table.Cell>
+                <Table.Cell py={1} pl={1}>
+                  Total
+                </Table.Cell>
                 <Table.Cell>
                   {totalPercentage}%
                   {totalPercentage > 50 && (
@@ -331,12 +342,24 @@ export function PlantAnalyzerSeedChems(props) {
                 </Table.Cell>
                 <Table.Cell>~{totalVolume}u</Table.Cell>
               </Table.Row>
+              <Table.Row
+                className="candystripe"
+                style={{ borderTop: '2px dotted gray' }}
+              >
+                <Table.Cell py={1} pl={1}>
+                  Cap
+                </Table.Cell>
+                <Table.Cell>100%</Table.Cell>
+                <Table.Cell>
+                  ~{seed_data.volume_mod * seed_data.volume_units}u
+                </Table.Cell>
+              </Table.Row>
               {seed_data.grind_results.length > 0 && (
                 <Table.Row
                   className="candystripe"
                   style={{ borderTop: '2px dotted gray' }}
                 >
-                  <Table.Cell py={0.5} colSpan={2}>
+                  <Table.Cell py={0.5} pl={1} colSpan={2}>
                     <i>Grinds nutriments into:</i>
                   </Table.Cell>
                   <Table.Cell>{seed_data.grind_results.join(', ')}</Table.Cell>
@@ -347,7 +370,7 @@ export function PlantAnalyzerSeedChems(props) {
                   className="candystripe"
                   style={{ borderTop: '2px dotted gray' }}
                 >
-                  <Table.Cell py={0.5} colSpan={2}>
+                  <Table.Cell py={0.5} pl={1} colSpan={2}>
                     <i>Juices into:</i>
                   </Table.Cell>
                   <Table.Cell>{seed_data.juice_name}</Table.Cell>
@@ -358,7 +381,7 @@ export function PlantAnalyzerSeedChems(props) {
                   className="candystripe"
                   style={{ borderTop: '2px dotted gray' }}
                 >
-                  <Table.Cell py={0.5} colSpan={2}>
+                  <Table.Cell py={0.5} pl={1} colSpan={2}>
                     <i>Distills into:</i>
                   </Table.Cell>
                   <Table.Cell>{seed_data.distill_reagent}</Table.Cell>
@@ -377,11 +400,7 @@ function expectedReagentVolume(
   seed_data: SeedData,
 ): number {
   const baseVolume = seed_data.volume_units * seed_data.volume_mod;
-  return (
-    Math.round(
-      (reagent.rate * baseVolume) / (seed_data.potency / baseVolume),
-    ) || 0
-  );
+  return Math.round(reagent.rate * baseVolume * (seed_data.potency / 100)) || 0;
 }
 
 function formatPerSecond(

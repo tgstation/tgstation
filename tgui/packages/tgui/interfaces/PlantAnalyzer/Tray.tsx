@@ -8,6 +8,7 @@ import {
   Section,
   Stack,
   Table,
+  Box,
   Tooltip,
 } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
@@ -98,26 +99,41 @@ export function PlantAnalyzerTrayStats(props) {
               label="Nutrients"
               tooltip="The plant starts withering without nutrients, unless it is a weed. Nutrients may affect plant and tray stats."
             >
-              <Tooltip
-                content={
-                  tray_data.reagents.length > 0 ? (
-                    <ReagentList reagents={tray_data.reagents} />
-                  ) : (
-                    'No reagents detected.'
-                  )
-                }
-              >
-                <ProgressBar
-                  value={tray_data.nutri / tray_data.nutri_max}
-                  ranges={{
-                    good: [0.7, Infinity],
-                    average: [0.3, 0.7],
-                    bad: [0, 0.3],
-                  }}
-                >
-                  {tray_data.nutri} / {tray_data.nutri_max}
-                </ProgressBar>
-              </Tooltip>
+              {tray_data.reagents.length > 0 ? (
+                <Box>
+                    <ProgressBar
+                      width="234px" // why won't you scale??
+                      position="absolute"
+                      value={0}
+                      color='transparent'
+                      style={{ zIndex: 3, border: `1px solid ${nutriToColor(tray_data.nutri, tray_data.nutri_max)}` }}
+                    >
+                      {tray_data.nutri} / {tray_data.nutri_max}
+                    </ProgressBar>
+                {tray_data.reagents.map((reagent, i) => (
+                    <ProgressBar
+                    key={`${i}-${reagent.name}`}
+                        mb={-0.5}
+                        width={`${(reagent.volume / tray_data.nutri_max) * 234}px`}
+                        value={1}
+                        color={reagent.color}
+                        empty
+                    >
+                    </ProgressBar>
+                ))}
+                </Box>
+                ) : (
+                    <ProgressBar
+                      value={tray_data.nutri / tray_data.nutri_max}
+                      ranges={{
+                        good: [0.7, Infinity],
+                        average: [0.3, 0.7],
+                        bad: [0, 0.3],
+                      }}
+                    >
+                      {tray_data.nutri} / {tray_data.nutri_max}
+                    </ProgressBar>
+                    )}
             </LabeledList.Item>
 
             <LabeledList.Item
@@ -199,7 +215,7 @@ export function PlantAnalyzerTrayChems(props) {
   const { tray_data } = data;
 
   return (
-    <Section title={tray_data.name + ' Contents'}>
+    <Section title={capitalizeFirst(tray_data.name + ' Contents')}>
       {tray_data.reagents.length === 0 ? (
         <NoticeBox color="red" align="center">
           No reagents detected
@@ -208,12 +224,12 @@ export function PlantAnalyzerTrayChems(props) {
         <Table>
           <Table.Row header>
             <Table.Cell>Reagent</Table.Cell>
-            <Table.Cell textAlign="right">Volume</Table.Cell>
+            <Table.Cell >Volume</Table.Cell>
           </Table.Row>
           {tray_data.reagents.map((reagent, i) => (
             <Table.Row key={i} className="candystripe">
-              <Table.Cell>{reagent.name}</Table.Cell>
-              <Table.Cell py={0.5} pl={2} textAlign="right">
+              <Table.Cell py={0.5} pl={1}>{reagent.name}</Table.Cell>
+              <Table.Cell >
                 {reagent.volume}u
               </Table.Cell>
             </Table.Row>
@@ -224,22 +240,8 @@ export function PlantAnalyzerTrayChems(props) {
   );
 }
 
-function ReagentList(props) {
-  const { reagents = [] } = props;
-
-  return (
-    <Table>
-      <Table.Row header>
-        <Table.Cell colSpan={2}>Reagents:</Table.Cell>
-      </Table.Row>
-      {reagents.map((reagent, i) => (
-        <Table.Row key={i}>
-          <Table.Cell>{reagent.name}</Table.Cell>
-          <Table.Cell py={0.5} pl={2} textAlign="right">
-            {reagent.volume}u
-          </Table.Cell>
-        </Table.Row>
-      ))}
-    </Table>
-  );
+function nutriToColor(nutri: number, maxNutri: number) {
+  if (nutri < maxNutri * 0.3) return 'red';
+  if (nutri < maxNutri * 0.7) return 'yellow';
+  return 'green';
 }

@@ -17,24 +17,25 @@ export type PlantAnalyzerData = {
 
 type TrayData = {
   being_pollinated: BooleanLike;
-  icon_state: string;
   icon: string;
+  icon_state: string;
+  is_dead: BooleanLike;
   light_level: number;
   name: string;
-  nutri_max: number;
   nutri: number;
-  pests_max: number;
+  nutri_max: number;
   pests: number;
+  pests_max: number;
   plant_age: number;
   plant_health: number;
   reagents: ReagentVolume[];
   self_sustaining: BooleanLike;
-  toxins_max: number;
   toxins: number;
-  water_max: number;
+  toxins_max: number;
   water: number;
-  weeds_max: number;
+  water_max: number;
   weeds: number;
+  weeds_max: number;
   yield_mod: number;
 };
 
@@ -81,7 +82,8 @@ type GraftData = {
 
 type ReagentVolume = {
   name: string;
-  volume: string;
+  volume: number;
+  color: string;
 };
 
 export type ReagentData = {

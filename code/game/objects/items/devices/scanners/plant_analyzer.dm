@@ -226,6 +226,7 @@
 		last_scan_data["tray_data"] = list(
 			"plant_health" = tray.plant_health,
 			"plant_age" = tray.age,
+			"is_dead" = tray.plant_status == HYDROTRAY_PLANT_DEAD,
 			"name" = tray.name,
 			"icon" = tray.icon,
 			"icon_state" = tray.icon_state,
@@ -248,7 +249,8 @@
 		for(var/datum/reagent/reagent in tray.reagents.reagent_list)
 			last_scan_data["tray_data"]["reagents"] += list(list(
 				"name" = reagent.name,
-				"volume" = reagent.volume
+				"volume" = reagent.volume,
+				"color" = reagent.color,
 			))
 
 	if(seed)
@@ -265,7 +267,7 @@
 			"endurance" = graft.endurance,
 			"weed_rate" = graft.weed_rate,
 			"weed_chance" = graft.weed_chance,
-			"graft_gene" = graft.stored_trait.type
+			"graft_gene" = graft.stored_trait.type,
 		)
 
 	if(user)
