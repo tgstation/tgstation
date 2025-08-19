@@ -274,18 +274,12 @@
 /obj/machinery/biogenerator/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(istype(arrived, /obj/item/food))
-		current_item_count += 1
-		RegisterSignal(arrived, COMSIG_QDELETING, PROC_REF(on_item_qdel))
+		current_item_count += 1 // No need to track qdels because they call Exited()
 
 /obj/machinery/biogenerator/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(istype(gone, /obj/item/food))
 		current_item_count -= 1
-		UnregisterSignal(gone, COMSIG_QDELETING)
-
-/obj/machinery/biogenerator/proc/on_item_qdel(datum/source)
-	SIGNAL_HANDLER
-	current_item_count -= 1
 
 /// Activates biomass processing and converts all inserted food products into biomass
 /obj/machinery/biogenerator/proc/start_process()
