@@ -118,6 +118,10 @@
 
 /obj/item/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
+		if(gender == FEMALE)
+			var/obj/item/reagent_containers/spray/chemsprayer/party/party_popper = new /obj/item/reagent_containers/spray/chemsprayer/party(get_turf(user))
+			party_popper.spray(M, user)
+			qdel(party_popper)
 		consume(M)
 	else
 		..()
