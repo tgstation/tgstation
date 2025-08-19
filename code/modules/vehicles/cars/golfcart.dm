@@ -251,9 +251,7 @@
 	. = ..()
 	if (!cargo)
 		return
-	if (!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src] closely.")
-		return
+	. += span_slightly_larger("It is currently transporting \the [cargo]")
 	. += cargo.examine(user)
 
 /obj/vehicle/ridden/golfcart/examine(mob/user)
@@ -267,7 +265,7 @@
 		var/power = 0
 		if (cell)
 			power = floor(cell.charge / cell.maxcharge * 100)
-		. += span_info("\The [src] currently is at [power]% charge.")
+		. += span_info("It is currently is at [power]% charge.")
 	if (hood_open)
 		. += span_warning("The hood is open!")
 		if (engine)
