@@ -44742,16 +44742,6 @@
 /obj/structure/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
-"oKX" = (
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/poddoor/shutters{
-	id = "cargowarehouse";
-	pixel_y = 0;
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/cargo/warehouse)
 "oKZ" = (
 /mob/living/basic/bot/repairbot,
 /obj/effect/turf_decal/stripes/line{
@@ -70821,8 +70811,7 @@
 	c_tag = "Secure - EVA Storage"
 	},
 /obj/machinery/light_switch/directional/south{
-	pixel_x = 8;
-	pixel_y = -26
+	pixel_x = 8
 	},
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
@@ -139426,7 +139415,7 @@ pMW
 pMW
 pMW
 pMW
-cAd
+pMW
 pMW
 pMW
 pMW
@@ -139683,7 +139672,6 @@ pMW
 pMW
 pMW
 pMW
-wIP
 pMW
 pMW
 pMW
@@ -139703,7 +139691,8 @@ pMW
 pMW
 pMW
 pMW
-cAd
+pMW
+pMW
 pMW
 pMW
 pMW
@@ -139938,9 +139927,10 @@ pMW
 pMW
 pMW
 pMW
+pMW
+pMW
 cAd
 pMW
-wIP
 pMW
 pMW
 pMW
@@ -139960,7 +139950,6 @@ pMW
 pMW
 pMW
 pMW
-wIP
 pMW
 pMW
 pMW
@@ -140195,31 +140184,31 @@ pMW
 pMW
 pMW
 pMW
-wIP
-pMW
-wIP
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
 pMW
 pMW
 wIP
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
 pMW
 cAd
+pMW
+pMW
 pMW
 pMW
 pMW
@@ -140452,31 +140441,31 @@ pMW
 pMW
 pMW
 pMW
-wIP
-wIP
-wIP
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
-pMW
+cAd
 pMW
 wIP
 pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
+pMW
 wIP
+pMW
+pMW
 pMW
 pMW
 pMW
@@ -140709,7 +140698,7 @@ pMW
 pMW
 pMW
 pMW
-pMW
+wIP
 pMW
 wIP
 pMW
@@ -140732,8 +140721,8 @@ pMW
 pMW
 pMW
 wIP
-wIP
-wIP
+pMW
+cAd
 pMW
 pMW
 pMW
@@ -140966,8 +140955,8 @@ pMW
 pMW
 pMW
 pMW
-pMW
-pMW
+wIP
+wIP
 wIP
 pMW
 pMW
@@ -140990,7 +140979,7 @@ pMW
 pMW
 wIP
 pMW
-pMW
+wIP
 pMW
 pMW
 pMW
@@ -141246,8 +141235,8 @@ pMW
 pMW
 pMW
 wIP
-pMW
-pMW
+wIP
+wIP
 pMW
 pMW
 pMW
@@ -184138,7 +184127,7 @@ haS
 udQ
 udQ
 ldM
-oKX
+bha
 bha
 bha
 eLH
