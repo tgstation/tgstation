@@ -326,27 +326,27 @@
 	stealth = 0
 	resistance = 2
 	stage_speed = -3
-	transmittable = -2
+	transmittable = -3
 	level = 8
 	passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
 	threshold_descs = list(
-		"Stealth 2" = "Host appears to die when falling into a coma.",
-		"Resistance 4" = "The virus also stabilizes the host while they are in critical condition.",
-		"Stage Speed 7" = "Increases healing speed.",
+		"Stealth 3" = "Host appears to die when falling into a coma.",
+		"Resistance 9" = "The virus also stabilizes the host while they are in critical condition.",
+		"Stage Speed 6" = "Increases healing speed.",
 	)
 
 /datum/symptom/heal/coma/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(A.totalStageSpeed() >= 6)
 		power = 1.5
-	if(A.totalResistance() >= 4)
+	if(A.totalResistance() >= 9)
 		stabilize = TRUE
-	if(A.totalStealth() >= 2)
+	if(A.totalStealth() >= 3)
 		deathgasp = TRUE
 
 /datum/symptom/heal/coma/on_stage_change(datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
@@ -373,7 +373,7 @@
 		return power
 	if(M.IsSleeping() && M.health > M.crit_threshold)
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
-	if(M.getBruteLoss() + M.getFireLoss() > 0 && M.stat == SOFT_CRIT && !active_coma)
+	if(M.getBruteLoss() + M.getFireLoss() > 0 && M.stat >= SOFT_CRIT && M.stat <= HARD_CRIT && !active_coma)
 		to_chat(M, span_warning("You feel yourself start to slip into a regenerative coma..."))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, PROC_REF(coma), M), 4 SECONDS)
