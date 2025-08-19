@@ -56,7 +56,7 @@
 			gender = FEMALE
 			if(awakened)
 				name = "Her Grace"
-			else
+			else if (!ascended)
 				desc = "A toolbox painted bright pink. Looking at it makes you feel uneasy."
 			icon_state = "pink"
 			inhand_icon_state = "toolbox_pink"
@@ -75,7 +75,7 @@
 			gender = MALE
 			if(awakened)
 				name = "His Grace"
-			else
+			else if (!ascended)
 				desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 			if(holder)
 				holder.remove_status_effect(/datum/status_effect/his_grace/her_grace)
