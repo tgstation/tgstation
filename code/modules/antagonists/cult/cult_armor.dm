@@ -246,6 +246,7 @@
 	actions_types = null
 	color_cutoffs = list(40, 0, 0) //red
 	glass_colour_type = null
+	custom_materials = null
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	. = ..()

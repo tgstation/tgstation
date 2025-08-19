@@ -15,6 +15,7 @@
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 	/// Whether or not we're disappearing but dramatically

@@ -507,6 +507,7 @@
 	flags_cover = GLASSESCOVERSEYES
 	tint = INFINITY // You WILL Be blind, no matter what
 	dog_fashion = /datum/dog_fashion/head
+	custom_materials = null
 
 /obj/item/clothing/glasses/blindfold/Initialize(mapload)
 	. = ..()
@@ -518,6 +519,7 @@
 	icon_state = "trickblindfold"
 	inhand_icon_state = "blindfold"
 	flags_cover = GLASSESCOVERSEYES
+	custom_materials = null
 
 /obj/item/clothing/glasses/blindfold/white
 	name = "blind personnel blindfold"
@@ -792,3 +794,4 @@
 	icon_state = "phantom_glasses"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
+	custom_materials = null

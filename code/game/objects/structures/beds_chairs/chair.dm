@@ -582,6 +582,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	item_chair = null
 	fishing_modifier = -13 //the pinnacle of Ratvarian technology.
 	has_armrest = TRUE
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 	/// Total rotations made
 	var/turns = 0
 
@@ -641,7 +642,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "No matter how much you squirm, it'll still be uncomfortable."
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
 	item_chair = /obj/item/chair/plastic
@@ -675,7 +676,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
-	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	max_integrity = 70
 	daze_amount = 0
 	origin_type = /obj/structure/chair/plastic

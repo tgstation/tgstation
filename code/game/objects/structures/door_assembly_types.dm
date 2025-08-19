@@ -255,6 +255,7 @@
 	airlock_type = /obj/machinery/door/airlock/bronze
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/bronze
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/structure/door_assembly/door_assembly_bronze/seethru
 	airlock_type = /obj/machinery/door/airlock/bronze/seethru

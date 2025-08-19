@@ -152,15 +152,15 @@
 		delete_components(spawned_components)
 		return
 	if(!result.compare_materials(copycat))
+		var/recipe_type = ispath(recipe, /datum/crafting_recipe/stack) ? "its stack_recipe datum" : recipe.type
 		var/warning = "custom_materials of [result.type] when crafted compared to just spawned don't match"
 		var/what_it_should_be = result.get_materials_english_list()
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
-			what_it_should_be += " (you can round values a bit if they're big enough)"
+			what_it_should_be += " (you can round a bit for values above 100)"
 		TEST_FAIL("[warning]. custom_materials should be [what_it_should_be]. \
-			Otherwise set the requirements_mats_blacklist variable for [recipe] \
+			Otherwise set the requirements_mats_blacklist variable for [recipe_type] \
 			or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it")
-
 
 	delete_components(spawned_components)
 

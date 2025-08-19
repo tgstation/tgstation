@@ -41,6 +41,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	fastening_type = SHOES_SLIPON
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()

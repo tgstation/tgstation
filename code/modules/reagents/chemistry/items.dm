@@ -353,6 +353,7 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 
 #undef DETAILED_CHEM_OUTPUT
 #undef SHORTENED_CHEM_OUTPUT

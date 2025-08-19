@@ -5,7 +5,7 @@
 	icon_state = "headpike"
 	density = FALSE
 	anchored = TRUE
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65)
 	var/obj/item/spear/spear
 	var/obj/item/spear/speartype = /obj/item/spear
 	var/obj/item/bodypart/head/victim
@@ -13,7 +13,7 @@
 /obj/structure/headpike/bone //for bone spears
 	icon_state = "headpike-bone"
 	speartype = /obj/item/spear/bonespear
-	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 3.5)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/structure/headpike/bamboo //for bamboo spears
 	icon_state = "headpike-bamboo"

@@ -462,6 +462,7 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)

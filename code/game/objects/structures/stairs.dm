@@ -192,6 +192,7 @@
 	icon_state = "stairs_frame"
 	density = FALSE
 	anchored = FALSE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 15)
 	/// What type of stack will this drop on deconstruction?
 	var/frame_stack = /obj/item/stack/rods
 	/// How much of frame_stack should this drop on deconstruction?

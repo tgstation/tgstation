@@ -114,6 +114,10 @@
 /obj/item/stack/LateInitialize()
 	merge_with_loc()
 
+/obj/item/stack/Destroy()
+	mats_per_unit = null
+	return ..()
+
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
