@@ -7,11 +7,19 @@
 	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
 
+/datum/status_effect/his_grace/her_grace
+	id = "her_grace"
+	alert_type = /atom/movable/screen/alert/status_effect/his_grace/her_grace
+
 /atom/movable/screen/alert/status_effect/his_grace
 	name = "His Grace"
 	desc = "His Grace hungers, and you must feed Him."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
+
+/atom/movable/screen/alert/status_effect/his_grace/her_grace
+	name = "Her Grace"
+	desc = "Her Grace hungers, and you must feed Her."
 
 /atom/movable/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
@@ -29,6 +37,14 @@
 	)
 	return ..()
 
+/datum/status_effect/his_grace/her_grace/on_apply()
+	owner.add_stun_absorption(
+		source = id,
+		priority = 3,
+		self_message = span_boldwarning("Her Grace protects you from the stun!"),
+	)
+	return ..()
+
 /datum/status_effect/his_grace/on_remove()
 	owner.remove_stun_absorption(id)
 
@@ -41,7 +57,10 @@
 		if(HG.awakened)
 			graces++
 	if(!graces)
-		owner.apply_status_effect(/datum/status_effect/his_wrath)
+		if(id == "his_grace")
+			owner.apply_status_effect(/datum/status_effect/his_wrath)
+		else
+			owner.apply_status_effect(/datum/status_effect/his_wrath/her_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.02

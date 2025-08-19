@@ -313,11 +313,19 @@
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/his_wrath
 
+/datum/status_effect/his_wrath/her_wrath
+	id = "her_wrath"
+	alert_type = /atom/movable/screen/alert/status_effect/his_wrath/her_wrath
+
 /atom/movable/screen/alert/status_effect/his_wrath
 	name = "His Wrath"
 	desc = "You fled from His Grace instead of feeding Him, and now you suffer."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
+
+/atom/movable/screen/alert/status_effect/his_wrath/her_wrath
+	name = "Her Wrath"
+	desc = "You fled from Her Grace instead of feeding Her, and now you suffer."
 
 /datum/status_effect/his_wrath/tick(seconds_between_ticks)
 	for(var/obj/item/his_grace/HG in owner.held_items)
