@@ -1011,18 +1011,35 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		position = find_next_delimiter_position(text,old_position,delimiter)
 
 		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
-		var/equal_position = findtext(text,"=",old_position, position)
+		var/equal_position = find_next_delimiter_position(text,old_position, "=")
 		var/trim_left = trim(copytext(text,old_position,(equal_position ? equal_position : position)))
-		var/left_constant = parse_constant(trim_left)
 		if(position)
 			old_position = position + length(text[position])
-		if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+		if(!trim_left) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
 			continue
 
+		var/left_constant = parse_constant(trim_left)
 		if(equal_position && !isnum(left_constant))
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
 			var/trim_right = trim(copytext(text, equal_position + length(text[equal_position]), position))
+			//right value is a list and since we used the delimiter , this text would be incomplete so we need to parse the full string
+			if(copytext(trim_right, 1, 6) == "list(")
+				var/start_index = equal_position + length(text[equal_position]) + 1
+				var/opening_count = 0
+				var/closing_count = 0
+				var/index = start_index
+				var/begin = FALSE
+				while(!begin || (opening_count != closing_count))
+					var/char = text[index]
+					if(char == "(")
+						opening_count += 1
+						begin = TRUE
+					else if(char == ")")
+						closing_count += 1
+					index += 1
+				trim_right = copytext(text, start_index, index)
+				old_position = index
 			var/right_constant = parse_constant(trim_right)
 			.[left_constant] = right_constant
 		else  // simple var
