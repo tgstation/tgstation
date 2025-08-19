@@ -267,6 +267,8 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	if(istype(holder.my_atom, /obj/item/cigarette))// Prevent methsplosion reaction if item is in a cigarette, pipe, etc.
+		return
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/target in RANGE_TURFS(1,T))
 		new /obj/effect/hotspot(target)
