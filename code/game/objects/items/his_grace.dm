@@ -56,6 +56,8 @@
 			gender = FEMALE
 			if(awakened)
 				name = "Her Grace"
+			else
+				desc = "A toolbox painted bright pink. Looking at it makes you feel uneasy."
 			icon_state = "pink"
 			inhand_icon_state = "toolbox_pink"
 			if(holder)
@@ -74,6 +76,8 @@
 			gender = MALE
 			if(awakened)
 				name = "His Grace"
+			else
+				desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 			if(holder)
 				holder.remove_status_effect(/datum/status_effect/his_grace/her_grace)
 			icon_state = "green"
@@ -123,15 +127,14 @@
 /obj/item/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
 		if(gender == FEMALE)
-			var/obj/item/reagent_containers/spray/chemsprayer/party/party_popper = new /obj/item/reagent_containers/spray/chemsprayer/party(get_turf(user))
 			var/dx = M.x - user.x
 			var/dy = M.y - user.y
-			if(dx)
+			if(dx && dy)
+				var/obj/item/reagent_containers/spray/chemsprayer/party/party_popper = new /obj/item/reagent_containers/spray/chemsprayer/party(get_turf(user))
 				dx = dx / abs(dx)
-			if(dy)
 				dy = dy / abs(dy)
-			party_popper.spray(locate(M.x + dx * 2, M.y + dy * 2, M.z), user)
-			qdel(party_popper)
+				party_popper.spray(locate(M.x + dx * 2, M.y + dy * 2, M.z), user)
+				qdel(party_popper)
 		consume(M)
 	else
 		..()
@@ -252,9 +255,11 @@
 	T.visible_message(span_boldwarning("[src] slowly stops rattling and falls still, [pronouns[2]] latch snapping shut."))
 	playsound(loc, 'sound/items/weapons/batonextend.ogg', 100, TRUE)
 	name = initial(name)
-	desc = initial(desc)
+	if(gender == MALE)
+		desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
+	else if (gender == FEMALE)
+		desc = "A toolbox painted bright pink. Looking at it makes you feel uneasy."
 	animate(src, transform=matrix())
-	gender = initial(gender)
 	force = initial(force)
 	force_bonus = initial(force_bonus)
 	awakened = FALSE
