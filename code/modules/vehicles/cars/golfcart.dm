@@ -346,6 +346,22 @@
 			. += span_info("You can see \the [cell] inside.")
 			. += span_smallnotice("If you remove the cell you could probably install another power source...")
 
+/obj/golfcart_rear/CanAllowThrough(atom/movable/mover, border_dir)
+	// i think it's better to do this than to runtime?
+	if (!parent)
+		return ..()
+	return parent.CanAllowThrough(mover, border_dir)
+
+/obj/vehicle/ridden/golfcart/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if (.)
+		// we want to be more permissive, not less
+		return TRUE
+	if (!isliving(mover))
+		return
+	var/mob/living/crawler = mover
+	return crawler.body_position == LYING_DOWN
+
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
 
