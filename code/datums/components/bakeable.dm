@@ -37,7 +37,7 @@
 	var/atom/result = new bake_result
 	if(!item_target.compare_materials(result))
 		var/warning = "custom_materials of [result.type] when baked compared to just spawned don't match"
-		var/what_it_should_be = item_target.get_materials_english_list()
+		var/what_it_should_be = item_target.transcribe_materials_list()
 		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
 	qdel(result)
 
