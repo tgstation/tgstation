@@ -1,0 +1,4 @@
+author: "panvxv"
+delete-after: True
+changes:
+  - bugfix: "Fixed bots unable to buckle people to themselves."
