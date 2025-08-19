@@ -33,6 +33,9 @@
 	. = ..()
 	set_active(active) //Force overlay update.
 
+/obj/machinery/atmospherics/miner/is_connectable(obj/machinery/atmospherics/target, given_layer)
+	return FALSE
+
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	. = ..()
 	if(broken)
