@@ -94,16 +94,30 @@
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
 	desc = "Contains one energy gun, capable of firing both non-lethal and lethal blasts of light."
-	cost = PAYCHECK_COMMAND * 12
+	cost = PAYCHECK_COMMAND * 10
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/laser_single
 	name = "Laser Gun Single-Pack"
 	desc = "Contains one laser gun, the lethal workhorse of Nanotrasen security everywhere."
-	cost = PAYCHECK_COMMAND * 6
+	cost = PAYCHECK_COMMAND * 8
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser)
+
+/datum/supply_pack/goody/carbine_single
+	name = "Laser Carbine Single_Pack"
+	desc = "Contains one laser carbines, capable of rapidly firing weak lasers."
+	cost = PAYCHECK_COMMAND * 8
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/energy/laser/carbine)
+
+/datum/supply_pack/goody/smg_single
+	name = "Disabler SMG Single_Pack"
+	desc = "Contains one disabler SMGs, capable of rapidly firing weak disabler beams."
+	cost = PAYCHECK_COMMAND * 6
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/energy/disabler/smg)
 
 /datum/supply_pack/goody/hell_single
 	name = "Hellgun Kit Single-Pack"
