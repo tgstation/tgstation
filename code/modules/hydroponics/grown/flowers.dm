@@ -19,7 +19,7 @@
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
-	/obj/item/seeds/poppy/attackby(obj/item/I, mob/user, obj/machinery/hydroponics/tray) //Allows for extraction of opium if between half age and maturation.
+	attackby(obj/item/I, mob/user, obj/machinery/hydroponics/tray) //Allows for extraction of opium if between half age and maturation.
 		if(istype(I, /obj/item/hatchet) && !src.extracted && tray.age >= 10 && tray.age <= 19)
 			src.extracted = 1
 			new /obj/item/food/drug/opium/raw(get_turf(tray))

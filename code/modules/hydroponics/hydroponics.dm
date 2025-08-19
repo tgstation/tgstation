@@ -938,7 +938,7 @@
 			to_chat(user, span_warning("This plot is completely devoid of weeds! It doesn't need uprooting."))
 			return
 
-	else if(istype(O, /obj/item/hatchet)) //Allows to check for extraction interactions for var/extracted.
+	else if(istype(O, /obj/item/hatchet)) //Checks for extraction interactions for var/extracted.
 		if(myseed && !myseed.extracted)
 			myseed.attackby(O, user, src)
 		else
