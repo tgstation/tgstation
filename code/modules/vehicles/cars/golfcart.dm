@@ -242,10 +242,24 @@
 		return
 	return parent.examine(user)
 
+/obj/golfcart_rear/examine_more(mob/user)
+	if (!parent)
+		return
+	return parent.examine_more(user)
+
+/obj/vehicle/ridden/golfcart/examine_more(mob/user)
+	. = ..()
+	if (!cargo)
+		return
+	if (!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		. += span_warning("You're too far away to examine [src] closely.")
+		return
+	. += cargo.examine(user)
+
 /obj/vehicle/ridden/golfcart/examine(mob/user)
 	. = ..()
 	if (cargo)
-		. += span_info("The bed is holding \a [cargo].")
+		. += span_info("The bed is holding \the [cargo].")
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += span_warning("You're too far away to examine [src] closely.")
 		return
@@ -387,11 +401,13 @@
 		crate_x_offset += 32
 	return vector(crate_x_offset, crate_y_offset)
 
-/obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null)
+/obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null, max_layer=null)
 	if (!cargo)
 		return
 	if (!layer)
 		layer = src.layer
+	if (!max_layer)
+		max_layer = ABOVE_ALL_MOB_LAYER
 	var/vector/offsets = get_cargo_offsets(crate_x_offset, crate_y_offset)
 	var/crate_layer_offset = 0
 	if (dir & NORTH)
@@ -402,15 +418,20 @@
 	if (cargo.icon)
 		overlays += mutable_appearance(cargo.icon, cargo.icon_state, cargo.layer)
 	overlays += cargo.update_overlays()
+	var/base_cargo_layer = layer + crate_layer_offset
 	for(var/i in 1 to overlays.len)
 		var/entry = overlays[i]
 		var/mutable_appearance/overlay = entry
 		if(istext(entry))
-			overlay = mutable_appearance(cargo.icon, entry, layer + crate_layer_offset)
+			overlay = mutable_appearance(cargo.icon, entry, base_cargo_layer)
 			overlays[i] = overlay
 		// nested lists may exist and i can't be asked to flatten them
 		if (!isnull(overlay))
-			overlay.layer = min(layer + crate_layer_offset + (overlay.layer - cargo.layer), ABOVE_MOB_LAYER + 0.01)
+			// preserves relative offsets
+			if (overlay.layer > 0)
+				overlay.layer = min(base_cargo_layer + (overlay.layer - cargo.layer), max_layer)
+			else
+				overlay.layer = min(base_cargo_layer + (overlay.layer * -0.01) - 0.01, max_layer)
 			overlay.pixel_x += offsets.x
 			overlay.pixel_y += offsets.y
 			overlay.pixel_z += 11
@@ -444,8 +465,13 @@
 	var/vector/rear_offsets = get_rear_offset()
 	rear_overlay.pixel_x = rear_offsets.x
 	rear_overlay.pixel_y = rear_offsets.y
+	// roof has to go above cargo
+	var/highest_layer = layer
 	if (dir & NORTH)
+		// except when facing north
+		highest_layer = ABOVE_ALL_MOB_LAYER
 	else if (dir & SOUTH)
+		highest_layer = layer
 		lower_overlay.pixel_y = 32
 	else if (dir & EAST)
 		lower_overlay.pixel_x = -32
@@ -454,6 +480,8 @@
 		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER + 0.02)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = -10
+
+		highest_layer = roof_overlay.layer
 	else if (dir & WEST)
 		lower_overlay.pixel_x = 32
 		lower_overlay.layer -= 0.02
@@ -461,6 +489,8 @@
 		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER + 0.02)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = 10
+
+		highest_layer = roof_overlay.layer
 	. += lower_overlay
 	. += rear_overlay
 	if (hood_open)
@@ -468,7 +498,7 @@
 	if (roof_overlay)
 		. += roof_overlay
 	if (cargo)
-		. += generate_cargo_overlay()
+		. += generate_cargo_overlay(max_layer=highest_layer - 0.01)
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
 	if (M.pulling)
