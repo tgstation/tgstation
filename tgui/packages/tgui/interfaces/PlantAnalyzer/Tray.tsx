@@ -1,7 +1,9 @@
 import {
+  Button,
   DmIcon,
   Icon,
   LabeledList,
+  NoticeBox,
   ProgressBar,
   Section,
   Stack,
@@ -14,42 +16,65 @@ import { useBackend } from '../../backend';
 import { Fallback } from './Fallback';
 import type { PlantAnalyzerData } from './types';
 
-export function PlantAnalyzerTray(props) {
+export function PlantAnalyzerTrayStats(props) {
   const { data } = useBackend<PlantAnalyzerData>();
   const { tray_data } = data;
 
   return (
-    <Section
-      title={capitalizeFirst(tray_data.name)}
-      buttons={
-        <>
-          {!!tray_data.self_sustaining && (
-            <Tooltip content="Self sustaining active, providing light, reclaiming water and reducing weed and pest levels.">
-              <Icon name="hand-holding-droplet" m={0.5} />
-            </Tooltip>
-          )}
-          {!!tray_data.being_pollinated && (
-            <Tooltip content="Cross pollinating nearby plants, potentially sharing plant reagents.">
-              <Icon name="wind" m={0.5} />
-            </Tooltip>
-          )}
-          {tray_data.yield_mod > 1 && (
-            <Tooltip content="Pollinated by bees, doubling the yield.">
-              <Icon name="sun" m={0.5} />
-            </Tooltip>
-          )}
-        </>
-      }
-    >
+    <Section title={capitalizeFirst(tray_data.name)}>
       <Stack>
         <Stack.Item mx={2}>
-          <DmIcon
-            fallback={Fallback}
-            icon={tray_data.icon}
-            icon_state={tray_data.icon_state}
-            height="64px"
-            width="64px"
-          />
+          <Stack vertical align="center" width="100px">
+            <Stack.Item>
+              <DmIcon
+                fallback={Fallback}
+                icon={tray_data.icon}
+                icon_state={tray_data.icon_state}
+                height="64px"
+                width="64px"
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Stack>
+                <Stack.Item>
+                  <Button
+                    icon="hand-holding-droplet"
+                    color={tray_data.self_sustaining ? 'yellow' : 'transparent'}
+                    tooltip={
+                      tray_data.self_sustaining
+                        ? 'Autogrow active - providing light, reclaiming water and reducing weed and pest levels.'
+                        : 'Autogrow inactive'
+                    }
+                    disabled={1}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="wind"
+                    color={tray_data.being_pollinated ? 'teal' : 'transparent'}
+                    tooltip={
+                      tray_data.being_pollinated
+                        ? 'Cross pollinating nearby plants - potentially sharing plant reagents.'
+                        : 'Not cross pollinating'
+                    }
+                    disabled={1}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="sun"
+                    color={tray_data.yield_mod > 1 ? 'olive' : 'transparent'}
+                    tooltip={
+                      tray_data.yield_mod > 1
+                        ? 'Pollinated by bees - doubling yield.'
+                        : 'No yield modifier'
+                    }
+                    disabled={1}
+                  />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
         <Stack.Item width="100%">
           <LabeledList>
@@ -165,6 +190,36 @@ export function PlantAnalyzerTray(props) {
           </LabeledList>
         </Stack.Item>
       </Stack>
+    </Section>
+  );
+}
+
+export function PlantAnalyzerTrayChems(props) {
+  const { data } = useBackend<PlantAnalyzerData>();
+  const { tray_data } = data;
+
+  return (
+    <Section title={tray_data.name + ' Contents'}>
+      {tray_data.reagents.length === 0 ? (
+        <NoticeBox color="red" align="center">
+          No reagents detected
+        </NoticeBox>
+      ) : (
+        <Table>
+          <Table.Row header>
+            <Table.Cell>Reagent</Table.Cell>
+            <Table.Cell textAlign="right">Volume</Table.Cell>
+          </Table.Row>
+          {tray_data.reagents.map((reagent, i) => (
+            <Table.Row key={i} className="candystripe">
+              <Table.Cell>{reagent.name}</Table.Cell>
+              <Table.Cell py={0.5} pl={2} textAlign="right">
+                {reagent.volume}u
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
+      )}
     </Section>
   );
 }

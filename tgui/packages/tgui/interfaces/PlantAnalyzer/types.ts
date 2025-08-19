@@ -1,3 +1,10 @@
+import type { BooleanLike } from 'tgui-core/react';
+
+export enum PlantAnalyzerTabs {
+  STATS = 1,
+  CHEM = 2,
+}
+
 export type PlantAnalyzerData = {
   graft_data: GraftData;
   seed_data: SeedData;
@@ -5,10 +12,11 @@ export type PlantAnalyzerData = {
   // Static
   cycle_seconds: number;
   trait_db: TraitData[];
+  active_tab: PlantAnalyzerTabs;
 };
 
 type TrayData = {
-  being_pollinated: boolean;
+  being_pollinated: BooleanLike;
   icon_state: string;
   icon: string;
   light_level: number;
@@ -20,7 +28,7 @@ type TrayData = {
   plant_age: number;
   plant_health: number;
   reagents: ReagentVolume[];
-  self_sustaining: boolean;
+  self_sustaining: BooleanLike;
   toxins_max: number;
   toxins: number;
   water_max: number;
@@ -30,7 +38,7 @@ type TrayData = {
   yield_mod: number;
 };
 
-type SeedData = {
+export type SeedData = {
   core_traits: string[];
   distill_reagent: string;
   endurance: number;
@@ -76,7 +84,7 @@ type ReagentVolume = {
   volume: string;
 };
 
-type ReagentData = {
+export type ReagentData = {
   name: string;
   rate: number;
 };

@@ -1,3 +1,7 @@
+
+#define PLANT_ANALYZER_STAT_TAB 1
+#define PLANT_ANALYZER_CHEM_TAB 2
+
 /obj/item/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth, genetic traits and chemicals."
@@ -12,8 +16,12 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	/// Cached data from ui_interact
 	var/list/last_scan_data
+	/// Weakref to the last thing we scanned
+	var/datum/weakref/last_tray_scanned
 	/// Cached data for the product grinder results
 	var/static/list/product_grinder_results = list()
+	/// If TRUE the UI opens to the second tab / the chem tab
+	var/shown_tab = PLANT_ANALYZER_STAT_TAB
 
 /obj/item/plant_analyzer/Initialize(mapload)
 	. = ..()
@@ -70,6 +78,7 @@
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
+	shown_tab = PLANT_ANALYZER_STAT_TAB
 	if(analyze(user, interacting_with))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
@@ -101,6 +110,7 @@
 			plant_biotype_chem_scan(scan_target, user)
 		return TRUE
 
+	shown_tab = PLANT_ANALYZER_CHEM_TAB
 	return analyze(user, scan_target)
 
 /*
@@ -138,8 +148,22 @@
 		ui = new(user, src, "PlantAnalyzer", "Plant Analyzer")
 		ui.open()
 
+/obj/item/plant_analyzer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("setTab")
+			var/tab = params["tab"]
+			if(tab == PLANT_ANALYZER_STAT_TAB || tab == PLANT_ANALYZER_CHEM_TAB)
+				shown_tab = tab
+			return TRUE
+
 /obj/item/plant_analyzer/ui_data(mob/user)
-	return last_scan_data
+	var/list/data = list()
+	data["active_tab"] = shown_tab
+	data += last_scan_data
+	return data
 
 /obj/item/plant_analyzer/ui_static_data(mob/user)
 	var/list/data = list()
@@ -155,13 +179,22 @@
 		data["trait_db"] += trait_data
 	return data
 
+/obj/item/plant_analyzer/process(seconds_per_tick)
+	var/atom/real_last_tray_scanned = last_tray_scanned?.resolve()
+	if(QDELETED(real_last_tray_scanned))
+		return PROCESS_KILL
+
+	if(loc.Adjacent(real_last_tray_scanned))
+		analyze(null, real_last_tray_scanned)
+
 /// Called when our analyzer is used on something
 /obj/item/plant_analyzer/proc/analyze(mob/user, atom/target)
 	var/obj/item/graft/graft
 	var/obj/item/seeds/seed
 	var/obj/machinery/hydroponics/tray
 
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	if(user)
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 
 	if (istype(target, /obj/machinery/hydroponics))
 		tray = target
@@ -181,6 +214,8 @@
 	if (!seed && !tray && !graft)
 		return FALSE
 
+	START_PROCESSING(SSobj, src)
+	last_tray_scanned = WEAKREF(tray) // sets it to null if no tray
 	last_scan_data = list(
 		"tray_data" = null,
 		"seed_data" = null,
@@ -233,7 +268,8 @@
 			"graft_gene" = graft.stored_trait.type
 		)
 
-	ui_interact(user)
+	if(user)
+		ui_interact(user)
 
 	return TRUE
 
