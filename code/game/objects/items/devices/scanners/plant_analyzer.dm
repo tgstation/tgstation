@@ -27,6 +27,10 @@
 	. = ..()
 	register_item_context()
 
+/obj/item/plant_analyzer/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/item/plant_analyzer/add_item_context(
 	obj/item/source,
 	list/context,
