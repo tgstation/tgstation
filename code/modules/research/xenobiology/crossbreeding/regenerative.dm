@@ -200,7 +200,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/green
 	colour = SLIME_TYPE_GREEN
-	effect_desc = "Fully heals the target and changes the spieces or color of a slime or jellyperson."
+	effect_desc = "Fully heals the target and changes the species or color of a slime or jellyperson."
 
 /obj/item/slimecross/regenerative/green/core_effect(mob/living/target, mob/user)
 	if(isslime(target))
