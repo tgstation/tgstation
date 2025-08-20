@@ -206,6 +206,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "aeA" = (
@@ -517,6 +518,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 1
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/white/smooth_half,
 /area/station/medical/cryo)
 "aks" = (
@@ -10495,7 +10497,6 @@
 "dKO" = (
 /obj/structure/urinal/directional/north,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "dKY" = (
@@ -22798,7 +22799,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/navigate_destination,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hVX" = (
@@ -26924,7 +26924,6 @@
 "jlY" = (
 /obj/structure/urinal/directional/north,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "jmc" = (
@@ -30088,6 +30087,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "knt" = (
@@ -31503,7 +31503,6 @@
 /area/station/hallway/primary/central)
 "kMo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
@@ -33852,12 +33851,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "lHH" = (
-/obj/structure/curtain,
-/obj/machinery/door/window/left/directional/south{
-	name = "Shower"
-	},
-/obj/machinery/shower/directional/south,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "lHK" = (
@@ -33987,7 +33980,12 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lLw" = (
-/obj/machinery/duct,
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/machinery/door/window/left/directional/south{
+	name = "Shower"
+	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "lLB" = (
@@ -34123,6 +34121,7 @@
 "lNf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "lNh" = (
@@ -38182,6 +38181,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "nfy" = (
@@ -52175,6 +52175,7 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/structure/reagent_dispensers/plumbed,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "rVb" = (
@@ -52244,7 +52245,6 @@
 "rWf" = (
 /obj/structure/urinal/directional/north,
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/machinery/light/floor,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
@@ -60382,7 +60382,6 @@
 "uIM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -61692,6 +61691,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "vgv" = (
@@ -65428,7 +65428,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wra" = (
