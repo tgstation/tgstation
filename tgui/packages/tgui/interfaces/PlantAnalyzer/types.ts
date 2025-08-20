@@ -6,9 +6,10 @@ export enum PlantAnalyzerTabs {
 }
 
 export type PlantAnalyzerData = {
-  graft_data: GraftData;
-  seed_data: SeedData;
-  tray_data: TrayData;
+  graft_data: GraftData | null;
+  seed_data: SeedData | null;
+  plant_data: PlantData | null;
+  tray_data: TrayData | null;
   // Static
   cycle_seconds: number;
   trait_db: TraitData[];
@@ -65,6 +66,10 @@ export type SeedData = {
   weed_chance: number;
   weed_rate: number;
   yield: number;
+};
+
+export type PlantData = {
+  reagents: ReagentVolume[];
 };
 
 type GraftData = {

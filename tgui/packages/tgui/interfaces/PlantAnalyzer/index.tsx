@@ -2,14 +2,18 @@ import { Button, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { PlantAnalyzerGraft } from './Graft';
-import { PlantAnalyzerSeedChems, PlantAnalyzerSeedStats } from './Seed';
+import {
+  PlantAnalyzerPlantChems,
+  PlantAnalyzerSeedChems,
+  PlantAnalyzerSeedStats,
+} from './Seed';
 import { PlantAnalyzerTrayChems, PlantAnalyzerTrayStats } from './Tray';
 import type { PlantAnalyzerData } from './types';
 import { PlantAnalyzerTabs } from './types';
 
 export function PlantAnalyzer(props) {
   const { act, data } = useBackend<PlantAnalyzerData>();
-  const { graft_data, seed_data, tray_data, active_tab } = data;
+  const { graft_data, seed_data, tray_data, plant_data, active_tab } = data;
 
   return (
     <Window width={475} height={625}>
@@ -52,6 +56,7 @@ export function PlantAnalyzer(props) {
             {/* grafts don't have any chems */}
             {tray_data && <PlantAnalyzerTrayChems />}
             {seed_data && <PlantAnalyzerSeedChems />}
+            {plant_data && <PlantAnalyzerPlantChems />}
           </>
         )}
       </Window.Content>

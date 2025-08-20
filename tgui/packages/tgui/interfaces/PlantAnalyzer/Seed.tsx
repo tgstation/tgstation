@@ -23,6 +23,11 @@ export function PlantAnalyzerSeedStats(props) {
   const { data } = useBackend<PlantAnalyzerData>();
   const { seed_data, tray_data, cycle_seconds, trait_db } = data;
 
+  if (!seed_data) {
+    // This shouldn't be rendered if seed data is null
+    return null;
+  }
+
   const all_traits = [
     ...(seed_data.core_traits || []),
     ...(seed_data.removable_traits || []),
@@ -265,18 +270,24 @@ export function PlantAnalyzerSeedChems(props) {
   const { data } = useBackend<PlantAnalyzerData>();
   const { seed_data } = data;
 
+  if (!seed_data) {
+    // This shouldn't be rendered if seed data is null
+    return null;
+  }
+
   const totalPercentage = seed_data.reagents.reduce(
     (sum, reagent) => sum + reagent.rate * 100,
     0,
   );
 
-  const totalVolume = seed_data.reagents.reduce(
-    (sum, reagent) => sum + expectedReagentVolume(reagent, seed_data),
-    0,
-  );
+  const totalVolume =
+    seed_data.reagents.reduce(
+      (sum, reagent) => sum + expectedReagentVolume(reagent, seed_data),
+      0,
+    ) || 0;
 
   return (
-    <Section title={capitalizeFirst(seed_data.name + ' Contents')}>
+    <Section title={capitalizeFirst(`${seed_data.name} Genes`)}>
       <Stack>
         <Stack.Item width="100%">
           {seed_data.reagents.length === 0 ? (
@@ -327,7 +338,7 @@ export function PlantAnalyzerSeedChems(props) {
                 </Table.Cell>
                 <Table.Cell>
                   {totalPercentage}%
-                  {totalPercentage > 50 && (
+                  {totalPercentage > 100 && (
                     <Blink>
                       <Button
                         icon="exclamation-triangle"
@@ -387,6 +398,60 @@ export function PlantAnalyzerSeedChems(props) {
                   <Table.Cell>{seed_data.distill_reagent}</Table.Cell>
                 </Table.Row>
               )}
+            </Table>
+          )}
+        </Stack.Item>
+      </Stack>
+    </Section>
+  );
+}
+
+export function PlantAnalyzerPlantChems(props) {
+  const { data } = useBackend<PlantAnalyzerData>();
+  const { seed_data, plant_data } = data;
+
+  if (!seed_data || !plant_data) {
+    // This shouldn't be rendered if seed or plant data is null
+    return null;
+  }
+
+  return (
+    <Section title={capitalizeFirst(`${seed_data.name} Contents`)}>
+      <Stack>
+        <Stack.Item width="100%">
+          {plant_data.reagents.length === 0 ? (
+            <NoticeBox color="green" align="center">
+              No reagent genes
+            </NoticeBox>
+          ) : (
+            <Table>
+              <Table.Row header>
+                <Table.Cell colSpan={2}>Reagent</Table.Cell>
+                <Table.Cell>Volume</Table.Cell>
+              </Table.Row>
+              {plant_data.reagents.map((reagent) => (
+                <Table.Row key={reagent.name} className="candystripe">
+                  <Table.Cell py={0.2} pl={1} colSpan={2}>
+                    {reagent.name}
+                  </Table.Cell>
+                  <Table.Cell>{reagent.volume}</Table.Cell>
+                </Table.Row>
+              ))}
+              <Table.Row
+                className="candystripe"
+                style={{ borderTop: '2px dotted gray' }}
+              >
+                <Table.Cell py={1} pl={1} colSpan={2}>
+                  Total
+                </Table.Cell>
+                <Table.Cell>
+                  {plant_data.reagents.reduce(
+                    (sum, reagent) => sum + reagent.volume,
+                    0,
+                  )}
+                  u
+                </Table.Cell>
+              </Table.Row>
             </Table>
           )}
         </Stack.Item>

@@ -2,14 +2,12 @@ import {
   Box,
   Button,
   DmIcon,
-  Icon,
   LabeledList,
   NoticeBox,
   ProgressBar,
   Section,
   Stack,
   Table,
-  Tooltip,
 } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
 
@@ -20,6 +18,11 @@ import type { PlantAnalyzerData } from './types';
 export function PlantAnalyzerTrayStats(props) {
   const { data } = useBackend<PlantAnalyzerData>();
   const { tray_data } = data;
+
+  if (!tray_data) {
+    // This shouldn't be rendered if tray_data is null
+    return null;
+  }
 
   return (
     <Section title={capitalizeFirst(tray_data.name)}>
@@ -216,8 +219,13 @@ export function PlantAnalyzerTrayChems(props) {
   const { data } = useBackend<PlantAnalyzerData>();
   const { tray_data } = data;
 
+  if (!tray_data) {
+    // This shouldn't be rendered if tray_data is null
+    return null;
+  }
+
   return (
-    <Section title={capitalizeFirst(tray_data.name + ' Contents')}>
+    <Section title={capitalizeFirst(`${tray_data.name} Nutrients`)}>
       {tray_data.reagents.length === 0 ? (
         <NoticeBox color="red" align="center">
           No reagents detected

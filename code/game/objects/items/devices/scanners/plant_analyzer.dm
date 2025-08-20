@@ -219,6 +219,7 @@
 	last_scan_data = list(
 		"tray_data" = null,
 		"seed_data" = null,
+		"plant_data" = null,
 		"graft_data" = null,
 	)
 
@@ -246,15 +247,26 @@
 			"toxins_max" = MAX_TRAY_TOXINS,
 			"reagents" = list(),
 		)
-		for(var/datum/reagent/reagent in tray.reagents.reagent_list)
+		for(var/datum/reagent/reagent as anything in tray.reagents.reagent_list)
 			last_scan_data["tray_data"]["reagents"] += list(list(
 				"name" = reagent.name,
-				"volume" = reagent.volume,
+				"volume" = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL),
 				"color" = reagent.color,
 			))
 
 	if(seed)
 		last_scan_data["seed_data"] = make_seed_data(seed)
+
+	if(isitem(target) && target.reagents)
+		last_scan_data["plant_data"] = list(
+			"reagents" = list(),
+		)
+		for(var/datum/reagent/reagent as anything in target.reagents.reagent_list)
+			last_scan_data["plant_data"]["reagents"] += list(list(
+				"name" = reagent.name,
+				"volume" = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL),
+				"color" = reagent.color,
+			))
 
 	if(graft)
 		last_scan_data["graft_data"] = list(
