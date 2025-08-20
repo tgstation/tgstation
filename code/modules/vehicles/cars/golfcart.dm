@@ -1,6 +1,7 @@
 #define ENGINE_UNWRENCHED 0
 #define ENGINE_WRENCHED 1
 #define ENGINE_WELDED 2
+#define GOLFCART_RIDING_SOURCE "riding_golfcart"
 
 /obj/golfcart_rear
 	name = "golf cart bed"
@@ -11,6 +12,8 @@
 	pixel_x = -32
 	pixel_y = -32
 	alpha = 1
+	can_buckle = TRUE
+	max_buckled_mobs = 2
 	glide_size = MAX_GLIDE_SIZE
 	layer = ABOVE_ALL_MOB_LAYER
 	var/obj/vehicle/ridden/golfcart/parent = null
@@ -27,8 +30,8 @@
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	integrity_failure = 0.5
-	max_buckled_mobs = 3
-	max_occupants = 3
+	layer = ABOVE_MOB_LAYER
+	max_occupants = 1
 	var/obj/item/v8_engine/engine = null
 	var/engine_state = null
 	var/obj/golfcart_rear/child = null
@@ -143,12 +146,6 @@
 
 /obj/vehicle/ridden/golfcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	// buckled_mobs only contains living mobs
-	for (var/mob/living/occupant as anything in buckled_mobs)
-		if (is_driver(occupant))
-			continue
-		occupant.forceMove(get_turf(child))
-		occupant.setDir(dir)
 	if (!is_hotrod())
 		return
 	for(var/mob/living/future_pancake in loc)
@@ -279,12 +276,19 @@
 /obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
 	if (!is_type_in_typecache(dropped, parent.allowed_cargo) || is_type_in_typecache(dropped, parent.banned_cargo))
 		return ..()
+	if (has_buckled_mobs())
+		user.balloon_alert("blocked!")
+		return ..()
 	var/obj/dropped_obj = dropped
 	return parent.load(dropped_obj)
 
 /datum/component/riding/vehicle/golfcart
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 1.5
+
+/datum/component/riding/vehicle/golfcart/restore_parent_layer_and_offsets()
+	// just don't restore anything
+	return
 
 /datum/component/riding/vehicle/golfcart/driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	if (!istype(parent, /obj/vehicle/ridden/golfcart))
@@ -355,21 +359,27 @@
 			. += span_info("You can see \the [cell] inside.")
 			. += span_smallnotice("If you remove the cell you could probably install another power source...")
 
+/obj/golfcart_rear/doMove(atom/destination)
+	. = ..()
+	for(var/mob/living/buckled_mob as anything in buckled_mobs)
+		buckled_mob.Move(destination, dir)
+		// realistically should do something if move fails but not sure what
+
 /obj/golfcart_rear/CanAllowThrough(atom/movable/mover, border_dir)
-	// i think it's better to do this than to runtime?
-	if (!parent)
-		return ..()
-	return parent.CanAllowThrough(mover, border_dir)
+	. = ..()
+	if (parent && parent.allow_crawler_through(mover))
+		return TRUE
+
+/obj/vehicle/ridden/golfcart/proc/allow_crawler_through(atom/crawler)
+	if (!isliving(crawler))
+		return FALSE
+	var/mob/living/living_crawler = crawler
+	return living_crawler.body_position == LYING_DOWN
 
 /obj/vehicle/ridden/golfcart/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if (.)
-		// we want to be more permissive, not less
+	if (allow_crawler_through(mover))
 		return TRUE
-	if (!isliving(mover))
-		return
-	var/mob/living/crawler = mover
-	return crawler.body_position == LYING_DOWN
 
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
@@ -461,21 +471,66 @@
 
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
-/obj/vehicle/ridden/golfcart/proc/allow_movement_between_passengers(atom/source, atom/mover)
+/obj/golfcart_rear/proc/allow_movement_between_passengers(atom/source, atom/mover)
 	if (!source in buckled_mobs)
 		return
 	if (!mover in buckled_mobs)
 		return
 	return COMSIG_COMPONENT_PERMIT_PASSAGE
 
-/obj/golfcart_rear/proc/tried_pass(atom/source, atom/mover)
-	if (!parent)
+/obj/golfcart_rear/proc/update_passenger_layers(new_dir)
+	if (isnull(new_dir))
+		new_dir = dir
+	var/layer = ABOVE_MOB_LAYER + 0.01
+	var/px = 0
+	var/py = 0
+	var/pz = 0
+	var/px_second_offset = 0
+	var/py_second_offset = 0
+	var/pz_second_offset = 0
+	if (new_dir & NORTH)
+		px = -4
+		px_second_offset = 8
+
+		pz = 20
+		pz_second_offset = 4
+	else if (new_dir & SOUTH)
+		layer = MOB_LAYER
+
+		px = -4
+		px_second_offset = 8
+
+		pz = 4
+		pz_second_offset = 4
+	else if (new_dir & WEST)
+		px = -4
+		px_second_offset = 12
+
+		pz = 13
+	else if (new_dir & EAST)
+		px = 4
+		px_second_offset = -12
+
+		pz = 13
+
+	for(var/i in 1 to buckled_mobs.len)
+		var/mob/living/passenger = buckled_mobs[i]
+		passenger.add_offsets(GOLFCART_RIDING_SOURCE,
+			x_add = px + px_second_offset * (i - 1),
+			y_add = py + py_second_offset * (i - 1),
+			z_add = pz + pz_second_offset * (i - 1)
+			)
+		passenger.layer = layer
+
+/obj/golfcart_rear/proc/on_dir_changed(datum/source, old_dir, new_dir)
+	if (!has_buckled_mobs())
 		return
-	return parent.allow_movement_between_passengers(source, mover)
+	update_passenger_layers(new_dir)
 
 /obj/golfcart_rear/Initialize(mapload, obj/vehicle/ridden/golfcart/progenitor)
 	. = ..()
 	parent = progenitor
+	RegisterSignal(parent, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_changed))
 
 /obj/vehicle/ridden/golfcart/hotrod/Initialize(mapload)
 	. = ..()
@@ -609,13 +664,41 @@
 		. += generate_cargo_overlay(max_layer=highest_layer - 0.01)
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
-	RegisterSignal(M, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_passengers))
 	if (M.pulling)
 		M.stop_pulling()
 	return ..()
 
+/obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
+	if (!isliving(source))
+		return // should runtime?
+	if (new_bodypos == STANDING_UP)
+		return
+	var/mob/living/passenger = source
+	unbuckle_mob(passenger, TRUE)
+
+/obj/golfcart_rear/is_buckle_possible(mob/living/target, force, check_loc)
+	. = ..()
+	if (parent && parent.cargo)
+		target.balloon_alert("blocked!")
+		return FALSE
+	if (target.body_position != STANDING_UP)
+		target.balloon_alert("stand up!")
+		return FALSE
+
+/obj/golfcart_rear/post_buckle_mob(mob/living/buckled_mob)
+	RegisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_passengers))
+	RegisterSignal(buckled_mob, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(passenger_falling_down))
+	. = ..()
+	update_passenger_layers()
+
+/obj/golfcart_rear/post_unbuckle_mob(mob/living/buckled_mob)
+	UnregisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS)
+	UnregisterSignal(buckled_mob, COMSIG_LIVING_SET_BODY_POSITION)
+	buckled_mob.remove_offsets(GOLFCART_RIDING_SOURCE)
+	buckled_mob.layer = initial(buckled_mob.layer)
+	return ..()
+
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
-	UnregisterSignal(M, COMSIG_ATOM_TRIED_PASS)
 	update_appearance(UPDATE_ICON) // because for some reason the overlays aren't properly redrawn
 	return ..()
 
@@ -645,6 +728,7 @@
 	cell = null
 	return ..()
 
+#undef GOLFCART_RIDING_SOURCE
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED
 #undef ENGINE_WELDED
