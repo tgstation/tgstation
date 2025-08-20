@@ -67,7 +67,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/hazard
-	icon_state = "medbriefcase_switzerland"
+	icon_state = "medbriefcase-switzerland"
 	inhand_icon_state = "medkit-emergency"
 	name = "hazard medkit"
 	desc = "A simple first aid kit for dealing with a variety of wounds and injuries.  caused by common workplace hazards."

@@ -43,9 +43,7 @@
 	/// The sound this makes when doing a continuous loop of healing with this item
 	var/heal_continuous_sound = null
 	/// Does this item heal all limbs?
-	var/splash_healing
-	///
-	var/splash_amount
+	var/splash_healing = FALSE
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -834,6 +832,7 @@
 	max_amount = 3
 	heal_brute = 25
 	novariants = TRUE
+	splash_healing = TRUE
 
 /obj/item/stack/medical/skinspray/examine_more(mob/user)
 	. = ..()
