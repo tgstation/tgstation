@@ -509,7 +509,9 @@
 /// Whether to include the station z level
 /datum/config_entry/flag/persistent_save_station_z_levels
 /// Whether to include space z levels and ruins
-/datum/config_entry/flag/persistent_save_space_z_levels
+/datum/config_entry/flag/persistent_save_space_empty_z_levels
+/// Whether to include space z levels and ruins
+/datum/config_entry/flag/persistent_save_space_ruin_z_levels
 /// Whether to include mining z levels (by default this is turned off)
 /datum/config_entry/flag/persistent_save_mining_z_levels
 /// Whether to include transitional z levels used for shuttle movement (by default this is turned off)

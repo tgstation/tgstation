@@ -33,3 +33,7 @@ GLOBAL_VAR(station_level_z_scratch)
 #define is_multi_z_level(z) (SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN))
 
 #define is_space_level(z) (SSmapping.level_trait(z, ZTRAIT_SPACE_RUINS) || SSmapping.level_trait(z, ZTRAIT_SPACE_EMPTY))
+
+#define is_space_empty_level(z) SSmapping.level_trait(z, ZTRAIT_SPACE_EMPTY)
+
+#define is_space_ruins_level(z) SSmapping.level_trait(z, ZTRAIT_SPACE_RUINS)
