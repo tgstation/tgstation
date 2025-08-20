@@ -64,14 +64,12 @@
 			get_step(child, turn(dir, 90)),
 			get_step(child, turn(dir, 270)),
 		)
+		var/atom/dropoff = get_turf(child)
 		for (var/atom/turf in candidates)
 			if (turf.Enter(cargo, src))
-				cargo.forceMove(turf)
-				cargo = null
-				child.layer = BELOW_HUMAN_HITBOX_LAYER
-				update_appearance(UPDATE_ICON)
-				return
-		cargo.forceMove(get_turf(child))
+				dropoff = turf
+				break
+		cargo.forceMove(dropoff)
 		cargo = null
 		child.layer = BELOW_HUMAN_HITBOX_LAYER
 		update_appearance(UPDATE_ICON)
