@@ -1020,7 +1020,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		var/is_simple = TRUE //linear list
 		var/trim_right = trim_left //simple var
-		if(equal_position && !isnum(trim_left))
+		if(equal_position)
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
 			trim_right = trim(copytext(text, equal_position + length(text[equal_position]), position))
