@@ -6,7 +6,7 @@
 #define CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
 #define BELOW_HUMAN_HITBOX_LAYER (CART_VERTICAL_LAYER + 0.01)
 #define HUMAN_RIDING_LAYER (CART_VERTICAL_LAYER + 0.02)
-#define CART_ROOF_LAYER (CART_VERTICAL_LAYER + 0.03)
+#define CART_ROOF_LAYER (CARGO_HITBOX_LAYER + 0.01)
 #define CART_LOWER_LAYER (OBJ_LAYER)
 #define HUMAN_LOWER_LAYER (MOB_LAYER)
 
@@ -641,14 +641,12 @@
 	var/vector/rear_offsets = get_rear_offset()
 	rear_overlay.pixel_x = rear_offsets.x
 	rear_overlay.pixel_y = rear_offsets.y
-	// roof has to go above cargo
-	var/highest_layer = layer
 	if (dir & NORTH)
-		// except when facing north
-		highest_layer = ABOVE_ALL_MOB_LAYER
 	else if (dir & SOUTH)
-		highest_layer = layer
 		lower_overlay.pixel_y = 32
+
+		roof_overlay = mutable_appearance(icon, "roof", CART_ROOF_LAYER)
+		roof_overlay.pixel_y = 32
 	else if (dir & EAST)
 		lower_overlay.pixel_x = -32
 		lower_overlay.layer -= 0.02
@@ -656,8 +654,6 @@
 		roof_overlay = mutable_appearance(icon, "roof", CART_ROOF_LAYER)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = -10
-
-		highest_layer = roof_overlay.layer
 	else if (dir & WEST)
 		lower_overlay.pixel_x = 32
 		lower_overlay.layer -= 0.02
@@ -665,8 +661,6 @@
 		roof_overlay = mutable_appearance(icon, "roof", CART_ROOF_LAYER)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = 10
-
-		highest_layer = roof_overlay.layer
 	. += lower_overlay
 	. += rear_overlay
 	if (hood_open)
@@ -674,7 +668,7 @@
 	if (roof_overlay)
 		. += roof_overlay
 	if (cargo)
-		. += generate_cargo_overlay(max_layer=highest_layer - 0.01)
+		. += generate_cargo_overlay(max_layer=CARGO_HITBOX_LAYER)
 
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
 	if (M.pulling)
@@ -746,10 +740,10 @@
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED
 #undef ENGINE_WELDED
-#undef CART_VERTICAL_LAYER (ABOVE_MOB_LAYER)
-#undef CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
-#undef BELOW_HUMAN_HITBOX_LAYER (CART_VERTICAL_LAYER + 0.01)
-#undef HUMAN_RIDING_LAYER (CART_VERTICAL_LAYER + 0.02)
-#undef CART_ROOF_LAYER (CART_VERTICAL_LAYER + 0.03)
-#undef CART_LOWER_LAYER (OBJ_LAYER)
-#undef HUMAN_LOWER_LAYER (MOB_LAYER)
+#undef CART_VERTICAL_LAYER
+#undef CARGO_HITBOX_LAYER
+#undef BELOW_HUMAN_HITBOX_LAYER
+#undef HUMAN_RIDING_LAYER
+#undef CART_ROOF_LAYER
+#undef CART_LOWER_LAYER
+#undef HUMAN_LOWER_LAYER
