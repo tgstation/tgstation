@@ -54,6 +54,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	/obj/item/card/emagfake = 1,
 	/obj/item/clothing/shoes/wheelys = 2,
 	/obj/item/clothing/shoes/kindle_kicks = 2,
+	/obj/item/toy/plush/goatplushie = 2, //troutstation edit
 	/obj/item/toy/plush/moth = 2,
 	/obj/item/toy/plush/pkplush = 2,
 	/obj/item/toy/plush/rouny = 2,

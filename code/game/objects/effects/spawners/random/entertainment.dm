@@ -257,7 +257,7 @@
 		/obj/item/toy/plush/pkplush,
 		/obj/item/toy/plush/horse,
 		/obj/item/toy/plush/monkey,
-		/obj/item/toy/plush/maddie, // Troutstation edit		
+		/obj/item/toy/plush/maddie, // Troutstation edit
 	)
 
 /obj/effect/spawner/random/entertainment/plushie_delux
@@ -278,6 +278,7 @@
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,
 		/obj/item/toy/plush/lizard_plushie/space/green = 3,
+		/obj/item/toy/plush/goatplushie = 3,  //troutstation edit
 		/obj/item/toy/plush/rouny = 3,
 		/obj/item/toy/plush/abductor = 3,
 		/obj/item/toy/plush/abductor/agent = 3,
