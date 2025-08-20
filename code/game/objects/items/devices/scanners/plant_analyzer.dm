@@ -347,4 +347,12 @@
 		seed_data["juice_name"] = product_grinder_results[seed.product]["juice_name"]
 		seed_data["grind_results"] = product_grinder_results[seed.product]["grind_results"]
 
+	seed_data["unique_labels"] = list()
+	seed_data["unique_collapsibles"] = list()
+	var/list/unique_data = seed.get_unique_analyzer_data()
+	for(var/label in unique_data)
+		seed_data[islist(unique_data[label]) ? "unique_collapsibles" : "unique_labels"] += list(list(
+			"label" = label,
+			"data" = unique_data[label],
+		))
 	return seed_data

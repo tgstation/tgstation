@@ -66,6 +66,19 @@ export type SeedData = {
   weed_chance: number;
   weed_rate: number;
   yield: number;
+  unique_labels: UniqueSeedLabel[];
+  unique_collapsibles: UniqueSeedCollapsible[];
+};
+
+type UniqueSeedLabel = {
+  label: string;
+  data: string;
+};
+
+type UniqueSeedCollapsible = {
+  label: string;
+  // key is shown text, value is tooltip text
+  data: Record<string, string>;
 };
 
 export type PlantData = {

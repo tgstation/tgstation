@@ -234,6 +234,11 @@ export function PlantAnalyzerSeedStats(props) {
               {`${seed_data.weed_chance}% chance to grow by
                 ${seed_data.weed_rate} every ${cycle_seconds} seconds`}
             </LabeledList.Item>
+            {seed_data.unique_labels.map((label) => (
+              <LabeledList.Item key={label.label} label={label.label}>
+                {label.data}
+              </LabeledList.Item>
+            ))}
           </LabeledList>
           <Collapsible title="Traits:" open color="brown" width="100%" mt={1}>
             <Stack vertical>
@@ -260,6 +265,33 @@ export function PlantAnalyzerSeedStats(props) {
               })}
             </Stack>
           </Collapsible>
+          {seed_data.unique_collapsibles.map((collapsible) => (
+            <Collapsible
+              key={collapsible.label}
+              title={collapsible.label}
+              color="brown"
+              width="100%"
+              mt={1}
+            >
+              <Stack vertical>
+                {Object.entries(collapsible.data).map(
+                  ([dataText, dataTooltip]) => (
+                    <Stack.Item key={dataText} width="100%">
+                      <Button
+                        ellipsis
+                        fluid
+                        color="transparent"
+                        disabled={1}
+                        tooltip={dataTooltip}
+                      >
+                        {dataText}
+                      </Button>
+                    </Stack.Item>
+                  ),
+                )}
+              </Stack>
+            </Collapsible>
+          ))}
         </Stack.Item>
       </Stack>
     </Section>
