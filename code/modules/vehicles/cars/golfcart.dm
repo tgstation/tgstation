@@ -2,20 +2,24 @@
 #define ENGINE_WRENCHED 1
 #define ENGINE_WELDED 2
 #define GOLFCART_RIDING_SOURCE "riding_golfcart"
+#define CART_VERTICAL_LAYER (ABOVE_MOB_LAYER)
+#define CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
+#define BELOW_HUMAN_HITBOX_LAYER (CART_VERTICAL_LAYER + 0.01)
+#define HUMAN_RIDING_LAYER (CART_VERTICAL_LAYER + 0.02)
+#define CART_ROOF_LAYER (CART_VERTICAL_LAYER + 0.03)
+#define CART_LOWER_LAYER (OBJ_LAYER)
+#define HUMAN_LOWER_LAYER (MOB_LAYER)
 
 /obj/golfcart_rear
 	name = "golf cart bed"
-	icon = 'icons/obj/toys/golfcart_hitbox.dmi'
+	icon = 'icons/obj/toys/golfcart_split.dmi'
+	icon_state = "rear_hitbox"
 	density = TRUE
-	base_pixel_x = -32
-	base_pixel_y = -32
-	pixel_x = -32
-	pixel_y = -32
 	alpha = 1
 	can_buckle = TRUE
 	max_buckled_mobs = 2
 	glide_size = MAX_GLIDE_SIZE
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = BELOW_HUMAN_HITBOX_LAYER
 	var/obj/vehicle/ridden/golfcart/parent = null
 
 /obj/vehicle/ridden/golfcart
@@ -64,10 +68,12 @@
 			if (turf.Enter(cargo, src))
 				cargo.forceMove(turf)
 				cargo = null
+				child.layer = BELOW_HUMAN_HITBOX_LAYER
 				update_appearance(UPDATE_ICON)
 				return
 		cargo.forceMove(get_turf(child))
 		cargo = null
+		child.layer = BELOW_HUMAN_HITBOX_LAYER
 		update_appearance(UPDATE_ICON)
 		return
 	if (cargo)
@@ -79,6 +85,7 @@
 		crate.close()
 	to_load.forceMove(src)
 	cargo = to_load
+	child.layer = CARGO_HITBOX_LAYER
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/unload()
@@ -438,8 +445,8 @@
 
 /datum/component/riding/vehicle/golfcart/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
-		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_NORTH = list(0, 0, CART_VERTICAL_LAYER),
+		TEXT_SOUTH = list(0, 0, CART_VERTICAL_LAYER),
 		TEXT_EAST =  list(0, 0, VEHICLE_LAYER),
 		TEXT_WEST =  list(0, 0, VEHICLE_LAYER),
 	)
@@ -472,16 +479,16 @@
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
 /obj/golfcart_rear/proc/allow_movement_between_passengers(atom/source, atom/mover)
-	if (!source in buckled_mobs)
+	if (!(source in buckled_mobs))
 		return
-	if (!mover in buckled_mobs)
+	if (!(mover in buckled_mobs))
 		return
 	return COMSIG_COMPONENT_PERMIT_PASSAGE
 
 /obj/golfcart_rear/proc/update_passenger_layers(new_dir)
 	if (isnull(new_dir))
 		new_dir = dir
-	var/layer = ABOVE_MOB_LAYER + 0.01
+	var/layer = HUMAN_RIDING_LAYER
 	var/px = 0
 	var/py = 0
 	var/pz = 0
@@ -492,10 +499,10 @@
 		px = -4
 		px_second_offset = 8
 
-		pz = 20
-		pz_second_offset = 4
+		pz = 24
+		pz_second_offset = -4
 	else if (new_dir & SOUTH)
-		layer = MOB_LAYER
+		layer = HUMAN_LOWER_LAYER
 
 		px = -4
 		px_second_offset = 8
@@ -615,14 +622,20 @@
 
 /obj/golfcart_rear/update_overlays()
 	. = ..()
+	if (dir & NORTH)
+		var/mutable_appearance/hitbox_overlay = mutable_appearance(icon, "rear_hitbox_overlay", layer)
+		hitbox_overlay.pixel_y += 32
+		. += hitbox_overlay
+	else if (dir & SOUTH)
+		. += mutable_appearance(icon, "rear_hitbox_lower", CART_LOWER_LAYER + 0.01)
 	if(!parent.cargo)
 		return
 	var/vector/rear_offsets = parent.get_rear_offset()
-	. += parent.generate_cargo_overlay(-rear_offsets.x - base_pixel_x, -rear_offsets.y - base_pixel_y, layer=layer)
+	. += parent.generate_cargo_overlay(-rear_offsets.x, -rear_offsets.y, layer=layer)
 
 /obj/vehicle/ridden/golfcart/update_overlays()
 	. = ..()
-	var/mutable_appearance/lower_overlay = mutable_appearance(icon, "lower", OBJ_LAYER)
+	var/mutable_appearance/lower_overlay = mutable_appearance(icon, "lower", CART_LOWER_LAYER)
 	var/mutable_appearance/roof_overlay = null
 	var/mutable_appearance/rear_overlay = mutable_appearance(icon, "rear", layer)
 	var/vector/rear_offsets = get_rear_offset()
@@ -640,7 +653,7 @@
 		lower_overlay.pixel_x = -32
 		lower_overlay.layer -= 0.02
 
-		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER + 0.02)
+		roof_overlay = mutable_appearance(icon, "roof", CART_ROOF_LAYER)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = -10
 
@@ -649,7 +662,7 @@
 		lower_overlay.pixel_x = 32
 		lower_overlay.layer -= 0.02
 
-		roof_overlay = mutable_appearance(icon, "roof", ABOVE_MOB_LAYER + 0.02)
+		roof_overlay = mutable_appearance(icon, "roof", CART_ROOF_LAYER)
 		roof_overlay.pixel_y = 31
 		roof_overlay.pixel_x = 10
 
@@ -686,6 +699,7 @@
 		return FALSE
 
 /obj/golfcart_rear/post_buckle_mob(mob/living/buckled_mob)
+	buckled_mob.pulledby?.stop_pulling()
 	RegisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_passengers))
 	RegisterSignal(buckled_mob, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(passenger_falling_down))
 	. = ..()
@@ -732,3 +746,10 @@
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED
 #undef ENGINE_WELDED
+#undef CART_VERTICAL_LAYER (ABOVE_MOB_LAYER)
+#undef CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
+#undef BELOW_HUMAN_HITBOX_LAYER (CART_VERTICAL_LAYER + 0.01)
+#undef HUMAN_RIDING_LAYER (CART_VERTICAL_LAYER + 0.02)
+#undef CART_ROOF_LAYER (CART_VERTICAL_LAYER + 0.03)
+#undef CART_LOWER_LAYER (OBJ_LAYER)
+#undef HUMAN_LOWER_LAYER (MOB_LAYER)
