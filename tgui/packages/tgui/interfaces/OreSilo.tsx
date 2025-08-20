@@ -65,7 +65,7 @@ type Data = {
   logs: Log[];
   // Banned users is a list of bank account datum IDs
   banned_users: number[];
-  id_required: BooleanLike;
+  ID_required: BooleanLike;
 };
 
 export const OreSilo = (props: Data) => {
@@ -233,16 +233,16 @@ type LogsListProps = {
 
 const RestrictButton = () => {
   const { act, data } = useBackend<Data>();
-  const { id_required } = data;
+  const { ID_required } = data;
   return (
     <Box align="center">
       <Button
         position="relative"
         className="__RestrictButton"
-        color={id_required ? 'bad' : 'good'}
+        color={ID_required ? 'bad' : 'good'}
         onClick={() => act('toggle_restrict')}
       >
-        {id_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
+        {ID_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
       </Button>
     </Box>
   );
