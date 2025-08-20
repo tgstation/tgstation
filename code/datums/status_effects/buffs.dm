@@ -6,10 +6,21 @@
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
+	var/gender = MALE
+	var/word
+	var/word2
 
-/datum/status_effect/his_grace/her_grace
-	id = "her_grace"
-	alert_type = /atom/movable/screen/alert/status_effect/his_grace/her_grace
+/datum/status_effect/his_grace/on_creation(mob/living/new_owner, inputgender)
+	. = ..()
+	gender = inputgender
+	if(gender == MALE)
+		word = "His"
+		word2 = "Him"
+		linked_alert.icon_state = "his_grace"
+	else
+		word = "Her"
+		word2 = "Her"
+		linked_alert.icon_state = "her_grace"
 
 /atom/movable/screen/alert/status_effect/his_grace
 	name = "His Grace"
@@ -17,14 +28,14 @@
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/atom/movable/screen/alert/status_effect/his_grace/her_grace
-	name = "Her Grace"
-	desc = "Her Grace hungers, and you must feed Her."
-	icon_state = "her_grace"
-
 /atom/movable/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
 	var/datum/status_effect/his_grace/HG = attached_effect
+	var/His = HG.word
+	var/Him = HG.word2
+	name = "[His] Grace"
+	desc = "[His] Grace hungers, and you must feed [Him]."
+	icon_state = "[lowertext(His)]_grace"
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
 	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
 	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
@@ -34,15 +45,7 @@
 	owner.add_stun_absorption(
 		source = id,
 		priority = 3,
-		self_message = span_boldwarning("His Grace protects you from the stun!"),
-	)
-	return ..()
-
-/datum/status_effect/his_grace/her_grace/on_apply()
-	owner.add_stun_absorption(
-		source = id,
-		priority = 3,
-		self_message = span_boldwarning("Her Grace protects you from the stun!"),
+		self_message = span_boldwarning("[word] Grace protects you from the stun!"),
 	)
 	return ..()
 
@@ -58,10 +61,7 @@
 		if(HG.awakened)
 			graces++
 	if(!graces)
-		if(id == "his_grace")
-			owner.apply_status_effect(/datum/status_effect/his_wrath)
-		else
-			owner.apply_status_effect(/datum/status_effect/his_wrath/her_wrath)
+		owner.apply_status_effect(/datum/status_effect/his_wrath, word, word2)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.02

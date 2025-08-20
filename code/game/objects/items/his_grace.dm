@@ -43,8 +43,6 @@
 				desc = "A toolbox painted bright pink. Looking at it makes you feel uneasy."
 			icon_state = "pink"
 			inhand_icon_state = "toolbox_pink"
-			if(holder)
-				holder.remove_status_effect(/datum/status_effect/his_grace)
 			T.visible_message(span_boldwarning("[src] starts to look a little... girly?"))
 		else if(gender == FEMALE)
 			gender = MALE
@@ -52,11 +50,11 @@
 				name = "His Grace"
 			else if (!ascended)
 				desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-			if(holder)
-				holder.remove_status_effect(/datum/status_effect/his_grace/her_grace)
 			icon_state = "green"
 			inhand_icon_state = "toolbox_green"
 			T.visible_message(span_boldwarning("[src] begins to look a little more... manly?"))
+		if(holder)
+			holder.remove_status_effect(/datum/status_effect/his_grace)
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
@@ -156,21 +154,13 @@
 				master.visible_message(span_boldwarning("[src] turns on [master]!"), "<span class='his_grace big bold'>[src] turns on you!</span>")
 				do_attack_animation(master, null, src)
 				master.emote("scream")
-				if(gender == MALE)
-					master.remove_status_effect(/datum/status_effect/his_grace)
-				else if (gender == FEMALE)
-					master.remove_status_effect(/datum/status_effect/his_grace/her_grace)
+				master.remove_status_effect(/datum/status_effect/his_grace)
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
 			else
-				if(gender == MALE)
-					master.apply_status_effect(/datum/status_effect/his_grace)
-					master.remove_status_effect(/datum/status_effect/his_grace/her_grace)
-				else if (gender == FEMALE)
-					master.apply_status_effect(/datum/status_effect/his_grace/her_grace)
-					master.remove_status_effect(/datum/status_effect/his_grace)
+				master.apply_status_effect(/datum/status_effect/his_grace,gender)
 		return
 	forceMove(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
