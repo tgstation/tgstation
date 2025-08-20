@@ -82,7 +82,7 @@
 
 		//Default to MAP_DIRECTORY_MAPS if no directory is passed
 		if(directory)
-			if(!(directory in MAP_DIRECTORY_WHITELIST))
+			if(!(directory in MAP_DIRECTORY_WHITELIST) && !CONFIG_GET(flag/persistent_save_enabled))
 				log_world("map directory not in whitelist: [directory] for map [filename]")
 				return configuring_map
 		else
@@ -164,14 +164,7 @@
 
 	traits = json["traits"]
 	// "traits": [{"Linkage": "Cross"}, {"Space Ruins": true}]
-	if (islist(traits))
-		// "Station" is set by default, but it's assumed if you're setting
-		// traits you want to customize which level is cross-linked
-		for (var/level in traits)
-			if (!(ZTRAIT_STATION in level))
-				level[ZTRAIT_STATION] = TRUE
-	// "traits": null or absent -> default
-	else if (!isnull(traits))
+	if (!isnull(traits))
 		log_world("map_config traits is not a list!")
 		return
 
