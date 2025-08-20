@@ -1,4 +1,0 @@
-author: "Cameron-The-Raven"
-delete-after: True
-changes:
-  - bugfix: "Brains will no longer runtime when owner-less"

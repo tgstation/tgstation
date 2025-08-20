@@ -473,3 +473,10 @@
   - map: Adjusts Turret Placement in the AI Upload on Nebulastation
   - map: Adds an External Security Camera to the Starboard Vault Wall overlooking
       the AI Upload on Nebulastation
+2025-08-20:
+  Cameron-The-Raven:
+  - bugfix: Brains will no longer runtime when owner-less
+  panvxv:
+  - bugfix: Fixed bots unable to buckle people to themselves.
+  scriptis:
+  - rscadd: nepotism
