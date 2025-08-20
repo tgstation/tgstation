@@ -1,4 +1,3 @@
-
 #define PLANT_ANALYZER_STAT_TAB 1
 #define PLANT_ANALYZER_CHEM_TAB 2
 
@@ -356,3 +355,6 @@
 			"data" = unique_data[label],
 		))
 	return seed_data
+
+#undef PLANT_ANALYZER_STAT_TAB
+#undef PLANT_ANALYZER_CHEM_TAB
