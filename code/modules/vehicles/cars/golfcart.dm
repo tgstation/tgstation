@@ -493,6 +493,7 @@
 	var/px_second_offset = 0
 	var/py_second_offset = 0
 	var/pz_second_offset = 0
+	var/invert_layer = 1
 	if (new_dir & NORTH)
 		px = -4
 		px_second_offset = 8
@@ -501,12 +502,14 @@
 		pz_second_offset = -4
 	else if (new_dir & SOUTH)
 		layer = HUMAN_LOWER_LAYER
+		invert_layer = -1
 
-		px = -4
-		px_second_offset = 8
+		px = 4
+		px_second_offset = -8
 
 		pz = 4
-		pz_second_offset = 4
+		pz_second_offset = -4
+		py_second_offset = 8 // this is hacky but fixes ordering
 	else if (new_dir & WEST)
 		px = -4
 		px_second_offset = 12
@@ -525,7 +528,7 @@
 			y_add = py + py_second_offset * (i - 1),
 			z_add = pz + pz_second_offset * (i - 1)
 			)
-		passenger.layer = layer
+		passenger.layer = layer + ((i * 0.01) - 0.01) * invert_layer
 
 /obj/golfcart_rear/proc/on_dir_changed(datum/source, old_dir, new_dir)
 	if (!has_buckled_mobs())
