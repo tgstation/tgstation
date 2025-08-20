@@ -435,6 +435,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	// allowing reagents to react after being lit
 	reagents.flags &= ~(NO_REACT)
+	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine))
+		reagents.flags |= NO_REACT
 	reagents.handle_reactions()
 	update_appearance(UPDATE_ICON)
 	if(flavor_text)
