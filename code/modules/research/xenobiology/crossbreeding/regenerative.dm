@@ -206,10 +206,9 @@ Regenerative extracts:
 	if(isslime(target))
 		target.visible_message(span_warning("The [target] suddenly changes color!"))
 		var/mob/living/basic/slime/target_slime = target
-		target_slime.random_colour()
+		target_slime.set_slime_type()
 	if(isjellyperson(target))
 		target.reagents.add_reagent(/datum/reagent/mutationtoxin/jelly,5)
-
 
 /obj/item/slimecross/regenerative/pink
 	colour = SLIME_TYPE_PINK
