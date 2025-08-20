@@ -201,18 +201,19 @@ export const AccountingConsole = () => {
   );
 };
 
+const doomMessages = [
+  'BUY GOLD!',
+  'BUY LOW, SELL HIGH!',
+  'INVEST IN CRYPTO!',
+  'SELL EVERYTHING!',
+  'THE ECONOMY IS COLLAPSING!',
+  'THE ECONOMY IS RUINED!',
+  'THE MARKET IS CRASHING!',
+  'THE STATION IS GOING BANKRUPT!',
+];
+
 const getRandomDoomMessage = () => {
-  const messages = [
-    'BUY GOLD!',
-    'BUY LOW, SELL HIGH!',
-    'INVEST IN CRYPTO!',
-    'SELL EVERYTHING!',
-    'THE ECONOMY IS COLLAPSING!',
-    'THE ECONOMY IS RUINED!',
-    'THE MARKET IS CRASHING!',
-    'THE STATION IS GOING BANKRUPT!',
-  ];
-  return messages[Math.floor(Math.random() * messages.length)];
+  return doomMessages[Math.floor(Math.random() * doomMessages.length)];
 };
 
 type FakeWindowProps = {
@@ -246,11 +247,7 @@ const FakeWindow = (
   const { name, children, setScreenmode } = props;
 
   return (
-    <Stack
-      vertical
-      className="Accounting__Window"
-      backgroundColor="rgb(195, 195, 195)"
-    >
+    <Stack vertical className="Accounting__Window">
       <Stack.Item>
         <Stack height="30px" backgroundColor="hsl(240, 100%, 25.1%)">
           <Stack.Item grow p={1}>
