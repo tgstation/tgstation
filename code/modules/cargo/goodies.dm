@@ -94,14 +94,14 @@
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
 	desc = "Contains one energy gun, capable of firing both non-lethal and lethal blasts of light."
-	cost = PAYCHECK_COMMAND * 10
+	cost = PAYCHECK_COMMAND * 12
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/laser_single
 	name = "Laser Gun Single-Pack"
 	desc = "Contains one laser gun, the lethal workhorse of Nanotrasen security everywhere."
-	cost = PAYCHECK_COMMAND * 8
+	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser)
 
