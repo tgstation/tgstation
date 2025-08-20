@@ -338,7 +338,7 @@
 	. = ..()
 	if (!cargo)
 		return
-	. += span_slightly_larger("It is currently transporting \the [cargo]")
+	. += span_slightly_larger("It is currently transporting the [cargo]")
 	. += cargo.examine(user)
 
 /obj/vehicle/ridden/golfcart/examine(mob/user)
