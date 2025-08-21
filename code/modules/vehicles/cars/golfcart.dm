@@ -56,30 +56,28 @@
 	var/obj/item/stock_parts/power_store/cell/cell = null
 	var/hood_open = FALSE
 
-/obj/vehicle/ridden/golfcart/proc/shake_cargo(pixelshiftx = 2, pixelshifty = 2, duration, shake_interval)
+/obj/vehicle/ridden/golfcart/proc/shake_cargo(pixelshiftx = 2, pixelshifty = 2, duration)
 	if (!cargo_image)
 		return
-	var/initialpixelx = cargo_image.pixel_x
-	var/initialpixely = cargo_image.pixel_y
-	animate(cargo_image, pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval, flags = ANIMATION_PARALLEL)
-	for (var/i in 3 to ((duration / shake_interval))) // Start at 3 because we already applied one, and need another to reset
-		animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
-	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
+	var/inital_pixel_x = cargo_image.pixel_x
+	var/inital_pixel_y = cargo_image.pixel_y
+	animate(cargo_image, pixel_x = inital_pixel_x + rand(-pixelshiftx, pixelshiftx), pixel_y = inital_pixel_y + rand(pixelshifty/2, pixelshifty), time=duration, flags=ANIMATION_PARALLEL)
+	animate(pixel_x = inital_pixel_x, pixel_y = inital_pixel_y, time=duration)
 
 /obj/vehicle/ridden/golfcart/proc/check_if_shake()
 	if (!cargo)
 		return FALSE
 
 	// Assuming we decide to shake again, how long until we check to shake again
-	var/next_check_time = 1 SECONDS
+	var/next_check_time = 0.75 SECONDS
 
 	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
-	var/shake_duration =  0.3 SECONDS
+	var/shake_duration =  0.125 SECONDS
 
 	for(var/mob/living/mob in cargo.contents)
 		if(DOING_INTERACTION_WITH_TARGET(mob, child))
 			// Shake and queue another check_if_shake
-			shake_cargo(4, 4, shake_duration, shake_interval=shake_duration)
+			shake_cargo(1, 6, shake_duration)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
 			return TRUE
 
