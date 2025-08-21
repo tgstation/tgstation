@@ -36,7 +36,7 @@
 	integrity_failure = 0.5
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
-	var/list/cargo_appearances = list()
+	var/obj/effect/overlay/vis/cargo_image = null
 	var/obj/item/v8_engine/engine = null
 	var/engine_state = null
 	var/obj/golfcart_rear/child = null
@@ -57,15 +57,15 @@
 	var/hood_open = FALSE
 
 /obj/vehicle/ridden/golfcart/proc/shake_cargo(pixelshiftx = 2, pixelshifty = 2, duration, shake_interval)
-	visible_message("shaking [cargo_appearances.len]")
-	for (var/mutable_appearance/overlay in cargo_appearances)
-		visible_message("shaking")
-		var/initialpixelx = pixel_x
-		var/initialpixely = pixel_y
-		animate(overlay, pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixelx + rand(-pixelshifty,pixelshifty), time = shake_interval, flags = ANIMATION_PARALLEL)
-		for (var/i in 3 to ((duration / shake_interval))) // Start at 3 because we already applied one, and need another to reset
-			animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
-		animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
+	if (!cargo_image)
+		return
+	visible_message("shaking")
+	var/initialpixelx = cargo_image.pixel_x
+	var/initialpixely = cargo_image.pixel_y
+	animate(cargo_image, pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixelx + rand(-pixelshifty,pixelshifty), time = shake_interval, flags = ANIMATION_PARALLEL)
+	for (var/i in 3 to ((duration / shake_interval))) // Start at 3 because we already applied one, and need another to reset
+		animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
+	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
 
 /obj/vehicle/ridden/golfcart/proc/check_if_shake()
 	if (!cargo)
@@ -143,6 +143,7 @@
 		cargo.forceMove(dropoff)
 		cargo = null
 		child.layer = BELOW_HUMAN_HITBOX_LAYER
+		rebuild_cargo_image()
 		update_appearance(UPDATE_ICON)
 		return
 	if (cargo)
@@ -158,6 +159,7 @@
 	to_load.forceMove(src)
 	cargo = to_load
 	child.layer = CARGO_HITBOX_LAYER
+	rebuild_cargo_image()
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/unload()
@@ -647,7 +649,9 @@
 	child.setDir(dir)
 	child.update_appearance(updates)
 
-/obj/vehicle/ridden/golfcart/proc/get_cargo_offsets(crate_x_offset = 0, crate_y_offset = 0)
+/obj/vehicle/ridden/golfcart/proc/get_cargo_offsets()
+	var/crate_x_offset = 0
+	var/crate_y_offset = 0
 	if (dir & NORTH)
 		crate_y_offset += -30
 	else if (dir & SOUTH)
@@ -665,7 +669,9 @@
 		layer = src.layer
 	if (!max_layer)
 		max_layer = ABOVE_ALL_MOB_LAYER
-	var/vector/offsets = get_cargo_offsets(crate_x_offset, crate_y_offset)
+	var/vector/offsets = get_cargo_offsets()
+	offsets.x += crate_x_offset
+	offsets.y += crate_y_offset
 	var/crate_layer_offset = 0
 	if (dir & NORTH)
 		crate_layer_offset = 0.01
@@ -689,9 +695,10 @@
 				overlay.layer = min(base_cargo_layer + (overlay.layer - cargo.layer), max_layer)
 			else
 				overlay.layer = min(base_cargo_layer + (overlay.layer * -0.01) - 0.01, max_layer)
-			overlay.pixel_x += offsets.x
-			overlay.pixel_y += offsets.y
-			overlay.pixel_z += 11
+			if (i == 1)
+				overlay.pixel_x += offsets.x
+				overlay.pixel_y += offsets.y
+				overlay.pixel_z += 11
 	return overlays
 
 /obj/vehicle/ridden/golfcart/proc/get_rear_offset()
@@ -719,6 +726,22 @@
 		return
 	var/vector/rear_offsets = parent.get_rear_offset()
 	. += parent.generate_cargo_overlay(-rear_offsets.x, -rear_offsets.y, layer=layer)
+
+/obj/vehicle/ridden/golfcart/proc/rebuild_cargo_image()
+	if (!cargo)
+		visible_message("rebuild cargo no cargo")
+		if (!cargo_image)
+			visible_message("and no cargo to remove")
+			return
+		vis_contents -= cargo_image
+		cargo_image = null
+		return
+	if (cargo_image)
+		vis_contents -= cargo_image
+	visible_message("making cargo image [cargo] [cargo.icon] [cargo.icon_state]")
+	cargo_image = SSvis_overlays._create_new_vis_overlay(cargo.icon, cargo.icon_state, CARGO_HITBOX_LAYER, plane, dir)
+	cargo_image.loc = src
+	vis_contents += cargo_image
 
 /obj/vehicle/ridden/golfcart/update_overlays()
 	. = ..()
@@ -756,11 +779,15 @@
 		. += roof_overlay
 
 	if (cargo)
-		cargo_appearances = generate_cargo_overlay(max_layer=CARGO_HITBOX_LAYER)
-		. += cargo_appearances
-	else if (cargo_appearances.len)
-		cargo_appearances = list()
-
+		cargo_image.overlays = list()
+		var/vector/offsets = get_cargo_offsets()
+		cargo_image.pixel_x = offsets.x
+		cargo_image.pixel_y = offsets.y
+		// i was hoping that making the cargo an image instead of an overlay would let me avoid redrawing the overlays every dir change
+		// but you can't "flatten" overlays into one image
+		var/list/overlays = generate_cargo_overlay(-offsets.x, -offsets.y, max_layer=CARGO_HITBOX_LAYER)
+		for(var/i in 2 to overlays.len)
+			cargo_image.overlays += overlays[i]
 /obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
 	if (!isliving(source))
 		return // should runtime?
