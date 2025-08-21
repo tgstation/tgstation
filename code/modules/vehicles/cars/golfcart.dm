@@ -55,6 +55,43 @@
 	var/obj/item/stock_parts/power_store/cell/cell = null
 	var/hood_open = FALSE
 
+/obj/vehicle/ridden/golfcart/proc/check_if_shake()
+	// Assuming we decide to shake again, how long until we check to shake again
+	var/next_check_time = 1 SECONDS
+
+	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
+	var/shake_duration =  0.3 SECONDS
+
+	for(var/mob/living/mob in contents)
+		if(DOING_INTERACTION_WITH_TARGET(mob, src))
+			// Shake and queue another check_if_shake
+			Shake(8, 8, shake_duration, shake_interval = shake_duration)
+			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
+			return TRUE
+
+	// If we reach here, nobody is resisting, so don't shake
+	return FALSE
+
+/obj/vehicle/ridden/golfcart/proc/easy_escape(mob/living/user, obj/container)
+	if (!cargo || cargo != container)
+		return
+	unload()
+
+/obj/vehicle/ridden/golfcart/proc/hard_escape(mob/living/user, obj/container)
+	return
+
+/obj/vehicle/ridden/golfcart/relay_container_resist_act(mob/living/user, obj/container)
+	user.visible_message(
+		span_danger("[user] tries to escape the [container]!"),
+		span_danger("You try to escape!"),
+	)
+	if (istype(container, /obj/structure/closet))
+		var/obj/structure/closet/closet = container
+		if (!closet.welded)
+			return easy_escape(user, container)
+		return hard_escape(user, container)
+	return easy_escape(user, container)
+
 /obj/vehicle/ridden/golfcart/proc/load(obj/to_load)
 	if (!to_load)
 		if (!cargo)
@@ -77,6 +114,9 @@
 	if (cargo)
 		return
 	if (to_load.anchored)
+		return
+	if (to_load.has_buckled_mobs())
+		// can't stack buckles and whatever
 		return
 	if (istype(to_load, /obj/structure/closet))
 		var/obj/structure/closet/crate = to_load
