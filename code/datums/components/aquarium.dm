@@ -617,7 +617,7 @@
 				"fish_happiness" = fish.get_happiness_value(),
 				"fish_icon" = fish::icon,
 				"fish_icon_state" = fish::icon_state,
-				"fish_health" = fish.health,
+				"fish_alive" = fish.status == FISH_ALIVE,
 			))
 			continue
 		.["propData"] += list(list(

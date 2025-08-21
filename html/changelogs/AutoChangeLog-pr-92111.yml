@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "constructed SMES now auto connects to any output cable underneath it regardless of its layer"

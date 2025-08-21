@@ -11,7 +11,7 @@
 	var/static/list/messages = list(
 		span_warning("You feel your conscious mind fall apart!"),
 		span_warning("Reality warps around you!"),
-		span_warning("Something's wispering around you!"),
+		span_warning("Something's whispering around you!"),
 		span_warning("You are going insane!"),
 	)
 	///Do we spawn misleading decoys?

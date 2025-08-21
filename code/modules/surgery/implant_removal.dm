@@ -18,7 +18,7 @@
 		TOOL_HEMOSTAT = 100,
 		TOOL_CROWBAR = 65,
 		/obj/item/kitchen/fork = 35)
-	time = 64
+	time = 6.4 SECONDS
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
 

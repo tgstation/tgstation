@@ -397,9 +397,7 @@
 	stack_threshold = 10
 	max_stacks = 10
 	overlay_file = 'icons/effects/bleed.dmi'
-	underlay_file = 'icons/effects/bleed.dmi'
 	overlay_state = "bleed"
-	underlay_state = "bleed"
 	var/bleed_damage = 200
 
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
@@ -938,12 +936,14 @@
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
+	/// By how much we should increase the attack cooldown
+	var/cd_increase = 2.5
 
 /datum/status_effect/rebuked/on_apply()
 	owner.next_move_modifier *= 2
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
-		simple_owner.ranged_cooldown_time *= 2.5
+		simple_owner.ranged_cooldown_time *= cd_increase
 	return TRUE
 
 /datum/status_effect/rebuked/on_remove()
@@ -953,7 +953,7 @@
 	owner.next_move_modifier *= 0.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
-		simple_owner.ranged_cooldown_time /= 2.5
+		simple_owner.ranged_cooldown_time /= cd_increase
 
 /datum/status_effect/freezing_blast
 	id = "freezing_blast"

@@ -654,3 +654,123 @@
   - balance: Modular shields now suffer a severe range penalty when generating indoors
       but are more potent in their capacity to endure damage.
   - image: modular shield gate sprites
+2025-07-28:
+  Arturlang:
+  - rscadd: Heretics can now look at their UI while dead, though you can't buy stuff
+  - rscadd: you can now a ghost observe heretics heretics and click on their antag
+      panel button to view their heretic UI
+  Bisar:
+  - rscadd: The ore silo has had a significant expansion to its logging capabilities.
+  - rscadd: The ore silo now allows any ID with Quartermaster access (NOT SILICONS!)
+      to ban/unban specific users from the silo.
+  - rscadd: The ore silo now has a toggle (on by default) that a user of ore silo
+      materials has an ID with an associated bank account. This can be toggled by
+      anyone with Quartermaster access (NOT SILICONS!)
+  - rscadd: NanoTrasen discounts any reports that Syndicate contraband (cryptographic
+      sequencer, agent card) can be used to circumvent any protocols instituted on
+      the ore silo access control routines.
+  - rscadd: The ore silo now announces operations to ban/unban users and enable/disable
+      ID requirements on radio channels (check the Github for actions reported to
+      what channels.)
+  - rscadd: The tgui interface for ore silo log entries has been reworked.
+  - refactor: The code for logging a given access to ore silo materials has been significantly
+      refactored.
+  - qol: Ore silo log entries now display materials spent in terms of sheets rather
+      than the obfuscated absolute-units previously display (1 iron ejected instead
+      of -100 iron, 0.25 used in a craft instead of -25 iron)
+  Ezel:
+  - qol: Both chefs can now spawn roundstart
+  SmArtKar:
+  - bugfix: Fixed mannequines runtiming when you try to pull them two times in a row
+  - bugfix: Fixed tables allowing people standing on them to climb over things freely
+      when deconstructed
+  - bugfix: Fixed some storages runtiming when trying to dump their contents into
+      other storages
+  SyncIt21:
+  - bugfix: constructed SMES now auto connects to any output cable underneath it regardless
+      of its layer
+  - bugfix: map loaded portable smes don't randomly break and become nonfunctional
+  Time-Green:
+  - rscadd: Recovered Crew have been added to the ghostrole spawner menu
+  - rscadd: Orbiting Recovered Crew corpses will make them twitch to indicate a soul
+      is available
+  Y0SH1M4S73R:
+  - rscadd: Items made out of a specific mob's meat take on the color of that mob's
+      blood.
+  - rscadd: Blood (or anything a mob uses as blood) can be used to imprint that mob's
+      meat onto metalgen.
+  - rscadd: Organs and bodyparts made predominantly out of meat become organic, if
+      they weren't already. Likewise, hauntium makes them ghostly.
+  dj-34:
+  - rscdel: Removed duplicate code of banner icons
+2025-07-29:
+  Bisar:
+  - bugfix: Ore silos should be able to be connected/disconnected/disassembled without
+      any issues now.
+  - bugfix: The define for CENTCOM_SPECOPS was incorrectly formatted; it has been
+      fixed.
+  FalloutFalcon:
+  - admin: new admin verb for whitelisting players through the txt
+  Melbert:
+  - bugfix: Genetics should be less likely to break your blood type
+  SmArtKar:
+  - rscadd: Added a raptor feather crusher trophy which makes your crusher shots go
+      through your allied mobs.
+  - balance: Rebuke effect from lobster claw trophy and the eye of god now applies
+      to basicmob attacks
+  - balance: Bileworm spewlet's damage is no longer reduced by 70% when hitting lavaland
+      fauna, and it no longer can hit allied mobs
+  - balance: Sphere MODule bombs no longer hit NODE drones and minebots
+  - balance: Ice demon/ice demon cube afterimages can now be walked through by players
+  - bugfix: Sphere MODule bombs now aggro basicmobs hit by their explosions
+2025-07-30:
+  Bisar:
+  - qol: Power cells and megacells now take much less time to print.
+  - balance: Power cells now take the base-item time-to-print ( 10 seconds -> 3.2
+      seconds ), WITHOUT the stock-item print speed increase.
+  - balance: Megacells now take 5 seconds to print ( 10 seconds -> 5 seconds), WITHOUT
+      the stock-item print speed increase.
+  Rhials:
+  - balance: Nightmares/Shadowpeople are no longer stunned by intense flashes like
+      flashbangs or handheld flashes.
+  - balance: Nightmares/Shadowpeople are now harmed and confused by ALL flash sources,
+      including welding or other sources of flash-like flashing.
+  - sound: Nightmares now have a wretched hiss as their default scream sound. Spooky!
+  TealSeer:
+  - refactor: refactored custom vending machine brand code, a new var on /obj/machinery/vending
+      called allow_custom now determines whether the machine can be chosen when screwdrivering
+      the circuit board
+2025-07-31:
+  Aliceee2ch:
+  - bugfix: Tier 3 cyber heart now prevents bleeding as intended
+  Bisar:
+  - bugfix: Fixed a couple of missing entries for user_data
+  - code_imp: Ore silo logs will now generate an entry for a failed ID_DATA entry
+      instead of not generating anything if the initial provided user_data wasn't
+      valid.
+  - bugfix: The calculation for discharged energy when committing suicide with a power
+      storage part should now be correctly evaluated.
+  Ghommie:
+  - bugfix: Fixes a few dishes getting a bit too, uh, meaty when cut.
+  - bugfix: Fixes being able to turn different types of cooked spaghetti into generic
+      cooked spaghetti with an oven.
+  JohnFulpWillard:
+  - rscadd: Added a new role to Mafia; the Coroner, which takes the Chaplain's ability
+      to see dead people's roles.
+  - rscadd: Mafia Chaplains now speak with the dead at night instead, and the dead
+      are corpselocked to prevent cheating.
+  - bugfix: Mafia's HoS doesn't kill himself when executing non-townies.
+  - qol: You can now update your notes & send them in chat while dead, as well as
+      look up the descriptions of other roles.
+  LemonInTheDark:
+  - bugfix: Distortion/fov effects now properly impact the full game world
+  Melbert:
+  - qol: Adds some wardrobes and backpacks to Catwalk laundry + dorms
+  MelokG and KREKS:
+  - image: resprited all RPEDs
+  - image: RPEDs now play an animation when replacing parts
+  SmArtKar:
+  - bugfix: Fixed fly infusion deleting the last infused organ upon activation
+  Thunder12345:
+  - map: Tramstation's xenobiology now receives xeno eggs in the middle of the chamber
+      instead of tucked away at the back.
