@@ -35,7 +35,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 
 /obj/machinery/wall_healer
 	name = "\improper Deforest First Aid Station"
-	desc = "A wall-mounted first aid station, used to treat minor injuries - just stick your hand in and relax."
+	desc = "A wall-mounted first aid station, designed to treat minor injuries - just stick your hand in and try to relax."
 	icon = 'icons/obj/machines/wall_healer.dmi'
 	icon_state = "wall_healer"
 	base_icon_state = "wall_healer"
@@ -49,27 +49,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	/// Lazylist of bandages that have been restocked into the wall healer.
 	VAR_PRIVATE/list/stocked_bandages
 
-	/// Cost per unit of chem injected. Note, always disregarded on red alert.
-	var/per_injection_cost = 3
-	/// Amount of chems injected per use
-	var/per_injection = 3
-	/// Reagent container containing chems that heal brute
-	VAR_PRIVATE/datum/reagents/brute_healing
-	/// Reagenet container containing chems that heal burn
-	VAR_PRIVATE/datum/reagents/burn_healing
-	/// Reagent container containing chems that heal toxins
-	VAR_PRIVATE/datum/reagents/tox_healing
-	/// Reagent container containing chems that assuage blood loss
-	VAR_PRIVATE/datum/reagents/blood_healing
+	/// Cost per unit of healing applied.
+	/// Note: disregarded on red alert.
+	var/per_heal_cost = 2.5
+	/// Amount of brute healing pooled
+	VAR_PRIVATE/brute_healing = MAX_LIVING_HEALTH * 0.4
+	/// Amount of burn healing pooled
+	VAR_PRIVATE/burn_healing = MAX_LIVING_HEALTH * 0.4
+	/// Amount of toxin healing pooled
+	VAR_PRIVATE/tox_healing = MAX_LIVING_HEALTH * 0.3
+	/// Amount of blood to restore
+	VAR_PRIVATE/blood_healing = BLOOD_VOLUME_NORMAL * 0.1
 
 	/// Current mob using the wall healer
 	VAR_PRIVATE/mob/living/current_user
-	/// Current hand of the mob using the wall healer, if any
+	/// Current hand of the mob using the wall healer, if any (can be unset if in use by a simplemob, for example)
 	VAR_PRIVATE/obj/item/bodypart/current_hand
 	/// Ref of the last user to touch the wall healer - only set when there is no active user
 	VAR_PRIVATE/last_user_ref
 	/// Bar that props above the healer to show time until next injection
-	VAR_PRIVATE/datum/progressbar/injection_bar
+	VAR_PRIVATE/datum/progressbar/wall_healer/injection_bar
 
 	/// How long it takes to recharge the wall healer
 	var/recharge_cd_length = 30 SECONDS
@@ -82,10 +81,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 
 /obj/machinery/wall_healer/Initialize(mapload)
 	. = ..()
-	init_reagent_containers()
-	if(mapload)
-		fill_reagent_containers()
+	if(!mapload)
+		brute_healing = 0
+		burn_healing = 0
+		tox_healing = 0
+		blood_healing = 0
+		update_appearance()
 	init_payment()
+	register_context()
 
 /obj/machinery/wall_healer/Destroy()
 	clear_using_mob()
@@ -96,31 +99,48 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	QDEL_LAZYLIST(stocked_bandages)
 	return ..()
 
-/obj/machinery/wall_healer/proc/init_reagent_containers()
-	brute_healing = new(30)
-	burn_healing = new(30)
-	tox_healing = new(30)
-	blood_healing = new(30)
+/obj/machinery/wall_healer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Heal self"
+		context[SCREENTIP_CONTEXT_RMB] = "Get gauze"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/stack/medical/gauze))
+		context[SCREENTIP_CONTEXT_LMB] = "Restock"
+		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/wall_healer/proc/fill_reagent_containers(percent = 100)
-	// Handles already full containers for us, fortunately
+/obj/machinery/wall_healer/proc/refill_healing_pool(percent = 100)
 	var/amount_refilled = 0
-	amount_refilled += brute_healing.add_reagent(/datum/reagent/medicine/c2/libital, 30 * percent / 100)
-	amount_refilled += burn_healing.add_reagent(/datum/reagent/medicine/c2/aiuri, 30 * percent / 100)
-	amount_refilled += blood_healing.add_reagent(/datum/reagent/medicine/salglu_solution, 30 * percent / 100)
-	amount_refilled += tox_healing.add_reagent(/datum/reagent/medicine/c2/syriniver, 30 * percent / 100)
+
+	var/pre_brute_healing = brute_healing
+	brute_healing = min(brute_healing + initial(brute_healing) * (percent / 100), initial(brute_healing))
+	amount_refilled += brute_healing - pre_brute_healing
+
+	var/pre_burn_healing = burn_healing
+	burn_healing = min(burn_healing + initial(burn_healing) * (percent / 100), initial(burn_healing))
+	amount_refilled += burn_healing - pre_burn_healing
+
+	var/pre_tox_healing = tox_healing
+	tox_healing = min(tox_healing + initial(tox_healing) * (percent / 100), initial(tox_healing))
+	amount_refilled += tox_healing - pre_tox_healing
+
+	var/pre_blood_healing = blood_healing
+	blood_healing = min(blood_healing + initial(blood_healing) * (percent / 100), initial(blood_healing))
+	amount_refilled += blood_healing - pre_blood_healing
+
 	if(amount_refilled > 0)
 		update_appearance()
+
 	return amount_refilled
 
 /obj/machinery/wall_healer/proc/init_payment()
 	// Cost depends on service (so just use 0 here)
 	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
-	desc += " This one charges by the second - better get your wallet ready."
+	desc += " Charges by the second, though all costs are waived on red alert."
 
 /obj/machinery/wall_healer/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [num_bandages + LAZYLEN(stocked_bandages)] bandage\s stocked. Remove a bandage with [EXAMINE_HINT("right-click")].")
+	. += span_notice("It has [num_bandages + LAZYLEN(stocked_bandages)] bandage\s stocked. \
+		Remove a bandage with [EXAMINE_HINT("right-click")].")
 
 /obj/machinery/wall_healer/update_icon_state()
 	. = ..()
@@ -131,10 +151,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	if(!is_operational)
 		return
 
-	var/brute_state = round(8 * (brute_healing.total_volume / brute_healing.maximum_volume), 1)
-	var/burn_state = round(8 * (burn_healing.total_volume / burn_healing.maximum_volume), 1)
-	var/tox_state = round(8 * (tox_healing.total_volume / tox_healing.maximum_volume), 1)
-	var/blood_state = round(8 * (blood_healing.total_volume / blood_healing.maximum_volume), 1)
+	var/brute_state = 8 - round(8 * (brute_healing / initial(brute_healing)), 1)
+	var/burn_state = 8 - round(8 * (burn_healing / initial(burn_healing)), 1)
+	var/tox_state = 8 - round(8 * (tox_healing / initial(tox_healing)), 1)
+	var/blood_state = 8 - round(8 * (blood_healing / initial(blood_healing)), 1)
 
 	var/mutable_appearance/brute = mutable_appearance(icon, "bar[brute_state]", alpha = src.alpha, appearance_flags = RESET_COLOR)
 	brute.color = /datum/reagent/medicine/c2/libital::color
@@ -149,7 +169,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	tox.pixel_z -= 4
 
 	var/mutable_appearance/blood = mutable_appearance(icon, "bar[blood_state]", alpha = src.alpha, appearance_flags = RESET_COLOR)
-	blood.color = /datum/reagent/medicine/salglu_solution::color
+	blood.color = /datum/reagent/blood::color
 	blood.pixel_z -= 6
 
 	. += brute
@@ -160,6 +180,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	. += emissive_appearance(icon, "bar_emissive", src, alpha = src.alpha)
 
 /obj/machinery/wall_healer/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	balloon_alert(user, "safeties disabled")
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -171,11 +197,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 		return .
 	var/mob/living/who_put_user_in = user
 	var/mob/living/new_user = dropped
-	if(!who_put_user_in.can_perform_action(src) || new_user.loc != loc)
+	if(new_user.loc != loc)
 		return .
 
 	if(do_after(user, 1 SECONDS, src))
-		user_put_in_other_hand(new_user, who_put_user_in)
+		other_put_users_hand_in(new_user, who_put_user_in)
 	return TRUE
 
 /obj/machinery/wall_healer/attack_hand(mob/living/user, list/modifiers)
@@ -237,7 +263,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 		)
 	set_using_mob(user)
 
-/obj/machinery/wall_healer/proc/user_put_in_other_hand(mob/living/user, mob/living/who_put_user_in)
+/obj/machinery/wall_healer/proc/other_put_users_hand_in(mob/living/user, mob/living/who_put_user_in)
 	if(who_put_user_in == user)
 		return user_put_in_own_hand(user)
 
@@ -310,7 +336,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	if(num_bandages + LAZYLEN(stocked_bandages) <= 0)
 		to_chat(user, span_notice("You try to retrieve some gauze, but [src] seems to be out of stock."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(attempt_charge(user, src, extra_fees = round(per_bandage_cost, 1)) & COMPONENT_OBJ_CANCEL_CHARGE)
+	if(attempt_charge(src, user, extra_fees = floor(per_bandage_cost)) & COMPONENT_OBJ_CANCEL_CHARGE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/stack/medical/gauze/bandage = LAZYACCESS(stocked_bandages, 1)
@@ -336,7 +362,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 /obj/machinery/wall_healer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stack/medical/gauze))
 		return NONE
-
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		to_chat(user, span_warning("You try to restock [src] with [tool], but it seems stuck to your hand."))
+		return ITEM_INTERACT_BLOCKING
 	user.visible_message(
 		span_notice("[user] restocks [src] with [tool]."),
 		span_notice("You restock [src] with [tool]."),
@@ -362,7 +390,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(clear_using_mob))
 
-	// melbert todo : decide if simplemobs are allowed
 	current_hand = user.get_active_hand()
 	if(current_hand)
 		RegisterSignals(current_hand, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_using_mob))
@@ -416,17 +443,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 		COOLDOWN_START(src, recharge_cooldown, recharge_cd_length * 0.5)
 		return
 	if(isnull(current_user))
-		if(COOLDOWN_FINISHED(src, recharge_cooldown) && fill_reagent_containers(10))
+		if(COOLDOWN_FINISHED(src, recharge_cooldown) && refill_healing_pool(10))
 			COOLDOWN_START(src, recharge_cooldown, recharge_cd_length)
 			playsound(src, 'sound/machines/defib/defib_ready.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return
 
 	if(!COOLDOWN_FINISHED(src, injection_cooldown))
-		injection_bar.update(COOLDOWN_TIMELEFT(src, injection_cooldown))
 		return
 
 	COOLDOWN_START(src, injection_cooldown, injection_cd_length)
-	injection_bar.update(0)
+
+	var/arm_check = isnull(current_hand) ? (current_user.mob_biotypes & MOB_ORGANIC) : IS_ORGANIC_LIMB(current_hand)
+	if(!arm_check)
+		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+		to_chat(current_user, span_notice("Nothing happens. Seems [src] doesn't recognize robotic [current_hand ? "limbs" : "beings"]."))
+		return
 
 	if(obj_flags & EMAGGED)
 		current_user.apply_damage(33, BRUTE, current_hand, sharpness = SHARP_POINTY)
@@ -434,32 +465,65 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 		to_chat(current_user, span_warning("You feel a sharp pain as the machine malfunctions, stabbing you with several needles!"))
 		return
 
-	var/need_brute = current_user.getBruteLoss() && !current_user.has_reagent(/datum/reagent/medicine/c2/libital)
-	var/need_burn = current_user.getFireLoss() && !current_user.has_reagent(/datum/reagent/medicine/c2/aiuri)
-	var/need_blood = !HAS_TRAIT(current_user, TRAIT_NOBLOOD) && current_user.blood_volume < BLOOD_VOLUME_OKAY && !current_user.has_reagent(/datum/reagent/medicine/salglu_solution)
-	var/need_tox = current_user.getToxLoss() && !current_user.has_reagent(/datum/reagent/medicine/c2/syriniver)
+	var/brute_healing_now = round(min(initial(brute_healing) * 0.1, brute_healing, current_user.getBruteLoss()), DAMAGE_PRECISION)
+	var/burn_healing_now = round(min(initial(burn_healing) * 0.1, burn_healing, current_user.getFireLoss()), DAMAGE_PRECISION)
+	var/tox_healing_now = round(min(initial(tox_healing) * 0.1, tox_healing, current_user.getToxLoss()), DAMAGE_PRECISION)
+	var/blood_healing_now = HAS_TRAIT(current_user, TRAIT_NOBLOOD) ? 0 : round(min(initial(blood_healing) * 0.1, blood_healing, max(BLOOD_VOLUME_OKAY - current_user.blood_volume, 0)), 0.1)
 
-	var/cost = round(per_injection_cost * per_injection * (need_brute + need_burn + need_blood + need_tox), 1)
-	if(attempt_charge(current_user, src, extra_fees = cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+	var/cost = round(per_heal_cost * (brute_healing_now + burn_healing_now + tox_healing_now + blood_healing_now), 1)
+	if(attempt_charge(src, current_user, extra_fees = cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+		// attempt charge sends a chat message on fail, so all we need here is the sound
 		return
 
-	var/amount_injected = 0
-	if(need_brute)
-		amount_injected += brute_healing.trans_to(current_user, per_injection, methods = INJECT)
-	if(need_burn)
-		amount_injected += burn_healing.trans_to(current_user, per_injection, methods = INJECT)
-	if(need_blood)
-		amount_injected += blood_healing.trans_to(current_user, per_injection, methods = INJECT)
-	if(need_tox)
-		amount_injected += tox_healing.trans_to(current_user, per_injection, methods = INJECT)
+	var/amount_healed = 0
+	if(brute_healing_now)
+		amount_healed += current_user.adjustBruteLoss(-brute_healing_now, required_bodytype = BODYTYPE_ORGANIC)
+		brute_healing -= brute_healing_now
+	if(burn_healing_now)
+		amount_healed += current_user.adjustFireLoss(-burn_healing_now, required_bodytype = BODYTYPE_ORGANIC)
+		burn_healing -= burn_healing_now
+	if(tox_healing_now)
+		amount_healed += current_user.adjustToxLoss(-tox_healing_now, required_biotype = MOB_ORGANIC)
+		tox_healing -= tox_healing_now
+	if(blood_healing_now)
+		current_user.blood_volume += blood_healing_now
+		amount_healed += blood_healing_now
+		blood_healing -= blood_healing_now
 
-	if(amount_injected)
+	if(amount_healed)
 		playsound(src, 'sound/machines/defib/defib_SaftyOn.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_notice("Several syringes inject you with healing chemicals. You feel better, though a bit tingly."))
+		to_chat(current_user, span_notice("Several syringes and medical tools work on your [current_hand.plaintext_zone]. You feel a bit better."))
+		update_appearance()
 	else
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_notice("Nothing seems to happen."))
+		if((!brute_healing_now && current_user.getBruteLoss()) \
+			|| (!burn_healing_now && current_user.getFireLoss()) \
+			|| (!tox_healing_now && current_user.getToxLoss()) \
+			|| (!blood_healing_now && current_user.blood_volume < BLOOD_VOLUME_OKAY))
+			to_chat(current_user, span_notice("Nothing happens. Seems like [src] needs to recharge."))
+		else
+			to_chat(current_user, span_notice("Nothing happens. Seems like you're in good enough shape."))
+
+/// Subtype of progress bar used by the wall healer to show time until next injection
+/// This subtype only exists so we can shove fastprocess processing off of the machine itself
+/datum/progressbar/wall_healer
+
+/datum/progressbar/wall_healer/New(mob/User, goal_number, atom/target, starting_amount)
+	. = ..()
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/progressbar/wall_healer/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/datum/progressbar/wall_healer/process(seconds_per_tick)
+	var/obj/machinery/wall_healer/healer = bar_loc
+	if(!istype(healer))
+		stack_trace("[type] instantiated on a non-wall-healer target [bar_loc || "null"] ([bar_loc?.type || "null"])")
+		return PROCESS_KILL
+
+	update(COOLDOWN_FINISHED(healer, injection_cooldown) ? 0 : COOLDOWN_TIMELEFT(healer, injection_cooldown))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/wall_healer, 32)
 
@@ -467,6 +531,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/wall_healer, 32)
 	name = "\improper Deforest Emergency First Aid Station"
 
 /obj/machinery/wall_healer/free/init_payment()
-	desc += " This one doesn't charge by the second."
+	return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/wall_healer/free, 32)
