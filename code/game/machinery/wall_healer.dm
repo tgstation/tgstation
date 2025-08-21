@@ -70,10 +70,6 @@
 
 /obj/machinery/wall_healer/Destroy()
 	clear_using_mob()
-	QDEL_NULL(brute_healing)
-	QDEL_NULL(burn_healing)
-	QDEL_NULL(tox_healing)
-	QDEL_NULL(blood_healing)
 	QDEL_LAZYLIST(stocked_bandages)
 	return ..()
 
