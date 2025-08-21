@@ -301,7 +301,7 @@
 			return "itself"
 
 //Pronoun procs for objects
-/obj/p_they(temp_gender)
+/atom/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	switch(temp_gender)
@@ -314,7 +314,7 @@
 		else
 			return "it"
 
-/obj/p_their(temp_gender)
+/atom/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	switch(temp_gender)
@@ -327,7 +327,7 @@
 		else
 			return "its"
 
-/obj/p_theirs(temp_gender)
+/atom/p_theirs(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	switch(temp_gender)
@@ -340,7 +340,7 @@
 		else
 			return "its"
 
-/obj/p_them(capitalized, temp_gender)
+/atom/p_them(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	switch(temp_gender)
@@ -353,47 +353,47 @@
 		else
 			return "it"
 
-/obj/p_have(temp_gender)
+/atom/p_have(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender == PLURAL)
 		return "have"
 	return "has"
 
-/obj/p_are(temp_gender)
+/atom/p_are(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender == PLURAL)
 		return "are"
 	return "is"
 
-/obj/p_were(temp_gender)
+/atom/p_were(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender == PLURAL)
 		return "were"
 	return "was"
 
-/obj/p_do(temp_gender)
+/atom/p_do(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender == PLURAL)
 		return "do"
 	return "does"
 
-/obj/p_s(temp_gender)
+/atom/p_s(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL)
 		return "s"
 
-/obj/p_es(temp_gender)
+/atom/p_es(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL)
 		return "es"
 
-/obj/p_themselves(temp_gender)
+/atom/p_themselves(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	switch(temp_gender)
