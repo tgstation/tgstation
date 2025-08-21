@@ -482,14 +482,13 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/melee/energy/sword/surplus/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) || charge <= 0)
 		return
 
-	if(charge)
-		charge--
-		if(charge <= 0)
-			user.balloon_alert(user, "out of charge!")
-			attack_self(user)
+	charge--
+	if(charge <= 0)
+		user.balloon_alert(user, "out of charge!")
+		attack_self(user)
 
 /obj/item/melee/energy/sword/surplus/proc/check_power(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
