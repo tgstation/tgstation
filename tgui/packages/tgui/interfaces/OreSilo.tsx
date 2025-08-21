@@ -276,8 +276,8 @@ const UserItem = (props: UserData) => {
     account_assignment,
     accesses,
     chamelon_override,
-    silicon_override = null,
-    id_read_failure = null,
+    silicon_override,
+    id_read_failure,
   } = props;
   const { act, data } = useBackend<Data>();
   const { banned_users } = data;
