@@ -26,7 +26,7 @@
 	give_space_immunity(movable)
 
 /datum/proximity_monitor/advanced/bubble/space_protection/field_turf_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
-	if(!isliving(movable) || get_dist(new_location, host) <= current_range)
+	if(!isliving(movable) || get_dist(new_location, host) <= (edge_is_a_field ? current_range : current_range - 1))
 		return
 	remove_space_immunity(movable)
 

@@ -32,7 +32,7 @@
 	catch_bullet_effect(movable)
 
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/field_turf_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
-	if(!isprojectile(movable) || get_dist(new_location, host) <= current_range)
+	if(!isprojectile(movable) || get_dist(new_location, host) <= (edge_is_a_field ? current_range : current_range - 1))
 		return
 	release_bullet_effect(movable)
 
@@ -83,7 +83,7 @@
 		ADD_TRAIT(movable, TRAIT_GOT_DAMPENED, REF(src))
 
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/peaceborg/field_turf_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
-	if(!iscyborg(movable) || get_dist(new_location, host) <= current_range)
+	if(!iscyborg(movable) || get_dist(new_location, host) <= (edge_is_a_field ? current_range : current_range - 1))
 		return
 	REMOVE_TRAIT(movable, TRAIT_GOT_DAMPENED, REF(src))
 
