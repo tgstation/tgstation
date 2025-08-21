@@ -200,31 +200,37 @@ export async function get_updated_label_set({ github, context }) {
   if (body)
     check_body_for_labels(body).forEach((label) => updated_labels.add(label));
 
-  // Keep track of labels that were manually added by maintainers in the events.
-  // And make sure they -stay- added.
+  // Keep track of labels that were manually added/removed by maintainers in the events.
+  // And make sure they -stay- added/removed.
   try {
-    await github.paginate(
+    const events = await github.paginate(
       github.rest.issues.listEventsForTimeline,
       {
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: context.payload.pull_request.number,
         per_page: 100,
-      },
-      (response) => {
-        for (const eventData of response.data) {
-          if (
-            eventData.event === "labeled" &&
-            eventData.actor?.login !== "github-actions"
-          ) {
-            updated_labels.add(eventData.label.name);
-          }
-        }
       }
     );
-  } catch (error) {
-    console.error("Error fetching paginated events:", error);
-  }
+
+    // The REST api returns timeline events in reverse chronological order
+    // So let's reverse them to have it go from oldest -> newest.
+    // That way, if a maintainer removes and then re-adds the same label it
+    // remains true to their final intent.
+    for (const eventData of events.reverse()) {
+      // Skip all bot actions
+      if (eventData.actor?.login === "github-actions") {
+        continue;
+      }
+      if (eventData.event === "labeled") {
+        updated_labels.add(eventData.label.name);
+      } else if (eventData.event === "unlabeled") {
+        updated_labels.delete(eventData.label.name);
+      }
+    }
+} catch (error) {
+  console.error("Error fetching paginated events:", error);
+}
 
   // Always remove Test Merge Candidate
   updated_labels.delete("Test Merge Candidate");

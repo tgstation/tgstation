@@ -473,3 +473,23 @@
   - map: Adjusts Turret Placement in the AI Upload on Nebulastation
   - map: Adds an External Security Camera to the Starboard Vault Wall overlooking
       the AI Upload on Nebulastation
+2025-08-20:
+  Cameron-The-Raven:
+  - bugfix: Brains will no longer runtime when owner-less
+  panvxv:
+  - bugfix: Fixed bots unable to buckle people to themselves.
+  scriptis:
+  - rscadd: nepotism
+2025-08-21:
+  Absolucy:
+  - bugfix: Digital clocks now process on the correct subsystem.
+  panvxv:
+  - rscadd: Added Disabler SMG Single-Pack
+  - rscadd: Added Laser Carbine Sigle-Pack
+  - balance: Moved Laser Guns crate from security to armory category in cargo
+  - balance: Increased amount of Energy Guns to 3 in Energy Guns crate
+  - balance: Increased amount of NT BR to 3 and magazines to 6 in NT BR crate
+  - rscadd: Added seclight attachment for swat, riot, press helmets
+  - bugfix: Fixed bulletproof helmets switching sprites to normal sec helmet
+  - image: Added sprites of Swat helmet and riot helmet with attached seclight
+  - image: Reworked part of helmet sprites - seclight
