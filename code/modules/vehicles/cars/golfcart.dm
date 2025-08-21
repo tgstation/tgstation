@@ -36,7 +36,7 @@
 	integrity_failure = 0.5
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
-	var/obj/effect/overlay/vis/cargo_image = null
+	var/image/cargo_image = null
 	var/obj/item/v8_engine/engine = null
 	var/engine_state = null
 	var/obj/golfcart_rear/child = null
@@ -733,13 +733,13 @@
 		if (!cargo_image)
 			visible_message("and no cargo to remove")
 			return
-		vis_contents -= cargo_image
+		SSvis_overlays.remove_vis_overlay(src, list(cargo_image))
 		cargo_image = null
 		return
 	if (cargo_image)
-		vis_contents -= cargo_image
+		SSvis_overlays.remove_vis_overlay(src, list(cargo_image))
 	visible_message("making cargo image [cargo] [cargo.icon] [cargo.icon_state]")
-	cargo_image = SSvis_overlays._create_new_vis_overlay(cargo.icon, cargo.icon_state, CARGO_HITBOX_LAYER, plane, dir)
+	cargo_image = SSvis_overlays.add_vis_overlay(src, cargo.icon, cargo.icon_state, CARGO_HITBOX_LAYER, plane, dir)
 	cargo_image.loc = src
 	vis_contents += cargo_image
 
