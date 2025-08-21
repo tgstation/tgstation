@@ -14749,7 +14749,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
 /obj/structure/cable,
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "epY" = (
@@ -20536,7 +20536,7 @@
 "gbv" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/sign/poster/official/work_for_a_future/directional/south,
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron,
 /area/station/science/research)
 "gby" = (
@@ -23460,7 +23460,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gVi" = (
@@ -25571,7 +25571,7 @@
 	},
 /obj/machinery/autolathe,
 /obj/structure/sign/poster/official/do_not_question/directional/north,
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "hBu" = (
@@ -32398,7 +32398,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "jyf" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "jyl" = (
@@ -34878,7 +34878,7 @@
 /area/station/security/interrogation)
 "kjl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "kjF" = (
@@ -44295,7 +44295,7 @@
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
 "nck" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "nct" = (
@@ -44620,7 +44620,7 @@
 /area/station/hallway/primary/central)
 "nhD" = (
 /obj/structure/table/glass,
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/directional/west,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
@@ -47804,7 +47804,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "oaj" = (
@@ -59901,7 +59901,7 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "rFp" = (
-/obj/machinery/vending/wallmed/directional/west{
+/obj/machinery/wall_healer/directional/west{
 	pixel_x = 27
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -65381,7 +65381,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/directional/north,
 /obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","medbay");
 	c_tag = "Medbay - Lobby"
@@ -70091,7 +70091,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "uGp" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/directional/north,
 /turf/open/floor/wood,
 /area/station/ai_monitored/command/storage/eva)
 "uGt" = (
@@ -73272,7 +73272,7 @@
 /turf/open/floor/plating,
 /area/station/service/kitchen/abandoned)
 "vEp" = (
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/directional/east,
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -76091,7 +76091,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "wvw" = (

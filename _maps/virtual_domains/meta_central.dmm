@@ -890,7 +890,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/iron,
 /area/virtual_domain)

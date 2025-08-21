@@ -10084,7 +10084,7 @@
 /area/centcom/tdome/observation)
 "Vu" = (
 /obj/structure/closet/secure_closet/ert_med,
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/wall_healer/directional/south{
 	use_power = 0
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10976,7 +10976,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/directional/north{
 	use_power = 0
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
