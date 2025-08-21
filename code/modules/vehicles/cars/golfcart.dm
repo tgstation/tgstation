@@ -36,6 +36,7 @@
 	integrity_failure = 0.5
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
+	var/list/cargo_appearances = list()
 	var/obj/item/v8_engine/engine = null
 	var/engine_state = null
 	var/obj/golfcart_rear/child = null
@@ -55,17 +56,34 @@
 	var/obj/item/stock_parts/power_store/cell/cell = null
 	var/hood_open = FALSE
 
+/obj/vehicle/ridden/golfcart/proc/shake_cargo(pixelshiftx = 2, pixelshifty = 2, duration, shake_interval)
+	visible_message("shaking [cargo_appearances.len]")
+	for (var/mutable_appearance/overlay in cargo_appearances)
+		visible_message("shaking")
+		var/initialpixelx = pixel_x
+		var/initialpixely = pixel_y
+		animate(overlay, pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixelx + rand(-pixelshifty,pixelshifty), time = shake_interval, flags = ANIMATION_PARALLEL)
+		for (var/i in 3 to ((duration / shake_interval))) // Start at 3 because we already applied one, and need another to reset
+			animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
+		animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
+
 /obj/vehicle/ridden/golfcart/proc/check_if_shake()
+	if (!cargo)
+		return FALSE
+
+	visible_message("check if shake")
 	// Assuming we decide to shake again, how long until we check to shake again
 	var/next_check_time = 1 SECONDS
 
 	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
 	var/shake_duration =  0.3 SECONDS
 
-	for(var/mob/living/mob in contents)
-		if(DOING_INTERACTION_WITH_TARGET(mob, src))
+	for(var/mob/living/mob in cargo.contents)
+		visible_message("is [mob] doing interaction?")
+		if(DOING_INTERACTION_WITH_TARGET(mob, child))
+			visible_message("YES!!!!!!!")
 			// Shake and queue another check_if_shake
-			Shake(8, 8, shake_duration, shake_interval = shake_duration)
+			shake_cargo(4, 4, shake_duration, shake_interval=shake_duration)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
 			return TRUE
 
@@ -76,15 +94,31 @@
 	if (!cargo || cargo != container)
 		return
 	unload()
+	if (istype(container, /obj/structure/closet))
+		var/obj/structure/closet/closet = container
+		if (closet.can_open(user))
+			closet.open()
 
 /obj/vehicle/ridden/golfcart/proc/hard_escape(mob/living/user, obj/container)
-	return
+	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 0)
+	visible_message("hard_escape()")
+	if (do_after(user, 5 SECONDS, target=child, timed_action_flags=IGNORE_USER_LOC_CHANGE))
+		visible_message("do after finished")
+		if (!cargo || cargo != container || !(user in cargo))
+			visible_message("wasnt in cargo")
+			return
+		unload()
 
 /obj/vehicle/ridden/golfcart/relay_container_resist_act(mob/living/user, obj/container)
 	user.visible_message(
 		span_danger("[user] tries to escape the [container]!"),
-		span_danger("You try to escape!"),
+		span_userdanger("You try to escape the [container]!"),
 	)
+	if (has_buckled_mobs())
+		for (var/mob/driver in buckled_mobs)
+			if (!is_driver(driver))
+				continue
+			driver.show_message(span_userdanger("The [container] shakes violently!"))
 	if (istype(container, /obj/structure/closet))
 		var/obj/structure/closet/closet = container
 		if (!closet.welded)
@@ -720,8 +754,12 @@
 		. += mutable_appearance(icon, "hood", layer + 0.01)
 	if (roof_overlay)
 		. += roof_overlay
+
 	if (cargo)
-		. += generate_cargo_overlay(max_layer=CARGO_HITBOX_LAYER)
+		cargo_appearances = generate_cargo_overlay(max_layer=CARGO_HITBOX_LAYER)
+		. += cargo_appearances
+	else if (cargo_appearances.len)
+		cargo_appearances = list()
 
 /obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
 	if (!isliving(source))
