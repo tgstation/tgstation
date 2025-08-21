@@ -1,4 +1,0 @@
-author: "tonyhawq"
-delete-after: True
-changes:
-  - spellcheck: "shuttles will now say \"arriving in 1 minute\" instead of \"1 minutes\""
