@@ -281,7 +281,7 @@
 /// If not provided with a type it will instead be random
 /mob/living/basic/slime/proc/set_slime_type(new_type = null)
 	if(isnull(new_type))
-		new_type = subtypesof(/datum/slime_type)
+		new_type = pick(subtypesof(/datum/slime_type))
 
 	slime_type = possible_slime_types[new_type]
 	update_name()
