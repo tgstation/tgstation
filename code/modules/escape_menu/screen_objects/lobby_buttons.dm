@@ -15,7 +15,7 @@
 	datum/hud/hud_owner,
 	button_text,
 	tooltip_text,
-	list/pixel_offset,
+	button_screen_loc,
 	on_click_callback,
 	button_overlay,
 )
@@ -24,7 +24,7 @@
 	src.on_click_callback = on_click_callback
 	src.tooltip_text = tooltip_text
 
-	screen_loc = "BOTTOM:[pixel_offset[1]],RIGHT:[pixel_offset[2]]"
+	screen_loc = button_screen_loc
 
 	if(button_overlay)
 		add_overlay(button_overlay)
@@ -93,7 +93,7 @@
 	datum/hud/hud_owner,
 	button_text,
 	tooltip_text,
-	list/pixel_offset,
+	button_screen_loc,
 	on_click_callback,
 	button_overlay,
 	end_point,
