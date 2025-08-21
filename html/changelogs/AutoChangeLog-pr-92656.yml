@@ -1,8 +1,0 @@
-author: "panvxv"
-delete-after: True
-changes:
-  - rscadd: "Added Disabler SMG Single-Pack"
-  - rscadd: "Added Laser Carbine Sigle-Pack"
-  - balance: "Moved Laser Guns crate from security to armory category in cargo"
-  - balance: "Increased amount of Energy Guns to 3 in Energy Guns crate"
-  - balance: "Increased amount of NT BR to 3 and magazines to 6 in NT BR crate"

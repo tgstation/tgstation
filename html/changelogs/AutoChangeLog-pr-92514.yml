@@ -1,7 +1,0 @@
-author: "panvxv"
-delete-after: True
-changes:
-  - rscadd: "Added seclight attachment for swat, riot, press helmets"
-  - bugfix: "Fixed bulletproof helmets switching sprites to normal sec helmet"
-  - image: "Added sprites of Swat helmet and riot helmet with attached seclight"
-  - image: "Reworked part of helmet sprites - seclight"
