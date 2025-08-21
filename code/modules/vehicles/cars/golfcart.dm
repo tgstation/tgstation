@@ -59,10 +59,9 @@
 /obj/vehicle/ridden/golfcart/proc/shake_cargo(pixelshiftx = 2, pixelshifty = 2, duration, shake_interval)
 	if (!cargo_image)
 		return
-	visible_message("shaking")
 	var/initialpixelx = cargo_image.pixel_x
 	var/initialpixely = cargo_image.pixel_y
-	animate(cargo_image, pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixelx + rand(-pixelshifty,pixelshifty), time = shake_interval, flags = ANIMATION_PARALLEL)
+	animate(cargo_image, pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval, flags = ANIMATION_PARALLEL)
 	for (var/i in 3 to ((duration / shake_interval))) // Start at 3 because we already applied one, and need another to reset
 		animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
 	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
@@ -71,7 +70,6 @@
 	if (!cargo)
 		return FALSE
 
-	visible_message("check if shake")
 	// Assuming we decide to shake again, how long until we check to shake again
 	var/next_check_time = 1 SECONDS
 
@@ -79,9 +77,7 @@
 	var/shake_duration =  0.3 SECONDS
 
 	for(var/mob/living/mob in cargo.contents)
-		visible_message("is [mob] doing interaction?")
 		if(DOING_INTERACTION_WITH_TARGET(mob, child))
-			visible_message("YES!!!!!!!")
 			// Shake and queue another check_if_shake
 			shake_cargo(4, 4, shake_duration, shake_interval=shake_duration)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
@@ -101,12 +97,13 @@
 
 /obj/vehicle/ridden/golfcart/proc/hard_escape(mob/living/user, obj/container)
 	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 0)
-	visible_message("hard_escape()")
 	if (do_after(user, 5 SECONDS, target=child, timed_action_flags=IGNORE_USER_LOC_CHANGE))
-		visible_message("do after finished")
 		if (!cargo || cargo != container || !(user in cargo))
-			visible_message("wasnt in cargo")
 			return
+		user.visible_message(
+			span_danger("The [container] falls off of the [child]!"),
+			span_userdanger("You escape the [src]!")
+			)
 		unload()
 
 /obj/vehicle/ridden/golfcart/relay_container_resist_act(mob/living/user, obj/container)
@@ -143,7 +140,6 @@
 		cargo.forceMove(dropoff)
 		cargo = null
 		child.layer = BELOW_HUMAN_HITBOX_LAYER
-		rebuild_cargo_image()
 		update_appearance(UPDATE_ICON)
 		return
 	if (cargo)
@@ -159,7 +155,6 @@
 	to_load.forceMove(src)
 	cargo = to_load
 	child.layer = CARGO_HITBOX_LAYER
-	rebuild_cargo_image()
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/unload()
@@ -662,7 +657,7 @@
 		crate_x_offset += 32
 	return vector(crate_x_offset, crate_y_offset)
 
-/obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null, max_layer=null)
+/obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null, max_layer=null, shift_all=TRUE)
 	if (!cargo)
 		return
 	if (!layer)
@@ -695,7 +690,7 @@
 				overlay.layer = min(base_cargo_layer + (overlay.layer - cargo.layer), max_layer)
 			else
 				overlay.layer = min(base_cargo_layer + (overlay.layer * -0.01) - 0.01, max_layer)
-			if (i == 1)
+			if (shift_all || i == 1)
 				overlay.pixel_x += offsets.x
 				overlay.pixel_y += offsets.y
 				overlay.pixel_z += 11
@@ -726,22 +721,6 @@
 		return
 	var/vector/rear_offsets = parent.get_rear_offset()
 	. += parent.generate_cargo_overlay(-rear_offsets.x, -rear_offsets.y, layer=layer)
-
-/obj/vehicle/ridden/golfcart/proc/rebuild_cargo_image()
-	if (!cargo)
-		visible_message("rebuild cargo no cargo")
-		if (!cargo_image)
-			visible_message("and no cargo to remove")
-			return
-		SSvis_overlays.remove_vis_overlay(src, list(cargo_image))
-		cargo_image = null
-		return
-	if (cargo_image)
-		SSvis_overlays.remove_vis_overlay(src, list(cargo_image))
-	visible_message("making cargo image [cargo] [cargo.icon] [cargo.icon_state]")
-	cargo_image = SSvis_overlays.add_vis_overlay(src, cargo.icon, cargo.icon_state, CARGO_HITBOX_LAYER, plane, dir)
-	cargo_image.loc = src
-	vis_contents += cargo_image
 
 /obj/vehicle/ridden/golfcart/update_overlays()
 	. = ..()
@@ -779,15 +758,23 @@
 		. += roof_overlay
 
 	if (cargo)
-		cargo_image.overlays = list()
+		vis_contents -= cargo_image
+		cargo_image = null
 		var/vector/offsets = get_cargo_offsets()
-		cargo_image.pixel_x = offsets.x
-		cargo_image.pixel_y = offsets.y
-		// i was hoping that making the cargo an image instead of an overlay would let me avoid redrawing the overlays every dir change
-		// but you can't "flatten" overlays into one image
-		var/list/overlays = generate_cargo_overlay(-offsets.x, -offsets.y, max_layer=CARGO_HITBOX_LAYER)
-		for(var/i in 2 to overlays.len)
-			cargo_image.overlays += overlays[i]
+		var/list/overlays = generate_cargo_overlay(max_layer=CARGO_HITBOX_LAYER, shift_all=FALSE)
+		if (overlays.len)
+			var/mutable_appearance/base_overlay = overlays[1]
+			overlays.Remove(base_overlay)
+			cargo_image = SSvis_overlays.add_vis_overlay(src, base_overlay.icon, base_overlay.icon_state, base_overlay.layer, plane, dir)
+			cargo_image.overlays = overlays
+			cargo_image.pixel_x = offsets.x
+			cargo_image.pixel_y = offsets.y
+			cargo_image.pixel_z = 11
+			cargo_image.layer = base_overlay.layer
+			vis_contents += cargo_image
+	else
+		cargo_image = null
+
 /obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
 	if (!isliving(source))
 		return // should runtime?
