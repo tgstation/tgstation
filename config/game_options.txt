@@ -588,7 +588,7 @@ PERSISTENT_SAVE_ENABLED
 PERSISTENT_AUTOSAVE_PERIOD 4
 ## The maximum amount of autosaves to store (set to -1 to never delete any autosaves)
 ## A full station 255x255 z-level with lots of objects/turfs/etc. is ~3 MB, Empty 255x255 z-levels are ~0.5 MB
-## An autosave with all z-levels included will result in ~10 MB (so 100 autosaves would be ~1 GB)
+## An autosave with all the default z-levels included will result in ~10 MB (so 100 autosaves would be ~1 GB)
 PERSISTENT_MAX_AUTOSAVES -1
 ## Include specific z levels when saving and loading
 ## Whether to include the centcom z level (can ONLY be saved and NEVER loaded via persistence since it is always compiled)
