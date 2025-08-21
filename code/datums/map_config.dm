@@ -164,7 +164,7 @@
 
 	traits = json["traits"]
 	// "traits": [{"Linkage": "Cross"}, {"Space Ruins": true}]
-	if (!isnull(traits))
+	if (isnull(traits))
 		log_world("map_config traits is not a list!")
 		return
 
