@@ -282,7 +282,7 @@
 	if (!is_type_in_typecache(dropped, parent.allowed_cargo) || is_type_in_typecache(dropped, parent.banned_cargo))
 		return ..()
 	if (has_buckled_mobs())
-		user.balloon_alert("blocked!")
+		balloon_alert(user, "blocked!")
 		return ..()
 	var/obj/dropped_obj = dropped
 	return parent.load(dropped_obj)
@@ -694,10 +694,10 @@
 /obj/golfcart_rear/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
 	if (parent && parent.cargo)
-		target.balloon_alert("blocked!")
+		balloon_alert(target, "blocked!")
 		return FALSE
 	if (target.body_position != STANDING_UP)
-		target.balloon_alert("stand up!")
+		balloon_alert(target, "stand up!")
 		return FALSE
 
 /obj/golfcart_rear/post_buckle_mob(mob/living/buckled_mob)
