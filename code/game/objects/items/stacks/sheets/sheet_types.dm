@@ -189,7 +189,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
-	. += span_notice("You can build a wall girder (unanchored) by right clicking on an empty floor.")
+	. += span_notice("Right click on floor to build:")
+	. += span_notice("- Unanchored wall girder")
+	. += span_notice("- Computer or Machine frame (with circuitboard)")
 
 /obj/item/stack/sheet/iron/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -253,18 +255,39 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	if(build_on.is_blocked_turf())
 		user.balloon_alert(user, "something is blocking the tile!")
 		return ITEM_INTERACT_BLOCKING
-	if(get_amount() < 2)
-		user.balloon_alert(user, "not enough material!")
+
+	var/frame_path = null
+	var/cost = 2 // Default girder cost
+	var/time = 4 SECONDS //Default girder build time
+	var/obj/item/circuitboard/held_board = locate() in user.held_items
+	if(!isnull(held_board))
+		if(istype(held_board, /obj/item/circuitboard/machine))
+			frame_path = /obj/structure/frame/machine
+		else
+			frame_path = /obj/structure/frame/computer
+		for(var/datum/stack_recipe/recipe in GLOB.metal_recipes)
+			if(recipe.result_type == frame_path)
+				time = recipe.time
+				cost = recipe.req_amount
+				break
+	if(get_amount() < cost)
+		user.balloon_alert(user, "need [cost] metal sheets!")
 		return ITEM_INTERACT_BLOCKING
-	if(!do_after(user, 4 SECONDS, build_on))
+	if(!do_after(user, time, build_on))
 		return ITEM_INTERACT_BLOCKING
 	if(build_on.is_blocked_turf())
 		user.balloon_alert(user, "something is blocking the tile!")
 		return ITEM_INTERACT_BLOCKING
-	if(!use(2))
+	if(!use(cost))
 		user.balloon_alert(user, "not enough material!")
 		return ITEM_INTERACT_BLOCKING
-	new/obj/structure/girder/displaced(build_on)
+	if(frame_path)
+		var/obj/structure/frame/constructed_frame = new frame_path(build_on)
+		constructed_frame.setDir(REVERSE_DIR(user.dir)) //to align computer frame with player direction
+		user.balloon_alert(user, "frame created")
+	else
+		new/obj/structure/girder/displaced(build_on)
+		user.balloon_alert(user, "girder created")
 	return ITEM_INTERACT_SUCCESS
 
 /*
@@ -866,6 +889,8 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, crafting_flags = NONE, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, crafting_flags = NONE, category = CAT_EQUIPMENT), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, crafting_flags = NONE, category = CAT_FURNITURE), \
+	new /datum/stack_recipe("liquid cooler jug", /obj/item/reagent_containers/cooler_jug, 4, time = 5 SECONDS, crafting_flags = NONE, category = CAT_CONTAINERS), \
+	new /datum/stack_recipe("liquid cooler", /obj/structure/reagent_dispensers/water_cooler/jugless, 25, time = 10 SECONDS, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	new /datum/stack_recipe("rebellion mask", /obj/item/clothing/mask/rebellion, 1, crafting_flags = NONE, category = CAT_CLOTHING)))
 
 /obj/item/stack/sheet/plastic
@@ -874,7 +899,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	inhand_icon_state = "sheet-plastic"
-	mats_per_unit = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	throwforce = 7
 	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic

@@ -123,8 +123,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
+	if(. || ui.user != owner.current)
+		return TRUE
 	switch(action)
 		if("change_objectives")
 			submit_player_objective()
@@ -132,6 +132,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
+
+/datum/antagonist/ui_status(mob/user, datum/ui_state/state)
+	. = ..()
+	if(isobserver(user) && antag_flags & ANTAG_OBSERVER_VISIBLE_PANEL)
+		return UI_UPDATE
 
 /datum/antagonist/ui_static_data(mob/user)
 	var/list/data = list()
@@ -150,12 +155,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = ..()
 	name = "Open [target] Information:"
 
-/datum/action/antag_info/Trigger(trigger_flags)
+/datum/action/antag_info/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
 
-	target.ui_interact(owner)
+	target.ui_interact(clicker || owner)
 
 /datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)
@@ -237,6 +242,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
 		info_button = new(src)
+		if(antag_flags & ANTAG_OBSERVER_VISIBLE_PANEL)
+			info_button.show_to_observers = TRUE
+			info_button.allow_observer_click = TRUE
 		info_button.Grant(owner.current)
 		info_button_ref = WEAKREF(info_button)
 	if(!silent)

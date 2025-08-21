@@ -1,0 +1,4 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - bugfix: "the interns recalculated the damage of the shotguns catridges and made corrections"

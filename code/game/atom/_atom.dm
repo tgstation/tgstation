@@ -414,18 +414,15 @@
  * - [reagents][/list]: The list of reagents the atom is being exposed to.
  * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
  * - methods: How the atom is being exposed to the reagents. Bitflags.
- * - volume_modifier: Volume multiplier.
  * - show_message: Whether to display anything to mobs when they are exposed.
  */
-/atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
+/atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, show_message=TRUE)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, show_message)
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent], methods)
-	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
 
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()
@@ -652,25 +649,25 @@
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
 	to_chat(user, span_notice("You start working on [src]."))
-	if(process_item.use_tool(src, user, processing_time, volume=50))
-		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
-		var/list/atom/created_atoms = list()
-		var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
-		for(var/i = 1 to amount_to_create)
-			var/atom/created_atom = new atom_to_create(drop_location())
-			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			if(custom_materials)
-				created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
-			created_atom.pixel_x = pixel_x
-			created_atom.pixel_y = pixel_y
-			if(i > 1)
-				created_atom.pixel_x += rand(-8,8)
-				created_atom.pixel_y += rand(-8,8)
-			created_atoms.Add(created_atom)
-		to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
-		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
-		UsedforProcessing(user, process_item, chosen_option, created_atoms)
+	if(!process_item.use_tool(src, user, processing_time, volume=50))
 		return
+	var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
+	var/list/atom/created_atoms = list()
+	var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
+	for(var/i = 1 to amount_to_create)
+		var/atom/created_atom = new atom_to_create(drop_location())
+		created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
+		if(custom_materials)
+			created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
+		created_atom.pixel_x = pixel_x
+		created_atom.pixel_y = pixel_y
+		if(i > 1)
+			created_atom.pixel_x += rand(-8,8)
+			created_atom.pixel_y += rand(-8,8)
+		created_atoms.Add(created_atom)
+	to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
+	SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
+	UsedforProcessing(user, process_item, chosen_option, created_atoms)
 
 /atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
 	qdel(src)

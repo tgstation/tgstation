@@ -1,12 +1,4 @@
 /**
- * The accepted discrepancy between the amount of material between an item when crafted and the same item when spawned
- * so we don't have to be obnoxious about small portion of mats being lost for items that are processed in multiple other
- * results (eg. a slab of meat being cut in three cutlets, and each cutlet can be used to craft different things)
- * right now it's around 3 points per 100 units of a material.
- */
-#define ACCEPTABLE_MATERIAL_DEVIATION 0.033
-
-/**
  * Check if a generic atom (because both mobs and the crafter machinery can do it) can potentially craft all recipes,
  * with the exact same types required in the recipe, and also compare the materials of crafted result with one of the same type
  * to ansure they match if the recipe has the CRAFT_ENFORCE_MATERIALS_PARITY flag.
@@ -153,34 +145,16 @@
 	if(result.custom_materials == copycat.custom_materials)
 		delete_components(spawned_components)
 		return
-	var/comparison_failed = TRUE
-	if(length(result.custom_materials) == length(copycat.custom_materials))
-		comparison_failed = FALSE
-		for(var/mat in result.custom_materials)
-			var/enemy_amount = copycat.custom_materials[mat]
-			if(!enemy_amount) //break the loop early, we cannot perform a division by zero anyway
-				comparison_failed = TRUE
-				break
-			var/ratio_difference = abs((result.custom_materials[mat] / enemy_amount) - 1)
-			if(ratio_difference > ACCEPTABLE_MATERIAL_DEVIATION)
-				comparison_failed = TRUE
-	if(comparison_failed)
-		var/warning = "custom_materials of [result.type] when crafted and spawned don't match"
-		var/what_it_should_be = "null"
+	if(!result.compare_materials(copycat))
+		var/warning = "custom_materials of [result.type] when crafted compared to just spawned don't match"
+		var/what_it_should_be = result.get_materials_english_list()
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
-			what_it_should_be = "\[list("
-			var/index = 1
-			var/mats_len = length(result.custom_materials)
-			for(var/datum/material/mat as anything in result.custom_materials)
-				what_it_should_be += "[mat.type] = [result.custom_materials[mat]]"
-				if(index < mats_len)
-					what_it_should_be += ", "
-				index++
-			what_it_should_be += ")\] (you can round values a bit)"
+			what_it_should_be += " (you can round values a bit)"
 		TEST_FAIL("[warning]. custom_materials should be [what_it_should_be]. \
 			Otherwise set the requirements_mats_blacklist variable for [recipe] \
 			or remove the CRAFT_ENFORCE_MATERIALS_PARITY crafting flag from it")
+
 
 	delete_components(spawned_components)
 
@@ -195,5 +169,3 @@
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND|CRAFT_IGNORE_DO_AFTER
-
-#undef ACCEPTABLE_MATERIAL_DEVIATION

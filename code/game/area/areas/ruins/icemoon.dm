@@ -54,7 +54,6 @@
 /area/ruin/pizzeria/kitchen
 	name = "\improper Moffuchi's Kitchen"
 
-
 /area/ruin/syndibiodome
 	name = "\improper Syndicate Biodome"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
