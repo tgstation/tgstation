@@ -11521,7 +11521,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/machinery/firealarm/directional/south,
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -30
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "cOb" = (
@@ -14226,8 +14229,8 @@
 /area/station/service/theater)
 "dxo" = (
 /obj/structure/bed/medical/emergency,
-/obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "dxr" = (
@@ -48823,9 +48826,9 @@
 /area/station/maintenance/port/fore)
 "mbA" = (
 /obj/structure/bed/medical/emergency,
-/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light/directional/south,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "mbR" = (
@@ -51018,7 +51021,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mDo" = (

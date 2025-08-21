@@ -39171,7 +39171,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "nyu" = (
@@ -41705,6 +41705,7 @@
 "ouz" = (
 /obj/item/kirbyplants,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "ouM" = (

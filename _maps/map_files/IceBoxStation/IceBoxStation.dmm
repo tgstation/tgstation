@@ -20691,7 +20691,6 @@
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "fME" = (
-/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -35448,7 +35447,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/wall_healer/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "kcc" = (
@@ -49936,6 +49935,9 @@
 	dir = 4
 	},
 /obj/structure/sign/departments/medbay/alt/directional/north,
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 26
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ohp" = (
@@ -59029,7 +59031,7 @@
 /area/station/service/janitor)
 "qGd" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "qGg" = (
@@ -84349,6 +84351,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Starboard Primary Hallway Center"
 	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "xVB" = (

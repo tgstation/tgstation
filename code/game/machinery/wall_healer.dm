@@ -7,6 +7,9 @@
 	base_icon_state = "wall_healer"
 	density = FALSE
 	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND // manually handled
+	payment_department = ACCOUNT_MED
+	max_integrity = 150
+	armor_type = /datum/armor/obj_machinery/wall_healer
 
 	/// Cost per bandage dispensed. Note, always disregarded on red alert.
 	var/per_bandage_cost = (/obj/item/stack/medical/gauze::custom_price) / (/obj/item/stack/medical/gauze::amount)
@@ -44,6 +47,15 @@
 	COOLDOWN_DECLARE(recharge_cooldown)
 	/// Cooldown between chem injections
 	COOLDOWN_DECLARE(injection_cooldown)
+
+/datum/armor/obj_machinery/wall_healer
+	melee = 50
+	bullet = 30
+	laser = 30
+	energy = 40
+	bomb = 10
+	fire = 80
+	acid = 80
 
 /obj/machinery/wall_healer/Initialize(mapload)
 	. = ..()
@@ -401,7 +413,13 @@
 
 /obj/machinery/wall_healer/attempt_charge(atom/sender, atom/target, extra_fees)
 	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-		return NONE
+		return NONE // no charge on red alert
+	if(!isliving(target))
+		return ..()
+	var/mob/living/paying = target
+	var/obj/item/card/id/card = paying.get_idcard(TRUE)
+	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
+		return NONE // no charge for doctors
 	return ..()
 
 /obj/machinery/wall_healer/process()
@@ -429,6 +447,7 @@
 		current_user.apply_damage(33, BRUTE, current_hand, sharpness = SHARP_POINTY)
 		playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(current_user, span_warning("You feel a sharp pain as the machine malfunctions, stabbing you with several needles!"))
+		use_energy(500 JOULES)
 		return
 
 	var/brute_healing_now = round(min(initial(brute_healing) * 0.1, brute_healing, current_user.getBruteLoss()), DAMAGE_PRECISION)
@@ -439,7 +458,9 @@
 	var/cost = round(per_heal_cost * (brute_healing_now + burn_healing_now + tox_healing_now + blood_healing_now), 1)
 	if(attempt_charge(src, current_user, extra_fees = cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		// attempt charge sends a chat message on fail, so all we need here is the sound
+		// attempt charge sends a chat message on fail, except if the user has no ID card
+		if(!current_user.get_idcard())
+			to_chat(user, span_warning("No ID card found. Aborting."))
 		return
 
 	var/amount_healed = 0
@@ -461,6 +482,7 @@
 		playsound(src, 'sound/machines/defib/defib_SaftyOn.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(current_user, span_notice("Several syringes and medical tools work on your [current_hand.plaintext_zone]. You feel a bit better."))
 		update_appearance()
+		use_energy(200 JOULES) // just some background power drain. we don't really care about whether this is actually successful
 	else
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if((!brute_healing_now && current_user.getBruteLoss()) \

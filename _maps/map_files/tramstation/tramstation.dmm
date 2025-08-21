@@ -15484,13 +15484,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"enF" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "eor" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -37391,6 +37384,7 @@
 	},
 /obj/machinery/computer/records/medical,
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "mai" = (
@@ -43593,6 +43587,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "olG" = (
@@ -49337,13 +49332,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/secondary/exit)
-"qrW" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/newscaster/directional/north,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "qsa" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -50221,6 +50209,7 @@
 	dir = 9
 	},
 /obj/machinery/computer/crew,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "qIq" = (
@@ -67668,7 +67657,7 @@
 	pixel_y = 4
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/item/storage/medkit/advanced{
+/obj/item/storage/medkit/regular{
 	pixel_x = -6
 	},
 /turf/open/floor/iron,
@@ -70321,7 +70310,7 @@
 /obj/item/stack/medical/mesh,
 /obj/item/stack/medical/gauze,
 /obj/structure/table/glass,
-/obj/machinery/wall_healer/directional/north,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xKt" = (
@@ -169476,7 +169465,7 @@ eoE
 xck
 ols
 wyd
-enF
+dyI
 aHP
 aKq
 aKP
@@ -170504,7 +170493,7 @@ rks
 rks
 wyd
 wyd
-qrW
+dyI
 gMT
 uHB
 jtr
