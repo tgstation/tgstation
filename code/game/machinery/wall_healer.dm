@@ -460,7 +460,7 @@
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		// attempt charge sends a chat message on fail, except if the user has no ID card
 		if(!current_user.get_idcard())
-			to_chat(user, span_warning("No ID card found. Aborting."))
+			to_chat(current_user, span_warning("No ID card found. Aborting."))
 		return
 
 	var/amount_healed = 0
