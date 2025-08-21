@@ -1,3 +1,5 @@
+#define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]"), MESSAGE_TYPE_DEBUG); log_world(X)
+
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	dependencies = list(
@@ -128,14 +130,28 @@ SUBSYSTEM_DEF(mapping)
 	preloadTemplates()
 
 #ifndef LOWMEMORYMODE
-	// Create space ruin levels
-	while (space_levels_so_far < current_map.space_ruin_levels)
-		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
-		++space_levels_so_far
-	// Create empty space levels
-	while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_EMPTY = TRUE))
-		++space_levels_so_far
+	//if any of these fail, something has gone horribly, HORRIBLY, wrong
+	var/list/FailedZs = list()
+
+	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_RUINS])
+		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_RUINS])
+			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
+			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
+	else
+		// Create space ruin levels
+		while (space_levels_so_far < current_map.space_ruin_levels)
+			add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
+			++space_levels_so_far
+
+	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_EMPTY])
+		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_EMPTY])
+			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
+			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
+	else
+		// Create empty space levels
+		while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
+			empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_EMPTY = TRUE))
+			++space_levels_so_far
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
@@ -148,6 +164,13 @@ SUBSYSTEM_DEF(mapping)
 	setup_ruins()
 	loading_ruins = FALSE
 
+	if(LAZYLEN(FailedZs)) //but seriously, unless the server's filesystem is messed up this will never happen
+		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
+		if(FailedZs.len > 1)
+			for(var/I in 2 to FailedZs.len)
+				msg += ", [FailedZs[I]]"
+		msg += ". Yell at your server host!"
+		INIT_ANNOUNCE(msg)
 #endif
 	// Run map generation after ruin generation to prevent issues
 	run_map_terrain_generation()
@@ -367,7 +390,6 @@ Used by the AI doomsday and the self-destruct nuke.
 	multiz_levels = SSmapping.multiz_levels
 	loaded_lazy_templates = SSmapping.loaded_lazy_templates
 
-#define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]"), MESSAGE_TYPE_DEBUG); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE, height_autosetup = TRUE)
 	. = list()
 	var/start_time = REALTIMEOFDAY
@@ -431,14 +453,21 @@ Used by the AI doomsday and the self-destruct nuke.
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
+	if(CONFIG_GET(flag/persistent_save_enabled))
+		SSpersistence.cache_z_levels_map_configs()
+
 	// ensure we have space_level datums for compiled-in maps
 	InitializeDefaultZLevels()
 
 	// load the station
 	station_start = world.maxz + 1
-	INIT_ANNOUNCE("Loading [current_map.map_name]...")
-	//if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_centcomm_z_levels) && )
-	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION, height_autosetup = current_map.height_autosetup)
+	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_station_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_STATION])
+		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_STATION])
+			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
+			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
+	else
+		INIT_ANNOUNCE("Loading [current_map.map_name]...")
+		LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION, height_autosetup = current_map.height_autosetup)
 
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
@@ -448,15 +477,15 @@ Used by the AI doomsday and the self-destruct nuke.
 		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_mining_z_levels)) // check if mining z-levels exist in map save
-		// allow multiple mining levels to be loaded
-		for(var/level in )
-
-		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if(current_map.minetype == MINETYPE_LAVALAND)
-		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE)
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
+	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_mining_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_MINING])
+		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_MINING])
+			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
+			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
+	else
+		if(current_map.minetype == MINETYPE_LAVALAND)
+			LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+		else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE)
+			INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif
 
 	if(LAZYLEN(FailedZs)) //but seriously, unless the server's filesystem is messed up this will never happen
@@ -466,7 +495,6 @@ Used by the AI doomsday and the self-destruct nuke.
 				msg += ", [FailedZs[I]]"
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
-#undef INIT_ANNOUNCE
 
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
 	if(current_map.map_path == CUSTOM_MAP_PATH)
@@ -966,3 +994,5 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	if(webmap_included && !isnull(SSmapping.current_map.mapping_url))
 		text += " | <a href='byond://?action=openWebMap'>(Show Map)</a>"
 	return text
+
+#undef INIT_ANNOUNCE
