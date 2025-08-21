@@ -490,7 +490,7 @@
 /obj/golfcart_rear/proc/allow_movement_between_bed_passengers(atom/source, atom/mover)
 	if (mover == parent)
 		return COMSIG_COMPONENT_PERMIT_PASSAGE
-	if (parent && mover in parent.buckled_mobs)
+	if (parent && (mover in parent.buckled_mobs))
 		return COMSIG_COMPONENT_PERMIT_PASSAGE
 	if ((source in buckled_mobs) && (mover in buckled_mobs))
 		return COMSIG_COMPONENT_PERMIT_PASSAGE
