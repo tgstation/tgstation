@@ -53,13 +53,13 @@ Buildable meters
 	name = "air vent fitting"
 	icon_state_preview = "uvent"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5 + SMALL_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6 + SMALL_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
 
 /obj/item/pipe/directional/scrubber
 	name = "air scrubber fitting"
 	icon_state_preview = "scrubber"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5 + SMALL_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6 + SMALL_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
 
 /obj/item/pipe/directional/connector
 	icon_state_preview = "connector"
@@ -107,6 +107,7 @@ Buildable meters
 /obj/item/pipe/binary/manual_valve
 	icon_state_preview = "mvalve"
 	pipe_type = /obj/machinery/atmospherics/components/binary/valve
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE

@@ -2518,7 +2518,7 @@
 #include "code\game\objects\items\pinpointer.dm"
 #include "code\game\objects\items\pitchfork.dm"
 #include "code\game\objects\items\plushes.dm"
-#include "code\game\objects\items\pneumaticCannon.dm"
+#include "code\game\objects\items\pneumatic_cannon.dm"
 #include "code\game\objects\items\powerfist.dm"
 #include "code\game\objects\items\puzzle_pieces.dm"
 #include "code\game\objects\items\reflex_hammer.dm"

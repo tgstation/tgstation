@@ -5,6 +5,7 @@
 	desc = "The gathered remains of a drake. It still crackles with heat, and smells distinctly of brimstone."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	icon_state = "dragon"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/item/drake_remains/Initialize(mapload)
 	. = ..()

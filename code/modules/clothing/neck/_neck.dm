@@ -562,6 +562,7 @@
 	worn_y_offset = 10
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -573,3 +574,4 @@
 	desc = "An elaborate crown made from the twisted flesh and sinew of an icewing watcher. \
 		Wearing it sends shivers down your spine just from being near it."
 	icon_state = "icewing_wreath"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
