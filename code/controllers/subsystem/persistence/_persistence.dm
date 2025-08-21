@@ -72,7 +72,8 @@ SUBSYSTEM_DEF(persistence)
 	 */
 	var/list/queued_message_bottles
 
-	var/list/persistent_save_cache = list()
+	/// A list of map config jsons used by persistence organized by z-level traits
+	var/list/map_configs_cache
 
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
@@ -212,51 +213,62 @@ SUBSYSTEM_DEF(persistence)
 
 /// Based on the last recent save, get a list of all z levels as numbers which have the specific trait
 /// Will return null if no traits match or a save file doesn't exist yet
-/datum/controller/subsystem/persistence/proc/levels_by_trait(trait)
-	var/last_save = get_last_save()
+/datum/controller/subsystem/persistence/proc/cache_z_levels_map_configs()
+	var/last_save = MAP_PERSISTENT_DIRECTORY + get_last_save()
 	if(!last_save)
 		return null // no saves exist yet
 
 	var/list/matching_z_levels = list()
 	var/list/last_save_files = flist(last_save)
+	last_save = copytext(last_save, 1, -1) // drop the "/" from the directory
 	for(var/file in last_save_files)
 		if(copytext("[file]", -5) != ".json")
 			continue
 
-		// make sure it doesn't set JSON to ZTRAIT_STATION by default
+		// need to reformat the file name and directory to work with load_map_config()
+		file = copytext(file, 1, -5) // drop the ".json" from file name
 		var/datum/map_config/map_json = load_map_config(file, last_save, TRUE)
 
 		// for persistent autosaves, the name is always a number which indicates the z-level
 		var/current_z = map_json.map_name
 		if(!islist(map_json.traits))
 			CRASH("Missing list of traits in autosave json for [last_save]/[current_z].json")
-			continue
 
-		var/current_multi_z_level = 0
-		// this will probably fuckup on multi-z maps where the traits are mixed
-		// for example ice station has mining z-levels and station z-levels on the same map
+		//var/current_multi_z_level = 0 REMOVE THIS LATER
+
+		// for multi-z maps if a trait is found on ANY z-levels, the entire map is considered to have that trait
 		for(var/level in map_json.traits)
-			if(!CONFIG_GET(flag/persistent_save_centcomm_z_levels) && is_centcom_level(z))
-				continue
-			else if(!CONFIG_GET(flag/persistent_save_station_z_levels) && is_station_level(z))
-				continue
-			else if(!CONFIG_GET(flag/persistent_save_space_z_levels) && is_space_level(z))
-				continue
-			else if(!CONFIG_GET(flag/persistent_save_mining_z_levels) && is_mining_level(z))
-				continue
-			else if(!CONFIG_GET(flag/persistent_save_transitional_z_levels) && is_reserved_level(z)) // for shuttles in transit (hyperspace)
-				continue
-			else if(!CONFIG_GET(flag/persistent_save_away_z_levels) && is_away_level(z)) // gateway away missions
-				continue
+			if(CONFIG_GET(flag/persistent_save_centcomm_z_levels) && (ZTRAIT_CENTCOM in level))
+				LAZYINITLIST(matching_z_levels[ZTRAIT_CENTCOM])
+				matching_z_levels[ZTRAIT_CENTCOM] |= map_json
+			else if(CONFIG_GET(flag/persistent_save_station_z_levels) && (ZTRAIT_STATION in level))
+				LAZYINITLIST(matching_z_levels[ZTRAIT_STATION])
+				matching_z_levels[ZTRAIT_STATION] |= map_json
+			else if(CONFIG_GET(flag/persistent_save_mining_z_levels) && (ZTRAIT_MINING in level))
+				LAZYINITLIST(matching_z_levels[ZTRAIT_MINING])
+				matching_z_levels[ZTRAIT_MINING] |= map_json
+			else if(CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && (ZTRAIT_SPACE_RUINS in level))
+				LAZYINITLIST(matching_z_levels[ZTRAIT_SPACE_RUINS])
+				matching_z_levels[ZTRAIT_SPACE_RUINS] |= map_json
+			else if(CONFIG_GET(flag/persistent_save_space_empty_z_levels) && (ZTRAIT_SPACE_EMPTY in level))
+				LAZYINITLIST(matching_z_levels[ZTRAIT_SPACE_EMPTY])
+				matching_z_levels[ZTRAIT_SPACE_EMPTY] |= map_json
+			else if(CONFIG_GET(flag/persistent_save_transitional_z_levels) && (ZTRAIT_RESERVED in level)) // for shuttles in transit (hyperspace)
+				LAZYINITLIST(matching_z_levels[ZTRAIT_RESERVED])
+				matching_z_levels[ZTRAIT_RESERVED] |= map_json
+			else if(CONFIG_GET(flag/persistent_save_away_z_levels) && (ZTRAIT_AWAY in level)) // gateway away missions
+				LAZYINITLIST(matching_z_levels[ZTRAIT_AWAY])
+				matching_z_levels[ZTRAIT_AWAY] |= map_json
 
-			if(trait in level)
-				matching_z_levels += (current_z + current_multi_z_level) // double check the math here
-			current_multi_z_level++
+			//if(trait in level)
+			//	matching_z_levels += (current_z + current_multi_z_level) // double check the math here
+			//current_multi_z_level++
 
 	if(!matching_z_levels.len)
 		return null
 
-	return matching_z_levels
+	map_configs_cache = matching_z_levels
+	return map_configs_cache
 
 /*
  * Helper proc to get all saves that returns a list of paths relative to MAP_PERSISTENT_DIRECTORY
@@ -298,7 +310,9 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		else if(!CONFIG_GET(flag/persistent_save_station_z_levels) && is_station_level(z))
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_space_z_levels) && is_space_level(z))
+		else if(!CONFIG_GET(flag/persistent_save_space_empty_z_levels) && is_space_empty_level(z))
+			continue
+		else if(!CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && is_space_ruins_level(z))
 			continue
 		else if(!CONFIG_GET(flag/persistent_save_mining_z_levels) && is_mining_level(z))
 			continue
@@ -335,10 +349,12 @@ SUBSYSTEM_DEF(persistence)
 		// consider adding ZTRAIT_SECRET to prevent ghosts observing z-levels
 		// is_mining_level(what_turf.z)
 
+		var/map_path = copytext(map_save_directory, 7) // drop the "_maps/" from directory
+
 		var/json_data = list(
 			"version" = MAP_CURRENT_VERSION,
 			"map_name" = level_to_check.name || CUSTOM_MAP_PATH,
-			"map_path" = map_save_directory,
+			"map_path" = map_path,
 			"map_file" = "[z].dmm",
 			// "planetary" we use mining level trait instead ?! double check bc idk how lavaland is setting gravity
 			"traits" = level_traits,
