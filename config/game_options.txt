@@ -596,9 +596,9 @@ PERSISTENT_MAX_AUTOSAVES -1
 ## Whether to include station z levels
 PERSISTENT_SAVE_STATION_Z_LEVELS
 ## Whether to include space ruins z levels
-#PERSISTENT_SAVE_SPACE_RUIN_Z_LEVELS
+PERSISTENT_SAVE_SPACE_RUIN_Z_LEVELS
 ## Whether to include space empty z levels
-#PERSISTENT_SAVE_SPACE_EMPTY_Z_LEVELS
+PERSISTENT_SAVE_SPACE_EMPTY_Z_LEVELS
 ## Whether to include mining z levels
 PERSISTENT_SAVE_MINING_Z_LEVELS
 ## Whether to include transitional z levels used for shuttle movement
