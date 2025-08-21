@@ -372,7 +372,13 @@
 
 /obj/golfcart_rear/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if (parent && parent.allow_crawler_through(mover))
+	if (!parent)
+		return
+	if (mover == parent)
+		return TRUE
+	if (mover in parent.buckled_mobs)
+		return TRUE
+	if (parent.allow_crawler_through(mover))
 		return TRUE
 
 /obj/vehicle/ridden/golfcart/proc/allow_crawler_through(atom/crawler)
@@ -383,6 +389,10 @@
 
 /obj/vehicle/ridden/golfcart/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
+	if (mover == child)
+		return TRUE
+	if (mover in child.buckled_mobs)
+		return TRUE
 	if (allow_crawler_through(mover))
 		return TRUE
 
@@ -411,10 +421,7 @@
 	var/old_dir = dir
 	if (get_turf(child) == newloc)
 		set_movedelay_effect(2)
-		var/old_child_loc = child.loc
-		child.loc = null
 		. = ..(newloc, turn(direct, 180))
-		child.loc = old_child_loc
 	else
 		set_movedelay_effect(1)
 		. = ..()
@@ -476,12 +483,17 @@
 
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
-/obj/golfcart_rear/proc/allow_movement_between_passengers(atom/source, atom/mover)
-	if (!(source in buckled_mobs))
-		return
-	if (!(mover in buckled_mobs))
-		return
-	return COMSIG_COMPONENT_PERMIT_PASSAGE
+/obj/vehicle/ridden/golfcart/proc/allow_movement_between_passengers(atom/source, atom/mover)
+	if (mover in child.buckled_mobs)
+		return COMSIG_COMPONENT_PERMIT_PASSAGE
+
+/obj/golfcart_rear/proc/allow_movement_between_bed_passengers(atom/source, atom/mover)
+	if (mover == parent)
+		return COMSIG_COMPONENT_PERMIT_PASSAGE
+	if (parent && mover in parent.buckled_mobs)
+		return COMSIG_COMPONENT_PERMIT_PASSAGE
+	if ((source in buckled_mobs) && (mover in buckled_mobs))
+		return COMSIG_COMPONENT_PERMIT_PASSAGE
 
 /obj/golfcart_rear/proc/update_passenger_layers(new_dir)
 	if (isnull(new_dir))
@@ -671,11 +683,6 @@
 	if (cargo)
 		. += generate_cargo_overlay(max_layer=CARGO_HITBOX_LAYER)
 
-/obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
-	if (M.pulling)
-		M.stop_pulling()
-	return ..()
-
 /obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
 	if (!isliving(source))
 		return // should runtime?
@@ -695,7 +702,7 @@
 
 /obj/golfcart_rear/post_buckle_mob(mob/living/buckled_mob)
 	buckled_mob.pulledby?.stop_pulling()
-	RegisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_passengers))
+	RegisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_bed_passengers))
 	RegisterSignal(buckled_mob, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(passenger_falling_down))
 	. = ..()
 	update_passenger_layers()
@@ -707,8 +714,15 @@
 	buckled_mob.layer = initial(buckled_mob.layer)
 	return ..()
 
+/obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
+	if (M.pulling)
+		M.stop_pulling()
+	RegisterSignal(M, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_passengers))
+	return ..()
+
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
 	update_appearance(UPDATE_ICON) // because for some reason the overlays aren't properly redrawn
+	UnregisterSignal(M, COMSIG_ATOM_TRIED_PASS)
 	return ..()
 
 /obj/vehicle/ridden/golfcart/atom_break()
