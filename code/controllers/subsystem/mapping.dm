@@ -129,10 +129,10 @@ SUBSYSTEM_DEF(mapping)
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
 
-#ifndef LOWMEMORYMODE
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
+#ifndef LOWMEMORYMODE
 	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_RUINS])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_RUINS])
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
@@ -143,7 +143,7 @@ SUBSYSTEM_DEF(mapping)
 			add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 			++space_levels_so_far
 
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_EMPTY])
+	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_empty_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_EMPTY])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_EMPTY])
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
@@ -153,24 +153,18 @@ SUBSYSTEM_DEF(mapping)
 			empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_EMPTY = TRUE))
 			++space_levels_so_far
 
-	// Pick a random away mission.
-	if(CONFIG_GET(flag/roundstart_away))
+	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_away_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_AWAY])
+		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_AWAY])
+			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
+			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
+	else if(CONFIG_GET(flag/roundstart_away)) // Pick a random away mission.
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
-
 	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
 		load_all_away_missions()
 
 	loading_ruins = TRUE
 	setup_ruins()
 	loading_ruins = FALSE
-
-	if(LAZYLEN(FailedZs)) //but seriously, unless the server's filesystem is messed up this will never happen
-		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
-		if(FailedZs.len > 1)
-			for(var/I in 2 to FailedZs.len)
-				msg += ", [FailedZs[I]]"
-		msg += ". Yell at your server host!"
-		INIT_ANNOUNCE(msg)
 #endif
 	// Run map generation after ruin generation to prevent issues
 	run_map_terrain_generation()
@@ -186,6 +180,14 @@ SUBSYSTEM_DEF(mapping)
 	generate_station_area_list()
 	initialize_reserved_level(base_transit.z_value)
 	calculate_default_z_level_gravities()
+
+	if(LAZYLEN(FailedZs))
+		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
+		if(FailedZs.len > 1)
+			for(var/I in 2 to FailedZs.len)
+				msg += ", [FailedZs[I]]"
+		msg += ". Yell at your server host!"
+		INIT_ANNOUNCE(msg)
 
 	return SS_INIT_SUCCESS
 
