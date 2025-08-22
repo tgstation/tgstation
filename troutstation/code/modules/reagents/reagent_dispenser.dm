@@ -1,32 +1,22 @@
-/obj/structure/reagent_dispensers/water_cooler/gay
-	name = "gay water cooler"
-	desc = "A machine that dispenses gay liquid to drink."
-	icon = 'troutstation/icons/obj/machines/vending.dmi'
-	icon_state = "gaywater_cooler"
-	anchored = FALSE
-	reagent_id = /datum/reagent/medicine/gaywater
-
-/obj/structure/reagent_dispensers/water_cooler/gay/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	playsound(get_turf(user), 'troutstation/sound/misc/spare.ogg', 100, TRUE)
+/obj/structure/reagent_dispensers/water_cooler/proc/burble()
+	playsound(get_turf(src), 'troutstation/sound/misc/spare.ogg', 100, TRUE)
 	say(pick("bable", "beble", "bible", "boble", "booble", "babie", "bebie", "bibie", "bobie", "bubie", "boobie"))
 
-/obj/structure/reagent_dispensers/water_cooler/gay/Initialize()
-	. = ..()
+/obj/structure/reagent_dispensers/water_cooler/proc/start_burbling()
+	burbling = TRUE
 	START_PROCESSING(SSprocessing, src)
 
-/obj/structure/reagent_dispensers/water_cooler/gay/Destroy()
+/obj/structure/reagent_dispensers/water_cooler/proc/stop_burbling()
+	burbling = FALSE
 	STOP_PROCESSING(SSprocessing, src)
-	return ..()
 
-/obj/structure/reagent_dispensers/water_cooler/gay/process()
+/obj/structure/reagent_dispensers/water_cooler/process()
 	if(prob(1))
-		say(pick("bable", "beble", "bible", "boble", "booble", "babie", "bebie", "bibie", "bobie", "bubie", "boobie"))
-		playsound(get_turf(src), 'troutstation/sound/misc/spare.ogg', 100, TRUE)
+		burble()
 		sleep(750)
 
-/obj/structure/reagent_dispensers/water_cooler/Initialize()
-	if(prob(35) && !ispath(src.type, /obj/structure/reagent_dispensers/water_cooler/gay)) // 35% chance proc AND checks if the water cooler at this location is NOT gay (there are no other variants of water cooler)
-		new /obj/structure/reagent_dispensers/water_cooler/gay(src.loc) // place the gay water cooler at the location original water cooler's spot
-		return INITIALIZE_HINT_QDEL
-	return ..()
+// Kept in the event someone wants to map it in I guess??
+/obj/structure/reagent_dispensers/water_cooler/gay
+	name = "gay water cooler"
+	desc = "A machine that dispenses gay water to drink. Pretty vocal."
+	reagent_id = /datum/reagent/medicine/gaywater

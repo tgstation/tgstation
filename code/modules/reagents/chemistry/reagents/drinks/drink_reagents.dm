@@ -1314,7 +1314,7 @@
 	name = "fruit punch"
 	description = "Impossibly sweet fruit punch. Nobody knows what fruits were used to make it, not even it's creators... \
 		It's unique recipe heals and rejuvinates the drinker, but is unsafe to consume without the support of a nearby watercooler."
-	color = "#f7b2e3"
+	color = "#eb424b" // Troutstation edit
 	taste_description = "dangerously sweet fruit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_VERYGOOD

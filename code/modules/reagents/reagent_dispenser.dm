@@ -368,17 +368,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/obj/item/reagent_containers/cooler_jug/our_jug
 	///Have we been tipped?
 	var/tipped = FALSE
+	// Troutstation edit - used to track if we should burble (that functionality is over in the troutstation reagent_dispenser.dm)
+	var/burbling = FALSE
 
 /obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
 	. = ..()
 	if(prob(2) && mapload)
-		reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
+		// Troutstation edit
+		if(prob(50))
+			reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
+		else
+			reagents.convert_reagent(/datum/reagent/water, /datum/reagent/medicine/gaywater)
 	create_jug()
 	refresh_appearance()
 
 /obj/structure/reagent_dispensers/water_cooler/Destroy()
 	. = ..()
 	our_jug = null
+	// Troutstation edit
+	if(burbling)
+		stop_burbling()
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
@@ -418,6 +427,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/obj/item/reagent_containers/cup/glass/sillycup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	paper_cups--
+	// Troutstation edit
+	if(burbling)
+		burble()
 
 /obj/structure/reagent_dispensers/water_cooler/update_overlays()
 	. = ..()
@@ -505,6 +517,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	eject_jug(user, our_jug)
 	our_jug = new_jug
 	our_jug.reagents.trans_to(reagents, tank_volume)
+	if(our_jug.do_burbling)
+		start_burbling()
 	balloon_alert(user, "attached")
 	user.log_message("attached a [new_jug] to [src] at [AREACOORD(src)] containing ([new_jug.reagents.get_reagent_log_string()])", LOG_ATTACK)
 	add_fingerprint(user)
@@ -556,6 +570,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		reagents.trans_to(our_jug.reagents, tank_volume)
 
 	our_jug = null
+	if(burbling)
+		stop_burbling()
 	refresh_appearance()
 
 ///Handles the visual stuff related to the cooler itself tipping.

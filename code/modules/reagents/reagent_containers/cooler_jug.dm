@@ -13,6 +13,8 @@
 	fill_icon_thresholds = list(25, 50, 75, 100)
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
+	// Troutstation edit
+	var/do_burbling = FALSE
 
 /obj/item/reagent_containers/cooler_jug/water
 	name = "water jug"
