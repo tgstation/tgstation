@@ -1,6 +1,3 @@
-/// Maximum amount of items in a storage bag that we're transferring items to the vendor from.
-#define MAX_VENDING_INPUT_AMOUNT 30
-
 //================================TOOL ACTS==============================================
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
@@ -115,9 +112,6 @@
 			var/loaded = 0
 			var/denied_items = 0
 			for(var/obj/item/the_item in storage_item.contents)
-				if(contents.len >= MAX_VENDING_INPUT_AMOUNT) // no more than 30 item can fit inside, legacy from snack vending although not sure why it exists
-					to_chat(user, span_warning("[src]'s compartment is full."))
-					break
 				if(loadingAttempt(the_item, user))
 					loaded++
 				else
@@ -204,25 +198,25 @@
 		credits_contained = max(0, credits_contained - credits_to_remove)
 		SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
-/obj/machinery/vending/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(tiltable && !tilted && weapon.force)
-		if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
-			tilt(get_turf(get_step(src, REVERSE_DIR(get_dir(src, user)))))
-			return TRUE
+/obj/machinery/vending/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(!tiltable || tilted || . <= 0)
+		return
+	if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
+		tilt(get_turf(get_step(src, REVERSE_DIR(get_dir(src, user)))))
+		return
 
-		switch(rand(1, 100))
-			if(1 to 5)
-				freebie(3)
-			if(6 to 15)
-				freebie(2)
-			if(16 to 25)
-				freebie(1)
-			if(26 to 75)
-				return
-			if(76 to 100)
-				tilt(user)
-		return TRUE
-	return ..()
+	switch(rand(1, 100))
+		if(1 to 5)
+			freebie(3)
+		if(6 to 15)
+			freebie(2)
+		if(16 to 25)
+			freebie(1)
+		if(26 to 75)
+			pass()
+		if(76 to 100)
+			tilt(user)
 
 /obj/machinery/vending/attack_tk_grab(mob/user)
 	to_chat(user, span_warning("[src] seems to resist your mental grasp!"))
@@ -231,5 +225,3 @@
 	. = ..()
 	if (!Adjacent(user, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-#undef MAX_VENDING_INPUT_AMOUNT

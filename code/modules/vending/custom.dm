@@ -128,6 +128,8 @@
 /obj/machinery/vending/custom/restock(obj/item/vending_refill/canister)
 	. = 0
 	if(!canister.products?.len)
+		if(!canister.products)
+			canister.products = list()
 		return
 
 	var/update_static_data = FALSE
@@ -323,6 +325,11 @@
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
+
+/obj/item/vending_refill/custom/get_part_rating()
+	. = 0
+	for(var/key in products)
+		. += products[key]
 
 /obj/machinery/vending/custom/unbreakable
 	name = "Indestructible Vendor"

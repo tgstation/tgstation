@@ -158,8 +158,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
 	var/list/file_data = list()
 	var/pos = 1
-	for(var/V in GLOB.news_network.network_channels)
-		var/datum/feed_channel/channel = V
+	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue

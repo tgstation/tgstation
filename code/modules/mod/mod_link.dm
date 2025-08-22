@@ -28,12 +28,11 @@
 	setdir_callback.Invoke(user, user.dir, user.dir)
 	mod_link.holder.RegisterSignal(mod_link.holder.loc, COMSIG_ATOM_DIR_CHANGE, proc_path)
 
-/proc/delete_link_visual_generic(datum/mod_link/mod_link)
-	var/mob/living/user = mod_link.get_user_callback.Invoke()
+/proc/delete_link_visual_generic(datum/mod_link/mod_link, mob/living/old_user)
 	playsound(mod_link.get_other().holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE, frequency = -1)
 	LAZYREMOVE(mod_link.holder.update_on_z, mod_link.visual)
 	mod_link.holder.lose_hearing_sensitivity(REF(mod_link))
-	mod_link.holder.UnregisterSignal(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_ATOM_DIR_CHANGE))
+	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mod_link.visual)
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
@@ -115,14 +114,14 @@
 /obj/item/mod/control/proc/get_link_visual(atom/movable/visuals)
 	return get_link_visual_generic(mod_link, visuals, PROC_REF(on_wearer_set_dir))
 
-/obj/item/mod/control/proc/delete_link_visual()
-	return delete_link_visual_generic(mod_link)
+/obj/item/mod/control/proc/delete_link_visual(mob/living/old_user)
+	return delete_link_visual_generic(mod_link, old_user)
 
 /obj/item/mod/control/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(speaker != wearer && speaker != ai_assistant)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_range = 2, message_mods = message_mods)
 
 /obj/item/mod/control/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -292,17 +291,16 @@
 /obj/item/clothing/neck/link_scryer/proc/get_link_visual(atom/movable/visuals)
 	return get_link_visual_generic(mod_link, visuals, PROC_REF(on_user_set_dir))
 
-/obj/item/clothing/neck/link_scryer/proc/delete_link_visual()
-	var/mob/living/user = mod_link.get_user_callback.Invoke()
-	if(!QDELETED(user))
-		user.update_worn_neck()
-	return delete_link_visual_generic(mod_link)
+/obj/item/clothing/neck/link_scryer/proc/delete_link_visual(mob/living/old_user)
+	if(!QDELETED(old_user))
+		old_user.update_worn_neck()
+	return delete_link_visual_generic(mod_link, old_user)
 
 /obj/item/clothing/neck/link_scryer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(speaker != loc)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 3)
+	mod_link.visual.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_range = 3, message_mods = message_mods)
 
 /obj/item/clothing/neck/link_scryer/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -346,6 +344,8 @@
 	var/list/visual_overlays = list()
 	/// A reference to the call between two MODlinks.
 	var/datum/mod_link_call/link_call
+	/// Weakref to the user that is involved in our current call, for cleaning up after ourselves.
+	var/datum/weakref/user_in_call_ref
 	/// A callback that returns the user of the MODlink.
 	var/datum/callback/get_user_callback
 	/// A callback that returns whether the MODlink can currently call.
@@ -435,6 +435,22 @@
 /datum/mod_link/proc/end_call()
 	QDEL_NULL(link_call)
 
+/datum/mod_link/proc/entered_call(datum/mod_link/other_link)
+	var/mob/living/user = get_user_callback.Invoke()
+	user_in_call_ref = WEAKREF(user)
+	ADD_TRAIT(user, TRAIT_IN_CALL, REF(src))
+
+	var/other_visual = other_link.make_visual_callback.Invoke()
+	get_visual_callback.Invoke(other_visual)
+
+/datum/mod_link/proc/exiting_call()
+	var/mob/living/old_user = user_in_call_ref?.resolve()
+	user_in_call_ref = null
+	if(old_user)
+		REMOVE_TRAIT(old_user, TRAIT_IN_CALL, REF(src))
+
+	delete_visual_callback.Invoke(old_user)
+
 /datum/mod_link/proc/on_holder_delete(atom/source)
 	SIGNAL_HANDLER
 	qdel(src)
@@ -447,28 +463,20 @@
 	var/datum/mod_link/link_receiver
 
 /datum/mod_link_call/New(datum/mod_link/link_caller, datum/mod_link/link_receiver)
-	link_caller.link_call = src
-	link_receiver.link_call = src
 	src.link_caller = link_caller
 	src.link_receiver = link_receiver
-	var/mob/living/caller_mob = link_caller.get_user_callback.Invoke()
-	ADD_TRAIT(caller_mob, TRAIT_IN_CALL, REF(src))
-	var/mob/living/receiver_mob = link_receiver.get_user_callback.Invoke()
-	ADD_TRAIT(receiver_mob, TRAIT_IN_CALL, REF(src))
-	make_visuals()
+	link_caller.link_call = src
+	link_receiver.link_call = src
+	link_caller.entered_call(link_receiver)
+	link_receiver.entered_call(link_caller)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/mod_link_call/Destroy()
-	var/mob/living/caller_mob = link_caller.get_user_callback.Invoke()
-	if(!QDELETED(caller_mob))
-		REMOVE_TRAIT(caller_mob, TRAIT_IN_CALL, REF(src))
-	var/mob/living/receiver_mob = link_receiver.get_user_callback.Invoke()
-	if(!QDELETED(receiver_mob))
-		REMOVE_TRAIT(receiver_mob, TRAIT_IN_CALL, REF(src))
-	STOP_PROCESSING(SSprocessing, src)
-	clear_visuals()
+	link_caller.exiting_call()
+	link_receiver.exiting_call()
 	link_caller.link_call = null
 	link_receiver.link_call = null
+	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /datum/mod_link_call/process(seconds_per_tick)
@@ -478,16 +486,6 @@
 
 /datum/mod_link_call/proc/can_continue_call()
 	return link_caller.frequency == link_receiver.frequency && link_caller.can_call_callback.Invoke() && link_receiver.can_call_callback.Invoke()
-
-/datum/mod_link_call/proc/make_visuals()
-	var/caller_visual = link_caller.make_visual_callback.Invoke()
-	var/receiver_visual = link_receiver.make_visual_callback.Invoke()
-	link_caller.get_visual_callback.Invoke(receiver_visual)
-	link_receiver.get_visual_callback.Invoke(caller_visual)
-
-/datum/mod_link_call/proc/clear_visuals()
-	link_caller.delete_visual_callback.Invoke()
-	link_receiver.delete_visual_callback.Invoke()
 
 /proc/call_link(mob/user, datum/mod_link/calling_link)
 	if(!calling_link.frequency)
