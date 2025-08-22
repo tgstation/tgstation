@@ -91,7 +91,7 @@
 		var/obj/item/food/baked_food = baked_result
 		LAZYADD(baked_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
 	//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
-	if(baked_result.reagents)
+	if(baked_result.reagents && original_object.reagents)
 		baked_result.reagents.clear_reagents()
 		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
 		if(added_reagents) // Add any new reagents that should be added
