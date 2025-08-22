@@ -133,6 +133,7 @@
 /mob/living/basic/mouse/death(gibbed)
 	// Rats with a mind will not turn into a lizard snack on death
 	if(mind)
+		SSmobs.cheeserats -= src
 		return ..()
 
 	// Call parent with gibbed = TRUE, becuase we're getting rid of the body
