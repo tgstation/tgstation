@@ -40,6 +40,8 @@
 		/obj/item/reagent_containers/cup/bottle/thermite = 20,
 		/obj/item/restraints/legcuffs/beartrap = 10,
 		/obj/item/food/drug/saturnx = 5,
+		/obj/item/food/drug/meth_crystal = 5,
+		/obj/item/food/drug/opium =5,
 		/obj/item/reagent_containers/cup/blastoff_ampoule = 5,
 		/obj/item/food/drug/moon_rock = 5,
 		/obj/item/grenade/empgrenade = 5,
@@ -73,11 +75,12 @@
 		/obj/item/food/drug/saturnx,
 		/obj/item/reagent_containers/cup/blastoff_ampoule,
 		/obj/item/food/drug/moon_rock,
+		/obj/item/food/drug/meth_crystal,
+		/obj/item/food/drug/opium/raw,
 		/obj/item/storage/pill_bottle/happy,
 		/obj/item/storage/pill_bottle/lsd,
 		/obj/item/storage/pill_bottle/psicodine,
 		/obj/item/storage/box/flat/fentanylpatches,
-		/obj/item/food/drug/meth_crystal,
 	)
 
 /obj/effect/spawner/random/contraband/permabrig_weapon

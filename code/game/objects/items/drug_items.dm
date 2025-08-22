@@ -84,30 +84,70 @@
 
 /obj/item/food/drug/meth_crystal
 	name = "crystal meth"
-	desc = "A clear, sad looking crystal substance."
+	desc = "A clear, sad, fake looking crystal substance."
 	icon_state = "meth_crystal1"
-	tastes = list("awfulness" = 2, "burning" = 1, "chemicals" = 2)
+	tastes = list("awfulness", "burning")
 	food_reagents = list(/datum/reagent/drug/methamphetamine = 10)
 
 /obj/item/food/drug/meth_crystal/Initialize(mapload)
 	. = ..()
-	icon_state = pick("meth_crystal1", "meth_crystal2", "meth_crystal3", "meth_crystal4")
+	icon_state = pick("meth_crystal1", "meth_crystal2", "meth_crystal3", "meth_crystal4", "meth_crystal5")
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/food/drug/opium
 	name = "opium"
 	desc = "A little of it, taken as much as a grain of ervum is a pain-easer, and a sleep-causer, and a digester... but being drank too much it hurts, making spacemen lethargical, and it kills."
 	icon_state = "opium1"
-	tastes = list("amber" = 2, "a bitter vanilla" = 1)
+	tastes = list("amber", "a bitter vanilla")
+	var/rich = 0 //Used for the player to combine opium chunks together, up to 5u of morphine.
 
-/obj/item/food/drug/opium/Initialize(mapload)
+/obj/item/food/drug/opium/examine()
+	. = ..()
+	if(rich)
+		. += span_notice("The opium is large and rich in fragrance; it cannot be pressed together further.")
+	else
+		. += span_notice("The opium is still small, and can be pressed together with another to increase its potency and richness.")
+
+/obj/item/food/drug/opium/Initialize(mapload) //For narcotics and black market purchases, pure and proper.
 	. = ..()
 	icon_state = pick("opium1", "opium2", "opium3", "opium4", "opium5")
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
-	reagents.add_reagent(/datum/reagent/medicine/morphine, 10)
+	food_reagents = list(/datum/reagent/medicine/morphine = 7, /datum/reagent/consumable/sugar = 1)
 
-/obj/item/food/drug/opium/raw/Initialize(mapload) //Randomized limited amount for the poppy extraction.
+/obj/item/food/drug/opium/raw/Initialize(mapload) //Randomizes trace amounts of contents found in the opium upon extraction, including contaminants.
 	. = ..()
 	reagents.clear_reagents()
-	var/amount = rand(1, 3)
+	var/amount
+	amount = rand(4, 25) / 10
 	reagents.add_reagent(/datum/reagent/medicine/morphine, amount)
+	amount = rand(1, 7) / 10
+	reagents.add_reagent(/datum/reagent/consumable/sugar, amount)
+
+/obj/item/food/drug/opium/raw/attackby(obj/item/I, mob/user) //Allows for combining opium up to 7u of morphine in a ball of opium, leaving the quantity vague-ish until maxed. Any further refinement requires a blender.
+	if(istype(I, /obj/item/food/drug/opium/raw))
+		var/obj/item/food/drug/opium/raw/other = I
+
+		var/current = reagents.get_reagent_amount(/datum/reagent/medicine/morphine)
+		if(current >= 7)
+			to_chat(user, span_notice("This chunk can't hold any more."))
+			return TRUE
+
+		var/capacity_left = 7 - current
+		var/transferred = other.reagents.trans_to(src, capacity_left)
+
+		if(transferred > 0)
+			var/overflow = reagents.get_reagent_amount(/datum/reagent/medicine/morphine) - 7
+			if(overflow > 0)
+				reagents.trans_to(other, overflow)
+
+			to_chat(user, span_notice("You press the chunks of opium together."))
+			if(!other.reagents.total_volume)
+				qdel(other)
+			if(reagents.get_reagent_amount(/datum/reagent/medicine/morphine) >= 7)
+				rich = TRUE
+		else
+			to_chat(user, span_notice("The opium cannot be pressed together further."))
+
+		return TRUE
+
+	return ..()

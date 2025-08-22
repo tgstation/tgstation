@@ -435,7 +435,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	// allowing reagents to react after being lit
 	reagents.flags &= ~(NO_REACT)
-	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine))
+	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine)) //Allows spacemen to smoke meth without exploding!
 		reagents.flags |= NO_REACT
 	reagents.handle_reactions()
 	update_appearance(UPDATE_ICON)
@@ -981,6 +981,19 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cobpipeoff"
 	inhand_icon_on = null
 	inhand_icon_off = null
+
+/obj/item/cigarette/pipe/crackpipe
+	name = "glass pipe"
+	desc = "A slick, pragmatic delivery method. The ancients learned much wisdom with this tool."
+	icon_state = "crackpipe"
+	inhand_icon_state = "crackpipeon"
+	inhand_icon_on = "crackpipeon"
+	inhand_icon_off = "crackpipe"
+	icon_on = "crackpipeon"
+	icon_off = "crackpipe"
+	inhand_icon_on = null
+	inhand_icon_off = null
+	lung_harm = 2
 
 ///////////
 //ROLLING//
