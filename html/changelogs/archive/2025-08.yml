@@ -493,3 +493,39 @@
   - bugfix: Fixed bulletproof helmets switching sprites to normal sec helmet
   - image: Added sprites of Swat helmet and riot helmet with attached seclight
   - image: Reworked part of helmet sprites - seclight
+2025-08-22:
+  LT3:
+  - bugfix: Fixed techfab category of janitor holographic sign projector
+  Paxilmaniac:
+  - qol: MOD tethers are now a little easier to click on
+  Pickle-Coding:
+  - bugfix: Fixes water evaporation cooling the air to 2.7 Kelvin.
+  - balance: Water evaporation can cool the floor.
+  SmArtKar:
+  - bugfix: Fixed spraypainted items glowing in the dark
+  - code_imp: Stacking status effects without visual overlays will no longer try to
+      create them and fail to do so.
+  - bugfix: Fixed newspapers not lighting on fire from lighters
+  - bugfix: Fixed table flipping sound/alert spam
+  - bugfix: Fixed plant analyzer blocking all interactions in the darkness
+  - bugfix: Nerfs the Safety Moth. Fixed incident displays displaying adverts even
+      while depowered/broken
+  SyncIt21:
+  - bugfix: converting reagents now computes correct purity & ph when conversion threshold
+      is set
+  - bugfix: converting reagents transfers reagent data correctly only when not filtering
+      sub types
+  - code_imp: converting reagents is faster performance wise
+  carpotoxin:
+  - bugfix: Mutant bodypart overlays (tails and et cetera) that are gender-specific
+      now display correctly
+  lelandkemble:
+  - bugfix: Lizard now have lizard brains
+  necromanceranne:
+  - rscadd: Adds the surplus energy sword; the mall katana of the future. It cuts
+      like shit, but if you're desperate enough, you could kill someone with it. Just
+      remember to keep it charged.
+  - balance: Energy swords are huge objects while activated.
+  paganiy:
+  - bugfix: the interns recalculated the damage of the shotguns catridges and made
+      corrections
