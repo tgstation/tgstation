@@ -420,7 +420,7 @@
 	return success
 
 /datum/antagonist/changeling/proc/can_give(datum/action/changeling/power)
-	for(ref_power in power.prereq_ability)
+	for(var/ref_power in power.prereq_ability)
 		if(!purchased_powers[ref_power])
 			return FALSE
 	return TRUE
