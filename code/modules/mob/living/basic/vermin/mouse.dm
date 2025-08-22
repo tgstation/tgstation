@@ -131,7 +131,6 @@
 
 // On death, remove the mouse from the ratcap, and turn it into an item if applicable
 /mob/living/basic/mouse/death(gibbed)
-	SSmobs.cheeserats -= src
 	// Rats with a mind will not turn into a lizard snack on death
 	if(mind)
 		return ..()
@@ -168,7 +167,7 @@
 					found_holder.release(FALSE)
 					holding_mob.dropItemToGround(found_holder)
 				holding_mob.equip_to_slot(mouse,equip_slot)
-	qdel(src)
+	src.Destroy()
 
 /mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
