@@ -1,5 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes:
-  - map: "Adjusts Turret Placement in the AI Upload on Nebulastation"
-  - map: "Adds an External Security Camera to the Starboard Vault Wall overlooking the AI Upload on Nebulastation"
