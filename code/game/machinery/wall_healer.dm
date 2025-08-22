@@ -42,7 +42,7 @@
 	/// How long it takes to recharge the wall healer
 	var/recharge_cd_length = 30 SECONDS
 	/// How long it takes between injections
-	var/injection_cd_length = 5 SECONDS
+	var/injection_cd_length = 4 SECONDS
 	/// Cooldown between chem recharges
 	COOLDOWN_DECLARE(recharge_cooldown)
 	/// Cooldown between chem injections
@@ -311,6 +311,9 @@
 		to_chat(user, span_notice("You try to retrieve some gauze, but [src] seems to be out of stock."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(attempt_charge(src, user, extra_fees = floor(per_bandage_cost)) & COMPONENT_OBJ_CANCEL_CHARGE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if((obj_flags & EMAGGED) && prob(99))
+		to_chat(user, span_warning("You try to retrieve some gauze, but it gets all jammed up in the access port."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/stack/medical/gauze/bandage = LAZYACCESS(stocked_bandages, 1)
