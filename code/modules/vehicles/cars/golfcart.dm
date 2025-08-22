@@ -311,9 +311,26 @@
 /obj/vehicle/ridden/golfcart/proc/can_weld_engine()
 	return hood_open && engine && (engine_state == ENGINE_WRENCHED || engine_state == ENGINE_WELDED)
 
+/obj/vehicle/ridden/golfcart/proc/set_to_hotrod_sprite()
+	if (icon == 'icons/obj/toys/golfcart_hotrod_split.dmi')
+		return
+	icon = 'icons/obj/toys/golfcart_hotrod_split.dmi'
+	child.icon = 'icons/obj/toys/golfcart_hotrod_split.dmi'
+	update_appearance(UPDATE_ICON)
+
+/obj/vehicle/ridden/golfcart/proc/set_to_default_sprite()
+	if (icon == 'icons/obj/toys/golfcart_split.dmi')
+		return
+	icon = 'icons/obj/toys/golfcart_split.dmi'
+	child.icon = 'icons/obj/toys/golfcart_split.dmi'
+	update_appearance(UPDATE_ICON)
+
 /obj/vehicle/ridden/golfcart/proc/set_engine_state(state)
 	engine_state = state
-	update_appearance(UPDATE_ICON)
+	if (engine_state == ENGINE_WELDED)
+		set_to_hotrod_sprite()
+	else
+		set_to_default_sprite()
 
 /obj/vehicle/ridden/golfcart/wrench_act(mob/living/user, obj/item/tool)
 	if (!can_wrench_engine())
