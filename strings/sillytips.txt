@@ -40,3 +40,4 @@ You can light a match with the heel of your boot. ...What's that? Friction match
 You can win a pulse rifle from the arcade machine. Honest.
 Your sprite represents your hitbox, so that afro makes you easier to kill. The sacrifices we make for style.
 Gorillas can be killed by land mines placed along forest paths.
+You can use a cryptographic sequencer on a disposals unit.
