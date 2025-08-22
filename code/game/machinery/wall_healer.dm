@@ -113,8 +113,9 @@
 
 /obj/machinery/wall_healer/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [num_bandages + LAZYLEN(stocked_bandages)] bandage\s stocked. \
-		Remove a bandage with [EXAMINE_HINT("right-click")].")
+	var/total_bandages = num_bandages + LAZYLEN(stocked_bandages)
+	. += span_notice("It has [total_bandages] bandage\s stocked.\
+		[total_bandages ? " Purchase a bandage with [EXAMINE_HINT("right-click")]." : ""]")
 
 /obj/machinery/wall_healer/update_icon_state()
 	. = ..()
@@ -302,15 +303,18 @@
 
 /obj/machinery/wall_healer/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. != SECONDARY_ATTACK_CALL_NORMAL)
+	if(. != SECONDARY_ATTACK_CALL_NORMAL || !isliving(user))
 		return .
+	var/mob/living/living_user = user
 	if(!is_operational)
-		to_chat(user, span_notice("You try to retrieve some gauze, but [src] doesn't respond."))
+		to_chat(user, span_warning("You try to retrieve some gauze, but [src] doesn't respond."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(num_bandages + LAZYLEN(stocked_bandages) <= 0)
-		to_chat(user, span_notice("You try to retrieve some gauze, but [src] seems to be out of stock."))
+		to_chat(user, span_warning("You try to retrieve some gauze, but [src] seems to be out of stock."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(attempt_charge(src, user, extra_fees = floor(per_bandage_cost)) & COMPONENT_OBJ_CANCEL_CHARGE)
+		if(!living_user.get_idcard())
+			to_chat(user, span_warning("No ID card found. Aborting."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if((obj_flags & EMAGGED) && prob(99))
 		to_chat(user, span_warning("You try to retrieve some gauze, but it gets all jammed up in the access port."))
