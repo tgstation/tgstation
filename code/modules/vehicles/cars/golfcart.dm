@@ -23,39 +23,52 @@
 	var/obj/vehicle/ridden/golfcart/parent = null
 
 /obj/vehicle/ridden/golfcart
+	///Base movespeed before any modifiers
+	var/static/base_movedelay = 1.5
+	///Base movespeed for the hotrod before any modifiers
+	var/static/hotrod_base_movedelay = 0.75
 	name = "golf cart"
 	desc = "An all-purpose cargo hauling vehicle."
 	icon = 'icons/obj/toys/golfcart_split.dmi'
 	icon_state = "front"
 	max_integrity = 150
-	var/static/base_movedelay = 1.5
-	var/static/hotrod_base_movedelay = 0.75
 	armor_type = /datum/armor/none
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	integrity_failure = 0.5
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
+	///Seperate image for the cargo buckled to the rear
 	var/image/cargo_image = null
+	///The power source for the cart. Can be replaced with an engine.
+	var/obj/item/stock_parts/power_store/cell/cell = null
+	///A more powerful power source for the cart.
 	var/obj/item/v8_engine/engine = null
+	///Can be unwrenched, wrenched, or welded
 	var/engine_state = null
+	///An invisible sprite that exists as a hitbox
 	var/obj/golfcart_rear/child = null
+	///Objects that can be buckled to the cargo hitch
 	var/static/list/allowed_cargo = typecacheof(list(
 		/obj/structure/closet/crate,
 		/obj/structure/reagent_dispensers,
 		/obj/machinery,
 		/obj/item/kirbyplants,
 	))
+	///Each movement requires this much energy to be drawn from the internal cell
 	var/charge_per_move = STANDARD_CELL_CHARGE / 300
+	///Has the final say on whether something can be buckled.
 	var/static/list/banned_cargo = typecacheof(list(
 		/obj/structure/reagent_dispensers/wall,
 		// i mean it's a fucking door
 		/obj/machinery/door,
 	))
+	///Currently buckled cargo
 	var/obj/cargo = null
-	var/obj/item/stock_parts/power_store/cell/cell = null
+	///Is the hood open?
 	var/hood_open = FALSE
 
+///Jiggles the cargo_image up and down.
 /obj/vehicle/ridden/golfcart/proc/shake_cargo(pixelshiftx = 2, pixelshifty = 2, duration)
 	if (!cargo_image)
 		return
@@ -64,6 +77,7 @@
 	animate(cargo_image, pixel_x = inital_pixel_x + rand(-pixelshiftx, pixelshiftx), pixel_y = inital_pixel_y + rand(pixelshifty/2, pixelshifty), time=duration, flags=ANIMATION_PARALLEL)
 	animate(pixel_x = inital_pixel_x, pixel_y = inital_pixel_y, time=duration)
 
+///Jiggles the cargo_image as long as someone is trying to jiggle it.
 /obj/vehicle/ridden/golfcart/proc/check_if_shake()
 	if (!cargo)
 		return FALSE
@@ -84,6 +98,7 @@
 	// If we reach here, nobody is resisting, so don't shake
 	return FALSE
 
+///Unload the container from the golfcart if it is cargo
 /obj/vehicle/ridden/golfcart/proc/easy_escape(mob/living/user, obj/container)
 	if (!cargo || cargo != container)
 		return
@@ -93,17 +108,19 @@
 		if (closet.can_open(user))
 			closet.open()
 
+///Unload the container from the golfcart if it is cargo and after a little jiggling and a some time
 /obj/vehicle/ridden/golfcart/proc/hard_escape(mob/living/user, obj/container)
 	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 0)
 	if (do_after(user, 5 SECONDS, target=child, timed_action_flags=IGNORE_USER_LOC_CHANGE))
 		if (!cargo || cargo != container || !(user in cargo))
 			return
+		unload()
 		user.visible_message(
 			span_danger("The [container] falls off of the [child]!"),
 			span_userdanger("You escape the [src]!")
 			)
-		unload()
 
+///Called when someone in the cargo hitch tries to escape
 /obj/vehicle/ridden/golfcart/relay_container_resist_act(mob/living/user, obj/container)
 	user.visible_message(
 		span_danger("[user] tries to escape the [container]!"),
@@ -121,6 +138,7 @@
 		return hard_escape(user, container)
 	return easy_escape(user, container)
 
+///Try to load something onto the cart. This proc may fail if the obj is not in allowed_cargo or is in banned_cargo.
 /obj/vehicle/ridden/golfcart/proc/load(obj/to_load)
 	if (!to_load)
 		if (!cargo)
@@ -161,6 +179,7 @@
 /obj/vehicle/ridden/golfcart/proc/is_hotrod()
 	return engine && engine_state && engine_state == ENGINE_WELDED
 
+///Called when something we crash into lands after being flinged
 /obj/vehicle/ridden/golfcart/proc/thrown_mob_landed(atom/thrown_atom)
 	if (!isliving(thrown_atom))
 		UnregisterSignal(thrown_atom, COMSIG_MOVABLE_THROW_LANDED)
@@ -184,7 +203,8 @@
 		span_userdanger("[src] slams into you!"),
 	)
 
-/obj/vehicle/ridden/golfcart/proc/run_over(var/mob/living/victim)
+///Called when a resting victim is run over
+/obj/vehicle/ridden/golfcart/proc/run_over(mob/living/victim)
 	if (!has_gravity())
 		victim.throw_at(get_edge_target_turf(victim, dir), 4, 3)
 		RegisterSignal(victim, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(thrown_mob_landed))
@@ -225,7 +245,7 @@
 	for(var/mob/living/future_pancake in loc)
 		run_over(future_pancake)
 
-
+///Tries to install the cell into the cart. Returns a boolean for success.
 /obj/vehicle/ridden/golfcart/proc/install_cell(obj/item/stock_parts/power_store/cell/cell_to_install, mob/user)
 	if (cell || engine)
 		balloon_alert(user, "already has an engine!")
@@ -235,6 +255,7 @@
 	balloon_alert(user, "installed \the [cell]")
 	return TRUE
 
+///Tries to install the cell into the cart. Returns a boolean for success.
 /obj/vehicle/ridden/golfcart/proc/install_engine(obj/item/v8_engine/engine_to_install, mob/user)
 	if (engine || cell)
 		balloon_alert(user, "already has an engine!")
@@ -361,7 +382,7 @@
 	vehicle_move_delay = 1.5
 
 /datum/component/riding/vehicle/golfcart/restore_parent_layer_and_offsets()
-	// just don't restore anything
+	// just don't restore anything.
 	return
 
 /datum/component/riding/vehicle/golfcart/driver_move(atom/movable/movable_parent, mob/living/user, direction)
@@ -450,6 +471,7 @@
 	if (parent.allow_crawler_through(mover))
 		return TRUE
 
+///Called when something tries to pass us. Returns TRUE if it is trying to crawl past us.
 /obj/vehicle/ridden/golfcart/proc/allow_crawler_through(atom/crawler)
 	if (!isliving(crawler))
 		return FALSE
@@ -475,9 +497,7 @@
 	// otherwise permit move
 	return
 
-/obj/vehicle/ridden/golfcart/proc/dist_to(atom/thing)
-	return min(get_dist(thing, loc), get_dist(thing.loc, child.loc))
-
+///Makes movedelay a factor of base_movedelay
 /obj/vehicle/ridden/golfcart/proc/set_movedelay_effect(modification)
 	var/base_movedelay_effect = base_movedelay
 	if (is_hotrod())
@@ -564,6 +584,7 @@
 	if ((source in buckled_mobs) && (mover in buckled_mobs))
 		return COMSIG_COMPONENT_PERMIT_PASSAGE
 
+///Called when the golfcart rear turns in order to keep the buckled mobs in the right places
 /obj/golfcart_rear/proc/update_passenger_layers(new_dir)
 	if (isnull(new_dir))
 		new_dir = dir
@@ -655,6 +676,7 @@
 		crate_x_offset += 32
 	return vector(crate_x_offset, crate_y_offset)
 
+///Flattens the attached cargo into a list of mutable_appearances with proper layering to fit between layer and max_layer
 /obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null, max_layer=null, shift_all=TRUE)
 	if (!cargo)
 		return
@@ -694,6 +716,7 @@
 				overlay.pixel_z += 11
 	return overlays
 
+///Gets the pixel offsets of the rear part of the golf cart
 /obj/vehicle/ridden/golfcart/proc/get_rear_offset()
 	var/x = 0
 	var/y = 0
@@ -722,6 +745,11 @@
 
 /obj/vehicle/ridden/golfcart/update_overlays()
 	. = ..()
+	// the overlays for the cart are fairly complicated.
+	// the main three are the front, rear, and lower overlays
+	// the front/rear overlay are the same layer
+	// but the lower overlay is always below buckled mobs and the cargo
+
 	var/mutable_appearance/lower_overlay = mutable_appearance(icon, "lower", CART_LOWER_LAYER)
 	var/mutable_appearance/roof_overlay = null
 	var/mutable_appearance/rear_overlay = mutable_appearance(icon, "rear", layer)
@@ -730,6 +758,8 @@
 	rear_overlay.pixel_y = rear_offsets.y
 	if (dir & NORTH)
 	else if (dir & SOUTH)
+		// however, specifically when facing south, we require another overlay.
+		// it is effectively an extension of the lower overlay, but it has to be on a different tile so it has to be a different overlay
 		var/mutable_appearance/floor_overlay = mutable_appearance(icon, "floor", CART_LOWER_LAYER)
 		floor_overlay.pixel_y += 25
 		. += floor_overlay
@@ -760,6 +790,7 @@
 		. += roof_overlay
 
 	if (cargo)
+		// the cargo is a seperate vis_overlay so that it can be animate()d
 		vis_contents -= cargo_image
 		cargo_image = null
 		var/vector/offsets = get_cargo_offsets()
@@ -777,6 +808,7 @@
 	else
 		cargo_image = null
 
+///Called when a passenger tries lying down/getting up. Automatically drops out people who can't stay on
 /obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
 	if (!isliving(source))
 		return // should runtime?
