@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 //proc used to update the mob's appearance after its dna UI has been changed
 //2025: Im unsure if dna is meant to be living, carbon, or human level.. there's contradicting stuff and bugfixes going back 8 years
 //If youre reading this, and you know for sure, update this, or maybe remove the carbon part entirely
-/mob/living/carbon/proc/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
+/mob/living/carbon/proc/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE, datum/dna/passed_dna)
 	if(!has_dna())
 		return
 
