@@ -117,7 +117,7 @@
 		unload()
 		user.visible_message(
 			span_danger("The [container] falls off of the [child]!"),
-			span_userdanger("You escape the [src]!")
+			span_userdanger("You knock the crate off the [src]!")
 			)
 
 ///Called when someone in the cargo hitch tries to escape
