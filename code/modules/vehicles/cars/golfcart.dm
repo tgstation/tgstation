@@ -860,21 +860,21 @@
 	return ..()
 
 /obj/golfcart_rear/Destroy()
+	if (parent)
+		UnregisterSignal(parent, COMSIG_ATOM_POST_DIR_CHANGE)
 	if (!QDELETED(parent))
 		qdel(parent)
 	parent = null
 	return ..()
 
 /obj/vehicle/ridden/golfcart/Destroy()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
 	if (!QDELETED(child))
 		qdel(child)
 	child = null
 	if (cargo && !QDELETED(cargo))
 		cargo.forceMove(drop_location())
 	cargo = null
-	if (!QDELETED(cell))
-		qdel(cell)
-	cell = null
 	return ..()
 
 #undef GOLFCART_RIDING_SOURCE
