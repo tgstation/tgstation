@@ -183,7 +183,7 @@
 	. = ..()
 	if(.)
 		return .
-	if(!ishuman(user))
+	if(!ishuman(user) || user.loc != loc)
 		return FALSE
 	if(do_after(user, 0.5 SECONDS, src))
 		user_put_in_own_hand(user)
@@ -443,14 +443,15 @@
 	var/arm_check = isnull(current_hand) ? (current_user.mob_biotypes & MOB_ORGANIC) : IS_ORGANIC_LIMB(current_hand)
 	if(!arm_check)
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_notice("Nothing happens. Seems [src] doesn't recognize robotic [current_hand ? "limbs" : "beings"]."))
+		to_chat(current_user, span_notice("Nothing happens. Seems [src] doesn't recognize non-organic [current_hand ? "limbs" : "beings"]."))
 		return
 
 	if(obj_flags & EMAGGED)
 		current_user.apply_damage(33, BRUTE, current_hand, sharpness = SHARP_POINTY)
 		playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_warning("You feel a sharp pain as the machine malfunctions, stabbing you with several needles!"))
+		to_chat(current_user, span_warning("You feel a sharp pain as the machine malfunctions, stabbing you with several instruments and needles!"))
 		use_energy(500 JOULES)
+		add_mob_blood(current_user)
 		return
 
 	var/brute_healing_now = round(min(initial(brute_healing) * 0.1, brute_healing, current_user.getBruteLoss()), DAMAGE_PRECISION)
@@ -470,6 +471,7 @@
 	if(brute_healing_now)
 		amount_healed += current_user.adjustBruteLoss(-brute_healing_now, required_bodytype = BODYTYPE_ORGANIC)
 		brute_healing -= brute_healing_now
+		add_mob_blood(current_user)
 	if(burn_healing_now)
 		amount_healed += current_user.adjustFireLoss(-burn_healing_now, required_bodytype = BODYTYPE_ORGANIC)
 		burn_healing -= burn_healing_now
@@ -480,21 +482,23 @@
 		current_user.blood_volume += blood_healing_now
 		amount_healed += blood_healing_now
 		blood_healing -= blood_healing_now
+		add_mob_blood(current_user)
 
 	if(amount_healed)
 		playsound(src, 'sound/machines/defib/defib_SaftyOn.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_notice("Several syringes and medical tools work on your [current_hand.plaintext_zone]. You feel a bit better."))
+		to_chat(current_user, span_notice("Several instruments and syringes work on your [current_hand?.plaintext_zone || "body"]. You feel a bit better."))
 		update_appearance()
 		use_energy(200 JOULES) // just some background power drain. we don't really care about whether this is actually successful
+		return
+
+	playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if((!brute_healing_now && current_user.getBruteLoss()) \
+		|| (!burn_healing_now && current_user.getFireLoss()) \
+		|| (!tox_healing_now && current_user.getToxLoss()) \
+		|| (!blood_healing_now && current_user.blood_volume < BLOOD_VOLUME_OKAY))
+		to_chat(current_user, span_notice("Nothing happens. Seems like [src] needs to recharge."))
 	else
-		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		if((!brute_healing_now && current_user.getBruteLoss()) \
-			|| (!burn_healing_now && current_user.getFireLoss()) \
-			|| (!tox_healing_now && current_user.getToxLoss()) \
-			|| (!blood_healing_now && current_user.blood_volume < BLOOD_VOLUME_OKAY))
-			to_chat(current_user, span_notice("Nothing happens. Seems like [src] needs to recharge."))
-		else
-			to_chat(current_user, span_notice("Nothing happens. Seems like you're in good enough shape."))
+		to_chat(current_user, span_notice("Nothing happens. Seems like you're in good enough shape."))
 
 /// Subtype of progress bar used by the wall healer to show time until next injection
 /// This subtype only exists so we can shove fastprocess processing off of the machine itself
