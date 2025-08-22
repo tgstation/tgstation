@@ -38,6 +38,8 @@
 	integrity_failure = 0.5
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
+	///Particle holder for low integrity smoking
+	var/obj/effect/abstract/particle_holder/smoke = null
 	///Seperate image for the cargo buckled to the rear
 	var/image/cargo_image = null
 	///The power source for the cart. Can be replaced with an engine.
@@ -67,6 +69,26 @@
 	var/obj/cargo = null
 	///Is the hood open?
 	var/hood_open = FALSE
+
+/obj/golfcart_rear/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	if (!parent)
+		return
+	return parent.take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+
+/obj/vehicle/ridden/golfcart/atom_break()
+	. = ..()
+	if (smoke)
+		return
+	smoke = new(src, /particles/smoke/ash)
+
+/obj/vehicle/ridden/golfcart/atom_fix()
+	. = ..()
+	if (smoke)
+		QDEL_NULL(smoke)
+
+/obj/vehicle/ridden/golfcart/atom_destruction()
+	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
+	return ..()
 
 ///Jiggles the cargo_image up and down.
 /obj/vehicle/ridden/golfcart/proc/shake_cargo(pixelshiftx = 2, pixelshifty = 2, duration)
@@ -344,15 +366,33 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/golfcart/welder_act(mob/living/user, obj/item/tool)
-	if(!tool.tool_start_check(user, amount = 1))
+	if (user.combat_mode)
+		return
+	if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED, amount = 1))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 3 SECONDS, amount = 1, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_weld_engine))))
-		return ITEM_INTERACT_BLOCKING
-	if (engine_state == ENGINE_WRENCHED)
-		set_engine_state(ENGINE_WELDED)
-	else if (engine_state == ENGINE_WELDED)
-		set_engine_state(ENGINE_WRENCHED)
-	return ITEM_INTERACT_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
+	if (hood_open)
+		if(!tool.use_tool(src, user, 3 SECONDS, amount = 1, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_weld_engine))))
+			return ITEM_INTERACT_BLOCKING
+		if (engine_state == ENGINE_WRENCHED)
+			set_engine_state(ENGINE_WELDED)
+		else if (engine_state == ENGINE_WELDED)
+			set_engine_state(ENGINE_WRENCHED)
+	else
+		if(DOING_INTERACTION(user, src))
+			balloon_alert(user, "already repairing it!")
+			return
+		if(atom_integrity >= max_integrity)
+			balloon_alert(user, "it's not damaged!")
+			return
+		// takes 10 seconds to repair from full
+		balloon_alert(user, "started repairing")
+		if (!tool.use_tool(src, user, ((max_integrity - atom_integrity) / max_integrity * 10) SECONDS, volume = 50))
+			balloon_alert(user, "repair interrupted!")
+			return
+		repair_damage(max_integrity - atom_integrity)
+		balloon_alert(user, "repaired")
+	return
 
 /obj/golfcart_rear/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -864,14 +904,6 @@
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
 	update_appearance(UPDATE_ICON) // because for some reason the overlays aren't properly redrawn
 	UnregisterSignal(M, COMSIG_ATOM_TRIED_PASS)
-	return ..()
-
-/obj/vehicle/ridden/golfcart/atom_break()
-	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
-	return ..()
-
-/obj/vehicle/ridden/golfcart/atom_destruction()
-	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
 	return ..()
 
 /obj/golfcart_rear/Destroy()
