@@ -835,8 +835,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, datum/team/fugitive/team, turf/team_spawn)
 	candidate.current.forceMove(team_spawn)
 	equip_fugitive(candidate.current, team)
-	if(length(selected_minds) > 1 && candidate == selected_minds[1])
-		equip_fugitive_leader(candidate.current)
+	equip_fugitive_leader(candidate.current)
 	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive(mob/living/carbon/human/fugitive, datum/team/fugitive/team)
@@ -861,8 +860,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive_leader(mob/living/carbon/human/fugitive)
 	var/turf/leader_turf = get_turf(fugitive)
-	var/obj/item/storage/toolbox/mechanical/toolbox = new(leader_turf)
-	fugitive.put_in_hands(toolbox)
+	fugitive.put_in_hands(new /obj/item/storage/toolbox/mechanical())
 
 	switch(fugitive_backstory)
 		if(FUGITIVE_BACKSTORY_SYNTH)
