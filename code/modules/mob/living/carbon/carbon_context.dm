@@ -15,7 +15,7 @@
 	else if (human_user == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Check injuries"
 
-		if (get_bodypart(human_user.zone_selected)?.get_modified_bleed_rate())
+		if (get_bodypart(human_user.zone_selected)?.cached_bleed_rate)
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Grab limb"
 
 	if (human_user != src)

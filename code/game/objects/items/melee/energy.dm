@@ -27,7 +27,7 @@
 	/// Hitsound played attacking while active.
 	var/active_hitsound = 'sound/items/weapons/blade1.ogg'
 	/// Weight class while active.
-	var/active_w_class = WEIGHT_CLASS_BULKY
+	var/active_w_class = WEIGHT_CLASS_HUGE
 	/// The heat given off when active.
 	var/active_heat = 3500
 
@@ -196,12 +196,15 @@
 	embed_type = /datum/embedding/esword
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
+	var/alt_sharpness = SHARP_POINTY
+	var/alt_force_mod = -10
+	var/alt_hitsound = null
 
 /obj/item/melee/energy/sword/Initialize(mapload)
 	. = ..()
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
-	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -10, TRAIT_TRANSFORM_ACTIVE)
+	AddComponent(/datum/component/alternative_sharpness, alt_sharpness, alt_continuous, alt_simple, alt_force_mod, TRAIT_TRANSFORM_ACTIVE, alt_hitsound)
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
@@ -374,3 +377,131 @@
 	inhand_icon_state = "lightblade"
 	base_icon_state = "lightblade"
 	icon_angle = 0
+
+/obj/item/melee/energy/sword/surplus
+	name = "\improper Type I 'Iaito' energy sword"
+	desc = "Oversized, overengineered, and mass-produced. The two blades help make up for the poor cutting plane the emitter generates. Hopefully. \
+		Supposedly, this version of the energy sword was a Waffle Corp prototype that was first trialed in a variety of armed conflicts around the interstellar \
+		frontier. The success rate, and survival of its users, were abysmally low. To make matters worse, they had made so many of these swords (accidentally) that \
+		it would cost the company more disposing of them than trying to offload them to raise a quick buck. Thus, the 'Iaito' was 'born'. Often found in the hands of \
+		grunts, mooks, goons, criminals, wannabe assassins or lunatics. You may or may not fit into one of these categories if you are genuinely attempting to kill someone\
+		with this sword."
+	icon_state = "surplus_e_sword"
+	inhand_icon_state = "surplus_e_sword"
+	base_icon_state = "surplus_e_sword"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	active_force = 15 // This force is augmented by the state of our target.
+	active_throwforce = 15
+	alt_continuous = list("whacks", "smacks", "bashes")
+	alt_simple = list("whack", "smack", "bash")
+	alt_sharpness = NONE
+	alt_force_mod = -12
+	alt_hitsound = SFX_SWING_HIT
+	/// Battery used to determine how many hits we can make before our sword switches off and can't be turned back on without a do_after.
+	var/charge = 20
+	/// Our battery maximum.
+	var/max_charge = 20
+	/// The amount of time it takes to recharge the sword.
+	var/charge_time = 5 SECONDS
+	/// The cooldown between instances of vigorous jiggling to get your shitty sword back on.
+	COOLDOWN_DECLARE(jiggle_cooldown)
+
+/obj/item/melee/energy/sword/surplus/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(check_power))
+
+/obj/item/melee/energy/sword/surplus/examine(mob/user)
+	. = ..()
+	if(charge)
+		. += span_notice("[src] has [charge] hits left before it must be recharged.")
+	else
+		. += span_warning("[src] needs to be recharged.")
+
+	. += span_info("You get the sense that this weapon isn't very effective unless you hit someone while they are exposed in some way, like attacking from behind or while they're staggered.")
+
+/obj/item/melee/energy/sword/surplus/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(charge < max_charge)
+		context[SCREENTIP_CONTEXT_RMB] = "Recharge"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+// A weapon best employed by someone in a desperate struggle
+/obj/item/melee/energy/sword/surplus/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!isliving(target))
+		return ..()
+
+	if(sharpness == NONE)
+		return ..()
+
+	var/mob/living/living_target = target
+	var/vulnerable_target = FALSE
+
+	if(living_target.stat == DEAD) // I know it doesn't make a lot of sense but it makes it a bit too good for dismemberment otherwise
+		return ..()
+
+	if(living_target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		vulnerable_target = TRUE
+
+	if(HAS_TRAIT(living_target, TRAIT_INCAPACITATED))
+		vulnerable_target = TRUE
+
+	if(check_behind(user, living_target))
+		vulnerable_target = TRUE
+
+	if(vulnerable_target)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 2)
+
+	return ..()
+
+/obj/item/melee/energy/sword/surplus/attack_self_secondary(mob/user, list/modifiers)
+	. = ..()
+	if (.)
+		return
+
+	if(charge == max_charge)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_CHARGING_ESWORD))
+		user.balloon_alert(user, "busy!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(charge <= max_charge)
+		user.balloon_alert(user, "attempting recharge...")
+		if(!do_after(user, charge_time, target = src, extra_checks = CALLBACK(src, PROC_REF(do_jiggle), user), interaction_key = DOAFTER_SOURCE_CHARGING_ESWORD, iconstate = "beat_the_heat"))
+			user.balloon_alert(user, "interrupted!")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	charge = max_charge
+	user.balloon_alert(user, "recharge successful")
+	playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/melee/energy/sword/surplus/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) || charge <= 0)
+		return
+
+	charge--
+	if(charge <= 0)
+		user.balloon_alert(user, "out of charge!")
+		attack_self(user)
+
+/obj/item/melee/energy/sword/surplus/proc/check_power(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	if(charge <= 0 && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		balloon_alert(user, "no charge!")
+		return COMPONENT_BLOCK_TRANSFORM
+
+/obj/item/melee/energy/sword/surplus/proc/do_jiggle(mob/user)
+	if(!COOLDOWN_FINISHED(src, jiggle_cooldown))
+		return TRUE
+
+	user.Shake(2, 1, 0.3 SECONDS, shake_interval = 0.1 SECONDS)
+	playsound(src, 'sound/items/baton/telescopic_baton_folded_pickup.ogg', 40, TRUE)
+	COOLDOWN_START(src, jiggle_cooldown, 1 SECONDS)
+	return TRUE
