@@ -315,14 +315,12 @@
 	if (icon == 'icons/obj/toys/golfcart_hotrod_split.dmi')
 		return
 	icon = 'icons/obj/toys/golfcart_hotrod_split.dmi'
-	child.icon = 'icons/obj/toys/golfcart_hotrod_split.dmi'
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/set_to_default_sprite()
 	if (icon == 'icons/obj/toys/golfcart_split.dmi')
 		return
 	icon = 'icons/obj/toys/golfcart_split.dmi'
-	child.icon = 'icons/obj/toys/golfcart_split.dmi'
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/set_engine_state(state)
