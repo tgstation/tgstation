@@ -860,7 +860,8 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive_leader(mob/living/carbon/human/fugitive)
 	var/turf/leader_turf = get_turf(fugitive)
-	fugitive.put_in_hands(new /obj/item/storage/toolbox/mechanical())
+	var/obj/item/storage/toolbox/mechanical/toolbox = new(leader_turf)
+	fugitive.put_in_hands(toolbox)
 
 	switch(fugitive_backstory)
 		if(FUGITIVE_BACKSTORY_SYNTH)
