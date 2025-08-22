@@ -47,6 +47,8 @@
 	COOLDOWN_DECLARE(recharge_cooldown)
 	/// Cooldown between chem injections
 	COOLDOWN_DECLARE(injection_cooldown)
+	/// Only sends messages every X injections to the same user to avoid spam
+	VAR_PRIVATE/antispam_counter = 0
 
 /datum/armor/obj_machinery/wall_healer
 	melee = 50
@@ -115,44 +117,40 @@
 	. = ..()
 	var/total_bandages = num_bandages + LAZYLEN(stocked_bandages)
 	. += span_notice("It has [total_bandages] bandage\s stocked.\
-		[total_bandages ? " Purchase a bandage with [EXAMINE_HINT("right-click")]." : ""]")
-
-/obj/machinery/wall_healer/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state][is_operational ? "" : "_off"]"
+		[total_bandages ? " [is_free(user) ? "Purchase" : "Retrieve"] a bandage with [EXAMINE_HINT("right-click")]." : ""]")
+	if(current_user)
+		. += span_notice("[current_user] currently [current_hand ? "has [current_user.p_their()] [current_hand.plaintext_zone] in" : "is using"] it.")
 
 /obj/machinery/wall_healer/update_overlays()
 	. = ..()
-	if(!is_operational)
-		return
 
-	var/brute_state = 8 - round(8 * (brute_healing / initial(brute_healing)), 1)
-	var/burn_state = 8 - round(8 * (burn_healing / initial(burn_healing)), 1)
-	var/tox_state = 8 - round(8 * (tox_healing / initial(tox_healing)), 1)
-	var/blood_state = 8 - round(8 * (blood_healing / initial(blood_healing)), 1)
-
+	var/brute_state = 7 - round(7 * (brute_healing / initial(brute_healing)), 1)
 	var/mutable_appearance/brute = mutable_appearance(icon, "bar[brute_state]", alpha = src.alpha, appearance_flags = RESET_COLOR)
 	brute.color = /datum/reagent/medicine/c2/libital::color
 	// no offset necessary
+	. += brute
 
+	var/burn_state = 7 - round(7 * (burn_healing / initial(burn_healing)), 1)
 	var/mutable_appearance/burn = mutable_appearance(icon, "bar[burn_state]", alpha = src.alpha, appearance_flags = RESET_COLOR)
 	burn.color = /datum/reagent/medicine/c2/aiuri::color
-	burn.pixel_z -= 2
+	burn.pixel_w += 4
+	. += burn
 
+	var/tox_state = 7 - round(7 * (tox_healing / initial(tox_healing)), 1)
 	var/mutable_appearance/tox = mutable_appearance(icon, "bar[tox_state]", alpha = src.alpha, appearance_flags = RESET_COLOR)
 	tox.color = /datum/reagent/medicine/c2/syriniver::color
-	tox.pixel_z -= 4
+	tox.pixel_w += 8
+	. += tox
 
+	var/blood_state = 7 - round(7 * (blood_healing / initial(blood_healing)), 1)
 	var/mutable_appearance/blood = mutable_appearance(icon, "bar[blood_state]", alpha = src.alpha, appearance_flags = RESET_COLOR)
 	blood.color = /datum/reagent/blood::color
-	blood.pixel_z -= 6
-
-	. += brute
-	. += burn
-	. += tox
+	blood.pixel_w += 12
 	. += blood
-	. += emissive_appearance(icon, "screen_emissive", src, alpha = src.alpha)
-	. += emissive_appearance(icon, "bar_emissive", src, alpha = src.alpha)
+
+	if(is_operational)
+		. += emissive_appearance(icon, "bar_emissive", src, alpha = src.alpha)
+	. += mutable_appearance(icon, "bar_shadow", alpha = src.alpha, appearance_flags = RESET_COLOR)
 
 /obj/machinery/wall_healer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -164,16 +162,27 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
+/// We want user to be right up to the wall mount to use it
+/// However people may often map the machine over a table
+/// In those contexts, they should be allowed to reach over the table
+/obj/machinery/wall_healer/proc/loc_check(mob/checking)
+	var/turf/turf_loc = get_turf(src)
+	if(turf_loc.is_blocked_turf())
+		return checking.Adjacent(turf_loc)
+	return checking.loc == turf_loc
+
 /obj/machinery/wall_healer/mouse_drop_receive(atom/dropped, mob/user, params)
 	. = ..()
 	if(.)
 		return .
 	if(!isliving(user) || !ishuman(dropped))
-		return .
+		balloon_alert(user, "incompatible!")
+		return FALSE
 	var/mob/living/who_put_user_in = user
 	var/mob/living/new_user = dropped
-	if(new_user.loc != loc)
-		return .
+	if(!loc_check(new_user))
+		balloon_alert(who_put_user_in, "[new_user == who_put_user_in ? "get" : "bring [new_user.p_them()]"] closer!")
+		return FALSE
 
 	if(do_after(user, 1 SECONDS, src))
 		other_put_users_hand_in(new_user, who_put_user_in)
@@ -183,7 +192,11 @@
 	. = ..()
 	if(.)
 		return .
-	if(!ishuman(user) || user.loc != loc)
+	if(!ishuman(user))
+		balloon_alert(user, "incompatible!")
+		return FALSE
+	if(!loc_check(user))
+		balloon_alert(user, "get closer!")
 		return FALSE
 	if(do_after(user, 0.5 SECONDS, src))
 		user_put_in_own_hand(user)
@@ -332,6 +345,7 @@
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		vision_distance = 5,
 	)
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/wall_healer/on_deconstruction(disassembled)
@@ -365,6 +379,8 @@
 /obj/machinery/wall_healer/proc/set_using_mob(mob/living/user)
 	if(last_user_ref != REF(user))
 		COOLDOWN_RESET(src, injection_cooldown)
+
+	antispam_counter = 0
 	last_user_ref = null
 
 	current_user = user
@@ -414,19 +430,25 @@
 	. = ..()
 	LAZYREMOVE(stocked_bandages, gone)
 
-/obj/machinery/wall_healer/attempt_charge(atom/sender, atom/target, extra_fees)
+/// Checks if the machine is free for the given mob
+/obj/machinery/wall_healer/proc/is_free(mob/living/for_who)
 	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-		return NONE // no charge on red alert
-	if(!isliving(target))
-		return ..()
-	var/mob/living/paying = target
-	var/obj/item/card/id/card = paying.get_idcard(TRUE)
+		return TRUE // always free on red alert
+	if(!istype(for_who))
+		return FALSE
+	var/obj/item/card/id/card = for_who.get_idcard(TRUE)
 	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
-		return NONE // no charge for doctors
+		return TRUE // free for doctors
+	return FALSE
+
+/obj/machinery/wall_healer/attempt_charge(atom/sender, atom/target, extra_fees)
+	if(is_free(target))
+		return NONE
 	return ..()
 
 /obj/machinery/wall_healer/process()
 	if(!is_operational)
+		// puts off recharging until operational again
 		COOLDOWN_START(src, recharge_cooldown, recharge_cd_length * 0.5)
 		return
 	if(isnull(current_user))
@@ -439,17 +461,26 @@
 		return
 
 	COOLDOWN_START(src, injection_cooldown, injection_cd_length)
+	antispam_counter++
 
 	var/arm_check = isnull(current_hand) ? (current_user.mob_biotypes & MOB_ORGANIC) : IS_ORGANIC_LIMB(current_hand)
 	if(!arm_check)
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_notice("Nothing happens. Seems [src] doesn't recognize non-organic [current_hand ? "limbs" : "beings"]."))
+		if(antispam_counter % 3 == 1)
+			to_chat(current_user, span_notice("Nothing happens. Seems [src] doesn't recognize non-organic [current_hand ? "limbs" : "beings"]."))
+		return
+
+	if(!current_user.can_inject(null, current_hand))
+		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+		if(antispam_counter % 3 == 1)
+			to_chat(current_user, span_notice("Nothing happens. Seems [src] can't find any exposed flesh to work on."))
 		return
 
 	if(obj_flags & EMAGGED)
 		current_user.apply_damage(33, BRUTE, current_hand, sharpness = SHARP_POINTY)
 		playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_warning("You feel a sharp pain as the machine malfunctions, stabbing you with several instruments and needles!"))
+		if(antispam_counter % 2 == 1)
+			to_chat(current_user, span_warning("You feel a sharp pain as the machine malfunctions, stabbing you with several instruments and needles!"))
 		use_energy(500 JOULES)
 		add_mob_blood(current_user)
 		return
@@ -463,7 +494,7 @@
 	if(attempt_charge(src, current_user, extra_fees = cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		// attempt charge sends a chat message on fail, except if the user has no ID card
-		if(!current_user.get_idcard())
+		if((antispam_counter % 3 == 1) && !current_user.get_idcard())
 			to_chat(current_user, span_warning("No ID card found. Aborting."))
 		return
 
@@ -486,19 +517,23 @@
 
 	if(amount_healed)
 		playsound(src, 'sound/machines/defib/defib_SaftyOn.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(current_user, span_notice("Several instruments and syringes work on your [current_hand?.plaintext_zone || "body"]. You feel a bit better."))
+		if(antispam_counter % 2 == 1)
+			to_chat(current_user, span_notice("Several instruments and syringes work on your [current_hand?.plaintext_zone || "body"]. You feel a bit better."))
 		update_appearance()
 		use_energy(200 JOULES) // just some background power drain. we don't really care about whether this is actually successful
 		return
 
 	playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if((!brute_healing_now && current_user.getBruteLoss()) \
-		|| (!burn_healing_now && current_user.getFireLoss()) \
-		|| (!tox_healing_now && current_user.getToxLoss()) \
-		|| (!blood_healing_now && current_user.blood_volume < BLOOD_VOLUME_OKAY))
+	if(antispam_counter % 3 != 1)
+		return
+	var/missed_brute_healing = brute_healing_now > 0 && !current_user.getBruteLoss()
+	var/missed_burn_healing = burn_healing_now > 0 && !current_user.getFireLoss()
+	var/missed_tox_healing = tox_healing_now > 0 && !current_user.getToxLoss()
+	var/missed_blood_healing = blood_healing_now > 0 && current_user.blood_volume >= BLOOD_VOLUME_OKAY
+	if(missed_brute_healing || missed_burn_healing || missed_tox_healing || missed_blood_healing)
 		to_chat(current_user, span_notice("Nothing happens. Seems like [src] needs to recharge."))
-	else
-		to_chat(current_user, span_notice("Nothing happens. Seems like you're in good enough shape."))
+		return
+	to_chat(current_user, span_notice("Nothing happens. Seems like you're in good enough shape."))
 
 /// Subtype of progress bar used by the wall healer to show time until next injection
 /// This subtype only exists so we can shove fastprocess processing off of the machine itself
