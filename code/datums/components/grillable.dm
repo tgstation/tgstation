@@ -159,9 +159,10 @@
 	if(IsEdible(grilled_result) && positive_result)
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
 		grilled_result.reagents.clear_reagents()
-		original_object.reagents?.trans_to(grilled_result, original_object.reagents.total_volume)
-		if(added_reagents) // Add any new reagents that should be added
-			grilled_result.reagents.add_reagent_list(added_reagents)
+	//Let any bad result handle removing or converting the transferred reagents on its own terms
+	original_object.reagents?.trans_to(grilled_result, original_object.reagents.total_volume)
+	if(added_reagents) // Add any new reagents that should be added
+		grilled_result.reagents.add_reagent_list(added_reagents)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	SEND_SIGNAL(grilled_result, COMSIG_ITEM_GRILLED_RESULT, parent)
