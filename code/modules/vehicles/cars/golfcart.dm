@@ -730,6 +730,10 @@
 	rear_overlay.pixel_y = rear_offsets.y
 	if (dir & NORTH)
 	else if (dir & SOUTH)
+		var/mutable_appearance/floor_overlay = mutable_appearance(icon, "floor", CART_LOWER_LAYER)
+		floor_overlay.pixel_y += 25
+		. += floor_overlay
+
 		lower_overlay.pixel_y = 32
 
 		roof_overlay = mutable_appearance(icon, "roof", CART_ROOF_LAYER)
