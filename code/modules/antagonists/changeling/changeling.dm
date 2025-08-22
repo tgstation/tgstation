@@ -394,6 +394,13 @@
 		to_chat(owner.current, span_warning("We cannot evolve this ability!"))
 		return FALSE
 
+	//Pre-requisite power check
+	var/datum/action/changeling/power = new sting_path()
+	if(!can_give(power))
+		to_chat(owner.current, span_warning("We lack the pre-requisite abilities to evolve this ability"))
+		return FALSE
+	qdel(power)
+
 	//To avoid potential exploits by buying new powers while in stasis, which clears your verblist. // Probably not a problem anymore, but whatever.
 	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
 		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
@@ -404,16 +411,20 @@
 	else if((sting_path == /datum/action/changeling/sting/false_armblade) && (purchased_powers[/datum/action/changeling/sting/transformation]))
 		to_chat(owner.current, span_notice("False changeling sting is now available."))
 
-	//Pre-requisite power for false ling helper ability
-	if(sting_path == /datum/action/changeling/sting/fake_changeling)
-		if(!(purchased_powers[/datum/action/changeling/sting/transformation]) || !(purchased_powers[/datum/action/changeling/sting/false_armblade]))
-			to_chat(owner.current, span_warning("We lack the pre-requisite abilities to evolve fake changeling sting."))
-			return FALSE
+
+
 
 	var/success = give_power(sting_path)
 	if(success)
 		genetic_points -= initial(sting_path.dna_cost)
 	return success
+
+/datum/antagonist/changeling/proc/can_give(datum/action/changeling/power)
+	for(ref_power in power.prereq_ability)
+		if(!purchased_powers[ref_power])
+			return FALSE
+	return TRUE
+
 
 /**
  * Gives a passed changeling power datum to the player

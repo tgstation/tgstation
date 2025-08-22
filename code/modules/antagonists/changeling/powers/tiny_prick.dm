@@ -355,10 +355,11 @@
 	dna_cost = 1
 
 /datum/action/changeling/sting/false_revival/sting_action(mob/living/user, mob/living/target)
-	. = ..()
 	if(target.stat != DEAD)
 		user.balloon_alert(user, "target is not dead!")
 		return
+	..()
+
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 	user.balloon_alert(user, "target injected!")
 	addtimer(CALLBACK(src, PROC_REF(revive), target), 10 SECONDS)
