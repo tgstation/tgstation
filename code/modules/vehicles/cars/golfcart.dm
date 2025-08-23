@@ -23,10 +23,6 @@
 	var/obj/vehicle/ridden/golfcart/parent = null
 
 /obj/vehicle/ridden/golfcart
-	///Base movespeed before any modifiers
-	var/static/base_movedelay = 1.5
-	///Base movespeed for the hotrod before any modifiers
-	var/static/hotrod_base_movedelay = 0.75
 	name = "golf cart"
 	desc = "An all-purpose cargo hauling vehicle."
 	icon = 'icons/obj/toys/golfcart_split.dmi'
@@ -39,6 +35,10 @@
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
 	key_type = /obj/item/key/golfcart
+	///Base movespeed before any modifiers
+	var/static/base_movedelay = 1.5
+	///Base movespeed for the hotrod before any modifiers
+	var/static/hotrod_base_movedelay = 0.75
 	///Particle holder for low integrity smoking
 	var/obj/effect/abstract/particle_holder/smoke = null
 	///Seperate image for the cargo buckled to the rear
@@ -320,38 +320,27 @@
 	for(var/mob/living/future_pancake in loc)
 		run_over(future_pancake)
 
-///Tries to install the cell into the cart. Returns a boolean for success.
-/obj/vehicle/ridden/golfcart/proc/install_cell(obj/item/stock_parts/power_store/cell/cell_to_install, mob/user)
-	if (cell || engine)
-		balloon_alert(user, "already has an engine!")
-		return FALSE
-	user.transferItemToLoc(cell_to_install, src)
-	cell = cell_to_install
-	balloon_alert(user, "installed \the [cell]")
-	return TRUE
-
-///Tries to install the cell into the cart. Returns a boolean for success.
-/obj/vehicle/ridden/golfcart/proc/install_engine(obj/item/v8_engine/engine_to_install, mob/user)
-	if (engine || cell)
-		balloon_alert(user, "already has an engine!")
-		return FALSE
-	user.transferItemToLoc(engine_to_install, src)
-	engine = engine_to_install
-	engine_state = ENGINE_UNWRENCHED
-	balloon_alert(user, "installed \the [engine]")
-	return TRUE
-
-/obj/vehicle/ridden/golfcart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = FALSE
+/obj/vehicle/ridden/golfcart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (!hood_open)
 		return ..()
 	if (istype(attacking_item, /obj/item/v8_engine))
-		. = install_engine(attacking_item, user)
+		if (engine || cell)
+			balloon_alert(user, "already has an engine!")
+			return ITEM_INTERACT_BLOCKING
+		user.transferItemToLoc(engine_to_install, src)
+		engine = engine_to_install
+		engine_state = ENGINE_UNWRENCHED
+		balloon_alert(user, "installed \the [engine]")
+		return ITEM_INTERACT_SUCCESS
 	if (istype(attacking_item, /obj/item/stock_parts/power_store/cell))
-		. = install_cell(attacking_item, user)
-	if (!.)
-		. = ..()
-	return
+		if (cell || engine)
+			balloon_alert(user, "already has an engine!")
+			return ITEM_INTERACT_BLOCKING
+		user.transferItemToLoc(cell_to_install, src)
+		cell = cell_to_install
+		balloon_alert(user, "installed \the [cell]")
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/vehicle/ridden/golfcart/attack_hand(mob/living/user, list/modifiers)
 	if (!hood_open)
@@ -489,40 +478,6 @@
 	var/obj/dropped_obj = dropped
 	return parent.load(dropped_obj)
 
-/datum/component/riding/vehicle/golfcart
-	ride_check_flags = RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
-	vehicle_move_delay = 1.5
-	keytype = /obj/item/key/golfcart
-
-/datum/component/riding/vehicle/golfcart/restore_parent_layer_and_offsets()
-	// just don't restore anything.
-	return
-
-/datum/component/riding/vehicle/golfcart/driver_move(atom/movable/movable_parent, mob/living/user, direction)
-	if (!istype(parent, /obj/vehicle/ridden/golfcart))
-		return ..()
-	var/obj/vehicle/ridden/golfcart/cart = parent
-	if (!cart.cell && !cart.is_hotrod())
-		return COMPONENT_DRIVER_BLOCK_MOVE
-	if (cart.cell)
-		if (cart.cell.charge <= 0)
-			return COMPONENT_DRIVER_BLOCK_MOVE
-	if (get_turf(cart.child) == get_step(cart, direction))
-		cart.set_movedelay_effect(2)
-	else
-		cart.set_movedelay_effect(1)
-	vehicle_move_delay = cart.movedelay
-	return ..()
-
-/datum/component/riding/vehicle/golfcart/handle_ride(mob/user, direction)
-	if (!istype(parent, /obj/vehicle/ridden/golfcart))
-		return ..()
-	var/obj/vehicle/ridden/golfcart/cart = parent
-	if (cart.cell)
-		var/charge_to_use = min(cart.charge_per_move, cart.cell.charge)
-		cart.cell.use(charge_to_use)
-	return ..()
-
 /obj/golfcart_rear/examine(mob/user)
 	if (!parent)
 		. = ..()
@@ -639,39 +594,16 @@
 	child.forceMove(behind)
 	return .
 
-/datum/component/riding/vehicle/golfcart/update_parent_layer_and_offsets(dir, animate)
-	. = ..()
-	if (istype(parent, /obj))
-		var/obj/objectified = parent
-		objectified.update_appearance(UPDATE_ICON)
-
-/datum/component/riding/vehicle/golfcart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
-	return list(
-		TEXT_NORTH = list(0, -16),
-		TEXT_SOUTH = list(0, 10),
-		TEXT_EAST =  list(-8, 2),
-		TEXT_WEST =  list(8, 2),
-	)
-
-/datum/component/riding/vehicle/golfcart/get_parent_offsets_and_layers()
-	return list(
-		TEXT_NORTH = list(0, 0, CART_VERTICAL_LAYER),
-		TEXT_SOUTH = list(0, 0, CART_VERTICAL_LAYER),
-		TEXT_EAST =  list(0, 0, VEHICLE_LAYER),
-		TEXT_WEST =  list(0, 0, VEHICLE_LAYER),
-	)
-
-/proc/normalize_dir(dir)
-	if(dir & (EAST|WEST))
-		return (dir & EAST) ? EAST : WEST
-	else if(dir & (NORTH|SOUTH))
-		return (dir & NORTH) ? NORTH : SOUTH
-	return dir
-
 /obj/golfcart_rear/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
 	if(pulledby)
 		var/olddir = dir
-		var/newdir = normalize_dir(direct)
+		var/newdir
+		if (dir & (EAST | WEST))
+			newdir = (dir & EAST) ? EAST : WEST
+		else if (dir & (NORTH | SOUTH))
+			newdir = (dir & NORTH) ? NORTH : SOUTH
+		else
+			newdir = dir
 		. = ..()
 		dir = newdir
 		if (get_step(src, turn(dir, 180)) != get_turf(pulledby))
