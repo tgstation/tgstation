@@ -1,4 +1,0 @@
-author: "carpotoxin"
-delete-after: True
-changes:
-  - bugfix: "Mutant bodypart overlays (tails and et cetera) that are gender-specific now display correctly"
