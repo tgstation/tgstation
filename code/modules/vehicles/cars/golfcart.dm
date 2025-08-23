@@ -752,24 +752,19 @@
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
 	child = new /obj/golfcart_rear(null, src)
 	if (isnull(direction))
-		visible_message("chicken butt")
 		if (get_step(src, NORTH).Enter(child))
-			visible_message("north")
 			direction = NORTH
 		else if (get_step(src, SOUTH).Enter(child))
-			visible_message("south")
 			direction = SOUTH
 		else if (get_step(src, EAST).Enter(child))
-			visible_message("east")
 			direction = EAST
 		else if (get_step(src, WEST).Enter(child))
-			visible_message("west")
 			direction = WEST
 		else
 			direction = SOUTH
 		direction = turn(direction, 180)
 	setDir(direction)
-	child.loc = get_step(src, dir)
+	child.loc = get_step(src, turn(dir, 180))
 	update_appearance()
 
 /obj/vehicle/ridden/golfcart/loaded/Initialize(mapload)
