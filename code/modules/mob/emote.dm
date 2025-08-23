@@ -147,7 +147,6 @@
 /datum/emote/jump
 	key = "jump"
 	key_third_person = "jumps"
-	message = "jumps!"
 	// Allows ghosts to jump
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
 	affected_by_pitch = FALSE
