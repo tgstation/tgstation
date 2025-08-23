@@ -14,7 +14,8 @@ import {
   Tooltip,
   VirtualList,
 } from 'tgui-core/components';
-import { BooleanLike, classes } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
+import { classes } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -267,10 +268,10 @@ const LogsList = (props: LogsListProps) => {
 
 const UserItem = (props: UserData) => {
   const {
-    name,
-    age,
-    assignment,
-    account_id,
+    name = 'NAME_RES_FAIL',
+    age = 0,
+    assignment = 'ASSGN-RES_FAIL',
+    account_id = 0,
     account_holder,
     account_assignment,
     accesses,
