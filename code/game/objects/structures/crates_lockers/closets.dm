@@ -443,7 +443,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(isliving(user))
 		if(!(user.mobility_flags & MOBILITY_USE))
 			return FALSE
-	if(user != strong_grab_source.resolve())
+	if(pulledby && user && user != pulledby)
 		to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
 		return FALSE
 	var/turf/T = get_turf(src)
