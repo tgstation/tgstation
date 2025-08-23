@@ -527,8 +527,8 @@
 
 /datum/component/riding/vehicle/golfcart/get_parent_offsets_and_layers()
 	return list(
-		TEXT_NORTH = list(0, 0, CART_VERTICAL_LAYER),
-		TEXT_SOUTH = list(0, 0, CART_VERTICAL_LAYER),
+		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
 		TEXT_EAST =  list(0, 0, VEHICLE_LAYER),
 		TEXT_WEST =  list(0, 0, VEHICLE_LAYER),
 	)
