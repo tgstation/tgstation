@@ -501,3 +501,27 @@ effective or pretty fucking useless.
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
 	speed = 1.6
+
+/obj/item/brain_scrambler
+	name = "brain scrambler"
+	desc = "A handheld tubular device with a small camera like hole on one end and a button on the back. Supposedly it was invented by Nanotrasen for erasing public memory but the Syndicate claims otherwise, no one seem to remember who truly invented it though."
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
+	icon_state = "brain_scrambler"
+	var/active = FALSE
+
+/obj/item/brain_scrambler/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!active)
+		balloon_alert(user, "scrambling mode on!")
+		active = TRUE
+		RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(scramble_mind))
+	else
+		balloon_alert(user, "scrambling mode off!")
+		active = FALSE
+		UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
+
+/obj/item/brain_scrambler/proc/scramble_mind(mob/user, mob/target)
+	SIGNAL_HANDLER
+
+	to_chat(target, span_warning("You forget everything within the last 2 minutes along with [user]"))
+	to_chat(user, span_notice("You successfully erase memory of yourself from [target]"))
