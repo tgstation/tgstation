@@ -886,8 +886,7 @@
 	var/vector/rear_offsets = get_rear_offset()
 	rear_overlay.pixel_x = rear_offsets.x
 	rear_overlay.pixel_y = rear_offsets.y
-	if (dir & NORTH)
-	else if (dir & SOUTH)
+	if (dir & SOUTH)
 		// however, specifically when facing south, we require another overlay.
 		// it is effectively an extension of the lower overlay, but it has to be on a different tile so it has to be a different overlay
 		var/mutable_appearance/floor_overlay = mutable_appearance(icon, "floor", CART_LOWER_LAYER)
