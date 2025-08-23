@@ -103,7 +103,7 @@
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
 	if(missing_health > 0)
-		target.adjustBruteLoss(missing_health) //and do that much damage
+		return missing_health //and do that much damage
 
 // Lobstrosity - Rebukes targets, increasing their click cooldown.
 /obj/item/crusher_trophy/lobster_claw
@@ -116,7 +116,7 @@
 	wildhunter_drop = /obj/item/organ/monster_core/rush_gland
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
-	return "mark detonation to briefly rebuke the target for [bonus_value] seconds"
+	return "mark detonation to briefly rebuke the target for [bonus_value] second[bonus_value > 1 ? "s" : ""]"
 
 /obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user)
 	. = ..()
@@ -138,7 +138,7 @@
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	. = ..()
-	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
+	target.loc.balloon_alert_to_viewers("[pick(comic_phrases)]!")
 	playsound(target, 'sound/mobs/non-humanoids/brimdemon/brimdemon_crush.ogg', 100)
 
 // Bileworm
@@ -186,12 +186,28 @@
 	check_flags = NONE
 	owner_has_control = FALSE
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/bileworm_acid
+	projectile_type = /obj/projectile/bileworm_acid/crusher
 	projectile_sound = 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
 	firing_directions = GLOB.cardinals.Copy()
 	return ..()
+
+/obj/projectile/bileworm_acid/crusher
+	damage_type = BRUTE // Otherwise the mobs take heavily reduced damage
+
+/obj/projectile/bileworm_acid/crusher/prehit_pierce(atom/target)
+	if (!isliving(target))
+		return ..()
+	var/mob/living/as_living = target
+	// Only hit hostile things, or mining mobs if we have no firer (somehow)
+	if (firer)
+		if (firer.faction_check_atom(as_living))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
+		return ..()
+	if (as_living.mob_biotypes & MOB_MINING)
+		return ..()
+	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 // demonic watcher
 /obj/item/crusher_trophy/ice_demon_cube
@@ -245,7 +261,7 @@
 	. = ..()
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
 
-// Polar bear
+// Polar bear - If you're hurt, you attack twice when you detonate a mark
 /obj/item/crusher_trophy/bear_paw
 	name = "polar bear paw"
 	desc = "It's a polar bear paw."
@@ -260,7 +276,21 @@
 	. = ..()
 	if(user.health / user.maxHealth > 0.5)
 		return
-	var/obj/item/I = user.get_active_held_item()
-	if(!I)
-		return
-	I.melee_attack_chain(user, target, null)
+	var/obj/item/weapon = user.get_active_held_item()
+	if(weapon)
+		addtimer(CALLBACK(weapon, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target), 0.1 SECONDS)
+
+// Raptor - Your shots now go through your allied mobs. You monster.
+/obj/item/crusher_trophy/raptor_feather
+	name = "raptor feather"
+	desc = "A feather of an innocent raptor. You'd go to hell for this one, if you weren't already mining in it."
+	icon_state = "raptor_feather"
+	denied_type = /obj/item/crusher_trophy/raptor_feather
+	trophy_id = TROPHY_RAPTOR_FEATHER
+	wildhunter_drop = /obj/item/food/meat/slab/chicken
+
+/obj/item/crusher_trophy/raptor_feather/effect_desc()
+	return "your shots to go through your allies"
+
+/obj/item/crusher_trophy/raptor_feather/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+	marker.ignore_allies = TRUE

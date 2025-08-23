@@ -29,14 +29,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Restore BYOND from Cache
         uses: ./.github/actions/restore_or_install_byond
         with:
           major: ${{ inputs.major }}
           minor: ${{ inputs.minor }}
       - name: Download build outputs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR}}
           path: ./

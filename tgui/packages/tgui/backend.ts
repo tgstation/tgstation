@@ -209,7 +209,10 @@ export const backendMiddleware = (store) => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
+      // Tiny window to not show previous content when resumed
       Byond.winset(Byond.windowId, {
+        size: '1x1',
+        pos: '1,1',
         'is-visible': false,
       });
       setTimeout(() => focusMap());

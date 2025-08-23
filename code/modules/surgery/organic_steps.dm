@@ -8,7 +8,7 @@
 		/obj/item/knife = 65,
 		/obj/item/shard = 45,
 		/obj/item = 30) // 30% success with any sharp item.
-	time = 16
+	time = 1.6 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	surgery_effects_mood = TRUE
@@ -64,7 +64,7 @@
 		TOOL_WIRECUTTER = 60,
 		/obj/item/stack/package_wrap = 35,
 		/obj/item/stack/cable_coil = 15)
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -95,7 +95,7 @@
 		TOOL_SCREWDRIVER = 45,
 		TOOL_WIRECUTTER = 35,
 		/obj/item/stack/rods = 35)
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 
@@ -117,7 +117,7 @@
 		/obj/item/gun/energy/laser = 90,
 		TOOL_WELDER = 70,
 		/obj/item = 30) // 30% success with any hot item.
-	time = 24
+	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
 
@@ -160,7 +160,7 @@
 		/obj/item/hatchet = 35,
 		/obj/item/knife/butcher = 35,
 		/obj/item = 25) //20% success (sort of) with any sharp item with a force >= 10
-	time = 54
+	time = 5.4 SECONDS
 	preop_sound = list(
 		/obj/item/circular_saw = 'sound/items/handling/surgery/saw.ogg',
 		/obj/item/melee/arm_blade = 'sound/items/handling/surgery/scalpel1.ogg',
@@ -208,7 +208,7 @@
 		/obj/item/pickaxe/drill = 60,
 		TOOL_SCREWDRIVER = 25,
 		/obj/item/kitchen/spoon = 20)
-	time = 30
+	time = 3 SECONDS
 
 /datum/surgery_step/drill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - code_imp: "added a new parameter to playsound and playsound_local that lets you specify a volume pref type to use"

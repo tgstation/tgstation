@@ -137,6 +137,7 @@
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtypes = GRAIN|DAIRY|MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/pie/tofupie
 	name = "tofu-pie"
@@ -221,6 +222,7 @@
 	tastes = list("pie" = 1, "acid" = 1, "meat" = 1)
 	foodtypes = GRAIN|DAIRY|MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/pie/applepie
 	name = "apple pie"
@@ -481,6 +483,7 @@
 	tastes = list("juicy meat" = 1, "mashed potatoes" = 1, "baked veggies" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/food/pie/asdfpie
 	name = "pie-flavored pie"

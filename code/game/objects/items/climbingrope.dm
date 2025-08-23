@@ -15,8 +15,6 @@
 	attack_verb_simple = list("whack", "flail", "bludgeon")
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
-	///how many times can we climb with this rope
-	var/uses = 5
 	///climb time
 	var/climb_time = 2.5 SECONDS
 
@@ -25,7 +23,6 @@
 	var/list/look_binds = user.client.prefs.key_bindings["look up"]
 	. += span_notice("Firstly, look upwards by holding <b>[english_list(look_binds, nothing_text = "(nothing bound)", and_text = " or ", comma_text = ", or ")]!</b>")
 	. += span_notice("Then, click solid ground (or lattice/catwalk) adjacent to the hole above you.")
-	. += span_notice("The rope looks like you could use it [uses] times before it falls apart.")
 
 /obj/item/climbing_hook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
@@ -40,16 +37,16 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/user_turf = get_turf(user)
-	var/turf/above = GET_TURF_ABOVE(user_turf)
-	if(target_blocked(interacting_with, above))
+	var/turf/trans_vertical = interacting_with.z > user.z ? GET_TURF_ABOVE(user_turf) : GET_TURF_ABOVE(interacting_with)
+	if(target_blocked(interacting_with, trans_vertical))
 		balloon_alert(user, "cant get there!")
 		return ITEM_INTERACT_BLOCKING
-	if(!above.Adjacent(interacting_with)) //is the target adjacent to our hole
+	if(get_dist(interacting_with, trans_vertical) > reach - 1) //is our rope long enough?
 		balloon_alert(user, "too far!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/away_dir = get_dir(above, interacting_with)
-	user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
+	var/away_dir = get_dir(trans_vertical, interacting_with)
+	user.visible_message(span_notice("[user] begins climbing [interacting_with.z > user.z ? "up" : "down"] with [src]."), span_notice("You get to work on properly hooking [src] and going [interacting_with.z > user.z ? "up" : "down"]."))
 	playsound(interacting_with, 'sound/effects/pickaxe/picaxe1.ogg', 50) //plays twice so people above and below can hear
 	playsound(user_turf, 'sound/effects/pickaxe/picaxe1.ogg', 50)
 	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(interacting_with, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
@@ -68,20 +65,15 @@
 
 	if(do_after(user, final_climb_time, interacting_with))
 		user.forceMove(interacting_with)
-		uses--
-		user.mind?.adjust_experience(/datum/skill/athletics, 50) //get some experience for our trouble, especially since this costs us a climbing rope use
-
-	if(uses <= 0)
-		user.visible_message(span_warning("[src] snaps and tears apart!"))
-		qdel(src)
+		user.mind?.adjust_experience(/datum/skill/athletics, round((ATHLETICS_SKILL_MISC_EXP)/(fitness_level || 1), 1)) //get some experience for our trouble, especially since this costs us a climbing rope use
 
 	QDEL_LIST(effects)
 	return ITEM_INTERACT_SUCCESS
 
 // didnt want to mess up is_blocked_turf_ignore_climbable
 /// checks if our target is blocked, also checks for border objects facing the above turf and climbable stuff
-/obj/item/climbing_hook/proc/target_blocked(turf/target, turf/above)
-	if(target.density || (isopenspaceturf(target) && target.zPassOut(DOWN)) || !above.zPassOut(DOWN) || above.density) // we check if we would fall down from it additionally
+/obj/item/climbing_hook/proc/target_blocked(turf/target, turf/trans_vertical)
+	if(target.density || (isopenspaceturf(target) && target.zPassOut(DOWN)) || !trans_vertical.zPassOut(DOWN) || trans_vertical.density) // we check if we would fall down from it additionally
 		return TRUE
 
 	for(var/atom/movable/atom_content as anything in target.contents)
@@ -89,7 +81,7 @@
 			continue
 		if(HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
 			continue
-		if((atom_content.flags_1 & ON_BORDER_1) && atom_content.dir != get_dir(target, above)) //if the border object is facing the hole then it is blocking us, likely
+		if((atom_content.flags_1 & ON_BORDER_1) && atom_content.dir != get_dir(target, trans_vertical)) //if the border object is facing the hole then it is blocking us, likely
 			continue
 		if(atom_content.density)
 			return TRUE
@@ -97,22 +89,19 @@
 
 /obj/item/climbing_hook/emergency
 	name = "emergency climbing hook"
-	desc = "An emergency climbing hook to scale up holes. The rope is EXTREMELY cheap and may not withstand extended use."
-	uses = 2
+	desc = "An emergency climbing hook to scale up holes."
 	climb_time = 4 SECONDS
 
 /obj/item/climbing_hook/syndicate
 	name = "suspicious climbing hook"
-	desc = "REALLY suspicious climbing hook to scale up holes. The hook has a syndicate logo engraved on it, and the rope appears rather durable."
+	desc = "REALLY suspicious climbing hook to scale up holes. The hook has a syndicate logo engraved on it, and the rope has sinister mechanical mechanisms to assist with climbing away from nefarious activities."
 	icon_state = "climbingrope_s"
-	uses = 10
-	climb_time = 1.5 SECONDS
+	climb_time = 0.75 SECONDS
 
 /obj/item/climbing_hook/infinite //debug stuff
 	name = "infinite climbing hook"
 	desc = "A plasteel hook, with rope. Upon closer inspection, the rope appears to be made out of plasteel woven into regular rope, amongst many other reinforcements."
-	uses = INFINITY
-	climb_time = 1 SECONDS
+	climb_time = 0.1 SECONDS
 
 /obj/effect/temp_visual/climbing_hook
 	icon = 'icons/mob/silicon/aibots.dmi'

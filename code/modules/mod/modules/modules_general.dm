@@ -997,7 +997,7 @@
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(!gloves)
 		return
-	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 	if(equipped)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped, delete_rod_when_deleted = FALSE)
 
@@ -1044,7 +1044,7 @@
 /obj/item/mod/module/hearing_protection/on_part_activation()
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
-		head_cover.AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
+		head_cover.AddComponent(/datum/component/wearertargeting/earprotection)
 		var/datum/component/wearertargeting/earprotection/protection = head_cover.GetComponent(/datum/component/wearertargeting/earprotection)
 		protection.on_equip(src, mod.wearer, ITEM_SLOT_HEAD)
 

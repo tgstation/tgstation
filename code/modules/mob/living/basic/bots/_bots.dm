@@ -231,13 +231,18 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if (can_announce)
 		COOLDOWN_START(src, offer_ghosts_cooldown, 30 SECONDS)
 
+	if (user)
+		log_silicon("[key_name(user)] enabled sapience for [src] ([initial(src.name)])") // Not technically a silicon but who is counting
+
 /// Disables this bot from being possessed by ghosts
 /mob/living/basic/bot/proc/disable_possession(mob/user)
+	if (user)
+		log_silicon("[key_name(user)] disabled sapience for [src] ([initial(src.name)])")
 	can_be_possessed = FALSE
 	if(isnull(key))
 		return
 	if (user)
-		log_combat(user, src, "ejected from [initial(src.name)] control.")
+		log_combat(user, src, "ejected [key_name(src)] from control of [src] ([initial(src.name)]).")
 	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
 	ghostize(can_reenter_corpse = FALSE)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
