@@ -38,6 +38,7 @@
 	integrity_failure = 0.5
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
+	key_type = /obj/item/key/golfcart
 	///Particle holder for low integrity smoking
 	var/obj/effect/abstract/particle_holder/smoke = null
 	///Seperate image for the cargo buckled to the rear
@@ -70,6 +71,11 @@
 	var/obj/cargo = null
 	///Is the hood open?
 	var/hood_open = FALSE
+
+/obj/item/key/golfcart
+	name = "golfcart key"
+	desc = "A small grey key for using the golf cart."
+	icon = 'icons/obj/toys/golfcart_split.dmi'
 
 /obj/item/golfcart_kit
 	name = "golfcart parts kit"
@@ -462,7 +468,10 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/click_alt(mob/user)
-	. = ..()
+	if (user in buckled_mobs)
+		return ..()
+	else
+		to_chat(user, span_warning("You must be sitting down to remove the key!"))
 	if (hood_open)
 		close_hood()
 		to_chat(user, span_notice("You shut \the [src]'s hood."))
@@ -480,8 +489,9 @@
 	return parent.load(dropped_obj)
 
 /datum/component/riding/vehicle/golfcart
-	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 1.5
+	keytype = /obj/item/key/golfcart
 
 /datum/component/riding/vehicle/golfcart/restore_parent_layer_and_offsets()
 	// just don't restore anything.
@@ -533,6 +543,7 @@
 
 /obj/vehicle/ridden/golfcart/examine(mob/user)
 	. = ..()
+	. += span_notice("Pop the hood by alt-clicking while not riding it.")
 	if (cargo)
 		. += span_info("The bed is holding \the [cargo].")
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
@@ -754,12 +765,12 @@
 	if (isnull(direction))
 		if (get_step(src, NORTH).Enter(child))
 			direction = NORTH
-		else if (get_step(src, SOUTH).Enter(child))
-			direction = SOUTH
 		else if (get_step(src, EAST).Enter(child))
 			direction = EAST
 		else if (get_step(src, WEST).Enter(child))
 			direction = WEST
+		else if (get_step(src, SOUTH).Enter(child))
+			direction = SOUTH
 		else
 			direction = SOUTH
 		direction = turn(direction, 180)
@@ -770,7 +781,6 @@
 /obj/vehicle/ridden/golfcart/loaded/Initialize(mapload)
 	. = ..()
 	cell = new /obj/item/stock_parts/power_store/cell/lead(src)
-	cell.charge = cell.maxcharge
 
 /obj/vehicle/ridden/golfcart/hotrod/Initialize(mapload)
 	. = ..()

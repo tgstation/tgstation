@@ -21110,6 +21110,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/item/key/golfcart,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "fmo" = (
@@ -77151,6 +77152,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/vehicle/ridden/golfcart/loaded,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "tbJ" = (
