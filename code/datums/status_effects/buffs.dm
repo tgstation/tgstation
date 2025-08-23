@@ -35,7 +35,7 @@
 	var/Him = HG.word2
 	name = "[His] Grace"
 	desc = "[His] Grace hungers, and you must feed [Him]."
-	icon_state = "[lowertext(His)]_grace"
+	icon_state = "[LOWER_TEXT(His)]_grace"
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
 	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
 	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
