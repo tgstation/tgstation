@@ -11,6 +11,15 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/imports/golfcart
+	name = "Golf Cart Crate"
+	desc = "Contains the parts to build a cart intended for moving heavy machinery and cargo across the station. \
+		Nanotrasen assumes no liability for carts operated as 'party wagons'."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/golfcart_kit)
+	crate_name = "golf cart crate"
+	crate_type = /obj/structure/closet/crate
+
 /datum/supply_pack/imports/foamforce
 	name = "Foam Force Crate"
 	desc = "Break out the big guns with eight Foam Force shotguns!"

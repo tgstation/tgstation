@@ -54,6 +54,7 @@
 	var/static/list/allowed_cargo = typecacheof(list(
 		/obj/structure/closet/crate,
 		/obj/structure/reagent_dispensers,
+		/obj/structure/flatpack_cart,
 		/obj/machinery,
 		/obj/item/kirbyplants,
 	))
@@ -69,6 +70,52 @@
 	var/obj/cargo = null
 	///Is the hood open?
 	var/hood_open = FALSE
+
+/obj/item/golfcart_kit
+	name = "golfcart parts kit"
+	desc = "A box containing a golf cart. Some assembly required. Batteries not included."
+	icon = 'icons/obj/toys/golfcart_split.dmi'
+	icon_state = "parts_kit"
+	w_class = WEIGHT_CLASS_HUGE
+	throw_range = 2
+	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
+	slowdown = 2.5
+	drag_slowdown = 3.5
+
+/obj/item/golfcart_kit/examine(mob/user)
+	. = ..()
+	. += span_notice("The instructions say that it needs to be [EXAMINE_HINT("screwed")] together.")
+
+/obj/item/golfcart_kit/proc/play_building_noises(mob/living/user, duration)
+	duration = max(duration - (1 SECONDS), 0.5 SECONDS)
+	playsound(src, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
+	sleep(1 SECONDS)
+	if (!DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+	playsound(src, 'sound/items/tools/screwdriver_operating.ogg', 50, TRUE)
+	sleep(duration / 2)
+	if (!DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
+	sleep(duration / 2)
+	if (!DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+	playsound(src, 'sound/items/tools/screwdriver.ogg', 50, TRUE)
+
+/obj/item/golfcart_kit/screwdriver_act(mob/living/user, obj/item/tool)
+	if (!isturf(loc))
+		user.balloon_alert(user, "set down first!")
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] starts putting together the [src]..."), span_notice("You start assembling the [src]..."))
+	var/unboxing_duration = 7 SECONDS
+	INVOKE_ASYNC(src, PROC_REF(play_building_noises), user, unboxing_duration * tool.toolspeed)
+	if(!tool.use_tool(src, user, unboxing_duration))
+		return ITEM_INTERACT_BLOCKING
+	if (!isturf(loc))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/vehicle/ridden/golfcart/cart = new(get_turf(src))
+	user.visible_message(span_notice("[user] assembles the [cart]!"), span_notice("You assemble the [cart]."))
+	qdel(src)
 
 /obj/golfcart_rear/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if (!parent)
@@ -505,9 +552,11 @@
 			else if (engine_state == ENGINE_WRENCHED)
 				. += span_notice("It needs to be [EXAMINE_HINT("welded")] down.")
 			// last state is ENGINE_WELDED
-		else
+		else if (cell)
 			. += span_info("You can see \the [cell] inside.")
 			. += span_smallnotice("If you remove the cell you could probably install another power source...")
+		else
+			. += span_info("There is no power cell installed.")
 
 /obj/golfcart_rear/doMove(atom/destination)
 	. = ..()
@@ -683,8 +732,8 @@
 		passenger.add_offsets(GOLFCART_RIDING_SOURCE,
 			x_add = px + px_second_offset * (i - 1),
 			y_add = py + py_second_offset * (i - 1),
-			z_add = pz + pz_second_offset * (i - 1)
-			)
+			z_add = pz + pz_second_offset * (i - 1),
+			animate = FALSE)
 		passenger.layer = layer + ((i * 0.01) - 0.01) * invert_layer
 
 /obj/golfcart_rear/proc/on_dir_changed(datum/source, old_dir, new_dir)
@@ -697,21 +746,41 @@
 	parent = progenitor
 	RegisterSignal(parent, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_changed))
 
-/obj/vehicle/ridden/golfcart/hotrod/Initialize(mapload)
-	. = ..()
-	cell = null
-	engine = new /obj/item/v8_engine(src)
-	set_engine_state(ENGINE_WELDED)
-
-/obj/vehicle/ridden/golfcart/Initialize(mapload)
+/obj/vehicle/ridden/golfcart/Initialize(mapload, direction = null)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/golfcart)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move))
-	child = new /obj/golfcart_rear(mapload, src)
-	child.loc = get_step(src, NORTH)
+	child = new /obj/golfcart_rear(null, src)
+	if (isnull(direction))
+		visible_message("chicken butt")
+		if (get_step(src, NORTH).Enter(child))
+			visible_message("north")
+			direction = NORTH
+		else if (get_step(src, SOUTH).Enter(child))
+			visible_message("south")
+			direction = SOUTH
+		else if (get_step(src, EAST).Enter(child))
+			visible_message("east")
+			direction = EAST
+		else if (get_step(src, WEST).Enter(child))
+			visible_message("west")
+			direction = WEST
+		else
+			direction = SOUTH
+		direction = turn(direction, 180)
+	setDir(direction)
+	child.loc = get_step(src, dir)
+	update_appearance()
+
+/obj/vehicle/ridden/golfcart/loaded/Initialize(mapload)
+	. = ..()
 	cell = new /obj/item/stock_parts/power_store/cell/lead(src)
 	cell.charge = cell.maxcharge
-	update_appearance()
+
+/obj/vehicle/ridden/golfcart/hotrod/Initialize(mapload)
+	. = ..()
+	engine = new /obj/item/v8_engine(src)
+	set_engine_state(ENGINE_WELDED)
 
 /obj/vehicle/ridden/golfcart/update_appearance(updates=ALL)
 	. = ..()
