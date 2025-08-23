@@ -215,3 +215,7 @@
 		qdel(parent)
 	parent = null
 	return ..()
+
+#undef HUMAN_LOWER_LAYER
+#undef HUMAN_RIDING_LAYER
+#undef GOLFCART_RIDING_SOURCE
