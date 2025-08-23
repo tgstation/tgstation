@@ -317,7 +317,7 @@
 	. = ..()
 	linked_alert.name = "[His] Wrath"
 	linked_alert.desc = "You fled from [His] Grace instead of feeding [Him], and now you suffer."
-	linked_alert.icon_state = "[lowertext(His)]_grace"
+	linked_alert.icon_state = "[LOWER_TEXT(His)]_grace"
 
 /atom/movable/screen/alert/status_effect/his_wrath
 	name = "His Wrath"
