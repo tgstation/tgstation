@@ -286,6 +286,14 @@
 	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
 	inebriation?.iron_liver = TRUE
 
+/datum/brain_trauma/severe/split_personality/schism(mob/dead/observer/ghost)
+	. = ..()
+	stranger_backseat.AddComponent( \
+			/datum/component/temporary_body, \
+			old_mind = stranger_backseat.mind, \
+			old_body = ghost.mind, \
+	)
+
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
 	owner.add_mood_event("hang_over", /datum/mood_event/hang_over)
