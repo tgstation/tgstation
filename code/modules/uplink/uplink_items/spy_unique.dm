@@ -155,3 +155,9 @@
 	item = /obj/item/melee/baton/nunchaku
 	cost = SPY_UPPER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+/datum/uplink_item/spy_unique/brain_scrambler
+	name = "Brain Scrambler"
+	desc = "Small handheld memory erasure device."
+	item = /obj/item/brain_scrambler
+	cost = SPY_UPPER_COST_THRESHOLD
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
