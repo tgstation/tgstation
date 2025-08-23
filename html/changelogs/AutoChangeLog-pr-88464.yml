@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - qol: "*jump emote will not print a message"

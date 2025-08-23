@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Stacking status effects without visual overlays will no longer try to create them and fail to do so."
