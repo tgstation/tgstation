@@ -588,6 +588,7 @@
 	id_tag = "u5";
 	name = "Unit 5"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "ajQ" = (
@@ -30257,6 +30258,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "kub" = (
@@ -39392,6 +39394,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "nDC" = (
@@ -43826,6 +43829,7 @@
 /area/station/solars/starboard/fore)
 "pik" = (
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "piE" = (
@@ -47519,6 +47523,7 @@
 	id_tag = "u2";
 	name = "Unit 2"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "qsI" = (
@@ -52021,6 +52026,7 @@
 	id_tag = "u4";
 	name = "Unit 4"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "rUu" = (
@@ -52492,6 +52498,7 @@
 	id_tag = "u1";
 	name = "Unit 1"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "saa" = (
@@ -53865,6 +53872,7 @@
 "swe" = (
 /obj/structure/urinal/directional/north,
 /obj/machinery/light/small/dim/directional/east,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "swi" = (
@@ -54467,6 +54475,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "sGV" = (
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "sHa" = (
@@ -63417,6 +63426,7 @@
 /obj/structure/urinal/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "vPP" = (
@@ -68337,6 +68347,7 @@
 	id_tag = "u3";
 	name = "Unit 3"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "xzP" = (

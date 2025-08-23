@@ -10680,6 +10680,7 @@
 /area/station/cargo/warehouse)
 "cDZ" = (
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "cEb" = (
@@ -17681,6 +17682,7 @@
 	name = "Unit 1";
 	id_tag = "Toilet1"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "ffL" = (
@@ -26822,6 +26824,7 @@
 	name = "Unit 2";
 	id_tag = "Toilet2"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "iCh" = (
@@ -36737,6 +36740,7 @@
 	name = "Unit 3";
 	id_tag = "Toilet3"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "lMJ" = (
@@ -51172,6 +51176,7 @@
 	name = "Unit 5";
 	id_tag = "Toilet5"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "qYJ" = (
@@ -51961,6 +51966,7 @@
 	name = "Unit 4";
 	id_tag = "Toilet4"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "rlZ" = (
@@ -62536,6 +62542,7 @@
 /area/station/service/hydroponics/garden)
 "uOY" = (
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "uOZ" = (
@@ -85480,7 +85487,7 @@ apC
 apC
 veV
 veV
-hAD
+alT
 hAD
 veV
 pdr
@@ -85737,12 +85744,12 @@ abM
 apC
 nmk
 ffE
-hAD
+alT
 hAD
 veV
 veV
 kMD
-hAD
+alT
 rlX
 oEl
 apC
@@ -86251,12 +86258,12 @@ abM
 apC
 paH
 iCe
-hAD
+alT
 hAD
 veV
 veV
 kMD
-hAD
+alT
 qYx
 rgT
 apC
@@ -86508,7 +86515,7 @@ abM
 apC
 veV
 veV
-hAD
+alT
 hAD
 ubY
 ubY
@@ -86765,7 +86772,7 @@ abM
 apC
 lYZ
 lMw
-hAD
+alT
 hAD
 hAD
 hAD
