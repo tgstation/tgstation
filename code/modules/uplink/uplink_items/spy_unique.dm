@@ -159,5 +159,5 @@
 	name = "Brain Scrambler"
 	desc = "Small handheld memory erasure device."
 	item = /obj/item/brain_scrambler
-	cost = SPY_UPPER_COST_THRESHOLD
+	cost = 1
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
