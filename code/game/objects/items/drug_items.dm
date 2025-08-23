@@ -87,7 +87,7 @@
 	desc = "A clear, sad, fake looking crystal substance."
 	icon_state = "meth_crystal1"
 	tastes = list("awfulness", "burning")
-	food_reagents = list(/datum/reagent/drug/methamphetamine = 10)
+	food_reagents = list(/datum/reagent/drug/methamphetamine = 5)
 
 /obj/item/food/drug/meth_crystal/Initialize(mapload)
 	. = ..()
@@ -104,9 +104,9 @@
 /obj/item/food/drug/opium/examine()
 	. = ..()
 	if(rich)
-		. += span_notice("The opium is large and rich in fragrance; it cannot be pressed together further.")
+		. += span_notice("The opium is large and rich in fragrance; it shouldn't be pressed together further.")
 	else
-		. += span_notice("The opium is still small, and can be pressed together with another to increase its potency and richness.")
+		. += span_notice("The opium is still small, and can be pressed together with more to increase its potency and richness.")
 
 /obj/item/food/drug/opium/Initialize(mapload) //For narcotics and black market purchases, pure and proper.
 	. = ..()

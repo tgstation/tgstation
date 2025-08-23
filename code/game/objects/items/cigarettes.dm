@@ -984,7 +984,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/pipe/crackpipe
 	name = "glass pipe"
-	desc = "A slick, pragmatic delivery method. The ancients learned much wisdom with this tool."
+	desc = "An ergonomic, low-key delivery method for the combusted. This apparatus taught the ancients much wisdom."
 	icon_state = "crackpipe"
 	inhand_icon_state = "crackpipeon"
 	inhand_icon_on = "crackpipeon"

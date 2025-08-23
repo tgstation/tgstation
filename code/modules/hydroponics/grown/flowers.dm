@@ -19,17 +19,17 @@
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
-	attackby(obj/item/I, mob/user, obj/machinery/hydroponics/tray) //Allows for extraction of opium only as a poppy pod. This can be taken and modified for other plants and substances.
-		if(istype(I, /obj/item/hatchet) && !src.extracted && tray.age >= 10 && tray.age <= 19)
-			src.extracted = 1
-			new /obj/item/food/drug/opium/raw(get_turf(tray))
-			playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
-			playsound(loc, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
-			user.visible_message(
-				span_notice("You carefully slice the poppy's pod, collecting the fragrant, alluring sap.")
-			)
-			return
-		..()
+/obj/item/seeds/poppy/attackby(obj/item/I, mob/user, obj/machinery/hydroponics/tray) //Allows for extraction of opium sap before full maturation.
+	if(I.sharpness && !src.extracted && tray.age >= 10 && tray.age <= 19)
+		src.extracted = TRUE
+		new /obj/item/food/drug/opium/raw(get_turf(tray))
+		playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
+		playsound(loc, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
+		user.visible_message(
+			span_notice("You carefully slice the poppy's pod, collecting the fragrant, alluring sap.")
+		)
+		return
+	..()
 
 /obj/item/food/grown/poppy
 	seed = /obj/item/seeds/poppy

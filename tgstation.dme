@@ -949,7 +949,6 @@
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\travel_towards.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\unbuckle_mob.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\ventcrawling.dm"
-#include "code\game\objects\items\cigarettes.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\wounded_targeting.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\write_on_paper.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\attack_adjacent_target.dm"
