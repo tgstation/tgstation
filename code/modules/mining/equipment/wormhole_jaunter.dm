@@ -93,17 +93,6 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOVABLE_CHASM_DROPPED)
 
-		/*
-		if(ishuman(dropped_thing))
-			var/mob/living/carbon/human/victim = dropped_thing
-			if(istype(victim.belt, /obj/item/wormhole_jaunter))
-				var/obj/item/wormhole_jaunter/jaunter = victim.belt
-				var/turf/chasm = get_turf(victim)
-				var/fall_into_chasm = jaunter.chasm_react(victim)
-				if(!fall_into_chasm)
-				return fall_into_chasm ? CHASM_DROPPING : CHASM_NOT_DROPPING
-		*/
-
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/living/user, turf/chasm)
 	SIGNAL_HANDLER
 
