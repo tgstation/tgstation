@@ -529,3 +529,7 @@
   paganiy:
   - bugfix: the interns recalculated the damage of the shotguns catridges and made
       corrections
+2025-08-23:
+  lelandkemble:
+  - bugfix: Fishing gloves MODule now actually lowers the difficulty of fishing like
+      it says
