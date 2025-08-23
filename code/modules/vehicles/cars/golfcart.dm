@@ -319,15 +319,15 @@
 	for(var/mob/living/future_pancake in loc)
 		run_over(future_pancake)
 
-/obj/vehicle/ridden/golfcart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/vehicle/ridden/golfcart/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
 	if (!hood_open)
 		return ..()
 	if (istype(attacking_item, /obj/item/v8_engine))
 		if (engine || cell)
 			balloon_alert(user, "already has an engine!")
 			return ITEM_INTERACT_BLOCKING
-		user.transferItemToLoc(engine_to_install, src)
-		engine = engine_to_install
+		user.transferItemToLoc(attacking_item, src)
+		engine = attacking_item
 		engine_state = ENGINE_UNWRENCHED
 		balloon_alert(user, "installed \the [engine]")
 		return ITEM_INTERACT_SUCCESS
@@ -335,8 +335,8 @@
 		if (cell || engine)
 			balloon_alert(user, "already has an engine!")
 			return ITEM_INTERACT_BLOCKING
-		user.transferItemToLoc(cell_to_install, src)
-		cell = cell_to_install
+		user.transferItemToLoc(attacking_item, src)
+		cell = attacking_item
 		balloon_alert(user, "installed \the [cell]")
 		return ITEM_INTERACT_SUCCESS
 	return ..()
