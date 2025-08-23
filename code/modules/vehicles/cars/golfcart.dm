@@ -472,6 +472,7 @@
 		return ..()
 	else
 		to_chat(user, span_warning("You must be sitting down to remove the key!"))
+	. = CLICK_ACTION_SUCCESS
 	if (hood_open)
 		close_hood()
 		to_chat(user, span_notice("You shut \the [src]'s hood."))
