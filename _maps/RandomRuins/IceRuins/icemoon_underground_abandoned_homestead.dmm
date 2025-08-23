@@ -77,7 +77,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "sF" = (
-/turf/open/openspace/icemoon/keep_below,
+/turf/open/lava/plasma/ice_moon,
 /area/icemoon/surface/outdoors/nospawn)
 "tD" = (
 /obj/structure/flora/rock/pile/icy/style_random,
@@ -148,7 +148,7 @@
 	},
 /area/ruin/powered/shuttle)
 "wN" = (
-/turf/open/openspace/icemoon/keep_below,
+/turf/open/lava/plasma/ice_moon,
 /area/ruin/powered/shuttle)
 "ym" = (
 /obj/structure/chair/wood{

@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Fishing gloves MODule now actually lowers the difficulty of fishing like it says"
