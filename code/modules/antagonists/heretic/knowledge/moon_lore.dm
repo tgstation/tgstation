@@ -101,7 +101,7 @@
 	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulet. \
 			If the item is used on someone with low sanity they go berserk attacking everyone, \
 			if their sanity isn't low enough it decreases their mood. \
-			Wearing this will make your blades harmless, they will instead directly attack their mind. \
+			Wearing this will grant you the ability to see heathens through walls and make your blades harmless, they will instead directly attack their mind. \
 			Provides thermal vision and doubles the brain regen of a moon heretic while worn."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 
