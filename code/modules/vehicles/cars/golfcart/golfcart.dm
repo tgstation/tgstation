@@ -692,15 +692,26 @@
 	else
 		cargo_image = null
 
+/obj/vehicle/ridden/golfcart/proc/dodge_friendly_fire(mob/source, obj/projectile/projectile)
+	if (!projectile.firer)
+		return
+	if (QDELETED(projectile.firer))
+		return
+	// so that you don't murder your driver when shooting off the back
+	if (projectile.firer in child.buckled_mobs)
+		return PROJECTILE_INTERRUPT_HIT_PHASE
+
 /obj/vehicle/ridden/golfcart/post_buckle_mob(mob/living/M)
 	if (M.pulling)
 		M.stop_pulling()
+	RegisterSignal(M, COMSIG_PROJECTILE_PREHIT, PROC_REF(dodge_friendly_fire))
 	RegisterSignal(M, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_passengers))
 	return ..()
 
 /obj/vehicle/ridden/golfcart/post_unbuckle_mob(mob/living/M)
 	update_appearance(UPDATE_ICON) // because for some reason the overlays aren't properly redrawn
 	UnregisterSignal(M, COMSIG_ATOM_TRIED_PASS)
+	UnregisterSignal(M, COMSIG_PROJECTILE_PREHIT)
 	return ..()
 
 /obj/vehicle/ridden/golfcart/Destroy()
