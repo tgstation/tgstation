@@ -291,7 +291,7 @@
 	stranger_backseat.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = stranger_backseat.mind, \
-			old_body = ghost, \
+			old_body = ghost.mind, \
 	)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
