@@ -13,6 +13,30 @@
 	glide_size = MAX_GLIDE_SIZE
 	layer = 0
 	var/obj/vehicle/ridden/golfcart/parent = null
+	///List of offsets for buckled passengers. Indexed by passenger index, then by direction string.
+	var/static/list/list/vector/passenger_offsets = list(
+		list(
+			TEXT_NORTH = vector(-4, 0, 24),
+			TEXT_SOUTH = vector(4, 0, 4),
+			TEXT_EAST = vector(4, 0, 13),
+			TEXT_WEST = vector(-4, 0, 13)
+		),
+		list(
+			TEXT_NORTH = vector(4, 0, 20),
+			TEXT_SOUTH = vector(-4, 8, 0),
+			TEXT_EAST = vector(-8, 0, 13),
+			TEXT_WEST = vector(8, 0, 13)
+		)
+	)
+	///Same as [/obj/golfcart_rear/passenger_offsets], except for when the passenger is lying down.
+	var/static/list/list/vector/lying_down_passenger_offsets = list(
+		list(
+			TEXT_NORTH = vector(0, 0, 16),
+			TEXT_SOUTH = vector(0, 0, 8),
+			TEXT_EAST = vector(2, 0, 8),
+			TEXT_WEST = vector(-2, 0, 8),
+		)
+	)
 
 /obj/golfcart_rear/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if (!parent)
@@ -110,48 +134,23 @@
 	if (isnull(new_dir))
 		new_dir = dir
 	var/layer = HUMAN_RIDING_LAYER
-	var/px = 0
-	var/py = 0
-	var/pz = 0
-	var/px_second_offset = 0
-	var/py_second_offset = 0
-	var/pz_second_offset = 0
-	var/invert_layer = 1
-	if (new_dir & NORTH)
-		px = -4
-		px_second_offset = 8
-
-		pz = 24
-		pz_second_offset = -4
-	else if (new_dir & SOUTH)
-		layer = HUMAN_LOWER_LAYER
-		invert_layer = -1
-
-		px = 4
-		px_second_offset = -8
-
-		pz = 4
-		pz_second_offset = -4
-		py_second_offset = 8 // this is hacky but fixes ordering
-	else if (new_dir & WEST)
-		px = -4
-		px_second_offset = 12
-
-		pz = 13
-	else if (new_dir & EAST)
-		px = 4
-		px_second_offset = -12
-
-		pz = 13
-
+	var/invert_layer = FALSE
+	if (new_dir & SOUTH)
+		invert_layer = TRUE
+	new_dir = "[new_dir]"
 	for(var/i in 1 to buckled_mobs.len)
 		var/mob/living/passenger = buckled_mobs[i]
+		var/vector/offset
+		if (passenger.body_position == LYING_DOWN)
+			offset = lying_down_passenger_offsets[i][new_dir]
+		else
+			offset = passenger_offsets[i][new_dir]
 		passenger.add_offsets(GOLFCART_RIDING_SOURCE,
-			x_add = px + px_second_offset * (i - 1),
-			y_add = py + py_second_offset * (i - 1),
-			z_add = pz + pz_second_offset * (i - 1),
+			x_add = offset.x,
+			y_add = offset.y,
+			z_add = offset.z,
 			animate = FALSE)
-		passenger.layer = layer + ((i * 0.01) - 0.01) * invert_layer
+		passenger.layer = layer + ((i * 0.01) - 0.01) * (-invert_layer)
 
 /obj/golfcart_rear/proc/on_dir_changed(datum/source, old_dir, new_dir)
 	if (!has_buckled_mobs())
@@ -181,18 +180,34 @@
 	if (!isliving(source))
 		return // should runtime?
 	if (new_bodypos == STANDING_UP)
+		update_passenger_layers()
 		return
+	if (buckled_mobs.len <= 1)
+		update_passenger_layers()
+		return // allow 1 laying down mob
 	var/mob/living/passenger = source
 	unbuckle_mob(passenger, TRUE)
 
 /obj/golfcart_rear/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
+	// these are to_viewers because you can buckle someone on their behalf
 	if (parent && parent.cargo)
-		balloon_alert(target, "blocked!")
+		balloon_alert_to_viewers("blocked!")
 		return FALSE
 	if (target.body_position != STANDING_UP)
-		balloon_alert(target, "stand up!")
+		if (!has_buckled_mobs())
+			return TRUE
+		balloon_alert_to_viewers("stand up!")
 		return FALSE
+	for (var/mob/blocker in buckled_mobs)
+		if (!isliving(blocker))
+			balloon_alert_to_viewers("blocked!")
+			return FALSE
+		var/mob/living/living_blocker = blocker
+		if (living_blocker.body_position != STANDING_UP)
+			balloon_alert_to_viewers("blocked!")
+			return FALSE
+	return TRUE
 
 /obj/golfcart_rear/post_buckle_mob(mob/living/buckled_mob)
 	buckled_mob.pulledby?.stop_pulling()
@@ -205,7 +220,10 @@
 	UnregisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS)
 	UnregisterSignal(buckled_mob, COMSIG_LIVING_SET_BODY_POSITION)
 	buckled_mob.remove_offsets(GOLFCART_RIDING_SOURCE)
-	buckled_mob.layer = initial(buckled_mob.layer)
+	if (buckled_mob.body_position == LYING_DOWN)
+		buckled_mob.layer = LYING_MOB_LAYER
+	else
+		buckled_mob.layer = initial(buckled_mob.layer)
 	return ..()
 
 /obj/golfcart_rear/Destroy()
