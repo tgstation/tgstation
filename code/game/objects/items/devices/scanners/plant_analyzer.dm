@@ -202,11 +202,12 @@
 	if (!seed && !tray && !graft)
 		return NONE
 
-	if(user && !user.can_read(src))
-		return ITEM_INTERACT_BLOCKING
+	if(user)
+		if(!user.can_read(src))
+			return ITEM_INTERACT_BLOCKING
+		START_PROCESSING(SSobj, src)
+		last_tray_scanned = WEAKREF(tray) // sets it to null if no tray
 
-	START_PROCESSING(SSobj, src)
-	last_tray_scanned = WEAKREF(tray) // sets it to null if no tray
 	last_scan_data = list(
 		"tray_data" = null,
 		"seed_data" = null,
