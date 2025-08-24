@@ -87,7 +87,18 @@
 	desc = "A clear, sad, fake looking crystal substance."
 	icon_state = "meth_crystal1"
 	tastes = list("awfulness", "burning")
-	food_reagents = list(/datum/reagent/drug/methamphetamine = 5)
+	food_reagents = list(/datum/reagent/drug/methamphetamine = 7)
+	force = 3
+	throwforce = 3
+	embed_type = /datum/embedding/meth
+
+/datum/embedding/meth
+	embed_chance = 7
+	fall_chance = 2
+	rip_time = 2 SECONDS
+	var/transfer_per_second = 0.75
+	COOLDOWN_DECLARE(reagent_message_cd)
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/food/drug/meth_crystal/Initialize(mapload)
 	. = ..()
@@ -96,7 +107,8 @@
 
 /obj/item/food/drug/opium
 	name = "opium"
-	desc = "A little of it, taken as much as a grain of ervum is a pain-easer, and a sleep-causer, and a digester... but being drank too much it hurts, making spacemen lethargical, and it kills."
+	desc = "A little of it, taken as much as a grain of ervum is a pain-easer, and a sleep-causer, and a digester... \
+	but being drank too much it hurts, making spacemen lethargical, and it kills."
 	icon_state = "opium1"
 	tastes = list("amber", "a bitter vanilla")
 	var/rich = 0 //Used for the player to combine opium chunks together, up to 5u of morphine.
@@ -114,7 +126,7 @@
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 	food_reagents = list(/datum/reagent/medicine/morphine = 7, /datum/reagent/consumable/sugar = 1)
 
-/obj/item/food/drug/opium/raw/Initialize(mapload) //Randomizes trace amounts of contents found in the opium upon extraction, including contaminants.
+/obj/item/food/drug/opium/raw/Initialize(mapload) //Randomizes trace amounts of contents found in the opium upon extraction, including contaminants that provide a good smoke flavor!
 	. = ..()
 	reagents.clear_reagents()
 	var/amount
@@ -123,7 +135,7 @@
 	amount = rand(1, 7) / 10
 	reagents.add_reagent(/datum/reagent/consumable/sugar, amount)
 
-/obj/item/food/drug/opium/raw/attackby(obj/item/I, mob/user) //Allows for combining opium up to 7u of morphine in a ball of opium, leaving the quantity vague-ish until maxed. Any further refinement requires a blender.
+/obj/item/food/drug/opium/raw/attackby(obj/item/I, mob/user) //Allows for combining opium up to 7u of morphine in a ball of opium, leaving the quantity vague-ish until maxed. Any further refinement requires machinery.
 	if(istype(I, /obj/item/food/drug/opium/raw))
 		var/obj/item/food/drug/opium/raw/other = I
 
