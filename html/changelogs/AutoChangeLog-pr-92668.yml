@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Wackier hallucinations should rear their head again"
+  - bugfix: "Ghost eyes hallucination works properly"

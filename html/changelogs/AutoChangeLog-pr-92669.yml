@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Stamina and projectile speed multipliers on pellet-cloud projectiles (e.g. buckshot, rubber shot, flechettes) now respect appropriate multipliers when fired from appropriate guns."
