@@ -410,3 +410,133 @@
   - qol: Swat and welding helmets give proper messages when adjusting visors.
   zxaber:
   - rscadd: AIs now get an alert when a new (non-syndicate) AI is brought online.
+2025-08-16:
+  Exester509:
+  - bugfix: The death ripley can move again, and thus, kill things that aren't standing
+      still right next to it.
+  JohnFulpWillard:
+  - qol: Jukebox now has context tips, balloon alerts over messages to chat, and can
+      now RMB to quick toggle music from playing.
+  Melbert:
+  - bugfix: Fixes some potential exploits in mecha ui code
+  - bugfix: Item on-attack effects will trigger as expected when hitting a limb at
+      damage cap
+  Needicla:
+  - bugfix: Spraycan-painted clothing now displays correctly when worn by short-height
+      characters (e.g., Settler); paint no longer disappears on the mob sprite.
+  - code_imp: Worn overlay coloration now uses named filters and recurses to child
+      overlays, making it resilient to later filter changes (like height displacement).
+  Time-Green:
+  - rscadd: Icebox surface is now a 1x3 z-level grid! Rejoice, explorers!
+  panvxv:
+  - balance: Reduced cost of Unmelting Protection and Blazing Star
+  tonyhawq:
+  - spellcheck: shuttles will now say "arriving in 1 minute" instead of "1 minutes"
+2025-08-17:
+  Bisar:
+  - balance: 'Added a list of "universal" items that can fit on any suit storage.
+      Mostly low-impact but high-utility items, but of special note: holsters and
+      the captain''s jetpack can be worn on any suit storage.'
+  - balance: Any item of size "tiny" can now also be worn in suit storage.
+  - qol: The suit storage change gives some small amount of sanity to wearing things
+      on suit storage, such as emergency oxygen tanks or a pack of smokes.
+  throwawayuseless:
+  - bugfix: Diode Disks are no longer improperly /improper.
+2025-08-18:
+  00-Steven:
+  - bugfix: Ending a MODlink call in any non-standard way no longer bricks your ability
+      to use MODlinks.
+  - bugfix: Ending a MODlink call in any non-standard way and then giving the item
+      to someone else to call with no longer moves the visuals based on the first
+      person to try to use the item.
+  HurgnDurgn:
+  - rscadd: Cleanbots now clean up used cigarettes.
+  Kashargul:
+  - bugfix: chat highlights
+  Needicla:
+  - bugfix: Abductor agent disguises no longer break when moving between z-levels.
+  NoHaxJustPi:
+  - spellcheck: Fixes "It is The bolts on the bottom are..." in tank holder descriptions,
+      and improves grammar for inserted objects.
+  Rhials:
+  - rscadd: You may now remove water cooler jugs and put whatever you want in them.
+      Go nuts.
+  - rscadd: Water coolers are now craftable (with plastic), orderable from cargo,
+      and tippable when unanchored.
+  - rscadd: Rarely, water coolers will spawn full of healing fruit punch instead of
+      water! Be careful not to stray from the cooler while digesting this stuff.
+  - rscadd: You can also just buy the punch cooler from cargo if you feel like it.
+  SyncIt21:
+  - qol: you can stock more than 30 items from a bag into an vending machine
+  - bugfix: fixes runtime when deconstructing custom vending machines
+  Zytolg:
+  - map: Adjusts Turret Placement in the AI Upload on Nebulastation
+  - map: Adds an External Security Camera to the Starboard Vault Wall overlooking
+      the AI Upload on Nebulastation
+2025-08-20:
+  Cameron-The-Raven:
+  - bugfix: Brains will no longer runtime when owner-less
+  panvxv:
+  - bugfix: Fixed bots unable to buckle people to themselves.
+  scriptis:
+  - rscadd: nepotism
+2025-08-21:
+  Absolucy:
+  - bugfix: Digital clocks now process on the correct subsystem.
+  panvxv:
+  - rscadd: Added Disabler SMG Single-Pack
+  - rscadd: Added Laser Carbine Sigle-Pack
+  - balance: Moved Laser Guns crate from security to armory category in cargo
+  - balance: Increased amount of Energy Guns to 3 in Energy Guns crate
+  - balance: Increased amount of NT BR to 3 and magazines to 6 in NT BR crate
+  - rscadd: Added seclight attachment for swat, riot, press helmets
+  - bugfix: Fixed bulletproof helmets switching sprites to normal sec helmet
+  - image: Added sprites of Swat helmet and riot helmet with attached seclight
+  - image: Reworked part of helmet sprites - seclight
+2025-08-22:
+  LT3:
+  - bugfix: Fixed techfab category of janitor holographic sign projector
+  Paxilmaniac:
+  - qol: MOD tethers are now a little easier to click on
+  Pickle-Coding:
+  - bugfix: Fixes water evaporation cooling the air to 2.7 Kelvin.
+  - balance: Water evaporation can cool the floor.
+  SmArtKar:
+  - bugfix: Fixed spraypainted items glowing in the dark
+  - code_imp: Stacking status effects without visual overlays will no longer try to
+      create them and fail to do so.
+  - bugfix: Fixed newspapers not lighting on fire from lighters
+  - bugfix: Fixed table flipping sound/alert spam
+  - bugfix: Fixed plant analyzer blocking all interactions in the darkness
+  - bugfix: Nerfs the Safety Moth. Fixed incident displays displaying adverts even
+      while depowered/broken
+  SyncIt21:
+  - bugfix: converting reagents now computes correct purity & ph when conversion threshold
+      is set
+  - bugfix: converting reagents transfers reagent data correctly only when not filtering
+      sub types
+  - code_imp: converting reagents is faster performance wise
+  carpotoxin:
+  - bugfix: Mutant bodypart overlays (tails and et cetera) that are gender-specific
+      now display correctly
+  lelandkemble:
+  - bugfix: Lizard now have lizard brains
+  necromanceranne:
+  - rscadd: Adds the surplus energy sword; the mall katana of the future. It cuts
+      like shit, but if you're desperate enough, you could kill someone with it. Just
+      remember to keep it charged.
+  - balance: Energy swords are huge objects while activated.
+  paganiy:
+  - bugfix: the interns recalculated the damage of the shotguns catridges and made
+      corrections
+2025-08-23:
+  lelandkemble:
+  - bugfix: Fishing gloves MODule now actually lowers the difficulty of fishing like
+      it says
+2025-08-24:
+  grungussuss:
+  - qol: '*jump emote will not print a message'
+  lelandkemble:
+  - bugfix: Cargo's warehouse is now magically charged enough to cast the Grand Ritual
+  tontyGH:
+  - bugfix: New player tutorials will no longer look extremely broken

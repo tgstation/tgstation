@@ -64,11 +64,13 @@
 		return
 	switch(action)
 		if("detach")
-			chassis.ui_selected_module_index = null
-			detach(get_turf(src))
+			if(detachable)
+				chassis.ui_selected_module_index = null
+				detach(get_turf(src))
 			. = TRUE
 		if("toggle")
-			set_active(!active)
+			if(can_be_toggled)
+				set_active(!active)
 			. = TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
