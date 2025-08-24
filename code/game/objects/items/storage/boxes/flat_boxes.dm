@@ -28,5 +28,5 @@
 
 /obj/item/storage/box/flat/fentanylpatches/Initialize()
 	. = ..()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 3)
 		new /obj/item/reagent_containers/applicator/patch/fent(src)
