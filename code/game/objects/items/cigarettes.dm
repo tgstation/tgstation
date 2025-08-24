@@ -987,8 +987,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "An ergonomic, low-key delivery method for the combusted. This apparatus taught the ancients much wisdom."
 	icon_state = "crackpipe"
 	inhand_icon_state = "crackpipeon"
-	inhand_icon_on = "crackpipeon"
-	inhand_icon_off = "crackpipe"
 	icon_on = "crackpipeon"
 	icon_off = "crackpipe"
 	inhand_icon_on = null
