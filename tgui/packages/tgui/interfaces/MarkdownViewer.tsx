@@ -34,7 +34,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
     content = sanitizeText(content, /* advHtml = */ false);
   }
 
-  // eslint-disable-next-line react/no-danger
+  // biome-ignore lint/security/noDangerouslySetInnerHtml: ignore
   return <div dangerouslySetInnerHTML={{ __html: content }} />;
 };
 

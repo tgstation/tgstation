@@ -277,7 +277,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/attacked_by(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(broken || !.) // breaking a mirror truly gets you bad luck!
+	if(broken || . <= 0) // breaking a mirror truly gets you bad luck!
 		return
 	to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
 	user.AddComponent(/datum/component/omen, incidents_left = 7)
