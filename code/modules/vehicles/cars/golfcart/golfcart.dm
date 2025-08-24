@@ -19,10 +19,10 @@
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
 	key_type = /obj/item/key/golfcart
-	///Base movespeed before any modifiers
-	var/static/base_movedelay = 1.5
+	///Base movespeed before any modifiers. Humans run at 1.5 movedelay.
+	var/static/base_movedelay = 1.25
 	///Base movespeed for the hotrod before any modifiers
-	var/static/hotrod_base_movedelay = 0.75
+	var/static/hotrod_base_movedelay = 0.65
 	///Particle holder for low integrity smoking
 	var/obj/effect/abstract/particle_holder/smoke = null
 	///Seperate image for the cargo buckled to the rear
