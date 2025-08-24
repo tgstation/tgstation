@@ -28,8 +28,8 @@
 		user.visible_message(
 			span_notice("You carefully slice the poppy's pod, collecting the fragrant, alluring sap.")
 		)
-		return
-	..()
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/food/grown/poppy
 	seed = /obj/item/seeds/poppy
