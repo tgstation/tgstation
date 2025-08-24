@@ -504,24 +504,53 @@ effective or pretty fucking useless.
 
 /obj/item/brain_scrambler
 	name = "brain scrambler"
-	desc = "A handheld tubular device with a small camera like hole on one end and a button on the back. Supposedly it was invented by Nanotrasen for erasing public memory but the Syndicate claims otherwise, no one seem to remember who truly invented it though."
+	desc = "A handheld device with a small camera on one end, and a button on the back. Supposedly it was invented by Nanotrasen for erasing public memory but the Syndicate claims otherwise - No one seems to remember who truly invented it..."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "brain_scrambler"
 	var/active = FALSE
+	var/time_length = 5
 
 /obj/item/brain_scrambler/attack_self(mob/user, modifiers)
 	. = ..()
-	if(!active)
-		balloon_alert(user, "scrambling mode on!")
-		active = TRUE
-		RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(scramble_mind))
-	else
-		balloon_alert(user, "scrambling mode off!")
-		active = FALSE
-		UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
+	var/turf/our_tile = get_turf(src)
+	var/turf/user_tile = get_turf(user)
+	if(our_tile != user_tile)
+		return
 
+	if(!active)
+		balloon_alert(user, "scrambling mode on")
+		active = TRUE
+		activate(user)
+	else
+		balloon_alert(user, "scrambling mode off")
+		active = FALSE
+		deactivate(user)
+
+/obj/item/brain_scrambler/dropped(mob/user, silent)
+	. = ..()
+	if(active)
+		say("No user detected, deactivating...")
+		deactivate()
+
+/obj/item/brain_scrambler/proc/activate(mob/user)
+	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(scramble_mind))
+
+/obj/item/brain_scrambler/proc/deactivate(mob/user)
+	UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
+
+//Erase the target's memory of the last X minutes depending on time_length along with the user.
 /obj/item/brain_scrambler/proc/scramble_mind(mob/user, mob/target)
 	SIGNAL_HANDLER
 
-	to_chat(target, span_warning("You forget everything within the last 2 minutes along with [user]"))
+	if(HAS_TRAIT(target, TRAIT_UNCONVERTABLE))
+		to_chat(user, span_notice("[target] seems to have resisted the memory erasure!"))
+		return
+
+	target.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
+	target.clear_fullscreen("fade_to_black", animated = 2 SECONDS)
+	to_chat(target, span_hypnophrase("As you look toward [user], a flash suddenly overwhelm you. You forget everything in the last [time_length] minutes as well as [user]."))
+	to_chat(target, span_warning("You should try to act like the past [time_length] didn't happen!"))
+
 	to_chat(user, span_notice("You successfully erase memory of yourself from [target]"))
+
+	target.log_message("had their memory of the last [time_length] minutes along with [user] during those time.")
