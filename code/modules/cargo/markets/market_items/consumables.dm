@@ -77,7 +77,7 @@
 
 /datum/market_item/consumable/methshipment
 	name = "Wholesale Methaphemtamine Shipment"
-	desc = "Dealer quantity! Don't get in high on your own supply. Or do. You already bought it."
+	desc = "Dealer quantity! Don't get high on your own supply. Or do. You already bought it."
 	item = /obj/item/storage/box/methdealer
 
 	stock_min = 1
@@ -95,7 +95,7 @@
 	stock_max = 3
 	price_min = CARGO_CRATE_VALUE * 0.5
 	price_max = CARGO_CRATE_VALUE * 1.2
-	availability_prob = 25
+	availability_prob = 35
 
 /datum/market_item/consumable/kronkshipment
 	name = "Wholesale Kronkaine Shipment"
@@ -113,19 +113,19 @@
 	desc = "A big rock, for when you just need a hit."
 	item = /obj/item/food/drug/meth_crystal
 
-	stock_min = 2
-	stock_max = 8
+	stock_min = 1
+	stock_max = 5
 	price_min = CARGO_CRATE_VALUE * 0.4
 	price_max = CARGO_CRATE_VALUE * 0.5
-	availability_prob = 45
+	availability_prob = 35
 
 /datum/market_item/consumable/heroin
 	name = "Heroin"
 	desc = "Chase the dragon."
 	item = /obj/item/food/drug/opium
 
-	stock_min = 2
-	stock_max = 8
+	stock_min = 1
+	stock_max = 5
 	price_min = CARGO_CRATE_VALUE * 0.35
 	price_max = CARGO_CRATE_VALUE * 0.5
-	availability_prob = 60
+	availability_prob = 45
