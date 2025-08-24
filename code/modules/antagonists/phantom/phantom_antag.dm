@@ -1,6 +1,7 @@
 /datum/antagonist/phantom
 	name = "\improper Phantom"
-	show_in_antagpanel = FALSE
+	pref_flag = ROLE_PHANTOM
+	show_in_antagpanel = TRUE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	antagpanel_category = ANTAG_GROUP_HORRORS
