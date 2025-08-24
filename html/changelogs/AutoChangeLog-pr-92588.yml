@@ -1,0 +1,4 @@
+author: "dj-34"
+delete-after: True
+changes:
+  - bugfix: "Camera flash sound now plays before customization, fixing the delayed sound issue caused by it."
