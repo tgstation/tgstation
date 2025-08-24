@@ -85,7 +85,7 @@
 
 /datum/chemical_reaction/meth_crystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
+	for(var/i in 1 to round(created_volume, CHEMICAL_VOLUME_ROUNDING))
 		var/obj/item/food/drug/meth_crystal/new_crystal = new(location)
 		new_crystal.pixel_x = rand(-6, 6)
 		new_crystal.pixel_y = rand(-6, 6)
