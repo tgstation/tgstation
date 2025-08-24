@@ -99,12 +99,12 @@
 	if(pulledby)
 		var/olddir = dir
 		var/newdir
-		if (dir & (EAST | WEST))
-			newdir = (dir & EAST) ? EAST : WEST
-		else if (dir & (NORTH | SOUTH))
-			newdir = (dir & NORTH) ? NORTH : SOUTH
+		if (direct & (EAST | WEST))
+			newdir = (direct & EAST) ? EAST : WEST
+		else if (direct & (NORTH | SOUTH))
+			newdir = (direct & NORTH) ? NORTH : SOUTH
 		else
-			newdir = dir
+			newdir = direct
 		. = ..()
 		dir = newdir
 		if (get_step(src, turn(dir, 180)) != get_turf(pulledby))
