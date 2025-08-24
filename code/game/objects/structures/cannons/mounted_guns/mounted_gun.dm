@@ -107,7 +107,7 @@
 	max_shots_per_fire = 8
 	shots_in_gun = 8
 	shots_per_load = 2
-	ammo_type = /obj/item/ammo_casing/junk
+	ammo_type = /obj/item/ammo_casing/shotgun/junk
 	projectile_type = /obj/projectile/bullet/junk
 	loaded_gun = TRUE
 	fully_loaded_gun = TRUE
