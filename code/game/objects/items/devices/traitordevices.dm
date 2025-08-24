@@ -527,10 +527,10 @@ effective or pretty fucking useless.
 		deactivate(user)
 
 /obj/item/brain_scrambler/dropped(mob/user, silent)
-	. = ..()
 	if(active)
 		say("No user detected, deactivating...")
 		deactivate()
+	. = ..()
 
 /obj/item/brain_scrambler/proc/activate(mob/user)
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(scramble_mind))
@@ -546,11 +546,11 @@ effective or pretty fucking useless.
 		to_chat(user, span_notice("[target] seems to have resisted the memory erasure!"))
 		return
 
-	target.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
-	target.clear_fullscreen("fade_to_black", animated = 2 SECONDS)
+	target.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
+	target.clear_fullscreen("flash", animated = 4 SECONDS)
 	to_chat(target, span_hypnophrase("As you look toward [user], a flash suddenly overwhelm you. You forget everything in the last [time_length] minutes as well as [user]."))
 	to_chat(target, span_warning("You should try to act like the past [time_length] didn't happen!"))
 
 	to_chat(user, span_notice("You successfully erase memory of yourself from [target]"))
 
-	target.log_message("had their memory of the last [time_length] minutes along with [user] during those time.")
+	target.log_message("had their memory of the last [time_length] minutes along with [user] during those time.", LOG_GAME)
