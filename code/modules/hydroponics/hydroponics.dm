@@ -940,7 +940,7 @@
 
 	else if(O.sharpness) // Allows for the extraction (for opium or sap) interaction if a seed has it.
 		if(myseed && !myseed.extracted)
-			myseed.attackby(O, user, src)
+			myseed.interact_with_atom(O, user, src)
 		else
 			return ..()
 

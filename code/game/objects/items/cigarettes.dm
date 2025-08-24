@@ -944,21 +944,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
 		return ..()
 
-	var/atom/to_smoke = thing
 	if(packeditem)
 		to_chat(user, span_warning("It is already packed!"))
 		return
-	if(istype(to_smoke, /obj/item/food/grown) && !HAS_TRAIT(to_smoke, TRAIT_DRIED))
+
+	if(istype(thing, /obj/item/food/grown) && !HAS_TRAIT(thing, TRAIT_DRIED))
 		to_chat(user, span_warning("It has to be dried first!"))
 		return
 
-	to_chat(user, span_notice("You stuff [to_smoke] into [src]."))
+	to_chat(user, span_notice("You stuff [thing] into [src]."))
 	smoketime = 13 MINUTES
-	packeditem = to_smoke.name
+	packeditem = thing.name
 	update_name()
-	if(to_smoke.reagents)
-		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transferred_by = user)
-	qdel(to_smoke)
+	if(thing.reagents)
+		thing.reagents.trans_to(src, thing.reagents.total_volume, transferred_by = user)
+	qdel(thing)
 
 
 /obj/item/cigarette/pipe/attack_self(mob/user)
