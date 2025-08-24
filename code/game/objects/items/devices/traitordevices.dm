@@ -512,9 +512,7 @@ effective or pretty fucking useless.
 
 /obj/item/brain_scrambler/attack_self(mob/user, modifiers)
 	. = ..()
-	var/turf/our_tile = get_turf(src)
-	var/turf/user_tile = get_turf(user)
-	if(our_tile != user_tile)
+	if(!(src in user.held_items))
 		return
 
 	if(!active)
@@ -528,7 +526,6 @@ effective or pretty fucking useless.
 
 /obj/item/brain_scrambler/dropped(mob/user, silent)
 	if(active)
-		say("No user detected, deactivating...")
 		deactivate(user)
 	. = ..()
 
