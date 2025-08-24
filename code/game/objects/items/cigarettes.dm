@@ -939,7 +939,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
-/obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/cigarette/pipe/interact_with_atom(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
 	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
 		return ..()
 
