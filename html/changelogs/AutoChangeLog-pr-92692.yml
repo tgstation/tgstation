@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "\"Move To Top\" verb no longer destroys wall-mounted intercoms"
