@@ -96,7 +96,6 @@
 	embed_chance = 7
 	fall_chance = 2
 	rip_time = 2 SECONDS
-	var/transfer_per_second = 0.75
 	COOLDOWN_DECLARE(reagent_message_cd)
 	ignore_throwspeed_threshold = TRUE
 
@@ -135,7 +134,7 @@
 	amount = rand(1, 7) / 10
 	reagents.add_reagent(/datum/reagent/consumable/sugar, amount)
 
-/obj/item/food/drug/opium/raw/attackby(obj/item/I, mob/user) //Allows for combining opium up to 7u of morphine in a ball of opium, leaving the quantity vague-ish until maxed. Any further refinement requires machinery.
+/obj/item/food/drug/opium/raw/interact_with_atom(obj/item/I, mob/user) //Allows for combining opium up to 7u of morphine in a ball of opium, leaving the quantity vague-ish until maxed. Any further refinement requires machinery.
 	if(istype(I, /obj/item/food/drug/opium/raw))
 		var/obj/item/food/drug/opium/raw/other = I
 
