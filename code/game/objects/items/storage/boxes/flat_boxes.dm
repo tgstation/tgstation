@@ -26,7 +26,7 @@
 	desc = "A small box containing a set of unmarked transdermal patches."
 	icon_state = "flat"
 
-/obj/item/storage/box/flat/fentanylpatches/Initialize()
+/obj/item/storage/box/flat/fentanylpatches/Initialize(mapload)
 	. = ..()
 	for(var/i = 1 to 3)
 		new /obj/item/reagent_containers/applicator/patch/fent(src)
