@@ -195,22 +195,6 @@
 ///Try to load something onto the cart. This proc may fail if the obj is not in allowed_cargo or is in banned_cargo.
 /obj/vehicle/ridden/golfcart/proc/load(obj/to_load)
 	if (!to_load)
-		if (!cargo)
-			return
-		var/list/candidates = list(
-			get_step(child, turn(dir, 180)),
-			get_step(child, turn(dir, 90)),
-			get_step(child, turn(dir, 270)),
-		)
-		var/atom/dropoff = get_turf(child)
-		for (var/atom/turf in candidates)
-			if (turf.Enter(cargo, src))
-				dropoff = turf
-				break
-		cargo.forceMove(dropoff)
-		cargo = null
-		child.layer = BELOW_HUMAN_HITBOX_LAYER
-		update_appearance(UPDATE_ICON)
 		return
 	if (cargo)
 		return
@@ -222,13 +206,28 @@
 	if (istype(to_load, /obj/structure/closet))
 		var/obj/structure/closet/crate = to_load
 		crate.close()
-	to_load.forceMove(src)
+	to_load.forceMove(child)
 	cargo = to_load
 	child.layer = CARGO_HITBOX_LAYER
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/unload()
-	return load(null)
+	if (!cargo)
+		return
+	var/list/candidates = list(
+		get_step(child, turn(dir, 180)),
+		get_step(child, turn(dir, 90)),
+		get_step(child, turn(dir, 270)),
+	)
+	var/atom/dropoff = get_turf(child)
+	for (var/atom/turf in candidates)
+		if (turf.Enter(cargo, src))
+			dropoff = turf
+			break
+	cargo.forceMove(dropoff)
+	cargo = null
+	child.layer = BELOW_HUMAN_HITBOX_LAYER
+	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/is_hotrod()
 	return engine && engine_state && engine_state == ENGINE_WELDED
