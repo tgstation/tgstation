@@ -298,7 +298,7 @@
 			else
 				break
 
-	// do this before picture is taken so we can reveal revenants for the photo
+	// do this before picture is taken so we can reveal phantoms for the photo
 	steal_souls(mobs)
 
 	for(var/mob/mob as anything in mobs)

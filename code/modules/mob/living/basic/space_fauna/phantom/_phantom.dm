@@ -1,18 +1,18 @@
 /// Source for a trait we get when we're stunned
-#define REVENANT_STUNNED_TRAIT "revenant_got_stunned"
+#define PHANTOM_STUNNED_TRAIT "phantom_got_stunned"
 
-/// Revenants: "Ghosts" that are invisible and move like ghosts, cannot take damage while invisible
+/// Phantoms: "Ghosts" that are invisible and move like ghosts, cannot take damage while invisible
 /// Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 /// Admin-spawn or random event
-/mob/living/basic/revenant
-	name = "revenant"
+/mob/living/basic/phantom
+	name = "phantom"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/simple/mob.dmi'
-	icon_state = "revenant_idle"
+	icon_state = "phantom_idle"
 	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
-	invisibility = INVISIBILITY_REVENANT
-	health = INFINITY //Revenants don't use health, they use essence instead
+	invisibility = INVISIBILITY_PHANTOM
+	health = INFINITY //Phantoms don't use health, they use essence instead
 	maxHealth = INFINITY
 	plane = GHOST_PLANE
 	sight = SEE_SELF
@@ -32,7 +32,7 @@
 	response_harm_continuous = "punches through"
 	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but phantoms no-sell them anyway.
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
@@ -45,54 +45,54 @@
 	speed = 1
 	unique_name = TRUE
 	hud_possible = list(ANTAG_HUD)
-	hud_type = /datum/hud/revenant
+	hud_type = /datum/hud/phantom
 
 	/// The icon we use while just floating around.
-	var/icon_idle = "revenant_idle"
+	var/icon_idle = "phantom_idle"
 	/// The icon we use while in a revealed state.
-	var/icon_reveal = "revenant_revealed"
+	var/icon_reveal = "phantom_revealed"
 	/// The icon we use when stunned (temporarily frozen)
-	var/icon_stun = "revenant_stun"
+	var/icon_stun = "phantom_stun"
 	/// The icon we use while draining someone.
-	var/icon_drain = "revenant_draining"
+	var/icon_drain = "phantom_draining"
 
 	/// Are we currently dormant (ectoplasm'd)?
 	var/dormant = FALSE
 	/// Are we currently draining someone?
 	var/draining = FALSE
-	/// Have we already given this revenant abilities?
+	/// Have we already given this phantom abilities?
 	var/generated_objectives_and_spells = FALSE
 
 	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
 	var/list/drained_mobs = null
-	/// List of action ability datums to grant on Initialize. Keep in mind that anything with the `/aoe/revenant` subtype starts locked by default.
+	/// List of action ability datums to grant on Initialize. Keep in mind that anything with the `/aoe/phantom` subtype starts locked by default.
 	var/static/list/datum/action/abilities = list(
-		/datum/action/cooldown/spell/aoe/revenant/blight,
-		/datum/action/cooldown/spell/aoe/revenant/defile,
-		/datum/action/cooldown/spell/aoe/revenant/haunt_object,
-		/datum/action/cooldown/spell/aoe/revenant/malfunction,
-		/datum/action/cooldown/spell/aoe/revenant/overload,
-		/datum/action/cooldown/spell/list_target/telepathy/revenant,
+		/datum/action/cooldown/spell/aoe/phantom/blight,
+		/datum/action/cooldown/spell/aoe/phantom/defile,
+		/datum/action/cooldown/spell/aoe/phantom/haunt_object,
+		/datum/action/cooldown/spell/aoe/phantom/malfunction,
+		/datum/action/cooldown/spell/aoe/phantom/overload,
+		/datum/action/cooldown/spell/list_target/telepathy/phantom,
 	)
 
-	/// The resource, and health, of revenants.
+	/// The resource, and health, of phantoms.
 	var/essence = 75
 	/// The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
 	var/max_essence = 75
-	/// If the revenant regenerates essence or not
+	/// If the phantom regenerates essence or not
 	var/essence_regenerating = TRUE
 	/// How much essence regenerates per second
 	var/essence_regen_amount = 2.5
-	/// How much essence the revenant has stolen
+	/// How much essence the phantom has stolen
 	var/essence_accumulated = 0
 	/// How much stolen essence is available for unlocks
 	var/essence_excess = 0
-	/// How long the revenant is revealed for, is about 2 seconds times this var.
+	/// How long the phantom is revealed for, is about 2 seconds times this var.
 	var/unreveal_time = 0
-	/// How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
+	/// How many perfect, regen-cap increasing souls the phantom has. //TODO, add objective for getting a perfect soul(s?)
 	var/perfectsouls = 0
 
-/mob/living/basic/revenant/Initialize(mapload)
+/mob/living/basic/phantom/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES), INNATE_TRAIT)
@@ -104,13 +104,13 @@
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	name = generate_random_mob_name()
 
-	GLOB.revenant_relay_mobs |= src
+	GLOB.phantom_relay_mobs |= src
 
-/mob/living/basic/revenant/Destroy()
-	GLOB.revenant_relay_mobs -= src
+/mob/living/basic/phantom/Destroy()
+	GLOB.phantom_relay_mobs -= src
 	return ..()
 
-/mob/living/basic/revenant/Login()
+/mob/living/basic/phantom/Login()
 	. = ..()
 	if(!. || isnull(client))
 		return FALSE
@@ -125,23 +125,23 @@
 		return TRUE
 
 	generated_objectives_and_spells = TRUE
-	mind.set_assigned_role(SSjob.get_job_type(/datum/job/revenant))
+	mind.set_assigned_role(SSjob.get_job_type(/datum/job/phantom))
 	SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
-	mind.add_antag_datum(/datum/antagonist/revenant)
+	mind.add_antag_datum(/datum/antagonist/phantom)
 	return TRUE
 
-/// Signal Handler Injection to handle Life() stuff for revenants
-/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT, times_fired)
+/// Signal Handler Injection to handle Life() stuff for phantoms
+/mob/living/basic/phantom/proc/on_life(seconds_per_tick = SSMOBS_DT, times_fired)
 	SIGNAL_HANDLER
 
 	if(dormant)
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
-	if(HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && essence <= 0)
+	if(HAS_TRAIT(src, TRAIT_PHANTOM_REVEALED) && essence <= 0)
 		death()
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
-	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
+	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_PHANTOM_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
 		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
@@ -149,18 +149,18 @@
 	update_appearance(UPDATE_ICON)
 	update_health_hud()
 
-/mob/living/basic/revenant/AltClickOn(atom/target)
+/mob/living/basic/phantom/AltClickOn(atom/target)
 	if(CAN_I_SEE(target))
 		client.loot_panel.open(get_turf(target))
 
-/mob/living/basic/revenant/get_status_tab_items()
+/mob/living/basic/phantom/get_status_tab_items()
 	. = ..()
 	. += "Current Essence: [essence >= max_essence ? essence : "[essence] / [max_essence]"] E"
 	. += "Total Essence Stolen: [essence_accumulated] SE"
 	. += "Unused Stolen Essence: [essence_excess] SE"
 	. += "Perfect Souls Stolen: [perfectsouls]"
 
-/mob/living/basic/revenant/update_health_hud()
+/mob/living/basic/phantom/update_health_hud()
 	if(isnull(hud_used))
 		return
 
@@ -171,7 +171,7 @@
 		essencecolor = "#1D2953" //oh jeez you're dying
 	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
-/mob/living/basic/revenant/say(
+/mob/living/basic/phantom/say(
 	message,
 	bubble_type,
 	list/spans = list(),
@@ -199,9 +199,9 @@
 
 	log_talk(message, LOG_SAY)
 	var/rendered = span_deadsay("<b>UNDEAD: [src]</b> says, \"[message]\"")
-	relay_to_list_and_observers(rendered, GLOB.revenant_relay_mobs, src)
+	relay_to_list_and_observers(rendered, GLOB.phantom_relay_mobs, src)
 
-/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly, so we gotta do some wacky override stuff
+/mob/living/basic/phantom/ClickOn(atom/A, params) //phantoms can't interact with the world directly, so we gotta do some wacky override stuff
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
@@ -218,18 +218,18 @@
 		return
 
 	// This is probably the most cringe place I could put this but whatever -
-	// Revenants can click on spirit boards for seances like ghosts
+	// Phantoms can click on spirit boards for seances like ghosts
 	if(istype(A, /obj/structure/spirit_board) \
-		&& !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) \
+		&& !HAS_TRAIT(src, TRAIT_PHANTOM_REVEALED) \
 		&& !HAS_TRAIT(src, TRAIT_NO_TRANSFORM) \
-		&& !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED))
+		&& !HAS_TRAIT(src, TRAIT_PHANTOM_INHIBITED))
 
 		var/obj/structure/spirit_board/board = A
 		board.spirit_board_pick_letter(src)
 		return
 
-/mob/living/basic/revenant/ranged_secondary_attack(atom/target, modifiers)
-	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
+/mob/living/basic/phantom/ranged_secondary_attack(atom/target, modifiers)
+	if(HAS_TRAIT(src, TRAIT_PHANTOM_INHIBITED) || HAS_TRAIT(src, TRAIT_PHANTOM_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
 		return
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
@@ -237,8 +237,8 @@
 	orbitsize -= (orbitsize / ICON_SIZE_ALL) * (ICON_SIZE_ALL * 0.25)
 	orbit(target, orbitsize)
 
-/mob/living/basic/revenant/adjust_health(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+/mob/living/basic/phantom/adjust_health(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && !HAS_TRAIT(src, TRAIT_PHANTOM_REVEALED))
 		return 0
 
 	. = amount
@@ -251,14 +251,14 @@
 
 	return .
 
-/mob/living/basic/revenant/orbit(atom/target)
+/mob/living/basic/phantom/orbit(atom/target)
 	setDir(SOUTH) // reset dir so the right directional sprites show up
 	return ..()
 
-/mob/living/basic/revenant/update_icon_state()
+/mob/living/basic/phantom/update_icon_state()
 	. = ..()
 
-	if(HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+	if(HAS_TRAIT(src, TRAIT_PHANTOM_REVEALED))
 		icon_state = icon_reveal
 		return
 
@@ -272,69 +272,69 @@
 
 	icon_state = icon_idle
 
-/mob/living/basic/revenant/med_hud_set_health()
+/mob/living/basic/phantom/med_hud_set_health()
 	return //we use no hud
 
-/mob/living/basic/revenant/med_hud_set_status()
+/mob/living/basic/phantom/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/basic/revenant/dust(just_ash, drop_items, force)
+/mob/living/basic/phantom/dust(just_ash, drop_items, force)
 	death()
 
-/mob/living/basic/revenant/gib()
+/mob/living/basic/phantom/gib()
 	death()
 
-/mob/living/basic/revenant/can_perform_action(atom/target, action_bitflags)
+/mob/living/basic/phantom/can_perform_action(atom/target, action_bitflags)
 	return FALSE
 
-/mob/living/basic/revenant/ex_act(severity, target)
+/mob/living/basic/phantom/ex_act(severity, target)
 	return FALSE //Immune to the effects of explosions.
 
-/mob/living/basic/revenant/blob_act(obj/structure/blob/attacking_blob)
+/mob/living/basic/phantom/blob_act(obj/structure/blob/attacking_blob)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
-/mob/living/basic/revenant/singularity_act()
+/mob/living/basic/phantom/singularity_act()
 	return //don't walk into the singularity expecting to find corpses, okay?
 
-/mob/living/basic/revenant/narsie_act()
+/mob/living/basic/phantom/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
-/mob/living/basic/revenant/bullet_act()
-	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || dormant)
+/mob/living/basic/phantom/bullet_act()
+	if(!HAS_TRAIT(src, TRAIT_PHANTOM_REVEALED) || dormant)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
-/mob/living/basic/revenant/death()
-	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || dormant) //Revenants cannot die if they aren't revealed //or are already dead
+/mob/living/basic/phantom/death()
+	if(!HAS_TRAIT(src, TRAIT_PHANTOM_REVEALED) || dormant) //Phantoms cannot die if they aren't revealed //or are already dead
 		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PHANTOM_STUNNED_TRAIT)
 	dormant = TRUE
 
 	visible_message(
 		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
-		span_revendanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
+		span_phantomdanger("NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]..."),
 	)
 
 	SetInvisibility(INVISIBILITY_NONE, id=type)
-	icon_state = "revenant_draining"
+	icon_state = "phantom_draining"
 	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 
 	animate(src, alpha = 0, time = 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(move_to_ectoplasm)), 3 SECONDS)
 
 /// Forces the mob, once dormant, to move inside ectoplasm until it can regenerate.
-/mob/living/basic/revenant/proc/move_to_ectoplasm()
+/mob/living/basic/phantom/proc/move_to_ectoplasm()
 	if(QDELETED(src) || !dormant) // something fucky happened, abort. we MUST be dormant to go inside the ectoplasm.
 		return
 
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 
-	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src)) // the ectoplasm will handle moving us out of dormancy
+	var/obj/item/ectoplasm/phantom/goop = new(get_turf(src)) // the ectoplasm will handle moving us out of dormancy
 	goop.old_ckey = client.ckey
-	goop.revenant = src
+	goop.phantom = src
 	forceMove(goop)
 
-/mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
+/mob/living/basic/phantom/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM)) // just in case it occurs, need to provide some feedback
 		balloon_alert(src, "can't move!")
@@ -348,36 +348,36 @@
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// Generates the information the player needs to know how to play their role, and returns it as a list.
-/mob/living/basic/revenant/proc/create_login_string()
+/mob/living/basic/phantom/proc/create_login_string()
 	RETURN_TYPE(/list)
 	var/list/returnable_list = list()
-	returnable_list += span_deadsay(span_boldbig("You are a revenant."))
-	returnable_list += span_bold("Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.")
+	returnable_list += span_deadsay(span_boldbig("You are a phantom."))
+	returnable_list += span_bold("Your formerly mundane spirit has been infused with alien energies and empowered into a phantom.")
 	returnable_list += span_bold("You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.")
 	returnable_list += span_bold("You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.")
 	returnable_list += span_bold("To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.")
 	returnable_list += span_bold("<i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i>")
-	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
+	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Phantom\">the wiki page</a> to learn more.")
 	return returnable_list
 
-/mob/living/basic/revenant/generate_random_mob_name()
+/mob/living/basic/phantom/generate_random_mob_name()
 	var/list/built_name_strings = list()
-	built_name_strings += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
+	built_name_strings += pick(strings(PHANTOM_NAME_FILE, "spirit_type"))
 	built_name_strings += " of "
-	built_name_strings += pick(strings(REVENANT_NAME_FILE, "adverb"))
-	built_name_strings += pick(strings(REVENANT_NAME_FILE, "theme"))
+	built_name_strings += pick(strings(PHANTOM_NAME_FILE, "adverb"))
+	built_name_strings += pick(strings(PHANTOM_NAME_FILE, "theme"))
 	return built_name_strings.Join("")
 
-/mob/living/basic/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
+/mob/living/basic/phantom/proc/on_baned(obj/item/weapon, mob/living/user)
 	SIGNAL_HANDLER
 	visible_message(
 		span_warning("[src] violently flinches!"),
-		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"),
+		span_phantomdanger("As [weapon] passes through you, you feel your essence draining away!"),
 	)
-	apply_status_effect(/datum/status_effect/revenant/inhibited, 3 SECONDS)
+	apply_status_effect(/datum/status_effect/phantom/inhibited, 3 SECONDS)
 
 /// Incorporeal move check: blocked by holy-watered tiles and salt piles.
-/mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
+/mob/living/basic/phantom/proc/incorporeal_move_check(atom/destination)
 	var/turf/open/floor/step_turf = get_turf(destination)
 	if(isnull(step_turf))
 		return TRUE // what? whatever let it happen
@@ -388,8 +388,8 @@
 
 	if(locate(/obj/effect/decal/cleanable/food/salt) in step_turf)
 		balloon_alert(src, "blocked by salt!")
-		apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
-		apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
+		apply_status_effect(/datum/status_effect/phantom/revealed, 2 SECONDS)
+		apply_status_effect(/datum/status_effect/incapacitating/paralyzed/phantom, 2 SECONDS)
 		return FALSE
 
 	if(locate(/obj/effect/blessing) in step_turf)
@@ -398,53 +398,53 @@
 
 	return TRUE
 
-/mob/living/basic/revenant/proc/cast_check(essence_cost)
+/mob/living/basic/phantom/proc/cast_check(essence_cost)
 	if(QDELETED(src))
 		return
 
 	var/turf/current = get_turf(src)
 
 	if(isclosedturf(current))
-		to_chat(src, span_revenwarning("You cannot use abilities from inside of a wall."))
+		to_chat(src, span_phantomwarning("You cannot use abilities from inside of a wall."))
 		return FALSE
 
 	for(var/obj/thing in current)
 		if(!thing.density || thing.CanPass(src, get_dir(current, src)))
 			continue
-		to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
+		to_chat(src, span_phantomwarning("You cannot use abilities inside of a dense object."))
 		return FALSE
 
-	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED))
-		to_chat(src, span_revenwarning("Your powers have been suppressed by a nullifying energy!"))
+	if(HAS_TRAIT(src, TRAIT_PHANTOM_INHIBITED))
+		to_chat(src, span_phantomwarning("Your powers have been suppressed by a nullifying energy!"))
 		return FALSE
 
 	if(!change_essence_amount(essence_cost, TRUE))
-		to_chat(src, span_revenwarning("You lack the essence to use that ability."))
+		to_chat(src, span_phantomwarning("You lack the essence to use that ability."))
 		return FALSE
 
 	return TRUE
 
-/mob/living/basic/revenant/proc/unlock(essence_cost)
+/mob/living/basic/phantom/proc/unlock(essence_cost)
 	if(essence_excess < essence_cost)
 		return FALSE
 	essence_excess -= essence_cost
 	update_mob_action_buttons()
 	return TRUE
 
-/mob/living/basic/revenant/proc/death_reset()
-	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
+/mob/living/basic/phantom/proc/death_reset()
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, PHANTOM_STUNNED_TRAIT)
 	forceMove(get_turf(src))
 	// clean slate, so no more debilitating effects
-	remove_status_effect(/datum/status_effect/revenant/revealed)
-	remove_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant)
-	remove_status_effect(/datum/status_effect/revenant/inhibited)
+	remove_status_effect(/datum/status_effect/phantom/revealed)
+	remove_status_effect(/datum/status_effect/incapacitating/paralyzed/phantom)
+	remove_status_effect(/datum/status_effect/phantom/inhibited)
 	draining = FALSE
 	dormant = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	RemoveInvisibility(type)
 	alpha = 255
 
-/mob/living/basic/revenant/proc/change_essence_amount(essence_to_change_by, silent = FALSE, source = null)
+/mob/living/basic/phantom/proc/change_essence_amount(essence_to_change_by, silent = FALSE, source = null)
 	if(QDELETED(src))
 		return FALSE
 
@@ -461,9 +461,9 @@
 	update_mob_action_buttons()
 	if(!silent)
 		if(essence_to_change_by > 0)
-			to_chat(src, span_revennotice("Gained [essence_to_change_by]E [source ? "from [source]":""]."))
+			to_chat(src, span_phantomnotice("Gained [essence_to_change_by]E [source ? "from [source]":""]."))
 		else
-			to_chat(src, span_revenminor("Lost [essence_to_change_by]E [source ? "from [source]":""]."))
+			to_chat(src, span_phantomminor("Lost [essence_to_change_by]E [source ? "from [source]":""]."))
 	return TRUE
 
-#undef REVENANT_STUNNED_TRAIT
+#undef PHANTOM_STUNNED_TRAIT

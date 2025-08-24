@@ -21,9 +21,9 @@
 	var/list/analysis = list()
 	//check tempo and lines
 	var/song_length = song.lines.len * song.tempo
-	analysis += span_revenbignotice("[src] speaks to you...")
-	analysis += span_revennotice("\"This song has <b>[song.lines.len]</b> lines and a tempo of <b>[song.tempo]</b>.\"")
-	analysis += span_revennotice("\"Multiplying these together gives a song length of <b>[song_length]</b>.\"")
-	analysis += span_revennotice("\"To get a bonus effect from [GLOB.deity] upon finishing a performance, you need a song length of <b>[FESTIVAL_SONG_LONG_ENOUGH]</b>.\"")
+	analysis += span_phantombignotice("[src] speaks to you...")
+	analysis += span_phantomnotice("\"This song has <b>[song.lines.len]</b> lines and a tempo of <b>[song.tempo]</b>.\"")
+	analysis += span_phantomnotice("\"Multiplying these together gives a song length of <b>[song_length]</b>.\"")
+	analysis += span_phantomnotice("\"To get a bonus effect from [GLOB.deity] upon finishing a performance, you need a song length of <b>[FESTIVAL_SONG_LONG_ENOUGH]</b>.\"")
 
 	to_chat(playing_song, analysis.Join("\n"))

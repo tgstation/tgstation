@@ -1,6 +1,6 @@
 /// Helper macro, for ease of expanding checks for mobs which cannot be blinded
 /// There are no reason why these cannot be blinded, it is simply for "design reasons" (these things shouldn't be blinded)
-#define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isrevenant(mob))
+#define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isphantom(mob))
 
 /// Blindness
 /datum/status_effect/grouped/blindness

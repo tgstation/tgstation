@@ -281,7 +281,7 @@
 		"min_players": 0,
 		"weight": 0
 	},
-	"Spawn Revenant": {
+	"Spawn Phantom": {
 		"min_players": 5,
 		"weight": 7
 	},

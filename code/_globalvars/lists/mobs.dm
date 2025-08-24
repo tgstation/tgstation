@@ -76,8 +76,8 @@ GLOBAL_LIST_EMPTY(current_observers_list)
 /// All living mobs which can hear blob telepathy
 GLOBAL_LIST_EMPTY(blob_telepathy_mobs)
 
-/// All "living" (because revenants are in between mortal planes or whatever) mobs that can hear revenants
-GLOBAL_LIST_EMPTY(revenant_relay_mobs)
+/// All "living" (because phantoms are in between mortal planes or whatever) mobs that can hear phantoms
+GLOBAL_LIST_EMPTY(phantom_relay_mobs)
 
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)

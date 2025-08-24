@@ -1424,11 +1424,11 @@
 			"rarity": "common"
 		},
 		{
-			"id": "revenant",
-			"name": "Revenant",
-			"desc": "The revenant is a spirit of pure hatred, kept alive by drawing the life force of its enemies.",
-			"rules": "When a creature on your battlefield dies, Revenant gains 1/0.",
-			"icon_state": "revenant",
+			"id": "phantom",
+			"name": "Phantom",
+			"desc": "The phantom is a spirit of pure hatred, kept alive by drawing the life force of its enemies.",
+			"rules": "When a creature on your battlefield dies, Phantom gains 1/0.",
+			"icon_state": "phantom",
 			"power": "2",
 			"resolve": "3",
 			"faction": "Syndicate",
@@ -1438,7 +1438,7 @@
 			"series": "coreset2020",
 			"rarity": "rare",
 			"summon_icon_file": "icons/mob/simple/mob.dmi",
-			"summon_icon_state": "revenant_revealed"
+			"summon_icon_state": "phantom_revealed"
 		},
 		{
 			"id": "re_education",

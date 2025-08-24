@@ -6,7 +6,7 @@
 	cure_text = "Holy water or extensive rest."
 	spread_text = "A burst of unholy energy"
 	cures = list(/datum/reagent/water/holywater)
-	cure_chance = 30 //higher chance to cure, because revenants are assholes
+	cure_chance = 30 //higher chance to cure, because phantoms are assholes
 	agent = "Unholy Forces"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CURABLE
@@ -35,14 +35,14 @@
 			cure()
 			return FALSE
 		if(SPT_PROB(1.5 * stage, seconds_per_tick))
-			to_chat(affected_mob, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
+			to_chat(affected_mob, span_phantomnotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
 			affected_mob.adjust_confusion(8 SECONDS)
 			need_mob_update += affected_mob.adjustStaminaLoss(20, updating_stamina = FALSE)
-			new /obj/effect/temp_visual/revenant(affected_mob.loc)
+			new /obj/effect/temp_visual/phantom(affected_mob.loc)
 		if(stagedamage < stage)
 			stagedamage++
 			need_mob_update += affected_mob.adjustToxLoss(1 * stage * seconds_per_tick, updating_health = FALSE) //should, normally, do about 30 toxin damage.
-			new /obj/effect/temp_visual/revenant(affected_mob.loc)
+			new /obj/effect/temp_visual/phantom(affected_mob.loc)
 		if(SPT_PROB(25, seconds_per_tick))
 			need_mob_update += affected_mob.adjustStaminaLoss(stage, updating_stamina = FALSE)
 		if(need_mob_update)
@@ -61,11 +61,11 @@
 		if(5)
 			if(!finalstage)
 				finalstage = TRUE
-				to_chat(affected_mob, span_revenbignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
+				to_chat(affected_mob, span_phantombignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
 				affected_mob.adjustStaminaLoss(22.5 * seconds_per_tick, updating_stamina = FALSE)
-				new /obj/effect/temp_visual/revenant(affected_mob.loc)
+				new /obj/effect/temp_visual/phantom(affected_mob.loc)
 				if(affected_mob.dna && affected_mob.dna.species)
 					affected_mob.set_haircolor("#1d2953", override = TRUE)
-				affected_mob.visible_message(span_warning("[affected_mob] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
+				affected_mob.visible_message(span_warning("[affected_mob] looks terrifyingly gaunt..."), span_phantomnotice("You suddenly feel like your skin is <i>wrong</i>..."))
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
 				addtimer(CALLBACK(src, PROC_REF(cure)), 10 SECONDS)

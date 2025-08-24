@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/faithless,
 		/mob/living/basic/ghost,
 		/mob/living/basic/heretic_summon,
-		/mob/living/basic/revenant,
+		/mob/living/basic/phantom,
 		/mob/living/basic/shade,
 		/mob/living/basic/skeleton,
 		/mob/living/basic/wizard,

@@ -49,7 +49,7 @@
 	// Blocks beams from triggering themselves, important to avoid infinite loops
 	if(istype(beam_atom, /obj/effect/ebeam))
 		return FALSE
-	// Anti-revenant / anti-ghost guard
+	// Anti-phantom / anti-ghost guard
 	if(beam_atom.invisibility)
 		return FALSE
 	// In general non-dense items should not block beams, but make special cases for things being thrown

@@ -80,6 +80,7 @@ Neutron
 Nightmare
 Peacekeeper
 Peddler
+Phantom
 Point
 Pooh
 Private

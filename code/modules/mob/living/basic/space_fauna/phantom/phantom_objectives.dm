@@ -1,22 +1,22 @@
-/datum/objective/revenant
+/datum/objective/phantom
 
-/datum/objective/revenant/New()
+/datum/objective/phantom/New()
 	target_amount = rand(350, 600)
 	explanation_text = "Absorb [target_amount] points of essence from humans."
 	return ..()
 
-/datum/objective/revenant/check_completion()
-	if(!isrevenant(owner.current))
+/datum/objective/phantom/check_completion()
+	if(!isphantom(owner.current))
 		return FALSE
-	var/mob/living/basic/revenant/owner_mob = owner.current
+	var/mob/living/basic/phantom/owner_mob = owner.current
 	if(QDELETED(owner_mob) || owner_mob.stat == DEAD)
 		return FALSE
 	var/essence_stolen = owner_mob.essence_accumulated
 	return essence_stolen >= target_amount
 
-/datum/objective/revenant_fluff
+/datum/objective/phantom_fluff
 
-/datum/objective/revenant_fluff/New()
+/datum/objective/phantom_fluff/New()
 	var/list/explanation_texts = list(
 		"Assist and exacerbate existing threats at critical moments.",
 		"Cause as much chaos and anger as you can without being killed.",
@@ -33,5 +33,5 @@
 	explanation_text = pick(explanation_texts)
 	return ..()
 
-/datum/objective/revenant_fluff/check_completion()
+/datum/objective/phantom_fluff/check_completion()
 	return TRUE

@@ -20,7 +20,7 @@
 		"walk" = CALLBACK(src, PROC_REF(ghost_speed), target, MOVE_INTENT_WALK),
 		), 7 SECONDS)
 
-	to_chat(target, span_revenwarning("You feel a ghastly presence!!!"))
+	to_chat(target, span_phantomwarning("You feel a ghastly presence!!!"))
 
 
 /datum/smite/ghost_control/proc/ghost_shove(mob/living/carbon/target)

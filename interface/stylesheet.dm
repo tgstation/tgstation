@@ -97,12 +97,12 @@ h1.alert, h2.alert		{color: #000000;}
 .holoparasite			{color: #35333a;}
 .bounty					{color: #ab6613;	font-style: italic;}
 
-.revennotice			{color: #1d2953;}
-.revenboldnotice		{color: #1d2953;	font-weight: bold;}
-.revenbignotice			{color: #1d2953;	font-weight: bold;	font-size: 3;}
-.revenminor				{color: #823abb}
-.revenwarning			{color: #760fbb;	font-style: italic;}
-.revendanger			{color: #760fbb;	font-weight: bold;	font-size: 3;}
+.phantomnotice			{color: #1d2953;}
+.phantomboldnotice		{color: #1d2953;	font-weight: bold;}
+.phantombignotice			{color: #1d2953;	font-weight: bold;	font-size: 3;}
+.phantomminor				{color: #823abb}
+.phantomwarning			{color: #760fbb;	font-style: italic;}
+.phantomdanger			{color: #760fbb;	font-weight: bold;	font-size: 3;}
 
 .sentientdisease		{color: #446600;}
 

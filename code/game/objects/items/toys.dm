@@ -1348,7 +1348,7 @@
 /obj/item/toy/figure/coroner
 	name = "\improper Coroner action figure"
 	icon_state = "coroner"
-	toysay = "Get the damn Revenant outta here!"
+	toysay = "Get the damn Phantom outta here!"
 
 /obj/item/toy/figure/paramedic
 	name = "\improper Paramedic action figure"

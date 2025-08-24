@@ -597,23 +597,23 @@
 	new_ninja.dna.update_dna_identity() // ninja antag datum needs dna to be set first
 	candidate.add_antag_datum(/datum/antagonist/ninja)
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant
-	name = "Revenant"
-	config_tag = "Revenant"
-	preview_antag_datum = /datum/antagonist/revenant
+/datum/dynamic_ruleset/midround/from_ghosts/phantom
+	name = "Phantom"
+	config_tag = "Phantom"
+	preview_antag_datum = /datum/antagonist/phantom
 	midround_type = LIGHT_MIDROUND
-	pref_flag = ROLE_REVENANT
+	pref_flag = ROLE_PHANTOM
 	ruleset_flags = RULESET_INVADER
 	weight = 5
 	min_pop = 10
 	max_antag_cap = 1
 	repeatable = FALSE
-	signup_atom_appearance = /mob/living/basic/revenant
-	/// There must be this many dead mobs on the station for a revenant to spawn (of all mob types, not just humans)
+	signup_atom_appearance = /mob/living/basic/phantom
+	/// There must be this many dead mobs on the station for a phantom to spawn (of all mob types, not just humans)
 	/// Remember there's usually 2-3 that spawn in the Morgue roundstart, so adjust this accordingly
 	var/required_station_corpses = 10
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/can_be_selected()
+/datum/dynamic_ruleset/midround/from_ghosts/phantom/can_be_selected()
 	if(!..())
 		return FALSE
 	var/num_station_corpses = 0
@@ -624,13 +624,13 @@
 
 	return num_station_corpses > required_station_corpses
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/create_ruleset_body()
-	return new /mob/living/basic/revenant(pick(get_revenant_spawns()))
+/datum/dynamic_ruleset/midround/from_ghosts/phantom/create_ruleset_body()
+	return new /mob/living/basic/phantom(pick(get_phantom_spawns()))
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/assign_role(datum/mind/candidate)
-	return // revenant new() handles everything
+/datum/dynamic_ruleset/midround/from_ghosts/phantom/assign_role(datum/mind/candidate)
+	return // phantom new() handles everything
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/proc/get_revenant_spawns()
+/datum/dynamic_ruleset/midround/from_ghosts/phantom/proc/get_phantom_spawns()
 	var/list/spawn_locs = list()
 	for(var/mob/deceased in GLOB.dead_mob_list)
 		var/turf/deceased_turf = get_turf(deceased)

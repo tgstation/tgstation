@@ -56,7 +56,7 @@
 				continue
 			if(victim.mob_biotypes & MOB_SPIRIT)
 				continue
-			if(victim.invisibility >= INVISIBILITY_REVENANT)
+			if(victim.invisibility >= INVISIBILITY_PHANTOM)
 				continue
 			// This gives all mobs in view "5" haunt level
 			// For reference picking one up gives "2"
@@ -134,6 +134,6 @@
 			haunt_color = "#52336e", \
 			haunt_duration = duration, \
 			aggro_radius = range, \
-			spawn_message = span_revenwarning("[object_to_possess] slowly rises upward, hanging menacingly in the air..."), \
-			despawn_message = span_revenwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \
+			spawn_message = span_phantomwarning("[object_to_possess] slowly rises upward, hanging menacingly in the air..."), \
+			despawn_message = span_phantomwarning("[object_to_possess] settles to the floor, lifeless and unmoving."), \
 		)

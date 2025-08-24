@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
-#define isrevenant(A) (istype(A, /mob/living/basic/revenant))
+#define isphantom(A) (istype(A, /mob/living/basic/phantom))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot) || istype(A, /mob/living/basic/bot))
 

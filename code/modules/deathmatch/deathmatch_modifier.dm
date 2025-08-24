@@ -604,4 +604,4 @@
 
 	instantiated_art.teach(player)
 
-	to_chat(player, span_revenboldnotice("Your martial art is [uppertext(instantiated_art.name)]!"))
+	to_chat(player, span_phantomboldnotice("Your martial art is [uppertext(instantiated_art.name)]!"))

@@ -92,7 +92,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 		speed = 3 SECONDS, \
 		effectiveness = 125, \
 	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //less good at killing revenants, much better at killing plants
+	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //less good at killing phantoms, much better at killing plants
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
@@ -160,8 +160,8 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 				haunt_color = "#7be595", \
 				haunt_duration = 1 MINUTES, \
 				aggro_radius = null, \
-				spawn_message = span_revenwarning("[reaped_head] shudders and rises up into the air in a pale green nimbus!"), \
-				despawn_message = span_revenwarning("[reaped_head] falls back to the ground, stationary once more."), \
+				spawn_message = span_phantomwarning("[reaped_head] shudders and rises up into the air in a pale green nimbus!"), \
+				despawn_message = span_phantomwarning("[reaped_head] falls back to the ground, stationary once more."), \
 				throw_force_bonus = 0, \
 				throw_force_max = 0, \
 			)

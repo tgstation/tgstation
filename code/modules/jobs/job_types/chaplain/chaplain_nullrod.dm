@@ -913,7 +913,7 @@
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	else if(living_target.incorporeal_move >= 1 && !HAS_TRAIT(living_target, TRAIT_REVENANT_REVEALED)) // WE CAN'T SNEAK ATTACK INCORPOREAL JERKS. BUT WE CAN SNEAK ATTACK REVEALED REVENANTS BECAUSE DUH, NULLROD.
+	else if(living_target.incorporeal_move >= 1 && !HAS_TRAIT(living_target, TRAIT_PHANTOM_REVEALED)) // WE CAN'T SNEAK ATTACK INCORPOREAL JERKS. BUT WE CAN SNEAK ATTACK REVEALED PHANTOMS BECAUSE DUH, NULLROD.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 

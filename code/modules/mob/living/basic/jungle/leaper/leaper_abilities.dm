@@ -4,8 +4,8 @@
 	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	button_icon_state = "leaper"
 	desc = "Fires a poisonous leaper bubble towards the victim!"
-	background_icon_state = "bg_revenant"
-	overlay_icon_state = "bg_revenant_border"
+	background_icon_state = "bg_phantom"
+	overlay_icon_state = "bg_phantom_border"
 	cooldown_time = 7 SECONDS
 	projectile_type = /obj/projectile/leaper
 	projectile_sound = 'sound/effects/snap.ogg'
@@ -112,8 +112,8 @@
 	name = "Blood Rain"
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "blood_effect_falling"
-	background_icon_state = "bg_revenant"
-	overlay_icon_state = "bg_revenant_border"
+	background_icon_state = "bg_phantom"
+	overlay_icon_state = "bg_phantom_border"
 	desc = "Rain down poisonous droplets of blood!"
 	cooldown_time = 10 SECONDS
 	click_to_activate = FALSE
@@ -192,8 +192,8 @@
 	name = "Belly Flop"
 	desc = "Belly flop your enemy!"
 	cooldown_time = 14 SECONDS
-	background_icon_state = "bg_revenant"
-	overlay_icon_state = "bg_revenant_border"
+	background_icon_state = "bg_phantom"
+	overlay_icon_state = "bg_phantom_border"
 	shared_cooldown = NONE
 
 /datum/action/cooldown/mob_cooldown/belly_flop/Activate(atom/target)
@@ -235,8 +235,8 @@
 	name = "Summon Suicide Toads"
 	button_icon = 'icons/mob/simple/animal.dmi'
 	button_icon_state = "frog_trash"
-	background_icon_state = "bg_revenant"
-	overlay_icon_state = "bg_revenant_border"
+	background_icon_state = "bg_phantom"
+	overlay_icon_state = "bg_phantom_border"
 	spell_requirements = NONE
 	cooldown_time = 30 SECONDS
 	summon_type = list(/mob/living/basic/frog/suicide)

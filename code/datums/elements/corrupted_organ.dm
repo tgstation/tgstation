@@ -37,14 +37,14 @@
 			/datum/component/haunted_item,\
 			haunt_color = "#00000000", \
 			aggro_radius = 4, \
-			spawn_message = span_revenwarning("[organ] hovers ominously into the air, pulsating with unnatural vigour!"), \
-			despawn_message = span_revenwarning("[organ] falls motionless to the ground."), \
+			spawn_message = span_phantomwarning("[organ] hovers ominously into the air, pulsating with unnatural vigour!"), \
+			despawn_message = span_phantomwarning("[organ] falls motionless to the ground."), \
 		)
 		return
 	var/turf/origin_turf = get_turf(organ)
 	playsound(organ, 'sound/effects/magic/forcewall.ogg', vol = 100)
 	new /obj/effect/temp_visual/curse_blast(origin_turf)
-	organ.visible_message(span_revenwarning("[organ] explodes in a burst of dark energy!"))
+	organ.visible_message(span_phantomwarning("[organ] explodes in a burst of dark energy!"))
 	for(var/mob/living/target in range(1, origin_turf))
 		var/armor = target.run_armor_check(attack_flag = BOMB)
 		target.apply_damage(30, damagetype = BURN, blocked = armor, spread_damage = TRUE)

@@ -57,10 +57,10 @@
 	. = ..()
 
 	if(effect_power < 10) //Under 10% participation, we do nothing more than a small visual *poof*.
-		new /obj/effect/temp_visual/revenant/cracks(get_turf(src))
+		new /obj/effect/temp_visual/phantom/cracks(get_turf(src))
 		return
 
-	if(effect_power >= 10) //Performs something akin to a revenant defile spell.
+	if(effect_power >= 10) //Performs something akin to a phantom defile spell.
 		var/effect_range = ghosts_orbiting + 3
 		for(var/impacted_thing in range(effect_range, src))
 			if(isfloorturf(impacted_thing))
@@ -82,14 +82,14 @@
 			if(ishuman(impacted_thing))
 				var/mob/living/carbon/human/mob_to_infect = impacted_thing
 				mob_to_infect.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
-				new /obj/effect/temp_visual/revenant(get_turf(mob_to_infect))
-				to_chat(mob_to_infect, span_revenminor("A cacophony of ghostly wailing floods your ears for a moment. The noise subsides, but a distant whispering continues echoing inside of your head..."))
+				new /obj/effect/temp_visual/phantom(get_turf(mob_to_infect))
+				to_chat(mob_to_infect, span_phantomminor("A cacophony of ghostly wailing floods your ears for a moment. The noise subsides, but a distant whispering continues echoing inside of your head..."))
 
 			if(istype(impacted_thing, /obj/structure/window))
 				var/obj/structure/window/window_to_damage = impacted_thing
 				window_to_damage.take_damage(rand(60, 90))
 				if(window_to_damage?.fulltile)
-					new /obj/effect/temp_visual/revenant/cracks(get_turf(window_to_damage))
+					new /obj/effect/temp_visual/phantom/cracks(get_turf(window_to_damage))
 
 	if(effect_power >= 35)
 		var/effect_range = ghosts_orbiting + 3
@@ -188,7 +188,7 @@
 		if(policy)
 			to_chat(new_ghost, policy)
 		else
-			to_chat(new_ghost, span_revenboldnotice("You are a lost soul, brought back to the realm of the living. Your time on this plane is limited, and you will soon be dragged back into the void!"))
+			to_chat(new_ghost, span_phantomboldnotice("You are a lost soul, brought back to the realm of the living. Your time on this plane is limited, and you will soon be dragged back into the void!"))
 		new_ghost.log_message("was returned to the living world as a ghost by an ectoplasmic anomaly.", LOG_GAME)
 
 /**
@@ -205,7 +205,7 @@
 	for(var/mob/living/mob_to_delete as anything in delete_list)
 		mob_to_delete.visible_message(span_alert("The [mob_to_delete] wails as it is torn back into the void!"), span_alert("You let out one last wail as you are sucked back into the realm of the dead. Then suddenly, you're back in the comforting embrace of the afterlife."), span_hear("You hear ethereal wailing."))
 		playsound(mob_to_delete, pick(delete_list), 50)
-		new /obj/effect/temp_visual/revenant/cracks(get_turf(mob_to_delete))
+		new /obj/effect/temp_visual/phantom/cracks(get_turf(mob_to_delete))
 		new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(mob_to_delete))
 		mob_to_delete.ghostize(FALSE) //So we don't throw an alert for deleting a mob with a key inside.
 		qdel(mob_to_delete)

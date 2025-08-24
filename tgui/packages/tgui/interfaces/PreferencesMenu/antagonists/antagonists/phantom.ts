@@ -1,11 +1,11 @@
 import { type Antagonist, Category } from '../base';
 
-const Revenant: Antagonist = {
-  key: 'revenant',
-  name: 'Revenant',
+const Phantom: Antagonist = {
+  key: 'phantom',
+  name: 'Phantom',
   description: [
     `
-      Become the mysterious revenant. Break windows, overload lights, and eat
+      Become the mysterious phantom. Break windows, overload lights, and eat
       the crew's life force, all while talking to your old community of
       disgruntled ghosts.
     `,
@@ -13,4 +13,4 @@ const Revenant: Antagonist = {
   category: Category.Midround,
 };
 
-export default Revenant;
+export default Phantom;

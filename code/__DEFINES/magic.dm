@@ -87,7 +87,7 @@ DEFINE_BITFIELD(spell_requirements, list(
 #define MAGIC_RESISTANCE (1<<0)
 /// Tinfoil hat magic resistance that blocks mental magic (telepathy / mind links, mind curses, abductors)
 #define MAGIC_RESISTANCE_MIND (1<<1)
-/// Holy magic resistance that blocks unholy magic (revenant, vampire, voice of god)
+/// Holy magic resistance that blocks unholy magic (phantom, vampire, voice of god)
 #define MAGIC_RESISTANCE_HOLY (1<<2)
 
 DEFINE_BITFIELD(antimagic_flags, list(

@@ -334,7 +334,7 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-["Revenant"]
+["Phantom"]
 weight = 5
 min_pop = 10
 blacklisted_roles = []

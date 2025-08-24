@@ -1676,7 +1676,7 @@
 2023-11-12T09:04:57.4972641Z 	screenshot_antag_icons_spacedragon was put in data/screenshots_new
 2023-11-12T09:04:57.4978863Z 	screenshot_antag_icons_abductor was put in data/screenshots_new
 2023-11-12T09:04:57.4984390Z 	screenshot_antag_icons_spaceninja was put in data/screenshots_new
-2023-11-12T09:04:57.5142179Z 	screenshot_antag_icons_revenant was put in data/screenshots_new
+2023-11-12T09:04:57.5142179Z 	screenshot_antag_icons_phantom was put in data/screenshots_new
 2023-11-12T09:04:57.5158225Z 	screenshot_antag_icons_sentientdisease was put in data/screenshots_new
 2023-11-12T09:04:57.5164048Z 	screenshot_antag_icons_changelingmidround was put in data/screenshots_new
 2023-11-12T09:04:57.5175747Z 	screenshot_antag_icons_paradoxclone was put in data/screenshots_new

@@ -500,7 +500,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
 /// Immune to being afflicted by time stop (spell)
 #define TRAIT_TIME_STOP_IMMUNE "time_stop_immune"
-/// Revenants draining you only get a very small benefit.
+/// Phantoms draining you only get a very small benefit.
 #define TRAIT_WEAK_SOUL "weak_soul"
 /// This mob has no soul
 #define TRAIT_NO_SOUL "no_soul"
@@ -574,10 +574,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob has their face visually, but not physically, covered
 #define TRAIT_FACE_COVERED "face_covered"
 
-/// Trait added when a revenant is visible.
-#define TRAIT_REVENANT_REVEALED "revenant_revealed"
-/// Trait added when a revenant has been inhibited (typically by the bane of a holy weapon)
-#define TRAIT_REVENANT_INHIBITED "revenant_inhibited"
+/// Trait added when a phantom is visible.
+#define TRAIT_PHANTOM_REVEALED "phantom_revealed"
+/// Trait added when a phantom has been inhibited (typically by the bane of a holy weapon)
+#define TRAIT_PHANTOM_INHIBITED "phantom_inhibited"
 
 /// Trait which prevents you from becoming overweight
 #define TRAIT_NOFAT "cant_get_fat"

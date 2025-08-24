@@ -66,7 +66,7 @@
 #define ROLE_POSIBRAIN "Posibrain"
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_REV "Revolutionary"
-#define ROLE_REVENANT "Revenant"
+#define ROLE_PHANTOM "Phantom"
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 /// This flag specifically is used as a generic catch-all antag ban

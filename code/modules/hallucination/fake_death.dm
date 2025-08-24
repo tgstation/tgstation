@@ -42,7 +42,7 @@
 				"coders",
 				"heretics",
 				"myself",
-				"revenants",
+				"phantoms",
 				"revs",
 				"sec",
 				"ss13",

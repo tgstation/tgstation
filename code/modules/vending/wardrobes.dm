@@ -558,7 +558,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "DeusVend"
 	desc = "God wills your purchase."
 	icon_state = "chapdrobe"
-	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
+	product_ads = "Are you being bothered by cultists or pesky phantoms? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the DeusVend!"
 	products = list(
 		/obj/item/choice_beacon/holy = 1,

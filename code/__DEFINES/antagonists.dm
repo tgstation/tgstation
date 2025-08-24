@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define OBJECTIVE_WEIGHT_LIKELY 15
 #define OBJECTIVE_WEIGHT_VERY_LIKELY 20
 
-#define REVENANT_NAME_FILE "revenant_names.json"
+#define PHANTOM_NAME_FILE "phantom_names.json"
 
 /// Antag panel groups
 #define ANTAG_GROUP_ABDUCTORS "Abductors"

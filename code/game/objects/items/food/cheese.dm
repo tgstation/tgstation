@@ -64,7 +64,7 @@
  * Used in wizard grand rituals' optional cheesy alternative.
  */
 /obj/item/food/cheese/wheel/proc/consume_cheese()
-	visible_message(span_revenwarning("...and is consumed in a vortex of chaos!"))
+	visible_message(span_phantomwarning("...and is consumed in a vortex of chaos!"))
 	do_sparks(number = 1, cardinal_only = TRUE, source = get_turf(src))
 	qdel(src)
 

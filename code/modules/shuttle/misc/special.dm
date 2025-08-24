@@ -52,12 +52,12 @@
 	. = ..()
 	if(active_tables.len >= tables_required)
 		if(!active)
-			visible_message("<span class='revenboldnotice'>\
+			visible_message("<span class='phantomboldnotice'>\
 				[src] opens its eyes.</span>")
 		active = TRUE
 	else
 		if(active)
-			visible_message("<span class='revenboldnotice'>\
+			visible_message("<span class='phantomboldnotice'>\
 				[src] closes its eyes.</span>")
 		active = FALSE
 	update_appearance()
@@ -114,8 +114,8 @@
 	for(var/i in found - sleepers)
 		var/mob/living/L = i
 		L.add_atom_colour(COLOR_PURPLE, TEMPORARY_COLOUR_PRIORITY)
-		L.visible_message(span_revennotice("A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious."),
-			span_revendanger("[desc]"))
+		L.visible_message(span_phantomnotice("A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious."),
+			span_phantomdanger("[desc]"))
 		// Don't let them sit suround unconscious forever
 		addtimer(CALLBACK(src, PROC_REF(sleeper_dreams), L), 10 SECONDS)
 
@@ -128,7 +128,7 @@
 	for(var/i in sleepers - found)
 		var/mob/living/L = i
 		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_PURPLE)
-		L.visible_message("<span class='revennotice'>The glow from [L] fades \
+		L.visible_message("<span class='phantomnotice'>The glow from [L] fades \
 			away.</span>")
 		L.grab_ghost()
 
@@ -144,7 +144,7 @@
 
 /obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
 	if(sleeper in sleepers)
-		to_chat(sleeper, span_revennotice("While you slumber, you have the strangest dream, like you can see yourself from the outside."))
+		to_chat(sleeper, span_phantomnotice("While you slumber, you have the strangest dream, like you can see yourself from the outside."))
 		sleeper.ghostize(TRUE)
 
 /obj/structure/table/abductor/wabbajack/left

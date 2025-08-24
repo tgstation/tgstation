@@ -96,8 +96,8 @@
 /datum/action/cooldown/tentacle_slap
 	name = "Tentacle slap"
 	desc = "Slap a creature with your tentacles."
-	background_icon_state = "bg_revenant"
-	overlay_icon_state = "bg_revenant_border"
+	background_icon_state = "bg_phantom"
+	overlay_icon_state = "bg_phantom_border"
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "tentacle_slap"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED

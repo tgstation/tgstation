@@ -235,10 +235,10 @@
 				var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
 				if(salt)
 					to_chat(L, span_warning("[salt] bars your passage!"))
-					if(isrevenant(L))
-						var/mob/living/basic/revenant/ghostie = L
-						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
-						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
+					if(isphantom(L))
+						var/mob/living/basic/phantom/ghostie = L
+						ghostie.apply_status_effect(/datum/status_effect/phantom/revealed, 2 SECONDS)
+						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/phantom, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Some strange aura is blocking the way."))

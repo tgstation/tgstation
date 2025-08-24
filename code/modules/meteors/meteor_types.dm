@@ -447,7 +447,7 @@
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
 	if(.)
-		new /obj/effect/temp_visual/revenant(get_turf(src))
+		new /obj/effect/temp_visual/phantom(get_turf(src))
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()
