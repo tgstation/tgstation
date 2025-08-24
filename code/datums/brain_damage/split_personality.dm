@@ -61,6 +61,18 @@
 	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
+	stranger_backseat.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = stranger_backseat.mind, \
+		old_body = ghost.mind, \
+	)
+
+	owner_backseat.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = owner_backseat.mind, \
+		old_body = owner, \
+	)
+
 
 /datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick, times_fired)
 	if(owner.stat == DEAD)
@@ -285,14 +297,6 @@
 	)
 	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
 	inebriation?.iron_liver = TRUE
-
-/datum/brain_trauma/severe/split_personality/schism(mob/dead/observer/ghost)
-	. = ..()
-	stranger_backseat.AddComponent( \
-			/datum/component/temporary_body, \
-			old_mind = stranger_backseat.mind, \
-			old_body = ghost.mind, \
-	)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
