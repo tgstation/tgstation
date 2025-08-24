@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Cargo's warehouse is now magically charged enough to cast the Grand Ritual"
