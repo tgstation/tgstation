@@ -1,5 +1,6 @@
 import { sortBy, uniq } from 'es-toolkit';
 import { filter, map } from 'es-toolkit/compat';
+import { atom, useAtom } from 'jotai';
 import { useState } from 'react';
 import {
   Box,
@@ -12,7 +13,6 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -22,8 +22,9 @@ function getOutfitKey(outfit) {
   return outfit.path || outfit.ref;
 }
 
-function useOutfitTabs(categories) {
-  return useState(categories[0]);
+const outfitTabAtom = atom('');
+function useOutfitTabs(initial) {
+  return useAtom(initial);
 }
 
 export function SelectEquipment(props) {
@@ -41,7 +42,7 @@ export function SelectEquipment(props) {
     ...outfits.map((entry) => entry.category),
     'Custom',
   ]);
-  const [tab] = useOutfitTabs(categories);
+  const [tab] = useAtom(outfitTabAtom);
 
   const [searchText, setSearchText] = useState('');
   const searchFilter = createSearch(
@@ -114,7 +115,9 @@ export function SelectEquipment(props) {
 
 function DisplayTabs(props) {
   const { categories } = props;
-  const [tab, setTab] = useOutfitTabs(categories);
+
+  const [tab, setTab] = useAtom(outfitTabAtom);
+
   return (
     <Tabs textAlign="center">
       {categories.map((category) => (
@@ -132,8 +135,8 @@ function DisplayTabs(props) {
 
 function OutfitDisplay(props) {
   const { act, data } = useBackend();
-  const { current_outfit } = data;
-  const { entries, currentTab } = props;
+  const { current_outfit, categories } = data;
+  const { entries, currentTab = categories[0] } = props;
 
   return (
     <Section fill scrollable>
