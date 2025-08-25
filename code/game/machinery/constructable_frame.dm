@@ -142,6 +142,20 @@
 	if(!istype(board, board_type) || !board.build_path)
 		balloon_alert(user, "invalid board!")
 		return FALSE
+
+	// Check if we're in a virtual domain and trying to install shuttle circuit boards to stop loot gremlins escaping back to station
+	var/area/current_area = get_area(src)
+	if(istype(current_area, /area/virtual_domain))
+		if(istype(board, /obj/item/circuitboard/computer/shuttle) || \
+		   ispath(board.build_path, /obj/machinery/computer/shuttle) || \
+		   ispath(board.build_path, /obj/machinery/computer/camera_advanced/shuttle_docker))
+			board.visible_message(span_danger("[board] sparks and burns out! Nanotrasen thanks you for your creativity. Your innovation has been denied and deleted."))
+			do_sparks(5, FALSE, src)
+			playsound(src, 'sound/effects/clockcult_gateway_disrupted.ogg', 50, TRUE)
+			qdel(board)
+			balloon_alert(user, "circuit board destroyed!")
+			return FALSE
+
 	if(by_hand && !user.transferItemToLoc(board, src))
 		return FALSE
 	else if(!board.forceMove(src))
