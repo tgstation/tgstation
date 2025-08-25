@@ -71,7 +71,8 @@
 	. = ..()
 	if (stat == DEAD)
 		return
-	. += emissive_appearance(icon, "watcher_emissive", src)
+	. += emissive_appearance(icon, "watcher_emissive", src, effect_type = EMISSIVE_NO_BLOOM)
+	. += emissive_appearance(icon, "watcher_emissive_bloom", src)
 
 /// I love eating diamonds yum
 /mob/living/basic/mining/watcher/proc/consume(atom/movable/thing)

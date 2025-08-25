@@ -72,6 +72,7 @@
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
@@ -137,6 +138,10 @@
 	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
+
+/mob/living/basic/mining/goldgrub/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'

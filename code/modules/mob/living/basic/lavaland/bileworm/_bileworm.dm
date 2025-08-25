@@ -57,3 +57,9 @@
 		/datum/action/cooldown/mob_cooldown/resurface = BB_BILEWORM_RESURFACE,
 	)
 	grant_actions_by_list(other_innate_actions)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/bileworm/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
