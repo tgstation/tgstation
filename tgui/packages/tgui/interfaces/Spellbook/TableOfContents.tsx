@@ -23,7 +23,7 @@ export function TableOfContents(props) {
         lineHeight={lineHeightToc}
         fluid
         icon="fire"
-        onClick={() => setTabIndex(Tab.Offensive)}
+        onClick={() => setTabIndex(Tab.Defensive)}
       >
         Deadly Evocations
       </Button>
@@ -41,7 +41,7 @@ export function TableOfContents(props) {
         lineHeight={lineHeightToc}
         fluid
         icon="globe-americas"
-        onClick={() => setTabIndex(Tab.Mobility)}
+        onClick={() => setTabIndex(Tab.Assistance)}
       >
         Magical Transportation
       </Button>
@@ -58,7 +58,7 @@ export function TableOfContents(props) {
         lineHeight={lineHeightToc}
         fluid
         icon="crown"
-        onClick={() => setTabIndex(Tab.Challenges)}
+        onClick={() => setTabIndex(Tab.Rituals)}
       >
         Challenges
       </Button>
@@ -75,7 +75,7 @@ export function TableOfContents(props) {
         lineHeight={lineHeightToc}
         fluid
         icon="thumbs-up"
-        onClick={() => setTabIndex(Tab.Loadouts)}
+        onClick={() => setTabIndex(Tab.Randomize)}
       >
         Wizard Approved Loadouts
       </Button>
@@ -92,7 +92,7 @@ export function TableOfContents(props) {
         lineHeight={lineHeightToc}
         fluid
         icon="cog"
-        onClick={() => setTabIndex(Tab.Perks)}
+        onClick={() => setTabIndex(Tab.TableOfContents2)}
       >
         Perks
       </Button>
