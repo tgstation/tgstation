@@ -138,6 +138,14 @@
 				ptank.forceMove(get_turf(src))
 				ptank = W
 				to_chat(user, span_notice("You swap the plasma tank in [src]!"))
+			AddComponent(\
+				/datum/component/bullet_intercepting,\
+				block_chance = 15,\
+				on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
+				active_slots = ITEM_SLOT_HANDS,\
+				block_charges = 1,\
+				block_type = list(BULLET,LASER),\
+			)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
@@ -247,6 +255,14 @@
 		status = TRUE
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
+			AddComponent(\
+				/datum/component/bullet_intercepting,\
+				block_chance = 100,\
+				on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
+				active_slots = ITEM_SLOT_HANDS,\
+				block_charges = 1,\
+				block_type = list(BULLET,LASER),\
+			)
 		update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_refill))
 
@@ -256,15 +272,12 @@
 /obj/item/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
-		owner.visible_message(span_danger("\The [attack_text] hits the fuel tank on [owner]'s [name], rupturing it! What a shot!"))
-		var/turf/target_turf = get_turf(owner)
-		owner.log_message("held a flamethrower tank detonated by a projectile ([hitby])", LOG_GAME)
-		igniter.ignite_turf(src,target_turf, release_amount = 100)
-		qdel(ptank)
-		return 1 //It hit the flamethrower, not them
-
+/obj/item/flamethrower/proc/intercepted_bullet_reaction(mob/living/holder, obj/projectile/bullet)
+	holder.visible_message(span_danger("\The [bullet] hits the fuel tank on [holder]'s [name], rupturing it! What a shot!"))
+	var/turf/target_turf = get_turf(holder)
+	holder.log_message("held a flamethrower tank detonated by a projectile ([bullet])", LOG_GAME)
+	igniter.ignite_turf(src,target_turf, release_amount = 100)
+	qdel(ptank)
 
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(heat,2)
