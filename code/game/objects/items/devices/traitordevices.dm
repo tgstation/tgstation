@@ -549,7 +549,7 @@ effective or pretty fucking useless.
 
 	target.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
 	target.clear_fullscreen("flash", animated = 4 SECONDS)
-	to_chat(target, span_big(span_hypnophrase("As you look toward [user], a flash suddenly overwhelms you. You forget everything in the last [time_length] minutes as well as [user].")))
+	to_chat(target, span_big(span_hypnophrase("As you look toward [user], a flash suddenly overwhelms you. You forget what you were doing and who [user] is.")))
 	to_chat(target, span_warning("You should try to act like the past [time_length] didn't happen!"))
 
 	to_chat(user, span_notice("You successfully erase memory of yourself from [target]"))
