@@ -99,7 +99,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				message_admins("[key_name_admin(holder)] has cured all diseases.")
 				for(var/thing in SSdisease.active_diseases)
 					var/datum/disease/D = thing
-					D.cure(0)
+					D.cure()
 
 		if("list_bombers")
 			holder.holder.list_bombers()
