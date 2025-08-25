@@ -529,6 +529,10 @@ effective or pretty fucking useless.
 		deactivate(user)
 	. = ..()
 
+/obj/item/brain_scrambler/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	target_mob.apply_status_effect(/datum/status_effect/confusion, 10 SECONDS)
+
 /obj/item/brain_scrambler/proc/activate(mob/user)
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(scramble_mind))
 
@@ -550,4 +554,4 @@ effective or pretty fucking useless.
 
 	to_chat(user, span_notice("You successfully erase memory of yourself from [target]"))
 
-	target.log_message("had their memory of the last [time_length] minutes along with [user] during those time.", LOG_GAME)
+	target.log_message("had their memory of the last [time_length] minutes along with [user] during those time.", LOG_VICTIM)
