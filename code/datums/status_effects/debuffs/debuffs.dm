@@ -397,9 +397,7 @@
 	stack_threshold = 10
 	max_stacks = 10
 	overlay_file = 'icons/effects/bleed.dmi'
-	underlay_file = 'icons/effects/bleed.dmi'
 	overlay_state = "bleed"
-	underlay_state = "bleed"
 	var/bleed_damage = 200
 
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
