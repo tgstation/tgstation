@@ -142,7 +142,6 @@
 	if(!istype(board, board_type) || !board.build_path)
 		balloon_alert(user, "invalid board!")
 		return FALSE
-
 	if(by_hand && !user.transferItemToLoc(board, src))
 		return FALSE
 	else if(!board.forceMove(src))
