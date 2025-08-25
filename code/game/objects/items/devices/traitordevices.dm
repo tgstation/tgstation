@@ -517,11 +517,9 @@ effective or pretty fucking useless.
 
 	if(!active)
 		balloon_alert(user, "scrambling mode on")
-		active = TRUE
 		activate(user)
 	else
 		balloon_alert(user, "scrambling mode off")
-		active = FALSE
 		deactivate(user)
 
 /obj/item/brain_scrambler/dropped(mob/user, silent)
@@ -534,9 +532,11 @@ effective or pretty fucking useless.
 	target_mob.apply_status_effect(/datum/status_effect/confusion, 10 SECONDS)
 
 /obj/item/brain_scrambler/proc/activate(mob/user)
+	active = TRUE
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(scramble_mind))
 
 /obj/item/brain_scrambler/proc/deactivate(mob/user)
+	active = FALSE
 	UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
 
 //Erase the target's memory of the last X minutes depending on time_length along with the user.
