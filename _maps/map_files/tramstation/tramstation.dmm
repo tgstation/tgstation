@@ -37563,12 +37563,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
-"lZJ" = (
-/obj/machinery/elevator_control_panel/directional/south{
-	linked_elevator_id = "tram_xeno_lift"
-	},
-/turf/open/openspace,
-/area/station/science/xenobiology)
 "lZW" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
@@ -65904,6 +65898,11 @@
 	dir = 6
 	},
 /obj/structure/ladder,
+/obj/machinery/elevator_control_panel/directional/south{
+	linked_elevator_id = "tram_xeno_lift";
+	pixel_x = 31;
+	pixel_y = -31
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "vXL" = (
@@ -182983,7 +182982,7 @@ xVF
 eJQ
 bNx
 aSt
-lZJ
+aSt
 qVr
 aaa
 aaa
