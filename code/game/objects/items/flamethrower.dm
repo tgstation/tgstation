@@ -133,19 +133,19 @@
 		return
 
 	else if(istype(W, /obj/item/tank/internals/plasma))
+		AddComponent(\
+			/datum/component/bullet_intercepting,\
+			block_chance = 15,\
+			on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
+			active_slots = ITEM_SLOT_HANDS,\
+			block_charges = 1,\
+			block_type = list(BULLET,LASER),\
+		)
 		if(ptank)
 			if(user.transferItemToLoc(W,src))
 				ptank.forceMove(get_turf(src))
 				ptank = W
 				to_chat(user, span_notice("You swap the plasma tank in [src]!"))
-			AddComponent(\
-				/datum/component/bullet_intercepting,\
-				block_chance = 15,\
-				on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
-				active_slots = ITEM_SLOT_HANDS,\
-				block_charges = 1,\
-				block_type = list(BULLET,LASER),\
-			)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
@@ -172,6 +172,7 @@
 	user.put_in_hands(ptank)
 	ptank = null
 	to_chat(user, span_notice("You remove the plasma tank from [src]!"))
+	qdel(src.GetComponent(/datum/component/bullet_intercepting))
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -257,7 +258,7 @@
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 			AddComponent(\
 				/datum/component/bullet_intercepting,\
-				block_chance = 100,\
+				block_chance = 15,\
 				on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
 				active_slots = ITEM_SLOT_HANDS,\
 				block_charges = 1,\
