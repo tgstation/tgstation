@@ -1251,7 +1251,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "Bd" = (
 /turf/closed/indestructible/rock,
-/area/space)
+/area/awaymission/caves/bmp_asteroid)
 "Bo" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt,
@@ -1457,7 +1457,7 @@
 	icon_state = "black";
 	name = "the other side"
 	},
-/area/space)
+/area/awaymission/caves/bmp_asteroid)
 "PS" = (
 /obj/machinery/light/small/built/directional/south,
 /obj/machinery/suit_storage_unit/mining{
