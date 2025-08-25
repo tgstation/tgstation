@@ -53284,9 +53284,6 @@
 /turf/open/floor/plating,
 /area/station/commons/vacant_room)
 "rLG" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
