@@ -540,3 +540,27 @@
   - bugfix: Cargo's warehouse is now magically charged enough to cast the Grand Ritual
   tontyGH:
   - bugfix: New player tutorials will no longer look extremely broken
+2025-08-25:
+  Hatterhat:
+  - bugfix: Stamina and projectile speed multipliers on pellet-cloud projectiles (e.g.
+      buckshot, rubber shot, flechettes) now respect appropriate multipliers when
+      fired from appropriate guns.
+  JohnFulpWillard:
+  - bugfix: The escape menu now works for non-widescreen users.
+  Melbert:
+  - bugfix: Wackier hallucinations should rear their head again
+  - bugfix: Ghost eyes hallucination works properly
+  Paxilmaniac:
+  - rscadd: Lets small items be stuck into slices of cheese or lunch meat
+  - balance: Pills in food no longer alert you that you've just swallowed one if you
+      like the food they were stuck in (yum... cheese...)
+  - image: changes the sprites of the bolt action rifles
+  Rhials:
+  - bugfix: Solo fugitives now spawn with a mechanical toolbox, as intended.
+  SmArtKar:
+  - bugfix: Fixed metal hydrogen being blocked from all material storages
+  - bugfix: Fixed barricades not transforming into walls when adding wood to them
+  - bugfix: '"Move To Top" verb no longer destroys wall-mounted intercoms'
+  dj-34:
+  - bugfix: Camera flash sound now plays before customization, fixing the delayed
+      sound issue caused by it.

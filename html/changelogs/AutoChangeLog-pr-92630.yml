@@ -1,5 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - rscadd: "Lets small items be stuck into slices of cheese or lunch meat"
-  - balance: "Pills in food no longer alert you that you've just swallowed one if you like the food they were stuck in (yum... cheese...)"
