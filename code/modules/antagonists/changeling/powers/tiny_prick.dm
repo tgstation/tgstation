@@ -73,12 +73,14 @@
 	button_icon_state = "sting_transform"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
+	part_of_prereq = list(/datum/action/changeling/sting/fake_changeling)
 	/// A reference to our active profile, which we grab DNA from
 	VAR_FINAL/datum/changeling_profile/selected_dna
 	/// Duration of the sting
 	var/sting_duration = 8 MINUTES
 	/// Set this to false via VV to allow golem, plasmaman, or monkey changelings to turn other people into golems, plasmamen, or monkeys
 	var/verify_valid_species = TRUE
+
 
 /datum/action/changeling/sting/transformation/Grant(mob/grant_to)
 	. = ..()
@@ -146,6 +148,7 @@
 	button_icon_state = "sting_armblade"
 	chemical_cost = 20
 	dna_cost = 1
+	part_of_prereq = list(/datum/action/changeling/sting/fake_changeling)
 
 /obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
