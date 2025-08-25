@@ -23,9 +23,6 @@ function getOutfitKey(outfit) {
 }
 
 const outfitTabAtom = atom('');
-function useOutfitTabs(initial) {
-  return useAtom(initial);
-}
 
 export function SelectEquipment(props) {
   const { act, data } = useBackend();
