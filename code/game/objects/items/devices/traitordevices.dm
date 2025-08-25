@@ -531,6 +531,9 @@ effective or pretty fucking useless.
 	. = ..()
 	target_mob.apply_status_effect(/datum/status_effect/confusion, 10 SECONDS)
 
+/obj/item/brain_scrambler/do_pickup_animation(atom/target, turf/source, storage_silent = TRUE)
+	. = ..()
+
 /obj/item/brain_scrambler/proc/activate(mob/user)
 	active = TRUE
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(scramble_mind))

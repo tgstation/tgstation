@@ -1528,7 +1528,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, outfit_wearer, visuals_only, item_slot)
 
-/obj/item/proc/do_pickup_animation(atom/target, turf/source)
+/obj/item/proc/do_pickup_animation(atom/target, turf/source, storage_silent = FALSE)
 	if(!source)
 		if(!istype(loc, /turf))
 			return
@@ -1541,7 +1541,7 @@
 	var/direction = get_dir(source, target)
 	var/to_x = target.base_pixel_x + target.base_pixel_w
 	var/to_y = target.base_pixel_y + target.base_pixel_z
-
+	// handle item pickup from surrounding
 	if(direction & NORTH)
 		to_y += 32
 	else if(direction & SOUTH)
@@ -1550,6 +1550,9 @@
 		to_x += 32
 	else if(direction & WEST)
 		to_x -= 32
+	// handle item puckup from same turf
+	if(storage_silent)// allow items to be pulled out without playing animation
+		return
 	if(!direction)
 		to_y += 10
 		pickup_animation.pixel_x += 6 * (prob(50) ? 1 : -1) //6 to the right or left, helps break up the straight upward move
