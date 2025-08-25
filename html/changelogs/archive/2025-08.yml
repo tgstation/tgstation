@@ -473,3 +473,94 @@
   - map: Adjusts Turret Placement in the AI Upload on Nebulastation
   - map: Adds an External Security Camera to the Starboard Vault Wall overlooking
       the AI Upload on Nebulastation
+2025-08-20:
+  Cameron-The-Raven:
+  - bugfix: Brains will no longer runtime when owner-less
+  panvxv:
+  - bugfix: Fixed bots unable to buckle people to themselves.
+  scriptis:
+  - rscadd: nepotism
+2025-08-21:
+  Absolucy:
+  - bugfix: Digital clocks now process on the correct subsystem.
+  panvxv:
+  - rscadd: Added Disabler SMG Single-Pack
+  - rscadd: Added Laser Carbine Sigle-Pack
+  - balance: Moved Laser Guns crate from security to armory category in cargo
+  - balance: Increased amount of Energy Guns to 3 in Energy Guns crate
+  - balance: Increased amount of NT BR to 3 and magazines to 6 in NT BR crate
+  - rscadd: Added seclight attachment for swat, riot, press helmets
+  - bugfix: Fixed bulletproof helmets switching sprites to normal sec helmet
+  - image: Added sprites of Swat helmet and riot helmet with attached seclight
+  - image: Reworked part of helmet sprites - seclight
+2025-08-22:
+  LT3:
+  - bugfix: Fixed techfab category of janitor holographic sign projector
+  Paxilmaniac:
+  - qol: MOD tethers are now a little easier to click on
+  Pickle-Coding:
+  - bugfix: Fixes water evaporation cooling the air to 2.7 Kelvin.
+  - balance: Water evaporation can cool the floor.
+  SmArtKar:
+  - bugfix: Fixed spraypainted items glowing in the dark
+  - code_imp: Stacking status effects without visual overlays will no longer try to
+      create them and fail to do so.
+  - bugfix: Fixed newspapers not lighting on fire from lighters
+  - bugfix: Fixed table flipping sound/alert spam
+  - bugfix: Fixed plant analyzer blocking all interactions in the darkness
+  - bugfix: Nerfs the Safety Moth. Fixed incident displays displaying adverts even
+      while depowered/broken
+  SyncIt21:
+  - bugfix: converting reagents now computes correct purity & ph when conversion threshold
+      is set
+  - bugfix: converting reagents transfers reagent data correctly only when not filtering
+      sub types
+  - code_imp: converting reagents is faster performance wise
+  carpotoxin:
+  - bugfix: Mutant bodypart overlays (tails and et cetera) that are gender-specific
+      now display correctly
+  lelandkemble:
+  - bugfix: Lizard now have lizard brains
+  necromanceranne:
+  - rscadd: Adds the surplus energy sword; the mall katana of the future. It cuts
+      like shit, but if you're desperate enough, you could kill someone with it. Just
+      remember to keep it charged.
+  - balance: Energy swords are huge objects while activated.
+  paganiy:
+  - bugfix: the interns recalculated the damage of the shotguns catridges and made
+      corrections
+2025-08-23:
+  lelandkemble:
+  - bugfix: Fishing gloves MODule now actually lowers the difficulty of fishing like
+      it says
+2025-08-24:
+  grungussuss:
+  - qol: '*jump emote will not print a message'
+  lelandkemble:
+  - bugfix: Cargo's warehouse is now magically charged enough to cast the Grand Ritual
+  tontyGH:
+  - bugfix: New player tutorials will no longer look extremely broken
+2025-08-25:
+  Hatterhat:
+  - bugfix: Stamina and projectile speed multipliers on pellet-cloud projectiles (e.g.
+      buckshot, rubber shot, flechettes) now respect appropriate multipliers when
+      fired from appropriate guns.
+  JohnFulpWillard:
+  - bugfix: The escape menu now works for non-widescreen users.
+  Melbert:
+  - bugfix: Wackier hallucinations should rear their head again
+  - bugfix: Ghost eyes hallucination works properly
+  Paxilmaniac:
+  - rscadd: Lets small items be stuck into slices of cheese or lunch meat
+  - balance: Pills in food no longer alert you that you've just swallowed one if you
+      like the food they were stuck in (yum... cheese...)
+  - image: changes the sprites of the bolt action rifles
+  Rhials:
+  - bugfix: Solo fugitives now spawn with a mechanical toolbox, as intended.
+  SmArtKar:
+  - bugfix: Fixed metal hydrogen being blocked from all material storages
+  - bugfix: Fixed barricades not transforming into walls when adding wood to them
+  - bugfix: '"Move To Top" verb no longer destroys wall-mounted intercoms'
+  dj-34:
+  - bugfix: Camera flash sound now plays before customization, fixing the delayed
+      sound issue caused by it.
