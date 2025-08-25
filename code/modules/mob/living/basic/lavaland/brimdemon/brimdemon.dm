@@ -63,7 +63,7 @@
 /mob/living/basic/mining/brimdemon/update_overlays()
 	. = ..()
 	if (stat != DEAD)
-		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Show a funny animation before doing an explosion
 /obj/effect/temp_visual/brim_burst
