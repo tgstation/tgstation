@@ -28,7 +28,7 @@
 /// Upper bound of produce size mod for soil lowers grown without soil.
 #define SOIL_LOVER_HYDRO_POTENCY_MAX 0.8
 /// Lower bound of produce size mod for soil lowers grown without soil
-#define SOIL_LOVER_HYDRO_POTENCY_MIN 0.2
+#define SOIL_LOVER_HYDRO_POTENCY_MIN 0.5
 
 
 /// -- Hydroponics tray defines. --
