@@ -42,7 +42,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/swarming, max_x = 16, max_y = 16)
+	AddComponent(/datum/component/swarming, max_x = 12, max_y = 12)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)
 	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 	if (random_states <= 1)
