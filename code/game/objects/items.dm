@@ -1528,6 +1528,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, outfit_wearer, visuals_only, item_slot)
 
+/// Animate the item being pick up
+/// storage_silent = TRUE to make it invisible when taking out of bag
 /obj/item/proc/do_pickup_animation(atom/target, turf/source, storage_silent = FALSE)
 	if(!source)
 		if(!istype(loc, /turf))
