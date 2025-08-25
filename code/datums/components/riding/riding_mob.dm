@@ -652,16 +652,16 @@
 /datum/component/riding/creature/raptor/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	if(!SSmapping.is_planetary())
 		return list(
-			TEXT_NORTH = list( 7, 7),
-			TEXT_SOUTH = list( 2, 10),
-			TEXT_EAST =  list(12, 7),
-			TEXT_WEST =  list(10, 7),
+			TEXT_NORTH = list(-1, 7),
+			TEXT_SOUTH = list(2, 10),
+			TEXT_EAST =  list(0, 7),
+			TEXT_WEST =  list(0, 7),
 		)
 	return list(
-		TEXT_NORTH = list( 0, 7),
-		TEXT_SOUTH = list( 0, 10),
+		TEXT_NORTH = list(0, 7),
+		TEXT_SOUTH = list(0, 10),
 		TEXT_EAST =  list(-3, 9),
-		TEXT_WEST =  list( 3, 9),
+		TEXT_WEST =  list(3, 9),
 	)
 
 /datum/component/riding/creature/raptor/get_parent_offsets_and_layers()
@@ -671,6 +671,12 @@
 		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
+
+/datum/component/riding/creature/raptor/update_parent_layer_and_offsets(dir, animate)
+	. = ..()
+	var/mob/living/basic/raptor/raptor = parent
+	if (istype(raptor))
+		raptor.adjust_offsets(dir)
 
 /datum/component/riding/creature/raptor/fast
 	vehicle_move_delay = 1.5
