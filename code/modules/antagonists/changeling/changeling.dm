@@ -423,6 +423,7 @@
 		genetic_points -= initial(power.dna_cost)
 	return success
 
+/// Check if we can give the power by checking if we have the prerequisite power or not
 /datum/antagonist/changeling/proc/can_give(datum/action/changeling/power)
 	for(var/ref_power in power.prereq_ability)
 		if(!purchased_powers[ref_power])
