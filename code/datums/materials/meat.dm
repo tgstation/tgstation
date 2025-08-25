@@ -80,14 +80,29 @@
 		eat_time = 3 SECONDS, \
 		tastes = list("meat" = 1))
 
-	source.AddComponent(
-		/datum/component/bloody_spreader,\
-		blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
-		blood_dna = blood_dna,\
-	)
+	if (blood_dna)
+		source.AddComponent(
+			/datum/component/bloody_spreader,\
+			blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
+			blood_dna = blood_dna,\
+		)
+	else
+		source.AddComponent(
+			/datum/component/bloody_spreader,\
+			blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
+		)
 
 	// Turfs can't handle the meaty goodness of blood walk.
 	if(!ismovable(source))
+		return
+
+	if (!blood_dna)
+		source.AddComponent(
+			/datum/component/blood_walk,\
+			blood_type = /obj/effect/decal/cleanable/blood,\
+			blood_spawn_chance = 35,\
+			max_blood = (protein_count + fat_count) * 0.3 * multiplier,\
+		)
 		return
 
 	source.AddComponent(
@@ -134,9 +149,9 @@
 		subjectname = source.name
 
 	var/datum/blood_type/blood_type = source.get_bloodtype()
-	color = blood_type.get_color()
-
-	blood_dna = source.get_blood_dna_list()
+	if (blood_type)
+		color = blood_type.get_color()
+		blood_dna = source.get_blood_dna_list()
 
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source
@@ -155,8 +170,9 @@
 
 	if(source.exotic_bloodtype)
 		var/datum/blood_type/blood_type = get_blood_type(source.exotic_bloodtype)
-		color = blood_type.get_color()
-		blood_dna = list("[blood_type.dna_string]" = blood_type)
+		if (blood_type)
+			color = blood_type.get_color()
+			blood_dna = list("[blood_type.dna_string]" = blood_type)
 
 	return ..()
 
