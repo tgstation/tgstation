@@ -185,8 +185,8 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bA" = (
 /obj/structure/destructible/cult/item_dispenser/archives,
-/obj/item/necromantic_stone,
 /obj/effect/decal/cleanable/blood,
+/obj/item/disk/design_disk/knight_gear,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bC" = (
@@ -461,12 +461,6 @@
 /obj/effect/landmark/awaystart,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"dx" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/sord,
-/turf/open/floor/wood,
-/area/awaymission/caves/northblock)
 "dy" = (
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
@@ -582,7 +576,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "el" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/gun/energy/laser/captain/scattershot,
+/obj/item/gun/energy/laser/carbine,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "em" = (
@@ -4425,7 +4419,7 @@ bL
 bL
 bL
 dt
-dx
+dC
 Mk
 dI
 dM
