@@ -37564,7 +37564,9 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "lZJ" = (
-/obj/machinery/elevator_control_panel/directional/south,
+/obj/machinery/elevator_control_panel/directional/south{
+	linked_elevator_id = "tram_xeno_lift"
+	},
 /turf/open/openspace,
 /area/station/science/xenobiology)
 "lZW" = (
