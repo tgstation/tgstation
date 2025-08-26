@@ -602,7 +602,7 @@ PERSISTENT_SAVE_SPACE_EMPTY_Z_LEVELS
 ## Whether to include mining z levels
 PERSISTENT_SAVE_MINING_Z_LEVELS
 ## Whether to include transitional z levels used for shuttle movement
-#PERSISTENT_SAVE_TRANSITIONAL_Z_LEVELS
+PERSISTENT_SAVE_TRANSITIONAL_Z_LEVELS
 ## Whether to include away gateway misisons z levels
-#PERSISTENT_SAVE_AWAY_Z_LEVELS
+PERSISTENT_SAVE_AWAY_Z_LEVELS
 
