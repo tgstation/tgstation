@@ -487,6 +487,7 @@
 	var/total_transfered_amount = 0
 
 	//first add reagents to target
+	var/list/transferred = list()
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(remove_blacklisted && !(reagent.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 			continue
@@ -512,6 +513,7 @@
 		if(!copy_only)
 			reagent.volume -= transfer_amount
 		transfer_log += "[reagent.type] ([transfered_amount]u, [reagent.purity] purity)"
+		transferred[reagent.type] = transfered_amount
 
 		if(!isnull(target_id))
 			break
@@ -539,6 +541,9 @@
 		if(!copy_only)
 			handle_reactions()
 		target_holder.handle_reactions()
+
+	if (target_atom)
+		SEND_SIGNAL(target_atom, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, src, transferred, total_transfered_amount, transferred_by, methods, ignore_stomach)
 
 	return total_transfered_amount
 

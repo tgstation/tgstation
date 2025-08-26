@@ -233,6 +233,10 @@
 	stage = new_stage
 	if(new_stage == max_stages && !(stage_peaked)) //once a virus has hit its peak, set it to have done so
 		stage_peaked = TRUE
+	if (stage <= 0)
+		cure()
+		return FALSE
+	return TRUE
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & (CURABLE | CHRONIC)))
