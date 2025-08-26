@@ -77,7 +77,16 @@
 		return
 
 	balloon_alert(neo, "establishing connection...")
-	if(!do_after(neo, 2 SECONDS, src))
+
+	// Prevent hand interactions during loading to stop smuggling exploits into virtual domain
+	ADD_TRAIT(neo, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+
+	var/connection_successful = do_after(neo, 2 SECONDS, src)
+
+	// Re-enable hand interactions after loading attempt
+	REMOVE_TRAIT(neo, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+
+	if(!connection_successful)
 		open_machine()
 		return
 
