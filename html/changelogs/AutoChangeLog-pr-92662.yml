@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - admin: "AFK logout report timers are now determined by a config rather than a hardcoded value."
