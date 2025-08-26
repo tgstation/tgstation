@@ -1154,15 +1154,6 @@
 	else if(loc != get_turf(src))
 		loc.container_resist_act(src)
 
-	// Special handling for ventcrawling - allow resist to exit isolated vents
-	else if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics))
-		var/obj/machinery/atmospherics/vent_location = loc
-		if(vent_location.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
-			to_chat(src, span_notice("You resist against the confines of the vent, struggling to escape..."))
-			handle_ventcrawl(vent_location)
-		else
-			to_chat(src, span_warning("You struggle against the vent walls, but can't find a way out of this sealed vent!"))
-
 	else if(mobility_flags & MOBILITY_MOVE)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
