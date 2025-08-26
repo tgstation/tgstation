@@ -155,6 +155,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	/// How much damage does this item do to the targets sanity?
 	var/sanity_damage = 20
+	var/list/possible_sounds = list(
+		'sound/items/sitcom_laugh/SitcomLaugh1.ogg',
+		'sound/items/sitcom_laugh/SitcomLaugh2.ogg',
+		'sound/items/sitcom_laugh/SitcomLaugh3.ogg',
+	)
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
@@ -168,7 +173,7 @@
 
 /// Modifies any blades you hold/pickup/drop when the amulet is enabled
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_amulet_activate(mob/living/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(channel_amulet))
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(blade_channel))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip_item))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_dropped_item))
 	// Just make sure we pacify blades potentially in our hands when we put on the amulet
@@ -206,6 +211,11 @@
 	if(channel_amulet(user, target))
 		return
 	return ..()
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/blade_channel(mob/living/attacker, mob/living/victim)
+	SIGNAL_HANDLER
+	playsound(attacker, pick(possible_sounds), 25, TRUE)
+	return channel_amulet(attacker, victim)
 
 /// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/channel_amulet(mob/user, atom/target)

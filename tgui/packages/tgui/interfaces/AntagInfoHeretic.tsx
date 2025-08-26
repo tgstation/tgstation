@@ -65,6 +65,7 @@ type Knowledge = {
   done: BooleanLike;
   ascension: BooleanLike;
   disabled: BooleanLike;
+  tooltip?: string;
 };
 
 enum ShopCategory {
@@ -338,8 +339,11 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
     <Stack.Item key={node.name}>
       <Button
         color="transparent"
-        tooltip={`${node.name}:
-          ${node.desc}`}
+        tooltip={
+          node.tooltip ??
+          `${node.name}:
+          ${node.desc}`
+        }
         onClick={
           !isBuyable
             ? () => logger.warn(`Cannot buy ${node.name}`)

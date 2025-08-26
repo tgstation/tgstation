@@ -37,8 +37,15 @@
 	desc = "Allows you to combine a chemical grenade casing and a liver to conjure a cursed grenade filled with Eldritch Rust, upon detonating it releases a huge cloud that blinds organics, rusts affected turfs and obliterates Silicons and Mechs."
 	gain_text = "The choked vines of the Rusted Hills are burdened with such overripe fruits. It undoes the markers of progress, leaving a clean slate to work into new shapes."
 	required_atoms = list(
-		/obj/item/grenade/chem_grenade = 1,
-		/obj/item/organ/liver = 1,
+		list(
+			/obj/item/food/breadslice/moldy,
+			/obj/item/food/badrecipe/moldy,
+			/obj/item/food/deadmouse/moldy,
+			/obj/item/food/pizzaslice/moldy,
+			/obj/item/food/boiledegg/rotten,
+			/obj/item/food/egg/rotten
+		) = 1,
+		/obj/item/grenade/chem_grenade = 1
 	)
 	result_atoms = list(/obj/item/grenade/chem_grenade/rust_sower)
 	cost = 2

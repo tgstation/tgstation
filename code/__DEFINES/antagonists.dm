@@ -143,6 +143,8 @@
 #define HKT_DEPTH_DRAFT_4 12
 #define HKT_DEPTH_ASCENSION 13
 
+#define HERETIC_CAN_ASCEND "can_ascend"
+
 
 /// A define used in ritual priority for heretics.
 #define MAX_KNOWLEDGE_PRIORITY 100

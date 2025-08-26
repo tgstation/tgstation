@@ -217,7 +217,11 @@
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge_path, /datum/heretic_knowledge/ultimate))
-			knowledge_data["disabled"] ||= !can_ascend()
+			var/ascension_check = can_ascend()
+			if(ascension_check != HERETIC_CAN_ASCEND)
+				knowledge_data["disabled"] = TRUE
+				knowledge_data["tooltip"] = ascension_check
+
 
 		var/depth = knowledge_data[HKT_DEPTH]
 
@@ -272,7 +276,7 @@
 			if(!researchable_knowledge(researched_path, shop_category))
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
 				CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
-			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) & !can_ascend())
+			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) & can_ascend() != HERETIC_CAN_ASCEND)
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
 				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 
@@ -379,6 +383,7 @@
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
+	RegisterSignal(our_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_heretic_examine))
 
 	RegisterSignals(
 		our_mob,
@@ -403,6 +408,7 @@
 			COMSIG_USER_ITEM_INTERACTION,
 			COMSIG_LIVING_POST_FULLY_HEAL,
 			COMSIG_LIVING_CULT_SACRIFICED,
+			COMSIG_ATOM_EXAMINE,
 			SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN),
 			SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN)
 		)
@@ -426,15 +432,32 @@
 	var/mob/heretic_mob = owner.current
 	heretic_mob.cut_overlay(eldritch_overlay)
 
-	if(!unlimited_blades || HAS_TRAIT(heretic_mob, TRAIT_HERETIC_AURA_HIDDEN))
+	if(!should_show_aura())
+		return FALSE
+
+	heretic_mob.add_overlay(eldritch_overlay)
+	return TRUE
+
+/datum/antagonist/heretic/proc/should_show_aura()
+	if(!can_assign_self_objectives)
+		return FALSE // We spurned the offer of the Mansus :(
+	if(!unlimited_blades || HAS_TRAIT(owner.current, TRAIT_HERETIC_AURA_HIDDEN))
 		return FALSE // No aura if we have the trait or is too early still
 	if(feast_of_owls)
 		return FALSE // No use in giving the aura to a heretic that can't ascend
 	if(heretic_path?.route == PATH_LOCK)
 		return FALSE // Lock heretics never get this aura
-
-	heretic_mob.add_overlay(eldritch_overlay)
 	return TRUE
+
+/datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, text)
+	SIGNAL_HANDLER
+	if(!should_show_aura())
+		return
+	var/mob/heretic_mob = owner.current
+	var/potential_string = "[heretic_mob.p_They()] [heretic_mob.p_are()] crackling with a swirling green vortex of energy."
+	if(can_ascend() == HERETIC_CAN_ASCEND)
+		potential_string += " [heretic_mob.p_They()] [heretic_mob.p_are()] shedding [heretic_mob.p_their()] mortal shell!"
+	text += span_green(potential_string)
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -1029,14 +1052,19 @@
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */
 /datum/antagonist/heretic/proc/can_ascend()
-	if(!can_assign_self_objectives)
-		return FALSE // We spurned the offer of the Mansus :(
 	if(feast_of_owls)
-		return FALSE // We sold our ambition for immediate power :/
+		return "The owls have taken your right of ascension (denied ascension)." // We sold our ambition for immediate power :/
+	if(!can_assign_self_objectives)
+		return "The mansus has spurned you (denied ascension)."
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
-			return FALSE
-	return TRUE
+			return "must complete all objectives before ascending."
+	var/config_time = CONFIG_GET(number/minimum_ascension_time) MINUTES
+
+	var/time_passed = STATION_TIME_PASSED()
+	if(config_time >= time_passed)
+		return "Too early, must wait [DisplayTimeText(config_time - time_passed)] before ascending."
+	return HERETIC_CAN_ASCEND
 
 /**
  * Helper to determine if a Heretic

@@ -585,7 +585,7 @@
 	if(invoker.ascended)
 		return FALSE
 
-	if(!invoker.can_ascend())
+	if(invoker.can_ascend() != HERETIC_CAN_ASCEND)
 		return FALSE
 
 	return TRUE
@@ -626,7 +626,7 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
-	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.researched_knowledge[type][HKT_ROUTE])
+	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_path.route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [gameTimestamp()].")
 	notify_ghosts(
 		"[user.real_name] has completed an ascension ritual!",
