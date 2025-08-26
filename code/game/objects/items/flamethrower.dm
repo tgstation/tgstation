@@ -133,14 +133,6 @@
 		return
 
 	else if(istype(W, /obj/item/tank/internals/plasma))
-		AddComponent(\
-			/datum/component/bullet_intercepting,\
-			block_chance = 15,\
-			on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
-			active_slots = ITEM_SLOT_HANDS,\
-			block_charges = 1,\
-			block_type = list(BULLET,LASER),\
-		)
 		if(ptank)
 			if(user.transferItemToLoc(W,src))
 				ptank.forceMove(get_turf(src))
@@ -172,7 +164,6 @@
 	user.put_in_hands(ptank)
 	ptank = null
 	to_chat(user, span_notice("You remove the plasma tank from [src]!"))
-	qdel(src.GetComponent(/datum/component/bullet_intercepting))
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -246,6 +237,14 @@
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
+	AddComponent(\
+	/datum/component/bullet_intercepting,\
+		block_chance = 15,\
+		on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
+		active_slots = ITEM_SLOT_HANDS,\
+		block_type = list(BULLET,LASER),\
+		is_blocking_check = CALLBACK(src, PROC_REF(check_tank)),\
+	)
 	if(create_full)
 		if(!weldtool)
 			weldtool = new /obj/item/weldingtool(src)
@@ -256,14 +255,6 @@
 		status = TRUE
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
-			AddComponent(\
-				/datum/component/bullet_intercepting,\
-				block_chance = 15,\
-				on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
-				active_slots = ITEM_SLOT_HANDS,\
-				block_charges = 1,\
-				block_type = list(BULLET,LASER),\
-			)
 		update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_refill))
 
@@ -279,6 +270,9 @@
 	holder.log_message("held a flamethrower tank detonated by a projectile ([bullet])", LOG_GAME)
 	igniter.ignite_turf(src,target_turf, release_amount = 100)
 	qdel(ptank)
+
+/obj/item/flamethrower/proc/check_tank()
+	return ptank
 
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(heat,2)
