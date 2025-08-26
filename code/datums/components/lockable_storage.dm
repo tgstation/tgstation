@@ -88,17 +88,12 @@
 /datum/component/lockable_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	if(isnull(held_item))
-		if(user.get_slot_by_item(source))
+		if(source in user.held_items)
 			context[SCREENTIP_CONTEXT_LMB] = "Open storage"
 			return CONTEXTUAL_SCREENTIP_SET
 		else
 			context[SCREENTIP_CONTEXT_RMB] = "Open storage"
 			return CONTEXTUAL_SCREENTIP_SET
-
-	if(held_item == source)
-		if(source.loc == user)
-		context[SCREENTIP_CONTEXT_LMB] = "Open storage"
-		return CONTEXTUAL_SCREENTIP_SET
 
 	if(can_hack_open)
 		switch(held_item.tool_behaviour)
