@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds 5 rewards to the Spy item pool: Penbang, Camera Flash, Dagger-Boot, Monster Cube Box, and the Spider Bite martial art"
