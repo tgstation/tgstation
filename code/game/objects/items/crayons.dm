@@ -531,6 +531,11 @@
 	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
 		return ITEM_INTERACT_BLOCKING
 
+	// Check if user moved too far away during drawing (zero gravity)
+	if(!user.Adjacent(target))
+		user.balloon_alert(user, "moved too far away!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(!use_charges(user, cost))
 		return ITEM_INTERACT_BLOCKING
 

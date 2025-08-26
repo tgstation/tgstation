@@ -90,6 +90,12 @@
 		drawing_rune = FALSE
 		return FALSE
 
+	// Check if user moved too far away during drawing (zero gravity)
+	if(!user.Adjacent(target))
+		user.balloon_alert(user, "moved too far away!")
+		drawing_rune = FALSE
+		return FALSE
+
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	drawing_rune = FALSE
 	return TRUE
