@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "vending machines with all products free now makes stuff actually free even without ID"
