@@ -44,11 +44,17 @@
 	var/can_smoothen_out = TRUE
 	/// We got smooth from being washed
 	var/smooth_brain = FALSE
+	/// Variance in brain traits added by subtypes
+	var/variant_traits_added
+	/// Variance in brain traits removed by subtypes
+	var/variant_traits_removed
 
 /obj/item/organ/brain/Initialize(mapload)
 	. = ..()
 	// Brain size logic
 	transform = transform.Scale(brain_size)
+	organ_traits.Remove(variant_traits_removed)
+	organ_traits |= variant_traits_added
 
 /obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
@@ -337,9 +343,15 @@
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
-	//if we're not more injured than before, return without gambling for a trauma
+	// If we crossed blinking brain damage thresholds either way, update our blinking
+	if (owner && ((prev_damage > BRAIN_DAMAGE_ASYNC_BLINKING && damage < BRAIN_DAMAGE_ASYNC_BLINKING) || (prev_damage < BRAIN_DAMAGE_ASYNC_BLINKING && damage > BRAIN_DAMAGE_ASYNC_BLINKING)))
+		var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
+		eyes?.animate_eyelids(owner)
+
+	// If we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
 		return
+
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
@@ -353,20 +365,22 @@
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
 
-	if (owner)
-		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
-			var/brain_message
-			if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
-				brain_message = span_warning("You feel lightheaded.")
-			else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
-				brain_message = span_warning("You feel less in control of your thoughts.")
-			else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
-				brain_message = span_warning("You can feel your mind flickering on and off...")
+	if (!owner || owner.stat > UNCONSCIOUS)
+		return
 
-			if(.)
-				. += "\n[brain_message]"
-			else
-				return brain_message
+	// Conscious or soft-crit
+	var/brain_message
+	if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
+		brain_message = span_warning("You feel lightheaded.")
+	else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
+		brain_message = span_warning("You feel less in control of your thoughts.")
+	else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
+		brain_message = span_warning("You can feel your mind flickering on and off...")
+
+	if(.)
+		. += "\n[brain_message]"
+	else
+		return brain_message
 
 /obj/item/organ/brain/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()
@@ -423,25 +437,26 @@
 	name = "zombie brain"
 	desc = "This glob of green mass can't have much intelligence inside it."
 	icon_state = "brain-x"
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE)
+	variant_traits_added = list(TRAIT_PRIMITIVE)
+	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
-	organ_traits = list(TRAIT_CAN_STRIP)
+	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
 
 /obj/item/organ/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
-	organ_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
+	variant_traits_removed = list(TRAIT_LITERATE)
+	variant_traits_added = list(
 		TRAIT_PRIMITIVE, // No literacy
 		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 		TRAIT_EXPERT_FISHER, // live off land, fish from river
 		TRAIT_ROUGHRIDER, // ride beast, chase down prey, flee from danger
 		TRAIT_BEAST_EMPATHY, // know the way of beast, calm with food
+		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 
 /obj/item/organ/brain/golem
@@ -451,14 +466,13 @@
 	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+	variant_traits_added = list(TRAIT_ROCK_METAMORPHIC)
 
 /obj/item/organ/brain/lustrous
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	can_smoothen_out = FALSE
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
 // This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
 // Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
@@ -492,7 +506,7 @@
 /obj/item/organ/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
-	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
+	variant_traits_added = list(TRAIT_TACKLING_TAILED_DEFENDER)
 
 /obj/item/organ/brain/ghost
 	name = "ghost brain"
@@ -506,7 +520,7 @@
 	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE, TRAIT_REMOTE_TASTING)
+	variant_traits_added = list(TRAIT_REMOTE_TASTING)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

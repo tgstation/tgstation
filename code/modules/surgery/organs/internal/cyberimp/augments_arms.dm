@@ -578,13 +578,13 @@
 	bonus_deactivate_text = span_notice("You can no longer force open airlocks with your bare hands.")
 	required_biotype = NONE
 
-/datum/status_effect/organ_set_bonus/strongarm/enable_bonus()
+/datum/status_effect/organ_set_bonus/strongarm/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
 	if(!.)
 		return
 	owner.AddElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
 
-/datum/status_effect/organ_set_bonus/strongarm/disable_bonus()
+/datum/status_effect/organ_set_bonus/strongarm/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
 	owner.RemoveElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
 

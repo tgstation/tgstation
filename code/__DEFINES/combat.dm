@@ -233,6 +233,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Ammo box will have a different sprite for any ammo at all, and no ammo, <icon_state>-full <icon_state>-empty
 #define AMMO_BOX_FULL_EMPTY 2
 
+// Ammo box multiload defines
+/// Ammo box does not accept multiload in or out, e.g. ammo box CANNOT transfer multiple casings in one action, either IN or OUT.
+#define AMMO_BOX_MULTILOAD_NONE	0
+/// Ammo box accepts multiload going in, e.g. ammo box can transfer multiple casings IN at once.
+#define AMMO_BOX_MULTILOAD_IN	(1 << 0)
+/// Ammo box accepts multiload going out, e.g. ammo box can transfer multiple casings OUT at once.
+#define AMMO_BOX_MULTILOAD_OUT	(1 << 1)
+/// Ammo box accepts multiload in AND out, e.g. ammo box can transfer multiple casings IN at once *and* OUT at once.
+#define AMMO_BOX_MULTILOAD_BOTH	AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT
+
+DEFINE_BITFIELD(ammo_box_multiload, list(
+	"LOAD_IN" = AMMO_BOX_MULTILOAD_IN,
+	"LOAD_OUT" = AMMO_BOX_MULTILOAD_OUT,
+))
+
 #define SUPPRESSED_NONE 0
 #define SUPPRESSED_QUIET 1 ///standard suppressed
 #define SUPPRESSED_VERY 2 /// no message
@@ -415,3 +430,10 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
 #define CALCULATE_FORCE(some_item, atk_mods) \
 	((((FORCE_OVERRIDE in atk_mods) ? atk_mods[FORCE_OVERRIDE] : some_item.force) + (atk_mods?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in atk_mods) ? atk_mods[FORCE_MULTIPLIER] : 1))
+
+/// Return from attacked_by to indicate the attack did not connect
+/// A negative number is used here to people can easily check "attacks that failed or did 0 damage" with <= 0
+#define ATTACK_FAILED -1
+
+///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown?
+#define FLASH_COMPLETED "flash_completed"

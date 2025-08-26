@@ -62,7 +62,7 @@ const findNearestScrollableParent = (startingNode) => {
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
-  node.setAttribute('style', 'background-color:' + color);
+  node.setAttribute('style', `background-color:${color}`);
   node.textContent = text;
   return node;
 };
@@ -93,7 +93,7 @@ const handleImageError = (e) => {
     }
     const src = node.src;
     node.src = null;
-    node.src = src + '#' + attempts;
+    node.src = `${src}#${attempts}`;
     node.setAttribute('data-reload-n', attempts + 1);
   }, IMAGE_RETRY_DELAY);
 };
@@ -218,17 +218,20 @@ class ChatRenderer {
       const lines = String(text)
         .split(',')
         .map((str) => str.trim())
-        .filter(
-          (str) =>
-            // Must be longer than one character
-            str &&
-            str.length > 1 &&
-            // Must be alphanumeric (with some punctuation)
-            (allowedRegex.test(str) ||
-              (str.charAt(0) === '/' && str.charAt(str.length - 1) === '/')) &&
-            // Reset lastIndex so it does not mess up the next word
-            ((allowedRegex.lastIndex = 0) || true),
-        );
+        .filter((str) => {
+          // Must be longer than one character
+          if (!str || str.length <= 1) return false;
+
+          // Must be alphanumeric (with some punctuation)
+          const isValidFormat =
+            allowedRegex.test(str) ||
+            (str.charAt(0) === '/' && str.charAt(str.length - 1) === '/');
+
+          // Reset lastIndex so it does not mess up the next word
+          allowedRegex.lastIndex = 0;
+
+          return isValidFormat;
+        });
       let highlightWords;
       let highlightRegex;
       // Nothing to match, reset highlighting
@@ -258,13 +261,13 @@ class ChatRenderer {
         }
       }
       const regexStr = regexExpressions.join('|');
-      const flags = 'g' + (matchCase ? '' : 'i');
+      const flags = `g${matchCase ? '' : 'i'}`;
       // We wrap this in a try-catch to ensure that broken regex doesn't break
       // the entire chat.
       try {
         // setting regex overrides matchword
         if (regexStr) {
-          highlightRegex = new RegExp('(' + regexStr + ')', flags);
+          highlightRegex = new RegExp(`(${regexStr})`, flags);
         } else {
           const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
             '|',
@@ -409,9 +412,9 @@ class ChatRenderer {
               working_value = true;
             } else if (working_value === '$false') {
               working_value = false;
-            } else if (!isNaN(working_value)) {
+            } else if (!Number.isNaN(working_value)) {
               const parsed_float = parseFloat(working_value);
-              if (!isNaN(parsed_float)) {
+              if (!Number.isNaN(parsed_float)) {
                 working_value = parsed_float;
               }
             }
@@ -429,13 +432,14 @@ class ChatRenderer {
 
           const reactRoot = createRoot(childNode);
 
-          /* eslint-disable react/no-danger */
+          // biome-ignore-start lint/security/noDangerouslySetInnerHtml: ignore
           reactRoot.render(
             <Element {...outputProps}>
               <span dangerouslySetInnerHTML={oldHtml} />
             </Element>,
             childNode,
           );
+          // biome-ignore-end lint/security/noDangerouslySetInnerHtml: ignore
         }
 
         // Highlight text
@@ -603,7 +607,7 @@ class ChatRenderer {
       for (let i = 0; i < cssRules.length; i++) {
         const rule = cssRules[i];
         if (rule && typeof rule.cssText === 'string') {
-          cssText += rule.cssText + '\n';
+          cssText += `${rule.cssText}\n`;
         }
       }
     }
@@ -612,7 +616,7 @@ class ChatRenderer {
     let messagesHtml = '';
     for (const message of this.visibleMessages) {
       if (message.node) {
-        messagesHtml += message.node.outerHTML + '\n';
+        messagesHtml += `${message.node.outerHTML}\n`;
       }
     }
     // Create a page

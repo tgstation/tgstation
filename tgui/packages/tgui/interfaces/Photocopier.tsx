@@ -9,7 +9,7 @@ import {
   Slider,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -188,7 +188,7 @@ const Status = (props: StatusProps) => {
                   fluid
                   dmIcon={paper.icon}
                   dmIconState={paper.icon_state}
-                  tooltip={paper.name + ' amount is ' + paper.amount}
+                  tooltip={`${paper.name} amount is ${paper.amount}`}
                   imageSize={32}
                   disabled={!paper.amount}
                   selected={created_paper === paper.type && paper.amount}

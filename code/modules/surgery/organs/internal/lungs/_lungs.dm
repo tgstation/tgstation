@@ -18,6 +18,10 @@
 	low_threshold_cleared = span_info("You can breathe normally again.")
 	high_threshold_cleared = span_info("The constriction around your chest loosens as your breathing calms down.")
 
+	cell_line = CELL_LINE_ORGAN_LUNGS
+	cells_minimum = 1
+	cells_maximum = 2
+
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
@@ -1076,6 +1080,17 @@
 	breath_noise = "a humid hiss"
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+
+/obj/item/organ/lungs/evolved
+	name = "evolved lungs"
+	desc = "A pair of lungs, with an organic filtering system and a stronger musculature."
+
+	icon_state = "lungs-evolved"
+
+	safe_plasma_max = 8
+	safe_co2_max = 8
+	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
+	safe_oxygen_min = 8
 
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT

@@ -69,7 +69,7 @@
 	update_static_data(user)
 	return TRUE
 
-/obj/machinery/computer/cargo/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/computer/cargo/on_construction(mob/user)
 	. = ..()
 	circuit.configure_machine(src)
 
@@ -378,7 +378,7 @@
 					requisition_paper.update_appearance()
 
 				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
+				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 
 			. = TRUE

@@ -622,7 +622,7 @@
 	///If we are currently activating our ability.
 	var/activating = FALSE
 
-/datum/action/cooldown/exquisite_bunch/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/exquisite_bunch/Trigger(mob/clicker, trigger_flags, atom/target)
 	if(activating)
 		return
 	var/bunch_turf = get_step(owner.loc, owner.dir)

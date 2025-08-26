@@ -572,6 +572,9 @@
 		return FALSE
 	if(!(flags & SHOCK_ILLUSION))
 		adjustFireLoss(shock_damage)
+		if(getFireLoss() > 100)
+			add_shared_particles(/particles/smoke/burning)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), /particles/smoke/burning), 10 SECONDS)
 	else
 		adjustStaminaLoss(shock_damage)
 	if(!(flags & SHOCK_SUPPRESS_MESSAGE))

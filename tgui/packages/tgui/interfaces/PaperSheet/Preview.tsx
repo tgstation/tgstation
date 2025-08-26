@@ -1,14 +1,14 @@
 import { marked } from 'marked';
 import { baseUrl } from 'marked-base-url';
 import { markedSmartypants } from 'marked-smartypants';
-import { Component, RefObject } from 'react';
+import { Component, type RefObject } from 'react';
 import { Box, Section } from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../../backend';
 import { sanitizeText } from '../../sanitize';
 import { tokenizer, walkTokens } from './helpers';
 import { StampView } from './StampView';
-import { FieldInput, InteractionType, PaperContext } from './types';
+import { type FieldInput, InteractionType, type PaperContext } from './types';
 
 type PreviewViewProps = {
   scrollableRef: RefObject<HTMLDivElement | null>;
@@ -342,7 +342,7 @@ export class PreviewView extends Component<PreviewViewProps> {
 
   // Builds a paper field ID from a number or string.
   createIDHeader = (index: number | string): string => {
-    return 'paperfield_' + index;
+    return `paperfield_${index}`;
   };
 
   // Returns the width the text with the provided attributes would take up in px.

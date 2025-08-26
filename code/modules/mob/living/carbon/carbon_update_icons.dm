@@ -24,7 +24,7 @@
 		if(OFFSET_HEAD)
 			update_worn_head()
 		if(OFFSET_FACE)
-			dna?.species?.handle_body(src) // updates eye icon
+			dna?.species?.update_face_offset(src) // updates eye and lipstick icon
 			update_worn_mask()
 		if(OFFSET_BELT)
 			update_worn_belt()
@@ -466,7 +466,7 @@
 
 	. = list()
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+		. += emissive_blocker(standing.icon, standing.icon_state, src)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 /// worn_overlays to use when you'd want to use KEEP_APART. Don't use KEEP_APART neither there nor here, as it would break floating overlays

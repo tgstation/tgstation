@@ -133,12 +133,12 @@
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
-	brother1.dna.features["ethcolor"] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.dna.features[FEATURE_ETHEREAL_COLOR] = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
-	brother2.dna.features["moth_antennae"] = "Plain"
-	brother2.dna.features["moth_markings"] = "None"
-	brother2.dna.features["moth_wings"] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_ANTENNAE] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_MARKINGS] = "None"
+	brother2.dna.features[FEATURE_MOTH_WINGS] = "Plain"
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
@@ -187,7 +187,6 @@
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	var/datum/team/brother_team/team = new
 	team.add_member(new_owner)
-	new_owner.add_antag_datum(/datum/antagonist/brother, team)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into a blood brother.")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into a blood brother.")
 
@@ -218,6 +217,8 @@
 		forge_brother_objectives()
 	if (!new_member.has_antag_datum(/datum/antagonist/brother))
 		add_brother(new_member.current)
+	else
+		set_brothers_left(brothers_left - 1)
 
 /datum/team/brother_team/remove_member(datum/mind/member)
 	if (!(member in members))

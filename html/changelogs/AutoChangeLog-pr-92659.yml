@@ -1,0 +1,4 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - qol: "Added [OPTIONAL] keybinds to for Swap Left/Right hands. Check your keybinds. [NOT OPTIONAL]"
