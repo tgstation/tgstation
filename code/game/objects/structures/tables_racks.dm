@@ -57,7 +57,7 @@
 	/// What sound does the table make when unflipped?
 	var/unflip_table_sound = 'sound/items/trayhit/trayhit2.ogg'
 	/// What sound does the table make when we flip the table?
-	var/flipped_table_sound = 'sound/items/trayhit/trayhit1.oggs'
+	var/flipped_table_sound = 'sound/items/trayhit/trayhit1.ogg'
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
