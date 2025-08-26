@@ -37,10 +37,10 @@
 	if(already_done)
 		switch(loot_table)
 			if(MAINT_LOOT)
-				if(loot == GLOB.maintenance_loot)
+				if(loot_list == GLOB.maintenance_loot)
 					return
 			if(DUMPSTER_LOOT)
-				if(loot == GLOB.dumpster_loot)
+				if(loot_list == GLOB.dumpster_loot)
 					return
 
 	already_done = TRUE
