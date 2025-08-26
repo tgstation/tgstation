@@ -214,7 +214,7 @@
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/blade_channel(mob/living/attacker, mob/living/victim)
 	SIGNAL_HANDLER
-	playsound(attacker, pick(possible_sounds), 25, TRUE)
+	playsound(attacker, pick(possible_sounds), 40, TRUE)
 	return channel_amulet(attacker, victim)
 
 /// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie

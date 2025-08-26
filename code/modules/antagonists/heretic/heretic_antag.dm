@@ -1058,7 +1058,7 @@
 		return "The mansus has spurned you (denied ascension)."
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
-			return "must complete all objectives before ascending."
+			return "Must complete all objectives before ascending."
 	var/config_time = CONFIG_GET(number/minimum_ascension_time) MINUTES
 
 	var/time_passed = STATION_TIME_PASSED()
