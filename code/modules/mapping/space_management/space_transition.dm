@@ -71,7 +71,7 @@
 	var/datum/space_transition_point/point
 	for(var/x in 1 to grid_diameter)
 		for(var/y in 1 to grid_diameter)
-			point = new/datum/space_transition_point(x, y, grid)
+			point = new /datum/space_transition_point(x, y, grid)
 			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
 	for(point as anything in grid)
 		point.set_neigbours(grid, grid_diameter)
