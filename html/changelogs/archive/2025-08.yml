@@ -564,3 +564,9 @@
   dj-34:
   - bugfix: Camera flash sound now plays before customization, fixing the delayed
       sound issue caused by it.
+2025-08-26:
+  Melbert:
+  - rscadd: 'Adds 5 rewards to the Spy item pool: Penbang, Camera Flash, Dagger-Boot,
+      Monster Cube Box, and the Spider Bite martial art'
+  Yobrocharlie:
+  - bugfix: fixed caves.dmm's runtimes for a downstream
