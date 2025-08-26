@@ -866,6 +866,7 @@
 #include "code\datums\world_topic.dm"
 #include "code\datums\achievements\_achievement_data.dm"
 #include "code\datums\achievements\_awards.dm"
+#include "code\datums\achievements\admin_panel.dm"
 #include "code\datums\achievements\boss_achievements.dm"
 #include "code\datums\achievements\boss_scores.dm"
 #include "code\datums\achievements\job_achievements.dm"
