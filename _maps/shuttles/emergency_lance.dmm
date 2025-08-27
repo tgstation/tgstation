@@ -918,7 +918,7 @@
 /area/shuttle/escape/brig)
 "Ec" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/emergency{
+/obj/item/storage/medkit/hazard{
 	pixel_x = 2;
 	pixel_y = 3
 	},

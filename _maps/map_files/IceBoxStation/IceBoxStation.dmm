@@ -57036,7 +57036,7 @@
 /area/station/science/xenobiology)
 "qbw" = (
 /obj/structure/table/wood,
-/obj/item/storage/medkit/emergency,
+/obj/item/storage/medkit/hazard,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "qbF" = (

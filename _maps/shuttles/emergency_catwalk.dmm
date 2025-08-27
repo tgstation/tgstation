@@ -72,7 +72,7 @@
 /obj/item/lazarus_injector,
 /obj/item/storage/medkit/emergency,
 /obj/item/storage/medkit/o2,
-/obj/item/storage/medkit/emergency,
+/obj/item/storage/medkit/hazard,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ft" = (

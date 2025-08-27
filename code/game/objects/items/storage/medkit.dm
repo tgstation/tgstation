@@ -51,7 +51,7 @@
 	icon_state = "medbriefcase"
 	inhand_icon_state = "medkit-emergency"
 	name = "emergency medkit"
-	desc = "A simple first aid kit for dealing with a variety of wounds and injuries caused by common workplace hazards."
+	desc = "A simple first aid kit for dealing with a variety of common wounds and injuries aboard space vessels."
 
 /obj/item/storage/medkit/emergency/PopulateContents()
 	if(empty)
@@ -70,7 +70,7 @@
 	icon_state = "medbriefcase-switzerland"
 	inhand_icon_state = "medkit-emergency"
 	name = "hazard medkit"
-	desc = "A simple first aid kit for dealing with a variety of wounds and injuries.  caused by common workplace hazards."
+	desc = "A simple first aid kit for dealing with a variety of wounds and injuries caused by common workplace hazards."
 /obj/item/storage/medkit/emergency/PopulateContents()
 	if(empty)
 		return

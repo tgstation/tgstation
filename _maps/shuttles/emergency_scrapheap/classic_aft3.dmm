@@ -209,7 +209,7 @@
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/storage/medkit/emergency{
+/obj/item/storage/medkit/hazard{
 	pixel_x = 2;
 	pixel_y = 2
 	},

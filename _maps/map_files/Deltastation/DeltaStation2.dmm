@@ -65178,7 +65178,7 @@
 /area/station/engineering/supermatter/room)
 "qdT" = (
 /obj/structure/table/wood,
-/obj/item/storage/medkit/emergency,
+/obj/item/storage/medkit/hazard,
 /obj/item/toy/figure/paramedic,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1

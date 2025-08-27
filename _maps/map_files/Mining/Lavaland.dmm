@@ -6662,7 +6662,7 @@
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/storage/medkit/emergency{
+/obj/item/storage/medkit/hazard{
 	pixel_x = -3
 	},
 /obj/machinery/camera/autoname/directional/west{
