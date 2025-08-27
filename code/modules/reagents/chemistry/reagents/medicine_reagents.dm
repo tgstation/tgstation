@@ -591,6 +591,8 @@
 	if (!iscarbon(affected_mob))
 		return
 
+	// has additional effects on asthma, but that's handled in the quirk
+
 	RegisterSignal(affected_mob, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(holder_lost_organ))
 	RegisterSignal(affected_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(holder_gained_organ))
 	var/mob/living/carbon/carbon_mob = affected_mob

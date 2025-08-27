@@ -31,6 +31,17 @@
 
 	return ..()
 
+/obj/item/inhaler/update_overlays()
+	. = ..()
+
+	if (isnull(canister))
+		underlays -= canister_underlay
+		canister_underlay = null
+	else if (isnull(canister_underlay))
+		canister_underlay = mutable_appearance(canister.icon, canister.icon_state)
+		canister_underlay.pixel_z = canister_underlay_y_offset
+		underlays += canister_underlay
+
 /obj/item/inhaler/examine(mob/user)
 	. = ..()
 
@@ -74,7 +85,7 @@
 		puff_timer = canister.self_administer_delay
 
 		pre_use_visible_message = span_notice("[user] puts [src] to [user.p_their()] lips, fingers on the canister...")
-		pre_use_self_message = span_notice("You put [src] to your lips and put pressure on canister...")
+		pre_use_self_message = span_notice("You put [src] to your lips and put pressure on the canister...")
 
 		post_use_visible_message = span_notice("[user] takes a puff of [src]!")
 		post_use_self_message = span_notice("You take a puff of [src]!")
@@ -159,17 +170,7 @@
 
 	canister = new_canister
 	canister?.forceMove(src)
-	update_canister_underlay()
-
-/// Updates our underlays with our canister, if any.
-/obj/item/inhaler/proc/update_canister_underlay()
-	if (isnull(canister))
-		underlays -= canister_underlay
-		canister_underlay = null
-	else if (isnull(canister_underlay))
-		canister_underlay = mutable_appearance(canister.icon, canister.icon_state)
-		canister_underlay.pixel_y = canister_underlay_y_offset
-		underlays += canister_underlay
+	update_overlays()
 
 /// Determines if we can be used. Fails on no canister, empty canister, invalid targets, or non-breathing targets.
 /obj/item/inhaler/proc/can_puff(mob/living/target_mob, mob/living/user, silent = FALSE)
@@ -185,9 +186,19 @@
 		if (!silent)
 			balloon_alert(user, "not a carbon!")
 		return FALSE
-	if (target_mob.is_mouth_covered())
+	var/mob/living/carbon/carbon_target = target_mob
+	if (carbon_target.is_mouth_covered())
 		if (!silent)
 			balloon_alert(user, "expose the mouth!")
+		return FALSE
+	if (HAS_TRAIT(carbon_target, TRAIT_NOBREATH))
+		if (!silent)
+			balloon_alert(user, "not breathing!")
+		return FALSE
+	var/obj/item/organ/lungs/lungs = carbon_target.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if (isnull(lungs) || lungs.received_pressure_mult <= 0)
+		if (!silent)
+			balloon_alert(user, "not breathing!")
 		return FALSE
 
 	return TRUE

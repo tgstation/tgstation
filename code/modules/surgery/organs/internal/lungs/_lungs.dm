@@ -70,7 +70,7 @@
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
 
 	/// All incoming breaths will have their pressure multiplied against this. Higher values allow more air to be breathed at once,
-	/// while lower values can cause suffocation.
+	/// while lower values can cause suffocation in low pressure environments.
 	var/received_pressure_mult = 1
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
@@ -1058,19 +1058,27 @@
 	received_pressure_mult = max(new_value, 0)
 	update_bronchodilation_alerts()
 
+#define LUNG_CAPACITY_ALERT_BUFFER 0.003
 /// Depending on [received_pressure_mult], gives either a bronchocontraction or bronchoconstriction alert to our owner (if we have one), or clears the alert
-/// if [received_pressure_mult] is 0.
+/// if [received_pressure_mult] is near 1.
 /obj/item/organ/lungs/proc/update_bronchodilation_alerts()
 	if (!owner)
 		return
 
 	var/initial_value = initial(received_pressure_mult)
-	if (received_pressure_mult == initial_value)
-		owner.clear_alert(ALERT_BRONCHODILATION)
-	else if (received_pressure_mult > initial_value)
+
+	// you wont really notice if youre only breathing a bit more or a bit less
+	var/dilated = (received_pressure_mult > (initial_value + LUNG_CAPACITY_ALERT_BUFFER))
+	var/constricted = (received_pressure_mult < (initial_value - LUNG_CAPACITY_ALERT_BUFFER))
+
+	if (dilated)
 		owner.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchodilated)
-	else
+	else if (constricted)
 		owner.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchoconstricted)
+	else
+		owner.clear_alert(ALERT_BRONCHODILATION)
+
+#undef LUNG_CAPACITY_ALERT_BUFFER
 
 /obj/item/organ/lungs/ethereal
 	name = "aeration reticulum"

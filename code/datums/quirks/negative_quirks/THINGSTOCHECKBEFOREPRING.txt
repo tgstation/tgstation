@@ -1,4 +1,0 @@
-1. check args to see if they were updated
-2. check the disease to see if albuterol cures it instantly
-3. add a asthmatic trait for lookup
-4. do we need the granularity o can_breathe/

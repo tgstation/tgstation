@@ -117,11 +117,13 @@
 			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
 			return
-		if(SPT_PROB(cure_mod, seconds_per_tick))
-			update_stage(max(stage - 1, 1))
 		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
-			cure()
-			return FALSE
+			if(disease_flags & INCREMENTAL_CURE)
+				if (!update_stage(stage - 1))
+					return FALSE
+			else
+				cure()
+				return FALSE
 
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE

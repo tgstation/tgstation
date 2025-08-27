@@ -5,14 +5,14 @@
 	Minor asthma attacks may disappear on their own, but all are dangerous."
 	cure_text = "Albuterol/Surgical intervention"
 	cures = list(/datum/reagent/medicine/albuterol)
-	agent = "Auto-immune"
+	agent = "Inflammatory"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CURABLE
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-	spread_text = "Auto-immune"
+	spread_text = "Inflammatory"
 	visibility_flags = HIDDEN_PANDEMIC
 	bypasses_immunity = TRUE
-	disease_flags = CURABLE
+	disease_flags = CURABLE|INCREMENTAL_CURE
 	required_organ = ORGAN_SLOT_LUNGS
 	infectable_biotypes = MOB_ROBOTIC|MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD
 
@@ -105,15 +105,15 @@
 	severity = DISEASE_SEVERITY_MEDIUM
 	stage_prob = 4
 
-	max_time_til_remission = 80 SECONDS
-	min_time_til_remission = 120 SECONDS
+	max_time_til_remission = 120 SECONDS
+	min_time_til_remission = 80 SECONDS
 	max_stages = 3
 
-	cure_chance = 25
+	cure_chance = 20
 
 	stage_to_inflammation_per_second = list(
-		"2" = 0.1,
-		"3" = 0.5,
+		"2" = 0.3,
+		"3" = 0.6,
 	)
 
 /datum/disease/asthma_attack/minor/stage_act(seconds_per_tick, times_fired)
@@ -128,11 +128,11 @@
 	severity = DISEASE_SEVERITY_HARMFUL
 	stage_prob = 5
 
-	max_time_til_remission = 80 SECONDS
-	min_time_til_remission = 120 SECONDS
+	max_time_til_remission = 120 SECONDS
+	min_time_til_remission = 80 SECONDS
 	max_stages = 4
 
-	cure_chance = 25
+	cure_chance = 20
 
 	stage_to_inflammation_per_second = list(
 		"2" = 1,
@@ -158,11 +158,11 @@
 	severity = DISEASE_SEVERITY_DANGEROUS
 	stage_prob = 6
 
-	max_time_til_remission = 120 SECONDS
-	min_time_til_remission = 80 SECONDS
+	max_time_til_remission = 80 SECONDS
+	min_time_til_remission = 60 SECONDS
 	max_stages = 5
 
-	cure_chance = 25
+	cure_chance = 20
 
 	stage_to_inflammation_per_second = list(
 		"2" = 1,

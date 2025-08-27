@@ -442,12 +442,12 @@
 			if (lungs.received_pressure_mult != initial_pressure_mult)
 				var/lung_message
 				if (lungs.received_pressure_mult > initial_pressure_mult) // higher than usual
-					lung_message = span_blue("Subject lungs are <b>bronchodilated</b> and are breathing <b>[lungs.received_pressure_mult * 100]%</b> more gas than normal.")
+					lung_message = span_blue("Subject lungs are <b>dilated</b> and are breathing <b>[(lungs.received_pressure_mult * 100) - 100]%</b> more gas than normal.")
 				else
 					if (lungs.received_pressure_mult <= 0) // lethal
-						lung_message = span_danger("Subject lungs are <b>bronchocontracted</b> and are <b>completely unable to breathe!</b> If asthmatic, administer albuterol via inhaler or perform windpipe surgery immediately!")
+						lung_message = span_danger("Subject lungs are <b>contracted</b> and are <b>completely unable to breathe!</b> If asthmatic, administer albuterol via inhaler, perform windpipe surgery, or replace lungs immediately!")
 					else
-						lung_message = span_danger("Subject lungs are <b>bronchocontracted</b> and can only breathe up to <b>[lungs.received_pressure_mult * 100]%</b> of its usual capacity. \
+						lung_message = span_danger("Subject lungs are <b>contracted</b> and can only breathe up to <b>[lungs.received_pressure_mult * 100]%</b> of their usual capacity. \
 						If subject is choking, it is suggested to provide them with a <b>high-pressure</b> internals tank.")
 				render_list += lung_message
 

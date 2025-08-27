@@ -2,12 +2,12 @@
 	name = "Asthma"
 	desc = "You suffer from asthma, a inflammatory disorder that causes your airpipe to squeeze shut! Be careful around smoke!"
 	icon = FA_ICON_LUNGS_VIRUS
-	value = -4
+	value = -4 // trivialized by NOBREATH but still quite dangerous
 	gain_text = span_danger("You have a harder time breathing.")
 	lose_text = span_notice("You suddenly feel like your lungs just got a lot better at breathing!")
 	medical_record_text = "Patient suffers from asthma."
 	hardcore_value = 2
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/inhaler_canister/albuterol)
 
 	/// At this percentage of inflammation, our lung pressure mult reaches 0. From 0-1.
@@ -21,11 +21,6 @@
 	/// The amount [inflammation] reduces every second while our owner is off stasis and alive.
 	var/passive_inflammation_reduction = 0.15
 
-	/// The current pressure mult we have applied to our lungs.
-	var/current_pressure_mult = 1
-	/// The maximum pressure mult we can apply to our lungs. 0 = unable to breathe whatsoever.
-	var/max_pressure_mult = 0 // cant breathe at all
-
 	/// The amount of inflammation we will receive when our owner breathes smoke.
 	var/inflammation_on_smoke = 7.5
 
@@ -37,13 +32,9 @@
 	/// A tracker variable for how much albuterol has been inhaled.
 	var/inhaled_albuterol = 0
 	/// If [inhaled_albuterol] is above 0, we will reduce inflammation by this much per tick.
-	var/albuterol_inflammtion_reduction = 4
-	/// When albuterol is inhaled, inflammation will be reduced via (inhaled_albuterol * albuterol_inflammtion_reduction * albuterol_immediate_reduction_mult)
-	var/albuterol_immediate_reduction_mult = 3
-
-	/// If our owner is choking, we send a message telling them they can remedy their asthma via a high-pressure internals tank.
-	/// Once we send that, we set this to TRUE, to prevent message spam.
-	var/alerted_user_to_suffocation = FALSE
+	var/albuterol_inflammation_reduction = 3
+	/// When albuterol is inhaled, inflammation will be reduced via (inhaled_albuterol * albuterol_inflammation_reduction * albuterol_immediate_reduction_mult)
+	var/albuterol_immediate_reduction_mult = 4
 
 	/// The current asthma attack trying to kill our owner.
 	var/datum/disease/asthma_attack/current_attack
@@ -54,19 +45,19 @@
 	var/time_first_attack_can_happen = 10 MINUTES
 
 	/// After an attack ends, this is the minimum time we must wait before we attack again.
-	var/min_time_between_attacks = 20 MINUTES
+	var/min_time_between_attacks = 15 MINUTES
 	/// After an attack ends, this is the maximum time we must wait before we attack again.
-	var/max_time_between_attacks = 30 MINUTES
+	var/max_time_between_attacks = 25 MINUTES
 
 	/// Every second, an asthma attack can happen via this probability. 0-1.
 	var/chance_for_attack_to_happen_per_second = 0.05
 
 	/// Assoc list of (/datum/disease/asthma_attack typepath -> number). Used in pickweight for when we pick a random asthma attack to apply.
 	var/static/list/asthma_attack_rarities = list(
-		/datum/disease/asthma_attack/minor = 500,
+		/datum/disease/asthma_attack/minor = 300,
 		/datum/disease/asthma_attack/moderate = 400,
-		/datum/disease/asthma_attack/severe = 50,
-		/datum/disease/asthma_attack/critical = 0.5, // this can quickly kill you, so its rarity is justified
+		/datum/disease/asthma_attack/severe = 100,
+		/datum/disease/asthma_attack/critical = 1, // this can quickly kill you, so its rarity is justified
 	)
 
 /datum/quirk/item_quirk/asthma/add_unique(client/client_source)
@@ -79,6 +70,7 @@
 	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(organ_removed))
 	RegisterSignal(quirk_holder, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, PROC_REF(reagents_transferred))
 	RegisterSignal(quirk_holder, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_full_heal))
+	RegisterSignal(quirk_holder, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	time_next_attack_allowed = world.time + time_first_attack_can_happen
 
@@ -86,12 +78,12 @@
 	. = ..()
 
 	current_attack?.cure()
-	UnregisterSignal(quirk_holder, COMSIG_CARBON_EXPOSED_TO_SMOKE, COMSIG_CARBON_LOSE_ORGAN, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, COMSIG_LIVING_POST_FULLY_HEAL)
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_EXPOSED_TO_SMOKE, COMSIG_CARBON_LOSE_ORGAN, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_LIFE)
 
-/datum/quirk/item_quirk/asthma/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_STASIS))
-		return
-	if (quirk_holder.stat == DEAD)
+/datum/quirk/item_quirk/asthma/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
+	if (HAS_TRAIT(quirk_holder, TRAIT_STASIS))
 		return
 
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
@@ -113,13 +105,13 @@
 			adjust_inflammation(histamine_inflammation)
 
 	var/datum/reagent/medicine/albuterol/albuterol = carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/albuterol)
-	if (!albuterol) // sanity - couldve been purged
+	if (!albuterol) // sanity - couldve been purged. can be 0 or null which is why we just use a !
 		inhaled_albuterol = 0
 	else
 		inhaled_albuterol = min(albuterol.volume, inhaled_albuterol)
 
 	if (inhaled_albuterol > 0)
-		adjust_inflammation(-(albuterol_inflammtion_reduction * seconds_per_tick))
+		adjust_inflammation(-(albuterol_inflammation_reduction * seconds_per_tick))
 
 	// asthma attacks dont happen if theres no client, because they can just kill you and some need immediate response
 	else if (carbon_quirk_holder.client && isnull(current_attack) && world.time > time_next_attack_allowed && SPT_PROB(chance_for_attack_to_happen_per_second, seconds_per_tick))
@@ -148,10 +140,14 @@
 	else // reduce the reduction
 		amount *= health_mult
 
+	var/old_pressure_mult = get_pressure_mult()
 	inflammation = (clamp(inflammation + amount, 0, max_inflammation))
 	var/difference = (old_inflammation - inflammation)
 	if (difference != 0)
-		holder_lungs?.set_received_pressure_mult(get_pressure_mult())
+		var/new_pressure_mult = get_pressure_mult()
+		var/pressure_difference = new_pressure_mult - old_pressure_mult
+
+		holder_lungs?.adjust_received_pressure_mult(pressure_difference)
 
 		if (!silent)
 			INVOKE_ASYNC(src, PROC_REF(do_inflammation_change_feedback), difference)
@@ -165,7 +161,7 @@
 		if (isnull(holder_lungs) || holder_lungs::received_pressure_mult <= 0) // it didnt go into the lungs get fucked
 			return
 
-		adjust_inflammation(-(albuterol_inflammtion_reduction * albuterol_immediate_reduction_mult))
+		adjust_inflammation(-(albuterol_inflammation_reduction * albuterol_immediate_reduction_mult))
 
 	inhaled_albuterol += adjustment
 
@@ -179,7 +175,7 @@
 /datum/quirk/item_quirk/asthma/proc/do_inflammation_change_feedback(difference)
 	var/change_mult = 1 + (difference / 300) // 300 is arbitrary
 	if (difference > 0) // it decreased
-		if (prob(0.5 * change_mult))
+		if (prob(1 * change_mult))
 			// in my experience with asthma an inhaler causes a bunch of mucous and you tend to cough it up
 			to_chat(quirk_holder, span_notice("The phlem in your throat forces you to cough!"))
 			quirk_holder.emote("cough")
@@ -236,6 +232,7 @@
 
 	time_next_attack_allowed = world.time + rand(min_time_between_attacks, max_time_between_attacks)
 
+/// Signal handler for COMSIG_LIVING_POST_FULLY_HEAL. Heals our asthma.
 /datum/quirk/item_quirk/asthma/proc/on_full_heal(datum/signal_source, heal_flags)
 	SIGNAL_HANDLER
 
