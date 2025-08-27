@@ -26,8 +26,10 @@
 
 	return ..()
 
-/obj/item/inhaler/Destroy(force)
-	set_canister(null)
+/obj/item/inhaler/(force)
+	if (force)
+		qdel(canister)
+	set_canister(null, move_canister = !force)
 
 	return ..()
 
