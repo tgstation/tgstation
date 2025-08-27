@@ -158,7 +158,7 @@
 		var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 		var/obj/item/organ/lungs/holder_lungs = carbon_quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 
-		if (isnull(holder_lungs) || holder_lungs::received_pressure_mult <= 0) // it didnt go into the lungs get fucked
+		if (isnull(holder_lungs) || holder_lungs.received_pressure_mult <= 0) // it didnt go into the lungs get fucked
 			return
 
 		adjust_inflammation(-(albuterol_inflammation_reduction * albuterol_immediate_reduction_mult))
