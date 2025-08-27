@@ -590,7 +590,7 @@
 		force_update = TRUE
 		return
 
-	if(obj_flags & EMAGGED || malfai)
+	if((obj_flags & EMAGGED) || malfai)
 		hacked_flicker_counter = hacked_flicker_counter - 1
 		if(hacked_flicker_counter <= 0)
 			flicker_hacked_icon()
