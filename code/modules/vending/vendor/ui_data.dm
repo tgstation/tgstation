@@ -12,7 +12,6 @@
 		ui = new(user, src, "Vending", name)
 		ui.open()
 
-
 /**
  * Returns a list of given product records of the vendor to be used in UI.
  * arguments:
