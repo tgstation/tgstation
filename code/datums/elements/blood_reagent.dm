@@ -156,7 +156,7 @@
 		return
 
 	if (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
-		exposed_obj.add_blood_DNA(list(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type) = blood_type))
+		exposed_obj.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
 
 	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
