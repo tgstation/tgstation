@@ -206,7 +206,7 @@
 
 /atom/movable/screen/alert/bronchoconstricted
 	name = "Bronchocontracted"
-	desc = "You feel like your lungs are smaller than usual! You might need a higher presure environment/internals to breathe!"
+	desc = "You feel like your lungs are smaller than usual! You might need a higher pressure environment/internals to breathe!"
 	icon_state = "bronchoconstricted"
 
 /atom/movable/screen/alert/gross
