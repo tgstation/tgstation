@@ -38583,7 +38583,7 @@
 /turf/open/floor/circuit,
 /area/station/command/teleporter)
 "msF" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
@@ -64149,7 +64149,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "vro" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
