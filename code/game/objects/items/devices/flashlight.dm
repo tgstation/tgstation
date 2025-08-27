@@ -1104,7 +1104,7 @@
 	///The timer we track until the bubble deletes itself.
 	var/bubble_timer
 	///The amount of time that the bubble will survive for once turned on. This can't be changed normally but is a var for admins.
-	var/bubble_duration = (5 MINUTES)
+	var/bubble_duration = (15 MINUTES)
 	///Boolean on whether or not a pyroclastic anomaly core has been inserted, allowing the item to be used.
 	var/installed_pyro_core = FALSE
 	///The proximity monitor & visual bubble that grants space protection to people nearby, while active.
