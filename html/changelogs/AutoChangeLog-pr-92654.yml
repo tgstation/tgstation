@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Machine Override mobs will no longer target/be targeted by AI turrets"

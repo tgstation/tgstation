@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - bugfix: "Bitrunner virtual area smuggling exploit"

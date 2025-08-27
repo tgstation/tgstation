@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - bugfix: "Admin Secrets - \"Cure all diseases\" now adds immunity to that disease"

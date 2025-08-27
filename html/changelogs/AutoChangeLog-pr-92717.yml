@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "plumbing pill press highlights selected option & its window has been scaled to fit all options"

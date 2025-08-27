@@ -570,3 +570,42 @@
       Monster Cube Box, and the Spider Bite martial art'
   Yobrocharlie:
   - bugfix: fixed caves.dmm's runtimes for a downstream
+2025-08-27:
+  Ben10Omintrix:
+  - balance: red raptors are now able to attack while ridden
+  Pepsilawn:
+  - balance: Blood beams no longer converts iron sheets into cult metal.
+  - bugfix: Fixes gas miners erroneously connecting to surrounding pipes, causing
+      runtimes
+  SmArtKar:
+  - bugfix: Machine Override mobs will no longer target/be targeted by AI turrets
+  - bugfix: Fixed crusher trophies sometimes not dropping when they should/dropping
+      duplicates
+  - bugfix: You can no longer adjust surgical breath masks to break their sprites.
+  - bugfix: Fixed chasm jaunters not working while you're buckled to a mob or an object
+  - code_imp: Updated chasm jaunters to use signals instead of being hardcoded in
+      chasm code.
+  - bugfix: Blood scrubber overflow no longer explodes the server
+  SyncIt21:
+  - bugfix: plumbing pill press highlights selected option & its window has been scaled
+      to fit all options
+  - bugfix: air alarm scrubber toggle mode button has its background colour again
+  - bugfix: vending machines with all products free now makes stuff actually free
+      even without ID
+  - bugfix: unconnected Thermomachine pipe is visible again
+  carpotoxin:
+  - bugfix: Fixes the external_bodyshapes variable of organs, like the lizard snout
+      which now actually flags lizards as having a snouted bodyshape
+  - bugfix: Dullahan's head relay properly flags their head bodypart to skip out on
+      the regeneration
+  loganuk:
+  - bugfix: Bitrunner virtual area smuggling exploit
+  - bugfix: Restores jumping emote sound
+  - bugfix: Prevented pink sprite when wearing trashbag on Janitor biosuit slot.
+  - bugfix: Admin Secrets - "Cure all diseases" now adds immunity to that disease
+  necromanceranne:
+  - admin: AFK logout report timers are now determined by a config rather than a hardcoded
+      value.
+  tontyGH:
+  - qol: Added [OPTIONAL] keybinds to for Swap Left/Right hands. Check your keybinds.
+      [NOT OPTIONAL]

@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - bugfix: "Prevented pink sprite when wearing trashbag on Janitor biosuit slot."

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed crusher trophies sometimes not dropping when they should/dropping duplicates"

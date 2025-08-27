@@ -1,4 +1,0 @@
-author: "Pepsilawn"
-delete-after: True
-changes:
-  - bugfix: "Fixes gas miners erroneously connecting to surrounding pipes, causing runtimes"

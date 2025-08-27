@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed chasm jaunters not working while you're buckled to a mob or an object"
-  - code_imp: "Updated chasm jaunters to use signals instead of being hardcoded in chasm code."
