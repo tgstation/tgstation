@@ -151,7 +151,7 @@
 /obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
-	silo_log(context, "WITHDRAWN", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets]", sheets.custom_materials, user_data)
+	silo_log(context, "WITHDRAWN", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets.name]", sheets.custom_materials, user_data)
 
 /obj/machinery/ore_silo/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING

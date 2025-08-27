@@ -9,6 +9,7 @@ import {
   NoticeBox,
   Section,
   Stack,
+  Table,
   Tabs,
   Tooltip,
   VirtualList,
@@ -279,50 +280,54 @@ const LogsList = (props: LogsListProps) => {
 
   const filteredLogs = query ? results.map(result => result.log) : logs;
 
-  return (
-    <Box height="100%">
-      <Section
-        title="Action Logs"
-        buttons={<RestrictButton />}
-      >
-        <Stack>
-          <Stack.Item grow>
-            <Input
-              fluid
-              height={1.7}
-              autoFocus
-              placeholder='Search for names, locations and resources...'
-              value={query}
-              onChange={(value) => setQuery(value)}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
-              icon="close"
-              onClick={() => setQuery('')}
-              disabled={!query}
-            />
-          </Stack.Item>
-        </Stack>
-      </Section>
-      <Section
-        fill
-        scrollable={filteredLogs.length > 0}
-        pr={1}>
-        {filteredLogs.length > 0 ? (
-          <VirtualList>
-            {filteredLogs.map((log, index) => (
-              <LogEntry key={index} {...log} />
-            ))}
-          </VirtualList>
-        ) : (
-          <NoticeBox textAlign="center">
-            {query ? 'No logs seem to match your request.' : 'Nothing here...'}
-          </NoticeBox>
-        )}
-      </Section>
-    </Box>
-  );
+      return (
+      <Stack vertical fill>
+        <Stack.Item>
+          <Section
+            title="Action Logs"
+            buttons={<RestrictButton />}
+          >
+            <Stack>
+              <Stack.Item grow>
+                <Input
+                  fluid
+                  height={1.7}
+                  autoFocus
+                  placeholder='Search for names, locations and resources...'
+                  value={query}
+                  onChange={(value) => setQuery(value)}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="close"
+                  onClick={() => setQuery('')}
+                  disabled={!query}
+                />
+              </Stack.Item>
+            </Stack>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section
+            fill
+            scrollable={filteredLogs.length > 0}
+            pr={1}>
+            {filteredLogs.length > 0 ? (
+              <VirtualList>
+                {filteredLogs.map((log, index) => (
+                  <LogEntry key={index} {...log} />
+                ))}
+              </VirtualList>
+            ) : (
+              <NoticeBox textAlign="center">
+                {query ? 'No logs seem to match your request.' : 'Nothing here...'}
+              </NoticeBox>
+            )}
+          </Section>
+        </Stack.Item>
+      </Stack>
+    );
 };
 
 const UserItem = (props: UserData) => {
@@ -349,6 +354,7 @@ const UserItem = (props: UserData) => {
           <Button
             color={banned_users.includes(account_id) ? 'bad' : 'good'}
             onClick={() => act('toggle_ban', { user_data: props })}
+            lineHeight={1.6}
           >
             {banned_users.includes(account_id) ? 'Unrestrict' : 'Restrict'}{' '}
             access
@@ -380,48 +386,73 @@ const LogEntry = (props: Log) => {
     noun,
     user_data,
   } = props;
-  return (
-    <Collapsible
-      title={
-        <>
-          <Button
-            color={actionToColor[action.toUpperCase()]}
-            width="8em"
-            textAlign="center"
-            ml={1}
-          >
-            {action.toUpperCase()}
-          </Button>
-          <Icon name="arrow-right" ml={1} mr={1} />
-          {` ${formatAmount(action, amount)} ${noun}`}
-          <Button style={{ marginLeft: '10px' }} icon='user' color="gray">{user_data.name} ({user_data.assignment})</Button>
-        </>
-      }
-      color="transparent"
-    >
-      <Box pl={1}>
-        <LabeledList>
-          <LabeledList.Item className="candystripe" label="Time">
-            {time}
-          </LabeledList.Item>
-          <LabeledList.Item className="candystripe" label="Machine">
-            {capitalize(machine_name)}
-          </LabeledList.Item>
-          <LabeledList.Item className="candystripe" label="Location">
-            {area_name}
-          </LabeledList.Item>
-          <LabeledList.Item
-            className="candystripe"
-            label="Materials"
-            color={amount > 0 ? 'good' : 'bad'}
-          >
-            {raw_materials}
-          </LabeledList.Item>
-          <LabeledList.Item className="candystripe" label="User">
-            <UserItem {...user_data} />
-          </LabeledList.Item>
-        </LabeledList>
-      </Box>
-    </Collapsible>
+  const [expanded, setExpanded] = useState(false);
+
+      return (
+      <Box>
+        <Box
+          style={{
+            cursor: 'pointer',
+          }}
+          onClick={() => setExpanded(!expanded)}
+        >
+            <Stack align="center" style={{ padding: '0.5em' }}>
+            <Stack.Item>
+              <Button disabled icon={expanded ? 'arrow-down' : 'arrow-right'} color='disabled' />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color={actionToColor[action.toUpperCase()]}
+                width="8em"
+                textAlign="center"
+              >
+                {action.toUpperCase()}
+              </Button>
+            </Stack.Item>
+            <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
+              <Icon name="arrow-right" ml={1} mr={1} />
+            </Stack.Item>
+            <Stack.Item grow style={{ display: 'flex', alignItems: 'center' }}>
+              {` ${formatAmount(action, amount)} ${noun}`}
+            </Stack.Item>
+            <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
+              <Button icon='user' color="gray">
+                {user_data.name} ({user_data.assignment})
+              </Button>
+            </Stack.Item>
+          </Stack>
+        </Box>
+
+      {expanded && (
+        <Box mt={0.5}>
+          <Table>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Time</Table.Cell>
+              <Table.Cell>{time}</Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Machine</Table.Cell>
+              <Table.Cell>{capitalize(machine_name)}</Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Location</Table.Cell>
+              <Table.Cell>{area_name}</Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Materials</Table.Cell>
+              <Table.Cell color={amount > 0 ? 'good' : 'bad'}>
+                {raw_materials}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>User</Table.Cell>
+              <Table.Cell>
+                <UserItem {...user_data} />
+              </Table.Cell>
+            </Table.Row>
+          </Table>
+        </Box>
+      )}
+    </Box>
   );
 };
