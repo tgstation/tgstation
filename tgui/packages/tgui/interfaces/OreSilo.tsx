@@ -12,6 +12,7 @@ import {
   Tabs,
   Tooltip,
   VirtualList,
+  Input
 } from 'tgui-core/components';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
@@ -20,6 +21,8 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import type { Material } from './Fabrication/Types';
+
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 type Machine = {
   name: string;
@@ -176,9 +179,9 @@ const MachineDisplay = (props: MachineProps) => {
         className={
           machine.on_hold
             ? classes([
-                'FabricatorRecipe__Title',
-                'FabricatorRecipe__Title--disabled',
-              ])
+              'FabricatorRecipe__Title',
+              'FabricatorRecipe__Title--disabled',
+            ])
             : 'FabricatorRecipe__Title'
         }
       >
@@ -254,24 +257,71 @@ const RestrictButton = () => {
 const LogsList = (props: LogsListProps) => {
   const { logs } = props;
 
+  const searchableLogs = logs.map((log, index) => ({
+    id: index,
+    log,
+    searchString: [
+      log.action.toLowerCase(),
+      log.user_data.name.toLowerCase(),
+      log.user_data.assignment.toLowerCase(),
+      log.raw_materials.toLowerCase(),
+      log.machine_name.toLowerCase(),
+      log.area_name.toLowerCase(),
+      log.noun.toLowerCase(),
+    ].join(' '),
+  }));
+
+  const { query, setQuery, results } = useFuzzySearch({
+    searchArray: searchableLogs,
+    matchStrategy: 'smart',
+    getSearchString: (item) => item.searchString,
+  });
+
+  const filteredLogs = query ? results.map(result => result.log) : logs;
+
   return (
-    <Section
-      fill
-      scrollable
-      pr={1}
-      title="Action Logs"
-      buttons={<RestrictButton />}
-    >
-      {logs.length > 0 ? (
-        <VirtualList>
-          {logs.map((log, index) => (
-            <LogEntry key={index} {...log} />
-          ))}
-        </VirtualList>
-      ) : (
-        <NoticeBox>No log entries currently present!</NoticeBox>
-      )}
-    </Section>
+    <Box height="100%">
+      <Section
+        title="Action Logs"
+        buttons={<RestrictButton />}
+      >
+        <Stack>
+          <Stack.Item grow>
+            <Input
+              fluid
+              height={1.7}
+              autoFocus
+              placeholder='Search for names, locations and resources...'
+              value={query}
+              onChange={(value) => setQuery(value)}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="close"
+              onClick={() => setQuery('')}
+              disabled={!query}
+            />
+          </Stack.Item>
+        </Stack>
+      </Section>
+      <Section
+        fill
+        scrollable={filteredLogs.length > 0}
+        pr={1}>
+        {filteredLogs.length > 0 ? (
+          <VirtualList>
+            {filteredLogs.map((log, index) => (
+              <LogEntry key={index} {...log} />
+            ))}
+          </VirtualList>
+        ) : (
+          <NoticeBox textAlign="center">
+            {query ? 'No logs seem to match your request.' : 'Nothing here...'}
+          </NoticeBox>
+        )}
+      </Section>
+    </Box>
   );
 };
 
@@ -291,13 +341,12 @@ const UserItem = (props: UserData) => {
   const { act, data } = useBackend<Data>();
   const { banned_users } = data;
   return (
-    <Stack align="center" className="__UserItem">
-      <Stack.Item className="__Name">{name},</Stack.Item>
-      <Stack.Item className="__Assignment">{assignment}</Stack.Item>
+    <Stack align="center">
+      <Stack.Item>{name},</Stack.Item>
+      <Stack.Item>{assignment}</Stack.Item>
       {!id_read_failure && !silicon_override && (
         <Stack.Item>
           <Button
-            className="__AntiRoboticistButton"
             color={banned_users.includes(account_id) ? 'bad' : 'good'}
             onClick={() => act('toggle_ban', { user_data: props })}
           >
@@ -345,8 +394,7 @@ const LogEntry = (props: Log) => {
           </Button>
           <Icon name="arrow-right" ml={1} mr={1} />
           {` ${formatAmount(action, amount)} ${noun}`}
-          <Icon name="user" ml={1} mr={1} />
-          {user_data.name} ({user_data.assignment})
+          <Button style={{ marginLeft: '10px' }} icon='user' color="gray">{user_data.name} ({user_data.assignment})</Button>
         </>
       }
       color="transparent"
