@@ -155,7 +155,7 @@
 		. += span_notice(" - Productivity at <b>[productivity * 100]%</b>.")
 		. += span_notice(" - Converting <b>[processed_items_per_cycle]</b> pieces of food per cycle.")
 		. += span_notice(" - Matter consumption at <b>[1 / efficiency * 100]</b>%.")
-		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[current_item_count] piece[current_item_count == 1 ? "" : "s"]</b>.")
+		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[current_item_count] piece\s</b>.")
 
 	if(welded_down)
 		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
