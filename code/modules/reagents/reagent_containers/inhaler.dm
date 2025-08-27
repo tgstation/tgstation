@@ -27,8 +27,8 @@
 	return ..()
 
 /obj/item/inhaler/Destroy(force)
-	QDEL_NULL(canister)
-	canister = null
+	if (!isnull(canister))
+		QDEL_NULL(canister)
 
 	return ..()
 
