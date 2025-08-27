@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Resprited all mineral overlays (from mining scanners)"
+  - code_imp: "Slightly improved mining scanner code"
