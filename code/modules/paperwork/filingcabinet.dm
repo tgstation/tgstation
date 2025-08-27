@@ -27,7 +27,7 @@
 	desc = "A small cabinet with drawers. This one has wheels!"
 	anchored = FALSE
 
-/obj/structure/filingcabinet/whitecabinet
+/obj/structure/filingcabinet/white
 	icon_state = "tallcabinet"
 
 /obj/structure/filingcabinet/Initialize(mapload)
