@@ -27,11 +27,16 @@
 	return ..()
 
 /obj/item/inhaler/Destroy(force)
-	if (force)
-		qdel(canister)
-	set_canister(null, move_canister = !force)
+	QDEL_NULL(canister)
+	canister = null
 
 	return ..()
+
+/obj/item/inhaler/handle_deconstruct(disassembled)
+	. = ..()
+
+	set_canister(null)
+
 
 /obj/item/inhaler/update_overlays()
 	. = ..()
