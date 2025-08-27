@@ -98,11 +98,11 @@
 		if (holder_histamine.overdosed) // uh oh!
 			if (SPT_PROB(15, seconds_per_tick))
 				to_chat(carbon_quirk_holder, span_boldwarning("You feel your neck swelling, squeezing on your windpipe more and more!"))
-			adjust_inflammation(histamine_OD_inflammation)
+			adjust_inflammation(histamine_OD_inflammation * seconds_per_tick)
 		else
 			if (SPT_PROB(5, seconds_per_tick))
 				to_chat(carbon_quirk_holder, span_warning("You find yourself wheezing a little harder as your neck swells..."))
-			adjust_inflammation(histamine_inflammation)
+			adjust_inflammation(histamine_inflammation * seconds_per_tick)
 
 	var/datum/reagent/medicine/albuterol/albuterol = carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/albuterol)
 	if (!albuterol) // sanity - couldve been purged. can be 0 or null which is why we just use a !
