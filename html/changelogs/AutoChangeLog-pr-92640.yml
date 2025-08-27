@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "converting reagents now computes correct purity & ph when conversion threshold is set"
-  - bugfix: "converting reagents transfers reagent data correctly only when not filtering sub types"
-  - code_imp: "converting reagents is faster performance wise"

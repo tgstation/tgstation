@@ -65,6 +65,7 @@ export const Vending = () => {
   const { data } = useBackend<VendingData>();
 
   const {
+    all_products_free,
     onstation,
     ad,
     product_records = [],
@@ -111,7 +112,7 @@ export const Vending = () => {
     <Window width={431} height={635}>
       <Window.Content>
         <Stack fill vertical>
-          {!!onstation && (
+          {!!onstation && !all_products_free && (
             <Stack.Item>
               <UserDetails />
             </Stack.Item>
@@ -391,11 +392,11 @@ const ProductPrice = (props: ProductPriceProps) => {
   const { data } = useBackend<VendingData>();
   const { displayed_currency_name } = data;
   const { discount, free, product, redPrice } = props;
-  let standardPrice = product.price + '';
+  let standardPrice = `${product.price}`;
   if (free) {
     standardPrice = 'FREE';
   } else if (discount) {
-    standardPrice = redPrice + '';
+    standardPrice = `${redPrice}`;
   }
   return (
     <Stack.Item fontSize={0.85} color={'gold'}>
