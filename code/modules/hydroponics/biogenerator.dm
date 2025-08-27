@@ -195,9 +195,12 @@
 	. += emissive_appearance(icon, "[icon_state]_o_screen", src)
 
 /obj/machinery/biogenerator/wrench_act(mob/living/user, obj/item/tool)
-	if(default_unfasten_wrench(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	switch(default_unfasten_wrench(user, tool))
+		if(SUCCESSFUL_UNFASTEN)
+			return ITEM_INTERACT_SUCCESS
+		if(FAILED_UNFASTEN)
+			return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/machinery/biogenerator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
