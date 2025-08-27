@@ -514,10 +514,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/water_cooler/boom()
 	if(QDELETED(src))
 		return
-	var/liquid_amount = 0
 	if(reagents.total_volume)
 		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
-		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50), adminlog=(liquid_amount<25))
+		chem_splash(get_turf(src), null, 2 + FLOOR((reagents.total_volume) / 1000), list(reagents))
 	eject_jug(throw_away = TRUE)
 	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
 	tip_over()
