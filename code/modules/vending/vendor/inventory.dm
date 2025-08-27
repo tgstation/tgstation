@@ -229,16 +229,14 @@
 	var/obj/item/vended_item = null
 	if(dispense_returned)
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
-		if(!QDELETED(vended_item))
-			vended_item.forceMove(spawn_location)
+		vended_item.forceMove(spawn_location)
 	else if(item_record.amount)
 		vended_item = new item_record.product_path(spawn_location)
 		if(vended_item.type in contraband)
 			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 		item_record.amount--
 
-	if(!QDELETED(vended_item))
-		on_dispense(vended_item, dispense_returned)
+	on_dispense(vended_item, dispense_returned)
 	use_energy(active_power_usage)
 
 	return vended_item
