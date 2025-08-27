@@ -542,9 +542,6 @@
 			handle_reactions()
 		target_holder.handle_reactions()
 
-	if (target_atom)
-		SEND_SIGNAL(target_atom, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, src, transferred, total_transfered_amount, transferred_by, methods, ignore_stomach)
-
 	return total_transfered_amount
 
 ///For internal purposes. Sends a signal when a new reagent has been created in the target reagent holder upon transfer

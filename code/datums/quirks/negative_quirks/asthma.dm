@@ -68,7 +68,7 @@
 
 	RegisterSignal(quirk_holder, COMSIG_CARBON_EXPOSED_TO_SMOKE, PROC_REF(holder_exposed_to_smoke))
 	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(organ_removed))
-	RegisterSignal(quirk_holder, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, PROC_REF(reagents_transferred))
+	RegisterSignal(quirk_holder, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(exposed_to_reagents))
 	RegisterSignal(quirk_holder, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_full_heal))
 	RegisterSignal(quirk_holder, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
@@ -78,7 +78,7 @@
 	. = ..()
 
 	current_attack?.cure()
-	UnregisterSignal(quirk_holder, COMSIG_CARBON_EXPOSED_TO_SMOKE, COMSIG_CARBON_LOSE_ORGAN, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_LIFE)
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_EXPOSED_TO_SMOKE, COMSIG_CARBON_LOSE_ORGAN, COMSIG_ATOM_EXPOSE_REAGENTS, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_LIFE)
 
 /datum/quirk/item_quirk/asthma/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
@@ -210,18 +210,21 @@
 		reset_asthma()
 
 /// Signal proc for when our owner receives reagents. If we receive albuterol via inhalation, we adjust inhaled albuterol by that amount. If we are smoking, we increase inflammation.
-/datum/quirk/item_quirk/asthma/proc/reagents_transferred(datum/signal_source, datum/reagents/transferrer, list/datum/reagent/transferred_reagents, final_total, mob/transferred_by, methods, ignore_stomach)
+/datum/quirk/item_quirk/asthma/proc/exposed_to_reagents(atom/source, list/reagents, datum/reagents/source_reagents, methods, show_message)
 	SIGNAL_HANDLER
+
+	var/final_total = 0
+
+	for (var/datum/reagent/reagent as anything in reagents)
+		var/amount = reagents[reagent]
+		if (istype(reagent, /datum/reagent/medicine/albuterol))
+			adjust_albuterol_levels(amount)
+		final_total += amount
 
 	if (!(methods & INHALE))
 		return
-	if (istype(transferrer.my_atom, /obj/item/cigarette)) // smoking is bad, kids
+	if (istype(source_reagents.my_atom, /obj/item/cigarette)) // smoking is bad, kids
 		adjust_inflammation(inflammation_on_smoke * final_total * 5)
-
-	for (var/datum/reagent/typepath as anything in transferred_reagents)
-		var/amount = transferred_reagents[typepath]
-		if (ispath(typepath, /datum/reagent/medicine/albuterol))
-			adjust_albuterol_levels(amount)
 
 /// Signal proc for when our asthma attack qdels. Unsets our refs to it and resets [time_next_attack_allowed].
 /datum/quirk/item_quirk/asthma/proc/attack_deleting(datum/signal_source)
