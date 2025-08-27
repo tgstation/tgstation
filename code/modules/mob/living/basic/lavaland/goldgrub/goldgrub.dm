@@ -145,7 +145,7 @@
 /mob/living/basic/mining/goldgrub/update_overlays()
 	. = ..()
 	if(has_emissive)
-		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+		. += emissive_appearance(icon, "[icon_state]_e", src)
 
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
