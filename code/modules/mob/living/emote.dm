@@ -796,7 +796,7 @@
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/whistle
+/datum/emote/living/carbon/human/whistle
 	key = "whistle"
 	key_third_person = "whistles"
 	message = "whistles."
@@ -804,5 +804,5 @@
 	vary = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
-/datum/emote/living/carbon/whistle/get_sound(mob/living/user)
+/datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
 	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
