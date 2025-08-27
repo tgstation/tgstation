@@ -187,6 +187,21 @@
 	overheat_temp = 800
 	mix_message = "The solution breaks apart, turning a deeper blue."
 
+/datum/chemical_reaction/medicine/albuterol_to_inverse_convermol
+	results = list(/datum/reagent/inverse/healing/convermol = 1, /datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3)
+	required_catalysts = list(/datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/medicine/albuterol = 5)
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER
+	required_temp = 900
+	optimal_temp = 920
+	overheat_temp = 990
+	thermic_constant = 25
+	mix_message = "The solution rapidly breaks apart, turning a mix of colors."
+
+/datum/chemical_reaction/medicine/albuterol_to_inverse_convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
+	var/bonus = impure ? 2 : 1
+	explode_smoke(holder, equilibrium, 7.5 * bonus, TRUE, TRUE)
+
 /datum/chemical_reaction/medicine/ephedrine
 	results = list(/datum/reagent/medicine/ephedrine = 4)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)

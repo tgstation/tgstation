@@ -64,7 +64,7 @@
 	. = ..()
 
 	var/obj/item/inhaler/albuterol/asthma/rescue_inhaler = new(get_turf(quirk_holder))
-	give_item_to_holder(rescue_inhaler, list(LOCATION_BACKPACK = ITEM_SLOT_BACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "You can use this to quickly relieve the symptoms of your asthma.")
+	give_item_to_holder(rescue_inhaler, list(LOCATION_BACKPACK, LOCATION_HANDS), flavour_text = "You can use this to quickly relieve the symptoms of your asthma.")
 
 	RegisterSignal(quirk_holder, COMSIG_CARBON_EXPOSED_TO_SMOKE, PROC_REF(holder_exposed_to_smoke))
 	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(organ_removed))
