@@ -137,6 +137,8 @@
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		Cutting the weapon down seems to have not helped with the moisture problem."
 	icon_state = "sakhno_tactifucked"
+	inhand_icon_state = "slopno"
+	worn_icon_state = "slopno"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
@@ -369,7 +371,7 @@
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	icon_state = "enchanted_rifle"
-	inhand_icon_state = "sakhno"
+	inhand_icon_state = "enchanted"
 	worn_icon_state = "enchanted_rifle"
 	slot_flags = ITEM_SLOT_BACK
 	var/guns_left = 30
