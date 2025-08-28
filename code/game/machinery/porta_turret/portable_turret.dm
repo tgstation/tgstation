@@ -325,29 +325,29 @@ DEFINE_BITFIELD(turret_flags, list(
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
 	if(!(machine_stat & BROKEN))
 		return NONE
 
 	//If the turret is destroyed, you can remove it with a crowbar to
 	//try and salvage its components
 	to_chat(user, span_notice("You begin prying the metal coverings off..."))
-	if(tool.use_tool(src, user, 20))
-		if(prob(70))
-			if(stored_gun)
-				stored_gun.forceMove(loc)
-				stored_gun = null
-			to_chat(user, span_notice("You remove the turret and salvage some components."))
-			if(prob(50))
-				new /obj/item/stack/sheet/iron(loc, rand(1,4))
-			if(prob(50))
-				new /obj/item/assembly/prox_sensor(loc)
-		else
-			to_chat(user, span_notice("You remove the turret but did not manage to salvage anything."))
-		qdel(src)
+	if(!tool.use_tool(src, user, 20))
+		return ITEM_INTERACT_BLOCKING
+	if(prob(70))
+		if(stored_gun)
+			stored_gun.forceMove(loc)
+			stored_gun = null
+		to_chat(user, span_notice("You remove the turret and salvage some components."))
+		if(prob(50))
+			new /obj/item/stack/sheet/iron(loc, rand(1,4))
+		if(prob(50))
+			new /obj/item/assembly/prox_sensor(loc)
+	else
+		to_chat(user, span_notice("You remove the turret but did not manage to salvage anything."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/wrench_act(mob/living/user, obj/item/tool)
-	. = NONE
 	if(on || raised)
 		return NONE
 
@@ -366,9 +366,9 @@ DEFINE_BITFIELD(turret_flags, list(
 		power_change()
 		SetInvisibility(INVISIBILITY_NONE, id=type)
 		qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(!tool.GetID())
 		return NONE
 

@@ -157,7 +157,6 @@
 	return //jetfuel can't break steel foam...
 
 /turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
 	if(!ismetaltile(tool))
 		return NONE
 

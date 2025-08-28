@@ -37,7 +37,6 @@
 	return ..() || parent_turret.attack_ghost(user)
 
 /obj/machinery/porta_turret_cover/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	. = NONE
 	if(parent_turret.locked)
 		user.balloon_alert(user, "controls locked")
 		return ITEM_INTERACT_BLOCKING
@@ -47,9 +46,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret_cover/wrench_act(mob/living/user, obj/item/tool)
-	. = NONE
 	if(parent_turret.on || parent_turret.raised)
-		return
+		return NONE
 
 	if(parent_turret.anchored)
 		parent_turret.set_anchored(FALSE)
@@ -66,7 +64,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret_cover/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(!tool.GetID())
 		return NONE
 	if(!parent_turret.allowed(user))
