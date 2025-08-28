@@ -26,7 +26,7 @@
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
-	var/initialize_directions = NONE
+	var/initialize_directions = ALL_CARDINALS
 	///The color of the pipe
 	var/pipe_color = ATMOS_COLOR_OMNI
 	///What layer the pipe is in (from 1 to 5, default 3)
@@ -68,9 +68,6 @@
 	///keeps the name of the object from being overridden if it's vareditted.
 	var/override_naming
 
-	///If we should init and immediately start processing
-	var/init_processing = FALSE
-
 	armor_type = /datum/armor/machinery_atmospherics
 
 /datum/armor/machinery_atmospherics
@@ -81,29 +78,14 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/post_machine_initialize()
-	. = ..()
-	update_name()
-
-/obj/machinery/atmospherics/examine(mob/user)
-	. = ..()
-	. += span_notice("[src] is on layer [piping_layer].")
-	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
-		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
-			. += span_notice("Alt-click to crawl through it.")
-
-/obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
+/obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir, init_dir = initialize_directions)
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
 		normalize_cardinal_directions()
 	nodes = new(device_type)
-	init_processing = process
-	..()
 	set_init_directions(init_dir)
 
-/obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
 		override_naming = TRUE
 	var/turf/turf_loc = null
@@ -116,9 +98,13 @@
 
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-	if(init_processing)
+	if(process)
 		SSair.start_processing_machine(src)
 	return ..()
+
+/obj/machinery/atmospherics/post_machine_initialize()
+	. = ..()
+	update_name()
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
@@ -131,6 +117,14 @@
 	QDEL_NULL(cap_overlay)
 
 	return ..()
+
+/obj/machinery/atmospherics/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] is on layer [piping_layer].")
+	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
+		var/mob/living/L = user
+		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
+			. += span_notice("Alt-click to crawl through it.")
 
 /**
  * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
@@ -179,8 +173,20 @@
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
 
+/**
+ * Turns the machine on/off
+ * Arguments
+ *
+ * * active - the state of the machine
+ */
 /obj/machinery/atmospherics/proc/set_on(active)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(active == on)
+		return
+
 	on = active
+	update_appearance(UPDATE_ICON)
 	SEND_SIGNAL(src, COMSIG_ATMOS_MACHINE_SET_ON, on)
 
 /// This should only be called by SSair as part of the rebuild queue.
@@ -590,6 +596,9 @@
 		break
 
 	if(!target_move)
+		// If we couldn't find a target to move to and we're ventcrawling, try to exit if this vent allows it
+		if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING) && (vent_movement & VENTCRAWL_ENTRANCE_ALLOWED))
+			user.handle_ventcrawl(src)
 		return
 
 	if(!(target_move.vent_movement & VENTCRAWL_ALLOWED))

@@ -1,5 +1,5 @@
-import { sortBy } from 'common/collections';
-import { ReactNode } from 'react';
+import { sortBy } from 'es-toolkit';
+import type { ReactNode } from 'react';
 import {
   Dimmer,
   Icon,
@@ -11,7 +11,7 @@ import { classes } from 'tgui-core/react';
 
 import { useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
-import { Design, MaterialMap } from './Types';
+import type { Design, MaterialMap } from './Types';
 
 /**
  * A function that does nothing.
@@ -235,10 +235,9 @@ export const DesignBrowser = <T extends Design = Design>(
                     </div>
                   </div>
 
-                  {sortBy(
-                    Object.values(root.subcategories),
+                  {sortBy(Object.values(root.subcategories), [
                     (category: Category) => category.title,
-                  ).map((category) => (
+                  ]).map((category) => (
                     <DesignBrowserTab
                       key={category.title}
                       category={category}
@@ -269,6 +268,7 @@ export const DesignBrowser = <T extends Design = Design>(
             <Stack.Item>
               <Section>
                 <SearchBar
+                  expensive
                   query={searchText}
                   onSearch={setSearchText}
                   placeholder={'Search all designs...'}
@@ -279,10 +279,9 @@ export const DesignBrowser = <T extends Design = Design>(
               <Section fill>
                 {searchText.length > 0 ? (
                   <VirtualList>
-                    {sortBy(
-                      Object.values(root.descendants),
+                    {sortBy(Object.values(root.descendants), [
                       (design: T) => design.name,
-                    )
+                    ])
                       .filter((design) =>
                         design.name
                           .toLowerCase()
@@ -298,10 +297,9 @@ export const DesignBrowser = <T extends Design = Design>(
                   </VirtualList>
                 ) : selectedCategory === ALL_CATEGORY ? (
                   <VirtualList>
-                    {sortBy(
-                      Object.values(root.descendants),
+                    {sortBy(Object.values(root.descendants), [
                       (design: T) => design.name,
-                    ).map((design) =>
+                    ]).map((design) =>
                       buildRecipeElement(
                         design,
                         availableMaterials || {},
@@ -389,10 +387,9 @@ const DesignBrowserTab = <T extends Design = Design>(
         Object.entries(category.subcategories).length > 0 &&
         selectedCategory === category.title && (
           <div className="FabricatorTabs">
-            {sortBy(
-              Object.values(category.subcategories),
+            {sortBy(Object.values(category.subcategories), [
               (category: Category) => category.title,
-            ).map((subcategory) => (
+            ]).map((subcategory) => (
               <DesignBrowserTab
                 key={subcategory.title}
                 category={subcategory}
@@ -472,7 +469,7 @@ const CategoryView = <T extends Design = Design>(
 
   const body = (
     <VirtualList>
-      {sortBy(category.children, (design: T) => design.name).map((design) =>
+      {sortBy(category.children, [(design: T) => design.name]).map((design) =>
         buildRecipeElement(
           design,
           availableMaterials || {},
@@ -503,7 +500,7 @@ const CategoryView = <T extends Design = Design>(
       title={category.title}
       key={category.anchorKey}
       container_id={category.anchorKey}
-      buttons={categoryButtons && categoryButtons(category)}
+      buttons={categoryButtons?.(category)}
     >
       {body}
     </Section>

@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "A lot of lavaland mobs now have minor glowy bits, making them easier to spot in the dark. Same applies to their attacks!"
+  - bugfix: "Legion brood (skulls) no longer float inside of rocks, or get damaged by atmos."
+  - image: "Legion broods now have an animation and multiple random variants."
+  - image: "Brimdemons now play an animation while firing their beam."

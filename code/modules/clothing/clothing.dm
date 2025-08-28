@@ -18,6 +18,10 @@
 	var/visor_toggle_down_sound = null
 	///Sound this item makes when its visor is flipped up
 	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -540,7 +544,13 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
+	var/message
+	if(up)
+		message = src.alt_toggle_message || "You push [src] out of the way."
+	else
+		message = src.toggle_message || "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
 
 	//play sounds when toggling the visor up or down (if there is any)
 	if(visor_toggle_up_sound && up)
@@ -628,3 +638,23 @@ BLIND     // can't see anything
 /obj/item/clothing/remove_fantasy_bonuses(bonus)
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
+
+/// Returns a list of overlays with our blood, if we're bloodied
+/obj/item/clothing/proc/get_blood_overlay(blood_state)
+	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
+		return
+
+	var/mutable_appearance/blood_overlay = null
+	if(clothing_flags & LARGE_WORN_ICON)
+		blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "[blood_state]blood_large")
+	else
+		blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_state]blood")
+
+	blood_overlay.color = get_blood_dna_color()
+
+	var/emissive_alpha = get_blood_emissive_alpha(is_worn = TRUE)
+	if (emissive_alpha)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha, effect_type = EMISSIVE_NO_BLOOM)
+		blood_overlay.overlays += emissive_overlay
+
+	return blood_overlay

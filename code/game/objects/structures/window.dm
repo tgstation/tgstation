@@ -30,8 +30,6 @@
 	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 	var/hit_sound = 'sound/effects/glass/glasshit.ogg'
-	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
-	var/bloodied = FALSE
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
 	/// Whether or not we're disappearing but dramatically
@@ -377,15 +375,18 @@
 	. = ..()
 	if(!(clean_types & CLEAN_SCRUB))
 		return
-	set_opacity(initial(opacity))
-	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	var/initial_opacity = initial(opacity)
+	if(opacity != initial_opacity)
+		set_opacity(initial_opacity)
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 	for(var/atom/movable/cleanables as anything in src)
 		if(cleanables == src)
 			continue
-		if(!cleanables.wash(clean_types))
+		var/cleanable_washed = cleanables.wash(clean_types)
+		if(!cleanable_washed)
 			continue
+		. |= cleanable_washed
 		vis_contents -= cleanables
-	bloodied = FALSE
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)

@@ -1,7 +1,7 @@
 /datum/antagonist/ninja
 	name = "\improper Space Ninja"
 	antagpanel_category = ANTAG_GROUP_NINJAS
-	job_rank = ROLE_NINJA
+	pref_flag = ROLE_NINJA
 	antag_hud_name = "ninja"
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
@@ -112,15 +112,20 @@
 		addObjectives()
 	addMemories()
 	equip_space_ninja(owner.current)
-	owner.current.add_quirk(/datum/quirk/freerunning)
-	owner.current.add_quirk(/datum/quirk/light_step)
+	owner.current.add_quirk(/datum/quirk/freerunning, announce = FALSE)
+	owner.current.add_quirk(/datum/quirk/light_step, announce = FALSE)
 	owner.current.mind.set_assigned_role(SSjob.get_job_type(/datum/job/space_ninja))
-	owner.current.mind.special_role = ROLE_NINJA
 	return ..()
 
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_ninja))
-	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has ninja'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has ninja'ed [key_name(new_owner)].")
+
+/datum/antagonist/ninja/on_respawn(mob/new_character)
+	equip_space_ninja()
+	var/turf/spawnpoint = find_space_spawn()
+	if(spawnpoint)
+		new_character.forceMove(spawnpoint)
+	return TRUE

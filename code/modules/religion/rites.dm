@@ -141,9 +141,9 @@
 		list(
 			// Arms
 			list(
-				/obj/item/organ/cyberimp/arm/combat = 1,
-				/obj/item/organ/cyberimp/arm/surgery = 1000000,
-				/obj/item/organ/cyberimp/arm/toolset = 1500000,
+				/obj/item/organ/cyberimp/arm/toolkit/combat = 1,
+				/obj/item/organ/cyberimp/arm/toolkit/surgery = 1000000,
+				/obj/item/organ/cyberimp/arm/toolkit/toolset = 1500000,
 			) = 15,
 			// Eyes
 			list(
@@ -256,8 +256,8 @@
 		var/mob/living/carbon/vomitorium = user
 		vomitorium.vomit(VOMIT_CATEGORY_DEFAULT)
 		var/datum/dna/dna = vomitorium.has_dna()
-		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
-		dna?.add_mutation(/datum/mutation/human/strong)
+		dna?.add_mutation(/datum/mutation/stimmed, MUTATION_SOURCE_MAINT_ADAPT) //some fluff mutations
+		dna?.add_mutation(/datum/mutation/strong, MUTATION_SOURCE_MAINT_ADAPT)
 	user.mind.add_addiction_points(/datum/addiction/maintenance_drugs, 1000)//ensure addiction
 
 /datum/religion_rites/adapted_eyes

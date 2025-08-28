@@ -16,64 +16,75 @@
 #define MINOR_NEGATIVE 4
 
 
-//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you don't want people to fuck with like wizard mutate
-/// A mutation that can be activated and deactivated by completing a sequence
-#define MUT_NORMAL 1
-/// A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before its name in the mutation section of the dna console
-#define MUT_EXTRA 2
-/// Cannot be interacted with by players through normal means. I.E. wizards mutate
-#define MUT_OTHER 3
+//Mutation sources. As long as there is at least one, the mutation will stay up after a remove_mutation call
+///Source for mutations that have been activated by completing a sequence or using an activator
+#define MUTATION_SOURCE_ACTIVATED "activated"
+///Source for mutations that have been added via mutators
+#define MUTATION_SOURCE_MUTATOR "mutator"
+///From timed dna injectors.
+#define MUTATION_SOURCE_TIMED_INJECTOR "timed_injector"
+///From mob/living/carbon/human/proc/crewlike_monkify()
+#define MUTATION_SOURCE_CREW_MONKEY "crew_monkey"
+#define MUTATION_SOURCE_MEDIEVAL_CTF "medieval_ctf"
+#define MUTATION_SOURCE_DNA_VAULT "dna_vault"
+///From the /datum/action/cooldown/spell/apply_mutations spell
+#define MUTATION_SOURCE_SPELL "spell"
+///From the heart eater component
+#define MUTATION_SOURCE_HEART_EATER "heart_eater"
+#define MUTATION_SOURCE_RAT_HEART "rat_heart"
+#define MUTATION_SOURCE_CLOWN_CLUMSINESS "clown_clumsiness"
+#define MUTATION_SOURCE_CHANGELING "changeling"
+#define MUTATION_SOURCE_GHOST_ROLE "ghost_role"
+#define MUTATION_SOURCE_WISHGRANTER "wishgranter"
+#define MUTATION_SOURCE_VV "vv"
+#define MUTATION_SOURCE_MANNITOIL "mannitoil"
+#define MUTATION_SOURCE_MAINT_ADAPT "maint_adapt"
+#define MUTATION_SOURCE_BURDENED_TRAUMA "burdened_trauma"
+#define MUTATION_SOURCE_GENE_SYMPTOM "gene_symptom"
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
-
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
-
-#define DNA_GENDER_BLOCK 1
-#define DNA_SKIN_TONE_BLOCK 2
-#define DNA_EYE_COLOR_LEFT_BLOCK 3
-#define DNA_EYE_COLOR_RIGHT_BLOCK 4
-#define DNA_HAIRSTYLE_BLOCK 5
-#define DNA_HAIR_COLOR_BLOCK 6
-#define DNA_FACIAL_HAIRSTYLE_BLOCK 7
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 8
-#define DNA_HAIRSTYLE_GRADIENT_BLOCK 9
-#define DNA_HAIR_COLOR_GRADIENT_BLOCK 10
-#define DNA_FACIAL_HAIRSTYLE_GRADIENT_BLOCK 11
-#define DNA_FACIAL_HAIR_COLOR_GRADIENT_BLOCK 12
-
-#define DNA_UNI_IDENTITY_BLOCKS 12
-
-/// This number needs to equal the total number of DNA blocks
-#define DNA_MUTANT_COLOR_BLOCK 1
-#define DNA_ETHEREAL_COLOR_BLOCK 2
-#define DNA_LIZARD_MARKINGS_BLOCK 3
-#define DNA_TAIL_BLOCK 4
-#define DNA_LIZARD_TAIL_BLOCK 5
-#define DNA_SNOUT_BLOCK 6
-#define DNA_HORNS_BLOCK 7
-#define DNA_FRILLS_BLOCK 8
-#define DNA_SPINES_BLOCK 9
-#define DNA_EARS_BLOCK 10
-#define DNA_MOTH_WINGS_BLOCK 11
-#define DNA_MOTH_ANTENNAE_BLOCK 12
-#define DNA_MOTH_MARKINGS_BLOCK 13
-#define DNA_MUSHROOM_CAPS_BLOCK 14
-#define DNA_POD_HAIR_BLOCK 15
-#define DNA_FISH_TAIL_BLOCK 16
-
-// Hey! Listen up if you're here because you're adding a species feature!
-//
-// You don't need to add a DNA block for EVERY species feature!
-// You ONLY need DNA blocks if you intend to allow players to change it via GENETICS!
-// (Which means having a DNA block for a feature tied to a mob without DNA is entirely pointless.)
-
-/// Total amount of DNA blocks, must be equal to the highest DNA block number
-#define DNA_FEATURE_BLOCKS 16
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
+
+//Features - No more magic strings
+//These can't just simply use dna block paths like identities, because there's keys that aren't tied to blocks
+
+// Block tied
+#define FEATURE_MUTANT_COLOR "mcolor"
+#define FEATURE_ETHEREAL_COLOR "ethcolor"
+#define FEATURE_EARS "ears"
+#define FEATURE_TAIL "tail_cat"
+#define FEATURE_TAIL_LIZARD "tail_lizard"
+#define FEATURE_TAIL_FISH "fish_tail"
+#define FEATURE_SNOUT "snout"
+#define FEATURE_LIZARD_MARKINGS "marking_lizard"
+#define FEATURE_HORNS "horns"
+#define FEATURE_FRILLS "frills"
+#define FEATURE_SPINES "spines"
+#define FEATURE_MOTH_WINGS "moth_wings"
+#define FEATURE_MOTH_ANTENNAE "moth_antennae"
+#define FEATURE_MOTH_MARKINGS "moth_markings"
+#define FEATURE_MUSH_CAP "caps"
+#define FEATURE_POD_HAIR "pod_hair"
+
+// Other
+#define FEATURE_WINGS "wings"
+#define FEATURE_TAIL_MONKEY "tail_monkey"
+#define FEATURE_TAIL_XENO "tail_xeno"
+#define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails
+#define FEATURE_LEGS "legs"
+
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
+#define COPY_DNA_SE (1<<0)
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the species.
+#define COPY_DNA_SPECIES (1<<1)
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the mutations.
+#define COPY_DNA_MUTATIONS (1<<2)
+
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -174,10 +185,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,))
-
-//Defines for Golem Species IDs
-#define SPECIES_GOLEM "golem"
+	ORGAN_SLOT_XENO_EGGSAC,
+))
 
 // Defines for used in creating "perks" for the species preference pages.
 /// A key that designates UI icon displayed on the perk.

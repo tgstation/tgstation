@@ -158,8 +158,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
 	var/list/file_data = list()
 	var/pos = 1
-	for(var/V in GLOB.news_network.network_channels)
-		var/datum/feed_channel/channel = V
+	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue
@@ -359,15 +358,9 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 
-	parts += "[FOURSPACES]Threat level: [SSdynamic.threat_level]"
-	parts += "[FOURSPACES]Threat left: [SSdynamic.mid_round_budget]"
-	if(SSdynamic.roundend_threat_log.len)
-		parts += "[FOURSPACES]Threat edits:"
-		for(var/entry as anything in SSdynamic.roundend_threat_log)
-			parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
-	parts += "[FOURSPACES]Executed rules:"
-	for(var/datum/dynamic_ruleset/rule in SSdynamic.executed_rules)
-		parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+	parts += "[FOURSPACES]Round: [SSdynamic.current_tier.name]"
+	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
+		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b> ([rule.config_tag])"
 
 	return parts.Join("<br>")
 
@@ -672,7 +665,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	button_icon_state = "round_end"
 	show_to_observers = FALSE
 
-/datum/action/report/Trigger(trigger_flags)
+/datum/action/report/Trigger(mob/clicker, trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 

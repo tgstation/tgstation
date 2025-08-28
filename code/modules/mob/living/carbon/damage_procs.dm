@@ -6,7 +6,7 @@
 	forced = FALSE,
 	spread_damage = FALSE,
 	wound_bonus = 0,
-	bare_wound_bonus = 0,
+	exposed_wound_bonus = 0,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
@@ -43,7 +43,7 @@
 	forced = FALSE,
 	spread_damage = FALSE,
 	wound_bonus = 0,
-	bare_wound_bonus = 0,
+	exposed_wound_bonus = 0,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
@@ -91,6 +91,37 @@
 /mob/living/carbon/getFireLoss()
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		amount += bodypart.burn_dam
+	return round(amount, DAMAGE_PRECISION)
+
+
+/**
+ * Returns the amount of bruteloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the bruteloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/proc/getBruteLossForType(required_bodytype = ALL)
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(!(bodypart.bodytype & required_bodytype))
+			continue
+		amount += bodypart.brute_dam
+	return round(amount, DAMAGE_PRECISION)
+
+/**
+ * Returns the amount of fireloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the fireloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/proc/getFireLossForType(required_bodytype = ALL)
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(!(bodypart.bodytype & required_bodytype))
+			continue
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
@@ -194,10 +225,13 @@
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
+ * * required_organ_flag - if you only want to check the damage of organs with the specified organ_flag(s) then you can use this.
  */
-/mob/living/carbon/get_organ_loss(slot)
+/mob/living/carbon/get_organ_loss(slot, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(affected_organ)
+		if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
+			return
 		return affected_organ.damage
 
 ////////////////////////////////////////////
@@ -265,7 +299,7 @@
  *
  * It automatically updates health status
  */
-/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
+/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, exposed_wound_bonus = 0, sharpness = NONE)
 	. = FALSE
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
@@ -275,7 +309,7 @@
 
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage()
-	if(picked.receive_damage(abs(brute), abs(burn), check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	if(picked.receive_damage(abs(brute), abs(burn), check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 	return (damage_calculator - picked.get_damage())
 

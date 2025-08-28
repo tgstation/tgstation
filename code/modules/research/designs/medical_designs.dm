@@ -59,6 +59,17 @@
 	build_path = /obj/item/reagent_containers/cup/beaker/plastic
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/organ_jar
+	name = "Organ Jar"
+	id = "organ_jar"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
+	)
+	build_path = /obj/item/reagent_containers/cup/beaker/organ_jar
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/meta_beaker
 	name = "Metamaterial Beaker"
 	id = "meta_beaker"
@@ -427,7 +438,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/cyberimp/arm/surgery
+	build_path = /obj/item/organ/cyberimp/arm/toolkit/surgery
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
@@ -444,7 +455,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/cyberimp/arm/toolset
+	build_path = /obj/item/organ/cyberimp/arm/toolkit/toolset
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)

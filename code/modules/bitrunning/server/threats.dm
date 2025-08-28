@@ -118,7 +118,6 @@
 
 	var/datum/mind/antag_mind = new_mob.mind
 	antag_mind.add_antag_datum(chosen_role)
-	antag_mind.special_role = ROLE_GLITCH
 	antag_mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
 	playsound(new_mob, 'sound/effects/magic/ethereal_exit.ogg', 50, vary = TRUE)

@@ -6,7 +6,7 @@
 
 	wound_series = WOUND_SERIES_CRANIAL_FISSURE
 
-	threshold_minimum = 150
+	threshold_minimum = 110
 	weight = 10
 
 	viable_zones = list(BODY_ZONE_HEAD)

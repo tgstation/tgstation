@@ -213,10 +213,10 @@
 		if(new_owner.reagents.has_reagent(workout_reagent))
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/athletics) - 1) * 2 SECONDS
+	var/skill_level_boost = (new_owner.mind?.get_skill_level(/datum/skill/athletics) - 1) * 2 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
-	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/athletics, SKILL_VALUE_MODIFIER) + world.time
+	var/exhaustion_limit = new_owner.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_VALUE_MODIFIER) + world.time
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
@@ -235,8 +235,10 @@
 	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
 
 /datum/status_effect/exercised/on_apply()
+	if(!owner.mind)
+		return FALSE
 	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/athletics))
-	return ..()
+	return TRUE
 
 /datum/status_effect/exercised/on_remove()
 	owner.clear_mood_event("exercise")
@@ -390,12 +392,12 @@
 
 /datum/status_effect/lightningorb/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/yellow_orb)
 	to_chat(owner, span_notice("You feel fast!"))
 
 /datum/status_effect/lightningorb/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/yellow_orb)
 	to_chat(owner, span_notice("You slow down."))
 
 /atom/movable/screen/alert/status_effect/lightningorb
@@ -452,18 +454,22 @@
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
 	alert_type = null
+	///What speed datum do we apply?
+	var/move_datum = /datum/movespeed_modifier/status_speed_boost
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	new_owner.do_alert_animation()
+	playsound(new_owner, 'sound/machines/chime.ogg', 50, FALSE, -5)
 	. = ..()
 
 /datum/status_effect/speed_boost/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	owner.add_movespeed_modifier(move_datum, update = TRUE)
 	return ..()
 
 /datum/status_effect/speed_boost/on_remove()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	owner.remove_movespeed_modifier(move_datum, update = TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
 	multiplicative_slowdown = -1

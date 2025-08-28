@@ -162,6 +162,7 @@
 	loot = list( // This spawner will scatter garbage around a dirty site.
 		/obj/effect/spawner/random/trash/garbage = 6,
 		/mob/living/basic/cockroach = 5,
+		/mob/living/basic/cockroach/bloodroach = 1,
 		/obj/effect/decal/cleanable/garbage = 4,
 		/obj/effect/decal/cleanable/vomit/old = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 2,
@@ -171,7 +172,7 @@
 	if(mapload)
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
-			loot -= /mob/living/basic/cockroach
+			loot -= list(/mob/living/basic/cockroach, /mob/living/basic/cockroach/bloodroach)
 	return ..()
 
 /obj/effect/spawner/random/trash/moisture

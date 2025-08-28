@@ -162,20 +162,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		to_chat(user, span_notice("You remove the water reclaimer from [src]"))
 		return
 
-	if(istype(O, /obj/item/stack/medical/gauze))
-		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/rag(src.loc)
-		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
-		G.use(1)
-		return
-
-	if(istype(O, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = O
-		new /obj/item/rag(loc)
-		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
-		cloth.use(1)
-		return
-
 	if(istype(O, /obj/item/stack/ore/glass))
 		new /obj/item/stack/sheet/sandblock(loc)
 		to_chat(user, span_notice("You wet the sand in the sink and form it into a block."))

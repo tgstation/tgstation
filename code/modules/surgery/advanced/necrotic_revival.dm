@@ -1,6 +1,7 @@
 /datum/surgery/advanced/necrotic_revival
 	name = "Necrotic Revival"
 	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
+	surgery_flags = SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -22,7 +23,7 @@
 	implements = list(
 		/obj/item/reagent_containers/syringe = 100,
 		/obj/item/pen = 30)
-	time = 50
+	time = 5 SECONDS
 	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 	require_all_chems = FALSE
 

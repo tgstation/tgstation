@@ -153,7 +153,8 @@
  * On accidental consumption, consume the pill
  */
 /obj/item/reagent_containers/applicator/pill/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
-	to_chat(victim, span_warning("You swallow something small. [source_item ? "Was that in [source_item]?" : ""]"))
+	if(victim.get_food_taste_reaction(source_item) != FOOD_LIKED) // If you don't like the food then you notice the pill you just swallowed
+		to_chat(victim, span_warning("You swallow something small. [source_item ? "Was that in [source_item]?" : ""]"))
 	on_consumption(victim, user)
 	return FALSE
 
@@ -194,6 +195,12 @@
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/medicine/antihol = 10, /datum/reagent/consumable/coffee = 30)
+
+/obj/item/reagent_containers/applicator/pill/prescription_stimulant
+	name = "prescription stimulant pill"
+	desc = "Used to treat symptoms of drowsiness and sudden loss of consciousness."
+	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/synaptizine = 5, /datum/reagent/medicine/modafinil = 3)
+	icon_state = "pill15"
 
 /obj/item/reagent_containers/applicator/pill/salbutamol
 	name = "salbutamol pill"

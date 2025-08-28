@@ -372,7 +372,7 @@
 		data["idle"] = linked_shuttle.mode == SHUTTLE_IDLE
 		if(on_shuttle_frame)
 			data["size"] = length(frame.turfs) - length(frame.shuttle_covered_turfs) + linked_shuttle.turf_count
-			data["problems"] = shuttle_expand_check(current_turf)
+			data["problems"] = shuttle_expand_check(current_turf, linked_shuttle)
 	return data
 
 /obj/item/shuttle_blueprints/proc/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master = FALSE)

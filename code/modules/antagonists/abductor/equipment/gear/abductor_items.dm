@@ -379,7 +379,7 @@ Return to step 11 of normal process."}
 
 /obj/item/melee/baton/abductor/can_baton(mob/living/target, mob/living/user)
 	if(!AbductorCheck(user))
-		return TRUE
+		return FALSE
 	return ..()
 
 /obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
@@ -520,7 +520,7 @@ Return to step 11 of normal process."}
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 	make_syndie()
 
 // Stops humans from disassembling abductor headsets.

@@ -49,13 +49,6 @@
 		return TRUE
 	return FALSE
 
-/datum/crafting_recipe/spec_pipe/on_craft_completion(mob/user, atom/result)
-	var/obj/item/pipe/crafted_pipe = result
-	crafted_pipe.pipe_type = pipe_type
-	crafted_pipe.pipe_color = ATMOS_COLOR_OMNI
-	crafted_pipe.setDir(user.dir)
-	crafted_pipe.update()
-
 /datum/crafting_recipe/spec_pipe/layer_adapter
 	name = "Layer manifold fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)

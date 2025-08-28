@@ -50,7 +50,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
 	zipped = !zipped
 	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
-	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
+	worn_icon_state = "[initial(post_init_icon_state) || initial(icon_state)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 
 	if(ishuman(loc))
@@ -536,7 +536,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/head/hooded/winterhood/engineering
 	desc = "A yellow winter coat hood. Definitely not a replacement for a hard hat."
@@ -549,7 +549,7 @@
 /obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 // Chief Engineer
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce
@@ -656,10 +656,13 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/custom"
+	post_init_icon_state = "coatwinter"
 	hood_down_overlay_suffix = ""
-	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
+	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
 	flags_1 = IS_PLAYER_COLORABLE_1
 

@@ -4,7 +4,7 @@
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	speak_emote = list("wails", "weeps")
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
@@ -103,6 +103,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

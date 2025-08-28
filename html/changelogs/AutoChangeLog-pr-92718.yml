@@ -1,0 +1,9 @@
+author: "Glamyr"
+delete-after: True
+changes:
+  - bugfix: "Xenobio pens on tramstation now has cameras"
+  - qol: "Lone freezer on tramstation ordnance connected to burn chamber"
+  - qol: "Circuit lab on tramstation now have MMI roundstart"
+  - map: "Moved ordnance canisters on tramstation"
+  - map: "Placed robo access desk opp of rnd"
+  - map: "Removed AI Monitor Upload from xenobio"

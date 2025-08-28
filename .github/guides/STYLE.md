@@ -1,4 +1,5 @@
 # Style Guide
+
 This is the style you must follow when writing code. It's important to note that large parts of the codebase do not consistently follow these rules, but this does not free you of the requirement to follow them.
 
 1. [General Guidelines](#general-guidelines)
@@ -11,6 +12,7 @@ This is the style you must follow when writing code. It's important to note that
 ## General Guidelines
 
 ### Tabs, not spaces
+
 You must use tabs to indent your code, NOT SPACES.
 
 Do not use tabs/spaces for indentation in the middle of a code line. Not only is this inconsistent because the size of a tab is undefined, but it means that, should the line you're aligning to change size at all, we have to adjust a ton of other code. Plus, it often time hurts readability.
@@ -28,40 +30,46 @@ Do not use tabs/spaces for indentation in the middle of a code line. Not only is
 ```
 
 ### Control statements
+
 (if, while, for, etc)
 
-* No control statement may contain code on the same line as the statement (`if (blah) return`)
-* All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
+- No control statement may contain code on the same line as the statement (`if (blah) return`)
+- All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
 
 ### Operators
-#### Spacing
-* Operators that should be separated by spaces
-	* Boolean and logic operators like &&, || <, >, ==, etc (but not !)
-	* Bitwise AND &
-	* Argument separator operators like , (and ; when used in a forloop)
-	* Assignment operators like = or += or the like
-* Operators that should not be separated by spaces
-	* Bitwise OR |
-	* Access operators like . and :
-	* Parentheses ()
-	* logical not !
 
-Math operators like +, -, /, *, etc are up in the air, just choose which version looks more readable.
+#### Spacing
+
+- Operators that should be separated by spaces
+  - Boolean and logic operators like &&, || <, >, ==, etc (but not !)
+  - Bitwise AND &
+  - Argument separator operators like , (and ; when used in a forloop)
+  - Assignment operators like = or += or the like
+- Operators that should not be separated by spaces
+  - Bitwise OR |
+  - Access operators like . and :
+  - Parentheses ()
+  - logical not !
+
+Math operators like +, -, /, \*, etc are up in the air, just choose which version looks more readable.
 
 #### Use
-* Bitwise AND - '&'
-	* Should be written as `variable & CONSTANT` NEVER `CONSTANT & variable`. Both are valid, but the latter is confusing and nonstandard.
-* Associated lists declarations must have their key value quoted if it's a string
-	* WRONG: `list(a = "b")`
-	* RIGHT: `list("a" = "b")`
+
+- Bitwise AND - '&'
+  - Should be written as `variable & CONSTANT` NEVER `CONSTANT & variable`. Both are valid, but the latter is confusing and nonstandard.
+- Associated lists declarations must have their key value quoted if it's a string
+  - WRONG: `list(a = "b")`
+  - RIGHT: `list("a" = "b")`
 
 ### Use static instead of global
+
 DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
 
 ```DM
 /mob
 	var/global/thing = TRUE
 ```
+
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 
 Isn't that confusing?
@@ -69,17 +77,21 @@ Isn't that confusing?
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
 ### Use early returns
+
 Do not enclose a proc in an if-block when returning on a condition is more feasible
 This is bad:
-````DM
+
+```DM
 /datum/datum1/proc/proc1()
 	if (thing1)
 		if (!thing2)
 			if (thing3 == 30)
 				do stuff
-````
+```
+
 This is good:
-````DM
+
+```DM
 /datum/datum1/proc/proc1()
 	if (!thing1)
 		return
@@ -88,21 +100,26 @@ This is good:
 	if (thing3 != 30)
 		return
 	do stuff
-````
+```
+
 This prevents nesting levels from getting deeper then they need to be.
 
 ### No magic numbers or strings
+
 This means stuff like having a "mode" variable for an object set to "1" or "2" with no clear indicator of what that means. Make these #defines with a name that more clearly states what it's for. For instance:
-````DM
+
+```DM
 /datum/proc/do_the_thing(thing_to_do)
 	switch(thing_to_do)
 		if(1)
 			(...)
 		if(2)
 			(...)
-````
+```
+
 There's no indication of what "1" and "2" mean! Instead, you'd do something like this:
-````DM
+
+```DM
 #define DO_THE_THING_REALLY_HARD 1
 #define DO_THE_THING_EFFICIENTLY 2
 /datum/proc/do_the_thing(thing_to_do)
@@ -111,7 +128,8 @@ There's no indication of what "1" and "2" mean! Instead, you'd do something like
 			(...)
 		if(DO_THE_THING_EFFICIENTLY)
 			(...)
-````
+```
+
 This is clearer and enhances readability of your code! Get used to doing it!
 
 ### Use our time defines
@@ -119,26 +137,31 @@ This is clearer and enhances readability of your code! Get used to doing it!
 The codebase contains some defines which will automatically multiply a number by the correct amount to get a number in deciseconds. Using these is preffered over using a literal amount in deciseconds.
 
 The defines are as follows:
-* SECONDS
-* MINUTES
-* HOURS
+
+- SECONDS
+- MINUTES
+- HOURS
 
 This is bad:
-````DM
+
+```DM
 /datum/datum1/proc/proc1()
 	if(do_after(mob, 15))
 		mob.dothing()
-````
+```
 
 This is good:
-````DM
+
+```DM
 /datum/datum1/proc/proc1()
 	if(do_after(mob, 1.5 SECONDS))
 		mob.dothing()
-````
+```
 
 ## Paths and Inheritence
+
 ### All BYOND paths must contain the full path
+
 (i.e. absolute pathing)
 
 DM will allow you nest almost any type keyword into a block, such as:
@@ -195,26 +218,33 @@ The previous code made compliant:
 ```
 
 ### Type paths must begin with a `/`
+
 eg: `/datum/thing`, not `datum/thing`
 
 ### Type paths must be snake case
+
 eg: `/datum/blue_bird`, not `/datum/BLUEBIRD` or `/datum/BlueBird` or `/datum/Bluebird` or `/datum/blueBird`
 
 ### Datum type paths must began with "datum"
+
 In DM, this is optional, but omitting it makes finding definitions harder.
 
 ## Variables
 
 ### Use `var/name` format when declaring variables
+
 While DM allows other ways of declaring variables, this one should be used for consistency.
 
 ### Use descriptive and obvious names
+
 Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
 #### Any variable or argument that holds time and uses a unit of time other than decisecond must include the unit of time in the name.
+
 For example, a proc argument named `delta_time` that marks the seconds between fires could confuse somebody who assumes it stores deciseconds. Naming it `delta_time_seconds` makes this clearer, naming it `seconds_per_tick` makes its purpose even clearer.
 
 ### Don't use abbreviations
+
 Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
 
 ```dm
@@ -226,10 +256,12 @@ Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", 
 /proc/use_item(mob/user, atom/target)
 ```
 
-Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
+Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the _context_ of the use of the variable.
 
 ### Naming things when typecasting
+
 When typecasting, keep your names descriptive:
+
 ```dm
 var/mob/living/living_target = target
 var/mob/living/carbon/carbon_target = living_target
@@ -238,6 +270,7 @@ var/mob/living/carbon/carbon_target = living_target
 Of course, if you have a variable name that better describes the situation when typecasting, feel free to use it.
 
 Note that it's okay, semantically, to use the same variable name as the type, e.g.:
+
 ```dm
 var/atom/atom
 var/client/client
@@ -254,15 +287,17 @@ client << browse(...)
 ```
 
 ### Name things as directly as possible
+
 `was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
 
 ### Avoid negative variable names
+
 `is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
 This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
 
 ### Exceptions to variable names
 
-Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but _new_ variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
 
 Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid unnecessary type checks and obscuring nulls in lists](./STANDARDS.md#avoid-unnecessary-type-checks-and-obscuring-nulls-in-lists), and making more descriptive variables is always encouraged.
 
@@ -284,7 +319,8 @@ for (var/i in reagents)
 ```
 
 ### Don't abuse the increment/decrement operators
-`x++` and `++x` both will increment x, but the former will return x *before* it was incremented, while the latter will return x *after* it was incremented. Great if you want to be clever, or if you were a C programmer in the 70s, but it hurts the readability of code to anyone who isn't familiar with this. The convenience is not nearly good enough to justify this burden.
+
+`x++` and `++x` both will increment x, but the former will return x _before_ it was incremented, while the latter will return x _after_ it was incremented. Great if you want to be clever, or if you were a C programmer in the 70s, but it hurts the readability of code to anyone who isn't familiar with this. The convenience is not nearly good enough to justify this burden.
 
 ```dm
 // Bad
@@ -304,6 +340,7 @@ apples--
 ```
 
 ### initial() versus ::
+
 `::` is a compile time scope operator which we use as an alternative to `initial()`.
 It's used within the definition of a datum as opposed to `Initialize` or other procs.
 
@@ -323,6 +360,7 @@ It's used within the definition of a datum as opposed to `Initialize` or other p
 ```
 
 Another good use for it easy access of the parent's variables.
+
 ```dm
 /obj/item/fork/dangerous
 	damage = parent_type::damage * 2
@@ -333,34 +371,37 @@ Another good use for it easy access of the parent's variables.
 	flags_1 = parent_type::flags_1 | FLAG_COOLER
 ```
 
-
 It's important to note that `::` does not apply to every application of `initial()`.
 Primarily in cases where the type you're using for the initial value is not static.
 
 For example,
+
 ```dm
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return initial(b.init_order) - initial(a.init_order)
 ```
+
 could not use `::` as the provided types are not static.
 
 ## Procs
 
 ### Getters and setters
 
-* Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
+- Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
 
 This is bad:
+
 ```DM
 /datum/datum1/proc/simple_getter()
 	return gotten_variable
 ```
+
 Prefer to either access the variable directly or use a macro/define.
 
-
-* Make usage of variables or traits, set up through condition setters, for a more maintainable alternative to compex and redefined getters.
+- Make usage of variables or traits, set up through condition setters, for a more maintainable alternative to compex and redefined getters.
 
 These are bad:
+
 ```DM
 /datum/datum1/proc/complex_getter()
 	return condition ? VALUE_A : VALUE_B
@@ -370,6 +411,7 @@ These are bad:
 ```
 
 This is good:
+
 ```DM
 /datum/datum1
 	var/getter_turned_into_variable
@@ -388,9 +430,11 @@ This is good:
 ```
 
 ### When passing vars through New() or Initialize()'s arguments, use src.var
+
 Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
 
 This is very bad:
+
 ```DM
 /atom/thing
 	var/is_red
@@ -405,6 +449,7 @@ This is very bad:
 Future coders using this code will have to remember two differently named variables which are near-synonyms of eachother. One of them is only used in Initialize for one line.
 
 This is bad:
+
 ```DM
 /atom/thing
 	var/is_red
@@ -416,9 +461,10 @@ This is bad:
 	new /atom/thing(null, _is_red = TRUE)
 ```
 
-`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other args like this.
+`_is_red` is being used to set `is_red` and yet means a random '\_' needs to be appended to the front of the arg, same as all other args like this.
 
 This is good:
+
 ```DM
 /atom/thing
 	var/is_red
@@ -440,7 +486,7 @@ Pop-quiz, what does this do?
 give_pizza(TRUE, 2)
 ```
 
-Well, obviously the `TRUE` makes the pizza hot, and `2` is the number of toppings. 
+Well, obviously the `TRUE` makes the pizza hot, and `2` is the number of toppings.
 
 Code like this can be very difficult to read, especially since our LSP does not show argument names at this time. Because of this, you should prefer to use named arguments where the meaning is not otherwise obvious.
 
@@ -477,6 +523,7 @@ proc_call_on_one_line(
 ```
 
 For example:
+
 ```dm
 /area/town
 	var/list/places_to_visit = list(
@@ -527,6 +574,7 @@ Macros are, in essence, direct copy and pastes into the code. They are one of th
 This section will assume you understand the following concepts:
 
 ### Language - Hygienic
+
 We say a macro is [**hygienic**](https://en.wikipedia.org/wiki/Hygienic_macro) if, generally, it does not rely on input not given to it directly through the call site, and does not affect the call site outside of it in a way that could not be easily reused somewhere else.
 
 An example of a non-hygienic macro is:
@@ -545,14 +593,17 @@ Here are two examples of non-hygienic macros, because it affects its call site:
 ```
 
 ### Language - Side effects/Pure
-We say something has [**side effects**](https://en.wikipedia.org/wiki/Side_effect_(computer_science)) if it mutates anything outside of itself. We say something is **pure** if it does not.
+
+We say something has [**side effects**](<https://en.wikipedia.org/wiki/Side_effect_(computer_science)>) if it mutates anything outside of itself. We say something is **pure** if it does not.
 
 For example, this has no side effects, and is pure:
+
 ```dm
 #define MOTH_MAX_HEALTH 500
 ```
 
 This, however, performs a side effect of updating the health:
+
 ```dm
 #define MOTH_SET_HEALTH(moth, new_health) ##moth.set_health(##new_health)
 ```
@@ -560,9 +611,11 @@ This, however, performs a side effect of updating the health:
 Now that you're caught up on the terms, let's get into the guidelines.
 
 ### Naming
+
 With little exception, macros should be SCREAMING_SNAKE_CASE.
 
 ### Put macro segments inside parentheses where possible.
+
 This will save you from bugs down the line with operator precedence.
 
 For example, the following macro:
@@ -590,7 +643,7 @@ This is [a real bug that tends to come up](https://github.com/tgstation/tgstatio
 The same goes for arguments passed to a macro...
 
 ```
-// Guarantee 
+// Guarantee
 #define CALCULATE_TEMPERATURE(base) (T20C + (##base))
 ```
 
@@ -602,7 +655,7 @@ Consider the previously mentioned non-hygienic macro:
 #define GET_HEALTH(health_percent) ((##health_percent) * max_health)
 ```
 
-This relies on "max_health", but it is not obviously clear what the source is. This will also become worse if we *do* want to change where we get the source from. This would be preferential as:
+This relies on "max*health", but it is not obviously clear what the source is. This will also become worse if we \_do* want to change where we get the source from. This would be preferential as:
 
 ```dm
 #define GET_HEALTH(source, health_percent) ((##health_percent) * (##source).max_health)
@@ -757,7 +810,7 @@ Because of how common using defines as constants is, this would seemingly imply 
 set_color(PARTY_LIGHT_COLOR())
 ```
 
-...which *does* imply some work is happening.
+...which _does_ imply some work is happening.
 
 BYOND does not support `#define PARTY_LIGHT_COLOR()`, so instead we would write the define as:
 
@@ -839,6 +892,7 @@ Sometimes the best macro is one that doesn't exist at all. Macros can make some 
 ```
 
 This is a fairly egregious macro, and would be better off just written like:
+
 ```dm
 /obj/item/sword/proc/hit(mob/victim)
 	attack(victim)
@@ -846,9 +900,10 @@ This is a fairly egregious macro, and would be better off just written like:
 ```
 
 ## Things that do not matter
+
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
 
-* English/British spelling on var/proc names
-	* Color/Colour - both are fine, but keep in mind that BYOND uses `color` as a base variable
-* Spaces after control statements
-	* `if()` and `if ()` - nobody cares!
+- English/British spelling on var/proc names
+  - Color/Colour - both are fine, but keep in mind that BYOND uses `color` as a base variable
+- Spaces after control statements
+  - `if()` and `if ()` - nobody cares!

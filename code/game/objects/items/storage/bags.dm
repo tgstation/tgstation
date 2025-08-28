@@ -29,7 +29,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	inhand_icon_state = "trashbag"
-	worn_icon_state = "trashbag"
+	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	storage_type = /datum/storage/bag/trash
@@ -72,10 +72,6 @@
 		else
 			icon_state = "[initial(icon_state)]"
 	return ..()
-
-/obj/item/storage/bag/trash/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
@@ -345,6 +341,10 @@
 		I_copy.layer = FLOAT_LAYER
 		. += I_copy
 
+/obj/item/storage/bag/tray/cyborg_unequip(mob/user)
+	. = ..()
+	atom_storage.remove_all(drop_location())
+
 /obj/item/storage/bag/tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	update_appearance()
@@ -464,7 +464,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
-	action_slots = ALL
 	storage_type = /datum/storage/bag/rebar_quiver/syndicate
 
 /obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)

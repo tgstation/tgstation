@@ -317,11 +317,7 @@
 
 	return TRUE
 
-/obj/item/lightreplacer/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
-/obj/item/lightreplacer/cyborg/advanced
+/obj/item/lightreplacer/advanced
 	name = "high capacity light replacer"
 	desc = "A higher capacity light replacer. Refill with broken or working lightbulbs, or sheets of glass."
 	icon_state = "lightreplacer_high"

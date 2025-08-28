@@ -105,6 +105,20 @@
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser)
 
+/datum/supply_pack/goody/carbine_single
+	name = "Laser Carbine Single_Pack"
+	desc = "Contains one laser carbines, capable of rapidly firing weak lasers."
+	cost = PAYCHECK_COMMAND * 8
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/energy/laser/carbine)
+
+/datum/supply_pack/goody/smg_single
+	name = "Disabler SMG Single_Pack"
+	desc = "Contains one disabler SMGs, capable of rapidly firing weak disabler beams."
+	cost = PAYCHECK_COMMAND * 6
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/energy/disabler/smg)
+
 /datum/supply_pack/goody/hell_single
 	name = "Hellgun Kit Single-Pack"
 	desc = "Contains one hellgun degradation kit, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
@@ -190,6 +204,18 @@
 	desc = "A soft, warm companion for midday naps."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/toy/plush/shark)
+
+/datum/supply_pack/goody/horseplush
+	name = "Horse Plushie"
+	desc = "A horse friend to keep you company. You're basically a cowboy now."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/toy/plush/horse)
+
+/datum/supply_pack/goody/unicornplush
+	name = "Unicorn Plushie"
+	desc = "Good for someone who likes unicorns. Wait, that's everybody!"
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/toy/plush/unicorn)
 
 /datum/supply_pack/goody/dog_bone
 	name = "Jumbo Dog Bone"

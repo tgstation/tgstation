@@ -74,11 +74,6 @@
 		wash(CLEAN_TYPE_BLOOD)
 		organ_flags &= ~ORGAN_VIRGIN
 
-	if(external_bodytypes)
-		receiver.synchronize_bodytypes()
-	if(external_bodyshapes)
-		receiver.synchronize_bodyshapes()
-
 	receiver.organs |= src
 	receiver.organs_slot[slot] = src
 	owner = receiver
@@ -141,8 +136,15 @@
 	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 
+	if(external_bodytypes)
+		limb.owner?.synchronize_bodytypes()
+	if(external_bodyshapes)
+		limb.owner?.synchronize_bodyshapes()
+
 	if(bodypart_overlay)
 		limb.add_bodypart_overlay(bodypart_overlay)
+
+	SEND_SIGNAL(src, COMSIG_ORGAN_BODYPART_INSERTED, limb, movement_flags)
 
 /*
  * Remove the organ from the select mob.
@@ -184,8 +186,6 @@
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 	ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
 
-	organ_owner.synchronize_bodytypes()
-	organ_owner.synchronize_bodyshapes()
 	if(!special)
 		organ_owner.hud_used?.update_locked_slots()
 
@@ -238,11 +238,16 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
-		AddElement(/datum/element/decal/blood, _color = get_blood_dna_color(blood_dna_info))
+		var/blood_color = get_color_from_blood_list(blood_dna_info)
+		if (blood_color)
+			AddElement(/datum/element/decal/blood, _color = blood_color)
 
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 	interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
+
+	limb.owner?.synchronize_bodytypes()
+	limb.owner?.synchronize_bodyshapes()
 
 	if(!bodypart_overlay)
 		return
@@ -280,7 +285,7 @@
 /obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
-	RemoveElement(/datum/element/decal/blood, _color = old_owner.dna.blood_type.get_color())
+	RemoveElement(/datum/element/decal/blood, _color = old_owner.get_bloodtype()?.get_color() || BLOOD_COLOR_RED)
 /**
  * Proc that gets called when the organ is surgically inserted by someone. Seem familiar?
  */

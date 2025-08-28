@@ -9,11 +9,10 @@
 	max_temperature = 60000
 	destruction_sleep_duration = 40
 	exit_delay = 40
-	can_be_tracked = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	accesses = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	mech_type = EXOSUIT_MODULE_MARAUDER
 	force = 45
 	max_equip_by_category = list(
@@ -59,7 +58,7 @@
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
 
-/datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))
@@ -73,7 +72,7 @@
 	name = "Zoom"
 	button_icon_state = "mech_zoom_off"
 
-/datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!owner.client || !chassis || !(owner in chassis.occupants))

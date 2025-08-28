@@ -10,6 +10,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC)
 
+/obj/item/hand_item/attack(mob/living/target_mob, mob/living/user)
+	. = ..()
+	SEND_SIGNAL(user, COMSIG_LIVING_HAND_ITEM_ATTACK, target_mob)
+
 /obj/item/hand_item/circlegame
 	name = "circled hand"
 	desc = "If somebody looks at this while it's below your waist, you get to bop them."
@@ -217,6 +221,7 @@
 	AddElement(/datum/element/high_fiver)
 
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
+	. = ..()
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 	SEND_SIGNAL(slapped, COMSIG_LIVING_SLAPPED, user)
 
@@ -327,7 +332,7 @@
 // Successful takes will qdel our hand after
 /obj/item/hand_item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	qdel(src)
@@ -394,7 +399,11 @@
 
 
 /obj/item/hand_item/hand/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
-	. = TRUE
+	. = ..()
+	if(!offerer || !taker)
+		return TRUE // this doesn't make sense unless both are carbons
+	if(.)
+		return
 
 	if(taker.body_position == LYING_DOWN)
 		taker.help_shake_act(offerer)
@@ -504,6 +513,10 @@
 	return TRUE
 
 /obj/item/hand_item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+	. = ..()
+	if(.)
+		return
+
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(offerer))
 	offerer.visible_message("<b>[offerer]</b> gives [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!!", span_notice("You give [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"), ignored_mobs = taker)
 	to_chat(taker, span_nicegreen("[offerer] gives you \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"))
@@ -679,7 +692,7 @@
 	armour_penetration = 0
 	damage = 25
 	wound_bonus = -20
-	bare_wound_bonus = 40
+	exposed_wound_bonus = 40
 	silent_blown = TRUE
 
 /obj/projectile/kiss/french

@@ -1,10 +1,10 @@
 {
-    "piggy_bank": [
-        {
-            "type": "icon_state",
-            "icon_state": "piggy_bank",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        }
+	"piggy_bank": [
+		{
+			"type": "icon_state",
+			"icon_state": "piggy_bank",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
 	]
 }

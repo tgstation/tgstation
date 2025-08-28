@@ -247,9 +247,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	return TRUE
 
 /obj/machinery/defibrillator_mount/mobile/on_deconstruction(disassembled)
+	var/atom/drop = drop_location()
 	if(disassembled)
-		new /obj/item/stack/sheet/iron(drop_location(), 5)
-		new /obj/item/stack/sheet/mineral/silver(drop_location(), 1)
-		new /obj/item/stack/cable_coil(drop_location(), 15)
+		new /obj/item/stack/sheet/iron(drop, 5)
+		new /obj/item/stack/sheet/mineral/silver(drop)
+		new /obj/item/stack/cable_coil(drop, 15)
 	else
-		new /obj/item/stack/sheet/iron(drop_location(), 5)
+		new /obj/item/stack/sheet/iron(drop, 5)

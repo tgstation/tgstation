@@ -81,7 +81,7 @@
 		if (9)
 			new /obj/effect/decal/cleanable/vomit/old(mess_location)
 		if (10)
-			new /obj/effect/decal/cleanable/oil/slippery(mess_location)
+			new /obj/effect/decal/cleanable/blood/oil/slippery(mess_location)
 		else
 			new /obj/effect/decal/cleanable/dirt(mess_location)
 

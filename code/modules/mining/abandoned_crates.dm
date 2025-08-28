@@ -38,6 +38,8 @@
 			var/length_input = length(input)
 			for(var/i = 1, i <= length_input, i += length(char)) //put the guess into a list
 				char = input[i]
+				if(!(char >= "0" && char <= "9"))
+					sanitycheck = FALSE //if a non-digit is found, reject the input
 				sanitised += text2num(char)
 			for(var/i in 1 to length(sanitised) - 1) //compare each digit in the guess to all those following it
 				for(var/j in i + 1 to length(sanitised))
@@ -225,7 +227,7 @@
 			new /obj/item/dnainjector/wackymut(src)
 		if(91)
 			for(var/i in 1 to 30)
-				new /mob/living/basic/cockroach(src)
+				new /mob/living/basic/cockroach/bloodroach(src)
 		if(92)
 			new /obj/item/katana(src)
 		if(93)

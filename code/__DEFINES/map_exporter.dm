@@ -5,6 +5,7 @@
 #define SAVE_AREAS (1 << 4) //! Save areas?
 #define SAVE_SPACE (1 << 5) //! Save space areas? (If not they will be saved as NOOP)
 #define SAVE_OBJECT_PROPERTIES (1 << 6) //! Save custom properties of objects (obj.on_object_saved() output)
+#define SAVE_ATMOS (1 << 7) //! Save turf atmos
 
 //Ignore turf if it contains
 #define SAVE_SHUTTLEAREA_DONTCARE 0

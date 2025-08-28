@@ -11,7 +11,7 @@
 	pixel_y = -12
 	},
 /obj/effect/decal/cleanable/insectguts,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "aP" = (
@@ -143,7 +143,7 @@
 	name = "antique cleaver";
 	desc = "A huge knife for chopping up and slicing meat. Years of service has scarred its metal and worn grooves into the handle, but its blade is well-maintained and very sharp."
 	},
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "gI" = (
@@ -411,7 +411,7 @@
 	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write.";
 	name = "charcoal stick"
 	},
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/structure/closet/crate/trashcart,
 /obj/item/food/grown/ash_flora/shavings,
 /turf/open/floor/plating/dumpsterair,
@@ -559,7 +559,7 @@
 /obj/item/trash/popcorn/caramel{
 	pixel_y = -6
 	},
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "zK" = (
@@ -890,8 +890,8 @@
 /obj/item/dog_bone{
 	pixel_y = -6
 	},
-/mob/living/basic/cockroach,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "KT" = (
@@ -912,7 +912,7 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/plastic,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/item/crowbar/hammer{

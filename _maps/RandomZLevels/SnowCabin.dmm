@@ -798,11 +798,6 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
-"ev" = (
-/obj/structure/table/wood/fancy,
-/obj/item/rag,
-/turf/open/floor/wood,
-/area/awaymission/cabin)
 "ew" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/stack/sheet/mineral/wood,
@@ -1279,11 +1274,6 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
-"gL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "gM" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
@@ -1436,13 +1426,6 @@
 "hq" = (
 /obj/machinery/vending/medical,
 /turf/open/floor/iron/white,
-/area/awaymission/cabin)
-"hr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
-/obj/effect/decal/cleanable/generic,
-/obj/structure/cable,
-/turf/open/floor/plating,
 /area/awaymission/cabin)
 "hs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2406,6 +2389,13 @@
 "ms" = (
 /turf/closed/indestructible/rock/snow/ice,
 /area/awaymission/cabin/caves)
+"mx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/generic,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "mI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
@@ -2702,6 +2692,10 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin)
+"pn" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/caves)
 "pq" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -2725,9 +2719,10 @@
 /area/awaymission/cabin/caves)
 "pv" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/structure/statue/snow/snowlegion{
 	anchored = 1;
@@ -3086,16 +3081,18 @@
 "ts" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "tC" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -3199,10 +3196,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
-"uz" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/misc/asteroid/snow/snow_cabin,
-/area/awaymission/cabin/caves)
 "uF" = (
 /obj/item/shard,
 /obj/effect/light_emitter{
@@ -3354,9 +3347,10 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "vJ" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/effect/decal/cleanable/plasma,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -3421,6 +3415,11 @@
 	},
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
+"wS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "xa" = (
 /obj/item/paper/pamphlet/gateway,
 /turf/open/misc/ice/smooth,
@@ -3462,9 +3461,10 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin)
 "xw" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/structure/statue/snow/snowlegion{
 	anchored = 1;
@@ -3476,9 +3476,10 @@
 "xx" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/knife/shiv/carrot,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -3689,9 +3690,10 @@
 /area/awaymission/cabin/caves)
 "zI" = (
 /obj/item/weldingtool/mini,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -3931,9 +3933,10 @@
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "Dw" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4074,6 +4077,15 @@
 	light_color = "#9bbbff"
 	},
 /turf/open/floor/plating/snowed/smoothed,
+/area/awaymission/cabin/caves)
+"EU" = (
+/obj/effect/decal/cleanable/glitter{
+	desc = "It looks like fancy glitter to me.";
+	name = "icy wind";
+	color = "4040ff"
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Fp" = (
 /obj/effect/turf_decal/weather/snow/corner,
@@ -4470,9 +4482,10 @@
 /area/awaymission/cabin/caves)
 "Lj" = (
 /obj/effect/decal/remains/xeno,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -4527,16 +4540,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
-"LS" = (
-/obj/structure/sign{
-	pixel_x = 32
-	},
-/turf/open/misc/asteroid/snow/snow_cabin{
-	floor_variance = 0;
-	icon_state = "snow_dug";
-	slowdown = 1
-	},
-/area/awaymission/cabin/caves)
 "LW" = (
 /obj/structure/barricade/wooden/snowed,
 /turf/open/misc/asteroid/snow/snow_cabin{
@@ -4558,9 +4561,10 @@
 /area/awaymission/cabin/snowforest/sovietsurface)
 "Mk" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -4622,9 +4626,10 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "Nb" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/effect/decal/remains/xeno/larva,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4743,9 +4748,10 @@
 /area/awaymission/cabin/snowforest)
 "Po" = (
 /obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -4863,9 +4869,10 @@
 /area/awaymission/cabin/snowforest/sovietsurface)
 "QT" = (
 /obj/item/chair/stool,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -4900,9 +4907,10 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "RD" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /mob/living/basic/statue/frosty,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4968,6 +4976,11 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
+"Sh" = (
+/obj/structure/table/wood/fancy,
+/obj/item/rag,
+/turf/open/floor/wood,
+/area/awaymission/cabin)
 "Si" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
@@ -5088,9 +5101,10 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "SS" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/effect/decal/cleanable/molten_object/large,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -5150,9 +5164,10 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "TU" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/effect/decal/cleanable/shreds,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -5322,23 +5337,16 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
-"Wp" = (
-/obj/effect/decal/cleanable/glitter/blue{
-	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
-	},
-/obj/effect/decal/cleanable/oil,
-/turf/open/misc/asteroid/snow/snow_cabin,
-/area/awaymission/cabin/caves)
 "WF" = (
 /obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "WH" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /obj/item/clothing/head/helmet/skull,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -5434,9 +5442,10 @@
 "Yc" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/melee/baseball_bat,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -25796,7 +25805,7 @@ eg
 an
 cT
 cV
-gL
+wS
 cV
 an
 xt
@@ -26309,7 +26318,7 @@ aq
 eg
 an
 cV
-gL
+wS
 cV
 cV
 an
@@ -29898,7 +29907,7 @@ eg
 an
 hb
 bU
-ev
+Sh
 eu
 cK
 cD
@@ -32902,7 +32911,7 @@ Oe
 Oe
 JL
 JL
-LS
+JL
 Oe
 Oe
 Oe
@@ -35039,7 +35048,7 @@ nV
 ei
 et
 hj
-hr
+mx
 hs
 et
 nV
@@ -51754,7 +51763,7 @@ gx
 tC
 tC
 tC
-Wp
+EU
 tC
 pv
 gx
@@ -52774,7 +52783,7 @@ Oe
 gx
 gx
 gx
-uz
+pn
 Oe
 gx
 gx
@@ -53807,10 +53816,10 @@ Oe
 IU
 Oe
 Oe
-Wp
+EU
 tC
 tC
-Wp
+EU
 xw
 gx
 gx

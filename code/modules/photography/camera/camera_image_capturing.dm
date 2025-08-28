@@ -1,14 +1,16 @@
 /obj/effect/appearance_clone
 
-/obj/effect/appearance_clone/New(loc, atom/A) //Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
-	if(istype(A))
-		appearance = A.appearance
-		dir = A.dir
-		if(ismovable(A))
-			var/atom/movable/AM = A
-			step_x = AM.step_x
-			step_y = AM.step_y
-	. = ..()
+/obj/effect/appearance_clone/New(loc, atom/our_atom) //Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
+	if(!istype(our_atom))
+		return ..()
+	if(!isopenspaceturf(our_atom))
+		appearance = our_atom.appearance
+	dir = our_atom.dir
+	if(ismovable(our_atom))
+		var/atom/movable/our_movable = our_atom
+		step_x = our_movable.step_x
+		step_y = our_movable.step_y
+	return ..()
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
@@ -42,10 +44,12 @@
 				lighting_overlay.underlays += backdrop
 				lighting_overlay.blend_mode = BLEND_MULTIPLY
 				lighting += lighting_overlay
-			for(var/i in T.contents)
-				var/atom/A = i
-				if(!A.invisibility || (see_ghosts && isobserver(A)))
-					atoms += new /obj/effect/appearance_clone(newT, A)
+			for(var/atom/found_atom as anything in T.contents)
+				if(HAS_TRAIT(found_atom, TRAIT_INVISIBLE_TO_CAMERA))
+					if(see_ghosts)
+						atoms += new /obj/effect/appearance_clone(newT, found_atom)
+				else if(!found_atom.invisibility || (see_ghosts && isobserver(found_atom)))
+					atoms += new /obj/effect/appearance_clone(newT, found_atom)
 		skip_normal = TRUE
 		wipe_atoms = TRUE
 		center = locate(cloned_center_x, cloned_center_y, bottom_left.z)
@@ -62,7 +66,7 @@
 				lighting += lighting_overlay
 			for(var/atom/movable/A in T)
 				if(A.invisibility)
-					if(!(see_ghosts && isobserver(A)))
+					if(!(see_ghosts && (isobserver(A) || HAS_TRAIT(A, TRAIT_INVISIBLE_TO_CAMERA))))
 						continue
 				atoms += A
 			CHECK_TICK

@@ -56,7 +56,7 @@
 	// unlike on_equip, this signal is triggered after the ball is removed from hands
 	// so we can just use is_holding_item_of_type() proc to check for multiple balls
 	if(!wielder.is_holding_item_of_type(/obj/item/toy/basketball))
-		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
+		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
 
 	wielder = null
 

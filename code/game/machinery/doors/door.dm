@@ -82,10 +82,13 @@
 	fire = 80
 	acid = 70
 
-/obj/machinery/door/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, welded)
-	return .
+/obj/machinery/door/on_object_saved()
+	var/data
+
+	if(welded)
+		data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded]"
+
+	return data
 
 /obj/machinery/door/Initialize(mapload)
 	AddElement(/datum/element/blocks_explosives)
@@ -303,6 +306,12 @@
 	. = ..()
 	if(.)
 		return
+	// Stops people without +USE from being able to click-open airlocks
+	// Explicitly not a generic check - if you make this generic, AIs (and more) won't be able to open doors
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!(living_user.mobility_flags & MOBILITY_USE))
+			return
 	if(try_remove_seal(user))
 		return
 	if(try_safety_unlock(user))
@@ -314,7 +323,7 @@
 		return
 	return ..()
 
-/obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/proc/try_to_activate_door(mob/living/user, access_bypass = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
 		return
@@ -430,17 +439,17 @@
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
 			if(panel_open)
-				icon_state = "o_door_opening"
+				icon_state = "o_[base_icon_state]_opening"
 			else
-				icon_state = "door_opening"
+				icon_state = "[base_icon_state]_opening"
 		if(DOOR_CLOSING_ANIMATION)
 			if(panel_open)
-				icon_state = "o_door_closing"
+				icon_state = "o_[base_icon_state]_closing"
 			else
-				icon_state = "door_closing"
+				icon_state = "[base_icon_state]_closing"
 		if(DOOR_DENY_ANIMATION)
 			if(!machine_stat)
-				icon_state = "door_deny"
+				icon_state = "[base_icon_state]_deny"
 		else
 			icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
 
@@ -474,15 +483,15 @@
 			return 0.6 SECONDS
 
 /// Override this to do misc tasks on animation start
-/obj/machinery/door/proc/animation_effects(animation)
+/obj/machinery/door/proc/animation_effects(animation, force_type = DEFAULT_DOOR_CHECKS)
 	return
 
 /// Used to start a new animation
 /// Accepts the animation to start as an arg
-/obj/machinery/door/proc/run_animation(animation)
+/obj/machinery/door/proc/run_animation(animation, force_type = DEFAULT_DOOR_CHECKS)
 	set_animation(animation)
 	addtimer(CALLBACK(src, PROC_REF(set_animation), null), animation_length(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
-	animation_effects(animation)
+	animation_effects(animation, force_type)
 
 // React to our animation changing
 /obj/machinery/door/proc/set_animation(animation)
@@ -575,24 +584,23 @@
 	for(var/turf/checked_turf in locs)
 		for(var/mob/living/future_pancake in checked_turf)
 			future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
-			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			var/sig_return = SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			future_pancake.add_splatter_floor(loc)
+			log_combat(src, future_pancake, "crushed")
+			var/door_wounding = (sig_return & DOORCRUSH_NO_WOUND) ? CANT_WOUND : 10
 			if(isalien(future_pancake))  //For xenos
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE * 1.5, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src) //Xenos go into crit after aproximately the same amount of crushes as humans.
 				future_pancake.emote("roar")
 			else if(ismonkey(future_pancake)) //For monkeys
 				future_pancake.emote("screech")
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				future_pancake.Paralyze(100)
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
+				future_pancake.Paralyze(10 SECONDS)
 			else if(ishuman(future_pancake)) //For humans
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				future_pancake.emote("scream")
-				future_pancake.Paralyze(100)
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
+				future_pancake.Paralyze(10 SECONDS)
 			else //for simple_animals & borgs
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				var/turf/location = get_turf(src)
-				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-				future_pancake.add_splatter_floor(location)
-				log_combat(src, future_pancake, "crushed")
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
 		for(var/obj/vehicle/sealed/mecha/mech in get_turf(src)) // Your fancy metal won't save you here!
 			mech.take_damage(DOOR_CRUSH_DAMAGE)
 			log_combat(src, mech, "crushed")

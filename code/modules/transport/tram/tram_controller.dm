@@ -946,7 +946,7 @@
 		new /obj/item/wallframe/tram/controller(drop_location)
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
-		new /obj/item/stack/sheet/iron(drop_location, 1)
+		new /obj/item/stack/sheet/iron(drop_location)
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.

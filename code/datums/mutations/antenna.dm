@@ -1,4 +1,4 @@
-/datum/mutation/human/antenna
+/datum/mutation/antenna
 	name = "Antenna"
 	desc = "The affected person sprouts an antenna. This is known to allow them to access common radio channels passively."
 	quality = POSITIVE
@@ -18,7 +18,7 @@
 	. = ..()
 	radio.name = "internal antenna"
 
-/datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/antenna/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
@@ -26,22 +26,22 @@
 	linked_radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(linked_radio)
 
-/datum/mutation/human/antenna/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/antenna/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
 	if(linked_radio)
 		QDEL_NULL(linked_radio)
 
-/datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/antenna/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
 
-/datum/mutation/human/antenna/get_visual_indicator()
+/datum/mutation/antenna/get_visual_indicator()
 	return visual_indicators[type][1]
 
-/datum/mutation/human/mindreader
+/datum/mutation/mindreader
 	name = "Mind Reader"
 	desc = "The affected person can look into the recent memories of others."
 	quality = POSITIVE
@@ -118,10 +118,10 @@
 		to_chat(owner, span_boldnotice("You find that their intent is to [carbon_cast_on.combat_mode ? "harm" : "help"]..."))
 		to_chat(owner, span_boldnotice("You uncover that [carbon_cast_on.p_their()] true identity is [carbon_cast_on.mind.name]."))
 
-/datum/mutation/human/mindreader/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/mindreader/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
 
-/datum/mutation/human/mindreader/get_visual_indicator()
+/datum/mutation/mindreader/get_visual_indicator()
 	return visual_indicators[type][1]

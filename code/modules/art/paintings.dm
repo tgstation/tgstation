@@ -18,9 +18,8 @@
 /obj/structure/easel/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/canvas))
 		var/obj/item/canvas/canvas = I
-		user.dropItemToGround(canvas)
+		user.transfer_item_to_turf(canvas, get_turf(src), silent = FALSE)
 		painting = canvas
-		canvas.forceMove(get_turf(src))
 		canvas.layer = layer+0.1
 		user.visible_message(span_notice("[user] puts \the [canvas] on \the [src]."),span_notice("You place \the [canvas] on \the [src]."))
 	else
@@ -176,8 +175,9 @@
 	if(.)
 		return
 	var/mob/user = usr
-	///this is here to allow observers and viewers to zoom in and out regardless of adjacency.
-	if(action != "zoom_in" && action != "zoom_out" && !can_interact(user))
+	//this is here to allow observers and viewers to zoom in and out regardless of adjacency.
+	//observers need this special check because we allow them to operate the UI in ui_state
+	if((action != "zoom_in" && action != "zoom_out") && (isobserver(user) || !can_interact(user)))
 		return
 	switch(action)
 		if("paint", "fill")

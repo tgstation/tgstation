@@ -101,10 +101,13 @@ export type EntryCoordProps = {
   coord?: number[];
 };
 
+/** @see https://ref.harry.live/proc/gradient */
+export type Gradient = string | number | Record<string, number>;
+
 export type EntryGradientProps = {
   name: string;
   var_name: string;
-  gradient?: (string | number)[];
+  gradient?: Gradient[];
 };
 
 export type EntryTransformProps = {

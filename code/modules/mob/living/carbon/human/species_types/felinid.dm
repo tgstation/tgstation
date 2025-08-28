@@ -24,32 +24,23 @@
 	/// Yummy!
 	species_cookie = /obj/item/food/nugget
 
-// Prevents felinids from taking toxin damage from carpotoxin
-/datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(istype(chem, /datum/reagent/toxin/carpotoxin))
-		var/datum/reagent/toxin/carpotoxin/fish = chem
-		fish.toxpwr = 0
-
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load, regenerate_icons)
 	if(ishuman(carbon_being))
 		var/mob/living/carbon/human/target_human = carbon_being
 		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
-			target_human.dna.features["tail_cat"] = "Cat"
-			if(target_human.dna.features["ears"] == "None")
-				target_human.dna.features["ears"] = "Cat"
-		if(target_human.dna.features["ears"] == "None")
+			target_human.dna.features[FEATURE_TAIL] = "Cat"
+			if(target_human.dna.features[FEATURE_EARS] == "None")
+				target_human.dna.features[FEATURE_EARS] = "Cat"
+		if(target_human.dna.features[FEATURE_EARS] == "None")
 			mutantears = /obj/item/organ/ears
 		else
-			var/obj/item/organ/ears/cat/ears = new(FALSE, target_human.dna.features["ears"])
+			var/obj/item/organ/ears/cat/ears = new(FALSE, target_human.dna.features[FEATURE_EARS])
 			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
 	var/list/features = ..()
-	features["ears"] = pick("None", "Cat")
+	features[FEATURE_EARS] = pick("None", "Cat")
 	return features
 
 /datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
@@ -262,6 +253,12 @@
 			SPECIES_PERK_NAME = "Hydrophobia",
 			SPECIES_PERK_DESC = "Felinids don't like getting soaked with water.",
 		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_NAME = "'Fight or Flight' Defense Response",
+			SPECIES_PERK_DESC = "Felinids who become mentally unstable (and deprived of food) exhibit an \
+				extreme 'fight or flight' response against aggressors. They sometimes bite people. Violently.",
+		),
 	)
-
 	return to_add

@@ -69,7 +69,6 @@
 		return // we weren't built for this proc to run
 
 	mind.set_assigned_role(SSjob.get_job_type(/datum/job/slaughter_demon))
-	mind.special_role = ROLE_SLAUGHTER_DEMON
 	mind.add_antag_datum(antag_type)
 
 	SEND_SOUND(src, 'sound/effects/magic/demon_dies.ogg')

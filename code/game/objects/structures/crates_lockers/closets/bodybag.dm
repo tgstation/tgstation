@@ -176,7 +176,7 @@
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(iscarbon(content))
 			var/mob/living/carbon/mob = content
-			if (mob.dna?.get_mutation(/datum/mutation/human/dwarfism))
+			if (mob.dna?.get_mutation(/datum/mutation/dwarfism))
 				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
 				continue
 		if(!isitem(content))
@@ -270,6 +270,7 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(sinched)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
+		return FALSE
 	return ..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/before_open(mob/living/user, force)

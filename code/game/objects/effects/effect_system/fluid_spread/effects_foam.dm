@@ -38,7 +38,7 @@
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload)
 	. = ..()
 	if(slippery_foam)
-		AddComponent(/datum/component/slippery, 100)
+		AddComponent(/datum/component/slippery, 100, can_slip_callback = CALLBACK(src, PROC_REF(try_slip)))
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
 		layer = WATER_LEVEL_LAYER
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
@@ -98,7 +98,7 @@
 				continue
 			if(object.invisibility >= INVISIBILITY_ABSTRACT) // Don't foam landmarks please
 				continue
-			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+			if(HAS_TRAIT(object, TRAIT_UNDERFLOOR))
 				continue
 			if (HAS_TRAIT(loc, TRAIT_ELEVATED_TURF) && !HAS_TRAIT(object, TRAIT_ELEVATING_OBJECT))
 				continue // Do expose tables, don't expose items on tables
@@ -137,6 +137,9 @@
 	lifetime -= seconds_per_tick
 	return TRUE
 
+/obj/effect/particle_effect/fluid/foam/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	return !HAS_TRAIT(slippee, TRAIT_MOB_ELEVATED)
+
 /obj/effect/particle_effect/fluid/foam/spread(seconds_per_tick = 0.2 SECONDS)
 	if(group.total_size > group.target_size)
 		return
@@ -163,7 +166,7 @@
 			foam_mob(foaming, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
-		reagents.copy_to(spread_foam, (reagents.total_volume))
+		reagents.trans_to(spread_foam, reagents.total_volume, copy_only = TRUE)
 		spread_foam.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_foam.result_type = result_type
 		SSfoam.queue_spread(spread_foam)
@@ -196,7 +199,7 @@
 
 /datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE)
 	. = ..()
-	carry?.copy_to(chemholder, carry.total_volume, no_react = stop_reactions)
+	carry?.trans_to(chemholder, carry.total_volume, no_react = stop_reactions, copy_only = TRUE)
 	if(!isnull(result_type))
 		src.result_type = result_type
 
@@ -205,7 +208,7 @@
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
 	if(reagent_scale > 1) // Make room in case we were created by a particularly stuffed payload.
 		foam.reagents.maximum_volume *= reagent_scale
-	chemholder.copy_to(foam, chemholder.total_volume, reagent_scale) // Foam has an amplifying effect on the reagents it is supplied with. This is balanced by the reagents being diluted as the area the foam covers increases.
+	chemholder.trans_to(foam, chemholder.total_volume, reagent_scale, copy_only = TRUE) // Foam has an amplifying effect on the reagents it is supplied with. This is balanced by the reagents being diluted as the area the foam covers increases.
 	foam.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	if(!isnull(result_type))
 		foam.result_type = result_type
@@ -401,7 +404,7 @@
 
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
-	if(isspaceturf(location))
+	if(isspaceturf(location) || isopenspaceturf(location))
 		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)

@@ -147,7 +147,7 @@
 	name = flipped ? cardname : "card"
 	return ..()
 
-/obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params, flip_card=FALSE)
+/obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, list/params, list/attack_modifier, flip_card=FALSE)
 	var/obj/item/toy/singlecard/card
 
 	if(istype(item, /obj/item/toy/cards/deck))

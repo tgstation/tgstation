@@ -315,8 +315,8 @@
 /obj/machinery/space_heater/improvised_chem_heater
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sheater-off"
-	name = "Improvised chem heater"
-	desc = "A space heater hacked to reroute heating to a water bath on the top."
+	name = "improvised chem heater"
+	desc = "A space heater fashioned to reroute heating to a water bath on top."
 	panel_open = TRUE //This is always open - since we've injected wires in the panel
 	//We inherit the cell from the heater prior
 	cell = null
@@ -337,6 +337,18 @@
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
 	QDEL_NULL(beaker)
+
+/obj/machinery/space_heater/improvised_chem_heater/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	if(!isliving(crafter))
+		return
+	var/mob/living/user = crafter
+	var/obj/item/stock_parts/power_store/cell/cell = (locate() in range(1)) || user.is_holding_item_of_type(/obj/item/stock_parts/power_store/cell)
+	if(!cell)
+		return
+	var/turf/turf = get_turf(cell)
+	forceMove(turf)
+	attackby(cell, user) //puts it into the heater
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()

@@ -10,18 +10,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/roundend_category = "other antagonists"
 	///Set to false to hide the antagonists from roundend report
 	var/show_in_roundend = TRUE
-	///If false, the roundtype will still convert with this antag active
-	var/prevent_roundtype_conversion = TRUE
 	///Mind that owns this datum
 	var/datum/mind/owner
 	///Silent will prevent the gain/lose texts to show
 	var/silent = FALSE
-	///Whether or not the person will be able to have more than one datum
-	var/can_coexist_with_others = TRUE
-	///List of datums this type can't coexist with
-	var/list/typecache_datum_blacklist = list()
-	///The define string we use to identify the role for bans/player polls to spawn a random new one in.
-	var/job_rank
+	/// What flag is checked for jobbans and polling? Optional, if unset, will use pref_flag
+	var/jobban_flag
+	/// What flag to check for prefs? Required for antags with preferences associated
+	var/pref_flag
 	///Should replace jobbanned player with ghosts if granted.
 	var/replace_banned = TRUE
 	///List of the objective datums that this role currently has, completing all objectives at round-end will cause this antagonist to greentext.
@@ -38,8 +34,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	///Name of the antag hud we provide to this mob.
 	var/antag_hud_name
-	/// If set to true, the antag will not be added to the living antag list.
-	var/count_against_dynamic_roll_chance = TRUE
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
 	var/suicide_cry = ""
 	//Antag panel properties
@@ -63,8 +57,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
-	/// Whether this antag datum blocks rolling new antag datums
-	var/block_midrounds = TRUE
 
 	//ANTAG UI
 
@@ -78,7 +70,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
-	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
@@ -132,8 +123,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
+	if(. || ui.user != owner.current)
+		return TRUE
 	switch(action)
 		if("change_objectives")
 			submit_player_objective()
@@ -141,6 +132,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
+
+/datum/antagonist/ui_status(mob/user, datum/ui_state/state)
+	. = ..()
+	if(isobserver(user) && antag_flags & ANTAG_OBSERVER_VISIBLE_PANEL)
+		return UI_UPDATE
 
 /datum/antagonist/ui_static_data(mob/user)
 	var/list/data = list()
@@ -159,12 +155,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = ..()
 	name = "Open [target] Information:"
 
-/datum/action/antag_info/Trigger(trigger_flags)
+/datum/action/antag_info/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
 
-	target.ui_interact(owner)
+	target.ui_interact(clicker || owner)
 
 /datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)
@@ -179,12 +175,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	var/datum/mind/tested = new_owner || owner
-	if(tested.has_antag_datum(type))
-		return FALSE
-	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
-		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
-			return FALSE
-	return TRUE
+	return !tested.has_antag_datum(type)
 
 //This will be called in add_antag_datum before owner assignment.
 //Should return antag datum without owner.
@@ -194,7 +185,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 ///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transferred.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
-	remove_innate_effects(old_body)
+	if(old_body)
+		remove_innate_effects(old_body)
 	if(old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
@@ -202,7 +194,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		info_button.Remove(old_body)
 		info_button.Grant(new_body)
 	apply_innate_effects(new_body)
-	if(count_against_dynamic_roll_chance && new_body.stat != DEAD)
+	if(new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
 
 //This handles the application of antag huds/special abilities
@@ -229,11 +221,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	var/mob/living/carbon/human/human_override = mob_override
 	if(removing) // They're a clown becoming an antag, remove clumsy
-		human_override.dna.remove_mutation(/datum/mutation/human/clumsy)
+		human_override.dna.remove_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 		if(!silent && message)
 			to_chat(human_override, span_boldnotice("[message]"))
 	else
-		human_override.dna.add_mutation(/datum/mutation/human/clumsy) // We're removing their antag status, add back clumsy
+		human_override.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS) // We're removing their antag status, add back clumsy
 
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -250,6 +242,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
 		info_button = new(src)
+		if(antag_flags & ANTAG_OBSERVER_VISIBLE_PANEL)
+			info_button.show_to_observers = TRUE
+			info_button.allow_observer_click = TRUE
 		info_button.Grant(owner.current)
 		info_button_ref = WEAKREF(info_button)
 	if(!silent)
@@ -270,11 +265,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(count_against_dynamic_roll_chance && owner.current.stat != DEAD && owner.current.client)
+	if(owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
 		antag_hud.apply_to_new_mob(owner.current)
+
+	LAZYADD(owner.special_roles, (jobban_flag || pref_flag))
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
@@ -292,7 +289,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!player.ckey)
 		return FALSE
 
-	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
+	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, jobban_flag || pref_flag)) || QDELETED(player))
 
 /**
  * Proc that replaces a player who cannot play a specific antagonist due to being banned via a poll, and alerts the player of their being on the banlist.
@@ -300,7 +297,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = job_rank, role = job_rank, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = jobban_flag || pref_flag, role = pref_flag, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
 	if(chosen_one)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
@@ -318,10 +315,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		CRASH("Antag datum with no owner.")
 
-	remove_innate_effects()
+	if(owner.current)
+		remove_innate_effects()
 	clear_antag_moodies()
 	LAZYREMOVE(owner.antag_datums, src)
-	if(!LAZYLEN(owner.antag_datums))
+	if(!LAZYLEN(owner.antag_datums) && owner.current)
 		owner.current.remove_from_current_living_antags()
 	if(info_button_ref)
 		QDEL_NULL(info_button_ref)
@@ -332,6 +330,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	LAZYREMOVE(owner.special_roles, (jobban_flag || pref_flag))
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
 	if(owner.current)
 		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
@@ -358,7 +357,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Use this proc for playing sounds, sending alerts, or otherwise informing the player that they're no longer a specific antagonist type.
  */
 /datum/antagonist/proc/farewell()
-	if(!silent)
+	if(!silent && owner.current)
 		to_chat(owner.current, span_userdanger("You are no longer \the [src]!"))
 
 /**
@@ -454,8 +453,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return ""
 
 /datum/antagonist/proc/enabled_in_preferences(datum/mind/noggin)
-	if(job_rank)
-		if(noggin.current && noggin.current.client && (job_rank in noggin.current.client.prefs.be_special))
+	if(pref_flag)
+		if(noggin.current && noggin.current.client && (pref_flag in noggin.current.client.prefs.be_special))
 			return TRUE
 		else
 			return FALSE
@@ -612,3 +611,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return TRUE
 
 #undef CUSTOM_OBJECTIVE_MAX_LENGTH
+
+/// Return TRUE to prevent the antag's job from handling the respawn
+/datum/antagonist/proc/on_respawn(mob/new_character)
+	return FALSE

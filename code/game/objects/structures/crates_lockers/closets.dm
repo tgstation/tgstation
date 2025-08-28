@@ -100,6 +100,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/x_shake_pixel_shift = 2
 	/// how many pixels the closet can shift on the y axes when shaking
 	var/y_shake_pixel_shift = 1
+	///Creates see through image for clients to see while inside closet
+	VAR_PRIVATE/datum/closet_see_inside/closet_see_inside
 
 /datum/armor/structure_closet
 	melee = 20
@@ -153,6 +155,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(is_station_level(z) && mapload)
 		add_to_roundstart_list()
 
+	closet_see_inside = new(src)
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload)
 		is_maploaded = TRUE
@@ -203,6 +207,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	id_card = null
 	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
+	QDEL_NULL(closet_see_inside)
 	GLOB.roundstart_station_closets -= src
 	return ..()
 
@@ -433,6 +438,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return TRUE
 	if(welded || locked)
 		return FALSE
+	if(isliving(user))
+		if(!(user.mobility_flags & MOBILITY_USE))
+			return FALSE
 	if(strong_grab)
 		if(user)
 			to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
@@ -614,21 +622,22 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!broken)
 		bust_open()
 
-/obj/structure/closet/CheckParts(list/parts_list)
-	var/obj/item/electronics/airlock/access_control = locate() in parts_list
+/obj/structure/closet/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/electronics/airlock/access_control = locate() in components
 	if(QDELETED(access_control))
-		return
+		return ..()
 
+	inherit_airlock_electronics_access(access_control)
+
+	return ..()
+
+/obj/structure/closet/proc/inherit_airlock_electronics_access(obj/item/electronics/airlock/access_control)
 	if (access_control.one_access)
 		req_one_access = access_control.accesses
 		req_access = null
 	else
 		req_access = access_control.accesses
 		req_one_access = null
-	access_control.moveToNullspace()
-
-	parts_list -= access_control
-	qdel(access_control)
 
 /obj/structure/closet/multitool_act(mob/living/user, obj/item/tool)
 	if(!secure || !card_reader_installed || broken || locked || opened)
@@ -742,7 +751,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!user.transferItemToLoc(weapon, src))
 			return
 
-		CheckParts(list(weapon))
+		inherit_airlock_electronics_access(weapon)
+		qdel(weapon)
 		secure = TRUE
 		balloon_alert(user, "electronics installed")
 
@@ -884,7 +894,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				return
 		if (user.combat_mode)
 			return
-		if(user.transferItemToLoc(weapon, drop_location())) // so we put in unlit welder too
+		if(user.transfer_item_to_turf(weapon, drop_location())) // so we put in unlit welder too
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
@@ -973,7 +983,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	container_resist_act(user)
 
-
 /obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -1028,15 +1037,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user, loc_required = TRUE)
-	if(isstructure(loc))
-		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
-		var/atom/movable/AM = loc
-		AM.relay_container_resist_act(user, src)
+		var/atom/movable/movable_parent = loc
+		movable_parent.relay_container_resist_act(user, src)
 		return
 	if(!welded && !locked)
 		open()
@@ -1065,7 +1072,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			to_chat(user, span_warning("You fail to break out of [src]!"))
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
-	container.container_resist_act(user)
+	container_resist_act(user)
 
 /// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
 /obj/structure/closet/proc/check_if_shake()
