@@ -56,8 +56,7 @@ All the important duct code:
 		active = FALSE
 		set_anchored(FALSE)
 	else if(!can_anchor())
-		if(mapload)
-			log_mapping("Overlapping ducts detected at [AREACOORD(src)], unanchoring one.")
+		stack_trace("Overlapping ducts detected at [AREACOORD(src)], unanchoring one.")
 		// Note that qdeling automatically drops a duct stack
 		return INITIALIZE_HINT_QDEL
 
@@ -161,6 +160,7 @@ All the important duct code:
 		duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 		drop_on_wrench = null
 	if(!QDELING(src))
+		stack_trace("1")
 		qdel(src)
 
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
@@ -363,6 +363,7 @@ All the important duct code:
 
 		// Turn into a duct stack and then merge to the in-hand stack.
 		var/obj/item/stack/ducts/stack = new(duct.loc, 1, FALSE)
+		stack_trace("2")
 		qdel(duct)
 		if(stack.can_merge(src))
 			stack.merge(src)
