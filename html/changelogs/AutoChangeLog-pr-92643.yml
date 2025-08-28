@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Ensured that biogens cannot brick themselves via various means"
-  - code_imp: "Updated biogen code"
