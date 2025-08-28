@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(IS_CLIENT_OR_MOCK(parent))
 		if(is_guest_key(parent.key))
 			if(parent.is_localhost())
-				path = "config/dev_preferences.json" // guest + locallost = dev instance, load dev preferences if possible
+				path = DEV_PREFS_PATH // guest + locallost = dev instance, load dev preferences if possible
 			else
 				load_and_save = FALSE // guest + not localhost = guest on live, don't save anything
 		else

@@ -1041,9 +1041,9 @@ ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferenc
 		tgui_alert(usr, "Guests don't have preferences to export.", "Export Failed", list("OK"))
 		return
 	var/datum/preferences/usr_prefs = usr.client.prefs
-	var/datum/json_savefile/dev_save = new("config/dev_preferences.json")
+	var/datum/json_savefile/dev_save = new(DEV_PREFS_PATH)
 	usr_prefs.save_preferences()
 	usr_prefs.savefile.copy_to_savefile(dev_save)
 	dev_save.save()
-	tgui_alert(usr, "Exported preferences to /config/dev_preferences.json. \
+	tgui_alert(usr, "Exported preferences to [DEV_PREFS_PATH]. \
 		Next time you localhost as a guest it will use this savefile as-is.", "Export Complete", list("OK thanks"))
