@@ -1038,8 +1038,7 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "aqT" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/toolbox/emergency,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "arl" = (
@@ -11307,10 +11306,6 @@
 /area/station/service/janitor)
 "dWb" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/basic/bot/repairbot,
-/obj/effect/turf_decal/stripes{
-	dir = 6
-	},
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -24204,12 +24199,11 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "iuU" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/basic/bot/cleanbot,
-/obj/effect/turf_decal/stripes{
-	dir = 5
-	},
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "iuV" = (
@@ -28150,8 +28144,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "jNg" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/cable_coil,
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "jNh" = (
@@ -58674,6 +58667,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/theater)
+"udu" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat/foyer)
 "udG" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
@@ -102189,7 +102191,7 @@ qYV
 sQd
 rgp
 mIe
-qBt
+udu
 vBs
 hfm
 eVE
