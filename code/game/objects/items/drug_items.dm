@@ -99,14 +99,14 @@
 	var/transfer_per_second = 0.5
 
 	process_effect(seconds_per_tick)
-		var/obj/item/food/drug/meth_crystal/rock = parent
-		if(!istype(rock))
+		var/obj/item/rock = parent
+		if(!istype(rock, /obj/item/food/drug/meth_crystal))
 			return
 
 		if(!IS_ORGANIC_LIMB(owner_limb))
 			return
 
-		if(!owner.reagents || !rock.reagents.total_volume)
+		if(!owner?.reagents || !rock.reagents?.total_volume)
 			return
 
 		rock.reagents.trans_to(
@@ -128,28 +128,31 @@
 	but being drank too much it hurts, making spacemen lethargical, and it kills."
 	icon_state = "opium1"
 	tastes = list("amber", "a bitter vanilla")
+	food_reagents = list(
+		/datum/reagent/medicine/morphine = 10,
+		/datum/reagent/consumable/sugar = 1
+	)
 
 /obj/item/food/drug/opium/examine()
-    . = ..()
-    if(reagents.get_reagent_amount(/datum/reagent/medicine/morphine) >= 10)
-        . += span_notice("The opium is large and rich in fragrance; it needs further no further refinement.")
-    else
-        . += span_notice("The opium is still small, and can be pressed together with more to increase its potency and richness.")
+	. = ..()
+	if(reagents.get_reagent_amount(/datum/reagent/medicine/morphine) >= 10)
+		. += span_notice("The opium is large and rich in fragrance; it needs no further refinement.")
+	else
+		. += span_notice("The opium is still small, and can be pressed together with more to increase its potency and richness.")
 
-/obj/item/food/drug/opium/Initialize(mapload) //For narcotics and black market purchases, pure and proper.
+/obj/item/food/drug/opium/Initialize(mapload) // For narcotics and black market purchases, pure and proper.
 	. = ..()
 	icon_state = pick("opium1", "opium2", "opium3", "opium4", "opium5")
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
-	food_reagents = list(/datum/reagent/medicine/morphine = 10, /datum/reagent/consumable/sugar = 1)
 
-/obj/item/food/drug/opium/raw/Initialize(loc, potency) //Randomizes amount depending upon potency.
+/obj/item/food/drug/opium/raw/Initialize(mapload, potency) // Randomizes amount depending upon potency.
 	. = ..()
 	reagents.clear_reagents()
 	var/mult = max(potency / 20, 1) // 20 = base, 100 = 5x, 200 = 10x
 	reagents.add_reagent(/datum/reagent/medicine/morphine, (rand(4, 25) / 10) * mult)
 	reagents.add_reagent(/datum/reagent/consumable/sugar, rand(1, 7) / 10)
 
-/obj/item/food/drug/opium/raw/interact_with_atom(obj/item/I, mob/user) //allows for combining opium up to 10u, refining it until rich and fragrant.
+/obj/item/food/drug/opium/raw/interact_with_atom(obj/item/I, mob/user) // allows for combining opium up to 10u, refining it until rich and fragrant.
 	if(istype(I, /obj/item/food/drug/opium/raw))
 		var/obj/item/food/drug/opium/raw/other = I
 
