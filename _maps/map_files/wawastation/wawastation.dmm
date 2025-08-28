@@ -22011,7 +22011,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "hGC" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/textured_large,
@@ -64678,7 +64678,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "wnT" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/south{
 	network = list("ss13","medbay")
