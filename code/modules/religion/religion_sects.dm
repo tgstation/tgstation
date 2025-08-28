@@ -107,34 +107,11 @@
 
 /// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
 /datum/religion_sect/proc/sect_bless(mob/living/target, mob/living/chap)
-	if(!ishuman(target))
-		return BLESSING_FAILED
-
-	var/mob/living/carbon/human/blessed = target
-	for(var/obj/item/bodypart/bodypart as anything in blessed.bodyparts)
-		if(IS_ROBOTIC_LIMB(bodypart))
-			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return BLESSING_IGNORED
-
-	var/heal_amt = 10
-	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-
-	if(!length(hurt_limbs))
-		return BLESSING_IGNORED
-
-	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-			blessed.update_damage_overlays()
-
-	blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
-	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return BLESSING_SUCCESS
+	return BLESSING_IGNORED
 
 /// What happens if we bless a corpse? By default just do the default smack behavior
 /datum/religion_sect/proc/sect_dead_bless(mob/living/target, mob/living/chap)
-	return FALSE
+	return BLESSING_FAILED
 
 /**** Nanotrasen Approved God ****/
 
@@ -149,8 +126,8 @@
 /datum/religion_sect/mechanical
 	name = "Mechanical God"
 	quote = "May you find peace in a metal shell."
-	desc = "Bibles now recharge cyborgs and heal robotic limbs if targeted, but they \
-	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
+	desc = "Bibles now heal and recharge cyborgs, bots, and robotic limbs if targeted, but they \
+	do not heal organic limbs. They also recharge etherals. You can now sacrifice cells, with favor depending on their charge."
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
 	desired_items = list(/obj/item/stock_parts/power_store = "with battery charge")
@@ -160,50 +137,57 @@
 
 /datum/religion_sect/mechanical/sect_bless(mob/living/target, mob/living/chap)
 	if(iscyborg(target))
-		var/mob/living/silicon/robot/R = target
+		var/mob/living/silicon/robot/borg = target
+		var/repair = (!borg.getBruteLoss() && !borg.getFireLoss())
+		if(repair)
+			borg.adjustBruteLoss(-5)
+			borg.adjustFireLoss(-5)
 		var/charge_amount = 0.05 * STANDARD_CELL_CHARGE
 		if(target.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
 			charge_amount *= 2
-		R.cell?.charge += charge_amount
-		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
-		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
-		R.add_mood_event("blessing", /datum/mood_event/blessing)
+		borg.cell?.charge += charge_amount
+		borg.visible_message(span_notice("[chap] [repair ? "repairs and " : ""]charges [borg] with the power of [GLOB.deity]!"))
+		to_chat(borg, span_boldnotice("You are [repair ? "repaired and " : ""]charged by the power of [GLOB.deity]!"))
+		borg.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 		return BLESSING_SUCCESS
 
+	var/did_we_charge = FALSE //we determine if we can charge them later
+
 	if(!ishuman(target))
-		return BLESSING_FAILED
+		if(!(target.mob_biotypes & MOB_ROBOTIC))
+			to_chat(chap, span_warning("[GLOB.deity] scoffs at the idea of repairing such inferior critter!"))
+			return BLESSING_FAILED
+		target.adjustBruteLoss(target.maxHealth * 0.1)
+	else
+		var/mob/living/carbon/human/blessed = target
 
-	var/mob/living/carbon/human/blessed = target
+		var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
+		if(istype(eth_stomach))
+			eth_stomach.adjust_charge(0.06 * STANDARD_CELL_CHARGE)
+			did_we_charge = TRUE
 
-	//first we determine if we can charge them
-	var/did_we_charge = FALSE
-	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(istype(eth_stomach))
-		eth_stomach.adjust_charge(0.06 * STANDARD_CELL_CHARGE)
-		did_we_charge = TRUE
+		//if we're not targeting a robot part we stop early
+		var/obj/item/bodypart/bodypart = blessed.get_bodypart(chap.zone_selected)
+		if(!IS_ROBOTIC_LIMB(bodypart))
+			if(!did_we_charge)
+				to_chat(chap, span_warning("[GLOB.deity] scoffs at the idea of repairing such inferior matter!"))
+				return BLESSING_FAILED
 
-	//if we're not targeting a robot part we stop early
-	var/obj/item/bodypart/bodypart = blessed.get_bodypart(chap.zone_selected)
-	if(IS_ORGANIC_LIMB(bodypart))
-		if(!did_we_charge)
-			to_chat(chap, span_warning("[GLOB.deity] scoffs at the idea of healing such fleshy matter!"))
-			return BLESSING_IGNORED
+			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
+			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
+			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+			playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
+			return BLESSING_SUCCESS
 
-		blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
-		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-		playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
-		return BLESSING_SUCCESS
+		//charge(?) and go
+		if(bodypart.heal_damage(5,5,BODYTYPE_ROBOTIC))
+			blessed.update_damage_overlays()
 
-	//charge(?) and go
-	if(bodypart.heal_damage(5,5,BODYTYPE_ROBOTIC))
-		blessed.update_damage_overlays()
-
-	blessed.visible_message(span_notice("[chap] [did_we_charge ? "repairs and charges" : "repairs"] [blessed] with the power of [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs and charges" : "repairs"] you!"))
+	target.visible_message(span_notice("[chap] [did_we_charge ? "repairs and charges" : "repairs"] [target] with the power of [GLOB.deity]!"))
+	to_chat(target, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs and charges" : "repairs"] you!"))
 	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
-	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	target.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
 /datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/power_store/cell/power_cell, mob/living/chap)
@@ -253,11 +237,14 @@
 	return TRUE
 
 #define GREEDY_HEAL_COST 50
+#define GREEDY_INORGANIC_HEAL_COST 5
+#define GREEDY_BLESSING_COST 7
 
 /datum/religion_sect/greed
 	name = "Greedy God"
 	quote = "Greed is good."
-	desc = "In the eyes of your mercantile deity, your wealth is your favor. Earn enough wealth to purchase some more business opportunities."
+	desc = "In the eyes of your mercantile deity, your wealth is your favor. Earn enough wealth to purchase some more business opportunities. \
+	It also improve your bible healing and blessing, and allow you to heal robotic limbs to, at a cost..."
 	tgui_icon = "dollar-sign"
 	altar_icon_state = "convertaltar-yellow"
 	alignment = ALIGNMENT_EVIL //greed is not good wtf
@@ -268,41 +255,48 @@
 	return "In the eyes of [GLOB.deity], your wealth is your favor."
 
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
-	if(!ishuman(blessed_living))
-		return BLESSING_FAILED
-
 	var/datum/bank_account/account = chap.get_bank_account()
 	if(!account)
-		to_chat(chap, span_warning("You need a way to pay for the heal!"))
-		return BLESSING_IGNORED
+		to_chat(chap, span_warning("You need a way to pay for the heal or blessing!"))
+		return BLESSING_FAILED
 
-	if(account.account_balance < GREEDY_HEAL_COST)
-		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
-		return BLESSING_IGNORED
+	var/healies = TRUE
+	if(!ishuman(blessed_living) || (!blessed_living.getBruteLoss() && !blessed_living.getFireLoss()))
+		if(account.account_balance < GREEDY_BLESSING_COST)
+			to_chat(chap, span_warning("Each blessing from [GLOB.deity] costs [GREEDY_BLESSING_COST]!"))
+			return BLESSING_FAILED
+		account.adjust_money(-GREEDY_BLESSING_COST, "Church Donation: Blessing")
+		healies = FALSE
+	else
+		var/mob/living/carbon/human/blessed = blessed_living
+		var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1)
 
-	var/mob/living/carbon/human/blessed = blessed_living
-	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
-		if(IS_ROBOTIC_LIMB(robolimb))
-			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return BLESSING_IGNORED
+		var/inorganic_limbs = 0
+		for(var/obj/item/bodypart/limb as anything in blessed.bodyparts)
+			if(!IS_ORGANIC_LIMB(limb))
+				inorganic_limbs++
 
-	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation: Treatment")
-	var/heal_amt = 30
-	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(!length(hurt_limbs))
-		return BLESSING_IGNORED
+		var/amount_to_pay = GREEDY_HEAL_COST + GREEDY_INORGANIC_HEAL_COST * inorganic_limbs
+		if(account.account_balance < amount_to_pay)
+			to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] (plus [GREEDY_INORGANIC_HEAL_COST] for each inorganic bodypart) credits for 30 health!"))
+			return BLESSING_FAILED
 
-	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-			blessed.update_damage_overlays()
+		account.adjust_money(-amount_to_pay, "Church Donation: Treatment")
+		var/heal_amt = 30
 
-	blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
+		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+			if(affecting.heal_damage(heal_amt, heal_amt))
+				blessed.update_damage_overlays()
+
+	blessed_living.visible_message(span_notice("[chap] barters a [healies ? "heal" : "blessing"] for [blessed_living] from [GLOB.deity]!"))
+	to_chat(blessed_living, span_boldnotice("May the power of [GLOB.deity] [healies ? "compel you to be healed" : "increase your stocks"]! Thank you for choosing [GLOB.deity]!"))
 	playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
-	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	blessed_living.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
 #undef GREEDY_HEAL_COST
+#undef GREEDY_INORGANIC_HEAL_COST
+#undef GREEDY_BLESSING_COST
 
 /datum/religion_sect/burden
 	name = "Punished God"
@@ -337,7 +331,7 @@
 
 /datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)
 	if(!istype(target) || !istype(chaplain))
-		return BLESSING_FAILED
+		return BLESSING_IGNORED
 
 	var/datum/brain_trauma/special/burdened/burden = chaplain.has_trauma_type(/datum/brain_trauma/special/burdened)
 	if(!burden)
@@ -395,8 +389,9 @@
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
 	if(!transferred)
-		to_chat(chaplain, span_warning("They hold no burden!"))
-		return BLESSING_IGNORED
+		to_chat(chaplain, span_warning("They hold no burden! May the power of [GLOB.deity] guide [target.p_their()] path!"))
+		to_chat(target, span_boldnotice("May the power of [GLOB.deity] guide your path!"))
+		return BLESSING_SUCCESS
 
 	target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
 	to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
@@ -443,14 +438,13 @@
 
 /datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/chap)
 	if(!ishuman(blessed_living))
-		return BLESSING_FAILED
-
-	var/mob/living/carbon/human/blessed = blessed_living
-	if(blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge))
-		to_chat(blessed, span_warning("[GLOB.deity] has already empowered them."))
 		return BLESSING_IGNORED
 
-	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
+	var/mob/living/carbon/human/blessed = blessed_living
+
+	var/amount_to_inject = 5 - blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge)
+	if(amount_to_inject > 0)
+		blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, amount_to_inject)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)

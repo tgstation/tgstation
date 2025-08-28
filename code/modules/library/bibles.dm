@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	/// Deity this bible is related to
 	var/deity_name = "Space Jesus"
+	var/linked_to_sect = TRUE
 
 /obj/item/book/bible/Initialize(mapload)
 	. = ..()
@@ -208,31 +209,41 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	qdel(src)
 
 /obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
-	if(GLOB.religious_sect)
-		return GLOB.religious_sect.sect_bless(blessed,user)
+	var/deity = linked_to_sect ? GLOB.deity : deity_name
+	if(linked_to_sect)
+		var/specific_blessing = GLOB.religious_sect?.sect_bless(blessed,user)
+		if(specific_blessing != BLESSING_IGNORED)
+			return specific_blessing
 
+	var/healies = FALSE
 	if(!ishuman(blessed))
-		return BLESSING_FAILED
+		if(blessed.mob_biotypes & MOB_ROBOTIC)
+			to_chat(user, span_warning("[deity] refuses to bless this metallic taint!"))
+			return BLESSING_FAILED
+	else
+		var/mob/living/carbon/human/built_in_his_image = blessed
+		var/organic_limb_found = FALSE
+		for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
+			if(IS_ORGANIC_LIMB(bodypart))
+				organic_limb_found = TRUE
+				break
 
-	var/mob/living/carbon/human/built_in_his_image = blessed
-	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
-		if(!IS_ORGANIC_LIMB(bodypart))
-			balloon_alert(user, "can't heal inorganic!")
-			return BLESSING_IGNORED
+		if(!organic_limb_found)
+			to_chat(user, span_warning("[deity] refuses to heal nor bless this metallic taint!"))
+			return BLESSING_FAILED
 
-	var/heal_amt = 10
-	var/list/hurt_limbs = built_in_his_image.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(!length(hurt_limbs))
-		return BLESSING_IGNORED
+		var/heal_amt = 10
+		var/list/hurt_limbs = built_in_his_image.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
+		if(length(hurt_limbs))
+			for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+				if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
+					built_in_his_image.update_damage_overlays()
+			healies = TRUE
 
-	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-			built_in_his_image.update_damage_overlays()
-
-	built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
-	to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-	playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
-	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
+	blessed.visible_message(span_notice("[user] [healies ? "heals" : "blesses"] [blessed] with the power of [deity]!"))
+	to_chat(blessed, span_boldnotice("May the power of [deity] [healies ? "compel you to be healed" : "guide your path"]!"))
+	playsound(blessed, SFX_PUNCH, 25, TRUE, -1)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
 /obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
@@ -255,7 +266,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		if(GLOB.religious_sect?.sect_dead_bless(target_mob, user) == BLESSING_FAILED)
+		if(!linked_to_sect || !GLOB.religious_sect || GLOB.religious_sect.sect_dead_bless(target_mob, user) == BLESSING_FAILED)
 			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
 			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
@@ -265,7 +276,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return
 
 	var/smack_chance = DEFAULT_SMACK_CHANCE
-	if(GLOB.religious_sect)
+	if(linked_to_sect && GLOB.religious_sect)
 		smack_chance = GLOB.religious_sect.smack_chance
 
 	if(!prob(smack_chance))
@@ -276,7 +287,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
-		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
+		if(!HAS_TRAIT(carbon_target, TRAIT_HEAD_INJURY_BLOCKED))
 			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
 	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
@@ -359,6 +370,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches", "curses", "smites")
 	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curse", "smite")
 	deity_name = "The Syndicate"
+	linked_to_sect = FALSE
 	var/uses = 1
 	var/owner_name
 
