@@ -642,4 +642,4 @@ TGUI_MAX_CHUNK_COUNT 32
 GENERATE_ASSETS_IN_INIT
 
 ## Minimum time before a heretic can ascend, in minutes
-# minimum_ascension_time 3
+# MINIMUM_ASCENSION_TIME 3
