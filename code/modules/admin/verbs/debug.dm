@@ -1037,7 +1037,7 @@ ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferenc
 	if(!usr.client.is_localhost())
 		tgui_alert(usr, "You shouldn't be using this right now!", "Export Failed", list("OK"))
 		return
-	if(is_guest_key(usr.ckey))
+	if(is_guest_key(usr.key))
 		tgui_alert(usr, "Guests don't have preferences to export.", "Export Failed", list("OK"))
 		return
 	var/datum/preferences/usr_prefs = usr.client.prefs
