@@ -67,20 +67,20 @@
 		// alive and well AIs control their floor bolts
 		balloon_alert(user, "the AI's bolt motors resist.")
 		return ITEM_INTERACT_SUCCESS
-	balloon_alert(user, "[!is_anchored ? "tightening" : "loosening"] bolts...")
-	balloon_alert(src, "bolts being [!is_anchored ? "tightened" : "loosened"]...")
+	balloon_alert(user, "[!anchored ? "tightening" : "loosening"] bolts...")
+	balloon_alert(src, "bolts being [!anchored ? "tightened" : "loosened"]...")
 	if(!tool.use_tool(src, user, 4 SECONDS))
 		return ITEM_INTERACT_SUCCESS
 	flip_anchored()
-	balloon_alert(user, "bolts [is_anchored ? "tightened" : "loosened"]")
-	balloon_alert(src, "bolts [is_anchored ? "tightened" : "loosened"]")
+	balloon_alert(user, "bolts [anchored ? "tightened" : "loosened"]")
+	balloon_alert(src, "bolts [anchored ? "tightened" : "loosened"]")
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/ai/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(user.combat_mode)
 		return
-	if(!is_anchored)
+	if(!anchored)
 		balloon_alert(user, "bolt it down first!")
 		return ITEM_INTERACT_SUCCESS
 	if(opened)
@@ -133,7 +133,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return
-	if(!is_anchored)
+	if(!anchored)
 		balloon_alert(user, "bolt it down first!")
 		return ITEM_INTERACT_SUCCESS
 	if(!opened)
