@@ -1,7 +1,7 @@
-//   ___   _   __  __ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-//  |   \ /_\ |  \/  | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| |
-//  | |) / _ \| |\/| | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` |
-//  |___/_/ \_\_|  |_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|
+//   ___   _   __  __ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+//  |   \ /_\ |  \/  | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| |
+//  | |) / _ \| |\/| | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` |
+//  |___/_/ \_\_|  |_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|
 //
 /obj/machinery/big_manipulator
 	name = "big manipulator"
@@ -12,7 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/big_manipulator
 	greyscale_colors = "#d8ce13"
 	greyscale_config = /datum/greyscale_config/big_manipulator
-	hud_possible = list(DIAG_LAUNCHPAD_HUD)
+	hud_possible = list(BIG_MANIP_HUD)
 
 	/// Min time manipulator can have in delay. Changing on upgrade.
 	var/minimal_interaction_multiplier = MIN_ROTATION_MULTIPLIER_TIER_1
@@ -59,25 +59,40 @@
 	var/list/hud_points = list()
 
 /obj/machinery/big_manipulator/proc/update_hud_for_all_points()
-	for(var/datum/interaction_point/point in pickup_points)
-		update_hud_for_point(point, TRANSFER_TYPE_PICKUP)
+	update_hud()
 
-	for(var/datum/interaction_point/point in dropoff_points)
-		update_hud_for_point(point, TRANSFER_TYPE_DROPOFF)
-
-/obj/machinery/big_manipulator/proc/update_hud_for_point(datum/interaction_point/point, point_type)
-	if(!is_operational)
+/obj/machinery/big_manipulator/proc/update_hud()
+	var/image/holder = hud_list[BIG_MANIP_HUD]
+	if(!holder)
 		return
 
-	// Creating a new HUD element
-	var/image/holder = new
-	hud_list[DIAG_LAUNCHPAD_HUD] = holder
-	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', point_type == TRANSFER_TYPE_PICKUP ? "launchpad_pull" : "launchpad_launch", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+	// Clear existing HUD points
+	LAZYCLEARLIST(hud_points)
 
-	var/target_turf = point.interaction_turf.resolve()
-	holder.appearance = target
-	holder.loc = target_turf
-	hud_points += holder
+	// Create HUD elements for all pickup points
+	for(var/datum/interaction_point/point in pickup_points)
+		var/mutable_appearance/target = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_1", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+		var/target_turf = point.interaction_turf.resolve()
+		if(target_turf)
+			var/image/point_holder = new
+			point_holder.appearance = target
+			point_holder.loc = target_turf
+			hud_points += point_holder
+
+	// Create HUD elements for all dropoff points
+	for(var/datum/interaction_point/point in dropoff_points)
+		var/mutable_appearance/target = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_2", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+		var/target_turf = point.interaction_turf.resolve()
+		if(target_turf)
+			var/image/point_holder = new
+			point_holder.appearance = target
+			point_holder.loc = target_turf
+			hud_points += point_holder
+
+	// Update the main HUD holder
+	holder.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+	set_hud_image_active(BIG_MANIP_HUD)
+	to_chat(world, span_notice("DEBUG: Updated BIG_MANIP_HUD with [length(hud_points)] points"))
 
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	var/turf/center = get_turf(src)
@@ -127,7 +142,7 @@
 
 	// Update HUD only when the manipulator is operational.
 	if(is_operational)
-		update_hud_for_point(new_interaction_point, transfer_type)
+		update_hud_for_all_points()
 
 	return new_interaction_point
 
@@ -149,6 +164,8 @@
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
+
+	update_hud()
 
 /// Checks the component tiers, adjusting the properties of the manipulator.
 /obj/machinery/big_manipulator/proc/process_upgrades()
@@ -255,6 +272,124 @@
 	if(!manipulator_arm)
 		create_manipulator_arm()
 
+	// Update all interaction points to maintain their relative positions when the manipulator moves
+	// This ensures that interaction points move with the manipulator, preserving their relative layout
+	update_interaction_points_on_move(old_loc)
+
+/// Updates all interaction points to maintain their relative positions when the manipulator moves
+/obj/machinery/big_manipulator/proc/update_interaction_points_on_move(atom/old_loc)
+	if(!old_loc || !isturf(old_loc))
+		return
+
+	var/turf/old_turf = old_loc
+	var/turf/new_turf = get_turf(src)
+	if(!new_turf || old_turf == new_turf)
+		return
+
+	// Calculate the offset
+	var/dx = new_turf.x - old_turf.x
+	var/dy = new_turf.y - old_turf.y
+
+	// Only update if there's actual movement (not just rotation)
+	if(dx == 0 && dy == 0)
+		return
+
+	// Update pickup points
+	for(var/datum/interaction_point/point in pickup_points)
+		update_point_position(point, dx, dy)
+
+	// Update dropoff points
+	for(var/datum/interaction_point/point in dropoff_points)
+		update_point_position(point, dx, dy)
+
+	// Update HUD if operational
+	if(is_operational)
+		update_hud_for_all_points()
+
+/// Updates a single interaction point's position by the given offset
+/obj/machinery/big_manipulator/proc/update_point_position(datum/interaction_point/point, dx, dy)
+	if(!point || !point.interaction_turf)
+		return
+
+	var/turf/old_turf = point.interaction_turf.resolve()
+	if(!old_turf)
+		return
+
+	var/turf/manipulator_turf = get_turf(src)
+	if(!manipulator_turf)
+		return
+
+	// Calculate new position, maintaining the same Z-level as the manipulator
+	var/turf/new_turf = locate(old_turf.x + dx, old_turf.y + dy, manipulator_turf.z)
+
+	// If manipulator is not anchored, allow points to be anywhere (even in walls)
+	if(!anchored)
+		if(new_turf)
+			point.interaction_turf = WEAKREF(new_turf)
+		return
+
+	// If anchored, check if the new position is valid
+	if(!new_turf || isclosedturf(new_turf))
+		// If the new position is invalid, try to find a suitable nearby turf
+		new_turf = find_suitable_turf_near(new_turf || old_turf)
+		if(!new_turf)
+			// If no suitable turf found and manipulator is anchored, remove the point
+			remove_invalid_point(point)
+			return
+
+	// Don't update if the new position is the same as the old one
+	if(new_turf == old_turf)
+		return
+
+	// Update the point's turf reference
+	point.interaction_turf = WEAKREF(new_turf)
+
+/// Finds a suitable turf near the given location
+/obj/machinery/big_manipulator/proc/find_suitable_turf_near(turf/center)
+	if(!center)
+		return null
+
+	var/turf/manipulator_turf = get_turf(src)
+	if(!manipulator_turf)
+		return null
+
+	// Ensure we're looking on the same Z-level as the manipulator
+	if(center.z != manipulator_turf.z)
+		center = locate(center.x, center.y, manipulator_turf.z)
+		if(!center)
+			return null
+
+	// Check the center first
+	if(!isclosedturf(center))
+		return center
+
+	// Check adjacent turfs in a spiral pattern
+	var/list/directions = list(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+	for(var/dir in directions)
+		var/turf/check = get_step(center, dir)
+		if(check && !isclosedturf(check))
+			return check
+
+	return null
+
+/// Removes an invalid interaction point from the manipulator
+/obj/machinery/big_manipulator/proc/remove_invalid_point(datum/interaction_point/point)
+	if(!point)
+		return
+
+	// Remove HUD for this point
+	remove_hud_for_point(point)
+
+	// Remove from appropriate list
+	if(point in pickup_points)
+		pickup_points -= point
+	else if(point in dropoff_points)
+		dropoff_points -= point
+
+	// Delete the point
+	qdel(point)
+
+
 /obj/machinery/big_manipulator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(obj_flags & EMAGGED)
@@ -279,7 +414,12 @@
 /obj/machinery/big_manipulator/default_unfasten_wrench(mob/user, obj/item/wrench, time)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
-		return
+		// When anchoring, validate all points and remove invalid ones
+		if(anchored)
+			validate_all_points()
+			update_hud_for_all_points()
+		else
+			remove_all_huds()
 
 /obj/machinery/big_manipulator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
@@ -404,7 +544,6 @@
 		drop_held_atom()
 		on = new_power_state
 		cycle_timer_running = FALSE
-		remove_all_huds()
 		end_current_task()
 		SStgui.update_uis(src)
 
@@ -639,7 +778,7 @@
 
 			remove_hud_for_point(target_point)
 			target_point.interaction_turf = WEAKREF(new_turf)
-			update_hud_for_point(target_point, is_pickup ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
+			update_hud_for_all_points()
 			return TRUE
 
 /// Cycles the given value in the given list. Retuns the next value in the list, or the first one if the list isn't long enough.

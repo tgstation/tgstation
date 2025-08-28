@@ -1,5 +1,3 @@
-#define DIAG_INTERACTION_POINT_HUD "interaction_point"
-
 /// A basic interaction point representing an open turf.
 /// Contains data about how it should be interacted with, including filters, turf objects enumerating and a couple more things.
 /datum/interaction_point
