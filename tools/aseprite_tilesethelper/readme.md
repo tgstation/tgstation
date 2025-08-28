@@ -10,20 +10,15 @@ This is a .aseprite file aimed to help make spriting easier for those that need 
 
 ## Why?
 
-The hardest thing to sprite at times down and upstream was walls and floor sprites reespectively, This aims to make life easier for those making those kinds of sprites. as no relevant tools or assistive systems could be found.
+The hardest thing to sprite at times down and upstream were walls and floor sprites respectively, This aims to make life easier for those making these kinds of sprites. as no relevant tools or assistive systems could be found.
 
 ## I finished editing in aseprite, what next?
 
-1. Export the file as a .PNG,
-2. Make a new DMI file for your sprite
-   2.1 Make sure your DMI file is enforcing 32x32
-3. Import your image into the DMI file or Ctrl + C & Ctrl + V
-4. Delete the Debug Break sprite and everything past it. (For new spriters, Sprite files are always left to right, Top Right to Bottom left.)
-
-(Micro Example): The alphabet is the order it goes in.
-A B C D
-E F G H
-I J K L
+1. Right click the "tilemap" layer named "SS13 Tilesize" and convert it to a layer
+2. Use the selection box (Marquee Tool) [Press M for hotkey.], and select the whole area above the red line.
+   2.1 Make sure not to select any part of the red line and to make sure all sprites are selected.
+3. Ctrl + C & Ctrl + V into your select .DMI file
+4. Change all the names of the sprites and enjoy!
 
 ## There's colors I dont want!
 
@@ -31,3 +26,12 @@ Here's how to delete the unwanted colors
 
 1. In the same DMI file as your imported sprites, go to the top left and click "Colors", then "Edit..."
 2. Click on the colors you dont want, and press Delete (Backspace will not work)
+
+## Can I use this to test carpet/wall designs?
+
+Yes you can! You can copy sprite into the file by having the relevant .DMI file, Copying and Pasting, aligning each sprite over the file.
+
+1. Open your .PNG or DMI file using DreamMaker
+   1.1 If you're using a DMI file this will take longer to set up, but allow for more control.
+2. Copy + Paste using Ctrl + C & Ctrl + V into the image itself!
+   2.1 If you're copying a .PNG of the sprites, align your image to the slot, alotted to you below the red line as best you can!
