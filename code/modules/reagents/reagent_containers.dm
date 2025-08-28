@@ -73,6 +73,8 @@
 	. = ..()
 	if(isnum(vol) && vol > 0)
 		volume = vol
+	if(!force)
+		item_flags |= NOBLUDGEON
 	create_reagents(volume, reagent_flags)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
@@ -135,7 +137,6 @@
 		return NONE // non-combat-mode-rmb allows for stuff like opening containers or attacking (bottle breaking)
 	if(try_splash(user, interacting_with))
 		return ITEM_INTERACT_SUCCESS
-
 	return NONE
 
 /// Tries to splash the target, called when right-clicking with a reagent container.
@@ -237,6 +238,7 @@
 		var/splash_multiplier = 1
 		if(was_thrown)
 			splash_multiplier *= (rand(5,10) * 0.1) //Not all of it makes contact with the target
+		var/turf_splash_multiplier = 1 - splash_multiplier
 		var/mob/M = target
 		var/turf/target_turf = get_turf(target)
 		target.visible_message(span_danger("[M] is splashed with something!"), \
@@ -244,7 +246,8 @@
 		if(splasher)
 			log_combat(splasher, M, "splashed", src, "containing [reagents.get_reagent_log_string()] [was_thrown ? "(thrown)" : ""]")
 		reagents.expose(target, TOUCH, splash_multiplier)
-		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
+		if(turf_splash_multiplier > 0)
+			reagents.expose(target_turf, TOUCH, turf_splash_multiplier) // 1 - splash_multiplier because it's what didn't hit the target
 
 	else if(bartender_check(target, splasher) && was_thrown)
 		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
