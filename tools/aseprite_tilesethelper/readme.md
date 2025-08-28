@@ -15,7 +15,7 @@ The hardest thing to sprite at times down and upstream were walls and floor spri
 ## I finished editing in aseprite, what next?
 
 1. Right click the "tilemap" layer named "SS13 Tilesize" and convert it to a layer
-2. Use the selection box (Marquee Tool) [Press M for hotkey.], and select the whole area above the red line.
+2. Use the selection box (Marquee Tool) [Press M for hotkey.], and select the whole area above the red line. While still selecting the now converted tilemap layer.
    2.1 Make sure not to select any part of the red line and to make sure all sprites are selected.
 3. Ctrl + C & Ctrl + V into your select .DMI file
 4. Change all the names of the sprites and enjoy!
