@@ -1031,3 +1031,16 @@ ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count how many atom 
 	. = list()
 	CRASH("count_datums not supported on OpenDream")
 #endif
+
+ADMIN_VERB_VISIBILITY(export_save_to_dev_preference, ADMIN_VERB_VISIBLITY_FLAG_LOCALHOST)
+ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferences", "Exports your savefile to be used by any guests that connect to your localost.", ADMIN_CATEGORY_SERVER)
+	if(!usr.client.is_localhost())
+		tgui_alert(usr, "You shouldn't be using this right now!", "Export Failed", list("OK"))
+		return
+	var/datum/preferences/usr_prefs = usr.client.prefs
+	var/datum/json_savefile/dev_save = new("config/dev_preferences.json")
+	usr_prefs.save_preferences()
+	usr_prefs.savefile.copy_to_savefile(dev_save)
+	dev_save.save()
+	tgui_alert(usr, "Exported preferences to /config/dev_preferences.json. \
+		Next time you localhost as a guest it will use this savefile as-is.", "Export Complete", list("OK thanks"))
