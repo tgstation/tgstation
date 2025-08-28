@@ -286,9 +286,12 @@
 	if(not_handled)
 		return
 
-	update_equipment_speed_mods()
-	update_obscured_slots(item_dropping.flags_inv)
-	hud_used?.update_locked_slots()
+	has_unequipped(item_dropping)
+
+/mob/living/carbon/human/item_coverage_changed(added_slots, removed_slots)
+	. = ..()
+	if((added_slots|removed_slots) & HIDEFACE)
+		sec_hud_set_security_status()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.

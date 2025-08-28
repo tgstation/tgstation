@@ -76,14 +76,21 @@
 		return FALSE
 	return TRUE
 
+/// Checks if any wings from the back of this mob are blocked by clothing
+/mob/living/carbon/human/proc/is_wing_blocked()
+	if(obscured_slots & (HIDEMUTWINGS|HIDEJUMPSUIT))
+		// Being specific species allow wings to work despite concealing clothing
+		return !is_type_in_list(dna?.species, wear_suit.species_exception)
+	return FALSE
+
 ///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
 /obj/item/organ/wings/functional/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
 	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-	if(!cant_hide && human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
-		to_chat(human, span_warning("Your suit blocks your wings from extending!"))
+	if(!cant_hide && human.is_wing_blocked())
+		to_chat(human, span_warning("Your clothing blocks your wings from extending!"))
 		return FALSE
 	var/turf/location = get_turf(human)
 	if(!location)

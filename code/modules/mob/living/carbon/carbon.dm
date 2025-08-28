@@ -1128,7 +1128,7 @@
 		. |= held_thing.wash(clean_types)
 
 	// Check and wash stuff that isn't covered
-	var/covered = check_covered_slots()
+	var/covered = hidden_slots_to_inventory_slots(covered_slots)
 	for(var/obj/item/worn as anything in get_equipped_items())
 		var/slot = get_slot_by_item(worn)
 		// Don't wash glasses if something other than them is covering our eyes
@@ -1186,7 +1186,7 @@
 			QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
-	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
+	return !(obscured_slots & HIDEFACE)
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)

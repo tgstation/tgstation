@@ -722,10 +722,7 @@
 	icon_state = "babbearfish"
 
 /datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDEEARS) || (human.wear_mask?.flags_inv & HIDEEARS))
+	if(bodypart_owner.owner?.obscured_flags & HIDEEARS)
 		return FALSE
 	return TRUE
 

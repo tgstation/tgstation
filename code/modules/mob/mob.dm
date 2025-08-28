@@ -1506,6 +1506,7 @@
 /// source - Item that caused the update by being equipped/dropped
 /mob/proc/update_equipment(obj/item/source)
 	update_equipment_speed_mods()
+	hud_used?.update_locked_slots()
 
 /// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()

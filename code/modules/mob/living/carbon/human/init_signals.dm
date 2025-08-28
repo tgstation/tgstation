@@ -13,6 +13,13 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_HUSK),
+		SIGNAL_REMOVETRAIT(TRAIT_HUSK),
+		SIGNAL_ADDTRAIT(TRAIT_INVISIBLE_MAN),
+		SIGNAL_REMOVETRAIT(TRAIT_INVISIBLE_MAN),
+	), PROC_REF(refresh_obscured))
+
 	// List of signals which force a visible name update
 	// TRAIT_UNKNOWN is excluded as it calls update_ID_card which also calls update_visible_name
 	var/static/list/name_update_signals = list(
