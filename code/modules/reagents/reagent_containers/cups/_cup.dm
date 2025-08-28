@@ -176,40 +176,41 @@
 
 	return NONE
 
-/obj/item/reagent_containers/cup/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
-	var/hotness = tool.get_temperature()
+/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/hotness = attacking_item.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, span_notice("You heat [name] with [tool]!"))
-		return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
+		return TRUE
 
 	//Cooling method
-	if(istype(tool, /obj/item/extinguisher))
-		var/obj/item/extinguisher/extinguisher = tool
+	if(istype(attacking_item, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
-			return NONE
+			return TRUE
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return ITEM_INTERACT_BLOCKING
+			return TRUE
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool \the [src] with the [tool]!"))
+		to_chat(user, span_notice("You cool \the [src] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
-		return ITEM_INTERACT_SUCCESS
+		return TRUE
 
-	if(istype(tool, /obj/item/food/egg)) //breaking eggs
-		var/obj/item/food/egg/attacking_egg = tool
+	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
+		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
-			return ITEM_INTERACT_BLOCKING
+			return TRUE
 		if(reagents.holder_full())
 			to_chat(user, span_notice("[src] is full."))
-			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-		attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
-		qdel(attacking_egg)
-		return ITEM_INTERACT_SUCCESS
+		else
+			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
+			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
+			qdel(attacking_egg)
+		return TRUE
+
+	return ..()
 
 /*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
@@ -468,7 +469,6 @@
 	resistance_flags = FLAMMABLE
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
-	/// Reference to the item inside the mortar, ready to be grinded
 	var/obj/item/grinded
 
 /obj/item/reagent_containers/cup/mortar/click_alt(mob/user)
@@ -479,53 +479,43 @@
 	balloon_alert(user, "ejected")
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/reagent_containers/cup/mortar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return
-
-	// Try to grind with a pestle
-	if(istype(tool,/obj/item/pestle))
-		if(!grinded)
+/obj/item/reagent_containers/cup/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+	..()
+	if(istype(I,/obj/item/pestle))
+		if(grinded)
+			if(user.getStaminaLoss() > 50)
+				to_chat(user, span_warning("You are too tired to work!"))
+				return
+			var/list/choose_options = list(
+				"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
+				"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
+			)
+			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
+			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)
+				to_chat(user, span_notice("You start grinding..."))
+				if(do_after(user, 2.5 SECONDS, target = src))
+					user.adjustStaminaLoss(40)
+					switch(picked_option)
+						if("Juice")
+							return juice_item(grinded, user)
+						if("Grind")
+							return grind_item(grinded, user)
+						else
+							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
+							return
+			return
+		else
 			to_chat(user, span_warning("There is nothing to grind!"))
-			return ITEM_INTERACT_BLOCKING
-		if(user.getStaminaLoss() > 50)
-			to_chat(user, span_warning("You are too tired to work!"))
-			return ITEM_INTERACT_BLOCKING
-
-		var/list/choose_options = list(
-			"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
-			"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
-		)
-		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
-		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || picked_option)
-			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You start grinding..."))
-		if(!do_after(user, 2.5 SECONDS, target = src))
-			return ITEM_INTERACT_BLOCKING
-		user.adjustStaminaLoss(40)
-		switch(picked_option)
-			if("Juice")
-				juice_item(grinded, user)
-				return ITEM_INTERACT_SUCCESS
-			if("Grind")
-				grind_item(grinded, user)
-				return ITEM_INTERACT_SUCCESS
-			else
-				to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
-				return ITEM_INTERACT_BLOCKING
-
-	// Try to insert an item
+			return
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
-		return ITEM_INTERACT_BLOCKING
-	if(!tool.blend_requirements(src))
+		return
+	if(!I.blend_requirements(src))
 		to_chat(user, span_warning("Cannot grind this!"))
-		return ITEM_INTERACT_BLOCKING
-	if(length(tool.grind_results) || tool.reagents?.total_volume)
-		tool.forceMove(src)
-		grinded = tool
-		return ITEM_INTERACT_SUCCESS
+		return
+	if(length(I.grind_results) || I.reagents?.total_volume)
+		I.forceMove(src)
+		grinded = I
 
 /obj/item/reagent_containers/cup/mortar/blended(obj/item/blended_item, grinded)
 	src.grinded = null
