@@ -91,30 +91,30 @@
 	throwforce = 4
 	embed_type = /datum/embedding/meth
 
-/datum/embedding/meth //lmao
+/datum/embedding/meth // lmao
 	embed_chance = 9
 	rip_time = 2 SECONDS
 	COOLDOWN_DECLARE(reagent_message_cd)
 	ignore_throwspeed_threshold = TRUE
 	var/transfer_per_second = 0.5
 
-	process_effect(seconds_per_tick)
-		var/obj/item/rock = parent
-		if(!istype(rock, /obj/item/food/drug/meth_crystal))
-			return
+/datum/embedding/meth/process_effect(seconds_per_tick)
+	var/obj/item/rock = parent
+	if(!istype(rock, /obj/item/food/drug/meth_crystal))
+		return
 
-		if(!IS_ORGANIC_LIMB(owner_limb))
-			return
+	if(!IS_ORGANIC_LIMB(owner_limb))
+		return
 
-		if(!owner?.reagents || !rock.reagents?.total_volume)
-			return
+	if(!owner?.reagents || !rock.reagents?.total_volume)
+		return
 
-		rock.reagents.trans_to(
-			owner,
-			transfer_per_second * seconds_per_tick,
-			methods = INJECT,
-			show_message = SPT_PROB(15, seconds_per_tick)
-		)
+	rock.reagents.trans_to(
+		owner,
+		transfer_per_second * seconds_per_tick,
+		methods = INJECT,
+		show_message = SPT_PROB(15, seconds_per_tick)
+	)
 
 /obj/item/food/drug/meth_crystal/Initialize(mapload)
 	. = ..()
