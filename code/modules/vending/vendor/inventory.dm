@@ -161,7 +161,7 @@
 		speak("Sold out of [item_record.name].")
 		flick(icon_deny, src)
 		return
-	if(onstation)
+	if(!all_products_free)
 		// Here we do additional handing ahead of the payment component's logic, such as age restrictions and additional logging
 		var/obj/item/card/id/card_used
 		var/mob/living/living_user
