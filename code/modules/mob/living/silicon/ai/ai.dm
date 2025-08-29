@@ -345,12 +345,12 @@
 
 /mob/living/silicon/ai/proc/flip_anchored()
 	if(anchored)
-		anchored = !anchored
+		set_anchored(FALSE)
 		move_resist = MOVE_FORCE_NORMAL
 		status_flags |= CANPUSH //we want the core to be push-able when un-anchored
 		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	else
-		anchored = !anchored
+		set_anchored(TRUE)
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
