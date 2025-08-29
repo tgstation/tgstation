@@ -151,7 +151,6 @@
 			update_worn_neck(equipping)
 		if(ITEM_SLOT_HANDCUFFED)
 			set_handcuffed(equipping)
-			update_handcuffed()
 		if(ITEM_SLOT_LEGCUFFED)
 			legcuffed = equipping
 			update_worn_legcuffs()
@@ -214,8 +213,6 @@
 		set_handcuffed(null)
 		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
-		if(!QDELETED(src))
-			update_handcuffed()
 	else if(item_dropping == legcuffed)
 		legcuffed = null
 		if(!QDELETED(src))
