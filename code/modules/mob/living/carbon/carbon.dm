@@ -1185,9 +1185,6 @@
 			scaries.fake = TRUE
 			QDEL_NULL(phantom_wound)
 
-/mob/living/carbon/is_face_visible()
-	return !(obscured_slots & HIDEFACE)
-
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)
 	if (ismecha(loc))
