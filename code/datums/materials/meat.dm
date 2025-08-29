@@ -80,29 +80,14 @@
 		eat_time = 3 SECONDS, \
 		tastes = list("meat" = 1))
 
-	if (blood_dna)
-		source.AddComponent(
-			/datum/component/bloody_spreader,\
-			blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
-			blood_dna = blood_dna,\
-		)
-	else
-		source.AddComponent(
-			/datum/component/bloody_spreader,\
-			blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
-		)
+	source.AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
+		blood_dna = blood_dna,\
+	)
 
 	// Turfs can't handle the meaty goodness of blood walk.
 	if(!ismovable(source))
-		return
-
-	if (!blood_dna)
-		source.AddComponent(
-			/datum/component/blood_walk,\
-			blood_type = /obj/effect/decal/cleanable/blood,\
-			blood_spawn_chance = 35,\
-			max_blood = (protein_count + fat_count) * 0.3 * multiplier,\
-		)
 		return
 
 	source.AddComponent(
@@ -149,8 +134,9 @@
 		subjectname = source.name
 
 	var/datum/blood_type/blood_type = source.get_bloodtype()
-	if (blood_type)
-		color = blood_type.get_color()
+	if (blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+		var/list/transition_filter = color_transition_filter(blood_type.get_color())
+		color = transition_filter["color"]
 		blood_dna = source.get_blood_dna_list()
 
 	if(ishuman(source))
@@ -170,8 +156,9 @@
 
 	if(source.exotic_bloodtype)
 		var/datum/blood_type/blood_type = get_blood_type(source.exotic_bloodtype)
-		if (blood_type)
-			color = blood_type.get_color()
+		if (blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+			var/list/transition_filter = color_transition_filter(blood_type.get_color())
+			color = transition_filter["color"]
 			blood_dna = list("[blood_type.dna_string]" = blood_type)
 
 	return ..()
@@ -186,8 +173,9 @@
 	var/list/blood_data = source.data
 	name = "[blood_data["real_name"] || "mystery"] [initial(name)]"
 	var/datum/blood_type/blood_type = blood_data["blood_type"]
-	if(blood_type)
-		color = blood_type.get_color()
+	if(blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+		var/list/transition_filter = color_transition_filter(blood_type.get_color())
+		color = transition_filter["color"]
 		blood_dna = list("[blood_type.dna_string]" = blood_type)
 	else
 		color = source.color
