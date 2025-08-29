@@ -36,6 +36,10 @@
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_1
 
+/obj/item/food/cheese/wedge/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
+
 /obj/item/food/cheese/wheel
 	name = "cheese wheel"
 	desc = "A big wheel of delicious Cheddar."
@@ -136,6 +140,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/cheese/firm_cheese_slice/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/firm_cheese_slice/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)

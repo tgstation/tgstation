@@ -114,22 +114,13 @@
 		if(HAS_TRAIT(thing_to_check, TRAIT_CHASM_STOPPER))
 			return CHASM_NOT_DROPPING
 
+	if(!ismob(dropped_thing))
+		return CHASM_DROPPING
+
 	//Flies right over the chasm
-	if(ismob(dropped_thing))
-		var/mob/M = dropped_thing
-		if(M.buckled) //middle statement to prevent infinite loops just in case!
-			var/mob/buckled_to = M.buckled
-			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
-				return CHASM_REGISTER_SIGNALS
-		if(ishuman(dropped_thing))
-			var/mob/living/carbon/human/victim = dropped_thing
-			if(istype(victim.belt, /obj/item/wormhole_jaunter))
-				var/obj/item/wormhole_jaunter/jaunter = victim.belt
-				var/turf/chasm = get_turf(victim)
-				var/fall_into_chasm = jaunter.chasm_react(victim)
-				if(!fall_into_chasm)
-					chasm.visible_message(span_boldwarning("[victim] falls into the [chasm]!")) //To freak out any bystanders
-				return fall_into_chasm ? CHASM_DROPPING : CHASM_NOT_DROPPING
+	var/mob/victim = dropped_thing
+	if(victim.buckled && droppable(victim.buckled) != CHASM_DROPPING)
+		return CHASM_REGISTER_SIGNALS
 	return CHASM_DROPPING
 
 #undef CHASM_NOT_DROPPING
@@ -142,12 +133,21 @@
 	if(!dropped_thing || !falling_ref?.resolve())
 		falling_atoms -= falling_ref
 		return
+
 	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
 	var/turf/below_turf = target_turf
 	var/atom/parent = src.parent
 
 	if(falling_atoms[falling_ref] > 1)
 		return // We're already handling this
+
+	if(SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_CHASM_DROPPED, parent) & COMPONENT_NO_CHASM_DROP)
+		return
+
+	// Free (if possible) and drop all buckled mobs separately, so drivers can escape their doomed vehicle if they're not glued to it
+	for(var/mob/living/buckled as anything in dropped_thing.buckled_mobs)
+		dropped_thing.unbuckle_mob(buckled)
+		drop_stuff(buckled)
 
 	if(below_turf)
 		if(HAS_TRAIT(dropped_thing, TRAIT_CHASM_DESTROYED))

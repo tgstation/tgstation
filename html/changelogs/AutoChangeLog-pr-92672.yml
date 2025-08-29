@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "New player tutorials will no longer look extremely broken"
