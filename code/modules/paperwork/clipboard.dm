@@ -21,6 +21,8 @@
 	)
 	unique_reskin_changes_inhand = TRUE
 
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+
 	/// The stored pen
 	var/obj/item/pen/pen
 	/// Is the pen integrated?

@@ -27,9 +27,10 @@
 		/obj/item/stack/sheet/mineral/bamboo = 20
 	)
 	result = /obj/item/storage/basket
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY
 	category = CAT_CONTAINERS
 	steps = list(
-		"master the art of underwater basketweaving", 
+		"master the art of underwater basketweaving",
 		"be underwater"
 	)
 

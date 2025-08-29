@@ -314,6 +314,7 @@
 	build_stack_type = /obj/item/stack/sheet/mineral/wood
 	build_stack_amount = 10
 	elevation = 0
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian

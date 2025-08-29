@@ -64,6 +64,7 @@
 	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar
 	newtonian_force = 1.5
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ammo_casing/rebar/Initialize(mapload)
 	. = ..()

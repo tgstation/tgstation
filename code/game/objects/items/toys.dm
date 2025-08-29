@@ -581,6 +581,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.1, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
 	/// The color of our fake energy sword

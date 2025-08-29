@@ -225,7 +225,7 @@
 	icon_state = "smallbottle"
 	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -344,7 +344,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -415,7 +415,7 @@
 	icon = 'icons/obj/drinks/colo.dmi'
 	icon_state = "colocup"
 	inhand_icon_state = "colocup"
-	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5

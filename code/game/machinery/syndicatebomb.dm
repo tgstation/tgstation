@@ -15,6 +15,7 @@
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 10)
 
 	/// What is the lowest amount of time we can set the timer to?
 	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS

@@ -713,6 +713,7 @@
 	iris_overlay = null
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = INFINITY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.1)
 	var/obj/item/flashlight/eyelight/eye
 	light_reactive = FALSE
 	pupils_name = "flashlights"
