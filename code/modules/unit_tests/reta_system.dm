@@ -7,6 +7,9 @@
 /datum/unit_test/reta_basic_functions
 
 /datum/unit_test/reta_basic_functions/Run()
+	// Initialize RETA system for testing
+	initialize_reta_system()
+	
 	// Test department mapping
 	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Engineering"), "Engineering", "Engineering department mapping failed")
 	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("engineering"), "Engineering", "Engineering lowercase mapping failed")
@@ -56,6 +59,9 @@
 /datum/unit_test/reta_id_card_access
 
 /datum/unit_test/reta_id_card_access/Run()
+	// Initialize RETA system for testing
+	initialize_reta_system()
+	
 	var/obj/item/card/id/test_card = allocate(/obj/item/card/id)
 	test_card.registered_name = "Test User"
 
@@ -84,6 +90,9 @@
 /datum/unit_test/reta_paramedic_access
 
 /datum/unit_test/reta_paramedic_access/Run()
+	// Initialize RETA system for testing
+	initialize_reta_system()
+	
 	var/datum/id_trim/job/paramedic/paramedic_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
 
 	// Test that paramedic no longer has broad access

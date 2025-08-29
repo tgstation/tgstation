@@ -18,7 +18,7 @@
 		return FALSE
 
 	// Clear existing timer for this department if any (allows extending/refreshing access)
-	if(reta_timers[dept])
+	if(reta_timers[dept] && reta_timers[dept] != -1)
 		deltimer(reta_timers[dept])
 		reta_timers[dept] = null
 
@@ -51,7 +51,7 @@
 	log_reta("DEBUG: New access granted for [dept]: [english_list(new_access)]")
 
 	// Set timer for this specific department
-	reta_timers[dept] = addtimer(CALLBACK(src, PROC_REF(clear_reta_access_for_dept), dept), duration_ds, TIMER_UNIQUE|TIMER_OVERRIDE)
+	reta_timers[dept] = addtimer(CALLBACK(src, PROC_REF(clear_reta_access_for_dept), dept), duration_ds, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
 	// Add to global registry for mass operations
 	GLOB.reta_active_cards |= src
@@ -146,7 +146,7 @@
 
 	// Clear all timers
 	for(var/dept in reta_timers)
-		if(reta_timers[dept])
+		if(reta_timers[dept] && reta_timers[dept] != -1)
 			deltimer(reta_timers[dept])
 
 	LAZYCLEARLIST(reta_temp_access)
@@ -218,7 +218,7 @@
 /obj/item/card/id/Destroy()
 	// Clear all department timers
 	for(var/dept in reta_timers)
-		if(reta_timers[dept])
+		if(reta_timers[dept] && reta_timers[dept] != -1)
 			deltimer(reta_timers[dept])
 	GLOB.reta_active_cards -= src
 	return ..()

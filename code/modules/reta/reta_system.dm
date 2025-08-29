@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 		return "Cargo"
 	if(findtext(dept_lower, "mining") || findtext(dept_lower, "mine"))
 		return "Mining"
-	if(findtext(dept_lower, "service") || findtext(dept_lower, "civilian"))
+	if(findtext(dept_lower, "service") || findtext(dept_lower, "civilian") || findtext(dept_lower, "library"))
 		return "Service"
 	if(findtext(dept_lower, "medical") || findtext(dept_lower, "medbay"))
 		return "Medical"
