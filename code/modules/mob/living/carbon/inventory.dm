@@ -178,12 +178,14 @@
 	if(!.)
 		return
 
-	update_equipment(item)
+	update_equipment_speed_mods()
+	hud_used?.update_locked_slots()
 	add_item_coverage(item)
 
 /// Called after an item has been successfully unequipped (dropped) from any slot
 /mob/living/carbon/proc/has_unequipped(obj/item/item)
-	update_equipment(item)
+	update_equipment_speed_mods()
+	hud_used?.update_locked_slots()
 	remove_item_coverage(item)
 
 /mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
@@ -244,10 +246,7 @@
 /mob/living/carbon/proc/remove_item_coverage(obj/item/item)
 	refresh_obscured() // No way to remove a single item's coverage without recalculating everything
 
-/// Recalculates the mob's obscured and covered slots based on currently equipped items
-/mob/living/carbon/proc/refresh_obscured()
-	SIGNAL_HANDLER
-
+/mob/living/carbon/refresh_obscured()
 	var/pre_coverage = obscured_slots
 
 	obscured_slots = NONE

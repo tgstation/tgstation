@@ -225,13 +225,16 @@ DEFINE_BITFIELD(item_flags, list(
 	"HIDEANTENNAE" = HIDEANTENNAE, \
 )
 
+/// Item obscured flags
 DEFINE_BITFIELD(flags_inv, HIDEFLAGS_BITFIELD)
-
+/// Item coverage flags
 DEFINE_BITFIELD(transparent_protection, HIDEFLAGS_BITFIELD)
-
+/// Mob obscured flags
 DEFINE_BITFIELD(obscured_slots, HIDEFLAGS_BITFIELD)
-
+/// Mob covered flags
 DEFINE_BITFIELD(covered_slots, HIDEFLAGS_BITFIELD)
+
+#undef HIDEFLAGS_BITFIELD
 
 DEFINE_BITFIELD(strict_coverage_zones, list(
 	"HAIR_APPENDAGE_FRONT" = HAIR_APPENDAGE_FRONT,

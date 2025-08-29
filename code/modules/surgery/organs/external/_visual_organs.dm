@@ -123,9 +123,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	if(bodypart_owner.owner?.obscured_flags & HIDEHAIR)
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
 /datum/bodypart_overlay/mutant/horns/get_global_feature_list()
 	return SSaccessories.horns_list
@@ -152,9 +150,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = FEATURE_FRILLS
 
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	if(bodypart_owner.owner?.obscured_flags & HIDEEARS)
-		return TRUE
-	return FALSE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEEARS)
 
 /datum/bodypart_overlay/mutant/frills/get_global_feature_list()
 	return SSaccessories.frills_list
@@ -183,9 +179,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = FEATURE_SNOUT
 
 /datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	if(bodypart_owner.owner?.obscured_flags & HIDESNOUT)
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDESNOUT)
 
 /datum/bodypart_overlay/mutant/snout/get_global_feature_list()
 	return SSaccessories.snouts_list
@@ -273,9 +267,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
 /datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	if(bodypart_owner.owner?.obscured_flags & HIDEANTENNAE)
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEANTENNAE)
 
 ///The leafy hair of a podperson
 /obj/item/organ/pod_hair
@@ -321,6 +313,4 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 		overlay.color = null
 
 /datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	if(bodypart_owner.owner?.obscured_flags & HIDEHAIR)
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)

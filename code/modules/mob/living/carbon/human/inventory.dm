@@ -292,6 +292,7 @@
 	. = ..()
 	if((added_slots|removed_slots) & HIDEFACE)
 		sec_hud_set_security_status()
+		update_visible_name()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.
@@ -423,9 +424,3 @@
 			new_bodypart.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = new_bodypart
 	..() //Don't redraw hands until we have organs for them
-
-/mob/living/carbon/human/update_equipment(obj/item/source)
-	. = ..()
-	// If the item we equipped/unequipped hides our face, we (potentially) need to update our name
-	if (source.flags_inv & HIDEFACE)
-		update_visible_name()

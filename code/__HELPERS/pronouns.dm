@@ -307,9 +307,8 @@
 /mob/living/carbon/human/get_visible_gender()
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return PLURAL
-	var/face_hidden = obscured_slots & HIDEFACE
-	var/slot_covered = hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_ICLOTHING
-	if(face_hidden && slot_covered)
+	// If both face and uniform are hidden, can't assess gender
+	if(obscured_slots & (HIDEFACE|HIDEJUMPSUIT) == (HIDEFACE|HIDEJUMPSUIT))
 		return PLURAL
 	return gender
 

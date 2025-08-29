@@ -84,7 +84,7 @@ There are several things that need to be remembered:
 		var/obj/item/clothing/under/uniform = w_uniform
 		update_hud_uniform(uniform)
 
-		if(HAS_TRAIT(uniform, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_ICLOTHING))
+		if(HAS_TRAIT(uniform, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEJUMPSUIT))
 			return
 
 		var/target_overlay = uniform.icon_state
@@ -188,7 +188,7 @@ There are several things that need to be remembered:
 	var/obj/item/worn_item = gloves
 	update_hud_gloves(worn_item)
 
-	if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_GLOVES))
+	if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEGLOVES))
 		return
 
 	var/icon_file = 'icons/mob/clothing/hands.dmi'
@@ -235,7 +235,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = glasses
 		update_hud_glasses(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_EYES))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEEYES))
 			return
 
 		var/icon_file = 'icons/mob/clothing/eyes.dmi'
@@ -261,7 +261,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = ears
 		update_hud_ears(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_EARS))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEEARS))
 			return
 
 		var/icon_file = 'icons/mob/clothing/ears.dmi'
@@ -282,7 +282,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_neck
 		update_hud_neck(wear_neck)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_NECK))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDENECK))
 			return
 
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
@@ -308,7 +308,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = shoes
 		update_hud_shoes(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_FEET))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDESHOES))
 			return
 
 		var/icon_file = DEFAULT_SHOES_FILE
@@ -343,7 +343,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = s_store
 		update_hud_s_store(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_SUITSTORE))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDESUITSTORAGE))
 			return
 
 		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
@@ -362,7 +362,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = head
 		update_hud_head(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_HEAD))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEHEADGEAR))
 			return
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
@@ -386,7 +386,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = belt
 		update_hud_belt(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_BELT))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEBELT))
 			return
 
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
@@ -458,7 +458,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_mask
 		update_hud_wear_mask(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (hidden_slots_to_inventory_slots(obscured_slots) & ITEM_SLOT_MASK))
+		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEMASK))
 			return
 
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
