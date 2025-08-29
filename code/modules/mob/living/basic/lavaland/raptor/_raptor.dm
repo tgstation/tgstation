@@ -146,11 +146,22 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	adjust_offsets(new_dir)
 
 /mob/living/basic/raptor/proc/adjust_offsets(direction)
-	if(!change_offsets)
+	if (!change_offsets)
 		return
-	pixel_x = (direction & EAST) ? -20 : 0
-	pixel_y = (direction & NORTH) ? -5 : 0
 
+	switch (direction)
+		if (NORTH)
+			pixel_x = -8
+			pixel_y = -5
+		if (SOUTH)
+			pixel_x = 0
+			pixel_y = 0
+		if (EAST, SOUTHEAST, NORTHEAST)
+			pixel_x = -20
+			pixel_y = 0
+		if (WEST, SOUTHWEST, NORTHWEST)
+			pixel_x = -5
+			pixel_y = 0
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()

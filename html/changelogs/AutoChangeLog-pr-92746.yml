@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "When lacking a reference picture for plastic surgery, the alert message will be sent to the surgery performer instead of everyone nearby."
