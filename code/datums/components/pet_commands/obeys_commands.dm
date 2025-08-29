@@ -59,6 +59,7 @@
 /datum/component/obeys_commands/proc/on_key_unpressed(mob/living/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_ATOM_MOUSE_ENTERED)
+	remove_from_viewers(source)
 
 /datum/component/obeys_commands/proc/remove_from_viewers(mob/living/source)
 	radial_viewers -= REF(source)
@@ -93,7 +94,8 @@
 	if(mouse_hovered == parent)
 		display_menu(friend)
 		return
-	if(isliving(mouse_hovered))
+
+	if(isliving(mouse_hovered) && mouse_hovered.loc != parent.loc)
 		remove_from_viewers(friend)
 
 /// Displays a radial menu of commands
