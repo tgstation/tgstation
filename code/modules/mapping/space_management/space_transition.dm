@@ -60,39 +60,23 @@
 /datum/controller/subsystem/mapping/proc/setup_map_transitions() //listamania
 	var/list/transition_levels = list()
 	var/list/cached_z_list = z_list
+	var/linkage
 	for(var/datum/space_level/level as anything in cached_z_list)
-		if (level.linkage == CROSSLINKED)
-			transition_levels.Add(level)
+		if(level.linkage != CROSSLINKED && level.linkage != GRIDLINKED)
+			continue
 
-	var/grid_diameter = (length(transition_levels) * 2) + 1
-	var/list/grid = new /list(grid_diameter ** 2)
+		transition_levels.Add(level)
 
-	var/datum/space_transition_point/point
-	for(var/x in 1 to grid_diameter)
-		for(var/y in 1 to grid_diameter)
-			point = new/datum/space_transition_point(x, y, grid)
-			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
-	for(point as anything in grid)
-		point.set_neigbours(grid, grid_diameter)
+		if(!isnull(linkage) && level.linkage != linkage)
+			// Either you be gridlinked or crosslinked, both is uhhh... a headache
+			stack_trace("Mixed linkages detected in z-level neighbour transitions!")
+			continue
+		linkage = level.linkage
 
-	var/center = round(grid_diameter / 2)
-	point = grid[CHORDS_TO_1D(grid_diameter, center, center)]
-	grid.Cut()
-
-	var/list/transition_pick = transition_levels.Copy()
-	var/list/possible_points = list()
-	var/list/used_points = list()
-	while(transition_pick.len)
-		var/datum/space_level/level = pick_n_take(transition_pick)
-		level.xi = point.x
-		level.yi = point.y
-		point.spl = level
-		possible_points |= point.neigbours
-		used_points |= point
-		possible_points.Remove(used_points)
-		level.set_neigbours(used_points)
-		point = pick(possible_points)
-		CHECK_TICK
+	if(linkage == CROSSLINKED)
+		set_cross_linkages(transition_levels)
+	else if(linkage == GRIDLINKED)
+		set_grid_linkages(transition_levels)
 
 	// Now that we've handed out neighbors, we're gonna handle an edge case
 	// Need to check if all our levels have neighbors in all directions
@@ -141,7 +125,7 @@
 			var/datum/space_level/neighbor = level.neigbours["[dirside]"]
 			var/zdestination = neighbor.z_value
 
-			for(var/turf/open/space/S in turfblock)
+			for(var/turf/open/S in turfblock)
 				S.destination_x = x_target || S.x
 				S.destination_y = y_target || S.y
 				S.destination_z = zdestination
@@ -162,4 +146,60 @@
 				var/turf/place = locate(S.destination_x, S.destination_y, zdestination)
 				S.AddElement(/datum/element/mirage_border, place, mirage_dir, range_cached)
 
+/// Construct linkages randomly to get maze-like space transitions
+/// We do this by constructing a very large grid, and placing the levels randomly inside, and then filling out the empty spaces
+/datum/controller/subsystem/mapping/proc/set_cross_linkages(list/transition_levels)
+	var/grid_diameter = (length(transition_levels) * 2) + 1
+	var/list/grid = new /list(grid_diameter ** 2)
+
+	var/datum/space_transition_point/point
+	for(var/x in 1 to grid_diameter)
+		for(var/y in 1 to grid_diameter)
+			point = new /datum/space_transition_point(x, y, grid)
+			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
+	for(point as anything in grid)
+		point.set_neigbours(grid, grid_diameter)
+
+	var/center = round(grid_diameter / 2)
+	point = grid[CHORDS_TO_1D(grid_diameter, center, center)]
+	grid.Cut()
+
+	var/list/transition_pick = transition_levels.Copy()
+	var/list/possible_points = list()
+	var/list/used_points = list()
+
+	while(transition_pick.len)
+		var/datum/space_level/level = pick_n_take(transition_pick)
+		level.xi = point.x
+		level.yi = point.y
+		point.spl = level
+		possible_points |= point.neigbours
+		used_points |= point
+		possible_points.Remove(used_points)
+		level.set_neigbours(used_points)
+		point = pick(possible_points)
+		CHECK_TICK
+
+/// Connect the z-levels in a non-randomized grid
+/datum/controller/subsystem/mapping/proc/set_grid_linkages(list/transition_levels)
+	var/grid_diameter = ceil(sqrt(length(transition_levels)))
+	var/list/grid = new /list(grid_diameter ** 2)
+
+	// Construct an imaginary grid with the right neighbours etc for our grid
+	var/datum/space_transition_point/point
+	for(var/x in 1 to grid_diameter)
+		for(var/y in 1 to grid_diameter)
+			point = new /datum/space_transition_point(x, y, grid)
+			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
+
+	// Translate the grid we made to the z-levels
+	var/list/used_points = list()
+	for(var/i in 1 to transition_levels.len)
+		var/datum/space_level/level = transition_levels[i]
+		point = grid[i]
+		level.xi = point.x
+		level.yi = point.y
+		point.spl = level
+		used_points += point //this used_points list is kinda lame, you can remove it if you can find out what the slice function in byond is
+		level.set_neigbours(used_points)
 #undef CHORDS_TO_1D

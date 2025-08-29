@@ -1,5 +1,0 @@
-author: "projectkepler-ru"
-delete-after: True
-changes:
-  - bugfix: ".38 Truestrike speedloader not being printable"
-  - spellcheck: ".38 Truestrike Magazine no longer have the extra E and Flareshot now no longer lose the R"

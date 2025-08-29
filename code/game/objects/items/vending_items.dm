@@ -3,8 +3,6 @@
 */
 /obj/item/vending_refill
 	name = "resupply canister"
-	var/machine_name = "Generic"
-
 	icon = 'icons/obj/vending_restock.dmi'
 	icon_state = "refill_snack"
 	inhand_icon_state = "restock_unit"
@@ -19,13 +17,14 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/item_vending_refill
 
-	/**
-	 * Built automatically from the corresponding vending machine.
-	 * If null, considered to be full. Otherwise, is list(/typepath = amount).
-	 */
+	///Name of the vending machine this canister is associated with
+	var/machine_name = "Generic"
+
+	///corresponds to /obj/machinery/vending::list/products
 	var/list/products
-	var/list/product_categories
+	///corresponds to /obj/machinery/vending::list/contraband
 	var/list/contraband
+	///corresponds to /obj/machinery/vending::list/premium
 	var/list/premium
 
 /datum/armor/item_vending_refill
@@ -38,18 +37,21 @@
 
 /obj/item/vending_refill/examine(mob/user)
 	. = ..()
+
 	var/num = get_part_rating()
-	if (num == INFINITY)
-		. += "It's sealed tight, completely full of supplies."
-	else if (num == 0)
-		. += "It's empty!"
+	if (!num)
+		. += span_notice("It's empty!")
+	else if(num == INFINITY)
+		. += span_notice("It's full of supplies!")
 	else
-		. += "It can restock [num] item\s."
+		. += span_notice("It can restock [num] item\s.")
 
 /obj/item/vending_refill/get_part_rating()
-	if (!products || !product_categories || !contraband || !premium)
-		return INFINITY
 	. = 0
+	//first time needs to be filled by the vending machine
+	if(!products)
+		return INFINITY
+
 	for(var/key in products)
 		. += products[key]
 	for(var/key in contraband)
@@ -57,9 +59,3 @@
 	for(var/key in premium)
 		. += premium[key]
 
-	for (var/list/category as anything in product_categories)
-		var/list/products = category["products"]
-		for (var/product_key in products)
-			. += products[product_key]
-
-	return .

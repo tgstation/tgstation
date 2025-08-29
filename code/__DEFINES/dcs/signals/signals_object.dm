@@ -359,6 +359,12 @@
 	#define COMPONENT_CANCEL_SAWING_OFF (1<<0)
 #define COMSIG_GUN_SAWN_OFF "gun_sawn_off"
 
+///called in /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun): (obj/item/firing_pin/pin, mob/living/user)
+#define COMSIG_GUN_PIN_INSERTED "gun_pin_inserted"
+
+///called in /obj/item/firing_pin/proc/gun_remove(mob/living/user): (obj/item/firing_pin/pin, mob/living/user)
+#define COMSIG_GUN_PIN_REMOVED "gun_pin_removed"
+
 // Jetpack things
 // Please kill me
 

@@ -56,7 +56,7 @@
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		linked_action?.begin_creating_bind(usr)
+		linked_action?.begin_creating_bind(src, usr)
 		return TRUE
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		var/datum/hud/our_hud = usr.hud_used
@@ -68,7 +68,7 @@
 	var/trigger_flags
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		trigger_flags |= TRIGGER_SECONDARY_ACTION
-	linked_action.Trigger(trigger_flags = trigger_flags)
+	linked_action.Trigger(usr, trigger_flags = trigger_flags)
 	return TRUE
 
 // Entered and Exited won't fire while you're dragging something, because you're still "holding" it
