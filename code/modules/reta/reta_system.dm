@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 		"Service" = list(ACCESS_SERVICE, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_HYDROPONICS),
 		"Cargo" = list(ACCESS_CARGO),
 		"Mining" = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_CARGO),
-		"Command" = list(ACCESS_COMMAND, ACCESS_BRIDGE) // Admin-only, not available through request consoles
+		"Command" = list(ACCESS_COMMAND), // Admin-only, not available through request consoles
 	)
 
 /// Checks if an origin department is on cooldown for calling a target department
