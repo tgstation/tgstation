@@ -115,13 +115,10 @@
 		equipping.pulledby.stop_pulling()
 
 	equipping.screen_loc = null
-	if(client)
-		client.screen -= equipping
+	client?.screen -= equipping
 
-	if(observers?.len)
-		for(var/mob/dead/observe as anything in observers)
-			if(observe.client)
-				observe.client.screen -= equipping
+	for(var/mob/dead/observe as anything in observers)
+		observe.client?.screen -= equipping
 
 	equipping.forceMove(src)
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
@@ -171,7 +168,6 @@
 /mob/living/carbon/get_equipped_speed_mod_items()
 	return ..() + get_equipped_items()
 
-/// This proc is called after an item has been successfully handled and equipped to a specific slot.
 /mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
 	. = ..()
 	if(!.)
@@ -181,8 +177,11 @@
 	hud_used?.update_locked_slots()
 	add_item_coverage(item)
 
-/// Called after an item has been successfully unequipped (dropped) from any slot
-/mob/living/carbon/proc/has_unequipped(obj/item/item)
+/mob/living/carbon/has_unequipped(obj/item/item)
+	. = ..() // NB: ATP the item is still in the slot, but no longer has the IN_INVENTORY flag (so is not returned by get_equipped_items)
+	if(!.)
+		return
+
 	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	remove_item_coverage(item)
@@ -192,7 +191,6 @@
 	if(!. || !item_dropping) //We don't want to set anything to null if the parent returned 0.
 		return
 
-	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
 	if(item_dropping == head)
 		head = null
 		if(!QDELETED(src))
@@ -217,19 +215,12 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
-	else
-		not_handled = TRUE
 
 	// Not an else-if because we're probably equipped in another slot
 	if(item_dropping == internal && (QDELETED(src) || QDELETED(item_dropping) || item_dropping.loc != src))
 		cutoff_internals()
 		if(!QDELETED(src))
 			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
-
-	if(not_handled)
-		return
-
-	has_unequipped(item_dropping)
 
 /// Adds the passed item's coverage to the mob's coverage related flags
 /mob/living/carbon/proc/add_item_coverage(obj/item/item)
