@@ -11,6 +11,8 @@
 	var/list/override_unsharable_abilities = list()
 	/// abilities that are always blacklisted from sharing
 	var/list/blacklist_abilities = list()
+	/// flag that determine how our ai acts while ridden
+	var/ai_behavior_while_ridden = RIDING_PAUSE_AI_PLANNING | RIDING_PAUSE_AI_MOVEMENT
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
 	if(!isliving(parent))
@@ -35,7 +37,7 @@
 	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = FALSE
-	REMOVE_TRAIT(parent, TRAIT_AI_PAUSED, REF(src))
+	parent.remove_traits(list(TRAIT_AI_PAUSED, TRAIT_AI_MOVEMENT_HALTED), REF(src))
 	return ..()
 
 /datum/component/riding/creature/RegisterWithParent()
@@ -83,7 +85,10 @@
 	rider.layer = initial(rider.layer)
 	if(can_be_driven)
 		//let the player take over if they should be controlling movement
-		ADD_TRAIT(ridden, TRAIT_AI_PAUSED, REF(src))
+		if(ai_behavior_while_ridden & RIDING_PAUSE_AI_PLANNING)
+			ADD_TRAIT(ridden, TRAIT_AI_PAUSED, REF(src))
+		if(ai_behavior_while_ridden & RIDING_PAUSE_AI_MOVEMENT)
+			ADD_TRAIT(ridden, TRAIT_AI_MOVEMENT_HALTED, REF(src))
 	return ..()
 
 /datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force = FALSE)
@@ -92,7 +97,7 @@
 		former_rider.log_message("is no longer riding [formerly_ridden].", LOG_GAME, color="pink")
 	remove_abilities(former_rider)
 	if(!formerly_ridden.buckled_mobs.len)
-		REMOVE_TRAIT(formerly_ridden, TRAIT_AI_PAUSED, REF(src))
+		formerly_ridden.remove_traits(list(TRAIT_AI_PAUSED, TRAIT_AI_MOVEMENT_HALTED), REF(src))
 	// We gotta reset those layers at some point, don't we?
 	former_rider.layer = MOB_LAYER
 	formerly_ridden.layer = MOB_LAYER
@@ -652,16 +657,16 @@
 /datum/component/riding/creature/raptor/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	if(!SSmapping.is_planetary())
 		return list(
-			TEXT_NORTH = list( 7, 7),
-			TEXT_SOUTH = list( 2, 10),
-			TEXT_EAST =  list(12, 7),
-			TEXT_WEST =  list(10, 7),
+			TEXT_NORTH = list(-1, 7),
+			TEXT_SOUTH = list(2, 10),
+			TEXT_EAST =  list(0, 7),
+			TEXT_WEST =  list(0, 7),
 		)
 	return list(
-		TEXT_NORTH = list( 0, 7),
-		TEXT_SOUTH = list( 0, 10),
+		TEXT_NORTH = list(0, 7),
+		TEXT_SOUTH = list(0, 10),
 		TEXT_EAST =  list(-3, 9),
-		TEXT_WEST =  list( 3, 9),
+		TEXT_WEST =  list(3, 9),
 	)
 
 /datum/component/riding/creature/raptor/get_parent_offsets_and_layers()
@@ -672,5 +677,14 @@
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
+/datum/component/riding/creature/raptor/update_parent_layer_and_offsets(dir, animate)
+	. = ..()
+	var/mob/living/basic/raptor/raptor = parent
+	if (istype(raptor))
+		raptor.adjust_offsets(dir)
+
 /datum/component/riding/creature/raptor/fast
 	vehicle_move_delay = 1.5
+
+/datum/component/riding/creature/raptor/combat
+	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT

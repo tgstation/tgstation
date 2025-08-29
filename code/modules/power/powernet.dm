@@ -111,7 +111,6 @@
 		return
 
 	flickering = TRUE
-	var/most_flickers = 1
 	for(var/obj/machinery/power/terminal/terminal in nodes)
 		if(!istype(terminal.master, /obj/machinery/power/apc))
 			continue
@@ -123,12 +122,10 @@
 		if(!prob(flicker_prob))
 			continue
 
-		var/flicker_count = rand(1, 3)
-		most_flickers = max(most_flickers, flicker_count)
 		var/obj/machinery/power/apc/apc = terminal.master
 		for(var/obj/machinery/light/light as anything in apc.get_lights())
-			light.flicker(flicker_count)
+			light.flicker(amount = 1)
 			CHECK_TICK
 
 	// don't let another flicker propagation until our slowest area is done (with some added leeway)
-	addtimer(VARSET_CALLBACK(src, flickering, FALSE), most_flickers * 2 SECONDS)
+	addtimer(VARSET_CALLBACK(src, flickering, FALSE), 9 SECONDS)

@@ -84,7 +84,7 @@
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	if(!istype(our_wood,/obj/item/stack/sheet/mineral/wood))
+	if(!istype(our_wood, /obj/item/stack/sheet/mineral/wood))
 		return NONE
 
 	if(our_wood.amount < 5)
@@ -100,9 +100,11 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!our_wood.use(drop_amount))
-		balloon_alert(user, "interrupted!")
 		return ITEM_INTERACT_BLOCKING
-	repair_damage(20 * drop_amount)
+
+	var/turf/cur_turf = get_turf(src)
+	cur_turf.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
+	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)

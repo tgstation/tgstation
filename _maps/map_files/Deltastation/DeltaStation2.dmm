@@ -27541,7 +27541,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/directional/south,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
@@ -45423,7 +45423,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/aft)
 "lky" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
@@ -56997,7 +56997,7 @@
 	},
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/light/directional/south,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
@@ -64625,7 +64625,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "pYr" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/item/toy/figure/psychologist{
 	pixel_x = -1;
 	pixel_y = 15
@@ -89562,7 +89562,7 @@
 "wfK" = (
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/newscaster/directional/south,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/cargo/office)

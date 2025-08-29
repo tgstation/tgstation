@@ -1,0 +1,1 @@
+/obj/structure/filingcabinet/filingcabinet : /obj/structure/filingcabinet/white{@OLD}

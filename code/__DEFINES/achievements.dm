@@ -161,3 +161,6 @@
 
 #define CHEF_TOURISTS_SERVED "Tourists Served As Chef"
 #define BARTENDER_TOURISTS_SERVED "Tourists Served As Bartender"
+
+/// Value in metadata version that signifies the achievement is archived
+#define ACHIEVEMENT_ARCHIVED_VERSION 9999

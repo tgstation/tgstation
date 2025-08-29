@@ -193,10 +193,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	. += span_notice("- Unanchored wall girder")
 	. += span_notice("- Computer or Machine frame (with circuitboard)")
 
-/obj/item/stack/sheet/iron/narsie_act()
-	new /obj/item/stack/sheet/runed_metal(loc, amount)
-	qdel(src)
-
 /obj/item/stack/sheet/iron/fifty
 	amount = 50
 

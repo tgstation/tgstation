@@ -76,9 +76,8 @@
 /obj/item/storage/part_replacer/bluespace/play_rped_effect()
 	if(prob(1))
 		playsound(src, 'sound/items/pshoom/pshoom_2.ogg', 40, TRUE)
-		flick("[icon_state]_old", src)
-		return
-	playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
+	else
+		playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
 	flick("[icon_state]_active", src)
 
 /**

@@ -29,6 +29,12 @@
 // This rider must be our friend
 #define JUST_FRIEND_RIDERS (1<<5)
 
+
+///Flags relating to our AI controller when ridden
+//do we halt planning while ridden?
+#define RIDING_PAUSE_AI_PLANNING (1<<0)
+//do we halt movement while ridden?
+#define RIDING_PAUSE_AI_MOVEMENT (1<<1)
 //car_traits flags
 ///Will this car kidnap people by ramming into them?
 #define CAN_KIDNAP (1<<0)

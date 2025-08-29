@@ -619,6 +619,10 @@
 	foodtypes = MEAT | RAW
 	var/meat_type = "meat"
 
+/obj/item/food/meat/rawcutlet/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
+
 /obj/item/food/meat/rawcutlet/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
@@ -734,6 +738,10 @@
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(on_microwave_cooked))
+
+/obj/item/food/meat/cutlet/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 ///This proc handles setting up the correct meat name for the cutlet, this should definitely be changed with the food rework.
 /obj/item/food/meat/cutlet/proc/on_microwave_cooked(datum/source, atom/source_item, cooking_efficiency)
