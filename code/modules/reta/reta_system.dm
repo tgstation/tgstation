@@ -4,7 +4,6 @@
  * Files edited or created for this:
  * - code\modules\reta\reta_id_card.dm (RETA ID card functionality)
  * - code\modules\reta\reta_debug.dm (Admin debug verbs)
- * - code\modules\reta\reta_access.dm (Access system extensions)
  * - code\controllers\configuration\entries\reta.dm (Configuration)
  * - code\modules\unit_tests\reta_system.dm (Unit tests)
  * - code\_globalvars\reta.dm (Global variables)
@@ -245,7 +244,7 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 	if(!dept_name)
 		return null
 
-	var/dept_lower = lowertext(dept_name)
+	var/dept_lower = LOWER_TEXT(dept_name)
 
 	// Check for partial matches to handle variations in console naming
 	if(findtext(dept_lower, "engineering") || findtext(dept_lower, "engine"))
