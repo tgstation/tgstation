@@ -84,8 +84,7 @@
 	..()
 
 /datum/brain_trauma/severe/split_personality/on_lose()
-	if(current_controller != OWNER) //it would be funny to cure a guy only to be left with the other personality, but it seems too cruel
-		switch_personalities(TRUE)
+	// qdel the mob with the temporary component will ensure the original mind will go back into the body and vice versa for the stranger mind
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
 	..()
