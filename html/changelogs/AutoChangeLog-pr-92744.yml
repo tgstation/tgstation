@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - qol: "You will no longer fall asleep from bloodloss upon arriving in the Mansus."
