@@ -268,6 +268,8 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
 
+	return ..() // Allow normal attack processing if no special interaction occurred
+
 /obj/machinery/coffeemaker/proc/try_brew()
 	if(!cartridge)
 		balloon_alert(usr, "no coffee cartidge inserted!")
@@ -605,12 +607,12 @@
 		var/obj/item/reagent_containers/cup/glass/coffee/new_cup = attack_item //different type of cup
 		if(new_cup.reagents.total_volume > 0 )
 			balloon_alert(user, "the cup must be empty!")
-			return
+			return TRUE
 		if(coffee_cups >= max_coffee_cups)
 			balloon_alert(user, "the cup holder is full!")
-			return
+			return TRUE
 		if(!user.transferItemToLoc(attack_item, src))
-			return
+			return TRUE
 		coffee_cups++
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
@@ -619,12 +621,12 @@
 		var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = attack_item
 		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
 			balloon_alert(user, "the pack must be full!")
-			return
+			return TRUE
 		if(sugar_packs >= max_sugar_packs)
 			balloon_alert(user, "the sugar compartment is full!")
-			return
+			return TRUE
 		if(!user.transferItemToLoc(attack_item, src))
-			return
+			return TRUE
 		sugar_packs++
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
@@ -633,12 +635,12 @@
 		var/obj/item/reagent_containers/condiment/creamer/new_pack = attack_item
 		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
 			balloon_alert(user, "the pack must be full!")
-			return
+			return TRUE
 		if(creamer_packs >= max_creamer_packs)
 			balloon_alert(user, "the creamer compartment is full!")
-			return
+			return TRUE
 		if(!user.transferItemToLoc(attack_item, src))
-			return
+			return TRUE
 		creamer_packs++
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
@@ -647,12 +649,12 @@
 		var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = attack_item
 		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
 			balloon_alert(user, "the pack must be full!")
-			return
+			return TRUE
 		if(sweetener_packs >= max_sweetener_packs)
 			balloon_alert(user, "the sweetener compartment is full!")
-			return
+			return TRUE
 		if(!user.transferItemToLoc(attack_item, src))
-			return
+			return TRUE
 		sweetener_packs++
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
@@ -660,22 +662,23 @@
 	if (istype(attack_item, /obj/item/food/grown/coffee) && !(attack_item.item_flags & ABSTRACT))
 		if(coffee_amount >= BEAN_CAPACITY)
 			balloon_alert(user, "the coffee container is full!")
-			return
+			return TRUE
 		if(!HAS_TRAIT(attack_item, TRAIT_DRIED))
 			balloon_alert(user, "coffee beans must be dry!")
-			return
+			return TRUE
 		var/obj/item/food/grown/coffee/new_coffee = attack_item
 		if(!user.transferItemToLoc(new_coffee, src))
-			return
+			return TRUE
 		coffee += new_coffee
 		coffee_amount++
 		balloon_alert(user, "added coffee")
-
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
 
 	if (istype(attack_item, /obj/item/storage/box/coffeepack))
 		if(coffee_amount >= BEAN_CAPACITY)
 			balloon_alert(user, "the coffee container is full!")
-			return
+			return TRUE
 		var/obj/item/storage/box/coffeepack/new_coffee_pack = attack_item
 		for(var/obj/item/food/grown/coffee/new_coffee in new_coffee_pack.contents)
 			if(HAS_TRAIT(new_coffee, TRAIT_DRIED)) //the coffee beans inside must be dry
@@ -687,15 +690,16 @@
 						balloon_alert(user, "added coffee")
 						update_appearance(UPDATE_OVERLAYS)
 					else
-						return
+						return TRUE
 				else
-					return
+					return TRUE
 			else
 				balloon_alert(user, "non-dried beans inside of coffee pack!")
-				return
+				return TRUE
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
 
-	update_appearance(UPDATE_OVERLAYS)
-	return TRUE //no afterattack
+	return ..() // Allow normal attack processing if no special interaction occurred
 
 /obj/machinery/coffeemaker/impressa/take_cup(mob/user)
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
