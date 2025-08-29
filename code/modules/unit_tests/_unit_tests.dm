@@ -155,6 +155,7 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
 #include "embedding.dm"
+#include "reta_system.dm"
 #include "emoting.dm"
 #include "emp_flashlight.dm"
 #include "ensure_subtree_operational_datum.dm"
