@@ -109,7 +109,7 @@
 
 	granted_items = list(
 		/obj/item/clothing/under/color/black,
-		/obj/item/clothing/shoes/sneakers/black,
+		/obj/item/clothing/shoes/sneakers/black/rogue,
 		/obj/item/clothing/mask/facescarf/rogue,
 		/obj/item/clothing/glasses/eyepatch/rogue,
 		/obj/item/bedsheet/black/rogue_cape,
@@ -117,7 +117,7 @@
 		/obj/item/knife/combat/survival,
 	)
 
-/obj/item/clothing/shoes/sneakers/black
+/obj/item/clothing/shoes/sneakers/black/rogue
 	name = "sneaker of SNEAKING"
 
 /obj/item/clothing/mask/facescarf/rogue
