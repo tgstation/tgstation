@@ -639,3 +639,10 @@
   - image: removed secret 1% probability of showing old BSRPED sprite
   loganuk:
   - bugfix: Prevents vent crawlers getting trapped in a static vent or scrubber.
+2025-08-29:
+  LT3:
+  - code_imp: Improved powernet light flickering
+  Pepsilawn:
+  - bugfix: Wawastation's garden tables won't fling you around anymore
+  loganuk:
+  - bugfix: Moves bots elsewhere on wawa AI Sat to stop girder blockage at round start.
