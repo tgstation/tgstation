@@ -11,10 +11,7 @@
 
 /// Grants temporary department access to this ID card
 /obj/item/card/id/proc/grant_reta_access(dept, duration_ds)
-	log_game("RETA DEBUG: grant_reta_access called for [src] with dept=[dept], duration=[duration_ds]")
-
 	if(!GLOB.reta_dept_grants[dept])
-		log_game("RETA DEBUG: No department grants defined for [dept]")
 		return FALSE
 
 	// Clear existing timer for this department if any (allows extending/refreshing access)
@@ -25,9 +22,6 @@
 	// Grant access flags for this department
 	var/list/access_flags = GLOB.reta_dept_grants[dept]
 	var/list/new_access = list()
-
-	log_reta("DEBUG: Access flags for [dept]: [english_list(access_flags)]")
-	log_reta("DEBUG: Current card access: [english_list(access)]")
 
 	// Initialize department access list if needed
 	if(!reta_temp_access[dept])
@@ -40,15 +34,9 @@
 			// Add to main access list
 			access += flag
 			new_access += flag
-			log_reta("DEBUG: Added access flag [flag] for department [dept]")
-		else
-			log_reta("DEBUG: Skipped access flag [flag] (already has permanent access)")
 
 	if(!LAZYLEN(new_access))
-		log_reta("DEBUG: No new access granted, returning FALSE")
 		return FALSE // No new access granted
-
-	log_reta("DEBUG: New access granted for [dept]: [english_list(new_access)]")
 
 	// Set timer for this specific department
 	reta_timers[dept] = addtimer(CALLBACK(src, PROC_REF(clear_reta_access_for_dept), dept), duration_ds, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)

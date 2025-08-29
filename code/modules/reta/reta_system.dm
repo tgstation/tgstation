@@ -1,52 +1,12 @@
 /**
- * Request Emergency Temporary Access (RETA) System
- *
- * Files edited or created for this:
- * - code\modules\reta\reta_id_card.dm (RETA ID card functionality)
- * - code\modules\reta\reta_debug.dm (Admin debug verbs)
- * - code\controllers\configuration\entries\reta.dm (Configuration)
- * - code\modules\unit_tests\reta_system.dm (Unit tests)
- * - code\_globalvars\reta.dm (Global variables)
- * - code\_globalvars\logging.dm (RETA log file declaration)
- * - code\game\machinery\requests_console.dm (modified for RETA integration)
- * - code\game\objects\items\cards_ids.dm (modified for access integration)
- * - code\datums\id_trim\jobs.dm (modified for paramedic access reduction)
- * - code\controllers\subsystem\job.dm (modified for RETA initialization)
- * - code\controllers\subsystem\networks\id_access.dm (modified for new card integration)
- * - code\game\world.dm (modified for config initialization)
- * - config\config.txt (RETA configuration entries)
- * - tgstation.dme (file inclusions)
- * - tgui\packages\tgui\interfaces\RequestsConsole\RequestsConsoleHeader.tsx (UI text update)
- *
+ * Request Emergency Temporary Access - RETA System
  * Provides temporary department access when Requests Console emergency calls are made.
- * Features automatic new player integration, multi-department selection, and radio announcements.
  */
-
-/// Global cooldown registry for RETA calls: origin_dept -> (target_dept -> next_allowed_time)
-GLOBAL_LIST_EMPTY(reta_cooldown)
-
-/// Global registry of consoles by origin department for UI updates
-GLOBAL_LIST_EMPTY(reta_consoles_by_origin)
-
-/// Global registry of ID cards with active RETA access for mass operations
-GLOBAL_LIST_EMPTY(reta_active_cards)
-
-/// Global registry of recent emergency calls for tracking multiple department scenarios
-GLOBAL_LIST_EMPTY(reta_recent_calls)
-
-/// Global list of access flags granted per department
-GLOBAL_LIST_EMPTY(reta_dept_grants)
-
-/// Global registry of currently active RETA grants: target_dept -> list(origin_dept, expiry_time)
-/// This allows new ID cards to automatically receive active RETA grants from HOP console OR new player join round
-GLOBAL_LIST_EMPTY(reta_active_grants)
 
 /// Helper function for RETA-specific logging
 /proc/log_reta(text)
 	WRITE_LOG(GLOB.reta_log, "[time_stamp()] RETA: [text]")
-	// Only log to game.log for important events, not debug spam
-	if(!findtext(text, "DEBUG:"))
-		log_game("RETA: [text]")
+	log_game("RETA: [text]")
 
 /proc/initialize_reta_system()
 	// Define which access flags are granted for each department
@@ -114,8 +74,6 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 		log_reta("No job trims defined for department '[target_dept]'")
 		return FALSE
 
-	log_reta("DEBUG: Looking for [target_dept] personnel with trims: [english_list(job_trims)]")
-
 	var/granted_count = 0
 	var/total_players_checked = 0
 	var/matching_trim_players = 0
@@ -133,21 +91,14 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 		if(!id_card || !id_card.trim)
 			continue
 
-		log_reta("DEBUG: Checking player [human_player] with card [id_card] trim [id_card.trim]")
-
 		// Check if this card's trim matches the target department
 		if(!is_type_in_list(id_card.trim, job_trims))
-			log_reta("DEBUG: Trim [id_card.trim] does not match [target_dept] trims")
 			continue
 
 		matching_trim_players++
 
-		log_reta("DEBUG: Found eligible [target_dept] card: [id_card] with trim [id_card.trim] carried by [human_player] (ALIVE)")
 		if(id_card.grant_reta_access(origin_dept, duration_ds))
 			granted_count++
-			log_reta("DEBUG: Successfully granted [origin_dept] access to [id_card]")
-		else
-			log_reta("DEBUG: Failed to grant access to [id_card] (likely already has required access)")
 
 	if(granted_count > 0)
 		// Register this as an active RETA grant for new cards
@@ -158,7 +109,8 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 		// Set up automatic cleanup when the grant expires
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cleanup_expired_reta_grant), target_dept, origin_dept), duration_ds)
 
-
+		// Update all doors to show RETA lights for newly activated grants
+		update_all_doors_reta_lights()
 
 		log_reta("Granted temporary [origin_dept] access to [granted_count] [target_dept] department ID cards from a call by [origin_dept].")
 		. = TRUE
@@ -275,6 +227,14 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 		GLOB.reta_active_grants -= target_dept
 	log_reta("Cleaned up expired [origin_dept] grant for [target_dept] department")
 
+	// Update all doors to remove RETA lights for expired grants
+	update_all_doors_reta_lights()
+
+/// Updates RETA lighting for all doors in the game
+/proc/update_all_doors_reta_lights()
+	for(var/obj/machinery/door/airlock/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
+		door.update_appearance(UPDATE_OVERLAYS)
+
 /// Applies any currently active RETA grants to a newly created/spawned ID card
 /// This should be called when ID cards are created, spawned, or have their trim changed
 /proc/apply_active_reta_grants_to_card(obj/item/card/id/id_card)
@@ -306,8 +266,6 @@ GLOBAL_LIST_EMPTY(reta_active_grants)
 			var/remaining_time = expiry_time - world.time
 			if(id_card.grant_reta_access(origin_dept, remaining_time))
 				log_reta("Auto-granted [origin_dept] access to newly created [id_card] ([target_dept] department)")
-			else
-				log_reta("DEBUG: Failed to grant [origin_dept] access to [id_card]")
 
 // Default config values
 #define RETA_DEFAULT_DURATION_DS 3000  // 5 minutes

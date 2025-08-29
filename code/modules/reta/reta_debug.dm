@@ -44,7 +44,6 @@ ADMIN_VERB(reta_manual_trigger, R_ADMIN, "RETA Door Access", "Manually trigger R
 	var/total_eligible_cards = 0
 
 	for(var/responding_dept in selected_depts)
-		// Debug: Check ID cards efficiently (only living human players) for this department
 		var/dept_eligible_cards = 0
 		var/list/job_trims = GLOB.reta_job_trims[responding_dept]
 
@@ -58,10 +57,9 @@ ADMIN_VERB(reta_manual_trigger, R_ADMIN, "RETA Door Access", "Manually trigger R
 
 			if(is_type_in_list(id_card.trim, job_trims))
 				dept_eligible_cards++
-				message_admins("DEBUG: Found eligible [responding_dept] card: [id_card] with trim [id_card.trim] carried by [human_player] (ALIVE)")
 
 		total_eligible_cards += dept_eligible_cards
-		message_admins("DEBUG: [responding_dept] department: [dept_eligible_cards] eligible cards from living players")
+		message_admins("[responding_dept] department: [dept_eligible_cards] eligible cards from living players")
 
 		// Note: RETA grants access FROM calling_dept TO responding_dept personnel
 		// So if Medical calls Security, Security personnel get Medical access
