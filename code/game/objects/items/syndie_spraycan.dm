@@ -85,14 +85,8 @@
 	if(HAS_TRAIT(user, TRAIT_TAGGER))
 		wait_time *= 0.5
 
-	if(!do_after(user, wait_time, target, hidden = TRUE))
+	if(!do_after(user, wait_time, target, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(adjacency_check), user, target)))
 		user.balloon_alert(user, "interrupted!")
-		drawing_rune = FALSE
-		return FALSE
-
-	// Check if user moved too far away during drawing (zero gravity)
-	if(!user.Adjacent(target))
-		user.balloon_alert(user, "moved too far away!")
 		drawing_rune = FALSE
 		return FALSE
 
@@ -151,6 +145,13 @@
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	suicider.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	return OXYLOSS
+
+///Checks if the user is still adjacent to the target (used for do_after extra_checks)
+/obj/item/traitor_spraycan/proc/adjacency_check(mob/user, atom/target)
+	if(!user.Adjacent(target))
+		user.balloon_alert(user, "moved too far away!")
+		return FALSE
+	return TRUE
 
 /obj/effect/decal/cleanable/traitor_rune
 	name = "syndicate graffiti"
