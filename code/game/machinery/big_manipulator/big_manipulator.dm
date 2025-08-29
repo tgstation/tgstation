@@ -62,37 +62,53 @@
 	update_hud()
 
 /obj/machinery/big_manipulator/proc/update_hud()
-	var/image/holder = hud_list[BIG_MANIP_HUD]
-	if(!holder)
-		return
+  // Clear existing HUD points
+  LAZYCLEARLIST(hud_points)
 
-	// Clear existing HUD points
-	LAZYCLEARLIST(hud_points)
+  // Get the main HUD image
+  var/image/main_hud = hud_list[BIG_MANIP_HUD]
+  if(!main_hud)
+    return
 
-	// Create HUD elements for all pickup points
-	for(var/datum/interaction_point/point in pickup_points)
-		var/mutable_appearance/target = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_1", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
-		var/target_turf = point.interaction_turf.resolve()
-		if(target_turf)
-			var/image/point_holder = new
-			point_holder.appearance = target
-			point_holder.loc = target_turf
-			hud_points += point_holder
+  // Set HUD location to manipulator turf with empty appearance
+  main_hud.loc = get_turf(src)
+  main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 
-	// Create HUD elements for all dropoff points
-	for(var/datum/interaction_point/point in dropoff_points)
-		var/mutable_appearance/target = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_2", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
-		var/target_turf = point.interaction_turf.resolve()
-		if(target_turf)
-			var/image/point_holder = new
-			point_holder.appearance = target
-			point_holder.loc = target_turf
-			hud_points += point_holder
+  // Clear existing overlays
+  main_hud.overlays.Cut()
 
-	// Update the main HUD holder
-	holder.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
-	set_hud_image_active(BIG_MANIP_HUD)
-	to_chat(world, span_notice("DEBUG: Updated BIG_MANIP_HUD with [length(hud_points)] points"))
+  // Create a list to store all point appearances
+  var/list/point_overlays = list()
+
+  // Add appearances for all pickup points with numbered icons
+  for(var/i = 1; i <= length(pickup_points); i++)
+    var/datum/interaction_point/point = pickup_points[i]
+    var/turf/target_turf = point.interaction_turf.resolve()
+    if(target_turf)
+      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+      // Calculate pixel offset from manipulator to point
+      var/turf/manip_turf = get_turf(src)
+      point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
+      point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
+      point_overlays += point_appearance
+
+  // Add appearances for all dropoff points with numbered icons
+  for(var/i = 1; i <= length(dropoff_points); i++)
+    var/datum/interaction_point/point = dropoff_points[i]
+    var/turf/target_turf = point.interaction_turf.resolve()
+    if(target_turf)
+      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+      // Calculate pixel offset from manipulator to point
+      var/turf/manip_turf = get_turf(src)
+      point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
+      point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
+      point_overlays += point_appearance
+
+  // Add all overlays at once to the main HUD
+  main_hud.overlays += point_overlays
+
+  hud_points += main_hud
+  set_hud_image_active(BIG_MANIP_HUD)
 
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	var/turf/center = get_turf(src)
@@ -687,8 +703,6 @@
 	var/datum/interaction_point/target_point = locate(point_ref)
 	if(!target_point)
 		return FALSE
-
-	say("[param] changed to [value]")
 
 	switch(param)
 		if("set_name")
