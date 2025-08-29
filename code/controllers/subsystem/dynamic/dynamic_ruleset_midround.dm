@@ -830,7 +830,7 @@
 		HUNTER_PACK_MI13,
 	)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), 10 MINUTES), 1 MINUTES)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, datum/team/fugitive/team, turf/team_spawn)
 	candidate.current.forceMove(team_spawn)
