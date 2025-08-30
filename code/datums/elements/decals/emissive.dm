@@ -20,7 +20,6 @@
 	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing, cleanable, description, null, emissive_type)
 
 /datum/element/decal/emissive/smooth_react(atom/source)
-	SIGNAL_HANDLER
 	var/smoothing_junction = source.smoothing_junction
 	if(smoothing_junction == smoothing)
 		return NONE
