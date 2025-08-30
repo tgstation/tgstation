@@ -215,3 +215,9 @@ GLOBAL_LIST_INIT(dna_feature_blocks, init_feature_block_types())
 	for(var/datum/dna_block/feature/block_path as anything in subtypesof(/datum/dna_block/feature))
 		var/datum/dna_block/feature/new_block = new block_path()
 		.[block_path] = new_block
+
+///List of all items that can be spawned by bubblegum.
+GLOBAL_LIST_INIT(bubblegum_loot, list(
+	/obj/item/mayhem,
+	/obj/item/soulscythe,
+))
