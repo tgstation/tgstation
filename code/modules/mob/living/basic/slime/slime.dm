@@ -21,8 +21,8 @@
 	maxHealth = 150
 	health = 150
 	mob_biotypes = MOB_SLIME
-	melee_damage_lower = 5
-	melee_damage_upper = 25
+	melee_damage_lower = 7
+	melee_damage_upper = 17
 	wound_bonus = -45
 	can_buckle_to = FALSE
 
@@ -125,8 +125,8 @@
 		for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
 			possible_slime_types[slime_type] = new slime_type
 
+	set_life_stage(new_life_stage, TRUE)
 	set_slime_type(new_type)
-	set_life_stage(new_life_stage)
 	set_nutrition(SLIME_STARTING_NUTRITION)
 
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
@@ -250,29 +250,23 @@
 		. += span_warning("It seems too overcroweded to properly reproduce!")
 
 ///Changes the slime's current life state
-/mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)
+/mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY, initial = FALSE)
 	life_stage = new_life_stage
+	if(life_stage == SLIME_LIFE_STAGE_ADULT)
+		health /= 0.75
+		maxHealth /= 0.75
+		melee_damage_lower *= 2
+		melee_damage_upper *= 2
+		obj_damage = 15
+		wound_bonus = -90
 
-	switch(life_stage)
-		if(SLIME_LIFE_STAGE_BABY)
-
-			health = initial(health)
-			maxHealth = initial(maxHealth)
-
-			obj_damage = initial(obj_damage)
-			melee_damage_lower = initial(melee_damage_lower)
-			melee_damage_upper = initial(melee_damage_upper)
-			wound_bonus = initial(wound_bonus)
-
-		if(SLIME_LIFE_STAGE_ADULT)
-
-			health = 200
-			maxHealth = 200
-
-			obj_damage = 15
-			melee_damage_lower += 10
-			melee_damage_upper += 10
-			wound_bonus = -90
+	else if(!initial)
+		health *= 0.75
+		maxHealth *= 0.75
+		melee_damage_lower *= 0.5
+		melee_damage_upper *= 0.5
+		obj_damage = initial(obj_damage)
+		wound_bonus = initial(wound_bonus)
 
 	ai_controller.set_blackboard_key(BB_SLIME_LIFE_STAGE, life_stage)
 	update_mob_action_buttons()
