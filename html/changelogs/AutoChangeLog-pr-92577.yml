@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "The speed of tools used in a crafting recipe now affect the time spent on it. Report any recipe that takes awfully little or too long to complete."
-  - balance: "Non-humanoid mobs can now benefit from being skilled at mining when swinging that pickaxe."
