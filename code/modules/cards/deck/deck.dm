@@ -19,7 +19,7 @@
 	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
 	var/is_standard_deck = TRUE
 	/// The amount of cards to spawn in the deck (optional)
-	var/decksize = INFINITY
+	var/decksize = 54
 	/// The description of the cardgame that is played with this deck (used for memories)
 	var/cardgame_desc = "card game"
 	/// The holodeck computer used to spawn a holographic deck (see /obj/item/toy/cards/deck/syndicate/holographic)
@@ -31,6 +31,8 @@
 
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
+	// Can't hold more cards than we spawn with
+	card_limit = decksize
 	AddElement(/datum/element/drag_pickup)
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cards/cardflip.ogg')
 	register_context()
@@ -167,23 +169,25 @@
 	return ..()
 
 /obj/item/toy/cards/deck/insert(obj/item/toy/card_item)
+	var/list/cards = ..()
+	if (!length(cards))
+		return null
 	// any card inserted into the deck is always facedown
-	if(istype(card_item, /obj/item/toy/singlecard))
-		var/obj/item/toy/singlecard/card = card_item
+	for(var/obj/item/toy/singlecard/card in cards)
 		card.Flip(CARD_FACEDOWN)
-	if(istype(card_item, /obj/item/toy/cards/cardhand))
-		var/obj/item/toy/cards/cardhand/cardhand = card_item
-		for(var/obj/item/toy/singlecard/card in cardhand.fetch_card_atoms())
-			card.Flip(CARD_FACEDOWN)
-	. = ..()
+	return cards
 
-/obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
-		insert(item)
-		var/card_grammar = istype(item, /obj/item/toy/singlecard) ? "card" : "cards"
-		user.balloon_alert_to_viewers("puts [card_grammar] in deck")
-		return
-	return ..()
+/obj/item/toy/cards/deck/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/singlecard) && !istype(tool, /obj/item/toy/cards/cardhand))
+		return NONE
+
+	if (!insert(tool))
+		to_chat(user, span_warning("\The [src] is stacked too high!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/card_grammar = istype(tool, /obj/item/toy/singlecard) ? "card" : "cards"
+	user.balloon_alert_to_viewers("puts [card_grammar] in deck")
+	return ITEM_INTERACT_SUCCESS
 
 /// This is how we play 52 card pickup
 /obj/item/toy/cards/deck/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
