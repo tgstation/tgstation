@@ -9,13 +9,13 @@
 
 | Website             | Link                                                                                                 |
 | ------------------- | ---------------------------------------------------------------------------------------------------- |
-| Website             | https://tgstation13.org                                                   													 |
-| Code                | https://github.com/tgstation/tgstation                     																					 |
-| Server Config       | https://github.com/tgstation-operations/server-config  																							 |
-| Wiki                | https://tgstation13.org/wiki/Main_Page                     																				   |
-| Codedocs            | https://codedocs.tgstation13.org/                              																			 |
-| /tg/station Discord | https://tgstation13.org/phpBB/viewforum.php?f=60																										 |
-| Coderbus Discord    | https://discord.gg/Vh8TJp9															                                             |
+| Website             | https://tgstation13.org                                                                              |
+| Code                | https://github.com/tgstation/tgstation                                                               |
+| Server Config       | https://github.com/tgstation-operations/server-config                                                |
+| Wiki                | https://tgstation13.org/wiki/Main_Page                                                               |
+| Codedocs            | https://codedocs.tgstation13.org/                                                                    |
+| /tg/station Discord | https://tgstation13.org/phpBB/viewforum.php?f=60                                                     |
+| Coderbus Discord    | https://discord.gg/Vh8TJp9                                                                           |
 
 This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 
