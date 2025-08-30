@@ -30,6 +30,7 @@ endmap
 map catwalkstation
 	minplayers 25
 	votable
+    feedbacklink https://forums.tgstation13.org/viewtopic.php?t=39040
 endmap
 
 map metastation
