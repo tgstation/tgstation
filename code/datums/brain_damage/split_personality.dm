@@ -59,7 +59,7 @@
 		qdel(src)
 		return
 	var/datum/mind/ghost_mind
-	if(ghost.mind)// if they previous had a body preserve them
+	if(ghost.mind.current)// if they previous had a body preserve them
 		ghost_mind = ghost.mind
 		stranger_backseat.AddComponent( \
 		/datum/component/temporary_body, \
