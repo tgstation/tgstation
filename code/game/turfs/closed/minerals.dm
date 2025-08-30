@@ -32,6 +32,8 @@
 	var/obj/item/boulder/spawned_boulder = null
 	/// How much ore we spawn when we're mining a mineralType.
 	var/mineralAmt = 3
+	///Holder for the icon of the image we display when we're pinged by a mining scanner
+	var/scan_icon
 	///Holder for the image we display when we're pinged by a mining scanner
 	var/scan_state = ""
 	///If true, this turf will not call AfterChange during change_turf calls.
