@@ -23,7 +23,30 @@
 	hackables = "health processor circuits"
 	possessed_message = "You are a medbot! Ensure good health among the crew to the best of your ability!"
 
-	additional_access = /datum/id_trim/job/paramedic
+	// Custom access list combining old paramedic access with additional station access for medibots
+	access_card = /obj/item/card/id/advanced{
+		access = list(
+			// Original paramedic access
+			ACCESS_EXTERNAL_AIRLOCKS,
+			ACCESS_MEDICAL,
+			ACCESS_MAINT_TUNNELS,
+			ACCESS_MORGUE,
+			ACCESS_MECH_MEDICAL,
+			ACCESS_SURGERY,
+			ACCESS_VIROLOGY,
+			ACCESS_PHARMACY,
+			// Additional station access for better mobility
+			ACCESS_SCIENCE,
+			ACCESS_SERVICE,
+			ACCESS_MINERAL_STOREROOM,
+			ACCESS_MINING,
+			ACCESS_MINING_STATION,
+			ACCESS_BIT_DEN,
+			ACCESS_CARGO,
+			ACCESS_CONSTRUCTION,
+			ACCESS_HYDROPONICS,
+		)
+	}
 	announcement_type = /datum/action/cooldown/bot_announcement/medbot
 	path_image_color = "#d9d9f4"
 
