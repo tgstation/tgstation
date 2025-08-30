@@ -4786,7 +4786,7 @@
 "YT" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/box/white,
-/obj/item/storage/medkit/emergency,
+/obj/item/storage/medkit/hazard,
 /obj/item/tank/internals/emergency_oxygen/double,
 /obj/item/clothing/mask/gas/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
