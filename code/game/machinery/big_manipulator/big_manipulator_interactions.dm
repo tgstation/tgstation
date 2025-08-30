@@ -358,14 +358,6 @@
 
 	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_point), interaction_delay)
 
-/// Completes the work cycle and prepares for the next one
-/obj/machinery/big_manipulator/proc/end_work()
-	end_current_task()
-	if(!on)
-		return
-
-	schedule_next_cycle()
-
 /// Completes the current manipulation action
 /obj/machinery/big_manipulator/proc/finish_manipulation(transfer_type = TRANSFER_TYPE_DROPOFF)
 	held_object = null
@@ -375,4 +367,5 @@
 	if(transfer_type == TRANSFER_TYPE_DROPOFF)
 		update_roundrobin_index(TRANSFER_TYPE_DROPOFF)
 
-	end_work()
+	end_current_task()
+	try_begin_full_cycle()

@@ -33,13 +33,13 @@
 	var/current_task_type = "idle"
 
 	/// The object inside the manipulator.
-	var/datum/weakref/held_object
+	var/datum/weakref/held_object = null
 	/// The chimp worker that uses the manipulator (handles USE cases).
-	var/datum/weakref/monkey_worker
+	var/datum/weakref/monkey_worker = null
 	/// Weakref to the ID that locked this manipulator.
 	var/datum/weakref/id_lock = null
 	/// The manipulator's arm.
-	var/obj/effect/big_manipulator_arm/manipulator_arm
+	var/obj/effect/big_manipulator_arm/manipulator_arm = null
 	/// Is the power access wire cut? Disables the power button if `TRUE`.
 	var/power_access_wire_cut = FALSE
 
@@ -95,23 +95,22 @@
   hud_points += main_hud
   set_hud_image_active(BIG_MANIP_HUD)
 
+/// Attempts to find the closest open turf to the manipulator
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	var/turf/center = get_turf(src)
-	if(!center)
-		return null
 
-	var/turf/north = get_step(center, NORTH)
-	if(north && !isclosedturf(north))
-		return north
-
-	var/list/directions = list(EAST, SOUTH, WEST, NORTHWEST, SOUTHWEST, SOUTHEAST, NORTHEAST)
+	var/list/directions = list(NORTH, EAST, SOUTH, WEST, NORTHWEST, SOUTHWEST, SOUTHEAST, NORTHEAST)
 	for(var/dir in directions)
-		var/turf/check = get_step(center, dir)
-		if(check && !isclosedturf(check))
-			return check
+		var/turf/checked_turf = get_step(center, dir)
+		if(checked_turf && !isclosedturf(checked_turf))
+			return checked_turf
 
+	// didn't find any :boowomp:
 	return null
 
+/// Attempts to create a new interaction point and assign it to the correct list.
+/// Arguments: `new_turf` (turf), `new_filters` (list), `new_filters_status` (boolean),
+/// `new_interaction_mode` (use a define), `transfer_type` (use a define).
 /obj/machinery/big_manipulator/proc/create_new_interaction_point(turf/new_turf, list/new_filters, new_filters_status, new_interaction_mode, transfer_type)
 	if(!new_turf)
 		new_turf = find_suitable_turf()
@@ -128,25 +127,24 @@
 
 	var/datum/interaction_point/new_interaction_point = new(new_turf, new_filters, new_filters_status, new_interaction_mode)
 
-	if(QDELETED(new_interaction_point))
+	if(QDELETED(new_interaction_point)) // if something STILL somehow went wrong
 		return FALSE
 
-	switch(transfer_type)
+	switch(transfer_type) // assigning to the correct list
 		if(TRANSFER_TYPE_PICKUP)
 			pickup_points += new_interaction_point
 		if(TRANSFER_TYPE_DROPOFF)
 			dropoff_points += new_interaction_point
 
-	// If emagged, allow interacting with living mobs as well.
 	if(obj_flags & EMAGGED)
 		new_interaction_point.type_filters += /mob/living
 
-	// Update HUD only when the manipulator is operational.
 	if(is_operational)
 		update_hud()
 
 	return new_interaction_point
 
+/// Allow each point to interact with mobs when the manipulator is emagged.
 /obj/machinery/big_manipulator/proc/update_all_points_on_emag_act()
 	for(var/datum/interaction_point/pickup_point in pickup_points)
 		pickup_point.type_filters += /mob/living
@@ -159,7 +157,7 @@
 	RegisterSignal(manipulator_arm, COMSIG_QDELETING, PROC_REF(on_hand_qdel))
 	process_upgrades()
 	if(on)
-		switch_power_state(null)
+		toggle_power_state(null)
 	set_wires(new /datum/wires/big_manipulator(src))
 	register_context()
 	prepare_huds()
@@ -207,7 +205,7 @@
 	. = ..()
 	var/mob/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
-		. += "You can see [monkey_resolve]: [src] manager."
+		. += "You can see a poor [monkey_resolve.name] buckled to [src]. You wonder if it's getting paid enough."
 
 /obj/machinery/big_manipulator/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()
@@ -243,10 +241,12 @@
 	remove_all_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_atom_from_hud(src)
+
 	qdel(manipulator_arm)
 	if(!isnull(held_object))
 		var/obj/containment_resolve = held_object?.resolve()
 		containment_resolve?.forceMove(get_turf(containment_resolve))
+
 	var/mob/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
 		monkey_resolve.forceMove(get_turf(monkey_resolve))
@@ -256,11 +256,14 @@
 /obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
 	if(isnull(monkey_worker))
 		return
+
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
 	if(gone != poor_monkey)
 		return
+
 	if(!is_type_in_list(poor_monkey, manipulator_arm.vis_contents))
 		return
+
 	manipulator_arm.vis_contents -= poor_monkey
 	poor_monkey.remove_offsets(type)
 	monkey_worker = null
@@ -270,11 +273,12 @@
 	if(isnull(get_turf(src)))
 		qdel(manipulator_arm)
 		return
+
 	if(!manipulator_arm)
 		create_manipulator_arm()
 
-	// Update all interaction points to maintain their relative positions when the manipulator moves
-	// This ensures that interaction points move with the manipulator, preserving their relative layout
+	// updating all interaction points to maintain their relative positions when the manipulator moves
+	// this ensures that interaction points move with the manipulator, preserving their relative layout
 	update_interaction_points_on_move(old_loc)
 
 /// Updates all interaction points to maintain their relative positions when the manipulator moves
@@ -287,23 +291,18 @@
 	if(!new_turf || old_turf == new_turf)
 		return
 
-	// Calculate the offset
 	var/dx = new_turf.x - old_turf.x
 	var/dy = new_turf.y - old_turf.y
 
-	// Only update if there's actual movement (not just rotation)
-	if(dx == 0 && dy == 0)
+	if(dx == 0 && dy == 0) // if we rotated for instance
 		return
 
-	// Update pickup points
 	for(var/datum/interaction_point/point in pickup_points)
 		update_point_position(point, dx, dy)
 
-	// Update dropoff points
 	for(var/datum/interaction_point/point in dropoff_points)
 		update_point_position(point, dx, dy)
 
-	// Update HUD if operational
 	if(is_operational)
 		update_hud()
 
@@ -320,10 +319,9 @@
 	if(!manipulator_turf)
 		return
 
-	// Calculate new position, maintaining the same Z-level as the manipulator
 	var/turf/new_turf = locate(old_turf.x + dx, old_turf.y + dy, manipulator_turf.z)
 
-	// If manipulator is not anchored, allow points to be anywhere (even in walls)
+	// if manipulator is not anchored, allow points to be anywhere (even in walls) to not mess up your stuff when moving it
 	if(!anchored)
 		if(new_turf)
 			point.interaction_turf = WEAKREF(new_turf)
@@ -332,7 +330,6 @@
 	if(!new_turf || isclosedturf(new_turf))
 		new_turf = find_suitable_turf_near(new_turf || old_turf)
 		if(!new_turf)
-			// If no suitable turf found and manipulator is anchored, remove the point
 			remove_invalid_point(point)
 			return
 
@@ -364,7 +361,7 @@
 	return null
 
 /// Removes an invalid interaction point from the manipulator
-/obj/machinery/big_manipulator/proc/remove_invalid_point(datum/interaction_point/point)
+/obj/machinery/big_manipulator/proc/remove_invalid_point(datum/interaction_point/point) // TODO
 	if(!point)
 		return
 
@@ -377,14 +374,14 @@
 
 	qdel(point)
 
-
 /obj/machinery/big_manipulator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return FALSE
+
 	balloon_alert(user, "overloaded")
 	obj_flags |= EMAGGED
-	// Update existing points to accept living mobs as targets
+
 	update_all_points_on_emag_act()
 	return TRUE
 
@@ -402,8 +399,7 @@
 /obj/machinery/big_manipulator/default_unfasten_wrench(mob/user, obj/item/wrench, time)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
-		// When anchoring, validate all points and remove invalid ones
-		if(anchored)
+		if(anchored) // on anchoring, validate all points and remove invalid ones
 			validate_all_points()
 			update_hud()
 		else
@@ -441,7 +437,7 @@
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
 	if(isnull(poor_monkey))
 		return
-	balloon_alert(user, "trying unbuckle...")
+	balloon_alert(user, "trying to unbuckle...")
 	if(!do_after(user, 3 SECONDS, src))
 		balloon_alert(user, "interrupted")
 		return
@@ -461,7 +457,7 @@
 	if(poor_monkey.mind)
 		balloon_alert(user, "too smart!")
 		return
-	poor_monkey.balloon_alert(user, "trying buckle...")
+	poor_monkey.balloon_alert(user, "trying to buckle...")
 	if(!do_after(user, 3 SECONDS, poor_monkey))
 		poor_monkey.balloon_alert(user, "interrupted")
 		return
@@ -477,11 +473,13 @@
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
 
-/obj/machinery/big_manipulator/attackby(obj/item/is_card, mob/user, params)
+/obj/machinery/big_manipulator/attackby(obj/item/some_item, mob/user, params)
 	. = ..()
-	if(!isidcard(is_card))
+	if(!isidcard(some_item))
 		return
-	var/obj/item/card/id/clicked_by_this_id = is_card
+
+	var/obj/item/card/id/clicked_by_this_id = some_item
+
 	if(id_lock)
 		var/obj/item/card/id/resolve_id = id_lock.resolve()
 		if(clicked_by_this_id != resolve_id)
@@ -492,19 +490,19 @@
 		id_lock = WEAKREF(clicked_by_this_id)
 	balloon_alert(user, "successfully [id_lock ? "" : "un"]locked")
 
-/// Creat manipulator hand effect on manipulator core.
+/// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
 	manipulator_arm = new/obj/effect/big_manipulator_arm(src)
 	manipulator_arm.dir = NORTH
 	vis_contents += manipulator_arm
 
-/// Deliting hand will destroy our manipulator core.
+/// Destroying the manipulator if the arm is destroyed.
 /obj/machinery/big_manipulator/proc/on_hand_qdel()
 	SIGNAL_HANDLER
 
 	deconstruct(TRUE)
 
-/obj/machinery/big_manipulator/proc/switch_power_state(mob/user)
+/obj/machinery/big_manipulator/proc/toggle_power_state(mob/user)
 	var/new_power_state = !on
 
 	if(!user)
@@ -551,13 +549,13 @@
 	if(power_access_wire_cut)
 		balloon_alert(user, "unresponsive!")
 		return
-	switch_power_state(user)
+	toggle_power_state(user)
 	if(on)
 		balloon_alert(user, "activated")
 	else
 		balloon_alert(user, "deactivated")
 
-/// Drop item that manipulator is manipulating.
+/// Drop the held atom.
 /obj/machinery/big_manipulator/proc/drop_held_atom()
 	if(isnull(held_object))
 		return
@@ -567,7 +565,7 @@
 
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
 	if(id_lock)
-		to_chat(user, span_warning("[src] is locked behind id authentication!"))
+		to_chat(user, span_warning("[src] is locked behind ID authentication!"))
 		ui?.close()
 		return
 	if(!anchored)
@@ -799,7 +797,6 @@
 	if(!point)
 		return
 
-	// Removing all HUDs for this point
 	for(var/image/hud_image in hud_points)
 		var/turf/resolved_turf = point.interaction_turf.resolve()
 		if(hud_image.loc == resolved_turf)
