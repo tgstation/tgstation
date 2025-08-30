@@ -78,6 +78,8 @@
 	idle_power_cost = 0 //magic
 	use_energy_cost = 0 //magic too
 	max_charges = 5
+	recharge_start_delay = 20 SECONDS
+	charge_increment_delay = 3 SECONDS
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
 	required_slots = list()
