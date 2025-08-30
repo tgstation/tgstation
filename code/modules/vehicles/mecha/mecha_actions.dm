@@ -154,7 +154,7 @@
 	name = "Toggle overclocking"
 	button_icon_state = "mech_overload_off"
 
-/datum/action/vehicle/sealed/mecha/mech_overclock/Trigger(trigger_flags, forced_state = null)
+/datum/action/vehicle/sealed/mecha/mech_overclock/Trigger(mob/clicker, trigger_flags, forced_state = null)
 	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))
