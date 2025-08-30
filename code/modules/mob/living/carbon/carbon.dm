@@ -839,6 +839,11 @@
 		set_handcuffed(null)
 		update_handcuffed()
 
+	if(heal_flags & HEAL_ORGANS)
+		var/obj/item/organ/lungs/holder_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		if (!isnull(holder_lungs))
+			holder_lungs.received_pressure_mult = holder_lungs::received_pressure_mult
+
 	return ..()
 
 /mob/living/carbon/do_strange_reagent_revival(healing_amount)

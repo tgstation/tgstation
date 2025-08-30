@@ -432,6 +432,25 @@
 			Possible Cure: [disease.cure_text]</div>\
 			</span>"
 
+
+	// Lungs
+	if (iscarbon(target))
+		var/mob/living/carbon/carbontarget = target
+		var/obj/item/organ/lungs/lungs = carbontarget.get_organ_slot(ORGAN_SLOT_LUNGS)
+		if (lungs)
+			var/initial_pressure_mult = initial(lungs.received_pressure_mult)
+			if (lungs.received_pressure_mult != initial_pressure_mult)
+				var/lung_message
+				if (lungs.received_pressure_mult > initial_pressure_mult) // higher than usual
+					lung_message = span_blue("Subject lungs are <b>dilated</b> and are breathing <b>[(lungs.received_pressure_mult * 100) - 100]%</b> more gas than normal.")
+				else
+					if (lungs.received_pressure_mult <= 0) // lethal
+						lung_message = span_danger("Subject lungs are <b>contracted</b> and are <b>completely unable to breathe!</b> If asthmatic, administer albuterol via inhaler, perform windpipe surgery, or replace lungs immediately!")
+					else
+						lung_message = span_danger("Subject lungs are <b>contracted</b> and can only breathe up to <b>[lungs.received_pressure_mult * 100]%</b> of their usual capacity. \
+						If subject is choking, it is suggested to provide them with a <b>high-pressure</b> internals tank.")
+				render_list += lung_message
+
 	// Time of death
 	if(target.station_timestamp_timeofdeath && !target.appears_alive())
 		render_list += "<hr>"
