@@ -207,7 +207,7 @@
 		return "Cargo"
 	if(findtext(dept_lower, "mining") || findtext(dept_lower, "mine"))
 		return "Mining"
-	if(findtext(dept_lower, "service") || findtext(dept_lower, "civilian") || findtext(dept_lower, "library"))
+	if(findtext(dept_lower, "service") ||
 		return "Service"
 	if(findtext(dept_lower, "medical") || findtext(dept_lower, "medbay"))
 		return "Medical"
@@ -219,9 +219,7 @@
 	// Autonamed areas that belong to service department
 	if(findtext(dept_lower, "kitchen") || findtext(dept_lower, "bar") || findtext(dept_lower, "cafeteria") || findtext(dept_lower, "diner"))
 		return "Service"
-	if(findtext(dept_lower, "chapel") || findtext(dept_lower, "theater") || findtext(dept_lower, "theater"))
-		return "Service"
-	if(findtext(dept_lower, "hydroponics") || findtext(dept_lower, "botany") || findtext(dept_lower, "garden"))
+	if(findtext(dept_lower, "hydroponics") || findtext(dept_lower, "botany") ||
 		return "Service"
 	if(findtext(dept_lower, "janitor") || findtext(dept_lower, "custodial"))
 		return "Service"
