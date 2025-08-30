@@ -19,6 +19,8 @@
 	var/tether_trait_source
 	/// If TRUE, only add TRAIT_TETHER_ATTACHED to our parent
 	var/no_target_trait
+	/// Are we currently attempting to forcefully shorten the tether?
+	var/force_moving_target = FALSE
 
 /datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, \
 	parent_module = null, tether_trait_source = null, no_target_trait = FALSE)
@@ -96,10 +98,30 @@
 	// If this was called, we know its a movable
 	var/atom/movable/movable_source = source
 	var/atom/movable/anchor = (source == tether_target ? parent : tether_target)
-	if (get_dist(anchor, new_loc) > cur_dist)
-		if (!istype(anchor) || anchor.anchored || !(!anchor.anchored && anchor.move_resist <= movable_source.move_force && anchor.Move(get_step_towards(anchor, new_loc))))
+
+	// Ignore distance limitations if we're attempting to move the other part of the tether
+	if (get_dist(anchor, new_loc) > cur_dist && !force_moving_target)
+		if (!istype(anchor) || anchor.anchored)
 			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+		if (anchor.anchored || anchor.move_resist > movable_source.move_force)
+			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
+			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+		force_moving_target = TRUE
+		var/safety = get_dist(anchor, new_loc) - cur_dist
+		for (var/i in 1 to safety)
+			// If distance after moving increases, something went wrong and we should stop
+			if (anchor.Move(get_step_towards(anchor, new_loc)) && get_dist(anchor, new_loc) <= cur_dist + safety)
+				safety -= 1
+				continue
+
+			force_moving_target = FALSE
+			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
+			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+		force_moving_target = FALSE
 
 	var/atom/blocker
 	var/anchor_dir = get_dir(source, anchor)
@@ -125,7 +147,7 @@
 		to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source))
+	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source) || force_moving_target)
 		return
 
 	var/datum/drift_handler/handler = movable_source.drift_handler
