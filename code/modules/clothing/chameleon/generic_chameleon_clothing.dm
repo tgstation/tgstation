@@ -185,12 +185,15 @@ do { \
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/chameleon/change/mask)
 	action_slots = ALL
-	/// Is our voice changer enabled or disabled?
-	var/voice_change = TRUE
+	clothing_traits = list(TRAIT_VOICE_MATCHES_ID)
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	voice_change = !voice_change
-	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
+	var/was_on = (TRAIT_VOICE_MATCHES_ID in clothing_traits)
+	if(was_on)
+		attach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
+	else
+		detach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
+	to_chat(user, span_notice("The voice changer is now [was_on ? "off" : "on"]!"))
 
 /obj/item/clothing/mask/chameleon/broken
 
@@ -203,7 +206,7 @@ do { \
 	item_flags = DROPDEL
 	//Same as the drone chameleon hat, undroppable and no protection
 	armor_type = /datum/armor/none
-	voice_change = FALSE
+	clothing_traits = null
 
 /obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
 	. = ..()

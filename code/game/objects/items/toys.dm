@@ -1448,7 +1448,7 @@
 	. = ..()
 	AddElement(/datum/element/toy_talk)
 
-/obj/item/toy/dummy/GetVoice()
+/obj/item/toy/dummy/get_voice()
 	return doll_name
 
 /obj/item/toy/seashell
