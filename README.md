@@ -11,7 +11,7 @@
 | ------------------- | ---------------------------------------------------------------------------------------------------- |
 | Website             | [https://tgstation13.org](https://tgstation13.org)                                                   |
 | Code                | [https://github.com/tgstation/tgstation](https://github.com/tgstation/tgstation)                     |
-| Server Config       | [https://github.com/tgstation-operations/server-config](https://github.com/tgstation-operations)     |
+| Server Config       | [https://github.com/tgstation/server-config](https://github.com/tgstation-operations/server-config)  |
 | Wiki                | [https://tgstation13.org/wiki/Main_Page](https://tgstation13.org/wiki/Main_Page)                     |
 | Codedocs            | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)                               |
 | /tg/station Discord | [https://tgstation13.org/phpBB/viewforum.php?f=60](https://tgstation13.org/phpBB/viewforum.php?f=60) |
