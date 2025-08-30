@@ -390,9 +390,11 @@ SUBSYSTEM_DEF(air)
 	while(currentrun.len)
 		var/datum/excited_group/EG = currentrun[currentrun.len]
 		currentrun.len--
+		var/volatile_reaction = EG.turf_reactions & VOLATILE_REACTION
 		EG.breakdown_cooldown++
-		EG.dismantle_cooldown++
-		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
+		if(!volatile_reaction)
+			EG.dismantle_cooldown++
+		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES && !volatile_reaction)
 			EG.self_breakdown(poke_turfs = TRUE)
 		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES && !(EG.turf_reactions & (REACTING | STOP_REACTIONS)))
 			EG.dismantle()
