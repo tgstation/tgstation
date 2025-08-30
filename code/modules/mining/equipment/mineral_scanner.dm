@@ -28,8 +28,7 @@
 
 /obj/item/mining_scanner/admin/attack_self(mob/user)
 	for(var/turf/closed/mineral/mineral_turf in world)
-		if(mineral_turf.scan_icon)
-			mineral_turf.icon = mineral_turf.scan_icon
+		mineral_turf.icon = mineral_turf.scan_icon
 		if(mineral_turf.scan_state)
 			mineral_turf.icon_state = mineral_turf.scan_state
 	qdel(src)
@@ -93,8 +92,7 @@
 		var/obj/effect/temp_visual/mining_overlay/scan_overlay = locate(/obj/effect/temp_visual/mining_overlay) in mineral
 		if(!scan_overlay)
 			scan_overlay = new(mineral)
-			if(mineral.scan_icon)
-				scan_overlay.icon = mineral.scan_icon
+			scan_overlay.icon = mineral.scan_icon
 			scan_overlay.icon_state = mineral.scan_state
 			continue
 
