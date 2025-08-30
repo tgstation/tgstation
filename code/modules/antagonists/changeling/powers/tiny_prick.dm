@@ -73,12 +73,14 @@
 	button_icon_state = "sting_transform"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
+	part_of_prereq = list(/datum/action/changeling/sting/fake_changeling)
 	/// A reference to our active profile, which we grab DNA from
 	VAR_FINAL/datum/changeling_profile/selected_dna
 	/// Duration of the sting
 	var/sting_duration = 8 MINUTES
 	/// Set this to false via VV to allow golem, plasmaman, or monkey changelings to turn other people into golems, plasmamen, or monkeys
 	var/verify_valid_species = TRUE
+
 
 /datum/action/changeling/sting/transformation/Grant(mob/grant_to)
 	. = ..()
@@ -146,6 +148,7 @@
 	button_icon_state = "sting_armblade"
 	chemical_cost = 20
 	dna_cost = 1
+	part_of_prereq = list(/datum/action/changeling/sting/fake_changeling)
 
 /obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
@@ -253,9 +256,8 @@
 
 /datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
-	desc = "We cause mass terror to our victim. Costs 10 chemicals."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
-			The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	desc = "We inject the target with a powerful hallucinogen causing them to see others as a random nearby passerby. Costs 10 chemicals."
+	helptext = "The target does not notice they have been stung and will begin hallucinating after 5 seconds for 20 seconds."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
@@ -263,13 +265,25 @@
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	..()
 	log_combat(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(begin_hallucination), user, target), 5 SECONDS)
 	return TRUE
 
-/datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
-	if(QDELETED(src) || QDELETED(target))
-		return
-	target.adjust_hallucinations(180 SECONDS)
+/datum/action/changeling/sting/lsd/proc/begin_hallucination(mob/user, mob/living/carbon/target)
+	var/list/list_of_ref = list()
+	for (var/mob/living/carbon/reference_hallucination in view(8 ,target))
+		list_of_ref += reference_hallucination
+
+	var/mob/living/carbon/our_human_ref = pick(list_of_ref)
+	target.cause_hallucination(\
+		/datum/hallucination/delusion/changeling, \
+		"[user.name]", \
+		duration = 20 SECONDS, \
+		affects_us = FALSE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+		passed_appearance = our_human_ref.appearance, \
+	)
 
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"
@@ -285,3 +299,88 @@
 	if(target.reagents)
 		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
 	return TRUE
+
+/datum/action/changeling/sting/fake_changeling
+	name = "False Changeling Sting"
+	desc = "We silently sting our victim and inject them with a fleshy mass to make them appear as us with an armblade while we take on their identity. Costs 25 chemicals."
+	helptext = "The victim will swap appearance with you, not including clothes. Lasts for only a short time."
+	button_icon_state = "false_ling"
+	chemical_cost = 25
+	dna_cost = 0
+	prereq_ability = list(
+		/datum/action/changeling/sting/transformation,
+		/datum/action/changeling/sting/false_armblade,
+	)
+
+/datum/action/changeling/sting/fake_changeling/sting_action(mob/living/user, mob/living/target)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(!ishuman(target))
+		return
+
+	var/mob/living/carbon/human/changeling = user
+	var/mob/living/carbon/human/victim = target
+
+	var/datum/dna/our_dna = changeling.dna
+	var/datum/dna/their_dna = victim.dna
+
+	victim.updateappearance(mutcolor_update = TRUE ,passed_dna = our_dna)
+	changeling.updateappearance(mutcolor_update = TRUE ,passed_dna = their_dna)
+
+	var/obj/item/melee/arm_blade/false/blade = new(target,1)
+	target.put_in_hands(blade)
+	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+
+	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, blade), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_our_dna), changeling), 30 SECONDS)
+	return TRUE
+
+/datum/action/changeling/sting/fake_changeling/proc/remove_effect(mob/living/carbon/human/target, obj/item/melee/arm_blade/false/blade)
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	target.visible_message(span_warning("With a sickening crunch, [target] reforms [target.p_their()] [blade.name] into an arm!"),
+	span_warning("[blade] reforms back to normal."), span_italics("You hear organic matter ripping and tearing!"))
+
+	qdel(blade)
+	target.update_held_items()
+	target.updateappearance(mutcolor_update = TRUE)
+
+/datum/action/changeling/sting/fake_changeling/proc/reset_our_dna(mob/living/carbon/human/us)
+	us.updateappearance(mutcolor_update = TRUE)
+
+/datum/action/changeling/sting/false_revival
+	name = "False Revival"
+	desc = "We inject a significant amount of ourselves to bring the dead body back to life, imitating our revival stasis while also making them hostile. Costs 40 chemicals"
+	helptext = "This will only work on dead bodies. The victim will be fully revived and forced to attack nearby targets - be cautious with who you use it on."
+	button_icon_state = "fake_revival"
+	chemical_cost = 40
+	dna_cost = 1
+
+/datum/action/changeling/sting/false_revival/sting_action(mob/living/user, mob/living/target)
+	if(target.stat != DEAD)
+		user.balloon_alert(user, "target is not dead!")
+		return
+	..()
+
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	user.balloon_alert(user, "target injected!")
+	addtimer(CALLBACK(src, PROC_REF(revive), target), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(end_revival), target), 30 SECONDS)
+	return TRUE
+
+/datum/action/changeling/sting/false_revival/proc/revive(mob/living/carbon/target)
+	// Heal all damage and some minor afflictions,
+	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
+	// but leave out limbs so we can do it specially
+	target.revive(flags_to_heal & ~HEAL_LIMBS)
+	to_chat(target, span_notice("Your body is being piloted by a sentient flesh, you are the manifestation of that flesh. Flee or attack anyone indiscriminately!"))
+	to_chat(target, span_boldwarning("Do not in anyway give away the identity of who revived you. Attack indiscriminately or flee from someone indiscriminately."))
+	target.emote("gasp")
+	target.emote("scream")
+	target.apply_status_effect(/datum/status_effect/amok)
+
+/datum/action/changeling/sting/false_revival/proc/end_revival(mob/living/target)
+	target.death()
+	target.investigate_log("died to false revival sting.", INVESTIGATE_DEATHS)
+

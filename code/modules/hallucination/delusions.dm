@@ -94,6 +94,7 @@
 		var/image/funny_image = make_delusion_image(found_human)
 		RegisterSignal(found_human, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
 		RegisterSignal(found_human, COMSIG_QDELETING, PROC_REF(on_mob_delete), TRUE)
+		RegisterSignal(found_human, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_new_dir))
 		LAZYSET(delusions, found_human, funny_image)
 		hallucinator.client.images |= funny_image
 
@@ -130,6 +131,12 @@
 	SIGNAL_HANDLER
 	var/image/funny_image = delusions[source]
 	SET_PLANE_EXPLICIT(funny_image, ABOVE_GAME_PLANE, source)
+
+/datum/hallucination/delusion/proc/on_new_dir(mob/living/source)
+	SIGNAL_HANDLER
+
+	var/image/delusion_image = delusions[source]
+	delusion_image.dir = source.dir
 
 /datum/hallucination/delusion/proc/examine_name_override(datum/source, mob/living/examined, visible_name, list/name_override)
 	SIGNAL_HANDLER
@@ -325,3 +332,19 @@
 	delusion_name = "Mind Gate"
 	duration = 60 SECONDS
 	affects_us = TRUE
+
+/// Used by changelings to make people see a specific other player's appearance
+/datum/hallucination/delusion/changeling
+	random_hallucination_weight = 0
+
+/datum/hallucination/delusion/changeling/New(
+	mob/living/hallucinator,
+	duration,
+	affects_us,
+	affects_others,
+	skip_nearby,
+	play_wabbajack,
+	passed_appearance,
+)
+	src.delusion_appearance = passed_appearance
+	return ..()

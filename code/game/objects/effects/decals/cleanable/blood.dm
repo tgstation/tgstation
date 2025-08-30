@@ -799,6 +799,7 @@
 	base_suffix = "splatter"
 	can_dry = FALSE // No point
 
+	mergeable_decal = FALSE
 	/// The turf we just came from, so we can back up when we hit a wall
 	var/turf/prev_loc
 	/// Skip making the final blood splatter when we're done, like if we're not in a turf
