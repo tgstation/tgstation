@@ -1,8 +1,8 @@
-//   ___   _   __  __ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-//  |   \ /_\ |  \/  | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| |
-//  | |) / _ \| |\/| | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` |
-//  |___/_/ \_\_|  |_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|
-//
+///   ___   _   __  __ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
+///  |   \ /_\ |  \/  | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| |
+///  | |) / _ \| |\/| | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` |
+///  |___/_/ \_\_|  |_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|
+///
 /obj/machinery/big_manipulator
 	name = "big manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
@@ -58,55 +58,40 @@
 	/// List of all HUD icons resembling interaction points.
 	var/list/hud_points = list()
 
-/obj/machinery/big_manipulator/proc/update_hud_for_all_points()
-	update_hud()
-
 /obj/machinery/big_manipulator/proc/update_hud()
-  // Clear existing HUD points
   LAZYCLEARLIST(hud_points)
 
-  // Get the main HUD image
   var/image/main_hud = hud_list[BIG_MANIP_HUD]
   if(!main_hud)
     return
 
-  // Set HUD location to manipulator turf with empty appearance
   main_hud.loc = get_turf(src)
   main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 
-  // Clear existing overlays
   main_hud.overlays.Cut()
-
-  // Create a list to store all point appearances
   var/list/point_overlays = list()
 
-  // Add appearances for all pickup points with numbered icons
   for(var/i = 1; i <= length(pickup_points); i++)
     var/datum/interaction_point/point = pickup_points[i]
     var/turf/target_turf = point.interaction_turf.resolve()
     if(target_turf)
       var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
-      // Calculate pixel offset from manipulator to point
       var/turf/manip_turf = get_turf(src)
       point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
       point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
       point_overlays += point_appearance
 
-  // Add appearances for all dropoff points with numbered icons
   for(var/i = 1; i <= length(dropoff_points); i++)
     var/datum/interaction_point/point = dropoff_points[i]
     var/turf/target_turf = point.interaction_turf.resolve()
     if(target_turf)
       var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
-      // Calculate pixel offset from manipulator to point
       var/turf/manip_turf = get_turf(src)
       point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
       point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
       point_overlays += point_appearance
 
-  // Add all overlays at once to the main HUD
   main_hud.overlays += point_overlays
-
   hud_points += main_hud
   set_hud_image_active(BIG_MANIP_HUD)
 
@@ -158,7 +143,7 @@
 
 	// Update HUD only when the manipulator is operational.
 	if(is_operational)
-		update_hud_for_all_points()
+		update_hud()
 
 	return new_interaction_point
 
@@ -320,7 +305,7 @@
 
 	// Update HUD if operational
 	if(is_operational)
-		update_hud_for_all_points()
+		update_hud()
 
 /// Updates a single interaction point's position by the given offset
 /obj/machinery/big_manipulator/proc/update_point_position(datum/interaction_point/point, dx, dy)
@@ -344,20 +329,16 @@
 			point.interaction_turf = WEAKREF(new_turf)
 		return
 
-	// If anchored, check if the new position is valid
 	if(!new_turf || isclosedturf(new_turf))
-		// If the new position is invalid, try to find a suitable nearby turf
 		new_turf = find_suitable_turf_near(new_turf || old_turf)
 		if(!new_turf)
 			// If no suitable turf found and manipulator is anchored, remove the point
 			remove_invalid_point(point)
 			return
 
-	// Don't update if the new position is the same as the old one
 	if(new_turf == old_turf)
 		return
 
-	// Update the point's turf reference
 	point.interaction_turf = WEAKREF(new_turf)
 
 /// Finds a suitable turf near the given location
@@ -369,17 +350,11 @@
 	if(!manipulator_turf)
 		return null
 
-	// Ensure we're looking on the same Z-level as the manipulator
 	if(center.z != manipulator_turf.z)
 		center = locate(center.x, center.y, manipulator_turf.z)
 		if(!center)
 			return null
 
-	// Check the center first
-	if(!isclosedturf(center))
-		return center
-
-	// Check adjacent turfs in a spiral pattern
 	var/list/directions = list(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
 	for(var/dir in directions)
 		var/turf/check = get_step(center, dir)
@@ -393,16 +368,13 @@
 	if(!point)
 		return
 
-	// Remove HUD for this point
 	remove_hud_for_point(point)
 
-	// Remove from appropriate list
 	if(point in pickup_points)
 		pickup_points -= point
 	else if(point in dropoff_points)
 		dropoff_points -= point
 
-	// Delete the point
 	qdel(point)
 
 
@@ -433,7 +405,7 @@
 		// When anchoring, validate all points and remove invalid ones
 		if(anchored)
 			validate_all_points()
-			update_hud_for_all_points()
+			update_hud()
 		else
 			remove_all_huds()
 
@@ -792,7 +764,7 @@
 
 			remove_hud_for_point(target_point)
 			target_point.interaction_turf = WEAKREF(new_turf)
-			update_hud_for_all_points()
+			update_hud()
 			return TRUE
 
 /// Cycles the given value in the given list. Retuns the next value in the list, or the first one if the list isn't long enough.
