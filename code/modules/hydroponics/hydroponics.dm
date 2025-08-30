@@ -938,6 +938,12 @@
 			to_chat(user, span_warning("This plot is completely devoid of weeds! It doesn't need uprooting."))
 			return
 
+	else if(O.sharpness) // Allows for the extraction (for opium or sap) interaction if a seed has it.
+		if(myseed && !myseed.extracted)
+			myseed.interact_with_atom(O, user, src)
+		else
+			return ..()
+
 	else if(istype(O, /obj/item/secateurs))
 		if(!myseed)
 			to_chat(user, span_notice("This plot is empty."))

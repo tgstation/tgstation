@@ -434,8 +434,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	reagents.flags &= ~(NO_REACT)
-	reagents.handle_reactions()
+	if(reagents.has_reagent(/datum/reagent/drug/methamphetamine)) //Allows spacemen to smoke meth without exploding!
+		reagents.flags &= ~(NO_REACT)
+		reagents.handle_reactions()
 	update_appearance(UPDATE_ICON)
 	if(flavor_text)
 		var/turf/T = get_turf(src)
@@ -938,25 +939,25 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
-/obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(thing, /obj/item/food/grown))
+/obj/item/cigarette/pipe/interact_with_atom(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
+	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
 		return ..()
 
-	var/obj/item/food/grown/to_smoke = thing
 	if(packeditem)
 		to_chat(user, span_warning("It is already packed!"))
 		return
-	if(!HAS_TRAIT(to_smoke, TRAIT_DRIED))
+
+	if(istype(thing, /obj/item/food/grown) && !HAS_TRAIT(thing, TRAIT_DRIED))
 		to_chat(user, span_warning("It has to be dried first!"))
 		return
 
-	to_chat(user, span_notice("You stuff [to_smoke] into [src]."))
+	to_chat(user, span_notice("You stuff [thing] into [src]."))
 	smoketime = 13 MINUTES
-	packeditem = to_smoke.name
+	packeditem = thing.name
 	update_name()
-	if(to_smoke.reagents)
-		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transferred_by = user)
-	qdel(to_smoke)
+	if(thing.reagents)
+		thing.reagents.trans_to(src, thing.reagents.total_volume, transferred_by = user)
+	qdel(thing)
 
 
 /obj/item/cigarette/pipe/attack_self(mob/user)
@@ -979,6 +980,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cobpipeoff"
 	inhand_icon_on = null
 	inhand_icon_off = null
+
+/obj/item/cigarette/pipe/crackpipe
+	name = "glass pipe"
+	desc = "An ergonomic, low-key delivery method for the combusted. This apparatus taught the ancients much wisdom."
+	icon_state = "crackpipe"
+	icon_on = "crackpipeon"
+	icon_off = "crackpipe"
+	inhand_icon_on = null
+	inhand_icon_off = null
+	lung_harm = 2
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 ///////////
 //ROLLING//
