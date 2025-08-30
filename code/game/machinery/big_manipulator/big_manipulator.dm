@@ -723,7 +723,6 @@
 
 		if("move_to")
 			var/button_number = text2num(value["buttonNumber"])
-			var/is_pickup = value["is_pickup"]
 
 			var/dx = 0
 			var/dy = 0

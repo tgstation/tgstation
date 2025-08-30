@@ -301,19 +301,19 @@
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 
 /// Throws the held object in the direction of the interaction point.
-/obj/machinery/big_manipulator/proc/throw_thing(datum/interaction_point/drop_point, atom/movable/target)
+/obj/machinery/big_manipulator/proc/throw_thing(datum/interaction_point/drop_point)
 	var/drop_turf = drop_point.interaction_turf.resolve()
 	var/throw_range = drop_point.throw_range
+	var/atom/movable/held_atom = held_object.resolve()
 
-	if((!(isitem(target) || isliving(target))) && !(obj_flags & EMAGGED))
-		target.forceMove(drop_turf)
-		target.dir = get_dir(get_turf(target), get_turf(src))
+	if((!(isitem(held_atom) || isliving(held_atom))) && !(obj_flags & EMAGGED))
+		held_atom.forceMove(drop_turf)
+		held_atom.dir = get_dir(get_turf(held_atom), get_turf(src))
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
-	var/obj/object_to_throw = target
-	object_to_throw.forceMove(drop_turf)
-	object_to_throw.throw_at(get_edge_target_turf(get_turf(src), drop_turf), throw_range, 2)
+	held_atom.forceMove(drop_turf)
+	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(held_atom), get_turf(src))), throw_range, 2)
 	do_attack_animation(drop_turf)
 	manipulator_arm.do_attack_animation(drop_turf)
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)

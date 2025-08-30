@@ -8,6 +8,7 @@ import {
   Slider,
   Stack,
   Table,
+  BlockQuote
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -362,7 +363,7 @@ const PointSection = (props: {
                       <ConfigRow
                         label="Skip Item Filters"
                         content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
-                        onClick={() => adjustPoint(editingPoint.id, 'toggle_filters_skip')}
+                        onClick={() => adjustPoint(editingPoint.id, 'toggle_filter_skip')}
                         tooltip="Toggle filter skipping"
                       />
                     </>
@@ -371,7 +372,7 @@ const PointSection = (props: {
                       <ConfigRow
                         label="Mode"
                         content={editingPoint.mode.toUpperCase()}
-                        onClick={() => adjustPoint(editingPoint.id, 'cycle_interaction_mode')}
+                        onClick={() => adjustPoint(editingPoint.id, 'cycle_dropoff_point_interaction')}
                         tooltip="Change dropoff mode"
                       />
                       <ConfigRow
@@ -489,6 +490,26 @@ export const BigManipulator = () => {
                 <Stack.Item grow>{current_task_type.toUpperCase()}</Stack.Item>
               </Stack>
             </ProgressBar>
+          </Section>
+
+          <Section>
+            <Stack>
+              <Stack.Item lineHeight='1.8' grow>
+                <Box style={{
+                  padding: '2px',
+                  backgroundColor: '#444444'
+                }}>
+                  <Button fluid icon='eject'>data disk</Button>
+                  {/* <BlockQuote>No storage detected.</BlockQuote> */}
+                </Box>
+              </Stack.Item>
+              <Stack.Item style={{alignContent: 'center'}}>
+                <Button lineHeight='2' icon='floppy-disk'>Read</Button>
+              </Stack.Item>
+              <Stack.Item style={{alignContent: 'center'}}>
+                <Button lineHeight='2'  icon='circle'>Write</Button>
+              </Stack.Item>
+            </Stack>
           </Section>
 
           <PointSection
