@@ -467,8 +467,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	. = ..()
 	if(!reagents)
 		return
-	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/consumable/liquidgibs, 0.4, include_source_subtypes = TRUE)
-	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/blood, 0.2, include_source_subtypes = TRUE)
+	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/consumable/liquidgibs, multiplier = 0.4, include_source_subtypes = TRUE)
+	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/blood, multiplier = 0.2, include_source_subtypes = TRUE)
 
 ///When processed, the reagents inside this fish will be passed to the created atoms.
 /obj/item/fish/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
@@ -1217,7 +1217,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	health_change *= seconds_per_tick
 	if(health_change < 0)
-		damage_fish(health_change)
+		damage_fish(-health_change)
 	else
 		repair_damage(health_change)
 

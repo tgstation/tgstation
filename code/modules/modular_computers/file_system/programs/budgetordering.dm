@@ -48,7 +48,7 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D = computer?.computer_id_slot?.GetID()
+		var/obj/item/card/id/D = computer?.stored_id?.GetID()
 		if(!D)
 			return FALSE
 		access = D.GetAccess()
@@ -64,7 +64,7 @@
 	data["department"] = "Cargo"
 
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
-	var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
+	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
 	if(id_card?.registered_account)
 		buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 		if((ACCESS_COMMAND in id_card.access))
@@ -113,7 +113,6 @@
 		))
 
 	//Data regarding the User's capability to buy things.
-	data["has_id"] = id_card
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
@@ -193,7 +192,7 @@
 				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
+				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
 		if("loan")
@@ -255,8 +254,8 @@
 					return
 
 			var/reason = ""
-			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
-				reason = tgui_input_text(usr, "Reason", "Cargo Request", max_length = MAX_MESSAGE_LEN)
+			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
+				reason = tgui_input_text(usr, "Reason", name, max_length = MAX_MESSAGE_LEN)
 				if(isnull(reason) || ..())
 					return
 
@@ -282,12 +281,13 @@
 				return
 
 			if(!requestonly && !self_paid && ishuman(usr) && !account)
+				var/obj/item/card/id/id_card = computer.stored_id?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
+			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
 				SSshuttle.request_list += SO
 			else
 				SSshuttle.shopping_list += SO
@@ -312,7 +312,7 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
-					var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
+					var/obj/item/card/id/id_card = computer.stored_id?.GetID()
 					if(id_card && id_card?.registered_account)
 						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 					SSshuttle.request_list -= SO

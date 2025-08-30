@@ -42,8 +42,8 @@
 
 /obj/item/clothing/suit/costume/pirate/armored
 	armor_type = /datum/armor/pirate_armored
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	species_exception = null
 
 /obj/item/clothing/suit/costume/pirate/captain
@@ -54,8 +54,8 @@
 
 /obj/item/clothing/suit/costume/pirate/captain/armored
 	armor_type = /datum/armor/pirate_armored
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	species_exception = null
 
 /obj/item/clothing/suit/costume/cyborg_suit

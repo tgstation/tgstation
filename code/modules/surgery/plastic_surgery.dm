@@ -59,7 +59,7 @@
 		TOOL_SCALPEL = 100,
 		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
-	time = 64
+	time = 6.4 SECONDS
 	surgery_effects_mood = TRUE
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -93,7 +93,7 @@
 				for(var/namelist as anything in disguises.picture?.names_seen)
 					names += namelist
 			else
-				user.visible_message(span_warning("You have no picture to base the appearance on, reverting to random appearances."))
+				to_chat(user, span_warning("You have no picture to base the appearance on, reverting to random appearances."))
 				for(var/i in 1 to 10)
 					names += target.generate_random_mob_name(TRUE)
 		else
