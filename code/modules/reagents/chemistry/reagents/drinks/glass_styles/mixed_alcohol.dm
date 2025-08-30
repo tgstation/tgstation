@@ -275,6 +275,13 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "grogglass"
 
+/datum/glass_style/drinking_glass/maints_crawler
+	required_drink_type = /datum/reagent/consumable/ethanol/maints_crawler
+	name = "Maintenance Crawler"
+	desc = "Despite being made of welding fuel, energy drinks, and terrible booze, it's still better than pruno."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "maints_crawler"
+
 /datum/glass_style/drinking_glass/aloe
 	required_drink_type = /datum/reagent/consumable/ethanol/aloe
 	name = "Aloe"
@@ -1029,6 +1036,7 @@
 	desc = "It's a tropical vacation in a glass."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "blue_hawaiian"
+
 
 // Shot glasses
 
