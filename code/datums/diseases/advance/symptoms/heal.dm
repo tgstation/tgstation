@@ -326,27 +326,27 @@
 	stealth = 0
 	resistance = 2
 	stage_speed = -3
-	transmittable = -2
+	transmittable = -3
 	level = 8
 	passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
 	threshold_descs = list(
-		"Stealth 2" = "Host appears to die when falling into a coma.",
-		"Resistance 4" = "The virus also stabilizes the host while they are in critical condition.",
-		"Stage Speed 7" = "Increases healing speed.",
+		"Stealth 3" = "Host appears to die when falling into a coma.",
+		"Resistance 9" = "The virus also stabilizes the host while they are in critical condition.",
+		"Stage Speed 6" = "Increases healing speed.",
 	)
 
 /datum/symptom/heal/coma/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(A.totalStageSpeed() >= 6)
 		power = 1.5
-	if(A.totalResistance() >= 4)
+	if(A.totalResistance() >= 9)
 		stabilize = TRUE
-	if(A.totalStealth() >= 2)
+	if(A.totalStealth() >= 3)
 		deathgasp = TRUE
 
 /datum/symptom/heal/coma/on_stage_change(datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
@@ -371,21 +371,16 @@
 	var/mob/living/M = A.affected_mob
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
-	if(M.IsSleeping())
+	if(M.IsSleeping() && M.health > M.crit_threshold)
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
-	switch(M.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
-			return power * 0.9
-		if(SOFT_CRIT)
-			return power * 0.5
-	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma && !(HAS_TRAIT(M,TRAIT_NOSOFTCRIT)))
-		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
+	if(M.getBruteLoss() + M.getFireLoss() > 0 && M.stat >= SOFT_CRIT && M.stat <= HARD_CRIT && !active_coma)
+		to_chat(M, span_warning("You feel yourself start to slip into a regenerative coma..."))
 		active_coma = TRUE
-		addtimer(CALLBACK(src, PROC_REF(coma), M), 6 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(coma), M), 4 SECONDS)
 
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+	if(QDELETED(M) || M.stat == DEAD || M.stat == CONSCIOUS || M.getBruteLoss() + M.getFireLoss() == 0) // Leaving crit before the coma sets in should cancel it
 		return
 	M.fakedeath("regenerative_coma", !deathgasp)
 	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 30 SECONDS)
@@ -399,15 +394,11 @@
 
 /datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
-
-	var/list/parts = M.get_damaged_bodyparts(1,1)
-
-	if(!parts.len)
-		return
-
-	for(var/obj/item/bodypart/bodypart in parts)
-		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
+	var/need_mob_update = FALSE
+	need_mob_update += M.adjustBruteLoss(heal_amt * -1, updating_health = FALSE, forced = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+	need_mob_update += M.adjustFireLoss(heal_amt * -1, updating_health = FALSE, forced = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+	if(need_mob_update)
+		M.updatehealth()
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
 		uncoma(M)
@@ -415,7 +406,7 @@
 	return 1
 
 /datum/symptom/heal/coma/passive_message_condition(mob/living/M)
-	if((M.getBruteLoss() + M.getFireLoss()) > 30)
+	if((M.getBruteLoss() + M.getFireLoss()) > M.maxHealth * 0.3)
 		return TRUE
 	return FALSE
 
