@@ -106,19 +106,18 @@
 	if(current_controller == STRANGER || reset_to_owner)
 		//back seat to body and vice versa
 		stranger_backseat.PossessByPlayer(owner.ckey)
-		owner.PossessByPlayer(owner_backseat.ckey)
 		//logging
 		owner_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [stranger_backseat.key])", LOG_GAME)
-		to_chat(owner, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
-		to_chat(owner_backseat, span_userdanger("You manage to take control of your body!"))
+		owner.PossessByPlayer(owner_backseat.ckey)
+		to_chat(stranger_backseat, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
+
 	else
 		owner_backseat.PossessByPlayer(owner.ckey)
-		owner.PossessByPlayer(stranger_backseat.ckey)
 		stranger_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [owner_backseat.key])", LOG_GAME)
-		to_chat(owner, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
-		to_chat(stranger_backseat, span_userdanger("You manage to take control of your body!"))
+		owner.PossessByPlayer(stranger_backseat.ckey)
+		to_chat(owner_backseat, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
 
-
+	to_chat(owner, span_userdanger("You manage to take control of your body!"))
 	current_controller = !current_controller
 
 
