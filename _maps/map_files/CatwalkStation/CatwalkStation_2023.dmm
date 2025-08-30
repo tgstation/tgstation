@@ -60227,6 +60227,7 @@
 	id_tag = "restroom_3";
 	name = "Toilet Unit"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "rJo" = (
@@ -64219,6 +64220,7 @@
 	id_tag = "restroom_2";
 	name = "Toilet Unit"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "sVA" = (
@@ -77306,6 +77308,7 @@
 	id_tag = "restroom_1";
 	name = "Toilet Unit"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "wOr" = (
