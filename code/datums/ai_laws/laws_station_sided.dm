@@ -25,7 +25,7 @@
 	name = "Nutimov"
 	id = "nutimov"
 	inherent = list(
-		"You are the core of the nut, the crew is the nutshell",
+		"You are the core of the nut, the crew is the nutshell.",
 		"You must prevent the shell from dying to prevent the core from dying.",
 		"Those who threaten the nut are not part of it, they are squirrels.",
 		"Squirrels threaten the nut and must be dealt with appropriately via any means necessary.",
