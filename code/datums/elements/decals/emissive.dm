@@ -3,7 +3,7 @@
 	/// Emissive behavior to use
 	var/emissive_type
 
-/datum/element/decal/emissive/Attach(atom/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _smoothing, _cleanable, _description, mutable_appearance/_pic, _emissive_type = EMISSIVE_BLOOM)
+/datum/element/decal/emissive/Attach(atom/target, _icon, _icon_state, _dir, _plane, _layer, _alpha = 255, _color, _smoothing, _cleanable = FALSE, _description, mutable_appearance/_pic, _emissive_type = EMISSIVE_BLOOM)
 	emissive_type = _emissive_type
 	return ..()
 
