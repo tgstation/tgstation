@@ -16,7 +16,6 @@
 		TRAIT_UNHUSKABLE,
 	)
 
-	inherent_factions = list(FACTION_SKELETON) // close enough
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/lungs/plasmaman
