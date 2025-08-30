@@ -1188,6 +1188,12 @@
 	set_plant_health(myseed.endurance)
 	lastcycle = world.time
 
+/obj/machinery/hydroponics/soil/rich
+	name = "rich soil"
+	desc = "A rich patch of dirt, usually used in gardens."
+	icon_state = "rich_soil"
+	maxnutri = 20
+
 ///The usb port circuit
 
 /obj/item/circuit_component/hydroponics

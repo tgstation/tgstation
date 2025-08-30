@@ -158,8 +158,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
 	var/list/file_data = list()
 	var/pos = 1
-	for(var/V in GLOB.news_network.network_channels)
-		var/datum/feed_channel/channel = V
+	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue
@@ -527,18 +526,25 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts += "The [venue] served [venue.customers_served] customer\s and made [venue.total_income] credits.<br>"
 	parts += "In total, they earned [tourist_income] credits[tourist_income ? "!" : "..."]<br>"
 	log_econ("Roundend service income: [tourist_income] credits.")
+
+	// Award service achievements based on tourist income
+	switch(tourist_income)
+		if(1 to 2000)
+			award_service(/datum/award/achievement/jobs/service_bad)
+		if(2001 to 4999)
+			award_service(/datum/award/achievement/jobs/service_okay)
+		if(5000 to INFINITY)
+			award_service(/datum/award/achievement/jobs/service_good)
+
 	switch(tourist_income)
 		if(0)
 			parts += "[span_redtext("Service did not earn any credits...")]<br>"
 		if(1 to 2000)
 			parts += "[span_redtext("Centcom is displeased. Come on service, surely you can do better than that.")]<br>"
-			award_service(/datum/award/achievement/jobs/service_bad)
 		if(2001 to 4999)
 			parts += "[span_greentext("Centcom is satisfied with service's job today.")]<br>"
-			award_service(/datum/award/achievement/jobs/service_okay)
 		else
 			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span><br>"
-			award_service(/datum/award/achievement/jobs/service_good)
 
 	parts += "<b>General Statistics:</b><br>"
 	parts += "There were [station_vault] credits collected by crew this shift.<br>"
@@ -549,7 +555,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
-	return parts
+	return parts.Join()
 
 /**
  * Awards the service department an achievement and updates the chef and bartender's highscore for tourists served.
@@ -666,7 +672,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	button_icon_state = "round_end"
 	show_to_observers = FALSE
 
-/datum/action/report/Trigger(trigger_flags)
+/datum/action/report/Trigger(mob/clicker, trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 

@@ -127,7 +127,7 @@
 
 /datum/component/echolocation/proc/show_image(image/input_appearance, atom/input, current_time)
 	var/image/final_image = image(input_appearance)
-	//final_image.layer += FOV_EFFECT_LAYER
+	final_image.layer += EFFECTS_LAYER
 	final_image.plane = FULLSCREEN_PLANE
 	final_image.loc = images_are_static ? get_turf(input) : input
 	final_image.dir = input.dir

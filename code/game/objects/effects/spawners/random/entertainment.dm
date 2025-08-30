@@ -277,7 +277,6 @@
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,
 		/obj/item/toy/plush/lizard_plushie/space/green = 3,
-		/obj/item/toy/plush/goatplushie = 3,
 		/obj/item/toy/plush/rouny = 3,
 		/obj/item/toy/plush/abductor = 3,
 		/obj/item/toy/plush/abductor/agent = 3,
@@ -295,6 +294,6 @@
 	loot = list(
 		/obj/item/grenade/chem_grenade/glitter/pink,
 		/obj/item/grenade/chem_grenade/glitter/blue,
-		/obj/item/grenade/chem_grenade/glitter/white,
+		/obj/item/grenade/chem_grenade/glitter,
 		/obj/item/grenade/chem_grenade/colorful
 	)

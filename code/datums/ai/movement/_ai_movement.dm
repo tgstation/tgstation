@@ -37,6 +37,9 @@
 	if((controller.ai_traits & STOP_MOVING_WHEN_PULLED) && pawn.pulledby) //Need to store more state. Annoying.
 		return FALSE
 
+	if(HAS_TRAIT(pawn, TRAIT_AI_MOVEMENT_HALTED))
+		return FALSE
+
 	if(!isturf(pawn.loc)) //No moving if not on a turf
 		return FALSE
 

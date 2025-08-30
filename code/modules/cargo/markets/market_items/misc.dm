@@ -185,7 +185,7 @@
 
 /datum/market_item/misc/girlypop/spawn_item(loc, datum/market_purchase/purchase)
 	. = ..()
-	var/obj/structure/closet/crate/pink/C = new(loc)
+	var/obj/structure/closet/crate/glitter/C = new(loc)
 	for (var/type in list(
 		/obj/item/poster/contraband/dream,
 		/obj/item/poster/contraband/beekind,
