@@ -9,7 +9,7 @@
 /datum/unit_test/reta_basic_functions/Run()
 	// Initialize RETA system for testing
 	initialize_reta_system()
-	
+
 	// Test department mapping
 	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Engineering"), "Engineering", "Engineering department mapping failed")
 	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("engineering"), "Engineering", "Engineering lowercase mapping failed")
@@ -52,16 +52,59 @@
 
 	// Test department name mapping including new Mining support
 	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Mining Station"), "Mining", "Mining Station should map to Mining")
-	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Library"), "Service", "Library should map to Service")
 	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Command"), "Command", "Command should map to Command")
 	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Bridge"), "Command", "Bridge should map to Command")
+
+	// Test autonamed service areas
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Kitchen"), "Service", "Kitchen should map to Service")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Bar"), "Service", "Bar should map to Service")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Cafeteria"), "Service", "Cafeteria should map to Service")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Diner"), "Service", "Diner should map to Service")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Hydroponics"), "Service", "Hydroponics should map to Service")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Botany"), "Service", "Botany should map to Service")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Janitor"), "Service", "Janitor should map to Service")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Custodial"), "Service", "Custodial should map to Service")
+
+	// Test autonamed medical areas
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Pharmacy"), "Medical", "Pharmacy should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Chemistry"), "Medical", "Chemistry should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Chem"), "Medical", "Chem should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Morgue"), "Medical", "Morgue should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Virology"), "Medical", "Virology should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Surgery"), "Medical", "Surgery should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Operating"), "Medical", "Operating should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Cryo"), "Medical", "Cryo should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Patients"), "Medical", "Patients should map to Medical")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Exam"), "Medical", "Exam should map to Medical")
+
+	// Test autonamed engineering areas
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Atmospherics"), "Engineering", "Atmospherics should map to Engineering")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Atmos"), "Engineering", "Atmos should map to Engineering")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Supermatter"), "Engineering", "Supermatter should map to Engineering")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Gravity"), "Engineering", "Gravity should map to Engineering")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Telecomm"), "Engineering", "Telecomm should map to Engineering")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Tcomm"), "Engineering", "Tcomm should map to Engineering")
+
+	// Test autonamed science areas
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Xenobiology"), "Science", "Xenobiology should map to Science")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Xenobio"), "Science", "Xenobio should map to Science")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Robotics"), "Science", "Robotics should map to Science")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Genetics"), "Science", "Genetics should map to Science")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Ordnance"), "Science", "Ordnance should map to Science")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Cytology"), "Science", "Cytology should map to Science")
+
+	// Test autonamed security areas
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Brig"), "Security", "Brig should map to Security")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Holding"), "Security", "Holding should map to Security")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Armory"), "Security", "Armory should map to Security")
+	TEST_ASSERT_EQUAL(reta_get_user_department_by_name("Checkpoint"), "Security", "Checkpoint should map to Security")
 
 /datum/unit_test/reta_id_card_access
 
 /datum/unit_test/reta_id_card_access/Run()
 	// Initialize RETA system for testing
 	initialize_reta_system()
-	
+
 	var/obj/item/card/id/test_card = allocate(/obj/item/card/id)
 	test_card.registered_name = "Test User"
 
@@ -92,7 +135,7 @@
 /datum/unit_test/reta_paramedic_access/Run()
 	// Initialize RETA system for testing
 	initialize_reta_system()
-	
+
 	var/datum/id_trim/job/paramedic/paramedic_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
 
 	// Test that paramedic no longer has broad access
