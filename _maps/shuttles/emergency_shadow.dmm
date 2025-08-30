@@ -789,7 +789,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
 "IR" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -1037,7 +1037,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Ux" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 1
 	},

@@ -404,7 +404,7 @@
 	pixel_x = 2;
 	pixel_y = 7
 	},
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "mn" = (
@@ -448,7 +448,7 @@
 /obj/item/canvas,
 /obj/item/canvas,
 /obj/item/canvas,
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /obj/machinery/light/directional/north,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
@@ -571,7 +571,7 @@
 /area/shuttle/escape)
 "qn" = (
 /obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -1352,7 +1352,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "VT" = (
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Wp" = (
