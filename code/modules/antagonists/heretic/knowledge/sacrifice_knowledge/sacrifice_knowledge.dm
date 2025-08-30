@@ -211,11 +211,11 @@
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
-		heretic_datum.knowledge_points += 3
+		heretic_datum.adjust_knowledge_points(3)
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
 	if(cultist_datum)
-		heretic_datum.knowledge_points += 1
+		heretic_datum.adjust_knowledge_points(1)
 		grant_reward(user, sacrifice, loc)
 		// easier to read
 		var/rewards_given = heretic_datum.rewards_given
@@ -234,7 +234,7 @@
 			to_chat(user, non_flavor_warning)
 		return
 	else
-		heretic_datum.knowledge_points += 2
+		heretic_datum.adjust_knowledge_points(2)
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	if(!begin_sacrifice(sacrifice))
@@ -505,7 +505,7 @@
 	sac_target.clear_mood_event("shadow_realm")
 	if(IS_HERETIC(sac_target))
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
-		victim_heretic.knowledge_points -= 3
+		victim_heretic.adjust_knowledge_points(-3)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
