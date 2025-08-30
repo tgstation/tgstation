@@ -64,7 +64,7 @@
 	var/uniform_compatible = isnull(worn_uniform) \
 		|| (worn_uniform.supports_variations_flags & DIGITIGRADE_VARIATIONS) \
 		|| !(worn_uniform.body_parts_covered & LEGS) \
-		|| (worn_suit?.flags_inv & HIDEJUMPSUIT) // If suit hides our jumpsuit, it doesn't matter if it squishes
+		|| (obscured_slots & HIDEJUMPSUIT) // If suit hides our jumpsuit, it doesn't matter if it squishes
 
 	var/suit_compatible = isnull(worn_suit) \
 		|| (worn_suit.supports_variations_flags & DIGITIGRADE_VARIATIONS) \

@@ -33,9 +33,7 @@
 	// Having your face covered conceals your drunkness
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		if(carbon_owner.wear_mask?.flags_inv & HIDEFACE)
-			return null
-		if(carbon_owner.head?.flags_inv & HIDEFACE)
+		if(carbon_owner.obscured_slots & HIDEFACE)
 			return null
 
 	// .01s are used in case the drunk value ends up to be a small decimal.
