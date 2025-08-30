@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - config: "Default max roundstart traitors per ruleset upped from 1 per 38 players to 1 per 24 players."
