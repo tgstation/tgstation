@@ -192,7 +192,7 @@
 			continue
 		if (anchor_turf.LinkBlockedWithAccess(pass_turf, pass_info))
 			continue
-		if (check_line(pass_turf, target, list(anchor, true_source)), turf_cache)
+		if (check_line(pass_turf, target, list(anchor, true_source), turf_cache))
 			continue
 		if (anchor.Move(pass_turf))
 			return TRUE
