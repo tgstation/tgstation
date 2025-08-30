@@ -2,9 +2,8 @@
 
 /// Produces a mutable appearance glued to the [EMISSIVE_PLANE] dyed to be the [EMISSIVE_COLOR].
 /proc/emissive_appearance(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const, effect_type = EMISSIVE_BLOOM)
-	if(IS_TOPDOWN_PLANE(offset_spokesman.plane))
-		if(isnull(layer) || layer == FLOAT_LAYER)
-			layer = TOPDOWN_TO_EMISSIVE_LAYER(offset_spokesman.layer)
+	if((isnull(layer) || layer == FLOAT_LAYER) && IS_TOPDOWN_PLANE(offset_spokesman.plane))
+		layer = TOPDOWN_TO_EMISSIVE_LAYER(offset_spokesman.layer)
 	else if(isnull(layer))
 		layer = FLOAT_LAYER
 
