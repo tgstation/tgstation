@@ -101,7 +101,8 @@
 	if(!msg)
 		return
 
-	user.log_message(msg, LOG_EMOTE)
+	if(user.client)
+		user.log_message(msg, LOG_EMOTE)
 
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
