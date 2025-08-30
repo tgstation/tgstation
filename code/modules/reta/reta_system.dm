@@ -216,6 +216,48 @@
 	if(findtext(dept_lower, "command") || findtext(dept_lower, "bridge"))
 		return "Command"
 
+	// Autonamed areas that belong to service department
+	if(findtext(dept_lower, "kitchen") || findtext(dept_lower, "bar") || findtext(dept_lower, "cafeteria") || findtext(dept_lower, "diner"))
+		return "Service"
+	if(findtext(dept_lower, "chapel") || findtext(dept_lower, "theater") || findtext(dept_lower, "theater"))
+		return "Service"
+	if(findtext(dept_lower, "hydroponics") || findtext(dept_lower, "botany") || findtext(dept_lower, "garden"))
+		return "Service"
+	if(findtext(dept_lower, "janitor") || findtext(dept_lower, "custodial"))
+		return "Service"
+
+	// Autonamed areas for medical
+	if(findtext(dept_lower, "pharmacy") || findtext(dept_lower, "chemistry") || findtext(dept_lower, "chem"))
+		return "Medical"
+	if(findtext(dept_lower, "morgue") || findtext(dept_lower, "virology"))
+		return "Medical"
+	if(findtext(dept_lower, "surgery") || findtext(dept_lower, "operating") || findtext(dept_lower, "cryo"))
+		return "Medical"
+	if(findtext(dept_lower, "patients") || findtext(dept_lower, "exam"))
+		return "Medical"
+
+	// Autonamed areas for engineering
+	if(findtext(dept_lower, "atmospherics") || findtext(dept_lower, "atmos"))
+		return "Engineering"
+	if(findtext(dept_lower, "supermatter") || findtext(dept_lower, "engine"))
+		return "Engineering"
+	if(findtext(dept_lower, "gravity") || findtext(dept_lower, "telecomm") || findtext(dept_lower, "tcomm"))
+		return "Engineering"
+
+	// Autonamed areas for science department
+	if(findtext(dept_lower, "xenobiology") || findtext(dept_lower, "xenobio"))
+		return "Science"
+	if(findtext(dept_lower, "robotics") || findtext(dept_lower, "genetics"))
+		return "Science"
+	if(findtext(dept_lower, "ordnance") || findtext(dept_lower, "cytology"))
+		return "Science"
+
+	// Handle specific autonamed areas that belong to security department
+	if(findtext(dept_lower, "brig") || findtext(dept_lower, "holding"))
+		return "Security"
+	if(findtext(dept_lower, "armory") || findtext(dept_lower, "checkpoint"))
+		return "Security"
+
 	return null
 
 /// Cleans up an expired RETA grant from the active grants registry
