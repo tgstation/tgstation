@@ -1663,6 +1663,7 @@
 #include "code\datums\elements\window_smash.dm"
 #include "code\datums\elements\decals\_decal.dm"
 #include "code\datums\elements\decals\blood.dm"
+#include "code\datums\elements\decals\emissive.dm"
 #include "code\datums\elements\food\dunkable.dm"
 #include "code\datums\elements\food\food_trash.dm"
 #include "code\datums\elements\food\foodlike_drink.dm"
