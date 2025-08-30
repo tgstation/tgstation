@@ -2,7 +2,7 @@
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
 
-/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
+/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/preset_laws, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
@@ -11,15 +11,11 @@
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	status_flags &= ~CANPUSH //AI starts anchored, so dont push it
 
-	if(L && istype(L, /datum/ai_laws))
-		laws = L
-		laws.associate(src)
-		for (var/law in laws.inherent)
-			lawcheck += law
+	if(istype(preset_laws, /datum/ai_laws))
+		laws = preset_laws
+		law_ui.update_inherent_stated_laws(laws)
 	else
 		make_laws()
-		for (var/law in laws.inherent)
-			lawcheck += law
 
 	create_eye()
 
@@ -373,8 +369,6 @@
 		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
 	else
 		mmi_type = new/obj/item/mmi(src)
-	if(hack_software)
-		new/obj/item/malf_upgrade(get_turf(src))
 	the_mmi = mmi_type
 	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
 	the_mmi.brain.organ_flags |= ORGAN_FROZEN

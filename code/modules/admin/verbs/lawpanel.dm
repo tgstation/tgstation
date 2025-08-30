@@ -20,7 +20,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	qdel(src)
 
 /datum/law_panel/proc/add_law_helper(mob/living/user, mob/living/silicon/borgo)
-	var/list/lawtypes = list(LAW_ZEROTH, LAW_HACKED, LAW_ION, LAW_INHERENT, LAW_SUPPLIED) // in order of priority
+	var/list/lawtypes = list(LAW_ZEROTH, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED) // in order of priority
 	var/lawtype = tgui_input_list(user, "Select law type", "Law type", lawtypes)
 	if(isnull(lawtype))
 		return FALSE
@@ -40,14 +40,12 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 			borgo.laws.set_zeroth_law(lawtext)
 			borgo.laws.protected_zeroth = TRUE
-		if(LAW_ION)
-			borgo.laws.add_ion_law(lawtext)
 		if(LAW_HACKED)
 			borgo.laws.add_hacked_law(lawtext)
 		if(LAW_INHERENT)
 			borgo.laws.add_inherent_law(lawtext)
 		if(LAW_SUPPLIED)
-			borgo.laws.add_supplied_law(length(borgo.laws.supplied), lawtext) // Just goes to the end of the list
+			borgo.laws.add_supplied_law(lawtext) // Just goes to the end of the list
 	log_admin("[key_name(user)] has UPLOADED a [lawtype] law to [key_name(borgo)] stating: [lawtext]")
 	message_admins("[key_name(user)] has UPLOADED a [lawtype] law to [key_name(borgo)] stating: [lawtext]")
 	return TRUE
@@ -89,10 +87,8 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			relevant_laws = borgo.laws.supplied
 		if(LAW_HACKED)
 			relevant_laws = borgo.laws.hacked
-		if(LAW_ION)
-			relevant_laws = borgo.laws.ion
 		if(LAW_ZEROTH)
-			borgo.set_zeroth_law(newlaw, announce = FALSE)
+			borgo.laws.set_zeroth_law(newlaw)
 			borgo.laws.protected_zeroth = TRUE
 			return TRUE
 
@@ -110,87 +106,16 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	message_admins("[key_name(user)] has EDITED a [lawtype] law on [key_name(borgo)]")
 	return TRUE
 
-/datum/law_panel/proc/edit_law_priority_helper(mob/living/user, mob/living/silicon/borgo, law)
-	var/old_prio = borgo.laws.supplied.Find(law)
-	if(!old_prio)
-		to_chat(user, span_danger("Something went wrong, we couldn't edit that law."))
-		return FALSE
-
-	var/new_prio = tgui_input_number(user, "Enter a new priority.", "Edit priority", old_prio, 50, 0)
-	if(!new_prio || QDELETED(src) || QDELETED(borgo))
-		return FALSE
-
-	// Sanity
-	if(old_prio != borgo.laws.supplied.Find(law))
-		to_chat(user, span_danger("[borgo]'s laws may have changed since you have edited priority, please re-try."))
-		return FALSE
-
-	// If it's far beyond any existing values, just re-add it normally
-	if(new_prio > length(borgo.laws.supplied))
-		borgo.laws.remove_supplied_law_by_num(old_prio)
-		borgo.laws.add_supplied_law(new_prio, law)
-		return TRUE
-
-	// Handle collisions
-	var/existing_law = borgo.laws.supplied[new_prio]
-	if(existing_law)
-		var/list/options = list("Swap", "Move up", "Move down", "Replace", "Cancel")
-		if(new_prio == 1)
-			// Nowhere to go from here
-			options -= "Move down"
-
-		var/swap_or_remove = tgui_alert(user, "There's already a law at that priority level. What should be done to it?", "Existing law", options)
-		if(swap_or_remove == "Cancel" || !swap_or_remove || QDELETED(src) || QDELETED(borgo))
-			return FALSE
-		// Sanity
-		if(law != borgo.laws.supplied[old_prio] || existing_law != borgo.laws.supplied[new_prio])
-			to_chat(user, span_danger("[borgo]'s laws have changed since you have edited priority, please re-try."))
-			return FALSE
-
-		if(swap_or_remove == "Swap")
-			borgo.laws.supplied.Swap(old_prio, new_prio)
-			log_admin("[key_name(user)] has SWAPPED [key_name(borgo)] law [old_prio] and [new_prio]")
-			return TRUE
-		if(swap_or_remove == "Replace")
-			borgo.laws.remove_supplied_law_by_num(new_prio, law)
-			borgo.laws.add_supplied_law(new_prio, law)
-			log_admin("[key_name(user)] has REPLACED [key_name(borgo)] law: [law] with priority [new_prio]")
-			return TRUE
-
-		var/new_prio_for_old_law = new_prio + (swap_or_remove == "Move up" ? 1 : -1)
-
-		borgo.laws.remove_supplied_law_by_num(old_prio)
-		borgo.laws.remove_supplied_law_by_num(new_prio)
-		borgo.laws.add_supplied_law(new_prio, law)
-		borgo.laws.add_supplied_law(new_prio_for_old_law, existing_law)
-		log_admin("[key_name(user)] has changed the priority of an existing law on [key_name(borgo)]. LAW: [law] PRIORITY: [new_prio]")
-		return TRUE
-
-	// Sanity
-	if(old_prio != borgo.laws.supplied.Find(law))
-		to_chat(user, span_danger("[borgo]'s may laws have changed since you have edited priority, please re-try."))
-		return FALSE
-
-	// At this point the slot is free, insert it as normal
-	borgo.laws.remove_supplied_law_by_num(old_prio)
-	borgo.laws.add_supplied_law(new_prio, law)
-	log_admin("[key_name(user)] has UPLOADED a supplied law to [key_name(borgo)] stating: [law]") // Normal insertion, I.E upload
-	message_admins("[key_name(user)] has UPLOADED a supplied law to [key_name(borgo)] stating: [law]")
-	return TRUE
-
 /datum/law_panel/proc/remove_law_helper(mob/living/user, mob/living/silicon/borgo, lawtype, law)
 	switch(lawtype)
 		if(LAW_INHERENT)
 			borgo.laws.remove_inherent_law(law)
 		if(LAW_SUPPLIED)
-			borgo.laws.remove_supplied_law_by_law(law)
+			borgo.laws.remove_supplied_law(law)
 		if(LAW_HACKED)
 			borgo.laws.remove_hacked_law(law)
-		if(LAW_ION)
-			borgo.laws.remove_ion_law(law)
 		if(LAW_ZEROTH)
 			borgo.laws.clear_zeroth_law(force = TRUE)
-			borgo.laws.protected_zeroth = FALSE
 		else
 			return FALSE
 	log_admin("[key_name(user)] has REMOVED a law from [key_name(borgo)]. LAW: [law]")
@@ -227,7 +152,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			return FALSE
 
 		if("laws_updated_alert")
-			borgo.post_lawchange()
+			borgo.announce_law_change()
 			return FALSE
 
 		if("give_law_datum")
@@ -245,9 +170,6 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 		if("edit_law_text")
 			. = edit_law_text_helper(usr, borgo, params["lawtype"], params["law"])
-
-		if("edit_law_prio")
-			. = edit_law_priority_helper(usr, borgo, params["law"])
 
 	if(. && !QDELETED(borgo))
 		// One of our functions successfully changed a law
@@ -298,11 +220,9 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			// zeroth law on top
 			if(lawset.zeroth || lawset.zeroth_borg)
 				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ZEROTH, "law" = lawset.zeroth || lawset.zeroth_borg, "num" = 0))
-			// then goes ion / hacked
+			// then goes hacked
 			for(var/law in lawset.hacked)
 				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_HACKED, "law" = law, "num" = -1))
-			for(var/law in lawset.ion)
-				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ION, "law" = law, "num" = -1))
 			// normie laws
 			var/lawnum = 1
 			for(var/law in lawset.inherent)
