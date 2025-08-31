@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed misaligned magmawing watcher sprites"
+  - image: "Swapped preparing/ready to attack eye sprites on base watchers"

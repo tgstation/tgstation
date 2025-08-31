@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "You cannot stack infinite amount of cards in decks to explode clients of whoever they get thrown at."
+  - refactor: "Rewrote card items to use new interaction code."

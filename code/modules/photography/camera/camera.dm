@@ -331,11 +331,12 @@
 	return
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
+	if(!silent)
+		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
+
 	if(print_picture_on_snap)
 		printpicture(user, picture)
 
-	if(!silent)
-		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--

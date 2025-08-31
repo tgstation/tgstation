@@ -1,0 +1,7 @@
+author: "tonyhawq"
+delete-after: True
+changes:
+  - rscadd: "Added a portable wind turbine which can charge things when you walk around"
+  - rscadd: "Added a signal that procs when an object resists space wind (from being anchored / pulled)"
+  - sound: "added woosh.ogg as a low \"wooshing\" noise"
+  - image: "added a wind turbine sprite"

@@ -88,7 +88,7 @@
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS|UPLINK_SPY)
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"

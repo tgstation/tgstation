@@ -614,7 +614,7 @@
 	use_power = NO_POWER_USE
 
 /obj/item/emitter_disk
-	name = "/improper Diode Disk: Debugger"
+	name = "\improper Diode Disk: Debugger"
 	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk6"
@@ -626,42 +626,42 @@
 	var/no_shot_counter = FALSE
 
 /obj/item/emitter_disk/stamina
-	name = "/improper Diode Disk: Electrodisruptive"
+	name = "\improper Diode Disk: Electrodisruptive"
 	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will increase the integrity of supermatter crystals and exhaust living creatures. The disk will be consumed in the process."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/bluelens
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/healing
-	name = "/improper Diode Disk: Bioregenerative"
+	name = "\improper Diode Disk: Bioregenerative"
 	desc = "This disk can be installed into an emitter with an open panel to make it shoot lasers which will heal the physical damages of living creatures."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/bioregen
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/incendiary
-	name = "/improper Diode Disk: Conflagratory"
+	name = "\improper Diode Disk: Conflagratory"
 	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will set living creatures ablaze."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/incend
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/sanity
-	name = "/improper Diode Disk: Psychosiphoning"
+	name = "\improper Diode Disk: Psychosiphoning"
 	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will depress living creatures and calm supermatter crystals."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/psy
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/magnetic
-	name = "/improper Diode Disk: Magnetogenerative"
+	name = "\improper Diode Disk: Magnetogenerative"
 	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will attract nearby objects."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/magnetic
 	consumed_on_removal = FALSE
 	consumable = FALSE
 
 /obj/item/emitter_disk/blast
-	name = "/improper Diode Disk: Hyperconcussive"
+	name = "\improper Diode Disk: Hyperconcussive"
 	desc = "This disk, loaded with proprietary syndicate firmware, can be used on an emitter with an open panel to make it shoot beams of concussive force which will cause small explosions."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/blast
 	consumed_on_removal = FALSE
