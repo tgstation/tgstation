@@ -35,7 +35,7 @@
 	name ="20x138mm bullet"
 	speed = 3.5
 	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
-	damage = 200
+	damage = 400
 	paralyze = 100
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
