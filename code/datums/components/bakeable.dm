@@ -125,6 +125,7 @@
 			ignored_mobs = asomnia_hadders,
 		)
 	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)
+	SEND_SIGNAL(baked_result, COMSIG_ITEM_BAKED_RESULT, parent)
 	qdel(parent)
 
 ///Gives info about the items baking status so you can see if its almost done
