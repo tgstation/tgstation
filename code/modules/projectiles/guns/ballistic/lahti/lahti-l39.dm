@@ -41,3 +41,28 @@
 	catastropic_dismemberment = TRUE
 	armour_penetration = 50
 	ignore_range_hit_prone_targets = TRUE
+
+/obj/item/gun/ballistic/automatic/sniper_rifle
+	name = "sniper rifle"
+	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
+	icon = 'code/modules/projectiles/guns/ballistic/lahti/guns_gubman2.dmi'
+	icon_state = "sniper"
+	w_class = WEIGHT_CLASS_BULKY
+	inhand_icon_state = "sniper"
+	worn_icon_state = null
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 90
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
+	recoil = 2
+	weapon_weight = WEAPON_HEAVY
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
+	fire_delay = 6 SECONDS
+	burst_size = 1
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BACK
+	actions_types = list()
+	mag_display = TRUE
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3
