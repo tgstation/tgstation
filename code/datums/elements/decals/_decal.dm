@@ -64,6 +64,9 @@
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
+	// Color matrixes should be stringlisted as to avoid dupes
+	if (islist(_color))
+		_color = string_list(_color)
 	if(_pic)
 		pic = _pic
 	else if(!generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, target))
