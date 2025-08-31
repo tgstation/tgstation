@@ -144,8 +144,10 @@
 
 		if(TAKE_ITEMS)
 			if(filters_status == FILTERS_REQUIRED)
-				return target in atom_filters
-			return isitem(target)
+				for(var/filter_path in atom_filters)
+					if(istype(target, filter_path))
+						return TRUE
+				return FALSE
 
 	return FALSE
 

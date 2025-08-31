@@ -596,10 +596,8 @@
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = "PICK"
 		var/list/filter_names = list()
-		for(var/datum/weakref/some_filter in point.atom_filters)
-			var/obj/resolved_object = some_filter?.resolve()
-			if(resolved_object)
-				filter_names += resolved_object.name
+		for(var/some_path in point.atom_filters)
+			filter_names += some_path.name
 		point_data["item_filters"] = filter_names
 		point_data["filters_status"] = point.filters_status
 		point_data["filtering_mode"] = point.filtering_mode
@@ -615,10 +613,8 @@
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = point.interaction_mode
 		var/list/filter_names = list()
-		for(var/datum/weakref/some_filter in point.atom_filters)
-			var/obj/resolved_object = some_filter?.resolve()
-			if(resolved_object)
-				filter_names += resolved_object.name
+		for(var/some_path in point.atom_filters)
+			filter_names += some_path.name
 		point_data["item_filters"] = filter_names
 		point_data["filters_status"] = point.filters_status
 		dropoff_points_data += list(point_data)
@@ -731,10 +727,11 @@
 			if(!held_item)
 				return FALSE
 
-			if(held_item in target_point.atom_filters)
-				return FALSE
+			for(var/filter_path in target_point.atom_filters)
+				if(istype(held_item, filter_path))
+					return FALSE
 
-			target_point.atom_filters += WEAKREF(held_item)
+			target_point.atom_filters += held_item.type
 			return TRUE
 
 		if("delete_filter")
