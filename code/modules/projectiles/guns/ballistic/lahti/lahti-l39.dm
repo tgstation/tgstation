@@ -10,7 +10,7 @@
 	fire_sound_volume = 90
 	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
 	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
-	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	mag_display = FALSE
 	recoil = 15
 	w_class = WEIGHT_CLASS_BULKY
