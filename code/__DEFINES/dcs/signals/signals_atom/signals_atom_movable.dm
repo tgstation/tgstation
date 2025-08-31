@@ -138,3 +138,8 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
+
+/// Called when the atom is dropped into a chasm: (turf/chasm)
+#define COMSIG_MOVABLE_CHASM_DROPPED "movable_charm_dropped"
+	/// Stop it from actually dropping into the chasm
+	#define COMPONENT_NO_CHASM_DROP (1<<0)
