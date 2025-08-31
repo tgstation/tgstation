@@ -1,4 +1,4 @@
-/obj/item/gun/ballistic/automatic/sniper_rifle/lahti
+/obj/item/gun/ballistic/automatic/lahti
 	name = "\improper Lahti L-39"
 	desc = "The Lahti L-39, now manufactured in space with better materials making it more portable and reliable- still loaded in the same massive cartridge, \
 		this thing was made to go through a tank and come out the other end- imagine what it could do to an exosuit, there's also a completely useless sight which is totally obstructed by the magazine."
@@ -6,13 +6,22 @@
 	icon_state = "lahtil"
 	inhand_icon_state = "sniper"
 	worn_icon_state = "sniper"
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 90
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot
 	mag_display = FALSE
 	recoil = 15
-	fire_sound_volume = 200
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/lahtimagazine
 	fire_delay = 8 SECONDS
 	slowdown = 2
+	burst_size = 1
+	slot_flags = ITEM_SLOT_BACK
+	actions_types = list()
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3
 
 /obj/item/ammo_box/magazine/lahtimagazine
 	name = "\improper Lahti sniper rounds (20x138mm)"
@@ -42,27 +51,3 @@
 	armour_penetration = 50
 	ignore_range_hit_prone_targets = TRUE
 
-/obj/item/gun/ballistic/automatic/sniper_rifle
-	name = "sniper rifle"
-	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
-	icon = 'code/modules/projectiles/guns/ballistic/lahti/guns_gubman2.dmi'
-	icon_state = "sniper"
-	w_class = WEIGHT_CLASS_BULKY
-	inhand_icon_state = "sniper"
-	worn_icon_state = null
-	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
-	fire_sound_volume = 90
-	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
-	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
-	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
-	recoil = 2
-	weapon_weight = WEAPON_HEAVY
-	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
-	fire_delay = 6 SECONDS
-	burst_size = 1
-	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BACK
-	actions_types = list()
-	mag_display = TRUE
-	suppressor_x_offset = 3
-	suppressor_y_offset = 3
