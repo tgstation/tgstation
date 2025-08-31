@@ -170,7 +170,7 @@
 
 	stored_soil.forceMove(interacting_with)
 	playsound(stored_soil, placement_sound, 65, vary = TRUE)
-	on_place()
+	stored_soil.on_place()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
