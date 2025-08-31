@@ -1243,7 +1243,7 @@
 
 	var/skill_modifier = 1
 
-	if(tool_behaviour == TOOL_MINING && ishuman(user))
+	if(tool_behaviour == TOOL_MINING)
 		if(user.mind)
 			skill_modifier = user.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
