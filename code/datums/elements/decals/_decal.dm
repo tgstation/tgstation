@@ -104,6 +104,11 @@
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	if(!_icon || !_icon_state)
 		return FALSE
+
+	if(_plane == EMISSIVE_PLANE)
+		pic = emissive_appearance(_icon, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", source, _layer, _alpha)
+		return TRUE
+
 	var/temp_image = image(_icon, null, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", _layer, _dir)
 	pic = new(temp_image)
 	var/atom/atom_source = source
