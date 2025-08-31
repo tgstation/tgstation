@@ -161,7 +161,6 @@ All the important duct code:
 		duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 		drop_on_wrench = null
 	if(!QDELING(src))
-		stack_trace("pipe got deleted at [AREACOORD(src)]")
 		qdel(src)
 
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
