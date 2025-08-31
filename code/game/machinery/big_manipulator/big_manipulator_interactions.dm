@@ -241,7 +241,7 @@
 		actual_held_object.forceMove(drop_target.drop_location())
 		return TRUE
 
-	actual_held_object.forceMove(drop_endpoint)
+	actual_held_object?.forceMove(drop_endpoint)
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 	return TRUE
 

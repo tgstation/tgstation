@@ -597,8 +597,8 @@
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = "PICK"
 		var/list/filter_names = list()
-		for(var/some_path in point.atom_filters)
-			filter_names += some_path.name
+		for(var/obj/item/some_path as anything in point.atom_filters)
+			filter_names += some_path::name
 		point_data["item_filters"] = filter_names
 		point_data["filters_status"] = point.filters_status
 		point_data["filtering_mode"] = point.filtering_mode
@@ -614,8 +614,8 @@
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = point.interaction_mode
 		var/list/filter_names = list()
-		for(var/some_path in point.atom_filters)
-			filter_names += some_path.name
+		for(var/obj/item/some_path as anything in point.atom_filters)
+			filter_names += some_path::name
 		point_data["item_filters"] = filter_names
 		point_data["filters_status"] = point.filters_status
 		dropoff_points_data += list(point_data)
