@@ -105,7 +105,7 @@
  **/
 /mob/proc/alt_shift_click_on(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return NONE
+	return FALSE
 
 /**
  * ## Bind for unambiguously opening the loot panel as a living mob.
@@ -115,20 +115,21 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	return try_open_loot_panel_on(target)
 
-//Helper for determining if a living mob may open the loot panel for some target, since it is shared between
-//alt and alt-shift click.
+///Helper for determining if a living mob may open the loot panel for some target, since it is shared between
+///alt and alt-shift click.
+///Returns FALSE if the mob is unable to open the loot panel at the target and TRUE if the loot panel was opened.
 /mob/living/proc/try_open_loot_panel_on(atom/target)
 	if(!CAN_I_SEE(target) || (is_blind() && !IN_GIVEN_RANGE(src, target, 1)))
-		return
+		return FALSE
 
 	// No alt clicking to view turf from beneath
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
-		return
+		return FALSE
 
 	/// No loot panel if it's on our person
 	if(isobj(target) && (target in get_all_gear()))
 		to_chat(src, span_warning("You can't search for this item, it's already in your inventory! Take it off first."))
-		return
+		return FALSE
 
 	client.loot_panel.open(get_turf(target))
 	return TRUE
