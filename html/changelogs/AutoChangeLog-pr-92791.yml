@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Brought back \"new\" goliath saddles which were lost during sprite reorganization a while back."
