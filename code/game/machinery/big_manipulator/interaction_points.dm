@@ -157,16 +157,16 @@
 	switch(interaction_mode)
 		if(INTERACT_DROP)
 			priorities_to_set = list(
-				new /datum/manipulator_priority/for_drop/on_floor(),
-				new /datum/manipulator_priority/for_drop/in_storage()
-				)
+				new /datum/manipulator_priority/for_drop/in_storage,
+				new /datum/manipulator_priority/for_drop/on_floor,
+			)
 		if(INTERACT_USE)
 			priorities_to_set = list(
-				new /datum/manipulator_priority/for_use/on_living(),
-				new /datum/manipulator_priority/for_use/on_structure(),
-				new /datum/manipulator_priority/for_use/on_machinery(),
-				new /datum/manipulator_priority/for_use/on_items()
-				)
+				new /datum/manipulator_priority/for_use/on_living,
+				new /datum/manipulator_priority/for_use/on_structure,
+				new /datum/manipulator_priority/for_use/on_machinery,
+				new /datum/manipulator_priority/for_use/on_items,
+			)
 
 	for(var/datum/manipulator_priority/priority in priorities_to_set)
 		priority.number = priority_number++

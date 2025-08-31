@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  BlockQuote,
   Box,
   Button,
   Modal,
@@ -8,38 +9,33 @@ import {
   Slider,
   Stack,
   Table,
-  BlockQuote
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 
-import type { ManipulatorData, PrioritySettings, InteractionPoint } from './types';
+import type { InteractionPoint, ManipulatorData } from './types';
 
-const taskingSchedules = [
-  "Round Robin",
-  "Strict Robin",
-  "Prefer First",
-]
+const taskingSchedules = ['Round Robin', 'Strict Robin', 'Prefer First'];
 
 const taskingScheduleIcons = {
-  "Round Robin": "list-ol",
-  "Strict Robin": "arrows-spin",
-  "Prefer First": "arrow-down-1-9"
-}
+  'Round Robin': 'list-ol',
+  'Strict Robin': 'arrows-spin',
+  'Prefer First': 'arrow-down-1-9',
+};
 
 const buttonNumberToIcon = {
-  1: "",
-  2: "arrow-up",
-  3: "",
-  4: "arrow-left",
-  5: "arrows-to-dot",
-  6: "arrow-right",
-  7: "",
-  8: "arrow-down",
-  9: ""
-}
+  1: '',
+  2: 'arrow-up',
+  3: '',
+  4: 'arrow-left',
+  5: 'arrows-to-dot',
+  6: 'arrow-right',
+  7: '',
+  8: 'arrow-down',
+  9: '',
+};
 
 const MasterControls = () => {
   const { act, data } = useBackend<ManipulatorData>();
@@ -150,23 +146,28 @@ const PointSection = (props: {
 }) => {
   const { data } = useBackend<ManipulatorData>();
   const { title, points, onAdd, act } = props;
-  const [editingPoint, setEditingPoint] = useState<InteractionPoint | null>(null);
+  const [editingPoint, setEditingPoint] = useState<InteractionPoint | null>(
+    null,
+  );
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const isPickup = title === 'Pickup Points';
   const currentTasking = isPickup ? data.pickup_tasking : data.dropoff_tasking;
-  const currentIcon = taskingScheduleIcons[currentTasking] || "clipboard-list";
+  const currentIcon = taskingScheduleIcons[currentTasking] || 'clipboard-list';
 
   const cycleTaskingSchedule = () => {
     const currentIndex = taskingSchedules.indexOf(currentTasking);
     const nextIndex = (currentIndex + 1) % taskingSchedules.length;
     const newTasking = taskingSchedules[nextIndex];
-    act('cycle_tasking_schedule', { new_schedule: newTasking, is_pickup: isPickup });
+    act('cycle_tasking_schedule', {
+      new_schedule: newTasking,
+      is_pickup: isPickup,
+    });
   };
 
   const adjustPoint = (pointId: string, param: string, value?: any) => {
-    act('adjust_point_param', {pointId, param, value})
-  }
+    act('adjust_point_param', { pointId, param, value });
+  };
 
   const handleEditPoint = (point: InteractionPoint, index: number) => {
     setEditingPoint(point);
@@ -176,17 +177,26 @@ const PointSection = (props: {
   useEffect(() => {
     if (editingPoint && editingIndex !== null) {
       const currentPoints = isPickup ? data.pickup_points : data.dropoff_points;
-      const updatedPoint = currentPoints.find(p => p.id === editingPoint.id);
+      const updatedPoint = currentPoints.find((p) => p.id === editingPoint.id);
       if (updatedPoint) {
         setEditingPoint(updatedPoint);
       }
     }
-  }, [data.pickup_points, data.dropoff_points, editingPoint?.id, editingIndex, isPickup]);
+  }, [
+    data.pickup_points,
+    data.dropoff_points,
+    editingPoint?.id,
+    editingIndex,
+    isPickup,
+  ]);
 
   const handleDirectionClick = (buttonNumber: number) => {
     if (!editingPoint || editingIndex === null) return;
 
-    adjustPoint(editingPoint.id, 'move_to', { buttonNumber, is_pickup: title === 'Pickup Points' })
+    adjustPoint(editingPoint.id, 'move_to', {
+      buttonNumber,
+      is_pickup: title === 'Pickup Points',
+    });
   };
 
   const getPointButtonNumber = (point: InteractionPoint): number | null => {
@@ -224,17 +234,23 @@ const PointSection = (props: {
     }
   };
 
-  const handleFilteringModeChange = () => {
-    if (!editingPoint || editingIndex === null) return;
-
-    adjustPoint(editingPoint.id, 'cycle_filtering_mode')
-  };
-
   return (
     <>
       <Section
         title={title}
-        buttons={<><Button tooltip="Cycle tasking schedule" onClick={cycleTaskingSchedule} icon={currentIcon} color="transparent">{currentTasking}</Button> <Button icon="plus" color="transparent" onClick={onAdd} /></>}
+        buttons={
+          <>
+            <Button
+              tooltip="Cycle tasking schedule"
+              onClick={cycleTaskingSchedule}
+              icon={currentIcon}
+              color="transparent"
+            >
+              {currentTasking}
+            </Button>{' '}
+            <Button icon="plus" color="transparent" onClick={onAdd} />
+          </>
+        }
       >
         <Stack vertical>
           {points.map((point, index) => (
@@ -249,7 +265,9 @@ const PointSection = (props: {
                 <Stack>
                   <Stack.Item grow>
                     <Box>
-                      <Box bold>{point.name} <Button icon="edit" color="transparent" /></Box>
+                      <Box bold>
+                        {point.name} <Button icon="edit" color="transparent" />
+                      </Box>
                       <Box color="label">Mode: {point.mode.toUpperCase()}</Box>
                       <Box color="label">
                         Filters: {point.filters_status ? 'ACTIVE' : 'INACTIVE'}
@@ -269,7 +287,11 @@ const PointSection = (props: {
                         icon="trash"
                         color="transparent"
                         onClick={() =>
-                          act('adjust_point_param', { point_id: point.id, is_pickup: title === 'Pickup Points' })
+                          adjustPoint(
+                            point.id,
+                            'remove_point',
+                            isPickup && 'SOMETHING',
+                          )
                         }
                       />
                     </Stack.Item>
@@ -326,7 +348,9 @@ const PointSection = (props: {
                         key={buttonNumber}
                         disabled={isCenter}
                         color={isCurrentButton ? 'good' : 'default'}
-                        onClick={() => !isCenter && handleDirectionClick(buttonNumber)}
+                        onClick={() =>
+                          !isCenter && handleDirectionClick(buttonNumber)
+                        }
                         style={{
                           margin: '0px',
                           textAlign: 'center',
@@ -347,23 +371,20 @@ const PointSection = (props: {
                         content={getFilteringModeText(
                           editingPoint.filtering_mode,
                         )}
-                        onClick={handleFilteringModeChange}
+                        onClick={() =>
+                          adjustPoint(
+                            editingPoint.id,
+                            'cycle_pickup_point_type',
+                          )
+                        }
                         tooltip="Cycle the pickup type"
                       />
                       <ConfigRow
-                        label="Item Filters"
-                        content={
-                          editingPoint.item_filters.length
-                            ? 'ACTIVE'
-                            : 'INACTIVE'
-                        }
-                        onClick={() => adjustPoint(editingPoint.id, 'reset_atom_filters')}
-                        tooltip="Toggle item filters"
-                      />
-                      <ConfigRow
-                        label="Skip Item Filters"
+                        label="Use Item Filters"
                         content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
-                        onClick={() => adjustPoint(editingPoint.id, 'toggle_filter_skip')}
+                        onClick={() =>
+                          adjustPoint(editingPoint.id, 'toggle_filter_skip')
+                        }
                         tooltip="Toggle filter skipping"
                       />
                     </>
@@ -372,13 +393,20 @@ const PointSection = (props: {
                       <ConfigRow
                         label="Mode"
                         content={editingPoint.mode.toUpperCase()}
-                        onClick={() => adjustPoint(editingPoint.id, 'cycle_dropoff_point_interaction')}
+                        onClick={() =>
+                          adjustPoint(
+                            editingPoint.id,
+                            'cycle_dropoff_point_interaction',
+                          )
+                        }
                         tooltip="Change dropoff mode"
                       />
                       <ConfigRow
                         label="Overflow"
                         content="OFF"
-                        onClick={() => adjustPoint(editingPoint.id, 'toggle_overflow')}
+                        onClick={() =>
+                          adjustPoint(editingPoint.id, 'toggle_overflow')
+                        }
                         tooltip="Toggle overflow"
                       />
                       <ConfigRow
@@ -388,7 +416,9 @@ const PointSection = (props: {
                             ? 'ACTIVE'
                             : 'INACTIVE'
                         }
-                        onClick={() => adjustPoint(editingPoint.id, 'reset_atom_filters')}
+                        onClick={() =>
+                          adjustPoint(editingPoint.id, 'reset_atom_filters')
+                        }
                         tooltip="Toggle filters"
                       />
                     </>
@@ -397,7 +427,57 @@ const PointSection = (props: {
               </Stack.Item>
             </Stack>
           </Section>
-          {editingPoint.filters_status && <Section>something</Section>}
+          {editingPoint.filters_status && (
+            <Section
+              title="Item Filters"
+              buttons={
+                <>
+                  <Button
+                    icon="plus"
+                    onClick={() =>
+                      adjustPoint(editingPoint.id, 'add_atom_filter_from_held')
+                    }
+                  >
+                    Add held
+                  </Button>
+                  <Button.Confirm
+                    onClick={() =>
+                      adjustPoint(editingPoint.id, 'reset_atom_filters')
+                    }
+                    confirmContent="Reset?"
+                    icon="trash"
+                  />
+                </>
+              }
+            >
+              <Stack vertical>
+                {editingPoint.item_filters.map(
+                  (name: string, index: number) => {
+                    return (
+                      <Stack key={index}>
+                        <Stack.Item grow>
+                          <BlockQuote>{name}</BlockQuote>
+                        </Stack.Item>
+                        <Stack.Item>
+                          <Button
+                            color="transparent"
+                            icon="xmark"
+                            onClick={() =>
+                              adjustPoint(
+                                editingPoint.id,
+                                'delete_filter',
+                                index,
+                              )
+                            }
+                          />
+                        </Stack.Item>
+                      </Stack>
+                    );
+                  },
+                )}
+              </Stack>
+            </Section>
+          )}
         </Modal>
       )}
     </>
@@ -492,26 +572,35 @@ export const BigManipulator = () => {
             </ProgressBar>
           </Section>
 
+          {/*
           <Section>
             <Stack>
-              <Stack.Item lineHeight='1.8' grow>
-                <Box style={{
-                  padding: '2px',
-                  backgroundColor: '#444444'
-                }}>
-                  <Button fluid icon='eject'>data disk</Button>
-                  {/* <BlockQuote>No storage detected.</BlockQuote> */}
+              <Stack.Item lineHeight="1.8" grow>
+                <Box
+                  style={{
+                    padding: '2px',
+                    backgroundColor: '#444444',
+                  }}
+                >
+                  <Button fluid icon="eject">
+                    data disk
+                  </Button>
+                  <BlockQuote>No storage detected.</BlockQuote>
                 </Box>
               </Stack.Item>
-              <Stack.Item style={{alignContent: 'center'}}>
-                <Button lineHeight='2' icon='floppy-disk'>Read</Button>
+              <Stack.Item style={{ alignContent: 'center' }}>
+                <Button lineHeight="2" icon="floppy-disk">
+                  Read
+                </Button>
               </Stack.Item>
-              <Stack.Item style={{alignContent: 'center'}}>
-                <Button lineHeight='2'  icon='circle'>Write</Button>
+              <Stack.Item style={{ alignContent: 'center' }}>
+                <Button lineHeight="2" icon="circle">
+                  Write
+                </Button>
               </Stack.Item>
             </Stack>
           </Section>
-
+*/}
           <PointSection
             title="Pickup Points"
             points={pickup_points}

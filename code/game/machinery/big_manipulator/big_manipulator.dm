@@ -595,8 +595,13 @@
 		var/turf/resolved_turf = point.interaction_turf.resolve()
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = "PICK"
-		point_data["filters"] = point.type_filters
-		point_data["item_filters"] = point.atom_filters
+		var/list/filter_names = list()
+		for(var/datum/weakref/some_filter in point.atom_filters)
+			var/obj/resolved_object = some_filter?.resolve()
+			if(resolved_object)
+				filter_names += resolved_object.name
+		point_data["item_filters"] = filter_names
+		point_data["filters_status"] = point.filters_status
 		point_data["filtering_mode"] = point.filtering_mode
 		pickup_points_data += list(point_data)
 	data["pickup_points"] = pickup_points_data
@@ -609,8 +614,13 @@
 		var/turf/resolved_turf = point.interaction_turf.resolve()
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = point.interaction_mode
-		point_data["filters"] = point.type_filters
-		point_data["item_filters"] = point.atom_filters
+		var/list/filter_names = list()
+		for(var/datum/weakref/some_filter in point.atom_filters)
+			var/obj/resolved_object = some_filter?.resolve()
+			if(resolved_object)
+				filter_names += resolved_object.name
+		point_data["item_filters"] = filter_names
+		point_data["filters_status"] = point.filters_status
 		dropoff_points_data += list(point_data)
 	data["dropoff_points"] = dropoff_points_data
 
@@ -684,8 +694,8 @@
 				pickup_points -= target_point
 			else
 				dropoff_points -= target_point
-
 			qdel(target_point)
+			return TRUE
 
 		if("reset_atom_filters")
 			target_point.atom_filters = list()
@@ -696,7 +706,7 @@
 			return TRUE
 
 		if("cycle_dropoff_point_interaction")
-			target_point.interaction_mode = cycle_value(target_point.interaction_mode, list(INTERACT_DROP, INTERACT_USE, INTERACT_THROW))
+			target_point.interaction_mode = cycle_value(target_point.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
 			return TRUE
 
 		if("toggle_filter_skip")
@@ -717,8 +727,18 @@
 
 		if("add_atom_filter_from_held")
 			var/obj/item/held_item = user.get_active_held_item()
-			if(held_item)
-				target_point.atom_filters += WEAKREF(held_item)
+
+			if(!held_item)
+				return FALSE
+
+			if(held_item in target_point.atom_filters)
+				return FALSE
+
+			target_point.atom_filters += WEAKREF(held_item)
+			return TRUE
+
+		if("delete_filter")
+			target_point.atom_filters.Remove(value)
 			return TRUE
 
 		if("move_to")

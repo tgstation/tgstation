@@ -258,7 +258,7 @@
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return FALSE
 
-	if(!(obj_resolve.loc == src && obj_resolve.loc == monkey_resolve)) // if we don't hold the said item or the monkey isn't buckled
+	if(!(obj_resolve.loc == src && monkey_resolve.loc == src)) // if we don't hold the said item or the monkey isn't buckled
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return FALSE
 
