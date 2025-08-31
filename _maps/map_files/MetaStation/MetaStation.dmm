@@ -25316,7 +25316,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "iNo" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/machinery/camera/directional/south{
 	c_tag = "Medbay Psychology Office";
 	network = list("ss13","medbay")
