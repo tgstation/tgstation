@@ -130,3 +130,14 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
+
+/datum/design/bs_crystal
+	name = "Bluespace Crystal"
+	id = "bscrystal"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/sheet/bluespace_crystal
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
+	)
