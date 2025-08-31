@@ -1067,6 +1067,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
 #define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
 
+///trait that stops our ai controlled mob from moving at all due to ai planning
+#define TRAIT_AI_MOVEMENT_HALTED "ai_movement_halted"
+
 /// this is used to bypass tongue language restrictions but not tongue disabilities
 #define TRAIT_TOWER_OF_BABEL "tower_of_babel"
 
