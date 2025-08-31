@@ -5838,6 +5838,7 @@
 #include "code\modules\projectiles\guns\ballistic\bows\_bow.dm"
 #include "code\modules\projectiles\guns\ballistic\bows\bow_arrows.dm"
 #include "code\modules\projectiles\guns\ballistic\bows\bow_types.dm"
+#include "code\modules\projectiles\guns\ballistic\lahti\lahti-l39.dm"
 #include "code\modules\projectiles\guns\energy\beam_rifle.dm"
 #include "code\modules\projectiles\guns\energy\crank_guns.dm"
 #include "code\modules\projectiles\guns\energy\dueling.dm"
