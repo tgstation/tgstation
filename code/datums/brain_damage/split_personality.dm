@@ -58,13 +58,11 @@
 	if(isnull(ghost))
 		qdel(src)
 		return
-	var/datum/mind/ghost_mind
-	if(ghost.mind.current)// if they previous had a body preserve them
-		ghost_mind = ghost.mind
+	if(ghost.mind.current)// if they previous had a body preserve them else that means they never had one or it was destroyed so assign ckey like normal
 		stranger_backseat.AddComponent( \
 		/datum/component/temporary_body, \
 		old_mind = ghost.mind, \
-		old_body = ghost_mind.current, \
+		old_body = ghost.mind.current, \
 		)
 		temp_component = TRUE
 
@@ -140,11 +138,6 @@
 		qdel(src) //in case trauma deletion doesn't already do it
 
 	if((body.stat == DEAD && trauma.owner_backseat == src))
-		trauma.switch_personalities()
-		qdel(trauma)
-
-	//if one of the two ghosts, the other one stays permanently
-	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)
 
