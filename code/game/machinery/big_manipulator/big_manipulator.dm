@@ -582,6 +582,7 @@
 	data["active"] = on
 	data["current_task_type"] = current_task_type
 	data["current_task_duration"] = current_task_duration
+	data["interaction_delay"] = interaction_delay
 	data["min_delay"] = minimal_interaction_multiplier
 	data["manipulator_position"] = "[x],[y]"
 	data["pickup_tasking"] = pickup_tasking
@@ -710,7 +711,7 @@
 			return TRUE
 
 		if("cycle_pickup_point_type")
-			target_point.filtering_mode = cycle_value(target_point.filtering_mode, list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS))
+			target_point.filtering_mode = cycle_value(target_point.filtering_mode, obj_flags & EMAGGED ? list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS) : list(TAKE_ITEMS, TAKE_CLOSETS))
 			return TRUE
 
 		if("cycle_worker_interaction")
