@@ -35,9 +35,9 @@
 	if(weapon.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "digging up soil...")
-	if(weapon.use_tool(src, user, 2 SECONDS, volume=50))
+	if(weapon.use_tool(src, user, 3 SECONDS, volume=50))
 		balloon_alert(user, "bagged")
-		new sack_type(loc)
+		new sack_type(loc, src)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -68,6 +68,7 @@
 	maxnutri = 20
 	maxwater =  150
 	tray_flags = SOIL | MULTIGRAFT | GRAFT_MEDIUM
+	sack_type = /obj/item/soil_sack/vermaculite
 
 /obj/machinery/hydroponics/soil/gel
 	name = "hydrogel beads"
@@ -76,6 +77,7 @@
 	maxwater = 300
 	tray_flags = SOIL | HYDROPONIC | SUPERWATER
 	plant_offset_y = 2
+	sack_type = /obj/item/soil_sack/gel
 
 /obj/machinery/hydroponics/soil/coir
 	name = "korta root coir"
@@ -83,6 +85,7 @@
 	icon_state = "soil_coir"
 	maxnutri = 20
 	tray_flags = SOIL | FAST_MUSHROOMS
+	sack_type = /obj/item/soil_sack/coir
 
 /obj/machinery/hydroponics/soil/worm
 	name = "worm castings"
@@ -92,11 +95,18 @@
 	maxwater = 200
 	tray_flags = SOIL | WORM_HABITAT | SLOW_RELEASE
 	plant_offset_y = 4
+	sack_type = /obj/item/soil_sack/worm
 
 /obj/machinery/hydroponics/soil/worm/on_place()
 	. = ..()
 	flick("soil_worm_wiggle", src)
 
+/obj/machinery/hydroponics/soil/rich
+	name = "rich soil"
+	desc = "A rich patch of dirt, usually used in gardens."
+	icon_state = "rich_soil"
+	maxnutri = 20
+	sack_type = /obj/item/soil_sack/rich
 
 /////////////////// Soil Sacks ///////////////////////
 /// Holder items that store the soils until deployed.
@@ -135,6 +145,9 @@
 		stored_soil = outside_soil
 		stored_soil.forceMove(src)
 		STOP_PROCESSING(SSmachines, stored_soil)
+		animate(src, 100 MILLISECONDS, pixel_z = 4, easing = QUAD_EASING | EASE_OUT)
+		animate(time = 100 MILLISECONDS, pixel_z = 0, easing = QUAD_EASING | EASE_IN)
+		animate(time = 250 MILLISECONDS, pixel_x = rand(-6, 6), pixel_y = rand(-4, 4), flags = ANIMATION_PARALLEL)
 
 /obj/item/soil_sack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isopenturf(interacting_with))
@@ -157,6 +170,7 @@
 
 	stored_soil.forceMove(interacting_with)
 	playsound(stored_soil, placement_sound, 65, vary = TRUE)
+	on_place()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -205,3 +219,8 @@
 	custom_premium_price = PAYCHECK_CREW * 4
 	stored_soil = /obj/machinery/hydroponics/soil/worm
 
+/obj/item/soil_sack/rich
+	name = "rich soil sack"
+	desc = "A sack of rich black soil.\nAs your gaze falls upon it, you feel a bit more connected to the land."
+	custom_premium_price = PAYCHECK_CREW * 1.5
+	stored_soil = /obj/machinery/hydroponics/soil/rich
