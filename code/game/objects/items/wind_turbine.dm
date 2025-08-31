@@ -301,7 +301,8 @@
 	if(isnull(charging))
 		return PROCESS_KILL
 	if(isnull(cap))
-		// TODO
+		// this is easier than starting/stopping the process based on capacitor state
+		// this code only charges the attached item, so stopping it early should not be a problem
 		return
 	var/obj/item/stock_parts/power_store/cell/charging_cell = charging.get_cell()
 	if (!charging_cell && istype(charging, /obj/item/stock_parts/power_store/cell))
