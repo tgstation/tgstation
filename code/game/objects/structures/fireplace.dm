@@ -65,28 +65,31 @@
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
 			to_chat(user, span_warning("You can't fit any more of [T] in [src]!"))
-			return
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
 		adjust_fuel_timer(LOG_BURN_TIMER * logs_used)
 		user.visible_message(span_notice("[user] tosses some wood into [src]."), span_notice("You add some fuel to [src]."))
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(T, /obj/item/paper_bin))
 		var/obj/item/paper_bin/paper_bin = T
 		user.visible_message(span_notice("[user] throws [T] into [src]."), span_notice("You add [T] to [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(T, /obj/item/paper))
 		user.visible_message(span_notice("[user] throws [T] into [src]."), span_notice("You throw [T] into [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER)
 		qdel(T)
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(try_light(T,user))
-		return
+	if(T.ignition_effect(src, user))
+		try_light(T, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	return ..()
 
 /obj/structure/fireplace/update_overlays()
