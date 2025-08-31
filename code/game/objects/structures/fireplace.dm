@@ -58,13 +58,14 @@
 		ignite()
 		return TRUE
 
-/obj/structure/fireplace/attackby(obj/item/T, mob/user)
-	if(istype(T, /obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/wood = T
+/obj/structure/fireplace/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(istype(tool, /obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/wood = tool
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
-			to_chat(user, span_warning("You can't fit any more of [T] in [src]!"))
+			to_chat(user, span_warning("You can't fit any more of [tool] in [src]!"))
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 		var/logs_used = min(space_for_logs, wood.amount)
@@ -73,21 +74,21 @@
 		user.visible_message(span_notice("[user] tosses some wood into [src]."), span_notice("You add some fuel to [src]."))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(istype(T, /obj/item/paper_bin))
-		var/obj/item/paper_bin/paper_bin = T
-		user.visible_message(span_notice("[user] throws [T] into [src]."), span_notice("You add [T] to [src]."))
+	if(istype(tool, /obj/item/paper_bin))
+		var/obj/item/paper_bin/paper_bin = tool
+		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You add [tool] to [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(istype(T, /obj/item/paper))
-		user.visible_message(span_notice("[user] throws [T] into [src]."), span_notice("You throw [T] into [src]."))
+	if(istype(tool, /obj/item/paper))
+		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You throw [tool] into [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER)
-		qdel(T)
+		qdel(tool)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(T.ignition_effect(src, user))
-		try_light(T, user)
+	if(tool.ignition_effect(src, user))
+		try_light(tool, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	return ..()
