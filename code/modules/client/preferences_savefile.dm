@@ -275,6 +275,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_preferences()
 	if(!savefile)
 		CRASH("Attempted to save the preferences of [parent] without a savefile. This should have been handled by load_preferences()")
+	if(path == DEV_PREFS_PATH)
+		// Don't save over dev preferences
+		return TRUE
+
 	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
