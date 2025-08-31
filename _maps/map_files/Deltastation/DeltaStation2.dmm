@@ -2262,6 +2262,7 @@
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/folder/yellow,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "aBf" = (
@@ -25306,6 +25307,17 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/button/door/directional/north{
+	pixel_y = 36;
+	name = "Cargo Lobby Lockdown";
+	id = "cargolobbylockdown";
+	req_access = list("cargo")
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Cargo Lockdown";
+	req_access = list("cargo");
+	id = "cargolockdown"
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "gmx" = (
@@ -29912,6 +29924,10 @@
 /area/station/security/checkpoint/medical/medsci)
 "hsn" = (
 /obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lobby Lockdown Shutters";
+	id = "cargolobbylockdown"
+	},
 /turf/open/floor/plating,
 /area/station/cargo/lobby)
 "hst" = (
@@ -34591,6 +34607,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
+"iCK" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/cargo/sorting)
 "iCO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37637,6 +37662,10 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/desk_bell{
 	pixel_x = 7
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -43127,6 +43156,10 @@
 /area/station/service/library/abandoned)
 "kGo" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "kGq" = (
@@ -49395,6 +49428,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "mjK" = (
@@ -53395,6 +53432,10 @@
 	name = "Cargo Lobby"
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lobby Lockdown Shutters";
+	id = "cargolobbylockdown"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "nkN" = (
@@ -55725,6 +55766,11 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "nPp" = (
@@ -60376,6 +60422,10 @@
 /area/station/service/theater)
 "pas" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "pat" = (
@@ -62494,9 +62544,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "pBw" = (
-/obj/machinery/status_display/supply{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/arrows{
 	dir = 4
 	},
@@ -62566,10 +62613,12 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/toy/figure/cargotech,
-/obj/machinery/status_display/supply{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/machinery/button/door/directional/south{
+	req_access = list("cargo");
+	name = "Cargo Lockdown";
+	id = "cargolockdown"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "pCE" = (
@@ -68646,6 +68695,10 @@
 	codes_txt = "delivery;dir=2";
 	location = "Cargo Office"
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/crew_quarters/bar)
 "qZs" = (
@@ -73511,6 +73564,10 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Ore Redemption Access";
 	req_access = list("mineral_storeroom")
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -84711,8 +84768,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/reinforced,
-/obj/item/folder/yellow,
-/obj/item/stamp/head/qm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -87183,6 +87238,10 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Cargo Lobby"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lobby Lockdown Shutters";
+	id = "cargolobbylockdown"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
@@ -91258,6 +91317,11 @@
 /obj/effect/turf_decal/delivery,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown";
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "wAt" = (
@@ -93237,6 +93301,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown"
+	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "xcm" = (
@@ -93681,6 +93750,7 @@
 /obj/item/gps/mining,
 /obj/item/paper_bin/carbon,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stamp/head/qm,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "xhR" = (
@@ -97534,6 +97604,11 @@
 /area/space/nearstation)
 "yfI" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/cargo/lobby)
 "yfM" = (
@@ -97635,6 +97710,11 @@
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "cargodeliver"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Lockdown Shutters";
+	id = "cargolockdown";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
@@ -140100,7 +140180,7 @@ wfK
 hoC
 yfI
 wAl
-kGo
+iCK
 vSm
 xhW
 ygL
@@ -144459,7 +144539,7 @@ aaa
 aaa
 aaa
 qYo
-ljS
+aJE
 gmo
 dfQ
 tYz
