@@ -662,3 +662,11 @@
   - qol: You will no longer fall asleep from bloodloss upon arriving in the Mansus.
   loganuk:
   - bugfix: Service achievement not being in end of round report
+2025-08-31:
+  FalloutFalcon:
+  - bugfix: some rogue bitrunning gimmick items have there silly names now.
+  Melbert:
+  - config: Default max roundstart traitors per ruleset upped from 1 per 38 players
+      to 1 per 24 players.
+  SmArtKar:
+  - bugfix: Fixed nonhuman meat being unusable for any material crafting
