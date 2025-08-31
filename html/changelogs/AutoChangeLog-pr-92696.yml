@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - refactor: "split personality/blackout drunk/brainwashed now uses temporary body component, should be less buggy"
