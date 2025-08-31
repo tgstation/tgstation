@@ -23,6 +23,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/gases
 	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
 	var/temperature = TCMB
+	/// The total moles within the gas mixture
+	var/total_moles
 	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
 	/// The order of operations
 	var/tmp/temperature_archived = TCMB
@@ -173,6 +175,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
 	return TRUE
+
+/// Add a specific amount of moles to specified gas
+/datum/gas_mixture/proc/adjust_gas_moles(datum/gas/species, amount)
+
 
 ///Proportionally removes amount of gas from the gas_mixture.
 ///Returns: gas_mixture with the gases removed
