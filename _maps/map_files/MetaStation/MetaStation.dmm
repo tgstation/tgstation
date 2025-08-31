@@ -2312,6 +2312,7 @@
 /area/station/service/hydroponics/garden)
 "aPk" = (
 /obj/structure/closet/crate/preopen,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aPm" = (
@@ -3873,6 +3874,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stock_parts/power_store/battery/empty,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
 "bqk" = (
@@ -34804,6 +34806,7 @@
 /obj/item/electronics/airlock,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/item/stock_parts/power_store/battery/upgraded,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "mbJ" = (
@@ -40568,6 +40571,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/north,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nZz" = (
@@ -43115,6 +43119,7 @@
 /obj/item/electronics/apc,
 /obj/item/electronics/airlock,
 /obj/machinery/light/small/directional/east,
+/obj/item/stock_parts/power_store/battery/upgraded,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "oUU" = (
@@ -48858,6 +48863,7 @@
 /obj/item/airlock_painter,
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "qSw" = (
@@ -49011,6 +49017,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "qUp" = (
@@ -49831,6 +49838,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "rkM" = (
@@ -63549,6 +63557,7 @@
 /obj/structure/table,
 /obj/item/plant_analyzer,
 /obj/machinery/firealarm/directional/south,
+/obj/item/stock_parts/power_store/battery/upgraded,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "vQA" = (
@@ -69970,6 +69979,7 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/incident_display/delam/directional/north,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ybu" = (

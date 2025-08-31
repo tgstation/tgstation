@@ -4800,9 +4800,10 @@
 /area/station/hallway/secondary/construction)
 "byJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/east,
+/obj/item/stock_parts/power_store/battery/high,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
-/obj/machinery/light/small/directional/east,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -9828,6 +9829,10 @@
 /obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 6
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = 5;
+	pixel_x = 8
 	},
 /turf/open/floor/iron/checker,
 /area/station/maintenance/port/aft)
@@ -55392,6 +55397,14 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = -5
+	},
+/obj/item/stock_parts/power_store/battery/high,
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = 5
+	},
+/obj/structure/closet/crate/engineering/electrical,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "qnt" = (
@@ -66619,6 +66632,12 @@
 /obj/item/stack/cable_coil,
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = 5
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = -5
+	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "tIV" = (
@@ -77095,8 +77114,9 @@
 /obj/item/storage/box/lights/mixed{
 	pixel_y = 8
 	},
-/obj/item/storage/toolbox/emergency,
 /obj/structure/table/reinforced,
+/obj/item/stock_parts/power_store/battery/high,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wLv" = (

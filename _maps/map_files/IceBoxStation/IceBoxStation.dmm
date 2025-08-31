@@ -1088,6 +1088,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "apI" = (
@@ -5672,6 +5673,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "byH" = (
@@ -7460,6 +7462,7 @@
 	},
 /obj/structure/closet/crate/solarpanel_small,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "bXx" = (
@@ -11232,6 +11235,7 @@
 "dat" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "daE" = (
@@ -14470,6 +14474,11 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
+"dWc" = (
+/obj/structure/closet/crate,
+/obj/item/stock_parts/power_store/battery,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
 "dWl" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -47782,6 +47791,11 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"nBm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stock_parts/power_store/battery,
+/turf/open/floor/iron,
+/area/station/maintenance/department/electrical)
 "nBo" = (
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom/directional/north{
@@ -59996,12 +60010,13 @@
 /area/station/maintenance/starboard/fore)
 "qRq" = (
 /obj/structure/rack,
-/obj/item/electronics/apc,
-/obj/item/electronics/airlock,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/item/stock_parts/power_store/battery,
+/obj/item/electronics/apc,
+/obj/item/electronics/airlock,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "qRr" = (
@@ -60410,6 +60425,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/table,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "qWO" = (
@@ -78634,6 +78650,7 @@
 /obj/item/electronics/apc,
 /obj/item/electronics/apc,
 /obj/item/electronics/firealarm,
+/obj/item/stock_parts/power_store/battery,
 /obj/item/electronics/firealarm,
 /obj/item/electronics/firelock,
 /obj/item/electronics/firelock,
@@ -82678,6 +82695,7 @@
 	pixel_y = 3
 	},
 /obj/item/wirecutters,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "xvy" = (
@@ -248866,7 +248884,7 @@ wdg
 ukR
 pwf
 oUL
-qKz
+dWc
 qKz
 mhQ
 okb
@@ -262965,7 +262983,7 @@ kKL
 cDv
 fUc
 sPU
-glI
+nBm
 mRY
 kKL
 kKL
