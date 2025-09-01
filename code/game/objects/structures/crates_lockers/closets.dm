@@ -70,8 +70,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/icon_broken = "sparking"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-	/// References the atom that has a strong pull component (or magnet modsuit module) and is dragging this, preventing opening by someone else
-	var/datum/weakref/strong_grab_source = null
 	/// secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/secure = FALSE
 	var/can_install_electronics = TRUE
@@ -206,7 +204,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/Destroy()
 	id_card = null
-	strong_grab_source = null
+	REMOVE_TRAIT(src, TRAIT_STRONGPULL, null)
 	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
 	QDEL_NULL(closet_see_inside)
@@ -443,7 +441,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(isliving(user))
 		if(!(user.mobility_flags & MOBILITY_USE))
 			return FALSE
-	if(pulledby && user && user != pulledby)
+	if(pulledby && user && HAS_TRAIT(src, TRAIT_STRONGPULL) && user != pulledby)
 		to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
 		return FALSE
 	var/turf/T = get_turf(src)
