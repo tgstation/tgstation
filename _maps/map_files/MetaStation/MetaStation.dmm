@@ -9579,10 +9579,6 @@
 	dir = 1
 	},
 /area/station/engineering/atmos/storage/gas)
-"dsB" = (
-/obj/machinery/duct,
-/turf/closed/wall,
-/area/station/service/library)
 "dsI" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/blue,
@@ -28741,11 +28737,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/space/basic,
 /area/space/nearstation)
-"jPN" = (
-/obj/item/wrench,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "jPU" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=3-Central-Port";
@@ -58537,11 +58528,6 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
-"udB" = (
-/obj/structure/lattice,
-/obj/machinery/duct,
-/turf/open/space/basic,
-/area/space/nearstation)
 "udD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -91085,7 +91071,7 @@ bzH
 buH
 iVs
 pJi
-dsB
+sVY
 mjr
 mjr
 sVY
@@ -115774,7 +115760,7 @@ uQe
 pul
 nzo
 iGr
-jPN
+gSn
 fzM
 qOW
 nnD
@@ -120942,7 +120928,7 @@ aaa
 aaa
 aaa
 lMJ
-udB
+lMJ
 lMJ
 lMJ
 lMJ
