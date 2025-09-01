@@ -28,8 +28,8 @@
 
 /obj/item/mining_scanner/admin/attack_self(mob/user)
 	for(var/turf/closed/mineral/mineral_turf in world)
-		mineral_turf.icon = mineral_turf.scan_icon
 		if(mineral_turf.scan_state)
+			mineral_turf.icon = mineral_turf.scan_icon
 			mineral_turf.icon_state = mineral_turf.scan_state
 	qdel(src)
 
