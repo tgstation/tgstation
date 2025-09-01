@@ -421,6 +421,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/tools/welder.ogg'
 	damtype = BURN
 	force = 4
+
+	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine))
+		reagents.flags |= NO_REACT
+
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
@@ -434,9 +438,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	if(reagents.has_reagent(/datum/reagent/drug/methamphetamine)) //Allows spacemen to smoke meth without exploding!
-		reagents.flags &= ~(NO_REACT)
-		reagents.handle_reactions()
 	update_appearance(UPDATE_ICON)
 	if(flavor_text)
 		var/turf/T = get_turf(src)
@@ -939,7 +940,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
-/obj/item/cigarette/pipe/interact_with_atom(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
 	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
 		return ..()
 
