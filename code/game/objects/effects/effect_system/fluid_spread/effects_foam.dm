@@ -267,7 +267,7 @@
 	var/list/gases = air.gases
 	if (gases[/datum/gas/plasma])
 		var/scrub_amt = min(30, gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
-		gases[/datum/gas/plasma][MOLES] -= scrub_amt
+		gases.adjust_gas_moles(/datum/gas/plasma, -scrub_amt)
 		absorbed_plasma += scrub_amt
 	if (air.temperature > T20C)
 		air.temperature = max(air.temperature / 2, T20C)
