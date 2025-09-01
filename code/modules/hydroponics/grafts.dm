@@ -19,7 +19,7 @@
 	if(ispath(mother_plant))
 		plant_dna = new mother_plant()
 		if(!istype(plant_dna))
-			CRASH("Tried to create a craft by passing a non-seed path.")
+			return
 	else if(istype(mother_plant))
 		plant_dna = mother_plant.Copy()
 	else
