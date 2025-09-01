@@ -16,14 +16,15 @@
 /obj/item/graft/Initialize(mapload, obj/item/seeds/mother_plant)
 	. = ..()
 	//create our "plant dna" internal seed from the plant the cuttings are taken from.
-	if(ispath(mother_plant))
-		plant_dna = new mother_plant()
-		if(!istype(plant_dna))
-			return
-	else if(istype(mother_plant))
-		plant_dna = mother_plant.Copy()
-	else
-		CRASH("Tried to create a graft using a non-seed reference.")
+	if(mother_plant)
+		if(ispath(mother_plant))
+			plant_dna = new mother_plant()
+			if(!istype(plant_dna))
+				CRASH("Tried to create a graft using a non-seed path.")
+		else if(istype(mother_plant))
+			plant_dna = mother_plant.Copy()
+		else
+			CRASH("Tried to create a graft using a non-seed reference.")
 
 	icon_state = pick(
 		10 ; "graft_plant" , \
