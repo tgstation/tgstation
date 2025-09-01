@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - balance: "The mining MODsuit's ash accretion module now fully cancels the base slowdown from activating the MOD."
