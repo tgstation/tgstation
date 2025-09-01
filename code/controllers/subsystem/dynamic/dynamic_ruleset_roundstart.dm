@@ -38,7 +38,7 @@
 	pref_flag = ROLE_TRAITOR
 	weight = 10
 	min_pop = 3
-	max_antag_cap = list("denominator" = 38)
+	max_antag_cap = list("denominator" = 24)
 
 /datum/dynamic_ruleset/roundstart/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)

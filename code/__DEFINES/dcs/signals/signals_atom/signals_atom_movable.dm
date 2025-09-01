@@ -76,6 +76,9 @@
 	#define HEARING_MESSAGE_MODE 9
 	#define HEARING_RANGE 10
 
+///called when space wind can't move a movable. (pressure_difference, pressure_direction)
+#define COMSIG_MOVABLE_RESISTED_SPACEWIND "movable_resisted_wind"
+
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
 // called when movable is expelled from a disposal pipe, bin or outlet on obj/pipe_eject: (direction)
@@ -138,3 +141,8 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
+
+/// Called when the atom is dropped into a chasm: (turf/chasm)
+#define COMSIG_MOVABLE_CHASM_DROPPED "movable_charm_dropped"
+	/// Stop it from actually dropping into the chasm
+	#define COMPONENT_NO_CHASM_DROP (1<<0)
