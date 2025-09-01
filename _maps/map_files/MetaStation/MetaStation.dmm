@@ -18983,10 +18983,6 @@
 "gEF" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/fyellow,
-/obj/structure/sink/kitchen/directional/south{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink"
-	},
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -20167,11 +20163,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"gZA" = (
-/obj/structure/lattice,
-/obj/structure/sink/directional/east,
-/turf/open/space/basic,
-/area/space/nearstation)
 "gZM" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -27302,7 +27293,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "jsq" = (
-/obj/structure/sink/directional/west,
 /obj/structure/toilet{
 	pixel_y = 8
 	},
@@ -31744,6 +31734,13 @@
 /obj/machinery/announcement_system,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
+"kRy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sink/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "kRA" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -37493,7 +37490,6 @@
 /area/station/engineering/atmos)
 "mTB" = (
 /obj/effect/landmark/blobstart,
-/obj/structure/sink/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "mTI" = (
@@ -43199,7 +43195,6 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
 	dir = 4
 	},
-/obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "oTD" = (
@@ -43917,7 +43912,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/sink/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
@@ -61664,10 +61658,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/command/gateway)
-"vgK" = (
-/obj/structure/sink/kitchen/directional/east,
-/turf/closed/wall,
-/area/station/commons/fitness/recreation)
 "vgW" = (
 /obj/machinery/door/window/left/directional/west{
 	name = "MiniSat Airlock Access"
@@ -107467,7 +107457,7 @@ rrt
 lMJ
 rrt
 aaa
-gZA
+lMJ
 aaa
 nvn
 mOl
@@ -107727,7 +107717,7 @@ aaa
 lMJ
 aaa
 szp
-vgK
+szp
 gEN
 sqH
 jAs
@@ -115278,7 +115268,7 @@ mMK
 jxH
 tMI
 pwZ
-fdZ
+kRy
 fdZ
 fdZ
 jvX
