@@ -19,7 +19,6 @@
 /obj/item/clothing/suit/jacket/Initialize(mapload)
 	. = ..()
 	allowed += GLOB.personal_carry_allowed
-	allowed += GLOB.improvised_firearm_allowed
 
 /obj/item/clothing/suit/toggle/jacket
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
@@ -42,7 +41,6 @@
 /obj/item/clothing/suit/jacket/Initialize(mapload)
 	. = ..()
 	allowed += GLOB.personal_carry_allowed
-	allowed += GLOB.improvised_firearm_allowed
 
 /obj/item/clothing/suit/toggle/jacket/sweater
 	name = "sweater jacket"
@@ -67,6 +65,10 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	blood_overlay_type = "coat"
 	flags_inv = HIDEBELT
+
+/obj/item/clothing/suit/toggle/jacket/trenchcoat/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
 
 /obj/item/clothing/suit/jacket/blazer
 	name = "blazer jacket"
@@ -111,6 +113,10 @@
 	icon_state = "bomberjacket"
 	inhand_icon_state = "brownjsuit"
 
+/obj/item/clothing/suit/jacket/bomber/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
+
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
 	desc = "Pompadour not included."
@@ -118,6 +124,10 @@
 	inhand_icon_state = "hostrench"
 	resistance_flags = NONE
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+
+/obj/item/clothing/suit/jacket/leather/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
 
 /obj/item/clothing/suit/jacket/leather/biker
 	name = "biker jacket"
@@ -152,12 +162,20 @@
 	icon_state = "militaryjacket"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/jacket/miljacket/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
+
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
 	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
 	icon_state = "letterman"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/jacket/letterman/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
 
 /obj/item/clothing/suit/jacket/letterman_red
 	name = "red letterman jacket"
@@ -166,6 +184,10 @@
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/jacket/letterman_red/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
+
 /obj/item/clothing/suit/jacket/letterman_syndie
 	name = "blood-red letterman jacket"
 	desc = "Oddly, this jacket seems to have a large S on the back..."
@@ -173,9 +195,17 @@
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/jacket/letterman_syndie/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
+
 /obj/item/clothing/suit/jacket/letterman_nanotrasen
 	name = "blue letterman jacket"
 	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
 	icon_state = "letterman_n"
 	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/jacket/letterman_nanotrasen/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.improvised_firearm_allowed
