@@ -1,0 +1,21 @@
+2025-09-01:
+  Melbert:
+  - balance: Armsky will detain people who yoink weapons out of the armory without
+      a permit again.
+  SmArtKar:
+  - image: Brought back "new" goliath saddles which were lost during sprite reorganization
+      a while back.
+  - bugfix: Fixed misaligned magmawing watcher sprites
+  - image: Swapped preparing/ready to attack eye sprites on base watchers
+  - bugfix: You cannot stack infinite amount of cards in decks to explode clients
+      of whoever they get thrown at.
+  - refactor: Rewrote card items to use new interaction code.
+  TheBoondock:
+  - refactor: split personality/blackout drunk/brainwashed now uses temporary body
+      component, should be less buggy
+  tonyhawq:
+  - rscadd: Added a portable wind turbine which can charge things when you walk around
+  - rscadd: Added a signal that procs when an object resists space wind (from being
+      anchored / pulled)
+  - sound: added woosh.ogg as a low "wooshing" noise
+  - image: added a wind turbine sprite
