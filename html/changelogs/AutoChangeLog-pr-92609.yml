@@ -1,0 +1,9 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fixed move subsystem bypassing status checks"
+  - bugfix: "Fixed elastic arms mutation bypassing abstract object checks for picking up objects"
+  - bugfix: "Fixed species radiation bypassing hair checks for balding"
+  - bugfix: "Fixed damaged APC board screentips bypassing emagged and broken checks"
+  - bugfix: "Fixed shuttle cleanup code bypassing move contents of turfs"
+  - bugfix: "Fixed tram crossing signals bypassing north and east direction checks"
