@@ -176,16 +176,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
 	return TRUE
 
-/// Add a specific amount of moles to specified gas
+/// Add a specific amount of moles to specified gas or add a new gas to the mix
 /// amount is added so make it negative to remove
 /datum/gas_mixture/proc/adjust_gas_moles(datum/gas/species, amount)
-	gases[species][MOLES += amount]
+	ASSERT_GAS(species, src)
+	gases[species][MOLES] += amount
+	garbage_collect()
 
-/// Add a specific amount of moles to all the gasses present
+/// Add a specific amount of moles to all the gasses present or add a new gas to the mix
 /// gases_moles is an associative list of gas species to amount, make amount negative to remove
 /datum/gas_mixture/proc/adjust_gases_moles(list/gases_moles)
 	for(var/gas_specie as anything in gases_moles)
+		ASSERT_GAS(gas_specie, src)
 		gases[gas_specie][MOLES] += gases_moles[gas_specie]
+	garbage_collect()
 
 ///Proportionally removes amount of gas from the gas_mixture.
 ///Returns: gas_mixture with the gases removed
