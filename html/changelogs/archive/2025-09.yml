@@ -1,0 +1,45 @@
+2025-09-01:
+  Melbert:
+  - balance: Armsky will detain people who yoink weapons out of the armory without
+      a permit again.
+  SmArtKar:
+  - image: Brought back "new" goliath saddles which were lost during sprite reorganization
+      a while back.
+  - bugfix: Fixed misaligned magmawing watcher sprites
+  - image: Swapped preparing/ready to attack eye sprites on base watchers
+  - bugfix: You cannot stack infinite amount of cards in decks to explode clients
+      of whoever they get thrown at.
+  - refactor: Rewrote card items to use new interaction code.
+  TheBoondock:
+  - refactor: split personality/blackout drunk/brainwashed now uses temporary body
+      component, should be less buggy
+  tonyhawq:
+  - rscadd: Added a portable wind turbine which can charge things when you walk around
+  - rscadd: Added a signal that procs when an object resists space wind (from being
+      anchored / pulled)
+  - sound: added woosh.ogg as a low "wooshing" noise
+  - image: added a wind turbine sprite
+2025-09-02:
+  Hatterhat:
+  - balance: The mining MODsuit's ash accretion module now fully cancels the base
+      slowdown from activating the MOD.
+  SmArtKar:
+  - bugfix: Fixed a potential server crash caused by Mi-Gos
+  - bugfix: Fixed biogens bricking themselves, again
+  TheBoondock:
+  - bugfix: fixed null.ghostize() in split personality deletion
+  agudbrand:
+  - qol: shift+alt will open the tgui loot panel on any tile without being intercepted
+      by items that may be on the tile
+  - code_imp: adds a shift+alt click on proc for living mobs to explicitly open the
+      tgui loot panel in addition to the already existing alt bind
+  lelandkemble:
+  - rscadd: His Grace will now drink gender-change potions
+  timothymtorres:
+  - bugfix: Fixed move subsystem bypassing status checks
+  - bugfix: Fixed elastic arms mutation bypassing abstract object checks for picking
+      up objects
+  - bugfix: Fixed species radiation bypassing hair checks for balding
+  - bugfix: Fixed damaged APC board screentips bypassing emagged and broken checks
+  - bugfix: Fixed shuttle cleanup code bypassing move contents of turfs
+  - bugfix: Fixed tram crossing signals bypassing north and east direction checks
