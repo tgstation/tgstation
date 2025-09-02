@@ -42,18 +42,29 @@
 	//collect all sensors that are the closest to this computer
 	var/list/closest_sensors = list()
 	var/turf/comp_turf = get_turf(src)
-	for(var/obj/machinery/air_sensor/sensor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/air_sensor))
+	for(var/obj/machinery/sensor as anything in (SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/air_sensor) + SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/meter/monitored)))
+		//same z level
 		if(sensor.z != z)
 			continue
-		if(!closest_sensors[sensor.chamber_id])
-			closest_sensors[sensor.chamber_id] = sensor
+		//infer chamber id
+		var/chamber_id = ""
+		if(istype(sensor, /obj/machinery/air_sensor))
+			var/obj/machinery/air_sensor/sensor = sensor
+			chamber_id = sensor.chamber_id
+		else
+			var/obj/machinery/meter/monitored/meter = sensor
+			chamber_id = meter.chamber_id
+		//track & collect closest sensors
+		if(!closest_sensors[chamber_id])
+			closest_sensors[chamber_id] = sensor
 			continue
-		var/obj/machinery/air_sensor/target = closest_sensors[sensor.chamber_id]
+		var/obj/machinery/target = closest_sensors[chamber_id]
 		if(get_dist(comp_turf, get_turf(sensor)) < get_dist(comp_turf, get_turf(target)))
-			closest_sensors[sensor.chamber_id] = sensor
+			closest_sensors[chamber_id] = sensor
+	//convert sensor list to id tags
 	connected_sensors = list()
 	for(var/chamber_id in closest_sensors)
-		var/obj/machinery/air_sensor/target = closest_sensors[chamber_id]
+		var/obj/machinery/target = closest_sensors[chamber_id]
 		connected_sensors[chamber_id] = target.id_tag
 
 /obj/machinery/computer/atmos_control/examine(mob/user)
