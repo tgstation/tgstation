@@ -9,35 +9,24 @@
 
 	/// Which sensors do we want to listen to.
 	/// Assoc of list[chamber_id] = readable_chamber_name
-	var/list/atmos_chambers
-
-	/// Used when control = FALSE to store the original atmos chambers so they dont get lost when reconnecting
-	var/list/always_displayed_chambers
-
+	var/list/atmos_chambers = list()
+	/// list of all sensors[key is chamber id, value is id of air sensor linked to this chamber] monitered by this computer
+	var/list/connected_sensors = list()
 	/// Whether we can actually adjust the chambers or not.
 	var/control = TRUE
 	/// Whether we are allowed to reconnect.
 	var/reconnecting = TRUE
-
-	/// list of all sensors[key is chamber id, value is id of air sensor linked to this chamber] monitered by this computer
-	var/list/connected_sensors
-
-/obj/machinery/computer/atmos_control/Initialize(mapload, obj/item/circuitboard/C)
-	. = ..()
-
-	var/static/list/multitool_tips = list(
-		TOOL_MULTITOOL = list(
-			SCREENTIP_CONTEXT_LMB = "Link Sensor",
-		)
-	)
-	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
-
-	//special case for the station monitering console. We dont want to loose these chambers during reconnecting
-	if(!control && !isnull(atmos_chambers))
-		always_displayed_chambers = atmos_chambers.Copy()
+	///OUur last reconnected chamber
+	VAR_PRIVATE/last_chamber_id = ""
 
 /obj/machinery/computer/atmos_control/post_machine_initialize()
 	. = ..()
+
+	scan()
+
+///Scans the z level for new air sensors & monitors
+/obj/machinery/computer/atmos_control/proc/scan()
+	PRIVATE_PROC(TRUE)
 
 	//collect all sensors that are the closest to this computer
 	var/list/closest_sensors = list()
@@ -62,23 +51,20 @@
 		if(get_dist(comp_turf, get_turf(sensor)) < get_dist(comp_turf, get_turf(target)))
 			closest_sensors[chamber_id] = sensor
 	//convert sensor list to id tags
-	connected_sensors = list()
+	connected_sensors.Cut()
 	for(var/chamber_id in closest_sensors)
 		var/obj/machinery/target = closest_sensors[chamber_id]
 		connected_sensors[chamber_id] = target.id_tag
-
-/obj/machinery/computer/atmos_control/examine(mob/user)
-	. = ..()
-	. += span_notice("Use a multitool to link a air sensor to this computer")
 
 /// Reconnect only works for station based chambers.
 /obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
 	if(!reconnecting)
 		return FALSE
 
+	scan()
+
 	// We only prompt the user with the sensors that are actually available.
 	var/available_devices = list()
-
 	for (var/chamber_identifier in connected_sensors)
 		//this sensor was destroyed at the time of reconnecting
 		var/obj/machinery/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber_identifier]]
@@ -102,28 +88,13 @@
 	if(isnull(new_id))
 		return FALSE
 
-	atmos_chambers = list()
-	//these are chambers we always want to display even after reconnecting
-	if(always_displayed_chambers)
-		for(var/chamber_id in always_displayed_chambers)
-			atmos_chambers[chamber_id] = always_displayed_chambers[chamber_id]
+	atmos_chambers -= last_chamber_id
 	atmos_chambers[new_id] = new_name
+	last_chamber_id = new_id
 
 	name = new_name + (control ? " Control" : " Monitor")
 
 	return TRUE
-
-/obj/machinery/computer/atmos_control/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	. = ..()
-
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
-		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
-		//register the sensor's unique ID with its assositated chamber
-		connected_sensors[sensor.chamber_id] = sensor.id_tag
-		user.balloon_alert(user, "sensor connected to [src]")
-		return ITEM_INTERACT_SUCCESS
-
-	return
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -180,7 +151,6 @@
 		return
 
 	var/chamber = params["chamber"]
-
 	switch(action)
 		if("toggle_input")
 			if (!(chamber in atmos_chambers))
@@ -196,6 +166,8 @@
 
 			input.on = !input.on
 			input.update_appearance(UPDATE_ICON)
+			return TRUE
+
 		if("toggle_output")
 			if (!(chamber in atmos_chambers))
 				return TRUE
@@ -210,6 +182,8 @@
 
 			output.on = !output.on
 			output.update_appearance(UPDATE_ICON)
+			return TRUE
+
 		if("adjust_input")
 			if (!(chamber in atmos_chambers))
 				return TRUE
@@ -228,6 +202,8 @@
 			target = clamp(target, 0, MAX_TRANSFER_RATE)
 
 			input.volume_rate = clamp(target, 0, min(input.airs[1].volume, MAX_TRANSFER_RATE))
+			return TRUE
+
 		if("adjust_output")
 			if (!(chamber in atmos_chambers))
 				return TRUE
@@ -246,10 +222,11 @@
 			target = clamp(target, 0, ATMOS_PUMP_MAX_PRESSURE)
 
 			output.internal_pressure_bound = target
-		if("reconnect")
-			reconnect(usr)
+			return TRUE
 
-	return TRUE
+		if("reconnect")
+			reconnect(ui.user)
+			return TRUE
 
 /obj/machinery/computer/atmos_control/nocontrol
 	control = FALSE
