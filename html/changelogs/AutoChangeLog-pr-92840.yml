@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Pirates can sell minerals and other cargo exports on their bounty pad again."
