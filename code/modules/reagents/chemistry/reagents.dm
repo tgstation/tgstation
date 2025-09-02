@@ -91,8 +91,6 @@
 	var/fallback_icon_state
 	/// When ordered in a restaurant, what custom order do we create?
 	var/restaurant_order = /datum/custom_order/reagent/drink
-	/// If this reagent immediately turns into something else (like /datum/reagent/glitter/random for example), set to the chem that it becomes (e.g. /datum/reagent/glitter)
-	var/turns_into
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)

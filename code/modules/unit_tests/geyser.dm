@@ -12,10 +12,9 @@
 	for(var/geyser_type as anything in geysers)
 		var/obj/structure/geyser/wittel/geyser = allocate(geyser_type)
 		geyser.potency = geyser.max_volume //make it recharge in 1 tick
-		var/real_reagent_id = geyser.reagent_id::turns_into // some reagents immediately turn into other types, so to not have them cause flaky failures let's keep them in mind
 
 		TEST_ASSERT(geyser.reagents, "Geyser does not have a reagent datum! Source: [geyser.type]")
-		TEST_ASSERT(geyser.reagents.has_reagent(real_reagent_id || geyser.reagent_id), "Geyser should start with [geyser.reagent_id], but started with [geyser.reagents.get_reagent_log_string()] instead. Source: [geyser.type]")
+		TEST_ASSERT(geyser.reagents.has_reagent(geyser.reagent_id), "Geyser should start with [geyser.reagent_id], but started with [geyser.reagents.get_reagent_log_string()] instead. Source: [geyser.type]")
 
 		geyser.reagents.clear_reagents() //this should awaken the geyser to start refilling
 
