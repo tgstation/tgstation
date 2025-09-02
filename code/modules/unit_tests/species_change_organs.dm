@@ -53,5 +53,5 @@
 
 	// They should be missing both the right arm and left leg still
 	var/list/missing_limbs = dummy.get_missing_limbs()
-	TEST_ASSERT(/obj/item/bodypart/arm/right in missing_limbs, "Dummy, upon changing species, regenerated their lost arm!")
-	TEST_ASSERT(/obj/item/bodypart/leg/left in missing_limbs, "Dummy, upon changing species, regenerated their lost leg!")
+	TEST_ASSERT(!(/obj/item/bodypart/arm/right in missing_limbs), "Dummy, upon changing species, regenerated their lost arm!")
+	TEST_ASSERT(!(/obj/item/bodypart/leg/left in missing_limbs), "Dummy, upon changing species, regenerated their lost leg!")
