@@ -49,8 +49,8 @@
 		//infer chamber id
 		var/chamber_id = ""
 		if(istype(sensor, /obj/machinery/air_sensor))
-			var/obj/machinery/air_sensor/sensor = sensor
-			chamber_id = sensor.chamber_id
+			var/obj/machinery/air_sensor/air_sense = sensor
+			chamber_id = air_sense.chamber_id
 		else
 			var/obj/machinery/meter/monitored/meter = sensor
 			chamber_id = meter.chamber_id
