@@ -36461,10 +36461,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/hallway/secondary/entry)
-"kvR" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "kwe" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -38275,9 +38271,6 @@
 /area/station/engineering/storage)
 "kYU" = (
 /obj/machinery/air_sensor/engine_chamber,
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "kYV" = (
@@ -44325,7 +44318,7 @@
 "mPy" = (
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "mPB" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Holodeck - Aft";
@@ -45786,7 +45779,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "nmW" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/machinery/firealarm/directional/west,
@@ -52500,7 +52493,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "phu" = (
 /obj/structure/transit_tube,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -63290,11 +63283,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/virology)
-"sqy" = (
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "sqz" = (
 /obj/structure/cable,
 /obj/item/cigbutt{
@@ -124550,7 +124538,7 @@ dcE
 dcE
 dcE
 phm
-sqy
+kOx
 heR
 heR
 dcE
@@ -124806,10 +124794,10 @@ dcE
 dcE
 dcE
 dcE
-sqy
-dcE
-dTJ
-mFJ
+kOx
+heR
+heR
+heR
 dcE
 unl
 wnb
@@ -125063,9 +125051,9 @@ dcE
 dcE
 dcE
 dcE
-sqy
-dcE
-dTJ
+kOx
+heR
+heR
 heR
 unl
 unl
@@ -125320,8 +125308,8 @@ dcE
 dcE
 dcE
 dcE
-sqy
-dcE
+kOx
+heR
 bzP
 nmV
 vUO
@@ -125577,10 +125565,10 @@ dcE
 dcE
 dcE
 dcE
-sqy
-dcE
+kOx
 heR
-mFJ
+heR
+heR
 mTz
 nRY
 thy
@@ -130216,7 +130204,7 @@ nUp
 qZN
 scP
 unl
-dcE
+dTJ
 mPy
 bZf
 aef
@@ -130473,8 +130461,8 @@ mTz
 unl
 unl
 unl
-dcE
-dcE
+dTJ
+dTJ
 heR
 sdL
 ghC
@@ -130729,10 +130717,10 @@ dcE
 dcE
 dcE
 dcE
-dTJ
-dTJ
-dTJ
-dTJ
+heR
+heR
+heR
+heR
 eaV
 eaV
 eaV
@@ -130986,10 +130974,10 @@ dcE
 dcE
 dcE
 dcE
-kvR
-kvR
-kvR
-kvR
+mXN
+mXN
+mXN
+mXN
 xXv
 kOx
 dcE
