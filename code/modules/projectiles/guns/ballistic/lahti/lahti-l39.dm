@@ -50,5 +50,15 @@
 	catastropic_dismemberment = TRUE
 	armour_penetration = 50
 	ignore_range_hit_prone_targets = TRUE
-	mecha_damage = 400 // bypasses the mechs armor and just deals the same amount of damage anyway.
+	var/mecha_damage = 400 // bypasses the mechs armor and just deals the same amount of damage anyway.
 	paralyze = 100 // same as sniper rifle
+
+/obj/projectile/bullet/mm20x138/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(isobj(target) && (blocked != 100))
+		var/obj/thing_to_break = target
+		var/damage_to_deal = object_damage
+		if(ismecha(thing_to_break) && mecha_damage)
+			damage_to_deal += mecha_damage
+		if(damage_to_deal)
+			thing_to_break.take_damage(damage_to_deal, BRUTE, BULLET, FALSE)
+	return ..()
