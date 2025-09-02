@@ -77,7 +77,7 @@
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
-	scan_state = "rock_Uranium"
+	scan_state = "rock_uranium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/uranium
 
@@ -89,7 +89,7 @@
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
-	scan_state = "rock_Iron"
+	scan_state = "rock_iron"
 	spreadChance = 20
 	merge_type = /obj/item/stack/ore/iron
 
@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
-	scan_state = "rock_Plasma"
+	scan_state = "rock_plasma"
 	spreadChance = 8
 	merge_type = /obj/item/stack/ore/plasma
 
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 3
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
-	scan_state = "rock_Silver"
+	scan_state = "rock_silver"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/silver
 
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 5
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
-	scan_state = "rock_Gold"
+	scan_state = "rock_gold"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/gold
 
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
-	scan_state = "rock_Diamond"
+	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
 
 /obj/item/stack/ore/diamond/five
@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
-	scan_state = "rock_Bananium"
+	scan_state = "rock_bananium"
 	merge_type = /obj/item/stack/ore/bananium
 
 /obj/item/stack/ore/titanium
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
-	scan_state = "rock_Titanium"
+	scan_state = "rock_titanium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/titanium
 

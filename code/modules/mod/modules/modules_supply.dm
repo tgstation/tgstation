@@ -369,7 +369,7 @@
 	/// Armor values per tile.
 	var/datum/armor/armor_mod = /datum/armor/mod_ash_accretion
 	/// Speed added when you're fully covered in ash.
-	var/speed_added = -0.5
+	var/speed_added = -0.75
 	/// Turfs that let us accrete ash.
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.

@@ -83,8 +83,10 @@
 	///Has a mutator been used on the slime? Only one is allowed
 	var/mutator_used = FALSE
 
-	//The datum that handles the slime colour's core and possible mutations
-	var/datum/slime_type/slime_type
+	// The datum that handles the slime colour's core and possible mutations
+	var/datum/slime_type/slime_type = null
+	// After a slime is initialized, a list of all possible initialized datums of slime_types
+	var/static/list/possible_slime_types = null
 
 	//CORE-CROSSING CODE
 
@@ -108,7 +110,7 @@
 	/// Our reproduction action
 	var/datum/action/innate/slime/reproduce/reproduce_action
 
-/mob/living/basic/slime/Initialize(mapload, new_type=/datum/slime_type/grey, new_life_stage=SLIME_LIFE_STAGE_BABY)
+/mob/living/basic/slime/Initialize(mapload, new_type = /datum/slime_type/grey, new_life_stage = SLIME_LIFE_STAGE_BABY)
 
 	. = ..()
 
@@ -118,11 +120,13 @@
 	reproduce_action = new (src)
 	reproduce_action.Grant(src)
 
+	if(isnull(possible_slime_types))
+		possible_slime_types = list()
+		for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
+			possible_slime_types[slime_type] = new slime_type
+
 	set_slime_type(new_type)
 	set_life_stage(new_life_stage)
-	update_name()
-	regenerate_icons()
-
 	set_nutrition(SLIME_STARTING_NUTRITION)
 
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 2)
@@ -143,9 +147,9 @@
 	ai_controller.set_blackboard_key(BB_SLIME_REPRODUCE, reproduce_action)
 
 /mob/living/basic/slime/Destroy()
-
 	QDEL_NULL(evolve_action)
 	QDEL_NULL(reproduce_action)
+	slime_type = null
 
 	return ..()
 
@@ -153,7 +157,7 @@
 /mob/living/basic/slime/random
 
 /mob/living/basic/slime/random/Initialize(mapload, new_colour, new_life_stage)
-	return ..(mapload, pick(subtypesof(/datum/slime_type)), prob(50) ? SLIME_LIFE_STAGE_ADULT : SLIME_LIFE_STAGE_BABY)
+	return ..(mapload, null, prob(50) ? SLIME_LIFE_STAGE_ADULT : SLIME_LIFE_STAGE_BABY)
 
 ///Friendly docile subtype
 /mob/living/basic/slime/pet
@@ -273,13 +277,13 @@
 	ai_controller.set_blackboard_key(BB_SLIME_LIFE_STAGE, life_stage)
 	update_mob_action_buttons()
 
-///Sets the slime's type, name and its icons
-/mob/living/basic/slime/proc/set_slime_type(new_type)
-	slime_type = new new_type
+/// Sets the slime's type, name and its icons.
+/// If not provided with a type it will instead be random
+/mob/living/basic/slime/proc/set_slime_type(new_type = null)
+	if(isnull(new_type))
+		new_type = pick(subtypesof(/datum/slime_type))
 
-///randomizes the colour of a slime
-/mob/living/basic/slime/proc/random_colour()
-	set_slime_type(pick(subtypesof(/datum/slime_type)))
+	slime_type = possible_slime_types[new_type]
 	update_name()
 	regenerate_icons()
 

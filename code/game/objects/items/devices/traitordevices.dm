@@ -501,3 +501,98 @@ effective or pretty fucking useless.
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
 	speed = 1.6
+
+/// Flashbang disguised as a pen
+/obj/item/pen/penbang
+	degrees = 90
+
+/obj/item/pen/penbang/on_transform(obj/item/source, mob/user, active)
+	. = ..()
+	var/det_time = 1 SECONDS + (4 SECONDS * (degrees / 90))
+	if(user)
+		to_chat(user, span_warning("You prime the penbang! [capitalize(DisplayTimeText(det_time))]!"))
+		log_bomber(user, "has primed a", src, "(penbang) for detonation")
+	addtimer(CALLBACK(src, PROC_REF(detonate), user), det_time)
+
+/obj/item/pen/penbang/proc/detonate(mob/user)
+	var/obj/item/grenade/flashbang/bang = new(get_turf(src))
+	bang.detonate()
+	qdel(src)
+
+/// A camera disguised as a flash
+/obj/item/camera/flash
+	/// The flash we use to flash people with
+	var/obj/item/assembly/flash/handheld/internal_flash
+
+/obj/item/camera/flash/Initialize(mapload)
+	. = ..()
+	internal_flash = new(src)
+
+/obj/item/camera/flash/Destroy()
+	QDEL_NULL(internal_flash)
+	return ..()
+
+/obj/item/camera/flash/Exited(atom/movable/gone, direction)
+	. = ..()
+	// i guess this is a normal camera now. shouldn't happen, though
+	if(gone == internal_flash)
+		internal_flash = null
+
+/obj/item/camera/flash/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	return ..()
+
+/obj/item/camera/flash/attack(mob/living/M, mob/user)
+	return internal_flash?.attack(M, user)
+
+/// Jackboots with a dagger embedded into them - changes your kicks to be stab attacks, potetnially causing bleeding
+/obj/item/clothing/shoes/jackboots/dagger
+	/// List of bodyparts modified by the dagger
+	var/list/modified_bodyparts = list()
+
+/obj/item/clothing/shoes/jackboots/dagger/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_FEET) || !istype(user))
+		modified_bodyparts += user.get_bodypart(BODY_ZONE_L_LEG)
+		modified_bodyparts += user.get_bodypart(BODY_ZONE_R_LEG)
+		for(var/obj/item/bodypart/bodypart in modified_bodyparts)
+			bodypart.unarmed_sharpness |= SHARP_EDGED
+			bodypart.unarmed_attack_effect = ATTACK_EFFECT_SLASH
+			RegisterSignals(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
+		RegisterSignal(user, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(modify_legs))
+
+/obj/item/clothing/shoes/jackboots/dagger/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_CARBON_POST_ATTACH_LIMB)
+	for(var/obj/item/bodypart/bodypart in modified_bodyparts)
+		clear_modification(bodypart)
+
+/obj/item/clothing/shoes/jackboots/dagger/handle_deconstruct(disassembled)
+	. = ..()
+	new /obj/item/switchblade/extended(drop_location())
+
+/obj/item/clothing/shoes/jackboots/dagger/proc/clear_modification(obj/item/bodypart/bodypart, ...)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
+	bodypart.unarmed_sharpness = initial(bodypart.unarmed_sharpness)
+	bodypart.unarmed_attack_effect = initial(bodypart.unarmed_attack_effect)
+	modified_bodyparts -= bodypart
+
+/obj/item/clothing/shoes/jackboots/dagger/proc/modify_legs(datum/source, obj/item/bodypart/bodypart, ...)
+	SIGNAL_HANDLER
+
+	if(bodypart in modified_bodyparts)
+		return
+	if(!istype(bodypart, /obj/item/bodypart/leg))
+		return
+
+	modified_bodyparts += bodypart
+	bodypart.unarmed_sharpness |= SHARP_EDGED
+	RegisterSignal(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
+
+/obj/item/clothing/shoes/jackboots/dagger/examine_more(mob/user)
+	. = ..()
+	. += span_notice("Upon closer inspection, you notice a dagger embedded into the sole.")
