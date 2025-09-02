@@ -71,7 +71,7 @@
 	/datum/gas/oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD, \
 	/datum/gas/nitrous_oxide = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD, \
 	)
-	air_contents.adjust_gases_moles(gas_list)
+	air_contents.adjust_multiple_gases(gas_list)
 
 /obj/item/tank/internals/anesthetic/examine(mob/user)
 	. = ..()
@@ -244,7 +244,7 @@
 	/datum/gas/oxygen = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.95, \
 	/datum/gas/nitrous_oxide = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.05, \
 	)
-	air_contents.adjust_gases_moles(gas_list)
+	air_contents.adjust_multiple_gases(gas_list)
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/bz
 
@@ -253,7 +253,7 @@
 	/datum/gas/oxygen = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.9, \
 	/datum/gas/bz = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.1,\
 	)
-	air_contents.adjust_gases_moles(gas_list)
+	air_contents.adjust_multiple_gases(gas_list)
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/helium
 	distribute_pressure = TANK_CLOWN_RELEASE_PRESSURE + 2
@@ -263,4 +263,4 @@
 	/datum/gas/oxygen = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.75, \
 	/datum/gas/helium = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.25 , \
 	)
-	air_contents.adjust_gases_moles(gas_list)
+	air_contents.adjust_multiple_gases(gas_list)

@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
 /// gases_moles is an associative list of gas species to amount, make amount negative to remove
-/datum/gas_mixture/proc/adjust_gases_moles(list/gases_moles)
+/datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
 	for(var/gas_specie as anything in gases_moles)
 		ASSERT_GAS(gas_specie, src)
 		gases[gas_specie][MOLES] += gases_moles[gas_specie]

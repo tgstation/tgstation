@@ -265,7 +265,7 @@
 	QDEL_NULL(hotspot)
 	var/datum/gas_mixture/air = location.air
 	if (air.gases[/datum/gas/plasma])
-		var/scrub_amt = min(30, gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
+		var/scrub_amt = min(30, air.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
 		air.adjust_gas_moles(/datum/gas/plasma, -scrub_amt)
 		absorbed_plasma += scrub_amt
 	if (air.temperature > T20C)
