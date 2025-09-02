@@ -51,6 +51,7 @@
 	armour_penetration = 50
 	ignore_range_hit_prone_targets = TRUE
 	var/mecha_damage = 400 // bypasses the mechs armor and just deals the same amount of damage anyway.
+	var/object_damage = 400 // same normal damage
 	paralyze = 100 // same as sniper rifle
 
 /obj/projectile/bullet/mm20x138/on_hit(atom/target, blocked = 0, pierce_hit)
