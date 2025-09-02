@@ -1,5 +1,0 @@
-author: "agudbrand"
-delete-after: True
-changes:
-  - qol: "shift+alt will open the tgui loot panel on any tile without being intercepted by items that may be on the tile"
-  - code_imp: "adds a shift+alt click on proc for living mobs to explicitly open the tgui loot panel in addition to the already existing alt bind"
