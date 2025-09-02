@@ -37,7 +37,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/jacket/Initialize(mapload)
+/obj/item/clothing/suit/toggle/jacket/Initialize(mapload)
 	. = ..()
 	allowed += GLOB.personal_carry_allowed
 
