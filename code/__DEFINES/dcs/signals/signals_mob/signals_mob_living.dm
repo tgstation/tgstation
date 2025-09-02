@@ -352,3 +352,6 @@
 
 ///from mob/living/befriend()
 #define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"
+
+/// From /mob/living/on_look_z_changed() : (turf/old_turf, turf/new_turf)
+#define COMSIG_LIVING_LOOK_Z_CHANGE "living_look_z_change"

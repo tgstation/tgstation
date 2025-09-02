@@ -2291,8 +2291,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return FALSE
 	return TRUE
 
+/// Should be called when the z-level that a living mob is actually looking at changes
+/// such that other systems are notified about it.
+/mob/living/proc/on_look_z_changed(turf/old_turf, turf/new_turf)
+	SEND_SIGNAL(src, COMSIG_LIVING_LOOK_Z_CHANGE, old_turf, new_turf)
+
 /mob/living/proc/end_look()
 	reset_perspective()
+	// Its possible that looking_holder may be null if the mob moved into a turf where they can no longer
+	// look up/down while holding the look up/down bind. Upon release this proc is called again.
+	if (looking_holder)
+		on_look_z_changed(looking_holder.loc, loc)
 	looking_vertically = NONE
 	QDEL_NULL(looking_holder)
 
@@ -2318,6 +2327,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	looking_vertically = UP
 	looking_holder = new(above_turf, src, UP)
 	reset_perspective(looking_holder)
+	on_look_z_changed(loc, above_turf)
 
 /mob/living/proc/get_looking_turf(direction)
 	//down needs to check this floor
@@ -2360,6 +2370,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	looking_vertically = DOWN
 	looking_holder = new(get_looking_turf(DOWN), src, DOWN)
 	reset_perspective(looking_holder)
+	on_look_z_changed(loc, below_turf)
 
 /mob/living/set_stat(new_stat)
 	. = ..()
