@@ -43,11 +43,12 @@
 /obj/projectile/bullet/mm20x138
 	name ="20x138mm bullet"
 	speed = 3.5
-	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
+	range = 400 // same as sniper rifle
 	damage = 400
 	paralyze = 100
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
 	armour_penetration = 50
 	ignore_range_hit_prone_targets = TRUE
-
+	mecha_damage = 400 // bypasses the mechs armor and just deals the same amount of damage anyway.
+	paralyze = 100 // same as sniper rifle
