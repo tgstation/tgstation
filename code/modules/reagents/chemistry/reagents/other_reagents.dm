@@ -2569,6 +2569,7 @@
 /datum/reagent/glitter/random
 	name = "Unrandomised Randomised Glitter"
 	description = "You shouldn't be seeing this, please make an issue report describing how you found it."
+	turns_into = /datum/reagent/glitter // this is what actually ends up being spawned, for purposes of unit tests and other checks
 
 	var/list/possible_colors = list(
 		list(COLOR_WHITE = 100),
