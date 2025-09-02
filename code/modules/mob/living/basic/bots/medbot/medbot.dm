@@ -374,7 +374,7 @@
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_PARAMEDIC
-	minimal_access = list(
+	access = list(
 		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_CONSTRUCTION,
@@ -388,8 +388,6 @@
 		ACCESS_MORGUE,
 		ACCESS_SCIENCE,
 		ACCESS_SERVICE,
-		)
-	extra_access = list(
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
 		ACCESS_PHARMACY,
