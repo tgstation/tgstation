@@ -59,39 +59,36 @@
 		return TRUE
 
 /obj/structure/fireplace/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(istype(tool, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/wood = tool
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
 			to_chat(user, span_warning("You can't fit any more of [tool] in [src]!"))
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return ITEM_INTERACT_BLOCKING
 
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
 		adjust_fuel_timer(LOG_BURN_TIMER * logs_used)
 		user.visible_message(span_notice("[user] tosses some wood into [src]."), span_notice("You add some fuel to [src]."))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper_bin))
 		var/obj/item/paper_bin/paper_bin = tool
 		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You add [tool] to [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
 		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You throw [tool] into [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER)
 		qdel(tool)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
 	if(tool.ignition_effect(src, user))
 		try_light(tool, user)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	return ..()
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fireplace/update_overlays()
 	. = ..()
