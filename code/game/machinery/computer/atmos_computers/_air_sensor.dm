@@ -21,12 +21,6 @@
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = assign_random_name()
 
-	//this global list of air sensors is available to all station monitering consoles round start and to new consoles made during the round
-	if(mapload)
-		GLOB.map_loaded_sensors[chamber_id] = id_tag
-		inlet_id = CHAMBER_INPUT_FROM_ID(chamber_id)
-		outlet_id = CHAMBER_OUTPUT_FROM_ID(chamber_id)
-
 	var/static/list/multitool_tips = list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents",
@@ -36,6 +30,16 @@
 	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
 
 	return ..()
+
+/obj/machinery/air_sensor/post_machine_initialize()
+	. = ..()
+
+	//auto connect to any inlet & outlet devices within a 4 diameter radius from this sensor
+	for(var/obj/machinery/atmospherics/components/unary/device in oview(4, src))
+		if(istype(device, /obj/machinery/atmospherics/components/unary/outlet_injector))
+			inlet_id = device.id_tag
+		else if(istype(device, /obj/machinery/atmospherics/components/unary/vent_pump))
+			outlet_id = device.id_tag
 
 /obj/machinery/air_sensor/Destroy()
 	reset()

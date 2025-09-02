@@ -19,9 +19,6 @@
 	/// Whether we are allowed to reconnect.
 	var/reconnecting = TRUE
 
-	/// Was this computer multitooled before. If so copy the list connected_sensors as it now maintain's its own sensors independent of the map loaded one's
-	var/was_multi_tooled = FALSE
-
 	/// list of all sensors[key is chamber id, value is id of air sensor linked to this chamber] monitered by this computer
 	var/list/connected_sensors
 
@@ -35,12 +32,29 @@
 	)
 	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
 
-	//all newly constructed/round start computers by default have access to this list
-	connected_sensors = GLOB.map_loaded_sensors
-
 	//special case for the station monitering console. We dont want to loose these chambers during reconnecting
 	if(!control && !isnull(atmos_chambers))
 		always_displayed_chambers = atmos_chambers.Copy()
+
+/obj/machinery/computer/atmos_control/post_machine_initialize()
+	. = ..()
+
+	//collect all sensors that are the closest to this computer
+	var/list/closest_sensors = list()
+	var/turf/comp_turf = get_turf(src)
+	for(var/obj/machinery/air_sensor/sensor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/air_sensor))
+		if(sensor.z != z)
+			continue
+		if(!closest_sensors[sensor.chamber_id])
+			closest_sensors[sensor.chamber_id] = sensor
+			continue
+		var/obj/machinery/air_sensor/target = closest_sensors[sensor.chamber_id]
+		if(get_dist(comp_turf, get_turf(sensor)) < get_dist(comp_turf, get_turf(target)))
+			closest_sensors[sensor.chamber_id] = sensor
+	connected_sensors = list()
+	for(var/chamber_id in closest_sensors)
+		var/obj/machinery/air_sensor/target = closest_sensors[chamber_id]
+		connected_sensors[chamber_id] = target.id_tag
 
 /obj/machinery/computer/atmos_control/examine(mob/user)
 	. = ..()
@@ -58,6 +72,7 @@
 		//this sensor was destroyed at the time of reconnecting
 		var/obj/machinery/sensor = GLOB.objects_by_id_tag[connected_sensors[chamber_identifier]]
 		if(QDELETED(sensor))
+			connected_sensors -= chamber_identifier
 			continue
 
 		//non master computers don't have access to these station moniters. Only done to give master computer's special access to these chambers and make them feel special or something
@@ -92,10 +107,6 @@
 
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
-		//computers reference a global map loaded list of sensor's but as soon a user attempt's to edit it, make a copy of that list so other computers aren't affected
-		if(!was_multi_tooled)
-			connected_sensors = connected_sensors.Copy()
-			was_multi_tooled = TRUE
 		//register the sensor's unique ID with its assositated chamber
 		connected_sensors[sensor.chamber_id] = sensor.id_tag
 		user.balloon_alert(user, "sensor connected to [src]")
