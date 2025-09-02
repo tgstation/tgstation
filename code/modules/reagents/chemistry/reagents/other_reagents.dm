@@ -2549,8 +2549,8 @@
 /datum/reagent/glitter/on_new(data)
 	. = ..()
 
-	if(data["colors"])
-		color = pick_weight(data["colors"])
+	if(src.data["colors"])
+		color = pick_weight(src.data["colors"])
 	else
 		color = COLOR_WHITE
 
@@ -2580,7 +2580,7 @@
 	)
 
 /datum/reagent/glitter/random/on_new(data)
-	data["colors"] = possible_colors
+	src.data["colors"] = possible_colors
 	return ..()
 
 /datum/reagent/confetti
