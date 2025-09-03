@@ -207,10 +207,6 @@ SUBSYSTEM_DEF(persistence)
 
 	return all_saves[1]
 
-/// Loads the last recent save
-/datum/controller/subsystem/persistence/proc/cache_save_files_z_levels()
-
-
 /// Based on the last recent save, get a list of all z levels as numbers which have the specific trait
 /// Will return null if no traits match or a save file doesn't exist yet
 /datum/controller/subsystem/persistence/proc/cache_z_levels_map_configs()
@@ -244,8 +240,6 @@ SUBSYSTEM_DEF(persistence)
 		if(!islist(map_config.traits))
 			CRASH("Missing list of traits in autosave json for [last_save]/[current_z].json")
 
-		//var/current_multi_z_level = 0 REMOVE THIS LATER
-
 		// for multi-z maps if a trait is found on ANY z-levels, the entire map is considered to have that trait
 		for(var/level in map_config.traits)
 			if(CONFIG_GET(flag/persistent_save_centcomm_z_levels) && (ZTRAIT_CENTCOM in level))
@@ -269,10 +263,6 @@ SUBSYSTEM_DEF(persistence)
 			else if(CONFIG_GET(flag/persistent_save_away_z_levels) && (ZTRAIT_AWAY in level)) // gateway away missions
 				LAZYINITLIST(matching_z_levels[ZTRAIT_AWAY])
 				matching_z_levels[ZTRAIT_AWAY] |= map_config
-
-			//if(trait in level)
-			//	matching_z_levels += (current_z + current_multi_z_level) // double check the math here
-			//current_multi_z_level++
 
 	if(!matching_z_levels.len)
 		return null
@@ -306,7 +296,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
 	var/map_save_directory = get_current_persistence_map_directory()
 
-	for(var/z in 1 to world.maxz) // ignore centcomm which is always 1st z level
+	for(var/z in 1 to world.maxz)
 		var/map
 		var/list/level_traits = list()
 		var/datum/space_level/level_to_check = SSmapping.z_list[z]
@@ -356,9 +346,6 @@ SUBSYSTEM_DEF(persistence)
 
 		var/file_path = "[map_save_directory]/[z].dmm"
 		rustg_file_write(map, file_path)
-
-		// consider adding ZTRAIT_SECRET to prevent ghosts observing z-levels
-		// is_mining_level(what_turf.z)
 
 		var/map_path = copytext(map_save_directory, 7) // drop the "_maps/" from directory
 

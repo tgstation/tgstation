@@ -4,7 +4,6 @@
 		neigbours = list(TEXT_NORTH,TEXT_SOUTH,TEXT_EAST,TEXT_WEST)
 		for(var/A in neigbours)
 			neigbours[A] = src
-	//else if(xi || yi)
 
 /datum/space_level/proc/set_neigbours(list/L)
 	for(var/datum/space_transition_point/P in L)
