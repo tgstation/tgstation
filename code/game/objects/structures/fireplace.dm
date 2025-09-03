@@ -89,6 +89,7 @@
 	if(tool.ignition_effect(src, user))
 		try_light(tool, user)
 		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/structure/fireplace/update_overlays()
 	. = ..()
