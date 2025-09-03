@@ -679,14 +679,20 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/New(list/dynamic_config)
+	. = ..()
+	max_antag_cap += prob(20) // 1/5 paradox clones will have (up to) two of the same guy
+
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected()
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_execute_args()
+	return list(find_clone())
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
 	return // handled by assign_role() entirely
 
-/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate)
-	var/mob/living/carbon/human/good_version = find_clone()
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate, mob/living/carbon/human/good_version)
 	var/mob/living/carbon/human/bad_version = good_version.make_full_human_copy(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 	candidate.transfer_to(bad_version, force_key_move = TRUE)
 
