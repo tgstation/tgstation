@@ -1,0 +1,10 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Accounting Console: New UI!"
+  - rscadd: "Accounting Console: Now can give advances to crewmembers"
+  - rscadd: "Accounting Console: Can now give pay raises or pay cuts"
+  - rscadd: "Accounting Console: Now only printable in the security lathe"
+  - rscadd: "Accounting Console: A spare board is now now found in secure tech storage."
+  - bugfix: "Fix vending machines adding payments to audit log twice."
+  - bugfix: "Non-crewmembers are no longer shown in the accounting console"

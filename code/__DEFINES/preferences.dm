@@ -38,6 +38,9 @@
 
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
 
+/// File path to the dev preference json file, which is loaded by guests while localhosting.
+#define DEV_PREFS_PATH "config/dev_preferences.json"
+
 #define PARALLAX_INSANE "Insane"
 #define PARALLAX_HIGH "High"
 #define PARALLAX_MED "Medium"

@@ -236,7 +236,7 @@
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]", user_data)
+	rmat.use_materials(D.materials, component_coeff, 1, "processed", "[D.name]", user_data)
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time

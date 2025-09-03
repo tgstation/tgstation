@@ -343,13 +343,13 @@
 	if(!locker.Adjacent(mod.wearer) || !isturf(locker.loc) || !isturf(mod.wearer.loc))
 		return
 	mod.wearer.start_pulling(locker)
-	locker.strong_grab = TRUE
+	ADD_TRAIT(locker, TRAIT_STRONGPULL, REF(mod.wearer))
 	RegisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_stop_pull))
 
 /obj/item/mod/module/magnet/proc/on_stop_pull(obj/structure/closet/locker, atom/movable/last_puller)
 	SIGNAL_HANDLER
 
-	locker.strong_grab = FALSE
+	REMOVE_TRAIT(locker, TRAIT_STRONGPULL, REF(mod.wearer))
 	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
 
 /obj/item/mod/module/ash_accretion
@@ -369,7 +369,7 @@
 	/// Armor values per tile.
 	var/datum/armor/armor_mod = /datum/armor/mod_ash_accretion
 	/// Speed added when you're fully covered in ash.
-	var/speed_added = -0.5
+	var/speed_added = -0.75
 	/// Turfs that let us accrete ash.
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.

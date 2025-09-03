@@ -1,0 +1,5 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - qol: "Wrapping a crate while pulling it will now re-grab it for you"
+  - qol: "You can now open crates dragged by the H.A.U.L. gauntlets if you're the one pulling"

@@ -21,6 +21,10 @@
 	var/mob/living/picker = user
 	if(!istype(picker) || !user.can_perform_action(source, FORBID_TELEKINESIS_REACH))
 		return
+	var/obj/pickup_object = source
+	if (pickup_object)
+		if (pickup_object.anchored)
+			return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 	if(over == picker)
 		INVOKE_ASYNC(picker, TYPE_PROC_REF(/mob/, put_in_hands), source)

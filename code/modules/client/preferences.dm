@@ -101,8 +101,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		middleware += new middleware_type(src)
 
 	if(IS_CLIENT_OR_MOCK(parent))
-		load_and_save = !is_guest_key(parent.key)
-		load_path(parent.ckey)
+		if(is_guest_key(parent.key))
+			if(parent.is_localhost())
+				path = DEV_PREFS_PATH // guest + locallost = dev instance, load dev preferences if possible
+			else
+				load_and_save = FALSE // guest + not localhost = guest on live, don't save anything
+		else
+			load_path(parent.ckey) // not guest = load their actual savefile
 		if(load_and_save && !fexists(path))
 			try_savefile_type_migration()
 

@@ -476,6 +476,9 @@
 	if (!splatter_turf)
 		splatter_turf = get_turf(src)
 
+	if (!splatter_turf)
+		return
+
 	// Check for husking and TRAIT_NOBLOOD
 	switch (can_bleed(BLOOD_COVER_TURFS))
 		if (BLEED_NONE)

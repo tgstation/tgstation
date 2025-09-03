@@ -76,6 +76,9 @@
 	#define HEARING_MESSAGE_MODE 9
 	#define HEARING_RANGE 10
 
+///called when space wind can't move a movable. (pressure_difference, pressure_direction)
+#define COMSIG_MOVABLE_RESISTED_SPACEWIND "movable_resisted_wind"
+
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
 // called when movable is expelled from a disposal pipe, bin or outlet on obj/pipe_eject: (direction)

@@ -22,6 +22,8 @@
 
 /datum/status_effect/unholy_determination/on_apply()
 	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
+	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
+		owner.blood_volume = BLOOD_VOLUME_OKAY
 	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()

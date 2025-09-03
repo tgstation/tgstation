@@ -423,7 +423,7 @@
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
-	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "built", "[design.name]", user_data = user_data)
+	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
 
 	var/atom/movable/created
 	if(is_stack)

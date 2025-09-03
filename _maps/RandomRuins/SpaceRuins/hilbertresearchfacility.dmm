@@ -483,7 +483,7 @@
 	name = "landing marker"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ml" = (
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 8

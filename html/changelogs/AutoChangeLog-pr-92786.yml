@@ -1,0 +1,4 @@
+author: "ATH1909"
+delete-after: True
+changes:
+  - balance: "NPC skeleton mobs are no longer hostile to players of the skeleton species."

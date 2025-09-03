@@ -199,7 +199,7 @@
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
-		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume", user_data = ID_DATA(user))
+		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
 		return TRUE
 
 /obj/item/construction/ui_static_data(mob/user)
