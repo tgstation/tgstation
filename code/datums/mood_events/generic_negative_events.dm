@@ -586,9 +586,8 @@
 
 /datum/mood_event/see_death/proc/get_descriptor(mob/dead_mob)
 	if(isnull(dead_mob))
-		return
-	var/datum/job/descriptor = dead_mob.mind?.assigned_role
-	if(descriptor?.job_flags & JOB_CREW_MEMBER)
+		return "something"
+	if(dead_mob.name != "Unknown" && dead_mob.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER)
 		return "the [LOWER_TEXT(descriptor.title)]"
 	return "someone"
 

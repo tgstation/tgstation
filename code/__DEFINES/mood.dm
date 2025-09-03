@@ -82,7 +82,7 @@
 #define MOOD_EVENT_ART (1<<2)
 /// Relates to being a generally silly guy
 #define MOOD_EVENT_WHIMSY (1<<3)
-/// Playing video games
+/// Playing games and goofing off
 #define MOOD_EVENT_GAMING (1<<4)
 /// Relates to food
 #define MOOD_EVENT_FOOD (1<<7)
