@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/gases
 	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
 	var/temperature = TCMB
-	/// The total moles within the gas mixture
+	/// The total moles within the gas mixture. Updated each time gas_mix is modified
 	var/total_moles
 	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
 	/// The order of operations
@@ -181,15 +181,43 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/adjust_gas_moles(datum/gas/species, amount)
 	ASSERT_GAS(species, src)
 	gases[species][MOLES] += amount
+	total_moles += amount
 	garbage_collect()
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
 /// gases_moles is an associative list of gas species to amount, make amount negative to remove
-/datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
-	for(var/gas_specie as anything in gases_moles)
-		ASSERT_GAS(gas_specie, src)
-		gases[gas_specie][MOLES] += gases_moles[gas_specie]
+/datum/gas_mixture/proc/adjust_multiple_gases(datum/gas_mixture/gas_holder)
+	var/list/our_gases = gases
+	var/list/holder_gases = gas_holder.gases
+	// Moles transfer into self
+	for(var/gas_specie as anything in holder_gases)
+		if(!(gas_specie in our_gases))
+			ASSERT_GAS(gas_specie, src)
+		gases[gas_specie][MOLES] += holder_gases[gas_specie][MOLES]
+		total_moles += holder_gases[gas_specie][MOLES]
+
+	//heat transfer
+	var/temperature_delta = abs(temperature - gas_holder.temperature)
+	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/self_heat_capacity = heat_capacity()
+		var/giver_heat_capacity = giver.heat_capacity()
+		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
+		if(combined_heat_capacity)
+			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 	garbage_collect()
+
+/// Modify the gas list as to convert moles of gas species A to gas species B
+/// reactant and product are the gas species to convert and conversion_amount is the amount to be converted
+/datum/gas_mixture/proc/convert_gas(datum/gas/reactant, datum/gas/product, conversion_amount)
+	var/list/cached_gases = gases
+	assert_gases(reactant, product)
+	cached_gases[reactant][MOLES] -= conversion_amount
+	cached_gases[product][MOLES] += conversion_amount
+
+
+/// Convert the moles of multiple reactant to their respective products
+/datum/gas_mixture/proc/bulk_gas_conversion()
+
 
 ///Proportionally removes amount of gas from the gas_mixture.
 ///Returns: gas_mixture with the gases removed
