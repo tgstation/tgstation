@@ -135,6 +135,9 @@ SUBSYSTEM_DEF(mapping)
 #ifndef LOWMEMORYMODE
 	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_RUINS])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_RUINS])
+			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
+				continue
+
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
 	else
@@ -145,6 +148,9 @@ SUBSYSTEM_DEF(mapping)
 
 	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_empty_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_EMPTY])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_EMPTY])
+			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
+				continue
+
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
 	else
@@ -155,6 +161,9 @@ SUBSYSTEM_DEF(mapping)
 
 	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_away_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_AWAY])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_AWAY])
+			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
+				continue
+
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
 	else if(CONFIG_GET(flag/roundstart_away)) // Pick a random away mission.
@@ -449,6 +458,11 @@ Used by the AI doomsday and the self-destruct nuke.
 			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+
+	if(CONFIG_GET(flag/persistent_save_enabled) && SSpersistence.map_configs_cache)
+		for(var/dmm_file in files)
+			SSpersistence.map_configs_cache[PERSISTENT_LOADED_Z_LEVELS][dmm_file] = TRUE
+
 	return parsed_maps
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
@@ -465,6 +479,9 @@ Used by the AI doomsday and the self-destruct nuke.
 	station_start = world.maxz + 1
 	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_station_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_STATION])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_STATION])
+			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
+				continue
+
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
 	else
@@ -481,6 +498,9 @@ Used by the AI doomsday and the self-destruct nuke.
 #ifndef LOWMEMORYMODE
 	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_mining_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_MINING])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_MINING])
+			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
+				continue
+
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
 	else
