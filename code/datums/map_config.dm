@@ -72,10 +72,11 @@
  * * filename - Name of the config file for the map we want to load. The .json file extension is added during the proc, so do not specify filenames with the extension.
  * * directory - Name of the directory containing our .json - Must be in MAP_DIRECTORY_WHITELIST. We default this to MAP_DIRECTORY_MAPS as it will likely be the most common usecase. If no filename is set, we ignore this.
  * * error_if_missing - Bool that says whether failing to load the config for the map will be logged in log_world or not as it's passed to LoadConfig().
+ * * persistence_save - Bool that is used when a map is loaded via persistence which affects station traits
  *
  * Returns the config for the map to load.
  */
-/proc/load_map_config(filename = null, directory = null, error_if_missing = TRUE)
+/proc/load_map_config(filename = null, directory = null, error_if_missing = TRUE, persistence_save = FALSE)
 	var/datum/map_config/configuring_map = load_default_map_config()
 
 	if(filename) // If none is specified, then go to look for next_map.json, for map rotation purposes.
@@ -93,7 +94,7 @@
 		filename = PATH_TO_NEXT_MAP_JSON
 
 
-	if (!configuring_map.LoadConfig(filename, error_if_missing))
+	if (!configuring_map.LoadConfig(filename, error_if_missing, persistence_save))
 		qdel(configuring_map)
 		return load_default_map_config()
 	return configuring_map
@@ -101,7 +102,7 @@
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
 
-/datum/map_config/proc/LoadConfig(filename, error_if_missing)
+/datum/map_config/proc/LoadConfig(filename, error_if_missing, persistence_save)
 	if(!fexists(filename))
 		if(error_if_missing)
 			log_world("map_config not found: [filename]")
