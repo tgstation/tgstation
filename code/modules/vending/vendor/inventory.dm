@@ -267,8 +267,8 @@
 
 	//do we have an account with job to purchase
 	var/datum/bank_account/account = paying_id_card.registered_account
-	if(!account) //unregistered account
-		speak("Your do not have a valid account.")
+	if(!account || !account.account_job) //unregistered account & jobless
+		speak("Your do not have a valid account with an registered job.")
 		return FALSE
 
 	//deduct money from person
