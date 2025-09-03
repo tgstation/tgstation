@@ -8,6 +8,8 @@
 	if(!transfer_type)
 		return NONE
 
+	var/atom/movable/target = held_object?.resolve()
+
 	var/list/interaction_points = transfer_type == TRANSFER_TYPE_DROPOFF ? dropoff_points : pickup_points
 	if(!length(interaction_points))
 		return NONE
@@ -17,14 +19,14 @@
 	switch(tasking_type)
 		if(TASKING_PREFER_FIRST)
 			for(var/datum/interaction_point/this_point in interaction_points)
-				if(this_point.is_available(transfer_type))
+				if(this_point.is_available(transfer_type, target))
 					return this_point
 
 			return NONE
 
 		if(TASKING_ROUND_ROBIN)
 			var/datum/interaction_point/this_point = interaction_points[roundrobin_history]
-			if(this_point.is_available(transfer_type))
+			if(this_point.is_available(transfer_type, target))
 				roundrobin_history += 1
 				if(roundrobin_history > length(interaction_points))
 					roundrobin_history = 1
@@ -37,7 +39,7 @@
 
 			while(roundrobin_history != initial_index)
 				this_point = interaction_points[roundrobin_history]
-				if(this_point.is_available(transfer_type))
+				if(this_point.is_available(transfer_type, target))
 					roundrobin_history += 1
 					if(roundrobin_history > length(interaction_points))
 						roundrobin_history = 1
@@ -50,7 +52,7 @@
 
 		if(TASKING_STRICT_ROBIN)
 			var/datum/interaction_point/this_point = interaction_points[roundrobin_history]
-			if(this_point.is_available(transfer_type))
+			if(this_point.is_available(transfer_type, target))
 				roundrobin_history += 1
 				if(roundrobin_history > length(interaction_points))
 					roundrobin_history = 1

@@ -1,9 +1,9 @@
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export interface PrioritySettings {
   name: string;
   priority_width: number;
-};
+}
 
 export type InteractionPoint = {
   name: string;
@@ -14,6 +14,7 @@ export type InteractionPoint = {
   item_filters: string[];
   filters_status: boolean;
   filtering_mode: number;
+  should_overflow: boolean;
 };
 
 export interface ManipulatorData {
@@ -36,4 +37,4 @@ export interface ManipulatorData {
   manipulator_position: string;
   pickup_tasking: string;
   dropoff_tasking: string;
-};
+}

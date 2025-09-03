@@ -602,6 +602,7 @@
 		point_data["item_filters"] = filter_names
 		point_data["filters_status"] = point.filters_status
 		point_data["filtering_mode"] = point.filtering_mode
+		point_data["should_overflow"] = point.should_overflow
 		pickup_points_data += list(point_data)
 	data["pickup_points"] = pickup_points_data
 
@@ -618,6 +619,7 @@
 			filter_names += some_path::name
 		point_data["item_filters"] = filter_names
 		point_data["filters_status"] = point.filters_status
+		point_data["should_overflow"] = point.should_overflow
 		dropoff_points_data += list(point_data)
 	data["dropoff_points"] = dropoff_points_data
 

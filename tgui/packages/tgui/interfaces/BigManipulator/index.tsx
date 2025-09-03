@@ -385,7 +385,7 @@ const PointSection = (props: {
                         onClick={() =>
                           adjustPoint(editingPoint.id, 'toggle_filter_skip')
                         }
-                        tooltip="Toggle filter skipping"
+                        tooltip="Toggle filter usage"
                       />
                     </>
                   ) : (
@@ -403,23 +403,24 @@ const PointSection = (props: {
                       />
                       <ConfigRow
                         label="Overflow"
-                        content="OFF"
+                        content={
+                          editingPoint.should_overflow ? 'TRUE' : 'FALSE'
+                        }
                         onClick={() =>
-                          adjustPoint(editingPoint.id, 'toggle_overflow')
+                          adjustPoint(
+                            editingPoint.id,
+                            'toggle_dropoff_point_overflow',
+                          )
                         }
                         tooltip="Toggle overflow"
                       />
                       <ConfigRow
-                        label="Filters"
-                        content={
-                          editingPoint.item_filters.length
-                            ? 'ACTIVE'
-                            : 'INACTIVE'
-                        }
+                        label="Use Item Filters"
+                        content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
                         onClick={() =>
-                          adjustPoint(editingPoint.id, 'reset_atom_filters')
+                          adjustPoint(editingPoint.id, 'toggle_filter_skip')
                         }
-                        tooltip="Toggle filters"
+                        tooltip="Toggle filter usage"
                       />
                     </>
                   )}
@@ -427,57 +428,49 @@ const PointSection = (props: {
               </Stack.Item>
             </Stack>
           </Section>
-          {editingPoint.filters_status && (
-            <Section
-              title="Item Filters"
-              buttons={
-                <>
-                  <Button
-                    icon="plus"
-                    onClick={() =>
-                      adjustPoint(editingPoint.id, 'add_atom_filter_from_held')
-                    }
-                  >
-                    Add held
-                  </Button>
-                  <Button.Confirm
-                    onClick={() =>
-                      adjustPoint(editingPoint.id, 'reset_atom_filters')
-                    }
-                    confirmContent="Reset?"
-                    icon="trash"
-                  />
-                </>
-              }
-            >
-              <Stack vertical>
-                {editingPoint.item_filters.map(
-                  (name: string, index: number) => {
-                    return (
-                      <Stack key={index}>
-                        <Stack.Item grow>
-                          <BlockQuote>{name}</BlockQuote>
-                        </Stack.Item>
-                        <Stack.Item>
-                          <Button
-                            color="transparent"
-                            icon="xmark"
-                            onClick={() =>
-                              adjustPoint(
-                                editingPoint.id,
-                                'delete_filter',
-                                index,
-                              )
-                            }
-                          />
-                        </Stack.Item>
-                      </Stack>
-                    );
-                  },
-                )}
-              </Stack>
-            </Section>
-          )}
+          <Section
+            title="Item Filters"
+            buttons={
+              <>
+                <Button
+                  icon="plus"
+                  onClick={() =>
+                    adjustPoint(editingPoint.id, 'add_atom_filter_from_held')
+                  }
+                >
+                  Add held
+                </Button>
+                <Button.Confirm
+                  onClick={() =>
+                    adjustPoint(editingPoint.id, 'reset_atom_filters')
+                  }
+                  confirmContent="Reset?"
+                  icon="trash"
+                />
+              </>
+            }
+          >
+            <Stack vertical>
+              {editingPoint.item_filters.map((name: string, index: number) => {
+                return (
+                  <Stack key={index}>
+                    <Stack.Item grow>
+                      <BlockQuote>{name}</BlockQuote>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        color="transparent"
+                        icon="xmark"
+                        onClick={() =>
+                          adjustPoint(editingPoint.id, 'delete_filter', index)
+                        }
+                      />
+                    </Stack.Item>
+                  </Stack>
+                );
+              })}
+            </Stack>
+          </Section>
         </Modal>
       )}
     </>

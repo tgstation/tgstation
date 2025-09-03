@@ -6,7 +6,7 @@
 	/// The weakref to the turf this interaction point represents.
 	var/datum/weakref/interaction_turf
 	/// Should we check our filters while interacting with this point?
-	var/filters_status = FILTERS_SKIPPED
+	var/should_should_use_filters = FALSE
 	/// How should this point be interacted with?
 	var/interaction_mode = INTERACT_DROP
 	/// How should the monkey worker (if there is one) interact with the target point?
@@ -19,8 +19,8 @@
 	/// If this is a dropoff point, influences which interaction endpoints are preferred over which
 	/// by the manipulator.
 	var/list/interaction_priorities = list()
-	/// Should the manipulator overflow this interaction point if there are already atoms on this turf?
-	var/should_overflow
+	/// Should the manipulator put items on this point if there are already such items on the turf?
+	var/overflow_status = POINT_OVERFLOW_ALLOWED
 	/// Which object category should the filters be looking out for.
 	var/filtering_mode = TAKE_ITEMS
 	/// List of types that can be picked up from this point
@@ -29,7 +29,7 @@
 		/obj/structure/closet,
 	)
 
-/datum/interaction_point/New(turf/new_turf, list/new_filters, new_filters_status, new_interaction_mode, new_allowed_types)
+/datum/interaction_point/New(turf/new_turf, list/new_filters, new_should_use_filters, new_interaction_mode, new_allowed_types, new_overflow_status)
 	if(!new_turf)
 		stack_trace("New manipulator interaction point created with no valid turf references passed.")
 		qdel(src)
@@ -44,14 +44,17 @@
 	if(length(new_filters))
 		atom_filters = new_filters
 
-	if(new_filters_status)
-		filters_status = new_filters_status
+	if(new_should_use_filters)
+		should_use_filters = new_should_use_filters
 
 	if(new_interaction_mode)
 		interaction_mode = new_interaction_mode
 
 	if(new_allowed_types)
 		type_filters = new_allowed_types
+
+	if(new_overflow_status)
+		overflow_status = new_overflow_status
 
 	interaction_priorities = fill_priority_list()
 
@@ -66,55 +69,85 @@
 		for(var/type_in_priority in resolved_turf.contents)
 			if(!istype(type_in_priority, take_type.what_type))
 				continue
+
 			if(isliving(type_in_priority))
 				var/mob/living/living_target = type_in_priority
 				if(living_target.stat == DEAD)
 					continue
+
 			return type_in_priority
 
 /// Checks if the interaction point is available - if it has items that can be interacted with.
-/datum/interaction_point/proc/is_available(transfer_type)
+/datum/interaction_point/proc/is_available(transfer_type, atom/movable/target)
 	if(!is_valid())
 		return FALSE
 
 	// All atoms on the turf that can be interacted with.
-	var/list/fitting_atoms = list()
+	var/list/atoms_on_the_turf = list()
 	var/turf/resolved_turf = interaction_turf.resolve()
 	if(resolved_turf)
 		for(var/atom/movable/movable_atom in resolved_turf.contents)
-			fitting_atoms += movable_atom
+			atoms_on_the_turf += movable_atom
 
-	// For pickup points, we want points that have items to pick up
+	// For pickup points, we want points that have atoms to pick up
 	if(transfer_type == TRANSFER_TYPE_PICKUP)
-		// If the atom filters are skipped and there are any atoms on the turf, check if they match the filtering mode
-		if(filters_status == FILTERS_SKIPPED && length(fitting_atoms))
-			for(var/atom/movable/movable_atom in fitting_atoms)
+
+		if(!length(atoms_on_the_turf))
+			return FALSE // nothing to pick up
+
+		if(should_use_filters)
+			// If the atom filters are required, we need to check if any atom on the turf fits the filters.
+			for(var/atom/movable/movable_atom in atoms_on_the_turf)
 				if(check_filters_for_atom(movable_atom))
 					return TRUE
 			return FALSE
 
-		// If the atom filters are required, we need to check if any atom on the turf fits the filters.
-		for(var/atom/movable/movable_atom in fitting_atoms)
+		// If the atom filters are skipped, then we just check if ANY match the filtering mode (objects/items/etc)
+		for(var/atom/movable/movable_atom in atoms_on_the_turf)
 			if(check_filters_for_atom(movable_atom))
 				return TRUE
 
-		// No suitable items to pick up - the pickup point is unavailable.
+		// No suitable atoms to pick up - the pickup point is unavailable.
 		return FALSE
 
 	// For dropoff points, we want points that are empty or can accept items
 	if(transfer_type == TRANSFER_TYPE_DROPOFF)
-		// If the atom filters are skipped, the point is always available for dropoff
-		if(filters_status == FILTERS_SKIPPED)
-			return TRUE
+		switch(overflow_status)
+			if(POINT_OVERFLOW_ALLOWED)
+				// If we don't care if there are already things on this turf, then we just check for filters
+				// Hence if the atom filters are skipped, the point is available for dropoff
+				if(!should_use_filters)
+					return TRUE
 
-		// If the atom filters are required, we need to check if any atom on the turf fits the filters.
-		// For dropoff, we want points that DON'T have items matching our filters
-		for(var/atom/movable/movable_atom in fitting_atoms)
-			if(check_filters_for_atom(movable_atom))
+				// If the item we're holding matches the filters, then the point is available
+				if(check_filters_for_atom(target))
+					return TRUE
 				return FALSE
 
-		// No conflicting items found - the dropoff point is available.
-		return TRUE
+			if(POINT_OVERFLOW_FILTERS)
+				// We need to check if there are already items matching the filters on the turf
+				for(var/atom/movable/movable_atom in atoms_on_the_turf)
+					if(check_filters_for_atom(movable_atom))
+						return FALSE // the item on the turf was in the filters, hence the turf is considered overflowed
+				return TRUE
+
+			if(POINT_OVERFLOW_HELD)
+				// We need to check if any of the items on the turf match the item we're holding
+				for(var/atom/movable/movable_atom in atoms_on_the_turf)
+					if(istype(movable_atom, target))
+					return FALSE // one of the items on the turf was the same as the one we're holding
+				return TRUE
+
+			if(POINT_OVERFLOW_FORBIDDEN)
+				// We need to check if there are already ANY items on the turf
+				var/list/items_on_the_turf = list()
+				for(var/obj/item/each_item as anything in atoms_on_the_turf)
+					items_on_the_turf += each_item
+
+				if(length(items_on_the_turf))
+					return FALSE
+
+			return TRUE
 
 	// No interaction is possible - the interaction point is unavailable.
 	return FALSE
@@ -143,11 +176,13 @@
 			return ishuman(target)
 
 		if(TAKE_ITEMS)
-			if(filters_status == FILTERS_REQUIRED)
-				for(var/filter_path in atom_filters)
-					if(istype(target, filter_path))
-						return TRUE
-				return FALSE
+			if(!should_use_filters)
+				return(isitem(target))
+
+			for(var/filter_path in atom_filters)
+				if(istype(target, filter_path))
+					return TRUE
+			return FALSE
 
 	return FALSE
 
