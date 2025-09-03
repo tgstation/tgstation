@@ -37,6 +37,8 @@
 
 	//auto connect to any inlet & outlet devices within a 4 diameter radius from this sensor
 	for(var/obj/machinery/atmospherics/components/unary/device in oview(4, src))
+		if(inlet_id && outlet_id)
+			break
 		configure(device)
 
 /**
@@ -44,17 +46,26 @@
  *
  * Arguments
  * * obj/machinery/atmospherics/components/unary/port - the device we are trying to connect to this sensor
+ * * reconfigure - if TRUE it will override existing ports if they are already registered
 */
-/obj/machinery/air_sensor/proc/configure(obj/machinery/atmospherics/components/unary/port)
+/obj/machinery/air_sensor/proc/configure(obj/machinery/atmospherics/components/unary/port, reconfigure = FALSE)
 	PRIVATE_PROC(TRUE)
 	. = 0
 
 	if(istype(port, /obj/machinery/atmospherics/components/unary/outlet_injector))
+		. = 1
+		if(!reconfigure && inlet_id)
+			return
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = port
+		//only configure non maploaded injectors cause they already have a preset config
+		if(input.type == /obj/machinery/atmospherics/components/unary/outlet_injector)
+			input.volume_rate = MAX_TRANSFER_RATE
 		inlet_id = input.id_tag
-		return 1
 
 	else if(istype(port, /obj/machinery/atmospherics/components/unary/vent_pump))
+		. = 2
+		if(!reconfigure && outlet_id)
+			return
 		var/obj/machinery/atmospherics/components/unary/vent_pump/output = port
 		//only configure non maploaded vent pumps cause they already have a preset config
 		if(output.type == /obj/machinery/atmospherics/components/unary/vent_pump)
@@ -67,7 +78,6 @@
 			output.external_pressure_bound = 0
 		//finally assign it to this sensor
 		outlet_id = output.id_tag
-		return 2
 
 /obj/machinery/air_sensor/Destroy()
 	reset()
@@ -127,7 +137,7 @@
 /obj/machinery/air_sensor/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
 
-	var/type = configure(multi_tool.buffer)
+	var/type = configure(multi_tool.buffer, TRUE)
 	switch(type)
 		if(1, 2)
 			var/obj/target = user.Adjacent(src) ? src : multi_tool.buffer
