@@ -234,40 +234,41 @@ SUBSYSTEM_DEF(persistence)
 	sortTim(last_save_files, GLOBAL_PROC_REF(cmp_persistent_saves_asc))
 	last_save = copytext(last_save, 1, -1) // drop the "/" from the directory
 
+	for(var/json_file in last_save_files)
 		// need to reformat the file name and directory to work with load_map_config()
-		file = copytext(file, 1, -5) // drop the ".json" from file name
-		var/datum/map_config/map_json = load_map_config(file, last_save, TRUE)
+		json_file = copytext(json_file, 1, -5) // drop the ".json" from file name
+		var/datum/map_config/map_config = load_map_config(json_file, last_save, persistence_save = TRUE)
 
 		// for persistent autosaves, the name is always a number which indicates the z-level
-		var/current_z = map_json.map_name
-		if(!islist(map_json.traits))
+		var/current_z = map_config.map_name
+		if(!islist(map_config.traits))
 			CRASH("Missing list of traits in autosave json for [last_save]/[current_z].json")
 
 		//var/current_multi_z_level = 0 REMOVE THIS LATER
 
 		// for multi-z maps if a trait is found on ANY z-levels, the entire map is considered to have that trait
-		for(var/level in map_json.traits)
+		for(var/level in map_config.traits)
 			if(CONFIG_GET(flag/persistent_save_centcomm_z_levels) && (ZTRAIT_CENTCOM in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_CENTCOM])
-				matching_z_levels[ZTRAIT_CENTCOM] |= map_json
+				matching_z_levels[ZTRAIT_CENTCOM] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_station_z_levels) && (ZTRAIT_STATION in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_STATION])
-				matching_z_levels[ZTRAIT_STATION] |= map_json
+				matching_z_levels[ZTRAIT_STATION] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_mining_z_levels) && (ZTRAIT_MINING in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_MINING])
-				matching_z_levels[ZTRAIT_MINING] |= map_json
+				matching_z_levels[ZTRAIT_MINING] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && (ZTRAIT_SPACE_RUINS in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_SPACE_RUINS])
-				matching_z_levels[ZTRAIT_SPACE_RUINS] |= map_json
+				matching_z_levels[ZTRAIT_SPACE_RUINS] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_space_empty_z_levels) && (ZTRAIT_SPACE_EMPTY in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_SPACE_EMPTY])
-				matching_z_levels[ZTRAIT_SPACE_EMPTY] |= map_json
+				matching_z_levels[ZTRAIT_SPACE_EMPTY] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_transitional_z_levels) && (ZTRAIT_RESERVED in level)) // for shuttles in transit (hyperspace)
 				LAZYINITLIST(matching_z_levels[ZTRAIT_RESERVED])
-				matching_z_levels[ZTRAIT_RESERVED] |= map_json
+				matching_z_levels[ZTRAIT_RESERVED] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_away_z_levels) && (ZTRAIT_AWAY in level)) // gateway away missions
 				LAZYINITLIST(matching_z_levels[ZTRAIT_AWAY])
-				matching_z_levels[ZTRAIT_AWAY] |= map_json
+				matching_z_levels[ZTRAIT_AWAY] |= map_config
 
 			//if(trait in level)
 			//	matching_z_levels += (current_z + current_multi_z_level) // double check the math here
@@ -276,6 +277,7 @@ SUBSYSTEM_DEF(persistence)
 	if(!matching_z_levels.len)
 		return null
 
+	matching_z_levels[PERSISTENT_LOADED_Z_LEVELS] = list()
 	map_configs_cache = matching_z_levels
 	return map_configs_cache
 
