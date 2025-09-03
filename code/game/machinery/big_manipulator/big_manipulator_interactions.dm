@@ -1,14 +1,76 @@
 // Interactions moved here to de-clutter the main file
 
+/// Selects which atom to pick up from this point for interaction with available dropoff points
+/obj/machinery/big_manipulator/proc/find_pickup_candidate_for_pickup_point(datum/interaction_point/pickup_point)
+	if(!pickup_point)
+		return null
+
+	var/turf/pickup_turf = pickup_point.interaction_turf?.resolve()
+	if(!pickup_turf)
+		return null
+
+	// Build ordered list of dropoff points according to current tasking and round-robin index
+	var/list/destinations = dropoff_points
+	if(!length(destinations))
+		return null
+
+	var/list/ordered = list()
+	switch(dropoff_tasking)
+		if(TASKING_PREFER_FIRST)
+			ordered = destinations.Copy()
+		if(TASKING_ROUND_ROBIN)
+			if(roundrobin_history_dropoff < 1 || roundrobin_history_dropoff > length(destinations))
+				roundrobin_history_dropoff = 1
+			for(var/i = roundrobin_history_dropoff, i <= length(destinations), i++)
+				ordered += destinations[i]
+			for(var/i2 = 1, i2 < roundrobin_history_dropoff, i2++)
+				ordered += destinations[i2]
+		if(TASKING_STRICT_ROBIN)
+			// Same ordering as round-robin, but we won't advance the index here
+			if(roundrobin_history_dropoff < 1 || roundrobin_history_dropoff > length(destinations))
+				roundrobin_history_dropoff = 1
+			for(var/j = roundrobin_history_dropoff, j <= length(destinations), j++)
+				ordered += destinations[j]
+			for(var/j2 = 1, j2 < roundrobin_history_dropoff, j2++)
+				ordered += destinations[j2]
+
+	// For each destination in order, try to find a pickup item that it can accept
+	for(var/datum/interaction_point/dest_point in ordered)
+		if(!dest_point || !dest_point.is_valid())
+			continue
+		for(var/atom/movable/candidate in pickup_turf.contents)
+			if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
+				continue
+			// Must satisfy pickup point filters
+			if(!pickup_point.check_filters_for_atom(candidate))
+				continue
+			// Must also satisfy destination point filters
+			if(!dest_point.check_filters_for_atom(candidate))
+				continue
+			// Destination decides if it can accept this item (overflow rules, etc.)
+			if(dest_point.is_available(TRANSFER_TYPE_DROPOFF, candidate))
+				// Advance the round-robin index for next time if using round-robin
+				if(dropoff_tasking == TASKING_ROUND_ROBIN)
+					var/found_index = destinations.Find(dest_point)
+					if(found_index)
+						roundrobin_history_dropoff = found_index + 1
+						if(roundrobin_history_dropoff > length(destinations))
+							roundrobin_history_dropoff = 1
+				return candidate
+
+	return null
+
 /// Calculates the next interaction point the manipulator should transfer the item to or pick up it from.
-/obj/machinery/big_manipulator/proc/find_next_point(tasking_type, transfer_type)
+/obj/machinery/big_manipulator/proc/find_next_point(tasking_type, transfer_type, atom/movable/target = null)
 	if(!tasking_type)
 		tasking_type = TASKING_PREFER_FIRST
 
 	if(!transfer_type)
 		return NONE
 
-	var/atom/movable/target = held_object?.resolve()
+	// If no target provided, try to get it from held_object
+	if(!target)
+		target = held_object?.resolve()
 
 	var/list/interaction_points = transfer_type == TRANSFER_TYPE_DROPOFF ? dropoff_points : pickup_points
 	if(!length(interaction_points))
@@ -108,7 +170,7 @@
 
 /// Attempts to actually run a full work cycle.
 /obj/machinery/big_manipulator/proc/try_run_full_cycle()
-	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
+	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP, null)
 	if(!origin_point) // no origin point - nowhere to begin the cycle from
 		to_chat(world, "No origin point found")
 		return handle_no_work_available()
@@ -123,22 +185,26 @@
 /// Attempts to interact with the origin point (pick up the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_origin_point(datum/interaction_point/origin_point, hand_is_empty = FALSE)
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
-	if(origin_turf)
-		for(var/atom/movable/movable_atom in origin_turf.contents)
-			if(!origin_point.check_filters_for_atom(movable_atom))
-				continue
-			if(movable_atom.anchored || HAS_TRAIT(movable_atom, TRAIT_NODROP))
-				continue
-			var/obj/item/movable_atom_item = movable_atom
-			if(movable_atom_item.item_flags & (ABSTRACT|DROPDEL))
-				continue
-			// Update round robin index after successful interaction
-			update_roundrobin_index(TRANSFER_TYPE_PICKUP)
-			start_work(movable_atom, hand_is_empty)
-			return TRUE
+	if(!origin_turf)
+		return handle_no_work_available()
 
-	to_chat(world, "No movable atom found on origin turf")
-	return handle_no_work_available()
+	// Use the new proc to find a suitable item that matches available destinations
+	var/atom/movable/selected = find_pickup_candidate_for_pickup_point(origin_point)
+	if(!selected)
+		to_chat(world, "No suitable item found for any destination")
+		return handle_no_work_available()
+
+	if(selected.anchored || HAS_TRAIT(selected, TRAIT_NODROP))
+		return handle_no_work_available()
+
+	var/obj/item/selected_item = selected
+	if(selected_item.item_flags & (ABSTRACT|DROPDEL))
+		return handle_no_work_available()
+
+	// Update round robin index after successful interaction
+	update_roundrobin_index(TRANSFER_TYPE_PICKUP)
+	start_work(selected, hand_is_empty)
+	return TRUE
 
 /// Attempts to start a work cycle (pick up the object)
 /obj/machinery/big_manipulator/proc/start_work(atom/movable/target, hand_is_empty = FALSE)
@@ -147,11 +213,12 @@
 		held_object = WEAKREF(target)
 		manipulator_arm.update_claw(held_object)
 
-	var/datum/interaction_point/destination_point = find_next_point(dropoff_tasking, TRANSFER_TYPE_DROPOFF) // find the next point
+	// Find the next available destination point that can accept this specific item
+	var/datum/interaction_point/destination_point = find_next_point(dropoff_tasking, TRANSFER_TYPE_DROPOFF, target)
 
 	if(!destination_point)
 		SStgui.update_uis(src)
-		to_chat(world, "No destination point found")
+		to_chat(world, "No destination point found for held item")
 		return handle_no_work_available()
 
 	rotate_to_point(destination_point, PROC_REF(try_interact_with_destination_point))
