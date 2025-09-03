@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "adds some null checks against players without an ID card/valid account vending an item"
+  - code_imp: "ensures dispensing an item always uses energy & not just when vending"

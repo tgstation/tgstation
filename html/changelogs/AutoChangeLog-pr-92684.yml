@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Examining most food items no longer tells you that you can make burned mess by microwaving them."
+  - bugfix: "Burned mess now has \"bad food\" in it more or less proportional to the nutrients of the item you just overcooked. This also applies to decomposition now."
