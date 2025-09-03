@@ -29621,11 +29621,11 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/item/hfr_box/body/waste_output{
+/obj/structure/table,
+/obj/item/hfr_box/body/fuel_input{
 	pixel_x = 10;
 	pixel_y = 9
 	},
-/obj/structure/table,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "iIS" = (
