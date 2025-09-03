@@ -383,7 +383,7 @@ SUBSYSTEM_DEF(persistence)
 
 		rustg_file_write(json_encode(json_data, JSON_PRETTY_PRINT), "[map_save_directory]/[z].json")
 
-ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Select a part of the map by coordinates and download it.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Saves all z-levels that are have their persistent save config enabled.", ADMIN_CATEGORY_DEBUG)
 	SSpersistence.save_persistent_maps()
 
 #undef FILE_RECENT_MAPS
