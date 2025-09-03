@@ -61,9 +61,9 @@
 /datum/controller/subsystem/mapping/proc/setup_map_transitions() //listamania
 	var/list/transition_levels = list()
 	var/list/cached_z_list = z_list
-	for(var/datum/space_level/level as anything in cached_z_list)
-		if (level.linkage == CROSSLINKED)
-			transition_levels.Add(level)
+	for(var/datum/space_level/cross_linked_level as anything in cached_z_list)
+		if (cross_linked_level.linkage == CROSSLINKED)
+			transition_levels.Add(cross_linked_level)
 
 	var/grid_diameter = (length(transition_levels) * 2) + 1
 	var/list/grid = new /list(grid_diameter ** 2)
@@ -77,23 +77,31 @@
 		point.set_neigbours(grid, grid_diameter)
 
 	var/center = round(grid_diameter / 2)
-	point = grid[CHORDS_TO_1D(grid_diameter, center, center)]
-	grid.Cut()
+	if(transition_levels.len)
+		point = grid[CHORDS_TO_1D(center, center, grid_diameter)]
+/// if loop here
 
 	var/list/transition_pick = transition_levels.Copy()
 	var/list/possible_points = list()
 	var/list/used_points = list()
 	while(transition_pick.len)
-		var/datum/space_level/level = pick_n_take(transition_pick)
-		level.xi = point.x
-		level.yi = point.y
-		point.spl = level
+		var/datum/space_level/networked_level = pick_n_take(transition_pick)
+
+		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && SSpersistence.map_configs_cache)
+			point = grid[CHORDS_TO_1D(networked_level.xi, networked_level.yi, grid_diameter)]
+
+		networked_level.xi = point.x
+		networked_level.yi = point.y
+		point.spl = networked_level
 		possible_points |= point.neigbours
 		used_points |= point
 		possible_points.Remove(used_points)
-		level.set_neigbours(used_points)
+		networked_level.set_neigbours(used_points)
 		point = pick(possible_points)
 		CHECK_TICK
+
+	grid.Cut()
+/// end if loop
 
 	// Now that we've handed out neighbors, we're gonna handle an edge case
 	// Need to check if all our levels have neighbors in all directions

@@ -605,4 +605,5 @@ PERSISTENT_SAVE_MINING_Z_LEVELS
 PERSISTENT_SAVE_TRANSITIONAL_Z_LEVELS
 ## Whether to include away gateway misisons z levels
 PERSISTENT_SAVE_AWAY_Z_LEVELS
-
+## If enabled, a fixed grid layout is loaded from the z-level JSON files
+PERSISTENT_USE_STATIC_MAP_GRID
