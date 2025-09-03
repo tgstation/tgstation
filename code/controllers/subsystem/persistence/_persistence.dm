@@ -367,11 +367,19 @@ SUBSYSTEM_DEF(persistence)
 			"map_name" = level_to_check.name || CUSTOM_MAP_PATH,
 			"map_path" = map_path,
 			"map_file" = "[z].dmm",
-			// "planetary" we use mining level trait instead ?! double check bc idk how lavaland is setting gravity
 			"traits" = level_traits,
-			"minetype" = MINETYPE_NONE, // set this to "ice" ?! looks like we can ignore it honestly
-
+			"minetype" = MINETYPE_NONE,
 		)
+
+		// saving station z-levels but not mining, we need to make sure minetype is included
+		if(is_station_level(z) && !CONFIG_GET(flag/persistent_save_mining_z_levels))
+			json_data["minetype"] = SSmapping.current_map.minetype
+
+		// consult is_on_a_planet() proc to see how planetary is determined
+		// on mining levels, planetary is always TRUE and doesnt need to be set
+		// on station levels, planetary is set via map_config (ie. Ice)
+		if(is_station_level(z) && SSmapping.is_planetary())
+			json_data["planetary"] = TRUE
 
 		rustg_file_write(json_encode(json_data, JSON_PRETTY_PRINT), "[map_save_directory]/[z].json")
 
