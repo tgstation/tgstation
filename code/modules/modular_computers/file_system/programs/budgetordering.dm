@@ -235,20 +235,20 @@
 			// Our account that we want to end up paying with. Defaults to the cargo budget!
 			var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			// Our ID card that we want to pull from for identification. Modifies either name, account, or neither depending on function.
-			var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
-			if(!id_card)
-				id_card = H?.get_idcard(TRUE) //Grab from hands/mob if there's no id_card slot to prioritize.
-			name = id_card?.registered_account.account_holder
+			var/obj/item/card/id/id_card_customer = computer.stored_id?.GetID()
+			if(!id_card_customer)
+				id_card_customer = H?.get_idcard(TRUE) //Grab from hands/mob if there's no id_card slot to prioritize.
+			name = id_card_customer?.registered_account.account_holder
 
 			if(self_paid)
-				if(!istype(id_card))
+				if(!istype(id_card_customer))
 					computer.say("No ID card detected.")
 					return
-				if(IS_DEPARTMENTAL_CARD(id_card))
-					computer.say("[id_card] cannot be used to make purchases.")
+				if(IS_DEPARTMENTAL_CARD(id_card_customer))
+					computer.say("[id_card_customer] cannot be used to make purchases.")
 					return
-				account = id_card.registered_account
-				name = id_card.registered_account.account_holder
+				account = id_card_customer.registered_account
+				name = id_card_customer.registered_account.account_holder
 				if(!istype(account))
 					computer.say("Invalid bank account.")
 					return
@@ -259,16 +259,16 @@
 				if(isnull(reason) || ..())
 					return
 
-			if(id_card && id_card?.registered_account)
-				if(id_card.registered_account?.account_job)
-					var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
+			if(id_card_customer && id_card_customer?.registered_account)
+				if(id_card_customer.registered_account?.account_job) //Find a budget to pull from
+					var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
 					if(!(personal_department.account_holder == "Cargo Budget"))
 						var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
 						if(!choice)
 							return
 						if(choice != "Cargo Budget")
 							account = personal_department
-						name = id_card.registered_account?.account_holder
+						name = id_card_customer.registered_account?.account_holder
 
 			if(pack.goody && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)

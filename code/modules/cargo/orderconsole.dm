@@ -261,21 +261,23 @@
 	// The list we are operating on right now
 	var/list/working_list = SSshuttle.shopping_list
 	var/reason = ""
-	if(requestonly && !self_paid)
+	if(requestonly && !self_paid && !pack.goody)
 		working_list = SSshuttle.request_list
 		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
 
+		name = account?.account_holder
 		if(account?.account_job)
 			var/datum/bank_account/personal_department = SSeconomy.get_dep_account(account.account_job?.paycheck_department)
 			if(!(personal_department.account_holder == "Cargo Budget"))
-				var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
-				if(!choice)
+				var/dept_choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
+				if(!dept_choice)
 					return
-				if(choice != "Cargo Budget")
+				if(dept_choice != "Cargo Budget")
 					account = personal_department
-				name = account?.account_holder
+			else
+				account = SSeconomy.get_dep_account(cargo_account)
 
 	if(pack.goody && !self_paid)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -306,6 +308,7 @@
 			reason = reason,
 			paying_account = account,
 			coupon = applied_coupon,
+			department_destination = reason ? 1 : 0, // Hijacking reason as a way to determine if an order's requested from at least one budget
 		)
 		working_list += order
 
