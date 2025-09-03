@@ -36,14 +36,15 @@
 
 	var/datum/status_effect/crusher_damage/damage = target.has_status_effect(/datum/status_effect/crusher_damage)
 	if(damage && prob((damage.total_damage/target.maxHealth) * drop_mod)) //on average, you'll need to kill 4 creatures before getting the item. by default.
-		if(islist(trophy_type))
-			for(var/trophypath in trophy_type)
-				make_path(target, trophypath)
+		if(!islist(trophy_type))
+			make_path(target, trophy_type)
 			return
-		make_path(target, trophy_type)
+
+		for(var/trophypath in trophy_type)
+			make_path(target, trophypath)
 
 /datum/element/crusher_loot/proc/make_path(mob/living/target, path)
 	if(drop_immediately)
 		new path(get_turf(target))
 	else
-		target.butcher_results[path] = 1
+		target.guaranteed_butcher_results[path] = 1

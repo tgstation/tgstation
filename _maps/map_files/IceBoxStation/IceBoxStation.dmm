@@ -6231,7 +6231,7 @@
 /area/station/command/bridge)
 "bGm" = (
 /obj/machinery/firealarm/directional/south,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
@@ -35253,7 +35253,7 @@
 /area/station/commons/storage/mining)
 "jYG" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
