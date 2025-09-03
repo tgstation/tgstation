@@ -582,7 +582,7 @@ SPY_HARD_REWARD_TC_THRESHOLD 15
 
 ## Uncomment to enable maps saving and loading that persists between rounds instead of always reseting to the default station map
 ## This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year/month/day/round-id
-PERSISTENT_SAVE_ENABLED
+#PERSISTENT_SAVE_ENABLED
 ## Period of time in hours between map autosaves (set to -1 to only allow saving when server reboots)
 ## Defaults to every 4 hours
 PERSISTENT_AUTOSAVE_PERIOD 4
@@ -602,8 +602,9 @@ PERSISTENT_SAVE_SPACE_EMPTY_Z_LEVELS
 ## Whether to include mining z levels
 PERSISTENT_SAVE_MINING_Z_LEVELS
 ## Whether to include transitional z levels used for shuttle movement
-PERSISTENT_SAVE_TRANSITIONAL_Z_LEVELS
+#PERSISTENT_SAVE_TRANSITIONAL_Z_LEVELS
 ## Whether to include away gateway misisons z levels
 PERSISTENT_SAVE_AWAY_Z_LEVELS
 ## If enabled, a fixed grid layout is loaded from the z-level JSON files
+## PERSISTENT_SAVE_SPACE_RUIN_Z_LEVELS and PERSISTENT_SAVE_SPACE_EMPTY_Z_LEVELS must be enabled for this to work
 PERSISTENT_USE_STATIC_MAP_GRID
