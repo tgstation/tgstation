@@ -699,8 +699,7 @@
 	candidate.transfer_to(bad_version, force_key_move = TRUE)
 
 	var/datum/antagonist/paradox_clone/antag = candidate.add_antag_datum(/datum/antagonist/paradox_clone)
-	antag.original_ref = WEAKREF(good_version.mind)
-	antag.setup_clone()
+	antag.setup_clone(good_version.mind)
 
 	playsound(bad_version, 'sound/items/weapons/zapbang.ogg', 30, TRUE)
 	bad_version.put_in_hands(new /obj/item/storage/toolbox/mechanical()) //so they dont get stuck in maints
