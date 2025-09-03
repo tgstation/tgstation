@@ -583,7 +583,7 @@
 	data["current_task_type"] = current_task_type
 	data["current_task_duration"] = current_task_duration
 	data["interaction_delay"] = interaction_delay
-	data["min_delay"] = minimal_interaction_multiplier
+	data["min_delay"] = BASE_INTERACTION_TIME * minimal_interaction_multiplier
 	data["manipulator_position"] = "[x],[y]"
 	data["pickup_tasking"] = pickup_tasking
 	data["dropoff_tasking"] = dropoff_tasking

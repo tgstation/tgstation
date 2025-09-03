@@ -48,7 +48,7 @@ const MasterControls = () => {
         <Button
           icon="backward-step"
           onClick={() =>
-            act('changeDelay', {
+            act('adjust_interaction_delay', {
               new_delay: min_delay,
             })
           }
@@ -65,7 +65,7 @@ const MasterControls = () => {
           maxValue={max_delay}
           unit="sec."
           onDrag={(e, value) =>
-            act('changeDelay', {
+            act('adjust_interaction_delay', {
               new_delay: value,
             })
           }
@@ -75,7 +75,7 @@ const MasterControls = () => {
         <Button
           icon="forward-step"
           onClick={() =>
-            act('changeDelay', {
+            act('adjust_interaction_delay', {
               new_delay: max_delay,
             })
           }
@@ -87,7 +87,7 @@ const MasterControls = () => {
           content="Drop"
           icon="eject"
           tooltip="Disengage the claws, dropping the held item"
-          onClick={() => act('drop')}
+          onClick={() => act('drop_held_atom')}
         />
       </Stack.Item>
     </Stack>
