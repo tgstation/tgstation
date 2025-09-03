@@ -79,7 +79,6 @@
 	var/center = round(grid_diameter / 2)
 	if(transition_levels.len)
 		point = grid[CHORDS_TO_1D(center, center, grid_diameter)]
-/// if loop here
 
 	var/list/transition_pick = transition_levels.Copy()
 	var/list/possible_points = list()
@@ -87,7 +86,13 @@
 	while(transition_pick.len)
 		var/datum/space_level/networked_level = pick_n_take(transition_pick)
 
-		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && SSpersistence.map_configs_cache)
+		if(
+		CONFIG_GET(flag/persistent_save_enabled) &&
+		CONFIG_GET(flag/persistent_use_static_map_grid) &&
+		CONFIG_GET(flag/persistent_save_space_ruin_z_levels) &&
+		CONFIG_GET(flag/persistent_save_space_empty_z_levels) &&
+		SSpersistence.map_configs_cache
+		)
 			point = grid[CHORDS_TO_1D(networked_level.xi, networked_level.yi, grid_diameter)]
 
 		networked_level.xi = point.x
@@ -101,7 +106,6 @@
 		CHECK_TICK
 
 	grid.Cut()
-/// end if loop
 
 	// Now that we've handed out neighbors, we're gonna handle an edge case
 	// Need to check if all our levels have neighbors in all directions
