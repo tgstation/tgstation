@@ -220,10 +220,19 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/matching_z_levels = list()
 	var/list/last_save_files = flist(last_save)
-	last_save = copytext(last_save, 1, -1) // drop the "/" from the directory
+
+	// prune the map .dmm files from our list since we only need JSONs
+	for(var/dmm_file in last_save_files)
+		if(copytext("[dmm_file]", -4) == ".dmm")
+			last_save_files.Remove(dmm_file)
+
+	// make sure only json files exist in this list because we have to sort them a special way
 	for(var/file in last_save_files)
 		if(copytext("[file]", -5) != ".json")
-			continue
+			CRASH("[file] in [last_save] directory is neither a .json or .dmm file")
+
+	sortTim(last_save_files, GLOBAL_PROC_REF(cmp_persistent_saves_asc))
+	last_save = copytext(last_save, 1, -1) // drop the "/" from the directory
 
 		// need to reformat the file name and directory to work with load_map_config()
 		file = copytext(file, 1, -5) // drop the ".json" from file name
