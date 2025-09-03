@@ -43,3 +43,7 @@
   - bugfix: Fixed damaged APC board screentips bypassing emagged and broken checks
   - bugfix: Fixed shuttle cleanup code bypassing move contents of turfs
   - bugfix: Fixed tram crossing signals bypassing north and east direction checks
+2025-09-03:
+  Rhials:
+  - bugfix: Pirates can sell minerals and other cargo exports on their bounty pad
+      again.
