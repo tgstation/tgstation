@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	shuttle_id = "cargo"
-	callTime = 600
+	callTime = 60 SECONDS
 
 	dir = WEST
 	port_direction = EAST
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(spawning_order.charge_on_purchase)
 				receiver_message += " [price] credits have been charged to your bank account"
 			paying_for_this.bank_card_talk(receiver_message)
-			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
+			SSeconomy.add_audit_entry(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
 		value += pack_cost
@@ -227,8 +227,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
 			crate.name += " - #[spawning_order.id]"
 
-		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]"))
-
+		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]", "[spawning_order.orderer_rank]"))
 		var/from_whom = paying_for_this?.account_holder || "nobody (department order)"
 
 		investigate_log("Order #[spawning_order.id] ([spawning_order.pack.name], placed by [key_name(spawning_order.orderer_ckey)]), paid by [from_whom] has shipped.", INVESTIGATE_CARGO)

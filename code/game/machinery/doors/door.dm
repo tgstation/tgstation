@@ -584,24 +584,23 @@
 	for(var/turf/checked_turf in locs)
 		for(var/mob/living/future_pancake in checked_turf)
 			future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
-			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			var/sig_return = SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			future_pancake.add_splatter_floor(loc)
+			log_combat(src, future_pancake, "crushed")
+			var/door_wounding = (sig_return & DOORCRUSH_NO_WOUND) ? CANT_WOUND : 10
 			if(isalien(future_pancake))  //For xenos
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE * 1.5, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src) //Xenos go into crit after aproximately the same amount of crushes as humans.
 				future_pancake.emote("roar")
 			else if(ismonkey(future_pancake)) //For monkeys
 				future_pancake.emote("screech")
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				future_pancake.Paralyze(100)
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
+				future_pancake.Paralyze(10 SECONDS)
 			else if(ishuman(future_pancake)) //For humans
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				future_pancake.emote("scream")
-				future_pancake.Paralyze(100)
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
+				future_pancake.Paralyze(10 SECONDS)
 			else //for simple_animals & borgs
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				var/turf/location = get_turf(src)
-				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-				future_pancake.add_splatter_floor(location)
-				log_combat(src, future_pancake, "crushed")
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
 		for(var/obj/vehicle/sealed/mecha/mech in get_turf(src)) // Your fancy metal won't save you here!
 			mech.take_damage(DOOR_CRUSH_DAMAGE)
 			log_combat(src, mech, "crushed")

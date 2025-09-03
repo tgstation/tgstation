@@ -17,6 +17,7 @@
 			"desc" = user_role.desc,
 			"hud_icon" = user_role.hud_icon,
 			"revealed_icon" = user_role.revealed_icon,
+			"role_dead" = (user_role.game_status == MAFIA_DEAD),
 		)
 
 	return data
@@ -68,7 +69,7 @@
 		if(user_role) //not observer
 			player_info["is_you"] = (role.body.real_name == user_role.body.real_name)
 			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
-				if(action.validate_action_target(src, potential_target = role, silent = TRUE))
+				if(action.validate_action_target(potential_target = role, silent = TRUE))
 					player_info["possible_actions"] += list(list("name" = action, "ref" = REF(action)))
 
 		data["players"] += list(player_info)
@@ -88,6 +89,7 @@
 	var/obj/item/modular_computer/modpc = ui.src_object
 	if(!istype(modpc))
 		modpc = null
+
 	//Admin actions
 	if(ui.user.client.holder)
 		switch(action)
@@ -147,21 +149,10 @@
 			if("start_now")
 				forced_setup()
 
-	switch(action) //both living and dead
-		if("mf_lookup")
-			var/role_lookup = params["role_name"]
-			var/datum/mafia_role/helper
-			for(var/datum/mafia_role/role as anything in all_roles)
-				if(role_lookup == role.name)
-					helper = role
-					break
-			helper.show_help(usr)
-
-	if(!user_role)//just the dead
+	if(!user_role) // non-player & pre-game actions.
 		switch(action)
 			if("mf_signup")
-				if(signup_mafia(usr, ui.user.client, modpc))
-					return TRUE
+				signup_mafia(ui.user, ui.user.client, modpc)
 			if("vote_to_start")
 				var/client/ghost_client = ui.user.client
 				if(phase != MAFIA_PHASE_SETUP)
@@ -191,35 +182,41 @@
 						to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [max(round(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))])."))
 						if(check_start_votes()) //See if we have enough votes to start
 							forced_setup()
-				return TRUE
+		return TRUE
 
-	if(user_role && user_role.game_status == MAFIA_DEAD)
-		return
-
-	//User actions (just living)
-	switch(action)
+	switch(action) //actions that both living and dead players can perform.
+		if("mf_lookup")
+			var/role_lookup = params["role_name"]
+			var/datum/mafia_role/helper
+			for(var/datum/mafia_role/role as anything in all_roles)
+				if(role_lookup == role.name)
+					helper = role
+					break
+			helper.show_help(usr)
 		if("change_notes")
-			if(user_role.game_status == MAFIA_DEAD)
-				return TRUE
 			user_role.written_notes = sanitize_text(params["new_notes"])
 			user_role.send_message_to_player("notes saved", balloon_alert = TRUE)
 			return TRUE
-		if("send_message_to_chat")
-			if(user_role.game_status == MAFIA_DEAD)
-				return TRUE
-			var/message_said = sanitize_text(params["message"])
-			user_role.body.say(message_said, forced = "mafia chat (sent by [ui.user.client])")
-			return TRUE
 		if("send_notes_to_chat")
-			if(user_role.game_status == MAFIA_DEAD || !user_role.written_notes)
-				return TRUE
-			if(phase == MAFIA_PHASE_NIGHT)
+			if(!user_role.written_notes)
 				return TRUE
 			if(!COOLDOWN_FINISHED(user_role, note_chat_sending_cooldown))
 				return FALSE
 			COOLDOWN_START(user_role, note_chat_sending_cooldown, MAFIA_NOTE_SENDING_COOLDOWN)
-			user_role.body.say("[user_role.written_notes]", forced = "mafia notes sending")
+			var/list/message_mods = list()
+			message_mods[MANNEQUIN_CONTROLLED] = ui.user
+			user_role.body.say("[user_role.written_notes]", forced = "mafia notes sending", message_mods = message_mods)
 			return TRUE
+		if("send_message_to_chat")
+			var/message_said = sanitize_text(params["message"])
+			var/list/message_mods = list()
+			message_mods[MANNEQUIN_CONTROLLED] = ui.user
+			user_role.body.say(message_said, forced = "mafia chat (sent by [ui.user.client])", message_mods = message_mods)
+
+	if(user_role.game_status == MAFIA_DEAD)
+		return TRUE
+
+	switch(action) //actions that only living players can perform.
 		if("perform_action")
 			var/datum/mafia_role/target = locate(params["target"]) in all_roles
 			if(!istype(target))
@@ -232,11 +229,11 @@
 					used_action.using_ability = TRUE
 					used_action.perform_action_target(src, target)
 				if(MAFIA_PHASE_NIGHT)
-					used_action.set_target(src, target)
+					used_action.set_target(target)
 			return TRUE
 
 	if(user_role != on_trial)
-		switch(action)
+		switch(action) // actions that can only be done while someone is on stand (that isn't you)
 			if("vote_abstain")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_abstain_votes))
 					return

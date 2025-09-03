@@ -1058,7 +1058,6 @@
 /area/centcom/central_command_areas/holding)
 "zU" = (
 /obj/structure/table/wood,
-/obj/item/toy/plush/goatplushie,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)

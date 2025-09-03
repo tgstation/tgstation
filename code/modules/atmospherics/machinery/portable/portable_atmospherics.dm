@@ -75,8 +75,10 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/Destroy()
-	disconnect()
+	disconnect(destroyed = TRUE)
 	air_contents = null
+	if(holding)
+		unregister_holding()
 	SSair.stop_processing_machine(src)
 
 	return ..()
@@ -194,12 +196,15 @@
 /**
  * Allow the portable machine to be disconnected from the connector
  */
-/obj/machinery/portable_atmospherics/proc/disconnect()
+/obj/machinery/portable_atmospherics/proc/disconnect(destroyed = FALSE)
 	if(!connected_port)
 		return FALSE
-	set_anchored(FALSE)
 	connected_port.connected_device = null
 	connected_port = null
+	if (destroyed)
+		return TRUE
+
+	set_anchored(FALSE)
 	pixel_x = 0
 	pixel_y = 0
 
@@ -310,7 +315,7 @@
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/item, mob/user)
 	. = ..()
-	if(!.)
+	if(. <= 0)
 		return
 	investigate_log("was smacked with \a [item] by [key_name(user)].", INVESTIGATE_ATMOS)
 	add_hiddenprint(user)
