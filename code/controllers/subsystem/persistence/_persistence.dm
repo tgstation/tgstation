@@ -322,7 +322,7 @@ SUBSYSTEM_DEF(persistence)
 			continue
 
 		if(is_multi_z_level(z))
-			if(!SSmapping.level_trait(z, ZTRAIT_UP) && SSmapping.level_trait(z, ZTRAIT_DOWN))
+			if(!SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN))
 				continue // skip all the other z levels if they aren't a bottom
 
 			var/bottom_z = z
