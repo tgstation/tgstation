@@ -204,7 +204,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/Destroy()
 	id_card = null
-	REMOVE_TRAIT(src, TRAIT_STRONGPULL, null)
 	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
 	QDEL_NULL(closet_see_inside)
