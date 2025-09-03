@@ -200,10 +200,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/temperature_delta = abs(temperature - gas_holder.temperature)
 	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
-		var/giver_heat_capacity = giver.heat_capacity()
+		var/giver_heat_capacity = gas_holder.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity)
-			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
+			temperature = (gas_holder.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 	garbage_collect()
 
 /// Modify the gas list as to convert moles of gas species A to gas species B
