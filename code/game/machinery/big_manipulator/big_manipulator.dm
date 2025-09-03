@@ -600,9 +600,10 @@
 		for(var/obj/item/some_path as anything in point.atom_filters)
 			filter_names += some_path::name
 		point_data["item_filters"] = filter_names
-		point_data["filters_status"] = point.filters_status
+		point_data["filters_status"] = point.should_use_filters
 		point_data["filtering_mode"] = point.filtering_mode
-		point_data["should_overflow"] = point.should_overflow
+		point_data["worker_interaction"] = point.worker_interaction
+		point_data["overflow_status"] = point.overflow_status
 		pickup_points_data += list(point_data)
 	data["pickup_points"] = pickup_points_data
 
@@ -618,8 +619,10 @@
 		for(var/obj/item/some_path as anything in point.atom_filters)
 			filter_names += some_path::name
 		point_data["item_filters"] = filter_names
-		point_data["filters_status"] = point.filters_status
-		point_data["should_overflow"] = point.should_overflow
+		point_data["filters_status"] = point.should_use_filters
+		point_data["filtering_mode"] = point.filtering_mode
+		point_data["worker_interaction"] = point.worker_interaction
+		point_data["overflow_status"] = point.overflow_status
 		dropoff_points_data += list(point_data)
 	data["dropoff_points"] = dropoff_points_data
 
@@ -700,16 +703,12 @@
 			target_point.atom_filters = list()
 			return TRUE
 
-		if("toggle_dropoff_point_overflow")
-			target_point.should_overflow = !target_point.should_overflow
-			return TRUE
-
 		if("cycle_dropoff_point_interaction")
 			target_point.interaction_mode = cycle_value(target_point.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
 			return TRUE
 
 		if("toggle_filter_skip")
-			target_point.filters_status = !target_point.filters_status
+			target_point.should_use_filters = !target_point.should_use_filters
 			return TRUE
 
 		if("cycle_pickup_point_type")
@@ -718,6 +717,10 @@
 
 		if("cycle_worker_interaction")
 			target_point.worker_interaction = cycle_value(target_point.worker_interaction, list(WORKER_NORMAL_USE, WORKER_SINGLE_USE, WORKER_EMPTY_USE))
+			return TRUE
+
+		if("cycle_overflow_status")
+			target_point.overflow_status = cycle_value(target_point.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
 			return TRUE
 
 		if("set_throw_range")
@@ -788,11 +791,9 @@
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
 	var/current_index = possible_values.Find(current_value)
 	if(current_index == null)
-		to_chat(world, span_notice("DEBUG: Value cycled to [possible_values[1]]"))
 		return possible_values[1]
 
 	var/next_index = (current_index % possible_values.len) + 1
-	to_chat(world, span_notice("DEBUG: Value cycled to [possible_values[next_index]]"))
 	return possible_values[next_index]
 
 /// Begins a new task with the specified type and duration

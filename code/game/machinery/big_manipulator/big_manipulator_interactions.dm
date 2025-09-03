@@ -76,7 +76,11 @@
 		return FALSE
 
 	cycle_timer_running = FALSE
-	try_run_full_cycle()
+
+	if(held_object)
+		start_work(held_object, TRUE)
+	else
+		try_run_full_cycle()
 
 /// Safely schedules the next cycle attempt to prevent overlapping.
 /obj/machinery/big_manipulator/proc/schedule_next_cycle()
@@ -106,6 +110,7 @@
 /obj/machinery/big_manipulator/proc/try_run_full_cycle()
 	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
 	if(!origin_point) // no origin point - nowhere to begin the cycle from
+		to_chat(world, "No origin point found")
 		return handle_no_work_available()
 
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
@@ -132,6 +137,7 @@
 			start_work(movable_atom, hand_is_empty)
 			return TRUE
 
+	to_chat(world, "No movable atom found on origin turf")
 	return handle_no_work_available()
 
 /// Attempts to start a work cycle (pick up the object)
@@ -145,6 +151,7 @@
 
 	if(!destination_point)
 		SStgui.update_uis(src)
+		to_chat(world, "No destination point found")
 		return handle_no_work_available()
 
 	rotate_to_point(destination_point, PROC_REF(try_interact_with_destination_point))

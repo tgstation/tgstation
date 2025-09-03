@@ -6,7 +6,7 @@
 	/// The weakref to the turf this interaction point represents.
 	var/datum/weakref/interaction_turf
 	/// Should we check our filters while interacting with this point?
-	var/should_should_use_filters = FALSE
+	var/should_use_filters = FALSE
 	/// How should this point be interacted with?
 	var/interaction_mode = INTERACT_DROP
 	/// How should the monkey worker (if there is one) interact with the target point?
@@ -135,7 +135,7 @@
 				// We need to check if any of the items on the turf match the item we're holding
 				for(var/atom/movable/movable_atom in atoms_on_the_turf)
 					if(istype(movable_atom, target))
-					return FALSE // one of the items on the turf was the same as the one we're holding
+						return FALSE // one of the items on the turf was the same as the one we're holding
 				return TRUE
 
 			if(POINT_OVERFLOW_FORBIDDEN)
@@ -147,7 +147,7 @@
 				if(length(items_on_the_turf))
 					return FALSE
 
-			return TRUE
+				return TRUE
 
 	// No interaction is possible - the interaction point is unavailable.
 	return FALSE
@@ -160,7 +160,6 @@
 
 	if(isclosedturf(resolved_turf))
 		return FALSE
-
 	return TRUE
 
 /// Checks if the passed movable `atom` fits the filters.

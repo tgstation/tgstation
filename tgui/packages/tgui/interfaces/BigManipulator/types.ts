@@ -14,7 +14,7 @@ export type InteractionPoint = {
   item_filters: string[];
   filters_status: boolean;
   filtering_mode: number;
-  should_overflow: boolean;
+  overflow_status: string;
 };
 
 export interface ManipulatorData {

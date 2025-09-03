@@ -403,16 +403,11 @@ const PointSection = (props: {
                       />
                       <ConfigRow
                         label="Overflow"
-                        content={
-                          editingPoint.should_overflow ? 'TRUE' : 'FALSE'
-                        }
+                        content={editingPoint.overflow_status}
                         onClick={() =>
-                          adjustPoint(
-                            editingPoint.id,
-                            'toggle_dropoff_point_overflow',
-                          )
+                          adjustPoint(editingPoint.id, 'cycle_overflow_status')
                         }
-                        tooltip="Toggle overflow"
+                        tooltip="Cycle overflow status"
                       />
                       <ConfigRow
                         label="Use Item Filters"

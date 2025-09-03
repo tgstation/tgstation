@@ -42,9 +42,9 @@
 
 #define CYCLE_SKIP_TIMEOUT 1 SECONDS
 
-#define POINT_OVERFLOW_ALLOWED
-#define POINT_OVERFLOW_FILTERS
-#define POINT_OVERFLOW_HELD
-#define POINT_OVERFLOW_FORBIDDEN
+#define POINT_OVERFLOW_ALLOWED "Overflow Allowed"
+#define POINT_OVERFLOW_FILTERS "Overflow Filters"
+#define POINT_OVERFLOW_HELD "Overflow Held"
+#define POINT_OVERFLOW_FORBIDDEN "Overflow Forbidden"
 
 
