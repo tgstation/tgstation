@@ -14,6 +14,23 @@
 	. = ..()
 	user.spin(TAUNT_EMOTE_DURATION, 0.1 SECONDS)
 
+datum/emote/living/tongue
+	key = "tongue"
+	key_third_person = "tongues"
+	message = "sticks their tongue out."
+
+/datum/emote/living/tongue/run_emote(mob/user, params, type_override, intentional)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(!human_user.get_organ_slot(ORGAN_SLOT_TONGUE))
+	{
+		to_chat(human_user, span_warning("You don't have a tongue!"))
+		return
+	}
+	. = ..()
+	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/tongue), 5.2 SECONDS)
+
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
