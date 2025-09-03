@@ -52,7 +52,10 @@
 			return
 	if(ventcrawl_target.welded)
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't crawl around a welded vent!"))
+			// Add cooldown to prevent welded vent message spam during movement
+			if(COOLDOWN_FINISHED(src, welded_vent_message_cd))
+				to_chat(src, span_warning("You can't crawl around a welded vent!"))
+				COOLDOWN_START(src, welded_vent_message_cd, 2 SECONDS)
 		return
 
 	if(!(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED))

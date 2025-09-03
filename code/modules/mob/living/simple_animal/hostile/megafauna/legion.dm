@@ -108,6 +108,15 @@
 	maxHealth = 200
 	size = LEGION_SMALL
 
+/mob/living/simple_animal/hostile/megafauna/legion/small/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/simple_animal/hostile/megafauna/legion/small/update_overlays()
+	. = ..()
+	if (stat != DEAD) // Shouldn't really happen but just in case
+		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(client)
 		return
@@ -148,7 +157,7 @@
 	var/mob/living/living_target = target
 	switch(living_target.stat)
 		if(UNCONSCIOUS, HARD_CRIT)
-			var/mob/living/basic/legion_brood/legion = new(loc)
+			var/mob/living/basic/mining/legion_brood/legion = new(loc)
 			legion.infest(living_target)
 
 ///Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.

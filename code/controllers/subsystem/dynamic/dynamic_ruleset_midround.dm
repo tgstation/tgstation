@@ -830,12 +830,12 @@
 		HUNTER_PACK_MI13,
 	)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), 10 MINUTES), 1 MINUTES)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, datum/team/fugitive/team, turf/team_spawn)
 	candidate.current.forceMove(team_spawn)
 	equip_fugitive(candidate.current, team)
-	if(length(selected_minds) > 1 && candidate == selected_minds[1])
+	if(candidate == selected_minds[1])
 		equip_fugitive_leader(candidate.current)
 	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
 
