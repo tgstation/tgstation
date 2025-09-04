@@ -21,14 +21,12 @@
 	var/show_puffs_left = TRUE // this is how real inhalers work
 
 /obj/item/inhaler/Initialize(mapload)
+	. = ..()
 	if (ispath(initial_casister_path, /obj/item/reagent_containers/inhaler_canister))
 		set_canister(new initial_casister_path)
 
-	return ..()
-
 /obj/item/inhaler/Destroy(force)
-	if (!isnull(canister))
-		QDEL_NULL(canister)
+	QDEL_NULL(canister)
 
 	return ..()
 
@@ -272,7 +270,7 @@
 	if(smoke_reagents.reagent_list)
 		smoke.set_up(1, holder = src, location = get_turf(src), carry = smoke_reagents)
 		smoke.start(log = TRUE)
-	visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
+		visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
 
 	return ..()
 
