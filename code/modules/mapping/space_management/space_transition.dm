@@ -125,7 +125,7 @@
 			var/datum/space_level/neighbor = level.neigbours["[dirside]"]
 			var/zdestination = neighbor.z_value
 
-			for(var/turf/open/S in turfblock)
+			for(var/turf/open/space/S in turfblock)
 				S.destination_x = x_target || S.x
 				S.destination_y = y_target || S.y
 				S.destination_z = zdestination
