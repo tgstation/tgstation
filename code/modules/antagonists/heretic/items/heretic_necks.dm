@@ -160,6 +160,7 @@
 		'sound/items/sitcom_laugh/SitcomLaugh2.ogg',
 		'sound/items/sitcom_laugh/SitcomLaugh3.ogg',
 	)
+	var/valid_weapon_type = /obj/item/melee/sickly_blade
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
@@ -204,7 +205,6 @@
 	if(!ismob(loc))
 		return ..()
 	var/mob/user = loc
-	on_amulet_deactivate(user)
 	return ..()
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -214,15 +214,13 @@
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/blade_channel(mob/living/attacker, mob/living/victim)
 	SIGNAL_HANDLER
-	playsound(attacker, pick(possible_sounds), 40, TRUE)
-	return channel_amulet(attacker, victim)
+	channel_amulet(attacker, victim)
 
 /// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/channel_amulet(mob/user, atom/target)
-	SIGNAL_HANDLER
 
 	if(!isliving(user))
-		return
+		return FALSE
 	var/mob/living/living_user = user
 	if(!IS_HERETIC_OR_MONSTER(living_user))
 		living_user.balloon_alert(living_user, "you feel a presence watching you")
@@ -231,12 +229,12 @@
 		return FALSE
 
 	if(!ishuman(target))
-		return
+		return FALSE
 	var/mob/living/carbon/human/human_target = target
 	if(IS_HERETIC_OR_MONSTER(human_target))
 		living_user.balloon_alert(living_user, "resists effects!")
 		return FALSE
-	if(human_target.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(human_target.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return FALSE
 	if(!human_target.mob_mood)
 		return FALSE
@@ -249,11 +247,12 @@
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)
 		living_user.log_message("made [human_target] insane.", LOG_GAME)
 		human_target.log_message("was driven insane by [living_user]", LOG_GAME)
+	return TRUE
 
 /// Modifies any blades that we equip while wearing the amulet
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_equip_item(mob/user, obj/item/blade, slot)
 	SIGNAL_HANDLER
-	if(!istype(blade, /obj/item/melee/sickly_blade))
+	if(!istype(blade, valid_weapon_type))
 		return // We only care about modifying blades
 	if(slot & ITEM_SLOT_HANDS)
 		blade.force = 0
@@ -284,13 +283,13 @@
 	"As [attacker] carves into you with [weapon], you lose something deep within. The agony is worse than any wound.",
 	)
 	to_chat(victim, span_userdanger(pick(victim_list)))
-	// JAKETODO | XANTODO Add the sounds here for amulet'd blade hitting someone
+	playsound(attacker, pick(possible_sounds), 40, TRUE)
 	return SIGNAL_MESSAGE_MODIFIED
 
 /// Modifies any blades that we drop while wearing the amulet
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_dropped_item(mob/user, obj/item/dropped_item)
 	SIGNAL_HANDLER
-	if(!istype(dropped_item, /obj/item/melee/sickly_blade))
+	if(!istype(dropped_item, valid_weapon_type))
 		return // We only care about modifying blades
 	dropped_item.force = initial(dropped_item.force)
 	dropped_item.wound_bonus = initial(dropped_item.wound_bonus)

@@ -19,7 +19,7 @@
 	deactive_msg = "You stop the music and halt the parade... for now."
 	cast_range = 12
 	projectile_type = /obj/projectile/moon_parade
-	antimagic_flags = MAGIC_RESISTANCE_MIND
+	antimagic_flags = MAGIC_RESISTANCE_MOON
 
 /obj/projectile/moon_parade
 	name = "Lunar parade"
@@ -63,7 +63,7 @@
 		return PROJECTILE_PIERCE_PHASE
 
 	// Anti-magic destroys the projectile for consistency and counterplay
-	if(victim.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(victim.can_block_magic(MAGIC_RESISTANCE_MOON))
 		visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 

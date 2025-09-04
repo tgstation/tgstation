@@ -258,7 +258,7 @@
 
 /datum/status_effect/eldritch/moon/on_apply()
 	. = ..()
-	if(owner.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(owner.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return FALSE
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.emote(pick("giggle", "laugh"))

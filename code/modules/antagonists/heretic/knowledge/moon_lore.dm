@@ -73,7 +73,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
 
-	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(target.can_block_magic(MAGIC_RESISTANCE_MOON))
 		to_chat(target, span_danger("You hear echoing laughter from above..but it is dull and distant."))
 		return
 
@@ -153,7 +153,7 @@
 	if(source == target || !isliving(target))
 		return
 
-	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(target.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return
 
 	target.cause_hallucination( \
@@ -276,7 +276,7 @@
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
-		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MIND)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
+		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MOON)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
 		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
 		if(carbon_view.has_status_effect(/datum/status_effect/confusion))
@@ -295,7 +295,7 @@
 			hallucination_duration = 50 SECONDS
 		)
 		carbon_view.adjust_temp_blindness(5 SECONDS)
-		if(HAS_TRAIT(carbon_view, TRAIT_MINDSHIELD))
+		if(should_mind_explode())
 			to_chat(carbon_view, span_boldbig(span_red(\
 				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
 				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
@@ -309,3 +309,11 @@
 			explosion.start(src)
 		else
 			attempt_conversion(carbon_view, source)
+
+
+/datum/heretic_knowledge/ultimate/moon_final/proc/should_mind_explode()
+	if(HAS_TRAIT(carbon_view, TRAIT_MINDSHIELD))
+		return TRUE
+	if(IS_CULTIST_OR_CULTIST_MOB(carbon_view))
+		return TRUE
+	return FALSE

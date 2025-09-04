@@ -18,7 +18,7 @@
 	cast_range = 6
 
 	active_msg = "You prepare to open your mind..."
-	antimagic_flags = MAGIC_RESISTANCE_MIND
+	antimagic_flags = MAGIC_RESISTANCE_MOON
 
 /datum/action/cooldown/spell/pointed/mind_gate/can_cast_spell(feedback = TRUE)
 	return ..() && isliving(owner)
