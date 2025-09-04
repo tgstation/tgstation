@@ -178,6 +178,14 @@
 				not_eaten += 1
 				continue
 
+		// Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, etc.)
+		// unless they have already been unlocked to prevent exploiting the recycler to bypass closet access.
+		if (iscloset(thing))
+			var/obj/structure/closet/as_closet = thing
+			if (as_closet.secure && as_closet.locked)
+				not_eaten += 1
+				continue
+
 		if (istype(thing, /obj/item/organ/brain) || istype(thing, /obj/item/dullahan_relay))
 			living_detected = TRUE
 
@@ -217,6 +225,7 @@
 			break
 		var/full_power_usage = TRUE
 		var/obj/nom_obj = nom[i]
+		debug_usr("recycling [nom_obj]")
 		if (isitem(nom_obj))
 			// Whether or not items consume full power depends on if they produced a material when recycled.
 			full_power_usage = recycle_item(nom_obj)
