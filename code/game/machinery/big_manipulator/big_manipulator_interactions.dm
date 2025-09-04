@@ -26,7 +26,6 @@
 			for(var/i2 = 1, i2 < roundrobin_history_dropoff, i2++)
 				ordered += destinations[i2]
 		if(TASKING_STRICT_ROBIN)
-			// Same ordering as round-robin, but we won't advance the index here
 			if(roundrobin_history_dropoff < 1 || roundrobin_history_dropoff > length(destinations))
 				roundrobin_history_dropoff = 1
 			for(var/j = roundrobin_history_dropoff, j <= length(destinations), j++)
@@ -41,15 +40,15 @@
 		for(var/atom/movable/candidate in pickup_turf.contents)
 			if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
 				continue
-			// Must satisfy pickup point filters
+
 			if(!pickup_point.check_filters_for_atom(candidate))
 				continue
-			// Must also satisfy destination point filters
+
 			if(!dest_point.check_filters_for_atom(candidate))
 				continue
-			// Destination decides if it can accept this item (overflow rules, etc.)
+
 			if(dest_point.is_available(TRANSFER_TYPE_DROPOFF, candidate))
-				// Advance the round-robin index for next time if using round-robin
+
 				if(dropoff_tasking == TASKING_ROUND_ROBIN)
 					var/found_index = destinations.Find(dest_point)
 					if(found_index)
@@ -61,16 +60,14 @@
 	return null
 
 /// Calculates the next interaction point the manipulator should transfer the item to or pick up it from.
-/obj/machinery/big_manipulator/proc/find_next_point(tasking_type, transfer_type, atom/movable/target = null)
+/obj/machinery/big_manipulator/proc/find_next_point(tasking_type, transfer_type)
 	if(!tasking_type)
 		tasking_type = TASKING_PREFER_FIRST
 
 	if(!transfer_type)
 		return NONE
 
-	// If no target provided, try to get it from held_object
-	if(!target)
-		target = held_object?.resolve()
+	var/atom/movable/target = held_object?.resolve()
 
 	var/list/interaction_points = transfer_type == TRANSFER_TYPE_DROPOFF ? dropoff_points : pickup_points
 	if(!length(interaction_points))
@@ -170,7 +167,7 @@
 
 /// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
 /obj/machinery/big_manipulator/proc/run_pickup_phase()
-	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP, null)
+	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
 	if(!origin_point) // no origin point - nowhere to begin the cycle from
 		return handle_no_work_available()
 
@@ -211,8 +208,7 @@
 
 /obj/machinery/big_manipulator/proc/run_dropoff_phase()
 	// Find the next available destination point that can accept the held item
-	var/atom/movable/target = held_object.resolve()
-	var/datum/interaction_point/destination_point = find_next_point(dropoff_tasking, TRANSFER_TYPE_DROPOFF, target)
+	var/datum/interaction_point/destination_point = find_next_point(dropoff_tasking, TRANSFER_TYPE_DROPOFF)
 
 	if(!destination_point)
 		SStgui.update_uis(src)
