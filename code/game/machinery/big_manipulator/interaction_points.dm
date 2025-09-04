@@ -110,19 +110,19 @@
 		// No suitable atoms to pick up - the pickup point is unavailable.
 		return FALSE
 
-	// For dropoff points, we want points that are empty or can accept items
 	if(transfer_type == TRANSFER_TYPE_DROPOFF)
+		// If filters are enabled, the held item itself must match them for any overflow mode
+		if(should_use_filters && !check_filters_for_atom(target))
+			return FALSE
+
 		switch(overflow_status)
 			if(POINT_OVERFLOW_ALLOWED)
 				// If we don't care if there are already things on this turf, then we just check for filters
 				// Hence if the atom filters are skipped, the point is available for dropoff
 				if(!should_use_filters)
 					return TRUE
-
-				// If the item we're holding matches the filters, then the point is available
-				if(check_filters_for_atom(target))
-					return TRUE
-				return FALSE
+				// If filters are enabled and the target matched them above, it's available
+				return TRUE
 
 			if(POINT_OVERFLOW_FILTERS)
 				// We need to check if there are already items matching the filters on the turf

@@ -524,7 +524,7 @@
 
 		on = new_power_state
 		SStgui.update_uis(src)
-		try_begin_full_cycle()
+		try_kickstart()
 
 	else
 		drop_held_atom()
@@ -741,7 +741,7 @@
 			return TRUE
 
 		if("delete_filter")
-			target_point.atom_filters.Remove(value)
+			target_point.atom_filters.Cut(value, value + 1)
 			return TRUE
 
 		if("move_to")

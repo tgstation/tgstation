@@ -234,6 +234,14 @@ const PointSection = (props: {
     }
   };
 
+  const formatFilters = (filters: string[]) => {
+    if (!filters || filters.length === 0) return '—';
+    if (filters.length <= 2) return filters.join(', ');
+    const shown = filters.slice(0, 2).join(', ');
+    const remaining = filters.length - 2;
+    return `${shown} and ${remaining} more...`;
+  };
+
   return (
     <>
       <Section
@@ -269,8 +277,17 @@ const PointSection = (props: {
                         {point.name} <Button icon="edit" color="transparent" />
                       </Box>
                       <Box color="label">Mode: {point.mode.toUpperCase()}</Box>
-                      <Box color="label">
-                        Filters: {point.filters_status ? 'ACTIVE' : 'INACTIVE'}
+                      <Box
+                        color="label"
+                        style={{
+                          maxWidth: '280px',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: 'block',
+                        }}
+                      >
+                        Filters: {formatFilters(point.item_filters)}
                       </Box>
                     </Box>
                   </Stack.Item>

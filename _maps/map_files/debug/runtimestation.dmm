@@ -1141,6 +1141,9 @@
 /obj/structure/transit_tube/station,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"ih" = (
+/turf/open/floor/wood,
+/area/station/construction)
 "ii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1317,6 +1320,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"py" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "pL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/caution/stand_clear{
@@ -1403,6 +1410,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science)
+"ro" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "ru" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -1628,6 +1640,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"wT" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
@@ -1661,6 +1677,70 @@
 /obj/machinery/light/small/red/dim/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
+"yc" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "yi" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1718,6 +1798,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"zk" = (
+/obj/structure/table/wood,
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "zo" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -1734,6 +1819,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"Ah" = (
+/obj/machinery/big_manipulator,
+/obj/item/clothing/head/hats/tophat{
+	pixel_y = 9
+	},
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "Aj" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1754,6 +1846,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"Bj" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/iron/checker,
+/area/station/construction)
+"Bl" = (
+/obj/machinery/chem_dispenser/fullupgrade,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "Bp" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -1976,6 +2077,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"FZ" = (
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/hud/diagnostic,
+/obj/item/clothing/glasses/hud/diagnostic,
+/obj/item/clothing/glasses/hud/diagnostic,
+/obj/item/clothing/glasses/hud/diagnostic,
+/obj/item/clothing/glasses/hud/diagnostic,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "GC" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
@@ -2023,6 +2133,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"HR" = (
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/wood,
+/area/station/construction)
 "HW" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2052,6 +2166,10 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"ID" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/wood,
+/area/station/construction)
 "IF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -2133,6 +2251,10 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"KV" = (
+/obj/machinery/big_manipulator,
+/turf/open/floor/plating,
+/area/station/construction)
 "Lb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2311,8 +2433,9 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "Pe" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola,
+/turf/open/floor/iron/checker,
 /area/station/construction)
 "Pk" = (
 /obj/machinery/airalarm/directional/north,
@@ -2343,6 +2466,11 @@
 /obj/structure/sign/poster/greenscreen/directional/north,
 /turf/open/floor/greenscreen,
 /area/station/construction)
+"PF" = (
+/obj/structure/table/wood,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "PJ" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2367,6 +2495,12 @@
 	},
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
+"QI" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/barsign/all_access/directional/north,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "QM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2573,6 +2707,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"VV" = (
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "We" = (
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
@@ -2700,6 +2837,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/medical/medbay)
+"YA" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/turf/open/floor/iron/checker,
+/area/station/construction)
 "YL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6298,14 +6440,14 @@ FA
 Hb
 Es
 dn
+cN
+Bj
+VV
+zk
+ID
+ih
 dn
-dn
-dn
-dn
-dn
-dn
-dn
-dn
+KV
 dn
 dL
 cN
@@ -6390,12 +6532,12 @@ bE
 ef
 cY
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+cN
+QI
+VV
+py
+ID
+ih
 dn
 dn
 dn
@@ -6482,12 +6624,12 @@ bE
 cN
 bV
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+cN
+Bl
+VV
+FZ
+ID
+ih
 dn
 dn
 dn
@@ -6574,12 +6716,12 @@ bE
 cN
 ZW
 dn
-dn
-dn
-dn
+cN
+PF
+VV
 Pe
-dn
-dn
+ID
+ih
 dn
 dn
 dn
@@ -6666,12 +6808,12 @@ hp
 cN
 PB
 qf
-dn
-dn
-dn
-dn
-dn
-dn
+cN
+yc
+Ah
+ro
+HR
+ih
 dn
 dn
 dn
@@ -6758,12 +6900,12 @@ bE
 cN
 vs
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+cN
+PF
+VV
+YA
+ID
+ih
 dn
 dn
 dn
@@ -6850,12 +6992,12 @@ bE
 cN
 yL
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+cN
+py
+VV
+py
+ID
+ih
 dn
 dn
 dn
@@ -6942,14 +7084,14 @@ bE
 ef
 cY
 dn
+cN
+wT
+VV
+py
+ID
+ih
 dn
-dn
-dn
-dn
-dn
-dn
-dn
-dn
+KV
 dn
 dL
 cN

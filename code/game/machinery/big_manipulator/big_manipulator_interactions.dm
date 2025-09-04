@@ -73,22 +73,32 @@
 	if(!length(interaction_points))
 		return NONE
 
-	var/roundrobin_history = transfer_type == TRANSFER_TYPE_DROPOFF ? roundrobin_history_dropoff : roundrobin_history_pickup
+	var/is_dropoff = transfer_type == TRANSFER_TYPE_DROPOFF
+	var/roundrobin_history = is_dropoff ? roundrobin_history_dropoff : roundrobin_history_pickup
 
 	switch(tasking_type)
 		if(TASKING_PREFER_FIRST)
 			for(var/datum/interaction_point/this_point in interaction_points)
-				if(this_point.is_available(transfer_type, target))
+				// For pickup: only consider points that have a candidate that can be delivered
+				if(!is_dropoff)
+					if(find_pickup_candidate_for_pickup_point(this_point))
+						return this_point
+				else if(this_point.is_available(transfer_type, target))
 					return this_point
 
 			return NONE
 
 		if(TASKING_ROUND_ROBIN)
 			var/datum/interaction_point/this_point = interaction_points[roundrobin_history]
-			if(this_point.is_available(transfer_type, target))
+			var/point_ok = is_dropoff ? this_point.is_available(transfer_type, target) : !!find_pickup_candidate_for_pickup_point(this_point)
+			if(point_ok)
 				roundrobin_history += 1
 				if(roundrobin_history > length(interaction_points))
 					roundrobin_history = 1
+				if(is_dropoff)
+					roundrobin_history_dropoff = roundrobin_history
+				else
+					roundrobin_history_pickup = roundrobin_history
 				return this_point
 
 			var/initial_index = roundrobin_history
@@ -98,10 +108,15 @@
 
 			while(roundrobin_history != initial_index)
 				this_point = interaction_points[roundrobin_history]
-				if(this_point.is_available(transfer_type, target))
+				point_ok = is_dropoff ? this_point.is_available(transfer_type, target) : !!find_pickup_candidate_for_pickup_point(this_point)
+				if(point_ok)
 					roundrobin_history += 1
 					if(roundrobin_history > length(interaction_points))
 						roundrobin_history = 1
+					if(is_dropoff)
+						roundrobin_history_dropoff = roundrobin_history
+					else
+						roundrobin_history_pickup = roundrobin_history
 					return this_point
 
 				roundrobin_history += 1
@@ -111,10 +126,15 @@
 
 		if(TASKING_STRICT_ROBIN)
 			var/datum/interaction_point/this_point = interaction_points[roundrobin_history]
-			if(this_point.is_available(transfer_type, target))
+			var/point_ok = is_dropoff ? this_point.is_available(transfer_type, target) : !!find_pickup_candidate_for_pickup_point(this_point)
+			if(point_ok)
 				roundrobin_history += 1
 				if(roundrobin_history > length(interaction_points))
 					roundrobin_history = 1
+				if(is_dropoff)
+					roundrobin_history_dropoff = roundrobin_history
+				else
+					roundrobin_history_pickup = roundrobin_history
 				return this_point
 
 			if(status == STATUS_BUSY)
@@ -151,6 +171,7 @@
 /// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
 	start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
+	say("No work avaliable.")
 	schedule_next_cycle()
 	return FALSE
 
@@ -167,6 +188,11 @@
 
 /// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
 /obj/machinery/big_manipulator/proc/run_pickup_phase()
+	if(!on)
+		return
+
+	cycle_timer_running = FALSE
+
 	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP)
 	if(!origin_point) // no origin point - nowhere to begin the cycle from
 		return handle_no_work_available()
@@ -206,9 +232,15 @@
 		held_object = WEAKREF(target)
 		manipulator_arm.update_claw(held_object)
 
+	// Schedule the dropoff phase after a successful pickup to avoid overlapping tasks
+	if(!hand_is_empty)
+		schedule_next_cycle()
+
 /obj/machinery/big_manipulator/proc/run_dropoff_phase()
 	// Find the next available destination point that can accept the held item
 	var/datum/interaction_point/destination_point = find_next_point(dropoff_tasking, TRANSFER_TYPE_DROPOFF)
+
+	cycle_timer_running = FALSE
 
 	if(!destination_point)
 		SStgui.update_uis(src)
