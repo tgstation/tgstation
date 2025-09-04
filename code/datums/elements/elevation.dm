@@ -27,7 +27,6 @@
 	UnregisterSignal(source, list(COMSIG_ATOM_ENTERING, COMSIG_ATOM_EXITING))
 	unregister_turf(source, source.loc)
 	REMOVE_TRAIT(source, TRAIT_ELEVATING_OBJECT, ref(src))
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	return ..()
 
 /datum/element/elevation/proc/reset_elevation(turf/target)
