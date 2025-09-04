@@ -225,7 +225,6 @@
 			break
 		var/full_power_usage = TRUE
 		var/obj/nom_obj = nom[i]
-		debug_usr("recycling [nom_obj]")
 		if (isitem(nom_obj))
 			// Whether or not items consume full power depends on if they produced a material when recycled.
 			full_power_usage = recycle_item(nom_obj)
