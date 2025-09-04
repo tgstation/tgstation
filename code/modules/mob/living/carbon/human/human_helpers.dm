@@ -306,6 +306,10 @@
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client, announce = FALSE)
 
+	for(var/personality_type in personalities)
+		var/datum/personality/personality = GLOB.personality_controller.personalities_by_type[personality_type]
+		personality.apply_to_mob(clone)
+
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 
 	return clone
