@@ -33,12 +33,9 @@
 /obj/item/inhaler/handle_deconstruct(disassembled)
 	. = ..()
 
-	set_canister(null)
+	canister?.forceMove(drop_location())
 
-
-/obj/item/inhaler/update_overlays()
-	. = ..()
-
+/obj/item/inhaler/proc/update_canister_underlay()
 	if (isnull(canister))
 		underlays -= canister_underlay
 		canister_underlay = null
@@ -66,15 +63,18 @@
 
 /obj/item/inhaler/Exited(atom/movable/gone, direction)
 	. = ..()
-	if (!.)
-		return
 
 	if (gone == canister)
 		set_canister(null, move_canister = FALSE)
 
-/obj/item/inhaler/attack(mob/living/target_mob, mob/living/user, params)
+
+/obj/item/inhaler/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!isliving(interacting_with))
+		return ..() // default behavior
+	var/mob/living/target_mob = interacting_with
+
 	if (!can_puff(target_mob, user))
-		return FALSE
+		return NONE
 
 	var/puff_timer = 0
 
@@ -111,9 +111,9 @@
 		if (pre_use_target_message)
 			to_chat(target_mob, pre_use_target_message)
 		if (!do_after(user, puff_timer, src))
-			return FALSE
+			return NONE
 		if (!can_puff(target_mob, user)) // sanity
-			return FALSE
+			return NONE
 
 	user.visible_message(post_use_visible_message, ignored_mobs = list(user, target_mob))
 	to_chat(user, post_use_self_message)
@@ -127,9 +127,9 @@
 
 	return ..()
 
-/obj/item/inhaler/attackby(obj/item/attacking_item, mob/user, params)
-	if (istype(attacking_item, /obj/item/reagent_containers/inhaler_canister))
-		return try_insert_canister(attacking_item, user, params)
+/obj/item/inhaler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (istype(tool, /obj/item/reagent_containers/inhaler_canister))
+		return try_insert_canister(tool, user, modifiers)
 
 	return ..()
 
@@ -175,7 +175,7 @@
 
 	canister = new_canister
 	canister?.forceMove(src)
-	update_overlays()
+	update_canister_underlay()
 
 /// Determines if we can be used. Fails on no canister, empty canister, invalid targets, or non-breathing targets.
 /obj/item/inhaler/proc/can_puff(mob/living/target_mob, mob/living/user, silent = FALSE)
@@ -189,7 +189,7 @@
 		return FALSE
 	if (!iscarbon(target_mob)) // maybe mix this into a general has mouth check
 		if (!silent)
-			balloon_alert(user, "not a carbon!")
+			balloon_alert(user, "not breathing!")
 		return FALSE
 	var/mob/living/carbon/carbon_target = target_mob
 	if (carbon_target.is_mouth_covered())
@@ -267,10 +267,12 @@
 	for (var/datum/reagent/reagent as anything in reagents.reagent_list)
 		smoke_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity)
 		reagents.remove_reagent(reagent.type, reagent.volume)
-	if(smoke_reagents.reagent_list)
+	if (smoke_reagents.reagent_list)
 		smoke.set_up(1, holder = src, location = get_turf(src), carry = smoke_reagents)
 		smoke.start(log = TRUE)
 		visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
+	else
+		visible_message(span_warning("[src] breaks open - but is empty!"))
 
 	return ..()
 

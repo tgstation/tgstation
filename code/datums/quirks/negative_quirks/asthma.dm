@@ -38,8 +38,8 @@
 
 	/// The current asthma attack trying to kill our owner.
 	var/datum/disease/asthma_attack/current_attack
-	/// The next time, in world.time, we can attempt to cause an asthma attack.
-	var/time_next_attack_allowed
+	/// Can we cause an asthma attack?
+	COOLDOWN_DECLARE(next_attack_cooldown)
 
 	/// world.time + this is the time the first attack can happen. Used on spawn.
 	var/time_first_attack_can_happen = 10 MINUTES
@@ -72,7 +72,7 @@
 	RegisterSignal(quirk_holder, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_full_heal))
 	RegisterSignal(quirk_holder, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-	time_next_attack_allowed = world.time + time_first_attack_can_happen
+	COOLDOWN_START(src, next_attack_cooldown, time_first_attack_can_happen)
 
 /datum/quirk/item_quirk/asthma/remove()
 	. = ..()
@@ -83,28 +83,30 @@
 /datum/quirk/item_quirk/asthma/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
+	if (quirk_holder.stat == DEAD)
+		return
+
 	if (HAS_TRAIT(quirk_holder, TRAIT_STASIS))
 		return
 
-	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
-	var/obj/item/organ/lungs/holder_lungs = carbon_quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if (isnull(holder_lungs))
 		return
 
 	adjust_inflammation(-passive_inflammation_reduction * seconds_per_tick)
 
-	var/datum/reagent/toxin/histamine/holder_histamine = carbon_quirk_holder.reagents.has_reagent(/datum/reagent/toxin/histamine)
+	var/datum/reagent/toxin/histamine/holder_histamine = quirk_holder.reagents.has_reagent(/datum/reagent/toxin/histamine)
 	if (holder_histamine)
 		if (holder_histamine.overdosed) // uh oh!
 			if (SPT_PROB(15, seconds_per_tick))
-				to_chat(carbon_quirk_holder, span_boldwarning("You feel your neck swelling, squeezing on your windpipe more and more!"))
+				to_chat(quirk_holder, span_boldwarning("You feel your neck swelling, squeezing on your windpipe more and more!"))
 			adjust_inflammation(histamine_OD_inflammation * seconds_per_tick)
 		else
 			if (SPT_PROB(5, seconds_per_tick))
-				to_chat(carbon_quirk_holder, span_warning("You find yourself wheezing a little harder as your neck swells..."))
+				to_chat(quirk_holder, span_warning("You find yourself wheezing a little harder as your neck swells..."))
 			adjust_inflammation(histamine_inflammation * seconds_per_tick)
 
-	var/datum/reagent/medicine/albuterol/albuterol = carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/albuterol)
+	var/datum/reagent/medicine/albuterol/albuterol = quirk_holder.reagents.has_reagent(/datum/reagent/medicine/albuterol)
 	if (!albuterol) // sanity - couldve been purged. can be 0 or null which is why we just use a !
 		inhaled_albuterol = 0
 	else
@@ -114,7 +116,7 @@
 		adjust_inflammation(-(albuterol_inflammation_reduction * seconds_per_tick))
 
 	// asthma attacks dont happen if theres no client, because they can just kill you and some need immediate response
-	else if (carbon_quirk_holder.client && isnull(current_attack) && world.time > time_next_attack_allowed && SPT_PROB(chance_for_attack_to_happen_per_second, seconds_per_tick))
+	else if (quirk_holder.client && isnull(current_attack) && COOLDOWN_FINISHED(src, next_attack_cooldown) && SPT_PROB(chance_for_attack_to_happen_per_second, seconds_per_tick))
 		do_asthma_attack()
 
 /// Causes an asthma attack via infecting our owner with the attack disease. Notifies ghosts.
@@ -132,8 +134,7 @@
 /datum/quirk/item_quirk/asthma/proc/adjust_inflammation(amount, silent = FALSE)
 	var/old_inflammation = inflammation
 
-	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
-	var/obj/item/organ/lungs/holder_lungs = carbon_quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/health_mult = get_lung_health_mult(holder_lungs)
 	if (amount > 0) // make it worse
 		amount *= (2 - health_mult)
@@ -155,8 +156,7 @@
 /// Setter proc for [inhaled_albuterol]. Adjusts inflammation immediately.
 /datum/quirk/item_quirk/asthma/proc/adjust_albuterol_levels(adjustment)
 	if (adjustment > 0)
-		var/mob/living/carbon/carbon_quirk_holder = quirk_holder
-		var/obj/item/organ/lungs/holder_lungs = carbon_quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+		var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 
 		if (isnull(holder_lungs) || holder_lungs.received_pressure_mult <= 0) // it didnt go into the lungs get fucked
 			return
@@ -197,7 +197,7 @@
 	return (1 - (holder_lungs.damage / holder_lungs.maxHealth))
 
 /// Signal proc for when we are exposed to smoke. Increases inflammation.
-/datum/quirk/item_quirk/asthma/proc/holder_exposed_to_smoke(datum/signal_source, mob/living/carbon/smoker, seconds_per_tick)
+/datum/quirk/item_quirk/asthma/proc/holder_exposed_to_smoke(datum/signal_source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	adjust_inflammation(inflammation_on_smoke * seconds_per_tick)
@@ -226,14 +226,14 @@
 	if (istype(source_reagents.my_atom, /obj/item/cigarette)) // smoking is bad, kids
 		adjust_inflammation(inflammation_on_smoke * final_total * 5)
 
-/// Signal proc for when our asthma attack qdels. Unsets our refs to it and resets [time_next_attack_allowed].
+/// Signal proc for when our asthma attack qdels. Unsets our refs to it and resets [next_attack_cooldown].
 /datum/quirk/item_quirk/asthma/proc/attack_deleting(datum/signal_source)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(current_attack, COMSIG_QDELETING)
 	current_attack = null
 
-	time_next_attack_allowed = world.time + rand(min_time_between_attacks, max_time_between_attacks)
+	COOLDOWN_START(src, next_attack_cooldown, rand(min_time_between_attacks, max_time_between_attacks))
 
 /// Signal handler for COMSIG_LIVING_POST_FULLY_HEAL. Heals our asthma.
 /datum/quirk/item_quirk/asthma/proc/on_full_heal(datum/signal_source, heal_flags)
@@ -245,6 +245,5 @@
 /// Resets our asthma to normal. No inflammation, no pressure mult.
 /datum/quirk/item_quirk/asthma/proc/reset_asthma()
 	inflammation = 0
-	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
-	var/obj/item/organ/lungs/holder_lungs = carbon_quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	holder_lungs?.set_received_pressure_mult(holder_lungs::received_pressure_mult)
