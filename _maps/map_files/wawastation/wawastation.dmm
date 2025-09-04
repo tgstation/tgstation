@@ -21051,12 +21051,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood/parquet,
 /area/station/service/theater)
-"hod" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/turf/open/space/openspace,
-/area/space)
 "hoe" = (
 /obj/machinery/conveyor/auto{
 	dir = 8;
@@ -179642,7 +179636,7 @@ hhX
 hhX
 hhX
 hhX
-hod
+hhX
 hhX
 hhX
 hhX

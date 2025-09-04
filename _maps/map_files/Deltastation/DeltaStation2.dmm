@@ -10494,11 +10494,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
-"cAZ" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/brown/half/contrasted,
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
 "cBd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -12777,11 +12772,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"dfQ" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/qm)
 "dfX" = (
 /obj/structure/rack,
 /obj/item/wrench,
@@ -25302,7 +25292,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "gmo" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
@@ -45371,12 +45360,11 @@
 /turf/open/floor/iron,
 /area/station/maintenance/solars/starboard/fore)
 "ljS" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "qmspace";
 	name = "Privacy Shutters"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/qm)
 "ljT" = (
@@ -144541,10 +144529,10 @@ aaa
 qYo
 aJE
 gmo
-dfQ
+qqx
 tYz
-dfQ
-cAZ
+qqx
+vMd
 tgX
 rWo
 rWo
