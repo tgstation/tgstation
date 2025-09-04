@@ -168,7 +168,7 @@
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
-	SSeconomy.track_purchase(idcard.registered_account, total_cost, parent)
+	SSeconomy.add_audit_entry(idcard.registered_account, total_cost, parent)
 	return TRUE
 
 /**

@@ -300,6 +300,112 @@
 		else
 			return "itself"
 
+//Pronoun procs for objects
+/atom/p_they(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "she"
+		if(MALE)
+			return "he"
+		if(PLURAL)
+			return "they"
+		else
+			return "it"
+
+/atom/p_their(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "her"
+		if(MALE)
+			return "his"
+		if(PLURAL)
+			return "their"
+		else
+			return "its"
+
+/atom/p_theirs(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "hers"
+		if(MALE)
+			return "his"
+		if(PLURAL)
+			return "theirs"
+		else
+			return "its"
+
+/atom/p_them(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "her"
+		if(MALE)
+			return "him"
+		if(PLURAL)
+			return "them"
+		else
+			return "it"
+
+/atom/p_have(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "have"
+	return "has"
+
+/atom/p_are(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "are"
+	return "is"
+
+/atom/p_were(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "were"
+	return "was"
+
+/atom/p_do(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "do"
+	return "does"
+
+/atom/p_s(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender != PLURAL)
+		return "s"
+
+/atom/p_es(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender != PLURAL)
+		return "es"
+
+/atom/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
+
 /// Reports what gender this atom appears to be
 /atom/proc/get_visible_gender()
 	return gender
