@@ -111,16 +111,16 @@
 		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
+		context[SCREENTIP_CONTEXT_RMB] = "Empty nutrients"
+
 		switch(plant_status)
 			if(HYDROTRAY_PLANT_DEAD)
 				context[SCREENTIP_CONTEXT_LMB] = "Remove dead plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
 			if(HYDROTRAY_PLANT_HARVESTABLE)
 				context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
-		return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
 	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
@@ -1204,6 +1204,12 @@
 
 /obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)
+
+/obj/machinery/hydroponics/soil/rich
+	name = "rich soil"
+	desc = "A rich patch of dirt, usually used in gardens."
+	icon_state = "rich_soil"
+	maxnutri = 20
 
 ///The usb port circuit
 

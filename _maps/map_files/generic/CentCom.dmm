@@ -2,9 +2,6 @@
 "aa" = (
 /turf/open/space/basic,
 /area/space)
-"ad" = (
-/turf/open/space,
-/area/space)
 "ak" = (
 /obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -979,7 +976,7 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "eq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/bot,
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron,
@@ -1122,7 +1119,7 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "eY" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
@@ -2118,7 +2115,7 @@
 /area/centcom/central_command_areas/supply)
 "ju" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
@@ -2947,7 +2944,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "nB" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
@@ -3571,7 +3568,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin/storage)
 "qn" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -4545,7 +4542,7 @@
 	shuttle_id = "emergency_away";
 	width = 50
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "uA" = (
 /obj/structure/chair{
@@ -5548,7 +5545,7 @@
 	shuttle_id = "cargo_away";
 	width = 20
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "yW" = (
 /obj/item/kirbyplants/organic/plant21,
@@ -7453,7 +7450,7 @@
 	shuttle_id = "ferry_away";
 	width = 21
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "Ip" = (
 /obj/structure/chair/stool/bar/directional/east,
@@ -9650,7 +9647,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Tq" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -10526,7 +10523,7 @@
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
 "XA" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
@@ -65296,7 +65293,7 @@ aa
 aa
 aa
 aa
-ad
+aa
 aa
 aa
 aa

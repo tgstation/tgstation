@@ -236,6 +236,11 @@
  * * [mob][user]- the user building this structure
  */
 /obj/item/construction/rcd/proc/rcd_create(atom/target, mob/user)
+	if(isopenturf(target))
+		var/turf/open/open = target
+		if(!open.CanBuildHere())
+			return NONE
+
 	var/list/rcd_results = target.rcd_vals(user, src) // does this atom allow for rcd actions?
 	if(!rcd_results) // nope
 		return NONE

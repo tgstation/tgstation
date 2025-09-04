@@ -43,10 +43,10 @@
 	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 		return
 
-	// Snowflake for cyborgs buckling people by dragging them onto them, unless in combat mode.
-	if (iscyborg(user))
-		var/mob/living/silicon/robot/cyborg_user = user
-		if (!cyborg_user.combat_mode)
+	// Snowflake for cyborgs and bots buckling people by dragging them onto them, unless in combat mode.
+	if(iscyborg(user) || isbot(user))
+		var/mob/living/bot_user = user
+		if (!bot_user.combat_mode)
 			return
 	// Snowflake for xeno consumption code
 	if (isalienadult(user))
@@ -310,9 +310,6 @@
 
 	user.log_message("has stripped [key_name(source)] of [item].", LOG_ATTACK, color="red")
 	source.log_message("has been stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
-
-	// Updates speed in case stripped speed affecting item
-	source.update_equipment_speed_mods()
 
 /// A representation of the stripping UI
 /datum/strip_menu

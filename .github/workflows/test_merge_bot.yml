@@ -23,7 +23,7 @@ jobs:
           echo "GET_TEST_MERGES_URL=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Prepare module
         if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
         run: |
