@@ -4,7 +4,7 @@
 	/// An list of targets to listen for the movements of
 	var/list/targets = list()
 
-	/// The check to call on the parent when a target moves
+	/// The check to call on the parent when a target moves. Can be the name of a proc on the parent, or a `/datum/callback`.
 	var/check
 
 	/// A list of each target currently being moved by a shuttle - if this list is not empty, checks will not be run.
