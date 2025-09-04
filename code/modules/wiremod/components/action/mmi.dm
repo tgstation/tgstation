@@ -65,6 +65,14 @@
 	/// Cooldown for when the next message can be sent to the MMI.
 	COOLDOWN_DECLARE(message_cooldown)
 
+	/// These two component weakrefs are needed because GetComponent is not reliable for components that are DUPE_ALLOWED or DUPE_SELECTED
+
+	/// A reference to the connect_containers component that handles making boris circuits and things containing them clickable by AIs to connect
+	var/datum/weakref/boris_circuit_container_connections
+
+	/// A reference to the connect_containers component that handles when a connected AI or something containing it moves
+	var/datum/weakref/connected_ai_container_connections
+
 /obj/item/circuit_component/mmi/Initialize(mapload)
 	. = ..()
 	disconnect_action = new(src)
@@ -154,13 +162,13 @@
 
 /obj/item/circuit_component/mmi/proc/register_boris_circuit(atom/movable/shell)
 	var/static/list/connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(boris_shell_or_container_moved))
-	AddComponentFrom(REF(src), /datum/component/multi_connect_containers, connections)
+	boris_circuit_container_connections = WEAKREF(AddComponent(/datum/component/connect_containers, src, connections))
 	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
 		location.AddComponentFrom(REF(src), /datum/component/boris_circuit_container)
 		AddComponentFrom(REF(location), /datum/component/shuttle_move_deferred_checks, PROC_REF(post_movement_checks))
 
 /obj/item/circuit_component/mmi/proc/unregister_boris_circuit(atom/movable/shell)
-	RemoveComponentSource(REF(src), /datum/component/multi_connect_containers)
+	QDEL_NULL(boris_circuit_container_connections)
 	for(var/atom/movable/location as anything in get_nested_locs(shell) + shell)
 		location.RemoveComponentSource(REF(src), /datum/component/boris_circuit_container)
 		RemoveComponentSource(REF(location), /datum/component/shuttle_move_deferred_checks)
@@ -238,7 +246,7 @@
 	RegisterSignals(ai, list(COMSIG_MOB_RESET_PERSPECTIVE, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED)), PROC_REF(remove_occupant))
 	RegisterSignal(ai, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, PROC_REF(on_control_toggled))
 	var/static/list/connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(occupant_or_container_moved))
-	AddComponentFrom(REF(ai), /datum/component/multi_connect_containers, connections)
+	connected_ai_container_connections = WEAKREF(AddComponent(/datum/component/connect_containers, ai, connections))
 	for(var/atom/movable/location as anything in get_nested_locs(ai) + ai)
 		AddComponentFrom(REF(location), /datum/component/shuttle_move_deferred_checks, PROC_REF(post_movement_checks))
 	disconnect_action.Grant(ai)
@@ -281,7 +289,7 @@
 			ai.create_eye()
 		disconnect_action.Remove(ai)
 		UnregisterSignal(ai, list(COMSIG_MOB_RESET_PERSPECTIVE, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), COMSIG_SILICON_AI_SET_CONTROL_DISABLED))
-		RemoveComponentSource(REF(ai), /datum/component/multi_connect_containers)
+		QDEL_NULL(connected_ai_container_connections)
 		for(var/atom/movable/location as anything in get_nested_locs(ai) + ai)
 			RemoveComponentSource(REF(location), /datum/component/shuttle_move_deferred_checks)
 		ai.reset_perspective(null)

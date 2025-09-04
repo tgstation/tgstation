@@ -211,26 +211,3 @@
 	while(CS.pendingcount)
 		sleep(resolution*world.tick_lag)
 	return CS.finished
-
-/**
- * A simple wrapper for callbacks to use in signal handling, because:
- * - A single listener can't register multiple handlers for the same signal on the same target
- * - Having a callback itself listen for signals is a code smell
- *
- * This can be removed if/when signal registration is refactored to allow for a single listener to register multiple handlers for the same singal on the same target.
- */
-/datum/callback_wrapper_for_signal_handling
-	var/datum/callback/callback
-
-/datum/callback_wrapper_for_signal_handling/New(datum/target, signal, object_to_call, proc_to_call, ...)
-	var/list/callback_args = args.Copy(3)
-	callback = new(arglist(callback_args))
-	RegisterSignal(target, signal, PROC_REF(invoke_callback))
-
-/datum/callback_wrapper_for_signal_handling/Destroy(force)
-	callback = null
-	return ..()
-
-/datum/callback_wrapper_for_signal_handling/proc/invoke_callback(...)
-	SIGNAL_HANDLER
-	callback.Invoke(arglist(args))
