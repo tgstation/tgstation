@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Run Auto Labeler
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { get_updated_label_set } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoLabel.js');
