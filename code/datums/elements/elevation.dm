@@ -17,13 +17,14 @@
 
 	src.pixel_shift = pixel_shift
 
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(target, COMSIG_ATOM_ENTERING, PROC_REF(on_source_entering))
+	RegisterSignal(target, COMSIG_ATOM_EXITING, PROC_REF(on_source_exiting))
 
 	var/atom/atom_target = target
 	register_turf(atom_target, atom_target.loc)
 
 /datum/element/elevation/Detach(atom/movable/source)
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERING, COMSIG_ATOM_EXITING))
 	unregister_turf(source, source.loc)
 	REMOVE_TRAIT(source, TRAIT_ELEVATING_OBJECT, ref(src))
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
@@ -45,10 +46,13 @@
 	SIGNAL_HANDLER
 	current_values[ELEVATION_MAX_PIXEL_SHIFT] = max(current_values[ELEVATION_MAX_PIXEL_SHIFT], pixel_shift)
 
-/datum/element/elevation/proc/on_moved(atom/movable/source, atom/oldloc)
+/datum/element/elevation/proc/on_source_entering(atom/movable/source, atom/entering, atom/old_loc)
 	SIGNAL_HANDLER
-	unregister_turf(source, oldloc)
-	register_turf(source, source.loc)
+	register_turf(source, entering)
+
+/datum/element/elevation/proc/on_source_exiting(atom/movable/source, atom/exiting)
+	SIGNAL_HANDLER
+	unregister_turf(source, exiting)
 
 /datum/element/elevation/proc/register_turf(atom/movable/source, atom/location)
 	if(!isturf(location))
