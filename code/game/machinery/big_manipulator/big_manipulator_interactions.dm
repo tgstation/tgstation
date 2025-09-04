@@ -121,11 +121,11 @@
 				return this_point
 
 			if(status == STATUS_BUSY)
-				addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
+				schedule_next_cycle()
 			return NONE
 
-/// Attempts to begin a full work cycle.
-/obj/machinery/big_manipulator/proc/try_begin_full_cycle()
+/// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
+/obj/machinery/big_manipulator/proc/try_kickstart()
 	if(!on)
 		return FALSE
 
@@ -138,18 +138,18 @@
 		return FALSE
 
 	cycle_timer_running = FALSE
-
-	if(held_object)
-		start_work(held_object, TRUE)
-	else
-		try_run_full_cycle()
+	run_pickup_phase()
 
 /// Safely schedules the next cycle attempt to prevent overlapping.
 /obj/machinery/big_manipulator/proc/schedule_next_cycle()
 	if(cycle_timer_running)
 		return
+
 	cycle_timer_running = TRUE
-	addtimer(CALLBACK(src, PROC_REF(try_begin_full_cycle)), CYCLE_SKIP_TIMEOUT)
+	if(held_object)
+		addtimer(CALLBACK(src, PROC_REF(run_dropoff_phase)), CYCLE_SKIP_TIMEOUT)
+	else
+		addtimer(CALLBACK(src, PROC_REF(run_pickup_phase)), CYCLE_SKIP_TIMEOUT)
 
 /// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
@@ -168,11 +168,10 @@
 		if(roundrobin_history_dropoff > length(dropoff_points))
 			roundrobin_history_dropoff = 1
 
-/// Attempts to actually run a full work cycle.
-/obj/machinery/big_manipulator/proc/try_run_full_cycle()
+/// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
+/obj/machinery/big_manipulator/proc/run_pickup_phase()
 	var/datum/interaction_point/origin_point = find_next_point(pickup_tasking, TRANSFER_TYPE_PICKUP, null)
 	if(!origin_point) // no origin point - nowhere to begin the cycle from
-		to_chat(world, "No origin point found")
 		return handle_no_work_available()
 
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
@@ -188,10 +187,8 @@
 	if(!origin_turf)
 		return handle_no_work_available()
 
-	// Use the new proc to find a suitable item that matches available destinations
-	var/atom/movable/selected = find_pickup_candidate_for_pickup_point(origin_point)
+	var/atom/movable/selected = find_pickup_candidate_for_pickup_point(origin_point) // find a suitable item that matches available destinations
 	if(!selected)
-		to_chat(world, "No suitable item found for any destination")
 		return handle_no_work_available()
 
 	if(selected.anchored || HAS_TRAIT(selected, TRAIT_NODROP))
@@ -201,24 +198,24 @@
 	if(selected_item.item_flags & (ABSTRACT|DROPDEL))
 		return handle_no_work_available()
 
-	// Update round robin index after successful interaction
 	update_roundrobin_index(TRANSFER_TYPE_PICKUP)
-	start_work(selected, hand_is_empty)
+	interact_with_origin_point(selected, hand_is_empty)
 	return TRUE
 
 /// Attempts to start a work cycle (pick up the object)
-/obj/machinery/big_manipulator/proc/start_work(atom/movable/target, hand_is_empty = FALSE)
+/obj/machinery/big_manipulator/proc/interact_with_origin_point(atom/movable/target, hand_is_empty = FALSE)
 	if(!hand_is_empty)
 		target.forceMove(src)
 		held_object = WEAKREF(target)
 		manipulator_arm.update_claw(held_object)
 
-	// Find the next available destination point that can accept this specific item
+/obj/machinery/big_manipulator/proc/run_dropoff_phase()
+	// Find the next available destination point that can accept the held item
+	var/atom/movable/target = held_object.resolve()
 	var/datum/interaction_point/destination_point = find_next_point(dropoff_tasking, TRANSFER_TYPE_DROPOFF, target)
 
 	if(!destination_point)
 		SStgui.update_uis(src)
-		to_chat(world, "No destination point found for held item")
 		return handle_no_work_available()
 
 	rotate_to_point(destination_point, PROC_REF(try_interact_with_destination_point))
@@ -444,4 +441,4 @@
 		update_roundrobin_index(TRANSFER_TYPE_DROPOFF)
 
 	end_current_task()
-	try_begin_full_cycle()
+	schedule_next_cycle()
