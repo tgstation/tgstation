@@ -2555,6 +2555,7 @@
 #include "code\game\objects\items\wall_mounted.dm"
 #include "code\game\objects\items\weaponry.dm"
 #include "code\game\objects\items\wiki_manuals.dm"
+#include "code\game\objects\items\wind_turbine.dm"
 #include "code\game\objects\items\wizard_clothes.dm"
 #include "code\game\objects\items\wizard_weapons.dm"
 #include "code\game\objects\items\AI_modules\_AI_modules.dm"
