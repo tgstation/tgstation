@@ -86,7 +86,7 @@
 	if (quirk_holder.stat == DEAD)
 		return
 
-	if (HAS_TRAIT(quirk_holder, TRAIT_STASIS))
+	if (HAS_TRAIT(quirk_holder, TRAIT_STASIS) || HAS_TRAIT(quirk_holder, TRAIT_NO_TRANSFORM))
 		return
 
 	var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
