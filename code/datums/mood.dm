@@ -182,6 +182,10 @@
 	new_event.on_add(src, mob_parent, params)
 	mood_events[category] = new_event
 	update_mood()
+	for(var/mob/living/nearby in viewers(mob_parent))
+		if(HAS_PERSONALITY(nearby, /datum/personality/empathetic))
+			// todo
+			pass()
 
 /**
  * Removes a mood event from the mob

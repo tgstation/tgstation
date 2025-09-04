@@ -556,20 +556,27 @@
 	mood_change = -8
 	timeout = 5 MINUTES
 
+	var/dont_care_message = "Oh, %DEAD_MOB% died. Shame, I guess."
+	var/pead_message = "My pet %DEAD_MOB% just died!!"
+	var/normal_message = "I just saw %DEAD_MOB% die. How horrible..."
+
 /datum/mood_event/see_death/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
 	var/ispet = istype(dead_mob, /mob/living/basic/pet)
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
+		description = replace_text(dont_care_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 		mood_change = 0
-		description = "Oh, [get_descriptor(dead_mob)] died. Shame, I guess."
+		timeout *= 0.5
 		return
-	if(ispet)
-		description = "My pet [dead_mob] just died!!"
+	if(HAS_PERSONALITY(owner, /datum/personality/friendly))
 		mood_change *= 1.5
-		timeout = 8 MINUTES
+	if(ispet)
+		description = replace_text(pead_message, "%DEAD_MOB%", dead_mob.name)
+		mood_change *= 1.5
+		timeout *= 1.25
 		return
-	description = "I just saw [get_descriptor(dead_mob)] die. How horrible..."
+	description = replace_text(normal_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 
 /datum/mood_event/see_death/be_refreshed(datum/mood/home, ...)
 	// Every time we get refreshed we get worse
@@ -594,42 +601,18 @@
 /datum/mood_event/see_death/gibbed
 	description = "Someone just exploded in front of me!!"
 	mood_change = -12
-	timeout = 8 MINUTES
-
-/datum/mood_event/see_death/gibbed/add_effects(mob/dead_mob)
-	if(isnull(dead_mob))
-		return
-	var/ispet = istype(dead_mob, /mob/living/basic/pet)
-	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
-		mood_change = 0
-		description = "Oh, [get_descriptor(dead_mob)] exploded. Now I have to get the mop."
-		return
-	if(ispet)
-		description = "My pet [dead_mob] just exploded!!"
-		mood_change *= 1.5
-		timeout = 10 MINUTES
-		return
-	description = "[capitalize(get_descriptor(dead_mob))] just exploded in front of me!!"
+	timeout = 10 MINUTES
+	dont_care_message = "Oh, %DEAD_MOB% exploded. Now I have to get the mop."
+	pead_message = "My pet %DEAD_MOB% just exploded!!"
+	normal_message = "%DEAD_MOB% just exploded in front of me!!"
 
 /datum/mood_event/see_death/dusted
 	description = "Someone was just vaporized in front of me!! I don't feel so good..."
 	mood_change = -12
-	timeout = 8 MINUTES
-
-/datum/mood_event/see_death/dusted/add_effects(mob/dead_mob)
-	if(isnull(dead_mob))
-		return
-	var/ispet = istype(dead_mob, /mob/living/basic/pet)
-	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
-		mood_change = 0
-		description = "Oh, [get_descriptor(dead_mob)] was vaporized. Now I have to get the dustpan."
-		return
-	if(ispet)
-		description = "My pet [dead_mob] just vaporized!!"
-		mood_change *= 1.5
-		timeout = 10 MINUTES
-		return
-	description = "[capitalize(get_descriptor(dead_mob))] was just vaporized in front of me!! I don't feel so good..."
+	timeout = 10 MINUTES
+	dont_care_message = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
+	pead_message = "My pet %DEAD_MOB% just vaporized!!"
+	normal_message = "%DEAD_MOB% was just vaporized in front of me!!"
 
 /datum/mood_event/slots/loss
 	description = "Aww dang it!"

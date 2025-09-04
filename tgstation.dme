@@ -1821,6 +1821,7 @@
 #include "code\datums\quirks\negative_quirks\cursed.dm"
 #include "code\datums\quirks\negative_quirks\deafness.dm"
 #include "code\datums\quirks\negative_quirks\depression.dm"
+#include "code\datums\quirks\negative_quirks\erratic.dm"
 #include "code\datums\quirks\negative_quirks\family_heirloom.dm"
 #include "code\datums\quirks\negative_quirks\fluoride_stare.dm"
 #include "code\datums\quirks\negative_quirks\food_allergy.dm"

@@ -25,14 +25,14 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 			/datum/personality/gourmand,
 			/datum/personality/ascetic,
 		),
-		list(
-			/datum/personality/authoritarian,
-			/datum/personality/egalitarian,
-		),
-		list(
-			/datum/personality/loyalist,
-			/datum/personality/disillusioned,
-		),
+		// list(
+		// 	/datum/personality/authoritarian,
+		// 	/datum/personality/egalitarian,
+		// ),
+		// list(
+		// 	/datum/personality/loyalist,
+		// 	/datum/personality/disillusioned,
+		// ),
 		list(
 			/datum/personality/hopeful,
 			/datum/personality/pessimistic,
@@ -51,14 +51,14 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 			/datum/personality/friendly,
 			/datum/personality/aromantic,
 		),
-		list(
-			/datum/personality/brave,
-			/datum/personality/cowardly,
-		),
-		list(
-			/datum/personality/brave,
-			/datum/personality/paranoid,
-		),
+		// list(
+		// 	/datum/personality/brave,
+		// 	/datum/personality/cowardly,
+		// ),
+		// list(
+		// 	/datum/personality/brave,
+		// 	/datum/personality/paranoid,
+		// ),
 		list(
 			/datum/personality/lazy,
 			/datum/personality/diligent,
@@ -128,7 +128,7 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 
 /// Helper to check if the new personality type is incompatible with the passed list of personality types
 /datum/personality_controller/proc/is_incompatible(list/personality_types, new_personality_type)
-	if(!length(personality_types))
+	if(!LAZYLEN(personality_types))
 		return FALSE
 	for(var/incompatibility in incompatibilities)
 		if(!(new_personality_type in incompatibility))
@@ -213,7 +213,7 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	savefile_key = "friendly"
 	name = "Friendly"
 	desc = "I like giving a hand to those in need."
-	pos_gameplay_desc = "Gives better hugs"
+	// pos_gameplay_desc = "Gives better hugs"
 	neg_gameplay_desc = "Seeing death affects your mood more"
 
 /datum/personality/empathetic
@@ -230,12 +230,12 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	pos_gameplay_desc = "Likes seeing other people sad"
 	neg_gameplay_desc = "Dislikes seeing other people happy"
 
-/datum/personality/judgemental
-	savefile_key = "judgemental"
-	name = "Judgemental"
-	desc = "What is wrong with these people?"
-	pos_gameplay_desc = "Likes it when people do things you like"
-	neg_gameplay_desc = "Dislikes it when people do things you dislike"
+// /datum/personality/judgemental
+// 	savefile_key = "judgemental"
+// 	name = "Judgemental"
+// 	desc = "What is wrong with these people?"
+// 	pos_gameplay_desc = "Likes it when people do things you like"
+// 	neg_gameplay_desc = "Dislikes it when people do things you dislike"
 
 /datum/personality/analytical
 	savefile_key = "analytical"
@@ -249,21 +249,17 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	desc = "I'm better making stuff up as I go along."
 	neut_gameplay_desc = "Prefers working in more social environments, such as the bar or medical"
 
-/*
-/datum/personality/morbid
-	name = "Morbid"
-	desc = "I am interested in more macabre things."
-	pos_gameplay_desc = "You receive positive moodlets from abnormal and macabre things, such as death and blood."
+// /datum/personality/morbid
+// 	name = "Morbid"
+// 	desc = "I am interested in more macabre things."
+// 	pos_gameplay_desc = "You receive positive moodlets from abnormal and macabre things, such as death and blood."
+// 	personality_trait = TRAIT_MORBID
 
-/datum/personality/evil
-	name = "Evil"
-	desc = "I'm a bad person."
-	pos_gameplay_desc = "You receive positive moodlets from hurting people, and negative moodlets from helping them."
-	categories = list(
-		PERSONALITY_OTHER_PEOPLE,
-		PERSONALITY_TO_HUMANITY,
-	)
-*/
+// /datum/personality/evil
+// 	name = "Evil"
+// 	desc = "I'm a bad person."
+// 	pos_gameplay_desc = "You receive positive moodlets from hurting people, and negative moodlets from helping them."
+
 /datum/personality/snob
 	savefile_key = "snob"
 	name = "Snobbish"
@@ -344,16 +340,16 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	who.mob_mood.negative_moodlet_length_modifier -= 0.2
 
 /datum/personality/brave
-	savefile_key = "brave"
-	name = "Brave"
-	desc = "It'll take a lot more than a little blood to scare me."
-	pos_gameplay_desc = "Accumulate fear slower, and moodlets related to fear are weaker"
+// 	savefile_key = "brave"
+// 	name = "Brave"
+// 	desc = "It'll take a lot more than a little blood to scare me."
+// 	pos_gameplay_desc = "Accumulate fear slower, and moodlets related to fear are weaker"
 
-/datum/personality/cowardly
-	savefile_key = "cowardly"
-	name = "Cowardly"
-	desc = "Everything is a danger around here! Even the air!"
-	neg_gameplay_desc = "Accumulate fear faster, and moodlets related to fear are stronger"
+// /datum/personality/cowardly
+// 	savefile_key = "cowardly"
+// 	name = "Cowardly"
+// 	desc = "Everything is a danger around here! Even the air!"
+// 	neg_gameplay_desc = "Accumulate fear faster, and moodlets related to fear are stronger"
 
 /datum/personality/lazy
 	savefile_key = "lazy"
@@ -483,42 +479,37 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	pos_gameplay_desc = "Enjoyment from eating liked food is strengthened"
 	neg_gameplay_desc = "Sorrow from eating food you dislike is increased, and mediocre food is less enjoyable"
 
-/datum/personality/authoritarian
-	savefile_key = "authoritarian"
-	name = "Authoritarian"
-	desc = "Order and discipline are the only things keeping this station running."
-	pos_gameplay_desc = "Likes being around heads of staff"
-	neut_gameplay_desc = "Prefers to work in positions of authority, such as a head of staff or security"
+// /datum/personality/authoritarian
+// 	savefile_key = "authoritarian"
+// 	name = "Authoritarian"
+// 	desc = "Order and discipline are the only things keeping this station running."
+// 	pos_gameplay_desc = "Likes being around heads of staff"
+// 	neut_gameplay_desc = "Prefers to work in positions of authority, such as a head of staff or security"
 
-/datum/personality/egalitarian
-	savefile_key = "egalitarian"
-	name = "Egalitarian"
-	desc = "Everyone should have equal say. We are all in this together."
-	neg_gameplay_desc = "Dislikes being around heads of staff"
+// /datum/personality/egalitarian
+// 	savefile_key = "egalitarian"
+// 	name = "Egalitarian"
+// 	desc = "Everyone should have equal say. We are all in this together."
+// 	neg_gameplay_desc = "Dislikes being around heads of staff"
 
-/datum/personality/loyalist
-	savefile_key = "loyalist"
-	name = "Loyal"
-	desc = "I believe in the station and in Central Command, till the very end!"
-	pos_gameplay_desc = "Likes company posters and signs"
+// /datum/personality/loyalist
+// 	savefile_key = "loyalist"
+// 	name = "Loyal"
+// 	desc = "I believe in the station and in Central Command, till the very end!"
+// 	pos_gameplay_desc = "Likes company posters and signs"
 
-/datum/personality/disillusioned
-	savefile_key = "disillusioned"
-	name = "Disillusioned"
-	desc = "Central Command isn't what it used to be. This isn't what I signed up for."
-	neg_gameplay_desc = "Dislikes company posters and signs"
-/*
-/datum/personality/erratic
-	name = "Erratic"
-	desc = "My emotions are unpredictable at best."
-	gameplay_desc = "Your personality may change at any time, and you may not be able to control it."
-*/
-/datum/personality/paranoid
-	savefile_key = "paranoid"
-	name = "Paranoid"
-	desc = "Everyone and everything is out to get me! This place is a deathtrap!"
-	pos_gameplay_desc = "Likes being safe, alone, or in moderately-sized groups"
-	neg_gameplay_desc = "Dislikes being in groups too large or too small"
+// /datum/personality/disillusioned
+// 	savefile_key = "disillusioned"
+// 	name = "Disillusioned"
+// 	desc = "Central Command isn't what it used to be. This isn't what I signed up for."
+// 	neg_gameplay_desc = "Dislikes company posters and signs"
+
+// /datum/personality/paranoid
+// 	savefile_key = "paranoid"
+// 	name = "Paranoid"
+// 	desc = "Everyone and everything is out to get me! This place is a deathtrap!"
+// 	pos_gameplay_desc = "Likes being safe, alone, or in moderately-sized groups"
+// 	neg_gameplay_desc = "Dislikes being in groups too large or too small"
 
 /datum/personality/teetotal
 	savefile_key = "teetotal"
