@@ -639,3 +639,34 @@
   - image: removed secret 1% probability of showing old BSRPED sprite
   loganuk:
   - bugfix: Prevents vent crawlers getting trapped in a static vent or scrubber.
+2025-08-29:
+  LT3:
+  - code_imp: Improved powernet light flickering
+  Pepsilawn:
+  - bugfix: Wawastation's garden tables won't fling you around anymore
+  loganuk:
+  - bugfix: Moves bots elsewhere on wawa AI Sat to stop girder blockage at round start.
+2025-08-30:
+  Ghommie:
+  - balance: The speed of tools used in a crafting recipe now affect the time spent
+      on it. Report any recipe that takes awfully little or too long to complete.
+  - balance: Non-humanoid mobs can now benefit from being skilled at mining when swinging
+      that pickaxe.
+  Rhials:
+  - bugfix: Fugitive hunters spawn again.
+  - bugfix: When lacking a reference picture for plastic surgery, the alert message
+      will be sent to the surgery performer instead of everyone nearby.
+  SmArtKar:
+  - bugfix: Fixed recovered crew blood-related runtimes
+  lelandkemble:
+  - qol: You will no longer fall asleep from bloodloss upon arriving in the Mansus.
+  loganuk:
+  - bugfix: Service achievement not being in end of round report
+2025-08-31:
+  FalloutFalcon:
+  - bugfix: some rogue bitrunning gimmick items have there silly names now.
+  Melbert:
+  - config: Default max roundstart traitors per ruleset upped from 1 per 38 players
+      to 1 per 24 players.
+  SmArtKar:
+  - bugfix: Fixed nonhuman meat being unusable for any material crafting
