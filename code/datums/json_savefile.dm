@@ -118,3 +118,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 		return TRUE
 
 	return FALSE
+
+/// Copies the entire tree to another json savefile datum, overwriting whatever was in the other datum before.
+/datum/json_savefile/proc/copy_to_savefile(datum/json_savefile/other_savefile)
+	other_savefile.tree = tree.Copy()

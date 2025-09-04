@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - bugfix: "Prevents vent crawlers getting trapped in a static vent or scrubber."

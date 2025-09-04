@@ -781,7 +781,7 @@
 	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
-	control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
+	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!
 	radio_enabled = FALSE //No talking on the built-in radio for you either!
 	forceMove(card)
 	card.AI = src
@@ -1097,6 +1097,10 @@
 	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return
+
+/mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
+	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
+	src.control_disabled = control_disabled
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

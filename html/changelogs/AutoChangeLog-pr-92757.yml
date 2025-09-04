@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed constant runtimes and broken APC processing behavior on emagged APCs"
