@@ -507,15 +507,17 @@
 // Configs for persistent map saving and loading
 /// This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year/month/day/hour-minute-second
 /datum/config_entry/flag/persistent_save_enabled
-/// Whether to include the centcom z level (by default this is turned off)
+/// Whether to include the centcom z levels (by default this is turned off)
 /datum/config_entry/flag/persistent_save_centcomm_z_levels
-/// Whether to include the station z level
+/// Whether to include the station z levels
 /datum/config_entry/flag/persistent_save_station_z_levels
 /// Whether to include space z levels and ruins
 /datum/config_entry/flag/persistent_save_space_empty_z_levels
 /// Whether to include space z levels and ruins
 /datum/config_entry/flag/persistent_save_space_ruin_z_levels
-/// Whether to include mining z levels (by default this is turned off)
+/// Whether to include ice z levels and ruins
+/datum/config_entry/flag/persistent_save_ice_ruin_z_levels
+/// Whether to include mining z levels
 /datum/config_entry/flag/persistent_save_mining_z_levels
 /// Whether to include transitional z levels used for shuttle movement (by default this is turned off)
 /datum/config_entry/flag/persistent_save_transitional_z_levels

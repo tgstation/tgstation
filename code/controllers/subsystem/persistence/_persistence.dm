@@ -257,6 +257,9 @@ SUBSYSTEM_DEF(persistence)
 			else if(CONFIG_GET(flag/persistent_save_space_empty_z_levels) && (ZTRAIT_SPACE_EMPTY in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_SPACE_EMPTY])
 				matching_z_levels[ZTRAIT_SPACE_EMPTY] |= map_config
+			else if(CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && (ZTRAIT_ICE_RUINS in level))
+				LAZYINITLIST(matching_z_levels[ZTRAIT_ICE_RUINS])
+				matching_z_levels[ZTRAIT_ICE_RUINS] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_transitional_z_levels) && (ZTRAIT_RESERVED in level)) // for shuttles in transit (hyperspace)
 				LAZYINITLIST(matching_z_levels[ZTRAIT_RESERVED])
 				matching_z_levels[ZTRAIT_RESERVED] |= map_config
@@ -314,6 +317,8 @@ SUBSYSTEM_DEF(persistence)
 		else if(!CONFIG_GET(flag/persistent_save_space_empty_z_levels) && is_space_empty_level(z))
 			continue
 		else if(!CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && is_space_ruins_level(z))
+			continue
+		else if(!CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && is_ice_ruins_level(z))
 			continue
 		else if(!CONFIG_GET(flag/persistent_save_mining_z_levels) && is_mining_level(z))
 			continue

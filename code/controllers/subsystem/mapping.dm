@@ -168,8 +168,6 @@ SUBSYSTEM_DEF(mapping)
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
 
 	else if(current_map.wilderness_levels)
-		var/list/FailedZs = list()
-
 		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
 
 		if(LAZYLEN(FailedZs))
