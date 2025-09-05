@@ -223,7 +223,7 @@
 	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
 		stored_slime.forceMove(target_turf)
 		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
-		stored_slime.handle_slime_stasis(0)
+		stored_slime.handle_slime_stasis()
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 
 ///Places every slime not controlled by a player into the internal storage, respecting its limits

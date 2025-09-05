@@ -171,6 +171,11 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/ais
+
+/datum/atom_hud/alternate_appearance/basic/ais/mobShouldSee(mob/M)
+	return isAI(M)
+
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops
 

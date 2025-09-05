@@ -289,7 +289,7 @@
 		return
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(!id_card || !id_card.registered_account || !id_card.registered_account.account_job)
+	if(QDELETED(id_card))
 		balloon_alert(user, "no card found!")
 		flick(icon_deny, src)
 		return

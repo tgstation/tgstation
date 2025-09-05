@@ -183,7 +183,7 @@
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
 	button_icon_state = "mech_siren_[secmech?.siren ? "on" : "off"]"
 
-/datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
+/datum/action/vehicle/sealed/mecha/siren/Trigger(mob/clicker, trigger_flags, forced_state = FALSE)
 	if(!..())
 		return
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis

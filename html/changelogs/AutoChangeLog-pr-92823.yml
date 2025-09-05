@@ -1,4 +1,0 @@
-author: "mcbalaam"
-delete-after: True
-changes:
-  - bugfix: "Now trying to light the fireplace will not make you attack it"

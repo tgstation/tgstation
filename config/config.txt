@@ -140,8 +140,9 @@ RESPAWN_DELAY 0
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
 
-## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
-GUEST_BAN
+## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting).
+## You probably want this enabled for a production server.
+#GUEST_BAN
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net

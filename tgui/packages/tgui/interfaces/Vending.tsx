@@ -45,7 +45,6 @@ type Category = {
 
 type VendingData = {
   all_products_free: boolean;
-  onstation: boolean;
   ad: string;
   department: string;
   jobDiscount: number;
@@ -66,7 +65,6 @@ export const Vending = () => {
 
   const {
     all_products_free,
-    onstation,
     ad,
     product_records = [],
     coin_records = [],
@@ -112,7 +110,7 @@ export const Vending = () => {
     <Window width={431} height={635}>
       <Window.Content>
         <Stack fill vertical>
-          {!!onstation && !all_products_free && (
+          {!all_products_free && (
             <Stack.Item>
               <UserDetails />
             </Stack.Item>

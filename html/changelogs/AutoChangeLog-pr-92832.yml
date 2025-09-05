@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed unconfigured pill presses manufacturing pills that claim to be bottles"
-  - spellcheck: "Decapitalized pill press suffixes for parity with the rest of pills/patches/bottles"
