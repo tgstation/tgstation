@@ -1,0 +1,4 @@
+author: "Darkened-Earth"
+delete-after: True
+changes:
+  - bugfix: "NanoTrasen's atmospherics division has replaced an incorrectly supplied HyperTorus Construction Cube(TM) with the correct variant on Catwalk-Class stations"

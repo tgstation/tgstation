@@ -837,11 +837,6 @@
 		ACCESS_MORGUE,
 		ACCESS_MECH_MEDICAL,
 		)
-	extra_access = list(
-		ACCESS_SURGERY,
-		ACCESS_VIROLOGY,
-		ACCESS_PHARMACY,
-		)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
