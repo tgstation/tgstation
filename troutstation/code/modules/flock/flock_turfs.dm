@@ -21,7 +21,7 @@
 
 /turf/open/floor/flock/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/decal, emissive_icon, base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, GLOB.emissive_color, smoothing_junction)
+	AddElement(/datum/element/decal, emissive_icon, base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, null, smoothing_junction)
 
 /turf/closed/wall/flock // todo: make mineral
 	name = "humming wall"
