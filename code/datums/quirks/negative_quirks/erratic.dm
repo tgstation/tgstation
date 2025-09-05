@@ -37,17 +37,17 @@
 		return
 
 	for(var/existing in quirk_holder.personalities)
-		var/datum/personality/existing_datum = GLOB.personality_controller.personalities_by_type[existing]
+		var/datum/personality/existing_datum = SSpersonalities.personalities_by_type[existing]
 		existing_datum.remove_from_mob(quirk_holder)
 
-	var/list/personality_pool = GLOB.personality_controller.personalities_by_type.Copy()
+	var/list/personality_pool = SSpersonalities.personalities_by_type.Copy()
 	var/num = rand(CONFIG_GET(number/max_personalities) - 2, CONFIG_GET(number/max_personalities) + 1)
 	var/i = 1
 	while(i <= num)
 		if(!length(personality_pool))
 			break
 		var/picked_type = pick(personality_pool)
-		if(GLOB.personality_controller.is_incompatible(quirk_holder.personalities, picked_type))
+		if(SSpersonalities.is_incompatible(quirk_holder.personalities, picked_type))
 			continue
 		var/datum/personality/picked_datum = personality_pool[picked_type]
 		picked_datum.apply_to_mob(quirk_holder)
@@ -57,8 +57,8 @@
 
 /datum/quirk/erratic/proc/replace_personalities(list/new_personalities)
 	for(var/existing in quirk_holder.personalities)
-		var/datum/personality/existing_datum = GLOB.personality_controller.personalities_by_type[existing]
+		var/datum/personality/existing_datum = SSpersonalities.personalities_by_type[existing]
 		existing_datum.remove_from_mob(quirk_holder)
 	for(var/incoming in new_personalities)
-		var/datum/personality/incoming_datum = GLOB.personality_controller.personalities_by_type[incoming]
+		var/datum/personality/incoming_datum = SSpersonalities.personalities_by_type[incoming]
 		incoming_datum.apply_to_mob(quirk_holder)

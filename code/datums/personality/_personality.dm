@@ -1,17 +1,58 @@
-/// Singleton datum that holds all the personality singletons and data
-GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /datum/personality_controller())
+SUBSYSTEM_DEF(personalities)
+	name = "Personalities"
+	flags = SS_BACKGROUND
+	runlevels = RUNLEVEL_GAME
+	wait = 3 SECONDS
 
-/// Singleton datum controller that holds all the personality singletons and data
-/datum/personality_controller
-	/// List of lists of incompatible personality types
-	var/list/incompatibilities = list(
+	/// All personality singletons indexed by their type
+	VAR_FINAL/list/personalities_by_type
+	/// All personality singletons indexed by their savefile key
+	VAR_FINAL/list/personalities_by_key
+	/// List of lists of incompatible personality types. CHeck via is_incompatible()
+	VAR_PRIVATE/list/incompatibilities
+
+	/// For personalities which process, this tracks all mobs we need to process for
+	var/list/processing_personalities = list()
+
+/datum/controller/subsystem/personalities/Initialize()
+	init_personalities()
+	init_incompatibilities()
+	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/personalities/fire(resumed)
+	var/seconds_per_tick = wait / (1 SECONDS)
+	for(var/datum/personality/personality as anything in processing_personalities)
+		for(var/mob/living/target  as anything in processing_personalities[personality])
+			if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_NO_TRANSFORM))
+				continue
+			personality.on_tick(target, seconds_per_tick)
+
+/datum/controller/subsystem/personalities/proc/init_personalities()
+	personalities_by_type = list()
+	personalities_by_key = list()
+	for(var/personality_type in subtypesof(/datum/personality))
+		var/datum/personality/personality = new personality_type()
+		if(isnull(personality.savefile_key))
+			stack_trace("Personality [personality_type] does not have a savefile key set.")
+			continue
+		if(personalities_by_key[personality.savefile_key])
+			stack_trace("Personality save key collision! key: [personality.savefile_key] - new: [personality_type] - old: [personalities_by_key[personality.savefile_key]]")
+			continue
+
+		personalities_by_type[personality_type] = personality
+		personalities_by_key[personality.savefile_key] = personality
+		if(personality.processes)
+			processing_personalities[personality] = list()
+
+/datum/controller/subsystem/personalities/proc/init_incompatibilities()
+	incompatibilities = list(
 		list(
 			/datum/personality/callous,
 			/datum/personality/friendly,
 		),
 		list(
-			/datum/personality/analytical,
-			/datum/personality/impulsive,
+			/datum/personality/department/analytical,
+			/datum/personality/department/impulsive,
 		),
 		list(
 			/datum/personality/introvert,
@@ -29,10 +70,10 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 		// 	/datum/personality/authoritarian,
 		// 	/datum/personality/egalitarian,
 		// ),
-		// list(
-		// 	/datum/personality/loyalist,
-		// 	/datum/personality/disillusioned,
-		// ),
+		list(
+			/datum/personality/nt/loyalist,
+			/datum/personality/nt/disillusioned,
+		),
 		list(
 			/datum/personality/hopeful,
 			/datum/personality/pessimistic,
@@ -51,14 +92,14 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 			/datum/personality/friendly,
 			/datum/personality/aromantic,
 		),
-		// list(
-		// 	/datum/personality/brave,
-		// 	/datum/personality/cowardly,
-		// ),
-		// list(
-		// 	/datum/personality/brave,
-		// 	/datum/personality/paranoid,
-		// ),
+		list(
+			/datum/personality/brave,
+			/datum/personality/cowardly,
+		),
+		list(
+			/datum/personality/brave,
+			/datum/personality/paranoid,
+		),
 		list(
 			/datum/personality/lazy,
 			/datum/personality/diligent,
@@ -106,28 +147,9 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 			/datum/personality/dog_lover,
 		),
 	)
-	/// All personality singletons indexed by their type
-	var/list/personalities_by_type
-	/// All personality singletons indexed by their savefile key
-	var/list/personalities_by_key
-
-/datum/personality_controller/New()
-	personalities_by_type = list()
-	personalities_by_key = list()
-	for(var/personality_type in subtypesof(/datum/personality))
-		var/datum/personality/personality = new personality_type()
-		if(isnull(personality.savefile_key))
-			stack_trace("Personality [personality_type] does not have a savefile key set.")
-			continue
-		if(personalities_by_key[personality.savefile_key])
-			stack_trace("Personality save key collision! key: [personality.savefile_key] - new: [personality_type] - old: [personalities_by_key[personality.savefile_key]]")
-			continue
-
-		personalities_by_type[personality_type] = personality
-		personalities_by_key[personality.savefile_key] = personality
 
 /// Helper to check if the new personality type is incompatible with the passed list of personality types
-/datum/personality_controller/proc/is_incompatible(list/personality_types, new_personality_type)
+/datum/controller/subsystem/personalities/proc/is_incompatible(list/personality_types, new_personality_type)
 	if(!LAZYLEN(personality_types))
 		return FALSE
 	for(var/incompatibility in incompatibilities)
@@ -170,6 +192,14 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	/// Required: The key to use when saving this personality to a savefile.
 	/// Don't change it once it's set unless you want to write migration code
 	var/savefile_key
+	/// Does this process?
+	var/processes = FALSE
+
+/datum/personality/Destroy(force)
+	if(force)
+		return ..()
+	stack_trace("qdel called on a personality singleton!")
+	return QDEL_HINT_LETMELIVE
 
 /// Trait source for personality traits
 #define PERSONALITY_TRAIT "personality_trait"
@@ -185,6 +215,8 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	if(personality_trait)
 		ADD_TRAIT(who, personality_trait, PERSONALITY_TRAIT)
 	LAZYSET(who.personalities, type, TRUE)
+	if(processes)
+		SSpersonalities.processing_personalities[type] += who
 
 /**
  * Called when removing this personality from a mob.
@@ -199,8 +231,14 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	if(personality_trait)
 		REMOVE_TRAIT(who, personality_trait, PERSONALITY_TRAIT)
 	LAZYREMOVE(who.personalities, type)
+	if(processes)
+		SSpersonalities.processing_personalities[type] -= who
 
 #undef PERSONALITY_TRAIT
+
+/// Called every SSpersonality tick if `processes` is TRUE
+/datum/personality/proc/on_tick(mob/living/subject, seconds_per_tick)
+	CRASH("Personality [type] processed but did not override on_tick().")
 
 /datum/personality/callous
 	savefile_key = "callous"
@@ -230,24 +268,80 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	pos_gameplay_desc = "Likes seeing other people sad"
 	neg_gameplay_desc = "Dislikes seeing other people happy"
 
-// /datum/personality/judgemental
-// 	savefile_key = "judgemental"
-// 	name = "Judgemental"
-// 	desc = "What is wrong with these people?"
-// 	pos_gameplay_desc = "Likes it when people do things you like"
-// 	neg_gameplay_desc = "Dislikes it when people do things you dislike"
+/datum/personality/department
+	/// Maps departments to area types
+	VAR_PRIVATE/list/department_to_area_type = list(
+		/datum/job_department/assistant = null, // get a job, hippie
+		/datum/job_department/captain = /area/station/command,
+		/datum/job_department/cargo = /area/station/cargo,
+		/datum/job_department/command = /area/station/command,
+		/datum/job_department/engineering = /area/station/engineering,
+		/datum/job_department/medical = /area/station/medical,
+		/datum/job_department/science = /area/station/science,
+		/datum/job_department/security = /area/station/security,
+		/datum/job_department/service = /area/station/service,
+	)
+	/// List of departments this personality applies to
+	var/list/applicable_departments
 
-/datum/personality/analytical
+/datum/personality/department/New()
+	. = ..()
+	for(var/department in department_to_area_type)
+		department_to_area_type[department] = typecacheof(department_to_area_type[department]) || list()
+
+/datum/personality/department/apply_to_mob(mob/living/who)
+	. = ..()
+	RegisterSignal(who, COMSIG_ENTER_AREA, PROC_REF(check_area))
+
+/datum/personality/department/remove_from_mob(mob/living/who)
+	. = ..()
+	UnregisterSignal(who, COMSIG_ENTER_AREA)
+	who.clear_mood_event("enjoying_department_area")
+
+/datum/personality/department/proc/check_area(mob/living/source, area/new_area)
+	SIGNAL_HANDLER
+
+	// var/obj/item/card/id/id = source.get_idcard()
+	// var/datum/id_trim/job/id_trim = id?.trim
+	// var/datum/job/job = id_trim?.find_job() || source.mind?.assigned_role
+	// if(isnull(job))
+	// 	return
+
+	var/datum/job/job = source.mind?.assigned_role
+	if(isnull(job))
+		return
+
+	var/list/preferred_areas = list()
+	for(var/department in applicable_departments & job.departments_list)
+		preferred_areas += department_to_area_type[department]
+
+	if(is_type_in_typecache(new_area, combined_typecache))
+		source.add_mood_event("enjoying_department_area", /datum/mood_event/enjoying_department_area)
+	else
+		source.clear_mood_event("enjoying_department_area")
+
+/datum/personality/department/analytical
 	savefile_key = "analytical"
 	name = "Analytical"
 	desc = "When it comes to making decisions, I tend to be more impersonal."
-	neut_gameplay_desc = "Prefers working in less social environments, such as research or engineering"
+	neut_gameplay_desc = "Prefers working in systemic environments - engineering, research, or medical
+	applicable_departments = list(
+		/datum/job_department/engineering,
+		/datum/job_department/research,
+		/datum/job_department/medical,
+	)
 
-/datum/personality/impulsive
+/datum/personality/department/impulsive
 	savefile_key = "impulsive"
 	name = "Impulsive"
 	desc = "I'm better making stuff up as I go along."
-	neut_gameplay_desc = "Prefers working in more social environments, such as the bar or medical"
+	neut_gameplay_desc = "Prefers working in social environments - cargo, command, security, or service"
+	applicable_departments = list(
+		/datum/job_department/cargo,
+		/datum/job_department/command,
+		/datum/job_department/security,
+		/datum/job_department/service,
+	)
 
 // /datum/personality/morbid
 // 	name = "Morbid"
@@ -340,16 +434,16 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 	who.mob_mood.negative_moodlet_length_modifier -= 0.2
 
 /datum/personality/brave
-// 	savefile_key = "brave"
-// 	name = "Brave"
-// 	desc = "It'll take a lot more than a little blood to scare me."
-// 	pos_gameplay_desc = "Accumulate fear slower, and moodlets related to fear are weaker"
+	savefile_key = "brave"
+	name = "Brave"
+	desc = "It'll take a lot more than a little blood to scare me."
+	pos_gameplay_desc = "Accumulate fear slower, and moodlets related to fear are weaker"
 
-// /datum/personality/cowardly
-// 	savefile_key = "cowardly"
-// 	name = "Cowardly"
-// 	desc = "Everything is a danger around here! Even the air!"
-// 	neg_gameplay_desc = "Accumulate fear faster, and moodlets related to fear are stronger"
+/datum/personality/cowardly
+	savefile_key = "cowardly"
+	name = "Cowardly"
+	desc = "Everything is a danger around here! Even the air!"
+	neg_gameplay_desc = "Accumulate fear faster, and moodlets related to fear are stronger"
 
 /datum/personality/lazy
 	savefile_key = "lazy"
@@ -492,24 +586,81 @@ GLOBAL_DATUM_INIT(personality_controller, /datum/personality_controller, new /da
 // 	desc = "Everyone should have equal say. We are all in this together."
 // 	neg_gameplay_desc = "Dislikes being around heads of staff"
 
-// /datum/personality/loyalist
-// 	savefile_key = "loyalist"
-// 	name = "Loyal"
-// 	desc = "I believe in the station and in Central Command, till the very end!"
-// 	pos_gameplay_desc = "Likes company posters and signs"
+/datum/personality/nt
+	processes = TRUE
+	/// What mood event to apply when seeing NT propaganda
+	var/mood_event_type
 
-// /datum/personality/disillusioned
-// 	savefile_key = "disillusioned"
-// 	name = "Disillusioned"
-// 	desc = "Central Command isn't what it used to be. This isn't what I signed up for."
-// 	neg_gameplay_desc = "Dislikes company posters and signs"
+/datum/personality/nt/proc/can_see_nt_propaganda(mob/living/subject)
+	for(var/obj/structure/sign/nearby in view(subject, 5))
+		if(istype(nearby, /obj/structure/sign/nanotrasen))
+			return TRUE
+		if(istype(nearby, /obj/structure/sign/poster/official/nanotrasen_logo))
+			return TRUE
 
-// /datum/personality/paranoid
-// 	savefile_key = "paranoid"
-// 	name = "Paranoid"
-// 	desc = "Everyone and everything is out to get me! This place is a deathtrap!"
-// 	pos_gameplay_desc = "Likes being safe, alone, or in moderately-sized groups"
-// 	neg_gameplay_desc = "Dislikes being in groups too large or too small"
+	return FALSE
+
+/datum/personality/nt/on_tick(mob/living/subject, seconds_per_tick)
+	if(can_see_nt_propaganda(subject))
+		subject.add_mood_event("nt_personality", mood_event_type)
+	else
+		subject.clear_mood_event("nt_personality")
+
+/datum/personality/nt/remove_from_mob(mob/living/who)
+	. = ..()
+	who.clear_mood_event("nt_personality")
+
+/datum/personality/nt/loyalist
+	savefile_key = "loyalist"
+	name = "Loyal"
+	desc = "I believe in the station and in Central Command, till the very end!"
+	pos_gameplay_desc = "Likes company posters and signs"
+	mood_event_type = /datum/mood_event/nt_loyalist
+
+/datum/personality/nt/disillusioned
+	savefile_key = "disillusioned"
+	name = "Disillusioned"
+	desc = "Central Command isn't what it used to be. This isn't what I signed up for."
+	neg_gameplay_desc = "Dislikes company posters and signs"
+	mood_event_type = /datum/mood_event/nt_disillusioned
+
+/datum/personality/paranoid
+	savefile_key = "paranoid"
+	name = "Paranoid"
+	desc = "Everyone and everything is out to get me! This place is a deathtrap!"
+	pos_gameplay_desc = "Likes alone or in moderately-sized groups"
+	neg_gameplay_desc = "Dislikes when with one other person, or in large groups"
+	processes = TRUE
+
+/datum/personality/paranoid/remove_from_mob(mob/living/who)
+	. = ..()
+	who.clear_mood_event("paranoia_personality")
+
+/datum/personality/paranoid/on_tick(mob/living/subject, seconds_per_tick)
+	var/list/nearby_people = list()
+	for(var/mob/living/carbon/human/nearby in view(subject, 5))
+		if(nearby == subject || !is_dangerous_mob(subject, nearby))
+			continue
+		nearby_people += nearby
+
+	switch(length(nearby_people))
+		if(0)
+			subject.add_mood_event("paranoia_personality", /datum/mood_event/paranoid/alone)
+		if(1)
+			subject.add_mood_event("paranoia_personality", /datum/mood_event/paranoid/one_on_one)
+		if(2 to 6) // 6 people is roughly the size of the larger jobs like meddoc or secoff
+			subject.add_mood_event("paranoia_personality", /datum/mood_event/paranoid/small_group)
+		else
+			subject.add_mood_event("paranoia_personality", /datum/mood_event/paranoid/large_group)
+
+/datum/personality/paranoid/proc/is_dangerous_mob(mob/living/subject, mob/living/carbon/human/target)
+	if(target.stat >= UNCONSCIOUS)
+		return FALSE
+	if(target.invisibility > subject.see_invisible || target.alpha < 20)
+		return FALSE
+	// things that are threatening: other players
+	// things that are also threatening: monkeys
+	return TRUE
 
 /datum/personality/teetotal
 	savefile_key = "teetotal"

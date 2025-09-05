@@ -87,6 +87,12 @@
 		if(HAS_PERSONALITY(owner, /datum/personality/gourmand))
 			mood_change *= 1.25
 
+	if(event_flags & MOOD_EVENT_FEAR)
+		if(HAS_PERSONALITY(owner, /datum/personality/cowardly))
+			mood_change *= 1.25
+		if(HAS_PERSONALITY(owner, /datum/personality/brave))
+			mood_change *= 0.75
+
 	add_effects(arglist(mood_args))
 
 /**

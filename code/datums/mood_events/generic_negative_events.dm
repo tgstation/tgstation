@@ -565,18 +565,18 @@
 		return
 	var/ispet = istype(dead_mob, /mob/living/basic/pet)
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
-		description = replace_text(dont_care_message, "%DEAD_MOB%", get_descriptor(dead_mob))
+		description = replacetext(dont_care_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 		mood_change = 0
 		timeout *= 0.5
 		return
 	if(HAS_PERSONALITY(owner, /datum/personality/friendly))
 		mood_change *= 1.5
 	if(ispet)
-		description = replace_text(pead_message, "%DEAD_MOB%", dead_mob.name)
+		description = replacetext(pead_message, "%DEAD_MOB%", dead_mob.name)
 		mood_change *= 1.5
 		timeout *= 1.25
 		return
-	description = replace_text(normal_message, "%DEAD_MOB%", get_descriptor(dead_mob))
+	description = replacetext(normal_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 
 /datum/mood_event/see_death/be_refreshed(datum/mood/home, ...)
 	// Every time we get refreshed we get worse
@@ -635,3 +635,37 @@
 	description = "I've lost control of my life."
 	mood_change = -5
 	timeout = 5 MINUTES
+
+/datum/mood_event/empathetic_sad
+	description = "Seeing sad people makes me sad."
+	mood_change = -2
+	timeout = 3 MINUTES
+
+/datum/mood_event/misanthropic_sad
+	description = "Seeing happy people makes me uneasy."
+	mood_change = -2
+	timeout = 3 MINUTES
+
+/datum/mood_event/paranoid/one_on_one
+	description = "I'm alone with someone - what if they want to kill me?"
+	mood_change = -3
+	event_flags = MOOD_EVENT_FEAR
+
+/datum/mood_event/paranoid/large_group
+	description = "There are so many people around - any one of them could be out to get me!"
+	mood_change = -3
+	event_flags = MOOD_EVENT_FEAR
+
+/datum/mood_event/nt_disillusioned
+	description = "I hate the company, and everything it stands for."
+	mood_change = -2
+
+/datum/mood_event/disillusioned_revs_lost
+	description = "The revolution was defeated... greaaaat."
+	mood_change = -2
+	timeout = 10 MINUTES
+
+/datum/mood_event/loyalist_revs_win
+	description = "The revolution was a success... This will hurt quarterly profits."
+	mood_change = -2
+	timeout = 10 MINUTES

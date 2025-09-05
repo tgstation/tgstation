@@ -16,7 +16,7 @@
 	else
 		if(LAZYLEN(personalities) >= CONFIG_GET(number/max_personalities))
 			return TRUE
-		if(GLOB.personality_controller.is_incompatible(personalities, personality_type))
+		if(SSpersonalities.is_incompatible(personalities, personality_type))
 			return TRUE
 		LAZYADD(personalities, personality_key)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)
@@ -30,8 +30,8 @@
 	var/list/data = list()
 
 	data["personalities"] = list()
-	for(var/datum/personality/personality_type as anything in GLOB.personality_controller.personalities_by_type)
-		var/datum/personality/personality = GLOB.personality_controller.personalities_by_type[personality_type]
+	for(var/datum/personality/personality_type as anything in SSpersonalities.personalities_by_type)
+		var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
 		data["personalities"] += list(list(
 			"description" = personality.desc,
 			"pos_gameplay_description" = personality.pos_gameplay_desc,
@@ -41,7 +41,7 @@
 			"path" = personality_type,
 		))
 
-	data["personality_incompatibilities"] = GLOB.personality_controller.incompatibilities
+	data["personality_incompatibilities"] = SSpersonalities.incompatibilities
 
 	return data
 
@@ -49,7 +49,7 @@
 	var/list/data = list()
 
 	var/max = CONFIG_GET(number/max_personalities)
-	data["max_personalities"] = max >= length(GLOB.personality_controller.personalities_by_type) ? -1 : max
+	data["max_personalities"] = max >= length(SSpersonalities.personalities_by_type) ? -1 : max
 	data["mood_enabled"] = !CONFIG_GET(flag/disable_human_mood)
 
 	return data
@@ -59,7 +59,7 @@
 
 	data["selected_personalities"] = list()
 	for(var/personality_key in preferences.read_preference(/datum/preference/personality))
-		var/datum/personality/personality = GLOB.personality_controller.personalities_by_key[personality_key]
+		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]
 		data["selected_personalities"] += personality.type
 
 	return data

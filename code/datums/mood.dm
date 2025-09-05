@@ -182,10 +182,20 @@
 	new_event.on_add(src, mob_parent, params)
 	mood_events[category] = new_event
 	update_mood()
+	if(new_event.mood_change == 0)
+		return
 	for(var/mob/living/nearby in viewers(mob_parent))
 		if(HAS_PERSONALITY(nearby, /datum/personality/empathetic))
-			// todo
-			pass()
+			if(new_event.mood_change > 0)
+				nearby.add_mood_event("empathetic_happy", /datum/mood_event/empathetic_happy)
+			if(new_event.mood_change < 0)
+				nearby.add_mood_event("empathetic_sad", /datum/mood_event/empathetic_sad)
+
+		if(HAS_PERSONALITY(nearby, /datum/personality/misanthropic))
+			if(new_event.mood_change > 0)
+				nearby.add_mood_event("misanthropic_sad", /datum/mood_event/misanthropic_sad)
+			if(new_event.mood_change < 0)
+				nearby.add_mood_event("misanthropic_happy", /datum/mood_event/misanthropic_happy)
 
 /**
  * Removes a mood event from the mob
