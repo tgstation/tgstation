@@ -68,18 +68,23 @@
 	if(going_hard)
 		. += "goat_dart"
 
+#define RUFRAN_NORMAL_SIZE 1
+#define RUFRAN_BIG_SIZE 1.5
+#define RUFRAN_HUGE_SIZE 2
+#define RUFRAN_GIGANTIC_SIZE 2.5
+#define RUFRAN_SIZE_INCREMENT 0.5
 
 /obj/item/toy/plush/rufran
 	icon = 'troutstation/icons/obj/toys/plushes.dmi'
 	name = "rufran plushie"
 	desc = "An adorable stuffed toy that resembles a moth and a bird. You feel like it looked smaller earlier."
 	icon_state = "plushie_rufran"
-	var/size = 1
+	var/size = RUFRAN_NORMAL_SIZE
 
 /obj/item/toy/plush/rufran/attackby(obj/item/dnainjector/gigantism/serum, mob/user, list/modifiers, list/attack_modifiers)
-	if(serum.used==FALSE && istype(serum, /obj/item/dnainjector/gigantism) && size < 2.5)
+	if(serum.used==FALSE && istype(serum, /obj/item/dnainjector/gigantism) && size < RUFRAN_GIGANTIC_SIZE)
 		to_chat(user, span_notice("You inject [src] with the gigantism serum!"))
-		size += 0.5
+		size += RUFRAN_SIZE_INCREMENT
 		AddElement(/datum/element/item_scaling, size, size)
 		playsound(get_turf(user), 'sound/effects/creak/creak1.ogg', 100, TRUE)
 		// actually use the injector
@@ -87,29 +92,38 @@
 		serum.desc = "A cheap single use autoinjector that injects the user with DNA. This one is used up."
 		serum.icon_state = "dnainjector0"
 		serum.inhand_icon_state = "dnainjector0"
-		if(size==1.5)
-			w_class = WEIGHT_CLASS_BULKY
-		if(size==2)
-			w_class = WEIGHT_CLASS_HUGE
-			AddComponent(/datum/component/two_handed, require_twohands = TRUE)
-		if(size==2.5)
+		// important: biggest number first, then descending order
+		if(size >= RUFRAN_GIGANTIC_SIZE)
 			w_class = WEIGHT_CLASS_GIGANTIC
 			interaction_flags_item = NONE
+		else if(size >= RUFRAN_HUGE_SIZE)
+			w_class = WEIGHT_CLASS_HUGE
+			AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+		else if(size >= RUFRAN_BIG_SIZE)
+			w_class = WEIGHT_CLASS_BULKY
 		return
 	if(serum.used==TRUE)
 		to_chat(user, span_warning("This injector is used up!"))
 		return
-	if(size >= 2.5)
+	if(size >= RUFRAN_GIGANTIC_SIZE)
 		to_chat(user, span_warning("[src] can't get any bigger!"))
 		return
 
 /obj/item/toy/plush/rufran/examine()
 	. = ..()
-	if(size == 1.5)
-		. += span_notice("It looks big!")
-	if(size == 2)
-		. += span_notice("It looks huge!")
-	if(size == 2.5)
-		. += span_notice("It looks massive!")
-	if(size > 2.5)
+	// important: biggest number first, then descending order
+	if(size >= RUFRAN_GIGANTIC_SIZE + 1E-4) // god i hate float comparisons sometimes
 		. += span_notice("wuh oh")
+	else if(size >= RUFRAN_GIGANTIC_SIZE)
+		. += span_notice("It looks massive!")
+	else if(size >= RUFRAN_HUGE_SIZE)
+		. += span_notice("It looks huge!")
+	else if(size >= RUFRAN_BIG_SIZE)
+		. += span_notice("It looks big!")
+
+// i have no fucking idea why anyone would reuse these macros but good practice is good practice
+#undef RUFRAN_NORMAL_SIZE
+#undef RUFRAN_BIG_SIZE
+#undef RUFRAN_HUGE_SIZE
+#undef RUFRAN_GIGANTIC_SIZE
+#undef RUFRAN_SIZE_INCREMENT
