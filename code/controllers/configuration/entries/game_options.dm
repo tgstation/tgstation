@@ -511,7 +511,7 @@
 /datum/config_entry/flag/persistent_save_centcomm_z_levels
 /// Whether to include the station z levels
 /datum/config_entry/flag/persistent_save_station_z_levels
-/// Whether to include space z levels and ruins
+/// Whether to include empty z levels
 /datum/config_entry/flag/persistent_save_space_empty_z_levels
 /// Whether to include space z levels and ruins
 /datum/config_entry/flag/persistent_save_space_ruin_z_levels
