@@ -184,7 +184,7 @@
 				level[ZTRAIT_STATION] = TRUE
 
 	// "traits": null or absent -> default
-	else if (!isnull(traits))
+	else if (!isnull(traits) && !persistence_save)
 		log_world("map_config traits is not a list!")
 		return
 
