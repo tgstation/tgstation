@@ -8,8 +8,8 @@ SUBSYSTEM_DEF(personalities)
 	VAR_FINAL/list/personalities_by_type
 	/// All personality singletons indexed by their savefile key
 	VAR_FINAL/list/personalities_by_key
-	/// List of lists of incompatible personality types. CHeck via is_incompatible()
-	VAR_PRIVATE/list/incompatibilities
+	/// List of lists of incompatible personality types.
+	VAR_FINAL/list/incompatibilities
 
 	/// For personalities which process, this tracks all mobs we need to process for
 	var/list/processing_personalities = list()
@@ -30,10 +30,10 @@ SUBSYSTEM_DEF(personalities)
 /datum/controller/subsystem/personalities/proc/init_personalities()
 	personalities_by_type = list()
 	personalities_by_key = list()
-	for(var/personality_type in subtypesof(/datum/personality))
+	for(var/personality_type in typesof(/datum/personality))
 		var/datum/personality/personality = new personality_type()
 		if(isnull(personality.savefile_key))
-			stack_trace("Personality [personality_type] does not have a savefile key set.")
+			// No key = abstract = ignore
 			continue
 		if(personalities_by_key[personality.savefile_key])
 			stack_trace("Personality save key collision! key: [personality.savefile_key] - new: [personality_type] - old: [personalities_by_key[personality.savefile_key]]")
@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(personalities)
 	incompatibilities = list(
 		list(
 			/datum/personality/callous,
-			/datum/personality/friendly,
+			/datum/personality/compassionate,
 		),
 		list(
 			/datum/personality/department/analytical,
@@ -79,18 +79,13 @@ SUBSYSTEM_DEF(personalities)
 			/datum/personality/pessimistic,
 		),
 		list(
-			/datum/personality/friendly,
+			/datum/personality/compassionate,
 			/datum/personality/misanthropic,
 		),
 		list(
 			/datum/personality/misanthropic,
 			/datum/personality/extrovert,
 			/datum/personality/empathetic,
-		),
-		list(
-			/datum/personality/aloof,
-			/datum/personality/friendly,
-			/datum/personality/aromantic,
 		),
 		list(
 			/datum/personality/brave,
@@ -101,23 +96,23 @@ SUBSYSTEM_DEF(personalities)
 			/datum/personality/paranoid,
 		),
 		list(
-			/datum/personality/lazy,
-			/datum/personality/diligent,
+			/datum/personality/slacking/lazy,
+			/datum/personality/slacking/diligent,
 		),
 		list(
-			/datum/personality/lazy,
+			/datum/personality/slacking/lazy,
 			/datum/personality/athletic,
 		),
 		list(
 			/datum/personality/brooding,
 			/datum/personality/resilient,
 		),
+		// list(
+		// 	/datum/personality/reckless,
+		// 	/datum/personality/cautious,
+		// ),
 		list(
-			/datum/personality/reckless,
-			/datum/personality/cautious,
-		),
-		list(
-			/datum/personality/lazy,
+			/datum/personality/slacking/lazy,
 			/datum/personality/industrious,
 		),
 		list(
@@ -161,6 +156,23 @@ SUBSYSTEM_DEF(personalities)
 			if(contrasting_type in incompatibility)
 				return TRUE
 	return FALSE
+
+/// Helper to select a random list of personalities, respecting incompatibilities. REturns a list of typepaths
+/datum/controller/subsystem/personalities/proc/select_random_personalities(lower_end = 1, upper_end = CONFIG_GET(number/max_personalities))
+	var/list/personality_pool = personalities_by_type.Copy()
+	var/list/selected_personalities = list()
+	var/num = rand(lower_end, upper_end)
+	var/i = 1
+	while(i <= num)
+		if(!length(personality_pool))
+			break
+		var/picked_type = pick(personality_pool)
+		if(is_incompatible(selected_personalities, picked_type))
+			continue
+		selected_personalities += picked_type
+		personality_pool -= picked_type
+		i += 1
+	return selected_personalities
 
 /**
  * ## Personality Singleton
@@ -247,11 +259,11 @@ SUBSYSTEM_DEF(personalities)
 	pos_gameplay_desc = "Does not mind seeing death"
 	neg_gameplay_desc = "Prefers not to help people"
 
-/datum/personality/friendly
-	savefile_key = "friendly"
-	name = "Friendly"
+/datum/personality/compassionate
+	savefile_key = "compassionate"
+	name = "Compassionate"
 	desc = "I like giving a hand to those in need."
-	// pos_gameplay_desc = "Gives better hugs"
+	pos_gameplay_desc = "Likes helping people"
 	neg_gameplay_desc = "Seeing death affects your mood more"
 
 /datum/personality/empathetic
@@ -269,78 +281,48 @@ SUBSYSTEM_DEF(personalities)
 	neg_gameplay_desc = "Dislikes seeing other people happy"
 
 /datum/personality/department
-	/// Maps departments to area types
-	VAR_PRIVATE/list/department_to_area_type = list(
-		/datum/job_department/assistant = null, // get a job, hippie
-		/datum/job_department/captain = /area/station/command,
-		/datum/job_department/cargo = /area/station/cargo,
-		/datum/job_department/command = /area/station/command,
-		/datum/job_department/engineering = /area/station/engineering,
-		/datum/job_department/medical = /area/station/medical,
-		/datum/job_department/science = /area/station/science,
-		/datum/job_department/security = /area/station/security,
-		/datum/job_department/service = /area/station/service,
-	)
-	/// List of departments this personality applies to
-	var/list/applicable_departments
-
-/datum/personality/department/New()
-	. = ..()
-	for(var/department in department_to_area_type)
-		department_to_area_type[department] = typecacheof(department_to_area_type[department]) || list()
+	/// List of areas this personality applies to
+	var/list/applicable_areas
 
 /datum/personality/department/apply_to_mob(mob/living/who)
 	. = ..()
-	RegisterSignal(who, COMSIG_ENTER_AREA, PROC_REF(check_area))
+	RegisterSignal(who, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_SET_ROLE), PROC_REF(update_effect))
+	// Unfortunate side effect here in that IC job changes, IE HoP are missed
+	who.apply_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/enjoying_department_area, applicable_areas & who.mind?.get_work_areas())
 
 /datum/personality/department/remove_from_mob(mob/living/who)
 	. = ..()
-	UnregisterSignal(who, COMSIG_ENTER_AREA)
-	who.clear_mood_event("enjoying_department_area")
+	UnregisterSignal(who, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_SET_ROLE))
+	who.remove_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/enjoying_department_area)
 
-/datum/personality/department/proc/check_area(mob/living/source, area/new_area)
+/// Signal handler to update our status effect when our job changes
+/datum/personality/department/proc/update_effect(mob/living/source, ...)
 	SIGNAL_HANDLER
 
-	// var/obj/item/card/id/id = source.get_idcard()
-	// var/datum/id_trim/job/id_trim = id?.trim
-	// var/datum/job/job = id_trim?.find_job() || source.mind?.assigned_role
-	// if(isnull(job))
-	// 	return
-
-	var/datum/job/job = source.mind?.assigned_role
-	if(isnull(job))
-		return
-
-	var/list/preferred_areas = list()
-	for(var/department in applicable_departments & job.departments_list)
-		preferred_areas += department_to_area_type[department]
-
-	if(is_type_in_typecache(new_area, combined_typecache))
-		source.add_mood_event("enjoying_department_area", /datum/mood_event/enjoying_department_area)
-	else
-		source.clear_mood_event("enjoying_department_area")
+	source.remove_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/enjoying_department_area)
+	source.apply_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/enjoying_department_area, applicable_areas & source.mind.get_work_areas())
 
 /datum/personality/department/analytical
 	savefile_key = "analytical"
 	name = "Analytical"
 	desc = "When it comes to making decisions, I tend to be more impersonal."
-	neut_gameplay_desc = "Prefers working in systemic environments - engineering, research, or medical
-	applicable_departments = list(
-		/datum/job_department/engineering,
-		/datum/job_department/research,
-		/datum/job_department/medical,
+	neut_gameplay_desc = "Prefers working in systemic environments like engineering, research, or medical"
+	applicable_areas = list(
+		/datum/job_department/engineering::primary_work_area,
+		/datum/job_department/science::primary_work_area,
+		/datum/job_department/medical::primary_work_area,
 	)
 
 /datum/personality/department/impulsive
 	savefile_key = "impulsive"
 	name = "Impulsive"
 	desc = "I'm better making stuff up as I go along."
-	neut_gameplay_desc = "Prefers working in social environments - cargo, command, security, or service"
-	applicable_departments = list(
-		/datum/job_department/cargo,
-		/datum/job_department/command,
-		/datum/job_department/security,
-		/datum/job_department/service,
+	neut_gameplay_desc = "Prefers working in social environments like cargo, command, security, or service"
+	applicable_areas = list(
+		/datum/job_department/cargo::primary_work_area,
+		/datum/job_department/command::primary_work_area,
+		/datum/job_department/security::primary_work_area,
+		/datum/job_department/service::primary_work_area,
 	)
 
 // /datum/personality/morbid
@@ -394,7 +376,7 @@ SUBSYSTEM_DEF(personalities)
 	name = "Introverted"
 	desc = "I prefer to be alone, reading or painting in the library."
 	pos_gameplay_desc = "Likes being in the library"
-	neg_gameplay_desc = "Dislikes large groups"
+	// neg_gameplay_desc = "Dislikes large groups"
 	personality_trait = TRAIT_INTROVERT
 
 /datum/personality/extrovert
@@ -402,7 +384,7 @@ SUBSYSTEM_DEF(personalities)
 	name = "Extroverted"
 	desc = "I prefer to be surrounded by people, having a drink at the Bar."
 	pos_gameplay_desc = "Likes being in the bar"
-	neg_gameplay_desc = "Dislikes being alone"
+	// neg_gameplay_desc = "Dislikes being alone"
 	personality_trait = TRAIT_EXTROVERT
 
 /datum/personality/resilient
@@ -445,19 +427,70 @@ SUBSYSTEM_DEF(personalities)
 	desc = "Everything is a danger around here! Even the air!"
 	neg_gameplay_desc = "Accumulate fear faster, and moodlets related to fear are stronger"
 
-/datum/personality/lazy
+/datum/personality/slacking
+	/// Areas which are considered "slacking off"
+	var/list/slacker_areas = list(
+		/area/station/commons/fitness,
+		/area/station/commons/lounge,
+		/area/station/service/bar,
+		/area/station/service/cafeteria,
+		/area/station/service/library,
+		/area/station/service/minibar,
+		/area/station/service/theater,
+	)
+	/// Mood event applied when in a slacking area
+	var/mood_event_type
+
+/datum/personality/slacking/apply_to_mob(mob/living/who)
+	. = ..()
+	who.apply_status_effect(/datum/status_effect/moodlet_in_area, mood_event_type, slacker_areas, CALLBACK(src, PROC_REF(is_slacking)))
+
+/datum/personality/slacking/remove_from_mob(mob/living/who)
+	. = ..()
+	who.remove_status_effect(/datum/status_effect/moodlet_in_area, mood_event_type)
+
+/// Callback for the moodlet_in_area status effect to determine if we're slacking off
+/datum/personality/slacking/proc/is_slacking(mob/living/who, area/new_area)
+	if(!istype(new_area, /area/station/service))
+		return TRUE
+	// Service workers don't slack in service
+	if(who.mind?.assigned_role.departments_bitflags & DEPARTMENT_SERVICE)
+		return FALSE
+
+	return TRUE
+
+/datum/personality/slacking/lazy
 	savefile_key = "lazy"
 	name = "Lazy"
-	desc = "When given the choice, I'd rather do nothing."
-	pos_gameplay_desc = "Happier out of your department - such as in the bar or recreation room"
-	neg_gameplay_desc = "Unhappy working in your department or exercising"
+	desc = "I don't really feel like working today."
+	pos_gameplay_desc = "Happy in the bar or recreation areas"
+	mood_event_type = /datum/mood_event/slacking_off_lazy
 
-/datum/personality/diligent
+/datum/personality/slacking/diligent
 	savefile_key = "diligent"
 	name = "Diligent"
-	desc = "Things need to be done, and I'm the one to do them!"
-	pos_gameplay_desc = "Happier working in your department"
-	neg_gameplay_desc = "Unhappy when slacking off in the bar or recreation room"
+	desc = "Things need to get done around here!"
+	pos_gameplay_desc = "Happy when in their department"
+	neg_gameplay_desc = "Unhappy when slacking off in the bar or recreation areas"
+	mood_event_type = /datum/mood_event/slacking_off_diligent
+
+/datum/personality/slacking/diligent/apply_to_mob(mob/living/who)
+	. = ..()
+	RegisterSignals(who, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_SET_ROLE), PROC_REF(update_effect))
+	// Unfortunate side effect here in that IC job changes, IE HoP are missed
+	who.apply_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/working_diligent, who.mind?.get_work_areas())
+
+/datum/personality/slacking/diligent/remove_from_mob(mob/living/who)
+	. = ..()
+	UnregisterSignal(who, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_SET_ROLE))
+	who.remove_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/working_diligent)
+
+/// Signal handler to update our status effect when our job changes
+/datum/personality/slacking/diligent/proc/update_effect(mob/living/source, ...)
+	SIGNAL_HANDLER
+
+	source.remove_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/working_diligent)
+	source.apply_status_effect(/datum/status_effect/moodlet_in_area, /datum/mood_event/working_diligent, source.mind.get_work_areas())
 
 /datum/personality/industrious
 	savefile_key = "industrious"
@@ -472,11 +505,11 @@ SUBSYSTEM_DEF(personalities)
 	pos_gameplay_desc = "Likes exercising"
 	neg_gameplay_desc = "Dislikes being lazy"
 
-/datum/personality/greedy
-	savefile_key = "greedy"
-	name = "Greedy"
-	desc = "Everything is mine, all mine!"
-	neg_gameplay_desc = "Dislikes spending or giving away money"
+// /datum/personality/greedy
+// 	savefile_key = "greedy"
+// 	name = "Greedy"
+// 	desc = "Everything is mine, all mine!"
+// 	neg_gameplay_desc = "Dislikes spending or giving away money"
 
 /datum/personality/whimsical
 	savefile_key = "whimsical"
@@ -508,8 +541,29 @@ SUBSYSTEM_DEF(personalities)
 	savefile_key = "aloof"
 	name = "Aloof"
 	desc = "Why is everyone so touchy? I'd rather be left alone."
-	neg_gameplay_desc = "Dislikes hugs"
+	neg_gameplay_desc = "Dislikes being grabbed, touched, or hugged"
 	personality_trait = TRAIT_BADTOUCH
+
+/datum/personality/aloof/apply_to_mob(mob/living/who)
+	. = ..()
+	RegisterSignals(who, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), PROC_REF(uncomfortable_touch))
+
+/datum/personality/aloof/remove_from_mob(mob/living/who)
+	. = ..()
+	UnregisterSignal(who, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT))
+
+/// Causes a negative moodlet to our quirk holder on signal
+/datum/personality/aloof/proc/uncomfortable_touch(mob/living/source)
+	SIGNAL_HANDLER
+
+	if(source.stat == DEAD)
+		return
+
+	new /obj/effect/temp_visual/annoyed(source.loc)
+	if(source.mob_mood.sanity <= SANITY_NEUTRAL)
+		source.add_mood_event("bad_touch", /datum/mood_event/very_bad_touch)
+	else
+		source.add_mood_event("bad_touch", /datum/mood_event/bad_touch)
 
 /datum/personality/hopeful
 	savefile_key = "hopeful"
@@ -620,7 +674,7 @@ SUBSYSTEM_DEF(personalities)
 /datum/personality/nt/disillusioned
 	savefile_key = "disillusioned"
 	name = "Disillusioned"
-	desc = "Central Command isn't what it used to be. This isn't what I signed up for."
+	desc = "Nanotrasen isn't what it used to be. This isn't what I signed up for."
 	neg_gameplay_desc = "Dislikes company posters and signs"
 	mood_event_type = /datum/mood_event/nt_disillusioned
 
@@ -628,8 +682,8 @@ SUBSYSTEM_DEF(personalities)
 	savefile_key = "paranoid"
 	name = "Paranoid"
 	desc = "Everyone and everything is out to get me! This place is a deathtrap!"
-	pos_gameplay_desc = "Likes alone or in moderately-sized groups"
-	neg_gameplay_desc = "Dislikes when with one other person, or in large groups"
+	pos_gameplay_desc = "Likes being alone or in moderately-sized groups"
+	neg_gameplay_desc = "Stressed when with one other person, or in large groups"
 	processes = TRUE
 
 /datum/personality/paranoid/remove_from_mob(mob/living/who)
@@ -674,17 +728,17 @@ SUBSYSTEM_DEF(personalities)
 	desc = "I'll always go for another round of drinks!"
 	pos_gameplay_desc = "Fulfillment from drinking lasts longer, even after you are no longer drunk"
 
-/datum/personality/reckless
-	savefile_key = "reckless"
-	name = "Reckless"
-	desc = "What is life without a little danger?"
-	pos_gameplay_desc = "Likes doing dangerous things"
+// /datum/personality/reckless
+// 	savefile_key = "reckless"
+// 	name = "Reckless"
+// 	desc = "What is life without a little danger?"
+// 	pos_gameplay_desc = "Likes doing risky things"
 
-/datum/personality/cautious
-	savefile_key = "cautious"
-	name = "Cautious"
-	desc = "Risks are foolish on a station as deadly as this."
-	neg_gameplay_desc = "Dislikes doing dangerous things"
+// /datum/personality/cautious
+// 	savefile_key = "cautious"
+// 	name = "Cautious"
+// 	desc = "Risks are foolish on a station as deadly as this."
+// 	neg_gameplay_desc = "Dislikes doing risky things"
 
 /datum/personality/gambler
 	savefile_key = "gambler"

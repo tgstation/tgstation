@@ -112,7 +112,7 @@
 	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/arcade/add_effects()
-	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/diligent))
+	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/slacking/diligent))
 		mood_change = -1
 		description = "Wow, I beat the game. I could've been doing anything productive instead."
 
@@ -147,7 +147,7 @@
 
 /datum/mood_event/exercise/add_effects(fitness_level)
 	mood_change = fitness_level // the more fit you are, the more you like to work out
-	if(HAS_PERSONALITY(owner, /datum/personality/lazy))
+	if(HAS_PERSONALITY(owner, /datum/personality/slacking/lazy))
 		mood_change *= -0.5
 		description = "Working out, what a chore!"
 	else if(!HAS_PERSONALITY(owner, /datum/personality/athletic))
@@ -360,29 +360,39 @@
 
 /datum/mood_event/helped_up
 	description = "Helping them up felt good!"
-	mood_change = 2
 	timeout = 45 SECONDS
 
+/datum/mood_event/helped_up/can_effect_mob(datum/mood/home, mob/living/who, ...)
+	if(!HAS_PERSONALITY(owner, /datum/personality/compassionate) \
+		&& !HAS_PERSONALITY(owner, /datum/personality/callous) \
+		&& !HAS_PERSONALITY(owner, /datum/personality/misanthropic))
+		return FALSE
+
+	return ..()
+
 /datum/mood_event/helped_up/add_effects(mob/other_person, helper)
+	if(!other_person)
+		return
+
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || HAS_PERSONALITY(owner, /datum/personality/misanthropic))
 		mood_change = -2
 		if(helper)
 			description = "They should have helped themselves."
 		else
 			description = "I could've gotten up myself."
-		return
-	if(!other_person)
-		return
 
-	if(helper)
-		description = "Helping [other_person] up felt good!"
-	else
-		description = "[other_person] helped me up, how nice of [other_person.p_them()]!"
+	else if(HAS_PERSONALITY(owner, /datum/personality/compassionate))
+		mood_change = 2
+		if(helper)
+			description = "Helping [other_person] up felt good!"
+		else
+			description = "[other_person] helped me up, how nice of [other_person.p_them()]!"
 
 /datum/mood_event/high_ten
 	description = "AMAZING! A HIGH-TEN!"
 	mood_change = 3
 	timeout = 45 SECONDS
+	event_flags = MOOD_EVENT_WHIMSY
 
 /datum/mood_event/down_low
 	description = "HA! What a rube, they never stood a chance..."
@@ -449,7 +459,7 @@
 	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/gaming/add_effects()
-	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/diligent))
+	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/slacking/diligent))
 		mood_change = -1
 		description = "Is now really the time to be playing games? I should be working."
 
@@ -592,14 +602,13 @@
 /datum/mood_event/slots/add_effects()
 	if(HAS_PERSONALITY(owner, /datum/personality/gambler))
 		mood_change *= 2
-	else if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/diligent))
+	else if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/slacking/diligent))
 		mood_change *= -1
 		description = "Why am I gambling my time and money away?"
-
-	if(HAS_PERSONALITY(owner, /datum/personality/reckless))
-		mood_change *= 1.2
-	if(HAS_PERSONALITY(owner, /datum/personality/cautious))
-		mood_change *= 0.5
+	// if(HAS_PERSONALITY(owner, /datum/personality/reckless))
+	// 	mood_change *= 1.2
+	// if(HAS_PERSONALITY(owner, /datum/personality/cautious))
+	// 	mood_change *= 0.5
 
 /datum/mood_event/slots/win
 	description = "Aw yeah I won!"
@@ -655,4 +664,12 @@
 
 /datum/mood_event/enjoying_department_area
 	description = "I love my job."
+	mood_change = 1
+
+/datum/mood_event/slacking_off_lazy
+	description = "Boss makes a dollar, I make a dime. That's why I slack on job time."
+	mood_change = 1
+
+/datum/mood_event/working_diligent
+	description = "Working hard is its own reward."
 	mood_change = 1

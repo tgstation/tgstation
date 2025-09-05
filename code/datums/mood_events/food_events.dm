@@ -47,8 +47,8 @@
 		description = "That food was [GLOB.food_quality_description[quality]]."
 	return ..()
 
-/datum/mood_event/food/proc/calculate_mood_change(quality)
-	var/quality = 2 + 2 * quality
+/datum/mood_event/food/proc/calculate_mood_change(base_quality)
+	var/quality = 2 + 2 * base_quality
 	if(HAS_PERSONALITY(owner, /datum/personality/ascetic))
 		quality *= 0.5
 	if(HAS_PERSONALITY(owner, /datum/personality/gourmand))

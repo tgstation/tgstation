@@ -1,7 +1,8 @@
 /datum/preference/personality
 	savefile_key = "personalities"
 	savefile_identifier = PREFERENCE_CHARACTER
-	can_randomize = FALSE
+	can_randomize = TRUE
+	randomize_by_default = FALSE
 
 /datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value)
 	if(isdummy(target) || CONFIG_GET(flag/disable_human_mood) || isnull(target.mob_mood))
@@ -32,3 +33,9 @@
 
 /datum/preference/personality/create_default_value()
 	return null
+
+/datum/preference/personality/create_random_value(datum/preferences/preferences)
+	var/list/random_personalities
+	for(var/datum/personality/personality_type as anything in SSpersonalities.select_random_personalities())
+		LAZYADD(random_personalities, initial(personality_type.savefile_key))
+	return random_personalities

@@ -43,6 +43,7 @@
  * Return FALSE if the mob should be unaffected
  */
 /datum/mood_event/proc/can_effect_mob(datum/mood/home, mob/living/who, ...)
+	SHOULD_CALL_PARENT(TRUE)
 	if(LAZYLEN(required_job) && !is_type_in_list(who.mind?.assigned_role, required_job))
 		return FALSE
 

@@ -3,6 +3,8 @@
 	desc = "You can never seem to nail down your personality."
 	icon = FA_ICON_MASKS_THEATER
 	value = -2
+	gain_text = span_danger("You feel erratic.") // say that again?
+	lose_text = span_notice("You feel more stable.")
 	medical_record_text = "Patient has a bipolar personality disorder."
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED|QUIRK_PROCESSES
 	hardcore_value = 2
@@ -20,6 +22,8 @@
 
 /datum/quirk/erratic/remove()
 	replace_personalities(base_personalities)
+	if(!QDELING(quirk_holder))
+		announce_personality_change()
 
 /datum/quirk/erratic/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, randomize_cooldown))
@@ -31,34 +35,26 @@
 
 	random_index += 1
 	if(random_index % 2 == 0)
-		replace_personalities(base_personalities)
 		random_index = 0
+		replace_personalities(base_personalities)
 		to_chat(quirk_holder, span_notice("You feel... normal."))
+		announce_personality_change()
 		return
 
-	for(var/existing in quirk_holder.personalities)
-		var/datum/personality/existing_datum = SSpersonalities.personalities_by_type[existing]
-		existing_datum.remove_from_mob(quirk_holder)
-
-	var/list/personality_pool = SSpersonalities.personalities_by_type.Copy()
-	var/num = rand(CONFIG_GET(number/max_personalities) - 2, CONFIG_GET(number/max_personalities) + 1)
-	var/i = 1
-	while(i <= num)
-		if(!length(personality_pool))
-			break
-		var/picked_type = pick(personality_pool)
-		if(SSpersonalities.is_incompatible(quirk_holder.personalities, picked_type))
-			continue
-		var/datum/personality/picked_datum = personality_pool[picked_type]
-		picked_datum.apply_to_mob(quirk_holder)
-		personality_pool -= picked_type
-		i += 1
+	var/max = CONFIG_GET(number/max_personalities)
+	var/list/new_personality = prob(1) ? list() : SSpersonalities.select_random_personalities(max - 2, max + 1)
+	replace_personalities(new_personality)
 	to_chat(quirk_holder, span_notice("You feel... different."))
+	announce_personality_change()
 
 /datum/quirk/erratic/proc/replace_personalities(list/new_personalities)
 	for(var/existing in quirk_holder.personalities)
-		var/datum/personality/existing_datum = SSpersonalities.personalities_by_type[existing]
-		existing_datum.remove_from_mob(quirk_holder)
+		quirk_holder.remove_personality(existing)
 	for(var/incoming in new_personalities)
-		var/datum/personality/incoming_datum = SSpersonalities.personalities_by_type[incoming]
-		incoming_datum.apply_to_mob(quirk_holder)
+		quirk_holder.add_personality(incoming)
+
+/datum/quirk/erratic/proc/announce_personality_change()
+	var/list/new_personality = list()
+	for(var/datum/personality/personality_type as anything in quirk_holder.personalities)
+		new_personality += initial(personality_type.name)
+	to_chat(quirk_holder, span_green("Your personality is now: [english_list(new_personality)]."))
