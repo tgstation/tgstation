@@ -508,7 +508,7 @@
 /// This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year/month/day/hour-minute-second
 /datum/config_entry/flag/persistent_save_enabled
 /// Whether to include the centcom z levels (by default this is turned off)
-/datum/config_entry/flag/persistent_save_centcomm_z_levels
+/datum/config_entry/flag/persistent_save_centcom_z_levels
 /// Whether to include the station z levels
 /datum/config_entry/flag/persistent_save_station_z_levels
 /// Whether to include empty z levels

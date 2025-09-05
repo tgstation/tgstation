@@ -603,7 +603,7 @@ PERSISTENT_AUTOSAVE_PERIOD 4
 PERSISTENT_MAX_AUTOSAVES -1
 ## Include specific z levels when saving and loading
 ## Whether to include the centcom z level (can ONLY be saved and NEVER loaded via persistence since it is always compiled)
-#PERSISTENT_SAVE_CENTCOMM_Z_LEVELS
+#PERSISTENT_SAVE_CENTCOM_Z_LEVELS
 ## Whether to include station z levels
 PERSISTENT_SAVE_STATION_Z_LEVELS
 ## Whether to include space ruins z levels

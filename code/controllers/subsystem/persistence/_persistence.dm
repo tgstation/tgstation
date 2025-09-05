@@ -242,7 +242,7 @@ SUBSYSTEM_DEF(persistence)
 
 		// for multi-z maps if a trait is found on ANY z-levels, the entire map is considered to have that trait
 		for(var/level in map_config.traits)
-			if(CONFIG_GET(flag/persistent_save_centcomm_z_levels) && (ZTRAIT_CENTCOM in level))
+			if(CONFIG_GET(flag/persistent_save_centcom_z_levels) && (ZTRAIT_CENTCOM in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_CENTCOM])
 				matching_z_levels[ZTRAIT_CENTCOM] |= map_config
 			else if(CONFIG_GET(flag/persistent_save_station_z_levels) && (ZTRAIT_STATION in level))
@@ -310,7 +310,7 @@ SUBSYSTEM_DEF(persistence)
 		level_traits += list(z_traits)
 
 		// skip saving certain z-levels depending on config settings
-		if(!CONFIG_GET(flag/persistent_save_centcomm_z_levels) && is_centcom_level(z))
+		if(!CONFIG_GET(flag/persistent_save_centcom_z_levels) && is_centcom_level(z))
 			continue
 		else if(!CONFIG_GET(flag/persistent_save_station_z_levels) && is_station_level(z))
 			continue
