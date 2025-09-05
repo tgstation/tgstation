@@ -1,4 +1,5 @@
 
+#define PLATFORM_WARNING_MODIFIER 5 SECONDS
 
 /**
  * The objects that ore vents produce, which is refined into minerals.
@@ -108,6 +109,35 @@
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
 
+/obj/item/boulder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /turf/open/lava))
+		if(!create_platform(interacting_with, user))
+			return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user)
+	if(locate(/obj/structure/lattice/catwalk/boulder, get_turf(interacting_with)))
+		to_chat(user, span_warning("There is already a boulder platform here!"))
+		return FALSE
+	var/platform_lifespan = 0
+
+	switch(boulder_size)
+		if(BOULDER_SIZE_SMALL)
+			platform_lifespan = 20 SECONDS
+		if(BOULDER_SIZE_MEDIUM)
+			platform_lifespan = 45 SECONDS
+		if(BOULDER_SIZE_LARGE)
+			platform_lifespan = 90 SECONDS
+		else
+			platform_lifespan = 10 SECONDS //Fallback
+
+	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
+	addtimer(CALLBACK(platform, TYPE_PROC_REF(/atom, add_shared_particles), /particles/smoke/ash), platform_lifespan - PLATFORM_WARNING_MODIFIER)
+	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, self_destruct)), platform_lifespan)
+	visible_message(span_notice("\The [src] floats on the lava, forming a temporary platform!"))
+	qdel(src)
+	return TRUE
 /**
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
  * @param obj/item/weapon The weapon that is being used to process the boulder, that we pull toolspeed from. If null, we use the override_speed_multiplier instead.
@@ -189,3 +219,36 @@
 		for(var/obj/item/content as anything in contents)
 			content.forceMove(get_turf(src))
 	qdel(src)
+
+#undef PLATFORM_WARNING_MODIFIER
+
+/obj/structure/lattice/catwalk/boulder
+	name = "boulder platform"
+	desc = "A boulder, floating on the molten hot deadly lava. More like a BOATlder."
+	icon = 'icons/obj/ore.dmi'
+	icon_state = "boulder_platform"
+	base_icon_state = "boulder_platform"
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
+	pixel_y = -8
+	build_material = null
+
+/obj/structure/lattice/catwalk/boulder/Initialize(mapload)
+	. = ..()
+	fast_emissive_blocker(src)
+
+/obj/structure/lattice/catwalk/boulder/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
+	if(ismetaltile(attacking_item))
+		balloon_alert(user, "Too unstable!")
+		return FALSE
+	return ..()
+
+/**
+ * Handles platforms deleting themselves with a visual effect and message.
+ */
+/obj/structure/lattice/catwalk/boulder/proc/self_destruct()
+	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = EASE_IN)
+	sleep(2 SECONDS)
+	visible_message(span_notice("The [src] sinks back into the lava and melts away!"))
+	deconstruct()

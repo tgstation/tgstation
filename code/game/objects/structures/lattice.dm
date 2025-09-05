@@ -73,7 +73,8 @@
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/atom_deconstruct(disassembled = TRUE)
-	new build_material(get_turf(src), number_of_mats)
+	if(!isnull(build_material) && number_of_mats >= 1)
+		new build_material(get_turf(src), number_of_mats)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF)
