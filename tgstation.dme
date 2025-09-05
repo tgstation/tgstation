@@ -6712,6 +6712,7 @@
 #include "troutstation\code\controllers\subsystem\flock.dm"
 #include "troutstation\code\datums\sprite_accessories.dm"
 #include "troutstation\code\datums\bodypart_overlays\markings_bodypart_overlay.dm"
+#include "troutstation\code\datums\components\crafting\entertainment.dm"
 #include "troutstation\code\datums\dna\blocks\dna_features_block.dm"
 #include "troutstation\code\datums\elements\food\processable_callback.dm"
 #include "troutstation\code\datums\mood_events\food_events.dm"
