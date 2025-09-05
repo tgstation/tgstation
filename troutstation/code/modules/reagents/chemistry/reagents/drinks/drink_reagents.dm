@@ -51,3 +51,8 @@
 	if(prob(5))
 		affected_mob.say(pick("bable", "beble", "bible", "boble", "booble", "babie", "bebie", "bibie", "bobie", "bubie", "boobie"))
 		sleep(100)
+
+/mob/living/carbon/examine(mob/user)
+	. = ..()
+	if(reagents.has_reagent(/datum/reagent/medicine/gaywater, needs_metabolizing = TRUE))
+		. += span_notice("[p_They()] [p_are()] gay!")
