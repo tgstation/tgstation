@@ -592,7 +592,7 @@ SPY_EASY_REWARD_TC_THRESHOLD 5
 SPY_HARD_REWARD_TC_THRESHOLD 15
 
 ## Uncomment to enable maps saving and loading that persists between rounds instead of always reseting to the default station map
-## This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year/month/day/round-id
+## This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year-month-day_UTF_hour.minute.second
 #PERSISTENT_SAVE_ENABLED
 ## Period of time in hours between map autosaves (set to -1 to only allow saving when server reboots)
 ## Defaults to every 4 hours
