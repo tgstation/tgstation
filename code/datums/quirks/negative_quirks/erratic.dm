@@ -1,6 +1,6 @@
 /datum/quirk/erratic
 	name = "Erratic"
-	desc = "You can never seem to nail down your personality."
+	desc = "You mood swings like a pendulum, causing your personality to change on a whim every so often."
 	icon = FA_ICON_MASKS_THEATER
 	value = -3
 	gain_text = span_danger("You feel erratic.") // say that again?

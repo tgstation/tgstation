@@ -485,9 +485,9 @@
 	timeout = 5 MINUTES
 	event_flags = MOOD_EVENT_FEAR
 
-// /datum/mood_event/moon_insanity/add_effects()
-// 	if(HAS_PERSONALITY(owner, /datum/personality/spiritual))
-// 		mood_change *= 2
+/datum/mood_event/moon_insanity/add_effects()
+	if(HAS_PERSONALITY(owner, /datum/personality/spiritual))
+		mood_change *= 2
 
 /datum/mood_event/amulet_insanity
 	description = "I sEe THe LiGHt, It mUsT BE stOPPed!"

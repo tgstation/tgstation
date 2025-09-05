@@ -69,8 +69,8 @@
 	if((event_flags & MOOD_EVENT_ART) && HAS_PERSONALITY(who, /datum/personality/creative))
 		mood_change *= 1.2
 
-	// if((event_flags & MOOD_EVENT_SPIRITUAL) && !HAS_PERSONALITY(who, /datum/personality/spiritual))
-	// 	mood_change *= 0.2
+	if((event_flags & MOOD_EVENT_SPIRITUAL) && !HAS_TRAIT(who, TRAIT_SPIRITUAL))
+		mood_change *= 0.2
 
 	// if(event_flags & (MOOD_EVENT_SUCCESS|MOOD_EVENT_FAILURE))
 	// 	if(HAS_PERSONALITY(owner, /datum/personality/humble))

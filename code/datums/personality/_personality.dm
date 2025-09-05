@@ -138,8 +138,8 @@ SUBSYSTEM_DEF(personalities)
 		list(
 			/datum/personality/animal_friend,
 			/datum/personality/animal_disliker,
-			/datum/personality/cat_lover,
-			/datum/personality/dog_lover,
+			/datum/personality/cat_fan,
+			/datum/personality/dog_fan,
 		),
 	)
 
@@ -517,13 +517,13 @@ SUBSYSTEM_DEF(personalities)
 	desc = "This station is too serious sometimes, lighten up!"
 	pos_gameplay_desc = "Likes ostensibly pointless but silly things, and does not mind clownish pranks"
 
-// /datum/personality/spiritual
-// 	savefile_key = "spiritual"
-// 	name = "Spiritual"
-// 	desc = "I believe in a higher power."
-// 	pos_gameplay_desc = "Likes the Chapel and the Chaplain"
-// 	neg_gameplay_desc = "Dislikes heretical things"
-// 	personality_trait = TRAIT_SPIRITUAL
+/datum/personality/spiritual
+	savefile_key = "spiritual"
+	name = "Spiritual"
+	desc = "I believe in a higher power."
+	pos_gameplay_desc = "Likes the Chapel and the Chaplain, and has special prayers"
+	neg_gameplay_desc = "Dislikes unholy things"
+	personality_trait = TRAIT_SPIRITUAL
 
 /datum/personality/creative
 	savefile_key = "creative"
@@ -765,16 +765,16 @@ SUBSYSTEM_DEF(personalities)
 	pos_gameplay_desc = "Likes being around pets"
 	neg_gameplay_desc = "Seeing a pet's death affects your mood more"
 
-/datum/personality/cat_lover
-	savefile_key = "cat_lover"
-	name = "Cat Lover"
+/datum/personality/cat_fan
+	savefile_key = "cat_fan"
+	name = "Cat Person"
 	desc = "Cats are so cute!"
 	pos_gameplay_desc = "Likes being around cats"
 	neg_gameplay_desc = "Dislikes being around dogs"
 
-/datum/personality/dog_lover
-	savefile_key = "dog_lover"
-	name = "Dog Lover"
+/datum/personality/dog_fan
+	savefile_key = "dog_fan"
+	name = "Dog Person"
 	desc = "Dogs are the best!"
 	pos_gameplay_desc = "Likes being around dogs"
 	neg_gameplay_desc = "Dislikes being around cats"

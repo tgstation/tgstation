@@ -75,6 +75,7 @@ function PersonalityButton(props: ButtonProps) {
     <Button
       onClick={isDisabled ? undefined : onClick}
       p={1}
+      pt={0.2}
       style={{
         cursor: isDisabled ? undefined : 'pointer',
         borderColor: borderColor,
@@ -105,7 +106,7 @@ function PersonalityButton(props: ButtonProps) {
         <Stack.Item
           color="#999999"
           mt={-1}
-          pt={0.25}
+          pt={0.2}
           style={{
             whiteSpace: 'normal',
             wordBreak: 'break-word',
@@ -118,7 +119,7 @@ function PersonalityButton(props: ButtonProps) {
         </Stack.Item>
         {personality.pos_gameplay_description && (
           <Stack.Item
-            mt={-0.1}
+            mt={-0.8}
             color="green"
             style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
           >
@@ -127,7 +128,7 @@ function PersonalityButton(props: ButtonProps) {
         )}
         {personality.neg_gameplay_description && (
           <Stack.Item
-            mt={-0.1}
+            mt={-0.8}
             color="red"
             style={{
               whiteSpace: 'normal',
@@ -139,7 +140,7 @@ function PersonalityButton(props: ButtonProps) {
         )}
         {personality.neut_gameplay_description && (
           <Stack.Item
-            mt={-0.1}
+            mt={-0.8}
             color="yellow"
             style={{
               whiteSpace: 'normal',
@@ -360,7 +361,7 @@ export function PersonalityPage() {
                   key={personality.name}
                   mr={0.5}
                   mb={0.5}
-                  width="32.5%"
+                  width="32.9%"
                 >
                   <PersonalityButton
                     personality={personality}

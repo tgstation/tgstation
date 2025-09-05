@@ -168,19 +168,19 @@
 		description = "Ewww, [animal.name] is so dirty! I don't want to touch it!"
 		return
 
-	var/dog_lover = HAS_PERSONALITY(owner, /datum/personality/dog_lover)
+	var/dog_fan = HAS_PERSONALITY(owner, /datum/personality/dog_fan)
 	var/isdog = istype(animal, /mob/living/basic/pet/dog)
-	var/cat_lover = HAS_PERSONALITY(owner, /datum/personality/cat_lover)
+	var/cat_fan = HAS_PERSONALITY(owner, /datum/personality/cat_fan)
 	var/iscat = istype(animal, /mob/living/basic/pet/cat)
-	if((dog_lover && isdog) || (cat_lover && iscat) || HAS_PERSONALITY(owner, /datum/personality/animal_friend))
+	if((dog_fan && isdog) || (cat_fan && iscat) || HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 		mood_change = 3
 		description = "I love [animal.name] so much, [animal.p_theyre()] so adorable! I can't stop petting [animal.p_them()]!"
 		return
-	if(dog_lover && iscat)
+	if(dog_fan && iscat)
 		mood_change = -1
 		description = "I don't like [animal.name]! I prefer dogs!"
 		return
-	if(cat_lover && isdog)
+	if(cat_fan && isdog)
 		mood_change = -1
 		description = "I don't like [animal.name]! I prefer cats!"
 		return
