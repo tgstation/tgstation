@@ -20,21 +20,21 @@
 
 /obj/item/ammo_box/speedloader/c357/match
 	name = "speed loader (.357 Match)"
-	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
+	desc = parent_type::desc + " Match rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c357/match
 	ammo_band_color = "#77828a"
 
 /obj/item/ammo_box/speedloader/c357/phasic
 	name = "speed loader (.357 Phasic)"
-	desc = "Designed to quickly reload revolvers. Holds phasic ammo, also known as 'Ghost Lead', allowing it to pass through non-organic material."
+	desc = parent_type::desc + " Phasic rounds, also known as 'Ghost Lead', are specially manufactured to pass through non-organic material. Somehow."
 	ammo_type = /obj/item/ammo_casing/c357/phasic
 	ammo_band_color = "#693a6a"
 
 /obj/item/ammo_box/speedloader/c357/heartseeker
 	name = "speed loader (.357 Heartseeker)"
-	desc = "Designed to quickly reload revolvers. Holds heartseeker ammo, which veers into targets with exceptional precision using \
-		an unknown method. It apparently predicts movement using neural pulses in the brain, but that's less marketable. \
-		As seen in the hit NTFlik horror-space western film, Forget-Me-Not! Brought to you by Roseus Galactic!"
+	desc = parent_type::desc + " Heartseeker rounds veer into targets with exceptional precision using an unknown method. \
+		It apparently predicts movement using neural pulses in the brain, but that's less marketable. \
+		As seen in the hit NTFlik horror-space western film, Forget-Me-Not, brought to you by Roseus Galactic!"
 	ammo_type = /obj/item/ammo_casing/c357/heartseeker
 	ammo_band_color = "#a91e1e"
 
@@ -64,48 +64,71 @@
 
 /obj/item/ammo_box/speedloader/c38/trac
 	name = "speed loader (.38 TRAC)"
-	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	desc = parent_type::desc + " TRAC bullets embed a tracking implant within the target's body."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 	ammo_band_color = COLOR_AMMO_TRACK
 
 /obj/item/ammo_box/speedloader/c38/match
 	name = "speed loader (.38 Match)"
-	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
+	desc = parent_type::desc + " Match bullets are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match
 	ammo_band_color = COLOR_AMMO_MATCH
 
 /obj/item/ammo_box/speedloader/c38/match/bouncy
 	name = "speed loader (.38 Rubber)"
-	desc = "Designed to quickly reload revolvers. These rounds are incredibly bouncy and MOSTLY nonlethal, making them great to show off trickshots with."
+	desc = parent_type::desc + " Rubber rounds are incredibly bouncy and MOSTLY less-lethal, making them great to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match/bouncy
 	ammo_band_color = COLOR_AMMO_RUBBER
 
 /obj/item/ammo_box/speedloader/c38/true
 	name = "speed loader (.38 True Strike)"
-	desc = "Designed to quickly reload revolvers. Bullets bounce towards new targets with surprising accuracy."
+	desc = parent_type::desc + " True Strike bullets bounce towards new targets with surprising accuracy after ricocheting."
 	ammo_type = /obj/item/ammo_casing/c38/match/true
 	ammo_band_color = COLOR_AMMO_TRUESTRIKE
 
 /obj/item/ammo_box/speedloader/c38/dumdum
 	name = "speed loader (.38 DumDum)"
-	desc = "Designed to quickly reload revolvers. These rounds expand on impact, allowing them to shred the target and cause massive bleeding. Very weak against armor and distant targets."
+	desc = parent_type::desc + " DumDum bullets expand on impact, reducing outright stopping power but \
+		shredding targets and causing massive bleeding in close range, \
+		at the cost of suffering greatly against armor and distant targets."
 	ammo_type = /obj/item/ammo_casing/c38/dumdum
 	ammo_band_color = COLOR_AMMO_DUMDUM
 
 /obj/item/ammo_box/speedloader/c38/hotshot
 	name = "speed loader (.38 Hot Shot)"
-	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
+	desc = parent_type::desc + " Hot Shot bullets contain an incendiary payload that ignites struck targets."
 	ammo_type = /obj/item/ammo_casing/c38/hotshot
 	ammo_band_color = COLOR_AMMO_HOTSHOT
 
 /obj/item/ammo_box/speedloader/c38/iceblox
 	name = "speed loader (.38 Iceblox)"
-	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
+	desc = parent_type::desc + " Iceblox bullets contain a cryogenic payload that lower the body temperature of struck targets."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = COLOR_AMMO_ICEBLOX
 
 /obj/item/ammo_box/speedloader/c38/flare
 	name = "speed loader (.38 Flare)"
-	desc = "Designed to quickly reload revolvers. Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
+	desc = parent_type::desc + " Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	ammo_type = /obj/item/ammo_casing/c38/flare
 	ammo_band_color = COLOR_AMMO_HELLFIRE
+
+/obj/item/ammo_box/speedloader/strilka310
+	name = "stripper clip (.310 Strilka)"
+	desc = "A five-round stripper clip for .310 Strilka rifles."
+	icon_state = "310_strip"
+	ammo_type = /obj/item/ammo_casing/strilka310
+	max_ammo = 5
+	ammo_box_multiload = AMMO_BOX_MULTILOAD_ALL
+	caliber = CALIBER_STRILKA310
+
+/obj/item/ammo_box/speedloader/strilka310/surplus
+	name = "stripper clip (.310 Surplus)"
+	desc = parent_type::desc + " This one has a few spots of rust where there's not excessive amounts of gun grease."
+	ammo_type = /obj/item/ammo_casing/strilka310/surplus
+
+/obj/item/ammo_box/speedloader/strilka310/phasic
+	name = "stripper clip (.310 Phasic)"
+	desc = parent_type::desc + " These should come with phasic bullets, \
+		hastily developed after an incident where a misfire resulted in the destruction of Atrakor Silverscale's priceless Vigoxian Fabergé egg. \
+		These fancy bullets pass right though valuables until they end up in a far less expensive human skull."
+	ammo_type = /obj/item/ammo_casing/strilka310/phasic
