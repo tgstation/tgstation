@@ -49,7 +49,6 @@
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
-	if (owne_mob)
 	owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
 	REMOVE_TRAIT(owner_mob, TRAIT_DESENSITIZED, REF(src))
 
