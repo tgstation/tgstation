@@ -34,7 +34,7 @@
 	description = "I've been creamed. Tastes like pie flavor."
 	mood_change = -2
 	timeout = 3 MINUTES
-	event_flags = MOOD_EVENT_WHIMSY
+	event_flags = MOOD_EVENT_WHIMSY // if whimsical, no penalty
 
 /datum/mood_event/inked
 	description = "I've been splashed with squid ink. Tastes like salt."
@@ -45,7 +45,7 @@
 	description = "I slipped. I should be more careful next time..."
 	mood_change = -2
 	timeout = 3 MINUTES
-	event_flags = MOOD_EVENT_WHIMSY
+	event_flags = MOOD_EVENT_WHIMSY // if whimsical, no penalty
 
 /datum/mood_event/eye_stab
 	description = "I used to be an adventurer like you, until I took a screwdriver to the eye."
@@ -485,9 +485,9 @@
 	timeout = 5 MINUTES
 	event_flags = MOOD_EVENT_FEAR
 
-/datum/mood_event/moon_insanity/add_effects()
-	if(HAS_PERSONALITY(owner, /datum/personality/spiritual))
-		mood_change *= 2
+// /datum/mood_event/moon_insanity/add_effects()
+// 	if(HAS_PERSONALITY(owner, /datum/personality/spiritual))
+// 		mood_change *= 2
 
 /datum/mood_event/amulet_insanity
 	description = "I sEe THe LiGHt, It mUsT BE stOPPed!"
@@ -555,30 +555,43 @@
 	description = "I just saw someone die. How horrible..."
 	mood_change = -8
 	timeout = 5 MINUTES
-
+	/// Message variant for callous people
 	var/dont_care_message = "Oh, %DEAD_MOB% died. Shame, I guess."
-	var/pead_message = "My pet %DEAD_MOB% just died!!"
+	/// Message variant for people who care about animals
+	var/pet_message = "%DEAD_MOB% just died!!"
+	/// Message variant for desensitized people (security, medical, cult with halo, etc)
 	var/desensitized_message = "I saw %DEAD_MOB% die."
 	var/normal_message = "I just saw %DEAD_MOB% die. How horrible..."
 
 /datum/mood_event/see_death/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
+	if(HAS_TRAIT(owner, TRAIT_CULT_HALO) && !HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
+		// When cultists get halos, they stop caring about death
+		mood_change = 4
+		description = "More souls for the Geometer!"
+		return
+
 	var/ispet = istype(dead_mob, /mob/living/basic/pet)
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
 		description = replacetext(dont_care_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 		mood_change = 0
 		timeout *= 0.5
 		return
+	// future todo : make the hop care about ian, cmo runtime, etc.
+	if(ispet)
+		description = replacetext(pet_message, "%DEAD_MOB%", capitalize(dead_mob.name)) // doesn't use a descriptor, so it says "Ian died"
+		if(HAS_PERSONALITY(owner, /datum/personality/animal_friend))
+			mood_change *= 1.5
+			timeout *= 1.25
+		else if(!HAS_PERSONALITY(owner, /datum/personality/compassionate))
+			mood_change *= 0.25
+			timeout *= 0.5
+		return
 	if(HAS_PERSONALITY(owner, /datum/personality/compassionate))
 		mood_change *= 1.5
-	if(ispet)
-		description = replacetext(pead_message, "%DEAD_MOB%", dead_mob.name) // doesn't use a descriptor, so it says "My pet Ian died"
-		mood_change *= 1.5
-		timeout *= 1.25
-		return
-	// These people are probably desensitized to death due to their job.... so let's not be overly punishing
-	if(owner.mind?.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_MEDICAL))
+		timeout *= 1.5
+	if(HAS_TRAIT(owner, TRAIT_DESENSITIZED))
 		mood_change *= 0.25
 		timeout *= 0.5
 		description = replacetext(desensitized_message, "%DEAD_MOB%", get_descriptor(dead_mob))
@@ -587,12 +600,14 @@
 	description = replacetext(normal_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 
 /datum/mood_event/see_death/be_refreshed(datum/mood/home, ...)
-	// Every time we get refreshed we get worse
-	mood_change *= 1.5
+	// Every time we get refreshed we get worse if not desensitized
+	if(!HAS_TRAIT(owner, TRAIT_DESENSITIZED))
+		mood_change *= 1.5
 	return ..()
 
 /datum/mood_event/see_death/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
 	// Only be replaced if the incoming event's base mood is worse than our base mood
+	// (IE: replace normal death events with gib events, but not the other way around)
 	if(initial(new_event.mood_change) > initial(mood_change))
 		new_event.mood_change = max(new_event.mood_change, mood_change * 1.5)
 		return ..()
@@ -612,7 +627,7 @@
 	mood_change = -12
 	timeout = 10 MINUTES
 	dont_care_message = "Oh, %DEAD_MOB% exploded. Now I have to get the mop."
-	pead_message = "My pet %DEAD_MOB% just exploded!!"
+	pet_message = "%DEAD_MOB% just exploded!!"
 	desensitized_message = "I saw %DEAD_MOB% explode."
 	normal_message = "%DEAD_MOB% just exploded in front of me!!"
 
@@ -621,7 +636,7 @@
 	mood_change = -12
 	timeout = 10 MINUTES
 	dont_care_message = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
-	pead_message = "My pet %DEAD_MOB% just vaporized!!"
+	pet_message = "%DEAD_MOB% just vaporized!!"
 	desensitized_message = "I saw %DEAD_MOB% get vaporized."
 	normal_message = "%DEAD_MOB% was just vaporized in front of me!!"
 
@@ -684,3 +699,18 @@
 /datum/mood_event/slacking_off_diligent
 	description = "I should get back to work."
 	mood_change = -1
+
+/datum/mood_event/unimaginative_patronage
+	description = "That felt like a waste of money."
+	mood_change = -2
+	timeout = 5 MINUTES
+
+/datum/mood_event/unimaginative_framing
+	description = "I could've hung something more useful there."
+	mood_change = -2
+	timeout = 5 MINUTES
+
+/datum/mood_event/unimaginative_sculpting
+	description = "That felt like a waste of materials."
+	mood_change = -2
+	timeout = 5 MINUTES

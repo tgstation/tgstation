@@ -227,15 +227,20 @@
 
 /datum/mood_event/focused
 	description = "I have a goal, and I will reach it, whatever it takes!" //Used for syndies, nukeops etc so they can focus on their goals
-	mood_change = 4
+	mood_change = 8
 	hidden = TRUE
 
 /datum/mood_event/badass_antag
 	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of having me around."
-	mood_change = 7
+	mood_change = 8
 	hidden = TRUE
 	special_screen_obj = "badass_sun"
 	special_screen_replace = FALSE
+
+/datum/mood_event/ling
+	description = "We have a goal, and we will reach it, whatever it takes!"
+	mood_change = 12
+	hidden = TRUE
 
 /datum/mood_event/creeping
 	description = "The voices have released their hooks on my mind! I feel free again!" //creeps get it when they are around their obsession
@@ -250,17 +255,17 @@
 
 /datum/mood_event/cult
 	description = "I have seen the truth, praise the almighty one!"
-	mood_change = 10 //maybe being a cultist isn't that bad after all
+	mood_change = 12 //maybe being a cultist isn't that bad after all
 	hidden = TRUE
 
 /datum/mood_event/heretics
 	description = "THE HIGHER I RISE, THE MORE I SEE."
-	mood_change = 10 //maybe being a heretic isnt that bad after all
+	mood_change = 12 //maybe being a heretic isnt that bad after all
 	hidden = TRUE
 
 /datum/mood_event/rift_fishing
 	description = "THE MORE I FISH, THE HIGHER I RISE."
-	mood_change = 7
+	mood_change = 6
 	timeout = 5 MINUTES
 
 /datum/mood_event/family_heirloom
@@ -673,3 +678,24 @@
 /datum/mood_event/working_diligent
 	description = "Working hard is its own reward."
 	mood_change = 1
+
+/datum/mood_event/creative_patronage
+	description = "Support artists!"
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/creative_framing
+	description = "Hanging up art really ties the room together."
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/creative_sculpting
+	description = "Sculpting is a great creative outlet."
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/whimsical_slip
+	description = "Haha! That guy fell over!"
+	mood_change = 3
+	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY

@@ -154,6 +154,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			quirk_to_migrate = "Apathetic",
 			new_typepath = /datum/personality/apathetic,
 		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Snob",
+			new_typepath = /datum/personality/snob,
+		)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()

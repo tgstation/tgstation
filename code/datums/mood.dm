@@ -182,20 +182,18 @@
 	new_event.on_add(src, mob_parent, params)
 	mood_events[category] = new_event
 	update_mood()
-	if(new_event.mood_change == 0)
+	if(new_event.mood_change == 0 || new_event.hidden)
 		return
-	for(var/mob/living/nearby in viewers(mob_parent))
-		if(HAS_PERSONALITY(nearby, /datum/personality/empathetic))
-			if(new_event.mood_change > 0)
-				nearby.add_mood_event("empathetic_happy", /datum/mood_event/empathetic_happy)
-			if(new_event.mood_change < 0)
-				nearby.add_mood_event("empathetic_sad", /datum/mood_event/empathetic_sad)
-
-		if(HAS_PERSONALITY(nearby, /datum/personality/misanthropic))
-			if(new_event.mood_change > 0)
-				nearby.add_mood_event("misanthropic_sad", /datum/mood_event/misanthropic_sad)
-			if(new_event.mood_change < 0)
-				nearby.add_mood_event("misanthropic_happy", /datum/mood_event/misanthropic_happy)
+	if(new_event.mood_change > 0)
+		add_personality_mood_to_viewers(mob_parent, "other_good_moodlet", list(
+			/datum/personality/empathetic = /datum/mood_event/empathetic_happy,
+			/datum/personality/misanthropic = /datum/mood_event/misanthropic_sad
+		), range = 4)
+	else
+		add_personality_mood_to_viewers(mob_parent, "other_bad_moodlet", list(
+			/datum/personality/empathetic = /datum/mood_event/empathetic_sad,
+			/datum/personality/misanthropic = /datum/mood_event/misanthropic_happy
+		), range = 4)
 
 /**
  * Removes a mood event from the mob
@@ -229,13 +227,13 @@
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
 		var/event_mood = the_event.mood_change
-		event_mood *= ((event_mood > 0) ? positive_mood_modifier : negative_mood_modifier)
+		event_mood *= max((event_mood > 0) ? positive_mood_modifier : negative_mood_modifier, 0)
 		mood += event_mood
 		if (!the_event.hidden)
 			shown_mood += event_mood
 
-	mood *= mood_modifier
-	shown_mood *= mood_modifier
+	mood *= max(mood_modifier, 0)
+	shown_mood *= max(mood_modifier, 0)
 
 	switch(mood)
 		if (-INFINITY to MOOD_SAD4)

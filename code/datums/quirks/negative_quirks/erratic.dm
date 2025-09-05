@@ -2,12 +2,12 @@
 	name = "Erratic"
 	desc = "You can never seem to nail down your personality."
 	icon = FA_ICON_MASKS_THEATER
-	value = -2
+	value = -3
 	gain_text = span_danger("You feel erratic.") // say that again?
 	lose_text = span_notice("You feel more stable.")
 	medical_record_text = "Patient has a bipolar personality disorder."
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED|QUIRK_PROCESSES
-	hardcore_value = 2
+	hardcore_value = 3
 	mail_goodies = list(/obj/item/storage/pill_bottle/psicodine)
 	/// Cooldown between personality randomizations
 	COOLDOWN_DECLARE(randomize_cooldown)

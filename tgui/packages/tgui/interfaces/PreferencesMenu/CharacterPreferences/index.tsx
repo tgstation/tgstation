@@ -9,8 +9,7 @@ import { AntagsPage } from './AntagsPage';
 import { JobsPage } from './JobsPage';
 import { LoadoutPage } from './loadout';
 import { MainPage } from './MainPage';
-import { PersonalityPage } from './PersonalityPage';
-import { QuirksPage } from './QuirksPage';
+import { QuirkPersonalityPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
 
 enum Page {
@@ -20,7 +19,6 @@ enum Page {
   Species,
   Quirks,
   Loadout,
-  Personality,
 }
 
 type ProfileProps = {
@@ -78,15 +76,11 @@ export function CharacterPreferenceWindow(props) {
 
       break;
     case Page.Quirks:
-      pageContents = <QuirksPage />;
+      pageContents = <QuirkPersonalityPage />;
       break;
 
     case Page.Loadout:
       pageContents = <LoadoutPage />;
-      break;
-
-    case Page.Personality:
-      pageContents = <PersonalityPage />;
       break;
 
     default:
@@ -165,17 +159,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Quirks}
               setPage={setCurrentPage}
             >
-              Quirks
-            </PageButton>
-          </Stack.Item>
-
-          <Stack.Item grow>
-            <PageButton
-              currentPage={currentPage}
-              page={Page.Personality}
-              setPage={setCurrentPage}
-            >
-              Personality
+              Quirks and Personality
             </PageButton>
           </Stack.Item>
         </Stack>

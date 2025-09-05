@@ -123,10 +123,10 @@ SUBSYSTEM_DEF(personalities)
 			/datum/personality/hopeful,
 			/datum/personality/pessimistic,
 		),
-		list(
-			/datum/personality/humble,
-			/datum/personality/prideful,
-		),
+		// list(
+		// 	/datum/personality/humble,
+		// 	/datum/personality/prideful,
+		// ),
 		list(
 			/datum/personality/erudite,
 			/datum/personality/uneducated,
@@ -360,7 +360,7 @@ SUBSYSTEM_DEF(personalities)
 /datum/personality/sensitive
 	savefile_key = "sensitive"
 	name = "Sensitive"
-	desc = "I am easily affected by the world around me."
+	desc = "I am easily influenced by the world around me."
 	neut_gameplay_desc = "All moodlets affect you more"
 
 /datum/personality/sensitive/apply_to_mob(mob/living/who)
@@ -517,25 +517,25 @@ SUBSYSTEM_DEF(personalities)
 	desc = "This station is too serious sometimes, lighten up!"
 	pos_gameplay_desc = "Likes ostensibly pointless but silly things, and does not mind clownish pranks"
 
-/datum/personality/spiritual
-	savefile_key = "spiritual"
-	name = "Spiritual"
-	desc = "I believe in a higher power."
-	pos_gameplay_desc = "Likes the Chapel and the Chaplain"
-	neg_gameplay_desc = "Dislikes heretical things"
-	personality_trait = TRAIT_SPIRITUAL
+// /datum/personality/spiritual
+// 	savefile_key = "spiritual"
+// 	name = "Spiritual"
+// 	desc = "I believe in a higher power."
+// 	pos_gameplay_desc = "Likes the Chapel and the Chaplain"
+// 	neg_gameplay_desc = "Dislikes heretical things"
+// 	personality_trait = TRAIT_SPIRITUAL
 
 /datum/personality/creative
 	savefile_key = "creative"
 	name = "Creative"
 	desc = "I like expressing myself, especially in a chaotic place like this."
-	pos_gameplay_desc = "Likes making art"
+	pos_gameplay_desc = "Likes making and seeing art or playing music"
 
 /datum/personality/unimaginative
 	savefile_key = "unimaginative"
 	name = "Unimaginative"
 	desc = "I'm not good at thinking outside the box. The box is there for a reason."
-	neg_gameplay_desc = "Dislikes making, seeing or hearing art"
+	neg_gameplay_desc = "Ignores art or music and dislikes making new art"
 
 /datum/personality/aloof
 	savefile_key = "aloof"
@@ -593,18 +593,18 @@ SUBSYSTEM_DEF(personalities)
 	. = ..()
 	who.mob_mood.positive_moodlet_length_modifier += 0.2
 
-/datum/personality/prideful
-	savefile_key = "prideful"
-	name = "Prideful"
-	desc = "I am proud of who I am."
-	pos_gameplay_desc = "Likes success"
-	neg_gameplay_desc = "Dislikes failure"
+// /datum/personality/prideful
+// 	savefile_key = "prideful"
+// 	name = "Prideful"
+// 	desc = "I am proud of who I am."
+// 	pos_gameplay_desc = "Likes success"
+// 	neg_gameplay_desc = "Dislikes failure"
 
-/datum/personality/humble
-	savefile_key = "humble"
-	name = "Humble"
-	desc = "I'm just doing my job."
-	neut_gameplay_desc = "Success or failure affects your mood less"
+// /datum/personality/humble
+// 	savefile_key = "humble"
+// 	name = "Humble"
+// 	desc = "I'm just doing my job."
+// 	neut_gameplay_desc = "Success or failure affects your mood less"
 
 /datum/personality/aromantic
 	savefile_key = "aromantic"
@@ -616,16 +616,16 @@ SUBSYSTEM_DEF(personalities)
 /datum/personality/ascetic
 	savefile_key = "ascetic"
 	name = "Ascetic"
-	desc = "I don't care much for luxurious foods. It's all fuel for the body."
+	desc = "I don't care much for luxurious foods - It's all fuel for the body."
 	pos_gameplay_desc = "Sorrow from eating disliked food is reduced"
 	neg_gameplay_desc = "Enjoyment from eating liked food is limited"
 
 /datum/personality/gourmand
 	savefile_key = "gourmand"
 	name = "Gourmand"
-	desc = "Food means everything to me."
+	desc = "Food means everything to me!"
 	pos_gameplay_desc = "Enjoyment from eating liked food is strengthened"
-	neg_gameplay_desc = "Sorrow from eating food you dislike is increased, and mediocre food is less enjoyable"
+	neg_gameplay_desc = "Sadness from eating food you dislike is increased, and mediocre food is less enjoyable"
 
 // /datum/personality/authoritarian
 // 	savefile_key = "authoritarian"
@@ -755,14 +755,15 @@ SUBSYSTEM_DEF(personalities)
 /datum/personality/uneducated
 	savefile_key = "uneducated"
 	name = "Uneducated"
-	desc = "I don't care much for books. Already know everything I need to know."
+	desc = "I don't care much for books - I already know everything I need to know."
 	neg_gameplay_desc = "Dislikes reading books"
 
 /datum/personality/animal_friend
 	savefile_key = "animal_friend"
 	name = "Animal Friend"
-	desc = "I love animals!"
+	desc = "I love animals! They'll never leave my side."
 	pos_gameplay_desc = "Likes being around pets"
+	neg_gameplay_desc = "Seeing a pet's death affects your mood more"
 
 /datum/personality/cat_lover
 	savefile_key = "cat_lover"

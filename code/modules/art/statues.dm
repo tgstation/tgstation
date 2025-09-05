@@ -401,6 +401,10 @@ Moving interrupts
 	if(!interrupted && !QDELETED(prepared_block))
 		prepared_block.create_statue()
 		user.balloon_alert(user, "statue finished")
+		if(HAS_PERSONALITY(user, /datum/personality/creative))
+			user.add_mood_event("creative_sculpting", /datum/mood_event/creative_sculpting)
+		if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+			user.add_mood_event("unimaginative_sculpting", /datum/mood_event/unimaginative_sculpting)
 	stop_sculpting(silent = !interrupted)
 
 /// To setup the sculpting target for the carving block

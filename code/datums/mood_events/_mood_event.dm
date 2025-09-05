@@ -66,21 +66,17 @@
 
 	owner = who
 
-	timeout *= ((mood_change > 0) ? home.positive_moodlet_length_modifier : home.negative_moodlet_length_modifier)
-	if(timeout)
-		addtimer(CALLBACK(home, TYPE_PROC_REF(/datum/mood, clear_mood_event), category), timeout, (TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT))
-
 	if((event_flags & MOOD_EVENT_ART) && HAS_PERSONALITY(who, /datum/personality/creative))
 		mood_change *= 1.2
 
-	if((event_flags & MOOD_EVENT_SPIRITUAL) && !HAS_PERSONALITY(who, /datum/personality/spiritual))
-		mood_change *= 0.2
+	// if((event_flags & MOOD_EVENT_SPIRITUAL) && !HAS_PERSONALITY(who, /datum/personality/spiritual))
+	// 	mood_change *= 0.2
 
-	if(event_flags & (MOOD_EVENT_SUCCESS|MOOD_EVENT_FAILURE))
-		if(HAS_PERSONALITY(owner, /datum/personality/humble))
-			mood_change *= 0.75
-		if(HAS_PERSONALITY(owner, /datum/personality/prideful))
-			mood_change *= 1.25
+	// if(event_flags & (MOOD_EVENT_SUCCESS|MOOD_EVENT_FAILURE))
+	// 	if(HAS_PERSONALITY(owner, /datum/personality/humble))
+	// 		mood_change *= 0.75
+	// 	if(HAS_PERSONALITY(owner, /datum/personality/prideful))
+	// 		mood_change *= 1.25
 
 	if(event_flags & MOOD_EVENT_FOOD)
 		if(HAS_PERSONALITY(owner, /datum/personality/ascetic))
@@ -95,6 +91,12 @@
 			mood_change *= 0.75
 
 	add_effects(arglist(mood_args))
+
+	mood_change = floor(mood_change)
+
+	timeout *= ((mood_change > 0) ? home.positive_moodlet_length_modifier : home.negative_moodlet_length_modifier)
+	if(timeout)
+		addtimer(CALLBACK(home, TYPE_PROC_REF(/datum/mood, clear_mood_event), category), timeout, (TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT))
 
 /**
  * Called when added to a mob

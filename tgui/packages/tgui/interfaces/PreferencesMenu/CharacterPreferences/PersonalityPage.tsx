@@ -12,7 +12,7 @@ import {
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../../../backend';
-import { Personality, PreferencesMenuData } from '../types';
+import type { Personality, PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 
 type ButtonData = {
@@ -65,12 +65,12 @@ type ButtonProps = {
 function PersonalityButton(props: ButtonProps) {
   const { personality, selected, invalid, disabled, onClick } = props;
 
-  let { backgroundColor, borderColor, tooltip } = getButtonColors(
+  const { backgroundColor, borderColor, tooltip } = getButtonColors(
     selected,
     invalid,
     disabled,
   );
-  let isDisabled = disabled || invalid || false;
+  const isDisabled = disabled || invalid || false;
   return (
     <Button
       onClick={isDisabled ? undefined : onClick}
@@ -93,22 +93,24 @@ function PersonalityButton(props: ButtonProps) {
           bold
           fontSize="16px"
           inline
-          p={0.25}
-          pl={0.5}
-          pr={0.5}
-          mb={-0.2}
-        >
-          {personality.name}
-        </Stack.Item>
-        <Stack.Divider />
-        <Stack.Item
-          mt={0.2}
-          mb={0.2}
-          color="#999999"
+          p={0.5}
           style={{
             whiteSpace: 'normal',
             wordBreak: 'break-word',
-            borderLeft: '0.15em solid #444444',
+            paddingLeft: '0.5em',
+          }}
+        >
+          {personality.name}
+        </Stack.Item>
+        <Stack.Item
+          color="#999999"
+          mt={-1}
+          pt={0.25}
+          style={{
+            whiteSpace: 'normal',
+            wordBreak: 'break-word',
+            borderTop: '0.2em solid #444444',
+            borderLeft: '0.2em solid #444444',
             paddingLeft: '0.5em',
           }}
         >
@@ -231,7 +233,7 @@ function getAllSelectedPersonalitiesString(
   allPersonalities: Personality[],
   selectedPersonalities: string[] | null,
 ) {
-  let personalityNames: string[] = [];
+  const personalityNames: string[] = [];
   for (const personality of allPersonalities) {
     if (selectedPersonalities?.includes(personality.path)) {
       personalityNames.push(personality.name);
@@ -259,7 +261,7 @@ function getAllSelectedPersonalitiesString(
   return `You are ${finalString}.`;
 }
 
-export function PersonalityPage(props) {
+export function PersonalityPage() {
   const { act, data } = useBackend<PreferencesMenuData>();
 
   const server_data = useServerPrefs();
@@ -347,7 +349,7 @@ export function PersonalityPage(props) {
             fluid
             placeholder="Search..."
             value={searchQuery}
-            onInput={(e) => setSearchQuery(e.currentTarget.value)}
+            onChange={(v) => setSearchQuery(v)}
           />
         </Stack.Item>
         <Stack.Item grow>

@@ -1562,4 +1562,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that allows an item to perform holy rites akin to a nullrod
 #define TRAIT_NULLROD_ITEM "nullrod_item"
 
+/// Mob gets far less severe negative moodlets from seeing death / blood
+#define TRAIT_DESENSITIZED "desensitized"
+
 // END TRAIT DEFINES
