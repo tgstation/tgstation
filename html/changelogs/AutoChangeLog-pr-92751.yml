@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Restricts paramedic access down to their current medical access and maintenance tunnel access. They retain their expanded access on lowpop."

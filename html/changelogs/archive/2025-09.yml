@@ -98,3 +98,24 @@
       pulling
   subject217:
   - spellcheck: fixed a typo in the admin message about achievements cleanup
+2025-09-05:
+  Ezel:
+  - bugfix: fixes kitchen plumbing not being connected to any water source
+  - map: Adds and expands plumbing systems around metastation
+  - map: Increased the dorms bathroom a little bit
+  SmArtKar:
+  - bugfix: Fixed constant runtimes and broken APC processing behavior on emagged
+      APCs
+  Y0SH1M4S73R:
+  - rscadd: B.O.R.I.S.es can be installed inside of integrated circuits with MMI components,
+      allowing an AI to remotely interface with them the same way an MMI or posibrain
+      could.
+  - refactor: The MMI component now uses item interaction behavior for inserting MMIs/B.O.R.I.S.es.
+  kittysmooch:
+  - image: 'modified old sprites for burritos, some tacos, chimichangas, chips and
+      salsa, and spanish rice.
+
+      :cl:'
+  necromanceranne:
+  - balance: Restricts paramedic access down to their current medical access and maintenance
+      tunnel access. They retain their expanded access on lowpop.
