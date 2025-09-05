@@ -93,7 +93,7 @@
 		push_over()
 
 /obj/item/cardboard_cutout/atom_deconstruct(disassembled)
-	new /obj/item/stack/sheet/cardboard(loc, 1)
+	new /obj/item/stack/sheet/cardboard(loc)
 
 /proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
 	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")

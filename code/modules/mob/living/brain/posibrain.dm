@@ -162,6 +162,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		to_chat(brainmob, policy)
 	brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
 	brainmob.set_stat(CONSCIOUS)
+	brainmob.grant_language(/datum/language/machine, source = LANGUAGE_ATOM)
 
 	visible_message(new_mob_message)
 	check_success()

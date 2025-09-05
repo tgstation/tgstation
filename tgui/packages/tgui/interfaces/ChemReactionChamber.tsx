@@ -13,7 +13,7 @@ import { round, toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { MixingData, Reagent } from './ChemMixingChamber';
+import type { MixingData, Reagent } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {
   ph: number;
@@ -39,7 +39,7 @@ export const ChemReactionChamber = (props) => {
   const reagents = data.reagents || [];
   const catalysts = data.catalysts || [];
   return (
-    <Window width={290} height={520}>
+    <Window width={290} height={570}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -76,7 +76,7 @@ export const ChemReactionChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        format={(value) => `${toFixed(value)} K`}
                       />
                     </Stack.Item>
                     <Stack.Item grow>
@@ -132,9 +132,8 @@ export const ChemReactionChamber = (props) => {
           <Stack.Item grow>
             <Section
               title="Settings"
-              height="220px"
-              maxHeight="220px"
-              overflow="hidden"
+              fill
+              scrollable
               buttons={
                 (isReacting && (
                   <Box inline bold color={'purple'}>
@@ -223,7 +222,7 @@ export const ChemReactionChamber = (props) => {
                       <Stack.Item key={reagent.name}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ':'}
+                            {`${reagent.name}:`}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.volume}
@@ -265,20 +264,15 @@ export const ChemReactionChamber = (props) => {
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item>
-            <Section
-              title="Catalysts"
-              height="150px"
-              maxHeight="150px"
-              overflow="hidden"
-            >
+          <Stack.Item grow={0.7}>
+            <Section title="Catalysts" fill scrollable>
               <Stack.Item>
                 <Stack vertical fill>
                   {catalysts.map((reagent) => (
                     <Stack.Item key={reagent.name}>
                       <Stack fill>
                         <Stack.Item mt={0.25} textColor="label">
-                          {reagent.name + ':'}
+                          {`${reagent.name}:`}
                         </Stack.Item>
                         <Stack.Item mt={0.25} grow>
                           {reagent.volume}

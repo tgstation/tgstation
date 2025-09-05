@@ -63,6 +63,9 @@
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/stack/wrapping_paper/xmas"
+	post_init_icon_state = "wrap_paper"
 	greyscale_colors = "#00FF00#FF0000"
 
 /obj/item/stack/wrapping_paper/use(used, transfer, check = TRUE)
@@ -162,6 +165,8 @@
 			return ITEM_INTERACT_BLOCKING
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(closet.loc))
+			var/mob/being_pulled_by = closet.pulledby
+			being_pulled_by?.start_pulling(parcel)
 			parcel.base_icon_state = closet.delivery_icon
 			parcel.update_icon()
 			parcel.drag_slowdown = closet.drag_slowdown

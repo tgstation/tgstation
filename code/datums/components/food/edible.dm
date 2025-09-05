@@ -76,10 +76,12 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
-	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, PROC_REF(OnCraft))
+	RegisterSignal(parent, COMSIG_ATOM_ON_CRAFT, PROC_REF(OnCraft))
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, PROC_REF(on_ooze_eat))
 	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(created_by_processing))
+	RegisterSignal(parent, COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS, PROC_REF(on_material_effects))
+	RegisterSignal(parent, COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS, PROC_REF(on_remove_material_effects))
 
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
@@ -105,7 +107,7 @@ Behavior that's still missing from this component that original food items had t
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ATOM_CHECKPARTS,
+		COMSIG_ATOM_ON_CRAFT,
 		COMSIG_ATOM_CREATEDBY_PROCESSING,
 		COMSIG_ATOM_ENTERED,
 		COMSIG_FOOD_INGREDIENT_ADDED,
@@ -325,7 +327,7 @@ Behavior that's still missing from this component that original food items had t
 	var/volume = ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT])
 
 	this_food.create_reagents(volume, this_food.reagents?.flags)
-	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], 1)
+	original_atom.reagents.trans_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], copy_only = TRUE)
 
 	if(original_atom.name != initial(original_atom.name))
 		this_food.name = "slice of [original_atom.name]"
@@ -333,11 +335,11 @@ Behavior that's still missing from this component that original food items had t
 		this_food.desc = "[original_atom.desc]"
 
 ///Called when food is crafted through a crafting recipe datum.
-/datum/component/edible/proc/OnCraft(datum/source, list/parts_list, datum/crafting_recipe/food/recipe)
+/datum/component/edible/proc/OnCraft(datum/source, list/components, datum/crafting_recipe/food/recipe)
 	SIGNAL_HANDLER
 
 	var/atom/this_food = parent
-	for(var/obj/item/food/crafted_part in parts_list)
+	for(var/obj/item/food/crafted_part in components)
 		if(!crafted_part.reagents)
 			continue
 		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume
@@ -742,4 +744,19 @@ Behavior that's still missing from this component that original food items had t
 		qdel(food)
 		return COMPONENT_ATOM_EATEN
 
+#define REQUIRED_MAT_FLAGS (MATERIAL_EFFECTS|MATERIAL_NO_EDIBILITY)
+
+///Calls on_edible_applied() for the main material composing the atom parent
+/datum/component/edible/proc/on_material_effects(atom/source, list/materials, datum/material/main_material)
+	SIGNAL_HANDLER
+	if((source.material_flags & REQUIRED_MAT_FLAGS) == REQUIRED_MAT_FLAGS)
+		main_material.on_edible_applied(source, src)
+
+///Calls on_edible_removed() for the main material no longer composing the atom parent
+/datum/component/edible/proc/on_remove_material_effects(atom/source, list/materials, datum/material/main_material)
+	SIGNAL_HANDLER
+	if((source.material_flags & REQUIRED_MAT_FLAGS) == REQUIRED_MAT_FLAGS)
+		main_material.on_edible_removed(source, src)
+
+#undef REQUIRED_MAT_FLAGS
 #undef DEFAULT_EDIBLE_VOLUME

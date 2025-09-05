@@ -125,7 +125,7 @@
 		def_zone = def_zone,
 		blocked = min(ARMOR_MAX_BLOCK, armor_check),  //cap damage reduction at 90%
 		wound_bonus = proj.wound_bonus,
-		bare_wound_bonus = proj.bare_wound_bonus,
+		exposed_wound_bonus = proj.exposed_wound_bonus,
 		sharpness = proj.sharpness,
 		attack_direction = get_dir(proj.starting, src),
 		attacking_item = proj,
@@ -219,7 +219,7 @@
 		return ..()
 
 	var/obj/item/thrown_item = AM
-	if(throwingdatum.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
+	if(throwingdatum?.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
 		if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
 			hitpush = FALSE
 			skipcatch = TRUE
@@ -235,13 +235,13 @@
 		return SUCCESSFUL_BLOCK
 
 	if(nosell_hit)
-		log_hit_combat(throwingdatum.get_thrower(), thrown_item)
+		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return ..()
 
 	visible_message(span_danger("[src] is hit by [thrown_item]!"),
 		span_userdanger("You're hit by [thrown_item]!"))
 	if(!thrown_item.throwforce)
-		log_hit_combat(throwingdatum.get_thrower(), thrown_item)
+		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return
 
 	var/armor = run_armor_check(
@@ -255,7 +255,7 @@
 		thrown_item.weak_against_armour,
 	)
 	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND), attacking_item = thrown_item)
-	log_hit_combat(throwingdatum.get_thrower(), thrown_item)
+	log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
@@ -268,9 +268,6 @@
 	if(thrown_by)
 		return log_combat(thrown_by, src, "threw and hit", thrown_item)
 	return log_combat(thrown_item, src, "hit ")
-
-/mob/living/proc/create_splatter(splatter_dir)
-	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir)
 
 ///The core of catching thrown items, which non-carbons cannot without the help of items or abilities yet, as they've no throw mode.
 /mob/living/proc/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
@@ -440,7 +437,7 @@
 		def_zone = user.zone_selected,
 		blocked = armor_block,
 		wound_bonus = user.wound_bonus,
-		bare_wound_bonus = user.bare_wound_bonus,
+		exposed_wound_bonus = user.exposed_wound_bonus,
 		sharpness = user.sharpness,
 		attack_direction = get_dir(user, src),
 	)
@@ -575,6 +572,9 @@
 		return FALSE
 	if(!(flags & SHOCK_ILLUSION))
 		adjustFireLoss(shock_damage)
+		if(getFireLoss() > 100)
+			add_shared_particles(/particles/smoke/burning)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), /particles/smoke/burning), 10 SECONDS)
 	else
 		adjustStaminaLoss(shock_damage)
 	if(!(flags & SHOCK_SUPPRESS_MESSAGE))

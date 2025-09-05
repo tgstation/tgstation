@@ -20,4 +20,4 @@ If they have been, the cutter will perform a full runthrough, and compile all in
 
 These dmis can then be committed, and badabing badaboom we have autocut sprites.
 
-If you want to change the cutter version we have a set of  config values in [dependancies.sh](../../dependencies.sh) that control it.
+If you want to change the cutter version we have a set of config values in [dependancies.sh](../../dependencies.sh) that control it.

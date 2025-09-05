@@ -26,6 +26,7 @@
 	lighting_cutoff_blue = 20
 	ai_controller = /datum/ai_controller/basic_controller/vatbeast
 	faction = list(FACTION_HOSTILE)
+	blood_volume = BLOOD_VOLUME_NORMAL
 	/// What can you feed a vatbeast to tame it?
 	var/static/list/enjoyed_food = list(
 		/obj/item/food/carrotfries,
@@ -55,6 +56,9 @@
 
 /mob/living/basic/vatbeast/proc/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/basic/vatbeast/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_LIZARD) // Green and alien
 
 /// Attack people and slap them
 /datum/ai_controller/basic_controller/vatbeast

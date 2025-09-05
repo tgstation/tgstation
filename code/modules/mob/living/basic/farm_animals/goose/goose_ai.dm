@@ -7,11 +7,12 @@
 		BB_EAT_EMOTES = list()
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/goose
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/goose,
 		/datum/ai_planning_subtree/capricious_retaliate,
 		/datum/ai_planning_subtree/target_retaliate,

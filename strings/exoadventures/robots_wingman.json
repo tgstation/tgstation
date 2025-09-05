@@ -6,12 +6,8 @@
 	"starting_qualities": {
 		"Love": 3
 	},
-	"required_site_traits": [
-		"in space"
-	],
-	"loot_categories": [
-		"trade_contract"
-	],
+	"required_site_traits": ["in space"],
+	"loot_categories": ["trade_contract"],
 	"scan_band_mods": {
 		"Narrow-band radio waves": 2
 	},

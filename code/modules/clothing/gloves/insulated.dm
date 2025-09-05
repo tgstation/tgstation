@@ -81,11 +81,15 @@
 /obj/item/clothing/gloves/color/yellow/sprayon/proc/use_charge()
 	SIGNAL_HANDLER
 
+	. = NONE
+
 	charges_remaining--
 	if(charges_remaining <= 0)
 		var/turf/location = get_turf(src)
 		location.visible_message(span_warning("[src] crumble[p_s()] away into nothing.")) // just like my dreams after working with .dm
 		qdel(src)
+
+	. |= COMPONENT_CLEANED
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."

@@ -16,7 +16,7 @@
 	flags_cover = HEADCOVERSEYES
 	heat = 999
 	wound_bonus = 10
-	bare_wound_bonus = 5
+	exposed_wound_bonus = 5
 	dog_fashion = /datum/dog_fashion/head
 	hitsound = 'sound/items/weapons/tap.ogg'
 	var/hitsound_on = 'sound/items/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat

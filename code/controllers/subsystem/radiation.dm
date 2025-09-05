@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(radiation)
 		processing.Cut(1, 2)
 
 /datum/controller/subsystem/radiation/stat_entry(msg)
-	msg = "[msg] | Pulses: [processing.len]"
+	msg = "Pulses:[processing.len]"
 	return ..()
 
 /datum/controller/subsystem/radiation/proc/pulse(atom/source, datum/radiation_pulse_information/pulse_information)

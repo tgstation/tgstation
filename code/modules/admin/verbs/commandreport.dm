@@ -6,6 +6,7 @@
 #define SYNDICATE_PRESET "The Syndicate"
 #define WIZARD_PRESET "The Wizard Federation"
 #define CUSTOM_PRESET "Custom Command Name"
+#define CUSTOM_SOUND_PRESET "Custom Sound"
 
 ADMIN_VERB(change_command_name, R_ADMIN, "Change Command Name", "Change the name of Central Command.", ADMIN_CATEGORY_EVENTS)
 	var/input = input(user, "Please input a new name for Central Command.", "What?", "") as text|null
@@ -78,7 +79,7 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 /datum/command_report_menu/ui_static_data(mob/user)
 	var/list/data = list()
 	data["command_name_presets"] = preset_names
-	data["announcer_sounds"] = list(DEFAULT_ANNOUNCEMENT_SOUND) + GLOB.announcer_keys
+	data["announcer_sounds"] = list(DEFAULT_ANNOUNCEMENT_SOUND) + GLOB.announcer_keys + CUSTOM_SOUND_PRESET
 	data["announcement_colors"] = ANNOUNCEMENT_COLORS
 
 	return data
@@ -97,7 +98,20 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 
 			command_name = params["updated_name"]
 		if("set_report_sound")
-			played_sound = params["picked_sound"]
+			if(params["picked_sound"] == CUSTOM_SOUND_PRESET)
+				played_sound = DEFAULT_ANNOUNCEMENT_SOUND // fallback by default
+				var/sound_file = input(ui_user, "Select sound file (OGG, WAV, MP3)", "Upload sound") as file|null
+				if(!sound_file)
+					tgui_alert(ui_user, "The custom sound could not be loaded. The standard sound will be played.", "Loading error", list("Ok"))
+					return
+
+				if(!(copytext("[sound_file]", -4) in list(".ogg", ".wav", ".mp3")))
+					tgui_alert(ui_user, "Invalid file type. Please select an OGG, WAV, or MP3 file.", "Loading error", list("Ok"))
+					return
+
+				played_sound = sound_file
+			else
+				played_sound = params["picked_sound"]
 		if("toggle_announce")
 			announce_contents = !announce_contents
 		if("toggle_printing")
@@ -163,3 +177,4 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 #undef SYNDICATE_PRESET
 #undef WIZARD_PRESET
 #undef CUSTOM_PRESET
+#undef CUSTOM_SOUND_PRESET

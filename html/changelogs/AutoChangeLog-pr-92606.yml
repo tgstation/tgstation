@@ -1,0 +1,6 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - bugfix: "fixes kitchen plumbing not being connected to any water source"
+  - map: "Adds and expands plumbing systems around metastation"
+  - map: "Increased the dorms bathroom a little bit"

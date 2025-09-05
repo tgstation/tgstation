@@ -220,9 +220,9 @@
 	. = ..()
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
-	var/mob/living/basic/legion_brood/minion = new (user.loc)
+	var/mob/living/basic/mining/legion_brood/minion = new (user.loc)
 	minion.assign_creator(user)
-	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
+	minion.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))
@@ -234,14 +234,14 @@
 		return
 	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
 
-	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
+	var/mob/living/basic/mining/legion_brood/minion = new (LivingUser.loc)
 	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
 
 //The Thing
 /obj/item/crusher_trophy/flesh_glob
 	name = "glob of shifting flesh"
-	desc = "A glob of shifting flesh. Sealed shut permanently. Suitable as a trophy for a kinetic crusher."
+	desc = "A glob of shifting flesh, sealed shut permanently. Suitable as a trophy for a kinetic crusher."
 	icon_state = "glob"
 	denied_type = /obj/item/crusher_trophy/flesh_glob
 	bonus_value = 20

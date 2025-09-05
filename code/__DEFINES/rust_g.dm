@@ -138,6 +138,36 @@
  */
 #define rustg_dmi_icon_states(fname) RUSTG_CALL(RUST_G, "dmi_icon_states")(fname)
 
+/**
+ * The below functions involve dmi metadata represented in the following format:
+ * list(
+ *     "width": number,
+ *     "height": number,
+ *     "states": list([STATE_DATA], ...)
+ * )
+ *
+ * STATE_DATA format:
+ * list(
+ *     "name": string,
+ *     "dirs": 1 | 4 | 8,
+ *     "delays"?: list(number, ...),
+ *     "rewind"?: TRUE | FALSE,
+ *     "movement"?: TRUE | FALSE,
+ *     "loop"?: number
+ * )
+ */
+
+/**
+ * Get the dmi metadata of the file located at `fname`.
+ * Returns a list in the metadata format listed above, or an error message.
+ */
+#define rustg_dmi_read_metadata(fname) json_decode(RUSTG_CALL(RUST_G, "dmi_read_metadata")(fname))
+/**
+ * Inject dmi metadata into a png file located at `path`.
+ * `metadata` must be a json_encode'd list in the metadata format listed above.
+ */
+#define rustg_dmi_inject_metadata(path, metadata) RUSTG_CALL(RUST_G, "dmi_inject_metadata")(path, metadata)
+
 #define rustg_file_read(fname) RUSTG_CALL(RUST_G, "file_read")(fname)
 #define rustg_file_exists(fname) (RUSTG_CALL(RUST_G, "file_exists")(fname) == "true")
 #define rustg_file_write(text, fname) RUSTG_CALL(RUST_G, "file_write")(text, fname)
@@ -198,13 +228,21 @@
 #define rustg_http_request_blocking(method, url, body, headers, options) RUSTG_CALL(RUST_G, "http_request_blocking")(method, url, body, headers, options)
 #define rustg_http_request_async(method, url, body, headers, options) RUSTG_CALL(RUST_G, "http_request_async")(method, url, body, headers, options)
 #define rustg_http_check_request(req_id) RUSTG_CALL(RUST_G, "http_check_request")(req_id)
+/// This is basically just `rustg_http_request_async` if you don't care about the response.
+/// This will either return "ok" or an error, as this does not create a job.
+#define rustg_http_request_fire_and_forget(method, url, body, headers, options) RUSTG_CALL(RUST_G, "http_request_fire_and_forget")(method, url, body, headers, options)
 
-/// Generates a spritesheet at: [file_path][spritesheet_name]_[size_id].png
+/// Generates a spritesheet at: [file_path][spritesheet_name]_[size_id].[png or dmi]
 /// The resulting spritesheet arranges icons in a random order, with the position being denoted in the "sprites" return value.
 /// All icons have the same y coordinate, and their x coordinate is equal to `icon_width * position`.
 ///
 /// hash_icons is a boolean (0 or 1), and determines if the generator will spend time creating hashes for the output field dmi_hashes.
-/// These hashes can be heplful for 'smart' caching (see rustg_iconforge_cache_valid), but require extra computation.
+/// These hashes can be helpful for 'smart' caching (see rustg_iconforge_cache_valid), but require extra computation.
+///
+/// generate_dmi is a boolean (0 or 1), and determines if the generator will save the sheet as a DMI or stripped PNG file.
+/// DMI files can be used to replace bulk Insert() operations, PNGs are more useful for asset transport or UIs. DMI generation is slower due to more metadata.
+/// flatten is a boolean (0 or 1), and determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir or frame values).
+/// PNGs are always flattened, regardless of argument.
 ///
 /// Spritesheet will contain all sprites listed within "sprites".
 /// "sprites" format:
@@ -220,9 +258,15 @@
 /// )
 /// TRANSFORM_OBJECT format:
 /// list("type" = RUSTG_ICONFORGE_BLEND_COLOR, "color" = "#ff0000", "blend_mode" = ICON_MULTIPLY)
-/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY)
+/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY, "x" = 1, "y" = 1) // offsets optional
 /// list("type" = RUSTG_ICONFORGE_SCALE, "width" = 32, "height" = 32)
 /// list("type" = RUSTG_ICONFORGE_CROP, "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // (BYOND icons index from 1,1 to the upper bound, inclusive)
+/// list("type" = RUSTG_ICONFORGE_MAP_COLORS, "rr" = 0.5, "rg" = 0.5, "rb" = 0.5, "ra" = 1, "gr" = 1, "gg" = 1, "gb" = 1, "ga" = 1, ...) // alpha arguments and rgba0 optional
+/// list("type" = RUSTG_ICONFORGE_FLIP, "dir" = SOUTH)
+/// list("type" = RUSTG_ICONFORGE_TURN, "angle" = 90.0)
+/// list("type" = RUSTG_ICONFORGE_SHIFT, "dir" = EAST, "offset" = 10, "wrap" = FALSE)
+/// list("type" = RUSTG_ICONFORGE_SWAP_COLOR, "src_color" = "#ff0000", "dst_color" = "#00ff00") // alpha bits supported
+/// list("type" = RUSTG_ICONFORGE_DRAW_BOX, "color" = "#ff0000", "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // alpha bits supported. color can be null/omitted for transparency. x2 and y2 will default to x1 and y1 if omitted
 ///
 /// Returns a SpritesheetResult as JSON, containing fields:
 /// list(
@@ -233,9 +277,9 @@
 ///     "error" = "[A string, empty if there were no errors.]"
 /// )
 /// In the case of an unrecoverable panic from within Rust, this function ONLY returns a string containing the error.
-#define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]")
+#define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Returns a job_id for use with rustg_iconforge_check()
-#define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]")
+#define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Returns the status of an async job_id, or its result if it is completed. See RUSTG_JOB DEFINEs.
 #define rustg_iconforge_check(job_id) RUSTG_CALL(RUST_G, "iconforge_check")("[job_id]")
 /// Clears all cached DMIs and images, freeing up memory.
@@ -256,7 +300,7 @@
 /// Provided a /datum/greyscale_config typepath, JSON string containing the greyscale config, and path to a DMI file containing the base icons,
 /// Loads that config into memory for later use by rustg_iconforge_gags(). The config_path is the unique identifier used later.
 /// JSON Config schema: https://hackmd.io/@tgstation/GAGS-Layer-Types
-/// Unsupported features: color_matrix layer type, 'or' blend_mode. May not have BYOND parity with animated icons or varying dirs between layers.
+/// Adding dirs or frames (via blending larger icons) to icons with more than 1 dir or 1 frame is not supported.
 /// Returns "OK" if successful, otherwise, returns a string containing the error.
 #define rustg_iconforge_load_gags_config(config_path, config_json, config_icon_path) RUSTG_CALL(RUST_G, "iconforge_load_gags_config")("[config_path]", config_json, config_icon_path)
 /// Given a config_path (previously loaded by rustg_iconforge_load_gags_config), and a string of hex colors formatted as "#ff00ff#ffaa00"
@@ -272,6 +316,12 @@
 #define RUSTG_ICONFORGE_BLEND_ICON "BlendIcon"
 #define RUSTG_ICONFORGE_CROP "Crop"
 #define RUSTG_ICONFORGE_SCALE "Scale"
+#define RUSTG_ICONFORGE_MAP_COLORS "MapColors"
+#define RUSTG_ICONFORGE_FLIP "Flip"
+#define RUSTG_ICONFORGE_TURN "Turn"
+#define RUSTG_ICONFORGE_SHIFT "Shift"
+#define RUSTG_ICONFORGE_SWAP_COLOR "SwapColor"
+#define RUSTG_ICONFORGE_DRAW_BOX "DrawBox"
 
 #define RUSTG_JOB_NO_RESULTS_YET "NO RESULTS YET"
 #define RUSTG_JOB_NO_SUCH_JOB "NO SUCH JOB"
@@ -297,6 +347,39 @@
  * 	a width*length length string of 1s and 0s representing a 2D poisson sample collapsed into a 1D string
  */
 #define rustg_noise_poisson_map(seed, width, length, radius) RUSTG_CALL(RUST_G, "noise_poisson_map")(seed, width, length, radius)
+
+/**
+ * Register a list of nodes into a rust library. This list of nodes must have been serialized in a json.
+ * Node {// Index of this node in the list of nodes
+ *  	  unique_id: usize,
+ *  	  // Position of the node in byond
+ *  	  x: usize,
+ *  	  y: usize,
+ *  	  z: usize,
+ *  	  // Indexes of nodes connected to this one
+ *  	  connected_nodes_id: Vec<usize>}
+ * It is important that the node with the unique_id 0 is the first in the json, unique_id 1 right after that, etc.
+ * It is also important that all unique ids follow. {0, 1, 2, 4} is not a correct list and the registering will fail
+ * Nodes should not link across z levels.
+ * A node cannot link twice to the same node and shouldn't link itself either
+ */
+#define rustg_register_nodes_astar(json) RUSTG_CALL(RUST_G, "register_nodes_astar")(json)
+
+/**
+ * Add a new node to the static list of nodes. Same rule as registering_nodes applies.
+ * This node unique_id must be equal to the current length of the static list of nodes
+ */
+#define rustg_add_node_astar(json) RUSTG_CALL(RUST_G, "add_node_astar")(json)
+
+/**
+ * Remove every link to the node with unique_id. Replace that node by null
+ */
+#define rustg_remove_node_astar(unique_id) RUSTG_CALL(RUST_G, "remove_node_astar")("[unique_id]")
+
+/**
+ * Compute the shortest path between start_node and goal_node using A*. Heuristic used is simple geometric distance
+ */
+#define rustg_generate_path_astar(start_node_id, goal_node_id) RUSTG_CALL(RUST_G, "generate_path_astar")("[start_node_id]", "[goal_node_id]")
 
 /*
  * Takes in a string and json_encode()"d lists to produce a sanitized string.
@@ -362,8 +445,17 @@
 #define rustg_time_milliseconds(id) text2num(RUSTG_CALL(RUST_G, "time_milliseconds")(id))
 #define rustg_time_reset(id) RUSTG_CALL(RUST_G, "time_reset")(id)
 
+/// Returns the current timestamp (in local time), formatted with the given format string.
+/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
+#define rustg_formatted_timestamp(format) RUSTG_CALL(RUST_G, "formatted_timestamp")(format)
+
+/// Returns the current timestamp (with the given UTC offset in hours), formatted with the given format string.
+/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
+#define rustg_formatted_timestamp_tz(format, offset) RUSTG_CALL(RUST_G, "formatted_timestamp")(format, offset)
+
 /// Returns the timestamp as a string
-#define rustg_unix_timestamp(...) (RUSTG_CALL(RUST_G, "unix_timestamp")())
+/proc/rustg_unix_timestamp()
+	return RUSTG_CALL(RUST_G, "unix_timestamp")()
 
 #define rustg_raw_read_toml_file(path) json_decode(RUSTG_CALL(RUST_G, "toml_file_to_json")(path) || "null")
 
@@ -391,10 +483,3 @@
 	#define url_decode(text) rustg_url_decode(text)
 #endif
 
-/// Returns the current timestamp (in local time), formatted with the given format string.
-/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
-#define rustg_formatted_timestamp(format) RUSTG_CALL(RUST_G, "formatted_timestamp")(format)
-
-/// Returns the current timestamp (with the given UTC offset in hours), formatted with the given format string.
-/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
-#define rustg_formatted_timestamp_tz(format, offset) RUSTG_CALL(RUST_G, "formatted_timestamp")(format, offset)

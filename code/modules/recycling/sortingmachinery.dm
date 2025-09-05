@@ -36,7 +36,7 @@
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
 		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
-		new /obj/item/stack/package_wrap(turf_loc, 1)
+		new /obj/item/stack/package_wrap(turf_loc)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 
@@ -73,22 +73,22 @@
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag
 
-/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/object)
+/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/container)
 	if(ismovable(loc))
 		var/atom/movable/movable_loc = loc //can't unwrap the wrapped container if it's inside something.
-		movable_loc.relay_container_resist_act(user, object)
+		movable_loc.relay_container_resist_act(user, container)
 		return
-	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 5 SECONDS, target = object))
-		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
+	to_chat(user, span_notice("You lean on the back of [container] and start pushing to rip the wrapping around it."))
+	if(do_after(user, 5 SECONDS, target = container))
+		if(!user || user.stat != CONSCIOUS || user.loc != container || container.loc != src)
 			return
-		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))
-		object.forceMove(loc)
+		to_chat(user, span_notice("You successfully removed [container]'s wrapping!"))
+		container.forceMove(loc)
 		unwrap_contents()
 		post_unwrap_contents(user)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, span_warning("You fail to remove [object]'s wrapping!"))
+			to_chat(user, span_warning("You fail to remove [container]'s wrapping!"))
 
 /obj/item/delivery/update_icon_state()
 	. = ..()

@@ -7,12 +7,13 @@
 		/datum/action/cooldown/spell/charged/psychic_booster,
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
+	var/does_it_blind = FALSE
+	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
+	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker, blinding = does_it_blind)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
 /obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
@@ -31,6 +32,9 @@
 	owner.adjust_disgust(33 * seconds_per_tick)
 	apply_organ_damage(5 * seconds_per_tick, 199)
 
+/obj/item/organ/brain/psyker/blinding
+	does_it_blind = TRUE
+
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
@@ -38,18 +42,8 @@
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
 	head_flags = HEAD_DEBRAIN
 
-/obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, lazy)
-	. = ..()
-	if(!.)
-		return
-	new_head_owner.become_blind(bodypart_trait_source)
-
-/obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
-	owner.cure_blind(bodypart_trait_source)
-	return ..()
-
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
-/mob/living/carbon/human/proc/slow_psykerize()
+/mob/living/carbon/human/proc/slow_psykerize(blind_them = FALSE)
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD) || istype(get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
 		return
 	to_chat(src, span_userdanger("You feel unwell..."))
@@ -60,7 +54,7 @@
 	emote("scream")
 	apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	sleep(5 SECONDS)
-	if(!psykerize())
+	if(!psykerize(is_blinding = blind_them))
 		to_chat(src, span_warning("The transformation subsides..."))
 		return
 	apply_damage(50, BRUTE, BODY_ZONE_HEAD)
@@ -69,7 +63,7 @@
 	emote("scream")
 
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
-/mob/living/carbon/human/proc/psykerize()
+/mob/living/carbon/human/proc/psykerize(is_blinding = FALSE)
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/organ/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -79,12 +73,15 @@
 	if(!psyker_head.replace_limb(src, special = TRUE))
 		return FALSE
 	qdel(old_head)
-	var/obj/item/organ/brain/psyker/psyker_brain = new()
+	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
+	if(is_blinding)
+		var/obj/item/organ/brain/psyker/blinding/dummy = new()
+		psyker_brain = dummy
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-	if(old_eyes)
+	if(old_eyes && is_blinding)
 		qdel(old_eyes)
 	return TRUE
 
@@ -103,15 +100,16 @@
 	if(!burden || burden.burden_level < 9)
 		to_chat(human_user, span_warning("You aren't burdened enough."))
 		return FALSE
-	for(var/obj/item/nullrod/null_rod in get_turf(religious_tool))
-		transformation_target = null_rod
-		return ..()
+	for(var/obj/item/possible_rod in get_turf(religious_tool))
+		if(HAS_TRAIT(possible_rod, TRAIT_NULLROD_ITEM))
+			transformation_target = possible_rod
+			return ..()
 	to_chat(human_user, span_warning("You need to place a null rod on [religious_tool] to do this!"))
 	return FALSE
 
 /datum/religion_rites/nullrod_transformation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/nullrod/null_rod = transformation_target
+	var/obj/item/null_rod = transformation_target
 	transformation_target = null
 	if(QDELETED(null_rod) || null_rod.loc != get_turf(religious_tool))
 		to_chat(user, span_warning("Your target left the altar!"))
@@ -182,7 +180,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25)
 	name = pick(possible_names)
 	desc = possible_names[name]
 

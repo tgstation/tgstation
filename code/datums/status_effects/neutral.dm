@@ -23,7 +23,7 @@
 	def_zone,
 	blocked,
 	wound_bonus,
-	bare_wound_bonus,
+	exposed_wound_bonus,
 	sharpness,
 	attack_direction,
 	attacking_item,

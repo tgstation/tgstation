@@ -10,7 +10,7 @@
 			continue
 		wearable_item_paths |= item_path
 
-	for(var/obj/item/clothing/clothing_path in (subtypesof(/obj/item/clothing) - typesof(/obj/item/clothing/head/mob_holder) - typesof(/obj/item/clothing/suit/space/santa))) //mob_holder is a psuedo abstract item. santa suit is a VERY SNOWFLAKE admin spawn suit that can hold /every/ possible item.
+	for(var/obj/item/clothing/clothing_path in (subtypesof(/obj/item/clothing) - typesof(/obj/item/clothing/suit/space/santa))) //santa suit is a VERY SNOWFLAKE admin spawn suit that can hold /every/ possible item.
 		for(var/path in clothing_path::allowed) //find all usable suit storage stuff.
 			wearable_item_paths |= path
 

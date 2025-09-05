@@ -111,16 +111,16 @@
 		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
+		context[SCREENTIP_CONTEXT_RMB] = "Empty nutrients"
+
 		switch(plant_status)
 			if(HYDROTRAY_PLANT_DEAD)
 				context[SCREENTIP_CONTEXT_LMB] = "Remove dead plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
 			if(HYDROTRAY_PLANT_HARVESTABLE)
 				context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
-		return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
 	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
@@ -214,9 +214,9 @@
 	. = ..()
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
-	if(!istype(gone, /obj/item/clothing/head/mob_holder/snail))
+	if(!istype(gone, /obj/item/mob_holder/snail))
 		return
-	var/obj/item/clothing/head/mob_holder/snail_object = gone
+	var/obj/item/mob_holder/snail_object = gone
 	if(snail_object.held_mob)
 		UnregisterSignal(snail_object.held_mob, list(
 			COMSIG_LIVING_DEATH,
@@ -508,27 +508,11 @@
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
 	if(myseed)
-		. += update_plant_overlay()
+		. += myseed.get_tray_overlay(age, plant_status)
 		. += update_status_light_overlays()
 
 	if(self_sustaining && self_sustaining_overlay_icon_state)
 		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
-
-/obj/machinery/hydroponics/proc/update_plant_overlay()
-	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
-	switch(plant_status)
-		if(HYDROTRAY_PLANT_DEAD)
-			plant_overlay.icon_state = myseed.icon_dead
-		if(HYDROTRAY_PLANT_HARVESTABLE)
-			if(!myseed.icon_harvest)
-				plant_overlay.icon_state = "[myseed.icon_grow][myseed.growthstages]"
-			else
-				plant_overlay.icon_state = myseed.icon_harvest
-		else
-			var/t_growthstate = clamp(round((age / myseed.maturation) * myseed.growthstages), 1, myseed.growthstages)
-			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
-	plant_overlay.pixel_z = myseed.plant_icon_offset
-	return plant_overlay
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
@@ -1047,9 +1031,6 @@
 				set_seed(null)
 			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
 			return
-	else if(istype(O, /obj/item/storage/part_replacer))
-		RefreshParts()
-		return
 	else if(istype(O, /obj/item/gun/energy/floragun))
 		var/obj/item/gun/energy/floragun/flowergun = O
 		if(flowergun.cell.charge < flowergun.cell.maxcharge)
@@ -1143,7 +1124,7 @@
 
 /obj/machinery/hydroponics/proc/empty_tray(mob/user)
 	reagents.clear_reagents()
-	for(var/obj/item/clothing/head/mob_holder/snail/possible_snail in contents)
+	for(var/obj/item/mob_holder/snail/possible_snail in contents)
 		possible_snail.forceMove(drop_location())
 	to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 
@@ -1224,6 +1205,12 @@
 /obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)
 
+/obj/machinery/hydroponics/soil/rich
+	name = "rich soil"
+	desc = "A rich patch of dirt, usually used in gardens."
+	icon_state = "rich_soil"
+	maxnutri = 20
+
 ///The usb port circuit
 
 /obj/item/circuit_component/hydroponics
@@ -1277,12 +1264,12 @@
 
 /obj/machinery/hydroponics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(!istype(arrived, /obj/item/clothing/head/mob_holder/snail))
+	if(!istype(arrived, /obj/item/mob_holder/snail))
 		return
 	our_snail = new
 	vis_contents += our_snail
 	our_snail.layer = layer + 0.01
-	var/obj/item/clothing/head/mob_holder/snail = arrived
+	var/obj/item/mob_holder/snail = arrived
 	RegisterSignals(snail.held_mob, list(COMSIG_MOVABLE_ATTEMPTED_MOVE, COMSIG_LIVING_DEATH), PROC_REF(remove_snail)) //rip
 
 

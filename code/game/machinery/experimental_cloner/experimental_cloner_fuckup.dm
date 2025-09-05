@@ -136,14 +136,14 @@
 		span_boldwarning("[victim]'s flesh slithers off in a disgusting heap!"),\
 		span_boldwarning("As you emerge from the pod, your skin slithers off onto the ground!"))
 	victim.set_species(/datum/species/skeleton)
-	new /obj/effect/gibspawner/human/bodypartless(victim.drop_location())
+	new /obj/effect/gibspawner/human/bodypartless(victim.drop_location(), victim)
 
 /// Become a psyker, possibly the worst fate on this list
 /datum/experimental_cloner_fuckup/psykerize
 	weight = CLONER_FAILURE_RARE
 
 /datum/experimental_cloner_fuckup/total_failure/post_emerged(mob/living/carbon/human/victim)
-	victim.slow_psykerize()
+	victim.slow_psykerize(blind_them = TRUE)
 
 /// Just fuck me up
 /datum/experimental_cloner_fuckup/total_failure

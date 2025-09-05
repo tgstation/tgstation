@@ -12,12 +12,12 @@
 /obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE) //For attaching parts to a finished mech
 	if(!user.transferItemToLoc(src, M))
 		to_chat(user, span_warning("\The [src] is stuck to your hand, you cannot put it in \the [M]!"))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mecha_parts/part/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mecha_parts/chassis
 	name = "Mecha Chassis"
@@ -251,10 +251,11 @@
 	name = "\improper Phazon chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
 
-/obj/item/mecha_parts/chassis/phazon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, /obj/item/assembly/signaler/anomaly/ectoplasm))
+/obj/item/mecha_parts/chassis/phazon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly/signaler/anomaly) && !istype(tool, /obj/item/assembly/signaler/anomaly/ectoplasm))
 		to_chat(user, "The anomaly core socket only accepts ectoplasm anomaly cores!")
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"
@@ -331,42 +332,6 @@
 	name="Savannah-Ivanov armor"
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "savannah_ivanov_armor"
-
-// Justice
-
-/obj/item/mecha_parts/chassis/justice
-	name = "\improper Justice chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/justice
-
-/obj/item/mecha_parts/part/justice_torso
-	name="\improper Justice torso"
-	desc="A Justice torso part."
-	icon_state = "justice_torso"
-
-/obj/item/mecha_parts/part/justice_left_arm
-	name="\improper Justice left arm"
-	desc="A Justice left arm."
-	icon_state = "justice_l_arm"
-
-/obj/item/mecha_parts/part/justice_right_arm
-	name="\improper Justice right arm"
-	desc="A Justice left arm."
-	icon_state = "justice_r_arm"
-
-/obj/item/mecha_parts/part/justice_left_leg
-	name="\improper Justice left leg"
-	desc="A Justice left leg."
-	icon_state = "justice_l_leg"
-
-/obj/item/mecha_parts/part/justice_right_leg
-	name="\improper Justice right leg"
-	desc="A Justice left leg."
-	icon_state = "justice_r_leg"
-
-/obj/item/mecha_parts/part/justice_armor
-	name="Justice armor"
-	desc="Justice armor plates."
-	icon_state = "justice_armor"
 
 ///////// Circuitboards
 

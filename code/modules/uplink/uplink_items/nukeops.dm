@@ -410,18 +410,18 @@
 // Explosives and Grenades
 // ~~ Grenades ~~
 
-/datum/uplink_item/explosives/grenades
+/datum/uplink_item/explosives/military_grade
 	cost = 15
 	surplus = 35
 	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
-/datum/uplink_item/explosives/grenades/buzzkill
+/datum/uplink_item/explosives/military_grade/buzzkill
 	name = "Buzzkill Grenade Box"
 	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
 		with random toxins. Courtesy of the BLF and Tiger Cooperative."
 	item = /obj/item/storage/box/syndie_kit/bee_grenades
 
-/datum/uplink_item/explosives/grenades/virus_grenade
+/datum/uplink_item/explosives/military_grade/virus_grenade
 	name = "Fungal Tuberculosis Grenade Box"
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
 		autoinjectors for rapid application on up to two targets each, a syringe, and a bottle containing \
@@ -429,11 +429,43 @@
 	item = /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	restricted = TRUE
 
-/datum/uplink_item/explosives/grenades/viscerators
+/datum/uplink_item/explosives/military_grade/viscerators
 	name = "Viscerator Delivery Grenade Box"
 	desc = "A box containing unique grenades that deploys a swarm of viscerators upon activation, which will chase down and shred \
 		any non-operatives in the area."
 	item = /obj/item/storage/box/syndie_kit/manhack_grenades
+
+/datum/uplink_item/explosives/military_grade/frag_grenade
+	name = "Frag Grenade Box"
+	desc = "A box containing 7 frag grenades. Simple. Destructive."
+	item = /obj/item/storage/box/syndie_kit/frag_grenades
+	cost = 5
+	purchasable_from = UPLINK_SERIOUS_OPS
+
+/datum/uplink_item/explosives/military_grade/x4
+	name = "Composition X-4"
+	desc = "Similar to C4, but with a stronger blast that is directional instead of circular. X-4 can be placed on a solid surface, such as a wall or window, \
+		and it will blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a controlled explosion that \
+		leaves a wider, deeper, hole."
+	item = /obj/item/grenade/c4/x4
+	cost = 2
+
+/datum/uplink_item/explosives/military_grade/syndicate_minibomb
+	name = "Syndicate Minibomb"
+	desc = "The minibomb is a grenade with a five-second fuse. Upon detonation, it will create a small hull breach \
+			in addition to dealing high amounts of damage to nearby personnel."
+	item = /obj/item/grenade/syndieminibomb
+	cost = 2
+	purchasable_from = UPLINK_SERIOUS_OPS
+
+/datum/uplink_item/explosives/military_grade/pizza_bomb
+	name = "Pizza Bomb"
+	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
+			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!\
+			Cybersun Industries would like to remind you that eating pizza in the middle of a delicate infiltration operation is not recommened, \
+			and that there are no guarantees that the pizza is safe from any explosive contaminants."
+	item = /obj/item/pizzabox/bomb
+	cost = 2
 
 // ~~ Grenadier's Belt Kit ~~
 
@@ -445,7 +477,7 @@
 
 // ~~ Detonator: In case you lose the old one ~~
 
-/datum/uplink_item/explosives/syndicate_detonator
+/datum/uplink_item/explosives/military_grade/syndicate_detonator
 	name = "Syndicate Detonator"
 	desc = "The Syndicate detonator is a companion device to the Syndicate bomb. Simply press the included button \
 		and an encrypted radio frequency will instruct all live Syndicate bombs to detonate. \
@@ -453,7 +485,44 @@
 		the blast radius before using the detonator."
 	item = /obj/item/syndicatedetonator
 	cost = 1
-	purchasable_from = UPLINK_ALL_SYNDIE_OPS
+
+/datum/uplink_item/explosives/military_grade/c4bag
+	name = "Bag of C-4 explosives"
+	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
+	item = /obj/item/storage/backpack/duffelbag/syndie/c4
+	cost = 5 // 50% discount!
+
+/datum/uplink_item/explosives/military_grade/x4bag
+	name = "Bag of X-4 explosives"
+	desc = "For when you didn't bring the bunker buster to your latest operation. Contains 10 X-4 shaped plastic explosives."
+	item = /obj/item/storage/backpack/duffelbag/syndie/x4
+	cost = 10 // 50% discount!
+
+/datum/uplink_item/explosives/military_grade/syndicate_bomb
+	name = "Syndicate Bomb"
+	desc = "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
+		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so. \
+		The bomb core can be pried out and manually detonated with other explosives."
+	item = /obj/item/sbeacondrop/bomb
+	cost = 8
+
+/datum/uplink_item/explosives/military_grade/syndicate_bomb/New()
+	. = ..()
+	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
+
+/datum/uplink_item/explosives/military_grade/syndicate_bomb/emp
+	name = "Syndicate EMP Bomb"
+	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
+	item = /obj/item/sbeacondrop/emp
+	cost = 6
+
+/datum/uplink_item/explosives/military_grade/syndicate_bomb/emp/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 2
 
 // Support (Borgs and Reinforcements)
 
@@ -592,15 +661,15 @@
 // ~~ Mech Support ~~
 
 /datum/uplink_item/mech/support_bag
-	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershot carbine which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
-	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
+	name = "Dark Gygax Support Duffel Bag"
+	desc = "A duffel bag containing ammo for isx full reloads of the scattershot exosuit weapon, which is equipped on standard Dark Gygax exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
+	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/darkgygax
 	cost = 4
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/mech/support_bag/mauler
-	name = "Mauler Ammo Bag"
-	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile launcher that are equipped on a standard Mauler exosuit."
+	name = "Mauler Support Duffel Bag"
+	desc = "A duffel bag containing ammo for three full reloads of the LMG and SRM-8 missile launcher that are equipped on a standard Mauler exosuit. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	cost = 6
 	purchasable_from = UPLINK_SERIOUS_OPS

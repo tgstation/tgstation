@@ -10,7 +10,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -89,7 +89,6 @@ export const FishAnalyzer = (props) => {
                   value={searchText}
                   onChange={setSearchText}
                   fluid
-                  expensive
                 />
               </Section>
             </Stack.Item>

@@ -36,8 +36,8 @@
 			icon_file = style.icon
 			icon_state = style.icon_state
 
-	icon_file ||= initial(preview_item.icon_preview) || initial(preview_item.icon)
-	icon_state ||= initial(preview_item.icon_state_preview) || initial(preview_item.icon_state)
+	icon_file ||= preview_item::icon_preview || preview_item::icon
+	icon_state ||= preview_item::icon_state_preview || preview_item::icon_state
 
 	if(PERFORM_ALL_TESTS(focus_only/bad_cooking_crafting_icons))
 		if(!icon_exists_or_scream(icon_file, icon_state))
@@ -50,7 +50,7 @@
 	var/list/tool_icons = list(
 		TOOL_CROWBAR = uni_icon('icons/obj/tools.dmi', "crowbar"),
 		TOOL_MULTITOOL = uni_icon('icons/obj/devices/tool.dmi', "multitool"),
-		TOOL_SCREWDRIVER = uni_icon('icons/obj/tools.dmi', "screwdriver_map"),
+		TOOL_SCREWDRIVER = uni_icon('icons/map_icons/items/_item.dmi', "/obj/item/screwdriver"),
 		TOOL_WIRECUTTER = uni_icon('icons/obj/tools.dmi', "cutters_map"),
 		TOOL_WRENCH = uni_icon('icons/obj/tools.dmi', "wrench"),
 		TOOL_WELDER = uni_icon('icons/obj/tools.dmi', "welder"),

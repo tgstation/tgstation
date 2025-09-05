@@ -6,6 +6,7 @@
 	)
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/ground_spikes,
 		/datum/ai_planning_subtree/use_mob_ability/spine_traps,

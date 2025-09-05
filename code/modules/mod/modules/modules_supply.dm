@@ -343,13 +343,13 @@
 	if(!locker.Adjacent(mod.wearer) || !isturf(locker.loc) || !isturf(mod.wearer.loc))
 		return
 	mod.wearer.start_pulling(locker)
-	locker.strong_grab = TRUE
+	ADD_TRAIT(locker, TRAIT_STRONGPULL, REF(mod.wearer))
 	RegisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_stop_pull))
 
 /obj/item/mod/module/magnet/proc/on_stop_pull(obj/structure/closet/locker, atom/movable/last_puller)
 	SIGNAL_HANDLER
 
-	locker.strong_grab = FALSE
+	REMOVE_TRAIT(locker, TRAIT_STRONGPULL, REF(mod.wearer))
 	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
 
 /obj/item/mod/module/ash_accretion
@@ -369,7 +369,7 @@
 	/// Armor values per tile.
 	var/datum/armor/armor_mod = /datum/armor/mod_ash_accretion
 	/// Speed added when you're fully covered in ash.
-	var/speed_added = -0.5
+	var/speed_added = -0.75
 	/// Turfs that let us accrete ash.
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.
@@ -620,12 +620,17 @@
 	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
 	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
 		rock.gets_drilled()
-	for(var/mob/living/mob in range(1, src))
-		mob.apply_damage(damage * (ismining(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
-		if(!ishostile(mob) || !firer)
+	for(var/mob/living/victim in range(1, src))
+		if(HAS_TRAIT(victim, TRAIT_MINING_AOE_IMMUNE))
 			continue
-		var/mob/living/simple_animal/hostile/hostile_mob = mob
-		hostile_mob.GiveTarget(firer)
+		victim.apply_damage(damage * (ismining(victim) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+		if(!firer)
+			continue
+		if(ishostile(victim))
+			var/mob/living/simple_animal/hostile/hostile_mob = victim
+			hostile_mob.GiveTarget(firer)
+		else if(isbasicmob(victim))
+			victim.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, firer)
 	for(var/obj/object in range(1, src))
 		object.take_damage(damage, BRUTE, BOMB)
 	qdel(src)

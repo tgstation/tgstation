@@ -123,6 +123,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*1.75)
 	usesound = 'sound/items/tools/jaws_pry.ogg'
+	hitsound = SFX_SWING_HIT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
@@ -217,7 +218,7 @@
 	toolspeed = 1.25
 	armor_type = /datum/armor/crowbar_mechremoval
 	resistance_flags = FIRE_PROOF
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	wound_bonus = 10
 
 /datum/armor/crowbar_mechremoval
@@ -237,22 +238,30 @@
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		mech.balloon_alert(user, "not wielded!")
 		return
-	if(!LAZYLEN(mech.occupants) || (LAZYLEN(mech.occupants) == 1 && mech.mecha_flags & SILICON_PILOT)) //if no occupants, or only an ai
+	var/obj/item/mecha_parts/mecha_equipment/sleeper/mech_sleeper = locate() in mech
+	if((!LAZYLEN(mech.occupants) || (LAZYLEN(mech.occupants) == 1 && mech.mecha_flags & SILICON_PILOT)) && (!mech_sleeper || !mech_sleeper.patient)) //if no occupants, or only an ai
 		mech.balloon_alert(user, "it's empty!")
 		return
-	user.log_message("tried to pry open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)
+	var/list/log_list_before = LAZYCOPY(mech.occupants)
+	if(mech_sleeper?.patient)
+		log_list_before += mech_sleeper.patient
+	user.log_message("tried to pry open [mech], located at [loc_name(mech)], which is occupied by [log_list_before.Join(", ")].", LOG_ATTACK)
 	var/mech_dir = mech.dir
 	mech.balloon_alert(user, "prying open...")
 	playsound(mech, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
-	if(!use_tool(mech, user, (mech.mecha_flags & IS_ENCLOSED) ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
+	if(!use_tool(mech, user, (mech.mecha_flags & IS_ENCLOSED) ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir, mech_sleeper)))
 		mech.balloon_alert(user, "interrupted!")
 		return
-	user.log_message("pried open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)
-	for(var/mob/living/occupant as anything in mech.occupants)
-		if(isAI(occupant))
+	var/list/log_list_after = LAZYCOPY(mech.occupants)
+	if(mech_sleeper?.patient)
+		log_list_after += mech_sleeper.patient
+		mech_sleeper.go_out()
+	user.log_message("pried open [mech], located at [loc_name(mech)], which was occupied by [log_list_after.Join(", ")].", LOG_ATTACK)
+	for(var/mob/living/occupant as anything in SANITIZE_LIST(mech.occupants))
+		if(isAI(occupant) || isbrain(occupant))
 			continue
-		mech.mob_exit(occupant, randomstep = TRUE)
+		mech.mob_exit(occupant)
 	playsound(mech, 'sound/machines/airlock/airlockforced.ogg', 75, TRUE)
 
-/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
-	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants) && mech.dir == mech_dir
+/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir, obj/item/mecha_parts/mecha_equipment/sleeper/mech_sleeper)
+	return HAS_TRAIT(src, TRAIT_WIELDED) && (LAZYLEN(mech.occupants) || mech_sleeper?.patient) && (mech.dir == mech_dir)

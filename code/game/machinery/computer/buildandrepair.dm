@@ -76,23 +76,23 @@
 
 	switch(state)
 		if(FRAME_STATE_EMPTY)
-			. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose" : "in place"].")
+			. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose." : "into place."]")
 			if(anchored)
-				. += span_warning("It's missing a circuit board.")
+				. += span_warning("It's missing a circuit board!")
 			else
 				. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
-			. += span_warning("\A [circuit] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
+			. += span_info("A circuit board is installed and should be [EXAMINE_HINT("screwed")] in place.")
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			. += span_warning("It can be [EXAMINE_HINT("wired")] with some cable.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("screwed")] loose.")
+			. += span_info("It should be [EXAMINE_HINT("wired")] with 5 cables.")
 		if(FRAME_COMPUTER_STATE_WIRED)
-			. += span_notice("The wires can be cut with [EXAMINE_HINT("wirecutters")].")
-			. += span_warning("There is a slot for 2 [EXAMINE_HINT("glass panels")].")
+			. += span_notice("Its wires can be [EXAMINE_HINT("cut")].")
+			. += span_info("It should be [EXAMINE_HINT("fitted")] with 2 glass panels.")
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			. += span_notice("The screen can be [EXAMINE_HINT("pried")] out.")
-			. += span_notice("The monitor can be [EXAMINE_HINT("screwed")] on to complete it")
+			. += span_info("The monitor should be [EXAMINE_HINT("screwed")] on to complete it.")
 
 /obj/structure/frame/computer/circuit_added(obj/item/circuitboard/added)
 	state = FRAME_COMPUTER_STATE_BOARD_INSTALLED
@@ -124,7 +124,7 @@
 
 			if(add_cabling(user, cable, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
+					replacer.play_rped_effect()
 					no_sound = TRUE
 				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
 
@@ -137,7 +137,7 @@
 
 			if(add_glass(user, glass_sheets, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
+					replacer.play_rped_effect()
 				return TRUE
 
 			return FALSE

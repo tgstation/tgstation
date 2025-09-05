@@ -65,6 +65,14 @@
 	contains = list(/obj/item/stack/sheet/mineral/bamboo/fifty)
 	crate_name = "bamboo cuttings crate"
 
+/datum/supply_pack/imports/wind_turbine
+	name = "Wind Turbine Crate"
+	desc = "Includes a portable wind turbine for charging small devices and appliances. Considered obsolete in the frontier, \
+		but perfect for officers who think walking laps around the station is 'innovative engineering'."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/portable_wind_turbine/loaded)
+	crate_name = "wind turbine crate"
+
 /datum/supply_pack/imports/bananium
 	name = "A Single Sheet of Bananium"
 	desc = "Don't let the clown know that he can order this. It costs a fortune even for this much."
@@ -201,7 +209,7 @@
 		/obj/item/clothing/mask/chameleon,
 		/obj/item/clothing/under/chameleon,
 		/obj/item/storage/belt/chameleon,
-		/obj/item/card/id/advanced/chameleon/crummy,
+		/obj/item/card/id/advanced/chameleon,
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)

@@ -3,7 +3,7 @@
 // Modular Computer - A machinery that is mostly just a host to the Modular Computer item.
 /obj/machinery/modular_computer
 	name = "modular computer"
-	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
+	desc = "The frame of an advanced computer" //This should only show up when building a computer, it should examine the processor instead
 	icon = 'icons/obj/machines/modular_console.dmi'
 	icon_state = "console"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.025
@@ -50,10 +50,16 @@
 	return ..()
 
 /obj/machinery/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
+	. = NONE
+
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle processor interaction"
-	return CONTEXTUAL_SCREENTIP_SET
+		. |= CONTEXTUAL_SCREENTIP_SET
+
+	if(CPU_INTERACTABLE(user))
+		. |= cpu?.add_context(source, context, held_item, user)
+
+	return .
 
 /obj/machinery/modular_computer/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -117,9 +123,15 @@
 	return update_icon(updates)
 
 /obj/machinery/modular_computer/click_alt(mob/user)
-	if(CPU_INTERACTABLE(user) || !can_interact(user))
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
 		return NONE
 	cpu.click_alt(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/modular_computer/click_alt_secondary(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt_secondary(user)
 	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -156,6 +168,9 @@
 
 /obj/machinery/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.item_interaction(user, tool, modifiers) : ..()
+
+/obj/machinery/modular_computer/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.item_interaction_secondary(user, tool, modifiers) : ..()
 
 /obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	return CPU_INTERACTABLE(user) ? cpu.attacked_by(attacking_item, user, modifiers, attack_modifiers) : ..()

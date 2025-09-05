@@ -86,7 +86,7 @@
 			smoke_mob(smoker, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group, src)
-		reagents.copy_to(spread_smoke, reagents.total_volume)
+		reagents.trans_to(spread_smoke, reagents.total_volume, copy_only = TRUE)
 		spread_smoke.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_smoke.lifetime = lifetime
 
@@ -376,7 +376,7 @@
 			continue
 		if(thing.invisibility >= INVISIBILITY_ABSTRACT) // Don't smoke landmarks please
 			continue
-		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(thing, TRAIT_T_RAY_VISIBLE))
+		if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
 			continue
 		reagents.expose(thing, SMOKE_MACHINE, fraction)
 
@@ -392,16 +392,16 @@
 		return FALSE
 
 	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
-	reagents.copy_to(smoker, reagents.total_volume, fraction, copy_methods = SMOKE_MACHINE)
+	reagents.trans_to(smoker, reagents.total_volume, fraction, methods = SMOKE_MACHINE, copy_only = TRUE)
 	reagents.expose(smoker, SMOKE_MACHINE, fraction)
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke
-/proc/do_chem_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE)
+/proc/do_chem_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem)
 	var/datum/reagents/smoke_reagents = new/datum/reagents(reagent_volume)
 	smoke_reagents.add_reagent(reagent_type, reagent_volume)
 
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type
 	smoke.attach(location)
 	smoke.set_up(amount = amount, holder = holder, location = location, carry = smoke_reagents, silent = TRUE)
 	smoke.start(log = log)
@@ -423,7 +423,7 @@
 
 /datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, silent = FALSE)
 	. = ..()
-	carry?.copy_to(chemholder, carry.total_volume)
+	carry?.trans_to(chemholder, carry.total_volume, copy_only = TRUE)
 
 	if(silent)
 		return
@@ -452,7 +452,7 @@
 	var/start_loc = holder ? get_turf(holder) : src.location
 	var/mixcolor = mix_color_from_reagents(chemholder.reagent_list)
 	var/obj/effect/particle_effect/fluid/smoke/chem/smoke = new effect_type(start_loc, new /datum/fluid_group(amount))
-	chemholder.copy_to(smoke, chemholder.total_volume)
+	chemholder.trans_to(smoke, chemholder.total_volume, copy_only = TRUE)
 
 	if(mixcolor)
 		smoke.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
@@ -470,3 +470,12 @@
 
 /datum/effect_system/fluid_spread/smoke/chem/quick
 	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/quick
+
+/**
+ * A version of chemical smoke with a intermediate lifespan.
+ */
+/obj/effect/particle_effect/fluid/smoke/chem/medium
+	lifetime = 8 SECONDS
+
+/datum/effect_system/fluid_spread/smoke/chem/medium
+	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/medium

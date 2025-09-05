@@ -48,8 +48,6 @@
 
 	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
 	var/datum/job/assigned_role
-	var/special_role
-	var/list/restricted_roles = list()
 
 	/// List of antag datums on this mind
 	var/list/antag_datums
@@ -89,7 +87,9 @@
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
 
-	/// A lazy list of statuses to add next to this mind in the traitor panel
+	/// A lazy list of roles to display that this mind has, stuff like "Traitor" or "Special Creature"
+	var/list/special_roles
+	/// A lazy list of statuses to display that this mind has, stuff like "Infected" or "Mindshielded"
 	var/list/special_statuses
 
 	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
@@ -124,7 +124,7 @@
 	.["memories"] = memories
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
-	.["special_role"] = special_role
+	.["special_role"] = jointext(get_special_roles(), " | ")
 	.["assigned_role"] = assigned_role.title
 	.["current"] = current
 
@@ -138,6 +138,9 @@
 	switch(var_name)
 		if(NAMEOF(src, assigned_role))
 			set_assigned_role(var_value)
+			. = TRUE
+		if(NAMEOF(src, holy_role))
+			set_holy_role(var_value)
 			. = TRUE
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -482,16 +485,6 @@
 	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
 	return affected_addiction.on_lose_addiction_points(src)
 
-/// Whether or not we can roll for midrounds, specifically checking if we have any major antag datums that should block it
-/datum/mind/proc/can_roll_midround(datum/antagonist/antag_type)
-	if(SEND_SIGNAL(current, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, antag_type) & CANCEL_ROLL)
-		return FALSE
-	for(var/datum/antagonist/antag as anything in antag_datums)
-		if(antag.block_midrounds)
-			return FALSE
-
-	return TRUE
-
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)
 	if(assigned_role == new_role)
@@ -500,6 +493,22 @@
 		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
+
+///Sets your holy role, giving/taking away traits related to if you're gaining/losing it.
+/datum/mind/proc/set_holy_role(new_holy_role)
+	if(holy_role == new_holy_role)
+		return
+	var/was_holy = holy_role
+	holy_role = new_holy_role
+	if(holy_role)
+		ADD_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_HOLY_ROLE, new_holy_role)
+	//the signal stops tracking when losing holy roles, but since we're gaining it, give us our HUDs if we're becoming holy.
+	if(!was_holy && holy_role)
+		for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+			blessed_hud.check_hud(current)
 
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,

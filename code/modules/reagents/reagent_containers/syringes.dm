@@ -67,7 +67,7 @@
 		to_chat(user, span_warning("You cannot directly fill [target]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(target.reagents.total_volume >= target.reagents.maximum_volume)
+	if(target.reagents.holder_full())
 		to_chat(user, span_notice("[target] is full."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -82,7 +82,7 @@
 				return ITEM_INTERACT_BLOCKING
 			if(!reagents.total_volume)
 				return ITEM_INTERACT_BLOCKING
-			if(living_target.reagents.total_volume >= living_target.reagents.maximum_volume)
+			if(living_target.reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 			living_target.visible_message(
 				span_danger("[user] injects [living_target] with the syringe!"),
@@ -109,7 +109,7 @@
 
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW, user)
 
-	if(reagents.total_volume >= reagents.maximum_volume)
+	if(reagents.holder_full())
 		to_chat(user, span_notice("[src] is full."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -123,7 +123,7 @@
 			)
 			if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target, extra_checks = CALLBACK(src, PROC_REF(try_syringe), living_target, user)))
 				return ITEM_INTERACT_BLOCKING
-			if(reagents.total_volume >= reagents.maximum_volume)
+			if(reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 		if(living_target.transfer_blood_to(src, drawn_amount))
 			user.visible_message(span_notice("[user] takes a blood sample from [living_target]."))
@@ -192,7 +192,7 @@
 		"embedding" = embed_data,
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
-		"bare_wound_bonus" = bare_wound_bonus,
+		"exposed_wound_bonus" = exposed_wound_bonus,
 		"demolition_mod" = demolition_mod,
 	)
 

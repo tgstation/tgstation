@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "jumpsuit",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -12,12 +12,12 @@
 			"blend_mode": "overlay"
 		}
 	],
-	"jumpsuit_d" : [
+	"jumpsuit_d": [
 		{
 			"type": "icon_state",
 			"icon_state": "jumpsuit_d",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -30,7 +30,7 @@
 			"type": "icon_state",
 			"icon_state": "jumpskirt",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -38,12 +38,12 @@
 			"blend_mode": "overlay"
 		}
 	],
-	"jumpskirt_d" : [
+	"jumpskirt_d": [
 		{
 			"type": "icon_state",
 			"icon_state": "jumpskirt_d",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",

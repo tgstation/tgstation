@@ -229,7 +229,8 @@
 	var/randomize_pizza = pick_weight(rng_pizza_list)
 	rng_pizza_list -= randomize_pizza
 	var/obj/item/pizzabox/new_pizza_box = new(new_crate)
-	new_pizza_box.pizza = new randomize_pizza
+	new_pizza_box.pizza = new randomize_pizza(new_pizza_box)
+	new_pizza_box.pizza.slice()
 	new_pizza_box.boxtag = new_pizza_box.pizza.boxtag
 	new_pizza_box.boxtag_set = TRUE
 	new_pizza_box.update_appearance(UPDATE_ICON | UPDATE_DESC)

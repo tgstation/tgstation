@@ -17,7 +17,7 @@
 	force = 20
 	throwforce = 10
 	wound_bonus = 5
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	toolspeed = 0.375
 	demolition_mod = 0.8
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
@@ -136,9 +136,7 @@
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("Unknown DNA" = BLOOD_TYPE_XENO),\
-		diseases = null,\
+		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
 	)
 
 // Path of Void's blade
@@ -247,7 +245,7 @@
 	throwforce = 15
 	block_chance = 35
 	wound_bonus = 25
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	armour_penetration = 35
 	icon_state = "cursed_blade"
 	inhand_icon_state = "cursed_blade"

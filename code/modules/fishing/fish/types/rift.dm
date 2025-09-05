@@ -8,7 +8,7 @@
 	force = 12
 	sharpness = SHARP_POINTY
 	wound_bonus = -10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	armour_penetration = 6
 	demolition_mod = 1.2
 	throwforce = 11
@@ -28,7 +28,7 @@
 	average_weight = 1500
 	food = /datum/reagent/bluespace
 	feeding_frequency = 10 MINUTES
-	health = 50
+	max_integrity = 100
 	death_text = "%SRC splinters apart into shards!"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/stack/ore/bluespace_crystal
@@ -114,7 +114,7 @@
 	force = 19
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 12
 	block_chance = 33
 	throwforce = 7
@@ -136,7 +136,8 @@
 	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human? that's odd...
 	required_temperature_max = BODYTEMP_HEAT_DAMAGE_LIMIT
 	food = /datum/reagent/blood
-	health = 600 // apex predator
+	max_integrity = 800 // apex predator
+	integrity_failure = 0.25
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/food/fishmeat/fish_tail
 	num_fillets = 1
@@ -188,7 +189,7 @@
 	block_chance *= multiplier
 	armour_penetration *= multiplier
 	wound_bonus *= multiplier
-	bare_wound_bonus *= multiplier
+	exposed_wound_bonus *= multiplier
 
 /obj/item/fish/dolphish/do_fish_process(seconds_per_tick)
 	. = ..()
@@ -226,7 +227,7 @@
 		if(0)
 			// No check, we always want sharky to bite jerky on 0
 			moc.visible_message(span_bolddanger("[src] bites directly into [moc] and squirms away from [moc.p_their()] grasp!"), span_userdanger("[src] sinks its fangs into you!!"))
-			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
+			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
 			forceMove(moc.drop_location())
 			moc.painful_scream()
 			patience = max_patience
@@ -258,7 +259,7 @@
 		span_warning("You try to pet [src], but it sinks its fangs into your hand!"),
 		vision_distance = DEFAULT_MESSAGE_RANGE - 3,
 		)
-	user.apply_damage(force, BRUTE, user.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
+	user.apply_damage(force, BRUTE, user.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
 	if(!in_aquarium)
 		forceMove(user.drop_location())
 	user.painful_scream()
@@ -339,7 +340,7 @@
 
 	for(var/mob/living/fallen_mob in falling_movables)
 		visible_message(span_danger("[src] flattens like a pancake as [fallen_mob] lands on top of it!"))
-		adjust_health(initial(health) * 0.1) // very durable
+		damage_fish(max_integrity * integrity_failure * 0.9) // very "durable"
 		AddElement(/datum/element/squish, 15 SECONDS)
 		fallen_mob.Paralyze(0.5 SECONDS)
 		playsound(src, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', 75)
@@ -367,7 +368,7 @@
 
 	food = /datum/reagent/silicon
 	feeding_frequency = 30 SECONDS
-	health = 160
+	max_integrity = 320
 	death_text = "%SRC calcifies."
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/stack/sheet/mineral/diamond
@@ -429,7 +430,8 @@
 	sprite_width = 12
 	sprite_height = 13
 
-	health = 500
+	max_integrity = 750
+	integrity_failure = 0.33
 	death_text = "%SRC decomposes."
 	random_case_rarity = FISH_RARITY_NOPE
 	// hand-tuned to be a your worst enemy
@@ -521,7 +523,7 @@
 
 	death_text = span_big(span_alertalien("%SRC emits a horrendous wailing as it perishes!"))
 	random_case_rarity = FISH_RARITY_NOPE
-	health = 250
+	max_integrity = 500
 	average_size = 30
 	average_weight = 2000
 	fillet_type = /obj/item/food/fishmeat/quality
@@ -772,7 +774,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = null, \
 		charges = maxHealth * 0.1, \
-		drain_antimagic = CALLBACK(src, PROC_REF(on_drain_magic)), \
+		block_magic = CALLBACK(src, PROC_REF(on_drain_magic)), \
 		expiration = CALLBACK(src, PROC_REF(on_expire)), \
 	)
 

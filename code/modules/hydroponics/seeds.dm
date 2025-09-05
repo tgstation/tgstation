@@ -452,9 +452,11 @@
 
 /**
  * Override for seeds with unique text for their analyzer. (No newlines at the start or end of unique text!)
- * Returns null if no unique text, or a string of text if there is.
+ * Returns null if no unique data
+ * Return an assoc list (label = text) to add a new line to the analyzer
+ * Return an assoc list (label = list(text = tooltip, text = tooltip)) to add a new collapsible section to the analyzer
  */
-/obj/item/seeds/proc/get_unique_analyzer_text()
+/obj/item/seeds/proc/get_unique_analyzer_data()
 	return null
 
 /**
@@ -642,3 +644,17 @@
 		var/datum/plant_gene/reagent/selected_reagent = pick(valid_reagents)
 		genes += selected_reagent.Copy()
 		reagents_from_genes()
+
+/// Returns a mutable appearance to be used as an overlay for the plant in hydro trays.
+/obj/item/seeds/proc/get_tray_overlay(age, status)
+	var/mutable_appearance/plant_overlay = mutable_appearance(growing_icon, layer = OBJ_LAYER + 0.01)
+	switch(status)
+		if(HYDROTRAY_PLANT_DEAD)
+			plant_overlay.icon_state = icon_dead
+		if(HYDROTRAY_PLANT_HARVESTABLE)
+			plant_overlay.icon_state = icon_harvest || "[icon_grow][growthstages]"
+		else
+			var/t_growthstate = clamp(round((age / maturation) * growthstages), 1, growthstages)
+			plant_overlay.icon_state = "[icon_grow][t_growthstate]"
+	plant_overlay.pixel_z = plant_icon_offset
+	return plant_overlay

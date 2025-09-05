@@ -139,7 +139,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 		if(worn)
 			if(istype(worn, /obj/item/modular_computer))
 				var/obj/item/modular_computer/worn_computer = worn
-				worn_computer.InsertID(id, H)
+				worn_computer.insert_id(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
@@ -570,7 +570,7 @@ ADMIN_VERB(debug_plane_masters, R_DEBUG, "Edit/Debug Planes", "Edit and visualiz
 	holder.plane_debug.ui_interact(mob)
 
 ADMIN_VERB(debug_huds, R_DEBUG, "Debug HUDs", "Debug the data or antag HUDs.", ADMIN_CATEGORY_DEBUG, i as num)
-	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/debug_variables, GLOB.huds[i])
+	user.debug_variables(GLOB.huds[i])
 
 ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed ruins to teleport to.", ADMIN_CATEGORY_DEBUG)
 	var/list/names = list()
@@ -955,3 +955,97 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(queue_tracy)
 ADMIN_VERB(debug_mc_dependencies, R_DEBUG, "Debug MC Dependencies", "Debug MC dependencies.", ADMIN_CATEGORY_DEBUG)
 	var/datum/mc_dependency_ui/data = new /datum/mc_dependency_ui()
 	data.ui_interact(usr)
+
+ADMIN_VERB(show_powernets, R_DEBUG, "Color Powernet Runs", "Colors every node and cable of every powernet in a different color.", ADMIN_CATEGORY_DEBUG)
+	var/removing = FALSE
+	for(var/obj/effect/abstract/marker/powernet/marker in GLOB.all_abstract_markers)
+		qdel(marker)
+		removing = TRUE
+
+	if(removing)
+		return
+
+	var/list/colors = GLOB.carp_colors.Copy()
+
+	if(length(colors) < length(SSmachines.powernets))
+		message_admins("[SSmachines.powernets.len] powernets exist - [length(colors)] colors available - Some powernets will be the same color!")
+
+	for(var/datum/powernet/net as anything in SSmachines.powernets)
+		if(!length(colors))
+			colors = GLOB.carp_colors.Copy()
+
+		var/selected_color = pick_n_take(colors)
+		for(var/atom/component as anything in net.nodes + net.cables)
+			var/turf/component_turf = get_turf(component)
+			var/existing = FALSE
+			for(var/obj/effect/abstract/marker/powernet/existing_marker in component_turf)
+				if(existing_marker.powernet_owner != REF(net))
+					continue
+				existing = TRUE
+				break
+			if(existing)
+				continue
+			var/obj/effect/abstract/marker/powernet/marker = new(component_turf)
+			marker.color = selected_color
+			marker.powernet_owner = REF(net)
+
+ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count how many atom or datum instances there are of each type, then output it to a JSON to download.", ADMIN_CATEGORY_DEBUG)
+	var/option = tgui_alert(user, "What type of instances do you wish to count?", "Instance Count", list("Atoms", "Datums"))
+	if(!option)
+		return
+	var/list/result
+	to_chat(user, span_notice("Beginning instance count ([option])"), type = MESSAGE_TYPE_DEBUG)
+	switch(option)
+		if("Atoms")
+			result = count_atoms()
+		if("Datums")
+			result = count_datums()
+
+	if(result)
+		to_chat(user, span_adminnotice("Counted [length(result)] instances, sending compiled JSON file now."), type = MESSAGE_TYPE_DEBUG)
+		var/tmp_path = "tmp/instance_count_[user.ckey].json"
+		fdel(tmp_path)
+		rustg_file_write(json_encode(result, JSON_PRETTY_PRINT), tmp_path)
+		var/exportable_json = file(tmp_path)
+		DIRECT_OUTPUT(user, ftp(exportable_json, "[LOWER_TEXT(option)]_instance_count_round_[GLOB.round_id].json"))
+		fdel(tmp_path)
+
+#ifndef OPENDREAM
+/proc/count_atoms()
+	. = list()
+	for(var/datum/thing in world) //atoms (don't believe its lies)
+		.[thing.type]++
+	sortTim(., cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+
+/proc/count_datums()
+	. = list()
+	for(var/datum/thing)
+		.[thing.type]++
+	sortTim(., cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+#else
+/proc/count_atoms()
+	. = list()
+	CRASH("count_atoms not supported on OpenDream")
+
+/proc/count_datums()
+	. = list()
+	CRASH("count_datums not supported on OpenDream")
+#endif
+
+ADMIN_VERB_VISIBILITY(export_save_to_dev_preference, ADMIN_VERB_VISIBLITY_FLAG_LOCALHOST)
+ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferences", "Exports your savefile to be used by any guests that connect to your localost.", ADMIN_CATEGORY_SERVER)
+	if(!user.is_localhost())
+		tgui_alert(user, "You shouldn't be using this right now!", "Export Failed", list("OK"))
+		log_admin("[key_name(user)] attempted to export preferences to [DEV_PREFS_PATH] - this is normally locked to localhost only!")
+		stack_trace("Export Save as Dev Preferences was called by a non-localhost user!")
+		return
+	if(is_guest_key(user.key))
+		tgui_alert(user, "Guests don't have preferences to export.", "Export Failed", list("OK"))
+		return
+	var/datum/preferences/user_prefs = user.prefs
+	var/datum/json_savefile/dev_save = new(DEV_PREFS_PATH)
+	user_prefs.save_preferences()
+	user_prefs.savefile.copy_to_savefile(dev_save)
+	dev_save.save()
+	tgui_alert(user, "Exported preferences to [DEV_PREFS_PATH]. \
+		Next time you localhost as a guest it will use this savefile as-is.", "Export Complete", list("OK thanks"))

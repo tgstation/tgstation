@@ -18,7 +18,7 @@
 	///The chance of a specific mutation of being generated compared to others when generate_chromosome() is called.
 	var/weight = 5
 
-/obj/item/chromosome/proc/can_apply(datum/mutation/human/mutation)
+/obj/item/chromosome/proc/can_apply(datum/mutation/mutation)
 	if(!mutation || QDELETED(mutation.owner) || mutation.can_chromosome != CHROMOSOME_NONE)
 		return FALSE
 	if(!isnull(stabilizer_coeff) && (mutation.stabilizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE))
@@ -30,14 +30,14 @@
 	if(!isnull(energy_coeff) && (mutation.energy_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE))
 		return TRUE
 
-/obj/item/chromosome/proc/apply(datum/mutation/human/mutation)
-	if(mutation.stabilizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
+/obj/item/chromosome/proc/apply(datum/mutation/mutation)
+	if(mutation.stabilizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE && stabilizer_coeff)
 		mutation.stabilizer_coeff = stabilizer_coeff
-	if(mutation.synchronizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
+	if(mutation.synchronizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE && synchronizer_coeff)
 		mutation.synchronizer_coeff = synchronizer_coeff
-	if(mutation.power_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
+	if(mutation.power_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE && power_coeff)
 		mutation.power_coeff = power_coeff
-	if(mutation.energy_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
+	if(mutation.energy_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE && energy_coeff)
 		mutation.energy_coeff = energy_coeff
 	mutation.can_chromosome = CHROMOSOME_USED
 	mutation.chromosome_name = name

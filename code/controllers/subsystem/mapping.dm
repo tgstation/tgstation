@@ -159,6 +159,22 @@ SUBSYSTEM_DEF(mapping)
 			empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_EMPTY = TRUE))
 			++space_levels_so_far
 
+	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_ICE_RUINS])
+		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_ICE_RUINS])
+			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
+				continue
+
+			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
+			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
+
+	else if(current_map.wilderness_levels)
+		var/list/FailedZs = list()
+
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
+
+		if(LAZYLEN(FailedZs))
+			CRASH("Ice wilds failed to load!")
+
 	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_away_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_AWAY])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_AWAY])
 			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
@@ -166,7 +182,8 @@ SUBSYSTEM_DEF(mapping)
 
 			INIT_ANNOUNCE("Loading persistent z-level [persistent_map.map_name]...")
 			LoadGroup(FailedZs, persistent_map.map_name, persistent_map.map_path, persistent_map.map_file, persistent_map.traits, null, height_autosetup = persistent_map.height_autosetup)
-	else if(CONFIG_GET(flag/roundstart_away)) // Pick a random away mission.
+	// Pick a random away mission.
+	else if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
 		load_all_away_missions()
@@ -271,7 +288,6 @@ SUBSYSTEM_DEF(mapping)
 	gravity_by_z_level[z_level_number] = max_gravity
 	return max_gravity
 
-
 /**
  * ##setup_ruins
  *
@@ -309,8 +325,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		var/river_type = HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED) ? /turf/open/lava/plasma/ice_moon : /turf/open/openspace/icemoon
-		spawn_rivers(ice_z, 4, river_type, /area/icemoon/surface/outdoors/unexplored/rivers)
+		spawn_rivers(ice_z, 6, /turf/open/lava/plasma/ice_moon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)

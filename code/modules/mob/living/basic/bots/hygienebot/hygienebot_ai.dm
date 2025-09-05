@@ -10,6 +10,7 @@
 		BB_WASH_FRUSTRATION = 0,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/handle_trash_talk,
 		/datum/ai_planning_subtree/wash_people,
