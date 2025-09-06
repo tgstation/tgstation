@@ -45,6 +45,7 @@
 		"name",
 		"job",
 		"life_status",
+		"dnr_status",
 		"suffocation",
 		"toxin",
 		"burn",
@@ -65,6 +66,7 @@
 		entry["name"] = player_record["name"]
 		entry["job"] = player_record["assignment"]
 		entry["life_status"] = player_record["life_status"]
+		entry["dnr_status"] = player_record["dnr_status"]
 		entry["suffocation"] = player_record["oxydam"]
 		entry["toxin"] = player_record["toxdam"]
 		entry["burn"] = player_record["burndam"]
@@ -248,6 +250,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// Broken sensors show garbage data
 		if (uniform.has_sensor == BROKEN_SENSORS)
 			entry["life_status"] = rand(0,1)
+			entry["dnr_status"] = rand(0,1)
 			entry["area"] = pick_list (ION_FILE, "ionarea")
 			entry["oxydam"] = rand(0,175)
 			entry["toxdam"] = rand(0,175)
@@ -262,6 +265,15 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (sensor_mode >= SENSOR_LIVING)
 			entry["life_status"] = tracked_living_mob.stat
 
+		var/mob/dead/observer/ghost = tracked_living_mob.get_ghost(TRUE, TRUE)
+		var/obj/item/organ/brain = tracked_living_mob.get_organ_by_type(/obj/item/organ/brain)
+		var/client_like = tracked_living_mob.client || HAS_TRAIT(tracked_living_mob, TRAIT_MIND_TEMPORARILY_GONE)
+		var/valid_ghost = ghost?.can_reenter_corpse && ghost?.client
+		var/valid_soul = brain || HAS_TRAIT(tracked_living_mob, TRAIT_FAKE_SOULLESS)
+		if((brain && client_like) || (valid_ghost && valid_soul))
+			entry["dnr_status"] = 0
+		else
+			entry["dnr_status"] = 1
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)
 			entry += list(
