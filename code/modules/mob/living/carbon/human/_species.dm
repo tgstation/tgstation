@@ -383,7 +383,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.hud_used?.healthdoll.update_body_zones()
 
 	if(old_species.type != type)
-		replace_body(human_who_gained_species, src)
+		replace_body(human_who_gained_species, src, old_species)
 
 	if(!human_who_gained_species.get_bloodtype()?.is_species_universal) // Clown blood is forever.
 		//Assigns exotic blood type if the species has one
@@ -2019,27 +2019,41 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return to_add
 
 ///Handles replacing all of the bodyparts with their species version during set_species()
-/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species)
+/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species, datum/species/old_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
-	var/list/final_bodypart_overrides = new_species.bodypart_overrides.Copy()
+	var/list/new_bodypart_overrides = new_species.bodypart_overrides.Copy()
 	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		new_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+		new_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
 
+	var/obj/item/bodypart/new_part
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
-
-		var/path = final_bodypart_overrides?[old_part.body_zone]
-		var/obj/item/bodypart/new_part
+		// update all our existing limbs
+		var/path = new_bodypart_overrides?[old_part.body_zone]
 		if(path)
 			new_part = new path()
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
+
+	var/list/old_bodypart_overrides = old_species.bodypart_overrides.Copy()
+	if(length(new_bodypart_overrides) <= length(old_bodypart_overrides))
+		return // we updated all the limbs the character deserves
+	// but there are cases where the old species naturally lacked limbs
+	for(var/zone in new_bodypart_overrides)
+		// find a limb that the character doesn't have because of their old species
+		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides.Find(zone))
+			continue
+		var/path = new_bodypart_overrides[zone]
+		if(path)
+			new_part = new path()
+			new_part.replace_limb(target, TRUE)
+			new_part.update_limb(is_creating = TRUE)
 
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
