@@ -237,7 +237,7 @@
 
 	toggle_reel_spin(1)
 	update_appearance()
-	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 2, TIMER_LOOP|TIMER_STOPPABLE)
+	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 4, TIMER_LOOP|TIMER_STOPPABLE)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_spinning), spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
 	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
