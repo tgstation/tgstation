@@ -217,10 +217,10 @@
 	return ..()
 
 /obj/structure/lattice/catwalk/boulder/proc/pre_self_destruct()
-	if(istype(loc, /turf/open/lava))
-		add_overlay("lava_cracks")
-	else
+	if(istype(loc, /turf/open/lava/plasma))
 		add_overlay("plasma_cracks")
+	else
+		add_overlay("lava_cracks")
 	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 5 SECONDS)
 
 /**
