@@ -200,7 +200,6 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	pixel_y = -4
 	build_material = null
 	/// The type of particle to make before the platform collapses.
 	var/warning_particle = /particles/smoke/ash
@@ -216,19 +215,25 @@
 		return FALSE
 	return ..()
 
+/obj/structure/lattice/catwalk/boulder/CanAllowThrough(atom/movable/mover, border_dir)
+	if(istype(mover, /obj/structure/ore_box))
+		self_destruct()
+		return TRUE
+	. = ..()
+
 /obj/structure/lattice/catwalk/boulder/proc/pre_self_destruct()
 	if(istype(loc, /turf/open/lava/plasma))
 		add_overlay("plasma_cracks")
 	else
 		add_overlay("lava_cracks")
-	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 5 SECONDS)
+	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = EASE_IN)
+	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 2 SECONDS)
 
 /**
  * Handles platforms deleting themselves with a visual effect and message.
  */
 /obj/structure/lattice/catwalk/boulder/proc/self_destruct()
-	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = EASE_IN)
-	sleep(2 SECONDS)
 	visible_message(span_notice("\The [src] sinks and dissapears!"))
+	playsound(src, 'sound/effects/gas_hissing.ogg', 20)
 	remove_shared_particles(warning_particle)
 	deconstruct()

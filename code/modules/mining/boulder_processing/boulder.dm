@@ -116,8 +116,14 @@
 			return ITEM_INTERACT_BLOCKING
 		return ITEM_INTERACT_SUCCESS
 
-/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user, turf/open/floating_on)
-	if(locate(/obj/structure/lattice/catwalk/boulder, get_turf(interacting_with)))
+/obj/item/boulder/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle, quickstart, throw_type_path)
+	. = ..()
+	if(istype(target, /turf/open/lava))
+		if(!create_platform(target, thrower))
+			return FALSE
+
+/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user)
+	if(locate(/obj/structure/lattice/catwalk/boulder, interacting_with))
 		to_chat(user, span_warning("There is already a boulder platform here!"))
 		return FALSE
 	var/platform_lifespan = 0
@@ -132,12 +138,12 @@
 		else
 			platform_lifespan = 10 SECONDS //Fallback
 	if(HAS_TRAIT(src, TRAIT_GULAG_BOULDER_WEAKNESS))
-		platform_lifespan = 6 SECONDS // I didn't want to just completely axe the mechanic within the gulag, so I decided to make it very short if your prisoners are very coordinated.
+		platform_lifespan = 1 SECONDS // I didn't want to just completely axe the mechanic within the gulag, so I decided to make it very short if your prisoners are very coordinated.
 
 	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
 	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), platform_lifespan)
 	// See Lattice.dm for more info
-	visible_message(span_notice("\The [src] floats on \the [floating_on], forming a temporary platform!"))
+	visible_message(span_notice("\The [src] floats on \the [interacting_with], forming a temporary platform!"))
 	qdel(src)
 	return TRUE
 /**
