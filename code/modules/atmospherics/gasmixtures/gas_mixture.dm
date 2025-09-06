@@ -216,7 +216,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 
 /// Convert the moles of multiple reactant to their respective products
-/datum/gas_mixture/proc/bulk_gas_conversion()
+/// Reactants and products must be PRESENT before calling this proc
+/// Reactants gets subtracted by amount while Products gets added by amount
+/datum/gas_mixture/proc/bulk_gas_conversion(list/reactants, list/products, amount)
+	var/list/cached_gas = gases
+	for(var/reactant_type in reactants)
+		cached_gas[reactant_type] -= amount
+	for(var/product_type in products)
+		cached_gas[product_type] += amount
+	garbage_collect()
+
 
 
 ///Proportionally removes amount of gas from the gas_mixture.
