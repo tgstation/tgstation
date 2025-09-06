@@ -1077,6 +1077,7 @@
 	icon_state = "snowball"
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
+	custom_materials = list(/datum/material/snow = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/toy/snowball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	user.throw_item(interacting_with)

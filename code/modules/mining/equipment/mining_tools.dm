@@ -177,6 +177,7 @@
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED
 	item_flags = CRUEL_IMPLEMENT
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/shovel/serrated/Initialize(mapload)
 	. = ..()

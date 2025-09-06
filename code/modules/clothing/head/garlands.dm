@@ -3,6 +3,7 @@
 	desc = "Someone, somewhere, is starving while wearing this. And it's definitely not you."
 	icon_state = "garland"
 	worn_icon_state = "garland"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.3) //tied together with cable coil
 
 /obj/item/clothing/head/costume/garland/equipped(mob/living/user, slot)
 	. = ..()

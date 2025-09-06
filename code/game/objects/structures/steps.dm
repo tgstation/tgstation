@@ -6,6 +6,7 @@
 	icon_state = "iron"
 	anchored = TRUE
 	move_resist = INFINITY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/steps/Initialize(mapload)
 	. = ..()

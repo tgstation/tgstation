@@ -267,7 +267,7 @@
 	desc = "A haphazardly-constructed bamboo stick with a sharpened tip, ready to poke holes into unsuspecting people."
 
 	throwforce = 22	//Better to throw
-	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 20)
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 25)
 	force_unwielded = 10
 	force_wielded = 18
 

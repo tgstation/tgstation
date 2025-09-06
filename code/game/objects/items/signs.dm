@@ -9,7 +9,7 @@
 	attack_verb_continuous = list("bashes", "smacks")
 	attack_verb_simple = list("bash", "smack")
 	resistance_flags = FLAMMABLE
-
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	var/label = ""
 	COOLDOWN_DECLARE(picket_sign_cooldown)
 

@@ -105,6 +105,7 @@
 	icon_state = "rod_healium"
 	base_icon_state =  "rod_healium"
 	projectile_type = /obj/projectile/bullet/rebar/healium
+	custom_materials = null
 	/// How many seconds of healing/sleeping action we have left, once all are spent the bolt dissolves
 	var/heals_left = 6 SECONDS
 
@@ -182,3 +183,4 @@
 	base_icon_state = "paperball"
 	projectile_type = /obj/projectile/bullet/paperball
 	newtonian_force = 0.5
+	custom_materials = null

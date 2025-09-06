@@ -28,6 +28,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
 
 /datum/armor/cloak_drake
 	melee = 65

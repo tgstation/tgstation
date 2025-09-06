@@ -6,6 +6,7 @@
 	name = "\improper Probably a White Pawn"
 	desc = "This is weird. Please inform administration on how you managed to get the parent chess piece. Thanks!"
 	max_integrity = 100
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/chess/wrench_act(mob/user, obj/item/tool)
 	if(flags_1 & HOLOGRAM_1)

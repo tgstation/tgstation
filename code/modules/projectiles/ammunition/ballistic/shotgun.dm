@@ -66,6 +66,7 @@
 	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
 	icon_state = "mshell"
 	projectile_type = /obj/projectile/bullet/cannonball/meteorslug
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
@@ -74,6 +75,7 @@
 	would have difficulty with."
 	icon_state = "pshell"
 	projectile_type = /obj/projectile/beam/pulse/shotgun
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2)
 
 /obj/item/ammo_casing/shotgun/frag12
 	name = "FRAG-12 slug"
@@ -161,6 +163,7 @@
 	pellets = 4
 	variance = 15
 	randomspread = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 
 /obj/item/ammo_casing/shotgun/scatterlaser
 	name = "scatter laser shell"

@@ -4,6 +4,7 @@
 	icon_state = "crown"
 	armor_type = /datum/armor/costume_crown
 	resistance_flags = FIRE_PROOF
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 /datum/armor/costume_crown
 	melee = 15

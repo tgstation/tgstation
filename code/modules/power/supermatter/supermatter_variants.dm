@@ -61,6 +61,7 @@
 	icon_state = "sm_small"
 	moveable = TRUE
 	anchored = FALSE
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/machinery/power/supermatter_crystal/small/Initialize(mapload)
 	. = ..()

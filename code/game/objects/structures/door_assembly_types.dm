@@ -283,6 +283,7 @@
 	noglass = TRUE
 	mineral = "titanium"
 	material_type = /obj/item/stack/sheet/mineral/titanium
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 8)
 
 /obj/structure/door_assembly/door_assembly_material/atom_deconstruct(disassembled = TRUE)
 	var/turf/target_turf = get_turf(src)

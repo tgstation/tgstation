@@ -390,6 +390,7 @@
 	icon_state = "juicebox"
 	volume = 15
 	drink_type = NONE
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/Initialize(mapload, vol)
 	. = ..()
