@@ -11,6 +11,7 @@
 	hud_type = /datum/hud/ai
 	mob_size = MOB_SIZE_LARGE
 	can_buckle_to = FALSE
+	anchored = TRUE
 
 	silicon_huds = list(DATA_HUD_MEDICAL_BASIC, DATA_HUD_SECURITY_BASIC, DATA_HUD_DIAGNOSTIC, DATA_HUD_BOT_PATH)
 	radio = /obj/item/radio/headset/silicon/ai
@@ -33,9 +34,6 @@
 	var/radio_enabled = TRUE
 	/// Whether its cover is opened, so you can wirecut it for deconstruction
 	var/opened = FALSE
-	/// If the AI is currently anchored to the ground, used for checks. Distinct from [atom/movable/anchored]
-	var/is_anchored = TRUE
-
 	/// Raw HTML containing the last page that was loaded from a held-up PDA
 	VAR_FINAL/last_tablet_note_seen = null
 	/// The last attempted VOX announcement. Exists so that failed VOXes can be retried easily
