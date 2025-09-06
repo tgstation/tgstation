@@ -217,7 +217,10 @@
 	return ..()
 
 /obj/structure/lattice/catwalk/boulder/proc/pre_self_destruct()
-	add_shared_particles(warning_particle)
+	if(istype(loc, /turf/open/lava))
+		add_overlay("lava_cracks")
+	else
+		add_overlay("plasma_cracks")
 	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 5 SECONDS)
 
 /**
