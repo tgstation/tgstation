@@ -44,6 +44,7 @@
 @include meta.load-css('./interfaces/Trophycase.scss');
 @include meta.load-css('./interfaces/Uplink.scss');
 @include meta.load-css('./interfaces/DetectiveBoard.scss');
+@include meta.load-css('./interfaces/LawRack.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	//Get which verb is prefixed to the message before radio but after most modifications
-	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	message_mods[SAY_MOD_VERB] ||= say_mod(message, message_mods)
 
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && (saymode.handle_message(src, message, spans, language, message_mods) & SAYMODE_MESSAGE_HANDLED))

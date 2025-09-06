@@ -1,14 +1,15 @@
 ///defined truthy result for `handle_unique_ai()`, which makes initialize return INITIALIZE_HINT_QDEL
 #define SHOULD_QDEL_MODULE 1
 
+/// Generic item that can be slotted into an AI law rack to give it functionality.
 /obj/item/ai_module
 	name = "\improper AI module"
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "std_mod"
+	base_icon_state = "std_mod"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	desc = "An AI Module for programming laws to an AI."
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -16,127 +17,153 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
+
+/// Called before being installed into a law rack. Return FALSE to block installation.
+/obj/item/ai_module/proc/can_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
+	return TRUE
+
+/// Called right before the module is added to the rack by a living mob, allowing special handling or logging
+/obj/item/ai_module/proc/pre_user_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
+	return
+
+/// Called right before the module is removed from the rack by a living mob, allowing special handling or logging
+/obj/item/ai_module/proc/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
+	return
+
+/// Called after a module is installed into a law rack.
+/obj/item/ai_module/proc/on_rack_install(obj/machinery/ai_law_rack/rack)
+	return
+
+/// Called when the law rack this is installed to has been linked to an AI.
+/// Also called when installed to a rack that already has an AI linked to it.
+/obj/item/ai_module/proc/silicon_linked_to_installed(mob/living/silicon/lawed)
+	return
+
+/// Called after a module is uninstalled from a law rack.
+/obj/item/ai_module/proc/on_rack_uninstall(obj/machinery/ai_law_rack/rack)
+	return
+
+/// Called with the law rack this is installed to is unlinked from an AI.
+/// Also called when uninstalled from a rack that has an AI linked to it.
+/obj/item/ai_module/proc/silicon_unlinked_from_installed(mob/living/silicon/lawed)
+	return
+
+/// When slotted into an AI law rack, adds laws! The bread and butter of AI modules.
+/obj/item/ai_module/law
+	desc = "An AI Module for programming laws to an AI."
 	/// This is where our laws get put at for the module
 	var/list/laws = list()
-	/// Used to skip laws being checked (for reset & remove boards that have no laws)
-	var/bypass_law_amt_check = FALSE
+	/// The laws list last time save_laws() was called
+	VAR_PRIVATE/list/saved_laws
+	/// If TRUE, this board has sustained damage and must be repaired
+	VAR_FINAL/ioned = FALSE
+	/// If TRUE, this module will never be ioned by an ion storm.
+	/// It also cannot be repaired by a multitool.
+	var/ion_storm_immune = FALSE
 
-/obj/item/ai_module/Initialize(mapload)
+/obj/item/ai_module/law/Initialize(mapload)
 	. = ..()
 	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI) && is_station_level(z))
 		var/delete_module = handle_unique_ai()
 		if(delete_module)
 			return INITIALIZE_HINT_QDEL
 
-/obj/item/ai_module/examine(mob/user as mob)
+	if(ioned)
+		update_appearance()
+
+/obj/item/ai_module/law/examine(mob/user)
 	. = ..()
+	if(ioned && !ion_storm_immune)
+		. += "This module has been damaged and should be repaired with a [EXAMINE_HINT("multitool")]."
+
 	var/examine_laws = display_laws()
 	if(examine_laws)
-		. += "\n" + examine_laws
+		. += "<br>[examine_laws]"
 
-/obj/item/ai_module/attack_self(mob/user as mob)
-	..()
-	to_chat(user, boxed_message(display_laws()))
+/obj/item/ai_module/law/multitool_act(mob/living/user, obj/item/tool)
+	if(!ioned || ion_storm_immune)
+		return NONE
+	balloon_alert(user, "repairing ion damage...")
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 25))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "module repaired")
+	set_ioned(FALSE)
+	laws = saved_laws
+	saved_laws = null
+	return ITEM_INTERACT_SUCCESS
 
-/// Returns a text display of the laws for the module.
-/obj/item/ai_module/proc/display_laws()
-	// Used to assemble the laws to show to an examining user.
-	var/assembled_laws = ""
+/// Updates the "ioned" stat of the module
+/obj/item/ai_module/law/proc/set_ioned(new_ioned)
+	var/old_ioned = ioned
+	ioned = new_ioned
+	if(old_ioned != ioned)
+		update_appearance()
 
-	if(laws.len)
-		assembled_laws += "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B><br>"
-		for(var/law in laws)
-			assembled_laws += "\"[law]\"<br>"
+/// Saves whatever laws are currently programmed into the module, so they can be restored later.
+/obj/item/ai_module/law/proc/save_laws()
+	saved_laws = laws.Copy()
 
-	return assembled_laws
+/obj/item/ai_module/law/update_overlays()
+	. = ..()
+	if(ioned)
+		. += "[base_icon_state]_damaged"
 
-///what this module should do if it is mapload spawning on a unique AI station trait round.
-/obj/item/ai_module/proc/handle_unique_ai()
-	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
-
-//The proc other things should be calling
-/obj/item/ai_module/proc/install(datum/ai_laws/law_datum, mob/user)
-	if(!bypass_law_amt_check && (!laws.len || laws[1] == "")) //So we don't loop trough an empty list and end up with runtimes.
-		to_chat(user, span_warning("ERROR: No laws found on board."))
+/obj/item/ai_module/law/attack_self(mob/user)
+	. = ..()
+	if(.)
 		return
 
-	var/overflow = FALSE
-	//Handle the lawcap
-	if(law_datum)
-		var/tot_laws = 0
-		var/included_lawsets = list(law_datum.supplied, law_datum.ion, law_datum.hacked, laws)
+	var/displayed = display_laws()
+	if(displayed)
+		to_chat(user, boxed_message(displayed))
+		. = TRUE
+	if(!ioned && user.is_holding(src))
+		. = configure(user)
 
-		// if the ai module is a core module we don't count inherent laws since they will be replaced
-		// however the freeformcore doesn't replace inherent laws so we check that too
-		if(!istype(src, /obj/item/ai_module/core) || istype(src, /obj/item/ai_module/core/freeformcore))
-			included_lawsets += list(law_datum.inherent)
+/// Allows users to configure aspects of the module, if applicable.
+/obj/item/ai_module/law/proc/configure(mob/user)
+	return FALSE
 
-		for(var/lawlist in included_lawsets)
-			for(var/mylaw in lawlist)
-				if(mylaw != "")
-					tot_laws++
+/// Returns a text display of the laws for the module.
+/obj/item/ai_module/law/proc/display_laws()
+	var/assembled_laws = ""
 
-		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			to_chat(user, span_alert("Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."))
-			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
-			log_silicon("[key_name(user)] tried to upload laws to [law_datum.owner ? key_name(law_datum.owner) : "an AI core"] that would exceed the law cap.")
-			overflow = TRUE
+	for(var/law in laws)
+		assembled_laws += "\"[law]\"<br>"
 
-	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
-	if(law_datum.owner)
-		to_chat(user, span_notice("Upload complete. [law_datum.owner]'s laws have been modified."))
-		law_datum.owner.law_change_counter++
-	else
-		to_chat(user, span_notice("Upload complete."))
+	if(assembled_laws)
+		return "<b>Programmed Law[(length(laws) > 1) ? "s" : ""]:</b><br>[assembled_laws]"
 
-	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
-	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
-	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
+	return null
 
-	//affected cyborgs are cyborgs linked to the AI with lawsync enabled
-	var/affected_cyborgs = list()
-	var/list/borg_txt = list()
-	var/list/borg_flw = list()
-	if(isAI(law_datum.owner))
-		var/mob/living/silicon/ai/owner = law_datum.owner
-		for(var/mob/living/silicon/robot/owned_borg as anything in owner.connected_robots)
-			if(owned_borg.connected_ai && owned_borg.lawupdate)
-				affected_cyborgs += owned_borg
-				borg_flw += "[ADMIN_LOOKUPFLW(owned_borg)], "
-				borg_txt += "[owned_borg.name]([owned_borg.key]), "
+///what this module should do if it is mapload spawning on a unique AI station trait round.
+/obj/item/ai_module/law/proc/handle_unique_ai()
+	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
-	borg_txt = borg_txt.Join()
-	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
-	log_silicon("LAW: [key_name(user)] used [src.name] on [key_name(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
-	message_admins("[ADMIN_LOOKUPFLW(user)] used [src.name] on [ADMIN_LOOKUPFLW(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""] , [length(affected_cyborgs) ? ", impacting synced borgs [borg_flw.Join()]" : ""]")
-	if(law_datum.owner)
-		deadchat_broadcast("<b> changed [span_name("[ainame]")]'s laws at [get_area_name(user, TRUE)].</b>", span_name("[user]"), follow_target=user, message_type=DEADCHAT_LAWCHANGE)
+/obj/item/ai_module/law/proc/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
+	return
 
-//The proc that actually changes the silicon's laws.
-/obj/item/ai_module/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
-	if(law_datum.owner)
-		to_chat(law_datum.owner, span_userdanger("[sender] has uploaded a change to the laws you must follow using a [name]."))
-
-/obj/item/ai_module/core
+/obj/item/ai_module/law/core
 	desc = "An AI Module for programming core laws to an AI."
 
-/obj/item/ai_module/core/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	for(var/templaw in laws)
-		if(law_datum.owner)
-			if(!overflow)
-				law_datum.owner.add_inherent_law(templaw)
-			else
-				law_datum.owner.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED), LAW_INHERENT)
-		else
-			if(!overflow)
-				law_datum.add_inherent_law(templaw)
-			else
-				law_datum.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED), LAW_INHERENT)
+/obj/item/ai_module/law/core/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
+	for(var/law in laws)
+		combined_lawset.add_inherent_law(law)
 
-/obj/item/ai_module/core/full
+/obj/item/ai_module/law/core/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
+	if(rack.get_parent_rack()) // If we are a sub rack, no stun
+		return
+	for(var/mob/living/bot in flatten_list(rack.linked_mobs))
+		// removing core laws temporarily stuns the silicon to let people swap cores without immediately getting blasted
+		if(bot.AmountStun() > 5 SECONDS || IS_MALF_AI(bot))
+			continue
+		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
+		to_chat(bot, span_userdanger("Core module removed. Recalculating directives..."))
+
+/obj/item/ai_module/law/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 
-/obj/item/ai_module/core/full/Initialize(mapload)
+/obj/item/ai_module/law/core/full/Initialize(mapload)
 	. = ..()
 	if(!law_id)
 		return
@@ -146,16 +173,7 @@
 	var/datum/ai_laws/core_laws = new lawtype
 	laws = core_laws.inherent
 
-/obj/item/ai_module/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
-	if(law_datum.owner)
-		law_datum.owner.clear_inherent_laws()
-		law_datum.owner.clear_zeroth_law(0)
-	else
-		law_datum.clear_inherent_laws()
-		law_datum.clear_zeroth_law(0)
-	..()
-
-/obj/item/ai_module/core/full/handle_unique_ai()
+/obj/item/ai_module/law/core/full/handle_unique_ai()
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	if(law_id == initial(default_laws.id))
 		return
@@ -171,26 +189,26 @@
 	. = ..()
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	//try to spawn a law board, since they may have special functionality (asimov setting subjects)
-	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
+	for(var/obj/item/ai_module/law/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/law/core/full))
 		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
 			continue
 		potential_lawboard = new potential_lawboard(loc)
 		return
 	//spawn the fallback instead
-	new /obj/item/ai_module/core/round_default_fallback(loc)
+	new /obj/item/ai_module/law/core/round_default_fallback(loc)
 
 ///When the default lawset spawner cannot find a module object to spawn, it will spawn this, and this sets itself to the round default.
 ///This is so /datum/lawsets can be picked even if they have no module for themselves.
-/obj/item/ai_module/core/round_default_fallback
+/obj/item/ai_module/law/core/round_default_fallback
 
-/obj/item/ai_module/core/round_default_fallback/Initialize(mapload)
+/obj/item/ai_module/law/core/round_default_fallback/Initialize(mapload)
 	. = ..()
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	default_laws = new default_laws()
 	name = "'[default_laws.name]' Core AI Module"
 	laws = default_laws.inherent
 
-/obj/item/ai_module/core/round_default_fallback/handle_unique_ai()
+/obj/item/ai_module/law/core/round_default_fallback/handle_unique_ai()
 	return
 
 #undef SHOULD_QDEL_MODULE

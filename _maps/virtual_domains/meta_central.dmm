@@ -212,15 +212,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"bQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/malf,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "bR" = (
 /obj/structure/chair{
 	dir = 1
@@ -261,14 +252,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/caution/red,
 /turf/open/floor/iron,
-/area/virtual_domain)
-"ch" = (
-/obj/structure/table/wood,
-/obj/machinery/light/directional/south,
-/obj/item/papercutter{
-	pixel_x = -4
-	},
-/turf/open/floor/wood,
 /area/virtual_domain)
 "cj" = (
 /obj/item/radio/intercom/directional/east,
@@ -311,6 +294,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
+/area/virtual_domain)
+"cs" = (
+/obj/structure/table/wood,
+/obj/machinery/light/directional/south,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
+/turf/open/floor/wood,
 /area/virtual_domain)
 "cw" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3698,19 +3689,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"Fa" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/night{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/night,
-/obj/item/clothing/glasses/night{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/turf/template_noop,
-/area/virtual_domain/safehouse)
 "Fc" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
@@ -4427,6 +4405,19 @@
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"Lq" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/night{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/night{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Ls" = (
 /obj/modular_map_root/safehouse{
 	key = "shuttle_space"
@@ -4450,6 +4441,15 @@
 /obj/structure/lattice,
 /obj/item/gun/ballistic/rifle/boltaction/surplus,
 /turf/open/space/basic,
+/area/virtual_domain)
+"LC" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "LD" = (
 /obj/item/kirbyplants/random/dead/research_director,
@@ -6726,7 +6726,7 @@ uS
 uS
 ML
 DP
-ch
+cs
 uS
 ND
 AP
@@ -7002,7 +7002,7 @@ HM
 ps
 hV
 Hd
-bQ
+LC
 hZ
 ii
 SN
@@ -7276,7 +7276,7 @@ oD
 pB
 hX
 zQ
-Fa
+Lq
 hX
 hX
 hX

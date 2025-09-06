@@ -7,15 +7,6 @@
 /obj/structure/cable,
 /turf/template_noop,
 /area/ruin/space)
-"ac" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 4;
-	name = "Syndicate Ship Turret";
-	on = 0;
-	shot_delay = 10
-	},
-/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ad" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/plastic,
@@ -53,19 +44,11 @@
 "am" = (
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"an" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ao" = (
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ap" = (
 /turf/template_noop,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"aq" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ar" = (
 /obj/machinery/camera/xray{
@@ -202,9 +185,6 @@
 "ba" = (
 /turf/closed/mineral/random,
 /area/ruin/space)
-"bb" = (
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bd" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -249,10 +229,6 @@
 /obj/item/storage/box/beakers,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"bg" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bh" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
@@ -456,10 +432,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bR" = (
-/obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bS" = (
 /obj/machinery/button/crematorium{
 	id = "fscremate";
@@ -471,10 +443,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bX" = (
-/obj/structure/sign/poster/contraband/c20r,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bY" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -488,9 +456,6 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bZ" = (
-/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ca" = (
 /obj/machinery/computer/crew/syndie{
@@ -555,23 +520,10 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"ci" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 4;
-	name = "Syndicate Ship Turret";
-	on = 0;
-	shot_delay = 10
-	},
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cj" = (
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"ck" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cm" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -987,6 +939,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"fs" = (
+/obj/structure/sign/poster/contraband/tools,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"gs" = (
+/obj/structure/sign/poster/contraband/syndicate_pistol,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "gz" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1046,6 +1006,18 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"or" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 4;
+	name = "Syndicate Ship Turret";
+	on = 0;
+	shot_delay = 10
+	},
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ph" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "qK" = (
 /obj/machinery/turretid{
 	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
@@ -1088,8 +1060,8 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"vR" = (
-/obj/item/ai_module/core/full/cybersun,
+"xN" = (
+/obj/item/ai_module/law/core/full/cybersun,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1182,6 +1154,27 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"LZ" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Mh" = (
+/obj/structure/sign/poster/contraband/c20r,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"Qf" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 4;
+	name = "Syndicate Ship Turret";
+	on = 0;
+	shot_delay = 10
+	},
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"TU" = (
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "VF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -1199,6 +1192,13 @@
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Yl" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ZR" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 
 (1,1,1) = {"
 aa
@@ -1631,21 +1631,21 @@ aa
 aa
 aa
 aa
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 aa
 aa
 aa
@@ -1677,8 +1677,8 @@ aa
 aa
 aa
 aa
-ci
-bZ
+Qf
+ph
 jN
 dt
 al
@@ -1692,8 +1692,8 @@ al
 al
 dt
 WR
-bZ
-ci
+ph
+Qf
 aa
 aa
 aa
@@ -1724,7 +1724,7 @@ aa
 aa
 aa
 aa
-bZ
+ph
 al
 al
 al
@@ -1740,7 +1740,7 @@ al
 al
 al
 al
-bZ
+ph
 aa
 aa
 aa
@@ -1771,23 +1771,23 @@ aa
 aa
 aa
 aa
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 dn
-bZ
-bZ
-bZ
+ph
+ph
+ph
 dn
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
 aa
 aa
 aa
@@ -1818,23 +1818,23 @@ aa
 aa
 aa
 aa
-bZ
-bZ
+ph
+ph
 bV
-bZ
+ph
 sL
 bw
-bZ
+ph
 mZ
 aR
 az
-bZ
+ph
 bz
 bD
 al
 bY
 al
-bZ
+ph
 aa
 aa
 aa
@@ -1865,23 +1865,23 @@ aa
 aa
 aa
 aa
-bZ
+ph
 tO
 aw
-bZ
+ph
 ao
 aO
-bZ
+ph
 vB
 cC
 yf
-bZ
+ph
 bY
 bE
 al
 al
 cY
-bZ
+ph
 aa
 aa
 aa
@@ -1912,7 +1912,7 @@ aa
 aa
 aa
 aa
-bZ
+ph
 cf
 aw
 ch
@@ -1928,7 +1928,7 @@ al
 al
 cc
 dr
-bZ
+ph
 aa
 aa
 aa
@@ -1959,10 +1959,10 @@ aa
 aa
 aa
 aa
-bZ
+ph
 Lj
 aw
-bZ
+ph
 ao
 ao
 bx
@@ -1975,7 +1975,7 @@ al
 al
 cc
 da
-bZ
+ph
 aa
 aa
 aa
@@ -2006,23 +2006,23 @@ aa
 aa
 aa
 aa
-bZ
-vR
+ph
+xN
 aw
-bZ
+ph
 aB
 bn
-bZ
+ph
 tv
 cE
 aS
-bZ
+ph
 bY
 bE
 al
 al
 cY
-bZ
+ph
 aa
 aa
 aa
@@ -2053,23 +2053,23 @@ aa
 aa
 aa
 aa
-ac
-bZ
+or
+ph
 co
-bZ
+ph
 VF
 ah
-bg
+gs
 aD
 cF
 Ji
-bZ
+ph
 ah
 bD
 al
 bY
-bZ
-ac
+ph
+or
 aa
 aa
 aa
@@ -2101,21 +2101,21 @@ aa
 aa
 aa
 aa
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 cG
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 aa
 aa
 aa
@@ -2148,21 +2148,21 @@ aa
 aa
 aa
 aa
-bZ
+ph
 ad
 am
 am
 ct
-bZ
+ph
 al
 cH
 al
-bZ
+ph
 bG
 bI
 cZ
 db
-bZ
+ph
 aa
 aa
 aa
@@ -2195,21 +2195,21 @@ aa
 aa
 aa
 aa
-bZ
+ph
 aj
 am
 am
 cj
-bZ
+ph
 Dx
 mm
 al
-bZ
+ph
 bH
 cd
-bZ
-bZ
-bZ
+ph
+ph
+ph
 aa
 aa
 aa
@@ -2218,12 +2218,12 @@ aY
 ba
 ba
 bq
-bb
-bb
+Yl
+Yl
 bj
 lQ
-bb
-bb
+Yl
+Yl
 ba
 ba
 ba
@@ -2242,7 +2242,7 @@ aa
 aa
 aa
 aa
-bZ
+ph
 ak
 ar
 am
@@ -2256,7 +2256,7 @@ bI
 bI
 cZ
 dc
-bZ
+ph
 aa
 aa
 aa
@@ -2265,12 +2265,12 @@ aY
 aY
 ba
 ba
-bX
+Mh
 bj
 bj
 bj
 bj
-bb
+Yl
 ba
 ba
 aY
@@ -2288,23 +2288,23 @@ aa
 aa
 aa
 aa
-ci
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+Qf
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 cK
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-ci
+ph
+ph
+ph
+ph
+ph
+ph
+ph
+Qf
 aa
 aa
 aa
@@ -2312,12 +2312,12 @@ aa
 aY
 ba
 ba
-bb
+Yl
 dh
 bj
 bm
 bj
-bb
+Yl
 ba
 aY
 aY
@@ -2335,10 +2335,10 @@ aa
 aa
 aa
 aa
-bZ
+ph
 bO
 bS
-bZ
+ph
 bv
 aP
 aP
@@ -2348,10 +2348,10 @@ aP
 aP
 aP
 al
-bZ
+ph
 al
 bJ
-bZ
+ph
 aa
 aa
 aa
@@ -2359,12 +2359,12 @@ aa
 aY
 aY
 ba
-bb
+Yl
 bf
 bh
 bj
 bj
-bb
+Yl
 bs
 ba
 ba
@@ -2382,10 +2382,10 @@ aa
 aa
 aa
 aa
-bZ
+ph
 Cy
 al
-bZ
+ph
 rz
 al
 ax
@@ -2395,10 +2395,10 @@ ax
 ax
 aP
 al
-bZ
+ph
 al
 ml
-bZ
+ph
 aa
 aa
 aa
@@ -2406,12 +2406,12 @@ aa
 aa
 aY
 aY
-bR
+fs
 bp
 bh
 bj
 bC
-bb
+Yl
 bq
 ba
 ba
@@ -2458,7 +2458,7 @@ bh
 bh
 bj
 bu
-bb
+Yl
 ba
 ba
 aY
@@ -2476,10 +2476,10 @@ aa
 aa
 aa
 aa
-bZ
+ph
 al
 al
-an
+LZ
 al
 at
 ah
@@ -2489,10 +2489,10 @@ ah
 ah
 aL
 al
-an
+LZ
 al
 bJ
-bZ
+ph
 aa
 aa
 aa
@@ -2500,12 +2500,12 @@ aa
 aa
 aY
 aY
-ck
+ZR
 yv
 bj
 bj
 jZ
-bb
+Yl
 ba
 ba
 aY
@@ -2523,10 +2523,10 @@ aa
 aa
 aa
 aa
-bZ
+ph
 cn
 al
-bZ
+ph
 al
 al
 al
@@ -2536,10 +2536,10 @@ ah
 al
 al
 al
-bZ
+ph
 al
 bL
-bZ
+ph
 aa
 aa
 aa
@@ -2547,12 +2547,12 @@ aa
 aY
 aY
 ba
-bb
-bb
+Yl
+Yl
 HM
 cw
-bb
-bb
+Yl
+Yl
 ba
 ba
 aY
@@ -2570,10 +2570,10 @@ aa
 aa
 aa
 aa
-ac
-bZ
+or
+ph
 dy
-bZ
+ph
 cr
 al
 al
@@ -2583,10 +2583,10 @@ Hi
 al
 al
 al
-bZ
+ph
 dy
-bZ
-ac
+ph
+or
 aa
 aa
 aa
@@ -2595,10 +2595,10 @@ aY
 ba
 ba
 ba
-bb
-bb
-bb
-bb
+Yl
+Yl
+Yl
+Yl
 ba
 ba
 bq
@@ -2618,21 +2618,21 @@ aa
 aa
 aa
 aa
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 cq
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
+ph
+ph
+ph
 aa
 aa
 aa
@@ -2667,7 +2667,7 @@ aa
 aa
 aa
 aa
-aq
+TU
 kY
 ce
 aw
@@ -2677,7 +2677,7 @@ aw
 aw
 cg
 ce
-bZ
+ph
 aa
 aa
 aa
@@ -2711,10 +2711,10 @@ aa
 aa
 aa
 aa
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
 aw
 aw
 aw
@@ -2724,10 +2724,10 @@ aw
 aw
 aw
 aw
-bZ
-bZ
-bZ
-bZ
+ph
+ph
+ph
+ph
 aa
 aa
 aa
@@ -2758,10 +2758,10 @@ aa
 aa
 aa
 aa
-bZ
+ph
 qK
 aw
-bZ
+ph
 br
 aw
 aw
@@ -2771,10 +2771,10 @@ aw
 aw
 aw
 bt
-bZ
+ph
 df
 df
-bZ
+ph
 aa
 aa
 aa
@@ -2805,7 +2805,7 @@ aa
 aa
 aa
 aa
-bZ
+ph
 mp
 aw
 cp
@@ -2821,7 +2821,7 @@ aw
 cJ
 aw
 gz
-bZ
+ph
 aa
 aa
 aa
@@ -2852,10 +2852,10 @@ aa
 aa
 aa
 aa
-ac
-bZ
+or
+ph
 aw
-bZ
+ph
 aw
 cu
 aw
@@ -2865,10 +2865,10 @@ ca
 aw
 cb
 aw
-bZ
+ph
 dg
-bZ
-ac
+ph
+or
 aa
 aa
 aa
@@ -2900,9 +2900,9 @@ aa
 aa
 aa
 aa
-bZ
-bZ
-bZ
+ph
+ph
+ph
 aw
 aw
 aw
@@ -2912,9 +2912,9 @@ aw
 aw
 aw
 aw
-bZ
-bZ
-bZ
+ph
+ph
+ph
 aa
 aa
 aa
@@ -2948,8 +2948,8 @@ aa
 aa
 aa
 aa
-bZ
-bZ
+ph
+ph
 bV
 bV
 aW
@@ -2959,8 +2959,8 @@ bV
 bV
 bV
 bV
-bZ
-bZ
+ph
+ph
 aa
 aa
 aa
@@ -2996,7 +2996,7 @@ aa
 aa
 aa
 aa
-ac
+or
 au
 au
 au
@@ -3006,7 +3006,7 @@ au
 au
 au
 au
-ac
+or
 aa
 aa
 aa
