@@ -112,11 +112,11 @@
 /obj/item/boulder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(istype(interacting_with, /turf/open/lava))
-		if(!create_platform(interacting_with, user))
+		if(!create_platform(interacting_with, user, interacting_with))
 			return ITEM_INTERACT_BLOCKING
 		return ITEM_INTERACT_SUCCESS
 
-/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user)
+/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user, turf/open/floating_on)
 	if(locate(/obj/structure/lattice/catwalk/boulder, get_turf(interacting_with)))
 		to_chat(user, span_warning("There is already a boulder platform here!"))
 		return FALSE
@@ -131,11 +131,13 @@
 			platform_lifespan = 90 SECONDS
 		else
 			platform_lifespan = 10 SECONDS //Fallback
+	if(HAS_TRAIT(src, TRAIT_GULAG_BOULDER_WEAKNESS))
+		platform_lifespan = 6 SECONDS // I didn't want to just completely axe the mechanic within the gulag, so I decided to make it very short if your prisoners are very coordinated.
 
 	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
-	addtimer(CALLBACK(platform, TYPE_PROC_REF(/atom, add_shared_particles), /particles/smoke/ash), platform_lifespan - PLATFORM_WARNING_MODIFIER)
-	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, self_destruct)), platform_lifespan)
-	visible_message(span_notice("\The [src] floats on the lava, forming a temporary platform!"))
+	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), platform_lifespan)
+
+	visible_message(span_notice("\The [src] floats on \the [floating_on], forming a temporary platform!"))
 	qdel(src)
 	return TRUE
 /**
@@ -231,18 +233,25 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	pixel_y = -8
+	pixel_y = -4
 	build_material = null
+	/// The type of particle to make before the platform collapses.
+	var/warning_particle = /particles/smoke/ash
 
 /obj/structure/lattice/catwalk/boulder/Initialize(mapload)
 	. = ..()
 	fast_emissive_blocker(src)
+	AddElement(/datum/element/elevation, pixel_shift = 8)
 
-/obj/structure/lattice/catwalk/boulder/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/lattice/catwalk/boulder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(ismetaltile(attacking_item))
 		balloon_alert(user, "Too unstable!")
 		return FALSE
 	return ..()
+
+/obj/structure/lattice/catwalk/boulder/proc/pre_self_destruct()
+	add_shared_particles(warning_particle)
+	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 5 SECONDS)
 
 /**
  * Handles platforms deleting themselves with a visual effect and message.
@@ -250,5 +259,6 @@
 /obj/structure/lattice/catwalk/boulder/proc/self_destruct()
 	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = EASE_IN)
 	sleep(2 SECONDS)
-	visible_message(span_notice("The [src] sinks back into the lava and melts away!"))
+	visible_message(span_notice("\The [src] sinks and dissapears!"))
+	remove_shared_particles(warning_particle)
 	deconstruct()

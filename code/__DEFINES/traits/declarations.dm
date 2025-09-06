@@ -1565,4 +1565,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait specifying that an AI has a remote connection to an integrated circuit
 #define TRAIT_CONNECTED_TO_CIRCUIT "connected_to_circuit"
 
+/// Trait applied to gulag boulders, to signify an even shorter duration for a spawned boulder platform (and prevent gulag cheese)
+#define TRAIT_GULAG_BOULDER_WEAKNESS "gulag_boulder_debuff"
+
 // END TRAIT DEFINES

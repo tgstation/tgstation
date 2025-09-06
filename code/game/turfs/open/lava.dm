@@ -354,6 +354,7 @@
  */
 /turf/open/lava/proc/drop_contents_into_lava()
 	for(var/atom/movable/each_content in contents)
+		balloon_alert_to_viewers("[pick("Splash","Pshhhh","Hiss","Blorble")]!")
 		burn_stuff(each_content)
 	return TRUE
 
