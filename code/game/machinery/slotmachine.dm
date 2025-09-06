@@ -8,8 +8,8 @@
 #define SMALL_PRIZE 400
 #define BIG_PRIZE 1000
 #define JACKPOT 10000
-#define SPIN_TIME 30 //As always, deciseconds.
-#define REEL_DEACTIVATE_DELAY 7
+#define SPIN_TIME 36 //As always, deciseconds.
+#define REEL_DEACTIVATE_DELAY 4
 #define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
 #define COIN 2
@@ -237,7 +237,7 @@
 
 	toggle_reel_spin(1)
 	update_appearance()
-	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 4, TIMER_LOOP|TIMER_STOPPABLE)
+	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_spinning), spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
 	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
