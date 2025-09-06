@@ -243,9 +243,9 @@
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
 	required_slots = list(ITEM_SLOT_BACK)
-	/// Does this show damage types, body temp, satiety
+	/// Does this show damage types, body temp, satiety?
 	var/display_detailed_vitals = TRUE
-	/// Does this show DNA data
+	/// Does this show DNA data?
 	var/display_dna = FALSE
 	/// Does this show the round ID and shift time?
 	var/display_time = FALSE
@@ -253,6 +253,8 @@
 	var/death_sound = 'sound/effects/flatline3.ogg'
 	/// Death sound volume. Please be responsible with this.
 	var/death_sound_volume = 50
+	/// Does this boost suit sensor status across Z-levels?
+	var/sensor_boost = TRUE
 
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
@@ -291,6 +293,7 @@
 	. = ..()
 	.["display_detailed_vitals"] = add_ui_configuration("Detailed Vitals", "bool", display_detailed_vitals)
 	.["display_dna"] = add_ui_configuration("DNA Information", "bool", display_dna)
+	.["sensor_boost"] = add_ui_configuration("Suit Sensor Booster", "bool", sensor_boost)
 
 /obj/item/mod/module/status_readout/configure_edit(key, value)
 	switch(key)
@@ -298,12 +301,23 @@
 			display_detailed_vitals = text2num(value)
 		if("display_dna")
 			display_dna = text2num(value)
+		if("sensor_boost")
+			sensor_boost = text2num(value)
+			update_sensor_booster()
 
 /obj/item/mod/module/status_readout/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
+	update_sensor_booster()
 
 /obj/item/mod/module/status_readout/on_part_deactivation(deleting)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_DEATH)
+	REMOVE_TRAIT(mod.wearer, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
+
+/obj/item/mod/module/status_readout/proc/update_sensor_booster()
+	if(sensor_boost)
+		ADD_TRAIT(mod.wearer, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
+	else
+		REMOVE_TRAIT(mod.wearer, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 
 /obj/item/mod/module/status_readout/proc/death_sound(mob/living/carbon/human/wearer)
 	SIGNAL_HANDLER
