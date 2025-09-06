@@ -3,24 +3,27 @@ import {
   Box,
   Button,
   Collapsible,
-  Divider,
   Icon,
   Image,
   LabeledList,
   NoticeBox,
   Section,
   Stack,
+  Table,
   Tabs,
   Tooltip,
   VirtualList,
+  Input
 } from 'tgui-core/components';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import type { Material } from './Fabrication/Types';
+
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 type Machine = {
   name: string;
@@ -68,6 +71,13 @@ type Data = {
   id_required: BooleanLike;
 };
 
+const actionToColor = {
+  DEPOSITED: 'green',
+  WITHDRAWN: 'red',
+  PROCESSED: 'blue',
+  RESTOCKED: 'purple',
+};
+
 export const OreSilo = (props: Data) => {
   const { act, data } = useBackend<Data>();
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
@@ -104,12 +114,7 @@ export const OreSilo = (props: Data) => {
                 onRemove={(index) => act('remove', { id: index })}
               />
             ) : null}
-            {currentTab === Tab.Logs && (
-              <>
-                <RestrictButton />
-                <LogsList logs={logs} />
-              </>
-            )}
+            {currentTab === Tab.Logs && <LogsList logs={logs} />}
           </Stack.Item>
           <Stack.Item>
             <Section fill>
@@ -175,9 +180,9 @@ const MachineDisplay = (props: MachineProps) => {
         className={
           machine.on_hold
             ? classes([
-                'FabricatorRecipe__Title',
-                'FabricatorRecipe__Title--disabled',
-              ])
+              'FabricatorRecipe__Title',
+              'FabricatorRecipe__Title--disabled',
+            ])
             : 'FabricatorRecipe__Title'
         }
       >
@@ -235,34 +240,94 @@ const RestrictButton = () => {
   const { act, data } = useBackend<Data>();
   const { id_required } = data;
   return (
-    <Box align="center">
-      <Button
-        position="relative"
-        className="__RestrictButton"
-        color={id_required ? 'bad' : 'good'}
-        onClick={() => act('toggle_restrict')}
-      >
-        {id_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
-      </Button>
-    </Box>
+    <Button
+      position="relative"
+      className="__RestrictButton"
+      color={id_required ? 'bad' : 'good'}
+      onClick={() => act('toggle_restrict')}
+      style={{
+        marginLeft: 'auto',
+        right: 0,
+      }}
+    >
+      {id_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
+    </Button>
   );
 };
 
 const LogsList = (props: LogsListProps) => {
   const { logs } = props;
 
-  return logs.length > 0 ? (
-    <Section fill scrollable pr={1} align="center">
-      <Divider />
-      <VirtualList>
-        {logs.map((log, index) => (
-          <LogEntry key={index} {...log} />
-        ))}
-      </VirtualList>
-    </Section>
-  ) : (
-    <NoticeBox>No log entries currently present!</NoticeBox>
-  );
+  const searchableLogs = logs.map((log, index) => ({
+    id: index,
+    log,
+    searchString: [
+      log.action.toLowerCase(),
+      log.user_data.name.toLowerCase(),
+      log.user_data.assignment.toLowerCase(),
+      log.raw_materials.toLowerCase(),
+      log.machine_name.toLowerCase(),
+      log.area_name.toLowerCase(),
+      log.noun.toLowerCase(),
+    ].join(' '),
+  }));
+
+  const { query, setQuery, results } = useFuzzySearch({
+    searchArray: searchableLogs,
+    matchStrategy: 'smart',
+    getSearchString: (item) => item.searchString,
+  });
+
+  const filteredLogs = query ? results.map(result => result.log) : logs;
+
+      return (
+      <Stack vertical fill>
+        <Stack.Item>
+          <Section
+            title="Action Logs"
+            buttons={<RestrictButton />}
+          >
+            <Stack>
+              <Stack.Item grow>
+                <Input
+                  fluid
+                  height={1.7}
+                  autoFocus
+                  placeholder='Search for names, locations and resources...'
+                  value={query}
+                  onChange={(value) => setQuery(value)}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="close"
+                  onClick={() => setQuery('')}
+                  disabled={!query}
+                />
+              </Stack.Item>
+            </Stack>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section
+            fill
+            scrollable={filteredLogs.length > 0}
+            pr={1}>
+            {filteredLogs.length > 0 ? (
+              <VirtualList>
+                {filteredLogs.map((log, index) => (
+                  <LogEntry key={index} {...log} />
+                ))}
+              </VirtualList>
+            ) : (
+              <NoticeBox textAlign="center">
+                {query ? 'No logs seem to match your request.' : 'Nothing here...'}
+              </NoticeBox>
+            )}
+          </Section>
+        </Stack.Item>
+      </Stack>
+    );
 };
 
 const UserItem = (props: UserData) => {
@@ -281,17 +346,18 @@ const UserItem = (props: UserData) => {
   const { act, data } = useBackend<Data>();
   const { banned_users } = data;
   return (
-    <Stack align="center" className="__UserItem">
-      <Stack.Item className="__Name">{name}</Stack.Item>
-      <Stack.Item className="__Assignment">{assignment}</Stack.Item>
+    <Stack align="center">
+      <Stack.Item>{name},</Stack.Item>
+      <Stack.Item>{assignment}</Stack.Item>
       {!id_read_failure && !silicon_override && (
         <Stack.Item>
           <Button
-            className="__AntiRoboticistButton" // we have fun here
             color={banned_users.includes(account_id) ? 'bad' : 'good'}
             onClick={() => act('toggle_ban', { user_data: props })}
+            lineHeight={1.6}
           >
-            {banned_users.includes(account_id) ? 'Unban' : 'Ban'} User?
+            {banned_users.includes(account_id) ? 'Unrestrict' : 'Restrict'}{' '}
+            access
           </Button>
         </Stack.Item>
       )}
@@ -300,7 +366,7 @@ const UserItem = (props: UserData) => {
 };
 
 const formatAmount = (action: string, amount: number) => {
-  const isSheetAction = action === 'EJECT' || action === 'DEPOSIT';
+  const isSheetAction = action === 'WITHDRAWN' || action === 'DEPOSITED';
   const rawAmount = Math.abs(amount);
   if (!isSheetAction) {
     return rawAmount;
@@ -320,28 +386,73 @@ const LogEntry = (props: Log) => {
     noun,
     user_data,
   } = props;
-  return (
-    <Collapsible
-      title={`${action.toUpperCase()} ${formatAmount(action, amount)} ${noun}, [${user_data.name} | ${user_data.assignment.toUpperCase()}]`}
-    >
-      <Section className="__LogEntry">
-        <LabeledList>
-          <LabeledList.Item label="Time">{time}</LabeledList.Item>
-          <LabeledList.Item label="Machine">
-            {capitalize(machine_name)}
-          </LabeledList.Item>
-          <LabeledList.Item label="Location">{area_name}</LabeledList.Item>
-          <LabeledList.Item
-            label="Materials"
-            color={amount > 0 ? 'good' : 'bad'}
-          >
-            {raw_materials}
-          </LabeledList.Item>
-          <LabeledList.Item label="User">
-            <UserItem {...user_data} />
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
-    </Collapsible>
+  const [expanded, setExpanded] = useState(false);
+
+      return (
+      <Box>
+        <Box
+          style={{
+            cursor: 'pointer',
+          }}
+          onClick={() => setExpanded(!expanded)}
+        >
+            <Stack align="center" style={{ padding: '0.5em' }}>
+            <Stack.Item>
+              <Button disabled icon={expanded ? 'arrow-down' : 'arrow-right'} color='disabled' />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color={actionToColor[action.toUpperCase()]}
+                width="8em"
+                textAlign="center"
+              >
+                {action.toUpperCase()}
+              </Button>
+            </Stack.Item>
+            <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
+              <Icon name="arrow-right" ml={1} mr={1} />
+            </Stack.Item>
+            <Stack.Item grow style={{ display: 'flex', alignItems: 'center' }}>
+              {` ${formatAmount(action, amount)} ${noun}`}
+            </Stack.Item>
+            <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
+              <Button icon='user' color="gray">
+                {user_data.name} ({user_data.assignment})
+              </Button>
+            </Stack.Item>
+          </Stack>
+        </Box>
+
+      {expanded && (
+        <Box mt={0.5}>
+          <Table>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Time</Table.Cell>
+              <Table.Cell>{time}</Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Machine</Table.Cell>
+              <Table.Cell>{capitalize(machine_name)}</Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Location</Table.Cell>
+              <Table.Cell>{area_name}</Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>Materials</Table.Cell>
+              <Table.Cell color={amount > 0 ? 'good' : 'bad'}>
+                {raw_materials}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row className="candystripe" lineHeight={2}>
+              <Table.Cell pl={1}>User</Table.Cell>
+              <Table.Cell>
+                <UserItem {...user_data} />
+              </Table.Cell>
+            </Table.Row>
+          </Table>
+        </Box>
+      )}
+    </Box>
   );
 };

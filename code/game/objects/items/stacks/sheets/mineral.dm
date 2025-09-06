@@ -531,17 +531,26 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	inhand_icon_state = null
 	singular_name = "metal hydrogen sheet"
 	w_class = WEIGHT_CLASS_NORMAL
-	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | BOMB_PROOF
 	gulag_valid = TRUE
 	mats_per_unit = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/metalhydrogen
 	merge_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	armor_type = /datum/armor/metal_hydrogen_sheet
 
 /obj/item/stack/sheet/mineral/metal_hydrogen/get_main_recipes()
 	. = ..()
 	. += GLOB.metalhydrogen_recipes
 
-
+/datum/armor/metal_hydrogen_sheet
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	fire = 100
+	acid = 100
+	bio = 100
 
 GLOBAL_LIST_INIT(zaukerite_recipes, list(
 	new /datum/stack_recipe("zaukerite shard", /obj/item/ammo_casing/rebar/zaukerite, req_amount=1, res_amount=1, category = CAT_WEAPON_AMMO),

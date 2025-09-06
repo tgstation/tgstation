@@ -2,28 +2,30 @@
 /datum/element/microwavable
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// The typepath we default to if we were passed no microwave result
-	var/atom/default_typepath
 	/// Resulting atom typepath on a completed microwave.
 	var/atom/result_typepath
 	/// Reagents that should be added to the result
 	var/list/added_reagents
+	/// Whether this is a bad recipe or not. It affects some checks.
+	var/bad_recipe
 
-/datum/element/microwavable/Attach(obj/item/target, microwave_type, list/reagents, skip_matcheck = FALSE)
+/datum/element/microwavable/Attach(obj/item/target, microwave_type, list/reagents, bad_recipe = FALSE)
 	. = ..()
 	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
+	if(!microwave_type)
+		CRASH("microwavable element attached without a microwave_type arg")
 
-	result_typepath = microwave_type || default_typepath
-
+	result_typepath = microwave_type
 	added_reagents = reagents
+	src.bad_recipe = bad_recipe
 
 	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
 
-	if(!ispath(result_typepath, default_typepath))
+	if(!bad_recipe)
 		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || skip_matcheck || !target.custom_materials || isstack(target))
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || bad_recipe || !target.custom_materials || isstack(target))
 		return
 
 	var/atom/result = new result_typepath
@@ -55,12 +57,8 @@
 
 	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
 
-	if(IS_EDIBLE(result) && (result_typepath != default_typepath))
+	if(IS_EDIBLE(result) && !bad_recipe)
 		BLACKBOX_LOG_FOOD_MADE(result.type)
-		result.reagents.clear_reagents()
-		source.reagents?.trans_to(result, source.reagents.total_volume)
-		if(added_reagents) // Add any new reagents that should be added
-			result.reagents.add_reagent_list(added_reagents)
 
 		if(istype(source, /obj/item/food) && istype(result, /obj/item/food))
 			var/obj/item/food/original_food = source
@@ -70,6 +68,12 @@
 		if(microwaver && microwaver.mind)
 			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))
 
+	//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
+	if(result.reagents && source.reagents)
+		result.reagents.clear_reagents()
+		source.reagents.trans_to(result, source.reagents.total_volume)
+		if(added_reagents) // Add any new reagents that should be added
+			result.reagents.add_reagent_list(added_reagents)
 
 	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, source, efficiency)
 	SEND_SIGNAL(source, COMSIG_ITEM_MICROWAVE_COOKED_FROM, result, efficiency)
@@ -77,7 +81,7 @@
 	qdel(source)
 
 	var/recipe_result = COMPONENT_MICROWAVE_SUCCESS
-	if(istype(result, default_typepath))
+	if(bad_recipe)
 		recipe_result |= COMPONENT_MICROWAVE_BAD_RECIPE
 
 	if(randomize_pixel_offset && isitem(result))

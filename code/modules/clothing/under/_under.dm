@@ -289,14 +289,15 @@
 
 	LAZYADD(attached_accessories, accessory)
 	accessory.forceMove(src)
+
+	if(isnull(accessory_overlay))
+		create_accessory_overlay()
+
 	// Allow for accessories to react to the acccessory list now
 	accessory.successful_attach(src)
 
 	if(user && attach_message)
 		balloon_alert(user, "accessory attached")
-
-	if(isnull(accessory_overlay))
-		create_accessory_overlay()
 
 	update_appearance()
 	return TRUE
@@ -320,10 +321,11 @@
 
 	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
-	removed.detach(src)
 
 	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
 		create_accessory_overlay()
+
+	removed.detach(src)
 
 	update_appearance()
 

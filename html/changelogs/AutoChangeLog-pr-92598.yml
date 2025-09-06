@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Ending a MODlink call in any non-standard way no longer bricks your ability to use MODlinks."
-  - bugfix: "Ending a MODlink call in any non-standard way and then giving the item to someone else to call with no longer moves the visuals based on the first person to try to use the item."
