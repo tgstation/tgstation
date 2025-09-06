@@ -334,6 +334,7 @@
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
 
 /obj/structure/closet/crate/grave/skeleton
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	affect_mood = TRUE
 
 /obj/structure/closet/crate/grave/skeleton/PopulateContents()
