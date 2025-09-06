@@ -1,5 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - balance: "baby slimes have slightly weaker melee damage"
-  - bugfix: "fugu gland's melee and HP buffs no longer wear off on slimes if they become babies after dying as an adult"
