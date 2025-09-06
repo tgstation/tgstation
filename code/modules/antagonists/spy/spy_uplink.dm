@@ -155,6 +155,9 @@
 	bounty.claimed = TRUE
 
 	var/atom/movable/reward = bounty.reward_item.spawn_item_for_generic_use(spy)
+	handler.claimed_bounty_rewards |= reward.type
+	if(bounty.clear_post_claim && prob(SPY_REWARD_REMOVAL_CHANCE))
+		handler.possible_uplink_items[SPY_BOUNTIES_RESTRICTED] -= reward
 	if(isitem(reward))
 		spy.put_in_hands(reward)
 
@@ -187,7 +190,7 @@
 
 	data["bounties"] = list()
 	for(var/datum/spy_bounty/bounty as anything in handler.get_all_bounties())
-		UNTYPED_LIST_ADD(data["bounties"], bounty.to_ui_data(user))
+		UNTYPED_LIST_ADD(data["bounties"], bounty.to_ui_data())
 	data["time_left"] = timeleft(handler.refresh_timer)
 
 	return data

@@ -78,6 +78,7 @@
 	desc = "An additional 8-round buckshot magazine for use with the Bulldog shotgun. Front towards enemy."
 	item = /obj/item/ammo_box/magazine/m12g
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/shotgun
 
 /datum/uplink_item/ammo_nuclear/basic/slug
 	name = "12g Slug Drum (Bulldog)"
@@ -85,6 +86,7 @@
 		Now 8 times less likely to shoot your pals."
 	item = /obj/item/ammo_box/magazine/m12g/slug
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/shotgun
 
 /datum/uplink_item/ammo_nuclear/basic/flechette
 	name = "12g Flechette Shells (Bulldog)"
@@ -92,6 +94,7 @@
 		Getting stopped by armor? Why not flechette? Turn meat and kevlar to tatters!"
 	item = /obj/item/ammo_box/magazine/m12g/flechette
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/shotgun
 
 /datum/uplink_item/ammo_nuclear/basic/donk
 	name = "12g Donk Co. 'Donk Spike' Flechette Magazine Box (Bulldog)"
@@ -100,6 +103,7 @@
 		the price of one purchase! WARNING: DO NOT SNIFF THE MAGAZINES!"
 	item = /obj/item/storage/box/syndie_kit/shotgun_surplus
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/shotgun
 
 /datum/uplink_item/ammo_nuclear/incendiary/dragon
 	name = "12g Dragon's Breath Drum (Bulldog)"
@@ -107,6 +111,7 @@
 		'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/shotgun
 
 /datum/uplink_item/ammo_nuclear/special/meteor
 	name = "12g Meteorslug Shells (Bulldog)"
@@ -114,6 +119,7 @@
 		Great for blasting holes into the hull and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/shotgun
 
 // ~~ Ansem Pistol ~~
 
@@ -128,6 +134,7 @@
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/automatic/pistol/clandestine
 
 /datum/uplink_item/ammo_nuclear/ap/m10mm
 	name = "10mm Armour Piercing Magazine (Ansem)"
@@ -135,6 +142,7 @@
 		These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m10mm/ap
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/automatic/pistol/clandestine
 
 /datum/uplink_item/ammo_nuclear/hp/m10mm
 	name = "10mm Hollow Point Magazine (Ansem)"
@@ -142,6 +150,7 @@
 		These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/automatic/pistol/clandestine
 
 /datum/uplink_item/ammo_nuclear/incendiary/m10mm
 	name = "10mm Incendiary Magazine (Ansem)"
@@ -149,6 +158,7 @@
 		Loaded with incendiary rounds which inflict less damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/m10mm/fire
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/automatic/pistol/clandestine
 
 //Medium-cost: 14 TC each. Meant for more expensive purchases with a goal in mind.
 
@@ -219,7 +229,7 @@
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 		For when you really need a lot of things dead. Unlike field agents, operatives get a premium price for their speedloaders!"
 	item = /obj/item/ammo_box/a357
-	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	purchasable_from = parent_type::purchasable_from
 
 /datum/uplink_item/ammo_nuclear/special/revolver/phasic
 	name = ".357 Phasic Speed Loader (Revolver)"
@@ -228,6 +238,7 @@
 		The name is a misnomer. It doesn't contain any lead whatsoever!"
 	item = /obj/item/ammo_box/a357/phasic
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/revolver
 
 /datum/uplink_item/ammo_nuclear/special/revolver/heartseeker
 	name = ".357 Heartseeker Speed Loader (Revolver)"
@@ -237,6 +248,7 @@
 	item = /obj/item/ammo_box/a357/heartseeker
 	cost = 3
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	spy_bounty_requirements = /obj/item/gun/ballistic/revolver
 
 // ~~ Grenade Launcher ~~
 // 'If god had wanted you to live, he would not have created ME!'

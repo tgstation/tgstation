@@ -109,9 +109,16 @@
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
 	/// However, they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
+	/**
+	 * If not null, spy bounties with this reward will only be shown (in a separate category) to spies
+	 * that have been previously reward with ONE of the items in the list. Can also be a simple path, to be wrapped in a list on init.
+	 */
+	var/list/spy_bounty_requirements
 
 /datum/uplink_item/New()
 	. = ..()
+	if(spy_bounty_requirements)
+		spy_bounty_requirements = typecacheof(LIST_VALUE_WRAP_LISTS(spy_bounty_requirements))
 	if(stock_key != UPLINK_SHARED_STOCK_UNIQUE)
 		return
 	stock_key = type

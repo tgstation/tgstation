@@ -45,6 +45,13 @@
 	min_val = 0
 	integer = TRUE
 
+/// Spy config: Changes the amount of bounties that are locked behind required previous rewards (typically ammo), otherwise hidden.
+/datum/config_entry/number/spy_bounty_max_restricted
+	default = 4
+	min_val = 0
+	max_val = 5
+	integer = TRUE
+
 /**
  * ## Spy bounty handler
  *
@@ -67,12 +74,16 @@
 	/// This number will override that calculation with a set value - used for testing and debugging.
 	var/num_attempts_override = 0
 
+	/// List of typepaths of the rewards from all claimed bounties (the items, rather than their uplink representations), used for restricted bounties.
+	var/list/claimed_bounty_rewards = list()
+
 	/// Assoc list that dictates how much of each bounty difficulty to give out at once.
 	/// Modified by the number of times we have refreshed bounties.
 	VAR_PRIVATE/list/base_bounties_to_give = list(
 		SPY_DIFFICULTY_EASY = 4,
 		SPY_DIFFICULTY_MEDIUM = 2,
 		SPY_DIFFICULTY_HARD = 2,
+		SPY_BOUNTIES_RESTRICTED = 4,
 	)
 
 	/// Assoc list of all active bounties.
@@ -96,6 +107,7 @@
 		SPY_DIFFICULTY_EASY = list(),
 		SPY_DIFFICULTY_MEDIUM = list(),
 		SPY_DIFFICULTY_HARD = list(),
+		SPY_BOUNTIES_RESTRICTED = list(),
 	)
 
 /datum/spy_bounty_handler/New()
@@ -104,6 +116,7 @@
 		SPY_DIFFICULTY_EASY = CONFIG_GET(number/spy_bounty_max_easy),
 		SPY_DIFFICULTY_MEDIUM = CONFIG_GET(number/spy_bounty_max_medium),
 		SPY_DIFFICULTY_HARD = CONFIG_GET(number/spy_bounty_max_hard),
+		SPY_BOUNTIES_RESTRICTED = CONFIG_GET(number/spy_bounty_max_restricted),
 	)
 
 	for(var/datum/spy_bounty/bounty as anything in subtypesof(/datum/spy_bounty))
@@ -127,13 +140,18 @@
 		if(item.cost >= CONFIG_GET(number/spy_hard_reward_tc_threshold))
 			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
 
+		if(item.spy_bounty_requirements)
+			possible_uplink_items[SPY_BOUNTIES_RESTRICTED] += item
+
 	refresh_bounty_list()
 
 /// Helper that returns a list of all active bounties in a single list, regardless of difficulty.
 /datum/spy_bounty_handler/proc/get_all_bounties() as /list
 	var/list/all_bounties = list()
 	for(var/difficulty in bounties)
-		all_bounties += bounties[difficulty]
+		for(var/datum/spy_bounty/bounty as anything in bounties[difficulty])
+			if(!bounty.reward_item.spy_bounty_requirements || (claimed_bounty_rewards & bounty.reward_item.spy_bounty_requirements))
+				all_bounties += bounty
 
 	return all_bounties
 
@@ -167,6 +185,30 @@
 			else
 				failed_attempts -= 1
 				qdel(bounty)
+
+	//Hand out restricted bounties if we have any (but not always), which are locked behind other rewards.
+	var/amount_to_give = rand(0, bounties_to_give[SPY_BOUNTIES_RESTRICTED])
+	var/list/restricted_items = rand(0, possible_uplink_items[SPY_BOUNTIES_RESTRICTED])
+	if(amount_to_give > 0 && length(restricted_items))
+		var/attempts_left = num_attempts_override || amount_to_give * 3 //less wiggle room as these aren't fundamental
+		while(attempts_left > 0)
+			attempts_left--
+			var/datum/uplink_item/picked_item = pick(restricted_items)
+			//find which difficulty category the item belongs to, and initialize the relative bounty
+			for(var/difficulty in bounties)
+				if(!(picked_item in possible_uplink_items[difficulty]))
+					continue
+				var/picked_bounty = pick_weight(bounty_types[difficulty])
+				var/datum/spy_bounty/bounty = new picked_bounty(src, picked_item)
+				if(bounty.initalized)
+					amount_to_give--
+					bounty.clear_post_claim = TRUE
+					bounties[difficulty] += bounty
+					break
+				qdel(bounty)
+
+			if(amount_to_give <= 0 || !length(restricted_items))
+				break
 
 	claimed_bounties_from_last_pool.Cut()
 	num_refreshes += 1
