@@ -40,7 +40,6 @@
 
 			if(dna_cost < 0) // 0 = free, but negatives are invalid
 				continue
-
 			var/list/ability_data = list()
 			ability_data["name"] = initial(ability_path.name)
 			ability_data["desc"] = initial(ability_path.desc)
@@ -49,11 +48,14 @@
 			ability_data["genetic_point_required"] = dna_cost
 			ability_data["absorbs_required"] = initial(ability_path.req_absorbs) // compares against changeling true_absorbs
 			ability_data["dna_required"] = initial(ability_path.req_dna) // compares against changeling absorbed_count
-
+			var/datum/action/changeling/ref_power = new ability_path() // this way so it doesnt mess with the other var access
+			ability_data["prerequisite_abilities"] = ref_power.prereq_ability // compares against owned_abilities
+			qdel(ref_power)
 			abilities += list(ability_data)
 
 		// Sorts abilities alphabetically by default
 		sortTim(abilities, /proc/cmp_assoc_list_name)
+
 
 	data["abilities"] = abilities
 	return data
