@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
 /// gases_moles is an associative list of gas species to amount, make amount negative to remove
-/datum/gas_mixture/proc/adjust_multiple_gases(datum/gas_mixture/gas_holder)
+/datum/gas_mixture/proc/adjust_multiple_gases(datum/gas_holder/incoming_gas)
 	var/list/our_gases = gases
 	var/list/holder_gases = gas_holder.gases
 	// Moles transfer into self
@@ -820,3 +820,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")
+
+/datum/gas_holder
+	var/list/gas_species
+	var/temperature
