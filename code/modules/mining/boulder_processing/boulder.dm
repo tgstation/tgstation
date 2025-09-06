@@ -136,7 +136,7 @@
 
 	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
 	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), platform_lifespan)
-
+	// See Lattice.dm for more info
 	visible_message(span_notice("\The [src] floats on \the [floating_on], forming a temporary platform!"))
 	qdel(src)
 	return TRUE
