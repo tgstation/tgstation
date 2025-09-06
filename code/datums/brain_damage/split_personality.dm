@@ -91,7 +91,7 @@
 /datum/brain_trauma/severe/split_personality/on_lose()
 	// qdel the mob with the temporary component will ensure the original mind will go back into the body and vice versa for the stranger mind
 	if(!temp_component)
-		stranger_backseat.ghostize()
+		stranger_backseat?.ghostize()
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
 	..()
