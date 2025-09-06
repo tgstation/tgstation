@@ -17,7 +17,7 @@
 	)
 	inherent_biotypes = MOB_HUMANOID | MOB_SPIRIT | MOB_UNDEAD
 	no_equip_flags = ITEM_SLOT_FEET
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | SLIME_EXTRACT
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | SLIME_EXTRACT | MIRROR_PRIDE | MIRROR_MAGIC
 	sexes = FALSE
 	meat = /obj/item/ectoplasm
 
