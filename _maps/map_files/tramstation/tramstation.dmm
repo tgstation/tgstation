@@ -22463,10 +22463,22 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -8;
+	pixel_y = -5
+	},
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = 8;
+	pixel_y = -5
+	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -32720,18 +32732,25 @@
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "kwp" = (
-/obj/structure/table,
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = -8
+/obj/structure/table{
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = 4
+	pixel_x = 7;
+	pixel_y = -6
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = 4
+	pixel_x = 9;
+	pixel_y = 6
 	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = -8
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -38693,10 +38712,10 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
 "mvy" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/trimline/yellow/filled/end{
 	dir = 4
 	},
+/obj/machinery/computer/station_alert/station_only,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "mwd" = (
@@ -39571,8 +39590,23 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/item/stack/rods/fifty,
 /obj/item/radio/intercom/directional/east,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 1;
+	pixel_y = 11
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 12;
+	pixel_y = 9
+	},
+/obj/item/stack/rods/fifty{
+	pixel_x = 8;
+	pixel_y = -2
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mLO" = (
@@ -45999,7 +46033,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "pjQ" = (
-/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -46009,6 +46042,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "pkk" = (
@@ -47470,18 +47506,23 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "pHb" = (
-/obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = 5
+	pixel_y = 5;
+	pixel_x = 7
 	},
 /obj/item/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
+	pixel_x = -7;
+	pixel_y = 0
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 10;
+	pixel_x = -7
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pHl" = (
@@ -49755,14 +49796,10 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "qyP" = (
-/obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "qyQ" = (
@@ -53042,13 +53079,10 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
 "rGU" = (
-/obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 5
-	},
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "rHb" = (
@@ -53821,13 +53855,13 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "rSC" = (
-/obj/machinery/modular_computer/preset/civilian,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/computer/atmos_control/nocontrol/master,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "rSH" = (
@@ -54534,9 +54568,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "shQ" = (
-/obj/machinery/modular_computer/preset/engineering{
-	dir = 8
-	},
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "shV" = (
@@ -54908,17 +54940,29 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/glasses/meson/engine{
-	pixel_x = 2;
+	pixel_x = -9;
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/meson/engine,
 /obj/item/clothing/glasses/meson/engine{
-	pixel_x = 4;
-	pixel_y = 6
+	pixel_x = -8;
+	pixel_y = 8
 	},
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/pipe_dispenser{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/pipe_dispenser{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/pipe_dispenser{
+	pixel_x = 4;
+	pixel_y = -9
+	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
@@ -57516,9 +57560,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "tiS" = (
 /obj/effect/landmark/navigate_destination/engineering,
-/obj/machinery/modular_computer/preset/cargochat/engineering{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58895,11 +58936,26 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/plasteel{
-	amount = 10
+	amount = 10;
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -9;
+	pixel_y = 0
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -10;
+	pixel_y = 13
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 1;
+	pixel_y = 11
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 9;
+	pixel_y = 10
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -68187,9 +68243,6 @@
 /turf/open/floor/iron/white/side,
 /area/station/science/lobby)
 "wNY" = (
-/obj/machinery/computer/station_alert/station_only{
-	dir = 8
-	},
 /obj/machinery/requests_console/directional/east{
 	name = "Atmospherics Requests Console";
 	department = "Atmospherics"
@@ -68199,6 +68252,8 @@
 	network = list("ss13","engineering");
 	c_tag = "Engineering - Atmospherics Front Desk"
 	},
+/obj/structure/closet/firecloset,
+/obj/item/extinguisher/advanced,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wOb" = (
@@ -68645,10 +68700,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wYO" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/effect/turf_decal/trimline/yellow/filled/end{
 	dir = 8
 	},
+/obj/machinery/modular_computer/preset/cargochat/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wYS" = (
@@ -68766,10 +68821,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "xaT" = (
-/obj/machinery/computer/atmos_control/nocontrol/master{
-	dir = 8
-	},
 /obj/machinery/light/directional/east,
+/obj/structure/closet/firecloset,
+/obj/item/extinguisher/advanced,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xbh" = (
@@ -68982,14 +69036,13 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "xfx" = (
-/obj/machinery/computer/atmos_alert/station_only{
-	dir = 8
-	},
 /obj/machinery/button/door/directional/east{
 	name = "Atmospherics Lockdown";
 	id = "atmos";
 	req_access = list("atmospherics")
 	},
+/obj/structure/closet/firecloset,
+/obj/item/extinguisher/advanced,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xfH" = (

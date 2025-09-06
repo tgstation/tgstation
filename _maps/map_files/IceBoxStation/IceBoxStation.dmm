@@ -2755,9 +2755,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "aMr" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
 /obj/effect/landmark/start/atmospheric_technician,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
@@ -3231,17 +3228,10 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/less_spawns)
 "aTj" = (
-/obj/structure/table,
-/obj/item/storage/belt/utility,
-/obj/item/wrench,
-/obj/item/weldingtool,
-/obj/item/clothing/head/utility/welding{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "aTp" = (
@@ -24021,7 +24011,6 @@
 /turf/open/floor/plating,
 /area/station/commons/dorms/laundry)
 "gJN" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/machinery/requests_console/directional/east{
 	department = "Engineering";
 	name = "Engineering Requests Console"
@@ -24029,6 +24018,9 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/structure/window/spawner/directional/south,
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "gJT" = (
@@ -26153,14 +26145,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "hqA" = (
-/obj/structure/table,
-/obj/item/crowbar/large,
-/obj/item/storage/box/lights/mixed,
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/glasses/meson,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
-	},
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "hqE" = (
@@ -27005,9 +26990,8 @@
 	},
 /area/station/service/chapel)
 "hDh" = (
-/obj/machinery/computer/atmos_alert/station_only{
-	dir = 8
-	},
+/obj/structure/closet/firecloset,
+/obj/item/extinguisher/advanced,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "hDp" = (
@@ -30787,6 +30771,7 @@
 /area/station/service/kitchen/coldroom)
 "iKh" = (
 /obj/machinery/incident_display/delam/directional/north,
+/obj/machinery/computer/station_alert/station_only,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "iKj" = (
@@ -34335,9 +34320,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/machinery/computer/atmos_control/nocontrol/master{
-	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -53883,9 +53865,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "phw" = (
-/obj/machinery/modular_computer/preset/civilian{
-	dir = 8
-	},
+/obj/machinery/computer/atmos_control/nocontrol/master,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "phz" = (
@@ -60448,9 +60428,13 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "qXt" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/siding/yellow{
-	dir = 5
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola{
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
@@ -69348,14 +69332,30 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "tzH" = (
-/obj/structure/rack,
+/obj/structure/rack{
+	pixel_x = 0;
+	pixel_y = 0
+	},
 /obj/item/clothing/suit/hazardvest,
 /obj/structure/sign/warning/no_smoking/directional/north,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/glasses/meson/engine,
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = 9;
+	pixel_y = -7
+	},
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -73053,8 +73053,10 @@
 /turf/open/floor/engine,
 /area/station/science/explab)
 "uCK" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/machinery/airalarm/directional/east,
+/obj/structure/chair/office{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "uCM" = (
@@ -75341,15 +75343,14 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vnt" = (
-/obj/machinery/computer/station_alert/station_only{
-	dir = 8
-	},
 /obj/machinery/button/door/directional/south{
 	id = "atmos"
 	},
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -10
 	},
+/obj/structure/closet/firecloset,
+/obj/item/extinguisher/advanced,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "vnw" = (
@@ -83081,6 +83082,7 @@
 /turf/open/floor/iron/large,
 /area/station/hallway/secondary/entry)
 "xAn" = (
+/obj/machinery/computer/atmos_alert/station_only,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "xAs" = (

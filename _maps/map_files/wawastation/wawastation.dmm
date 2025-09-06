@@ -4020,9 +4020,10 @@
 /turf/open/floor/iron/herringbone,
 /area/station/hallway/primary/central)
 "btZ" = (
-/obj/machinery/computer/atmos_control/nocontrol/master,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/iron,
-/area/station/engineering/atmos/upper)
+/area/station/engineering/main)
 "bue" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -4832,11 +4833,9 @@
 	},
 /area/station/science/xenobiology)
 "bGU" = (
-/obj/machinery/computer/atmos_alert/station_only{
-	dir = 4
-	},
 /obj/machinery/camera/autoname/directional/south,
 /obj/item/radio/intercom/directional/west,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
 "bGW" = (
@@ -18869,6 +18868,10 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/item/mod/module/thermal_regulator{
+	pixel_x = 6;
+	pixel_y = 12
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "gCP" = (
@@ -35259,7 +35262,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "mio" = (
-/obj/machinery/computer/station_alert/station_only,
+/obj/item/extinguisher/advanced,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
 "mit" = (
@@ -45008,9 +45012,6 @@
 /area/station/engineering/main)
 "pCF" = (
 /obj/machinery/light/directional/south,
-/obj/structure/chair/office{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
@@ -47116,6 +47117,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "qmo" = (
@@ -47501,10 +47503,10 @@
 /area/station/maintenance/department/science)
 "qsu" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/computer/atmos_alert,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "qsx" = (
@@ -52194,11 +52196,11 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "rWM" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/machinery/computer/station_alert,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "rWO" = (
@@ -54247,12 +54249,16 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sDh" = (
-/obj/structure/rack,
-/obj/item/mod/module/plasma_stabilizer,
-/obj/item/mod/module/thermal_regulator,
+/obj/item/mod/module/plasma_stabilizer{
+	pixel_x = -115;
+	pixel_y = -36
+	},
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
+	},
+/obj/machinery/computer/atmos_control{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -111525,7 +111531,7 @@ rhS
 nHr
 gaN
 rhS
-sqw
+btZ
 ryC
 kqC
 qDR
@@ -178059,7 +178065,7 @@ pXL
 kOI
 eRl
 ovD
-btZ
+mio
 djW
 oas
 muw
