@@ -42228,6 +42228,11 @@
 	dir = 10
 	},
 /area/station/science/research)
+"lUp" = (
+/obj/effect/landmark/start/hangover,
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/station/commons/toilet)
 "lUw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43662,6 +43667,7 @@
 	id_tag = "Toilet2";
 	name = "Unit 2"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/textured,
 /area/station/commons/toilet)
 "msN" = (
@@ -44244,6 +44250,7 @@
 	id_tag = "Toilet1";
 	name = "Unit 1"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/textured,
 /area/station/commons/toilet)
 "mBr" = (
@@ -82279,6 +82286,10 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
+"xpD" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/station/commons/toilet)
 "xpE" = (
 /obj/structure/table,
 /obj/item/knife/kitchen,
@@ -84614,6 +84625,7 @@
 /area/station/security/prison/mess)
 "xWG" = (
 /obj/machinery/light/small/directional/south,
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "xWM" = (
@@ -248838,7 +248850,7 @@ pBs
 eYF
 sNj
 fKR
-hsB
+xpD
 uja
 ise
 iuv
@@ -249095,7 +249107,7 @@ pBs
 uja
 uja
 uja
-hsB
+xpD
 uja
 wJk
 iuv
@@ -249352,7 +249364,7 @@ pBs
 uja
 kDz
 mBm
-twU
+lUp
 uja
 uPT
 poL
@@ -249609,7 +249621,7 @@ kqP
 uja
 uja
 uja
-hsB
+xpD
 uja
 ehq
 kOq

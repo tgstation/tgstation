@@ -22784,7 +22784,8 @@
 /area/station/medical/virology)
 "hVX" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/newscaster/directional/south,
@@ -33348,6 +33349,7 @@
 	id_tag = "Toilet4";
 	name = "Unit 4"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "lvZ" = (
@@ -33861,7 +33863,8 @@
 /area/station/tcommsat/computer)
 "lJm" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/newscaster/directional/south,
@@ -40061,7 +40064,7 @@
 /area/station/maintenance/port)
 "nKO" = (
 /obj/structure/toilet{
-	dir = 4
+	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/newscaster/directional/east,
@@ -41475,6 +41478,7 @@
 	id_tag = "Toilet1";
 	name = "Unit 1"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "ooz" = (
@@ -49684,7 +49688,8 @@
 /area/station/engineering/atmos)
 "rdT" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/newscaster/directional/south,
@@ -56690,6 +56695,7 @@
 	id_tag = "Toilet3";
 	name = "Unit 3"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "tzE" = (
@@ -63994,6 +64000,7 @@
 	id_tag = "Toilet2";
 	name = "Unit 2"
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "vTf" = (
@@ -104913,7 +104920,7 @@ xnU
 dIO
 jlY
 vgu
-fLz
+kAF
 lvU
 nKO
 dIO
