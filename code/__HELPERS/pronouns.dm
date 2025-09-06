@@ -413,8 +413,8 @@
 /mob/living/carbon/human/get_visible_gender()
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return PLURAL
-	var/face_hidden = (wear_mask?.flags_inv & HIDEFACE) || (head?.flags_inv & HIDEFACE)
-	if(face_hidden && (check_obscured_slots() & ITEM_SLOT_ICLOTHING))
+	// If both face and uniform are hidden, can't assess gender
+	if(obscured_slots & (HIDEFACE|HIDEJUMPSUIT) == (HIDEFACE|HIDEJUMPSUIT))
 		return PLURAL
 	return gender
 

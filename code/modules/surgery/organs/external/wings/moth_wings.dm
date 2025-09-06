@@ -54,11 +54,7 @@
 		return FALSE
 	if(owner.has_gravity())
 		return FALSE
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		if(human_owner.wear_suit?.flags_inv & HIDEMUTWINGS)
-			return FALSE //Can't fly with hidden wings
-	if(burnt)
+	if((owner.obscured_slots & HIDEMUTWINGS) || burnt)
 		return FALSE
 	var/datum/gas_mixture/current = owner.loc.return_air()
 	if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85))
@@ -117,12 +113,7 @@
 	return SSaccessories.moth_wings_list
 
 /datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if(human.wear_suit?.flags_inv & HIDEMUTWINGS)
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEMUTWINGS)
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state

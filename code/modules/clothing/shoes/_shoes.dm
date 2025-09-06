@@ -77,7 +77,7 @@
 		. += "The [fastening_type] are all knotted together."
 
 /obj/item/clothing/shoes/visual_equipped(mob/user, slot)
-	..()
+	. = ..()
 	if(offset && (slot_flags & slot))
 		user.pixel_z += offset
 		worn_y_dimension -= (offset * 2)
