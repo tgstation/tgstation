@@ -46,7 +46,7 @@
 	living_user.apply_status_effect(/datum/status_effect/exercised)
 
 	var/obj/gulag_boulder = new spawned_boulder(get_turf(living_user))
-	ADD_TRAIT(gulag_boulder, TRAIT_GULAG_BOULDER_WEAKNESS, src) // We need this to prevent gulag boulders from being an easy escape method out of the gulag.
+	ADD_TRAIT(gulag_boulder, TRAIT_GULAG_BOULDER_WEAKNESS, REF(src)) // We need this to prevent gulag boulders from being an easy escape method out of the gulag.
 
 	living_user.visible_message(span_notice("[living_user] hauls a boulder out of [src]."))
 	living_user.apply_damage(stamina_damage_to_inflict, STAMINA)

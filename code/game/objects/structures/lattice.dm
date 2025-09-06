@@ -212,7 +212,7 @@
 
 /obj/structure/lattice/catwalk/boulder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(ismetaltile(attacking_item))
-		balloon_alert(user, "Too unstable!")
+		balloon_alert(user, "too unstable!")
 		return FALSE
 	return ..()
 
