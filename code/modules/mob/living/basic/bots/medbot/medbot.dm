@@ -23,7 +23,7 @@
 	hackables = "health processor circuits"
 	possessed_message = "You are a medbot! Ensure good health among the crew to the best of your ability!"
 
-	additional_access = /datum/id_trim/job/paramedic
+	additional_access = /datum/id_trim/medibot
 	announcement_type = /datum/action/cooldown/bot_announcement/medbot
 	path_image_color = "#d9d9f4"
 
@@ -368,6 +368,32 @@
 	if(CanReach(patient))
 		melee_attack(patient)
 
+/datum/id_trim/medibot
+	assignment = JOB_MEDIBOT
+	trim_state = "trim_paramedic"
+	department_color = COLOR_MEDICAL_BLUE
+	subdepartment_color = COLOR_MEDICAL_BLUE
+	sechud_icon_state = SECHUD_PARAMEDIC
+	access = list(
+		ACCESS_BIT_DEN,
+		ACCESS_CARGO,
+		ACCESS_CONSTRUCTION,
+		ACCESS_HYDROPONICS,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MECH_MEDICAL,
+		ACCESS_MEDICAL,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		ACCESS_MORGUE,
+		ACCESS_SCIENCE,
+		ACCESS_SERVICE,
+		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
+		ACCESS_PHARMACY,
+		)
+	honorifics = list("Medical Robot")
+	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
 /mob/living/basic/bot/medbot/autopatrol
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
