@@ -710,7 +710,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Mj" = (
@@ -994,7 +994,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "We" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "WL" = (

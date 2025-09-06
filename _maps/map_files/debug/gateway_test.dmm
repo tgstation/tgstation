@@ -34,7 +34,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/directional/west,
 /turf/open/indestructible,
 /area/misc/testroom/gateway_room)
 "j" = (

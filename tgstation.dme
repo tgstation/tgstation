@@ -2208,6 +2208,7 @@
 #include "code\game\machinery\teambuilder.dm"
 #include "code\game\machinery\teleporter.dm"
 #include "code\game\machinery\transformer.dm"
+#include "code\game\machinery\wall_healer.dm"
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
 #include "code\game\machinery\camera\camera.dm"
