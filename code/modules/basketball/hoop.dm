@@ -148,13 +148,16 @@
 	var/click_on_hoop = TRUE
 	var/mob/living/thrower = throwingdatum?.get_thrower()
 
+	if(!istype(thrower))
+		return
+
 	// aim penalty for not clicking directly on the hoop when shooting
 	if(!istype(backboard) || backboard != src)
 		click_on_hoop = FALSE
 		score_chance *= 0.5
 
 	// aim penalty for spinning while shooting
-	if(istype(thrower) && HAS_TRAIT(thrower, TRAIT_SPINNING))
+	if(HAS_TRAIT(thrower, TRAIT_SPINNING))
 		score_chance *= 0.5
 
 	if(prob(score_chance))
