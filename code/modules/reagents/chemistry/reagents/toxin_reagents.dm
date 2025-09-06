@@ -267,7 +267,7 @@
 	LAZYINITLIST(data)
 	data["method"] |= methods
 
-	//the stomach handles INJECT via on_mob_metabolize() we only deal with INHALE
+	//the stomach handles INGEST via on_mob_metabolize() we only deal with INHALE
 	//also means vapour works much faster which is realistic
 	if(methods & INHALE)
 		zombify(exposed_mob)
