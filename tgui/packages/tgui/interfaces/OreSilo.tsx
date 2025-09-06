@@ -239,6 +239,10 @@ const RestrictButton = () => {
         className="__RestrictButton"
         color={ID_required ? 'bad' : 'good'}
         onClick={() => act('toggle_restrict')}
+        style={{
+          marginLeft: 'auto',
+          right: 0,
+        }}
       >
         {ID_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
       </Button>
