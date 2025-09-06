@@ -1,0 +1,138 @@
+2025-09-01:
+  Melbert:
+  - balance: Armsky will detain people who yoink weapons out of the armory without
+      a permit again.
+  SmArtKar:
+  - image: Brought back "new" goliath saddles which were lost during sprite reorganization
+      a while back.
+  - bugfix: Fixed misaligned magmawing watcher sprites
+  - image: Swapped preparing/ready to attack eye sprites on base watchers
+  - bugfix: You cannot stack infinite amount of cards in decks to explode clients
+      of whoever they get thrown at.
+  - refactor: Rewrote card items to use new interaction code.
+  TheBoondock:
+  - refactor: split personality/blackout drunk/brainwashed now uses temporary body
+      component, should be less buggy
+  tonyhawq:
+  - rscadd: Added a portable wind turbine which can charge things when you walk around
+  - rscadd: Added a signal that procs when an object resists space wind (from being
+      anchored / pulled)
+  - sound: added woosh.ogg as a low "wooshing" noise
+  - image: added a wind turbine sprite
+2025-09-02:
+  Hatterhat:
+  - balance: The mining MODsuit's ash accretion module now fully cancels the base
+      slowdown from activating the MOD.
+  SmArtKar:
+  - bugfix: Fixed a potential server crash caused by Mi-Gos
+  - bugfix: Fixed biogens bricking themselves, again
+  TheBoondock:
+  - bugfix: fixed null.ghostize() in split personality deletion
+  agudbrand:
+  - qol: shift+alt will open the tgui loot panel on any tile without being intercepted
+      by items that may be on the tile
+  - code_imp: adds a shift+alt click on proc for living mobs to explicitly open the
+      tgui loot panel in addition to the already existing alt bind
+  lelandkemble:
+  - rscadd: His Grace will now drink gender-change potions
+  timothymtorres:
+  - bugfix: Fixed move subsystem bypassing status checks
+  - bugfix: Fixed elastic arms mutation bypassing abstract object checks for picking
+      up objects
+  - bugfix: Fixed species radiation bypassing hair checks for balding
+  - bugfix: Fixed damaged APC board screentips bypassing emagged and broken checks
+  - bugfix: Fixed shuttle cleanup code bypassing move contents of turfs
+  - bugfix: Fixed tram crossing signals bypassing north and east direction checks
+2025-09-03:
+  Rhials:
+  - bugfix: Pirates can sell minerals and other cargo exports on their bounty pad
+      again.
+2025-09-04:
+  ATH1909:
+  - balance: NPC skeleton mobs are no longer hostile to players of the skeleton species.
+  Ghommie:
+  - bugfix: Examining most food items no longer tells you that you can make burned
+      mess by microwaving them.
+  - bugfix: Burned mess now has "bad food" in it more or less proportional to the
+      nutrients of the item you just overcooked. This also applies to decomposition
+      now.
+  Melbert:
+  - qol: 'Plant analyzer: Scanning a tray will regularly update the UI with the tray''s
+      information while you stand adjacent to it, no longer requiring you re-scan
+      the tray to update it.'
+  - qol: 'Plant analyzer: UI is now split between chems and stats - RMB will open
+      directly to the chem tab.'
+  - qol: 'Plant analyzer: UI received several UX changes - listing out more information
+      at a glance, rather than behind tooltips or icons'
+  - bugfix: 'Plant analyzer: Chem scanning plants now shows the plant''s current chemical
+      contents once again (on top of their genes)'
+  - bugfix: 'Plant analyzer: Unique seed data (kudzu mutation, replica pod dna) is
+      shown again'
+  - qol: Added hydroponics to runtime station
+  - qol: Added screentip to hydroponic trays for clearing reagents
+  - rscadd: 'Accounting Console: New UI!'
+  - rscadd: 'Accounting Console: Now can give advances to crewmembers'
+  - rscadd: 'Accounting Console: Can now give pay raises or pay cuts'
+  - rscadd: 'Accounting Console: Now only printable in the security lathe'
+  - rscadd: 'Accounting Console: A spare board is now now found in secure tech storage.'
+  - bugfix: Fix vending machines adding payments to audit log twice.
+  - bugfix: Non-crewmembers are no longer shown in the accounting console
+  Pickle-Coding:
+  - balance: Some gas reactions will prevent excited groups from breaking down.
+  SmArtKar:
+  - spellcheck: Fixed a missing period in Nutimov and Paladin lawsets
+  - bugfix: Fixed unconfigured pill presses manufacturing pills that claim to be bottles
+  - spellcheck: Decapitalized pill press suffixes for parity with the rest of pills/patches/bottles
+  SyncIt21:
+  - code_imp: adds some null checks against players without an ID card/valid account
+      vending an item
+  - code_imp: ensures dispensing an item always uses energy & not just when vending
+  lelandkemble:
+  - spellcheck: Made shuttle computer boards only say (Computer Board) once
+  - spellcheck: fixes double the on acid on floors
+  mcbalaam:
+  - bugfix: Now trying to light the fireplace will not make you attack it
+  - qol: Color coded and consistent material silo logs
+  - qol: Wrapping a crate while pulling it will now re-grab it for you
+  - qol: You can now open crates dragged by the H.A.U.L. gauntlets if you're the one
+      pulling
+  subject217:
+  - spellcheck: fixed a typo in the admin message about achievements cleanup
+2025-09-05:
+  Ezel:
+  - bugfix: fixes kitchen plumbing not being connected to any water source
+  - map: Adds and expands plumbing systems around metastation
+  - map: Increased the dorms bathroom a little bit
+  SmArtKar:
+  - bugfix: Fixed constant runtimes and broken APC processing behavior on emagged
+      APCs
+  Y0SH1M4S73R:
+  - rscadd: B.O.R.I.S.es can be installed inside of integrated circuits with MMI components,
+      allowing an AI to remotely interface with them the same way an MMI or posibrain
+      could.
+  - refactor: The MMI component now uses item interaction behavior for inserting MMIs/B.O.R.I.S.es.
+  kittysmooch:
+  - image: 'modified old sprites for burritos, some tacos, chimichangas, chips and
+      salsa, and spanish rice.
+
+      :cl:'
+  necromanceranne:
+  - balance: Restricts paramedic access down to their current medical access and maintenance
+      tunnel access. They retain their expanded access on lowpop.
+2025-09-06:
+  Darkened-Earth:
+  - bugfix: NanoTrasen's atmospherics division has replaced an incorrectly supplied
+      HyperTorus Construction Cube(TM) with the correct variant on Catwalk-Class stations
+  Gboster-0:
+  - balance: baby slimes have slightly weaker melee damage
+  - bugfix: fugu gland's melee and HP buffs no longer wear off on slimes if they become
+      babies after dying as an adult
+  SmArtKar:
+  - bugfix: Fixed emissive overlays on neon carpets poking through objects
+  - bugfix: Fixed blood drunk miner's dash and some mecha actions not working
+  - bugfix: Made synthflesh patches not spam chat messages every tick
+  - bugfix: Water cooler explosions no longer runtime
+  SyncIt21:
+  - code_imp: improved code for vending machine payment process
+  - bugfix: stop logging 0 credit purchases when vending machines are dispensing returned
+      products

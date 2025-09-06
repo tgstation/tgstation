@@ -26,8 +26,8 @@
 	var/processed_items_per_cycle = 5
 	/// The maximum amount of items the biogenerator can hold for biomass conversion purposes.
 	var/max_items = 20
-	/// The current amount of items that can be converted into biomass that the biogenerator is holding.
-	var/current_item_count = 0
+	/// Cached amount of items currently in the biogenerator, for use in UI so we don't have to loop over contents every second while its open
+	var/content_count_cache = 0
 	/// The maximum amount of biomass that will affect the visuals of the biogenerator.
 	var/max_visual_biomass = 5000
 	/// The maximum amount of reagents that the biogenerator can output to a container at once.
@@ -155,7 +155,7 @@
 		. += span_notice(" - Productivity at <b>[productivity * 100]%</b>.")
 		. += span_notice(" - Converting <b>[processed_items_per_cycle]</b> pieces of food per cycle.")
 		. += span_notice(" - Matter consumption at <b>[1 / efficiency * 100]</b>%.")
-		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[current_item_count] piece\s</b>.")
+		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[get_content_count()] piece\s</b>.")
 
 	if(welded_down)
 		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
@@ -238,33 +238,35 @@
 		insert_beaker(user, tool)
 		return ITEM_INTERACT_SUCCESS
 
+	var/content_count = get_content_count()
 	if(istype(tool, /obj/item/storage/bag))
-		if(current_item_count >= max_items)
+		if(content_count >= max_items)
 			to_chat(user, span_warning("\The [src] is already full! Activate it to free up some space."))
 			return ITEM_INTERACT_FAILURE
 
 		var/obj/item/storage/bag/bag = tool
 		for(var/obj/item/food/item in bag.contents)
-			if(current_item_count >= max_items)
+			if(content_count >= max_items)
 				break
-			if(bag.atom_storage.attempt_remove(item, src))
-				current_item_count++
+			bag.atom_storage.attempt_remove(item, src)
 
+		content_count = get_content_count() // Refresh the cache for UI
 		if(bag.contents.len == 0)
 			to_chat(user, span_info("You empty \the [bag] into \the [src]."))
-		else if (current_item_count >= max_items)
+		else if (content_count >= max_items)
 			to_chat(user, span_info("You fill \the [src] from \the [bag] to its capacity."))
 		else
 			to_chat(user, span_info("You fill \the [src] from \the [bag]."))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/food))
-		if(current_item_count >= max_items)
+		if(content_count >= max_items)
 			to_chat(user, span_warning("\The [src] is already full! Activate it to free up some space."))
 			return ITEM_INTERACT_FAILURE
 
 		if(user.transferItemToLoc(tool, src))
 			to_chat(user, span_info("You insert \the [tool] in \the [src]"))
+			get_content_count() // Refresh the cache for UI
 		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_warning("You cannot put \the [tool] in \the [src]!"))
@@ -273,16 +275,6 @@
 /obj/machinery/biogenerator/click_alt(mob/living/user)
 	eject_beaker(user)
 	return CLICK_ACTION_SUCCESS
-
-/obj/machinery/biogenerator/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(istype(arrived, /obj/item/food))
-		current_item_count += 1 // No need to track qdels because they call Exited()
-
-/obj/machinery/biogenerator/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(istype(gone, /obj/item/food))
-		current_item_count -= 1
 
 /// Activates biomass processing and converts all inserted food products into biomass
 /obj/machinery/biogenerator/proc/start_process()
@@ -310,7 +302,7 @@
 		stop_process()
 		return
 
-	if(!current_item_count)
+	if(!get_content_count())
 		stop_process()
 		return
 
@@ -327,12 +319,16 @@
 
 	use_energy(active_power_usage * seconds_per_tick)
 
-	if(!current_item_count)
+	if(!get_content_count())
 		stop_process(FALSE)
 
 	update_appearance()
 
-
+/obj/machinery/biogenerator/proc/get_content_count()
+	content_count_cache = 0
+	for (var/obj/item/food/food in contents)
+		content_count_cache += 1
+	return content_count_cache
 
 /**
  * Simple helper proc that converts the given food item into biomass for the generator, while also handling removing it
@@ -485,7 +481,7 @@
 	data["processing"] = processing
 	data["max_output"] = max_output
 	data["efficiency"] = efficiency
-	data["can_process"] = !!current_item_count
+	data["can_process"] = !!content_count_cache
 
 	if(beaker)
 		data["beakerCurrentVolume"] = round(beaker.reagents.total_volume, 0.01)
