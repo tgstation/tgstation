@@ -206,7 +206,6 @@
 
 /datum/action/item_action/mod_recall/New(Target)
 	..()
-	hsv2rgb(rand(0, 359), 1, 0.5) // todo: actually recolor the icon
 	if(!istype(Target, /obj/item/implant/mod))
 		qdel(src)
 		return

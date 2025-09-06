@@ -195,15 +195,17 @@
 
 /// Call to update all slots visually affected by this module
 /obj/item/mod/module/proc/update_clothing_slots()
-	if(mod.wearer)
-		var/updated_slots = mod.slot_flags
-		if (mask_worn_overlay)
-			for (var/obj/item/part as anything in mod.get_parts())
-				updated_slots |= part.slot_flags
-		else if (length(required_slots))
-			for (var/slot in required_slots)
-				updated_slots |= slot
-		mod.wearer.update_clothing(updated_slots)
+	if(!mod.wearer)
+		return
+
+	var/updated_slots = mod.slot_flags
+	if (mask_worn_overlay)
+		for (var/obj/item/part as anything in mod.get_parts())
+			updated_slots |= part.slot_flags
+	else if (length(required_slots))
+		for (var/slot in required_slots)
+			updated_slots |= slot
+	mod.wearer.update_clothing(updated_slots)
 
 /// Called when the module is used
 /obj/item/mod/module/proc/used(mob/activator)
