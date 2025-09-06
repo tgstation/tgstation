@@ -308,6 +308,7 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/pickaxe,
 	/obj/item/resonator,
 	/obj/item/spear,
+	/obj/item/gun/ballistic/bow/ashenbow,
 ))
 
 /// List of all "tools" that can fit into belts or work from toolboxes
