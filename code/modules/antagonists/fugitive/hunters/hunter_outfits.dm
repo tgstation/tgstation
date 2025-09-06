@@ -42,7 +42,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	head = /obj/item/clothing/head/helmet/alt
 	shoes = /obj/item/clothing/shoes/russian
-	l_pocket = /obj/item/ammo_box/strilka310
+	l_pocket = /obj/item/ammo_box/speedloader/strilka310
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	id = /obj/item/card/id/advanced/bountyhunter
 

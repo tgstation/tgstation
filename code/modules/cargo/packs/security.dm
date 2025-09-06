@@ -11,9 +11,9 @@
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/beanbag = 3,
 					/obj/item/storage/box/rubbershot = 3,
-					/obj/item/ammo_box/c38/trac,
-					/obj/item/ammo_box/c38/hotshot,
-					/obj/item/ammo_box/c38/iceblox,
+					/obj/item/ammo_box/speedloader/c38/trac,
+					/obj/item/ammo_box/speedloader/c38/hotshot,
+					/obj/item/ammo_box/speedloader/c38/iceblox,
 				)
 	crate_name = "ammo crate"
 
@@ -321,7 +321,7 @@
 	desc = "Contains four tracking implants and three tracking speedloaders of tracing .38 ammo."
 	cost = CARGO_CRATE_VALUE * 4.5
 	contains = list(/obj/item/storage/box/trackimp,
-					/obj/item/ammo_box/c38/trac = 3,
+					/obj/item/ammo_box/speedloader/c38/trac = 3,
 				)
 	crate_name = "tracking implant crate"
 
