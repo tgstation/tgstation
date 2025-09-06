@@ -82,11 +82,7 @@ export function TguiSay() {
       setButtonContent(currentPrefix.current ?? iterator.current());
 
       // Empty input, resets the channel
-    } else if (
-      currentPrefix.current &&
-      iterator.isSay() &&
-      value?.length === 0
-    ) {
+    } else if (currentPrefix.current && iterator.isSay() && value?.length === 0) {
       setCurrentPrefix(null);
       setButtonContent(iterator.current());
     }
