@@ -50,15 +50,10 @@
 	. = ..()
 	passthrough_ability = new(src)
 	passthrough_ability.Grant(new_ghost)
-	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
-		blessed_hud.check_hud(new_ghost)
 
 /datum/species/ghost/on_species_loss(mob/living/carbon/human/former_ghost, datum/species/new_species, pref_load)
-	. = ..()
 	QDEL_NULL(passthrough_ability)
-	//this has to be called after parent so inherent traits is cleared before we update our HUDs
-	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
-		blessed_hud.check_hud(former_ghost)
+	return ..()
 
 /datum/species/ghost/get_physical_attributes()
 	return "Ghosts are the spiritual remains of long-passed entities. They lack legs, can fly, and phase through walls, \
