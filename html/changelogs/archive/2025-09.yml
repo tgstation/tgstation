@@ -98,3 +98,41 @@
       pulling
   subject217:
   - spellcheck: fixed a typo in the admin message about achievements cleanup
+2025-09-05:
+  Ezel:
+  - bugfix: fixes kitchen plumbing not being connected to any water source
+  - map: Adds and expands plumbing systems around metastation
+  - map: Increased the dorms bathroom a little bit
+  SmArtKar:
+  - bugfix: Fixed constant runtimes and broken APC processing behavior on emagged
+      APCs
+  Y0SH1M4S73R:
+  - rscadd: B.O.R.I.S.es can be installed inside of integrated circuits with MMI components,
+      allowing an AI to remotely interface with them the same way an MMI or posibrain
+      could.
+  - refactor: The MMI component now uses item interaction behavior for inserting MMIs/B.O.R.I.S.es.
+  kittysmooch:
+  - image: 'modified old sprites for burritos, some tacos, chimichangas, chips and
+      salsa, and spanish rice.
+
+      :cl:'
+  necromanceranne:
+  - balance: Restricts paramedic access down to their current medical access and maintenance
+      tunnel access. They retain their expanded access on lowpop.
+2025-09-06:
+  Darkened-Earth:
+  - bugfix: NanoTrasen's atmospherics division has replaced an incorrectly supplied
+      HyperTorus Construction Cube(TM) with the correct variant on Catwalk-Class stations
+  Gboster-0:
+  - balance: baby slimes have slightly weaker melee damage
+  - bugfix: fugu gland's melee and HP buffs no longer wear off on slimes if they become
+      babies after dying as an adult
+  SmArtKar:
+  - bugfix: Fixed emissive overlays on neon carpets poking through objects
+  - bugfix: Fixed blood drunk miner's dash and some mecha actions not working
+  - bugfix: Made synthflesh patches not spam chat messages every tick
+  - bugfix: Water cooler explosions no longer runtime
+  SyncIt21:
+  - code_imp: improved code for vending machine payment process
+  - bugfix: stop logging 0 credit purchases when vending machines are dispensing returned
+      products
