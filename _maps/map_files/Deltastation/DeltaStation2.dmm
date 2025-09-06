@@ -9551,6 +9551,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/item/crowbar/red,
 /obj/structure/rack,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "cnu" = (
@@ -22147,6 +22148,8 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/airalarm/directional/east,
+/obj/item/stock_parts/power_store/battery,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "fzV" = (
@@ -28227,6 +28230,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/clothing/gloves/color/yellow,
 /obj/machinery/newscaster/directional/east,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "gUy" = (
@@ -41138,6 +41142,7 @@
 /obj/item/plant_analyzer,
 /obj/item/radio,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stock_parts/power_store/battery/empty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "keH" = (
@@ -50011,6 +50016,7 @@
 /obj/item/electronics/apc,
 /obj/item/electronics/airalarm,
 /obj/effect/turf_decal/bot,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "mtd" = (
@@ -50965,6 +50971,7 @@
 	},
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "mDw" = (
@@ -56766,6 +56773,7 @@
 "odX" = (
 /obj/effect/spawner/random/maintenance/two,
 /obj/structure/closet,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "oec" = (
@@ -58224,6 +58232,7 @@
 /obj/item/electronics/apc,
 /obj/item/electronics/airlock,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "oxb" = (
@@ -60793,6 +60802,7 @@
 /obj/structure/table/reinforced,
 /obj/item/assembly/timer,
 /obj/item/assembly/timer,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "pfS" = (
@@ -67379,6 +67389,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/dark,
 /area/station/service/electronic_marketing_den)
 "qHJ" = (
@@ -69690,6 +69701,8 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/structure/sign/poster/official/build/directional/east,
+/obj/item/stock_parts/power_store/battery,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rmP" = (
@@ -73186,6 +73199,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "seD" = (
@@ -76103,6 +76117,7 @@
 /obj/item/holosign_creator/engineering,
 /obj/item/multitool,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "sOi" = (
@@ -82447,6 +82462,7 @@
 /obj/item/assembly/voice,
 /obj/item/assembly/timer,
 /obj/item/assembly/timer,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "urF" = (
@@ -86013,6 +86029,7 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
 	},
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron/white,
 /area/station/maintenance/fore)
 "vkK" = (
@@ -89021,6 +89038,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "vYk" = (
@@ -94332,6 +94350,7 @@
 	dir = 8
 	},
 /obj/item/clothing/gloves/color/yellow,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "xrd" = (
@@ -97980,6 +97999,7 @@
 /obj/item/clipboard,
 /obj/item/electronics/apc,
 /obj/machinery/light/small/directional/east,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "yko" = (

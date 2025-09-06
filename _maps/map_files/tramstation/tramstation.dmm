@@ -639,6 +639,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "acu" = (
@@ -18172,6 +18173,7 @@
 	pixel_x = -8;
 	pixel_y = -23
 	},
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "fnz" = (
@@ -18581,6 +18583,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "fvn" = (
@@ -23444,6 +23447,7 @@
 /obj/structure/table,
 /obj/item/aicard,
 /obj/item/ai_module/reset,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "hkN" = (
@@ -28312,6 +28316,9 @@
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/west,
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "jdq" = (
@@ -30581,6 +30588,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
+"jPG" = (
+/obj/effect/turf_decal/trimline/yellow/filled/shrink_cw{
+	dir = 8
+	},
+/obj/item/stock_parts/power_store/battery{
+	pixel_y = -6;
+	pixel_x = -5
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "jPK" = (
 /mob/living/carbon/human/species/monkey/punpun,
 /obj/structure/cable,
@@ -39573,6 +39590,10 @@
 	},
 /obj/item/stack/rods/fifty,
 /obj/item/radio/intercom/directional/east,
+/obj/item/stock_parts/power_store/battery{
+	pixel_y = -6;
+	pixel_x = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mLO" = (
@@ -48671,6 +48692,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "qdG" = (
@@ -52530,6 +52552,10 @@
 "rvo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = -5;
+	pixel_x = -5
 	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -62730,6 +62756,10 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/item/stock_parts/power_store/battery{
+	pixel_y = -6;
+	pixel_x = -5
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "uTs" = (
@@ -65304,6 +65334,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"vLS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "vMu" = (
 /obj/modular_map_root/tramstation{
 	name = "secbarupper";
@@ -103043,7 +103083,7 @@ dIn
 eKn
 jbb
 cyH
-eKn
+vLS
 eKn
 pfG
 qHs
@@ -106321,7 +106361,7 @@ qeD
 fUP
 mOB
 uAC
-qeD
+jPG
 qxU
 alg
 uCB

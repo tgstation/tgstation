@@ -8425,6 +8425,16 @@
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
+"cYM" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airalarm,
+/obj/item/stack/cable_coil/thirty,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "cYP" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -15143,6 +15153,17 @@
 "fri" = (
 /turf/closed/wall,
 /area/station/maintenance/department/bridge)
+"frk" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_y = 5
+	},
+/obj/item/stack/cable_coil/thirty,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "frs" = (
 /obj/machinery/reagentgrinder{
 	pixel_y = 4
@@ -15681,6 +15702,7 @@
 /obj/structure/table/glass,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "fzY" = (
@@ -65648,6 +65670,15 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
+"wDj" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/stock_parts/power_store/battery/high,
+/obj/item/electronics/apc,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "wDo" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
@@ -112033,9 +112064,9 @@ ybD
 tQX
 iJt
 oWE
-ybD
-ybD
-ybD
+cYM
+wDj
+frk
 ybD
 ePT
 ybD
