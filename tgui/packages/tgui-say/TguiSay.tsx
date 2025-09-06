@@ -138,15 +138,16 @@ export function TguiSay() {
 
   function handleForceSay(): void {
     const iterator = channelIterator.current;
+    const currentValue = innerRef.current?.value;
 
     // Only force say if we're on a visible channel and have typed something
-    if (!value || iterator.isVisible()) return;
+    if (!currentValue || !iterator.isVisible()) return;
 
     const prefix = currentPrefix ?? '';
-    const grunt = iterator.isSay() ? prefix + value : value;
+    const grunt = iterator.isSay() ? prefix + currentValue : currentValue;
 
     messages.current.forceSayMsg(grunt, iterator.current());
-    unloadChat();
+    handleClose();
   }
 
   function handleIncrementChannel(): void {
