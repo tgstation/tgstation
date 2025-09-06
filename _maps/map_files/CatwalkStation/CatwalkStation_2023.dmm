@@ -18633,6 +18633,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"fAc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Bay Shutters";
+	id = "qm_cargobay";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/cargo/storage)
 "fAl" = (
 /turf/closed/wall/r_wall,
 /area/station/science/lab)
@@ -41497,6 +41506,19 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/glass/reinforced,
 /area/station/construction/storage_wing)
+"mhy" = (
+/obj/machinery/door/airlock/mining{
+	name = "Cargo Bay"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Bay Shutters";
+	id = "qm_cargobay";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/cargo/storage)
 "mhI" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -48041,6 +48063,14 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
+"oeh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "qm_cargobay";
+	name = "Cargo Bay Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/cargo/storage)
 "oey" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
@@ -56628,6 +56658,15 @@
 "qHg" = (
 /turf/open/floor/iron/stairs,
 /area/station/service/library)
+"qHy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Bay Shutters";
+	id = "qm_cargobay";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/security/checkpoint/supply)
 "qHB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67346,6 +67385,16 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
+"tUP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/curtain/bounty,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Cargo Bay Shutters";
+	id = "qm_cargobay";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/cargo/bitrunning/den)
 "tUS" = (
 /obj/effect/turf_decal/siding/wideplating_new{
 	dir = 4
@@ -124114,7 +124163,7 @@ rwd
 deg
 qJb
 qPj
-uKP
+oeh
 ssa
 cjh
 osx
@@ -124122,7 +124171,7 @@ csb
 csb
 cjh
 glU
-uKP
+oeh
 mHf
 fEA
 uqB
@@ -188358,24 +188407,24 @@ wKb
 dkQ
 euG
 euG
-coc
+tUP
 coc
 euG
 euG
 cjh
 cjh
 cjh
-uKP
+fAc
+mhy
+fAc
+fAc
+mhy
+fAc
+fAc
 cXX
-uKP
-uKP
-cXX
-uKP
-uKP
-cXX
-uKP
+fAc
 mHf
-iju
+qHy
 mHf
 mHf
 mHf
