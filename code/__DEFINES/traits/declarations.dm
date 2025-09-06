@@ -1168,8 +1168,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
 #define TRAIT_RUSTY "rust_trait"
-/// Stops someone from splashing their reagent_container on an object with this trait
-#define TRAIT_DO_NOT_SPLASH "do_not_splash"
 /// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 /// Objects with this trait are deleted if they fall into chasms, rather than entering abstract storage
