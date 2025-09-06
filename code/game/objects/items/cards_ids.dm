@@ -148,6 +148,10 @@
 		update_label()
 		update_icon()
 
+	// Apply any active RETA grants to this new ID card
+	// This will only do something if there are active grants, so it's safe to call always
+	apply_active_reta_grants_to_card(src)
+
 	register_item_context()
 	register_context()
 
@@ -893,7 +897,14 @@
 	return .
 
 /obj/item/card/id/GetAccess()
-	return access.Copy()
+	var/list/total_access = access.Copy()
+
+	// Add all RETA temporary access from all departments - code/modules/reta/reta_system.dm
+	for(var/dept in reta_temp_access)
+		if(reta_temp_access[dept])
+			total_access |= reta_temp_access[dept]
+
+	return total_access
 
 /obj/item/card/id/GetID()
 	return src

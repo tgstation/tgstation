@@ -97,6 +97,13 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		load_jobs_from_config()
 	set_overflow_role(CONFIG_GET(string/overflow_job)) // this must always go after load_jobs_from_config() due to how the legacy systems operate, this always takes precedent.
+
+	// Initialize RETA system - must be after setup_occupations() so all jobs are loaded - code/modules/reta/reta_system.dm
+	log_game("RETA: Jobs subsystem Initialize() calling RETA initialization")
+	initialize_reta_system()
+	populate_reta_job_trims()
+	log_game("RETA: Jobs subsystem Initialize() RETA initialization completed")
+
 	return SS_INIT_SUCCESS
 
 /// Returns a list of jobs that we are allowed to fuck with during random events
