@@ -222,6 +222,7 @@
 	anchor.pixel_x = hitx
 	anchor.pixel_y = hity
 	anchor.anchored = TRUE
+	anchor.reset_pixel_pos = TRUE
 	anchor.parent_module = parent_module
 	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module))
 
@@ -238,6 +239,8 @@
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	/// MODsuit tether module that created our projectile
 	var/obj/item/mod/module/tether/parent_module
+	/// Should we reset our pixel positions next time we move?
+	var/reset_pixel_pos = FALSE
 
 /obj/item/tether_anchor/Initialize(mapload)
 	. = ..()
@@ -255,8 +258,12 @@
 
 /obj/item/tether_anchor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	if (default_unfasten_wrench(user, tool))
+		pixel_x = 0
+		pixel_y = 0
+		reset_pixel_pos = FALSE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/tether_anchor/attack_hand_secondary(mob/user, list/modifiers)
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
@@ -273,6 +280,13 @@
 	balloon_alert(user, "attached tether")
 	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/tether_anchor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (reset_pixel_pos)
+		pixel_x = 0
+		pixel_y = 0
+		reset_pixel_pos = FALSE
 
 /obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
