@@ -353,9 +353,11 @@
  * Called when a lava stopper (Catwalks/boulder platforms) is removed and it's contents need to be subjected to the lava underneath.
  */
 /turf/open/lava/proc/drop_contents_into_lava()
-	for(var/atom/movable/each_content in contents)
-		balloon_alert_to_viewers("[pick("Splash","Pshhhh","Hiss","Blorble")]!")
-		burn_stuff(each_content)
+	SIGNAL_HANDLER
+	balloon_alert_to_viewers("[pick("Splash","Pshhhh","Hiss","Blorble")]!")
+	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
+	for(var/atom/movable/each_content as anything in contents)
+		on_atom_inited(src, each_content)
 	return TRUE
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)
