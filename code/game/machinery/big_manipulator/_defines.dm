@@ -15,13 +15,15 @@
 #define MIN_ROTATION_MULTIPLIER_TIER_4 0.2
 
 #define MAX_INTERACTION_POINTS_TIER_1 2
-#define MAX_INTERACTION_POINTS_TIER_2 4
-#define MAX_INTERACTION_POINTS_TIER_3 5
+#define MAX_INTERACTION_POINTS_TIER_2 3
+#define MAX_INTERACTION_POINTS_TIER_3 4
 #define MAX_INTERACTION_POINTS_TIER_4 6
 
-#define STATUS_BUSY "Busy"
-#define STATUS_WAITING "Waiting"
-#define STATUS_IDLE "Idle"
+#define CURRENT_TASK_NONE "NO TASK" // manipulator is off
+#define CURRENT_TASK_IDLE "IDLE" // manipulator is skipping a cycle because it has nothing to do
+#define CURRENT_TASK_MOVING "MOVING TO POINT"
+#define CURRENT_TASK_INTERACTING "INTERACTING"
+#define CURRENT_TASK_STOPPING "STOPPING"
 
 #define WORKER_SINGLE_USE "Single Time Use"
 #define WORKER_EMPTY_USE "Empty Hand Use"

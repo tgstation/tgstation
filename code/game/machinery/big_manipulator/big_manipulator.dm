@@ -21,16 +21,17 @@
 	/// How many interaction points of each kind can we have?
 	var/interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
 
-	/// The status of the manipulator - `IDLE` or `BUSY`.
-	var/status = STATUS_IDLE
+	/// The current task of the manipulator.
+	var/current_task = CURRENT_TASK_NONE
 	/// Is the manipulator turned on?
 	var/on = FALSE
 	/// Is a cycle timer already running?
 	var/cycle_timer_running = FALSE
+	/// Flag to track if we're in the process of stopping
+	var/is_stopping = FALSE
 
 	var/current_task_start_time = 0
 	var/current_task_duration = 0
-	var/current_task_type = "idle"
 
 	/// The object inside the manipulator.
 	var/datum/weakref/held_object = null
@@ -208,9 +209,6 @@
 		. += "You can see a poor [monkey_resolve.name] buckled to [src]. You wonder if it's getting paid enough."
 
 /obj/machinery/big_manipulator/attack_hand_secondary(mob/living/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
 	try_press_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -391,7 +389,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/big_manipulator/can_be_unfasten_wrench(mob/user, silent)
-	if(status == STATUS_BUSY || on)
+	if(current_task != CURRENT_TASK_NONE || on)
 		to_chat(user, span_warning("[src] is activated!"))
 		return FAILED_UNFASTEN
 	return ..()
@@ -431,16 +429,20 @@
 /obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
 	if(isnull(monkey_worker))
 		return
-	if(status == STATUS_BUSY)
+
+	if(current_task != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
 		return
+
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
 	if(isnull(poor_monkey))
 		return
+
 	balloon_alert(user, "trying to unbuckle...")
 	if(!do_after(user, 3 SECONDS, src))
 		balloon_alert(user, "interrupted")
 		return
+
 	balloon_alert(user, "unbuckled")
 	poor_monkey.drop_all_held_items()
 	poor_monkey.forceMove(drop_point)
@@ -448,19 +450,24 @@
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
 	if(!ismonkey(monkey))
 		return
+
 	if(!isnull(monkey_worker))
 		return
-	if(status == STATUS_BUSY)
+
+	if(current_task != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
 		return
+
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey
 	if(poor_monkey.mind)
 		balloon_alert(user, "too smart!")
 		return
+
 	poor_monkey.balloon_alert(user, "trying to buckle...")
 	if(!do_after(user, 3 SECONDS, poor_monkey))
 		poor_monkey.balloon_alert(user, "interrupted")
 		return
+
 	balloon_alert(user, "buckled")
 	monkey_worker = WEAKREF(poor_monkey)
 	poor_monkey.drop_all_held_items()
@@ -530,7 +537,12 @@
 		drop_held_atom()
 		on = new_power_state
 		cycle_timer_running = FALSE
-		end_current_task()
+		// Set stopping task instead of ending current task immediately
+		if(current_task != CURRENT_TASK_NONE)
+			is_stopping = TRUE
+			start_task(CURRENT_TASK_STOPPING, 0)
+		else
+			end_current_task()
 		SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/validate_all_points()
@@ -549,6 +561,12 @@
 	if(power_access_wire_cut)
 		balloon_alert(user, "unresponsive!")
 		return
+
+	// Reject activation during stopping task
+	if(current_task == CURRENT_TASK_STOPPING)
+		balloon_alert(user, "stopping in progress!")
+		return
+
 	toggle_power_state(user)
 	if(on)
 		balloon_alert(user, "activated")
@@ -580,7 +598,7 @@
 /obj/machinery/big_manipulator/ui_data(mob/user)
 	var/list/data = list()
 	data["active"] = on
-	data["current_task_type"] = current_task_type
+	data["current_task"] = current_task
 	data["current_task_duration"] = current_task_duration
 	data["interaction_delay"] = interaction_delay
 	data["min_delay"] = BASE_INTERACTION_TIME * minimal_interaction_multiplier
@@ -638,6 +656,7 @@
 	. = ..()
 	if(.)
 		return
+
 	switch(action)
 		if("run_cycle")
 			try_press_on(ui.user)
@@ -801,16 +820,18 @@
 	end_current_task() // End any previous task first (momentarily sets IDLE)
 	current_task_start_time = world.time
 	current_task_duration = duration / 10 // Duration is in deciseconds for TGUI
-	current_task_type = task_type
-	status = STATUS_BUSY // Set status to BUSY for the new task
+	current_task = task_type
 	SStgui.update_uis(src)
 
 /// Ends the current task
 /obj/machinery/big_manipulator/proc/end_current_task()
 	current_task_start_time = 0
 	current_task_duration = 0
-	current_task_type = "idle"
-	status = STATUS_IDLE // Set status to IDLE when a task truly ends
+	// If we were stopping, set to NONE instead of IDLE
+	if(is_stopping)
+		current_task = CURRENT_TASK_NONE
+	else
+		current_task = CURRENT_TASK_IDLE
 	SStgui.update_uis(src) // Update UI immediately
 
 /obj/machinery/big_manipulator/proc/remove_hud_for_point(datum/interaction_point/point)

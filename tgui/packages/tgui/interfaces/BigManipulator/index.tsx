@@ -500,7 +500,7 @@ export const BigManipulator = () => {
     throw_range,
     item_as_filter,
     selected_type,
-    current_task_type,
+    current_task,
     current_task_duration,
     pickup_points,
     dropoff_points,
@@ -511,7 +511,7 @@ export const BigManipulator = () => {
 
   // Effect to control animation
   useEffect(() => {
-    const isTaskActive = current_task_type !== 'idle';
+    const isTaskActive = current_task !== 'IDLE';
     // Set initial value on task change
     setProgressValue(0);
 
@@ -524,7 +524,7 @@ export const BigManipulator = () => {
       // Cleanup timer on unmount or task change
       return () => clearTimeout(timer);
     }
-  }, [current_task_type]); // Dependency on task type
+  }, [current_task]); // Dependency on task type
 
   return (
     <Window title="Manipulator Interface" width={420} height={610}>
@@ -541,11 +541,27 @@ export const BigManipulator = () => {
             title="Action Panel"
             buttons={
               <Button
-                icon={active ? 'stop' : 'play'}
-                color={active ? 'bad' : 'good'}
+                icon={
+                  current_task === 'NO TASK'
+                    ? 'play'
+                    : current_task === 'STOPPING'
+                      ? 'hourglass-start'
+                      : 'stop'
+                }
+                color={
+                  current_task === 'NO TASK'
+                    ? 'good'
+                    : current_task === 'STOPPING'
+                      ? 'blue'
+                      : 'bad'
+                }
                 onClick={() => act('run_cycle')}
               >
-                {active ? 'Stop' : 'Run'}
+                {current_task === 'NO TASK'
+                  ? 'Run'
+                  : current_task === 'STOPPING'
+                    ? 'Stopping'
+                    : 'Stop'}
               </Button>
             }
           >
@@ -572,7 +588,7 @@ export const BigManipulator = () => {
             >
               <Stack lineHeight="1.8em">
                 <Stack.Item ml="-2px">Current task:</Stack.Item>
-                <Stack.Item grow>{current_task_type.toUpperCase()}</Stack.Item>
+                <Stack.Item grow>{current_task.toUpperCase()}</Stack.Item>
               </Stack>
             </ProgressBar>
           </Section>

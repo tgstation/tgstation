@@ -30,7 +30,7 @@ export interface ManipulatorData {
   delay_step: number;
   min_delay: number;
   max_delay: number;
-  current_task_type: string;
+  current_task: string;
   current_task_duration: number;
   pickup_points: InteractionPoint[];
   dropoff_points: InteractionPoint[];

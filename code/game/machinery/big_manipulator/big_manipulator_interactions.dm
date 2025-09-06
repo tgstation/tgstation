@@ -18,6 +18,7 @@
 	switch(dropoff_tasking)
 		if(TASKING_PREFER_FIRST)
 			ordered = destinations.Copy()
+
 		if(TASKING_ROUND_ROBIN)
 			if(roundrobin_history_dropoff < 1 || roundrobin_history_dropoff > length(destinations))
 				roundrobin_history_dropoff = 1
@@ -25,6 +26,7 @@
 				ordered += destinations[i]
 			for(var/i2 = 1, i2 < roundrobin_history_dropoff, i2++)
 				ordered += destinations[i2]
+
 		if(TASKING_STRICT_ROBIN)
 			if(roundrobin_history_dropoff < 1 || roundrobin_history_dropoff > length(destinations))
 				roundrobin_history_dropoff = 1
@@ -37,6 +39,7 @@
 	for(var/datum/interaction_point/dest_point in ordered)
 		if(!dest_point || !dest_point.is_valid())
 			continue
+
 		for(var/atom/movable/candidate in pickup_turf.contents)
 			if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
 				continue
@@ -137,8 +140,7 @@
 					roundrobin_history_pickup = roundrobin_history
 				return this_point
 
-			if(status == STATUS_BUSY)
-				schedule_next_cycle()
+			schedule_next_cycle()
 			return NONE
 
 /// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
@@ -147,6 +149,10 @@
 		return FALSE
 
 	if(!anchored)
+		return FALSE
+
+	// Check if manipulator is already busy with a task
+	if(current_task != CURRENT_TASK_NONE)
 		return FALSE
 
 	if(!use_energy(active_power_usage, force = FALSE))
@@ -162,6 +168,14 @@
 	if(cycle_timer_running)
 		return
 
+	// Don't schedule cycles during stopping task
+	if(is_stopping)
+		return
+
+	// Allow scheduling if manipulator is idle, none, or if we have a held object (need to drop it off)
+	if(current_task != CURRENT_TASK_IDLE && current_task != CURRENT_TASK_NONE && !held_object)
+		return
+
 	cycle_timer_running = TRUE
 	if(held_object)
 		addtimer(CALLBACK(src, PROC_REF(run_dropoff_phase)), CYCLE_SKIP_TIMEOUT)
@@ -170,8 +184,16 @@
 
 /// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
-	start_task(STATUS_WAITING, CYCLE_SKIP_TIMEOUT)
-	say("No work avaliable.")
+	// If we're stopping, don't schedule next cycle
+	if(is_stopping)
+		on = FALSE
+		cycle_timer_running = FALSE
+		is_stopping = FALSE
+		end_current_task()
+		SStgui.update_uis(src)
+		return FALSE
+
+	start_task(CURRENT_TASK_IDLE, CYCLE_SKIP_TIMEOUT)
 	schedule_next_cycle()
 	return FALSE
 
@@ -206,6 +228,15 @@
 
 /// Attempts to interact with the origin point (pick up the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_origin_point(datum/interaction_point/origin_point, hand_is_empty = FALSE)
+	// If we're stopping, just finish the task and shut down
+	if(is_stopping)
+		on = FALSE
+		cycle_timer_running = FALSE
+		is_stopping = FALSE
+		end_current_task()
+		SStgui.update_uis(src)
+		return
+
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
 	if(!origin_turf)
 		return handle_no_work_available()
@@ -251,6 +282,15 @@
 
 /// Attempts to interact with the destination point (drop/use/throw the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_destination_point(datum/interaction_point/destination_point, hand_is_empty = FALSE)
+	// If we're stopping, just finish the task and shut down
+	if(is_stopping)
+		on = FALSE
+		cycle_timer_running = FALSE
+		is_stopping = FALSE
+		end_current_task()
+		SStgui.update_uis(src)
+		return
+
 	if(hand_is_empty)
 		use_thing_with_empty_hand(destination_point)
 		return TRUE
@@ -278,7 +318,7 @@
 	var/num_rotations = round(abs(angle_diff) / 45)
 	var/total_rotation_time = num_rotations * interaction_delay
 
-	start_task("moving to point", total_rotation_time)
+	start_task(CURRENT_TASK_MOVING, total_rotation_time)
 
 	// If the next point is on the same tile, we don't need to rotate at all
 	if(num_rotations == 0)
@@ -469,4 +509,14 @@
 		update_roundrobin_index(TRANSFER_TYPE_DROPOFF)
 
 	end_current_task()
+
+	// If we were in stopping task, turn off the manipulator completely
+	if(is_stopping)
+		on = FALSE
+		cycle_timer_running = FALSE
+		is_stopping = FALSE
+		end_current_task()
+		SStgui.update_uis(src)
+		return
+
 	schedule_next_cycle()
