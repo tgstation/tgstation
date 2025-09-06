@@ -12,9 +12,13 @@
 	wait_time_range = list(6 SECONDS, 12 SECONDS)
 
 /datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
+	if(reward_path != FISHING_RANDOM_ORGAN)
+		return ..()
+
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		fishing_spot = portal.current_linked_atom
+
 	if(!iscarbon(fishing_spot))
 		var/random_type = pick(subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		return new random_type(spawn_location)
