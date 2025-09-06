@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - rscadd: "MOD status display modules (from Field Surgery Modules) now default to boosting suit sensors to be multi-Z capable. This can be turned off, and defaults to off for space ninjas' MODs."
