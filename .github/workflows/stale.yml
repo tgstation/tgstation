@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v10
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-pr-message: "This PR has been inactive for long enough to be automatically marked as stale. This means it is at risk of being auto closed in ~ 7 days, please address any outstanding review items and ensure your PR is finished, if these are all true and you are auto-staled anyway, you need to actively ask maintainers if your PR will be merged. Once you have done any of the previous actions then you should request a maintainer remove the stale label on your PR, to reset the stale timer. If you feel no maintainer will respond in that time, you may wish to close this PR youself, while you seek maintainer comment, as you will then be able to reopen the PR yourself"
