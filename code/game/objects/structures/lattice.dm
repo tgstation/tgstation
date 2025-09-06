@@ -190,3 +190,42 @@
 	turf_we_place_on.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	qdel(src)
+
+/obj/structure/lattice/catwalk/boulder
+	name = "boulder platform"
+	desc = "A boulder, floating on the molten hot deadly lava. More like a BOATlder."
+	icon = 'icons/obj/ore.dmi'
+	icon_state = "boulder_platform"
+	base_icon_state = "boulder_platform"
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
+	pixel_y = -4
+	build_material = null
+	/// The type of particle to make before the platform collapses.
+	var/warning_particle = /particles/smoke/ash
+
+/obj/structure/lattice/catwalk/boulder/Initialize(mapload)
+	. = ..()
+	fast_emissive_blocker(src)
+	AddElement(/datum/element/elevation, pixel_shift = 8)
+
+/obj/structure/lattice/catwalk/boulder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(ismetaltile(attacking_item))
+		balloon_alert(user, "Too unstable!")
+		return FALSE
+	return ..()
+
+/obj/structure/lattice/catwalk/boulder/proc/pre_self_destruct()
+	add_shared_particles(warning_particle)
+	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 5 SECONDS)
+
+/**
+ * Handles platforms deleting themselves with a visual effect and message.
+ */
+/obj/structure/lattice/catwalk/boulder/proc/self_destruct()
+	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = EASE_IN)
+	sleep(2 SECONDS)
+	visible_message(span_notice("\The [src] sinks and dissapears!"))
+	remove_shared_particles(warning_particle)
+	deconstruct()
