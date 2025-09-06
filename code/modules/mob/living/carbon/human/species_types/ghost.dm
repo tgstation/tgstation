@@ -108,7 +108,8 @@
  */
 /datum/action/innate/toggle_passthrough
 	name = "Toggle passthrough"
-	desc = "Toggles your ability to phase through everything, including your gear. You are tied to your tombstone while it's active."
+	desc = "Toggles phasing through everything, including your hands. You are tied to your tombstone while this is active. \
+		At least you know how to keep your clothes on."
 	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "ghost"
 
