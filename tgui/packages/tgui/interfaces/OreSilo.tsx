@@ -71,6 +71,13 @@ type Data = {
   ID_required: BooleanLike;
 };
 
+const actionToColor = {
+  DEPOSITED: 'green',
+  WITHDRAWN: 'red',
+  PROCESSED: 'blue',
+  RESTOCKED: 'purple',
+};
+
 export const OreSilo = (props: Data) => {
   const { act, data } = useBackend<Data>();
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
