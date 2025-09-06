@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "improved code for vending machine payment process"
-  - bugfix: "stop logging 0 credit purchases when vending machines are dispensing returned products"
