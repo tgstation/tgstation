@@ -15,6 +15,7 @@
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	melee_attack_cooldown = CLICK_CD_MELEE
 	obj_damage = 40
 	unsuitable_atmos_damage = 0
 	attack_sound = 'sound/items/weapons/punch3.ogg'
