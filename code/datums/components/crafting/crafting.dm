@@ -5,6 +5,9 @@
 #define CONTENTS_REAGENTS "reagents"
 #define CONTENTS_TOOL_BEHAVIOUR "tool_behaviour"
 
+/// The portion of time spent crafting that recipe dependant on the speed of the tools
+#define RECIPE_DYNAMIC_TIME_COEFF 0.85
+
 /datum/component/personal_crafting
 	/// Custom screen_loc for our element
 	var/screen_loc_override
@@ -151,7 +154,9 @@
 						.[CONTENTS_REAGENTS][reagent.type] += reagent.volume
 				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
 					if(item.tool_behaviour)
-						.[CONTENTS_TOOL_BEHAVIOUR] += item.tool_behaviour
+						var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
+						if(current_tool_speed < item.toolspeed)
+							.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.[CONTENTS_MACHINERY], object.type, object)
 		else if (isstructure(object))
@@ -217,7 +222,31 @@
 
 	//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
 	if(!(ignored_flags & CRAFT_IGNORE_DO_AFTER))
-		if(!do_after(crafter, recipe.time, target = crafter))
+		var/recipe_time = recipe.time
+		var/tools_used = length(recipe.tool_behaviors) + length(recipe.tool_paths)
+
+		// If there's any, the speed of the tools used to craft the recipe influence the time spent crafting it
+		if(tools_used > 0)
+			//get the portion of time that's affected by tool speed at all and subtract it from the full recipe time
+			var/dynamic_recipe_time = recipe.time * RECIPE_DYNAMIC_TIME_COEFF
+			recipe_time -= dynamic_recipe_time
+			//Then divide it by the number of tools used in the recipe, and recalculate it.
+			dynamic_recipe_time /= tools_used
+
+			var/instances = contents[CONTENTS_INSTANCES]
+			for(var/tool in recipe.tool_paths)
+				var/best_speed = 10 //failsafe-ish
+				for(var/obj/item/item as anything in instances)
+					if(!istype(item, tool) || best_speed < item.toolspeed)
+						continue
+					best_speed = item.toolspeed
+				recipe_time += dynamic_recipe_time * best_speed
+
+			var/found_behaviors = contents[CONTENTS_TOOL_BEHAVIOUR]
+			for(var/behavior in recipe.tool_behaviors)
+				recipe_time += found_behaviors[behavior]
+
+		if(!do_after(crafter, round(recipe_time, 0.1 SECONDS), target = crafter))
 			return "."
 		contents = get_surroundings(crafter, recipe.blacklist)
 		fail_message = perform_all_checks(crafter, recipe, contents, check_tools_last = TRUE)
@@ -723,3 +752,4 @@
 #undef CONTENTS_STRUCTURES
 #undef CONTENTS_REAGENTS
 #undef CONTENTS_TOOL_BEHAVIOUR
+#undef RECIPE_DYNAMIC_TIME_COEFF

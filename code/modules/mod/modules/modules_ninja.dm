@@ -302,6 +302,7 @@
 		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
 		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
 	display_time = TRUE
+	sensor_boost = FALSE
 	death_sound = null
 	death_sound_volume = null
 

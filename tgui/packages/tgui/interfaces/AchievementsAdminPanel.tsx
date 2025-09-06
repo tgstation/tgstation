@@ -9,7 +9,7 @@ type Data = {
 
 export const AchievementsAdminPanel = (props) => {
   const { act, data } = useBackend<Data>();
-  const { orphaned_keys } = data;
+  const { orphaned_keys, archived_keys } = data;
   return (
     <Window title="Achievements Admin Panel" width={540} height={680}>
       <Window.Content scrollable>
@@ -49,7 +49,7 @@ export const AchievementsAdminPanel = (props) => {
         <Section title="Archived achievements">
           <NoticeBox>Archived achievements in the database.</NoticeBox>
           <LabeledList>
-            {orphaned_keys.map((key) => (
+            {archived_keys.map((key) => (
               <LabeledList.Item
                 key={key}
                 label=""
