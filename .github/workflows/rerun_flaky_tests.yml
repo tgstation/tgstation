@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Rerun flaky tests
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { rerunFlakyTests } = await import('${{ github.workspace }}/tools/pull_request_hooks/rerunFlakyTests.js')
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Report flaky tests
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { reportFlakyTests } = await import('${{ github.workspace }}/tools/pull_request_hooks/rerunFlakyTests.js')
