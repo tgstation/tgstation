@@ -236,6 +236,26 @@
 	)
 
 /*
+ * Anti-dragon spear
+ * "WHERES MY DRAGONATOR?!"
+ */
+/obj/item/spear/dragonator
+	icon = 'icons/obj/weapons/48x.dmi'
+	icon_state = "speardragon0"
+	icon_prefix = "speardragon"
+	base_icon_state = "speardragon0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	name = "Anti-Dragon Spear"
+	desc = "A spear specifically designed to fight space dragons, though it is a fine weapon for other functions. Capable of being launched from a ballista."
+
+	throwforce = 22
+	armour_penetration = 15 //Enhanced armor piercing
+	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT * 7)
+	force_unwielded = 15
+	force_wielded = 30
+
+/*
  * Bone Spear
  */
 /obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
@@ -282,6 +302,30 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/obj/item/spear/military
+	icon_state = "military_spear0"
+	base_icon_state = "military_spear0"
+	icon_prefix = "military_spear"
+	name = "military javelin"
+	desc = "A stick with a seemingly blunt spearhead on its end. Looks like it might break bones easily."
+	attack_verb_continuous = list("attacks", "pokes", "jabs")
+	attack_verb_simple = list("attack", "poke", "jab")
+	throwforce = 30
+	demolition_mod = 1
+	wound_bonus = 5
+	exposed_wound_bonus = 25
+	throw_range = 9
+	throw_speed = 5
+	sharpness = NONE // we break bones instead of cutting flesh
+
+
+
+
+
+
+
+
 
 /**
  * Skybulge
