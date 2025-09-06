@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// gases_moles is an associative list of gas species to amount, make amount negative to remove
 /datum/gas_mixture/proc/adjust_multiple_gases(datum/gas_holder/incoming_gas)
 	var/list/our_gases = gases
-	var/list/holder_gases = gas_holder.gases
+	var/list/holder_gases = incoming_gas.gases
 	// Moles transfer into self
 	for(var/gas_specie as anything in holder_gases)
 		if(!(gas_specie in our_gases))
@@ -197,14 +197,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		total_moles += holder_gases[gas_specie][MOLES]
 
 	//heat transfer
-	var/temperature_delta = abs(temperature - gas_holder.temperature)
+	var/temperature_delta = abs(temperature - incoming_gas.temperature)
 	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
-		var/giver_heat_capacity = gas_holder.heat_capacity()
+		var/giver_heat_capacity = incoming_gas.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity)
-			temperature = (gas_holder.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
+			temperature = (incoming_gas.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 	garbage_collect()
+	qdel(incoming_gas)
 
 /// Modify the gas list as to convert moles of gas species A to gas species B
 /// reactant and product are the gas species to convert and conversion_amount is the amount to be converted
