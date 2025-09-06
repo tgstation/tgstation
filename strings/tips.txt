@@ -317,3 +317,4 @@ As the Captain, your sabre deals extra damage to Assistants (as long as they hav
 You can automatically extract and retract arm implants by 'activating' the empty hand they're on. This includes integrated toolsets, cursed katanas, and vorpal scythes.
 You can combine the Carpet reagent with various different reagents, such as Oil and Cyanide, to create unique carpet types.
 You can bake a birthday cake and then microwave it to create a legendary cake hat. You can then combine it with an energy sword to create an energy cake.
+You can quickly remove radiation from items in a room by releasing water vapor into the air around them (including worn items).
