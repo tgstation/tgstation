@@ -99,7 +99,7 @@
 	desc = "I'm not sure why you bothered to buy this...and why does it cost so much?"
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
-		/obj/effect/spawner/random/maintenance/three,
+		/obj/effect/spawner/random/maintenance/dumpster,
 		/obj/effect/spawner/random/trash/garbage = 5,
 	)
 	crate_name = "putrid dumpster"
