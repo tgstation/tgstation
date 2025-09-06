@@ -464,7 +464,6 @@
 /area/ruin/space/has_grav/interdyne)
 "tm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "interdyne_atmos";
 	dir = 1;
 	pipe_color = "#0000FF"
 	},

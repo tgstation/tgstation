@@ -4905,42 +4905,36 @@
 /area/awaymission/snowdin/cave/cavern)
 "rM" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "snowdinmix";
 	dir = 1
 	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "rN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "snowdinmix";
 	dir = 1
 	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "rO" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "snowdino2";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "rP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "snowdino2";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "rQ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "snowdinn2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
 "rR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "snowdinn2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
@@ -5124,7 +5118,6 @@
 /area/awaymission/snowdin/post/engineering)
 "sC" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "snowdinincin";
 	dir = 1
 	},
 /turf/open/floor/engine/vacuum,

@@ -1515,8 +1515,7 @@
 /area/ruin/syndicate_lava_base/medbay)
 "lP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	dir = 8;
-	chamber_id = "lavalandsyndieo2"
+	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/ruin/syndicate_lava_base/engineering)
@@ -1774,8 +1773,7 @@
 /area/ruin/syndicate_lava_base/engineering)
 "nR" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	dir = 8;
-	chamber_id = "lavalandsyndieplasma"
+	dir = 8
 	},
 /turf/open/floor/engine/plasma,
 /area/ruin/syndicate_lava_base/engineering)
@@ -1881,7 +1879,6 @@
 /area/ruin/syndicate_lava_base/engineering)
 "oM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "lavalandsyndien2";
 	dir = 8
 	},
 /turf/open/floor/engine/n2,
@@ -2664,8 +2661,7 @@
 /area/ruin/syndicate_lava_base/engineering)
 "zU" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	dir = 8;
-	chamber_id = "lavalandsyndien2"
+	dir = 8
 	},
 /turf/open/floor/engine/n2,
 /area/ruin/syndicate_lava_base/engineering)
@@ -2678,7 +2674,6 @@
 /area/ruin/syndicate_lava_base/bar)
 "Ab" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "lavalandsyndieo2";
 	dir = 8
 	},
 /turf/open/floor/engine/o2,
@@ -3382,9 +3377,7 @@
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "JV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "lavalandsyndieco2"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
 /turf/open/floor/engine/co2,
 /area/ruin/syndicate_lava_base/engineering)
 "Ks" = (
@@ -3868,7 +3861,6 @@
 /area/ruin/syndicate_lava_base/main)
 "Ry" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "lavalandsyndieplasma";
 	dir = 8
 	},
 /turf/open/floor/engine/plasma,
@@ -4104,9 +4096,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/main)
 "Uw" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "lavalandsyndieco2"
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 /turf/open/floor/engine/co2,
 /area/ruin/syndicate_lava_base/engineering)
 "Uz" = (
