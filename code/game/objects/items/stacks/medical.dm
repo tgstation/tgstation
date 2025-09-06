@@ -42,6 +42,8 @@
 	var/heal_end_sound = null
 	/// The sound this makes when doing a continuous loop of healing with this item
 	var/heal_continuous_sound = null
+	/// Does this item heal all limbs?
+	var/splash_healing = FALSE
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -558,6 +560,14 @@
 	heal_continuous_sound = SFX_SUTURE_CONTINUOUS
 	heal_end_sound = SFX_SUTURE_END
 
+/obj/item/stack/medical/suture/emergency
+	name = "emergency suture"
+	desc = "A value pack of cheap sutures, not very good at repairing damage, but still decent at stopping bleeding."
+	heal_brute = 5
+	amount = 5
+	max_amount = 5
+	merge_type = /obj/item/stack/medical/suture/emergency
+
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
 	icon_state = "suture_purp"
@@ -793,6 +803,16 @@
 	pickup_sound = SFX_CLOTH_PICKUP
 	// add a better drop sound more fitting for a lil' itty bitty band-aid
 
+/obj/item/stack/medical/bandage/timmy
+	name = "Lil Timmy bandage"
+	desc = "A little pink sticking plaster for children. It has a bunch of little cartoon hearts on it. \
+	A printed-on note reads: Slap onto the bruised or bleeding area for instant relief." //if you are blind then someone read this out to you at some point and feeling up this item brings back those memories. so there.
+	max_amount = 2
+	grind_results = list(/datum/reagent/medicine/c2/libital = 1)
+
+/obj/item/stack/medical/bandage/timmy/double
+	amount = 2
+
 /obj/item/stack/medical/bandage/makeshift
 	name = "makeshift bandage"
 	desc = "A hastily constructed bandage designed for basic first aid on blunt-force trauma."
@@ -800,3 +820,30 @@
 	icon_state_preview = "bandage_makeshift"
 	inhand_icon_state = "bandage"
 	novariants = TRUE
+
+/obj/item/stack/medical/skinspray
+	name = "\improper Dr. Oatcake's All-Natural Holistic Skin Repair Spray"
+	desc = "A spray-on solution for healing scrapes and bruises*. Simply apply to bare skin, membrane**, or scales and let it spread throughout the body. \
+		A patented blend of CBD, essential oils, orgones***, vaccumgrown marjoram and aromatherapeutic compounds were energetically aligned to this homeopathic solution. Allergen free!****"
+	grind_results = list(/datum/reagent/water = 2)
+	icon = 'icons/obj/devices/artefacts.dmi'
+	icon_state = "debug_artefact"
+	amount = 3
+	max_amount = 3
+	heal_brute = 25
+	novariants = TRUE
+	splash_healing = TRUE
+
+/obj/item/stack/medical/skinspray/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>Bio</i>")
+	. += span_info("")
+	. += span_danger("Do not continue use if any of the following conditions develop:")
+	. += span_minorannounce("Drowsiness, Confusion, Hallucinations, Coma, Muscle Weakness, Vomiting, Diarrhoea, Nausea, Halitosis, , and severe rashes")
+
+	. += span_danger("Warranty void if nanoseal is broken.")
+	. += span_minorannounce("*Not guaranteed to heal all scrapes and/or bruises (or any combination thereof). Intended for therapeutic and/or entertainment use (depending on legal juristiction) alongside traditional medicine.")
+	. += span_minorannounce("**Organic, carbon-based ONLY. Dr Oatcake's takes NO RESPONSIBILITY for use on artificial skin or non-carbon-based life forms (including, but not limited to, plasma- and iron-based organisms).")
+	. += span_minorannounce("***Up to 20% of which may be Negatively Charged.")
+	. += span_minorannounce("****Allergy to saline-glucose solution excluded. We at Dr. Oatcake's do not believe such an allergy exists, but we are still required to list this warning. Got a problem? Write to your elected representative!")
+	. += span_minoralert("Pressurised container: Do not pierce, bite, explode, burn, freeze, consume, implode, whisk, throw, heat or grind, even when apparently empty and especially when apparently full.")

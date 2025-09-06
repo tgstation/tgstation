@@ -349,6 +349,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		list(//medkits
 			/obj/item/storage/box/hug/medical = 1,
 			/obj/item/storage/medkit/emergency = 1,
+			/obj/item/storage/medkit/hazard = 1,
 			/obj/item/storage/medkit/regular = 1,
 			/obj/item/storage/box/bandages = 1,
 			) = 1,
