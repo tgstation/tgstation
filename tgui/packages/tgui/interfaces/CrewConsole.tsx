@@ -25,6 +25,7 @@ const SORT_NAMES = {
 
 const STAT_LIVING = 0;
 const STAT_DEAD = 4;
+const STAT_DNR = 1
 
 const SORT_OPTIONS = ['health', 'ijob', 'name', 'area'];
 
@@ -127,6 +128,7 @@ type CrewSensor = {
   assignment: string | undefined;
   ijob: number;
   life_status: number;
+  dnr_status: number;
   oxydam: number;
   toxdam: number;
   burndam: number;
@@ -229,6 +231,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
     assignment,
     ijob,
     life_status,
+    dnr_status,
     oxydam,
     toxdam,
     burndam,
@@ -261,6 +264,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
         ) : (
           <Icon name="skull" color="#801308" size={1} />
         )}
+        {dnr_status !== STAT_DNR ? '' : ' (DNR)'}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (
