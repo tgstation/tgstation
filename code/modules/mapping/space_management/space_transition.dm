@@ -161,8 +161,8 @@
 		point.set_neigbours(grid, grid_diameter)
 
 	var/center = round(grid_diameter / 2)
-	point = grid[CHORDS_TO_1D(grid_diameter, center, center)]
-	grid.Cut()
+	if(transition_levels.len)
+		point = grid[CHORDS_TO_1D(center, center, grid_diameter)]
 
 	var/list/transition_pick = transition_levels.Copy()
 	var/list/possible_points = list()
@@ -170,6 +170,10 @@
 
 	while(transition_pick.len)
 		var/datum/space_level/level = pick_n_take(transition_pick)
+
+		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && CONFIG_GET(flag/persistent_save_space_empty_z_levels) && CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && SSpersistence.map_configs_cache)
+			point = grid[CHORDS_TO_1D(level.xi, level.yi, grid_diameter)]
+
 		level.xi = point.x
 		level.yi = point.y
 		point.spl = level
@@ -179,6 +183,8 @@
 		level.set_neigbours(used_points)
 		point = pick(possible_points)
 		CHECK_TICK
+
+	grid.Cut()
 
 /// Connect the z-levels in a non-randomized grid
 /datum/controller/subsystem/mapping/proc/set_grid_linkages(list/transition_levels)
@@ -196,7 +202,12 @@
 	var/list/used_points = list()
 	for(var/i in 1 to transition_levels.len)
 		var/datum/space_level/level = transition_levels[i]
-		point = grid[i]
+
+		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && CONFIG_GET(flag/persistent_save_space_empty_z_levels) && CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && SSpersistence.map_configs_cache)
+			point = grid[CHORDS_TO_1D(level.xi, level.yi, grid_diameter)]
+		else
+			point = grid[i]
+
 		level.xi = point.x
 		level.yi = point.y
 		point.spl = level

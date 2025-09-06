@@ -18,4 +18,8 @@
 	else // in case a single trait is passed in
 		SSmapping.z_trait_levels[new_traits] += list(new_z)
 
+	if(new_traits["xi"] && new_traits["yi"])
+		xi = new_traits["xi"]
+		yi = new_traits["yi"]
+
 	set_linkage(new_traits[ZTRAIT_LINKAGE])
