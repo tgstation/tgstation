@@ -4177,6 +4177,7 @@
 #include "code\modules\economy\_economy.dm"
 #include "code\modules\economy\account.dm"
 #include "code\modules\economy\holopay.dm"
+#include "code\modules\economy\poker_chips.dm"
 #include "code\modules\emoji\emoji_parse.dm"
 #include "code\modules\emote_panel\emote_panel.dm"
 #include "code\modules\engineering\tools\multitool.dm"
