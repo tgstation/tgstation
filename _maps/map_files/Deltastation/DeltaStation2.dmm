@@ -1631,6 +1631,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/commons/toilet/locker)
 "asv" = (
@@ -5730,7 +5731,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /obj/structure/toilet{
-	dir = 8
+	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/landmark/start/hangover,
@@ -7388,6 +7389,10 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
+"bNS" = (
+/obj/machinery/duct,
+/turf/closed/wall,
+/area/station/medical/break_room)
 "bNT" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 8
@@ -27188,7 +27193,7 @@
 "gGT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/button/door/directional/south{
@@ -50505,6 +50510,10 @@
 /obj/item/paper_bin,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
+"mxX" = (
+/obj/machinery/duct,
+/turf/closed/wall,
+/area/station/science/breakroom)
 "mxY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
@@ -66301,6 +66310,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/commons/toilet/locker)
 "qvi" = (
@@ -67603,7 +67613,7 @@
 "qKz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
-	dir = 8
+	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot,
@@ -132205,7 +132215,7 @@ fDF
 fDF
 peU
 cHO
-aAj
+mxX
 qQM
 jYk
 vsV
@@ -140442,7 +140452,7 @@ cky
 dki
 lvZ
 jQB
-lvZ
+bNS
 lvZ
 pkg
 lvZ
