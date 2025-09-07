@@ -1,0 +1,4 @@
+author: "sushi"
+delete-after: True
+changes:
+  - rscadd: "recyclers will now deconstruct non-item objects that they eat instead of just deleting them"
