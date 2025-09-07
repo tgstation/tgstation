@@ -34581,7 +34581,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "aisat";
 	pixel_x = 32;
-	preset_destination_names = list(2 = "Telecomms", 3 = "AI Core")
+	preset_destination_names = list("2" = "Telecomms", "3" = "AI Core")
 	},
 /turf/open/openspace,
 /area/station/ai_monitored/turret_protected/aisat_interior)
