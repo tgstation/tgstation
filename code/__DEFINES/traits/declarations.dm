@@ -859,6 +859,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
 /// This atom has a quality_food_ingredient element attached
 #define TRAIT_QUALITY_FOOD_INGREDIENT "quality_food_ingredient"
+/**
+ * This atom will pass its name to the edible item in the form "a slice of [name]" when processed
+ * even if it matches its compile-time name
+ */
+#define TRAIT_PASS_NAME_TO_EDIBLE_WHEN_PROCESSED "pass_name_to_edible_when_processed"
 /// The items needs two hands to be carried
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
 /// Can't be catched when thrown

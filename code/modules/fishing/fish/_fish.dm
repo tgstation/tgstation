@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FISH_STASIS), PROC_REF(exit_stasis))
 
 	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
-	add_traits(list(TRAIT_DUCT_TAPE_UNREPAIRABLE, TRAIT_VALID_DNA_INFUSION), INNATE_TRAIT)
+	add_traits(list(TRAIT_DUCT_TAPE_UNREPAIRABLE, TRAIT_PASS_NAME_TO_EDIBLE_WHEN_PROCESSED, TRAIT_VALID_DNA_INFUSION), INNATE_TRAIT)
 
 	//stops new fish from being able to reproduce right away.
 	breeding_wait = world.time + (breeding_timeout * NEW_FISH_BREEDING_TIMEOUT_MULT)
