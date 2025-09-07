@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Modal,
-  ProgressBar,
   Section,
   Slider,
   Stack,
@@ -508,23 +507,27 @@ export const BigManipulator = () => {
 
   // Local state for ProgressBar value management
   const [progressValue, setProgressValue] = useState(0);
+  const [progressKey, setProgressKey] = useState(0);
 
-  // Effect to control animation
+  // Effect to control animation with CSS transitions
   useEffect(() => {
-    const isTaskActive = current_task !== 'IDLE';
-    // Set initial value on task change
-    setProgressValue(0);
+    const isTaskActive = current_task !== 'IDLE' && current_task !== 'NO TASK';
 
     if (isTaskActive) {
-      // Slight delay before setting the final value
-      const timer = setTimeout(() => {
-        setProgressValue(1);
-      }, 20); // 20ms delay
+      // Start new task - reset progress and force component recreation
+      setProgressValue(0);
+      setProgressKey((prev) => prev + 1);
 
-      // Cleanup timer on unmount or task change
-      return () => clearTimeout(timer);
+      // Use setTimeout to trigger CSS transition after component recreation
+      setTimeout(() => {
+        setProgressValue(100);
+      }, 10);
+    } else {
+      // Task completed or idle - reset progress
+      setProgressValue(0);
+      setProgressKey((prev) => prev + 1);
     }
-  }, [current_task]); // Dependency on task type
+  }, [current_task, current_task_duration]);
 
   return (
     <Window title="Manipulator Interface" width={420} height={610}>
@@ -576,21 +579,44 @@ export const BigManipulator = () => {
           </Section>
 
           <Section>
-            <ProgressBar
-              value={progressValue}
-              maxValue={1}
+            <Box
+              key={progressKey}
               style={{
-                transition:
-                  progressValue === 1
-                    ? `width ${current_task_duration}s linear`
-                    : 'none',
+                position: 'relative',
+                height: '1.8em',
+                backgroundColor: '#333',
+                border: '1px solid #555',
+                overflow: 'hidden',
               }}
             >
-              <Stack lineHeight="1.8em">
-                <Stack.Item ml="-2px">Current task:</Stack.Item>
-                <Stack.Item grow>{current_task.toUpperCase()}</Stack.Item>
-              </Stack>
-            </ProgressBar>
+              <Box
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  height: '100%',
+                  width: `${progressValue}%`,
+                  backgroundColor: '#4CAF50',
+                  transition: `width ${current_task_duration}s linear`,
+                  zIndex: 1,
+                }}
+              />
+              <Box
+                style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '0 8px',
+                  color: '#fff',
+                  fontSize: '12px',
+                }}
+              >
+                <Box style={{ marginRight: '8px' }}>Current task:</Box>
+                <Box style={{ flexGrow: 1 }}>{current_task.toUpperCase()}</Box>
+              </Box>
+            </Box>
           </Section>
 
           {/*

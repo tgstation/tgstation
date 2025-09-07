@@ -541,6 +541,8 @@
 		if(current_task != CURRENT_TASK_NONE)
 			is_stopping = TRUE
 			start_task(CURRENT_TASK_STOPPING, 0)
+			// Schedule automatic completion of stopping task
+			addtimer(CALLBACK(src, PROC_REF(complete_stopping_task)), 1 SECONDS)
 		else
 			end_current_task()
 		SStgui.update_uis(src)
@@ -828,11 +830,17 @@
 	current_task_start_time = 0
 	current_task_duration = 0
 	// If we were stopping, set to NONE instead of IDLE
-	if(is_stopping)
-		current_task = CURRENT_TASK_NONE
-	else
-		current_task = CURRENT_TASK_IDLE
+	current_task = CURRENT_TASK_NONE
 	SStgui.update_uis(src) // Update UI immediately
+
+/// Completes the stopping task and transitions to TASK_NONE
+/obj/machinery/big_manipulator/proc/complete_stopping_task()
+	if(current_task == CURRENT_TASK_STOPPING && is_stopping)
+		on = FALSE
+		cycle_timer_running = FALSE
+		is_stopping = FALSE
+		end_current_task()
+		SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/remove_hud_for_point(datum/interaction_point/point)
 	if(!point)

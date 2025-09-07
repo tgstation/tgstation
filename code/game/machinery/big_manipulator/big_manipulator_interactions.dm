@@ -186,11 +186,7 @@
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
 	// If we're stopping, don't schedule next cycle
 	if(is_stopping)
-		on = FALSE
-		cycle_timer_running = FALSE
-		is_stopping = FALSE
-		end_current_task()
-		SStgui.update_uis(src)
+		complete_stopping_task()
 		return FALSE
 
 	start_task(CURRENT_TASK_IDLE, CYCLE_SKIP_TIMEOUT)
@@ -230,12 +226,10 @@
 /obj/machinery/big_manipulator/proc/try_interact_with_origin_point(datum/interaction_point/origin_point, hand_is_empty = FALSE)
 	// If we're stopping, just finish the task and shut down
 	if(is_stopping)
-		on = FALSE
-		cycle_timer_running = FALSE
-		is_stopping = FALSE
-		end_current_task()
-		SStgui.update_uis(src)
+		complete_stopping_task()
 		return
+
+	current_task = CURRENT_TASK_INTERACTING
 
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
 	if(!origin_turf)
@@ -284,12 +278,10 @@
 /obj/machinery/big_manipulator/proc/try_interact_with_destination_point(datum/interaction_point/destination_point, hand_is_empty = FALSE)
 	// If we're stopping, just finish the task and shut down
 	if(is_stopping)
-		on = FALSE
-		cycle_timer_running = FALSE
-		is_stopping = FALSE
-		end_current_task()
-		SStgui.update_uis(src)
+		complete_stopping_task()
 		return
+
+	current_task = CURRENT_TASK_INTERACTING
 
 	if(hand_is_empty)
 		use_thing_with_empty_hand(destination_point)
@@ -512,11 +504,7 @@
 
 	// If we were in stopping task, turn off the manipulator completely
 	if(is_stopping)
-		on = FALSE
-		cycle_timer_running = FALSE
-		is_stopping = FALSE
-		end_current_task()
-		SStgui.update_uis(src)
+		complete_stopping_task()
 		return
 
 	schedule_next_cycle()
