@@ -85,6 +85,10 @@ handles linking back and forth.
 
 	silo = null
 
+	//mapload only if the parent gets deleted by some random event before the round begins
+	if(QDELETED(parent))
+		return
+
 	mat_container = parent.AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
