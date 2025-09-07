@@ -91,9 +91,8 @@
 		if(source in user.held_items)
 			context[SCREENTIP_CONTEXT_LMB] = "Open storage"
 			return CONTEXTUAL_SCREENTIP_SET
-		else
-			context[SCREENTIP_CONTEXT_RMB] = "Open storage"
-			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_RMB] = "Open storage"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(can_hack_open)
 		switch(held_item.tool_behaviour)
