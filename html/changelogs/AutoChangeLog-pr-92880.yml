@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "zombie powder works through inhale(now faster acting)/ingest again"
