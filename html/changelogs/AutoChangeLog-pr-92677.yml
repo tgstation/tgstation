@@ -1,0 +1,6 @@
+author: "Melber"
+delete-after: True
+changes:
+  - balance: "Advanced first aid kits in the bridge are back to being normal first aid kids"
+  - balance: "Emergency Nanomed vendors have larger stocks and better supplies"
+  - rscadd: "Replaces a majority of Emergency Nanomeds on stations and shuttles with Deforest First Aid Stations. Left clicking these stationary machines will heal minor damage and blood loss over time - at a (small) price. Right clicking them will provide gauze, also for a price. All costs are waived on shuttles, during red alert, or for medical staff. You can also click-drag to have other mobs use the machine. However, robotic limbs need not apply."
