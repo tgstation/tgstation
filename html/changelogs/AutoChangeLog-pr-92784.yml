@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Player-controlled medbots can now inject chloral on healthy targets"

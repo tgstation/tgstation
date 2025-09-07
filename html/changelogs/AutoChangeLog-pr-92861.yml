@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - spellcheck: "When failing to move up or down a Z-Level, you are now tied to the present"

@@ -136,3 +136,19 @@
   - code_imp: improved code for vending machine payment process
   - bugfix: stop logging 0 credit purchases when vending machines are dispensing returned
       products
+2025-09-07:
+  Hatterhat:
+  - rscadd: MOD status display modules (from Field Surgery Modules) now default to
+      boosting suit sensors to be multi-Z capable. This can be turned off, and defaults
+      to off for space ninjas' MODs.
+  SmArtKar:
+  - qol: Letting go of the pet command hotkey (Shift by default) will instantly close
+      the menu
+  - bugfix: Hovering over things on the same tile no longer closes the pet command
+      menu
+  lelandkemble:
+  - spellcheck: When failing to move up or down a Z-Level, you are now tied to the
+      present
+  - bugfix: prevents eaten remote signalers from following you between bodies
+  nikothedude:
+  - bugfix: Player-controlled medbots can now inject chloral on healthy targets
