@@ -100,7 +100,7 @@
 /obj/item/stock_parts/power_store/cell/ninja
 	name = "black power cell"
 	icon_state = "bscell"
-	emp_damage_modifier = 3
+	emp_damage_modifier = 2 //Better because ninja
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE
@@ -108,7 +108,7 @@
 /obj/item/stock_parts/power_store/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
-	emp_damage_modifier = 3 // Four hits
+	emp_damage_modifier = 4 // Three hits
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
@@ -120,7 +120,7 @@
 /obj/item/stock_parts/power_store/cell/super
 	name = "super-capacity power cell"
 	icon_state = "scell"
-	emp_damage_modifier = 4 // Five hits
+	emp_damage_modifier = 5 // Four hits
 	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	chargerate = STANDARD_CELL_RATE
@@ -131,7 +131,7 @@
 /obj/item/stock_parts/power_store/cell/hyper
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
-	emp_damage_modifier = 5 // Six Hits
+	emp_damage_modifier = 6 // Five Hits
 	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	chargerate = STANDARD_CELL_RATE * 1.5
@@ -143,7 +143,7 @@
 	name = "bluespace power cell"
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
-	emp_damage_modifier = 5 //Eight Hits
+	emp_damage_modifier = 5 // Six hits.
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
 	chargerate = STANDARD_CELL_RATE * 2
