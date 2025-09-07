@@ -1,0 +1,5 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - bugfix: "Stops coffee machines having melee god mode"
+  - qol: "Right clicking on coffee machine without coffee pot has correct message"
