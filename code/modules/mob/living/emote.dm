@@ -21,10 +21,9 @@
 
 /datum/emote/living/tongue/run_emote(mob/user, params, type_override, intentional)
 	var/mob/living/carbon/human/human_user = user
-	if(istype(human_user))
-		if(!human_user.get_organ_slot(ORGAN_SLOT_TONGUE))
-			to_chat(human_user, span_warning("You don't have a tongue!"))
-			return
+	if(istype(human_user) && !human_user.get_organ_slot(ORGAN_SLOT_TONGUE))
+		to_chat(human_user, span_warning("You don't have a tongue!"))
+		return
 	. = ..()
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/tongue), 5.2 SECONDS)
 
