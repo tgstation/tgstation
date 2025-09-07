@@ -414,7 +414,7 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,
-		/obj/item/mod/module/dispenser/ninja,,
+		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/weapon_recall,
 		/obj/item/mod/module/adrenaline_boost,
 		/obj/item/mod/module/energy_net,
