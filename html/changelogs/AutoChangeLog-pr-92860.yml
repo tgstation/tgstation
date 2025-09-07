@@ -1,0 +1,4 @@
+author: "sushi"
+delete-after: True
+changes:
+  - bugfix: "crates and other objects causing elevation will no longer leave behind magic elevating turfs upon destruction"
