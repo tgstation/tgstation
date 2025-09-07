@@ -109,7 +109,7 @@
 	if(!implant)
 		balloon_alert(recaller, "no target implant!")
 		return FALSE
-	if(!(recaller == implant.imp_in) && !allow_suit_activation) // No pAI recalling
+	if(recaller != implant.imp_in && !allow_suit_activation) // No pAI recalling
 		balloon_alert(recaller, "sector safety regulations prevent MOD-side recalling!")
 		return FALSE
 	if(mod.open)
