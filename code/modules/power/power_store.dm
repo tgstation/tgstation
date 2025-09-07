@@ -241,7 +241,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	use((STANDARD_CELL_CHARGE /severity) * emp_damage_modifier, force = TRUE)
+	use((STANDARD_CELL_CHARGE /severity) * emp_damage_modifier , force = TRUE)
 
 /obj/item/stock_parts/power_store/ex_act(severity, target)
 	. = ..()
