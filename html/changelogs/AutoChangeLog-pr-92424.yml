@@ -1,0 +1,4 @@
+author: "Stonetear"
+delete-after: True
+changes:
+  - refactor: "MODsuit module code now knows who clicked the activation button."
