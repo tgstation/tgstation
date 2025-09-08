@@ -7,8 +7,12 @@
 	dna_cost = 2
 	req_human = TRUE
 	disabled_by_fire = FALSE
+	var/static/bio_acid_path = /datum/reagent/toxin/acid/bio_acid
+	var/static/bio_acid_amount_per_spray = 10
+	var/static/bio_acid_color = "#9455ff"
 
 /datum/action/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
+	. = FALSE
 	var/list/obj/restraints = list()
 	var/obj/item/clothing/suit/straitjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	if(!straitjacket?.breakouttime)
@@ -19,7 +23,7 @@
 	var/mob/living/space_invader = user.pulledby
 	if(!straitjacket && !legcuffs && !handcuffs && !some_manner_of_cage && !space_invader)
 		user.balloon_alert(user, "already free!")
-		return FALSE
+		return .
 	..()
 	if(straitjacket)
 		restraints.Add(straitjacket)
@@ -30,10 +34,15 @@
 	if(some_manner_of_cage)
 		restraints.Add(some_manner_of_cage)
 	for(var/obj/restraint as anything in restraints)
+		if(restraint.obj_flags & (INDESTRUCTIBLE | ACID_PROOF | UNACIDABLE))
+			to_chat(user, span_changeling("We cannot use bio-acid to destroy [restraint]!"))
+			continue
 		spew_acid(user, restraint)
+		. = TRUE
 	if(space_invader)
 		punish_with_acid(user, space_invader)
-	return TRUE
+		. = TRUE
+	return .
 
 /datum/action/changeling/biodegrade/proc/spew_acid(mob/living/carbon/human/user, obj/restraint)
 	if(restraint == user.loc)
@@ -56,48 +65,34 @@
 	make_puddle(restraint)
 	log_combat(user = user, target = restraint, what_done = "melted restraining equipped item", addition = "(biodegrade)")
 
-
 /datum/action/changeling/biodegrade/proc/make_puddle(obj/melted_restraint)
 	return new /obj/effect/decal/cleanable/greenglow(get_turf(melted_restraint))
 
+//										are you prepared for my CHANGELING BLAST?!!
+/datum/action/changeling/biodegrade/proc/acid_blast(atom/movable/user, atom/movable/target)
+	var/datum/reagents/ephemeral_acid = new
+	ephemeral_acid.add_reagent(bio_acid_path, bio_acid_amount_per_spray)
+	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
+	splash_animation.color = bio_acid_color
+	target.flick_overlay_view(splash_animation, 3 SECONDS)
+	ephemeral_acid.expose(target, TOUCH)
+
 /datum/action/changeling/biodegrade/proc/punish_with_acid(mob/living/carbon/human/user, mob/living/hapless_manhandler)
-	if(!iscarbon(hapless_manhandler))
+	acid_blast(user, hapless_manhandler)
+	playsound(user, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', 50, TRUE)
+	if(IS_CHANGELING(hapless_manhandler)) // not so hapless
 		user.visible_message(
-			span_danger("[user] spews a torrent of sizzling acid onto [hapless_manhandler], using the opportunity to wrestle away."),
-			user.balloon_alert(user, "dissuading captor..."),
-			span_danger("You hear retching, then sizzling, quickly muffled by a loud keening of pain."))
-		playsound(user, 'sound/items/tools/welder.ogg', 50, TRUE)
-		hapless_manhandler.emote("scream")
-		hapless_manhandler.Stun(2 SECONDS)
-		hapless_manhandler.adjustFireLoss(40, updating_health = TRUE)
-		hapless_manhandler.stop_pulling()
-		log_combat(user = user, target = hapless_manhandler, what_done = "acid-spewed to escape a grab", addition = "(biodegrade)")
+			span_danger("[user] spews a mist of sizzling acid onto [hapless_manhandler]... but nothing happens!"),
+			span_changeling("We prepare our escape, spraying bio-acid on our captor... [span_danger("But nothing happened?!")]"), //nani?!
+			span_danger("You hear retching, then a sizzling that terminates quite abruptly.")
+			)
+		to_chat(hapless_manhandler, span_changeling("Our prey attempts to dissuade us with one of our biology's simplest adaptions. Quaint."))
 		return
-	var/mob/living/carbon/hapless_carbon = hapless_manhandler
-	var/obj/item/bodypart/arm/doomed_limb = hapless_carbon.get_active_hand()
-	var/bio_state = doomed_limb.biological_state
-	var/danger_message
-	if(!(bio_state & BIO_FLESH) && !(bio_state & BIO_BONE))
-		if(bio_state & BIO_METAL)
-			danger_message = "metal and wire"
-		else
-			danger_message = "the limb"
-	else if (bio_state & BIO_FLESH)
-		if(bio_state & BIO_BONE)
-			danger_message = "blood and bone"
-	else if (bio_state & BIO_BONE)
-		danger_message = "the bony connections"
-	else//someone was being silly with bio_state in this case but let's avoid a runtime
-		danger_message = "the limb"
 	user.visible_message(
-		span_danger("[user] spews acid onto the arm [hapless_manhandler] grabs [user.p_them()] with, melting through [danger_message]!"),
-		user.balloon_alert(user, "removing captor's grab..."),
-		span_danger("You hear someone retching, followed quickly by a horrible sizzling, which is then muffled by a terrible wail of pain."))
-	to_chat(hapless_carbon, span_userdanger("YOUR ARM IS MELTING OFF!"))
-	playsound(user, 'sound/items/tools/welder.ogg', 50, TRUE)
-	hapless_carbon.emote("scream")
-	doomed_limb.dismember()
-	hapless_carbon.Stun(2 SECONDS)
-	hapless_carbon.stop_pulling()
-	log_combat(user = user, target = hapless_carbon, what_done = "delimbed to escape a grab", addition = "(biodegrade)")
-	return
+		span_danger("[user] spews a mist of sizzling acid onto [hapless_manhandler], using the opportunity to wrestle away."),
+		user.balloon_alert(user, "dissuading captor..."),
+		span_danger("You hear retching, then sizzling, quickly muffled by a loud keening of pain."))
+	hapless_manhandler.Stun(2 SECONDS)
+	hapless_manhandler.emote("scream")
+	hapless_manhandler.stop_pulling()
+	log_combat(user = user, target = hapless_manhandler, what_done = "acid-spewed to escape a grab", addition = "(biodegrade)")

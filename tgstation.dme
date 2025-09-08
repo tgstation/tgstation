@@ -3231,6 +3231,7 @@
 #include "code\modules\antagonists\changeling\changeling_power.dm"
 #include "code\modules\antagonists\changeling\fallen_changeling.dm"
 #include "code\modules\antagonists\changeling\headslug_eggs.dm"
+#include "code\modules\antagonists\changeling\powers\_biodegrade_bioacid.dm"
 #include "code\modules\antagonists\changeling\powers\absorb.dm"
 #include "code\modules\antagonists\changeling\powers\adrenaline.dm"
 #include "code\modules\antagonists\changeling\powers\augmented_eyesight.dm"
