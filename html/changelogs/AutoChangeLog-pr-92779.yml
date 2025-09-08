@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Golems which somehow manage to grow wings and somehow manage to equip something that covers their jumpsuit can no longer fly. (Seriously, this will not affect anyone)"
-  - refactor: "Refactored clothing obscurity entirely. Items should be a loooot more consistent and what covers what, and should update a lot snappier. As always, report any oddities, like mysteriously disappearing articles of clothing, hair, or species parts"

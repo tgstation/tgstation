@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - spellcheck: "Fixes a bunch of manual's formatting, and updates Chef Recipes"

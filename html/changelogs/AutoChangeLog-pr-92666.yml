@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "ore silo id restriction button in the UI now changes text & colour correctly"
-  - bugfix: "ore silo id restriction is now only enforced for station loaded silo and is optional in other cases"

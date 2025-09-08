@@ -1,4 +1,0 @@
-author: "sushi"
-delete-after: True
-changes:
-  - bugfix: "force say works again"

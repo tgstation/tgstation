@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Toilets now require plumbing or water reclaimers to function, and can get clogged by small items."
-  - bugfix: "Trying to use plungers on plumbing objects will no longer hit them after finishing the interaction."
-  - code_imp: "Updated toilet item interaction code"

@@ -152,3 +152,85 @@
   - bugfix: prevents eaten remote signalers from following you between bodies
   nikothedude:
   - bugfix: Player-controlled medbots can now inject chloral on healthy targets
+2025-09-08:
+  Aliceee2ch:
+  - bugfix: Fixed oversight from "Material tab for the autolathe" PR. You can now
+      eject BS crystals, allien alloy and mythril from autolathe.
+  - bugfix: Fixed wires interaction and fixed mech multitool/wirecutters interaction.
+  Krysonism:
+  - balance: vatbeasts, mega arachnids and butterbears now attack much quicker, in
+      line with their old player controlled attack speed.
+  Melber:
+  - balance: Advanced first aid kits in the bridge are back to being normal first
+      aid kids
+  - balance: Emergency Nanomed vendors have larger stocks and better supplies
+  - rscadd: Replaces a majority of Emergency Nanomeds on stations and shuttles with
+      Deforest First Aid Stations. Left clicking these stationary machines will heal
+      minor damage and blood loss over time - at a (small) price. Right clicking them
+      will provide gauze, also for a price. All costs are waived on shuttles, during
+      red alert, or for medical staff. You can also click-drag to have other mobs
+      use the machine. However, robotic limbs need not apply.
+  Melbert:
+  - rscdel: Golems which somehow manage to grow wings and somehow manage to equip
+      something that covers their jumpsuit can no longer fly. (Seriously, this will
+      not affect anyone)
+  - refactor: Refactored clothing obscurity entirely. Items should be a loooot more
+      consistent and what covers what, and should update a lot snappier. As always,
+      report any oddities, like mysteriously disappearing articles of clothing, hair,
+      or species parts
+  SmArtKar:
+  - bugfix: Fixed organ fishing blocking alternate material rod loot from spawning
+  - rscadd: Toilets now require plumbing or water reclaimers to function, and can
+      get clogged by small items.
+  - bugfix: Trying to use plungers on plumbing objects will no longer hit them after
+      finishing the interaction.
+  - code_imp: Updated toilet item interaction code
+  - bugfix: Fixed mobs without guaranteed butcher drops not dropping any crusher trophies
+  - admin: Clientless mobs no longer log their emotes
+  Stonetear:
+  - refactor: MODsuit module code now knows who clicked the activation button.
+  SyncIt21:
+  - bugfix: ore silo id restriction button in the UI now changes text & colour correctly
+  - bugfix: ore silo id restriction is now only enforced for station loaded silo and
+      is optional in other cases
+  - bugfix: no runtime for vendors using department cards
+  - bugfix: the map reader now reads null & 0 values into lists
+  - bugfix: the map reader now parses associative lists(maps/alists) correctly in
+      cases where = sign is embedded within a string
+  - bugfix: the map reader now parses associative lists(maps/alists) who's values
+      themselves can be lists
+  - bugfix: the map reader can now parse nested lists to any degree
+  - bugfix: Chemmaster highlights selected icon & has its window scaled up
+  - bugfix: zombie powder works through inhale(now faster acting)/ingest again
+  Webcomicartist:
+  - qol: The slot machine spins faster, allowing for more time-efficient gambling.
+  Xander3359:
+  - refactor: change some attack procs to use item interaction
+  arbuzik456:
+  - rscadd: Added tongue emote mechanic where you can stick out your tongue
+  lelandkemble:
+  - bugfix: Arcade machine experiment now succeeds on output rather than input of
+      tickets
+  - spellcheck: Fixes a bunch of manual's formatting, and updates Chef Recipes
+  - bugfix: Escape pods no longer have planetary gravity
+  - bugfix: tooltip for secure briefcases now shows correct button.
+  - qol: You can now hear heart attacks with a stethoscope
+  loganuk:
+  - bugfix: Stops coffee machines having melee god mode
+  - qol: Right clicking on coffee machine without coffee pot has correct message
+  necromanceranne:
+  - balance: The Multiphase X-01 has 12 lethal shots to match the capacity of the
+      standard energy gun.
+  - qol: Lets you rename the smoothbore disabler.
+  pebis36012:
+  - bugfix: Splattercasting touch spells no longer give infinite blood
+  sushi:
+  - bugfix: force say works again
+  - bugfix: crates and other objects causing elevation will no longer leave behind
+      magic elevating turfs upon destruction
+  - rscadd: recyclers will now deconstruct non-item objects that they eat instead
+      of just deleting them
+  uaioy:
+  - balance: wizard modsuit shield recharges slower
+  vinylspiders:
+  - bugfix: dead bodies in the morgue will no longer try to blink

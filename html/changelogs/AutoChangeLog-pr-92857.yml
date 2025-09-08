@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Arcade machine experiment now succeeds on output rather than input of tickets"

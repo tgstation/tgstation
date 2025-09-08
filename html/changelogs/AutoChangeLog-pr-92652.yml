@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "the map reader now reads null & 0 values into lists"
-  - bugfix: "the map reader now parses associative lists(maps/alists) correctly in cases where = sign is embedded within a string"
-  - bugfix: "the map reader now parses associative lists(maps/alists) who's values themselves can be lists"
-  - bugfix: "the map reader can now parse nested lists to any degree"

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed mobs without guaranteed butcher drops not dropping any crusher trophies"

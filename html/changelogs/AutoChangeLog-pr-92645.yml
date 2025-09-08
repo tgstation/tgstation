@@ -1,4 +1,0 @@
-author: "pebis36012"
-delete-after: True
-changes:
-  - bugfix: "Splattercasting touch spells no longer give infinite blood"
