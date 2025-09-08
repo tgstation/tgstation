@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
+	abstract_type = /turf
 	datum_flags = DF_STATIC_OBJECT
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1

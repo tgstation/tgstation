@@ -4,12 +4,6 @@
 	/// Text that appears preceding the name in [/atom/proc/examine_title]
 	var/examine_thats = "That's"
 
-/mob/living/carbon/human
-	examine_thats = "This is"
-
-/mob/living/silicon/robot
-	examine_thats = "This is"
-
 /**
  * Called when a mob examines this atom: [/mob/verb/examinate]
  *
