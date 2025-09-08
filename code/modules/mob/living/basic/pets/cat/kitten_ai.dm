@@ -39,7 +39,7 @@
 	var/list/meowing_list = controller.blackboard[meows_key]
 	if(length(meowing_list))
 		living_pawn.say(pick(meowing_list), forced = "ai_controller")
-	living_pawn._pointed(target)
+	living_pawn.do_pointed(target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, success, target_key)

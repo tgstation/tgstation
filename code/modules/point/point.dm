@@ -109,11 +109,6 @@ DEFINE_VERB(/mob, pointed, "Point To", "", FALSE, "Object", atom/pointing_at as 
 	if(istype(pointing_at, /obj/effect/temp_visual/point))
 		return FALSE
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(_pointed), pointing_at))
-	
-/// possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
-/// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro
-/mob/proc/_pointed(atom/pointing_at)
 	if(client) //Clientless mobs can just go ahead and point
 		if(ismovable(pointing_at))
 			var/atom/movable/pointed_movable = pointing_at

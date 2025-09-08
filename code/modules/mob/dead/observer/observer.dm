@@ -644,11 +644,11 @@ DEFINE_VERB(/mob/dead/observer, possess, "Possess!", "Take over the body of a mi
 	target.faction = list(FACTION_NEUTRAL)
 	return TRUE
 
-/mob/dead/observer/_pointed(atom/pointed_at)
+/mob/dead/observer/do_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 
-	visible_message(span_deadsay("<b>[src]</b> points to [pointed_at]."))
+	visible_message(span_deadsay("<b>[src]</b> points to [pointing_at]."))
 
 DEFINE_VERB(/mob/dead/observer, view_manifest, "View Crew Manifest", "", FALSE, "Ghost")
 	if(!client)

@@ -531,10 +531,6 @@ DEFINE_VERB(/mob/living, stop_pulling1, "Stop Pulling", "", FALSE, "IC")
 /mob/living/do_pointed(atom/pointing_at as mob|obj|turf in view(client.view, src))
 	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS))
 		return FALSE
-
-	return ..()
-
-/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)
@@ -1184,11 +1180,8 @@ DEFINE_PROC_VERB(/mob/living, toggle_resting, "Rest", "", FALSE, "IC")
 DEFINE_VERB(/mob/living, resist, "Resist", "", FALSE, "IC")
 	do_resist()
 
+///gotta let folks override thsi thing
 /mob/living/proc/do_resist()
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
-
-///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
-/mob/living/proc/execute_resist()
 	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)

@@ -514,6 +514,7 @@ DEFINE_PROC_VERB(/mob, Cell, "Cell", "", TRUE, "Admin")
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 	return TRUE
 
+//It used to be oview(12), but I can't really say why
 /**
  * Examine a mob
  *
@@ -521,9 +522,11 @@ DEFINE_PROC_VERB(/mob, Cell, "Cell", "", TRUE, "Admin")
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-//It used to be oview(12), but I can't really say why
 DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|obj|turf in view())
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
+	if(VERB_JUST_FIRED())
+		run_examinate()
+	else
+		DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
 /mob/proc/run_examinate(atom/examinify)
 
@@ -725,9 +728,11 @@ DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|o
  */
 DEFINE_VERB(/mob, mode, "Activate Held Object", "", FALSE, "Object")
 	set src = usr
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
+	if(VERB_JUST_FIRED())
+		execute_mode()
+	else
+		DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
-///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
 /mob/proc/execute_mode()
 	if(ismecha(loc))
 		return
@@ -917,7 +922,7 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 	if(selected_hand != active_hand_index)
 		swap_hand(selected_hand)
 
-	// _queue_verb requires a client, so when we don't have it (AI controlled mob) we don't use it
+	// _queue_verb_callback requires a client, so when we don't have it (AI controlled mob) we don't use it
 	client ? mode() : execute_mode()
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
