@@ -648,6 +648,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	//the actual loop.
 	while (1)
 		var/tick_index = TICK_INFO_INDEX()
+		GLOB.tick_info.mc_fired[tick_index] = world.time
 		GLOB.tick_info.mc_start_usage[tick_index] = TICK_USAGE
 		GLOB.tick_info.mc_finished_usage[tick_index] = TICK_USAGE // base state in case of sleep in loop() somehow
 		GLOB.tick_info.last_subsystem_usages = subsystems_to_cost

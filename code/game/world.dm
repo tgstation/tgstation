@@ -181,6 +181,10 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 	var/current_index = TICK_INFO_INDEX()
 	if(tick_info)
 		tick_info.pre_tick_cpu_usage[current_index] = TICK_USAGE
+		// MC sometimes yields and such
+		if(!tick_info.mc_fired(world.time))
+			tick_info.mc_start_usage[current_index] = 0
+			tick_info.mc_finished_usage[current_index] = 0
 
 	refresh_cpu_values()
 	if(GLOB.floor_cpu)
@@ -279,7 +283,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			<a href='byond://?src=[REF(src)];act=toggle_movement'>New Glide [GLOB.use_new_glide]</a> \
 			<a href='byond://?src=[REF(src)];act=toggle_compensation'>CPU Compensation [GLOB.attempt_corrective_cpu]</a> \
 			<a href='byond://?src=[REF(src)];act=toggle_mc_limit'>Dynamic MC Limit [GLOB.use_new_mc_limit]</a> \
-			<a href='byond://?src=[REF(src)];act=toggle_graph'>CPU Graphing [display_graph]</a>\n\
+			<a href='byond://?src=[REF(src)];act=toggle_graph'>CPU Graphing [display_graph]</a>\
+			<a href='byond://?src=[REF(src)];act=toggle_verb_collection'>Verb Collection [GLOB.collect_verb_costs]</a>\n\
 		Glide: New ([GLOB.glide_size_multiplier]) Old ([GLOB.old_glide_size_multiplier])\n\
 		Graph: \
 			Displaying \[<a href='byond://?src=[REF(src)];act=set_graph_mode'>[graph_display.display_mode]</a>\] \
@@ -395,6 +400,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			else
 				graph_display.alpha = 0
 			return TRUE
+		if("toggle_verb_collection")
+			GLOB.collect_verb_costs = !GLOB.collect_verb_costs
 		if("set_graph_mode")
 			var/mode = tgui_input_list(usr, "What kind of info should we graph?", "Graph Mode?", graph_options)
 			if(!(mode in graph_options))
@@ -442,6 +449,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 /// Global datum, for real, I am so sorry
 /datum/tick_holder
 	var/list/cpu_values = new /list(TICK_INFO_SIZE)
+	var/list/mc_fired = new /list(TICK_INFO_SIZE)
 	var/list/mc_start_usage = new /list(TICK_INFO_SIZE)
 	var/list/mc_finished_usage = new /list(TICK_INFO_SIZE)
 	var/list/mc_usage = new /list(TICK_INFO_SIZE)
@@ -458,6 +466,11 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/list/last_subsystem_usages = list()
 	var/cpu_index = 1
 	var/last_cpu_update = -1
+
+/datum/tick_holder/proc/mc_fired(tick_inspecting)
+	if(mc_fired[TICK_INFO_TICK2INDEX(DS2TICKS(tick_inspecting))] == tick_inspecting)
+		return TRUE
+	return FALSE
 
 // Not initialized, because we have to do that manually
 // That's how fucked we are
@@ -503,15 +516,15 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	var/list/cost_breakdown = list()
 	for(var/datum/verb_cost_tracker/verb_info as anything in GLOB.verb_trackers_this_tick)
 		if(verb_info.invoked_on != verb_info.finished_on)
-			stack_trace("We somehow slept between logpoints for [verb_info.proc_name], ahhhhh ([json_encode(verb_info.vars)])")
+			stack_trace("We somehow slept between logpoints for [verb_info.name_to_use], ahhhhh ([json_encode(verb_info.vars)])")
 			continue
 		if(verb_info.finished_on != world.time - world.tick_lag)
 			stack_trace("there's a verb we think is from last tick that happen this tick, what? ([json_encode(verb_info.vars)])")
 			continue
-		total_verb_cost += verb_info.usage_at_end - verb_info.useage_at_start
-		verb_spans += list(list(verb_info.useage_at_start, verb_info.usage_at_end))
+		total_verb_cost += verb_info.usage_at_end - verb_info.usage_at_start
+		verb_spans += list(list(verb_info.usage_at_start, verb_info.usage_at_end))
 		last_verb_finished = max(last_verb_finished, verb_info.usage_at_end)
-		cost_breakdown[verb_info.proc_name] += verb_info.usage_at_end - verb_info.useage_at_start
+		cost_breakdown[verb_info.name_to_use] += verb_info.usage_at_end - verb_info.usage_at_start
 
 	cpu_values[cpu_index] = real_cpu
 	tick_info.mc_usage[cpu_index] = tick_info.mc_finished_usage[cpu_index] - tick_info.mc_start_usage[cpu_index]
@@ -567,11 +580,6 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	else
 		GLOB.corrective_cpu_threshold = GLOB.corrective_cpu_target
 		GLOB.corrective_cpu_cost = 0
-
-#undef TICK_INFO_INDEX
-#undef TICK_INFO_TICK2INDEX
-#undef FORMAT_CPU
-#undef TICK_INFO_SIZE
 
 /// Initializes TGS and loads the returned revising info into GLOB.revdata
 /world/proc/InitTgs()
