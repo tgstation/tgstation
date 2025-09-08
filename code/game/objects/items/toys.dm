@@ -27,6 +27,7 @@
  * Intento
  */
 /obj/item/toy
+	abstract_type = /obj/item/toy
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

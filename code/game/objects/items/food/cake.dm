@@ -1,5 +1,6 @@
 /obj/item/food/cake
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cake
 	bite_consumption = 3
 	max_volume = 80
 	food_reagents = list(

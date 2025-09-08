@@ -1,5 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
+	abstract_type = /obj/item/clothing
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	integrity_failure = 0.4
