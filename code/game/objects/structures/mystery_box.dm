@@ -173,15 +173,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /// This proc is used to define what item types valid_types is filled with
 /obj/structure/mystery_box/proc/generate_valid_types()
-	valid_types = list()
-
-	for(var/iter_path in typesof(selectable_base_type))
-		if(!ispath(iter_path, /obj/item))
-			continue
-		var/obj/item/iter_item = iter_path
-		if((initial(iter_item.item_flags) & ABSTRACT) || !initial(iter_item.icon_state) || !initial(iter_item.inhand_icon_state))
-			continue
-		valid_types += iter_path
+	valid_types = generate_reasonable_types(selectable_base_type)
 
 /// The box has been activated, play the sound and spawn the prop item
 /obj/structure/mystery_box/proc/activate(mob/living/user)
