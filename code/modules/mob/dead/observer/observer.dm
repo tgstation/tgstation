@@ -721,7 +721,7 @@ DEFINE_VERB(/mob/dead/observer, add_view_range, "Add View Range", "", TRUE, "", 
 	if(!..())
 		return FALSE
 
-	visible_message(span_deadsay("<b>[src]</b> points to [pointed_at]."))
+	visible_message(span_deadsay("<b>[src]</b> points to [pointing_at]."))
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)

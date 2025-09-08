@@ -1,7 +1,7 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 DEFINE_VERB(/client, wiki, "wiki", \
 	"Brings you to the Wiki", \
-	TRUE, "", query as text)
+	TRUE, "")
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(!wikiurl)
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
