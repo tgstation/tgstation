@@ -398,6 +398,11 @@
 		return
 	return user.dna.species.get_cough_sound(user)
 
+/datum/emote/living/wheeze
+	key = "wheeze"
+	key_third_person = "wheezes"
+	message = "wheezes!"
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/pout
 	key = "pout"
