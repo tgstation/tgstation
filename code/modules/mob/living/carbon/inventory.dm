@@ -175,6 +175,8 @@
 
 	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
+	if(!(slot & item.slot_flags))
+		return
 	add_item_coverage(item)
 
 /mob/living/carbon/has_unequipped(obj/item/item)
