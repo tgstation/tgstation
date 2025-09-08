@@ -116,12 +116,11 @@
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		tool_behaviour = TOOL_MINING
-		RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(rocksmash))
-		RegisterSignal(user, COMSIG_MOVABLE_BUMP, PROC_REF(rocksmash))
-	else
-		stopmining(user)
+	if(!(slot & ITEM_SLOT_GLOVES))
+		return
+	tool_behaviour = TOOL_MINING
+	RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(rocksmash))
+	RegisterSignal(user, COMSIG_MOVABLE_BUMP, PROC_REF(rocksmash))
 
 /obj/item/clothing/gloves/gauntlets/dropped(mob/user)
 	. = ..()
