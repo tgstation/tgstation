@@ -11,8 +11,7 @@ GLOBAL_DATUM(mass_teaching, /datum/summon_things_controller/spellbook_entry)
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
 
-GLOBAL_LIST_INIT(summoned_all_guns, generate_reasonable_types(/obj/item/gun))
-
+GLOBAL_LIST_INIT(summoned_all_guns, generate_reasonable_item_types(/obj/item/gun))
 
 GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/disabler,
