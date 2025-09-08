@@ -5,30 +5,14 @@
 	set desc = "Open Character Preferences"
 	set category = "OOC"
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if(caller)
-		__open_preferences_window(PREFERENCE_TAB_CHARACTER_PREFERENCES)
-	else
-		var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee)
-		ASYNC
-			__open_preferences_window(PREFERENCE_TAB_CHARACTER_PREFERENCES)
-		__store_cost.usage_at_end = TICK_USAGE
-		__store_cost.finished_on = world.time
-		__store_cost.enter_average()
+	VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(__open_preferences_window, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager, PREFERENCE_TAB_CHARACTER_PREFERENCES)
 
 /datum/verbs/menu/Preferences/verb/open_game_preferences()
 	set name = "Open Game Preferences"
 	set desc = "Open Game Preferences"
 	set category = "OOC"
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if(caller)
-		__open_preferences_window(PREFERENCE_TAB_GAME_PREFERENCES)
-	else
-		var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee)
-		ASYNC
-			__open_preferences_window(PREFERENCE_TAB_GAME_PREFERENCES)
-		__store_cost.usage_at_end = TICK_USAGE
-		__store_cost.finished_on = world.time
-		__store_cost.enter_average()
+	VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(__open_preferences_window, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager, PREFERENCE_TAB_GAME_PREFERENCES)
 
 // I am sorry. I am so sorry.
 /proc/__open_preferences_window(preference_tab)

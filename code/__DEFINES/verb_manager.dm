@@ -20,7 +20,7 @@
 ///_verification_args... are only necessary if the verb_manager subsystem youre using checks them in can_queue_verb()
 ///if you put anything in _verification_args that ISNT explicitely put in the can_queue_verb() override of the subsystem youre using,
 ///it will runtime.
-#define TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) (_queue_verb(_verb_callback, _tick_check, _subsystem_to_use, _verification_args))
+#define TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) (_queue_verb_callback(_verb_callback, _tick_check, _subsystem_to_use, _verification_args))
 ///queue wrapper for TRY_QUEUE_VERB() when you want to call the proc if the server isnt overloaded enough to queue
 #define QUEUE_OR_CALL_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) \
 	if(!TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args)) {\
@@ -34,3 +34,19 @@
 //default tick threshold but nondefault subsystem
 #define TRY_QUEUE_VERB_FOR(_verb_callback, _subsystem_to_use, _verification_args...) (TRY_QUEUE_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, _subsystem_to_use, _verification_args))
 #define QUEUE_OR_CALL_VERB_FOR(_verb_callback, _subsystem_to_use, _verification_args...) QUEUE_OR_CALL_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, _subsystem_to_use, _verification_args)
+
+
+// Queue verb based off the type of the current tracker's average cost and the MC threshold
+#define INTELIGENT_TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) \
+	TRY_QUEUE_VERB(_verb_callback, (_tick_check - GLOB.active_tracker?.get_average_cost()), _subsystem_to_use, _verification_args)
+#define INTELIGENT_QUEUE_OR_CALL_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) \
+	QUEUE_OR_CALL_VERB(_verb_callback, (_tick_check - GLOB.active_tracker?.get_average_cost()), _subsystem_to_use, _verification_args)
+
+// Queue verb based off the type of the current tracker's average cost and the MC threshold
+#define INTELIGENT_DEFAULT_TRY_QUEUE_VERB(_verb_callback, _verification_args...) \
+	INTELIGENT_TRY_QUEUE_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, null, _verification_args)
+#define INTELIGENT_DEFAULT_QUEUE_OR_CALL_VERB(_verb_callback, _verification_args...) \
+	INTELIGENT_QUEUE_OR_CALL_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, null, _verification_args)
+
+#define INTELIGENT_TRY_QUEUE_VERB_FOR(_verb_callback, _subsystem_to_use, _verification_args...) (INTELIGENT_TRY_QUEUE_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, _subsystem_to_use, _verification_args))
+#define INTELIGENT_QUEUE_OR_CALL_VERB_FOR(_verb_callback, _subsystem_to_use, _verification_args...) INTELIGENT_QUEUE_OR_CALL_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, _subsystem_to_use, _verification_args)

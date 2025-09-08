@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /// Wrapper around click content
 /// Returns TRUE if successful, FALSE if blocked, if anything else is returned it will be returned in the parent
-/client/proc/__Topic(href, href_list, hsrc, hsrc_command)
+/client/proc/__Topic(href, list/href_list, hsrc, hsrc_command)
 	if(!usr || usr != mob) //stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return FALSE
 
@@ -115,9 +115,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			to_chat(src, span_danger("Your previous action was ignored because you've done too many in a second"))
 			return FALSE
 
+	var/topic_name = "topic"
+	if (isdatum(hsrc))
+		var/datum/real_src = hsrc
+		topic_name = "[topic_name]-[real_src.type]"
+	if(GLOB.active_tracker)
+		GLOB.active_tracker.name_to_use = "[topic_name]-[href_list.Join("-")]"
+
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
 		return FALSE
+	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
+	//overloaded
 	if(href_list["reload_tguipanel"])
 		nuke_chat()
 	if(href_list["reload_statbrowser"])
@@ -189,7 +198,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
 	//overloaded
-	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_WrapSrcTopic), hsrc, href, href_list)))
+	if(hsrc && hsrc != holder && INTELIGENT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_WrapSrcTopic), hsrc, href, href_list), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSverb_manager))
+		if(GLOB.active_tracker)
+			GLOB.active_tracker.name_to_use = "[GLOB.active_tracker.name_to_use]-queued"
 		return FALSE
 	return TRUE //redirect to hsrc.Topic()
 
@@ -296,7 +307,6 @@ OVERRIDE_INTERNAL_VERB(/client, AllowUpload, filename, filelength)
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 	if(ckey == "lemoninthedark")
-		GLOB.attempt_corrective_cpu = TRUE
 		GLOB.use_new_glide = TRUE
 
 	var/reconnecting = FALSE
@@ -879,6 +889,7 @@ OVERRIDE_INTERNAL_VERB(/client, AllowUpload, filename, filelength)
 		if(__Click(object, location, control, params))
 			. = ..()
 	else
+		// No reason to check here because we will do so later in the call chain, with more detail on who/what is being clicked on
 		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
 		ASYNC
 			if(__Click(object, location, control, params))
@@ -953,9 +964,13 @@ OVERRIDE_INTERNAL_VERB(/client, AllowUpload, filename, filelength)
 			to_chat(src, span_danger("Your previous click was ignored because you've done too many in a second"))
 			return FALSE
 
+	if(GLOB.active_tracker)
+		GLOB.active_tracker.name_to_use = "click-[object.type]-ghost{[isobserver(usr)]}-shift{[LAZYACCESS(modifiers, SHIFT_CLICK)]}"
 	//check if the server is overloaded and if it is then queue up the click for next tick
 	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists its reasonable
-	if(!QDELETED(object) && TRY_QUEUE_VERB(VERB_CALLBACK(object, TYPE_PROC_REF(/atom, _Click), location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
+	if(!QDELETED(object) && INTELIGENT_TRY_QUEUE_VERB(VERB_CALLBACK(object, TYPE_PROC_REF(/atom, _Click), location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
+		if(GLOB.active_tracker)
+			GLOB.active_tracker.name_to_use = "[GLOB.active_tracker.name_to_use]-queued"
 		return FALSE
 
 	if (hotkeys)

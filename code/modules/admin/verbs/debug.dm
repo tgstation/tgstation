@@ -539,7 +539,7 @@ ADMIN_VERB(del_log, R_DEBUG, "Display del() Log", "Display del's log of everythi
 
 	dellog += "</ol>"
 
-	var/datum/browser/browser = new(usr, "dellog", "Del Log", 00, 400)
+	var/datum/browser/browser = new(usr, "dellog", "Del Log", 400, 400)
 	browser.set_content(dellog.Join())
 	browser.open()
 
