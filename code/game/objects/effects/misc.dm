@@ -45,6 +45,13 @@
 
 /// Override to define loot blacklist behavior
 /obj/effect/spawner/proc/can_spawn(atom/loot)
+	if(!ispath(loot))
+		WARNING("[loot] is not a path")
+		return FALSE
+	if(loot:abstract_type == loot)
+		return FALSE
+	if(loot:spawn_blacklisted)
+		return FALSE
 	return TRUE
 
 /obj/effect/list_container
