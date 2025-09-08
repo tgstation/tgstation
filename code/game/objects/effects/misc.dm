@@ -45,7 +45,9 @@
 
 /// Override to define loot blacklist behavior
 /obj/effect/spawner/proc/can_spawn(atom/loot)
-	if(!ispath(loot)) // Means its something evil like /obj/item/stack/sheet/mineral/diamond{amount = 15} which is not a path and cannot be checked as one
+	if(!ispath(loot))
+		// Means its something evil like /obj/item/stack/sheet/mineral/diamond{amount = 15}
+		// (modified instances?) which is not a path and cannot be checked as one
 		return TRUE
 	if(loot.abstract_type == loot)
 		return FALSE
