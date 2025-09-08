@@ -62,7 +62,7 @@
 
 	autopsy_information += "Analyzing results for <b>[scanned.name]</b>:</br></br>"
 	autopsy_information += "Time of Death - <b>[scanned.station_timestamp_timeofdeath]</b></br>"
-	autopsy_information += "Subject has been dead <b>[DisplayTimeText(round(world.time - scanned.timeofdeath))]</b>.<hr>"
+	autopsy_information += "Subject has been dead for <b>[DisplayTimeText(round(world.time - scanned.timeofdeath))]</b>.<hr>"
 
 	var/oxy_loss = scanned.getOxyLoss()
 	var/tox_loss = scanned.getToxLoss()
