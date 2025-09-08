@@ -130,7 +130,8 @@ GLOBAL_DATUM(active_tracker, /datum/verb_cost_tracker)
 /datum/verb_cost_tracker/proc/enter_average(category)
 	if(!category)
 		category = name_to_use
-	GLOB.average_verb_cost[category] = MC_AVG_SLOW_UP_FAST_DOWN(GLOB.average_verb_cost[category], usage_at_end - usage_at_start)
+	if(GLOB.collect_verb_costs)
+		GLOB.average_verb_cost[category] = MC_AVG_SLOW_UP_FAST_DOWN(GLOB.average_verb_cost[category], usage_at_end - usage_at_start)
 	GLOB.active_tracker = null
 
 /datum/verb_cost_tracker/proc/get_average_cost()
