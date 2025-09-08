@@ -81,11 +81,11 @@
 	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
 
-/obj/item/mod/module/magboot/on_activation()
+/obj/item/mod/module/magboot/on_activation(mob/activator)
 	mod.wearer.add_traits(active_traits, REF(src))
 	mod.update_speed()
 
-/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/magboot/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_traits(active_traits, REF(src))
 	mod.update_speed()
 
@@ -140,7 +140,7 @@
 	if (key == "cut_tethers")
 		SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
-/obj/item/mod/module/tether/on_deactivation(display_message, deleting)
+/obj/item/mod/module/tether/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
 /obj/projectile/tether
@@ -394,7 +394,7 @@
 /obj/item/mod/module/constructor/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, REF(src))
 
-/obj/item/mod/module/constructor/on_use()
+/obj/item/mod/module/constructor/on_use(mob/activator)
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_energy_cost)
 

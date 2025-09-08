@@ -1,0 +1,4 @@
+author: "sushi"
+delete-after: True
+changes:
+  - rscadd: "water vapor on a turf will now also wash radiation off of the items on it"

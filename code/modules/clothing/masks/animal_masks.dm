@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 				RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 			to_chat(M, span_userdanger("[src] was cursed!"))
 			M.update_worn_mask()
+			M.refresh_obscured()
 
 /obj/item/clothing/mask/animal/proc/clear_curse()
 	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
