@@ -6,7 +6,7 @@
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	icon_state = "shade_cult"
 	icon_living = "shade_cult"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	maxHealth = 40
 	health = 40
 	status_flags = CANPUSH
@@ -72,7 +72,7 @@
 		SSblackbox.record_feedback("tally", "cult_shade_suicided", 1)
 	..()
 
-/mob/living/basic/shade/attackby(obj/item/item, mob/user, list/modifiers)
+/mob/living/basic/shade/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/soulstone))
 		var/obj/item/soulstone/stone = item
 		stone.capture_shade(src, user)

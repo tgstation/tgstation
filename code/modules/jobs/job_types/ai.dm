@@ -86,3 +86,6 @@
 
 /datum/job/ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>"
+
+/datum/job/ai/on_respawn(mob/new_character)
+	new_character.AIize()

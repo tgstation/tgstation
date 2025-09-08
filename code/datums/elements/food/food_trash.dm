@@ -57,7 +57,7 @@
 
 	if(istype(source, /obj/item/food/grown) && ispath(trash, /obj/item/food))
 		var/obj/item/food/grown/plant = source
-		trash_item = new trash(edible_object.drop_location())
+		trash_item = ispath(trash, /obj/item/food/grown) ? new trash(edible_object.drop_location(), plant.seed) : new trash(edible_object.drop_location())
 		trash_item.reagents?.set_all_reagents_purity(plant.seed.get_reagent_purity())
 	else
 		trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())

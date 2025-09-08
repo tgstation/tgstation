@@ -11,9 +11,11 @@
 	var/static/list/messages = list(
 		span_warning("You feel your conscious mind fall apart!"),
 		span_warning("Reality warps around you!"),
-		span_warning("Something's wispering around you!"),
+		span_warning("Something's whispering around you!"),
 		span_warning("You are going insane!"),
 	)
+	///Do we spawn misleading decoys?
+	var/spawn_decoys = TRUE
 
 /obj/effect/anomaly/hallucination/Initialize(mapload, new_lifespan)
 	. = ..()
@@ -50,6 +52,9 @@
 	)
 
 /obj/effect/anomaly/hallucination/proc/generate_decoys()
+	if(!spawn_decoys)
+		return
+
 	for(var/turf/floor in orange(1, src))
 		if(prob(35))
 			new /obj/effect/anomaly/hallucination/decoy(floor)
@@ -100,3 +105,7 @@
 
 /obj/effect/anomaly/hallucination/decoy/generate_decoys()
 	return
+
+///Subtype for the SM that doesn't spawn decoys, because otherwise the whole area gets flooded with dummies.
+/obj/effect/anomaly/hallucination/supermatter
+	spawn_decoys = FALSE

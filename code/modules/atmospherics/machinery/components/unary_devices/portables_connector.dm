@@ -20,7 +20,7 @@
 	///Reference to the connected device
 	var/obj/machinery/portable_atmospherics/connected_device
 
-/obj/machinery/atmospherics/components/unary/portables_connector/New()
+/obj/machinery/atmospherics/components/unary/portables_connector/Initialize(mapload)
 	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 0
@@ -32,7 +32,7 @@
 
 /obj/machinery/atmospherics/components/unary/portables_connector/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "connector_cap", initialize_directions, pipe_color)
 		cap.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(cap)

@@ -15,7 +15,7 @@
 	damtype = BURN
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	wound_bonus = -30
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/max_thunder_charges = 3
 	var/thunder_charges = 3
@@ -67,7 +67,7 @@
 /obj/item/storm_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return thunder_blast(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-/obj/item/storm_staff/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/storm_staff/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	thunder_blast(target, user)
 
 /obj/item/storm_staff/proc/thunder_blast(atom/target, mob/user)

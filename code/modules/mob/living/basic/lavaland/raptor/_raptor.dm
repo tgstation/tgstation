@@ -38,6 +38,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	faction = list(FACTION_RAPTOR, FACTION_NEUTRAL)
 	speak_emote = list("screeches")
+	butcher_results = list(
+		/obj/item/food/meat/slab/chicken = 4,
+		/obj/item/stack/sheet/bone = 2,
+	)
 	ai_controller = /datum/ai_controller/basic_controller/raptor
 	///can this mob breed
 	var/can_breed = TRUE
@@ -52,7 +56,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/attack,
-		/datum/pet_command/follow/start_active,
+		/datum/pet_command/follow,
 		/datum/pet_command/fetch,
 	)
 	///things we inherited from our parent
@@ -73,6 +77,12 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	AddElement(/datum/element/wears_collar)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
+	AddElement(\
+		/datum/element/crusher_loot,\
+		trophy_type = /obj/item/crusher_trophy/raptor_feather,\
+		drop_mod = 100,\
+		drop_immediately = FALSE,\
+	)
 
 	if(!mapload)
 		GLOB.raptor_population += REF(src)
@@ -136,11 +146,22 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	adjust_offsets(new_dir)
 
 /mob/living/basic/raptor/proc/adjust_offsets(direction)
-	if(!change_offsets)
+	if (!change_offsets)
 		return
-	pixel_x = (direction & EAST) ? -20 : 0
-	pixel_y = (direction & NORTH) ? -5 : 0
 
+	switch (direction)
+		if (NORTH)
+			pixel_x = -8
+			pixel_y = -5
+		if (SOUTH)
+			pixel_x = 0
+			pixel_y = 0
+		if (EAST, SOUTHEAST, NORTHEAST)
+			pixel_x = -20
+			pixel_y = 0
+		if (WEST, SOUTHWEST, NORTHWEST)
+			pixel_x = -5
+			pixel_y = 0
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -215,6 +236,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	raptor_color = RAPTOR_RED
+	ridable_component = /datum/component/riding/creature/raptor/combat
 	dex_description = "A resilient breed of raptors, battle-tested and bred for the purpose of humbling its foes in combat, \
 		This breed demonstrates higher combat capabilities than its peers and oozes ruthless aggression."
 	child_path = /mob/living/basic/raptor/baby_raptor/red

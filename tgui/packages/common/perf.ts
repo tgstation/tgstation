@@ -14,9 +14,9 @@ const FRAME_DURATION = 1000 / FPS;
 // True if Performance API is supported
 const supportsPerf = !!window.performance?.now;
 // High precision markers
-let hpMarkersByName: Record<string, number> = {};
+const hpMarkersByName: Record<string, number> = {};
 // Low precision markers
-let lpMarkersByName: Record<string, number> = {};
+const lpMarkersByName: Record<string, number> = {};
 
 /**
  * Marks a certain spot in the code for later measurements.

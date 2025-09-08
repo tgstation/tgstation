@@ -57,12 +57,7 @@
 	visible_message(span_notice("[exposing_reagent] begins to cook on [src]."))
 	return NONE
 
-/obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
-
-
-/obj/machinery/griddle/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/machinery/griddle/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(griddled_objects.len >= max_items)
 		to_chat(user, span_notice("[src] can't fit more items!"))

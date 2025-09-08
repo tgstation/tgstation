@@ -2,8 +2,9 @@
 	name = "sticky tape"
 	singular_name = "sticky tape"
 	desc = "Used for sticking to things for sticking said things to people."
-	icon = 'icons/obj/tapes.dmi'
-	icon_state = "tape"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/stack/sticky_tape"
+	post_init_icon_state = "tape"
 	var/prefix = "sticky"
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
@@ -99,9 +100,11 @@
 
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/stack/sticky_tape/pointy"
+	post_init_icon_state = "tape_spikes"
 	singular_name = "pointy tape"
 	desc = "Used for sticking to things for sticking said things inside people."
-	icon_state = "tape_spikes"
 	prefix = "pointy"
 	conferred_embed = /datum/embedding/pointy_tape
 	merge_type = /obj/item/stack/sticky_tape/pointy
@@ -182,6 +185,10 @@
 
 	if(!isobj(interacting_with) || iseffect(interacting_with))
 		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_DUCT_TAPE_UNREPAIRABLE))
+		user.balloon_alert(user, "cannot be repaired with duct tape!")
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/object_to_repair = interacting_with
 	var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity

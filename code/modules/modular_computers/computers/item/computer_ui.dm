@@ -97,9 +97,9 @@
 	)
 
 	data["proposed_login"] = list(
-		IDInserted = computer_id_slot ? TRUE : FALSE,
-		IDName = computer_id_slot?.registered_name,
-		IDJob = computer_id_slot?.assignment,
+		IDInserted = stored_id ? TRUE : FALSE,
+		IDName = stored_id?.registered_name,
+		IDJob = stored_id?.assignment,
 	)
 
 	data["removable_media"] = list()
@@ -193,7 +193,10 @@
 					if(!inserted_disk)
 						return
 
-					user.put_in_hands(inserted_disk)
+					if(!user || !Adjacent(user))
+						inserted_disk.forceMove(drop_location())
+					else
+						user.put_in_hands(inserted_disk)
 					inserted_disk = null
 					playsound(src, 'sound/machines/card_slide.ogg', 50)
 					return TRUE
@@ -208,7 +211,7 @@
 						return TRUE
 
 				if("ID")
-					if(RemoveID(user))
+					if(remove_id(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 						return TRUE
 

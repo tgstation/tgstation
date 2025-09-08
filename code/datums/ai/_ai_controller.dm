@@ -18,7 +18,7 @@ multiple modular subtrees with behaviors
 	var/list/blackboard = list()
 
 	///Bitfield of traits for this AI to handle extra behavior
-	var/ai_traits = NONE
+	var/ai_traits = DEFAULT_AI_FLAGS
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors = list()
 	///Current actions being performed by the AI.

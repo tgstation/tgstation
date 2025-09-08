@@ -38,6 +38,8 @@
 	var/minion_path = /mob/living/basic/cockroach/sewer
 	/// Command list given to minionised cockroaches
 	var/list/minion_commands
+	/// Cockroach death drops
+	var/static/list/death_drops = list(/obj/effect/decal/cleanable/insectguts)
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	var/turf/our_turf = get_turf(src)
@@ -48,8 +50,7 @@
 		minimum_survivable_temperature = 140 // 40kelvin below icebox temp
 		add_atom_colour("#66ccff", FIXED_COLOUR_PRIORITY)
 	. = ..()
-	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts)
-	AddElement(/datum/element/death_drops, roach_drops)
+	AddElement(/datum/element/death_drops, death_drops)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddComponent( \
 		/datum/component/squashable, \
@@ -73,7 +74,7 @@
 	return FALSE
 
 // Roach goop is the gibs to drop
-/mob/living/basic/cockroach/spawn_gibs()
+/mob/living/basic/cockroach/get_gibs_type(drop_bitflags = NONE)
 	return
 
 /// Roach which tries to ineffectually attack you
@@ -90,6 +91,32 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	minion_path = null
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/aggro
+
+/mob/living/basic/cockroach/bloodroach
+	name = "bloodroach"
+	desc = "This cockroach has gorged itself on maintenance blood, and has a glistening red sheen to its fatty carapace. Incredibly disgusting."
+	icon_state = "bloodroach"
+	icon_dead = "bloodroach_no_animation"
+	health = 3
+	maxHealth = 3 // Wow!!
+	var/static/list/blood_drops = list(/obj/effect/decal/cleanable/blood/gibs/old)
+
+/mob/living/basic/cockroach/bloodroach/Initialize(mapload)
+	. = ..()
+	// Overriding the static drops of parent
+	AddElement(/datum/element/death_drops, blood_drops)
+
+/mob/living/basic/cockroach/bloodroach/death(gibbed)
+	if(HAS_TRAIT(src, TRAIT_BUGKILLER_DEATH))
+		return ..()
+	// explode into a pile of blood if not pest controlled
+	for(var/turf/messy_turf in view(src, 2))
+		new /obj/effect/decal/cleanable/blood(messy_turf)
+		for(var/mob/living/mob_in_turf in messy_turf)
+			mob_in_turf.visible_message(span_danger("[mob_in_turf] is splattered with blood!"), span_userdanger("You're splattered with blood!"))
+			mob_in_turf.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
+			playsound(mob_in_turf, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
+	return ..()
 
 /// Roach with a spiky hat, like a caltrop
 /mob/living/basic/cockroach/hauberoach

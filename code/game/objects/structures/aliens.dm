@@ -67,6 +67,7 @@
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
+	ADD_TRAIT(src, TRAIT_INVERTED_DEMOLITION, INNATE_TRAIT)
 
 /obj/structure/alien/resin/Destroy()
 	air_update_turf(TRUE, FALSE)

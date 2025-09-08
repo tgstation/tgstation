@@ -4,6 +4,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	sound_vary = TRUE
 	/// The maximum amount of reagents per transfer that will be moved out of this reagent container.
 	var/amount_per_transfer_from_this = 5
 	/// Does this container allow changing transfer amounts at all, the container can still have only one possible transfer value in possible_transfer_amounts at some point even if this is true
@@ -40,7 +41,19 @@
 	/// The icon file to take fill icon appearances from
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	///The sound this container makes when picked up, dropped if there is liquid inside.
-	var/reagent_container_liquid_sound = null
+	var/reagent_container_liquid_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on drop
+	var/filled_drop_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on throw drop
+	var/filled_throw_drop_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on pickup
+	var/filled_pickup_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on throw impact
+	var/filled_throw_hit_sound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on hit
+	var/filled_hitsound
+	///The sound this container makes when there is an amount of liquid over a certain threshold inside on equip
+	var/filled_equip_sound
 	///If we want to the contrast of the reagent overlay if the reagent mix color is very dark.
 	var/adjust_color_contrast = FALSE
 
@@ -83,7 +96,7 @@
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!user.combat_mode)
 		return
 	return ..()
@@ -119,7 +132,7 @@
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 
-/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
 	if(!user.combat_mode)
@@ -210,7 +223,7 @@
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, datum/thrownthing/throwingdatum, override_spillable = FALSE)
 	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable) || reagent_flags & SMART_CAP)
 		return
-	var/mob/thrown_by = throwingdatum.get_thrower()
+	var/mob/thrown_by = throwingdatum?.get_thrower()
 
 	if(ismob(target) && target.reagents)
 		var/splash_multiplier = 1
@@ -229,7 +242,7 @@
 		reagents.expose(target, TOUCH, splash_multiplier)
 		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
 
-	else if(bartender_check(target, thrown_by) && throwingdatum)
+	else if(throwingdatum && bartender_check(target, thrown_by))
 		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
 		return
 
@@ -327,12 +340,43 @@
 
 	. += filling
 
-/obj/item/reagent_containers/dropped(mob/user, silent)
-	. = ..()
-	if(reagent_container_liquid_sound && reagents.total_volume > 0)
-		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+/obj/item/reagent_containers/proc/reagent_container_sound_chain(filled_sound, empty_sound, target, volume)
+	if(reagents.total_volume <= round((reagents.maximum_volume * 0.2), 1))
+		if(empty_sound)
+			playsound(target, empty_sound, volume, vary = sound_vary, ignore_walls = FALSE)
+			return TRUE
+		return FALSE
 
-/obj/item/reagent_containers/equipped(mob/user, slot, initial = FALSE)
+	if(reagent_container_liquid_sound)
+		playsound(target, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+	if(filled_sound)
+		playsound(target, filled_sound, volume, vary = sound_vary, ignore_walls = FALSE)
+		return TRUE
+	if(empty_sound)
+		playsound(target, empty_sound, volume, vary = sound_vary, ignore_walls = FALSE)
+		return TRUE
+	return FALSE
+
+/obj/item/reagent_containers/play_pickup_sound(volume = PICKUP_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_pickup_sound, pickup_sound, src, volume)
+
+/obj/item/reagent_containers/play_drop_sound(volume = DROP_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_drop_sound, drop_sound, src, volume)
+
+/obj/item/reagent_containers/play_throw_drop_sound(volume = YEET_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_throw_drop_sound, throw_drop_sound, src, volume)
+
+/obj/item/reagent_containers/play_mob_throw_hit_sound(target, volume = DROP_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_throw_hit_sound, mob_throw_hit_sound, target, volume)
+
+/obj/item/reagent_containers/play_hit_sound(target, volume = HALFWAY_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_hitsound, filled_hitsound, target, volume)
+
+/obj/item/reagent_containers/play_equip_sound(volume = EQUIP_SOUND_VOLUME)
+	return reagent_container_sound_chain(filled_equip_sound, equip_sound, src, volume)
+
+/obj/item/reagent_containers/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
-	if(!initial && (slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
-		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+	// If consumed in crafting, we should dump contents out before qdeling them.
+	if(!is_type_in_list(src, current_recipe.parts))
+		reagents.expose(loc, TOUCH)

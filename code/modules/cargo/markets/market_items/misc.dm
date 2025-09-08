@@ -185,7 +185,7 @@
 
 /datum/market_item/misc/girlypop/spawn_item(loc, datum/market_purchase/purchase)
 	. = ..()
-	var/obj/structure/closet/crate/pink/C = new(loc)
+	var/obj/structure/closet/crate/glitter/C = new(loc)
 	for (var/type in list(
 		/obj/item/poster/contraband/dream,
 		/obj/item/poster/contraband/beekind,
@@ -203,3 +203,21 @@
 	))
 		new type(C)
 	return C
+
+/datum/market_item/misc/self_surgery_skillchip
+	name = /obj/item/skillchip/self_surgery::name
+	desc = "Man, the insurance companies HATE this one. Damn fat-cats can't stand the idea of people treating their own illnesses - \
+	they'd rather you go to THEIR doctors, who THEY convinced to charge EXTORTIONARY prices the average Joe can't afford, all so you \
+	gotta sign on to THEIR packages. Most people end up paying for NOTHING for YEARS just so that they have a CHANCE at being able to afford \
+	treatment when they actually NEED it. \n\n Uh, what was I talking about again... Oh, yeah. This here skillchip'll let you put yourself under the knife. \
+	A must-have for the person who can't rely on anyone else."
+	item = /obj/item/skillchip/self_surgery
+	price_min = CARGO_CRATE_VALUE * 5
+	price_max = CARGO_CRATE_VALUE * 10
+	stock_max = 1
+	availability_prob = 15
+
+/datum/market_item/misc/self_surgery_skillchip/buy(obj/item/market_uplink/uplink, mob/buyer, shipping_method, legal_status)
+	. = ..()
+	if(.)
+		availability_prob *= 0.5

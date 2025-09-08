@@ -105,15 +105,11 @@
 
 /obj/machinery/recycler/update_overlays()
 	. = ..()
-	if(!bloody)
+	if(!bloody || !GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 
 	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", appearance_flags = RESET_COLOR|KEEP_APART)
-	var/blood_dna = GET_ATOM_BLOOD_DNA(src)
-	if(blood_dna)
-		blood_overlay.color = get_blood_dna_color(blood_dna)
-	else
-		blood_overlay.color = BLOOD_COLOR_RED
+	blood_overlay.color = get_blood_dna_color()
 	. += blood_overlay
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)
@@ -160,7 +156,7 @@
 			continue
 
 		if (thing.resistance_flags & INDESTRUCTIBLE)
-			if (!isturf(thing.loc) && !isliving(thing.loc))
+			if (!isturf(thing.loc) && !recursive_loc_check(thing, /mob/living))
 				thing.forceMove(loc)
 			not_eaten += 1
 			continue
@@ -179,6 +175,14 @@
 		if (isitem(thing))
 			var/obj/item/as_item = thing
 			if (as_item.item_flags & ABSTRACT)
+				not_eaten += 1
+				continue
+
+		// Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, etc.)
+		// unless they have already been unlocked to prevent exploiting the recycler to bypass closet access.
+		if (iscloset(thing))
+			var/obj/structure/closet/as_closet = thing
+			if (as_closet.secure && as_closet.locked)
 				not_eaten += 1
 				continue
 
@@ -219,7 +223,17 @@
 	for(var/i = length(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
-		use_energy(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+		var/full_power_usage = TRUE
+		var/obj/nom_obj = nom[i]
+		if (isitem(nom_obj))
+			// Whether or not items consume full power depends on if they produced a material when recycled.
+			full_power_usage = recycle_item(nom_obj)
+		else
+			// When a non-item is eaten, we deconstruct it with dismantled = FALSE so that
+			// it and its contents aren't just deleted. These always consume full power.
+			nom_obj.deconstruct(FALSE)
+		use_energy(active_power_usage / (full_power_usage ? 1 : 2))
+
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
@@ -263,9 +277,9 @@
 	if(iscarbon(living_mob))
 		if(living_mob.stat == CONSCIOUS)
 			living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
-		add_mob_blood(living_mob)
 
-	if(!bloody && !issilicon(living_mob))
+	if(!issilicon(living_mob))
+		add_mob_blood(living_mob)
 		bloody = TRUE
 
 	// Instantly lie down, also go unconscious from the pain, before you die.

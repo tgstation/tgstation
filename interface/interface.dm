@@ -1,47 +1,44 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 DEFINE_VERB(/client, wiki, "wiki", \
-	"Type what you want to know about. This will open the wiki in your web browser. Type nothing to go to the main page.", \
+	"Brings you to the Wiki", \
 	TRUE, "", query as text)
 	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(wikiurl)
-		if(query)
-			var/output = wikiurl + "/index.php?title=Special%3ASearch&profile=default&search=" + query
-			src << link(output)
-		else if (query != null)
-			src << link(wikiurl)
-	else
+	if(!wikiurl)
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
-	return
+		return
+
+	var/query = tgui_input_text(src,
+		"Type what you want to know about. This will open the wiki in your web browser. Type nothing to go to the main page.",
+		"Wiki",
+		max_length = MAX_MESSAGE_LEN,
+	)
+	if(isnull(query)) //cancelled out
+		return
+	var/output = wikiurl
+	if(query != "")
+		output += "?title=Special%3ASearch&profile=default&search=[query]"
+	DIRECT_OUTPUT(src, link(output))
 
 DEFINE_VERB(/client, forum, "forum", "Visit the forum.", TRUE, "")
 	var/forumurl = CONFIG_GET(string/forumurl)
-	if(forumurl)
-		if(tgui_alert(src, "This will open the forum in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		src << link(forumurl)
-	else
+	if(!forumurl)
 		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
-	return
+		return
+	DIRECT_OUTPUT(src, link(forumurl))
 
 DEFINE_VERB(/client, rules, "rules", "Show Server Rules.", TRUE, "")
 	var/rulesurl = CONFIG_GET(string/rulesurl)
-	if(rulesurl)
-		if(tgui_alert(src, "This will open the rules in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		src << link(rulesurl)
-	else
+	if(!rulesurl)
 		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
-	return
+		return
+	DIRECT_OUTPUT(src, link(rulesurl))
 
 DEFINE_VERB(/client, github, "github", "Visit Github", TRUE, "")
 	var/githuburl = CONFIG_GET(string/githuburl)
-	if(githuburl)
-		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		src << link(githuburl)
-	else
+	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
-	return
+		return
+	DIRECT_OUTPUT(src, link(githuburl))
 
 DEFINE_VERB(/client, reportissue, "report-issue", "Report an issue", TRUE, "")
 	var/githuburl = CONFIG_GET(string/githuburl)
@@ -78,12 +75,11 @@ DEFINE_VERB(/client, reportissue, "report-issue", "Report an issue", TRUE, "")
 		for(var/entry in testmerge_data)
 			var/datum/tgs_revision_information/test_merge/tm = entry
 			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
-		var/all_tms_joined = jointext(all_tms, "%0A") // %0A is a newline for URL encoding because i don't trust \n to not break
+		var/all_tms_joined = jointext(all_tms, "\n")
 
-		concatable += ("&test-merges=" + all_tms_joined)
+		concatable += ("&test-merges=" + url_encode(all_tms_joined))
 
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
-
 
 DEFINE_VERB(/client, changelog, "Changelog", "", FALSE, "OOC")
 	if(!GLOB.changelog_tgui)

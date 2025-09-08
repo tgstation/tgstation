@@ -25,7 +25,7 @@
 		/obj/item/immortality_talisman,
 		/obj/item/book_of_babel,
 		/obj/item/wisp_lantern,
-		/obj/item/organ/cyberimp/arm/shard/katana,
+		/obj/item/organ/cyberimp/arm/toolkit/shard/katana,
 		/obj/item/clothing/neck/cloak/wolf_coat,
 		/obj/item/clothing/glasses/godeye,
 		/obj/item/clothing/neck/necklace/memento_mori,

@@ -410,9 +410,9 @@ DEFINE_VERB(/obj/item/paper, rename, "Rename paper", "", FALSE, "Object")
 		user.put_in_hands(new_plane)
 	return new_plane
 
-/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
-	// Enable picking paper up by clicking on it with the clipboard or folder
-	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/folder) || istype(attacking_item, /obj/item/paper_bin))
+/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	// Enable picking paper up by clicking on it with the clipboard or paper bin
+	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/paper_bin))
 		attacking_item.attackby(src, user)
 		return
 
@@ -839,12 +839,17 @@ DEFINE_VERB(/obj/item/paper, rename, "Rename paper", "", FALSE, "Object")
 	)
 
 /obj/item/paper/construction
+	name = "construction paper"
+	icon = 'icons/effects/random_spawners.dmi'
 
 /obj/item/paper/construction/Initialize(mapload)
 	. = ..()
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	color = pick(COLOR_RED, COLOR_LIME, COLOR_LIGHT_ORANGE, COLOR_DARK_PURPLE, COLOR_FADED_PINK, COLOR_BLUE_LIGHT)
+	update_appearance()
 
 /obj/item/paper/natural
+	name = "natural paper"
 	color = COLOR_OFF_WHITE
 
 /obj/item/paper/crumpled

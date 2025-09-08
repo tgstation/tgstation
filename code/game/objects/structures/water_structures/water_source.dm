@@ -57,7 +57,7 @@
 		span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."),
 	)
 
-/obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
+/obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
@@ -138,7 +138,7 @@
 	. = ..()
 	icon_state = base_icon_state
 
-/obj/structure/water_source/puddle/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/structure/water_source/puddle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	icon_state = "[base_icon_state]-splash"
 	. = ..()
 	icon_state = base_icon_state

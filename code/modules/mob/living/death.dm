@@ -43,10 +43,19 @@
  * drop_bitflags: (see code/__DEFINES/blood.dm)
  * * DROP_BODYPARTS - Gibs will spawn with bodypart limbs present
 **/
-/mob/living/proc/spawn_gibs(drop_bitflags=NONE)
+/mob/living/proc/spawn_gibs(drop_bitflags = NONE)
 	if(flags_1 & HOLOGRAM_1)
 		return
-	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
+
+	var/gib_type = get_gibs_type(drop_bitflags)
+	if (gib_type)
+		new gib_type(drop_location(), src, get_static_viruses())
+
+/// Get type of gibs this mob should spawn based on our flags
+/mob/living/proc/get_gibs_type(drop_bitflags = NONE)
+	if (mob_biotypes & MOB_ROBOTIC)
+		return /obj/effect/gibspawner/robot
+	return /obj/effect/gibspawner/generic
 
 /**
  * Drops a mob's organs on the floor

@@ -1,4 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes:
-  - bugfix: "Bungotoxins secondary effect that sets the victims confusion depending on their dizziness now works again."

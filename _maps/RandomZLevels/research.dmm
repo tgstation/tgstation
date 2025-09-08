@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/mineral,
@@ -1134,7 +1134,6 @@
 /area/awaymission/research/interior/security)
 "fw" = (
 /obj/machinery/power/smes{
-	capacity = 1.8e+008;
 	charge = 2e+005
 	},
 /obj/structure/cable,
@@ -2347,7 +2346,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "ls" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -3902,7 +3901,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "TK" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/iron/dark,

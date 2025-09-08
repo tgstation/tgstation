@@ -42,8 +42,8 @@
 
 /obj/item/clothing/suit/costume/pirate/armored
 	armor_type = /datum/armor/pirate_armored
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	species_exception = null
 
 /obj/item/clothing/suit/costume/pirate/captain
@@ -54,8 +54,8 @@
 
 /obj/item/clothing/suit/costume/pirate/captain/armored
 	armor_type = /datum/armor/pirate_armored
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	species_exception = null
 
 /obj/item/clothing/suit/costume/cyborg_suit
@@ -606,7 +606,9 @@
 /obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"
 	desc = "A cool shirt for chilling on the beach."
-	icon_state = "hawaiian_shirt"
+	icon = 'icons/map_icons/clothing/suit/costume.dmi'
+	icon_state = "/obj/item/clothing/suit/costume/hawaiian"
+	post_init_icon_state = "hawaiian_shirt"
 	inhand_icon_state = null
 	greyscale_config = /datum/greyscale_config/hawaiian_shirt
 	greyscale_config_worn = /datum/greyscale_config/hawaiian_shirt/worn
@@ -621,7 +623,9 @@
 /obj/item/clothing/suit/costume/football_armor
 	name = "football protective gear"
 	desc = "Given to members of the football team!"
-	icon_state = "football_armor"
+	icon = 'icons/map_icons/clothing/suit/costume.dmi'
+	icon_state = "/obj/item/clothing/suit/costume/football_armor"
+	post_init_icon_state = "football_armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/football_armor
 	greyscale_config_worn = /datum/greyscale_config/football_armor/worn

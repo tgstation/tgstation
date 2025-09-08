@@ -5,7 +5,7 @@
 		BB_ONLY_FISH_WHILE_HUNGRY = TRUE,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
@@ -67,7 +67,7 @@
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/pet/penguin/baby),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

@@ -104,7 +104,7 @@
 	average_weight = 2500
 	breeding_timeout = 4.25 MINUTES
 	feeding_frequency = 3 MINUTES
-	health = 180
+	max_integrity = 360
 	beauty = FISH_BEAUTY_GREAT
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -145,7 +145,7 @@
 			block_chance -= 15
 			armour_penetration -= 10
 			wound_bonus -= 10
-			bare_wound_bonus -= 10
+			exposed_wound_bonus -= 10
 			toolspeed += 0.6
 		if(WEIGHT_CLASS_SMALL)
 			force -= 8
@@ -154,7 +154,7 @@
 			block_chance -= 10
 			armour_penetration -= 10
 			wound_bonus -= 10
-			bare_wound_bonus -= 10
+			exposed_wound_bonus -= 10
 			toolspeed += 0.4
 		if(WEIGHT_CLASS_NORMAL)
 			force -= 5
@@ -162,7 +162,7 @@
 			block_chance -= 5
 			armour_penetration -= 5
 			wound_bonus -= 5
-			bare_wound_bonus -= 5
+			exposed_wound_bonus -= 5
 			toolspeed += 0.2
 		if(WEIGHT_CLASS_HUGE)
 			force += 2
@@ -171,7 +171,7 @@
 			armour_penetration += 10
 			block_chance += 10
 			wound_bonus += 10
-			bare_wound_bonus += 5
+			exposed_wound_bonus += 5
 		if(WEIGHT_CLASS_GIGANTIC)
 			force += 4
 			attack_speed += 0.4 SECONDS
@@ -179,7 +179,7 @@
 			block_chance += 20
 			armour_penetration += 20
 			wound_bonus += 15
-			bare_wound_bonus += 10
+			exposed_wound_bonus += 10
 			toolspeed -= 0.1
 
 	if(status == FISH_DEAD)
@@ -189,14 +189,14 @@
 		demolition_mod -= 0.3
 		armour_penetration -= 15
 		wound_bonus -= 5
-		bare_wound_bonus -= 5
+		exposed_wound_bonus -= 5
 		toolspeed += 1
 
 /obj/item/fish/chainsawfish/calculate_fish_force_bonus(bonus_malus)
 	. = ..()
 	armour_penetration += bonus_malus * 3
 	wound_bonus += bonus_malus * 2
-	bare_wound_bonus += bonus_malus * 3
+	exposed_wound_bonus += bonus_malus * 3
 	block_chance += bonus_malus * 2
 	toolspeed -= bonus_malus * 0.1
 
@@ -229,14 +229,14 @@
 	wound_bonus = -15
 	attack_speed = 1 SECONDS
 	block_chance = 25
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	demolition_mod = 0.8
 	armour_penetration = 10
 	stable_population = 3
 	average_weight = 3000
 	breeding_timeout = 5 MINUTES
 	feeding_frequency = 4 MINUTES
-	health = 180
+	max_integrity = 360
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	beauty = FISH_BEAUTY_GREAT
 	fishing_difficulty_modifier = 20
@@ -265,21 +265,21 @@
 			block_chance -= 25
 			armour_penetration -= 15
 			wound_bonus -= 15
-			bare_wound_bonus -= 30
+			exposed_wound_bonus -= 30
 		if(WEIGHT_CLASS_SMALL)
 			force -= 6
 			attack_speed -= 0.3 SECONDS
 			block_chance -= 20
 			armour_penetration -= 10
 			wound_bonus -= 10
-			bare_wound_bonus -= 25
+			exposed_wound_bonus -= 25
 		if(WEIGHT_CLASS_NORMAL)
 			force -= 4
 			attack_speed -= 0.2 SECONDS
 			block_chance -= 20
 			armour_penetration -= 5
 			wound_bonus -= 10
-			bare_wound_bonus -= 15
+			exposed_wound_bonus -= 15
 		if(WEIGHT_CLASS_HUGE)
 			force += 3
 			attack_speed += 0.2 SECONDS
@@ -287,7 +287,7 @@
 			demolition_mod += 0.1
 			armour_penetration += 5
 			wound_bonus += 10
-			bare_wound_bonus += 5
+			exposed_wound_bonus += 5
 		if(WEIGHT_CLASS_GIGANTIC)
 			force += 7
 			attack_speed += 0.3 SECONDS
@@ -295,18 +295,18 @@
 			block_chance += 20
 			armour_penetration += 10
 			wound_bonus += 15
-			bare_wound_bonus += 10
+			exposed_wound_bonus += 10
 
 	if(status == FISH_DEAD)
 		force -= 5 + w_class
 		block_chance -= 15
 		armour_penetration -= 10
 		wound_bonus -= 5
-		bare_wound_bonus -= 15
+		exposed_wound_bonus -= 15
 
 /obj/item/fish/pike/armored/calculate_fish_force_bonus(bonus_malus)
 	. = ..()
 	armour_penetration += bonus_malus * 3
 	wound_bonus += bonus_malus * 2
-	bare_wound_bonus += bonus_malus * 4
+	exposed_wound_bonus += bonus_malus * 4
 	block_chance += bonus_malus * 4

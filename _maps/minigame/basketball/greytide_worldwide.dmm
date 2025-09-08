@@ -177,7 +177,7 @@
 /area/centcom/basketball)
 "ku" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 1
 	},
@@ -419,7 +419,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "CD" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "De" = (
@@ -482,7 +482,7 @@
 /area/centcom/basketball)
 "HH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Ic" = (
@@ -603,7 +603,7 @@
 /area/centcom/basketball)
 "Ql" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "QC" = (
@@ -624,7 +624,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "SF" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Tc" = (

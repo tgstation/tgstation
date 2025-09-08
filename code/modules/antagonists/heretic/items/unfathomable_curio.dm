@@ -57,8 +57,6 @@
 /obj/item/storage/belt/unfathomable_curio/proc/shield_damaged(mob/living/carbon/wearer, attack_text, new_current_charges)
 	var/list/brain_traumas = list(
 		/datum/brain_trauma/severe/mute,
-		/datum/brain_trauma/severe/flesh_desire,
-		/datum/brain_trauma/severe/eldritch_beauty,
 		/datum/brain_trauma/severe/paralysis,
 		/datum/brain_trauma/severe/monophobia
 	)

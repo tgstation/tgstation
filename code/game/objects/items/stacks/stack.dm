@@ -72,9 +72,11 @@
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
 
-/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-	if(new_amount != null)
-		amount = new_amount
+/obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+	amount = new_amount
+	if(amount <= 0)
+		stack_trace("invalid amount [amount]!")
+		return INITIALIZE_HINT_QDEL
 	while(amount > max_amount)
 		amount -= max_amount
 		new type(loc, max_amount, FALSE, mat_override, mat_amt)
@@ -129,7 +131,6 @@
 		if(item_stack == src || QDELING(item_stack) || (item_stack.amount >= item_stack.max_amount))
 			continue
 		if(!(item_stack.flags_1 & INITIALIZED_1))
-			stack_trace("find_other_stack found uninitialized stack in loc? skipping for now")
 			continue
 		var/stack_ref = REF(item_stack)
 		if(already_found[stack_ref])
@@ -695,7 +696,7 @@
 	if(user.get_inactive_held_item() == src)
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		return split_stack(user, 1)
+		return split_n_take(user, 1)
 	else
 		. = ..()
 
@@ -712,32 +713,43 @@
 	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
 	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	split_stack(user, stackmaterial)
+	split_n_take(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/** Splits the stack into two stacks.
+/** Splits the stack into two stacks, returns the new stack.
  *
  * Arguments:
- * - [user][/mob]: The mob splitting the stack.
  * - amount: The number of units to split from this stack.
  */
-/obj/item/stack/proc/split_stack(mob/user, amount)
+/obj/item/stack/proc/split_stack(amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
-	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
-	. = F
-	F.copy_evidences(src)
+	var/obj/item/stack/new_stack = new type(null, amount, FALSE, mats_per_unit)
+	new_stack.copy_evidences(src)
 	loc.atom_storage?.refresh_views()
-	if(user)
-		if(!user.put_in_hands(F, merge_stacks = FALSE))
-			F.forceMove(user.drop_location())
-		add_fingerprint(user)
-		F.add_fingerprint(user)
-
 	is_zero_amount(delete_if_zero = TRUE)
+	return new_stack
 
-/obj/item/stack/attackby(obj/item/W, mob/user, list/modifiers)
+/**
+ * Splits amount items from stack, attempts to place new stack in user's hands.
+ * Returns the new stack.
+ * Arguments:
+ * * [user][/mob] - Mob performing the split, non-nullable
+ * * amount - Number of units to split from this stack
+ */
+/obj/item/stack/proc/split_n_take(mob/user, amount)
+	if(!user)
+		return null
+	add_fingerprint(user)
+	var/obj/item/stack/new_stack = split_stack(amount)
+	if(isnull(new_stack))
+		return null
+	new_stack.add_fingerprint(user)
+	user.put_in_hands(new_stack, merge_stacks = FALSE)
+	return new_stack
+
+/obj/item/stack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(can_merge(W, inhand = TRUE))
 		var/obj/item/stack/S = W
 		if(merge(S))

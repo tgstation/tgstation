@@ -21,6 +21,10 @@
 	// Love is stored in the heart.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/love = 2.5)
 
+	cell_line = CELL_LINE_ORGAN_HEART
+	cells_minimum = 1
+	cells_maximum = 2
+
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 
 	/// Whether the heart is currently beating.
@@ -31,6 +35,7 @@
 	var/beat = BEAT_NONE
 	/// whether the heart's been operated on to fix some of its damages
 	var/operated = FALSE
+	var/beat_noise = "a rhythmic thumping"
 
 /obj/item/organ/heart/update_icon_state()
 	. = ..()
@@ -149,12 +154,17 @@
 		return span_warning("[self_aware ? "Your heart hurts." : "It hurts, and your heart rate feels irregular."]")
 	return span_boldwarning("[self_aware ? "Your heart seriously hurts!" : "It seriously hurts, and your heart rate is all over the place."]")
 
+/// by default, returns the hearts beat_noise var as a notice span. May do other things when overridden, such as eldritch insanity or electrocution. Whatever you want, really.
+/obj/item/organ/heart/proc/hear_beat_noise(mob/living/hearer)
+	return span_notice("[owner.p_Their()] heart produces [beat_noise].")
+
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
 	base_icon_state = "cursedheart"
 	decay_factor = 0
+	beat_noise = "a pained screeching with every beat. <b>It seems to lack any kind of rhythm</b>"
 	var/pump_delay = 3 SECONDS
 	var/blood_loss = BLOOD_VOLUME_NORMAL * 0.2
 	var/heal_brute = 0
@@ -179,6 +189,9 @@
 
 	qdel(accursed.GetComponent(/datum/component/manual_heart))
 
+/obj/item/organ/heart/cursed/hear_beat_noise(mob/living/hearer)
+	return span_danger(beat_noise)
+
 /obj/item/organ/heart/cybernetic
 	name = "basic cybernetic heart"
 	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
@@ -187,7 +200,7 @@
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 	failing_desc = "seems to be broken."
-
+	beat_noise = "a steady fsssh of hydraulics"
 	/// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
 	var/stabilization_available = FALSE
 
@@ -282,6 +295,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	stabilization_available = TRUE
 	toxification_probability = 0
+	bleed_prevention = TRUE
 	emp_vulnerability = 20
 
 /obj/item/organ/heart/cybernetic/surplus
@@ -291,6 +305,7 @@
 	icon_state = "heart-c-s-on"
 	base_icon_state = "heart-c-s"
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+	beat_noise = "a concerningly irregular hydraulic hum. You <b>shouldn't touch this</b> while it's running"
 	emp_vulnerability = 100
 
 //surplus organs are so awful that they explode when removed, unless failing
@@ -298,10 +313,14 @@
 	. = ..()
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
+/obj/item/organ/heart/cybernetic/surplus/hear_beat_noise(mob/living/hearer)
+	return span_danger("[owner.p_Their()] heart produces [beat_noise].")
+
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
 	organ_flags = ORGAN_ROBOTIC  //the power of freedom prevents heart attacks
+	beat_noise = "<b>THE SOUND OF FREEDOM</b>"
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
@@ -317,5 +336,72 @@
 /obj/item/organ/heart/pod
 	name = "pod mitochondria"
 	desc = "This plant-like organ is the powerhouse of the podperson." // deliberate wording here
+	beat_noise = "the power of the podperson" // makes sense
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+
+/// An improved version of the organic heart, with more health and more "keeping you alive" potential
+/obj/item/organ/heart/evolved
+	name = "evolved heart"
+	desc = "It beats ever strong."
+	icon_state = "heart-evolved-on"
+	base_icon_state = "heart-evolved"
+
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.2
+
+	/// Chance to heal per on_life
+	var/healing_probability = 10
+	/// Base healing we receive per tick at 0 damage and for standard versions
+	var/base_healing = 1
+
+/obj/item/organ/heart/evolved/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	if(prob(healing_probability * seconds_per_tick))
+		var/damage_to_heal = base_healing * ((maxHealth - damage) / initial(maxHealth)) * seconds_per_tick
+		owner.heal_overall_damage(damage_to_heal, damage_to_heal, required_bodytype = BODYTYPE_ORGANIC)
+
+		if(owner.stat == HARD_CRIT && !owner.has_reagent(/datum/reagent/medicine/atropine, 5))
+			owner.reagents.add_reagent(/datum/reagent/medicine/atropine, 1 * seconds_per_tick)
+
+/// A weaker evolved heart, but can block magic in exchange for our organs health!
+/obj/item/organ/heart/evolved/sacred
+	name = "sacred heart"
+	desc = "Your foul magics stand no chance against the power of LOVE!!!"
+
+	icon_state = "heart-sacred-on"
+	base_icon_state = "heart-sacred"
+
+	healing_probability = 5
+	base_healing = 0.5
+
+	// How much damage each magic block deals to us
+	var/damage_per_block = 50
+
+/obj/item/organ/heart/evolved/sacred/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	if(IS_CULTIST(owner))
+		owner.reagents.add_reagent(/datum/reagent/water/holywater, 5 * seconds_per_tick)
+
+/obj/item/organ/heart/evolved/sacred/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
+	. = ..()
+
+	receiver.AddComponent(/datum/component/anti_magic, block_magic = CALLBACK(src, PROC_REF(on_blocked)), check_blocking = CALLBACK(src, PROC_REF(check_block)))
+
+/obj/item/organ/heart/evolved/sacred/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+
+	qdel(organ_owner.GetComponent(/datum/component/anti_magic))
+
+/// When we blocked damage, do PAIN on us
+/obj/item/organ/heart/evolved/sacred/proc/on_blocked()
+	apply_organ_damage(damage_per_block)
+	owner.vomit(VOMIT_CATEGORY_BLOOD)
+	playsound(owner, 'sound/effects/health/slowbeat.ogg', 80)
+
+/// We don't block magic if it would kill our heart
+/obj/item/organ/heart/evolved/sacred/proc/check_block()
+	if(maxHealth - damage <= damage_per_block)
+		return FALSE
+	return TRUE

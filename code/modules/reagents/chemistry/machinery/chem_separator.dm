@@ -42,7 +42,7 @@
 /obj/structure/chem_separator/atom_deconstruct(disassembled)
 	var/atom/drop = drop_location()
 
-	new /obj/item/stack/sheet/mineral/wood(drop, 1)
+	new /obj/item/stack/sheet/mineral/wood(drop)
 
 	new /obj/item/thermometer(drop)
 

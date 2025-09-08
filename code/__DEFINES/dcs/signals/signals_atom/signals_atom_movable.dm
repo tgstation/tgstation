@@ -70,9 +70,14 @@
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
 	#define HEARING_RADIO_FREQ 5
-	#define HEARING_SPANS 6
-	#define HEARING_MESSAGE_MODE 7
-	#define HEARING_RANGE 8
+	#define HEARING_RADIO_FREQ_NAME 6
+	#define HEARING_RADIO_FREQ_COLOR 7
+	#define HEARING_SPANS 8
+	#define HEARING_MESSAGE_MODE 9
+	#define HEARING_RANGE 10
+
+///called when space wind can't move a movable. (pressure_difference, pressure_direction)
+#define COMSIG_MOVABLE_RESISTED_SPACEWIND "movable_resisted_wind"
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
@@ -103,7 +108,7 @@
 	/// Return to prevent the movable from talking into the radio.
 	#define COMPONENT_CANNOT_USE_RADIO (1<<0)
 
-/// Sent from /atom/movable/proc/say_quote() after say verb is chosen and before spans are applied.
+/// Sent from /atom/movable/proc/generate_messagepart() generating a quoted message, after say verb is chosen and before spans are applied.
 #define COMSIG_MOVABLE_SAY_QUOTE "movable_say_quote"
 	// Used to access COMSIG_MOVABLE_SAY_QUOTE argslist
 	/// The index of args that corresponds to the actual message
@@ -136,3 +141,8 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
+
+/// Called when the atom is dropped into a chasm: (turf/chasm)
+#define COMSIG_MOVABLE_CHASM_DROPPED "movable_charm_dropped"
+	/// Stop it from actually dropping into the chasm
+	#define COMPONENT_NO_CHASM_DROP (1<<0)

@@ -101,6 +101,13 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/add_ghost_version = FALSE
 	var/datum/atom_hud/alternate_appearance/basic/observers/ghost_appearance
 	uses_global_hud_category = FALSE
+	///List of signals we hook onto which we'll update HUDs when we receive this.
+	var/list/signals_registering = list(
+		COMSIG_MOB_ANTAGONIST_REMOVED,
+		COMSIG_MOB_GHOSTIZED,
+		COMSIG_MOB_MIND_TRANSFERRED_INTO,
+		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
+	)
 
 /datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
 	..()
@@ -131,20 +138,10 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		QDEL_NULL(ghost_appearance)
 
 /datum/atom_hud/alternate_appearance/basic/track_mob(mob/new_viewer)
-	RegisterSignals(new_viewer, list(
-		COMSIG_MOB_ANTAGONIST_REMOVED,
-		COMSIG_MOB_GHOSTIZED,
-		COMSIG_MOB_MIND_TRANSFERRED_INTO,
-		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
-	), PROC_REF(check_hud), override = TRUE)
+	RegisterSignals(new_viewer, signals_registering, PROC_REF(check_hud), override = TRUE)
 
 /datum/atom_hud/alternate_appearance/basic/untrack_mob(mob/former_viewer)
-	UnregisterSignal(former_viewer, list(
-		COMSIG_MOB_ANTAGONIST_REMOVED,
-		COMSIG_MOB_GHOSTIZED,
-		COMSIG_MOB_MIND_TRANSFERRED_INTO,
-		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
-	))
+	UnregisterSignal(former_viewer, signals_registering)
 
 /datum/atom_hud/alternate_appearance/basic/add_atom_to_hud(atom/A)
 	LAZYINITLIST(A.hud_list)
@@ -174,6 +171,11 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/ais
+
+/datum/atom_hud/alternate_appearance/basic/ais/mobShouldSee(mob/M)
+	return isAI(M)
+
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops
 
@@ -189,13 +191,18 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	antag_datum_type = /datum/antagonist/cult
 
 /datum/atom_hud/alternate_appearance/basic/blessed_aware
+	signals_registering = list(
+		COMSIG_MOB_ANTAGONIST_REMOVED,
+		COMSIG_MOB_GHOSTIZED,
+		COMSIG_MOB_MIND_TRANSFERRED_INTO,
+		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
+		COMSIG_MOB_MIND_SET_HOLY_ROLE,
+	)
 
-/datum/atom_hud/alternate_appearance/basic/blessed_aware/mobShouldSee(mob/M)
-	if(M.mind?.holy_role)
-		return TRUE
-	if (istype(M, /mob/living/basic/construct/wraith))
-		return TRUE
-	if(isrevenant(M) || IS_WIZARD(M) || IS_HERETIC(M))
+/datum/atom_hud/alternate_appearance/basic/blessed_aware/mobShouldSee(mob/viewing_mob)
+	if(!viewing_mob.mind)
+		return FALSE
+	if(HAS_MIND_TRAIT(viewing_mob, TRAIT_SEE_BLESSED_TILES))
 		return TRUE
 	return FALSE
 

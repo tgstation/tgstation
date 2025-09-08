@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "when you kill yourself with a soulfish, it will now kill you"
-  - bugfix: "also the toolboxes the soulfish suicide spawns will despawn as intended"

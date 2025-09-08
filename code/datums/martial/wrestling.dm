@@ -68,7 +68,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 	button_icon_state = "wrassle_slam"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/slam/Trigger(trigger_flags)
+/datum/action/slam/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -81,7 +81,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 	button_icon_state = "wrassle_throw"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/throw_wrassle/Trigger(trigger_flags)
+/datum/action/throw_wrassle/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -94,7 +94,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 	button_icon_state = "wrassle_kick"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS // This is supposed to be usable while cuffed but it probably isn't
 
-/datum/action/kick/Trigger(trigger_flags)
+/datum/action/kick/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -107,7 +107,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 	button_icon_state = "wrassle_strike"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/strike/Trigger(trigger_flags)
+/datum/action/strike/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -120,7 +120,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 	button_icon_state = "wrassle_drop"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED
 
-/datum/action/drop/Trigger(trigger_flags)
+/datum/action/drop/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

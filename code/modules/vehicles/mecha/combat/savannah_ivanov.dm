@@ -19,7 +19,7 @@
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | BEACON_TRACKABLE | BEACON_CONTROLLABLE
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
@@ -80,7 +80,7 @@
 	///skyfall builds up in charges every 2 seconds, when it reaches 5 charges the ability actually starts
 	var/skyfall_charge_level = 0
 
-/datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/skyfall/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!owner || !chassis || !(owner in chassis.occupants))
@@ -252,7 +252,7 @@
 		end_missile_targeting()
 	return ..()
 
-/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))

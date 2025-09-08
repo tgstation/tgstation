@@ -132,7 +132,7 @@
 		current_range = spray_range
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
-/obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
@@ -393,7 +393,7 @@ DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "",
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	reagent_flags = NONE
-	list_reagents = list(/datum/reagent/glitter/confetti = 15)
+	list_reagents = list(/datum/reagent/confetti = 15)
 	volume = 15
 	amount_per_transfer_from_this = 5
 	can_toggle_range = FALSE

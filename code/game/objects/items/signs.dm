@@ -30,7 +30,7 @@
 		name = "[label] sign"
 		desc = "It reads: [label]"
 
-/obj/item/picket_sign/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/item/picket_sign/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(IS_WRITING_UTENSIL(W))
 		retext(user, W)
 	else
@@ -74,5 +74,5 @@
 	result = /obj/item/picket_sign
 	reqs = list(/obj/item/stack/rods = 1,
 				/obj/item/stack/sheet/cardboard = 2)
-	time = 80
+	time = 8 SECONDS
 	category = CAT_ENTERTAINMENT

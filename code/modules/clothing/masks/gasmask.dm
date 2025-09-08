@@ -4,7 +4,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	"The Coquette" = "sexyclown",
 	"The Madman" = "joker",
 	"The Rainbow Color" = "rainbow",
-	"The Jester" = "chaos",
 	"The Dealer" = "cards"
 ))
 
@@ -216,6 +215,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	tint = 2
+	toggle_message = "You pull the visor down"
+	alt_toggle_message = "You push the visor up"
 	armor_type = /datum/armor/gas_welding
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
@@ -274,7 +275,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	icon_state = "syndicate"
 	inhand_icon_state = "syndicate_gasmask"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	w_class = WEIGHT_CLASS_SMALL
 	fishing_modifier = 0
 	pepper_tint = FALSE
@@ -306,7 +307,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	clownmask_designs = list(
 		"True Form" = image(icon = src.icon, icon_state = "clown"),
 		"The Coquette" = image(icon = src.icon, icon_state = "sexyclown"),
-		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
 		"The Madman" = image(icon = src.icon, icon_state = "joker"),
 		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow"),
 		"The Dealer" = image(icon = src.icon, icon_state = "cards"),

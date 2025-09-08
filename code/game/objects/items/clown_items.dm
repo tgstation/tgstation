@@ -71,8 +71,6 @@
 	cleanspeed = 2.8 SECONDS //janitor gets this
 	uses = 300
 
-/obj/item/soap/nanotrasen/cyborg
-
 /obj/item/soap/deluxe
 	desc = "A deluxe Waffle Corporation brand bar of soap. Smells of high-class luxury."
 	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
@@ -127,7 +125,7 @@
 /obj/item/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	. = CLEAN_ALLOWED
 	if(!check_allowed_items(atom_to_clean))
-		. |= CLEAN_NO_XP
+		. |= CLEAN_NO_XP|CLEAN_NO_WASH
 
 /**
  * Decrease the number of uses the bar of soap has.
@@ -152,6 +150,9 @@
 /obj/item/soap/proc/noUses(mob/user)
 	to_chat(user, span_warning("[src] crumbles into tiny bits!"))
 	qdel(src)
+
+/obj/item/soap/nanotrasen/cyborg
+	name = "built-in soap"
 
 /obj/item/soap/nanotrasen/cyborg/noUses(mob/user)
 	to_chat(user, span_warning("[src] has ran out of chemicals! Head to a recharger to refill it."))

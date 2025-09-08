@@ -227,7 +227,7 @@
 
 /// Verb added to humans who learn the art of the sleeping carp.
 DEFINE_PROC_VERB(/mob/living, sleeping_carp_help, "Recall Teachings", "Remember the martial techniques of the Sleeping Carp clan.", FALSE, "Sleeping Carp")
-	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
+	to_chat(usr, span_info("<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
 	[span_notice("Gnashing Teeth")]: Punch Punch. Deal additional damage every second (consecutive) punch! Very good chance to wound!\n\
 	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
 	[span_notice("Keelhaul")]: Shove Shove. Nonlethally kick an opponent to the floor, knocking them down, discombobulating them and dealing substantial stamina damage. If they're already prone, disarm them as well.\n\
@@ -235,7 +235,7 @@ DEFINE_PROC_VERB(/mob/living, sleeping_carp_help, "Recall Teachings", "Remember 
 	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \n\
 	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons. \n\
 	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \n\
-	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
+	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>"))
 
 
 /obj/item/staff/bostaff
@@ -267,7 +267,7 @@ DEFINE_PROC_VERB(/mob/living, sleeping_carp_help, "Recall Teachings", "Remember 
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
-/obj/item/staff/bostaff/attack(mob/target, mob/living/user, list/modifiers)
+/obj/item/staff/bostaff/attack(mob/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, span_warning("You club yourself over the head with [src]."))

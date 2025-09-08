@@ -18,6 +18,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/iron = 5)
 	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
+	cell_line = CELL_LINE_ORGAN_LIVER
+	cells_minimum = 1
+	cells_maximum = 2
+
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
 	/// The maximum volume of toxins the liver will ignore
@@ -59,23 +63,21 @@
 
 	qdel(GetComponent(/datum/component/squeak))
 
-/// Registers COMSIG_SPECIES_HANDLE_CHEMICAL from owner
 /obj/item/organ/liver/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	RegisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL, PROC_REF(handle_chemical))
+	RegisterSignal(organ_owner, COMSIG_MOB_REAGENT_TICK, PROC_REF(handle_chemical))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_owner_examine))
 
-/// Unregisters COMSIG_SPECIES_HANDLE_CHEMICAL from owner
 /obj/item/organ/liver/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_SPECIES_HANDLE_CHEMICAL, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(organ_owner, list(COMSIG_MOB_REAGENT_TICK, COMSIG_ATOM_EXAMINE))
 
 /**
  * This proc can be overriden by liver subtypes so they can handle certain chemicals in special ways.
  * Return null to continue running the normal on_mob_life() for that reagent.
- * Return COMSIG_MOB_STOP_REAGENT_CHECK to not run the normal metabolism effects.
+ * Return COMSIG_MOB_STOP_REAGENT_TICK to not run the normal metabolism effects.
  *
- * NOTE: If you return COMSIG_MOB_STOP_REAGENT_CHECK, that reagent will not be removed like normal! You must handle it manually.
+ * NOTE: If you return COMSIG_MOB_STOP_REAGENT_TICK, that reagent will not be removed like normal! You must handle it manually.
  **/
 /obj/item/organ/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
@@ -222,6 +224,13 @@
 	liver_resistance = 0.333 * LIVER_DEFAULT_TOX_RESISTANCE // -66%
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
+/obj/item/organ/liver/ghost
+	name = "ghost liver"
+	desc = "Processes the last alcohol they drank in their time alive."
+	icon_state = "liver-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/liver/cybernetic
 	name = "basic cybernetic liver"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
@@ -288,12 +297,94 @@
 
 /obj/item/organ/liver/pod/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(!(organ_owner.mob_biotypes & MOB_PLANT))
 		return
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		organ_owner.adjustToxLoss(3 * REM * seconds_per_tick)
+
+/obj/item/organ/liver/snail
+	name = "snail liver"
+	desc = "A slimy liver, constantly secreting impressive volumes of lube. Usually cooked with olive oil and cilantro, and traditionally eaten under a white flag."
+	icon_state = "liver-bone" // Its greyscale, so works perfectly for coloring
+	color = "#96DB00"
+	/// Speed modifier for snails who have this organ. Positive numbers make them move slower, negative numbers make them move faster.
+	var/snail_speed_mod = 6
+
+/obj/item/organ/liver/snail/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.AddElement(/datum/element/lube_walking, require_resting = TRUE)
+	organ_owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/snail, multiplicative_slowdown = snail_speed_mod)
+
+/obj/item/organ/liver/snail/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/snail)
+	organ_owner.RemoveElement(/datum/element/lube_walking, require_resting = TRUE)
+
+/obj/item/organ/liver/snail/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
+		return
+	if(istype(chem, /datum/reagent/consumable/salt))
+		playsound(organ_owner, SFX_SEAR, 30, TRUE)
+		organ_owner.adjustFireLoss(2 * REM * seconds_per_tick)
+		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_TICK
+
+/obj/item/organ/liver/evolved
+	name = "evolved liver"
+	desc = "A more robust liver, better at everything."
+
+	icon_state = "evolved-liver"
+
+	alcohol_tolerance = ALCOHOL_RATE * 0.5
+	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
+	toxTolerance = 6 //can shrug off up to 6u of toxins
+	liver_resistance = 1.5 * LIVER_DEFAULT_TOX_RESISTANCE
+
+/obj/item/organ/liver/bloody
+	name = "leaky liver"
+	desc = "An extra spongy liver, only slightly better than a normal liver, but with an increased ability to replenish blood."
+
+	icon_state = "leaky-liver"
+
+	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
+	alcohol_tolerance = ALCOHOL_RATE * 0.8
+	toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE + 1
+	liver_resistance = 1.1 * LIVER_DEFAULT_TOX_RESISTANCE
+
+/obj/item/organ/liver/bloody/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+		owner.blood_volume += 4 * seconds_per_tick
+
+/// Convert all non-alcoholic drinks into alcohol
+/obj/item/organ/liver/distillery
+	name = "alcoholics delight"
+	desc = "The perfect liver, distilling non-alcoholic reagents into alcohol whenever possible."
+
+	icon_state = "liver-distillery"
+
+	organ_traits = list(TRAIT_ALCOHOL_TOLERANCE)
+
+	alcohol_tolerance = ALCOHOL_RATE * 0.1
+
+	/// Volume that is converted per second
+	var/ethanol_conversion = 0.2
+	/// What to convert stuff into
+	var/convert_into = /datum/reagent/consumable/ethanol
+
+/obj/item/organ/liver/distillery/on_life(seconds_per_tick, times_fired)
+	. = ..()
+
+	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+		// Already alcohol
+		if(istype(reagent, convert_into))
+			continue
+
+		owner.reagents.convert_reagent(reagent.type, convert_into, ethanol_conversion)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

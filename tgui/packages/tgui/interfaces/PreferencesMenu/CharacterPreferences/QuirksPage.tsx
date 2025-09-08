@@ -1,4 +1,4 @@
-import { filter } from 'common/collections';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import {
@@ -13,10 +13,10 @@ import {
 import { createSearch } from 'tgui-core/string';
 
 import {
-  PreferencesMenuData,
-  Quirk,
+  type PreferencesMenuData,
+  type Quirk,
   RandomSetting,
-  ServerData,
+  type ServerData,
 } from '../types';
 import { useRandomToggleState } from '../useRandomToggleState';
 import { useServerPrefs } from '../useServerPrefs';
@@ -50,7 +50,6 @@ type QuirkListProps = {
 };
 
 type QuirkProps = {
-  // eslint-disable-next-line react/no-unused-prop-types
   onClick: (quirkName: string, quirk: Quirk) => void;
   randomBodyEnabled: boolean;
   selected: boolean;
@@ -87,7 +86,6 @@ function QuirkList(props: QuirkProps & QuirkListProps) {
 type QuirkDisplayProps = {
   quirk: Quirk & { failTooltip?: string };
   // bugged
-  // eslint-disable-next-line react/no-unused-prop-types
   quirkKey: string;
 } & QuirkProps;
 
@@ -418,7 +416,6 @@ export function QuirksPage(props) {
               width="200px"
               value={searchQuery}
               onChange={setSearchQuery}
-              expensive
             />
           </Stack.Item>
           <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">

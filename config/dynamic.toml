@@ -1,0 +1,612 @@
+["Greenshift"]
+name = "Greenshift"
+min_pop = 0
+weight = 2
+advisory_report = "Advisory Level: <b>Green Star</b></center><BR>Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department advises maintaining vigilance against potential threats, regardless of a lack of known threats."
+ruleset_type_settings.roundstart.low = 0
+ruleset_type_settings.roundstart.high = 0
+ruleset_type_settings.roundstart.half_range_pop_threshold = 25
+ruleset_type_settings.roundstart.full_range_pop_threshold = 50
+ruleset_type_settings.light_midround.low = 0
+ruleset_type_settings.light_midround.high = 0
+ruleset_type_settings.light_midround.half_range_pop_threshold = 25
+ruleset_type_settings.light_midround.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.time_threshold = 30
+ruleset_type_settings.light_midround.execution_cooldown_low = 10
+ruleset_type_settings.light_midround.execution_cooldown_high = 20
+ruleset_type_settings.heavy_midround.low = 0
+ruleset_type_settings.heavy_midround.high = 0
+ruleset_type_settings.heavy_midround.half_range_pop_threshold = 25
+ruleset_type_settings.heavy_midround.full_range_pop_threshold = 40
+ruleset_type_settings.heavy_midround.time_threshold = 60
+ruleset_type_settings.heavy_midround.execution_cooldown_low = 10
+ruleset_type_settings.heavy_midround.execution_cooldown_high = 20
+ruleset_type_settings.latejoin.low = 0
+ruleset_type_settings.latejoin.high = 0
+ruleset_type_settings.latejoin.half_range_pop_threshold = 25
+ruleset_type_settings.latejoin.full_range_pop_threshold = 40
+ruleset_type_settings.latejoin.time_threshold = 0
+ruleset_type_settings.latejoin.execution_cooldown_low = 10
+ruleset_type_settings.latejoin.execution_cooldown_high = 20
+
+["Low Chaos"]
+name = "Low Chaos"
+min_pop = 0
+weight = 8
+advisory_report = "Advisory Level: <b>Yellow Star</b></center><BR>Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
+ruleset_type_settings.roundstart.low = 1
+ruleset_type_settings.roundstart.high = 1
+ruleset_type_settings.roundstart.half_range_pop_threshold = 25
+ruleset_type_settings.roundstart.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.low = 0
+ruleset_type_settings.light_midround.high = 2
+ruleset_type_settings.light_midround.half_range_pop_threshold = 25
+ruleset_type_settings.light_midround.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.time_threshold = 30
+ruleset_type_settings.light_midround.execution_cooldown_low = 10
+ruleset_type_settings.light_midround.execution_cooldown_high = 20
+ruleset_type_settings.heavy_midround.low = 0
+ruleset_type_settings.heavy_midround.high = 1
+ruleset_type_settings.heavy_midround.half_range_pop_threshold = 25
+ruleset_type_settings.heavy_midround.full_range_pop_threshold = 40
+ruleset_type_settings.heavy_midround.time_threshold = 60
+ruleset_type_settings.heavy_midround.execution_cooldown_low = 10
+ruleset_type_settings.heavy_midround.execution_cooldown_high = 20
+ruleset_type_settings.latejoin.low = 0
+ruleset_type_settings.latejoin.high = 1
+ruleset_type_settings.latejoin.half_range_pop_threshold = 25
+ruleset_type_settings.latejoin.full_range_pop_threshold = 40
+ruleset_type_settings.latejoin.time_threshold = 5
+ruleset_type_settings.latejoin.execution_cooldown_low = 10
+ruleset_type_settings.latejoin.execution_cooldown_high = 20
+
+["Low-Medium Chaos"]
+name = "Low-Medium Chaos"
+min_pop = 0
+weight = 46
+advisory_report = "Advisory Level: <b>Red Star</b></center><BR>Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
+ruleset_type_settings.roundstart.low = 1
+ruleset_type_settings.roundstart.high = 2
+ruleset_type_settings.roundstart.half_range_pop_threshold = 25
+ruleset_type_settings.roundstart.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.low = 0
+ruleset_type_settings.light_midround.high = 2
+ruleset_type_settings.light_midround.half_range_pop_threshold = 25
+ruleset_type_settings.light_midround.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.time_threshold = 30
+ruleset_type_settings.light_midround.execution_cooldown_low = 10
+ruleset_type_settings.light_midround.execution_cooldown_high = 20
+ruleset_type_settings.heavy_midround.low = 0
+ruleset_type_settings.heavy_midround.high = 1
+ruleset_type_settings.heavy_midround.half_range_pop_threshold = 25
+ruleset_type_settings.heavy_midround.full_range_pop_threshold = 40
+ruleset_type_settings.heavy_midround.time_threshold = 60
+ruleset_type_settings.heavy_midround.execution_cooldown_low = 10
+ruleset_type_settings.heavy_midround.execution_cooldown_high = 20
+ruleset_type_settings.latejoin.low = 1
+ruleset_type_settings.latejoin.high = 2
+ruleset_type_settings.latejoin.half_range_pop_threshold = 25
+ruleset_type_settings.latejoin.full_range_pop_threshold = 40
+ruleset_type_settings.latejoin.time_threshold = 5
+ruleset_type_settings.latejoin.execution_cooldown_low = 10
+ruleset_type_settings.latejoin.execution_cooldown_high = 20
+
+["Medium-High Chaos"]
+name = "Medium-High Chaos"
+min_pop = 0
+weight = 36
+advisory_report = "Advisory Level: <b>Black Orbit</b></center><BR>Your sector's advisory level is Black Orbit. Your sector's local communications network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert and vigilant against any other potential threats."
+ruleset_type_settings.roundstart.low = 2
+ruleset_type_settings.roundstart.high = 3
+ruleset_type_settings.roundstart.half_range_pop_threshold = 25
+ruleset_type_settings.roundstart.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.low = 1
+ruleset_type_settings.light_midround.high = 2
+ruleset_type_settings.light_midround.half_range_pop_threshold = 25
+ruleset_type_settings.light_midround.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.time_threshold = 30
+ruleset_type_settings.light_midround.execution_cooldown_low = 10
+ruleset_type_settings.light_midround.execution_cooldown_high = 20
+ruleset_type_settings.heavy_midround.low = 1
+ruleset_type_settings.heavy_midround.high = 2
+ruleset_type_settings.heavy_midround.half_range_pop_threshold = 25
+ruleset_type_settings.heavy_midround.full_range_pop_threshold = 40
+ruleset_type_settings.heavy_midround.time_threshold = 60
+ruleset_type_settings.heavy_midround.execution_cooldown_low = 10
+ruleset_type_settings.heavy_midround.execution_cooldown_high = 20
+ruleset_type_settings.latejoin.low = 1
+ruleset_type_settings.latejoin.high = 3
+ruleset_type_settings.latejoin.half_range_pop_threshold = 25
+ruleset_type_settings.latejoin.full_range_pop_threshold = 40
+ruleset_type_settings.latejoin.time_threshold = 5
+ruleset_type_settings.latejoin.execution_cooldown_low = 10
+ruleset_type_settings.latejoin.execution_cooldown_high = 20
+
+["High Chaos"]
+name = "High Chaos"
+min_pop = 25
+weight = 10
+advisory_report = "Advisory Level: <b>Midnight Sun</b></center><BR>Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
+ruleset_type_settings.roundstart.low = 3
+ruleset_type_settings.roundstart.high = 4
+ruleset_type_settings.roundstart.half_range_pop_threshold = 25
+ruleset_type_settings.roundstart.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.low = 1
+ruleset_type_settings.light_midround.high = 2
+ruleset_type_settings.light_midround.half_range_pop_threshold = 25
+ruleset_type_settings.light_midround.full_range_pop_threshold = 40
+ruleset_type_settings.light_midround.time_threshold = 20
+ruleset_type_settings.light_midround.execution_cooldown_low = 10
+ruleset_type_settings.light_midround.execution_cooldown_high = 20
+ruleset_type_settings.heavy_midround.low = 2
+ruleset_type_settings.heavy_midround.high = 4
+ruleset_type_settings.heavy_midround.half_range_pop_threshold = 25
+ruleset_type_settings.heavy_midround.full_range_pop_threshold = 40
+ruleset_type_settings.heavy_midround.time_threshold = 30
+ruleset_type_settings.heavy_midround.execution_cooldown_low = 10
+ruleset_type_settings.heavy_midround.execution_cooldown_high = 20
+ruleset_type_settings.latejoin.low = 2
+ruleset_type_settings.latejoin.high = 3
+ruleset_type_settings.latejoin.half_range_pop_threshold = 25
+ruleset_type_settings.latejoin.full_range_pop_threshold = 40
+ruleset_type_settings.latejoin.time_threshold = 5
+ruleset_type_settings.latejoin.execution_cooldown_low = 10
+ruleset_type_settings.latejoin.execution_cooldown_high = 20
+
+["Latejoin Traitor"]
+weight = 10
+min_pop = 3
+blacklisted_roles = [
+	"Head of Personnel",
+]
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Latejoin Heretic"]
+weight = 3
+min_pop = 30
+blacklisted_roles = [
+	"Head of Personnel",
+]
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Latejoin Changeling"]
+weight = 3
+min_pop = 15
+blacklisted_roles = [
+	"Head of Personnel",
+]
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Latejoin Revolution"]
+weight = 1
+min_pop = 30
+blacklisted_roles = []
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Spiders"]
+weight.1 = 0
+weight.2 = 0
+weight.3 = 1
+weight.4 = 2
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 0
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Light Pirates"]
+weight = 3
+min_pop = 15
+blacklisted_roles = []
+min_antag_cap = 0
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Heavy Pirates"]
+weight = 3
+min_pop = 25
+blacklisted_roles = []
+min_antag_cap = 0
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Midround Wizard"]
+weight.1 = 0
+weight.2 = 0
+weight.3 = 1
+weight.4 = 2
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Midround Nukeops"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap.denominator = 18
+min_antag_cap.offset = 1
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Midround Clownops"]
+weight = 0
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap.denominator = 18
+min_antag_cap.offset = 1
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Blob"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 3
+repeatable = 1
+minimum_required_age = 0
+
+["Xenomorph"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 5
+weight.4 = 5
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 2
+repeatable_weight_decrease = 3
+repeatable = 1
+minimum_required_age = 0
+
+["Nightmare"]
+weight = 5
+min_pop = 15
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Space Dragon"]
+weight.1 = 0
+weight.2 = 3
+weight.3 = 5
+weight.4 = 5
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 3
+repeatable = 1
+minimum_required_age = 0
+
+["Abductors"]
+weight = 5
+min_pop = 20
+blacklisted_roles = []
+min_antag_cap = 2
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 3
+repeatable = 1
+minimum_required_age = 0
+
+["Space Ninja"]
+weight.1 = 0
+weight.2 = 0
+weight.3 = 1
+weight.4 = 2
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Revenant"]
+weight = 5
+min_pop = 10
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Midround Changeling"]
+weight = 5
+min_pop = 15
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Paradox Clone"]
+weight = 5
+min_pop = 10
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Voidwalker"]
+weight = 5
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Fugitives"]
+weight = 3
+min_pop = 20
+blacklisted_roles = []
+min_antag_cap = 3
+max_antag_cap = 4
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Morph"]
+weight = 0
+min_pop = 0
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Slaughter Demon"]
+weight = 0
+min_pop = 20
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Midround Traitor"]
+weight = 10
+min_pop = 3
+blacklisted_roles = [
+	"Head of Personnel",
+]
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Midround Malfunctioning AI"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = []
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Blob Infection"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = []
+repeatable_weight_decrease = 3
+repeatable = 1
+minimum_required_age = 0
+
+["Midround Obsessed"]
+weight.1 = 5
+weight.2 = 5
+weight.3 = 3
+weight.4 = 1
+min_pop = 5
+blacklisted_roles = []
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Roundstart Traitor"]
+weight = 10
+min_pop = 3
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap.denominator = 24
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Roundstart Malfunctioning AI"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Roundstart Blood Brothers"]
+weight = 5
+min_pop = 10
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap.denominator = 29
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Roundstart Changeling"]
+weight = 3
+min_pop = 15
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap.denominator = 29
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Roundstart Heretics"]
+weight = 3
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap.denominator = 24
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Roundstart Wizard"]
+weight.1 = 0
+weight.2 = 0
+weight.3 = 1
+weight.4 = 2
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 1
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Roundstart Blood Cult"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = [
+	"Head of Personnel",
+]
+min_antag_cap.denominator = 20
+min_antag_cap.offset = 1
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Roundstart Nukeops"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap.denominator = 18
+min_antag_cap.offset = 1
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Roundstart Clownops"]
+weight = 0
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap.denominator = 18
+min_antag_cap.offset = 1
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Roundstart Revolution"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 30
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 3
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Roundstart Spies"]
+weight.1 = 0
+weight.2 = 1
+weight.3 = 3
+weight.4 = 3
+min_pop = 10
+blacklisted_roles = []
+min_antag_cap.denominator = 20
+min_antag_cap.offset = 1
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Extended"]
+weight = 0
+min_pop = 0
+blacklisted_roles = []
+min_antag_cap = 0
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Meteor"]
+weight = 0
+min_pop = 0
+blacklisted_roles = []
+min_antag_cap = 0
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
+["Nations"]
+weight = 0
+min_pop = 0
+blacklisted_roles = []
+min_antag_cap = 0
+# max_antag_cap = min_antag_cap
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0

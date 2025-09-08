@@ -7,6 +7,8 @@
 	eye_color_left = COLOR_VOID_PURPLE
 	eye_color_right = COLOR_VOID_PURPLE
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
+	pupils_name = span_hypnophrase("pierced realities") //teeny tiny mansus portals, IN YOUR EYEBALLS (known to cause cancer in the state of california)
+	penlight_message = "ARE THE LOCK, THE LIGHT IS THE KEY! THE HIGHER I RISE, THE MORE I-"
 	/// The override images we are applying
 	var/list/hallucinations
 
@@ -39,6 +41,17 @@
 	organ_owner.client?.images -= hallucinations
 	QDEL_NULL(hallucinations)
 
+/obj/item/organ/eyes/corrupt/penlight_examine(mob/living/viewer, obj/item/examtool)
+	viewer.playsound_local(src, 'sound/effects/magic/magic_block_mind.ogg', 75, FALSE)
+	if(!viewer.is_blind() && !IS_HERETIC_OR_MONSTER(viewer))
+		to_chat(viewer, span_danger("Your eyes sizzle in their sockets as eldritch energies assault them!"))
+		viewer.emote("scream")
+		viewer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		viewer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
+		viewer.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/temporary_blindness) //debounce basically.
+		var/obj/item/organ/eyes/parboiled = viewer.get_organ_slot(ORGAN_SLOT_EYES)
+		parboiled?.apply_organ_damage(40) //enough to blind, but not enough to blind *permanently*
+	return "[owner.p_Their()] eyes [span_hypnophrase(penlight_message)]"
 
 /// Sometimes speak in incomprehensible tongues
 /obj/item/organ/tongue/corrupt
@@ -49,7 +62,7 @@
 /obj/item/organ/tongue/corrupt/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
-	AddElement(/datum/element/noticable_organ, "The inside of %PRONOUN_Their mouth is full of stars.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "The inside of %PRONOUN_their mouth is full of stars.", BODY_ZONE_PRECISE_MOUTH)
 
 /obj/item/organ/tongue/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
@@ -178,12 +191,14 @@
 
 	return ..()
 
-
 /// Occasionally bombards you with spooky hands and lets everyone hear your pulse.
 /obj/item/organ/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
+	beat_noise = "THE THUMPTHUMPTHUMPING OF THE CHISEL ON THE GLASS. OPEN THE FUTURE SHATTER THE-"
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
+	cell_line = CELL_LINE_ORGAN_HEART_CURSED
+	cells_minimum = 2 //guarantees we always get sacred heart and corrupted heart cells
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 
@@ -198,12 +213,22 @@
 	fire_curse_hand(owner)
 	COOLDOWN_START(src, hand_cooldown, rand(6 SECONDS, 45 SECONDS)) // Wide variance to put you off guard
 
+/obj/item/organ/heart/corrupt/hear_beat_noise(mob/living/hearer)
+	hearer.playsound_local(src, 'sound/effects/magic/hereticknock.ogg', 75, FALSE)
+	if(!IS_HERETIC_OR_MONSTER(hearer))
+		hearer.emote("scream")
+		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		hearer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
+		var/obj/item/bodypart/head/regret = hearer.get_bodypart(BODY_ZONE_HEAD)
+		regret?.force_wound_upwards(/datum/wound/pierce/bleed/severe/magicalearpain, wound_source = "stethoscoped a corrupted heart")
+	return "[owner.p_Their()] heart produces [span_hypnophrase(beat_noise)]"
 
 /// Sometimes cough out some kind of dangerous gas
 /obj/item/organ/lungs/corrupt
 	name = "corrupt lungs"
 	desc = "Some things SHOULD be drowned in tar."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
+	breath_noise = "SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING FROM THE-"
 	/// How likely are we not to cough every time we take a breath?
 	var/cough_chance = 15
 	/// How much gas to emit?
@@ -233,6 +258,15 @@
 	var/turf/open/our_turf = get_turf(breather)
 	our_turf.assume_air(mix_to_spawn)
 
+/obj/item/organ/lungs/corrupt/hear_breath_noise(mob/living/hearer)
+	hearer.playsound_local(src, 'sound/effects/magic/voidblink.ogg', 75, FALSE)
+	if(!IS_HERETIC_OR_MONSTER(hearer))
+		hearer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
+		hearer.emote("scream")
+		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		var/obj/item/organ/ears/regret = hearer.get_organ_slot(ORGAN_SLOT_EARS)
+		regret?.adjustEarDamage(10,20)
+	return "[owner.p_Their()] lungs emit [span_hypnophrase(breath_noise)]"
 
 /// It's full of worms
 /obj/item/organ/appendix/corrupt

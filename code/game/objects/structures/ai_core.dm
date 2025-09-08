@@ -149,7 +149,7 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers)
+/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(tool.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
 		to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
@@ -179,7 +179,7 @@
 			balloon_alert(user, "connected neural network")
 			return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, list/modifiers)
+/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(remote_ai)
 		to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
 	if(!anchored)
@@ -460,7 +460,7 @@ That prevents a few funky behaviors.
 			return
 	//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
-		AI.control_disabled = FALSE
+		AI.set_control_disabled(FALSE)
 		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
 		to_chat(AI, span_notice("You have been uploaded to a stationary terminal. Remote device connection restored."))

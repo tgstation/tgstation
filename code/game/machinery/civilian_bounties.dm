@@ -47,7 +47,7 @@
 	///Typecast of an inserted, scanned ID card inside the console, as bounties are held within the ID card.
 	var/obj/item/card/id/inserted_scan_id
 
-/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, list/modifiers)
+/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(isidcard(I))
 		if(id_insert(user, I, inserted_scan_id))
 			inserted_scan_id = I
@@ -267,14 +267,14 @@
 	var/holder_item = FALSE
 
 	if(!isidcard(card_to_insert))
-		card_to_insert = inserting_item.RemoveID()
+		card_to_insert = inserting_item.remove_id()
 		holder_item = TRUE
 
 	if(!card_to_insert || !user.transferItemToLoc(card_to_insert, src))
 		return FALSE
 
 	if(target)
-		if(holder_item && inserting_item.InsertID(target))
+		if(holder_item && inserting_item.insert_id(target))
 			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		else
 			id_eject(user, target)

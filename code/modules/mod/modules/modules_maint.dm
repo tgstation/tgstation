@@ -54,7 +54,7 @@
 	set_off = TRUE
 
 ///Calls snap_signal() when exposed to a reagent via VAPOR, PATCH or TOUCH
-/obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
+/obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, show_message)
 	SIGNAL_HANDLER
 
 	if(!(methods & (VAPOR|PATCH|TOUCH)))
@@ -136,12 +136,12 @@
 	QDEL_NULL(rave_screen)
 	return ..()
 
-/obj/item/mod/module/visor/rave/on_activation()
+/obj/item/mod/module/visor/rave/on_activation(mob/activator)
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave, REF(src))
 	rave_screen.update_color(rainbow_order[rave_number])
 	music_player.start_music(mod.wearer)
 
-/obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/visor/rave/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	QDEL_NULL(rave_screen)
 	if(isnull(music_player.active_song_sound))
 		return
@@ -199,7 +199,7 @@
 	cooldown_time = 30 SECONDS
 	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 
-/obj/item/mod/module/tanner/on_use()
+/obj/item/mod/module/tanner/on_use(mob/activator)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 	var/datum/reagents/holder = new()
 	holder.add_reagent(/datum/reagent/spraytan, 10)
@@ -223,7 +223,7 @@
 	var/blowing_time = 10 SECONDS
 	var/oxygen_damage = 20
 
-/obj/item/mod/module/balloon/on_use()
+/obj/item/mod/module/balloon/on_use(mob/activator)
 	if(!do_after(mod.wearer, blowing_time, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(oxygen_damage)
@@ -247,7 +247,7 @@
 	/// The total number of sheets created by this MOD. The more sheets, them more likely they set on fire.
 	var/num_sheets_dispensed = 0
 
-/obj/item/mod/module/paper_dispenser/on_use()
+/obj/item/mod/module/paper_dispenser/on_use(mob/activator)
 	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
 		return FALSE
 
@@ -316,7 +316,7 @@
 	/// If you use the module on a planetary turf, you fly up. To the sky.
 	var/you_fucked_up = FALSE
 
-/obj/item/mod/module/atrocinator/on_activation()
+/obj/item/mod/module/atrocinator/on_activation(mob/activator)
 	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
@@ -325,13 +325,13 @@
 	passtable_on(mod.wearer, REF(src))
 	check_upstairs() //todo at some point flip your screen around
 
-/obj/item/mod/module/atrocinator/deactivate(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/atrocinator/deactivate(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(you_fucked_up && !deleting)
-		to_chat(mod.wearer, span_danger("It's too late."))
+		to_chat(activator, span_danger("It's too late."))
 		return FALSE
 	return ..()
 
-/obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/atrocinator/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(!deleting)
 		playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))

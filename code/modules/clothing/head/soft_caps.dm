@@ -122,7 +122,7 @@ DEFINE_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "", FALSE, "Objec
 	icon_state = "secsoft"
 	soft_type = "sec"
 	armor_type = /datum/armor/cosmetic_sec
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/veteran
@@ -131,7 +131,7 @@ DEFINE_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "", FALSE, "Objec
 	icon_state = "veteransoft"
 	soft_type = "veteran"
 	armor_type = /datum/armor/cosmetic_sec
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/paramedic

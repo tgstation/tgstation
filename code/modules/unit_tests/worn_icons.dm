@@ -48,6 +48,8 @@
 				match_message += (match_message ? " & '[file_place]'" : " - Matching sprite found in: '[file_place]'")
 
 		if(worn_icon) //easiest to check since we override everything. this automatically includes downstream support.
+			if(isnull(worn_icon_state)) // no worn sprite for this item.
+				continue
 			if(!(icon_state in icon_states(worn_icon, 1)))
 				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'[match_message]")
 			continue

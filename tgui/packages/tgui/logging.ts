@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { sendLogEntry } from 'tgui-dev-server/link/client.mjs';
+import { sendLogEntry } from 'tgui-dev-server/link/client';
 
 const LEVEL_DEBUG = 0;
 const LEVEL_LOG = 1;

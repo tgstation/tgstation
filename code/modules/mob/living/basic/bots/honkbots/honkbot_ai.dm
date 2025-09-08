@@ -5,6 +5,7 @@
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/use_mob_ability/random_honk,
 		/datum/ai_planning_subtree/find_wanted_targets,
@@ -18,7 +19,6 @@
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_controller/basic_controller/bot/honkbot/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -213,29 +213,6 @@
 		controller.add_to_blacklist(slipped_victim)
 	controller.clear_blackboard_key(slip_target)
 	controller.clear_blackboard_key(slippery_target)
-
-/datum/ai_behavior/drag_target
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-
-/datum/ai_behavior/drag_target/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/drag_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/atom/movable/target = controller.blackboard[target_key]
-	if(QDELETED(target) || target.anchored || target.pulledby)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/mob/living/our_mob = controller.pawn
-	our_mob.start_pulling(target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-/datum/ai_behavior/drag_target/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	. = ..()
-	if(!succeeded)
-		controller.clear_blackboard_key(target_key)
 
 /datum/ai_planning_subtree/use_mob_ability/random_honk
 	ability_key = BB_HONK_ABILITY

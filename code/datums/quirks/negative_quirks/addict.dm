@@ -203,7 +203,7 @@
 
 /datum/quirk/item_quirk/addict/alcoholic/post_add()
 	. = ..()
-	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(check_brandy))
 	var/obj/item/reagent_containers/brandy_container = drug_container_type
 	if(isnull(brandy_container))
 		stack_trace("Alcoholic quirk added while the GLOB.possible_alcoholic_addictions is (somehow) not initialized!")
@@ -218,7 +218,7 @@
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
 /datum/quirk/item_quirk/addict/alcoholic/remove()
-	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
 /datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
 	SIGNAL_HANDLER

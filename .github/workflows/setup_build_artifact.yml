@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: ./.github/actions/setup_node
+      - uses: actions/checkout@v5
+      - name: Setup Bun
+        uses: ./.github/actions/setup_bun
       - name: Restore BYOND from Cache
         uses: ./.github/actions/restore_or_install_byond
         with:
@@ -25,7 +25,7 @@ jobs:
       - name: Compile
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
+          tools/build/build.sh --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
       - name: Setup variable for output path
         run: |
           OUTPUT_DIR="target"

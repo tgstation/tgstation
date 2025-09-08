@@ -82,7 +82,7 @@
 /obj/effect/abstract/floating_eyes/process(seconds_per_tick)
 	var/turf/below_us = get_turf(src)
 	var/mob/seer = seer_ref?.resolve()
-	if(below_us.get_lumcount() < LIGHTING_TILE_IS_DARK || seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
+	if(below_us.get_lumcount() > LIGHTING_TILE_IS_DARK || seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
 		graceful_delete()
 
 /obj/effect/abstract/floating_eyes/proc/graceful_delete()

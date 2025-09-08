@@ -16,8 +16,8 @@
 	icon_state = "earmuffs"
 	inhand_icon_state = "earmuffs"
 	clothing_traits = list(TRAIT_DEAF)
-	strip_delay = 15
-	equip_delay_other = 25
+	strip_delay = 1.5 SECONDS
+	equip_delay_other = 2.5 SECONDS
 	resistance_flags = FLAMMABLE
 	custom_price = PAYCHECK_COMMAND * 1.5
 	flags_cover = EARS_COVERED
@@ -25,7 +25,7 @@
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/earhealing)
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
 
 /obj/item/clothing/ears/earmuffs/debug

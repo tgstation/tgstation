@@ -38,7 +38,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
 	var/tram_serial
 	name = "tram information plate"
 	sign_change_name = "Information - Tram Statistics"
-	icon_state = "commission_tram"
+	icon_state = "tram_plate"
 	max_integrity = 150
 	armor_type = /datum/armor/tram_structure
 	is_editable = FALSE

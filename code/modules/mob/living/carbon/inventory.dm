@@ -1,21 +1,3 @@
-/// Returns a list of slots that are *visibly* covered by clothing and thus cannot be seen by others
-/mob/living/carbon/proc/check_obscured_slots()
-	var/hidden_slots = NONE
-
-	for(var/obj/item/equipped_item in get_equipped_items())
-		hidden_slots |= equipped_item.flags_inv
-
-	return hidden_slots_to_inventory_slots(hidden_slots)
-
-/// Returns a list of slots that are protected by other clothing, but could possibly be seen by others, via transparent visors and similar stuff
-/mob/living/carbon/proc/check_covered_slots()
-	var/hidden_slots = NONE
-
-	for(var/obj/item/equipped_item in get_equipped_items())
-		hidden_slots |= equipped_item.flags_inv | equipped_item.transparent_protection
-
-	return hidden_slots_to_inventory_slots(hidden_slots)
-
 /// Convers HIDEX to ITEM_SLOT_X, should be phased out in favor of using latter everywhere later
 /proc/hidden_slots_to_inventory_slots(hidden_slots)
 	var/obscured = NONE
@@ -81,34 +63,13 @@
 
 /// Returns items which are currently visible on the mob
 /mob/living/carbon/proc/get_visible_items()
-	var/static/list/visible_slots = list(
-		ITEM_SLOT_OCLOTHING,
-		ITEM_SLOT_ICLOTHING,
-		ITEM_SLOT_GLOVES,
-		ITEM_SLOT_EYES,
-		ITEM_SLOT_EARS,
-		ITEM_SLOT_MASK,
-		ITEM_SLOT_HEAD,
-		ITEM_SLOT_FEET,
-		ITEM_SLOT_ID,
-		ITEM_SLOT_BELT,
-		ITEM_SLOT_BACK,
-		ITEM_SLOT_NECK,
-		ITEM_SLOT_HANDS,
-		ITEM_SLOT_SUITSTORE,
-		ITEM_SLOT_HANDCUFFED,
-		ITEM_SLOT_LEGCUFFED,
-	)
-	var/list/obscured = check_obscured_slots()
 	var/list/visible_items = list()
-	for (var/slot in visible_slots)
-		if (obscured & slot)
-			continue
-		var/obj/item/equipped = get_item_by_slot(slot)
-		if (equipped)
-			visible_items += equipped
+	var/obscured_item_slots = hidden_slots_to_inventory_slots(obscured_slots)
 	for (var/obj/item/held in held_items)
 		visible_items += held
+	for(var/obj/item/thing in get_equipped_items())
+		if(!(get_slot_by_item(thing) & obscured_item_slots))
+			visible_items += thing
 	return visible_items
 
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/equipping, list/slots, qdel_on_fail = TRUE, indirect_action = FALSE)
@@ -154,13 +115,10 @@
 		equipping.pulledby.stop_pulling()
 
 	equipping.screen_loc = null
-	if(client)
-		client.screen -= equipping
+	client?.screen -= equipping
 
-	if(observers?.len)
-		for(var/mob/dead/observe as anything in observers)
-			if(observe.client)
-				observe.client.screen -= equipping
+	for(var/mob/dead/observe as anything in observers)
+		observe.client?.screen -= equipping
 
 	equipping.forceMove(src)
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
@@ -190,7 +148,6 @@
 			update_worn_neck(equipping)
 		if(ITEM_SLOT_HANDCUFFED)
 			set_handcuffed(equipping)
-			update_handcuffed()
 		if(ITEM_SLOT_LEGCUFFED)
 			legcuffed = equipping
 			update_worn_legcuffs()
@@ -208,77 +165,117 @@
 
 	return not_handled
 
-/mob/living/carbon/has_equipped(obj/item/item, slot, initial)
-	. = ..()
-	hud_used?.update_locked_slots()
-
 /mob/living/carbon/get_equipped_speed_mod_items()
 	return ..() + get_equipped_items()
 
-/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
-	. = ..() //Sets the default return value to what the parent returns.
-	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
+/mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
+	. = ..()
+	if(!.)
 		return
 
-	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
-	if(I == head)
+	update_equipment_speed_mods()
+	hud_used?.update_locked_slots()
+	add_item_coverage(item)
+
+/mob/living/carbon/has_unequipped(obj/item/item)
+	. = ..() // NB: ATP the item is still in the slot, but no longer has the IN_INVENTORY flag (so is not returned by get_equipped_items)
+	if(!.)
+		return
+
+	update_equipment_speed_mods()
+	hud_used?.update_locked_slots()
+	remove_item_coverage(item)
+
+/mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+	. = ..() //Sets the default return value to what the parent returns.
+	if(!. || !item_dropping) //We don't want to set anything to null if the parent returned 0.
+		return
+
+	if(item_dropping == head)
 		head = null
 		if(!QDELETED(src))
 			update_worn_head()
-	else if(I == back)
+	else if(item_dropping == back)
 		back = null
 		if(!QDELETED(src))
 			update_worn_back()
-	else if(I == wear_mask)
+	else if(item_dropping == wear_mask)
 		wear_mask = null
 		if(!QDELETED(src))
 			update_worn_mask()
-	else if(I == wear_neck)
+	else if(item_dropping == wear_neck)
 		wear_neck = null
 		if(!QDELETED(src))
-			update_worn_neck(I)
-	else if(I == handcuffed)
+			update_worn_neck(item_dropping)
+	else if(item_dropping == handcuffed)
 		set_handcuffed(null)
 		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
-		if(!QDELETED(src))
-			update_handcuffed()
-	else if(I == legcuffed)
+	else if(item_dropping == legcuffed)
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
-	else
-		not_handled = TRUE
 
 	// Not an else-if because we're probably equipped in another slot
-	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
+	if(item_dropping == internal && (QDELETED(src) || QDELETED(item_dropping) || item_dropping.loc != src))
 		cutoff_internals()
 		if(!QDELETED(src))
 			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 
-	if(not_handled)
-		return
+/// Adds the passed item's coverage to the mob's coverage related flags
+/mob/living/carbon/proc/add_item_coverage(obj/item/item)
+	var/pre_coverage = obscured_slots
+	obscured_slots |= item.flags_inv
+	covered_slots |= item.flags_inv | item.transparent_protection
+	if(pre_coverage != obscured_slots)
+		item_coverage_changed(obscured_slots & ~pre_coverage, pre_coverage & ~obscured_slots)
 
-	update_equipment_speed_mods()
-	update_obscured_slots(I.flags_inv)
-	hud_used?.update_locked_slots()
+/// Removes the passed item's coverage from the mob's coverage related flags
+/mob/living/carbon/proc/remove_item_coverage(obj/item/item)
+	refresh_obscured() // No way to remove a single item's coverage without recalculating everything
 
-/// Returns TRUE if an air tank compatible helmet is equipped.
+/mob/living/carbon/refresh_obscured()
+	var/pre_coverage = obscured_slots
+
+	obscured_slots = NONE
+	covered_slots = NONE
+	for(var/obj/item/other_equipped_item as anything in get_equipped_items())
+		obscured_slots |= other_equipped_item.flags_inv
+		covered_slots |= other_equipped_item.flags_inv | other_equipped_item.transparent_protection
+
+	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+		obscured_slots |= HIDEHAIR|HIDEFACIALHAIR
+
+	if(pre_coverage != obscured_slots)
+		item_coverage_changed(obscured_slots & ~pre_coverage, pre_coverage & ~obscured_slots)
+
+/**
+ * Called when a mob's obscured slots change
+ *
+ * Args
+ * * added_slots - slots that were added to obscured_slots
+ * * removed_slots - slots that were removed from obscured_slots
+ */
+/mob/living/carbon/proc/item_coverage_changed(added_slots, removed_slots)
+	update_clothing(hidden_slots_to_inventory_slots(added_slots|removed_slots))
+	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
+		update_body()
+
+/// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
 	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
-		return TRUE
+		return head
 
-/// Returns TRUE if an air tank compatible mask is equipped.
+/// Returns the mask if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
 	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
-		return TRUE
+		return wear_mask
 
-/// Returns TRUE if a breathing tube is equipped.
+/// Returns the tube if a breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_tube()
-	if (get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
-		return TRUE
+	return get_organ_slot(ORGAN_SLOT_BREATHING_TUBE)
 
-/// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
+/// Returns the object that allows us to breathe internals - tube implant, mask or helmet
 /mob/living/carbon/proc/can_breathe_internals()
 	return can_breathe_tube() || can_breathe_mask() || can_breathe_helmet()
 
@@ -417,95 +414,6 @@
 	var/index = get_held_index_of_item(I)
 	return index && hand_bodyparts[index]
 
-/**
- * Proc called when offering an item to another player
- *
- * This handles creating an alert and adding an overlay to it
- */
-/mob/living/carbon/proc/give(mob/living/carbon/offered)
-	if(has_status_effect(/datum/status_effect/offering))
-		to_chat(src, span_warning("You're already offering something!"))
-		return
-
-	if(IS_DEAD_OR_INCAP(src))
-		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
-		return
-
-	var/obj/item/offered_item = get_active_held_item()
-	// if it's an abstract item, should consider it to be non-existent (unless it's a HAND_ITEM, which means it's an obj/item that is just a representation of our hand)
-	if(!offered_item || ((offered_item.item_flags & ABSTRACT) && !(offered_item.item_flags & HAND_ITEM)))
-		to_chat(src, span_warning("You're not holding anything to offer!"))
-		return
-
-	if(offered)
-		if(offered == src)
-			if(!swap_hand(get_inactive_hand_index())) //have to swap hands first to take something
-				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
-				return
-			if(!put_in_active_hand(offered_item))
-				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
-				return
-			else
-				to_chat(src, span_notice("You take [offered_item] from yourself."))
-				return
-
-		if(IS_DEAD_OR_INCAP(offered))
-			to_chat(src, span_warning("[offered.p_Theyre()] unable to take anything in [offered.p_their()] current state!"))
-			return
-
-		if(!CanReach(offered))
-			to_chat(src, span_warning("You have to be beside [offered.p_them()]!"))
-			return
-	else
-		if(!(locate(/mob/living/carbon) in orange(1, src)))
-			to_chat(src, span_warning("There's nobody beside you to take it!"))
-			return
-
-	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
-		return
-
-	balloon_alert_to_viewers("offers something")
-	visible_message(span_notice("[src] is offering [offered ? "[offered] " : ""][offered_item]."), \
-					span_notice("You offer [offered ? "[offered] " : ""][offered_item]."), null, 2)
-
-	apply_status_effect(/datum/status_effect/offering, offered_item, null, offered)
-
-/**
- * Proc called when the player clicks the give alert
- *
- * Handles checking if the player taking the item has open slots and is in range of the offerer
- * Also deals with the actual transferring of the item to the players hands
- * Arguments:
- * * offerer - The person giving the original item
- * * I - The item being given by the offerer
- */
-/mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
-	clear_alert("[offerer]")
-	if(IS_DEAD_OR_INCAP(src))
-		to_chat(src, span_warning("You're unable to take anything in your current state!"))
-		return
-	if(get_dist(src, offerer) > 1)
-		to_chat(src, span_warning("[offerer] is out of range!"))
-		return
-	if(!I || offerer.get_active_held_item() != I)
-		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
-		return
-	if(!get_empty_held_indexes())
-		to_chat(src, span_warning("You have no empty hands!"))
-		return
-
-	if(I.on_offer_taken(offerer, src)) // see if the item has special behavior for being accepted
-		return
-
-	if(!offerer.temporarilyRemoveItemFromInventory(I))
-		visible_message(span_notice("[offerer] tries to hand over [I] but it's stuck to them...."))
-		return
-
-	visible_message(span_notice("[src] takes [I] from [offerer]."), \
-					span_notice("You take [I] from [offerer]."))
-	I.do_pickup_animation(src, offerer)
-	put_in_hands(I)
-
 ///Returns a list of all body_zones covered by clothing
 /mob/living/carbon/proc/get_covered_body_zones()
 	RETURN_TYPE(/list)
@@ -539,7 +447,7 @@
 		"right pocket" = ITEM_SLOT_RPOCKET
 	)
 
-	var/placed_in = equip_in_one_of_slots(item, pockets, indirect_action = TRUE)
+	var/placed_in = equip_in_one_of_slots(item, pockets, qdel_on_fail = FALSE, indirect_action = TRUE)
 
 	if (!placed_in)
 		placed_in = equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE)

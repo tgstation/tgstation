@@ -1,12 +1,12 @@
 // Drone inventory procs
 
-/mob/living/basic/drone/doUnEquip(obj/item/item, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/basic/drone/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())
 		update_held_items()
-		if(item == head)
+		if(item_dropping == head)
 			head = null
 			update_worn_head()
-		if(item == internal_storage)
+		if(item_dropping == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
 		return TRUE

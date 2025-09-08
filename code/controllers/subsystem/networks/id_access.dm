@@ -457,7 +457,7 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
 
 /**
  * Removes a trim from a ID card.
@@ -478,7 +478,7 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
 
 /**
  * Adds the accesses associated with a trim to an ID card.
@@ -518,3 +518,78 @@ SUBSYSTEM_DEF(id_access)
 			tally++
 
 	return tally
+
+/**
+ * Helper proc for creating a copy of the in-character information you could render from scanning for an ID card.
+ * Accounts for chameleon cards, silicons, and ID read failures.
+ * Pertinently, it also returns relevant information for their bank account (if they have one).
+ * To return bank account info for a chameleon card, bypass_chameleon must be set to TRUE. Otherwise it returns
+ * a bogey record.
+ * datum/source -
+ */
+/datum/controller/subsystem/id_access/proc/__in_character_record_id_information(
+	atom/movable/target_of_record,
+	bypass_chameleon = FALSE
+	) as /alist
+
+	var/alist/returned_record = alist(
+		"name" = null,
+		"age" = null,
+		"assignment" = null,
+		"account_id" = null,
+		"account_holder" = null,
+		"account_assignment" = null,
+		"accesses" = null,
+	)
+	. = returned_record
+	if(isnull(target_of_record))
+		.["name"] = ID_READ_FAILURE
+		.["age"] = ID_READ_FAILURE
+		.["assignment"] = ID_READ_FAILURE
+		.["account_id"] = ID_READ_FAILURE
+		.["account_holder"] = ID_READ_FAILURE
+		.["account_assignment"] = ID_READ_FAILURE
+		.["accesses"] = ID_READ_FAILURE
+		.[ID_READ_FAILURE] = ID_READ_FAILURE
+		return .
+	var/mob/living/target = astype(target_of_record, /mob/living)
+	if(target)
+		if(!issilicon(target) && !isdrone(target))
+			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
+			return .
+		.["name"] = target.name
+		.["age"] = 0
+		.["assignment"] = "Silicon"
+		.["account_id"] = null
+		.["account_holder"] = null
+		.["account_assignment"] = null
+		.["accesses"] = null
+		.[SILICON_OVERRIDE] = SILICON_OVERRIDE
+		return .
+	var/obj/item/card/id/advanced/id_card = astype(target_of_record, /obj/item/card/id/advanced)
+	if(id_card)
+		.["name"] = id_card.registered_name || "Unknown"
+		.["age"] = id_card.registered_age || "Unknown"
+		.["assignment"] = id_card.assignment || "Unassigned"
+		.["accesses"] = id_card.access
+		var/datum/bank_account/id_account = id_card.registered_account
+		if(istype(id_card, /obj/item/card/id/advanced/chameleon) && !bypass_chameleon)
+			// Generate a bogey record based only on the ID card
+			// Generates a random bank account number every time as a 'spot the thread' for anyone who
+			// went through records for this entry for whatever reason.
+			.["account_id"] = rand(111111, 999999)
+			.["account_holder"] = .["name"]
+			.["account_assignment"] = .["assignment"]
+			.[CHAMELEON_OVERRIDE] = CHAMELEON_OVERRIDE
+			return .
+		if(!id_account)
+			.["account_id"] = 0
+			.["account_holder"] = "NO ACCOUNT."
+			.["account_assignment"] = "NO ACCOUNT."
+			return .
+		.["account_id"] = id_account.account_id
+		.["account_holder"] = id_account.account_holder
+		.["account_assignment"] = id_account.account_job?.title || "Unassigned"
+		return .
+	else
+		. = ID_DATA(null)

@@ -25,7 +25,7 @@
 	tastes = list("pasta" = 1)
 	crafting_complexity = FOOD_COMPLEXITY_1
 
-/obj/item/food/spaghetti/make_bakeable()
+/obj/item/food/spaghetti/raw/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/spaghetti/boiledspaghetti, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/food/spaghetti/raw/make_microwaveable()
@@ -43,7 +43,7 @@
 
 /obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
 
 /obj/item/food/spaghetti/pastatomato
 	name = "spaghetti"
@@ -100,6 +100,7 @@
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/spaghetti/spesslaw
 	name = "spesslaw"
@@ -113,6 +114,7 @@
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 4)
 
 /obj/item/food/spaghetti/chowmein
 	name = "chow mein"
@@ -126,6 +128,7 @@
 	tastes = list("noodle" = 1, "meat" = 1, "fried vegetables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/spaghetti/beefnoodle
 	name = "beef noodle"
@@ -141,6 +144,7 @@
 	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/spaghetti/butternoodles
 	name = "butter noodles"
@@ -179,6 +183,7 @@
 	tastes = list("noodles" = 5, "meat" = 3, "egg" = 4, "dried seaweed" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/spaghetti/kitakata_ramen
 	name = "kitakata ramen"
@@ -193,6 +198,7 @@
 	tastes = list("noodles" = 5, "meat" = 4, "mushrooms" = 3, "onion" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/spaghetti/kitsune_udon
 	name = "kitsune udon"
@@ -221,6 +227,7 @@
 	tastes = list("noodles" = 5, "meat" = 4, "potato" = 3, "onion" = 2, "mixed veggies" = 2)
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/spaghetti/pho
 	name = "pho"
@@ -235,6 +242,7 @@
 	tastes = list("noodles" = 5, "meat" = 4, "cabbage" = 3, "onion" = 2, "herbs" = 2)
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/spaghetti/pad_thai
 	name = "pad thai"
@@ -262,6 +270,7 @@
 	tastes = list("spaghetti" = 1, "parmigiano reggiano" = 1,  "guanciale" = 1)
 	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/spaghetti/carbonara/Initialize(mapload)
 	. = ..()

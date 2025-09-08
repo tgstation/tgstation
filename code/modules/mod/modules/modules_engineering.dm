@@ -8,7 +8,7 @@
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
@@ -24,6 +24,18 @@
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = initial(head_cover.flash_protect)
+
+/obj/item/mod/module/welding/syndicate
+	complexity = 0
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/stealth/wraith)
+	overlay_state_inactive = "module_armorbooster_on"
+	use_mod_colors = TRUE
+	mask_worn_overlay = TRUE
+
+/obj/item/mod/module/welding/syndicate/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	return ..()
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray
@@ -69,11 +81,11 @@
 	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
 
-/obj/item/mod/module/magboot/on_activation()
+/obj/item/mod/module/magboot/on_activation(mob/activator)
 	mod.wearer.add_traits(active_traits, REF(src))
 	mod.update_speed()
 
-/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/magboot/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_traits(active_traits, REF(src))
 	mod.update_speed()
 
@@ -128,7 +140,7 @@
 	if (key == "cut_tethers")
 		SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
-/obj/item/mod/module/tether/on_deactivation(display_message, deleting)
+/obj/item/mod/module/tether/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
 /obj/projectile/tether
@@ -382,7 +394,7 @@
 /obj/item/mod/module/constructor/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, REF(src))
 
-/obj/item/mod/module/constructor/on_use()
+/obj/item/mod/module/constructor/on_use(mob/activator)
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_energy_cost)
 
@@ -396,7 +408,7 @@
 		relatively easy to install into most other suits."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
+	incompatible_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/infiltrator)
 	required_slots = list(ITEM_SLOT_HEAD)
 
 /obj/item/mod/module/headprotector/on_part_activation()

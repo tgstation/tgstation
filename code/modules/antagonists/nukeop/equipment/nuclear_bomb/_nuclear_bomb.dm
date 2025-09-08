@@ -108,7 +108,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	return TRUE
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if (istype(weapon, /obj/item/disk/nuclear))
 		if(!disk_check(weapon))
 			return TRUE

@@ -2,39 +2,39 @@ name: TGS Test Suite
 on:
   push:
     branches:
-    - master
-    - 'project/**'
-    - 'gh-readonly-queue/master/**'
-    - 'gh-readonly-queue/project/**'
+      - master
+      - "project/**"
+      - "gh-readonly-queue/master/**"
+      - "gh-readonly-queue/project/**"
     paths:
-    - '.tgs.yml'
-    - '.github/workflows/tgs_test.yml'
-    - 'dependencies.sh'
-    - 'code/__DEFINES/tgs.config.dm'
-    - 'code/__DEFINES/tgs.dm'
-    - 'code/game/world.dm'
-    - 'code/modules/tgs/**'
-    - 'tools/bootstrap/**'
-    - 'tools/tgs_scripts/**'
-    - 'tools/tgs_test/**'
+      - ".tgs.yml"
+      - ".github/workflows/tgs_test.yml"
+      - "dependencies.sh"
+      - "code/__DEFINES/tgs.config.dm"
+      - "code/__DEFINES/tgs.dm"
+      - "code/game/world.dm"
+      - "code/modules/tgs/**"
+      - "tools/bootstrap/**"
+      - "tools/tgs_scripts/**"
+      - "tools/tgs_test/**"
   pull_request:
     branches:
-    - master
-    - 'project/**'
+      - master
+      - "project/**"
     paths:
-    - '.tgs.yml'
-    - '.github/workflows/tgs_test.yml'
-    - 'dependencies.sh'
-    - 'code/__DEFINES/tgs.config.dm'
-    - 'code/__DEFINES/tgs.dm'
-    - 'code/game/world.dm'
-    - 'code/modules/tgs/**'
-    - 'tools/bootstrap/**'
-    - 'tools/tgs_scripts/**'
-    - 'tools/tgs_test/**'
+      - ".tgs.yml"
+      - ".github/workflows/tgs_test.yml"
+      - "dependencies.sh"
+      - "code/__DEFINES/tgs.config.dm"
+      - "code/__DEFINES/tgs.dm"
+      - "code/game/world.dm"
+      - "code/modules/tgs/**"
+      - "tools/bootstrap/**"
+      - "tools/tgs_scripts/**"
+      - "tools/tgs_test/**"
   merge_group:
     branches:
-    - master
+      - master
 env:
   TGS_API_PORT: 5000
   PR_NUMBER: ${{ github.event.number }}
@@ -59,12 +59,12 @@ jobs:
           - 5000:5000 #Can't use env here for some reason
     steps:
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.0.x
 
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Test TGS Integration
         run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ github.event.pull_request.head.sha || github.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ env.PR_NUMBER }}
