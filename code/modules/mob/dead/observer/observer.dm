@@ -484,9 +484,7 @@ DEFINE_VERB(/mob/dead/observer, jumptomob, "Jump to Mob", "", FALSE, "")
 	else
 		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
-/mob/dead/observer/verb/change_view_range()
-	set name = "View Range"
-
+DEFINE_VERB(/mob/dead/observer, change_view_range, "View Range", "", FALSE, "")
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return
@@ -508,8 +506,6 @@ DEFINE_VERB(/mob/dead/observer, toggle_ghostsee, "Toggle Ghost Vision", "", FALS
 	to_chat(usr, span_boldnotice("You [(ghost_hud_flags & GHOST_VISION) ? "now" : "no longer"] have ghost vision."))
 
 DEFINE_VERB(/mob/dead/observer, toggle_darkness, "Toggle Darkness", "", FALSE, "")
-	set name = "Toggle Darkness"
-
 	switch(lighting_cutoff)
 		if (LIGHTING_CUTOFF_VISIBLE)
 			lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
