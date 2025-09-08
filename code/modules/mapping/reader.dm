@@ -1034,7 +1034,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			var/index = start_index
 			var/begin = FALSE
 			while(!begin || (opening_count != closing_count))
-				var/char = copytext(text, index, index + 1)
+				var/char = text[index]
 				if(char == "(")
 					opening_count += 1
 					begin = TRUE
