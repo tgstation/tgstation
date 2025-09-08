@@ -48,9 +48,9 @@
 	if(!ispath(loot))
 		stack_trace("[loot] is not a path")
 		return FALSE
-	if(loot:abstract_type == loot)
+	if(loot.abstract_type == loot)
 		return FALSE
-	if(loot:spawn_blacklisted)
+	if(loot.spawn_blacklisted)
 		return FALSE
 	return TRUE
 
