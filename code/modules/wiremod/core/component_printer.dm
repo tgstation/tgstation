@@ -132,7 +132,7 @@
 	if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]", user_data)
+	materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
 	return new design.build_path(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -160,7 +160,7 @@
 
 			balloon_alert_to_viewers("printed [design.name]")
 
-			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]", user_data)
+			materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
 			var/atom/printed_design = new design.build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
