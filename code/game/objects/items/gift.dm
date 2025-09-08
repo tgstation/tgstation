@@ -114,7 +114,11 @@
 		possible_gifts = list()
 		for(var/type in subtypesof(/obj/item))
 			var/obj/item/thing = type
-			if(!initial(thing.icon_state) || !initial(thing.inhand_icon_state) || (initial(thing.item_flags) & ABSTRACT))
+			if(!initial(thing.icon_state) || !initial(thing.inhand_icon_state))
+				continue
+			if((initial(thing.item_flags) & ABSTRACT) || type:abstract_type == type)
+				continue
+			if(type:spawn_blacklisted)
 				continue
 
 			possible_gifts += type

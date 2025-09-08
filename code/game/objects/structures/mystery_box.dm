@@ -275,6 +275,12 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/wands/generate_valid_types()
 	valid_types = GLOB.mystery_magic
 
+/obj/structure/mystery_box/wildcard
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one has an EXTREAMLY extended array of weaponry."
+
+/obj/structure/mystery_box/wildcard/generate_valid_types()
+	valid_types = GLOB.summoned_all_guns
+
 ///A fishing and pirate-themed mystery box, rarely found by fishing in the ocean, then another cannot be caught for the next 30 minutes.
 /obj/structure/mystery_box/fishing
 	name = "treasure chest"

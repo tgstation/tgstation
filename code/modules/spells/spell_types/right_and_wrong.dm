@@ -11,6 +11,18 @@ GLOBAL_DATUM(mass_teaching, /datum/summon_things_controller/spellbook_entry)
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
 
+GLOBAL_LIST_INIT(summoned_all_guns, init_summoned_guns())
+
+/proc/init_summoned_guns()
+	var/list/all_valid_guns = list()
+	for(var/obj/item/gun/gun_type as anything in subtypesof(/obj/item/gun))
+		if(gun_type:abstract_type == gun_type)
+			continue
+		if(gun_type:spawn_blacklisted)
+			continue
+		all_valid_guns += gun_type
+	return all_valid_guns
+
 GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/disabler,
 	/obj/item/gun/energy/e_gun,
