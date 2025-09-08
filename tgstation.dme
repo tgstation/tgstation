@@ -2441,6 +2441,7 @@
 #include "code\game\objects\effects\spawners\random\techstorage.dm"
 #include "code\game\objects\effects\spawners\random\trash.dm"
 #include "code\game\objects\effects\spawners\random\vending.dm"
+#include "code\game\objects\effects\spawners\random\weapon.dm"
 #include "code\game\objects\effects\temporary_visuals\cult.dm"
 #include "code\game\objects\effects\temporary_visuals\effect_trail.dm"
 #include "code\game\objects\effects\temporary_visuals\miscellaneous.dm"
