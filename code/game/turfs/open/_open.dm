@@ -416,7 +416,7 @@
 	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
-	wash(CLEAN_WASH, TRUE)
+	wash(CLEAN_WASH | CLEAN_RAD, TRUE)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, daze_amount, force_drop)
