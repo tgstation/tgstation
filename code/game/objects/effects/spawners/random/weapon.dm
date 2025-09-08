@@ -9,7 +9,8 @@
 	var/obj/item/gun/gun_to_spawn = loot
 	if(!ispath(gun_to_spawn))
 		return FALSE
-	#warn remeber what vars TG uses, I forget shiptest has much better gun code.
+	// With shiptest guncode this resulted in every gun being ready to go.
+	// Need to recreate this so the guns shoved into your hands are ready to blast assistants.
 	/*
 	if(gun_to_spawn:spawn_no_ammo == TRUE)
 		return FALSE
