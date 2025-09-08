@@ -1,0 +1,5 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "The .tsx code for Ore Silo logs will now catch nulls instead of TBing."
+  - bugfix: "Fixed ANOTHER place where user_data for an ore silo log wasn't set correctly."
