@@ -74,6 +74,9 @@
  */
 /atom/proc/examine_tags(mob/user)
 	. = list()
+	if(abstract_type == type)
+		.[span_hypnophrase("abstract")] = "This is an abstract concept, you should report this to a strange entity called GITHUB!"
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_TAGS, user, .)
 
 /// What this atom should be called in examine tags
