@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Crafting recipes with tools such as wirecutters, wrenches, screwdrivers etc. should take the right amount of time to complete."
