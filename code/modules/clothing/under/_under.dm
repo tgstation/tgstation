@@ -534,4 +534,5 @@
 	return ..()
 
 /obj/item/clothing/under/rank
+	abstract_type = /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

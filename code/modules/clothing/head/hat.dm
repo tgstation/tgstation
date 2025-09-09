@@ -1,6 +1,7 @@
 /obj/item/clothing/head/hats
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+	abstract_type = /obj/item/clothing/head/hats
 
 /obj/item/clothing/head/hats/centhat
 	name = "\improper CentCom hat"

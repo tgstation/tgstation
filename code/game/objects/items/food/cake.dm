@@ -25,6 +25,7 @@
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cakeslice
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,

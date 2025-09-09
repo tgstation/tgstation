@@ -65,3 +65,6 @@
 /obj/item/clothing/suit/toggle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon, toggle_noun)
+
+/obj/item/clothing/head/hooded
+	abstract_type = /obj/item/clothing/head/hooded
