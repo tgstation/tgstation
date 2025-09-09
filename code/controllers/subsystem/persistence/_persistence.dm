@@ -296,11 +296,31 @@ SUBSYSTEM_DEF(persistence)
 	sortTim(all_saves, sorting_method)
 	return all_saves
 
+/datum/controller/subsystem/persistence/proc/get_save_flags()
+	var/flags = NONE
+
+	if(CONFIG_GET(flag/persistent_save_objects))
+		flags |= SAVE_OBJECTS
+	if(CONFIG_GET(flag/persistent_save_mobs))
+		flags |= SAVE_MOBS
+	if(CONFIG_GET(flag/persistent_save_turfs))
+		flags |= SAVE_TURFS
+	if(CONFIG_GET(flag/persistent_save_areas))
+		flags |= SAVE_AREAS
+	if(CONFIG_GET(flag/persistent_save_space))
+		flags |= SAVE_SPACE
+	if(CONFIG_GET(flag/persistent_save_object_properties))
+		flags |= SAVE_OBJECT_PROPERTIES
+	if(CONFIG_GET(flag/persistent_save_atmos))
+		flags |= SAVE_ATMOS
+
+	return flags
+
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
 	var/map_save_directory = get_current_persistence_map_directory()
+	var/save_flags = get_save_flags()
 
 	for(var/z in 1 to world.maxz)
-		var/map
 		var/list/level_traits = list()
 		var/datum/space_level/level_to_check = SSmapping.z_list[z]
 		var/list/z_traits = level_to_check.traits
@@ -327,12 +347,12 @@ SUBSYSTEM_DEF(persistence)
 		else if(!CONFIG_GET(flag/persistent_save_away_z_levels) && is_away_level(z)) // gateway away missions
 			continue
 
+		var/bottom_z = z
+		var/top_z = z
 		if(is_multi_z_level(z))
 			if(!SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN))
 				continue // skip all the other z levels if they aren't a bottom
 
-			var/bottom_z = z
-			var/top_z
 			for(var/above_z in (bottom_z + 1) to world.maxz)
 				var/datum/space_level/above_level_to_check = SSmapping.z_list[above_z]
 				var/list/above_z_traits = above_level_to_check.traits
@@ -345,9 +365,7 @@ SUBSYSTEM_DEF(persistence)
 					top_z = above_z
 					break
 
-			map = write_map(1, 1, bottom_z, world.maxx, world.maxy, top_z)
-		else
-			map = write_map(1, 1, z, world.maxx, world.maxy, z)
+		var/map = write_map(1, 1, bottom_z, world.maxx, world.maxy, top_z, save_flags)
 
 		var/file_path = "[map_save_directory]/[z].dmm"
 		rustg_file_write(map, file_path)
