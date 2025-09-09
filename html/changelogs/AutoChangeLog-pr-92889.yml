@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "sand is now made of sand and not glass. Get a welder if you plan to shove it into a protolathe."
+  - rscdel: "Removed now useless sand blocks."
