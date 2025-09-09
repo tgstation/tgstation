@@ -13,7 +13,7 @@
 		// if(!iter_type.icon_state || !iter_type.inhand_icon_state)
 		if(!iter_type.icon_state)
 			// This wont be left in
-			WARNING("[src] has no icon_state but is not otherwise blacklisted from spawning. I think I need to fix that.")
+			stack_trace("[src] has no icon_state but is not otherwise blacklisted from spawning. I think I need to fix that.")
 			continue // With the existance of abstract_type we could prob depricate this handling at some point
 		all_valid_types += iter_type
 	return all_valid_types
