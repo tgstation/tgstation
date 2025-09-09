@@ -111,7 +111,7 @@
 	var/static/list/obj/item/possible_gifts = null
 
 	if(isnull(possible_gifts))
-		possible_gifts = generate_reasonable_item_types(/obj/item)
+		possible_gifts = get_sane_item_types(/obj/item)
 
 	var/gift_type = pick(possible_gifts)
 	return gift_type

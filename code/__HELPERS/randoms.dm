@@ -5,7 +5,7 @@
 	if(!LAZYLEN(allowed_food)) //it's static so we only ever do this once
 		var/list/blocked = list() // This used to be populated
 
-		allowed_food = generate_reasonable_item_types(/obj/item/food) - blocked
+		allowed_food = get_sane_item_types(/obj/item/food) - blocked
 
 	return pick(allowed_food)
 
@@ -18,7 +18,7 @@
 			/obj/item/reagent_containers/cup/glass/bottle
 		)
 
-		allowed_drinks = generate_reasonable_item_types(/obj/item/reagent_containers/cup/glass) + generate_reasonable_item_types(/obj/item/reagent_containers/cup/soda_cans) - blocked
+		allowed_drinks = get_sane_item_types(/obj/item/reagent_containers/cup/glass) + get_sane_item_types(/obj/item/reagent_containers/cup/soda_cans) - blocked
 
 	return pick(allowed_drinks)
 

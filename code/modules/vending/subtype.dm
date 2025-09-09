@@ -22,7 +22,7 @@
 ///Adds the subtype to the product list
 /obj/machinery/vending/subtype_vendor/RefreshParts()
 	products.Cut()
-	for(var/type in generate_reasonable_item_types(type_to_vend))
+	for(var/type in get_sane_item_types(type_to_vend))
 		LAZYADDASSOC(products, type, 50)
 
 	//no refill canister so we fill the records with their max amounts directly
@@ -50,7 +50,7 @@
 	RefreshParts()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/* For stress testing generate_reasonable_item_types
+/* For stress testing get_sane_item_types
 /obj/machinery/vending/subtype_vendor/the_everything_vendor
 	desc = "This is a bad idea."
 	type_to_vend = /obj/item
