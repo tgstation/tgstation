@@ -356,6 +356,9 @@
 	upsprite = "ushankaup_polar"
 	downsprite = "ushankadown_polar"
 
+/obj/item/clothing/head/costume/nightcap
+	abstract_type = /obj/item/clothing/head/costume/nightcap
+
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"
 	desc = "A blue nightcap for all the dreamers and snoozers out there."
