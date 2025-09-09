@@ -1,5 +1,3 @@
-/// A basic interaction point representing an open turf.
-/// Contains data about how it should be interacted with, including filters, turf objects enumerating and a couple more things.
 /datum/interaction_point
 	var/name = "interaction point"
 
@@ -112,7 +110,7 @@
 
 	if(transfer_type == TRANSFER_TYPE_DROPOFF)
 		// If filters are enabled, the held item itself must match them for any overflow mode
-		if(should_use_filters && !check_filters_for_atom(target))
+		if(!check_filters_for_atom(target) && should_use_filters)
 			return FALSE
 
 		switch(overflow_status)
@@ -129,6 +127,7 @@
 				for(var/atom/movable/movable_atom in atoms_on_the_turf)
 					if(check_filters_for_atom(movable_atom))
 						return FALSE // the item on the turf was in the filters, hence the turf is considered overflowed
+
 				return TRUE
 
 			if(POINT_OVERFLOW_HELD)
@@ -136,6 +135,7 @@
 				for(var/atom/movable/movable_atom in atoms_on_the_turf)
 					if(istype(movable_atom, target))
 						return FALSE // one of the items on the turf was the same as the one we're holding
+
 				return TRUE
 
 			if(POINT_OVERFLOW_FORBIDDEN)

@@ -19,7 +19,12 @@ export type InteractionPoint = {
 
 export interface ManipulatorData {
   active: BooleanLike;
-  interaction_delay: number;
+  current_task: string;
+  current_task_duration: number;
+
+  speed_multiplier: number;
+  min_speed_multiplier: number;
+  max_speed_multiplier: number;
   worker_interaction: string;
   highest_priority: BooleanLike;
   interaction_mode: string;
@@ -28,10 +33,7 @@ export interface ManipulatorData {
   item_as_filter: string;
   selected_type: string;
   delay_step: number;
-  min_delay: number;
-  max_delay: number;
-  current_task: string;
-  current_task_duration: number;
+
   pickup_points: InteractionPoint[];
   dropoff_points: InteractionPoint[];
   manipulator_position: string;

@@ -38,17 +38,22 @@ const buttonNumberToIcon = {
 
 const MasterControls = () => {
   const { act, data } = useBackend<ManipulatorData>();
-  const { delay_step, interaction_delay, min_delay, max_delay } = data;
+  const {
+    delay_step,
+    speed_multiplier,
+    min_speed_multiplier,
+    max_speed_multiplier,
+  } = data;
   return (
     <Stack>
-      <Stack.Item>Delay:</Stack.Item>
+      <Stack.Item>Speed:</Stack.Item>
       <Stack.Item>
         {' '}
         <Button
           icon="backward-step"
           onClick={() =>
-            act('adjust_interaction_delay', {
-              new_delay: min_delay,
+            act('adjust_interaction_speed', {
+              new_speed: min_speed_multiplier,
             })
           }
         />
@@ -57,15 +62,16 @@ const MasterControls = () => {
         <Slider
           style={{ marginTop: '-5px' }}
           lineHeight={1}
-          step={delay_step}
+          step={0.1}
           my={1}
-          value={interaction_delay}
-          minValue={min_delay}
-          maxValue={max_delay}
-          unit="sec."
+          value={speed_multiplier}
+          minValue={min_speed_multiplier}
+          maxValue={max_speed_multiplier}
+          unit="x"
+          stepPixelSize={20}
           onDrag={(e, value) =>
-            act('adjust_interaction_delay', {
-              new_delay: value,
+            act('adjust_interaction_speed', {
+              new_speed: value,
             })
           }
         />
@@ -74,8 +80,8 @@ const MasterControls = () => {
         <Button
           icon="forward-step"
           onClick={() =>
-            act('adjust_interaction_delay', {
-              new_delay: max_delay,
+            act('adjust_interaction_speed', {
+              new_speed: max_speed_multiplier,
             })
           }
         />
@@ -543,29 +549,32 @@ export const BigManipulator = () => {
           <Section
             title="Action Panel"
             buttons={
-              <Button
-                icon={
-                  current_task === 'NO TASK'
-                    ? 'play'
+              <>
+                <Button icon="id-card">Lock</Button>
+                <Button
+                  icon={
+                    current_task === 'NO TASK'
+                      ? 'play'
+                      : current_task === 'STOPPING'
+                        ? 'hourglass-start'
+                        : 'stop'
+                  }
+                  color={
+                    current_task === 'NO TASK'
+                      ? 'good'
+                      : current_task === 'STOPPING'
+                        ? 'blue'
+                        : 'bad'
+                  }
+                  onClick={() => act('run_cycle')}
+                >
+                  {current_task === 'NO TASK'
+                    ? 'Run'
                     : current_task === 'STOPPING'
-                      ? 'hourglass-start'
-                      : 'stop'
-                }
-                color={
-                  current_task === 'NO TASK'
-                    ? 'good'
-                    : current_task === 'STOPPING'
-                      ? 'blue'
-                      : 'bad'
-                }
-                onClick={() => act('run_cycle')}
-              >
-                {current_task === 'NO TASK'
-                  ? 'Run'
-                  : current_task === 'STOPPING'
-                    ? 'Stopping'
-                    : 'Stop'}
-              </Button>
+                      ? 'Stopping'
+                      : 'Stop'}
+                </Button>
+              </>
             }
           >
             <Box
@@ -584,9 +593,9 @@ export const BigManipulator = () => {
               style={{
                 position: 'relative',
                 height: '1.8em',
-                backgroundColor: '#333',
-                border: '1px solid #555',
+                border: '1px solid #40668c',
                 overflow: 'hidden',
+                borderRadius: '2px',
               }}
             >
               <Box
@@ -596,7 +605,7 @@ export const BigManipulator = () => {
                   left: 0,
                   height: '100%',
                   width: `${progressValue}%`,
-                  backgroundColor: '#4CAF50',
+                  backgroundColor: '#40668c',
                   transition: `width ${current_task_duration}s linear`,
                   zIndex: 1,
                 }}
@@ -613,7 +622,9 @@ export const BigManipulator = () => {
                   fontSize: '12px',
                 }}
               >
-                <Box style={{ marginRight: '8px' }}>Current task:</Box>
+                <Box style={{ marginRight: '8px', marginLeft: '-2px' }}>
+                  Current task:
+                </Box>
                 <Box style={{ flexGrow: 1 }}>{current_task.toUpperCase()}</Box>
               </Box>
             </Box>

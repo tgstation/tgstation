@@ -169,7 +169,7 @@
 		return
 
 	// Don't schedule cycles during stopping task
-	if(is_stopping)
+	if(current_task == CURRENT_TASK_STOPPING)
 		return
 
 	// Allow scheduling if manipulator is idle, none, or if we have a held object (need to drop it off)
@@ -185,7 +185,7 @@
 /// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
 	// If we're stopping, don't schedule next cycle
-	if(is_stopping)
+	if(current_task == CURRENT_TASK_STOPPING)
 		complete_stopping_task()
 		return FALSE
 
@@ -225,7 +225,7 @@
 /// Attempts to interact with the origin point (pick up the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_origin_point(datum/interaction_point/origin_point, hand_is_empty = FALSE)
 	// If we're stopping, just finish the task and shut down
-	if(is_stopping)
+	if(current_task == CURRENT_TASK_STOPPING)
 		complete_stopping_task()
 		return
 
@@ -277,7 +277,7 @@
 /// Attempts to interact with the destination point (drop/use/throw the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_destination_point(datum/interaction_point/destination_point, hand_is_empty = FALSE)
 	// If we're stopping, just finish the task and shut down
-	if(is_stopping)
+	if(current_task == CURRENT_TASK_STOPPING)
 		complete_stopping_task()
 		return
 
@@ -308,7 +308,7 @@
 	var/angle_diff = closer_angle_difference(current_angle, target_angle)
 
 	var/num_rotations = round(abs(angle_diff) / 45)
-	var/total_rotation_time = num_rotations * interaction_delay
+	var/total_rotation_time = num_rotations * BASE_INTERACTION_TIME / speed_multiplier
 
 	start_task(CURRENT_TASK_MOVING, total_rotation_time)
 
@@ -331,8 +331,8 @@
 		// If this is the last step, doing a precise degree turn
 		var/matrix/final_matrix = matrix()
 		final_matrix.Turn(target_angle)
-		animate(manipulator_arm, transform = final_matrix, time = interaction_delay)
-		addtimer(CALLBACK(src, callback, target_point), interaction_delay)
+		animate(manipulator_arm, transform = final_matrix, time = BASE_INTERACTION_TIME / speed_multiplier)
+		addtimer(CALLBACK(src, callback, target_point), BASE_INTERACTION_TIME / speed_multiplier)
 		return
 
 	// Animating a single rotation step
@@ -343,11 +343,11 @@
 	var/next_angle = current_angle + rotation_step
 	var/matrix/next_matrix = matrix()
 	next_matrix.Turn(next_angle)
-	animate(manipulator_arm, transform = next_matrix, time = interaction_delay)
+	animate(manipulator_arm, transform = next_matrix, time = BASE_INTERACTION_TIME / speed_multiplier)
 
 	// Recursively planning the next step (yay recursion :yuppie: call me a madman I LOVE recursion)
-	elapsed_time += interaction_delay
-	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_point, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), interaction_delay)
+	elapsed_time += BASE_INTERACTION_TIME / speed_multiplier
+	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_point, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), BASE_INTERACTION_TIME / speed_multiplier)
 
 /*
   ___         _   _           _   _            ___     _     _
@@ -428,7 +428,7 @@
 		return
 
 	if(item_used)
-		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), interaction_delay)
+		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), BASE_INTERACTION_TIME)
 		return
 
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
@@ -489,7 +489,7 @@
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_point), interaction_delay)
+	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_point), BASE_INTERACTION_TIME)
 
 /// Completes the current manipulation action
 /obj/machinery/big_manipulator/proc/finish_manipulation(transfer_type = TRANSFER_TYPE_DROPOFF)
@@ -503,8 +503,10 @@
 	end_current_task()
 
 	// If we were in stopping task, turn off the manipulator completely
-	if(is_stopping)
+	if(current_task == CURRENT_TASK_STOPPING)
 		complete_stopping_task()
 		return
+
+	current_task = CURRENT_TASK_IDLE
 
 	schedule_next_cycle()

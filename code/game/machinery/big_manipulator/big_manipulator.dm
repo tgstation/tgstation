@@ -1,8 +1,3 @@
-///   ___   _   __  __ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _ _  _
-///  |   \ /_\ |  \/  | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| | \| |
-///  | |) / _ \| |\/| | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` | .` |
-///  |___/_/ \_\_|  |_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|_|\_|
-///
 /obj/machinery/big_manipulator
 	name = "big manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
@@ -14,21 +9,23 @@
 	greyscale_config = /datum/greyscale_config/big_manipulator
 	hud_possible = list(BIG_MANIP_HUD)
 
-	/// Min time manipulator can have in delay. Changing on upgrade.
-	var/minimal_interaction_multiplier = MIN_ROTATION_MULTIPLIER_TIER_1
-	/// Base interaction delay (between repeating actions and adjacent points)
-	var/interaction_delay = BASE_INTERACTION_TIME * STARTING_MULTIPLIER
+	/// How quickly the manipulator will process it's actions.
+	var/speed_multiplier = 1
+
+	var/min_speed_multiplier =  MIN_SPEED_MULTIPLIER_TIER_1
+	var/max_speed_multiplier =  MAX_SPEED_MULTIPLIER_TIER_1
+
 	/// How many interaction points of each kind can we have?
 	var/interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
 
 	/// The current task of the manipulator.
 	var/current_task = CURRENT_TASK_NONE
+
 	/// Is the manipulator turned on?
 	var/on = FALSE
 	/// Is a cycle timer already running?
 	var/cycle_timer_running = FALSE
-	/// Flag to track if we're in the process of stopping
-	var/is_stopping = FALSE
+
 
 	var/current_task_start_time = 0
 	var/current_task_duration = 0
@@ -176,26 +173,26 @@
 	var/manipulator_tier = locate_servo.tier
 	switch(manipulator_tier)
 		if(-INFINITY to 1)
-			minimal_interaction_multiplier = MIN_ROTATION_MULTIPLIER_TIER_1
-			interaction_delay = BASE_INTERACTION_TIME * MIN_ROTATION_MULTIPLIER_TIER_1
+			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_1
+			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_1
 			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
 			set_greyscale(COLOR_YELLOW)
 			manipulator_arm?.set_greyscale(COLOR_YELLOW)
 		if(2)
-			minimal_interaction_multiplier = MIN_ROTATION_MULTIPLIER_TIER_2
-			interaction_delay = BASE_INTERACTION_TIME * MIN_ROTATION_MULTIPLIER_TIER_2
+			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_2
+			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_2
 			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_2
 			set_greyscale(COLOR_ORANGE)
 			manipulator_arm?.set_greyscale(COLOR_ORANGE)
 		if(3)
-			minimal_interaction_multiplier = MIN_ROTATION_MULTIPLIER_TIER_3
-			interaction_delay = BASE_INTERACTION_TIME * MIN_ROTATION_MULTIPLIER_TIER_3
+			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_3
+			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_3
 			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_3
 			set_greyscale(COLOR_RED)
 			manipulator_arm?.set_greyscale(COLOR_RED)
 		if(4 to INFINITY)
-			minimal_interaction_multiplier = MIN_ROTATION_MULTIPLIER_TIER_4
-			interaction_delay = BASE_INTERACTION_TIME * MIN_ROTATION_MULTIPLIER_TIER_4
+			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_4
+			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_4
 			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_4
 			set_greyscale(COLOR_PURPLE)
 			manipulator_arm?.set_greyscale(COLOR_PURPLE)
@@ -539,7 +536,6 @@
 		cycle_timer_running = FALSE
 		// Set stopping task instead of ending current task immediately
 		if(current_task != CURRENT_TASK_NONE)
-			is_stopping = TRUE
 			start_task(CURRENT_TASK_STOPPING, 0)
 			// Schedule automatic completion of stopping task
 			addtimer(CALLBACK(src, PROC_REF(complete_stopping_task)), 1 SECONDS)
@@ -602,8 +598,9 @@
 	data["active"] = on
 	data["current_task"] = current_task
 	data["current_task_duration"] = current_task_duration
-	data["interaction_delay"] = interaction_delay
-	data["min_delay"] = BASE_INTERACTION_TIME * minimal_interaction_multiplier
+	data["speed_multiplier"] = speed_multiplier // TODO: ui fix
+	data["min_speed_multiplier"] = min_speed_multiplier // TODO: ui fix
+	data["max_speed_multiplier"] = max_speed_multiplier // TODO: ui fix
 	data["manipulator_position"] = "[x],[y]"
 	data["pickup_tasking"] = pickup_tasking
 	data["dropoff_tasking"] = dropoff_tasking
@@ -648,12 +645,6 @@
 
 	return data
 
-/obj/machinery/big_manipulator/ui_static_data(mob/user)
-	var/list/data = list()
-	data["delay_step"] = DELAY_STEP
-	data["max_delay"] = MAX_DELAY
-	return data
-
 /obj/machinery/big_manipulator/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -687,12 +678,12 @@
 				SStgui.update_uis(src)
 			return TRUE
 
-		if("adjust_interaction_delay")
-			var/new_delay = text2num(params["new_delay"])
-			if(isnull(new_delay))
+		if("adjust_interaction_speed")
+			var/new_speed = text2num(params["new_speed"])
+			if(isnull(new_speed))
 				return FALSE
-			var/min_d = BASE_INTERACTION_TIME * minimal_interaction_multiplier
-			interaction_delay = clamp(new_delay, min_d, MAX_DELAY)
+
+			speed_multiplier = clamp(new_speed, min_speed_multiplier, max_speed_multiplier)
 			SStgui.update_uis(src)
 			return TRUE
 
@@ -829,16 +820,15 @@
 /obj/machinery/big_manipulator/proc/end_current_task()
 	current_task_start_time = 0
 	current_task_duration = 0
-	// If we were stopping, set to NONE instead of IDLE
-	current_task = CURRENT_TASK_NONE
+	if(current_task == CURRENT_TASK_STOPPING)
+		current_task = CURRENT_TASK_NONE
 	SStgui.update_uis(src) // Update UI immediately
 
 /// Completes the stopping task and transitions to TASK_NONE
 /obj/machinery/big_manipulator/proc/complete_stopping_task()
-	if(current_task == CURRENT_TASK_STOPPING && is_stopping)
+	if(current_task == CURRENT_TASK_STOPPING)
 		on = FALSE
 		cycle_timer_running = FALSE
-		is_stopping = FALSE
 		end_current_task()
 		SStgui.update_uis(src)
 
