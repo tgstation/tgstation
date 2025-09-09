@@ -297,6 +297,7 @@
 	inhand_icon_state = "balloon"
 	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
+	abstract_type = /obj/item/toy/balloon_animal
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 5
@@ -549,6 +550,9 @@
 		span_danger("You fire [src] at [interacting_with]!"), \
 		span_hear("You hear a gunshot!"))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/ammo
+	abstract_type = /obj/item/toy/ammo
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
