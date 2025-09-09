@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - bugfix: "Fixes using syndie graffiti spray/crayon writing while zero grav drifting"
