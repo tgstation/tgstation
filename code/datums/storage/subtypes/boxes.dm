@@ -3,7 +3,6 @@
 	max_specific_storage = WEIGHT_CLASS_SMALL
 	open_sound = 'sound/items/handling/cardboard_box/cardboard_box_open.ogg'
 	rustle_sound = 'sound/items/handling/cardboard_box/cardboard_box_rustle.ogg'
-	max_total_storage = WEIGHT_CLASS_SMALL * 4
 
 ///Debug tools box
 /datum/storage/box/debug
