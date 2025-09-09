@@ -133,7 +133,7 @@
 			if(POINT_OVERFLOW_HELD)
 				// We need to check if any of the items on the turf match the item we're holding
 				for(var/atom/movable/movable_atom in atoms_on_the_turf)
-					if(istype(movable_atom, target))
+					if(istype(movable_atom, target?.type))
 						return FALSE // one of the items on the turf was the same as the one we're holding
 
 				return TRUE

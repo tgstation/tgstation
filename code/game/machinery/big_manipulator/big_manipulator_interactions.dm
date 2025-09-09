@@ -144,7 +144,7 @@
 			return NONE
 
 /// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
-/obj/machinery/big_manipulator/proc/try_kickstart()
+/obj/machinery/big_manipulator/proc/try_kickstart(mob/user)
 	if(!on)
 		return FALSE
 
@@ -157,7 +157,7 @@
 
 	if(!use_energy(active_power_usage, force = FALSE))
 		on = FALSE
-		balloon_alert("not enough power!")
+		balloon_alert_to_viewers("not enough power!")
 		return FALSE
 
 	cycle_timer_running = FALSE
@@ -372,6 +372,7 @@
 	var/atom/drop_target = drop_endpoint
 	if(drop_target.atom_storage && (!drop_target.atom_storage.attempt_insert(actual_held_object, override = TRUE, messages = FALSE)))
 		actual_held_object.forceMove(drop_target.drop_location())
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return TRUE
 
 	actual_held_object?.forceMove(drop_endpoint)
@@ -500,10 +501,10 @@
 	if(transfer_type == TRANSFER_TYPE_DROPOFF)
 		update_roundrobin_index(TRANSFER_TYPE_DROPOFF)
 
+	var/was_stopping = (current_task == CURRENT_TASK_STOPPING)
 	end_current_task()
 
-	// If we were in stopping task, turn off the manipulator completely
-	if(current_task == CURRENT_TASK_STOPPING)
+	if(was_stopping)
 		complete_stopping_task()
 		return
 

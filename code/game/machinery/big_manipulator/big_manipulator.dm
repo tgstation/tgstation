@@ -360,14 +360,14 @@
 	if(!point)
 		return
 
-	remove_hud_for_point(point)
-
 	if(point in pickup_points)
 		pickup_points -= point
 	else if(point in dropoff_points)
 		dropoff_points -= point
 
 	qdel(point)
+	if(is_operational)
+		update_hud()
 
 /obj/machinery/big_manipulator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -528,7 +528,7 @@
 
 		on = new_power_state
 		SStgui.update_uis(src)
-		try_kickstart()
+		try_kickstart(user)
 
 	else
 		drop_held_atom()
@@ -544,15 +544,24 @@
 		SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/validate_all_points()
+	var/list/pickup_to_remove = list()
 	for(var/datum/interaction_point/point in pickup_points)
 		if(!point.is_valid())
-			remove_hud_for_point(point)
-			pickup_points.Remove(point)
+			pickup_to_remove += point
 
+	for(var/datum/interaction_point/point_to_remove in pickup_to_remove)
+		pickup_points.Remove(point_to_remove)
+
+	var/list/dropoff_to_remove = list()
 	for(var/datum/interaction_point/point in dropoff_points)
 		if(!point.is_valid())
-			remove_hud_for_point(point)
-			dropoff_points.Remove(point)
+			dropoff_to_remove += point
+
+	for(var/datum/interaction_point/point_to_remove in dropoff_to_remove)
+		dropoff_points.Remove(point_to_remove)
+
+	if(is_operational)
+		update_hud()
 
 /// Attempts to press the power button.
 /obj/machinery/big_manipulator/proc/try_press_on(mob/living/carbon/human/user)
@@ -794,7 +803,6 @@
 			if(!new_turf || isclosedturf(new_turf))
 				return FALSE
 
-			remove_hud_for_point(target_point)
 			target_point.interaction_turf = WEAKREF(new_turf)
 			update_hud()
 			return TRUE
@@ -831,17 +839,6 @@
 		cycle_timer_running = FALSE
 		end_current_task()
 		SStgui.update_uis(src)
-
-/obj/machinery/big_manipulator/proc/remove_hud_for_point(datum/interaction_point/point)
-	if(!point)
-		return
-
-	for(var/image/hud_image in hud_points)
-		var/turf/resolved_turf = point.interaction_turf.resolve()
-		if(hud_image.loc == resolved_turf)
-			hud_points -= hud_image
-			qdel(hud_image)
-			break
 
 /obj/machinery/big_manipulator/proc/remove_all_huds()
 	for(var/image/hud_image in hud_points)
