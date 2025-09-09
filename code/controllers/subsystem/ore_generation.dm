@@ -24,6 +24,44 @@ SUBSYSTEM_DEF(ore_generation)
 	/// A tracker of how many of each ore vent size we have in the game. Useful for tracking purposes.
 
 /datum/controller/subsystem/ore_generation/Initialize()
+	/// First, lets sort each ore_vent here based on their distance to the landmark, then we'll assign sizes.
+	var/list/sort_vents = list()
+	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
+
+		var/obj/landmark_anchor //We need to find the mining epicenter to gather distance from.
+		for(var/obj/possible_landmark as anything in GLOB.mining_center) // have to check multiple due to icebox
+			if(possible_landmark.z == vent.z)
+				landmark_anchor = possible_landmark
+				break
+
+		if(!landmark_anchor) //We're missing a mining epicenter landmark, but it's not crash-worthy.
+			vent.vent_size_setup(random = TRUE, force_size = null, map_loading = TRUE)
+			continue
+
+		sort_vents += vent[get_dist(get_turf(vent), get_turf(landmark_anchor))]
+		to_chat(world, "Identified a vent with a distance of [get_dist(get_turf(vent),get_turf(landmark_anchor))] from epicenter!!!")
+
+	var/list/postsort_vents = list()
+	var/obj/structure/ore_vent/lowest_current
+	for(var/obj/structure/ore_vent/vent as anything in sort_vents)
+		var/min = INFINITY
+		if(sort_vents[vent] < min)
+			min = sort_vents[vent]
+			lowest_current = vent
+		if()
+
+
+
+
+	// var/cutoff = round((length(possible_vents) / 3))
+	// var/vent_size_level = SMALL_VENT_TYPE
+	// for(var/obj/structure/ore_vent/vent as anything in postsort_vents)
+	// 	while(cutoff > 0)
+	// 		vent.vent_size_setup(random = FALSE, force_size = vent_size_level, map_loading = TRUE)
+	// 		cutoff--
+
+
+
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	while(length(ore_vent_minerals) > 0) //Keep looping if there's more to assign
 		var/stallbreaker = 0

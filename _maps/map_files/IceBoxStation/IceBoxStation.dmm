@@ -6957,6 +6957,14 @@
 	dir = 1
 	},
 /area/station/hallway/primary/starboard)
+"bQi" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/mining_center,
+/turf/open/floor/iron,
+/area/mine/eva/lower)
 "bQx" = (
 /obj/structure/ladder{
 	name = "upper dispenser access"
@@ -43187,6 +43195,11 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/less_spawns)
+"mkU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/mining_center,
+/turf/open/floor/iron,
+/area/station/commons/storage/mining)
 "mld" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -75203,6 +75216,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
+/obj/effect/landmark/mining_center,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vmr" = (
@@ -105470,7 +105484,7 @@ qmt
 pVg
 ubG
 xlA
-eVa
+bQi
 gSO
 uPt
 qmt
@@ -178707,7 +178721,7 @@ iiX
 jIC
 twr
 wzY
-jQy
+mkU
 jQy
 nqx
 pls

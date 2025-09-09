@@ -7480,6 +7480,7 @@
 /obj/structure/ore_vent/starter_resources{
 	icon_state = "ore_vent_active"
 	},
+/obj/effect/landmark/mining_center,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Qw" = (
