@@ -50,7 +50,6 @@
 	RefreshParts()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-// This will be removed
 /* For stress testing generate_reasonable_item_types
 /obj/machinery/vending/subtype_vendor/the_everything_vendor
 	desc = "This is a bad idea."

@@ -82,8 +82,12 @@
 	///The layout pref we take from the player looking at this datum's UI to know what layout to give.
 	var/datum/preference/choiced/layout_prefs_used = /datum/preference/choiced/tgui_layout
 
-	/// Use path Ex:(abstract_type = obj/item). Generally for abstract code objects, atoms with a set abstract_type can never be selected by spawner. Examples include parent objects which should only exist within the code, or deployable embedded items.
-	/// It is also used in datum subtype behavoirs to do a handful of things, primarly not spawning parent types.
+	/**
+	 * Parent types.
+	 *
+	 * Use path Ex:(abstract_type = /obj/item). Generally for abstract code objects, atoms with a set abstract_type can never be selected by spawner.
+	 * These should be things that should never show up in a round, this does not include things that require init behavoir to function.
+	 */
 	var/abstract_type = /datum
 
 /**
