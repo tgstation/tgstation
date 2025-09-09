@@ -305,9 +305,16 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						empty = FALSE
 				current_header += "[empty ? "" : ",\n"][place]"
 				//====SAVING ATMOS====
-				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_ATMOS) && !isspaceturf(pull_from))
-					var/metadata = generate_tgm_metadata(pull_from)
-					current_header += "[metadata]"
+				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_ATMOS))
+					var/turf/open/atmos_turf = pull_from
+					// Optimiziations that skip saving atmospheric data for turfs that don't need it
+					// - Space: Gas is constantly purged, and temperature is immutable
+					// - Walls: Atmos values should not realistically change
+					// - Planetary: Atmos slowly reverts to its default gas mix
+					if(!isspaceturf(atmos_turf) && isopenturf(atmos_turf) && !atmos_turf.planetary_atmos)
+						var/metadata = generate_tgm_metadata(atmos_turf)
+						current_header += "[metadata]"
+
 				current_header += ",\n[location])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
