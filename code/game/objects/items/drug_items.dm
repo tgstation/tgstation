@@ -173,7 +173,7 @@
 			if(!other.reagents.total_volume)
 				qdel(other)
 		else
-			to_chat(user, span_notice("The opium ought not be pressed together further."))
+			to_chat(user, span_notice("The opium cannot be pressed together further."))
 
 		return TRUE
 
