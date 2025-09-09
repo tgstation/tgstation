@@ -10,6 +10,7 @@
 	desc = "Just your average condiment bottle."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "bottle"
+	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'

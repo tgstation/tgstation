@@ -1,6 +1,7 @@
 /obj/item/reagent_containers/cup
 	name = "open container"
 	amount_per_transfer_from_this = 10
+	w_class = WEIGHT_CLASS_SMALL
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	reagent_flags = OPENCONTAINER | DUNKABLE
@@ -234,6 +235,7 @@
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/medical/chemical.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "beaker"
 	inhand_icon_state = "beaker"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -261,6 +263,7 @@
 /obj/item/reagent_containers/cup/beaker/large
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
+	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "beakerlarge"
 	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT*1.25)
 	volume = 100
@@ -271,6 +274,7 @@
 /obj/item/reagent_containers/cup/beaker/plastic
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
+	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "beakerwhite"
 	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
 	volume = 120
@@ -281,6 +285,7 @@
 /obj/item/reagent_containers/cup/beaker/meta
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
+	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "beakergold"
 	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 180
@@ -293,6 +298,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
+	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 1.5)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
@@ -304,6 +310,7 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units."
 	icon_state = "beakerbluespace"
+	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 300
 	amount_per_transfer_from_this = 10
