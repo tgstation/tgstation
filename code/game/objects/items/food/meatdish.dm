@@ -882,6 +882,7 @@
 	trash_type = /obj/item/stack/rods
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "kebab"
+	abstract_type = /obj/item/food/kebab
 	w_class = WEIGHT_CLASS_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 14)
 	tastes = list("meat" = 3, "metal" = 1)
