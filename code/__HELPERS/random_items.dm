@@ -12,8 +12,6 @@
 		// The original behavior also included inhand icon states but that seems dumb
 		// if(!iter_type.icon_state || !iter_type.inhand_icon_state)
 		if(!iter_type.icon_state)
-			// This wont be left in
-			stack_trace("[iter_type] has no icon_state but is not otherwise blacklisted from spawning. I think I need to fix that.")
 			continue // With the existance of abstract_type we could prob depricate this handling at some point
 		all_valid_types += iter_type
 	return all_valid_types
