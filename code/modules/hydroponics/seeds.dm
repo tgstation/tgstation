@@ -63,6 +63,8 @@
 	var/graft_gene
 	///Determines if the plant should be allowed to mutate early at 30+ instability.
 	var/seed_flags = MUTATE_EARLY
+	///Determines if the plant has been sliced with a sharp tool to extract substances like saps.
+	var/extracted = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
@@ -452,9 +454,11 @@
 
 /**
  * Override for seeds with unique text for their analyzer. (No newlines at the start or end of unique text!)
- * Returns null if no unique text, or a string of text if there is.
+ * Returns null if no unique data
+ * Return an assoc list (label = text) to add a new line to the analyzer
+ * Return an assoc list (label = list(text = tooltip, text = tooltip)) to add a new collapsible section to the analyzer
  */
-/obj/item/seeds/proc/get_unique_analyzer_text()
+/obj/item/seeds/proc/get_unique_analyzer_data()
 	return null
 
 /**

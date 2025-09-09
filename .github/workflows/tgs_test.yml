@@ -59,7 +59,7 @@ jobs:
           - 5000:5000 #Can't use env here for some reason
     steps:
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.0.x
 

@@ -120,6 +120,7 @@
 	if(ismob(chameleon_item.loc))
 		var/mob/wearer = chameleon_item.loc
 		wearer.update_clothing(chameleon_item.slot_flags | ITEM_SLOT_HANDS)
+		wearer.refresh_obscured()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
 	PROTECTED_PROC(TRUE) // Call update_look, not this!
