@@ -535,7 +535,7 @@
 		on = new_power_state
 		cycle_timer_running = FALSE
 		// Set stopping task instead of ending current task immediately
-		if(current_task != CURRENT_TASK_NONE)
+		if(current_task != CURRENT_TASK_NONE || current_task != CURRENT_TASK_STOPPING)
 			start_task(CURRENT_TASK_STOPPING, 0)
 			// Schedule automatic completion of stopping task
 			addtimer(CALLBACK(src, PROC_REF(complete_stopping_task)), 1 SECONDS)

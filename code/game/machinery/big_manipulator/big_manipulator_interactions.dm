@@ -501,10 +501,9 @@
 	if(transfer_type == TRANSFER_TYPE_DROPOFF)
 		update_roundrobin_index(TRANSFER_TYPE_DROPOFF)
 
-	var/was_stopping = (current_task == CURRENT_TASK_STOPPING)
 	end_current_task()
 
-	if(was_stopping)
+	if(current_task == CURRENT_TASK_STOPPING)
 		complete_stopping_task()
 		return
 
