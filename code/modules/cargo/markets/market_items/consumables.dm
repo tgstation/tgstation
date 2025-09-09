@@ -106,7 +106,7 @@
 	stock_max = 3
 	price_min = CARGO_CRATE_VALUE * 1
 	price_max = CARGO_CRATE_VALUE * 2
-	availability_prob = 20
+	availability_prob = 15
 
 /datum/market_item/consumable/methaphetamine
 	name = "Crystal Meth"
@@ -132,11 +132,11 @@
 
 /datum/market_item/consumable/kronkaine
 	name = "Kronkaine"
-	desc = "An 88 ball, it's rare this is ever on the market!"
+	desc = "An 8⁸ ball, this is hardly ever on the market!"
 	item = /obj/item/food/drug/moon_rock
 
 	stock_min = 1
 	stock_max = 2
 	price_min = CARGO_CRATE_VALUE * 0.5
 	price_max = CARGO_CRATE_VALUE * 1
-	availability_prob = 10
+	availability_prob = 15
