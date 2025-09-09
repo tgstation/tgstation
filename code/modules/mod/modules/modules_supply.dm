@@ -132,10 +132,10 @@
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
-	cooldown_time = 0.25 SECONDS
+	cooldown_time = 0.2 SECONDS
 	overlay_state_active = "module_drill"
 	required_slots = list(ITEM_SLOT_GLOVES)
-	toolspeed = 0.25
+	toolspeed = 0.2
 	/// Are we currently in passive sphere mode?
 	var/ballin = FALSE
 
@@ -240,20 +240,17 @@
 		playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
-	for(var/obj/item/stack/stored_ore as anything in ores)
+	for(var/obj/item/stack/ore/stored_ore as anything in src)
 		if(!ore.can_merge(stored_ore))
 			continue
 		ore.merge(stored_ore)
 		if(QDELETED(ore))
 			return
-		break
 	ore.forceMove(src)
-	ores += ore
 
 /obj/item/mod/module/orebag/on_use(mob/activator)
-	for(var/obj/item/ore as anything in ores)
+	for(var/obj/item/ore as anything in src)
 		ore.forceMove(mod.drop_location())
-	ores.Cut()
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/hydraulic
@@ -549,7 +546,7 @@
 	/// Has the module been upgraded with bileworm hide plating?
 	var/hide_upgrade = FALSE
 	/// How much hide is required to reinforce the MOD
-	var/hide_amount = 4
+	var/hide_amount = 3
 
 /datum/armor/mod_sphere_transform
 	melee = 20 // Can get up to 70 armor when ash covered and ballin, which is as good as a HECK suit... but you can't really attack anymore
@@ -583,6 +580,8 @@
 	hide_upgrade = TRUE
 	overlay_state_inactive = "module_bileworm_bracing"
 	user_traits += TRAIT_LAVA_IMMUNE
+	if (active)
+		ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, REF(src))
 	update_clothing_slots()
 	return ITEM_INTERACT_SUCCESS
 
@@ -711,6 +710,7 @@
 		if(HAS_TRAIT(victim, TRAIT_MINING_AOE_IMMUNE))
 			continue
 		victim.apply_damage(damage * (ismining(victim) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+		to_chat(victim, span_userdanger("You are hit by a mining bomb explosion!"))
 		if(!firer)
 			continue
 		if(ishostile(victim))
