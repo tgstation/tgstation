@@ -1040,14 +1040,14 @@ GLOBAL_LIST_EMPTY(map_model_default)
 					begin = TRUE
 				else if(char == ")")
 					closing_count += 1
-				index += 1
+				index += length(char)
 			trim_right = trim(copytext(text, start_index, index))
 			if(is_simple)
 				trim_left = trim_right
-			if(index == length(text)) //stops a wasteful iteration when we reach the end
+			if(index >= length(text)) //stops a wasteful iteration when we reach the end
 				position = 0
 			else
-				old_position = index + 1 //this moves our pointer past , to the next element
+				old_position = index + length(text[index]) //this moves our pointer past , to the next element
 		else if(position)
 			old_position = position + length(text[position])
 
