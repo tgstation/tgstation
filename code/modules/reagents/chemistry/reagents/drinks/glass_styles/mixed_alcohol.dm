@@ -1047,7 +1047,7 @@
 /datum/glass_style/drinking_glass/old_fashioned
 	required_drink_type = /datum/reagent/consumable/ethanol/old_fashioned
 	name = "Old Fashioned"
-	desc = "Depending on your definitions, this drink is a form of the original cocktail. However, seemingly antiquated traditions such as the muddling of a sugar cube in the glass are actually somewhat anachronistic, introduced after the drink had already been around long enough to earn it's name."
+	desc = "The original Cocktail... With some added anachronisms."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "old_fashioned"
 
