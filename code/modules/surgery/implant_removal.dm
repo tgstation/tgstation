@@ -23,11 +23,7 @@
 	var/obj/item/implant/implant
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/implant/found_implant = null
-	for(var/obj/item/object in target.implants)
-		found_implant = object
-		break
-	implant = found_implant
+	implant = LAZYACCESS(target.implants, 1)
 	if(implant)
 		display_results(
 			user,
