@@ -218,7 +218,7 @@
 			//Then divide it by the number of tools used in the recipe, and recalculate it.
 			dynamic_recipe_time /= tools_used
 
-			var/list/possible_tool_instances = surroundings[CONTENTS_POSSIBLE_TOOLS]
+			var/list/possible_tool_instances = contents[CONTENTS_POSSIBLE_TOOLS]
 			for(var/tool in recipe.tool_paths)
 				var/best_speed = 10 //failsafe-ish
 				for(var/obj/item/item as anything in possible_tool_instances)
