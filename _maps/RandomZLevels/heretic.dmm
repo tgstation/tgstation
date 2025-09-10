@@ -278,7 +278,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "bZ" = (
-/turf/closed/mineral,
+/turf/closed/mineral/asteroid/has_more_air,
 /area/awaymission/caves/heretic_laboratory_clean)
 "cb" = (
 /obj/effect/decal/cleanable/crayon{
@@ -1576,6 +1576,7 @@
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "kM" = (
+/turf/open/floor/iron/terracotta,
 /area/awaymission/caves/heretic_laboratory_clean)
 "kQ" = (
 /obj/structure/disposalpipe/segment{
@@ -2437,8 +2438,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
-"qC" = (
-/area/awaymission/beach/heretic)
 "qD" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/blessing,
@@ -3523,6 +3522,7 @@
 "xz" = (
 /obj/machinery/light/directional/west,
 /obj/effect/blessing,
+/turf/open/floor/iron/terracotta,
 /area/awaymission/caves/heretic_laboratory_clean)
 "xB" = (
 /turf/open/floor/plating,
@@ -4109,7 +4109,7 @@
 /area/awaymission/beach/heretic)
 "Ci" = (
 /obj/effect/baseturf_helper/beach/sand,
-/turf/closed/mineral,
+/turf/closed/mineral/asteroid/has_more_air,
 /area/awaymission/beach/heretic)
 "Cm" = (
 /mob/living/basic/heretic_summon/stalker,
@@ -4314,10 +4314,6 @@
 "DL" = (
 /turf/open/floor/carpet/green,
 /area/awaymission/beach/heretic)
-"DP" = (
-/obj/item/gun/ballistic/automatic/wt550/p90,
-/turf/open/floor/iron,
-/area/awaymission/caves/heretic_laboratory_clean)
 "DR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	dir = 6
@@ -4646,6 +4642,9 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"Gh" = (
+/turf/closed/wall/mineral/iron,
+/area/awaymission/beach/heretic)
 "Gi" = (
 /obj/structure/mirror/directional/west,
 /obj/structure/sink/directional/east,
@@ -4773,6 +4772,11 @@
 /obj/structure/fluff/tram_rail,
 /turf/open/misc/asteroid,
 /area/awaymission/caves/heretic_laboratory)
+"GZ" = (
+/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Hb" = (
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory)
@@ -5496,7 +5500,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/caves/heretic_laboratory_clean)
 "LZ" = (
-/turf/closed/mineral,
+/turf/closed/mineral/asteroid/has_more_air,
 /area/awaymission/caves/heretic_laboratory)
 "Ma" = (
 /obj/machinery/door/airlock/highsecurity,
@@ -5529,10 +5533,6 @@
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
-"Mh" = (
-/obj/structure/holosign/barrier/atmos/sturdy,
-/turf/open/floor/plating,
-/area/awaymission/caves/heretic_laboratory_clean)
 "Mj" = (
 /obj/effect/turf_decal/trimline/red/line,
 /turf/open/floor/iron/dark,
@@ -5763,6 +5763,7 @@
 /area/awaymission/beach/heretic)
 "Oc" = (
 /obj/effect/blessing,
+/turf/open/floor/iron/terracotta,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Od" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -6207,11 +6208,6 @@
 /obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
-"QR" = (
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
-/obj/effect/blessing,
-/turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
 "Ra" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -6612,6 +6608,10 @@
 	},
 /turf/closed/indestructible/riveted,
 /area/awaymission/caves/heretic_laboratory)
+"TX" = (
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Ua" = (
 /turf/open/misc/beach/coast{
 	dir = 8
@@ -6882,6 +6882,10 @@
 	},
 /turf/open/floor/stone,
 /area/awaymission/beach/heretic)
+"Wl" = (
+/obj/item/gun/ballistic/automatic/wt550/p90,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Wn" = (
 /obj/structure/dresser,
 /obj/effect/blessing,
@@ -7526,7 +7530,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/caves/heretic_laboratory)
 "ZZ" = (
-/turf/closed/mineral,
+/turf/closed/mineral/asteroid/has_more_air,
 /area/awaymission/beach/heretic)
 
 (1,1,1) = {"
@@ -8998,7 +9002,7 @@ KB
 KB
 KB
 wi
-Mh
+TX
 wi
 ay
 ay
@@ -9512,7 +9516,7 @@ ay
 ay
 KB
 wi
-Mh
+TX
 wi
 KB
 KB
@@ -12024,7 +12028,7 @@ bZ
 bZ
 bZ
 wi
-Mh
+TX
 wi
 bZ
 bZ
@@ -16194,7 +16198,7 @@ bq
 Br
 KB
 wi
-Mh
+TX
 wi
 KB
 Sh
@@ -20276,11 +20280,11 @@ bZ
 bZ
 bZ
 wi
-DP
+Wl
 ld
 an
 ld
-DP
+Wl
 wi
 KB
 OG
@@ -25906,7 +25910,7 @@ wi
 wi
 wi
 Pc
-QR
+GZ
 wi
 wi
 wi
@@ -26681,7 +26685,7 @@ Pc
 Le
 Pc
 Pc
-QR
+GZ
 Pc
 Oc
 Oc
@@ -26926,7 +26930,7 @@ wi
 wi
 wi
 Pc
-QR
+GZ
 wi
 wi
 wi
@@ -32954,8 +32958,8 @@ Lh
 Lh
 Lh
 Lh
-Dj
-Dj
+ZZ
+ZZ
 CS
 CS
 CS
@@ -33211,7 +33215,7 @@ Lh
 Lh
 Lh
 Lh
-Dj
+ZZ
 CS
 CS
 CS
@@ -59915,12 +59919,12 @@ VR
 VR
 mn
 VR
-qC
-qC
-qC
-qC
-qC
-qC
+Gh
+Gh
+Gh
+Gh
+Gh
+Gh
 Na
 Na
 Na
@@ -60172,12 +60176,12 @@ ZZ
 vd
 wM
 wM
-qC
+Gh
 wb
 zH
 kr
 Wk
-qC
+Gh
 Na
 Na
 Na
@@ -60429,12 +60433,12 @@ ZZ
 ZZ
 LS
 uL
-qC
+Gh
 EY
 kr
 kr
 kr
-qC
+Gh
 Na
 Na
 Na
@@ -60686,12 +60690,12 @@ bZ
 ZZ
 ZZ
 GM
-qC
+Gh
 kr
 kr
 kr
 kr
-qC
+Gh
 Na
 Na
 Na
@@ -60943,7 +60947,7 @@ bZ
 bZ
 ZZ
 ZZ
-qC
+Gh
 NY
 eM
 kr
@@ -61200,12 +61204,12 @@ bZ
 bZ
 bZ
 bZ
-qC
-qC
-qC
-qC
-qC
-qC
+Gh
+Gh
+Gh
+Gh
+Gh
+Gh
 ZZ
 ZZ
 ZZ
