@@ -4,7 +4,7 @@
 #define CONTENTS_STRUCTURES "structures"
 #define CONTENTS_REQS_COUNT "reqs_count"
 #define CONTENTS_TOOL_BEHAVIOUR "tool_behaviour"
-#define CONTENTS_WITHIN_SOURCE "within_source"
+#define CONTENTS_POSSIBLE_TOOLS "tool_instances"
 
 /// The portion of time spent crafting that recipe dependant on the speed of the tools
 #define RECIPE_DYNAMIC_TIME_COEFF 0.85
@@ -175,7 +175,7 @@
 		if(current_tool_speed < item.toolspeed)
 			.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
 
-	.[CONTENTS_WITHIN_SOURCE] = within_source //These may be used as tools, but not components for the recipe.
+	.[CONTENTS_POSSIBLE_TOOLS] = flatten_list(.[CONTENTS_INSTANCES]) + within_source //These may be used as tools, not components for the recipe.
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
 /datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
@@ -186,13 +186,12 @@
 		if(!(required_quality in surroundings[CONTENTS_TOOL_BEHAVIOUR]))
 			return FALSE
 
-	var/list/all_possible_tool_instances = surroundings[CONTENTS_INSTANCES] + surroundings[CONTENTS_WITHIN_SOURCE]
+	var/list/possible_tool_instances = surroundings[CONTENTS_POSSIBLE_TOOLS]
 	for(var/required_path in recipe.tool_paths)
-
-		if(!(locate(required_path) in all_possible_tool_instances))
+		if(!(locate(required_path) in possible_tool_instances))
 			return FALSE
 
-	return recipe.check_tools(source, all_possible_tool_instances, final_check)
+	return recipe.check_tools(source, possible_tool_instances, final_check)
 
 /datum/component/personal_crafting/proc/construct_item(atom/crafter, datum/crafting_recipe/recipe)
 	if(!crafter)
@@ -219,10 +218,10 @@
 			//Then divide it by the number of tools used in the recipe, and recalculate it.
 			dynamic_recipe_time /= tools_used
 
-			var/list/all_possible_tool_instances = contents[CONTENTS_INSTANCES] + contents[CONTENTS_WITHIN_SOURCE]
+			var/list/possible_tool_instances = surroundings[CONTENTS_POSSIBLE_TOOLS]
 			for(var/tool in recipe.tool_paths)
 				var/best_speed = 10 //failsafe-ish
-				for(var/obj/item/item as anything in all_possible_tool_instances)
+				for(var/obj/item/item as anything in possible_tool_instances)
 					if(!istype(item, tool) || best_speed < item.toolspeed)
 						continue
 					best_speed = item.toolspeed
@@ -739,4 +738,4 @@
 #undef CONTENTS_REQS_COUNT
 #undef CONTENTS_TOOL_BEHAVIOUR
 #undef RECIPE_DYNAMIC_TIME_COEFF
-#undef CONTENTS_WITHIN_SOURCE
+#undef CONTENTS_POSSIBLE_TOOLS
