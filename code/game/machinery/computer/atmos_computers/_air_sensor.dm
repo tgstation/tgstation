@@ -1,3 +1,8 @@
+///Indicator for inlet port
+#define INLET 1
+///Indicator for outlet port
+#define OUTLET 2
+
 /// Gas tank air sensor.
 /// These always hook to monitors, be mindful of them
 /obj/machinery/air_sensor
@@ -42,7 +47,8 @@
 		configure(device)
 
 /**
- * Connects an injector or an vent pump to this air sensor
+ * Connects an injector or an vent pump to this air sensor. Must be on the same z level as sensor
+ * return what type of port was configured or NONE for no op
  *
  * Arguments
  * * obj/machinery/atmospherics/components/unary/port - the device we are trying to connect to this sensor
@@ -50,12 +56,12 @@
 */
 /obj/machinery/air_sensor/proc/configure(obj/machinery/atmospherics/components/unary/port, reconfigure = FALSE)
 	PRIVATE_PROC(TRUE)
-	. = 0
+	. = NONE
 	if(!istype(port) || port.z != z)
 		return
 
 	if(istype(port, /obj/machinery/atmospherics/components/unary/outlet_injector))
-		. = 1
+		. = INLET
 		if(!reconfigure && inlet_id)
 			return
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = port
@@ -65,7 +71,7 @@
 		inlet_id = input.id_tag
 
 	else if(istype(port, /obj/machinery/atmospherics/components/unary/vent_pump))
-		. = 2
+		. = OUTLET
 		if(!reconfigure && outlet_id)
 			return
 		var/obj/machinery/atmospherics/components/unary/vent_pump/output = port
@@ -141,13 +147,12 @@
 
 	var/type = configure(multi_tool.buffer, TRUE)
 	switch(type)
-		if(1, 2)
-			var/obj/target = user.Adjacent(src) ? src : multi_tool.buffer
-			target.balloon_alert(user, "connected to [type == 1 ? "input" : "output"]")
-			multi_tool.set_buffer(src)
-		else
-			multi_tool.set_buffer(src)
-			balloon_alert(user, "sensor added to buffer")
+		if(INLET, OUTLET)
+			var/port = "[type == INLET ? "input" : "output"] port"
+			user.balloon_alert(user, "[port] configured")
+			to_chat(user, span_notice("[src] has connected [multi_tool.buffer] to its [port]."))
+	to_chat(user, span_notice("sensor has been added to the multitool buffer."))
+	multi_tool.set_buffer(src)
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -253,3 +258,6 @@
 /obj/item/air_sensor/atom_deconstruct(disassembled)
 	new /obj/item/analyzer(loc)
 	new /obj/item/stack/sheet/iron(loc)
+
+#undef INLET
+#undef OUTLET
