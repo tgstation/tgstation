@@ -93,7 +93,7 @@
 				for(var/namelist as anything in disguises.picture?.names_seen)
 					names += namelist
 			else
-				user.visible_message(span_warning("You have no picture to base the appearance on, reverting to random appearances."))
+				to_chat(user, span_warning("You have no picture to base the appearance on, reverting to random appearances."))
 				for(var/i in 1 to 10)
 					names += target.generate_random_mob_name(TRUE)
 		else

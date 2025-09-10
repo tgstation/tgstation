@@ -193,10 +193,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	. += span_notice("- Unanchored wall girder")
 	. += span_notice("- Computer or Machine frame (with circuitboard)")
 
-/obj/item/stack/sheet/iron/narsie_act()
-	new /obj/item/stack/sheet/runed_metal(loc, amount)
-	qdel(src)
-
 /obj/item/stack/sheet/iron/fifty
 	amount = 50
 
@@ -992,26 +988,6 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 	amount = 20
 /obj/item/stack/sheet/pizza/five
 	amount = 5
-
-/obj/item/stack/sheet/sandblock
-	name = "blocks of sand"
-	desc = "You're too old to be playing with sandcastles. Now you build... sandstations."
-	singular_name = "sand block"
-	icon_state = "sheet-sandstone"
-	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT)
-	merge_type = /obj/item/stack/sheet/sandblock
-	material_type = /datum/material/sand
-	material_modifier = 1
-	drop_sound = SFX_STONE_DROP
-	pickup_sound = SFX_STONE_PICKUP
-
-/obj/item/stack/sheet/sandblock/fifty
-	amount = 50
-/obj/item/stack/sheet/sandblock/twenty
-	amount = 20
-/obj/item/stack/sheet/sandblock/five
-	amount = 5
-
 
 /obj/item/stack/sheet/hauntium
 	name = "haunted sheets"
