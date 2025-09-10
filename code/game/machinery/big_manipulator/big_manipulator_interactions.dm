@@ -178,9 +178,9 @@
 
 	cycle_timer_running = TRUE
 	if(held_object)
-		addtimer(CALLBACK(src, PROC_REF(run_dropoff_phase)), CYCLE_SKIP_TIMEOUT)
+		run_dropoff_phase()
 	else
-		addtimer(CALLBACK(src, PROC_REF(run_pickup_phase)), CYCLE_SKIP_TIMEOUT)
+		run_pickup_phase()
 
 /// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
@@ -229,7 +229,7 @@
 		complete_stopping_task()
 		return
 
-	current_task = CURRENT_TASK_INTERACTING
+	start_task(CURRENT_TASK_INTERACTING, 0.2 SECONDS)
 
 	var/turf/origin_turf = origin_point.interaction_turf.resolve()
 	if(!origin_turf)
@@ -281,7 +281,7 @@
 		complete_stopping_task()
 		return
 
-	current_task = CURRENT_TASK_INTERACTING
+	start_task(CURRENT_TASK_INTERACTING, 0.2 SECONDS)
 
 	if(hand_is_empty)
 		use_thing_with_empty_hand(destination_point)
