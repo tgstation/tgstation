@@ -712,3 +712,8 @@
 /datum/chemical_reaction/drink/daiquiri
 	results = list(/datum/reagent/consumable/ethanol/daiquiri = 6)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 3, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/ice = 1)
+
+/datum/chemical_reaction/drink/flip_cocktail
+	results=list(/datum/reagent/consumable/ethanol/flip_cocktail = 25)
+	required_reagents = list(/datum/reagent/consumable/ethanol/cognac = 15, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/eggwhite = 4, /datum/reagent/consumable/eggyolk = 2)
+	mix_message = "The egg emulsifies into a smooth mixture."

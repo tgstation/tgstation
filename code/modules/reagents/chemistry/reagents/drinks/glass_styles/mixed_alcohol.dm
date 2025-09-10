@@ -1121,6 +1121,13 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "daiquiri"
 
+/datum/glass_style/drinking_glass/flip_cocktail
+	required_drink_type = /datum/reagent/consumable/ethanol/flip_cocktail
+	name = "Flip Cocktail"
+	desc = "No red-hot iron poker included, unfortunately."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "flip_cocktail"
+
 
 // Shot glasses
 

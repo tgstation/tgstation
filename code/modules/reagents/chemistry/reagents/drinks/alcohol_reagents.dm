@@ -2987,7 +2987,7 @@
 /datum/reagent/consumable/ethanol/blue_blazer
 	name = "Blue Blazer"
 	description = "The signature drink of a legendary bartender from the 19th century. While remembered for how he innovated the art of bartending, at the end of the day this drink is really just warmed and sweetened whiskey."
-	boozepwr = 40
+	boozepwr = 25
 	color = "#b5949b"
 	quality = DRINK_NICE
 	taste_description = "scorched sweet whiskey"
@@ -3026,6 +3026,15 @@
 	color = "#b6d3a6ff"
 	quality = DRINK_NICE
 	taste_description = "crisp lime"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/flip_cocktail
+	name = "Flip Cocktail"
+	description = "A simplified and modernized adaptation of a much older drink that predates the Cocktail. While the older version used ale and was heated before it was drunk, this version is chilled. Really, the main similarity is the use of a whole egg."
+	boozepwr = 30
+	color = "#dddfcaff"
+	quality = DRINK_GOOD
+	taste_description = "creamy brandy and nutmeg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 #undef ALCOHOL_EXPONENT
