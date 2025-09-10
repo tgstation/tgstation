@@ -20,12 +20,6 @@
 // BEGIN_INCLUDE
 #include "__odlint.dm"
 #include "_maps\_basemap.dm"
-#include "_maps\RandomZLevels\heretic\bruceguns.dm"
-#include "_maps\RandomZLevels\heretic\cbrn.dm"
-#include "_maps\RandomZLevels\heretic\heretic.dm"
-#include "_maps\RandomZLevels\heretic\heretic_gateway_misc.dm"
-#include "_maps\RandomZLevels\heretic\heretic_gateway_spawners.dm"
-#include "_maps\RandomZLevels\heretic\heretic_gateway_tram.dm"
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\_experiments.dm"
