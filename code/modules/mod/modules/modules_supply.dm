@@ -186,7 +186,8 @@
 
 	playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected! Drills disabled."))
-	on_deactivation()
+	if (active)
+		deactivate(bumper, display_message = FALSE)
 
 /obj/item/mod/module/drill/proc/on_module_activated(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
@@ -209,7 +210,7 @@
 	if (!active)
 		on_deactivation()
 
-///Ore Bag - Lets you pick up ores and drop them from the suit.
+/// Ore Bag - Lets you pick up ores and drop them from the suit.
 /obj/item/mod/module/orebag
 	name = "MOD ore bag module"
 	desc = "An integrated ore storage system installed into the suit, \
@@ -223,8 +224,6 @@
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
-	/// The ores stored in the bag.
-	var/list/ores = list()
 
 /obj/item/mod/module/orebag/on_equip()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(ore_pickup))
@@ -546,7 +545,7 @@
 	/// Has the module been upgraded with bileworm hide plating?
 	var/hide_upgrade = FALSE
 	/// How much hide is required to reinforce the MOD
-	var/hide_amount = 3
+	var/hide_amount = 2 // These are rather rare as of now, should be increased later once other methods of crossing lava are removed
 
 /datum/armor/mod_sphere_transform
 	melee = 20 // Can get up to 70 armor when ash covered and ballin, which is as good as a HECK suit... but you can't really attack anymore
