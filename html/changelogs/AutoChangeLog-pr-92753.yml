@@ -1,0 +1,9 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - rscadd: "RETA System - Request Consoles give temporary access to responders when used for some areas. Paramedics lose broad access but get external space access."
+  - qol: "Request consoles now show name and job role on call message & Cooldown on spamming calls + sound prompt"
+  - qol: "Medibot access no longer based on Paramedic trim ID - Still has original access"
+  - image: "Added \"lights_reta\" for temporary door access when in effect"
+  - admin: "Gives admins \"RETA door access\" verb for giving department wide area access on maps."
+  - config: "New config settings for RETA"
