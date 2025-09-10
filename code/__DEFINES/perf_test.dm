@@ -20,6 +20,7 @@ GLOBAL_VAR_INIT(last_prime_storage_index, 1)
 	var/list/prime_holder = new /list(LAST_USEFUL_PRIME_INDEX)
 	prime_holder[1] = 3
 	return prime_holder
+#warn remove this yea?
 
 #define PRIMES_UNTIL(target_usage) \
 	do { \
@@ -58,5 +59,5 @@ GLOBAL_VAR_INIT(last_prime_storage_index, 1)
 			GLOB.last_prime_canidate = _prime_canidate; \
 		} else { \
 			CONSUME_UNTIL(target_usage) \
-		 } \
+		} \
 	} while(FALSE)

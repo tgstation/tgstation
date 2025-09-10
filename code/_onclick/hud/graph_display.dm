@@ -646,3 +646,5 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 		overtime_gradient[3] = max_value
 		return gradient(overtime_gradient, clamp(scaled, 0, max_value))
 	return gradient(cpu_gradient, clamp(scaled, 0, 1))
+
+#define GRAPH_EDGE_SIZE

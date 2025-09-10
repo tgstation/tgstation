@@ -53,12 +53,12 @@
 	return
 
 /proc/meowtonin_stack_trace(message, source, line, full_info)
-    var/list/info = list("[message || "N/A"]")
-    if(istext(source))
-        info += "\tsource: [source]"
-        if(line)
-            info += "\tline: [line]"
-    if(full_info)
-        world.log << "\n=== (panic start) ===\n[full_info]\n=== (panic end) ===\n"
-    CRASH(jointext(info, "\n"))
+	var/list/info = list("[message || "N/A"]")
+	if(istext(source))
+		info += "\tsource: [source]"
+		if(line)
+			info += "\tline: [line]"
+	if(full_info)
+		world.log << "\n=== (panic start) ===\n[full_info]\n=== (panic end) ===\n"
+	CRASH(jointext(info, "\n"))
 
