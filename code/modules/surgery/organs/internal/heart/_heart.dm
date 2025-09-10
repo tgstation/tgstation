@@ -97,7 +97,7 @@
 /obj/item/organ/heart/proc/is_beating()
 	return beating
 
-/obj/item/organ/heart/get_status_text(advanced, add_tooltips)
+/obj/item/organ/heart/get_status_text(advanced, add_tooltips, colored)
 	if(owner.has_status_effect(/datum/status_effect/heart_attack))
 		return conditional_tooltip("<font color='#cc3333'>Myocardial Infarction</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
 	if((!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD))
