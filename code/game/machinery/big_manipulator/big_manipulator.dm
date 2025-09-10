@@ -818,6 +818,9 @@
 
 /// Begins a new task with the specified type and duration
 /obj/machinery/big_manipulator/proc/start_task(task_type, duration)
+	if(current_task == CURRENT_TASK_STOPPING)
+		return
+
 	end_current_task() // End any previous task first (momentarily sets IDLE)
 	current_task_start_time = world.time
 	current_task_duration = duration / 10 // Duration is in deciseconds for TGUI
