@@ -418,8 +418,6 @@
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.
 	var/static/list/keep_turfs
-	/// Color matrix to assign to user when fully ash covered
-	var/static/list/ash_color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3)
 
 /datum/armor/mod_ash_accretion
 	melee = 3 // 50 armor when fully covered in ash, equal to two plates on an explorer suit
@@ -467,7 +465,6 @@
 	if(traveled_tiles == max_traveled_tiles)
 		mod.update_speed()
 	traveled_tiles = 0
-	mod.wearer.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, ash_color)
 
 /obj/item/mod/module/ash_accretion/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
@@ -494,8 +491,9 @@
 			return
 
 		balloon_alert(mod.wearer, "fully ash covered")
-		mod.wearer.add_atom_colour(ash_color, TEMPORARY_COLOUR_PRIORITY) // make them super light
-		animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
+		var/cur_color = mod.wearer.color
+		mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) // Make them super light
+		animate(mod.wearer, 1 SECONDS, color = cur_color, flags = ANIMATION_PARALLEL)
 		playsound(src, 'sound/effects/sparks/sparks1.ogg', 100, TRUE)
 		mod.update_speed()
 		return
@@ -518,7 +516,6 @@
 
 	if(traveled_tiles <= 0)
 		balloon_alert(mod.wearer, "ran out of ash!")
-		mod.wearer.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, ash_color)
 
 /obj/item/mod/module/sphere_transform
 	name = "MOD sphere transform module"
