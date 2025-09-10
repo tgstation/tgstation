@@ -7,6 +7,7 @@
 /datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value)
 	if(isdummy(target) || CONFIG_GET(flag/disable_human_mood) || isnull(target.mob_mood))
 		return
+	// melbert todo : this is applied to antags like wizard
 	for(var/personality_key in value)
 		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]
 		personality.apply_to_mob(target)
