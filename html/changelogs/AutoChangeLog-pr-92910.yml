@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix held items with slowdown not working"
+  - bugfix: "Fix hair mask updating oddly"
