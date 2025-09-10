@@ -27,7 +27,7 @@
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(!held_item)
 		return NONE
-	if(src.broken)
+	if(broken)
 		return NONE
 	if(!held_item.GetID())
 		return NONE

@@ -63,6 +63,8 @@
 	var/graft_gene
 	///Determines if the plant should be allowed to mutate early at 30+ instability.
 	var/seed_flags = MUTATE_EARLY
+	///Determines if the plant has been sliced with a sharp tool to extract substances like saps.
+	var/extracted = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()

@@ -4,9 +4,6 @@
 /area/template_noop)
 "d" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark/textured,
-/area/ruin/space/djstation)
-"f" = (
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/djstation)
@@ -95,7 +92,7 @@ Y
 a
 i
 M
-f
+Z
 d
 V
 i
