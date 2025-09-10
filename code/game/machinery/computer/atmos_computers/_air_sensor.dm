@@ -56,24 +56,22 @@
 */
 /obj/machinery/air_sensor/proc/configure(obj/machinery/atmospherics/components/unary/port, reconfigure = FALSE)
 	PRIVATE_PROC(TRUE)
-	. = NONE
 	if(!istype(port) || port.z != z)
-		return
+		return NONE
 
 	if(istype(port, /obj/machinery/atmospherics/components/unary/outlet_injector))
-		. = INLET
 		if(!reconfigure && inlet_id)
-			return
+			return INLET
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = port
 		//only configure non maploaded injectors cause they already have a preset config
 		if(input.type == /obj/machinery/atmospherics/components/unary/outlet_injector)
 			input.volume_rate = MAX_TRANSFER_RATE
 		inlet_id = input.id_tag
+		return INLET
 
 	else if(istype(port, /obj/machinery/atmospherics/components/unary/vent_pump))
-		. = OUTLET
 		if(!reconfigure && outlet_id)
-			return
+			return OUTLET
 		var/obj/machinery/atmospherics/components/unary/vent_pump/output = port
 		//only configure non maploaded vent pumps cause they already have a preset config
 		if(output.type == /obj/machinery/atmospherics/components/unary/vent_pump)
@@ -86,6 +84,8 @@
 			output.external_pressure_bound = 0
 		//finally assign it to this sensor
 		outlet_id = output.id_tag
+		return OUTLET
+	return NONE
 
 /obj/machinery/air_sensor/Destroy()
 	reset()
