@@ -4,7 +4,7 @@
 #define STATE_COUNT_DIAGONAL	7
 
 
-DEFINE_VERB(/mob, ChooseDMI, "ChooseDMI", "", FALSE, "", dmi as file)
+/mob/verb/ChooseDMI(dmi as file)
 	var/dmifile = file(dmi)
 	if(isfile(dmifile) && (copytext("[dmifile]",-4) == ".dmi"))
 		SliceNDice(dmifile)
