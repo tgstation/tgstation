@@ -20,6 +20,7 @@
 // BEGIN_INCLUDE
 #include "__odlint.dm"
 #include "_maps\_basemap.dm"
+#include "_maps\RandomZLevels\heretic\bruceguns.dm"
 #include "_maps\RandomZLevels\heretic\cbrn.dm"
 #include "_maps\RandomZLevels\heretic\heretic.dm"
 #include "_maps\RandomZLevels\heretic\heretic_gateway_misc.dm"
@@ -5835,7 +5836,6 @@
 #include "code\modules\projectiles\guns\energy.dm"
 #include "code\modules\projectiles\guns\magic.dm"
 #include "code\modules\projectiles\guns\ballistic\automatic.dm"
-#include "code\modules\projectiles\guns\ballistic\heretic_gateway_bruceguns.dm"
 #include "code\modules\projectiles\guns\ballistic\launchers.dm"
 #include "code\modules\projectiles\guns\ballistic\pistol.dm"
 #include "code\modules\projectiles\guns\ballistic\revolver.dm"
