@@ -36415,8 +36415,7 @@
 /area/station/service/chapel)
 "lEt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/oxygen_output{
-	dir = 8;
-	chamber_id = "o2ordance"
+	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/station/science/ordnance/storage)
@@ -58374,8 +58373,7 @@
 /area/station/science/research)
 "txW" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/oxygen_input{
-	dir = 4;
-	chamber_id = "o2ordance"
+	dir = 4
 	},
 /turf/open/floor/engine/o2,
 /area/station/science/ordnance/storage)
