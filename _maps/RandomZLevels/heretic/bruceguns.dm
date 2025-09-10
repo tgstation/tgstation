@@ -3,7 +3,6 @@
 	desc = "The FN P90 is a fast fire rate personal defense weapon, the bullets it shoots are small but what it lacks in damage it more than makes up for in penetration and fire rate."
 	icon = 'icons/obj/weapons/guns/p90.dmi.dmi'
 	icon_state = "p90"
-	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "m90"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/p90_mag
 	can_suppress = FALSE
@@ -24,12 +23,10 @@
 	base_icon_state = "46x30mmt-20"
 	ammo_type = /obj/item/ammo_casing/mm57x28
 	max_ammo = 50
-	caliber = CALIBER_46X30MM
 
 /obj/item/ammo_casing/mm57x28
 	name = "5.7x28mm bullet casing"
 	desc = "A 5.7x28mmmm bullet casing."
-	caliber = CALIBER_46X30MM
 	projectile_type = /obj/projectile/bullet/mm57x28
 	icon_state = "s-casing"
 	base_icon_state = "ammo"
@@ -51,4 +48,4 @@
 /obj/item/ammo_casing/energy/shrink/worse
 	projectile_type = /obj/projectile/magic/shrink/alien
 	select_name = "shrink ray"
-	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
+	e_cost = 1
