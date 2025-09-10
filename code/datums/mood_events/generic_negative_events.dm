@@ -644,16 +644,12 @@
 	description = "Aww dang it!"
 	mood_change = -2
 	timeout = 5 MINUTES
-	event_flags = MOOD_EVENT_GAMING | MOOD_EVENT_FAILURE
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/slots/loss/add_effects()
 	if(HAS_PERSONALITY(owner, /datum/personality/gambler))
 		mood_change = 0
 		description = "Aww dang it."
-	// if(HAS_PERSONALITY(owner, /datum/personality/reckless))
-	// 	mood_change *= 0.5
-	// if(HAS_PERSONALITY(owner, /datum/personality/cautious))
-	// 	mood_change *= 2
 	if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/slacking/diligent))
 		mood_change *= 1.5
 
