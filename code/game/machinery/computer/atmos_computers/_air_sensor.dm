@@ -51,6 +51,8 @@
 /obj/machinery/air_sensor/proc/configure(obj/machinery/atmospherics/components/unary/port, reconfigure = FALSE)
 	PRIVATE_PROC(TRUE)
 	. = 0
+	if(!istype(port) || port.z != z)
+		return
 
 	if(istype(port, /obj/machinery/atmospherics/components/unary/outlet_injector))
 		. = 1
