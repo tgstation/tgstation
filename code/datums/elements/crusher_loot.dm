@@ -46,5 +46,8 @@
 /datum/element/crusher_loot/proc/make_path(mob/living/target, path)
 	if(drop_immediately)
 		new path(get_turf(target))
-	else
-		target.guaranteed_butcher_results[path] = 1
+		return
+
+	if (!target.guaranteed_butcher_results)
+		target.guaranteed_butcher_results = list()
+	target.guaranteed_butcher_results[path] = 1

@@ -324,6 +324,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		lungs = new()
 		lungs.Insert(src)
 	lungs.set_organ_damage(0)
+	lungs.received_pressure_mult = lungs::received_pressure_mult
 
 	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(heart)

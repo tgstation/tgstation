@@ -13,15 +13,9 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 
-	// List of signals which force a visible name update
-	// TRAIT_UNKNOWN is excluded as it calls update_ID_card which also calls update_visible_name
-	var/static/list/name_update_signals = list(
-		SIGNAL_ADDTRAIT(TRAIT_INVISIBLE_MAN),
-		SIGNAL_REMOVETRAIT(TRAIT_INVISIBLE_MAN),
-		SIGNAL_ADDTRAIT(TRAIT_DISFIGURED),
-		SIGNAL_REMOVETRAIT(TRAIT_DISFIGURED),
-	)
-	RegisterSignals(src, name_update_signals, PROC_REF(update_visible_name))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), PROC_REF(refresh_obscured))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_INVISIBLE_MAN), SIGNAL_REMOVETRAIT(TRAIT_INVISIBLE_MAN)), PROC_REF(invisible_man_toggle))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_DISFIGURED), SIGNAL_REMOVETRAIT(TRAIT_DISFIGURED)), PROC_REF(update_visible_name))
 
 /// Gaining or losing [TRAIT_DWARF] updates our height and grants passtable
 /mob/living/carbon/human/proc/on_dwarf_trait(datum/source)
@@ -91,3 +85,9 @@
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)
+
+/// When [TRAIT_INVISIBLE_MAN] is added or removed we need to update a few things
+/mob/living/carbon/human/proc/invisible_man_toggle(datum/source)
+	SIGNAL_HANDLER
+	refresh_obscured()
+	update_visible_name()
