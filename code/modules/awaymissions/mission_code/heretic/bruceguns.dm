@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/automatic/wt550/p90
 	name = "\improper FN P90"
 	desc = "The FN P90 is a fast fire rate personal defense weapon, the bullets it shoots are small but what it lacks in damage it more than makes up for in penetration and fire rate."
-	icon = 'icons/obj/weapons/guns/p90.dmi.dmi'
+	icon = 'icons/obj/weapons/guns/p90.dmi'
 	icon_state = "p90"
 	inhand_icon_state = "m90"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/p90_mag
