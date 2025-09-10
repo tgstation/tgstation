@@ -163,7 +163,7 @@
 			if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 				mouse.desc = "They're toast."
 				mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
-			found_holder.release(FALSE)
+			found_holder?.release(FALSE)
 			if(must_equip)
 				if(equip_slot == ITEM_SLOT_HANDS)
 					holding_mob.dropItemToGround(found_holder)
