@@ -12,6 +12,19 @@
 	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	result = /obj/item/reagent_containers/cup/glass/bottle/lizardwine
 	category = CAT_DRINK
+	
+/datum/crafting_recipe/blue_blazer
+	name = "Blue Blazer"
+	time = 40
+	reqs = list(
+		/datum/reagent/consumable/ethanol/whiskey = 20,
+		/datum/reagent/water = 20, 
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/reagent_containers/cup/glass/drinkingglass
+	)
+	tool_paths = list(/obj/item/lighter)
+	result = /obj/item/reagent_containers/cup/glass/drinkingglass/filled/blue_blazer
+	category = CAT_DRINK
 
 /datum/crafting_recipe/moonshinejug
 	name = "Moonshine Jug"

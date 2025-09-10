@@ -137,3 +137,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/irish_cream
 	name = "Irish Cream"
 	list_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 50)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/blue_blazer
+	name = "Blue Blazer"
+	list_reagents = list(/datum/reagent/consumable/ethanol/blue_blazer = 45)
