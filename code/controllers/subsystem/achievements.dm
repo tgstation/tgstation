@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(achievements)
 
 	var/list/orphaned_keys = get_orphaned_keys(FALSE)
 	if(orphaned_keys.len)
-		message_admins("Achievement metadata found without matching achievement, use Achievement-Admin-Panel verb to cleanup if necessary")
+		message_admins("Achievement metadata found without matching achievement, use Achievements-Admin-Panel verb to cleanup if necessary")
 
 /// returns list of metadata keys and versions in db with no matching achievement datum, either deleted achievements, or from server with code ahead of us.
 /datum/controller/subsystem/achievements/proc/get_orphaned_keys(include_archived = TRUE)
