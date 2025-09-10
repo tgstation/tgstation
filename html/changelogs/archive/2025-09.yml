@@ -234,3 +234,54 @@
   - balance: wizard modsuit shield recharges slower
   vinylspiders:
   - bugfix: dead bodies in the morgue will no longer try to blink
+2025-09-09:
+  Bisar:
+  - bugfix: The .tsx code for Ore Silo logs will now catch nulls instead of TBing.
+  - bugfix: Fixed ANOTHER place where user_data for an ore silo log wasn't set correctly.
+  JohnFulpWillard, sprites by PopLop:
+  - rscadd: Added a new pyroclastic anomaly locked item, the Space Furnace. Grants
+      space immunity to people nearby while active.
+  Xander3359:
+  - balance: Downgraded CE tools to T1 instead of T2
+  lelandkemble:
+  - rscdel: you can't grill a bone into a steak anymore
+  loganuk:
+  - bugfix: Fixes using syndie graffiti spray/crayon writing while zero grav drifting
+  nikothedude:
+  - rscadd: 2 aiuri and 2 libital cans to nanodrug plus
+  - rscadd: Asthma quirk, based on IRL asthma
+  - rscadd: Inhalers, a new reagent administering method that uses INHALE
+  - rscadd: Albuterol, a new reagent that increases the amount of gas you inhale by
+      40%
+  - balance: Inverse convermol now forms once the reaction is done, not on metabolize
+  sushi:
+  - rscadd: water vapor on a turf will now also wash radiation off of the items on
+      it
+2025-09-10:
+  Ghommie:
+  - balance: sand is now made of sand and not glass. Get a welder if you plan to shove
+      it into a protolathe.
+  - rscdel: Removed now useless sand blocks.
+  - bugfix: Crafting recipes with tools such as wirecutters, wrenches, screwdrivers
+      etc. should take the right amount of time to complete.
+  SmArtKar:
+  - qol: Significantly improved MODtether behavior, they should be easier to work
+      with now.
+  - bugfix: Fixed multiple MODtethers bugs and a potential server crash related to
+      them.
+  - bugfix: Fixed foam sometimes passing through directional windows.
+  SyncIt21:
+  - bugfix: map export won't break exported gas strings & other that depend on semicolon
+  - code_imp: non ascii chars inside lists in map files can be read without error
+  loganuk:
+  - map: Catwalk lower Science changes [C.A.T]
+  massaheartsu:
+  - rscadd: Added meth, opium, and their production! Also added to black market uplink.
+  - rscadd: Added a craftable glass pipe.
+  - rscadd: Added to contraband spawners.
+  - qol: Can now insert any drug item into a pipe.
+  - bugfix: Spacemen can now smoke meth without exploding!!
+  timothymtorres:
+  - bugfix: Santa has put cargo in his very naughty list for spam producing his presents
+      by dumpster diving. This fixes Christmas presents (and other holiday items)
+      from spawning inside dumpsters.
