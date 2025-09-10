@@ -88,7 +88,7 @@
 	id = "MASSDRIVER_HERETIC"
 
 /obj/machinery/computer/pod/old/mass_driver_controller/feeder
-	id = "MASSDRIVER_HERETIC
+	id = "MASSDRIVER_HERETIC"
 
 /turf/closed/mineral/asteroid/has_more_air //this one is for if your checks are failing it might be because ya got dis rock
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
