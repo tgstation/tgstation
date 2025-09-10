@@ -472,7 +472,7 @@
 	description = "I love winning video games!"
 	mood_change = 6
 	timeout = 5 MINUTES
-	event_flags = MOOD_EVENT_GAMING | MOOD_EVENT_SUCCESS
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/love_reagent
 	description = "This food reminds me of the good ol' days."
@@ -610,16 +610,13 @@
 	else if(HAS_PERSONALITY(owner, /datum/personality/industrious) || HAS_PERSONALITY(owner, /datum/personality/slacking/diligent))
 		mood_change *= -1
 		description = "Why am I gambling my time and money away?"
-	// if(HAS_PERSONALITY(owner, /datum/personality/reckless))
-	// 	mood_change *= 1.2
-	// if(HAS_PERSONALITY(owner, /datum/personality/cautious))
-	// 	mood_change *= 0.5
+
 
 /datum/mood_event/slots/win
 	description = "Aw yeah I won!"
 	mood_change = 2
 	timeout = 5 MINUTES
-	event_flags = MOOD_EVENT_SUCCESS | MOOD_EVENT_GAMING
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/slots/win/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
 	if(new_event.mood_change < mood_change)

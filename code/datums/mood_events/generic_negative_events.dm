@@ -430,7 +430,7 @@
 	description = "If I'm not good at video games, can I truly call myself a gamer?"
 	mood_change = -6
 	timeout = 10 MINUTES
-	event_flags = MOOD_EVENT_GAMING | MOOD_EVENT_SUCCESS
+	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/lost_52_card_pickup
 	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."

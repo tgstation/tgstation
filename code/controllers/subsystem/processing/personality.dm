@@ -66,10 +66,6 @@ SUBSYSTEM_DEF(personalities)
 			/datum/personality/gourmand,
 			/datum/personality/ascetic,
 		),
-		// list(
-		// 	/datum/personality/authoritarian,
-		// 	/datum/personality/egalitarian,
-		// ),
 		list(
 			/datum/personality/nt/loyalist,
 			/datum/personality/nt/disillusioned,
@@ -107,10 +103,6 @@ SUBSYSTEM_DEF(personalities)
 			/datum/personality/brooding,
 			/datum/personality/resilient,
 		),
-		// list(
-		// 	/datum/personality/reckless,
-		// 	/datum/personality/cautious,
-		// ),
 		list(
 			/datum/personality/slacking/lazy,
 			/datum/personality/industrious,
@@ -123,10 +115,6 @@ SUBSYSTEM_DEF(personalities)
 			/datum/personality/hopeful,
 			/datum/personality/pessimistic,
 		),
-		// list(
-		// 	/datum/personality/humble,
-		// 	/datum/personality/prideful,
-		// ),
 		list(
 			/datum/personality/erudite,
 			/datum/personality/uneducated,

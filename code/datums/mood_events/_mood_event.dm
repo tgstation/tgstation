@@ -72,12 +72,6 @@
 	if((event_flags & MOOD_EVENT_SPIRITUAL) && !HAS_TRAIT(who, TRAIT_SPIRITUAL))
 		mood_change *= 0.2
 
-	// if(event_flags & (MOOD_EVENT_SUCCESS|MOOD_EVENT_FAILURE))
-	// 	if(HAS_PERSONALITY(owner, /datum/personality/humble))
-	// 		mood_change *= 0.75
-	// 	if(HAS_PERSONALITY(owner, /datum/personality/prideful))
-	// 		mood_change *= 1.25
-
 	if(event_flags & MOOD_EVENT_FOOD)
 		if(HAS_PERSONALITY(owner, /datum/personality/ascetic))
 			mood_change *= 0.75
