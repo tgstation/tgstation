@@ -94,7 +94,7 @@
 
 	mood_change = floor(mood_change)
 
-	timeout *= ((mood_change > 0) ? home.positive_moodlet_length_modifier : home.negative_moodlet_length_modifier)
+	timeout *= max((mood_change > 0) ? home.positive_moodlet_length_modifier : home.negative_moodlet_length_modifier, 0.1)
 	if(timeout)
 		addtimer(CALLBACK(home, TYPE_PROC_REF(/datum/mood, clear_mood_event), category), timeout, (TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT))
 
