@@ -200,7 +200,7 @@
 		else
 			return_yield *= (parent.yieldmod)
 
-	return return_yield
+	return round(return_yield)
 
 
 /obj/item/seeds/proc/harvest(mob/user)
