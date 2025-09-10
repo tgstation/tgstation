@@ -16,6 +16,8 @@ DEFINE_BITFIELD(visibility_flags, list(
 #define CAN_CARRY (1<<1)
 #define CAN_RESIST (1<<2)
 #define CHRONIC (1<<3)
+/// Instead of instantly curing the disease, cures will simply reduce the stage
+#define INCREMENTAL_CURE (1<<4)
 
 //Spread Flags
 #define DISEASE_SPREAD_SPECIAL (1<<0)

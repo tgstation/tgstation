@@ -3,7 +3,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	use_power = 0
 	},
 /turf/open/floor/iron/smooth_edge{
@@ -386,7 +386,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "Jd" = (
