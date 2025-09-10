@@ -2,7 +2,7 @@
 	specific_transport_id = HERETIC_LINE_1
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav/heretic
-	name = HERETIC_LINE_1
+	name = "heretic nav"
 	specific_transport_id = HERETIC_LINE_1
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/heretic/left
