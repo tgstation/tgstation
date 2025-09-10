@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "map export won't break exported gas strings & other that depend on semicolon"
