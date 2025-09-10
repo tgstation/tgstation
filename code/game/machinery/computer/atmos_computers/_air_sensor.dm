@@ -151,7 +151,7 @@
 			var/port = "[type == INLET ? "input" : "output"] port"
 			user.balloon_alert(user, "[port] configured")
 			to_chat(user, span_notice("[src] has connected [multi_tool.buffer] to its [port]."))
-	to_chat(user, span_notice("sensor has been added to the multitool buffer."))
+	to_chat(user, span_notice("[src] has been added to multitool buffer."))
 	multi_tool.set_buffer(src)
 
 	return ITEM_INTERACT_SUCCESS
