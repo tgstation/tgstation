@@ -528,7 +528,7 @@
 	if(istagger)
 		wait_time *= 0.5
 
-	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
+	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4, extra_checks = CALLBACK(src, PROC_REF(adjacency_check), user, target)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!use_charges(user, cost))
@@ -584,6 +584,13 @@
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
 	return ITEM_INTERACT_SUCCESS
+
+///Checks if the user is still adjacent to the target (used for do_after extra_checks)
+/obj/item/toy/crayon/proc/adjacency_check(mob/user, atom/target)
+	if(!user.Adjacent(target))
+		user.balloon_alert(user, "moved too far away!")
+		return FALSE
+	return TRUE
 
 /obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!check_allowed_items(interacting_with))

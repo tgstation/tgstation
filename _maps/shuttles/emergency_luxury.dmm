@@ -61,7 +61,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ek" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /obj/machinery/iv_drip,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
@@ -870,7 +870,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Jd" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "JB" = (
@@ -1003,7 +1003,7 @@
 /area/shuttle/escape)
 "Nu" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
 "Om" = (
@@ -1170,7 +1170,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Wx" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "WF" = (

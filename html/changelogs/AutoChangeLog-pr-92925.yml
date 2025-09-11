@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "The GPS debug tool will now spawn with the admin outfit apart of the debug tools"
+  - admin: "Add GPS debug tool to admin debug box"

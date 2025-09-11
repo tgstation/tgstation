@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Letting go of the pet command hotkey (Shift by default) will instantly close the menu"
-  - bugfix: "Hovering over things on the same tile no longer closes the pet command menu"
