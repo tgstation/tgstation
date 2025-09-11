@@ -1,4 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - qol: "made Autopsy Reports follow similar formatting to Health Scans, and adds some information previously missing such as Missing Organs."

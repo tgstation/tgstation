@@ -285,3 +285,45 @@
   - bugfix: Santa has put cargo in his very naughty list for spam producing his presents
       by dumpster diving. This fixes Christmas presents (and other holiday items)
       from spawning inside dumpsters.
+2025-09-11:
+  Ezel:
+  - balance: CE now gets upgraded welders instead of normal
+  Hatterhat:
+  - qol: Mail bags can now hold bounty cubes.
+  - qol: You can now cut folders apart back into cardboard with wirecutters or a knife.
+  Melbert:
+  - bugfix: Fix held items with slowdown not working
+  - bugfix: Fix hair mask updating oddly
+  OrionTheFox:
+  - qol: made Autopsy Reports follow similar formatting to Health Scans, and adds
+      some information previously missing such as Missing Organs.
+  SyncIt21:
+  - qol: hand crafted air sensors now auto connect to input & output ports if they
+      are located within a 4 tile radius from it
+  - qol: atmos control monitors now locate all air sensors nearest to in on that same
+      z level meaning you can have multiple air sensors of the same type on the same
+      map
+  - refactor: refactored how air sensors & atmos monitors connect to each other. Please
+      report any atmos computers that have missing input valves/output ports on their
+      connected air sensors or those that don't list any air sensors at all on github
+  lelandkemble:
+  - qol: allows hitting empty light fixtures on combat mode
+  - bugfix: mice stored on your person will no longer disappear when killed
+  loganuk:
+  - rscadd: RETA System - Request Consoles give temporary access to responders when
+      used for some areas. Paramedics lose broad access but get external space access.
+  - qol: Request consoles now show name and job role on call message & Cooldown on
+      spamming calls + sound prompt
+  - qol: Medibot access no longer based on Paramedic trim ID - Still has original
+      access
+  - image: Added "lights_reta" for temporary door access when in effect
+  - admin: Gives admins "RETA door access" verb for giving department wide area access
+      on maps.
+  - config: New config settings for RETA
+  necromanceranne:
+  - balance: Jackets can carry personal firearms and holsters in their suit storage.
+      So can hawaiian shirts and comedian suits.
+  - balance: More 'assistant' attire can fit improvised weapons.
+  - balance: Justice suits can fit security items in their suit storage.
+  - bugfix: Imperium monk outfits now hold the true list of chaplain suit storage
+      items, and not just a limited list.

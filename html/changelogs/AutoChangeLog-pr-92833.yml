@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Jackets can carry personal firearms and holsters in their suit storage. So can hawaiian shirts and comedian suits."
-  - balance: "More 'assistant' attire can fit improvised weapons."
-  - balance: "Justice suits can fit security items in their suit storage."
-  - bugfix: "Imperium monk outfits now hold the true list of chaplain suit storage items, and not just a limited list."
