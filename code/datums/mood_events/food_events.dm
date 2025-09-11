@@ -48,13 +48,13 @@
 	return ..()
 
 /datum/mood_event/food/proc/calculate_mood_change(base_quality)
-	var/quality = 2 + 2 * base_quality
+	var/quality = 1 + 1.5 * base_quality
 	if(HAS_PERSONALITY(owner, /datum/personality/ascetic))
 		quality *= 0.5
 	if(HAS_PERSONALITY(owner, /datum/personality/gourmand))
 		if(quality <= FOOD_QUALITY_GOOD)
 			quality = FOOD_QUALITY_NORMAL
-	return round(.)
+	return ceil(quality)
 
 /datum/mood_event/pacifist_eating_fish_item
 	description = "I shouldn't be eating living creatures..."
