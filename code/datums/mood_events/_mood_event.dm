@@ -47,8 +47,14 @@
 	if(LAZYLEN(required_job) && !is_type_in_list(who.mind?.assigned_role, required_job))
 		return FALSE
 
-	if((event_flags & MOOD_EVENT_WHIMSY) && !HAS_PERSONALITY(who, /datum/personality/whimsical))
-		return FALSE
+	if((event_flags & MOOD_EVENT_WHIMSY))
+		// Whimsical people get positive whimsical moodlets
+		// Non-whimsical people get negative whimsical moodlets
+		var/is_whimsical = HAS_PERSONALITY(who, /datum/personality/whimsical)
+		if(mood_change >= 0 && !is_whimsical)
+			return FALSE
+		if(mood_change < 0 && is_whimsical)
+			return FALSE
 
 	if((event_flags & MOOD_EVENT_ART) && HAS_PERSONALITY(who, /datum/personality/unimaginative))
 		return FALSE
