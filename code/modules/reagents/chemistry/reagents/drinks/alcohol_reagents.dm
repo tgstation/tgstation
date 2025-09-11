@@ -2978,10 +2978,9 @@
 
 /datum/reagent/consumable/ethanol/suffering_bastard/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	//removes disgust, same with sol dry
-	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
-	//this is litterally copy-pasted from mannitol with the healing amount changed, not sure if there's a better way of doing this.
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+	affected_mob.apply_status_effect(/datum/status_effect/headache_soothed) //prevents headaches
+	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick) //removes disgust, same with sol dry
+	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)) //heals brain damage very slowly, about 12 damage per 5u
 		return UPDATE_MOB_HEALTH
 		
 /datum/reagent/consumable/ethanol/blue_blazer
