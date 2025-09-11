@@ -50,3 +50,7 @@
 		nodes[1] = null
 	if(parents[1])
 		nullify_pipenet(parents[1])
+
+/obj/machinery/atmospherics/components/unary/container_resist_act(mob/living/user)
+	user.handle_ventcrawl(src)
+	return

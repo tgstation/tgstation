@@ -60,7 +60,7 @@
 
 	if(!(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED))
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't enter this vent!"))
+			to_chat(src, span_warning("You can't move through this vent!"))
 		return
 
 	return TRUE
