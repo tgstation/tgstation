@@ -157,7 +157,7 @@
 /datum/mood_event/pet_animal
 	description = "Animals are adorable! I can't stop petting them!"
 	timeout = 5 MINUTES
-
+	/// Tracks the typepath of animal we last petted
 	var/animal_type
 
 /datum/mood_event/pet_animal/add_effects(mob/animal)
