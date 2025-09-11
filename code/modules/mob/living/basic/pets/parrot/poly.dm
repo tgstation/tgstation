@@ -16,7 +16,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	gold_core_spawnable = NO_SPAWN
-	speech_probability_rate = 13
+	speech_probability_rate = 3
 
 	/// Callback to save our memory at the end of the round.
 	var/datum/callback/roundend_callback = null
@@ -183,6 +183,9 @@
 	rustg_file_write(json_encode(file_data, JSON_PRETTY_PRINT), file_path)
 	memory_saved = TRUE
 	return TRUE
+
+/mob/living/basic/parrot/poly/setup_headset()
+	ears = new /obj/item/radio/headset/headset_eng(src)
 
 /mob/living/basic/parrot/poly/ghost
 	name = "The Ghost of Poly"
