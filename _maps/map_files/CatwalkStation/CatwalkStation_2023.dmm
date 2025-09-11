@@ -912,14 +912,13 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "anE" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4;
-	piping_layer = 5
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "anG" = (
@@ -4951,9 +4950,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "byI" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4;
-	piping_layer = 5
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -5257,11 +5255,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "O2 to Airmix";
+	name = " L5 O2 to Airmix";
 	piping_layer = 5
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/upper)
 "bCp" = (
@@ -7899,9 +7897,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	piping_layer = 5
-	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/upper)
 "coP" = (
@@ -19227,12 +19223,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "fCJ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	piping_layer = 5
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "fCK" = (
@@ -29004,11 +28998,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "N2 to Airmix";
+	name = "L5 N2 to Airmix";
 	piping_layer = 5
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/upper)
 "isf" = (
@@ -31204,12 +31198,10 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	piping_layer = 5
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "iXd" = (
@@ -34919,12 +34911,10 @@
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "jXI" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	piping_layer = 5
-	},
 /obj/machinery/meter{
 	name = "Mixed Air Tank In"
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/upper)
 "jXV" = (
@@ -35311,7 +35301,6 @@
 /area/station/maintenance/starboard/lesser)
 "kdF" = (
 /obj/structure/closet/radiation,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/upper)
 "kdG" = (
@@ -46823,8 +46812,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "nzw" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	piping_layer = 5;
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
 	dir = 9
 	},
 /turf/open/floor/iron/smooth,
@@ -67357,9 +67345,8 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/starboard)
 "tCG" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 5;
-	piping_layer = 5
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
+	dir = 5
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -79618,9 +79605,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "xfK" = (
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer5{
 	dir = 8;
-	piping_layer = 5
+	name = "air mixer"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -79895,9 +79882,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
-"xkX" = (
-/turf/open/floor/catwalk_floor,
-/area/station/engineering/atmos/upper)
 "xkZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -125163,7 +125147,7 @@ gmY
 twY
 aLN
 wzI
-npt
+cMc
 pVq
 lpE
 unl
@@ -125420,7 +125404,7 @@ uvz
 bOt
 aLN
 vkS
-xkX
+rfC
 vvK
 npt
 doS
