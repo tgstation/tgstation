@@ -125,14 +125,16 @@
 
 		created_atom.flags_1 |= ADMIN_SPAWNED_1
 
-		if(spawn_params["custom_icon"])
-			created_atom.icon = file(spawn_params["custom_icon"])
-		if(spawn_params["custom_icon_state"])
-			created_atom.icon_state = spawn_params["custom_icon_state"]
-		if(spawn_params["custom_icon_size"])
+		if(spawn_params["selected_atom_icon"])
+			created_atom.icon = file(spawn_params["selected_atom_icon"])
+
+		if(spawn_params["selected_atom_icon_state"])
+			created_atom.icon_state = spawn_params["selected_atom_icon_state"]
+
+		if(spawn_params["atom_icon_size"])
 			if(ismob(created_atom))
 				var/mob/living/created_mob = created_atom
-				created_mob.current_size = spawn_params["custom_icon_size"] / 100
+				created_mob.current_size = spawn_params["atom_icon_size"] / 100
 
 		if(atom_dir)
 			created_atom.setDir(atom_dir)
@@ -153,21 +155,6 @@
 				if(target_robot.model)
 					target_robot.model.add_module(created_item, TRUE, TRUE)
 					target_robot.activate_module(created_item)
-
-		if(spawn_params["selected_atom_icon"])
-			created_atom.icon = file(spawn_params["selected_atom_icon"])
-		else if(selected_atom)
-			created_atom.icon = initial(selected_atom.icon)
-
-		if(spawn_params["selected_atom_icon_state"])
-			created_atom.icon_state = spawn_params["selected_atom_icon_state"]
-		else if(selected_atom && spawn_params["selected_atom_icon_state"] != null)
-			created_atom.icon_state = initial(selected_atom.icon_state)
-
-		if(spawn_params["atom_icon_size"])
-			if(ismob(created_atom))
-				var/mob/living/created_mob = created_atom
-				created_mob.current_size = spawn_params["atom_icon_size"] / 100
 
 	if(pod)
 		new /obj/effect/pod_landingzone(target, pod)
