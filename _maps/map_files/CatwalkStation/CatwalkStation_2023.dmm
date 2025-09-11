@@ -49426,26 +49426,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
 "olj" = (
-/obj/item/hfr_box/corner{
-	pixel_x = 3;
-	pixel_y = 10
-	},
-/obj/item/hfr_box/corner{
-	pixel_y = 6
-	},
-/obj/item/hfr_box/corner{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/hfr_box/corner{
-	pixel_x = -4;
+/obj/structure/table,
+/obj/item/hfr_box/core{
 	pixel_y = 5
 	},
-/obj/item/hfr_box/core{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/structure/table,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "olm" = (
@@ -54175,6 +54159,24 @@
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
+"pGL" = (
+/obj/structure/table,
+/obj/item/hfr_box/corner{
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/obj/item/hfr_box/corner{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/hfr_box/corner{
+	pixel_x = -10
+	},
+/obj/item/hfr_box/corner{
+	pixel_x = 3
+	},
+/turf/open/floor/engine,
+/area/station/engineering/atmos/hfr_room)
 "pGV" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L5"
@@ -55357,15 +55359,12 @@
 	pixel_y = 8
 	},
 /obj/item/hfr_box/body/waste_output{
-	pixel_x = 10;
-	pixel_y = 9
+	pixel_x = 8;
+	pixel_y = 8
 	},
-/obj/item/hfr_box/body/interface{
-	pixel_y = 17
-	},
+/obj/item/hfr_box/body/interface,
 /obj/item/hfr_box/body/waste_output{
-	pixel_x = -15;
-	pixel_y = 13
+	pixel_x = -15
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
@@ -194856,7 +194855,7 @@ slL
 dcE
 nlm
 ydS
-bNX
+pGL
 saT
 bNX
 bNX
