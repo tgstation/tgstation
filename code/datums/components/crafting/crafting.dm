@@ -175,7 +175,10 @@
 		if(current_tool_speed < item.toolspeed)
 			.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
 
-	.[CONTENTS_POSSIBLE_TOOLS] = flatten_list(.[CONTENTS_INSTANCES]) + within_source //These may be used as tools, not components for the recipe.
+	var/list/instances = .[CONTENTS_INSTANCES]
+	for(var/item_type in instances)
+		.[CONTENTS_POSSIBLE_TOOLS] += instances[item_type]
+	.[CONTENTS_POSSIBLE_TOOLS] += within_source
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
 /datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
