@@ -38,31 +38,28 @@ SUBSYSTEM_DEF(ore_generation)
 			vent.vent_size_setup(random = TRUE, force_size = null, map_loading = TRUE)
 			continue
 
-		sort_vents += vent[get_dist(get_turf(vent), get_turf(landmark_anchor))]
-		to_chat(world, "Identified a vent with a distance of [get_dist(get_turf(vent),get_turf(landmark_anchor))] from epicenter!!!")
+		sort_vents.Insert(length(sort_vents), vent)
+		sort_vents[vent] = get_dist(get_turf(vent),get_turf(landmark_anchor))
 
-	var/list/postsort_vents = list()
-	var/obj/structure/ore_vent/lowest_current
-	for(var/obj/structure/ore_vent/vent as anything in sort_vents)
-		var/min = INFINITY
-		if(sort_vents[vent] < min)
-			min = sort_vents[vent]
-			lowest_current = vent
-		if()
+	sortTim(sort_vents, GLOBAL_PROC_REF(cmp_numeric_asc), associative = TRUE) // Should sort list from closest to farthest.
+	possible_vents = sort_vents // Now we can work with the main list
 
+	var/cutoff = round((length(possible_vents) / 3))
+	to_chat(world, "we're playing with a cutoff of [cutoff] on a list of [length(possible_vents)]")
+	var/vent_size_level = SMALL_VENT_TYPE
 
+	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
+		vent.vent_size_setup(random = FALSE, force_size = vent_size_level, map_loading = TRUE)
+		cutoff--
+		if(cutoff < 0 && (vent_size_level == SMALL_VENT_TYPE || vent_size_level == MEDIUM_VENT_TYPE))
+			cutoff = round((length(possible_vents) / 3))
+			switch(vent_size_level)
+				if(SMALL_VENT_TYPE)
+					vent_size_level = MEDIUM_VENT_TYPE
+				if(MEDIUM_VENT_TYPE)
+					vent_size_level = LARGE_VENT_TYPE
 
-
-	// var/cutoff = round((length(possible_vents) / 3))
-	// var/vent_size_level = SMALL_VENT_TYPE
-	// for(var/obj/structure/ore_vent/vent as anything in postsort_vents)
-	// 	while(cutoff > 0)
-	// 		vent.vent_size_setup(random = FALSE, force_size = vent_size_level, map_loading = TRUE)
-	// 		cutoff--
-
-
-
-	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
+	//Finally, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	while(length(ore_vent_minerals) > 0) //Keep looping if there's more to assign
 		var/stallbreaker = 0
 		for(var/obj/structure/ore_vent/vent as anything in possible_vents)
