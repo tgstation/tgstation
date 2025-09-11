@@ -479,6 +479,11 @@
 	mood_change = 5
 
 /datum/mood_event/love_reagent/add_effects(duration)
+	if(HAS_PERSONALITY(owner, /datum/personality/pessimistic))
+		mood_change = 0
+		description = "This food is okay, I guess."
+		return
+
 	if(isnum(duration))
 		timeout = duration
 
