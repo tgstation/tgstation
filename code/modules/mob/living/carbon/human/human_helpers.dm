@@ -80,9 +80,7 @@
 /mob/living/carbon/human/get_face_name(if_no_face = "Unknown")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return if_no_face //We're Unknown, no face information for you
-	for(var/obj/item/worn_item in get_equipped_items())
-		if(!(worn_item.flags_inv & HIDEFACE))
-			continue
+	if(obscured_slots & HIDEFACE)
 		return if_no_face
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head) || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (head.brutestate + head.burnstate) > 2 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible

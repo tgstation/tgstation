@@ -2481,11 +2481,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(GRAB_KILL)
 			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
-
-/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
-/mob/living/proc/is_face_visible()
-	return TRUE
-
 /// Sprite to show for photocopying mob butts
 /mob/living/proc/get_butt_sprite()
 	return null

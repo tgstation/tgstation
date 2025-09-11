@@ -390,7 +390,7 @@
 	. = ..()
 	if (.)
 		return
-	var/obj/item/card/id/advanced/user_card = astype(usr, /mob/living)?.get_idcard()
+	var/alist/user_data = ID_DATA(usr)
 
 	switch (action)
 		if ("print")
@@ -401,14 +401,14 @@
 
 			var/list/design = scanned_designs[design_id]
 
-			if (!materials.can_use_resource(user_card))
+			if (!materials.can_use_resource(user_data = user_data))
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design["materials"], efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
-			materials.use_materials(design["materials"], efficiency_coeff, 1, "processed", design["name"], user_card)
+			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"], user_data = user_data)
 			print_module(design)
 			balloon_alert_to_viewers("printed [design["name"]]")
 		if ("remove_mat")

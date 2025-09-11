@@ -8,8 +8,8 @@
 #define SMALL_PRIZE 400
 #define BIG_PRIZE 1000
 #define JACKPOT 10000
-#define SPIN_TIME 65 //As always, deciseconds.
-#define REEL_DEACTIVATE_DELAY 7
+#define SPIN_TIME 36 //As always, deciseconds.
+#define REEL_DEACTIVATE_DELAY 4
 #define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
 #define COIN 2

@@ -1565,4 +1565,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob gets far less severe negative moodlets from seeing death / blood
 #define TRAIT_DESENSITIZED "desensitized"
 
+/// Trait specifying that an AI has a remote connection to an integrated circuit
+#define TRAIT_CONNECTED_TO_CIRCUIT "connected_to_circuit"
+
 // END TRAIT DEFINES
