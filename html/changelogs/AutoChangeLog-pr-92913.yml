@@ -1,0 +1,4 @@
+author: "sushi"
+delete-after: True
+changes:
+  - bugfix: "implants can no longer be removed from the same mob (or other mobs!) multiple times"
