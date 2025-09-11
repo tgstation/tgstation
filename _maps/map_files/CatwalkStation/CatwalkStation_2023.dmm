@@ -49875,15 +49875,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/office)
-"osT" = (
-/obj/structure/cable,
-/obj/machinery/light/directional/south,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
-	dir = 4
-	},
-/turf/open/floor/catwalk_floor,
-/area/station/engineering/atmos/upper)
 "osU" = (
 /obj/structure/sign/poster/contraband/blasto_detergent/directional,
 /turf/closed/wall,
@@ -66704,25 +66695,6 @@
 "tqQ" = (
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
-"tri" = (
-/obj/item/hfr_box/body/waste_output{
-	pixel_x = -15;
-	pixel_y = 13
-	},
-/obj/item/hfr_box/body/interface{
-	pixel_y = 17
-	},
-/obj/item/hfr_box/body/moderator_input{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/obj/structure/table,
-/obj/item/hfr_box/body/fuel_input{
-	pixel_x = 10;
-	pixel_y = 9
-	},
-/turf/closed/wall/r_wall,
-/area/station/engineering/break_room)
 "trH" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/openspace,
@@ -67981,6 +67953,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"tLC" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/station/engineering/break_room)
 "tLK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -81102,6 +81078,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"xDj" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "xDs" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
@@ -125277,7 +125257,7 @@ xif
 xJu
 bAW
 bDw
-bAW
+xDj
 loh
 bAW
 rIU
@@ -127561,7 +127541,7 @@ xfK
 dnr
 ica
 dxZ
-osT
+qMP
 fEQ
 diZ
 gMA
@@ -191821,15 +191801,15 @@ ngH
 hbV
 tRa
 wzi
+tLC
 tRa
 tRa
 tRa
+tLC
 tRa
 tRa
 tRa
-tRa
-tRa
-tRa
+tLC
 tRa
 tRa
 eTy
@@ -196454,7 +196434,7 @@ nyv
 wIl
 rHT
 uDg
-tri
+ngH
 heR
 nlm
 nlm
