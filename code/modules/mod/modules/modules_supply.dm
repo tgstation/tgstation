@@ -135,9 +135,11 @@
 	cooldown_time = 0.2 SECONDS
 	overlay_state_active = "module_drill"
 	required_slots = list(ITEM_SLOT_GLOVES)
-	toolspeed = 0.2
+	toolspeed = 0.25
 	/// Are we currently in passive sphere mode?
 	var/ballin = FALSE
+	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
+	var/last_bumpmine_tick = -1
 
 /obj/item/mod/module/drill/on_install()
 	. = ..()
@@ -176,11 +178,15 @@
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
 
-	if(!ismineralturf(bumped_into) || !drain_power(use_energy_cost))
+	if (world.time == last_bumpmine_tick)
+		return
+
+	if (!ismineralturf(bumped_into) || !drain_power(use_energy_cost))
 		return
 
 	var/turf/closed/mineral/gibtonite/giberal_turf = bumped_into
-	if(!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
+	if (!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
+		last_bumpmine_tick = world.time
 		bumped_into.attackby(src, bumper)
 		return
 
