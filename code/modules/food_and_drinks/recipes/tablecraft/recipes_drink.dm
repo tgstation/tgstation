@@ -15,12 +15,12 @@
 	
 /datum/crafting_recipe/blue_blazer
 	name = "Blue Blazer"
-	time = 40
+	time = 3 SECONDS //TODO: Figure out why this is still slow
 	reqs = list(
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
 		/datum/reagent/consumable/ethanol/whiskey = 20,
 		/datum/reagent/water = 20, 
-		/datum/reagent/consumable/sugar = 5,
-		/obj/item/reagent_containers/cup/glass/drinkingglass
+		/datum/reagent/consumable/sugar = 5
 	)
 	tool_paths = list(/obj/item/lighter)
 	result = /obj/item/reagent_containers/cup/glass/drinkingglass/filled/blue_blazer
