@@ -10,7 +10,7 @@
 	var/list/visibleTurfs = list()
 	///cameras that can see into our grid
 	///indexed by the z level of the camera
-	var/list/cameras = list()
+	var/alist/cameras = alist()
 	///list of all turfs, associative with that turf's static image
 	///turf -> /image
 	var/list/turfs = list()
@@ -113,7 +113,7 @@
 	var/list/updated_visible_turfs = list()
 
 	for(var/z_level in lower_z to upper_z)
-		for(var/obj/machinery/camera/current_camera as anything in cameras["[z_level]"])
+		for(var/obj/machinery/camera/current_camera as anything in cameras[z_level])
 			if(!current_camera || !current_camera.can_use())
 				continue
 
@@ -121,9 +121,8 @@
 			if(get_dist(point, current_camera) > CHUNK_SIZE + (CHUNK_SIZE / 2))
 				continue
 
-			for(var/turf/vis_turf in current_camera.can_see())
-				if(turfs[vis_turf])
-					updated_visible_turfs[vis_turf] = vis_turf
+			for(var/turf/vis_turf as anything in turfs & current_camera.can_see())
+				updated_visible_turfs[vis_turf] = vis_turf
 
 	///new turfs that we couldnt see last update but can now
 	var/list/newly_visible_turfs = updated_visible_turfs - visibleTurfs
@@ -191,7 +190,7 @@
 			if(mech.chassis_camera?.can_use())
 				local_cameras += mech.chassis_camera
 
-		cameras["[z_level]"] = local_cameras
+		cameras[z_level] = local_cameras
 
 		var/image/mirror_from = SScameras.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		var/turf/chunk_corner = locate(x, y, z_level)
@@ -207,9 +206,8 @@
 			if(!camera.can_use())
 				continue
 
-			for(var/turf/vis_turf in camera.can_see())
-				if(turfs[vis_turf])
-					visibleTurfs[vis_turf] = vis_turf
+			for(var/turf/vis_turf as anything in turfs & camera.can_see())
+				visibleTurfs[vis_turf] = vis_turf
 
 	for(var/turf/obscured_turf as anything in turfs - visibleTurfs)
 		var/image/new_static = turfs[obscured_turf]

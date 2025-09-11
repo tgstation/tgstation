@@ -8,11 +8,11 @@ ADMIN_VERB(camera_view, R_DEBUG, "Camera Range Display", "Shows the range of cam
 
 	if(!on)
 		var/list/seen = list()
-		for(var/obj/machinery/camera/C as anything in SScameras.cameras)
-			for(var/turf/T in C.can_see())
-				seen[T]++
-		for(var/turf/T in seen)
-			T.maptext = MAPTEXT(seen[T])
+		for(var/obj/machinery/camera/cam as anything in SScameras.cameras)
+			for(var/turf/cam_turf as anything in cam.can_see())
+				seen[cam]++
+		for(var/turf/seen_turf as anything in seen)
+			seen_turf.maptext = MAPTEXT(seen[seen_turf])
 	BLACKBOX_LOG_ADMIN_VERB("Show Camera Range")
 
 #ifdef TESTING

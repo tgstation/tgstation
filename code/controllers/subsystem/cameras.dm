@@ -33,12 +33,13 @@ SUBSYSTEM_DEF(cameras)
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
 	if(!resumed)
 		src.current_run = chunks_to_update.Copy()
+		chunks_to_update = list()
 
 	var/list/current_run = src.current_run
 	while(current_run.len)
 		var/datum/camerachunk/chunk = current_run[current_run.len]
 		chunk.force_update(only_if_necessary = TRUE) // Forces an update if necessary
-		chunks_to_update.len--
+		current_run.len--
 		if(MC_TICK_CHECK)
 			break
 
@@ -168,10 +169,10 @@ SUBSYSTEM_DEF(cameras)
 				continue
 			if(choice == REMOVE_CAMERA)
 				// Remove the camera.
-				chunk.cameras["[chunk_turf.z]"] -= center_or_camera
+				chunk.cameras[chunk_turf.z] -= center_or_camera
 			if(choice == ADD_CAMERA)
 				// You can't have the same camera in the list twice.
-				chunk.cameras["[chunk_turf.z]"] |= center_or_camera
+				chunk.cameras[chunk_turf.z] |= center_or_camera
 			chunk.queue_update(center_or_camera, update_delay_buffer)
 
 /// A faster, turf only version of [/datum/controller/subsystem/cameras/proc/major_chunk_change]

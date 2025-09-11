@@ -390,6 +390,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return FALSE
 	return TRUE
 
+/// Returns a list of turfs in this camera's view.
+/// This includes turfs that are "obscured by darkness" from the camera's POV.
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
@@ -398,26 +400,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
-		see = range(view_range, pos)
+		see = RANGE_TURFS(view_range, pos)
 	else
-		see = get_hear(view_range, pos)
+		see = get_hear_turfs(view_range, pos)
+
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
-		for(var/turf/seen in see)
+		for(var/turf/seen as anything in see)
 			if(check_lower)
-				var/turf/visible = seen
-				while(visible && istransparentturf(visible))
-					var/turf/below = GET_TURF_BELOW(visible)
-					for(var/turf/adjacent in range(1, below))
-						see += adjacent
-						see += adjacent.contents
-					visible = below
+				var/turf/below = GET_TURF_BELOW(seen)
+				while(below && istransparentturf(below))
+					see += RANGE_TURFS(1, below)
+					below = GET_TURF_BELOW(below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
-					for(var/turf/adjacent in range(1, above))
-						see += adjacent
-						see += adjacent.contents
+					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
 	return see
 
