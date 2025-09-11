@@ -77,7 +77,7 @@ handles linking back and forth.
 
 /datum/component/remote_materials/Destroy()
 	if(connection)
-		SSticker.round_start_events -= connection
+		LAZYREMOVE(SSticker.round_start_events, connection)
 		connection = null
 	if(silo)
 		allow_standalone = FALSE
