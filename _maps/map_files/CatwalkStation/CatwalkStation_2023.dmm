@@ -4580,6 +4580,7 @@
 "btg" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "bti" = (
@@ -11216,7 +11217,6 @@
 /turf/open/floor/plating/airless,
 /area/station/maintenance/starboard/aft)
 "dlF" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
@@ -17881,6 +17881,7 @@
 "fiY" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/firealarm/directional/west,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "fjc" = (
@@ -18769,6 +18770,7 @@
 "fvE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "fvG" = (
@@ -25078,6 +25080,11 @@
 /obj/item/toy/figure/assistant,
 /turf/open/space/openspace,
 /area/space/nearstation)
+"hmg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "hmo" = (
 /obj/structure/closet/crate/hydroponics{
 	name = "hydroponics equipment crate"
@@ -30147,6 +30154,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "iHF" = (
@@ -32462,6 +32470,12 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"jpE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal/incinerator)
 "jpF" = (
 /obj/effect/spawner/random/trash/grime,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -39877,6 +39891,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "lxQ" = (
@@ -43571,10 +43586,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
-"mAm" = (
-/obj/structure/lattice,
-/turf/open/space/openspace,
-/area/space)
 "mAr" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L1"
@@ -44499,10 +44510,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
-"mPy" = (
-/obj/machinery/camera/autoname/directional/west,
-/turf/open/space/basic,
-/area/space)
 "mPB" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Holodeck - Aft";
@@ -52268,7 +52275,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable/layer1,
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/engine,
 /area/station/engineering/main)
@@ -53210,6 +53216,12 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
+"psc" = (
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/obj/structure/lattice,
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/space/basic,
+/area/space/nearstation)
 "psi" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck{
@@ -63208,10 +63220,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
 /area/station/security/prison)
-"smQ" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
 "smV" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured_large,
@@ -66026,6 +66034,11 @@
 /obj/effect/mapping_helpers/mail_sorting/medbay/general,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"tgJ" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal/incinerator)
 "tgT" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
@@ -66261,6 +66274,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "tkX" = (
@@ -71791,6 +71805,13 @@
 	},
 /turf/open/openspace,
 /area/station/maintenance/starboard/lesser)
+"uPA" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/disposal/incinerator)
 "uPL" = (
 /obj/item/controller,
 /obj/item/compact_remote,
@@ -75578,10 +75599,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/station/service/chapel)
-"vUn" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/openspace,
-/area/space)
 "vUQ" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/wood,
@@ -126191,7 +126208,7 @@ unl
 jSf
 pvp
 pvp
-smQ
+jSf
 nCZ
 jSf
 pvp
@@ -130041,8 +130058,8 @@ xBj
 hto
 unl
 dcE
-mPy
-hpI
+dcE
+psc
 pOL
 oSY
 nqt
@@ -187857,7 +187874,7 @@ nlm
 nlm
 nlm
 nlm
-vUn
+xrx
 qqY
 hRj
 dCm
@@ -189389,11 +189406,11 @@ nzg
 fVM
 laO
 aVB
-gmq
-gmq
-gmq
-gmq
-aMq
+tgJ
+tgJ
+tgJ
+tgJ
+knC
 fiY
 lxO
 tkV
@@ -189646,8 +189663,8 @@ fVM
 aYQ
 hhI
 gmq
-aMq
-iOk
+knC
+ruQ
 gmq
 aMq
 iOk
@@ -189903,9 +189920,9 @@ fVM
 fVM
 xrz
 wKI
-aMq
-ruQ
-aMq
+jpE
+uPA
+knC
 knC
 iOk
 aMq
@@ -190425,7 +190442,7 @@ nLt
 rDI
 tRg
 yar
-nLt
+hmg
 twI
 shx
 rqo
@@ -197900,7 +197917,7 @@ dDL
 nlm
 nlm
 nlm
-mAm
+dDL
 nlm
 nlm
 nlm
