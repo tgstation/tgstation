@@ -572,7 +572,7 @@
 		description = "More souls for the Geometer!"
 		return
 
-	var/ispet = istype(dead_mob, /mob/living/basic/pet)
+	var/ispet = istype(dead_mob, /mob/living/basic/pet) || ismonkey(dead_mob)
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
 		description = replacetext(dont_care_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 		mood_change = 0

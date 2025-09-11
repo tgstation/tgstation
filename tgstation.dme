@@ -1890,7 +1890,6 @@
 #include "code\datums\quirks\neutral_quirks\transhumanist.dm"
 #include "code\datums\quirks\neutral_quirks\vegetarian.dm"
 #include "code\datums\quirks\positive_quirks\alcohol_tolerance.dm"
-#include "code\datums\quirks\positive_quirks\apathetic.dm"
 #include "code\datums\quirks\positive_quirks\bilingual.dm"
 #include "code\datums\quirks\positive_quirks\chip_connector.dm"
 #include "code\datums\quirks\positive_quirks\chipped.dm"

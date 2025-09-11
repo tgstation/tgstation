@@ -533,6 +533,7 @@
 /mob/dead/observer/sync_mind()
 	return
 
+/// Iterates over this mind's assigned role's departments and returns a list of their primary work areas.
 /datum/mind/proc/get_work_areas()
 	var/list/work_areas = list()
 	for(var/department in assigned_role.departments_list)
