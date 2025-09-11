@@ -47,6 +47,13 @@
 	bodypart.add_bodypart_overlay(overlay)
 	return overlay
 
+/datum/bodypart_overlay/simple/emote/tongue
+	icon_state = "tongue"
+	draw_color = COLOR_TONGUE_PINK
+	layers = EXTERNAL_ADJACENT
+	offset_key = OFFSET_FACE
+	attached_body_zone = BODY_ZONE_HEAD
+
 /datum/bodypart_overlay/simple/emote/blush
 	icon_state = "blush"
 	draw_color = COLOR_BLUSH_PINK

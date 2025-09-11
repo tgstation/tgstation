@@ -111,16 +111,16 @@
 		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
+		context[SCREENTIP_CONTEXT_RMB] = "Empty nutrients"
+
 		switch(plant_status)
 			if(HYDROTRAY_PLANT_DEAD)
 				context[SCREENTIP_CONTEXT_LMB] = "Remove dead plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
 			if(HYDROTRAY_PLANT_HARVESTABLE)
 				context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
-		return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
 	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
@@ -937,6 +937,12 @@
 		else
 			to_chat(user, span_warning("This plot is completely devoid of weeds! It doesn't need uprooting."))
 			return
+
+	else if(O.sharpness) // Allows for the extraction (for opium or sap) interaction if a seed has it.
+		if(myseed && !myseed.extracted)
+			myseed.interact_with_atom(O, user, src)
+		else
+			return ..()
 
 	else if(istype(O, /obj/item/secateurs))
 		if(!myseed)
