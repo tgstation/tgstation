@@ -48,8 +48,8 @@ handles linking back and forth.
 		connect_to_silo = TRUE
 
 	if(mapload) // wait for silo to initialize during mapload
-		connection = CALLBACK(src, PROC_REF(_PrepareStorage))
-		SSticker.OnRoundstart(connection, connect_to_silo)
+		connection = CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo)
+		SSticker.OnRoundstart(connection)
 	else //directly register in round
 		_PrepareStorage(connect_to_silo)
 
