@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "hand crafted air sensors now auto connect to input & output ports if they are located within a 4 tile radius from it"
-  - qol: "atmos control monitors now locate all air sensors nearest to in on that same z level meaning you can have multiple air sensors of the same type on the same map"
-  - refactor: "refactored how air sensors & atmos monitors connect to each other. Please report any atmos computers that have missing input valves/output ports on their connected air sensors or those that don't list any air sensors at all on github"
