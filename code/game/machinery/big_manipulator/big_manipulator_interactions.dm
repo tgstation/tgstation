@@ -44,9 +44,6 @@
 			if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
 				continue
 
-			if(!pickup_point.check_filters_for_atom(candidate))
-				continue
-
 			if(!dest_point.check_filters_for_atom(candidate))
 				continue
 
@@ -219,7 +216,7 @@
 	if(!origin_turf)
 		return
 
-	rotate_to_point(origin_point, PROC_REF(try_interact_with_origin_point))
+	rotate_to_point(origin_point, PROC_REF(try_interact_with_origin_point), CURRENT_TASK_MOVING_PICKUP)
 	return TRUE
 
 /// Attempts to interact with the origin point (pick up the object)
@@ -271,7 +268,7 @@
 		SStgui.update_uis(src)
 		return handle_no_work_available()
 
-	rotate_to_point(destination_point, PROC_REF(try_interact_with_destination_point))
+	rotate_to_point(destination_point, PROC_REF(try_interact_with_destination_point), CURRENT_TASK_MOVING_DROPOFF)
 	return TRUE
 
 /// Attempts to interact with the destination point (drop/use/throw the object)
@@ -298,7 +295,7 @@
 	return TRUE
 
 /// Rotates the manipulator arm to face the target point.
-/obj/machinery/big_manipulator/proc/rotate_to_point(datum/interaction_point/target_point, callback)
+/obj/machinery/big_manipulator/proc/rotate_to_point(datum/interaction_point/target_point, callback, type)
 	if(!target_point)
 		return FALSE
 
@@ -310,7 +307,7 @@
 	var/num_rotations = round(abs(angle_diff) / 45)
 	var/total_rotation_time = num_rotations * BASE_INTERACTION_TIME / speed_multiplier
 
-	start_task(CURRENT_TASK_MOVING, total_rotation_time)
+	start_task(type == CURRENT_TASK_MOVING_PICKUP ? CURRENT_TASK_MOVING_PICKUP : CURRENT_TASK_MOVING_DROPOFF, total_rotation_time)
 
 	// If the next point is on the same tile, we don't need to rotate at all
 	if(num_rotations == 0)
