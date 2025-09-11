@@ -10,7 +10,7 @@
 	incompatible_modules = list(/obj/item/mod/module/magnetic_harness)
 	required_slots = list(ITEM_SLOT_OCLOTHING)
 	/// Time before we activate the magnet.
-	var/magnet_delay = 0.8 SECONDS
+	var/magnet_delay = 0.2 SECONDS
 	/// The typecache of all guns we allow.
 	var/static/list/guns_typecache
 	/// The guns already allowed by the modsuit chestplate.
