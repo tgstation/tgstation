@@ -596,7 +596,7 @@
 		mood_change *= 1.5
 		timeout *= 1.5
 	if(HAS_TRAIT(owner, TRAIT_DESENSITIZED))
-		mood_change *= 0.25
+		mood_change *= 0.5
 		timeout *= 0.5
 		description = replacetext(desensitized_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 		return
