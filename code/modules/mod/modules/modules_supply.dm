@@ -700,7 +700,8 @@
 	var/mutable_appearance/explosion_image = mutable_appearance('icons/effects/96x96.dmi', "judicial_explosion", FLOAT_LAYER, src, ABOVE_GAME_PLANE)
 	explosion_image.pixel_w = -32
 	explosion_image.pixel_z = -32
-	add_overlay(explosion_image)
+	var/turf/our_loc = get_turf(src)
+	our_loc.flick_overlay_view(explosion_image, 1.35 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(boom), firer), explosion_time)
 
 /obj/structure/mining_bomb/proc/boom(atom/movable/firer)
