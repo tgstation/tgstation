@@ -1,0 +1,7 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - map: "Added shutters in Cargo bay on every station."
+  - map: "Added firelocks on lower Cargo staircase on TramStation. Also added space shutters in drone bay to prevent easy spacing."
+  - map: "Windows in Meta and IceBox Cargo security outposts are now hotwired, like every other security outpost does."
+  - map: "Replaced blast doors on regular shutters in QM office on MetaStation."

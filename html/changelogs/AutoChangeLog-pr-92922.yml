@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "snails no longer crush glass tables when crawling over them"
