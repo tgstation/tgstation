@@ -19756,8 +19756,8 @@
 /area/station/hallway/primary/starboard)
 "fLd" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8;
-	initialize_directions = 8
+	dir = 4;
+	initialize_directions = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/hallway)
@@ -20802,6 +20802,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "fZP" = (
@@ -54412,6 +54413,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/hallway)
 "pKp" = (
@@ -64900,10 +64902,6 @@
 	},
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
-"sOS" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/disposal/incinerator)
 "sOT" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -67722,8 +67720,8 @@
 "tIn" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8;
-	initialize_directions = 8
+	dir = 4;
+	initialize_directions = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/hallway)
@@ -189128,11 +189126,11 @@ dDL
 dDL
 dDL
 dDL
-sOS
+shx
 pPu
 shx
 hfS
-sOS
+shx
 bIu
 gmq
 gmq
@@ -191957,10 +191955,10 @@ heR
 dDL
 shx
 shx
-sOS
-sOS
-sOS
-sOS
+shx
+shx
+shx
+shx
 shx
 kHY
 kHY
