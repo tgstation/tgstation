@@ -184,9 +184,6 @@
 	memory_saved = TRUE
 	return TRUE
 
-/mob/living/basic/parrot/poly/setup_headset()
-	ears = new /obj/item/radio/headset/headset_eng(src)
-
 /mob/living/basic/parrot/poly/ghost
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
