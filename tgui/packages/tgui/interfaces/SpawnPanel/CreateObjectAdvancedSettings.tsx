@@ -17,11 +17,10 @@ interface CreateObjectAdvancedSettingsProps {
 }
 
 export function CreateObjectAdvancedSettings(
-  CreateObjectAdvancedSettingsProps,
+  props: CreateObjectAdvancedSettingsProps,
 ) {
   const { act, data } = useBackend<SpawnPanelData>();
-  const { iconSettings, onIconSettingsChange } =
-    CreateObjectAdvancedSettingsProps;
+  const { iconSettings, onIconSettingsChange } = props;
 
   const sendUpdatedSettings = (
     changedSettings: Partial<Record<string, unknown>> = {},

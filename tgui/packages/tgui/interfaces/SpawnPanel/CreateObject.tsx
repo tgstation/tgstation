@@ -37,10 +37,6 @@ interface SpawnPreferences {
   selected_atom?: string;
 }
 
-interface CurrentList {
-  atoms: Record<string, AtomData>;
-}
-
 export function CreateObject(props: CreateObjectProps) {
   const { act, data } = useBackend<SpawnPanelData>();
   const { setAdvancedSettings, iconSettings, objList = { atoms: {} } } = props;
@@ -53,15 +49,10 @@ export function CreateObject(props: CreateObjectProps) {
   const [showIcons, setshowIcons] = useState(false);
   const [showPreview, setshowPreview] = useState(false);
 
-  useEffect(() => {}, [iconSettings.icon, iconSettings.iconState]);
-
   // flattening the object lists
-  const allObjects = Object.assign({}, ...Object.values(objList)) as Record<
-    string,
-    AtomData
-  >;
+  const allObjects = objList.atoms;
 
-  const CurrentList = objList as CurrentList;
+  const currentList = objList;
   const currentType = allObjects[data.copied_type ?? '']?.type || 'Objects';
 
   const { query, setQuery, results } = useFuzzySearch({
@@ -81,10 +72,10 @@ export function CreateObject(props: CreateObjectProps) {
   useEffect(() => {
     if (data.selected_object) {
       setSelectedObj(data.selected_object);
-      if (CurrentList[data.selected_object]) {
+      if (currentList[data.selected_object]) {
         props.onIconSettingsChange?.({
-          icon: CurrentList[data.selected_object].icon,
-          iconState: CurrentList[data.selected_object].icon_state,
+          icon: currentList[data.selected_object].icon,
+          iconState: currentList[data.selected_object].icon_state,
         });
       }
     }
