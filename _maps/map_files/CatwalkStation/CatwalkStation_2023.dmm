@@ -9764,10 +9764,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
-"cNT" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/disposal/incinerator)
 "cOe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -190691,7 +190687,7 @@ fVM
 fVM
 shx
 sRd
-cNT
+shx
 gbc
 ngQ
 ngQ
