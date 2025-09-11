@@ -174,6 +174,10 @@
 	description = "I'm nervous and on edge and I can't stand still!!"
 	mood_change = -2
 
+/datum/mood_event/jittery/add_effects(...)
+	if(HAS_PERSONALITY(owner, /datum/personality/paranoid))
+		mood_change -= 1
+
 /datum/mood_event/choke
 	description = "I CAN'T BREATHE!!!"
 	mood_change = -10
@@ -202,7 +206,7 @@
 	event_flags = MOOD_EVENT_FEAR
 
 /datum/mood_event/phobia
-	description = "I saw something very frightening."
+	description = "I saw something very frightening!"
 	mood_change = -4
 	timeout = 4 MINUTES
 	event_flags = MOOD_EVENT_FEAR
