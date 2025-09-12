@@ -2728,6 +2728,7 @@
 #include "code\game\objects\items\kirby_plants\organic_plants.dm"
 #include "code\game\objects\items\kirby_plants\synthetic_plants.dm"
 #include "code\game\objects\items\melee\baton.dm"
+#include "code\game\objects\items\melee\chainofcommand.dm"
 #include "code\game\objects\items\melee\energy.dm"
 #include "code\game\objects\items\melee\misc.dm"
 #include "code\game\objects\items\rcd\RCD.dm"
