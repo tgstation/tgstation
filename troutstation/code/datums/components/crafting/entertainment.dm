@@ -3,7 +3,7 @@
 	result = /obj/item/toy/plush/rufran
 	time = 1 SECONDS
 	reqs = list(
-		/obj/item/dnainjector/gigantism = 1,
+		/obj/item/dnainjector = 1,
 		/obj/item/toy/plush/moth = 1
 		)
 	category = CAT_ENTERTAINMENT

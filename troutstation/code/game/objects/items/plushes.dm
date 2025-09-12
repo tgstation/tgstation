@@ -79,10 +79,11 @@
 	name = "rufran plushie"
 	desc = "An adorable stuffed toy that resembles a moth and a bird. You feel like it looked smaller earlier."
 	icon_state = "plushie_rufran"
+	squeak_override = list('sound/mobs/humanoids/moth/scream_moth.ogg'=1)
 	var/size = RUFRAN_NORMAL_SIZE
 
-/obj/item/toy/plush/rufran/attackby(obj/item/dnainjector/gigantism/serum, mob/user, list/modifiers, list/attack_modifiers)
-	if(serum.used==FALSE && istype(serum, /obj/item/dnainjector/gigantism) && size < RUFRAN_GIGANTIC_SIZE)
+/obj/item/toy/plush/rufran/attackby(obj/item/dnainjector/serum, mob/user, list/modifiers, list/attack_modifiers)
+	if((serum.used==FALSE && size < RUFRAN_GIGANTIC_SIZE && /datum/mutation/gigantism in serum.add_mutations) || (serum.used==FALSE && size < RUFRAN_GIGANTIC_SIZE && serum.add_mutations[1].name == "Gigantism")) // holy shit if you can make this cleaner PLEASE
 		to_chat(user, span_notice("You inject [src] with the gigantism serum!"))
 		size += RUFRAN_SIZE_INCREMENT
 		AddElement(/datum/element/item_scaling, size, size)
