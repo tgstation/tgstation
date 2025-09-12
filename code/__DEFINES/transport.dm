@@ -112,6 +112,3 @@ DEFINE_BITFIELD(request_flags, list(
 #define TRANSPORT_REMOTE_FAULT 3
 #define TRANSPORT_LOCAL_FAULT 4
 #define TRANSPORT_BREAKDOWN_RATE 0.0175
-
-// Temporary pod cap
-#define TEMPPODCAP 50
