@@ -720,6 +720,6 @@
 
 /datum/chemical_reaction/drink/blue_blazer
 	results=list(/datum/reagent/consumable/ethanol/blue_blazer = 9)
-	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 4, /datum/reagent/water = 4, /datum/reagent/consumable/sugar = 1, )
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 4, /datum/reagent/water = 4, /datum/reagent/consumable/sugar = 1)
 	mix_message = "The whiskey ignites in a brilliant blue flame!"
 	required_temp = 365 //autoignition temp of ethanol
