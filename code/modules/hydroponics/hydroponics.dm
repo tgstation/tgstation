@@ -529,16 +529,14 @@
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
-	var/obj/item/seeds/old_seed = myseed
+	var/old_seed = myseed
 	myseed = new_seed
-	old_seed?.on_unplanted(src)
 	if(old_seed && delete_old_seed)
 		qdel(old_seed)
 	set_plant_status(new_seed ? HYDROTRAY_PLANT_GROWING : HYDROTRAY_NO_PLANT) //To make sure they can't just put in another seed and insta-harvest it
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
-	myseed?.on_planted(src)
 	age = 0
 	update_appearance()
 	if(isnull(myseed))
@@ -940,21 +938,6 @@
 			to_chat(user, span_warning("This plot is completely devoid of weeds! It doesn't need uprooting."))
 			return
 
-	else if(O.tool_behaviour == TOOL_SHOVEL)
-		if(!myseed && !weedlevel)
-			to_chat(user, span_warning("[src] doesn't have any plants or weeds!"))
-			return
-		user.visible_message(span_notice("[user] starts digging out [src]'s plants..."),
-			span_notice("You start digging out [src]'s plants..."))
-		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
-			user.visible_message(span_notice("[user] digs out the plants in [src]!"), span_notice("You dig out all of [src]'s plants!"))
-			if(myseed) //Could be that they're just using it as a de-weeder
-				set_plant_health(0, update_icon = FALSE, forced = TRUE)
-				lastproduce = 0
-				set_seed(null)
-			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
-			return
-
 	else if(istype(O, /obj/item/secateurs))
 		if(!myseed)
 			to_chat(user, span_notice("This plot is empty."))
@@ -1034,6 +1017,20 @@
 			set_seed(null)
 		return
 
+	else if(O.tool_behaviour == TOOL_SHOVEL)
+		if(!myseed && !weedlevel)
+			to_chat(user, span_warning("[src] doesn't have any plants or weeds!"))
+			return
+		user.visible_message(span_notice("[user] starts digging out [src]'s plants..."),
+			span_notice("You start digging out [src]'s plants..."))
+		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
+			user.visible_message(span_notice("[user] digs out the plants in [src]!"), span_notice("You dig out all of [src]'s plants!"))
+			if(myseed) //Could be that they're just using it as a de-weeder
+				set_plant_health(0, update_icon = FALSE, forced = TRUE)
+				lastproduce = 0
+				set_seed(null)
+			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
+			return
 	else if(istype(O, /obj/item/gun/energy/floragun))
 		var/obj/item/gun/energy/floragun/flowergun = O
 		if(flowergun.cell.charge < flowergun.cell.maxcharge)
