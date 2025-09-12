@@ -723,4 +723,3 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 4, /datum/reagent/water = 4, /datum/reagent/consumable/sugar = 1)
 	mix_message = "The whiskey ignites in a brilliant blue flame!"
 	required_temp = 365 //autoignition temp of ethanol
-	
