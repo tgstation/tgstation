@@ -253,7 +253,6 @@
 		AM.visible_message(span_notice("The transit system is currently overloaded. Please wait."))
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
-	SStransport.temppods |= pod
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
