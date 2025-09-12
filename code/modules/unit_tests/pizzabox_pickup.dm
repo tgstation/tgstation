@@ -1,4 +1,4 @@
-/// Unit test to ensure pizza boxes can be picked up when on the ground using alt-click
+/// Unit test to ensure pizza boxes can be picked up when on the ground using drag-click
 /datum/unit_test/pizzabox_pickup
 
 /datum/unit_test/pizzabox_pickup/Run()
@@ -23,9 +23,9 @@
 	if(dropped_slice)
 		qdel(dropped_slice)
 	
-	// Test 2: Alt+click should pick up the box even with sliced pizza
-	test_box.click_alt(test_user)
-	TEST_ASSERT(test_box.loc == test_user, "Alt+click should pick up pizza box from ground even with sliced pizza")
+	// Test 2: Drag-click should pick up the box even with sliced pizza
+	test_box.mouse_drop_dragged(test_user, test_user)
+	TEST_ASSERT(test_box.loc == test_user, "Drag-click should pick up pizza box from ground even with sliced pizza")
 	
 	// Test 3: When holding the box, should be able to take slices
 	test_user.put_in_inactive_hand(test_box)

@@ -196,16 +196,17 @@
 		update_appearance()
 		user.regenerate_icons()
 
-/obj/item/pizzabox/click_alt(mob/user)
-	if(!can_use(user))
-		return CLICK_ACTION_BLOCKING
-	if(isobj(loc))
-		balloon_alert(user, "can't pick up from there!")
-		return CLICK_ACTION_BLOCKING
-	// Force pickup behavior when alt-clicking
-	if(attempt_pickup(user))
-		return CLICK_ACTION_SUCCESS
-	return CLICK_ACTION_BLOCKING
+/obj/item/pizzabox/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	// When dragging pizza box onto user, allow pickup even with sliced pizza
+	if(over_object == user)
+		if(!can_use(user))
+			return
+		if(isobj(loc))
+			balloon_alert(user, "can't pick up from there!")
+			return
+		attempt_pickup(user)
+		return
+	return ..() // Pass through to parent for other drag behaviors
 
 /obj/item/pizzabox/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
 	. = NONE
@@ -448,10 +449,9 @@
 /obj/item/pizzabox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(!held_item)
 		if(user.get_inactive_held_item() != src)
-			// When not holding the box, show slice-taking or pickup options
+			// When not holding the box, show slice-taking option
 			if(open && pizza?.sliced && !isobj(loc))
 				context[SCREENTIP_CONTEXT_LMB] = "Take slice"
-				context[SCREENTIP_CONTEXT_ALT_LMB] = "Pick up box"
 			return CONTEXTUAL_SCREENTIP_SET
 		if(open)
 			if(pizza)
