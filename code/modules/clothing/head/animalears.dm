@@ -10,7 +10,7 @@
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
 		update_icon(ALL, user)
 		user.update_worn_head() //Color might have been changed by update_appearance.
-	..()
+	return ..()
 
 /obj/item/clothing/head/costume/kitty/update_icon(updates=ALL, mob/living/carbon/human/user)
 	. = ..()

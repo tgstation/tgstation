@@ -45,7 +45,7 @@
 #define INJECT (1<<4)
 /// Exclusive to just plumbing. if set we use the round robin technique else we use proportional
 #define LINEAR (1<<5)
-/// Used by smoke or inhaling from a source. Smoke and cigarettes.
+/// Used by smoke or inhaling from a source. Smoke, cigarettes, and inhalers.
 #define INHALE (1<<6)
 
 ///Smoke machines are both touch and inhaling

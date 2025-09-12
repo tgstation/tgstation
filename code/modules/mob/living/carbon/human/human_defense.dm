@@ -393,7 +393,7 @@
 	if (!(flags & SHOCK_NO_HUMAN_ANIM))
 		electrocution_animation(4 SECONDS)
 
-/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots() //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
+/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize obscured_slots //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
@@ -673,29 +673,28 @@
 
 /mob/living/carbon/human/proc/burn_clothing(seconds_per_tick, stacks)
 	var/list/burning_items = list()
-	var/covered = check_covered_slots()
 	//HEAD//
 
-	if(glasses && !(covered & ITEM_SLOT_EYES))
+	if(glasses && !(covered_slots & HIDEEYES))
 		burning_items += glasses
-	if(wear_mask && !(covered & ITEM_SLOT_MASK))
+	if(wear_mask && !(covered_slots & HIDEMASK))
 		burning_items += wear_mask
-	if(wear_neck && !(covered & ITEM_SLOT_NECK))
+	if(wear_neck && !(covered_slots & HIDENECK))
 		burning_items += wear_neck
-	if(ears && !(covered & ITEM_SLOT_EARS))
+	if(ears && !(covered_slots & HIDEEARS))
 		burning_items += ears
 	if(head)
 		burning_items += head
 
 	//CHEST//
-	if(w_uniform && !(covered & ITEM_SLOT_ICLOTHING))
+	if(w_uniform && !(covered_slots & HIDEJUMPSUIT))
 		burning_items += w_uniform
 	if(wear_suit)
 		burning_items += wear_suit
 
 	//ARMS & HANDS//
 	var/obj/item/clothing/arm_clothes = null
-	if(gloves && !(covered & ITEM_SLOT_GLOVES))
+	if(gloves && !(covered_slots & HIDEGLOVES))
 		arm_clothes = gloves
 	else if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
 		arm_clothes = wear_suit
@@ -706,7 +705,7 @@
 
 	//LEGS & FEET//
 	var/obj/item/clothing/leg_clothes = null
-	if(shoes && !(covered & ITEM_SLOT_FEET))
+	if(shoes && !(covered_slots & HIDESHOES))
 		leg_clothes = shoes
 	else if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
 		leg_clothes = wear_suit

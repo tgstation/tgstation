@@ -28,17 +28,17 @@
 
 /datum/species/fly/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
-	RegisterSignal(human_who_gained_species, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
+	RegisterSignal(human_who_gained_species, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/species/fly/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+	UnregisterSignal(C, COMSIG_ATOM_ATTACKBY)
 
-/datum/species/fly/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+/datum/species/fly/proc/on_attackby(mob/living/source, obj/item/attacking_item, mob/living/attacker, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
 
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
-		damage_mods += 30 // Yes, a 30x damage modifier
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 30) // Yes, a 30x damage modifier
 
 /datum/species/fly/get_physical_attributes()
 	return "These hideous creatures suffer from pesticide immensely, eat waste, and are incredibly vulnerable to bright lights. They do have wings though."

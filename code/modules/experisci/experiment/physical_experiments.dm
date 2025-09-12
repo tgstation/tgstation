@@ -43,12 +43,12 @@
 		linked_experiment_handler.announce_message("Incorrect object for experiment.")
 		return FALSE
 
-	RegisterSignal(currently_scanned_atom, COMSIG_ARCADE_PRIZEVEND, PROC_REF(win_arcade))
+	RegisterSignal(currently_scanned_atom, COMSIG_ARCADE_VICTORY, PROC_REF(win_arcade))
 	linked_experiment_handler.announce_message("Experiment ready to start.")
 	return TRUE
 
 /datum/experiment/physical/arcade_winner/unregister_events()
-	UnregisterSignal(currently_scanned_atom, COMSIG_ARCADE_PRIZEVEND)
+	UnregisterSignal(currently_scanned_atom, COMSIG_ARCADE_VICTORY)
 
 /datum/experiment/physical/arcade_winner/check_progress()
 	. += EXPERIMENT_PROG_BOOL("Win an arcade game at a tracked arcade cabinet.", is_complete())

@@ -668,7 +668,6 @@
 		if(autocuff && iscarbon(target))
 			var/mob/living/carbon/carbontarget = target
 			carbontarget.set_handcuffed(new cuff_type(carbontarget))
-			carbontarget.update_handcuffed()
 		return
 
 	if(istype(target, /obj/machinery/door))

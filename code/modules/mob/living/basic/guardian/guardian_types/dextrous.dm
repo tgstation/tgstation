@@ -81,7 +81,7 @@
 	internal_storage = equipping
 	update_inv_internal_storage()
 
-	equipping.on_equipped(src, slot)
+	has_equipped(equipping, slot)
 	return TRUE
 
 /mob/living/basic/guardian/dextrous/getBackSlot()

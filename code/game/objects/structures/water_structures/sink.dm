@@ -159,13 +159,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		O.play_tool_sound(src)
 		has_water_reclaimer = FALSE
 		new/obj/item/stock_parts/water_recycler(get_turf(loc))
-		to_chat(user, span_notice("You remove the water reclaimer from [src]"))
-		return
-
-	if(istype(O, /obj/item/stack/ore/glass))
-		new /obj/item/stack/sheet/sandblock(loc)
-		to_chat(user, span_notice("You wet the sand in the sink and form it into a block."))
-		O.use(1)
+		to_chat(user, span_notice("You remove the water reclaimer from [src]."))
 		return
 
 	if(istype(O, /obj/item/stock_parts/water_recycler))

@@ -153,6 +153,9 @@
 /obj/item/food/meat/slab/human/mutant/skeleton/make_processable()
 	return //skeletons don't have cutlets
 
+/obj/item/food/meat/slab/human/mutant/skeleton/make_grillable()
+	return
+
 /obj/item/food/meat/slab/human/mutant/zombie
 	name = "meat (rotten)"
 	icon_state = "rottenmeat"

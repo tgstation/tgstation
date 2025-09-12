@@ -1,0 +1,3 @@
+/obj/machinery/atmospherics/components/unary/vent_pump/@SUBTYPES{chamber_id=@ANY} : /obj/machinery/atmospherics/components/unary/vent_pump/@SUBTYPES{@OLD;chamber_id=@SKIP}
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/@SUBTYPES{chamber_id=@ANY} : /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/@SUBTYPES{@OLD;chamber_id=@SKIP}
+

@@ -130,10 +130,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...", "plunging shower...")
-	if(do_after(user, 3 SECONDS, target = src))
-		user.balloon_alert_to_viewers("finished plunging")
-		reagents.expose(get_turf(src), TOUCH) //splash on the floor
-		reagents.clear_reagents()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return TRUE
+	user.balloon_alert_to_viewers("finished plunging")
+	reagents.expose(get_turf(src), TOUCH) //splash on the floor
+	reagents.clear_reagents()
+	begin_processing()
+	return TRUE
 
 /obj/machinery/shower/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))

@@ -270,6 +270,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 	if(isnull(item.atom_storage))
 		return NONE
 

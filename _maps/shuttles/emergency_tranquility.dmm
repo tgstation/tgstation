@@ -920,7 +920,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "rK" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape)
 "rL" = (
@@ -1072,7 +1072,7 @@
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "vx" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "vy" = (
@@ -1370,7 +1370,7 @@
 	dir = 9
 	},
 /mob/living/basic/bot/cleanbot,
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ac" = (

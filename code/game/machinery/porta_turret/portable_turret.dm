@@ -324,55 +324,61 @@ DEFINE_BITFIELD(turret_flags, list(
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/porta_turret/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(machine_stat & BROKEN)
-		if(I.tool_behaviour == TOOL_CROWBAR)
-			//If the turret is destroyed, you can remove it with a crowbar to
-			//try and salvage its components
-			to_chat(user, span_notice("You begin prying the metal coverings off..."))
-			if(I.use_tool(src, user, 20))
-				if(prob(70))
-					if(stored_gun)
-						stored_gun.forceMove(loc)
-						stored_gun = null
-					to_chat(user, span_notice("You remove the turret and salvage some components."))
-					if(prob(50))
-						new /obj/item/stack/sheet/iron(loc, rand(1,4))
-					if(prob(50))
-						new /obj/item/assembly/prox_sensor(loc)
-				else
-					to_chat(user, span_notice("You remove the turret but did not manage to salvage anything."))
-				qdel(src)
+/obj/machinery/porta_turret/crowbar_act(mob/living/user, obj/item/tool)
+	if(!(machine_stat & BROKEN))
+		return NONE
 
-	else if((I.tool_behaviour == TOOL_WRENCH) && (!on))
-		if(raised)
-			return
-
-		//This code handles moving the turret around. After all, it's a portable turret!
-		if(!anchored && !isinspace())
-			set_anchored(TRUE)
-			RemoveInvisibility(id=type)
-			update_appearance()
-			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
-			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
-				cover.parent_turret = src //make the cover's parent src
-		else if(anchored)
-			set_anchored(FALSE)
-			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
-			power_change()
-			SetInvisibility(INVISIBILITY_NONE, id=type)
-			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
-
-	else if(I.GetID())
-		//Behavior lock/unlock mangement
-		if(allowed(user))
-			locked = !locked
-			to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
-		else
-			to_chat(user, span_alert("Access denied."))
+	//If the turret is destroyed, you can remove it with a crowbar to
+	//try and salvage its components
+	to_chat(user, span_notice("You begin prying the metal coverings off..."))
+	if(!tool.use_tool(src, user, 20))
+		return ITEM_INTERACT_BLOCKING
+	if(prob(70))
+		if(stored_gun)
+			stored_gun.forceMove(loc)
+			stored_gun = null
+		to_chat(user, span_notice("You remove the turret and salvage some components."))
+		if(prob(50))
+			new /obj/item/stack/sheet/iron(loc, rand(1,4))
+		if(prob(50))
+			new /obj/item/assembly/prox_sensor(loc)
 	else
-		return ..()
+		to_chat(user, span_notice("You remove the turret but did not manage to salvage anything."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/porta_turret/wrench_act(mob/living/user, obj/item/tool)
+	if(on || raised)
+		return NONE
+
+	//This code handles moving the turret around. After all, it's a portable turret!
+	if(!anchored && !isinspace())
+		set_anchored(TRUE)
+		RemoveInvisibility(id=type)
+		update_appearance()
+		to_chat(user, span_notice("You secure the exterior bolts on the turret."))
+		if(has_cover)
+			cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
+			cover.parent_turret = src //make the cover's parent src
+	else if(anchored)
+		set_anchored(FALSE)
+		to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
+		power_change()
+		SetInvisibility(INVISIBILITY_NONE, id=type)
+		qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/porta_turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.GetID())
+		return NONE
+
+	//Behavior lock/unlock mangement
+	if(!allowed(user))
+		to_chat(user, span_alert("Access denied."))
+		return ITEM_INTERACT_BLOCKING
+	locked = !locked
+	to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

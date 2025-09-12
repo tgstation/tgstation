@@ -1375,7 +1375,6 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "asrc_b";
 	dir = 8
 	},
 /turf/open/floor/engine/air,
@@ -3719,7 +3718,6 @@
 /area/ruin/space/has_grav/dangerous_research)
 "Xb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "asrc_a";
 	dir = 8
 	},
 /turf/open/floor/engine/airless,

@@ -260,7 +260,7 @@
 	if(remote_eye.zMove(UP))
 		to_chat(owner, span_notice("You move upwards."))
 	else
-		to_chat(owner, span_notice("You couldn't move upwards!"))
+		to_chat(owner, span_notice("You can't move upwards!"))
 
 /datum/action/innate/camera_multiz_down
 	name = "Move down a floor"
@@ -274,7 +274,7 @@
 	if(remote_eye.zMove(DOWN))
 		to_chat(owner, span_notice("You move downwards."))
 	else
-		to_chat(owner, span_notice("You couldn't move downwards!"))
+		to_chat(owner, span_notice("You can't move downwards!"))
 
 /obj/machinery/computer/camera_advanced/human_ai/screwdriver_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "repackaging...")

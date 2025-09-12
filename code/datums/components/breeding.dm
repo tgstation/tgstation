@@ -51,6 +51,9 @@
 	if(source.combat_mode)
 		return
 
+	if(source.client || target.client)
+		return
+
 	if(!is_type_in_typecache(target, can_breed_with))
 		return
 

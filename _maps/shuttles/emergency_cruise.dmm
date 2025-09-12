@@ -384,7 +384,7 @@
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -932,7 +932,7 @@
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -2054,7 +2054,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Cu" = (

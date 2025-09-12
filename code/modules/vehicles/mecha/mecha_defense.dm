@@ -269,6 +269,8 @@
 		return part.try_attach_part(user, src, FALSE)
 
 	if(is_wire_tool(tool) && (mecha_flags & PANEL_OPEN))
+		if(user.combat_mode)
+			return
 		if(wires.interact(user))
 			return ITEM_INTERACT_SUCCESS
 

@@ -43,6 +43,10 @@
 			job_datum.spawn_positions = 0
 			job_datum.total_positions = 0
 
+/// Returns all jobs that are in this category for jobbans
+/datum/job_department/proc/get_jobban_jobs()
+	return department_jobs.Copy()
+
 /// Returns a nation name for this department.
 /datum/job_department/proc/generate_nation_name()
 	var/static/list/nation_suffixes = list("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
@@ -92,6 +96,10 @@
 	associated_cargo_groups = list("Security", "Armory")
 	head_of_staff_access = ACCESS_HOS
 	department_access = REGION_ACCESS_SECURITY
+
+/datum/job_department/security/get_jobban_jobs()
+	// Captains often fulfill security duties so they are considered part of the security department for jobbans
+	return ..() | SSjob.get_job_type(/datum/job/captain)
 
 /datum/job_department/engineering
 	department_name = DEPARTMENT_ENGINEERING

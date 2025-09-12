@@ -170,13 +170,13 @@
 
 	//smelting the ore
 	for(var/obj/item/stack/ore/gathered_ore as anything in ore_list)
-		if(isnull(gathered_ore.refined_type))
+		var/obj/item/smelted_ore = gathered_ore.on_orm_collection(src)
+		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(gathered_ore, ore_multiplier) <= 0)
-			unload_mineral(gathered_ore) //if rejected unload
+		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+			unload_mineral(smelted_ore) //if rejected unload
 
-		SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
 
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make

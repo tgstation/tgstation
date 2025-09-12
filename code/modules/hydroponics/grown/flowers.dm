@@ -19,6 +19,19 @@
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
+/obj/item/seeds/poppy/interact_with_atom(obj/item/I, mob/user, obj/machinery/hydroponics/tray)
+	if(I.sharpness && !src.extracted && tray.age >= 10 && tray.age <= 19)
+		src.extracted = TRUE
+		var/seed_yield = tray.myseed?.potency
+		new /obj/item/food/drug/opium/raw(get_turf(src), seed_yield)
+		playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
+		playsound(loc, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
+		user.visible_message(
+			span_notice("You carefully slice the poppy's pod, collecting the fragrant, alluring sap.")
+		)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 /obj/item/food/grown/poppy
 	seed = /obj/item/seeds/poppy
 	name = "poppy"

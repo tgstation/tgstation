@@ -200,7 +200,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/data_validity_integer = check_savedata_version(savefile.get_entry())
 	if(load_and_save && IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
@@ -235,7 +235,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	if(SHOULD_UPDATE_DATA(data_validity_integer))
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.

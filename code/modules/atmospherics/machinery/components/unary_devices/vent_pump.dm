@@ -32,9 +32,6 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	/// id of air sensor its connected to
-	var/chamber_id
-
 	///area this vent is assigned to
 	var/area/assigned_area
 

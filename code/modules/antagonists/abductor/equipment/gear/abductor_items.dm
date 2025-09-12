@@ -445,7 +445,6 @@ Return to step 11 of normal process."}
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
 				if(!carbon_victim.handcuffed)
 					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(carbon_victim))
-					carbon_victim.update_handcuffed()
 					to_chat(user, span_notice("You restrain [carbon_victim]."))
 					log_combat(user, carbon_victim, "handcuffed")
 			else

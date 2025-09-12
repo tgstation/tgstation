@@ -557,6 +557,7 @@
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
 /area/mine/mechbay)
 "di" = (
@@ -736,6 +737,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -912,6 +914,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "fD" = (
@@ -1238,6 +1241,7 @@
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -1346,6 +1350,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/wall_healer/directional/north,
 /turf/open/floor/iron/white,
 /area/mine/medical)
 "hD" = (
@@ -2016,6 +2021,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/mine/eva)
 "lh" = (
@@ -2217,6 +2223,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/mine/lounge)
 "lP" = (
@@ -2650,6 +2657,7 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/light/directional/west,
+/obj/machinery/wall_healer/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "nl" = (
@@ -2908,6 +2916,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -3630,7 +3639,6 @@
 /area/mine/cafeteria)
 "sX" = (
 /obj/machinery/mechpad,
-/obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
@@ -3731,6 +3739,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white/smooth_corner,
 /area/mine/medical)
 "tE" = (
@@ -4206,6 +4215,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "wr" = (
@@ -4328,6 +4338,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/hydroponics)
 "xt" = (
@@ -5900,6 +5911,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -6414,6 +6427,7 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/storage/public)
 "Kp" = (
@@ -6558,6 +6572,7 @@
 /obj/effect/turf_decal/trimline/red/filled/mid_joiner{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -6758,6 +6773,7 @@
 "Mc" = (
 /obj/structure/chair/wood/wings,
 /obj/machinery/light/small/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/carpet/neon/simple/red/nodots,
 /area/mine/cafeteria)
 "Me" = (
@@ -7349,6 +7365,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/textured_edge{
 	dir = 8
 	},
@@ -8574,7 +8591,6 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "WJ" = (
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
@@ -8947,6 +8963,13 @@
 	dir = 1
 	},
 /area/mine/laborcamp/quarters)
+"YD" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron/dark,
+/area/mine/production)
 "YF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9034,6 +9057,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/mine/cafeteria)
 "Zp" = (
@@ -49223,7 +49247,7 @@ RY
 RY
 dQ
 Cg
-lb
+YD
 pK
 Ob
 IL

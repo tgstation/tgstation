@@ -1008,27 +1008,61 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/old_position = 1
 	while(position != 0)
 		// find next delimiter that is not within  "..."
-		position = find_next_delimiter_position(text,old_position,delimiter)
+		position = find_next_delimiter_position(text, old_position, delimiter)
 
 		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
-		var/equal_position = findtext(text,"=",old_position, position)
-		var/trim_left = trim(copytext(text,old_position,(equal_position ? equal_position : position)))
-		var/left_constant = parse_constant(trim_left)
-		if(position)
-			old_position = position + length(text[position])
-		if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+		var/equal_position = find_next_delimiter_position(text, old_position, "=")
+		var/trim_left = trim(copytext(text, old_position, (equal_position ? equal_position : position)))
+		if(!trim_left) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+			if(position)
+				old_position = position + length(text[position])
 			continue
 
-		if(equal_position && !isnum(left_constant))
+		var/is_simple = TRUE //linear list
+		var/trim_right = trim_left //simple var
+		if(equal_position)
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
-			var/trim_right = trim(copytext(text, equal_position + length(text[equal_position]), position))
-			var/right_constant = parse_constant(trim_right)
-			.[left_constant] = right_constant
-		else  // simple var
+			trim_right = trim(copytext(text, equal_position + length(text[equal_position]), position))
+			is_simple = FALSE
+
+		//right value is a list and since we used the delimiter , this text would be incomplete so we need to parse the full string
+		if(copytext(trim_right, 1, 6) == "list(")
+			var/start_index = is_simple ? old_position : equal_position + length(text[equal_position])
+			var/opening_count = 0
+			var/closing_count = 0
+			var/index = start_index
+			var/begin = FALSE
+			while(!begin || (opening_count != closing_count))
+				var/char = text[index]
+				if(char == "(")
+					opening_count += 1
+					begin = TRUE
+				else if(char == ")")
+					closing_count += 1
+				index += length(char)
+			trim_right = trim(copytext(text, start_index, index))
+			if(is_simple)
+				trim_left = trim_right
+			if(index >= length(text)) //stops a wasteful iteration when we reach the end
+				position = 0
+			else
+				old_position = index + length(text[index]) //this moves our pointer past , to the next element
+		else if(position)
+			old_position = position + length(text[position])
+
+		//assign value
+		var/left_constant = parse_constant(trim_left)
+		if(is_simple)
 			. += list(left_constant)
+		else
+			.[left_constant] = parse_constant(trim_right)
 
 /datum/parsed_map/proc/parse_constant(text)
+	// empty text
+	if(!text)
+		return ""
+
 	// number
 	var/num = text2num(text)
 	if(isnum(num))

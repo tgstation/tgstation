@@ -98,7 +98,9 @@
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...")
-	if(do_after(user, 3 SECONDS, target = src))
-		user.balloon_alert_to_viewers("finished plunging")
-		reagents.expose(get_turf(src), TOUCH) //splash on the floor
-		reagents.clear_reagents()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return TRUE
+	user.balloon_alert_to_viewers("finished plunging")
+	reagents.expose(get_turf(src), TOUCH) //splash on the floor
+	reagents.clear_reagents()
+	return TRUE

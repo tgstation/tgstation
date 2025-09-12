@@ -723,6 +723,7 @@
 	item = /obj/item/mod/module/injector
 	cost = 2
 	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	uplink_item_flags = NONE
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
@@ -730,6 +731,7 @@
 	item = /obj/item/mod/module/holster
 	cost = 2
 	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	uplink_item_flags = NONE
 
 /datum/uplink_item/device_tools/medgun_mod
 	name = "Medbeam Gun Module"

@@ -242,7 +242,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/drip,
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/wall_healer/free/directional/south{
 	use_power = 0
 	},
 /turf/template_noop,

@@ -22,10 +22,12 @@
 
 /obj/machinery/iv_drip/plumbing/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...", "plunging iv drip...")
-	if(do_after(user, 3 SECONDS, target = src))
-		user.balloon_alert_to_viewers("finished plunging")
-		reagents.expose(get_turf(src), TOUCH) //splash on the floor
-		reagents.clear_reagents()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return TRUE
+	user.balloon_alert_to_viewers("finished plunging")
+	reagents.expose(get_turf(src), TOUCH) //splash on the floor
+	reagents.clear_reagents()
+	return TRUE
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool) != SUCCESSFUL_UNFASTEN)

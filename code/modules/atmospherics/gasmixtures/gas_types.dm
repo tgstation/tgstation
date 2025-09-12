@@ -121,7 +121,7 @@
 	rarity = 500
 	purchaseable = TRUE
 	base_value = 0.5
-	desc = "Water, in gas form. Makes things slippery."
+	desc = "Water, in gas form. Makes floors slippery and washes items on them."
 	primary_color = "#b0c4de"
 
 /datum/gas/hypernoblium

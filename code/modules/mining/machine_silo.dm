@@ -33,8 +33,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	processing_flags = NONE
 
-	/// By default, an ore silo requires you to be wearing an ID to pull materials from it.
-	var/ID_required = TRUE
+	/// Only the station loaded ore silo starts out with ID restrictions, else its optional
+	var/ID_required = FALSE
 	/// List of all connected components that are on hold from accessing materials.
 	var/list/holds = list()
 	/// List of all components that are sharing ores with this silo.
@@ -52,6 +52,7 @@
 		RADIO_CHANNEL_SUPPLY = NONE,
 		RADIO_CHANNEL_SECURITY = NONE,
 	)
+	///List of announcement messages for silo restrictions
 	var/static/alist/announcement_messages = alist(
 		BAN_ATTEMPT_FAILURE_NO_ACCESS = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME lacks supply command authority.",
 		BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME attempting subversion of supply command authority.",
@@ -69,6 +70,7 @@
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
+
 	materials = AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
@@ -80,11 +82,27 @@
 		), \
 		allowed_items = /obj/item/stack \
 	)
+
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
+		ID_required = TRUE
+
 	register_context()
 	setup_radio()
 	configure_default_announcements_policy()
+
+/obj/machinery/ore_silo/Destroy()
+	if (GLOB.ore_silo_default == src)
+		GLOB.ore_silo_default = null
+
+	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
+		mats.disconnect()
+
+	ore_connected_machines = null
+	materials = null
+	QDEL_NULL(radio)
+
+	return ..()
 
 /obj/machinery/ore_silo/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -103,19 +121,6 @@
 	radio.keyslot.channels[RADIO_CHANNEL_SUPPLY] = TRUE
 	radio.keyslot.channels[RADIO_CHANNEL_SECURITY] = TRUE
 	radio.recalculateChannels()
-
-/obj/machinery/ore_silo/Destroy()
-	if (GLOB.ore_silo_default == src)
-		GLOB.ore_silo_default = null
-
-	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
-		mats.disconnect()
-
-	ore_connected_machines = null
-	materials = null
-	QDEL_NULL(radio)
-
-	return ..()
 
 /obj/machinery/ore_silo/examine(mob/user)
 	. = ..()
@@ -330,11 +335,12 @@
 
 		if("toggle_ban")
 			var/list/banned_user_data = params["user_data"]
-			attempt_ban_toggle(usr, banned_user_data)
+			attempt_ban_toggle(ui.user, banned_user_data)
 			return TRUE
 
 		if("toggle_restrict")
-			attempt_toggle_restrict(usr)
+			attempt_toggle_restrict(ui.user)
+			return TRUE
 /**
  * Called from the ore silo's UI, when someone attempts to (un)ban a user from using the ore silo.
  * The person doing the banning should have at least QM access. Unless this is emagged. Not modifiable by silicons unless emagged.
@@ -558,6 +564,7 @@
 	var/amount
 	///List of individual materials used in the action
 	var/list/materials
+	///User data of the player doing material operations
 	var/alist/user_data
 
 /datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list(), alist/user_data)
