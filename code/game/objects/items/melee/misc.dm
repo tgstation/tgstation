@@ -49,15 +49,18 @@
 	id = "commanded"
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/commanded
-	move_datum = /datum/movespeed_modifier/status_speed_boost/minor
+	move_datum = /datum/movespeed_modifier/status_speed_boost/commanded
 	duration = 7 SECONDS
 
-/datum/movespeed_modifier/status_speed_boost/minor
+/datum/movespeed_modifier/status_speed_boost/commanded
 	multiplicative_slowdown = -0.20
+
+/datum/actionspeed_modifier/commanded
+	multiplicative_slowdown = -0.65
 
 /atom/movable/screen/alert/status_effect/commanded
 	name = "Commanded"
-	desc = "You are inspired to move faster!"
+	desc = "You are inspired to do things faster!"
 	icon_state = "commanded"
 
 /obj/item/melee/synthetic_arm_blade
