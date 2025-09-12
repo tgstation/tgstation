@@ -45,7 +45,6 @@ SUBSYSTEM_DEF(ore_generation)
 	possible_vents = sort_vents // Now we can work with the main list
 
 	var/cutoff = round((length(possible_vents) / 3))
-	to_chat(world, "we're playing with a cutoff of [cutoff] on a list of [length(possible_vents)]")
 	var/vent_size_level = SMALL_VENT_TYPE
 
 	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
