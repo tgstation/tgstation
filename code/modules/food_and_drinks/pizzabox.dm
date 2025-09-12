@@ -157,28 +157,19 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
-		if(open && pizza?.sliced && !isobj(loc))
-			var/active_item = user.get_active_held_item()
-			var/inactive_item = user.get_inactive_held_item()
-			
-			if(active_item && inactive_item)
-				// Both hands full - can't do anything useful
-				balloon_alert(user, "hands full!")
-				return
-			else if(!active_item && !inactive_item)
-				// Both hands empty - allow pickup instead of slice-taking
-				return ..()
-			else
-				// One hand has item - give slice as normal
-				pizza.produce_slice(user)
-				update_appearance()
-				return
 		return ..()
 	if(open)
 		if(pizza)
-			user.put_in_hands(pizza)
-			pizza = null
-			update_appearance()
+			if(pizza.sliced)
+				// If pizza is sliced and we're holding the box, give a slice
+				pizza.produce_slice(user)
+				update_appearance()
+				return
+			else
+				// If pizza is not sliced, take out the whole pizza
+				user.put_in_hands(pizza)
+				pizza = null
+				update_appearance()
 		else if(bomb)
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
