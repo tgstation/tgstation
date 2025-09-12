@@ -290,8 +290,7 @@
 	LAZYADD(attached_accessories, accessory)
 	accessory.forceMove(src)
 
-	if(isnull(accessory_overlay))
-		create_accessory_overlay()
+	update_accessory_overlay()
 
 	// Allow for accessories to react to the acccessory list now
 	accessory.successful_attach(src)
@@ -315,35 +314,30 @@
 		popped_accessory.balloon_alert(user, "accessory removed")
 
 /// Removes the passed accesory from our accessories list
-/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed)
-	if(removed == attached_accessories[1])
-		accessory_overlay = null
+/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed, update = TRUE)
+
 
 	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
 
-	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
-		create_accessory_overlay()
-
 	removed.detach(src)
 
-	update_appearance()
+	if(update)
+		update_accessory_overlay()
 
-/// Handles creating the worn overlay mutable appearance
-/// Only the first accessory attached is displayed (currently)
-/obj/item/clothing/under/proc/create_accessory_overlay()
-	var/obj/item/clothing/accessory/prime_accessory = attached_accessories[1]
-	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, prime_accessory.icon_state)
-	accessory_overlay.alpha = prime_accessory.alpha
-	accessory_overlay.color = prime_accessory.color
-
-/// Updates the accessory's worn overlay mutable appearance
+/// Handles creating, updating and cutting the worn overlay mutable appearance.
 /obj/item/clothing/under/proc/update_accessory_overlay()
-	if(isnull(accessory_overlay))
+	if(accessory_overlay)
+		cut_overlay(accessory_overlay)
+	if(!legth(attached_accessories))
+		accessory_overlay = null
 		return
-
-	cut_overlay(accessory_overlay)
-	create_accessory_overlay()
+	accessory_overlay = mutable_appearance()
+	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
+		var/mutable_appearance/appearance = mutable_appearance(accessory.worn_icon, accessory.icon_state)
+		appearance.alpha = accessory.alpha
+		appearance.color = accessory.color
+		accessory_overlay.overlays += appearance
 	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
@@ -355,8 +349,9 @@
 /// Helper to remove all attachments to the passed location
 /obj/item/clothing/under/proc/dump_attachments(atom/drop_to = drop_location())
 	for(var/obj/item/clothing/accessory/worn_accessory as anything in attached_accessories)
-		remove_accessory(worn_accessory)
+		remove_accessory(worn_accessory, update = FALSE)
 		worn_accessory.forceMove(drop_to)
+	update_accessory_overlay()
 
 /obj/item/clothing/under/atom_destruction(damage_flag)
 	dump_attachments()
