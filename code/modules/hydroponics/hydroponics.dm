@@ -531,14 +531,16 @@
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
 	var/obj/item/seeds/old_seed = myseed
 	myseed = new_seed
-	old_seed?.on_unplanted(src)
+	for(var/datum/plant_gene/trait/gene in old_seed?.genes)
+		gene.on_unplanted_from_tray(src, old_seed)
 	if(old_seed && delete_old_seed)
 		qdel(old_seed)
 	set_plant_status(new_seed ? HYDROTRAY_PLANT_GROWING : HYDROTRAY_NO_PLANT) //To make sure they can't just put in another seed and insta-harvest it
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
-	myseed?.on_planted(src)
+	for(var/datum/plant_gene/trait/gene in myseed?.genes)
+		gene.on_plant_in_tray(src, myseed)
 	age = 0
 	update_appearance()
 	if(isnull(myseed))

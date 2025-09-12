@@ -15,45 +15,9 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
-	genes = list(/datum/plant_gene/trait/preserved)
+	genes = list(/datum/plant_gene/trait/preserved, /datum/plant_gene/trait/opium_production)
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
-	/// Determines if the plant has been sliced with a sharp tool to extract substances like saps.
-	var/extracted = FALSE
-
-/obj/item/seeds/poppy/on_planted(obj/machinery/hydroponics/parent)
-	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_extract))
-
-/obj/item/seeds/poppy/on_unplanted(obj/machinery/hydroponics/parent)
-	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
-
-/// Redirect tray item interaction so we can have custom extracting behavior
-/obj/item/seeds/poppy/proc/try_extract(obj/machinery/hydroponics/source, mob/living/user, obj/item/tool, ...)
-	SIGNAL_HANDLER
-
-	if(!tool.sharpness || tool.tool_behaviour == TOOL_SHOVEL)
-		return NONE
-
-	if(source.age < 10)
-		to_chat(user, span_warning("The [plantname] are too young to extract sap from!"))
-		return ITEM_INTERACT_FAILURE
-	if(source.age > 19)
-		to_chat(user, span_warning("The [plantname] are too old to extract sap from!"))
-		return ITEM_INTERACT_FAILURE
-	if(extracted)
-		to_chat(user, span_warning("The [plantname] have already been harvested for sap!"))
-		return ITEM_INTERACT_FAILURE
-
-	extracted = TRUE
-	new /obj/item/food/drug/opium/raw(source.drop_location(), potency)
-	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
-	playsound(tool, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
-	user.visible_message(
-		span_notice("[user] carefully slices open a poppy pod, extracting a sap."),
-		span_notice("You carefully slice the poppy's pod, collecting the fragrant, alluring sap."),
-		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-	)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -78,6 +42,7 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "lily-grow"
 	icon_dead = "lily-dead"
+	genes = list(/datum/plant_gene/trait/preserved)
 	mutatelist = list(/obj/item/seeds/poppy/lily/trumpet)
 
 /obj/item/food/grown/poppy/lily
@@ -107,7 +72,7 @@
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
 	mutatelist = null
-	genes = list(/datum/plant_gene/reagent/preset/polypyr, /datum/plant_gene/trait/preserved)
+	genes = list(/datum/plant_gene/trait/preserved, /datum/plant_gene/reagent/preset/polypyr)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
 	graft_gene = /datum/plant_gene/reagent/preset/polypyr
@@ -132,6 +97,7 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "geranium-grow"
 	icon_dead = "geranium-dead"
+	genes = list(/datum/plant_gene/trait/preserved)
 	mutatelist = list(/obj/item/seeds/poppy/geranium/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
