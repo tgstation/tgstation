@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Minor cleanup with species-weapon vulnerabilities (like moths vs flyswatters)"

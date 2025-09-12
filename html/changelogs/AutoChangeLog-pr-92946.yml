@@ -1,4 +1,0 @@
-author: "MintMetal"
-delete-after: True
-changes:
-  - bugfix: "fixed lost cable on Delta Station"
