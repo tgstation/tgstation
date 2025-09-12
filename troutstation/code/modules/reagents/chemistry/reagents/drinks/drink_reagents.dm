@@ -48,9 +48,8 @@
 	. = ..()
 	if(SPT_PROB(20, seconds_per_tick))
 		playsound(affected_mob, 'troutstation/sound/misc/gay.ogg', 100, FALSE) // Only audible to the mob
-	if(prob(5))
+	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.say(pick("bable", "beble", "bible", "boble", "booble", "babie", "bebie", "bibie", "bobie", "bubie", "boobie"))
-		sleep(100)
 
 /mob/living/carbon/examine(mob/user)
 	. = ..()

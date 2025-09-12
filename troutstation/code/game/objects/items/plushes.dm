@@ -83,7 +83,13 @@
 	var/size = RUFRAN_NORMAL_SIZE
 
 /obj/item/toy/plush/rufran/attackby(obj/item/dnainjector/serum, mob/user, list/modifiers, list/attack_modifiers)
-	if((serum.used==FALSE && size < RUFRAN_GIGANTIC_SIZE && /datum/mutation/gigantism in serum.add_mutations) || (serum.used==FALSE && size < RUFRAN_GIGANTIC_SIZE && serum.add_mutations[1].name == "Gigantism")) // holy shit if you can make this cleaner PLEASE
+	if(serum.used)
+		to_chat(user, span_warning("This injector is used up!"))
+		return
+	if(size >= RUFRAN_GIGANTIC_SIZE)
+		to_chat(user, span_warning("[src] can't get any bigger!"))
+		return
+	if(/datum/mutation/gigantism in serum.add_mutations || serum.add_mutations[1].name == "Gigantism")
 		to_chat(user, span_notice("You inject [src] with the gigantism serum!"))
 		size += RUFRAN_SIZE_INCREMENT
 		AddElement(/datum/element/item_scaling, size, size)
@@ -103,12 +109,7 @@
 		else if(size >= RUFRAN_BIG_SIZE)
 			w_class = WEIGHT_CLASS_BULKY
 		return
-	if(serum.used==TRUE)
-		to_chat(user, span_warning("This injector is used up!"))
-		return
-	if(size >= RUFRAN_GIGANTIC_SIZE)
-		to_chat(user, span_warning("[src] can't get any bigger!"))
-		return
+
 
 /obj/item/toy/plush/rufran/examine()
 	. = ..()
