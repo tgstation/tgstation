@@ -18,19 +18,42 @@
 	genes = list(/datum/plant_gene/trait/preserved)
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
+	/// Determines if the plant has been sliced with a sharp tool to extract substances like saps.
+	var/extracted = FALSE
 
-/obj/item/seeds/poppy/interact_with_atom(obj/item/I, mob/user, obj/machinery/hydroponics/tray)
-	if(I.sharpness && !src.extracted && tray.age >= 10 && tray.age <= 19)
-		src.extracted = TRUE
-		var/seed_yield = tray.myseed?.potency
-		new /obj/item/food/drug/opium/raw(get_turf(src), seed_yield)
-		playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
-		playsound(loc, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
-		user.visible_message(
-			span_notice("You carefully slice the poppy's pod, collecting the fragrant, alluring sap.")
-		)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+/obj/item/seeds/poppy/on_planted(obj/machinery/hydroponics/parent)
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_extract))
+
+/obj/item/seeds/poppy/on_unplanted(obj/machinery/hydroponics/parent)
+	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
+
+/// Redirect tray item interaction so we can have custom extracting behavior
+/obj/item/seeds/poppy/proc/try_extract(obj/machinery/hydroponics/source, mob/living/user, obj/item/tool, ...)
+	SIGNAL_HANDLER
+
+	if(!tool.sharpness || tool.tool_behaviour == TOOL_SHOVEL)
+		return NONE
+
+	if(source.age < 10)
+		to_chat(user, span_warning("The [plantname] are too young to extract sap from!"))
+		return ITEM_INTERACT_FAILURE
+	if(source.age > 19)
+		to_chat(user, span_warning("The [plantname] are too old to extract sap from!"))
+		return ITEM_INTERACT_FAILURE
+	if(extracted)
+		to_chat(user, span_warning("The [plantname] have already been harvested for sap!"))
+		return ITEM_INTERACT_FAILURE
+
+	extracted = TRUE
+	new /obj/item/food/drug/opium/raw(source.drop_location(), potency)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
+	playsound(tool, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
+	user.visible_message(
+		span_notice("[user] carefully slices open a poppy pod, extracting a sap."),
+		span_notice("You carefully slice the poppy's pod, collecting the fragrant, alluring sap."),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/grown/poppy
 	seed = /obj/item/seeds/poppy
