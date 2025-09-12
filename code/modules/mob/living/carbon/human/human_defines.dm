@@ -70,7 +70,8 @@
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/special_voice = "" // For changing our voice. Used by a symptom.
+	/// Allows for special overrides of voice
+	var/override_voice = ""
 
 	var/datum/physiology/physiology
 
