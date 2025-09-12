@@ -327,3 +327,38 @@
   - balance: Justice suits can fit security items in their suit storage.
   - bugfix: Imperium monk outfits now hold the true list of chaplain suit storage
       items, and not just a limited list.
+2025-09-12:
+  Aliceee2ch:
+  - map: Added shutters in Cargo bay on every station.
+  - map: Added firelocks on lower Cargo staircase on TramStation. Also added space
+      shutters in drone bay to prevent easy spacing.
+  - map: Windows in Meta and IceBox Cargo security outposts are now hotwired, like
+      every other security outpost does.
+  - map: Replaced blast doors on regular shutters in QM office on MetaStation.
+  Ben10Omintrix:
+  - bugfix: snails no longer crush glass tables when crawling over them
+  Bisar:
+  - code_imp: Heat capacity calculation for gas mixtures has been slightly optimized.
+  Iamgoofball:
+  - bugfix: Blocks mobs with players controlling them from breeding (ie. sentience
+      potion'd raptors)
+  Melbert:
+  - code_imp: Minor cleanup with species-weapon vulnerabilities (like moths vs flyswatters)
+  MintMetal:
+  - bugfix: fixed lost cable on Delta Station
+  SyncIt21:
+  - bugfix: Fixes random runtime for round start silo connections
+  - bugfix: Ore Silo UI works again
+  lelandkemble:
+  - bugfix: Station MODules no longer provide illegal technology
+  sushi:
+  - bugfix: implants can no longer be removed from the same mob (or other mobs!) multiple
+      times
+  timothymtorres:
+  - bugfix: Fix map z-level generation starting position. Z-levels used to cluster
+      together near the edges and will now instead be spread out evenly from the center.
+  - qol: The GPS debug tool will now spawn with the admin outfit apart of the debug
+      tools
+  - admin: Add GPS debug tool to admin debug box
+  tiramisuapimancer:
+  - bugfix: you can actually get the hat stabilizer modsuit module on the black market
