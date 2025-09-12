@@ -52,7 +52,7 @@
 		ADD_TRAIT(who, personality_trait, PERSONALITY_TRAIT)
 	LAZYSET(who.personalities, type, TRUE)
 	if(processes)
-		SSpersonalities.processing_personalities[type] += who
+		SSpersonalities.processing_personalities[src] += who
 
 /**
  * Called when removing this personality from a mob.
@@ -68,7 +68,7 @@
 		REMOVE_TRAIT(who, personality_trait, PERSONALITY_TRAIT)
 	LAZYREMOVE(who.personalities, type)
 	if(processes)
-		SSpersonalities.processing_personalities[type] -= who
+		SSpersonalities.processing_personalities[src] -= who
 
 #undef PERSONALITY_TRAIT
 
