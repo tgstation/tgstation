@@ -1,5 +1,6 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	abstract_type = /obj/item/melee/energy
 	icon_angle = -45
 	max_integrity = 200
 	armor_type = /datum/armor/melee_energy
