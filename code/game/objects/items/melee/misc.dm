@@ -24,8 +24,16 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/items/weapons/chainhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
-	///Does this chain allow you to speed people up with right click?
-	var/can_hasten = TRUE
+
+/obj/item/melee/chainofcommand/Initialize(mapload)
+	. = ..()
+	register_item_context()
+
+/obj/item/melee/chainofcommand/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+	if(isliving(target))
+		context[SCREENTIP_CONTEXT_RMB] = "Hasten"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/melee/chainofcommand/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -41,6 +49,7 @@
 		to_chat(user, span_warning("You consider lashing yourself, but hesitate at the thought of how much it would hurt."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	user.do_attack_animation(target)
 	playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 	victim.apply_status_effect(/datum/status_effect/speed_boost/commanded)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
