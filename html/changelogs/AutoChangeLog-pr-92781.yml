@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored a lot of code relating to human face and voice, ie, what shows up in examine and in say. Report anything odd when examining people, with ID cards, when talking over radio, or when disguised"
+  - refactor: "Refactored ling mimic voice and traitor voice changer"
+  - rscdel: "Potted plants no longer hide voice. They still hide appearance, though"
+  - qol: "Honorifics now show in examine / in world, rather than only when speaking."

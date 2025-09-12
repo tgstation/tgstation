@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - qol: "Eating ice cream no longer curses you"

@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - image: "The rebellion mask now renders beneath your hair."
+  - qol: "The rebellion mask now lets you plug in internals."

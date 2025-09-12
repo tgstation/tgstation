@@ -93,7 +93,7 @@
 	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
 	health = 45
 	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
-	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
+	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS | SECBOT_CHECK_WEAPONS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
 	name = "Officer Pipsqueak"
@@ -349,7 +349,6 @@
 		return FALSE
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
-		current_target.update_handcuffed()
 		playsound(src, SFX_LAW, 50, FALSE)
 		back_to_idle()
 

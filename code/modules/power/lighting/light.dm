@@ -180,6 +180,9 @@
 
 	var/area/local_area = get_room_area()
 
+	if(flickering)
+		. += mutable_appearance(overlay_icon, "[base_state]_flickering")
+		return
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
@@ -225,7 +228,11 @@
 		if(reagents)
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area = get_room_area()
-		if (local_area?.fire)
+		if (flickering)
+			brightness_set = brightness * bulb_low_power_brightness_mul
+			power_set = bulb_low_power_pow_mul
+			color_set = nightshift_light_color
+		else if (local_area?.fire)
 			color_set = fire_colour
 			power_set = fire_power
 			brightness_set = fire_brightness
@@ -381,7 +388,7 @@
 		return
 
 	// attempt to stick weapon into light socket
-	if(status != LIGHT_EMPTY)
+	if(status != LIGHT_EMPTY || user.combat_mode)
 		return ..()
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER) //If it's a screwdriver open it.
 		tool.play_tool_sound(src, 75)
@@ -500,27 +507,36 @@
 		)
 	return TRUE
 
-/obj/machinery/light/proc/flicker(amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(amount = 1)
 	set waitfor = FALSE
 	if(flickering || !on || status != LIGHT_OK)
 		return
 
 	. = TRUE // did we actually flicker? Send this now because we expect immediate response, before sleeping.
-	flickering = TRUE
+	set_light(
+		l_range = brightness * bulb_low_power_brightness_mul,
+		l_power = bulb_low_power_pow_mul,
+		l_color = nightshift_light_color,
+	)
+	cut_overlays(src)
+	stoplag(0.7 SECONDS)
+	if(prob(30))
+		do_sparks(number = 2, cardinal_only = TRUE, source = src)
+
 	for(var/i in 1 to amount)
 		if(status != LIGHT_OK || !has_power())
 			break
-		on = !on
+		flickering = !flickering
 		update(FALSE)
-		stoplag(rand(0.5 SECONDS, 1.5 SECONDS))
+		stoplag(pick(list(2 SECONDS, 4 SECONDS, 6 SECONDS)))
 
 	if(has_power())
 		on = (status == LIGHT_OK)
 	else
 		on = FALSE
 
-	update(FALSE)
 	flickering = FALSE
+	update(FALSE)
 
 // ai attack - make lights flicker, because why not
 
