@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "There's a 1/5 chance that Paradox Clone spawns a second clone if there are enough candidates. Neither clone is aware of or on a team with the other - There can only be one."
+  - rscadd: "Paradox Clones are now tasked to `Be the only [x] alive`, meaning means of identity cloning (such as Genetics or Changelings) may throw a wrench in your plan."
