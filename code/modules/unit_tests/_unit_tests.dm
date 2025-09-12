@@ -239,6 +239,7 @@
 #include "oxyloss_suffocation.dm"
 #include "paintings.dm"
 #include "pills.dm"
+#include "pizzabox_pickup.dm"
 #include "plane_double_transform.dm"
 #include "plane_dupe_detector.dm"
 #include "plane_sanity.dm"

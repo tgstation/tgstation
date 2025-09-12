@@ -158,12 +158,21 @@
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
 		if(open && pizza?.sliced && !isobj(loc))
-			// If both hands are full, allow pickup instead of giving a slice
-			if(user.get_active_held_item() && user.get_inactive_held_item())
+			var/active_item = user.get_active_held_item()
+			var/inactive_item = user.get_inactive_held_item()
+			
+			if(active_item && inactive_item)
+				// Both hands full - can't do anything useful
+				balloon_alert(user, "hands full!")
+				return
+			else if(!active_item && !inactive_item)
+				// Both hands empty - allow pickup instead of slice-taking
 				return ..()
-			pizza.produce_slice(user)
-			update_appearance()
-			return
+			else
+				// One hand has item - give slice as normal
+				pizza.produce_slice(user)
+				update_appearance()
+				return
 		return ..()
 	if(open)
 		if(pizza)
