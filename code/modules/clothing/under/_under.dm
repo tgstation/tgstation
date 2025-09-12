@@ -329,7 +329,7 @@
 /obj/item/clothing/under/proc/update_accessory_overlay()
 	if(accessory_overlay)
 		cut_overlay(accessory_overlay)
-	if(!legth(attached_accessories))
+	if(!length(attached_accessories))
 		accessory_overlay = null
 		return
 	accessory_overlay = mutable_appearance()
