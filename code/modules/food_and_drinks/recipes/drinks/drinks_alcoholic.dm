@@ -703,7 +703,7 @@
 	results = list(/datum/reagent/consumable/ethanol/hot_toddy = 10)
 	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/consumable/ethanol/cognac = 3, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/lemonjuice = 1)
 	mix_message = "The scent of warm cognac fills the air."
-	required_temp = 320 //Pour boiling water into other ingredients
+	required_temp = 320 //Pour 100c water into other ingredients
 
 /datum/chemical_reaction/drink/tizirian_sour
 	results = list(/datum/reagent/consumable/ethanol/tizirian_sour = 8)
@@ -717,3 +717,9 @@
 	results=list(/datum/reagent/consumable/ethanol/flip_cocktail = 25)
 	required_reagents = list(/datum/reagent/consumable/ethanol/cognac = 15, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/eggwhite = 4, /datum/reagent/consumable/eggyolk = 2)
 	mix_message = "The egg emulsifies into a smooth mixture."
+
+/datum/chemical_reaction/drink/blue_blazer
+	results=list(/datum/reagent/consumable/ethanol/blue_blazer = 9)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 4, /datum/reagent/water = 4, /datum/reagent/consumable/sugar = 1, )
+	mix_message = "The whiskey ignites in a brilliant blue flame!"
+	required_temp = 365 //autoignition temp of ethanol
