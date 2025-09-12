@@ -11,6 +11,8 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	var/list/sensors = list()
 	var/list/doors = list()
 	var/list/displays = list()
+	///List of active transit pods
+	var/list/temppods = list()
 	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
 	var/max_time = 15
 	///how many times the tram can move costing over max_time milliseconds before it gets slowed down

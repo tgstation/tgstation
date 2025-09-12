@@ -249,7 +249,11 @@
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
 	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
+	if(LAZYLEN(SStransport.temppods) >= TEMPPODCAP)
+		AM.visible_message(span_notice("The transit system is currently overloaded. Please wait."))
+		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
+	SStransport.temppods |= pod
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
@@ -259,6 +263,7 @@
 
 /obj/structure/transit_tube/station/dispenser/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+	SStransport.temppods -= pod
 	qdel(pod)
 
 /obj/structure/transit_tube/station/dispenser/flipped

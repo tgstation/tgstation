@@ -21,6 +21,7 @@
 
 /obj/structure/transit_tube_pod/Destroy()
 	empty_pod()
+	SStransport.temppods -= src
 	return ..()
 
 /obj/structure/transit_tube_pod/update_icon_state()
@@ -135,6 +136,7 @@
 		setDir(next_dir)
 		// Allow collisions when leaving the tubes.
 		Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay))
+		SStransport.temppods -= src
 		qdel(src)
 		return
 
@@ -214,6 +216,7 @@
 
 /obj/structure/transit_tube_pod/dispensed/outside_tube()
 	if(!QDELETED(src))
+		SStransport.temppods -= src
 		qdel(src)
 
 #undef MOVE_ANIMATION_STAGE_ONE
