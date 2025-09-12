@@ -158,6 +158,9 @@
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
 		if(open && pizza?.sliced && !isobj(loc))
+			// If both hands are full, allow pickup instead of giving a slice
+			if(user.get_active_held_item() && user.get_inactive_held_item())
+				return ..()
 			pizza.produce_slice(user)
 			update_appearance()
 			return
