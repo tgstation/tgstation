@@ -575,17 +575,10 @@
 		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
-<<<<<<< Updated upstream
 /mob/verb/down()
 	set name = "Move Down"
 	set category = "IC"
 
-=======
-DEFINE_VERB(/mob, down, "Move Down", "", FALSE, "IC")
-	do_down()
-
-/mob/proc/do_down()
->>>>>>> Stashed changes
 	if(remote_control)
 		return remote_control.relaymove(src, DOWN)
 
