@@ -165,7 +165,7 @@
 
 /obj/item/mod/module/megaphone/on_activation(mob/activator)
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	RegisterSignal(equipper, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(add_tts_filter))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(add_tts_filter))
 
 /obj/item/mod/module/megaphone/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOB_SAY))
