@@ -49,9 +49,3 @@
 	type_to_vend = type_to_vend_now
 	RefreshParts()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/* For stress testing get_sane_item_types
-/obj/machinery/vending/subtype_vendor/the_everything_vendor
-	desc = "This is a bad idea."
-	type_to_vend = /obj/item
-*/
