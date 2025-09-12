@@ -146,6 +146,10 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
+	if(item.is_open_container())
+		// (assuming they want to pour rather than add the container itself)
+		// allow interaction to fall through to reagent container coed
+		return NONE
 	if(!can_add_ingredient(item))
 		return ITEM_INTERACT_BLOCKING
 
