@@ -1366,3 +1366,16 @@
 	name = "Fruit Punishment"
 	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a liquid cooler! Your body is going into shock!"
 	icon_state = "punch_punishment"
+
+/datum/reagent/consumable/ethanol/bitters_soda
+	name = "Bitters and Soda"
+	description = "A simple beverage of soda water flavored with aromatic bitters. Soothes upset stomachs."
+	boozepwr = 0
+	color = "#f1c1b3"
+	quality = DRINK_NICE
+	taste_description = "mild aromatics"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	
+/datum/reagent/consumable/ethanol/bitters_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
