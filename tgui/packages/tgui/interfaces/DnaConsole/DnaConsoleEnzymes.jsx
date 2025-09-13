@@ -294,13 +294,14 @@ const PulseSettings = (props) => {
         <LabeledList.Item label="Output level">
           <NumberInput
             animated
+            tickWhileDragging
             width="32px"
             step={1}
             stepPixelSize={10}
             value={pulseStrength}
             minValue={1}
             maxValue={PULSE_STRENGTH_MAX}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('set_pulse_strength', {
                 val: value,
               })
@@ -310,13 +311,14 @@ const PulseSettings = (props) => {
         <LabeledList.Item label="Pulse duration">
           <NumberInput
             animated
+            tickWhileDragging
             width="32px"
             step={1}
             stepPixelSize={10}
             value={pulseDuration}
             minValue={1}
             maxValue={PULSE_DURATION_MAX}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('set_pulse_duration', {
                 val: value,
               })

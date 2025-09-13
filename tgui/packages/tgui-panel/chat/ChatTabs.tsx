@@ -23,7 +23,7 @@ export function ChatTabs(props) {
   return (
     <Stack align="center">
       <Stack.Item>
-        <Tabs textAlign="center">
+        <Tabs scrollable textAlign="center">
           {pages.map((page) => (
             <Tabs.Tab
               key={page.id}
