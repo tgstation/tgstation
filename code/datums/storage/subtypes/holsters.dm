@@ -55,9 +55,7 @@
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/m50,
 		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box/c38, // Revolver speedloaders.
-		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/strilka310,
+		/obj/item/ammo_box/speedloader, // Speedloaders, which includes stripper clips on a technicality.
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
@@ -84,9 +82,7 @@
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/m50,
 		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box/c38,
-		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/strilka310,
+		/obj/item/ammo_box/speedloader,
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/recharge/ebow,
 		/obj/item/gun/energy/e_gun/mini,
@@ -107,9 +103,7 @@
 	holdables = list(
 		/obj/item/gun, // ALL guns.
 		/obj/item/ammo_box/magazine, // ALL magazines.
-		/obj/item/ammo_box/c38, //There isn't a speedloader parent type, so I just put these three here by hand.
-		/obj/item/ammo_box/a357, //I didn't want to just use /obj/item/ammo_box, because then this could hold huge boxes of ammo.
-		/obj/item/ammo_box/strilka310,
+		/obj/item/ammo_box/speedloader, // ALL speedloaders (there's 3 types at time of writing so it's probably fine)
 		/obj/item/ammo_casing, // For shotgun shells, rockets, launcher grenades, and a few other things.
 		/obj/item/grenade, // All regular grenades, the big grenade launcher fires these.
 	)

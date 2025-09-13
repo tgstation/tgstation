@@ -176,7 +176,7 @@
 
 	backpack_contents = list(
 		/obj/item/grenade/smokebomb = 2,
-		/obj/item/ammo_box/strilka310 = 2,
+		/obj/item/ammo_box/speedloader/strilka310 = 2,
 	)
 
 /datum/outfit/deathmatch_loadout/battler/druid
@@ -1071,8 +1071,8 @@
 	belt = /obj/item/storage/belt/unfathomable_curio
 	gloves = null
 	shoes = /obj/item/clothing/shoes/winterboots/ice_boots
-	l_pocket = /obj/item/ammo_box/strilka310/lionhunter
-	r_pocket = /obj/item/ammo_box/strilka310/lionhunter
+	l_pocket = /obj/item/ammo_box/speedloader/strilka310/lionhunter
+	r_pocket = /obj/item/ammo_box/speedloader/strilka310/lionhunter
 
 	back = /obj/item/gun/ballistic/rifle/lionhunter // for his neutral b, he wields a gun
 
