@@ -42,7 +42,7 @@
 #define WIRE_BACKUP1 "Auxiliary Power 1"
 #define WIRE_BACKUP2 "Auxiliary Power 2"
 #define WIRE_BEACON "Beacon"
-#define WIRE_BOLTLIGHT "Bolt Lights"
+#define WIRE_FEEDBACK "Feedback"
 #define WIRE_BOLTS "Bolts"
 #define WIRE_BOOM "Boom Wire"
 #define WIRE_CAMERA "Camera"
