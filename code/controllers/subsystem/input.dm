@@ -47,7 +47,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 		var/client/user = clients[i]
 		user.set_macros()
 
-/datum/controller/subsystem/verb_manager/input/can_queue_verb(datum/callback/verb_callback/incoming_callback, control)
+/datum/controller/subsystem/verb_manager/input/can_queue_verb(control)
 	//make sure the incoming verb is actually something we specifically want to handle
 	if(control != "mapwindow.map")
 		return FALSE

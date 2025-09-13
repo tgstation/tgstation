@@ -338,7 +338,14 @@
 			window = window,
 			src_object = src_object)
 		process_status()
-		DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(on_act_message), act_type, payload, state))
+		if(GLOB.active_tracker)
+			GLOB.active_tracker.name_to_use = "ui_act-[src_object.type]-[act_type]"
+		var/datum/callback/ui_callback = VERB_CALLBACK(src, PROC_REF(on_act_message), act_type, payload, state)
+		if(INTELIGENT_TRY_QUEUE_VERB(ui_callback, VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSverb_manager))
+			if(GLOB.active_tracker)
+				GLOB.active_tracker.name_to_use = "[GLOB.active_tracker.name_to_use]-queued"
+		else
+			ui_callback.InvokeAsync()
 		return FALSE
 	switch(type)
 		if("ready")

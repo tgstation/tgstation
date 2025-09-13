@@ -30,10 +30,17 @@
 	set hidden = FALSE; /* this is explicitly needed as the proc begins with an underscore */ \
 	set popup_menu = ##show_in_context_menu; \
 	set category = ##verb_category; \
-	var/list/_verb_args = list(usr, /datum/admin_verb/##verb_path_name); \
-	_verb_args += args; \
-	SSadmin_verbs.dynamic_invoke_verb(arglist(_verb_args)); \
+	var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
+	ASYNC { \
+		var/list/_verb_args = list(usr, /datum/admin_verb/##verb_path_name); \
+		_verb_args += args; \
+		SSadmin_verbs.dynamic_invoke_verb(arglist(_verb_args)); \
+	}\
+	__store_cost.usage_at_end = TICK_USAGE; \
+	__store_cost.finished_on = world.time; \
+	__store_cost.enter_average(); \
 }; \
+\
 /datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, ##verb_args)
 
 #define ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \

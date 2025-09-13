@@ -511,10 +511,7 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-/mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
-	set name = "Pull"
-	set category = "Object"
-
+DEFINE_VERB(/mob/living, pulled, "Pull", "", FALSE, "Object", atom/movable/AM as mob|obj in oview(1))
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
 	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
@@ -527,26 +524,19 @@
 	update_pull_movespeed()
 	update_pull_hud_icon()
 
-/mob/living/verb/stop_pulling1()
-	set name = "Stop Pulling"
-	set category = "IC"
+DEFINE_VERB(/mob/living, stop_pulling1, "Stop Pulling", "", FALSE, "IC")
 	stop_pulling()
 
 //same as above
-/mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
+/mob/living/do_pointed(atom/pointing_at as mob|obj|turf in view(client.view, src))
 	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS))
 		return FALSE
-
-	return ..()
-
-/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message(span_infoplain("[span_name("[src]")] points at [pointing_at]."), span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as num|null)
-	set hidden = TRUE
+DEFINE_VERB(/mob/living, succumb, "succumb", "", TRUE, "", whispered as num|null)
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -604,10 +594,7 @@
 
 // MOB PROCS //END
 
-/mob/living/proc/mob_sleep()
-	set name = "Sleep"
-	set category = "IC"
-
+DEFINE_PROC_VERB(/mob/living, mob_sleep, "Sleep", "", FALSE, "IC")
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
 		return
@@ -662,10 +649,7 @@
 		account = I.registered_account
 		return account
 
-/mob/living/proc/toggle_resting()
-	set name = "Rest"
-	set category = "IC"
-
+DEFINE_PROC_VERB(/mob/living, toggle_resting, "Rest", "", FALSE, "IC")
 	set_resting(!resting, FALSE)
 
 
@@ -1127,14 +1111,11 @@
 		return FALSE
 	return TRUE
 
-/mob/living/verb/resist()
-	set name = "Resist"
-	set category = "IC"
+DEFINE_VERB(/mob/living, resist, "Resist", "", FALSE, "IC")
+	do_resist()
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
-
-///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
-/mob/living/proc/execute_resist()
+///gotta let folks override thsi thing
+/mob/living/proc/do_resist()
 	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)
@@ -2887,10 +2868,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	BLACKBOX_LOG_ADMIN_VERB("Give Guardian Spirit")
 
-/mob/living/verb/lookup()
-	set name = "Look Up"
-	set category = "IC"
-
+DEFINE_VERB(/mob/living, lookup, "Look Up", "", FALSE, "IC")
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
 		end_look()
@@ -2907,10 +2885,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	to_chat(src, "You tilt your head upwards.")
 	look_up()
 
-/mob/living/verb/lookdown()
-	set name = "Look Down"
-	set category = "IC"
-
+DEFINE_VERB(/mob/living, lookdown, "Look Down", "", FALSE, "IC")
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
 		end_look()

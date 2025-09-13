@@ -391,13 +391,6 @@
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
 		// I could change the network to null but I don't know what would happen, and it seems too hacky for me.
 
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	return ..()
-
 /mob/living/silicon/robot/execute_mode()
 	if(incapacitated)
 		return
@@ -976,7 +969,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/silicon/robot/execute_resist()
+/mob/living/silicon/robot/do_resist()
 	. = ..()
 	if(!has_buckled_mobs())
 		return

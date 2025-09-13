@@ -17,7 +17,8 @@ GLOBAL_VAR(restart_counter)
  *   - world.Genesis() =>
  *     - world.init_byond_tracy()
  *     - (Start native profiling)
- *     - world.init_debugger()
+ *     - new /datum/debugger()
+ *     - world.setup_external_cpu()
  *     - Master =>
  *       - config *unloaded
  *       - (all subsystems) PreInit()
@@ -96,6 +97,9 @@ GLOBAL_VAR(restart_counter)
 	// Create the logger
 	logger = new
 
+	// Cpu tracking setup
+	world.setup_external_cpu()
+
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
 
@@ -146,6 +150,436 @@ GLOBAL_VAR(restart_counter)
 	Master.Initialize(10, FALSE, TRUE)
 
 	RunUnattendedFunctions()
+
+// Should we intentionally consume cpu time to try to keep SendMaps deltas constant?
+GLOBAL_VAR_INIT(attempt_corrective_cpu, FALSE)
+// Should we use the corrective cpu threshold to calculate the mc's target cpu?
+GLOBAL_VAR_INIT(use_new_mc_limit, FALSE)
+// What value are we attempting to correct cpu TO (autoaccounts for lag, ideally)
+GLOBAL_VAR_INIT(corrective_cpu_threshold, 0)
+// What cpu value are we trying to meet safely
+// For reasons I do not yet understand 90 is too high for this on highpop. I think it has to do with
+// maptick being averaged/spikey? unsure.
+GLOBAL_VAR_INIT(corrective_cpu_target, 85)
+GLOBAL_VAR_INIT(corrective_cpu_cost, 0)
+// How far away from the average can we get before discarding a datapoint
+GLOBAL_VAR_INIT(corrective_cpu_ratio, 30)
+// How far away from the average can we get before discarding a datapoint
+GLOBAL_VAR_INIT(glide_threshold_ratio, 10)
+// Debug tool, lets us set the floor of cpu consumption
+GLOBAL_VAR_INIT(floor_cpu, 0)
+// Debug tool, lets us set a sometimes used floor for cpu consumption
+GLOBAL_VAR_INIT(sustain_cpu, 0)
+// Debug tool, sets the chance to use GLOB.sustain_cpu as a floor
+GLOBAL_VAR_INIT(sustain_cpu_chance, 0)
+// Debug tool, floors cpu to its value, then resets itself
+GLOBAL_VAR_INIT(spike_cpu, 0)
+
+/world/Tick()
+	// this is for next tick so don't display it yet yeah?
+	var/datum/tick_holder/tick_info = ____tick_info
+	var/current_index = TICK_INFO_INDEX()
+	if(tick_info)
+		tick_info.pre_tick_cpu_usage[current_index] = TICK_USAGE
+		// MC sometimes yields and such
+		if(!tick_info.mc_fired(world.time))
+			tick_info.mc_start_usage[current_index] = 0
+			tick_info.mc_finished_usage[current_index] = 0
+
+	refresh_cpu_values()
+	if(GLOB.floor_cpu)
+		// avoids byond sleeping the loop and causing the MC to infinistall
+		// Run first to set a floor for sustain to spike up to
+		CONSUME_UNTIL(min(GLOB.floor_cpu, 500))
+
+	if(GLOB.sustain_cpu && prob(GLOB.sustain_cpu_chance))
+		CONSUME_UNTIL(min(GLOB.sustain_cpu, 500))
+
+	if(GLOB.spike_cpu)
+		CONSUME_UNTIL(min(GLOB.spike_cpu, 10000))
+		GLOB.spike_cpu = 0
+
+	// attempt to correct cpu overrun
+	var/cpu_corrected = FALSE
+	// If we're supposed to be correcting cpu
+	if(GLOB.attempt_corrective_cpu && GLOB.corrective_cpu_threshold > TICK_USAGE)
+		cpu_corrected = TRUE
+		CONSUME_UNTIL(GLOB.corrective_cpu_threshold)
+	// or if we HAVE already corrected cpu with the MC (roughly, hard to be exact about this stuff)
+	else if(GLOB.use_new_mc_limit && GLOB.corrective_cpu_threshold + GLOB.corrective_cpu_threshold * 0.05 > TICK_USAGE)
+		cpu_corrected = TRUE
+	if(tick_info)
+		tick_info.corrected_ticks[current_index] = cpu_corrected
+
+	GLOB.cpu_tracker.update_display()
+
+	if(tick_info)
+		tick_info.tick_cpu_usage[current_index] = TICK_USAGE
+
+	GLOB.verb_trackers_this_tick = list()
+
+INITIALIZE_IMMEDIATE(/atom/movable/screen/usage_display)
+GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
+/atom/movable/screen/usage_display
+	screen_loc = "LEFT:8, CENTER-6"
+	plane = CPU_DEBUG_PLANE
+	layer = CPU_DISPLAY_LAYER
+	maptext_width = 512
+	maptext_height = 512
+	alpha = 220
+	clear_with_screen = FALSE
+	// how many people are looking at us right now?
+	var/viewer_count = 0
+	/// What modes CAN the graph display?
+	var/list/graph_options = list(
+		USAGE_DISPLAY_EARLY_SLEEPERS,
+		USAGE_DISPLAY_MC,
+		USAGE_DISPLAY_LATE_SLEEPERS,
+		USAGE_DISPLAY_SLEEPERS,
+		USAGE_DISPLAY_PRE_TICK,
+		USAGE_DISPLAY_MAPTICK,
+		USAGE_DISPLAY_PRE_VERBS,
+		USAGE_DISPLAY_VERBS,
+		USAGE_DISPLAY_VERB_TIMING,
+		USAGE_DISPLAY_COMPLETE_CPU,
+	)
+	var/atom/movable/screen/graph_display/bars/cpu_display/graph_display
+	var/atom/movable/screen/usage_display_controls/controls
+	var/display_graph = TRUE
+
+/atom/movable/screen/usage_display/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	controls = new(null, null)
+	controls.parent = src
+	graph_display = new(null, null)
+	graph_display.setup()
+	graph_display.set_display_mode(USAGE_DISPLAY_COMPLETE_CPU)
+
+/atom/movable/screen/usage_display/Destroy()
+	QDEL_NULL(controls)
+	QDEL_NULL(graph_display)
+	return ..()
+
+/atom/movable/screen/usage_display/proc/update_display()
+	if(viewer_count <= 0)
+		return
+	graph_display.refresh_thresholds()
+
+	var/datum/tick_holder/tick_info = GLOB.tick_info
+	var/list/cpu_values = tick_info.cpu_values
+	var/list/mc_start_usage = tick_info.mc_start_usage
+	var/list/mc_usage = tick_info.mc_usage
+	var/list/post_mc_usage = tick_info.post_mc_usage
+	var/list/pre_tick_cpu_usage = tick_info.pre_tick_cpu_usage
+	var/list/tick_cpu_usage = tick_info.tick_cpu_usage
+	var/list/maptick_usage = tick_info.maptick_usage
+	var/list/verb_cost = tick_info.verb_cost
+	var/list/last_verb_ran = tick_info.last_verb_ran
+	var/last_index = TICK_INFO_TICK2INDEX(DS2TICKS(world.time) - 1)
+	var/full_time = TICKS2DS(TICK_INFO_SIZE) / 10 // convert from ticks to seconds
+
+	controls.maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
+		Toggles: \
+			<a href='byond://?src=[REF(src)];act=toggle_movement'>New Glide [GLOB.use_new_glide]</a> \
+			<a href='byond://?src=[REF(src)];act=toggle_compensation'>CPU Compensation [GLOB.attempt_corrective_cpu]</a> \
+			<a href='byond://?src=[REF(src)];act=toggle_mc_limit'>Dynamic MC Limit [GLOB.use_new_mc_limit]</a> \
+			<a href='byond://?src=[REF(src)];act=toggle_graph'>CPU Graphing [display_graph]</a> \
+			<a href='byond://?src=[REF(src)];act=toggle_verb_collection'>Verb Collection [GLOB.collect_verb_costs]</a>\n\
+		Glide: New ([GLOB.glide_size_multiplier]) Old ([GLOB.old_glide_size_multiplier])\n\
+		Graph: \
+			Displaying \[<a href='byond://?src=[REF(src)];act=set_graph_mode'>[graph_display.display_mode]</a>\] \
+			<a href='byond://?src=[REF(src)];act=freeze_graph'>[graph_display.frozen ? "Thaw" : "Freeze"]</a> \
+			Max Displayable Value \[<a href='byond://?src=[REF(src)];act=set_graph_scale'>[graph_display.max_displayable_cpu]</a>\]\
+	</div>"
+	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
+		Tick: [FORMAT_CPU(world.time / world.tick_lag)]\n\
+		Floor: <a href='byond://?src=[REF(src)];act=set_floor'>[GLOB.floor_cpu]</a>\n\
+		Sustain: <a href='byond://?src=[REF(src)];act=set_sustain_cpu'>[GLOB.sustain_cpu]</a> \
+			<a href='byond://?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
+		Spike: <a href='byond://?src=[REF(src)];act=set_spike'>[GLOB.spike_cpu]</a>\n\
+		Glide Ratio: <a href='byond://?src=[REF(src)];act=set_glide_ratio'>[GLOB.glide_threshold_ratio]</a>%\n\
+		Correction Ideal: <a href='byond://?src=[REF(src)];act=set_corrective_target'>[FORMAT_CPU(GLOB.corrective_cpu_target)]</a>\n\
+		Correction Ratio: <a href='byond://?src=[REF(src)];act=set_corrective_ratio'>[GLOB.corrective_cpu_ratio]</a>%\n\
+		Correction Target: [FORMAT_CPU(GLOB.corrective_cpu_threshold)]\n\
+		Correction Distance: [FORMAT_CPU(GLOB.corrective_cpu_target - cpu_values[last_index])]\n\
+		Correction Cost: [FORMAT_CPU(GLOB.corrective_cpu_cost)]\n\
+		Frame Behind CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
+		Frame Behind Sleep: [FORMAT_CPU(mc_start_usage[last_index])]\n\
+		Frame Behind MC: [FORMAT_CPU(min(mc_usage))]\n\
+		Frame Behind Post MC: [FORMAT_CPU(min(post_mc_usage))]\n\
+		Frame Behind Pre Tick: [FORMAT_CPU(pre_tick_cpu_usage[last_index])]\n\
+		Frame Behind Tick: [FORMAT_CPU(tick_cpu_usage[last_index])]\n\
+		Frame Behind Maptick: [FORMAT_CPU(maptick_usage[last_index])]\n\
+		Frame Behind Verb: [FORMAT_CPU(verb_cost[last_index])]\n\
+		Frame Behind Last Ran Verb: [FORMAT_CPU(last_verb_ran[last_index])]\n\
+		<div style=\"color:#FF0000;\">\
+			Max CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
+			Max Sleep [full_time]s: [FORMAT_CPU(max(mc_start_usage))]\n\
+			Max MC [full_time]s: [FORMAT_CPU(max(mc_usage))]\n\
+			Max Post MC [full_time]s: [FORMAT_CPU(min(post_mc_usage))]\n\
+			Max Pre Tick [full_time]s: [FORMAT_CPU(max(pre_tick_cpu_usage))]\n\
+			Max Tick [full_time]s: [FORMAT_CPU(max(tick_cpu_usage))]\n\
+			Max Map [full_time]s: [FORMAT_CPU(max(maptick_usage))]\n\
+			Max Verb [full_time]s: [FORMAT_CPU(max(verb_cost))]\n\
+			Max Last Ran Verb [full_time]s: [FORMAT_CPU(max(last_verb_ran))]\n\
+		</div>\
+		<div style=\"color:#0096FF;\">\
+			Min CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
+			Min Sleep [full_time]s: [FORMAT_CPU(min(mc_start_usage))]\n\
+			Min MC [full_time]s: [FORMAT_CPU(min(mc_usage))]\n\
+			Min Post MC [full_time]s: [FORMAT_CPU(min(post_mc_usage))]\n\
+			Min Pre Tick [full_time]: [FORMAT_CPU(min(pre_tick_cpu_usage))]\n\
+			Min Tick [full_time]s: [FORMAT_CPU(min(tick_cpu_usage))]\n\
+			Min Map [full_time]s: [FORMAT_CPU(min(maptick_usage))]\n\
+			Min Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\n\
+			Min Last Ran Verb [full_time]s: [FORMAT_CPU(min(last_verb_ran))]\
+		</div>\
+	</div>"
+
+/atom/movable/screen/usage_display/proc/toggle_cpu_debug(client/modify)
+	if(modify?.displaying_cpu_debug) // I am lazy and this is a cold path
+		viewer_count -= 1
+		modify.screen -= src
+		modify.screen -= graph_display
+		modify.screen -= controls
+		UnregisterSignal(modify, COMSIG_QDELETING)
+		modify?.displaying_cpu_debug = FALSE
+	else
+		viewer_count += 1
+		modify.screen += src
+		modify.screen += graph_display
+		modify.screen += controls
+		RegisterSignal(modify, COMSIG_QDELETING, PROC_REF(client_disconnected))
+		modify?.displaying_cpu_debug = TRUE
+		if(viewer_count == 1)
+			graph_display.clear_values()
+
+	for(var/atom/movable/screen/plane_master/cpu_debug/debuggin as anything in modify.mob?.hud_used?.get_true_plane_masters(CPU_DEBUG_PLANE))
+		debuggin.update_visibility(modify.mob)
+
+/atom/movable/screen/usage_display/proc/client_disconnected(client/disconnected)
+	SIGNAL_HANDLER
+	toggle_cpu_debug(disconnected)
+
+/atom/movable/screen/usage_display_controls
+	screen_loc = "LEFT+4:16, TOP:-8"
+	plane = CPU_DEBUG_PLANE
+	layer = CPU_DISPLAY_LAYER
+	maptext_width = 512
+	maptext_height = 512
+	alpha = 220
+	clear_with_screen = FALSE
+	var/atom/movable/screen/usage_display/parent
+
+/atom/movable/screen/usage_display_controls/Destroy()
+	parent = null
+	return ..()
+
+/atom/movable/screen/usage_display_controls/Topic(href, list/href_list)
+	parent.Topic(href, href_list)
+
+/atom/movable/screen/usage_display/Topic(href, list/href_list)
+	if (..())
+		return
+	if(usr.ckey != "lemoninthedark" && (!check_rights(R_DEBUG) || !check_rights(R_SERVER)))
+		return FALSE
+	switch(href_list["act"])
+		if("toggle_movement")
+			GLOB.use_new_glide = !GLOB.use_new_glide
+			return TRUE
+		if("toggle_compensation")
+			GLOB.attempt_corrective_cpu = !GLOB.attempt_corrective_cpu
+			return TRUE
+		if("toggle_mc_limit")
+			GLOB.use_new_mc_limit = !GLOB.use_new_mc_limit
+			return TRUE
+		if("toggle_graph")
+			display_graph = !display_graph
+			if(display_graph)
+				graph_display.alpha = 255
+			else
+				graph_display.alpha = 0
+			return TRUE
+		if("toggle_verb_collection")
+			GLOB.collect_verb_costs = !GLOB.collect_verb_costs
+		if("set_graph_mode")
+			var/mode = tgui_input_list(usr, "What kind of info should we graph?", "Graph Mode?", graph_options)
+			if(!(mode in graph_options))
+				return
+			graph_display.set_display_mode(mode)
+			return TRUE
+		if("set_graph_scale")
+			var/current_value = graph_display.max_displayable_cpu
+			var/max_cpu = tgui_input_number(usr, "What should be the highest displayable cpu value?", "Max CPU", max_value = INFINITY, min_value = 0, default = current_value) || 0
+			graph_display.set_max_display(max_cpu)
+			return TRUE
+		if("freeze_graph")
+			graph_display.set_frozen(!graph_display.frozen)
+			return TRUE
+		if("set_corrective_target")
+			var/target_cpu = tgui_input_number(usr, "What should we attempt to correct up to?", "Correct CPU", max_value = INFINITY, min_value = 0, default = GLOB.corrective_cpu_target) || 0
+			GLOB.corrective_cpu_target = target_cpu
+			return TRUE
+		if("set_corrective_ratio")
+			var/target_ratio = tgui_input_number(usr, "How tolerant of distance from the average should we be?", "Correct CPU Ratio", max_value = INFINITY, min_value = 0, default = GLOB.corrective_cpu_ratio) || 0
+			GLOB.corrective_cpu_ratio = target_ratio
+			return TRUE
+		if("set_glide_ratio")
+			var/target_ratio = tgui_input_number(usr, "How tolerant of distance from the average should we be?", "Glide Ratio", max_value = INFINITY, min_value = 0, default = GLOB.glide_threshold_ratio) || 0
+			GLOB.glide_threshold_ratio = target_ratio
+			return TRUE
+		if("set_floor")
+			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
+			GLOB.floor_cpu = floor_cpu
+			return TRUE
+		if("set_sustain_cpu")
+			var/sustain_cpu = tgui_input_number(usr, "What should we randomly set our cpu to?", "Sustain CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
+			GLOB.sustain_cpu = sustain_cpu
+			return TRUE
+		if("set_sustain_chance")
+			var/sustain_cpu_chance = tgui_input_number(usr, "What % of the time should we floor at Sustain CPU", "Sustain CPU %", max_value = 100, min_value = 0, default = 0) || 0
+			GLOB.sustain_cpu_chance = sustain_cpu_chance
+			return TRUE
+		if("set_spike")
+			var/spike_cpu = tgui_input_number(usr, "How high should we spike cpu usage", "Spike CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
+			GLOB.spike_cpu = spike_cpu
+			return TRUE
+
+/// Holds and tracks information about our current tick
+/// Global datum, for real, I am so sorry
+/datum/tick_holder
+	var/list/cpu_values = new /list(TICK_INFO_SIZE)
+	var/list/mc_fired = new /list(TICK_INFO_SIZE)
+	var/list/mc_start_usage = new /list(TICK_INFO_SIZE)
+	var/list/mc_finished_usage = new /list(TICK_INFO_SIZE)
+	var/list/mc_usage = new /list(TICK_INFO_SIZE)
+	var/list/post_mc_usage = new /list(TICK_INFO_SIZE)
+	var/list/tick_cpu_usage = new /list(TICK_INFO_SIZE)
+	var/list/pre_tick_cpu_usage = new /list(TICK_INFO_SIZE)
+	var/list/maptick_usage = new /list(TICK_INFO_SIZE)
+	var/list/verb_cost = new /list(TICK_INFO_SIZE)
+	var/list/verb_timings = new /list(TICK_INFO_SIZE)
+	var/list/last_verb_ran = new /list(TICK_INFO_SIZE)
+	var/list/cpu_error = new /list(TICK_INFO_SIZE)
+	var/list/corrected_ticks = new /list(TICK_INFO_SIZE)
+	/// Subsystems fired in the previous tick, paried with thier usage
+	var/list/last_subsystem_usages = list()
+	var/cpu_index = 1
+	var/last_cpu_update = -1
+
+/datum/tick_holder/proc/mc_fired(tick_inspecting)
+	if(mc_fired[TICK_INFO_TICK2INDEX(DS2TICKS(tick_inspecting))] == tick_inspecting)
+		return TRUE
+	return FALSE
+
+// Not initialized, because we have to do that manually
+// That's how fucked we are
+GLOBAL_REAL(____tick_info, /datum/tick_holder)
+GLOBAL_DATUM(tick_info, /datum/tick_holder)
+/// Inserts our current world.cpu value into our rolling lists
+/// Its job is to pull the actual usage last tick instead of the moving average
+/world/proc/refresh_cpu_values()
+	if(!____tick_info)
+		____tick_info = new()
+	if(GLOB)
+		GLOB.tick_info = ____tick_info
+
+	var/datum/tick_holder/tick_info = ____tick_info
+	if(tick_info.last_cpu_update == world.time)
+		return
+
+	tick_info.last_cpu_update = world.time
+	// info about the last game tick so it should be logged as the last game tick
+	var/cpu_index = TICK_INFO_TICK2INDEX(DS2TICKS(world.time) - 1)
+	tick_info.cpu_index = cpu_index
+	// cache for sonic speed
+	var/list/cpu_values = tick_info.cpu_values
+
+	// ok so world.cpu is a 16 entry wide moving average of the actual cpu value
+	// because fuck you
+	// I want the ACTUAL unrolled value, which lucy's cool helpers can give me
+	// yes byond does average against a constant window size, it doesn't account for a lack of values initially it just sorta assumes they exist.
+	// ♪ it ain't me, it ain't me ♪
+	var/real_cpu = current_true_cpu()
+
+	var/calculated_avg = real_cpu
+	for(var/i in 1 to INTERNAL_CPU_SIZE - 1)
+		calculated_avg += cpu_values[WRAP(cpu_index - i, 1, TICK_INFO_SIZE + 1)]
+	// (95.7994 * 16) - 1536.35 == -3.3
+	// (a+b+c+d...) / 16 * 16 - (a+b+c+d...) == -g
+	var/inbuilt_error = world.cpu * INTERNAL_CPU_SIZE - calculated_avg
+
+	// We have info about all verb costs last tick, let's unroll that and make it useful
+	var/total_verb_cost
+	var/list/verb_spans = list()
+	var/last_verb_finished = 0
+	var/list/cost_breakdown = list()
+	for(var/datum/verb_cost_tracker/verb_info as anything in GLOB.verb_trackers_this_tick)
+		if(verb_info.invoked_on != verb_info.finished_on)
+			stack_trace("We somehow slept between logpoints for [verb_info.name_to_use], ahhhhh ([json_encode(verb_info.vars)])")
+			continue
+		if(verb_info.finished_on != world.time - world.tick_lag)
+			stack_trace("there's a verb we think is from last tick that happen this tick, what? ([json_encode(verb_info.vars)])")
+			continue
+		total_verb_cost += verb_info.usage_at_end - verb_info.usage_at_start
+		verb_spans += list(list(verb_info.usage_at_start, verb_info.usage_at_end))
+		last_verb_finished = max(last_verb_finished, verb_info.usage_at_end)
+		cost_breakdown[verb_info.name_to_use] += verb_info.usage_at_end - verb_info.usage_at_start
+
+	cpu_values[cpu_index] = real_cpu
+	tick_info.mc_usage[cpu_index] = tick_info.mc_finished_usage[cpu_index] - tick_info.mc_start_usage[cpu_index]
+	tick_info.post_mc_usage[cpu_index] = tick_info.pre_tick_cpu_usage[cpu_index] - tick_info.mc_finished_usage[cpu_index]
+	// world.cpu is continuious cpu from tick start to right after maptick, so we can doooo this
+	tick_info.maptick_usage[cpu_index] = cpu_values[cpu_index] - tick_info.tick_cpu_usage[cpu_index]
+	tick_info.verb_cost[cpu_index] = total_verb_cost
+	tick_info.verb_timings[cpu_index] = list(verb_spans, cost_breakdown)
+	tick_info.last_verb_ran[cpu_index] = last_verb_finished
+	tick_info.cpu_error[cpu_index] = inbuilt_error
+
+/proc/update_glide_compensation()
+	world.refresh_cpu_values()
+	var/datum/tick_holder/tick_info = ____tick_info
+	var/list/cpu_values = tick_info.cpu_values
+	var/list/corrected_ticks = tick_info.corrected_ticks
+
+	var/capped_sum = 0
+	var/non_zero = 0
+	var/corrected_sum = 0
+	var/non_zero_corrected = 0
+	for(var/i in 1 to length(cpu_values))
+		var/value = cpu_values[i]
+		capped_sum += max(value, 100)
+		if(corrected_ticks[i])
+			corrected_sum += value
+			if(value != 0)
+				non_zero_corrected += 1
+		if(value != 0)
+			non_zero += 1
+
+	var/first_capped_average = non_zero ? capped_sum / non_zero : 1
+	var/trimmed_capped_sum = 0
+	var/cap_used = 0
+	var/first_corrected_average = non_zero_corrected ? corrected_sum / non_zero_corrected : 1
+	var/trimmed_max_value = 0
+	for(var/i in 1 to length(cpu_values))
+		var/value = cpu_values[i]
+		// If we deviate more then 30% above the average (since we care about filtering spikes), skip us over
+		if(value && max(value, 100) / first_capped_average - 1 <= GLOB.glide_threshold_ratio / 100)
+			trimmed_capped_sum += max(value, 100)
+			cap_used += 1
+		if(corrected_ticks[i] && value / first_corrected_average - 1 <= GLOB.corrective_cpu_ratio / 100)
+			trimmed_max_value = max(value, trimmed_max_value)
+
+	var/final_capped_average = trimmed_capped_sum ? trimmed_capped_sum / cap_used : first_capped_average
+	GLOB.glide_size_multiplier = min(100 / final_capped_average, 1)
+
+	var/final_corrected_value = trimmed_max_value ? trimmed_max_value : first_corrected_average
+	if(final_corrected_value > GLOB.corrective_cpu_target)
+		GLOB.corrective_cpu_threshold = GLOB.corrective_cpu_target - (final_corrected_value - GLOB.corrective_cpu_target)
+		GLOB.corrective_cpu_cost = final_corrected_value
+	else
+		GLOB.corrective_cpu_threshold = GLOB.corrective_cpu_target
+		GLOB.corrective_cpu_cost = 0
 
 /// Initializes TGS and loads the returned revising info into GLOB.revdata
 /world/proc/InitTgs()
@@ -346,6 +780,7 @@ GLOBAL_VAR(restart_counter)
 	if(check_hard_reboot())
 		log_world("World hard rebooted at [time_stamp()]")
 		shutdown_logging() // See comment below.
+		world.cleanup_external_cpu()
 		QDEL_NULL(Tracy)
 		QDEL_NULL(Debugger)
 		TgsEndProcess()
@@ -354,6 +789,7 @@ GLOBAL_VAR(restart_counter)
 	log_world("World rebooted at [time_stamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
+	world.cleanup_external_cpu()
 	QDEL_NULL(Tracy)
 	QDEL_NULL(Debugger)
 
@@ -363,6 +799,7 @@ GLOBAL_VAR(restart_counter)
 	#endif
 
 /world/Del()
+	world.cleanup_external_cpu()
 	QDEL_NULL(Tracy)
 	QDEL_NULL(Debugger)
 	. = ..()

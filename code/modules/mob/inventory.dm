@@ -617,11 +617,11 @@
 		qdel(item)
 	return FALSE
 
-/mob/verb/quick_equip()
-	set name = "quick-equip"
-	set hidden = TRUE
-
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_quick_equip)))
+DEFINE_VERB(/mob, quick_equip, "quick-equip", "", TRUE, "")
+	if(VERB_JUST_FIRED())
+		execute_quick_equip()
+	else
+		DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_quick_equip)))
 
 ///proc extender of [/mob/verb/quick_equip] used to make the verb queuable if the server is overloaded
 /mob/proc/execute_quick_equip()

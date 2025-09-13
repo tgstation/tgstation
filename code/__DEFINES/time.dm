@@ -76,6 +76,8 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 #define TICKS2DS(T) ((T) TICKS)
 
+#define RATIO2TICK(R) ((R) / 100)
+
 #define MS2DS(T) ((T) MILLISECONDS)
 
 #define DS2MS(T) ((T) * 100)
