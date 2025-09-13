@@ -45,7 +45,7 @@
 	var/turf/turfloc = loc
 	. = ..()
 	if(isturf(turfloc))
-		for(var/thing_that_falls as anything in turfloc) // as anything because turfloc can only contain movables
+		for(var/thing_that_falls in turfloc) // as anything because turfloc can only contain movables
 			turfloc.zFall((thing_that_falls))
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)

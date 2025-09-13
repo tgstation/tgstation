@@ -344,7 +344,7 @@
 	data["selected_root"] = root_category
 
 	data["categories"] = list()
-	for(var/sub_category as anything in GLOB.rcd_designs[root_category])
+	for(var/sub_category in GLOB.rcd_designs[root_category])
 		var/list/target_category =  GLOB.rcd_designs[root_category][sub_category]
 		if(!length(target_category))
 			continue

@@ -219,7 +219,7 @@ if $grep 'forceMove\(\s*(\w+\(\)|\w+)\s*,\s*(\w+\(\)|\w+)\s*\)' $code_files; the
 fi;
 
 part "as anything on typeless loops"
-if $grep 'for\(var/[^/]+ as anything in' $code_files; then
+if $grep 'var/[^/]+ as anything' $code_files; then
     echo
     echo -e "${RED}ERROR: 'as anything' used in a typeless for loop. This doesn't do anything and should be removed.${NC}"
     st=1
