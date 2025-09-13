@@ -14478,6 +14478,10 @@
 /obj/structure/table,
 /obj/item/plate/large,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/key/golfcart{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "fdy" = (
@@ -16967,9 +16971,8 @@
 /area/station/medical/chemistry/minisat)
 "fUz" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/structure/closet_empty/crate,
-/obj/item/electronics/apc,
 /obj/structure/sign/poster/random/directional/south,
+/obj/vehicle/ridden/golfcart/loaded,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "fUH" = (
@@ -55342,6 +55345,8 @@
 "sWd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/side,
+/obj/item/electronics/apc,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "sWn" = (
@@ -82040,7 +82045,7 @@ hCS
 rdX
 kcW
 nfS
-mDe
+lLk
 fUz
 rnk
 rnk
@@ -82296,7 +82301,7 @@ sdc
 hCS
 apW
 lLk
-lLk
+mDe
 sWd
 asb
 rnk
