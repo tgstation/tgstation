@@ -2,10 +2,9 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-  Collapsible,
   Icon,
   Image,
-  LabeledList,
+  Input,
   NoticeBox,
   Section,
   Stack,
@@ -13,17 +12,14 @@ import {
   Tabs,
   Tooltip,
   VirtualList,
-  Input
 } from 'tgui-core/components';
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import type { Material } from './Fabrication/Types';
-
-import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 type Machine = {
   name: string;
@@ -180,9 +176,9 @@ const MachineDisplay = (props: MachineProps) => {
         className={
           machine.on_hold
             ? classes([
-              'FabricatorRecipe__Title',
-              'FabricatorRecipe__Title--disabled',
-            ])
+                'FabricatorRecipe__Title',
+                'FabricatorRecipe__Title--disabled',
+              ])
             : 'FabricatorRecipe__Title'
         }
       >
@@ -280,56 +276,52 @@ const LogsList = (props: LogsListProps) => {
     getSearchString: (item) => item.searchString,
   });
 
-  const filteredLogs = query ? results.map(result => result.log) : logs;
+  const filteredLogs = query ? results.map((result) => result.log) : logs;
 
-      return (
-      <Stack vertical fill>
-        <Stack.Item>
-          <Section
-            title="Action Logs"
-            buttons={<RestrictButton />}
-          >
-            <Stack>
-              <Stack.Item grow>
-                <Input
-                  fluid
-                  height={1.7}
-                  autoFocus
-                  placeholder='Search for names, locations and resources...'
-                  value={query}
-                  onChange={(value) => setQuery(value)}
-                />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  icon="close"
-                  onClick={() => setQuery('')}
-                  disabled={!query}
-                />
-              </Stack.Item>
-            </Stack>
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section
-            fill
-            scrollable={filteredLogs.length > 0}
-            pr={1}>
-            {filteredLogs.length > 0 ? (
-              <VirtualList>
-                {filteredLogs.map((log, index) => (
-                  <LogEntry key={index} {...log} />
-                ))}
-              </VirtualList>
-            ) : (
-              <NoticeBox textAlign="center">
-                {query ? 'No logs seem to match your request.' : 'Nothing here...'}
-              </NoticeBox>
-            )}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    );
+  return (
+    <Stack vertical fill>
+      <Stack.Item>
+        <Section title="Action Logs" buttons={<RestrictButton />}>
+          <Stack>
+            <Stack.Item grow>
+              <Input
+                fluid
+                height={1.7}
+                autoFocus
+                placeholder="Search for names, locations and resources..."
+                value={query}
+                onChange={(value) => setQuery(value)}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="close"
+                onClick={() => setQuery('')}
+                disabled={!query}
+              />
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section fill scrollable={filteredLogs.length > 0} pr={1}>
+          {filteredLogs.length > 0 ? (
+            <VirtualList>
+              {filteredLogs.map((log, index) => (
+                <LogEntry key={index} {...log} />
+              ))}
+            </VirtualList>
+          ) : (
+            <NoticeBox textAlign="center">
+              {query
+                ? 'No logs seem to match your request.'
+                : 'Nothing here...'}
+            </NoticeBox>
+          )}
+        </Section>
+      </Stack.Item>
+    </Stack>
+  );
 };
 
 const UserItem = (props: UserData) => {
@@ -390,40 +382,44 @@ const LogEntry = (props: Log) => {
   } = props;
   const [expanded, setExpanded] = useState(false);
 
-      return (
-      <Box>
-        <Box
-          style={{
-            cursor: 'pointer',
-          }}
-          onClick={() => setExpanded(!expanded)}
-        >
-            <Stack align="center" style={{ padding: '0.5em' }}>
-            <Stack.Item>
-              <Button disabled icon={expanded ? 'arrow-down' : 'arrow-right'} color='disabled' />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                color={actionToColor[action.toUpperCase()]}
-                width="8em"
-                textAlign="center"
-              >
-                {action.toUpperCase()}
-              </Button>
-            </Stack.Item>
-            <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
-              <Icon name="arrow-right" ml={1} mr={1} />
-            </Stack.Item>
-            <Stack.Item grow style={{ display: 'flex', alignItems: 'center' }}>
-              {` ${formatAmount(action, amount)} ${noun}`}
-            </Stack.Item>
-            <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
-              <Button icon='user' color="gray">
-                {user_data.name} ({user_data.assignment})
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Box>
+  return (
+    <Box>
+      <Box
+        style={{
+          cursor: 'pointer',
+        }}
+        onClick={() => setExpanded(!expanded)}
+      >
+        <Stack align="center" style={{ padding: '0.5em' }}>
+          <Stack.Item>
+            <Button
+              disabled
+              icon={expanded ? 'arrow-down' : 'arrow-right'}
+              color="disabled"
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              color={actionToColor[action.toUpperCase()]}
+              width="8em"
+              textAlign="center"
+            >
+              {action.toUpperCase()}
+            </Button>
+          </Stack.Item>
+          <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
+            <Icon name="arrow-right" ml={1} mr={1} />
+          </Stack.Item>
+          <Stack.Item grow style={{ display: 'flex', alignItems: 'center' }}>
+            {` ${formatAmount(action, amount)} ${noun}`}
+          </Stack.Item>
+          <Stack.Item style={{ display: 'flex', alignItems: 'center' }}>
+            <Button icon="user" color="gray">
+              {user_data.name} ({user_data.assignment})
+            </Button>
+          </Stack.Item>
+        </Stack>
+      </Box>
 
       {expanded && (
         <Box mt={0.5}>
