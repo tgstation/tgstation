@@ -225,12 +225,28 @@
 		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
 	add_shared_particles(/particles/smoke/ash)
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
-		for(var/turf/closed/mineral/rock in oview(i))
-			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
-				new /obj/effect/decal/cleanable/rubble(rock)
-			if(prob(100 - (i * 15)))
-				rock.gets_drilled(user)
-				if(prob(50))
+		for(var/turf/rock in oview(i))
+			if(istype(rock, /turf/closed/mineral))
+				if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
+					new /obj/effect/decal/cleanable/rubble(rock)
+				if(!prob(100 - (i * 15)))
+					continue
+				var/turf/closed/mineral/drillable = rock
+				drillable.gets_drilled(user)
+			else	//Open turf behavior.
+				if(istype(rock, /turf/open/lava))
+					if(!prob(100 - (i * 15)))
+						continue
+					var/obj/item/boulder/produced = produce_boulder(FALSE)
+					var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, wave_timer)
+					if(!platform)
+						continue
+					platform.alpha = 0
+					platform.pixel_y = -16
+					animate(platform, alpha = 255, time = 2 SECONDS, pixel_y = 0, easing = QUAD_EASING|EASE_OUT)
+					if(!QDELETED(produced))
+						qdel(platform)
+				else if(prob(50))
 					new /obj/effect/decal/cleanable/rubble(rock)
 		sleep(0.6 SECONDS)
 	return TRUE
