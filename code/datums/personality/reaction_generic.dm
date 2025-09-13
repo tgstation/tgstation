@@ -6,11 +6,11 @@
 
 /datum/personality/apathetic/apply_to_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.mood_modifier -= 0.2
+	who.mob_mood?.mood_modifier -= 0.2
 
 /datum/personality/apathetic/remove_from_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.mood_modifier += 0.2
+	who.mob_mood?.mood_modifier += 0.2
 
 /datum/personality/sensitive
 	savefile_key = "sensitive"
@@ -20,11 +20,11 @@
 
 /datum/personality/sensitive/apply_to_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.mood_modifier += 0.2
+	who.mob_mood?.mood_modifier += 0.2
 
 /datum/personality/sensitive/remove_from_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.mood_modifier -= 0.2
+	who.mob_mood?.mood_modifier -= 0.2
 
 /datum/personality/resilient
 	savefile_key = "resilient"
@@ -34,11 +34,11 @@
 
 /datum/personality/resilient/apply_to_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.negative_moodlet_length_modifier -= 0.2
+	who.mob_mood?.negative_moodlet_length_modifier -= 0.2
 
 /datum/personality/resilient/remove_from_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.negative_moodlet_length_modifier += 0.2
+	who.mob_mood?.negative_moodlet_length_modifier += 0.2
 
 /datum/personality/brooding
 	savefile_key = "brooding"
@@ -48,11 +48,11 @@
 
 /datum/personality/brooding/apply_to_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.negative_moodlet_length_modifier += 0.2
+	who.mob_mood?.negative_moodlet_length_modifier += 0.2
 
 /datum/personality/brooding/remove_from_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.negative_moodlet_length_modifier -= 0.2
+	who.mob_mood?.negative_moodlet_length_modifier -= 0.2
 
 /datum/personality/hopeful
 	savefile_key = "hopeful"
@@ -62,11 +62,11 @@
 
 /datum/personality/hopeful/apply_to_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.positive_moodlet_length_modifier += 0.2
+	who.mob_mood?.positive_moodlet_length_modifier += 0.2
 
 /datum/personality/hopeful/remove_from_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.positive_moodlet_length_modifier -= 0.2
+	who.mob_mood?.positive_moodlet_length_modifier -= 0.2
 
 /datum/personality/pessimistic
 	savefile_key = "pessimistic"
@@ -76,11 +76,11 @@
 
 /datum/personality/pessimistic/apply_to_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.positive_moodlet_length_modifier -= 0.2
+	who.mob_mood?.positive_moodlet_length_modifier -= 0.2
 
 /datum/personality/pessimistic/remove_from_mob(mob/living/who)
 	. = ..()
-	who.mob_mood.positive_moodlet_length_modifier += 0.2
+	who.mob_mood?.positive_moodlet_length_modifier += 0.2
 
 /datum/personality/whimsical
 	savefile_key = "whimsical"
