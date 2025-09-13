@@ -626,11 +626,11 @@
 /obj/item/hatchet,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/item/paper/guides/jobs/hydroponics,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/spawner/random/entertainment/coin,
 /obj/structure/table/wood,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "alA" = (
@@ -3185,6 +3185,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "bgm" = (
@@ -3402,9 +3405,6 @@
 /turf/closed/wall,
 /area/station/security/courtroom)
 "bjD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/item/crowbar,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/cultivator,
@@ -3412,6 +3412,9 @@
 /obj/item/storage/bag/plants,
 /obj/item/plant_analyzer,
 /obj/structure/table/wood,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "bjF" = (
@@ -6662,13 +6665,11 @@
 /area/station/service/lawoffice)
 "ctg" = (
 /obj/item/radio/intercom/directional/east,
-/obj/effect/turf_decal/siding/white{
-	dir = 5
+/obj/structure/window/unanchored/spawner/directional/north,
+/mob/living/basic/chicken{
+	name = "Kentucky"
 	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/water/no_planet_atmos/deep,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ctn" = (
 /obj/effect/turf_decal/stripes/line,
@@ -16509,10 +16510,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fLo" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 8
+/obj/machinery/door/window/left/directional/west{
+	name = "Animal Pen"
 	},
-/turf/open/water/no_planet_atmos,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "fLq" = (
 /obj/machinery/door/window/left/directional/north{
@@ -20642,14 +20643,11 @@
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "hiX" = (
-/obj/effect/turf_decal/siding/wideplating_new{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/effect/turf_decal/siding/green{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -21659,9 +21657,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "hzJ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
@@ -22053,6 +22048,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "hIp" = (
@@ -24291,9 +24289,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/wideplating_new,
-/obj/structure/railing,
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/siding/green,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "ivc" = (
@@ -26293,7 +26289,6 @@
 "jbM" = (
 /obj/machinery/seed_extractor,
 /obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
@@ -27773,13 +27768,10 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "jAE" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 4
+/mob/living/basic/cow{
+	name = "Betsy"
 	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/water/no_planet_atmos/deep,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "jAN" = (
 /obj/machinery/airalarm/directional/north,
@@ -29817,7 +29809,6 @@
 	pixel_y = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/table/wood,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -30215,19 +30206,8 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "krt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/machinery/light/directional/south,
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wideplating_new{
-	dir = 4
-	},
-/obj/item/storage/toolbox/fishing,
-/obj/item/storage/toolbox/fishing,
-/obj/item/fishing_rod,
-/obj/item/fishing_rod,
-/obj/effect/turf_decal/tile/green/half/contrasted{
+/obj/effect/turf_decal/siding/green{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -36560,7 +36540,6 @@
 /obj/machinery/light/directional/north,
 /obj/item/plant_analyzer,
 /obj/item/reagent_containers/cup/watering_can,
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/table/wood,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -39939,10 +39918,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "nIy" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 9
-	},
-/turf/open/water/no_planet_atmos,
+/obj/structure/window/unanchored/spawner/directional/north,
+/obj/structure/window/unanchored/spawner/directional/west,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "nIP" = (
 /obj/structure/table/glass,
@@ -40138,7 +40116,6 @@
 "nMK" = (
 /obj/machinery/biogenerator,
 /obj/machinery/firealarm/directional/north,
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "nMV" = (
@@ -44795,13 +44772,7 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "pwp" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 6
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/water/no_planet_atmos/deep,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "pwx" = (
 /obj/structure/chair{
@@ -51595,14 +51566,12 @@
 /turf/open/floor/plating,
 /area/station/command/teleporter)
 "rKN" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 10
-	},
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/structure/sign/clock/directional/south,
-/turf/open/water/no_planet_atmos,
+/obj/structure/window/unanchored/spawner/directional/west,
+/mob/living/basic/chicken{
+	name = "Nugget"
+	},
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "rKQ" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -57890,14 +57859,11 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "tUh" = (
-/obj/effect/turf_decal/siding/wideplating_new{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
+	},
+/obj/effect/turf_decal/siding/green{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -66910,6 +66876,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
@@ -67536,8 +67505,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/siding/wideplating_new/corner,
-/obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -67547,6 +67514,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/green/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "xeZ" = (
@@ -69975,9 +69943,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/wideplating_new,
-/obj/structure/railing,
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/siding/green,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "xUH" = (
@@ -70524,11 +70490,11 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "ycQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/spawner/random/food_or_drink/plant_produce,
 /obj/structure/table/wood,
+/obj/effect/turf_decal/siding/green/inner_corner{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "ydb" = (
