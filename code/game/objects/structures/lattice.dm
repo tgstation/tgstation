@@ -226,7 +226,7 @@
 		add_overlay("plasma_cracks")
 	else
 		add_overlay("lava_cracks")
-	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = EASE_IN)
+	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = QUAD_EASING|EASE_IN)
 	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 2 SECONDS)
 
 /**

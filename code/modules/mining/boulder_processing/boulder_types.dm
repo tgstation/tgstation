@@ -70,7 +70,6 @@
 		/datum/material/uranium = 3,
 	)
 	set_custom_materials(list(pick_weight(expanded_gulag_minerals) = SHEET_MATERIAL_AMOUNT))
-	ADD_TRAIT(src, TRAIT_GULAG_BOULDER_WEAKNESS, REF(src))
 
 ///lowgrade boulder, Exists as an admin spawn for testing
 /obj/item/boulder/shabby

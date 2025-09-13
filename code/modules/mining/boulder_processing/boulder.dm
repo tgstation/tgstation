@@ -26,6 +26,8 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Used in inheriting the icon_state from our parent vent in update_icon.
 	var/boulder_string = "boulder"
+	/// If the boulder is converted into a platform, how long will it last? Default is 10 seconds unless overwritten by a vent.
+	var/platform_lifespan = PLATFORM_LIFE_DEFAULT
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
@@ -126,19 +128,6 @@
 	if(locate(/obj/structure/lattice/catwalk/boulder, interacting_with))
 		to_chat(user, span_warning("There is already a boulder platform here!"))
 		return FALSE
-	var/platform_lifespan = 0
-
-	switch(boulder_size)
-		if(BOULDER_SIZE_SMALL)
-			platform_lifespan = 20 SECONDS
-		if(BOULDER_SIZE_MEDIUM)
-			platform_lifespan = 45 SECONDS
-		if(BOULDER_SIZE_LARGE)
-			platform_lifespan = 90 SECONDS
-		else
-			platform_lifespan = 10 SECONDS //Fallback
-	if(HAS_TRAIT(src, TRAIT_GULAG_BOULDER_WEAKNESS))
-		platform_lifespan = 1 SECONDS // I didn't want to just completely axe the mechanic within the gulag, so I decided to make it very short if your prisoners are very coordinated.
 
 	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
 	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), platform_lifespan)
