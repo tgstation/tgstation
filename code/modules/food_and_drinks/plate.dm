@@ -26,8 +26,7 @@
 
 /obj/item/plate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!IS_EDIBLE(tool))
-		balloon_alert(user, "not food!")
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(tool.w_class > biggest_w_class)
 		balloon_alert(user, "too big!")
 		return ITEM_INTERACT_BLOCKING
