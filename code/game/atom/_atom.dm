@@ -394,11 +394,11 @@
 	return is_refillable() && is_drainable()
 
 /// Is this atom injectable into other atoms
-/atom/proc/is_injectable(mob/user, allowmobs = TRUE)
+/atom/proc/is_injectable()
 	return reagents && (reagents.flags & (INJECTABLE | REFILLABLE))
 
 /// Can we draw from this atom with an injectable atom
-/atom/proc/is_drawable(mob/user, allowmobs = TRUE)
+/atom/proc/is_drawable()
 	return reagents && (reagents.flags & (DRAWABLE | DRAINABLE))
 
 /// Can this atoms reagents be refilled
