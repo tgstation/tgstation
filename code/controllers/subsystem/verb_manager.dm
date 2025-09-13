@@ -49,6 +49,32 @@ SUBSYSTEM_DEF(verb_manager)
 	///always queue if possible. overrides can_queue_admin_verbs but not FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs
 	var/always_queue = FALSE
 
+/datum/controller/subsystem/verb_manager/stat_entry(msg)
+	. = ..()
+	if(use_default_stats)
+		. += "V/S: [round(verbs_executed_per_second, 0.01)]"
+
+/datum/controller/subsystem/verb_manager/fire(resumed)
+	run_verb_queue()
+
+/// runs through all of this subsystems queue of verb callbacks.
+/// goes through the entire verb queue without yielding.
+/// used so you can flush the queue outside of fire() without interfering with anything else subtype subsystems might do in fire().
+/datum/controller/subsystem/verb_manager/proc/run_verb_queue()
+	var/executed_verbs = 0
+
+	for(var/datum/callback/verb_callback/verb_callback as anything in verb_queue)
+		if(!istype(verb_callback))
+			stack_trace("non /datum/callback/verb_callback inside [name]'s verb_queue!")
+			continue
+
+		verb_callback.InvokeAsync()
+		executed_verbs++
+
+	verb_queue.Cut()
+	verbs_executed_per_second = MC_AVG_SECONDS(verbs_executed_per_second, executed_verbs, wait SECONDS)
+	//note that wait SECONDS is incorrect if this is called outside of fire() but because byond is garbage i need to add a timer to rustg to find a valid solution
+
 /**
  * is a verb allowed to queue right now, given current costs and the passed arguments to the specified verb subsystem, so that it can process in the next tick.
  * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB() and co.
@@ -151,29 +177,3 @@ SUBSYSTEM_DEF(verb_manager)
 		message_admins("[name] verb queuing: tick usage: [TICK_USAGE]%, proc: [incoming_callback.delegate], object: [incoming_callback.object], usr: [usr]")
 	verb_queue += incoming_callback
 	return TRUE
-
-/datum/controller/subsystem/verb_manager/fire(resumed)
-	run_verb_queue()
-
-/// runs through all of this subsystems queue of verb callbacks.
-/// goes through the entire verb queue without yielding.
-/// used so you can flush the queue outside of fire() without interfering with anything else subtype subsystems might do in fire().
-/datum/controller/subsystem/verb_manager/proc/run_verb_queue()
-	var/executed_verbs = 0
-
-	for(var/datum/callback/verb_callback/verb_callback as anything in verb_queue)
-		if(!istype(verb_callback))
-			stack_trace("non /datum/callback/verb_callback inside [name]'s verb_queue!")
-			continue
-
-		verb_callback.InvokeAsync()
-		executed_verbs++
-
-	verb_queue.Cut()
-	verbs_executed_per_second = MC_AVG_SECONDS(verbs_executed_per_second, executed_verbs, wait SECONDS)
-	//note that wait SECONDS is incorrect if this is called outside of fire() but because byond is garbage i need to add a timer to rustg to find a valid solution
-
-/datum/controller/subsystem/verb_manager/stat_entry(msg)
-	. = ..()
-	if(use_default_stats)
-		. += "V/S: [round(verbs_executed_per_second, 0.01)]"
