@@ -784,17 +784,17 @@
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_MEDICAL_DOCTOR
-	extra_access = list(
-		ACCESS_PLUMBING,
-		)
 	minimal_access = list(
 		ACCESS_MECH_MEDICAL,
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MORGUE,
-		ACCESS_PHARMACY,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		)
+	extra_access = list(
+		ACCESS_PHARMACY,
+		ACCESS_PLUMBING,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
