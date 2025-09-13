@@ -1,6 +1,8 @@
 #define GOLFCART_RIDING_SOURCE "riding_golfcart"
 #define HUMAN_LOWER_LAYER (MOB_LAYER)
-#define HUMAN_RIDING_LAYER (ABOVE_MOB_LAYER + 0.02)
+#define CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
+#define BELOW_HUMAN_HITBOX_LAYER (ABOVE_MOB_LAYER + 0.01)
+#define HUMAN_RIDING_LAYER (BELOW_HUMAN_HITBOX_LAYER + 0.02)
 
 /obj/golfcart_rear
 	name = "golf cart bed"
@@ -12,6 +14,8 @@
 	max_buckled_mobs = 2
 	glide_size = MAX_GLIDE_SIZE
 	layer = 0
+	///Currently buckled cargo
+	var/obj/cargo = null
 	///Was this move triggered by the parent?
 	var/moving_from_parent = FALSE
 	var/obj/vehicle/ridden/golfcart/parent = null
@@ -40,23 +44,126 @@
 		)
 	)
 
+///Try to load something onto the cart. This proc may fail if the obj is not in allowed_cargo or is in banned_cargo.
+/obj/golfcart_rear/proc/load(obj/to_load)
+	if (!to_load)
+		return
+	if (cargo)
+		return
+	if (to_load.anchored)
+		return
+	if (to_load.has_buckled_mobs())
+		// can't stack buckles and whatever
+		return
+	if (istype(to_load, /obj/structure/closet))
+		var/obj/structure/closet/crate = to_load
+		crate.close()
+	to_load.forceMove(src)
+	cargo = to_load
+	layer = CARGO_HITBOX_LAYER
+	parent.update_appearance(UPDATE_ICON)
+
+/obj/golfcart_rear/proc/unload()
+	if (!cargo)
+		return
+	var/list/candidates = list(
+		get_step(src, turn(dir, 180)),
+		get_step(src, turn(dir, 90)),
+		get_step(src, turn(dir, 270)),
+	)
+	var/atom/dropoff = get_turf(src)
+	for (var/atom/turf in candidates)
+		if (turf.Enter(cargo, src))
+			dropoff = turf
+			break
+	cargo.forceMove(dropoff)
+	cargo = null
+	layer = BELOW_HUMAN_HITBOX_LAYER
+	parent.update_appearance(UPDATE_ICON)
+
+///Jiggles the cargo_image as long as someone is trying to jiggle it.
+/obj/golfcart_rear/proc/check_if_shake()
+	if (!cargo)
+		return FALSE
+
+	// Assuming we decide to shake again, how long until we check to shake again
+	var/next_check_time = 0.75 SECONDS
+
+	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
+	var/shake_duration =  0.125 SECONDS
+
+	for(var/mob/living/mob in cargo.contents)
+		if(DOING_INTERACTION_WITH_TARGET(mob, src))
+			// Shake and queue another check_if_shake
+			parent.shake_cargo(1, 6, shake_duration)
+			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
+			return TRUE
+
+	// If we reach here, nobody is resisting, so don't shake
+	return FALSE
+
+/obj/golfcart_rear/proc/after_escape(obj/container, mob/living/user)
+	user?.visible_message(
+		span_danger("The [container] falls off of the [src]!"),
+		span_userdanger("You knock the crate off the [src]!")
+	)
+	container.SpinAnimation(5, 1)
+	if (user && istype(container, /obj/structure/closet))
+		var/obj/structure/closet/closet = container
+		if (closet.can_open(user))
+			closet.open()
+
+///Unload the container from the golfcart if it is cargo
+/obj/golfcart_rear/proc/easy_escape(mob/living/user, obj/container)
+	if (!cargo || cargo != container)
+		return
+	unload()
+	after_escape(container, user)
+
+///Unload the container from the golfcart if it is cargo and after a little jiggling and a some time
+/obj/golfcart_rear/proc/hard_escape(mob/living/user, obj/container)
+	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 0)
+	if (do_after(user, 5 SECONDS, target=src, timed_action_flags=IGNORE_USER_LOC_CHANGE))
+		if (!cargo || cargo != container || !(user in cargo))
+			return
+		unload()
+		after_escape(container, user)
+
+///Called when someone resists inside of the cargo hitch.
+/obj/golfcart_rear/relay_container_resist_act(mob/living/user, obj/container)
+	user.visible_message(
+		span_danger("[user] tries to escape the [container]!"),
+		span_userdanger("You try to escape the [container]!"),
+	)
+	if (parent.has_buckled_mobs())
+		for (var/mob/driver in parent.buckled_mobs)
+			if (!parent.is_driver(driver))
+				continue
+			driver.show_message(span_userdanger("The [container] shakes violently!"))
+	if (istype(container, /obj/structure/closet))
+		var/obj/structure/closet/closet = container
+		if (!closet.welded)
+			return easy_escape(user, container)
+		return hard_escape(user, container)
+	return easy_escape(user, container)
+
 /obj/golfcart_rear/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if (!parent)
 		return
 	return parent.take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 
 /obj/golfcart_rear/attack_hand(mob/user, list/modifiers)
-	if(!isnull(parent.cargo))
-		parent.unload()
+	if(!isnull(cargo))
+		unload()
 		return TRUE
 	return ..()
 
 /obj/golfcart_rear/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if (!parent.cargo)
+	if (!cargo)
 		return
 	tool.play_tool_sound(src, 50)
-	parent.unload()
+	unload()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
@@ -66,7 +173,7 @@
 		balloon_alert(user, "blocked!")
 		return ..()
 	var/obj/dropped_obj = dropped
-	return parent.load(dropped_obj)
+	return load(dropped_obj)
 
 /obj/golfcart_rear/examine(mob/user)
 	if (!parent)
@@ -189,6 +296,7 @@
 /obj/golfcart_rear/Initialize(mapload, obj/vehicle/ridden/golfcart/progenitor)
 	. = ..()
 	parent = progenitor
+	layer = BELOW_HUMAN_HITBOX_LAYER
 	RegisterSignal(parent, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_changed))
 
 /obj/golfcart_rear/update_overlays()
@@ -199,7 +307,7 @@
 		. += hitbox_overlay
 	else if (dir & SOUTH)
 		. += mutable_appearance(icon, "rear_hitbox_lower", OBJ_LAYER + 0.01)
-	if(!parent.cargo)
+	if(!cargo)
 		return
 	var/vector/rear_offsets = parent.get_rear_offset()
 	. += parent.generate_cargo_overlay(-rear_offsets.x, -rear_offsets.y, layer=layer)
@@ -222,7 +330,7 @@
 /obj/golfcart_rear/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
 	// these are to_viewers because you can buckle someone on their behalf
-	if (parent && parent.cargo)
+	if (parent && cargo)
 		balloon_alert_to_viewers("blocked!")
 		return FALSE
 	if (target.body_position != STANDING_UP)
@@ -263,8 +371,13 @@
 	if (!QDELETED(parent))
 		qdel(parent)
 	parent = null
+	if (cargo && !QDELETED(cargo))
+		cargo.forceMove(drop_location())
+	cargo = null
 	return ..()
 
+#undef CARGO_HITBOX_LAYER
 #undef HUMAN_LOWER_LAYER
 #undef HUMAN_RIDING_LAYER
 #undef GOLFCART_RIDING_SOURCE
+#undef BELOW_HUMAN_HITBOX_LAYER

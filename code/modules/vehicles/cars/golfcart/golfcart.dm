@@ -4,7 +4,6 @@
 #define CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
 #define CART_ROOF_LAYER (CARGO_HITBOX_LAYER + 0.01)
 #define CART_LOWER_LAYER (OBJ_LAYER)
-#define BELOW_HUMAN_HITBOX_LAYER (ABOVE_MOB_LAYER + 0.01)
 #define FAKE_GLIDE_INITIAL_SOURCE "fake_glide_initial"
 
 /obj/vehicle/ridden/golfcart
@@ -54,8 +53,6 @@
 		// i mean it's a fucking door
 		/obj/machinery/door,
 	))
-	///Currently buckled cargo
-	var/obj/cargo = null
 	///Is the hood open?
 	var/hood_open = FALSE
 
@@ -133,104 +130,6 @@
 	var/inital_pixel_y = cargo_image.pixel_y
 	animate(cargo_image, pixel_x = inital_pixel_x + rand(-pixelshiftx, pixelshiftx), pixel_y = inital_pixel_y + rand(pixelshifty/2, pixelshifty), time=duration, flags=ANIMATION_PARALLEL)
 	animate(pixel_x = inital_pixel_x, pixel_y = inital_pixel_y, time=duration)
-
-///Jiggles the cargo_image as long as someone is trying to jiggle it.
-/obj/vehicle/ridden/golfcart/proc/check_if_shake()
-	if (!cargo)
-		return FALSE
-
-	// Assuming we decide to shake again, how long until we check to shake again
-	var/next_check_time = 0.75 SECONDS
-
-	// How long we shake between different calls of Shake(), so that it starts shaking and stops, instead of a steady shake
-	var/shake_duration =  0.125 SECONDS
-
-	for(var/mob/living/mob in cargo.contents)
-		if(DOING_INTERACTION_WITH_TARGET(mob, child))
-			// Shake and queue another check_if_shake
-			shake_cargo(1, 6, shake_duration)
-			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
-			return TRUE
-
-	// If we reach here, nobody is resisting, so don't shake
-	return FALSE
-
-///Unload the container from the golfcart if it is cargo
-/obj/vehicle/ridden/golfcart/proc/easy_escape(mob/living/user, obj/container)
-	if (!cargo || cargo != container)
-		return
-	unload()
-	if (istype(container, /obj/structure/closet))
-		var/obj/structure/closet/closet = container
-		if (closet.can_open(user))
-			closet.open()
-
-///Unload the container from the golfcart if it is cargo and after a little jiggling and a some time
-/obj/vehicle/ridden/golfcart/proc/hard_escape(mob/living/user, obj/container)
-	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 0)
-	if (do_after(user, 5 SECONDS, target=child, timed_action_flags=IGNORE_USER_LOC_CHANGE))
-		if (!cargo || cargo != container || !(user in cargo))
-			return
-		unload()
-		user.visible_message(
-			span_danger("The [container] falls off of the [child]!"),
-			span_userdanger("You knock the crate off the [src]!")
-			)
-
-///Called when someone in the cargo hitch tries to escape
-/obj/vehicle/ridden/golfcart/relay_container_resist_act(mob/living/user, obj/container)
-	user.visible_message(
-		span_danger("[user] tries to escape the [container]!"),
-		span_userdanger("You try to escape the [container]!"),
-	)
-	if (has_buckled_mobs())
-		for (var/mob/driver in buckled_mobs)
-			if (!is_driver(driver))
-				continue
-			driver.show_message(span_userdanger("The [container] shakes violently!"))
-	if (istype(container, /obj/structure/closet))
-		var/obj/structure/closet/closet = container
-		if (!closet.welded)
-			return easy_escape(user, container)
-		return hard_escape(user, container)
-	return easy_escape(user, container)
-
-///Try to load something onto the cart. This proc may fail if the obj is not in allowed_cargo or is in banned_cargo.
-/obj/vehicle/ridden/golfcart/proc/load(obj/to_load)
-	if (!to_load)
-		return
-	if (cargo)
-		return
-	if (to_load.anchored)
-		return
-	if (to_load.has_buckled_mobs())
-		// can't stack buckles and whatever
-		return
-	if (istype(to_load, /obj/structure/closet))
-		var/obj/structure/closet/crate = to_load
-		crate.close()
-	to_load.forceMove(child)
-	cargo = to_load
-	child.layer = CARGO_HITBOX_LAYER
-	update_appearance(UPDATE_ICON)
-
-/obj/vehicle/ridden/golfcart/proc/unload()
-	if (!cargo)
-		return
-	var/list/candidates = list(
-		get_step(child, turn(dir, 180)),
-		get_step(child, turn(dir, 90)),
-		get_step(child, turn(dir, 270)),
-	)
-	var/atom/dropoff = get_turf(child)
-	for (var/atom/turf in candidates)
-		if (turf.Enter(cargo, src))
-			dropoff = turf
-			break
-	cargo.forceMove(dropoff)
-	cargo = null
-	child.layer = BELOW_HUMAN_HITBOX_LAYER
-	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/proc/is_hotrod()
 	return engine && engine_state && engine_state == ENGINE_WELDED
@@ -438,16 +337,16 @@
 
 /obj/vehicle/ridden/golfcart/examine_more(mob/user)
 	. = ..()
-	if (!cargo)
+	if (!child.cargo)
 		return
-	. += span_slightly_larger("It is currently transporting the [cargo]")
-	. += cargo.examine(user)
+	. += span_slightly_larger("It is currently transporting the [child.cargo]")
+	. += child.cargo.examine(user)
 
 /obj/vehicle/ridden/golfcart/examine(mob/user)
 	. = ..()
 	. += span_notice("Pop the hood by alt-clicking while not riding it.")
-	if (cargo)
-		. += span_info("The bed is holding \the [cargo].")
+	if (child.cargo)
+		. += span_info("The bed is holding \the [child.cargo].")
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += span_warning("You're too far away to examine [src] closely.")
 		return
@@ -589,7 +488,6 @@
 			direction = SOUTH
 		direction = turn(direction, 180)
 	setDir(direction)
-	child.layer = BELOW_HUMAN_HITBOX_LAYER // this is a hack
 	child.loc = get_step(src, turn(dir, 180))
 	update_appearance()
 
@@ -622,8 +520,9 @@
 
 ///Flattens the attached cargo into a list of mutable_appearances with proper layering to fit between layer and max_layer
 /obj/vehicle/ridden/golfcart/proc/generate_cargo_overlay(crate_x_offset = 0, crate_y_offset = 0, layer=null, max_layer=null, shift_all=TRUE)
-	if (!cargo)
+	if (!child.cargo)
 		return
+	var/obj/cargo = child.cargo
 	if (!layer)
 		layer = src.layer
 	if (!max_layer)
@@ -719,7 +618,7 @@
 	if (roof_overlay)
 		. += roof_overlay
 
-	if (cargo)
+	if (child.cargo)
 		// the cargo is a seperate vis_overlay so that it can be animate()d
 		vis_contents -= cargo_image
 		cargo_image = null
@@ -765,15 +664,11 @@
 	if (!QDELETED(child))
 		qdel(child)
 	child = null
-	if (cargo && !QDELETED(cargo))
-		cargo.forceMove(drop_location())
-	cargo = null
 	return ..()
 
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED
 #undef ENGINE_WELDED
 #undef CARGO_HITBOX_LAYER
-#undef BELOW_HUMAN_HITBOX_LAYER
 #undef CART_ROOF_LAYER
 #undef CART_LOWER_LAYER
