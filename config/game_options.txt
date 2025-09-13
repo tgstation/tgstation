@@ -590,3 +590,34 @@ SPY_EASY_REWARD_TC_THRESHOLD 5
 ## Hard bounties grant uplink rewards that cost this much TC (or higher).
 ## Also functions as the upper end for medium bounties.
 SPY_HARD_REWARD_TC_THRESHOLD 15
+
+## Uncomment to enable maps saving and loading that persists between rounds instead of always reseting to the default station map
+## This will load the most recent saved maps, z-levels, and jsons in the _maps/persistence folder organized by year-month-day_UTF_hour.minute.second
+#PERSISTENT_SAVE_ENABLED
+## Period of time in hours between map autosaves (set to -1 to only allow saving when server reboots)
+## Defaults to every 4 hours
+PERSISTENT_AUTOSAVE_PERIOD 4
+## The maximum amount of autosaves to store (set to -1 to never delete any autosaves)
+## A full station 255x255 z-level with lots of objects/turfs/etc. is ~3 MB, Empty 255x255 z-levels are ~0.5 MB
+## An autosave with all the default z-levels included will result in ~10 MB (so 100 autosaves would be ~1 GB)
+PERSISTENT_MAX_AUTOSAVES -1
+## Include specific z levels when saving and loading
+## Whether to include the centcom z level (can ONLY be saved and NEVER loaded via persistence since it is always compiled)
+#PERSISTENT_SAVE_CENTCOM_Z_LEVELS
+## Whether to include station z levels
+PERSISTENT_SAVE_STATION_Z_LEVELS
+## Whether to include space ruins z levels
+PERSISTENT_SAVE_SPACE_RUIN_Z_LEVELS
+## Whether to include space empty z levels
+PERSISTENT_SAVE_SPACE_EMPTY_Z_LEVELS
+## Whether to include ice ruin z levels
+PERSISTENT_SAVE_ICE_RUIN_Z_LEVELS
+## Whether to include mining z levels
+PERSISTENT_SAVE_MINING_Z_LEVELS
+## Whether to include transitional z levels used for shuttle movement
+#PERSISTENT_SAVE_TRANSITIONAL_Z_LEVELS
+## Whether to include away gateway misisons z levels
+PERSISTENT_SAVE_AWAY_Z_LEVELS
+## If enabled, a fixed grid layout is loaded from the z-level JSON files
+## PERSISTENT_SAVE_SPACE_RUIN_Z_LEVELS, PERSISTENT_SAVE_SPACE_EMPTY_Z_LEVELS, and PERSISTENT_SAVE_ICE_RUIN_Z_LEVELS must be enabled for this to work
+PERSISTENT_USE_STATIC_MAP_GRID
