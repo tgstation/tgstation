@@ -25,7 +25,7 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
-	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
+	tool_behaviour = TOOL_ROLLINGPIN // Glass bottles can be used as rolling pins when empty
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
 	/// A contained piece of paper, a photo, or space cash, that we can use as a message or gift to future spessmen.
 	var/obj/item/message_in_a_bottle
@@ -50,6 +50,13 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Toss message"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/reagent_containers/cup/glass/bottle/on_reagent_change(datum/reagents/holder, ...)
+	. = ..()
+	if(!reagents?.total_volume)
+		tool_behaviour = TOOL_ROLLINGPIN // Glass bottles can be used as rolling pins when empty
+	else
+		tool_behaviour = null
 
 /obj/item/reagent_containers/cup/glass/bottle/Exited(atom/movable/gone, atom/newloc)
 	if(gone == message_in_a_bottle)
