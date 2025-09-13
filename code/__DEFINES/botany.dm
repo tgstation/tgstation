@@ -53,6 +53,8 @@
 #define TRAIT_HALVES_YIELD (1<<0)
 /// Doesn't get bonuses from tray yieldmod
 #define TRAIT_NO_POLLINATION (1<<1)
+/// Shows description on examine
+#define TRAIT_SHOW_EXAMINE (1<<2)
 
 /// -- Trait IDs. Plants that match IDs cannot be added to the same plant. --
 /// Plants that glow.
