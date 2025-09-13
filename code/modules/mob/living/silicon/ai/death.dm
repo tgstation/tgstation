@@ -21,7 +21,7 @@
 	if(icon_exists(icon, "[base_icon]_death_transition"))
 		flick("[base_icon]_death_transition", src)
 
-	if(is_anchored)
+	if(anchored)
 		flip_anchored()
 
 	if(eyeobj)
