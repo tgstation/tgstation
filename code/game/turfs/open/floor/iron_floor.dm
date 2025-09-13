@@ -3,6 +3,13 @@
 	floor_tile = /obj/item/stack/tile/iron/base
 	rust_resistance = RUST_RESISTANCE_BASIC
 
+/turf/open/floor/examine(mob/user)
+  if(prob(1))
+    return "Dude, you're tripping out. You should probably, like, go see a doctor."
+  else
+    return ..()
+// If this breaks everything floor related i will be so sad
+
 /turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
