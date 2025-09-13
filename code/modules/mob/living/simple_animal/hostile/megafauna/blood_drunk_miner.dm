@@ -188,7 +188,7 @@ Difficulty: Medium
 	if(dir & (EAST|WEST)) //Facing east or west
 		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
-	animate(src, transform = our_matrix, pixel_y = -6, dir = final_dir, time = 2, easing = SINE_EASING|EASE_IN|EASE_OUT)
+	animate(src, transform = our_matrix, pixel_y = -6, dir = final_dir, time = 2, easing = QUAD_EASING)
 	sleep(0.5 SECONDS)
 	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = SINE_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(0.4 SECONDS)
