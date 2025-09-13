@@ -2,7 +2,6 @@
 /// List of containers the Chem Master machine can print
 GLOBAL_LIST_INIT(reagent_containers, list(
 	CAT_CONDIMENTS = list(
-		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/condiment/flour,
 		/obj/item/reagent_containers/condiment/sugar,
 		/obj/item/reagent_containers/condiment/rice,
@@ -27,7 +26,8 @@ GLOBAL_LIST_INIT(reagent_containers, list(
 		/obj/item/reagent_containers/condiment/pack,
 	),
 	CAT_TUBES = list(
-		/obj/item/reagent_containers/cup/tube
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/cup/bottle,
 	),
 	CAT_PILLS = typecacheof(list(
 		/obj/item/reagent_containers/applicator/pill/style
