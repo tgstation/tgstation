@@ -51,6 +51,3 @@
 
 /datum/computer_file/program/maintenance/theme/alien
 	theme_name = PDA_THEME_ABDUCTOR_NAME
-
-/datum/computer_file/program/maintenance/theme/bird
-	theme_name = PDA_THEME_BIRD_NAME

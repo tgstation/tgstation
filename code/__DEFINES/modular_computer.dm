@@ -130,6 +130,7 @@ GLOBAL_LIST_INIT(default_pda_themes, list(
 	PDA_THEME_RETRO_NAME = PDA_THEME_RETRO,
 	PDA_THEME_SYNTH_NAME = PDA_THEME_SYNTH,
 	PDA_THEME_TERMINAL_NAME = PDA_THEME_TERMINAL,
+	PDA_THEME_BIRD_NAME = PDA_THEME_BIRD,
 ))
 
 ///List of PDA themes that are accessible to everyone by default.
