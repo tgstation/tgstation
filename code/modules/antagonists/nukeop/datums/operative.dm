@@ -129,6 +129,7 @@
 
 	var/mob/living/carbon/human/operative = owner.current
 	ADD_TRAIT(operative, TRAIT_NOFEAR_HOLDUPS, INNATE_TRAIT)
+	ADD_TRAIT(operative, TRAIT_DESENSITIZED, INNATE_TRAIT) // nuke-ops proooobably don't care much about death. (their innate moodlet will offset this further)
 
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
