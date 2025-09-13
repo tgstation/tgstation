@@ -9,7 +9,7 @@
 
 	if(tilted && !user.buckled)
 		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 5 SECONDS, target=src))
+		if(do_after(user, 5 SECONDS, target = src))
 			untilt(user)
 		return
 
