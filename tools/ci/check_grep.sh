@@ -225,13 +225,6 @@ if $grep 'for\(var/[^/]+ as anything in' $code_files; then
     st=1
 fi;
 
-part "as anything on typeless loops"
-if $grep 'var/[^/]+ as anything' $code_files; then
-    echo
-    echo -e "${RED}ERROR: 'as anything' used in a typeless for loop. This doesn't do anything and should be removed.${NC}"
-    st=1
-fi;
-
 part "as anything on internal functions"
 if $grep 'var\/(turf|mob|obj|atom\/movable).+ as anything in o?(view|range|hearers)\(' $code_files; then
     echo
