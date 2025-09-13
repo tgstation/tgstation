@@ -1,6 +1,7 @@
 /obj/item/organ/cyberimp/arm
 	name = "arm-mounted implant"
 	desc = "An implant that goes in your arm to improve it."
+	abstract_type = /obj/item/organ/cyberimp/arm
 	zone = BODY_ZONE_R_ARM
 	slot = ORGAN_SLOT_RIGHT_ARM_AUG
 	w_class = WEIGHT_CLASS_SMALL
