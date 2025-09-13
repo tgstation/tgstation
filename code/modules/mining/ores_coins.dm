@@ -440,7 +440,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value = 0
 	var/coinflip
-	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 	///If you do not want this coin to be valued based on its materials and instead set a custom value set this to TRUE and set value to the desired value.
 	var/override_material_worth = FALSE
 	/// The name of the heads side of the coin
@@ -549,36 +548,46 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/gold = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/silver
 	custom_materials = list(/datum/material/silver = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/silver = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/diamond
 	custom_materials = list(/datum/material/diamond = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/carbon = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/plasma
 	custom_materials = list(/datum/material/plasma = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/toxin/plasma = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/uranium
 	custom_materials = list(/datum/material/uranium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/uranium = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/titanium
 	custom_materials = list(/datum/material/titanium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/flash_powder = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/consumable/nutriment/soup/clown_tears = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/adamantine
 	custom_materials = list(/datum/material/adamantine = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/mythril
 	custom_materials = list(/datum/material/mythril = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/medicine/omnizine/godblood = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/plastic
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/plastic_polymers = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/runite
 	custom_materials = list(/datum/material/runite = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/iron = COIN_MATERIAL_AMOUNT * 0.1, /datum/reagent/consumable/ethanol/ritual_wine = COIN_MATERIAL_AMOUNT * 0.1)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -593,11 +602,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	heads_name = "valid"
 	material_flags = NONE
 	override_material_worth = TRUE
+	grind_results = list(/datum/reagent/ants = COIN_MATERIAL_AMOUNT * 0.1, /datum/reagent/consumable/eggyolk = COIN_MATERIAL_AMOUNT * 0.1)
 
 /obj/item/coin/iron
+	grind_results = list(/datum/reagent/iron = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/coin/gold/debug
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/gold/cursed = COIN_MATERIAL_AMOUNT * 0.2)
 	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
 
 /obj/item/coin/gold/debug/attack_self(mob/user)
@@ -640,6 +652,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	heads_name = "heretic"
 	has_action = TRUE
 	material_flags = NONE
+	grind_results = list(/datum/reagent/carbon = HALF_SHEET_MATERIAL_AMOUNT * 0.1, /datum/reagent/toxin/plasma = HALF_SHEET_MATERIAL_AMOUNT * 0.1, /datum/reagent/eldritch = COIN_MATERIAL_AMOUNT * 0.2)
 	/// The range at which airlocks are effected.
 	var/airlock_range = 5
 
