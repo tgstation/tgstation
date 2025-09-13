@@ -167,6 +167,7 @@
 
 	if(I.tool_behaviour != TOOL_MINING)
 		return
+
 	var/turf/T = user.loc
 	if (!isturf(T))
 		return
@@ -175,12 +176,10 @@
 		return
 
 	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
-
-	balloon_alert(user, "picking...")
-
 	if(!I.use_tool(src, user, tool_mine_speed, volume=50))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return
+
 	if(ismineralturf(src))
 		gets_drilled(user, 1)
 		SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
