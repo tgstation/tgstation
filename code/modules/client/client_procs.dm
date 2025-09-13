@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//overloaded
 	if(hsrc && hsrc != holder && INTELIGENT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_WrapSrcTopic), hsrc, href, href_list), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSverb_manager))
 		if(GLOB.active_tracker)
-			GLOB.active_tracker.name_to_use = "[GLOB.active_tracker.name_to_use]-queued"
+			GLOB.active_tracker.name_to_use = "nullified_click"
 		return FALSE
 	return TRUE //redirect to hsrc.Topic()
 
@@ -975,7 +975,7 @@ OVERRIDE_INTERNAL_VERB(/client, AllowUpload, filename, filelength)
 	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists its reasonable
 	if(!QDELETED(object) && INTELIGENT_TRY_QUEUE_VERB(VERB_CALLBACK(object, TYPE_PROC_REF(/atom, _Click), location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
 		if(GLOB.active_tracker)
-			GLOB.active_tracker.name_to_use = "[GLOB.active_tracker.name_to_use]-queued"
+			GLOB.active_tracker.name_to_use = "nullified_topic"
 		return FALSE
 
 	if (hotkeys)

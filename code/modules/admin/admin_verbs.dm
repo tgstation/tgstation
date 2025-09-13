@@ -261,10 +261,10 @@ ADMIN_VERB(cpu_control, R_DEBUG, "Toggle Cpu Controls", "Enables performance deb
 ADMIN_VERB(verb_costs, R_DEBUG, "Print Verb Costs", "Displays verbs in order of most to least average cost", ADMIN_CATEGORY_DEBUG)
 	var/list/text = list("<B>Verb Costs</B><BR><BR><ol>")
 	var/list/display_verbs = GLOB.average_verb_cost.Copy()
-	sortTim(display_verbs, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
+	sortTim(display_verbs, cmp=/proc/cmp_verb_cost_desc, associative = TRUE)
 	for(var/proc_name in display_verbs)
-		var/cost = display_verbs[proc_name]
-		text += "<li><u>[proc_name] => [cost]</u></li>"
+		var/list/intel = display_verbs[proc_name]
+		text += "<li><u>[proc_name] => [DS2MS(TICKS2DS(RATIO2TICK(intel[VERB_LIST_COST])))] (Time Since Last Called [world.time - intel[VERB_LIST_TIME]])</u></li>"
 	text += "</ol>"
 
 	var/datum/browser/browser = new(usr, "verb_cost", "Verb Costs", 700, 400)

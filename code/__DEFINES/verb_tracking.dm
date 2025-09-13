@@ -4,7 +4,7 @@
 	} else { \
 		var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
 		if(INTELIGENT_TRY_QUEUE_VERB(HELL_CALLBACK(call_on, lookup_method(proc_name),  args.Copy()), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, queue_on)) { \
-			__store_cost.name_to_use = "nullified"; \
+			__store_cost.name_to_use = "nullified_verb"; \
 			__store_cost.usage_at_end = TICK_USAGE; \
 			__store_cost.finished_on = world.time; \
 			__store_cost.enter_average(); \
@@ -24,7 +24,7 @@
 	} else { \
 		var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
 		if(INTELIGENT_TRY_QUEUE_VERB(VERB_CALLBACK(call_on, lookup_method(proc_name), arguments), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, queue_on)) { \
-			__store_cost.name_to_use = "nullified"; \
+			__store_cost.name_to_use = "nullified_verb"; \
 			__store_cost.usage_at_end = TICK_USAGE; \
 			__store_cost.finished_on = world.time; \
 			__store_cost.enter_average(); \
@@ -100,10 +100,17 @@
 
 #define VERB_JUST_FIRED(...) (caller.proc == GLOB.active_tracker?.proc_name)
 
-/// List of verb path -> a running average of its cost
+#define VERB_LIST_COST 1
+#define VERB_LIST_TIME 2
+/// List of verb path -> list(a running average of its cost, last time it ran)
 GLOBAL_LIST_EMPTY(average_verb_cost)
 /// Should we collect verb costs
 GLOBAL_VAR_INIT(collect_verb_costs, FALSE)
+/// List of all the "marked nullifiers" (things like "nullified_verb" which mark the average cost of queuing a "thing")
+GLOBAL_LIST_INIT(nullifiying_verblikes, list("nullified_verb", "nullified_click", "nullified_topic"))
+
+/proc/cmp_verb_cost_desc(list/a, list/b)
+	return b[VERB_LIST_COST] - a[VERB_LIST_COST]
 
 GLOBAL_LIST_EMPTY(verb_trackers_this_tick)
 
@@ -130,9 +137,29 @@ GLOBAL_DATUM(active_tracker, /datum/verb_cost_tracker)
 /datum/verb_cost_tracker/proc/enter_average(category)
 	if(!category)
 		category = name_to_use
-	if(GLOB.collect_verb_costs)
-		GLOB.average_verb_cost[category] = MC_AVG_SLOW_UP_FAST_DOWN(GLOB.average_verb_cost[category], usage_at_end - usage_at_start)
 	GLOB.active_tracker = null
+	if(!GLOB.average_verb_cost)
+		return
+		
+	var/list/intel = GLOB.average_verb_cost[name_to_use]
+	if(!intel)
+		var/avg_usage = MC_AVG_SLOW_UP_FAST_DOWN(0, usage_at_end - usage_at_start)
+		if(SSverb_maintinance.kill_threshold_cost > avg_usage && !(name_to_use in GLOB.nullifiying_verblikes))
+			return
+		GLOB.average_verb_cost[name_to_use] = list(avg_usage, world.time)
+		return
+
+	var/avg_usage = MC_AVG_SLOW_UP_FAST_DOWN(intel[VERB_LIST_COST], usage_at_end - usage_at_start)
+	if(SSverb_maintinance.kill_threshold_cost > avg_usage && !(name_to_use in GLOB.nullifiying_verblikes))
+		GLOB.average_verb_cost -= name_to_use
+		return
+
+	intel[VERB_LIST_TIME] = world.time
+	intel[VERB_LIST_COST] = avg_usage
 
 /datum/verb_cost_tracker/proc/get_average_cost()
-	return GLOB.average_verb_cost[name_to_use] || 0
+	var/list/intel = GLOB.average_verb_cost[name_to_use]
+	if(!intel)
+		return 0
+	intel[VERB_LIST_TIME] = world.time
+	return intel[VERB_LIST_COST]

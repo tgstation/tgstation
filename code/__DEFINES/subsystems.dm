@@ -131,6 +131,7 @@
 #define FIRE_PRIORITY_IDLE_NPC 5
 #define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
+#define FIRE_PRIORITY_VERB_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10
 #define FIRE_PRIORITY_VIS 10
 #define FIRE_PRIORITY_AMBIENCE 10
@@ -245,12 +246,12 @@
 #define SSMACHINES_MACHINES 7
 #define SSMACHINES_MACHINES_LATE 8
 
-// Weather susbsytem tasks
+// Weather susbsytem subtasks
 #define SSWEATHER_MOBS 1
 #define SSWEATHER_TURFS 2
 #define SSWEATHER_THUNDER 3
 
-// Wardrobe subsystem tasks
+// Wardrobe subsystem subtasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
 
