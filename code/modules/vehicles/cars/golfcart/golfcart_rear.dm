@@ -12,6 +12,8 @@
 	max_buckled_mobs = 2
 	glide_size = MAX_GLIDE_SIZE
 	layer = 0
+	///Was this move triggered by the parent?
+	var/moving_from_parent = FALSE
 	var/obj/vehicle/ridden/golfcart/parent = null
 	///List of offsets for buckled passengers. Indexed by passenger index, then by direction string.
 	var/static/list/list/vector/passenger_offsets = list(
@@ -78,11 +80,30 @@
 		return ..()
 	return parent.examine_more(user)
 
+/obj/golfcart_rear/proc/move_from_parent(atom/destination)
+	moving_from_parent = TRUE
+	currently_z_moving = destination.z != loc.z
+	. = forceMove(destination)
+	moving_from_parent = FALSE
+
 /obj/golfcart_rear/doMove(atom/destination)
 	. = ..()
-	for(var/mob/living/buckled_mob as anything in buckled_mobs)
-		buckled_mob.Move(destination, dir)
-		// realistically should do something if move fails but not sure what
+	if (!moving_from_parent)
+		return
+	for (var/mob/buckled_mob in buckled_mobs)
+		if (currently_z_moving)
+			buckled_mob.currently_z_moving = currently_z_moving
+			buckled_mob.forceMove(destination)
+		else
+			// this is not a good hack - this should never happen
+			// but stairs are a particularly problematic area
+			if (!buckled_mob.Move(destination, dir, glide_size))
+				// this is a terrible hack because mob/living forwards forceMove calls to buckled
+				// unless currently_z_moving is non-null
+				buckled_mob.currently_z_moving = CURRENTLY_Z_MOVING_GENERIC
+				buckled_mob.forceMove(destination)
+				buckled_mob.currently_z_moving = FALSE
+
 
 /obj/golfcart_rear/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -96,6 +117,9 @@
 		return TRUE
 
 /obj/golfcart_rear/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
+	if (moving_from_parent)
+		return
+
 	if(pulledby)
 		var/olddir = dir
 		var/newdir
@@ -105,6 +129,7 @@
 			newdir = (direct & NORTH) ? NORTH : SOUTH
 		else
 			newdir = direct
+		set_glide_size(glide_size_override ? glide_size_override : pulledby.glide_size)
 		. = ..()
 		dir = newdir
 		if (get_step(src, turn(dir, 180)) != get_turf(pulledby))
@@ -113,7 +138,7 @@
 		if (!behind.Enter(parent))
 			setDir(olddir)
 			behind = get_step(src, dir)
-		parent.set_glide_size(pulledby.glide_size)
+		parent.set_glide_size(glide_size_override ? glide_size_override : pulledby.glide_size)
 		parent.forceMove(behind)
 		parent.setDir(dir)
 		parent.update_appearance(UPDATE_ICON)
@@ -122,6 +147,8 @@
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
 /obj/golfcart_rear/proc/allow_movement_between_bed_passengers(atom/source, atom/mover)
+	SIGNAL_HANDLER
+
 	if (mover == parent)
 		return COMSIG_COMPONENT_PERMIT_PASSAGE
 	if (parent && (mover in parent.buckled_mobs))
@@ -153,6 +180,8 @@
 		passenger.layer = layer + ((i * 0.01) - 0.01) * (-invert_layer)
 
 /obj/golfcart_rear/proc/on_dir_changed(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if (!has_buckled_mobs())
 		return
 	update_passenger_layers(new_dir)
@@ -177,6 +206,8 @@
 
 ///Called when a passenger tries lying down/getting up. Automatically drops out people who can't stay on
 /obj/golfcart_rear/proc/passenger_falling_down(atom/source, new_bodypos)
+	SIGNAL_HANDLER
+
 	if (!isliving(source))
 		return // should runtime?
 	if (new_bodypos == STANDING_UP)

@@ -5,6 +5,7 @@
 #define CART_ROOF_LAYER (CARGO_HITBOX_LAYER + 0.01)
 #define CART_LOWER_LAYER (OBJ_LAYER)
 #define BELOW_HUMAN_HITBOX_LAYER (ABOVE_MOB_LAYER + 0.01)
+#define FAKE_GLIDE_INITIAL_SOURCE "fake_glide_initial"
 
 /obj/vehicle/ridden/golfcart
 	name = "golf cart"
@@ -19,6 +20,8 @@
 	layer = ABOVE_MOB_LAYER
 	max_occupants = 1
 	key_type = /obj/item/key/golfcart
+	///Perform an extra step after movement finishes?
+	var/perform_extra_step = FALSE
 	///Base movespeed before any modifiers. Humans run at 1.5 movedelay.
 	var/static/base_movedelay = 1.25
 	///Base movespeed for the hotrod before any modifiers
@@ -502,7 +505,48 @@
 	movedelay = base_movedelay_effect * modification
 	child.set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 
+/obj/vehicle/ridden/golfcart/zMove(dir, turf/target, z_move_flags)
+	var/can_do_extra_step = FALSE
+	if (currently_z_moving == CURRENTLY_Z_ASCENDING)
+		can_do_extra_step = TRUE
+	. = ..()
+	if (!.)
+		return
+	perform_extra_step = perform_extra_step || can_do_extra_step
+
+/obj/vehicle/ridden/golfcart/proc/fake_glide(direct)
+	var/px = 0
+	var/py = 0
+	if (direct & NORTH)
+		py -= 32
+	else if (direct & SOUTH)
+		py += 32
+	if (direct & EAST)
+		px -= 32
+	else if (direct & WEST)
+		px += 32
+	pixel_x += px
+	pixel_y += py
+	child.pixel_x += px
+	child.pixel_y += py
+	animate(src, movedelay, pixel_x=0, pixel_y=0)
+	animate(child, movedelay, pixel_x=0, pixel_y=0)
+	for (var/mob/buckled in (buckled_mobs + child.buckled_mobs))
+		var/inital_pixel_x = buckled.pixel_x
+		var/inital_pixel_y = buckled.pixel_y
+		buckled.pixel_x += px
+		buckled.pixel_y += py
+		animate(buckled, movedelay, pixel_x=inital_pixel_x, pixel_y=inital_pixel_y)
+		if (buckled.client)
+			var/client/client = buckled.client
+			var/initial_client_pixel_x = client.pixel_x
+			var/initial_client_pixel_y = client.pixel_y
+			client.pixel_x += px
+			client.pixel_y += py
+			animate(client, movedelay, pixel_x=initial_client_pixel_x, pixel_y=initial_client_pixel_y)
+
 /obj/vehicle/ridden/golfcart/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
+	perform_extra_step = FALSE
 	var/atom/old_loc = get_turf(src)
 	var/old_dir = dir
 	if (get_turf(child) == newloc)
@@ -517,8 +561,11 @@
 			setDir(old_dir)
 			behind = get_step(src, turn(dir, 180))
 	update_appearance(UPDATE_ICON)
-	child.forceMove(behind)
-	return .
+	child.move_from_parent(behind)
+	if (perform_extra_step || old_loc.z != loc.z)
+		if (!Move(get_step(src, dir), dir, glide_size_override, update_dir))
+			return
+		fake_glide(dir)
 
 /obj/vehicle/ridden/golfcart/proc/allow_movement_between_passengers(atom/source, atom/mover)
 	if (mover in child.buckled_mobs)
