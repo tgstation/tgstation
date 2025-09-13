@@ -1,7 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - rscadd: "Soda cans show up in the silver slime drink table."
-  - rscadd: "Examine tag for items that are not mean to show up ingame."
-  - refactor: "Standardizes how gifts rule out abstract types."
-  - bugfix: "gifts no longer check if something has an inhand, massively expanding the list of potential items."
