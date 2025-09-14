@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(cameras)
 	flags = SS_BACKGROUND
 	priority = FIRE_PRIORITY_CAMERAS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 5 MINUTES
+	wait = 2 MINUTES
 	dependencies = list(
 		// Required to get plane offset for static images
 		/datum/controller/subsystem/mapping,
