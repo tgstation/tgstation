@@ -3,6 +3,7 @@
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	abstract_type = /obj/item/ammo_box
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	inhand_icon_state = "syringe_kit"
@@ -258,6 +259,7 @@
 /obj/item/ammo_box/magazine
 	name = "A magazine (what?)"
 	desc = "A magazine of rounds, they look like error signs... this should probably be reported somewhere."
+	abstract_type = /obj/item/ammo_box/magazine
 	ammo_box_multiload = AMMO_BOX_MULTILOAD_IN // so you can't use a magazine like a bootleg speedloader
 	drop_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_pickup1.ogg'

@@ -76,6 +76,9 @@
 	#define HEARING_MESSAGE_MODE 9
 	#define HEARING_RANGE 10
 
+///called when space wind can't move a movable. (pressure_difference, pressure_direction)
+#define COMSIG_MOVABLE_RESISTED_SPACEWIND "movable_resisted_wind"
+
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
 // called when movable is expelled from a disposal pipe, bin or outlet on obj/pipe_eject: (direction)
@@ -112,11 +115,6 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE 1
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
-
-/// Sent from /atom/movable/proc/compose_message() after the name part: (list/stored_name, visible_name)
-#define COMSIG_MOVABLE_MESSAGE_GET_NAME_PART "movable_message_get_name_part"
-	///The index of the name part
-	#define NAME_PART_INDEX 1
 
 /// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
