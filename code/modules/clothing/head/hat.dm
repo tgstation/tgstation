@@ -333,8 +333,6 @@
 	greyscale_config = /datum/greyscale_config/ushanka
 	greyscale_config_worn = /datum/greyscale_config/ushanka/worn
 	greyscale_colors = "#C7B08B#5A4E44"
-	upsprite = "ushanka_gagup"
-	downsprite = "ushanka_gagdown"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	inhand_icon_state = null
 	flags_inv = HIDEEARS|HIDEHAIR
@@ -343,9 +341,9 @@
 	dog_fashion = /datum/dog_fashion/head/ushanka
 	var/earflaps = TRUE
 	///Sprite visible when the ushanka flaps are folded up.
-	var/upsprite = "ushankaup"
+	var/upsprite = "ushanka_gagup"
 	///Sprite visible when the ushanka flaps are folded down.
-	var/downsprite = "ushankadown"
+	var/downsprite = "ushanka_gagdown"
 
 /obj/item/clothing/head/costume/ushanka/attack_self(mob/user)
 	if(earflaps)
