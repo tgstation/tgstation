@@ -9,6 +9,7 @@
 */
 
 /obj/item/restraints
+	abstract_type = /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/weapons/restraints.dmi'

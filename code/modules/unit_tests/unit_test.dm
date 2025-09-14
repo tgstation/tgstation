@@ -31,6 +31,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	return focused_tests.len > 0 ? focused_tests : null
 
 /datum/unit_test
+	/// Do not instantiate if type matches this
+	abstract_type = /datum/unit_test
+
 	//Bit of metadata for the future maybe
 	var/list/procs_tested
 
@@ -46,9 +49,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
-
-	/// Do not instantiate if type matches this
-	var/abstract_type = /datum/unit_test
 
 	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
 	var/static/list/uncreatables = null
