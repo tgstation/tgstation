@@ -96,8 +96,8 @@
 		var/obj/item/food/grown/edible_subject = all_harvested_items[1]
 		descendent_seed = edible_subject.seed
 
-	var/expected_nutriments = round(descendent_seed.reagents_add[/datum/reagent/consumable/nutriment] * descendent_seed.potency / 100)
-	var/expected_vitamins = round(descendent_seed.reagents_add[/datum/reagent/consumable/nutriment/vitamin] * descendent_seed.potency / 100)
+	var/expected_nutriments = round(descendent_seed.reagents_add[/datum/reagent/consumable/nutriment] * descendent_seed.potency / 100, 0.01)
+	var/expected_vitamins = round(descendent_seed.reagents_add[/datum/reagent/consumable/nutriment/vitamin] * descendent_seed.potency / 100, 0.01)
 
 	var/found_nutriments = all_harvested_items[1].reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 	var/found_vitamins = all_harvested_items[1].reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/vitamin)
