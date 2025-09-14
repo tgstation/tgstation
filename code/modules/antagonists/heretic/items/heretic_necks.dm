@@ -228,20 +228,23 @@
 	if(IS_HERETIC_OR_MONSTER(human_target))
 		living_user.balloon_alert(living_user, "resists effects!")
 		return FALSE
+	if(human_target.has_status_effect(/datum/status_effect/moon_slept) || human_target.has_status_effect(/datum/status_effect/moon_converted))
+		human_target.balloon_alert(living_user, "already affected!")
+		return FALSE
 	if(human_target.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return FALSE
 	if(!human_target.mob_mood)
 		return FALSE
 	if(human_target.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
-		living_user.balloon_alert(living_user, "their mind is too strong!")
+		human_target.balloon_alert(living_user, "their mind is too strong!")
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		human_target.mob_mood.adjust_sanity(-sanity_damage)
 	else
 		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
-			living_user.balloon_alert(living_user, "their mind almost bends but something protects it!")
-			living_user.SetSleeping(60 SECONDS, ignore_canstun = FALSE)
-			return
-		living_user.balloon_alert(living_user, "their mind bends to see the truth!")
+			human_target.balloon_alert(living_user, "their mind almost bends but something protects it!")
+			human_target.apply_status_effect(/datum/status_effect/moon_slept)
+			return TRUE
+		human_target.balloon_alert(living_user, "their mind bends to see the truth!")
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)
 		living_user.log_message("made [human_target] insane.", LOG_GAME)
 		human_target.log_message("was driven insane by [living_user]", LOG_GAME)
