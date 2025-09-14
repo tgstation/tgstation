@@ -23,6 +23,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/gases
 	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
 	var/temperature = TCMB
+	/// The total heat capacity of this mixture
+	var/total_heat_capacity
 	/// The total moles within the gas mixture. Updated each time gas_mix is modified
 	var/total_moles
 	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
@@ -178,23 +180,30 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /// Add a specific amount of moles to specified gas or add a new gas to the mix
 /// amount is added so make it negative to remove
-/datum/gas_mixture/proc/adjust_gas_moles(datum/gas/species, amount)
+/datum/gas_mixture/proc/adjust_gas_moles(datum/gas/species, amount, incoming_temp)
 	ASSERT_GAS(species, src)
 	gases[species][MOLES] += amount
 	total_moles += amount
+	//heat transfer
+	if(abs(temperature - incoming_temp) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/self_heat_capacity = heat_capacity()
+		var/giver_heat_capacity = species.specific_heat * amount
+		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
+		total_heat_capacity = combined_heat_capacity
+		if(combined_heat_capacity)
+			temperature = (incoming_temp * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 	garbage_collect()
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
-/// gases_moles is an associative list of gas species to amount, make amount negative to remove
 /datum/gas_mixture/proc/adjust_multiple_gases(datum/gas_holder/incoming_gas)
 	var/list/our_gases = gases
-	var/list/holder_gases = incoming_gas.gases
+	var/list/holder_gases = incoming_gas.gas_species
 	// Moles transfer into self
 	for(var/gas_specie as anything in holder_gases)
 		if(!(gas_specie in our_gases))
 			ASSERT_GAS(gas_specie, src)
-		gases[gas_specie][MOLES] += holder_gases[gas_specie][MOLES]
-		total_moles += holder_gases[gas_specie][MOLES]
+		gases[gas_specie][MOLES] += holder_gases[gas_specie]
+		total_moles += holder_gases[gas_specie]
 
 	//heat transfer
 	var/temperature_delta = abs(temperature - incoming_gas.temperature)
@@ -823,5 +832,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return atmos_contents.Join(";")
 
 /datum/gas_holder
+	/// Associative list of species to moles
 	var/list/gas_species
 	var/temperature
