@@ -9,7 +9,7 @@
 	///The type of theme we have
 	var/theme_name
 	///The Database ID of the theme. It's important that non-abstract types have it set.
-	VAR_FINAL/theme_id
+	var/theme_id
 
 /datum/computer_file/program/maintenance/theme/New()
 	. = ..()
