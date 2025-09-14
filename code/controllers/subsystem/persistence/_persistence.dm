@@ -196,7 +196,8 @@ SUBSYSTEM_DEF(persistence)
 
 	for(var/i in 1 to saves_to_delete)
 		var/oldest_autosave_full_path = MAP_PERSISTENT_DIRECTORY + all_saves[i]
-		to_chat(world, span_boldannounce("Deleted oldest autosave: [oldest_autosave_full_path]"))
+		log_mapping("Deleted oldest autosave: [oldest_autosave_full_path]")
+		log_admin("Deleted oldest autosave: [oldest_autosave_full_path]")
 		fdel(oldest_autosave_full_path)
 
 /// Returns the directory path to the last save if it exists
@@ -288,8 +289,8 @@ SUBSYSTEM_DEF(persistence)
 		var/full_path = MAP_PERSISTENT_DIRECTORY + path
 
 		if(!flist(full_path).len) // empty save directory
-			log_world("Deleted empty autosave directory: [full_path]")
-			to_chat(world, span_boldannounce("Deleted empty autosave: [full_path]"))
+			log_mapping("Deleted empty autosave: [full_path]")
+			log_admin("Deleted empty autosave: [full_path]")
 			all_saves -= full_path
 			fdel(full_path)
 
