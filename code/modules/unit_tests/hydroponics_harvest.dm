@@ -96,15 +96,19 @@
 		var/obj/item/food/grown/edible_subject = all_harvested_items[1]
 		descendent_seed = edible_subject.seed
 
-	var/expected_nutriments = round(descendent_seed.reagents_add[/datum/reagent/consumable/nutriment] * descendent_seed.potency / 100, 0.01)
-	var/expected_vitamins = round(descendent_seed.reagents_add[/datum/reagent/consumable/nutriment/vitamin] * descendent_seed.potency / 100, 0.01)
+	var/gene_nutrients = descendent_seed.reagents_add[/datum/reagent/consumable/nutriment]
+	var/gene_vitamins = descendent_seed.reagents_add[/datum/reagent/consumable/nutriment/vitamin]
+
+	var/expected_nutriments = round(gene_nutrients * (descendent_seed.potency / 100) * max_volume)
+	var/expected_vitamins = round(gene_vitamins * (descendent_seed.potency / 100) * max_volume)
 
 	var/found_nutriments = all_harvested_items[1].reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 	var/found_vitamins = all_harvested_items[1].reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/vitamin)
+
 	QDEL_LIST(all_harvested_items) //We got everything we needed from our harvest, we can clean it up.
 
-	TEST_ASSERT_EQUAL(found_nutriments, expected_nutriments * max_volume, "Hydroponics harvest from [saved_name] has a [expected_nutriments] nutriment gene (expecting [expected_nutriments * max_volume]) but only had [found_nutriments] units of nutriment inside.")
-	TEST_ASSERT_EQUAL(found_vitamins, expected_vitamins * max_volume, "Hydroponics harvest from [saved_name] has a [expected_vitamins] vitamin gene (expecting [expected_nutriments * max_volume]) but only had [found_vitamins] units of vitamins inside.")
+	TEST_ASSERT_EQUAL(found_nutriments, expected_nutriments, "Hydroponics harvest from [saved_name] has a [gene_nutrients] nutriment gene (expecting [expected_nutriments]) but only had [found_nutriments] units of nutriment inside.")
+	TEST_ASSERT_EQUAL(found_vitamins, expected_vitamins, "Hydroponics harvest from [saved_name] has a [gene_vitamins] vitamin gene (expecting [expected_vitamins]) but only had [found_vitamins] units of vitamins inside.")
 
 	if(tray.myseed)
 		tray.age = 0
