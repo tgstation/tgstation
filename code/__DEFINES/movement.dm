@@ -7,7 +7,7 @@
 /// Compensating for time dilation
 GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 GLOBAL_VAR_INIT(old_glide_size_multiplier, 1.0)
-GLOBAL_VAR_INIT(use_new_glide, FALSE)
+GLOBAL_VAR_INIT(use_new_glide, TRUE)
 
 #define GLIDE_SIZE_MULTI (GLOB.use_new_glide ? GLOB.glide_size_multiplier : GLOB.old_glide_size_multiplier)
 

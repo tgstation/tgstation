@@ -105,7 +105,7 @@
 /// List of verb path -> list(a running average of its cost, last time it ran)
 GLOBAL_LIST_EMPTY(average_verb_cost)
 /// Should we collect verb costs
-GLOBAL_VAR_INIT(collect_verb_costs, FALSE)
+GLOBAL_VAR_INIT(collect_verb_costs, TRUE)
 /// List of all the "marked nullifiers" (things like "nullified_verb" which mark the average cost of queuing a "thing")
 GLOBAL_LIST_INIT(nullifiying_verblikes, list("nullified_verb", "nullified_click", "nullified_topic"))
 
@@ -140,7 +140,7 @@ GLOBAL_DATUM(active_tracker, /datum/verb_cost_tracker)
 	GLOB.active_tracker = null
 	if(!GLOB.average_verb_cost)
 		return
-		
+
 	var/list/intel = GLOB.average_verb_cost[name_to_use]
 	if(!intel)
 		var/avg_usage = MC_AVG_SLOW_UP_FAST_DOWN(0, usage_at_end - usage_at_start)
