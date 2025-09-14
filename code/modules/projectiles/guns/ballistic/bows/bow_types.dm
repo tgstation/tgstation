@@ -58,4 +58,7 @@
 /obj/item/gun/ballistic/bow/ashenbow
 	name = "ashen bow"
 	desc = "A bow made from watcher sinew and bone. Seems to possess an almost eerie radiance about it."
+	inhand_icon_state = "ashenbow"
+	base_icon_state = "ashenbow"
+	worn_icon_state = "ashenbow"
 	projectile_damage_multiplier = 0.5

@@ -187,5 +187,5 @@
 
 /obj/projectile/bullet/arrow/ashen/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 2.5, added_damage = 0)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 0, added_damage = 40)
 
