@@ -239,13 +239,12 @@
 						continue
 					var/obj/item/boulder/produced = produce_boulder(FALSE)
 					var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, wave_timer)
-					if(!platform)
+					if(!platform || !QDELETED(produced))
+						qdel(produced)
 						continue
 					platform.alpha = 0
 					platform.pixel_y = -16
 					animate(platform, alpha = 255, time = 2 SECONDS, pixel_y = 0, easing = QUAD_EASING|EASE_OUT)
-					if(!QDELETED(produced))
-						qdel(platform)
 				else if(prob(50))
 					new /obj/effect/decal/cleanable/rubble(rock)
 		sleep(0.6 SECONDS)
