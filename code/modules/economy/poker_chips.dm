@@ -2,7 +2,7 @@
 	name = "poker chip"
 	desc = "A small plastic chip used for gambling. A clever substitution to make the gambling addict feel like his losses are less real."
 	icon = 'icons/obj/economy.dmi'
-	icon_state = "pokerchip_white"
+	icon_state = "pokerchip_white_black"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/plastic_polymers = COIN_MATERIAL_AMOUNT * 0.2)
@@ -14,7 +14,6 @@
 
 /obj/item/poker_chip/white_black
 	name = "1₵ poker chip"
-	icon_state = "pokerchip_white_black"
 	redeem_value = 1
 
 /obj/item/poker_chip/white_blue
