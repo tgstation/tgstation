@@ -215,7 +215,8 @@
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
 	if(spawned_boulder)
-		new spawned_boulder(src)
+		var/obj/item/boulder/wall_boulder = new spawned_boulder(src)
+		wall_boulder.platform_lifespan = PLATFORM_LIFE_GULAG
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(exp_multiplier)

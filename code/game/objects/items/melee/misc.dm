@@ -1,5 +1,6 @@
 // Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
+	abstract_type = /obj/item/melee
 	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/chainofcommand
