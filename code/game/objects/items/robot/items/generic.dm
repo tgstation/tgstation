@@ -11,6 +11,7 @@
 
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
+	abstract_type = /obj/item/borg
 
 /// Cost to use the stun arm
 #define CYBORG_STUN_CHARGE_COST (0.2 * STANDARD_CELL_CHARGE)

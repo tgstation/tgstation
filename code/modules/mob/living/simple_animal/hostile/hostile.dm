@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile
+	abstract_type = /mob/living/simple_animal/hostile
 	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40

@@ -4,6 +4,7 @@
 	worn_icon = 'icons/mob/clothing/under/default.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	abstract_type = /obj/item/clothing/under
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY
@@ -533,4 +534,5 @@
 	return ..()
 
 /obj/item/clothing/under/rank
+	abstract_type = /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

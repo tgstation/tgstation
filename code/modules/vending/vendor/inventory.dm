@@ -265,26 +265,23 @@
 /obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, discountless)
 	PROTECTED_PROC(TRUE)
 
-	//do we have an account with job to purchase
+	//returned items are free
+	if(LAZYLEN(product_to_vend.returned_products))
+		return TRUE
+
+	//account to use. optional cause we handle cash on hand transfers as well
 	var/datum/bank_account/account = paying_id_card.registered_account
-	if(!account || !account.account_job) //unregistered account & jobless
-		speak("Your do not have a valid account with an registered job.")
-		return FALSE
 
 	//deduct money from person
-	if(account.account_job && account.account_job.paycheck_department == payment_department && !discountless)
+	if(!discountless && account.account_job?.paycheck_department == payment_department)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
-	if(LAZYLEN(product_to_vend.returned_products))
-		price_to_use = 0 //returned items are free
-	if(price_to_use && (attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE))
+	if(attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE)
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
 		return FALSE
 
 	//transfer money to machine
-	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)
-	if(paying_id_account)
-		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
+	SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+	log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
 	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE

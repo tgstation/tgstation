@@ -23,6 +23,8 @@ handles linking back and forth.
 	var/mat_container_flags = NONE
 	///List of signals to hook onto the local container
 	var/list/mat_container_signals
+	///Callback for round start silo connections. Have to cancel this if the parent gets destroyed before round start
+	VAR_PRIVATE/datum/callback/connection
 
 /datum/component/remote_materials/Initialize(
 	mapload,
@@ -46,7 +48,8 @@ handles linking back and forth.
 		connect_to_silo = TRUE
 
 	if(mapload) // wait for silo to initialize during mapload
-		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
+		connection = CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo)
+		SSticker.OnRoundstart(connection)
 	else //directly register in round
 		_PrepareStorage(connect_to_silo)
 
@@ -60,6 +63,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/_PrepareStorage(connect_to_silo)
 	PRIVATE_PROC(TRUE)
 
+	connection = null
 	if (connect_to_silo)
 		silo = GLOB.ore_silo_default
 		if (silo)
@@ -72,6 +76,9 @@ handles linking back and forth.
 		_MakeLocal()
 
 /datum/component/remote_materials/Destroy()
+	if(connection)
+		LAZYREMOVE(SSticker.round_start_events, connection)
+		connection = null
 	if(silo)
 		allow_standalone = FALSE
 		disconnect()
