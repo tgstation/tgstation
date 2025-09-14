@@ -39,8 +39,3 @@
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
-/obj/projectile/plasma/borg
-	damage = 0
-	range = 7
-	mine_range = 5
-

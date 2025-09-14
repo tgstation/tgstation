@@ -10,6 +10,3 @@
 	delay = 10
 	e_cost = LASER_SHOTS(100, STANDARD_CELL_CHARGE)
 
-/obj/item/ammo_casing/energy/plasma/borg
-	projectile_type = /obj/projectile/plasma/borg
-
