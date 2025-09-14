@@ -243,7 +243,7 @@
 			var/obj/item/seeds/descendent_seed = Copy()
 			// Cuck potency if a soil lover such as a root crop is grown in water.
 			if(!(parent.tray_flags & SOIL) && get_gene(/datum/plant_gene/trait/soil_lover))
-				descendent_seed.set_potency(potency * RANDOM_DECIMAL(SOIL_LOVER_HYDRO_POTENCY_MIN, SOIL_LOVER_HYDRO_POTENCY_MAX))
+				descendent_seed.set_potency(round(potency * RANDOM_DECIMAL(SOIL_LOVER_HYDRO_POTENCY_MIN, SOIL_LOVER_HYDRO_POTENCY_MAX)))
 
 			t_prod = new product(output_loc, new_seed = descendent_seed)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
