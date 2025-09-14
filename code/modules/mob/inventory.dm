@@ -180,7 +180,7 @@
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
-	if(!I.on_equipped(src, ITEM_SLOT_HANDS, initial = visuals_only))
+	if(!has_equipped(I, ITEM_SLOT_HANDS, initial = visuals_only))
 		return FALSE
 	update_held_items()
 	I.pixel_x = I.base_pixel_x

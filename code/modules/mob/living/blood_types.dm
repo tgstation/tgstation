@@ -15,8 +15,6 @@
 	var/datum/reagent/reagent_type = /datum/reagent/blood
 	/// What chem is used to restore this blood type (outside of itself, of course)?
 	var/datum/reagent/restoration_chem = /datum/reagent/iron
-	/// Exclude abstract root types from being initialized by defining them here
-	var/root_abstract_type
 	/// If this blood type is meant to persist across species changes
 	var/is_species_universal
 	/// Splash and expose behaviors for this blood type's reagent, to prevent water-blood covered items, as well as information transfer flags
@@ -165,7 +163,7 @@
 /datum/blood_type/human
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
 	dna_string = "Human DNA"
-	root_abstract_type = /datum/blood_type/human
+	abstract_type = /datum/blood_type/human
 
 /datum/blood_type/human/a_minus
 	name = BLOOD_TYPE_A_MINUS
@@ -384,7 +382,7 @@
 
 /// An abstract-ish blood type used particularly for species with blood set to random reagents, such as podpeople
 /datum/blood_type/random_chemical
-	root_abstract_type = /datum/blood_type/random_chemical
+	abstract_type = /datum/blood_type/random_chemical
 
 /datum/blood_type/random_chemical/New(datum/reagent/reagent)
 	name = initial(reagent.name)
@@ -393,7 +391,7 @@
 	id = type_key()
 	color = initial(reagent.color)
 	reagent_type = reagent
-	root_abstract_type = null
+	abstract_type = null
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type

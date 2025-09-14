@@ -1,7 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - rscadd: "Asthma quirk, based on IRL asthma"
-  - rscadd: "Inhalers, a new reagent administering method that uses INHALE"
-  - rscadd: "Albuterol, a new reagent that increases the amount of gas you inhale by 40%"
-  - balance: "Inverse convermol now forms once the reaction is done, not on metabolize"

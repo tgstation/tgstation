@@ -326,6 +326,7 @@ DEFINE_PROC_VERB(/obj/item/defibrillator, toggle_paddles, "Toggle Paddles", "", 
 	inhand_icon_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	spawn_blacklisted = TRUE
 
 	force = 0
 	throwforce = 6

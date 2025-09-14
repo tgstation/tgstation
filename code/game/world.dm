@@ -601,6 +601,9 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 
 	load_poll_data()
 
+	// Initialize RETA system - code/modules/reta/reta_system.dm
+	reta_init_config()
+
 	LoadVerbs(/datum/verbs/menu)
 
 	if(fexists(RESTART_COUNTER_PATH))
