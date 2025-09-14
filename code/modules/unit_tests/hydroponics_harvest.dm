@@ -87,8 +87,17 @@
 	TEST_ASSERT(all_harvested_items[1].reagents, "Hydroponics harvest from [saved_name] had no reagent container.")
 	TEST_ASSERT_EQUAL(all_harvested_items[1].reagents.maximum_volume, max_volume, "Hydroponics harvest from [saved_name] [double_chemicals ? "did not have its reagent capacity doubled to [max_volume] properly." : "did not have its reagents capped at [max_volume] properly."]")
 
-	var/expected_nutriments = seed.reagents_add[/datum/reagent/consumable/nutriment]
-	var/expected_vitamins = seed.reagents_add[/datum/reagent/consumable/nutriment/vitamin]
+	var/obj/item/seeds/descendent_seed
+
+	if(istype(all_harvested_items[1], /obj/item/grown))
+		var/obj/item/grown/nonedible_subject = all_harvested_items[1]
+		descendent_seed = nonedible_subject.seed
+	else if(istype(all_harvested_items[1], /obj/item/food/grown))
+		var/obj/item/food/grown/edible_subject = all_harvested_items[1]
+		descendent_seed = edible_subject.seed
+
+	var/expected_nutriments = descendent_seed.reagents_add[/datum/reagent/consumable/nutriment]
+	var/expected_vitamins = descendent_seed.reagents_add[/datum/reagent/consumable/nutriment/vitamin]
 
 	var/found_nutriments = all_harvested_items[1].reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 	var/found_vitamins = all_harvested_items[1].reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/vitamin)
