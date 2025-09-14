@@ -16,6 +16,11 @@ export function PlantAnalyzerGraft(props) {
   const { data } = useBackend<PlantAnalyzerData>();
   const { graft_data } = data;
 
+  if (!graft_data) {
+    // This shouldn't be rendered if graft_data is null
+    return null;
+  }
+
   return (
     <Section
       title={`Graft: ${capitalizeFirst(graft_data.name)}`}

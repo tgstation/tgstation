@@ -1,5 +1,6 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
+	abstract_type = /obj/item/food/grown/mushroom
 	// This is a prototype that should never be spawned
 	// but we'll default it to SOME seed if it does end up spawning just so we don't runtime horribly
 	seed = /obj/item/seeds/chanter

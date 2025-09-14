@@ -23,9 +23,7 @@
 	var/obj/item/implant/implant
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/obj/item/object in target.implants)
-		implant = object
-		break
+	implant = LAZYACCESS(target.implants, 1)
 	if(implant)
 		display_results(
 			user,
@@ -56,29 +54,27 @@
 		display_pain(target, "You can feel your [implant.name] pulled out of you!")
 		implant.removed(target)
 
-		if (QDELETED(implant))
-			return ..()
-
-		var/obj/item/implantcase/case
-		for(var/obj/item/implantcase/implant_case in user.held_items)
-			case = implant_case
-			break
-		if(!case)
-			case = locate(/obj/item/implantcase) in get_turf(target)
-		if(case && !case.imp)
-			case.imp = implant
-			implant.forceMove(case)
-			case.update_appearance()
-			display_results(
-				user,
-				target,
-				span_notice("You place [implant] into [case]."),
-				span_notice("[user] places [implant] into [case]!"),
-				span_notice("[user] places it into [case]!"),
-			)
-		else
-			qdel(implant)
-
+		if (!QDELETED(implant))
+			var/obj/item/implantcase/case
+			for(var/obj/item/implantcase/implant_case in user.held_items)
+				case = implant_case
+				break
+			if(!case)
+				case = locate(/obj/item/implantcase) in get_turf(target)
+			if(case && !case.imp)
+				case.imp = implant
+				implant.forceMove(case)
+				case.update_appearance()
+				display_results(
+					user,
+					target,
+					span_notice("You place [implant] into [case]."),
+					span_notice("[user] places [implant] into [case]!"),
+					span_notice("[user] places it into [case]!"),
+				)
+			else
+				qdel(implant)
+		implant = null
 	else
 		to_chat(user, span_warning("You can't find anything in [target]'s [target_zone]!"))
 	return ..()

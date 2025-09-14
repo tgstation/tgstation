@@ -6,12 +6,15 @@
 	desc = "A charging dock for energy based weaponry, PDAs, and other devices."
 	circuit = /obj/item/circuitboard/machine/recharger
 	pass_flags = PASSTABLE
+	/// The item currently inserted into the charger
 	var/obj/item/charging = null
+	/// How good the capacitor is at charging the item
 	var/recharge_coeff = 1
-	var/using_power = FALSE //Did we put power into "charging" last process()?
-	///Did we finish recharging the currently inserted item?
+	/// Did we put power into "charging" last process()?
+	var/using_power = FALSE
+	/// Did we finish recharging the currently inserted item?
 	var/finished_recharging = FALSE
-
+	/// List of items that can be recharged
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
 		/obj/item/melee/baton/security,
@@ -83,28 +86,28 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/recharger/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!is_type_in_typecache(attacking_item, allowed_devices))
-		return ..()
+/obj/machinery/recharger/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_type_in_typecache(tool, allowed_devices))
+		return NONE
 
 	if(!anchored)
 		to_chat(user, span_notice("[src] isn't connected to anything!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(charging || panel_open)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	var/area/our_area = get_area(src) //Check to make sure user's not in space doing it, and that the area got proper power.
 	if(!isarea(our_area) || our_area.power_equip == 0)
-		to_chat(user, span_notice("[src] blinks red as you try to insert [attacking_item]."))
-		return TRUE
+		to_chat(user, span_notice("[src] blinks red as you try to insert [tool]."))
+		return ITEM_INTERACT_BLOCKING
 
-	if (istype(attacking_item, /obj/item/gun/energy))
-		var/obj/item/gun/energy/energy_gun = attacking_item
+	if(istype(tool, /obj/item/gun/energy))
+		var/obj/item/gun/energy/energy_gun = tool
 		if(!energy_gun.can_charge)
 			to_chat(user, span_notice("Your gun has no external power connector."))
-			return TRUE
-	user.transferItemToLoc(attacking_item, src)
-	return TRUE
+			return ITEM_INTERACT_BLOCKING
+	user.transferItemToLoc(tool, src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)

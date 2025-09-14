@@ -122,11 +122,23 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	GLOB.req_console_all += src
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
+
+	// Register this console for RETA UI updates - code/modules/reta/reta_system.dm
+	var/dept_key = reta_get_user_department_by_name(department)
+	if(dept_key)
+		LAZYADD(GLOB.reta_consoles_by_origin[dept_key], src)
+
 	find_and_hang_on_wall()
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_LIST(messages)
 	GLOB.req_console_all -= src
+
+	// Remove from RETA console registry
+	var/dept_key = reta_get_user_department_by_name(department)
+	if(dept_key)
+		LAZYREMOVE(GLOB.reta_consoles_by_origin[dept_key], src)
+
 	return ..()
 
 /obj/machinery/requests_console/ui_interact(mob/user, datum/tgui/ui)
@@ -162,14 +174,104 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("set_emergency")
 			if(emergency)
 				return
-			emergency = params["emergency"]
-			switch(params["emergency"])
-				if(REQ_EMERGENCY_SECURITY) //Security
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
-				if(REQ_EMERGENCY_ENGINEERING) //Engineering
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
-				if(REQ_EMERGENCY_MEDICAL) //Medical
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+
+			// Check for RETA eligibility
+			var/emergency_type = params["emergency"]
+			var/origin_dept = reta_get_user_department_by_name(department)
+			var/target_dept = null
+
+			switch(emergency_type)
+				if(REQ_EMERGENCY_SECURITY)
+					target_dept = "Security"
+				if(REQ_EMERGENCY_ENGINEERING)
+					target_dept = "Engineering"
+				if(REQ_EMERGENCY_MEDICAL)
+					target_dept = "Medical"
+
+			// Check if user can call this emergency (prevent self-calls) RETA
+			var/user_dept = reta_get_user_department(usr)
+			if(user_dept == target_dept)
+				to_chat(usr, span_alert("You cannot call your own department for emergency assistance."))
+				return
+
+			// Check cooldown RETA
+			if(origin_dept && target_dept && reta_on_cooldown(origin_dept, target_dept))
+				to_chat(usr, span_alert("Emergency calls to [target_dept] are on cooldown."))
+				return
+
+			emergency = emergency_type
+
+			// Grant RETA if conditions are met
+			if(origin_dept && target_dept && CONFIG_GET(flag/reta_enabled))
+				// Set cooldown
+				var/cooldown_ds = CONFIG_GET(number/reta_dept_cooldown_ds) || 150
+				reta_set_cooldown(origin_dept, target_dept, cooldown_ds)
+
+				// Find responders and grant access to their ID cards
+				var/duration_ds = CONFIG_GET(number/reta_duration_ds) || 3000
+				var/granted_count = reta_find_and_grant_access(target_dept, origin_dept, duration_ds)
+
+				// Track this call for multiple department analysis
+				reta_track_call(origin_dept, target_dept)
+
+				// Enhanced announcement with caller info
+				var/caller_info = ""
+				if(usr)
+					var/caller_name = usr.real_name || "Unknown"
+					var/caller_title = "Unknown Position"
+					if(usr?.mind?.assigned_role)
+						caller_title = usr.mind.assigned_role.title
+					caller_info = " (Called by [caller_name], [caller_title])"
+
+				var/enhanced_location = "[department][caller_info]"
+
+				switch(emergency_type)
+					if(REQ_EMERGENCY_SECURITY)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
+					if(REQ_EMERGENCY_ENGINEERING)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
+					if(REQ_EMERGENCY_MEDICAL)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+
+				// Send confirmation to the calling department about the RETA activation
+				var/calling_message = "RETA activated[caller_info]. [target_dept] personnel now have temporary access to your areas."
+
+				// Get an announcement system to send simple radio messages
+				var/obj/machinery/announcement_system/announcer = get_announcement_system(null, null, list(RADIO_CHANNEL_COMMON))
+				if(announcer)
+					switch(origin_dept)
+						if("Security")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SECURITY)
+						if("Engineering")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_ENGINEERING)
+						if("Medical")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_MEDICAL)
+						if("Science")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SCIENCE)
+						if("Service")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SERVICE)
+						if("Command")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_COMMAND)
+						if("Cargo")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SUPPLY)
+						if("Mining")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SUPPLY)
+
+				// Log RETA activity
+				log_game("RETA: [origin_dept] called [target_dept] emergency, granted access to [granted_count] responder IDs for [duration_ds/10] seconds")
+
+				// Push UI updates to consoles in the same origin department
+				reta_push_ui_updates(origin_dept, target_dept)
+			else
+				// Normal emergency call without RETA
+				switch(emergency_type)
+					if(REQ_EMERGENCY_SECURITY)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
+					if(REQ_EMERGENCY_ENGINEERING)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
+					if(REQ_EMERGENCY_MEDICAL)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+
 			update_appearance()
 			addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
@@ -290,6 +392,20 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	data["messages"] = list()
 	for (var/datum/request_message/message in messages)
 		data["messages"] += list(message.message_ui_data())
+
+	// Add RETA data
+	data["reta_enabled"] = CONFIG_GET(flag/reta_enabled)
+	var/origin_dept = reta_get_user_department_by_name(department)
+	var/user_dept = reta_get_user_department(user)
+
+	data["reta_cooldowns"] = list()
+	if(origin_dept)
+		data["reta_cooldowns"]["Security"] = reta_on_cooldown(origin_dept, "Security")
+		data["reta_cooldowns"]["Engineering"] = reta_on_cooldown(origin_dept, "Engineering")
+		data["reta_cooldowns"]["Medical"] = reta_on_cooldown(origin_dept, "Medical")
+
+	data["reta_user_dept"] = user_dept
+
 	return data
 
 
@@ -312,6 +428,10 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/proc/clear_emergency()
 	emergency = null
 	update_appearance()
+
+/// Updates the UI for all viewers
+/obj/machinery/requests_console/proc/ui_update()
+	SStgui.update_uis(src)
 
 /// From message_server.dm: Console.create_message(data)
 /obj/machinery/requests_console/proc/create_message(data)
@@ -418,12 +538,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 /datum/aas_config_entry/rc_emergency
 	name = "RC Alert: Emergency"
 	announcement_lines_map = list(
-		"Security" = "Security emergency in %LOCATION!!!",
-		"Engineering" = "Engineering emergency in %LOCATION!!!",
-		"Medical" = "Medical emergency in %LOCATION!!!",
+		"Security" = "SECURITY EMERGENCY in %LOCATION - RETA door access granted to responders!",
+		"Engineering" = "ENGINEERING EMERGENCY in %LOCATION - RETA door access granted to responders!",
+		"Medical" = "MEDICAL EMERGENCY in %LOCATION - RETA door access granted to responders!",
 	)
 	vars_and_tooltips_map = list(
-		"LOCATION" = "will be replaced with the department name",
+		"LOCATION" = "will be replaced with the department name and caller information (Name, Job Title)",
 	)
 
 /datum/aas_config_entry/rc_new_message
