@@ -1,8 +1,5 @@
 //===============================HAND INTERACTION===================================
 /obj/machinery/vending/interact(mob/user)
-	if (HAS_AI_ACCESS(user))
-		return ..()
-
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
