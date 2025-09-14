@@ -49,11 +49,6 @@
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/cast(mob/living/cast_on)
 	if(!iscarbon(owner))
 		return ..()
-	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.uncuff()
-	var/obj/item/clothing/shoes/shoes = carbon_owner.shoes
-	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
-		shoes.adjust_laces(SHOES_TIED, carbon_owner)
 
 	// Wearing Ash heretic armor empowers your spells if you have over 3 fire stacks
 	if(!ishuman(owner))
@@ -67,6 +62,10 @@
 	empowered_cast = TRUE
 	human_owner.setStaminaLoss(0)
 	human_owner.SetAllImmobility(0)
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.uncuff()
+	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
+		shoes.adjust_laces(SHOES_TIED, carbon_owner)
 
 	return ..()
 
