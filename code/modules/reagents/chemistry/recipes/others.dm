@@ -61,6 +61,9 @@
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	new /obj/item/stack/sheet/mineral/plasma(get_turf(holder.my_atom), round(created_volume))
 
+#define ROOM_TEMP 293
+#define MAX_EXO_TEMP 1064
+
 /datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
@@ -68,7 +71,18 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/mineral/gold(get_turf(holder.my_atom), round(created_volume))
+	var/turf/reaction_location = get_turf(holder.my_atom)
+	if(!reaction_location)
+		return
+
+	new /obj/item/stack/gold_nugget(reaction_location, round(created_volume))
+	for(var/creation_loop in 1 to round(created_volume))
+		var/datum/gas_mixture/enviro = reaction_location.return_air()
+		enviro.temperature = clamp(max(ROOM_TEMP, enviro.temperature * 1.1), ROOM_TEMP, MAX_EXO_TEMP)
+		reaction_location.air_update_turf(FALSE, FALSE)
+
+#undef ROOM_TEMP
+#undef MAX_EXO_TEMP
 
 /datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
