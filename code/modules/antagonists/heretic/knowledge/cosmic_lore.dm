@@ -263,7 +263,7 @@
 		heretic_eyes?.color_cutoffs = list(30, 30, 30)
 		ascended_human.update_sight()
 
-	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
+	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc, user)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY
 	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
@@ -276,9 +276,7 @@
 		star_touch_spell.set_star_gazer(star_gazer_mob)
 		star_touch_spell.ascended = TRUE
 	star_gazer_mob.add_traits(stargazer_traits, type)
-	star_gazer_mob.summoner = WEAKREF(user)
 	star_gazer_mob.leash_to(star_gazer_mob, user)
-	star_gazer_mob.giga_laser.our_master = WEAKREF(user)
 
 	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)
