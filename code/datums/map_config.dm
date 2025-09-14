@@ -176,17 +176,18 @@
 	// When a map is saved and loaded via persistence_save, all traits are explicitly
 	// written to the JSON. We must bypass inserting ZTRAIT_STATION automatically otherwise
 	// space/mining/etc. z-levels would have ZTRAIT_STATION inserted into their JSONs
-	if (islist(traits) && !persistence_save)
-		// "traits": [{"Linkage": "Cross"}, {"Space Ruins": true}]
-		for (var/level in traits)
-			// for regular maps (Meta, Delta, etc.) ZTRAIT_STATION is automatically added to a z-level's custom traits since the default JSON will have it omitted
-			if (!(ZTRAIT_STATION in level)) // unless the trait is explicitly disabled in the JSON
-				level[ZTRAIT_STATION] = TRUE
+	if (!persistence_save)
+		if (islist(traits))
+			// "traits": [{"Linkage": "Cross"}, {"Space Ruins": true}]
+			for (var/level in traits)
+				// for regular maps (Meta, Delta, etc.) ZTRAIT_STATION is automatically added to a z-level's custom traits since the default JSON will have it omitted
+				if (!(ZTRAIT_STATION in level)) // unless the trait is explicitly disabled in the JSON
+					level[ZTRAIT_STATION] = TRUE
 
-	// "traits": null or absent -> default
-	else if (!isnull(traits) && !persistence_save)
-		log_world("map_config traits is not a list!")
-		return
+		// "traits": null or absent -> default
+		else if (!isnull(traits))
+			log_world("map_config traits is not a list!")
+			return
 
 	var/temp = json["space_ruin_levels"]
 	if (isnum(temp))
