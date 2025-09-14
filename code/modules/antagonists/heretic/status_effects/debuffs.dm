@@ -249,6 +249,16 @@
 	owner.update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
+// exists to apply sleep and deny adding duplicates
+/datum/status_effect/moon_slept
+	id = "moon slept"
+	duration = 2 MINUTES
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/moon_slept/on_apply()
+	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, w-wait no that's not right</span>")))
+	owner.balloon_alert(owner, "they lie..wait-what are they lying about?")
+	owner.SetUnconscious(duration * 0.5, ignore_canstun = FALSE)
 
 /atom/movable/screen/alert/status_effect/moon_converted
 	name = "Moon Converted"

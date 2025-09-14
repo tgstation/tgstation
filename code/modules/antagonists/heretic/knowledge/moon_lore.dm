@@ -295,7 +295,7 @@
 			hallucination_duration = 50 SECONDS
 		)
 		carbon_view.adjust_temp_blindness(5 SECONDS)
-		if(should_mind_explode())
+		if(should_mind_explode(carbon_view))
 			to_chat(carbon_view, span_boldbig(span_red(\
 				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
 				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
@@ -311,9 +311,9 @@
 			attempt_conversion(carbon_view, source)
 
 
-/datum/heretic_knowledge/ultimate/moon_final/proc/should_mind_explode()
-	if(HAS_TRAIT(carbon_view, TRAIT_MINDSHIELD))
+/datum/heretic_knowledge/ultimate/moon_final/proc/should_mind_explode(mob/living/carbon/target)
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		return TRUE
-	if(IS_CULTIST_OR_CULTIST_MOB(carbon_view))
+	if(IS_CULTIST_OR_CULTIST_MOB(target))
 		return TRUE
 	return FALSE

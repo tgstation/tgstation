@@ -201,12 +201,6 @@
 	on_amulet_deactivate(user)
 	return ..()
 
-/obj/item/clothing/neck/heretic_focus/moon_amulet/Destroy()
-	if(!ismob(loc))
-		return ..()
-	var/mob/user = loc
-	return ..()
-
 /obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(channel_amulet(user, target))
 		return
@@ -243,6 +237,10 @@
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		human_target.mob_mood.adjust_sanity(-sanity_damage)
 	else
+		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+			living_user.balloon_alert(living_user, "their mind almost bends but something protects it!")
+			living_user.SetSleeping(60 SECONDS, ignore_canstun = FALSE)
+			return
 		living_user.balloon_alert(living_user, "their mind bends to see the truth!")
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)
 		living_user.log_message("made [human_target] insane.", LOG_GAME)
@@ -271,16 +269,16 @@
 	SIGNAL_HANDLER
 
 	var/list/attack_list = list(
-	"You sweep [weapon] towards [victim], splitting [victim.p_Their()] image in two.",
-	"You strike [victim] with [weapon], spilling forth a cascade from within. Immaculate.",
-	"As it bite deep, your [weapon] unburdens [victim] of unneeded thought.",
+		"You sweep [weapon] towards [victim], splitting [victim.p_Their()] image in two.",
+		"You strike [victim] with [weapon], spilling forth a cascade from within. Immaculate.",
+		"As it bite deep, your [weapon] unburdens [victim] of unneeded thought.",
 	)
 	to_chat(attacker, span_danger(pick(attack_list)))
 
 	var/list/victim_list = list(
-	"You are struck by [attacker], but the [weapon] tears away something more than parts of your body.",
-	"You see an arch of light as [attacker]'s [weapon] twists towards you, and you see the world briefly in tetrachrome.",
-	"As [attacker] carves into you with [weapon], you lose something deep within. The agony is worse than any wound.",
+		"You are struck by [attacker], but the [weapon] tears away something more than parts of your body.",
+		"You see an arch of light as [attacker]'s [weapon] twists towards you, and you see the world briefly in tetrachrome.",
+		"As [attacker] carves into you with [weapon], you lose something deep within. The agony is worse than any wound.",
 	)
 	to_chat(victim, span_userdanger(pick(victim_list)))
 	playsound(attacker, pick(possible_sounds), 40, TRUE)
