@@ -290,8 +290,6 @@
 	LAZYADD(attached_accessories, accessory)
 	accessory.forceMove(src)
 
-	update_accessory_overlay()
-
 	// Allow for accessories to react to the acccessory list now
 	accessory.successful_attach(src)
 
@@ -327,17 +325,12 @@
 
 /// Handles creating, updating and cutting the worn overlay mutable appearance.
 /obj/item/clothing/under/proc/update_accessory_overlay()
-	if(accessory_overlay)
-		cut_overlay(accessory_overlay)
 	if(!length(attached_accessories))
 		accessory_overlay = null
 		return
 	accessory_overlay = mutable_appearance()
 	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
-		var/mutable_appearance/appearance = mutable_appearance(accessory.worn_icon, accessory.icon_state)
-		appearance.alpha = accessory.alpha
-		appearance.color = accessory.color
-		accessory_overlay.overlays += appearance
+		accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
 	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
