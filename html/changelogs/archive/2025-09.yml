@@ -257,3 +257,155 @@
   sushi:
   - rscadd: water vapor on a turf will now also wash radiation off of the items on
       it
+2025-09-10:
+  Ghommie:
+  - balance: sand is now made of sand and not glass. Get a welder if you plan to shove
+      it into a protolathe.
+  - rscdel: Removed now useless sand blocks.
+  - bugfix: Crafting recipes with tools such as wirecutters, wrenches, screwdrivers
+      etc. should take the right amount of time to complete.
+  SmArtKar:
+  - qol: Significantly improved MODtether behavior, they should be easier to work
+      with now.
+  - bugfix: Fixed multiple MODtethers bugs and a potential server crash related to
+      them.
+  - bugfix: Fixed foam sometimes passing through directional windows.
+  SyncIt21:
+  - bugfix: map export won't break exported gas strings & other that depend on semicolon
+  - code_imp: non ascii chars inside lists in map files can be read without error
+  loganuk:
+  - map: Catwalk lower Science changes [C.A.T]
+  massaheartsu:
+  - rscadd: Added meth, opium, and their production! Also added to black market uplink.
+  - rscadd: Added a craftable glass pipe.
+  - rscadd: Added to contraband spawners.
+  - qol: Can now insert any drug item into a pipe.
+  - bugfix: Spacemen can now smoke meth without exploding!!
+  timothymtorres:
+  - bugfix: Santa has put cargo in his very naughty list for spam producing his presents
+      by dumpster diving. This fixes Christmas presents (and other holiday items)
+      from spawning inside dumpsters.
+2025-09-11:
+  Ezel:
+  - balance: CE now gets upgraded welders instead of normal
+  Hatterhat:
+  - qol: Mail bags can now hold bounty cubes.
+  - qol: You can now cut folders apart back into cardboard with wirecutters or a knife.
+  Melbert:
+  - bugfix: Fix held items with slowdown not working
+  - bugfix: Fix hair mask updating oddly
+  OrionTheFox:
+  - qol: made Autopsy Reports follow similar formatting to Health Scans, and adds
+      some information previously missing such as Missing Organs.
+  SyncIt21:
+  - qol: hand crafted air sensors now auto connect to input & output ports if they
+      are located within a 4 tile radius from it
+  - qol: atmos control monitors now locate all air sensors nearest to in on that same
+      z level meaning you can have multiple air sensors of the same type on the same
+      map
+  - refactor: refactored how air sensors & atmos monitors connect to each other. Please
+      report any atmos computers that have missing input valves/output ports on their
+      connected air sensors or those that don't list any air sensors at all on github
+  lelandkemble:
+  - qol: allows hitting empty light fixtures on combat mode
+  - bugfix: mice stored on your person will no longer disappear when killed
+  loganuk:
+  - rscadd: RETA System - Request Consoles give temporary access to responders when
+      used for some areas. Paramedics lose broad access but get external space access.
+  - qol: Request consoles now show name and job role on call message & Cooldown on
+      spamming calls + sound prompt
+  - qol: Medibot access no longer based on Paramedic trim ID - Still has original
+      access
+  - image: Added "lights_reta" for temporary door access when in effect
+  - admin: Gives admins "RETA door access" verb for giving department wide area access
+      on maps.
+  - config: New config settings for RETA
+  necromanceranne:
+  - balance: Jackets can carry personal firearms and holsters in their suit storage.
+      So can hawaiian shirts and comedian suits.
+  - balance: More 'assistant' attire can fit improvised weapons.
+  - balance: Justice suits can fit security items in their suit storage.
+  - bugfix: Imperium monk outfits now hold the true list of chaplain suit storage
+      items, and not just a limited list.
+2025-09-12:
+  Aliceee2ch:
+  - map: Added shutters in Cargo bay on every station.
+  - map: Added firelocks on lower Cargo staircase on TramStation. Also added space
+      shutters in drone bay to prevent easy spacing.
+  - map: Windows in Meta and IceBox Cargo security outposts are now hotwired, like
+      every other security outpost does.
+  - map: Replaced blast doors on regular shutters in QM office on MetaStation.
+  Ben10Omintrix:
+  - bugfix: snails no longer crush glass tables when crawling over them
+  Bisar:
+  - code_imp: Heat capacity calculation for gas mixtures has been slightly optimized.
+  Iamgoofball:
+  - bugfix: Blocks mobs with players controlling them from breeding (ie. sentience
+      potion'd raptors)
+  Melbert:
+  - code_imp: Minor cleanup with species-weapon vulnerabilities (like moths vs flyswatters)
+  MintMetal:
+  - bugfix: fixed lost cable on Delta Station
+  SyncIt21:
+  - bugfix: Fixes random runtime for round start silo connections
+  - bugfix: Ore Silo UI works again
+  lelandkemble:
+  - bugfix: Station MODules no longer provide illegal technology
+  sushi:
+  - bugfix: implants can no longer be removed from the same mob (or other mobs!) multiple
+      times
+  timothymtorres:
+  - bugfix: Fix map z-level generation starting position. Z-levels used to cluster
+      together near the edges and will now instead be spread out evenly from the center.
+  - qol: The GPS debug tool will now spawn with the admin outfit apart of the debug
+      tools
+  - admin: Add GPS debug tool to admin debug box
+  tiramisuapimancer:
+  - bugfix: you can actually get the hat stabilizer modsuit module on the black market
+2025-09-13:
+  FalloutFalcon:
+  - rscadd: Soda cans show up in the silver slime drink table.
+  - rscadd: Examine tag for items that are not mean to show up ingame.
+  - refactor: Standardizes how gifts rule out abstract types.
+  - bugfix: gifts no longer check if something has an inhand, massively expanding
+      the list of potential items.
+  JohnFulpWillard:
+  - rscdel: Merged ghosts and spirits into one species.
+  - balance: Spirit's passthrough ability is now tied down 7 tiles from a tombstone,
+      but is no longer affected by holy water nor does it make them drop their equipped
+      gear.
+  - balance: Ghosts can now be healed.
+  Melbert:
+  - rscdel: Captain's no longer sorted under Security in places such as the manifest
+      or job selection
+  - refactor: Refactored a lot of code relating to human face and voice, ie, what
+      shows up in examine and in say. Report anything odd when examining people, with
+      ID cards, when talking over radio, or when disguised
+  - refactor: Refactored ling mimic voice and traitor voice changer
+  - rscdel: Potted plants no longer hide voice. They still hide appearance, though
+  - qol: Honorifics now show in examine / in world, rather than only when speaking.
+  - rscadd: There's a 1/5 chance that Paradox Clone spawns a second clone if there
+      are enough candidates. Neither clone is aware of or on a team with the other
+      - There can only be one.
+  - rscadd: Paradox Clones are now tasked to `Be the only [x] alive`, meaning means
+      of identity cloning (such as Genetics or Changelings) may throw a wrench in
+      your plan.
+  lelandkemble:
+  - qol: Eating ice cream no longer curses you
+  loganuk:
+  - map: Catwalk - Atmos and Engineering split, new access hallway, new stairs to
+      AI sat, HFR re-located, space for passion projects, new lighting, So many changes
+      to document. [C.A.T]
+  necromanceranne:
+  - bugfix: Syndicate Tomes once again can be used to beat the shit out of people.
+  - image: The rebellion mask now renders beneath your hair.
+  - qol: The rebellion mask now lets you plug in internals.
+2025-09-14:
+  ArcaneMusic:
+  - rscadd: Boulders from ore-vents can now be used on lava tiles, to create a temporary
+      bridge to cross. Just don't be standing on it when it sinks back into the lava!
+  - map: Re-added the gulag boulder-vent to the lavaland gulag.
+  - bugfix: Lava tiles will now properly burn its contents when a catwalk or similar
+      crossing disappears above itself.
+  LemonInTheDark:
+  - bugfix: Moving diagonally will no longer lead to stutter stepping (it's tickbound)

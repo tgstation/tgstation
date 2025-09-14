@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Significantly improved MODtether behavior, they should be easier to work with now."
-  - bugfix: "Fixed multiple MODtethers bugs and a potential server crash related to them."
-  - bugfix: "Fixed foam sometimes passing through directional windows."

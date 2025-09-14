@@ -53,6 +53,6 @@
 	if(message_language)
 		language_port.set_output(initial(message_language.name))
 	speaker_port.set_output(speaker)
-	speaker_name.set_output(speaker.GetVoice())
+	speaker_name.set_output(speaker.get_voice())
 	trigger_port.set_output(COMPONENT_SIGNAL)
 	return TRUE

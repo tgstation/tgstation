@@ -1,8 +1,0 @@
-author: "massaheartsu"
-delete-after: True
-changes:
-  - rscadd: "Added meth, opium, and their production! Also added to black market uplink."
-  - rscadd: "Added a craftable glass pipe."
-  - rscadd: "Added to contraband spawners."
-  - qol: "Can now insert any drug item into a pipe."
-  - bugfix: "Spacemen can now smoke meth without exploding!!"

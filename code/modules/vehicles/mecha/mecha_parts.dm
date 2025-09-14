@@ -6,6 +6,7 @@
 	name = "mecha part"
 	icon = 'icons/mob/rideables/mech_construct.dmi'
 	icon_state = "blank"
+	abstract_type = /obj/item/mecha_parts
 	w_class = WEIGHT_CLASS_GIGANTIC
 	obj_flags = CONDUCTS_ELECTRICITY
 
