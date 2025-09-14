@@ -17,6 +17,9 @@
 	var/prox_check = TRUE //If the emag requires you to be in range
 	var/type_blacklist //List of types that require a specialized emag
 
+/obj/item/card/emag/get_displayed_name(honorifics = FALSE)
+	return name // That's Grey Tider (as "cryptographic sequencer")
+
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
@@ -98,6 +101,9 @@
 	slot_flags = ITEM_SLOT_ID
 	/// Whether we are exploding
 	var/exploding = FALSE
+
+/obj/item/card/emagfake/get_displayed_name(honorifics = FALSE)
+	return name // That's Grey Tider (as "cryptographic sequencer")
 
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))

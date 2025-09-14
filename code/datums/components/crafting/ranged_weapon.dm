@@ -21,7 +21,7 @@
 
 /datum/crafting_recipe/receiver
 	name = "Modular Rifle Receiver"
-	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SAW)
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
@@ -417,6 +417,17 @@
 	time = 30 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/ashenbow
+	name = "Ashen Bow"
+	result = /obj/item/gun/ballistic/bow/ashenbow
+	reqs = list(
+		/obj/item/stack/sheet/bone = 6,
+		/obj/item/stack/sheet/sinew = 3,
+		/obj/item/stack/sheet/leather = 1,
+	)
+	time = 30 SECONDS
+	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/photoncannon
 	name = "Photon Cannon"

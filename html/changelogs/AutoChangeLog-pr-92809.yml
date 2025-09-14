@@ -1,0 +1,10 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Shortbows and divine bows do more damage. The divine bow also launches arrows at a higher velocity than normal bows."
+  - image: "Flaming arrows now have proper sprites."
+  - balance: "Flaming arrows now deal BURN damage. And also deal an appropriate amount of damage for an arrow."
+  - rscadd: "Ashen bows and arrows, made from sinew and bone. And leather for the bow."
+  - rscadd: "Ashen arrows deal significantly more damage to mining mobs."
+  - balance: "Arrow quivers are made from wood rather than cardboard."
+  - qol: "Shortbows and ashen bows have the ability to be renamed."
