@@ -157,7 +157,7 @@
 
 /datum/status_effect/star_mark/extended
 	duration = 3 MINUTES
-
+f
 
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
@@ -239,6 +239,7 @@
 	duration = 2 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
 	remove_on_fullheal = TRUE
+	alert_type = null
 
 /datum/status_effect/moon_slept/on_apply()
 	. = owner.SetUnconscious(duration * 0.5, ignore_canstun = FALSE)
