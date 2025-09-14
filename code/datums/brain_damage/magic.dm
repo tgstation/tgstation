@@ -136,5 +136,5 @@
 	random_gain = FALSE
 
 /obj/effect/client_image_holder/stalker_phantom/cosmic
-	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi' // XANTODO figure out why its the ghost and not the gazer
+	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
 	image_state = "star_gazer"
