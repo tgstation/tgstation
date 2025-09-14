@@ -4,8 +4,10 @@
 	var/list/traits
 	var/z_value = 1 //actual z placement
 	var/linkage = SELFLOOPING
+	/// The x position on a grid that links the z-levels together
 	var/xi
-	var/yi   //imaginary placements on the grid
+	/// The y position on a grid that links the z-levels together
+	var/yi
 
 /datum/space_level/New(new_z, new_name, list/new_traits = list())
 	z_value = new_z
