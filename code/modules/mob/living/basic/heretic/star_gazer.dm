@@ -47,23 +47,24 @@
 	var/leash_range = 20
 	/// Timer for finding a ghost so it doesn't spam dead chat with requests
 	var/begging_timer
+	///---- Abilities given to the star gazer mob
+	var/list/abilities_to_grant = list(
+		/datum/action/cooldown/spell/conjure/cosmic_expansion,
+		/datum/action/cooldown/spell/pointed/projectile/star_blast,
+		/datum/action/cooldown/recall_stargazer,
+		/datum/action/cooldown/spell/stargazer_laser,
+	)
 
-	//---- Abilities given to the star gazer mob
-	var/datum/action/cooldown/spell/conjure/cosmic_expansion/expansion
-	var/datum/action/cooldown/spell/pointed/projectile/star_blast/blast
-	var/datum/action/cooldown/recall_stargazer/recall
-	var/datum/action/cooldown/spell/stargazer_laser/giga_laser
-
-/mob/living/basic/heretic_summon/star_gazer/Initialize(mapload)
+/mob/living/basic/heretic_summon/star_gazer/Initialize(mapload, mob/living/master)
 	. = ..()
-	expansion = new(src)
-	expansion.Grant(src)
-	blast = new(src)
-	blast.Grant(src)
-	recall = new(src)
-	recall.Grant(src)
-	giga_laser = new(src)
-	giga_laser.Grant(src)
+	for(var/datum/action/cooldown/spell/spell as anything in abilities_to_grant)
+		spell = new spell(src)
+		spell.Grant(src)
+	var/datum/action/cooldown/spell/stargazer_laser/laser = locate() in actions
+	if(master)
+		summoner = WEAKREF(master)
+		if(laser)
+			laser.our_master = WEAKREF(master)
 	AddComponent(/datum/component/seethrough_mob)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
@@ -90,12 +91,22 @@
 
 /// Tries to find a ghost to take control of the mob. If no ghost accepts, ask again in a bit
 /mob/living/basic/heretic_summon/star_gazer/proc/beg_for_ghost()
-	var/mob/chosen_ghost = SSpolling.poll_ghost_candidates("Do you want to play as an ascended heretic's stargazer?", check_jobban = ROLE_HERETIC, poll_time = 20 SECONDS, ignore_category = POLL_IGNORE_HERETIC_MONSTER, alert_pic = mutable_appearance('icons/mob/nonhuman-player/96x96eldritch_mobs.dmi', "star_gazer"), jump_target = src, role_name_text = "star gazer", amount_to_pick = 1)
+	if(timeleft(begging_timer) && !client)
+		return
+	begging_timer = addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE) // Keep begging until someone accepts
+	var/mob/chosen_ghost = SSpolling.poll_ghost_candidates(
+		"Do you want to play as an ascended heretic's stargazer?",
+		check_jobban = ROLE_HERETIC,
+		poll_time = 20 SECONDS,
+		ignore_category = POLL_IGNORE_HERETIC_MONSTER,
+		alert_pic = mutable_appearance('icons/effects/eldritch.dmi', "cosmic_diamond"),
+		jump_target = src,
+		role_name_text = "star gazer",
+		amount_to_pick = 1
+	)
 	if(chosen_ghost)
 		PossessByPlayer(chosen_ghost.key)
 		deltimer(begging_timer)
-	else
-		begging_timer = addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES, TIMER_STOPPABLE) // Keep begging until someone accepts
 
 /// Connects these two mobs by a leash
 /mob/living/basic/heretic_summon/star_gazer/proc/leash_to(atom/movable/leashed, atom/movable/leashed_to)
@@ -356,11 +367,11 @@
 					playsound(living_victim, 'sound/effects/supermatter.ogg', 80, TRUE)
 					living_victim.visible_message(
 						span_danger("You see [living_victim] engulfed in the scorching wrath of the cosmos. \
-									For a moment, you see their silhouette flail in agony before fading to mere atoms."),
+							For a moment, you see their silhouette flail in agony before fading to mere atoms."),
 						span_boldbig(span_hypnophrase("THE POWER OF THE COSMOS ITSELF POURS OUT OVER YOUR FORM. \
-						WAVES OF HEAT LATCH ONTO YOUR BODY, PULLING IT APART AT THE SEAMS. \
-						YOUR TOTAL ANNIHILATION TAKES ONLY A MOMENT BEFORE YOU ARE REDUCED BACK TO WHAT YOU ALWAYS WERE. \
-						MOTES OF MERE DUST..."))
+							WAVES OF HEAT LATCH ONTO YOUR BODY, PULLING IT APART AT THE SEAMS. \
+							YOUR TOTAL ANNIHILATION TAKES ONLY A MOMENT BEFORE YOU ARE REDUCED BACK TO WHAT YOU ALWAYS WERE. \
+							MOTES OF MERE DUST..."))
 						)
 					living_victim.dust()
 				living_victim.emote("scream")
