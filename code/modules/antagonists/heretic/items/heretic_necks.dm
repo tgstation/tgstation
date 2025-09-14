@@ -162,6 +162,11 @@
 	)
 	var/valid_weapon_type = /obj/item/melee/sickly_blade
 
+/obj/item/clothing/neck/heretic_focus/moon_amulet/examine(mob/user)
+	. = ..()
+	if(IS_HERETIC(user))
+		. += span_notice("Wearing this amulet increases your healing speed by 50%")
+
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
 	if(!IS_HERETIC(user) && (slot_flags & slot))
