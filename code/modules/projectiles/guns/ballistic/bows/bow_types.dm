@@ -8,6 +8,7 @@
 /obj/item/gun/ballistic/bow/shortbow
 	name = "shortbow"
 	desc = "A simple homemade shortbow. Great for LARPing. Or poking out someones eye."
+	obj_flags = UNIQUE_RENAME
 	projectile_damage_multiplier = 0.5
 
 ///chaplain's divine archer bow
@@ -61,4 +62,6 @@
 	inhand_icon_state = "ashenbow"
 	base_icon_state = "ashenbow"
 	worn_icon_state = "ashenbow"
+	slot_flags = ITEM_SLOT_BACK
+	obj_flags = UNIQUE_RENAME
 	projectile_damage_multiplier = 0.5
