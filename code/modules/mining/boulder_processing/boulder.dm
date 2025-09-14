@@ -1,4 +1,5 @@
 
+#define PLATFORM_WARNING_MODIFIER 5 SECONDS
 
 /**
  * The objects that ore vents produce, which is refined into minerals.
@@ -25,6 +26,8 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Used in inheriting the icon_state from our parent vent in update_icon.
 	var/boulder_string = "boulder"
+	/// If the boulder is converted into a platform, how long will it last? Default is 10 seconds unless overwritten by a vent.
+	var/platform_lifespan = PLATFORM_LIFE_DEFAULT
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
@@ -108,6 +111,30 @@
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
 
+/obj/item/boulder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /turf/open/lava))
+		if(!create_platform(interacting_with, user, interacting_with))
+			return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/boulder/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle, quickstart, throw_type_path)
+	. = ..()
+	if(istype(target, /turf/open/lava))
+		if(!create_platform(target, thrower))
+			return FALSE
+
+/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user)
+	if(locate(/obj/structure/lattice/catwalk/boulder, interacting_with))
+		to_chat(user, span_warning("There is already a boulder platform here!"))
+		return FALSE
+
+	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
+	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), platform_lifespan)
+	// See Lattice.dm for more info
+	visible_message(span_notice("\The [src] floats on \the [interacting_with], forming a temporary platform!"))
+	qdel(src)
+	return TRUE
 /**
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
  * @param obj/item/weapon The weapon that is being used to process the boulder, that we pull toolspeed from. If null, we use the override_speed_multiplier instead.
@@ -189,3 +216,5 @@
 		for(var/obj/item/content as anything in contents)
 			content.forceMove(get_turf(src))
 	qdel(src)
+
+#undef PLATFORM_WARNING_MODIFIER

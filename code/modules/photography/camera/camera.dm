@@ -315,8 +315,9 @@
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
 	for(var/mob/living/carbon/human/person in mobs)
-		if(person.is_face_visible())
-			names += "[person.name]"
+		if(person.obscured_slots & HIDEFACE)
+			continue
+		names += "[person.name]"
 
 	var/datum/picture/picture = new("picture", desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)

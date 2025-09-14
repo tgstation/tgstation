@@ -31,9 +31,8 @@
 /area/ruin/space/djstation)
 "v" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	dir = 1
 	},
-/obj/machinery/duct,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
