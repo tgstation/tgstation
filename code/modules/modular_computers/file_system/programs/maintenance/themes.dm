@@ -37,7 +37,7 @@
 		return
 	theme_app.imported_themes += theme_name
 	theme_app.size += size
-	user.client?.give_award(/datum/award/score/progress/pda_themes, user, theme_id)
+	user?.client?.give_award(/datum/award/score/progress/pda_themes, user, theme_id)
 	qdel(src)
 
 /datum/computer_file/program/maintenance/theme/cat
