@@ -3040,5 +3040,10 @@
 	taste_description = "creamy brandy and nutmeg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/flip_cocktail/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	if(prob(10))
+		drinker.emote("flip")
+
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
