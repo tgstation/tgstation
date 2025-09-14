@@ -3,8 +3,9 @@
  *
  * Adds an already initialized file to the computer, checking if one already exists.
  * Returns TRUE if successfully stored, FALSE otherwise.
+ * user is optional: If set, the action was done by a mob/player
  */
-/obj/item/modular_computer/proc/store_file(datum/computer_file/file_storing)
+/obj/item/modular_computer/proc/store_file(datum/computer_file/file_storing, mob/user)
 	if(!file_storing || !istype(file_storing))
 		return FALSE
 	if(!can_store_file(file_storing))
@@ -16,8 +17,8 @@
 
 	file_storing.computer = src
 	used_capacity += file_storing.size
-	SEND_SIGNAL(file_storing, COMSIG_COMPUTER_FILE_STORE, src)
-	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, file_storing)
+	SEND_SIGNAL(file_storing, COMSIG_COMPUTER_FILE_STORE, src, user)
+	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, file_storing, user)
 	return TRUE
 
 /**

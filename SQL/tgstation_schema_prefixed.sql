@@ -616,7 +616,15 @@ CREATE TABLE `SS13_achievement_metadata` (
 -- Table structure for table 'SS13_x_progress'
 
 DROP TABLE IF EXISTS `SS13_fish_progress`;
-CREATE TABLE `fish_progress` (
+CREATE TABLE `SS13_fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `SS13_pda_themes_progress`;
+CREATE TABLE `SS13_pda_themes_progress` (
   `ckey` VARCHAR(32) NOT NULL,
   `progress_entry` VARCHAR(32) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

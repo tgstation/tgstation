@@ -967,7 +967,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/proc/photo_act(mob/user, obj/item/photo/scanned_photo)
-	if(!store_file(new /datum/computer_file/picture(scanned_photo.picture)))
+	if(!store_file(new /datum/computer_file/picture(scanned_photo.picture), user))
 		balloon_alert(user, "no space!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "photo scanned")

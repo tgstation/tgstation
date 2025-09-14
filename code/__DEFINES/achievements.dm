@@ -149,6 +149,9 @@
 ///DB ID for all the different kinds of fish that you've caught so far.
 #define FISH_SCORE "Fish Score"
 
+///Database ID for unlockable PDA themes, purely costmetic
+#define PDA_THEMES_SCORE "PDA Themes"
+
 // Tourist related achievements and scores
 
 //centcom grades (achievement)

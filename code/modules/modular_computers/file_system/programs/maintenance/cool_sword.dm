@@ -17,7 +17,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(on_delete))
 
-/datum/computer_file/program/maintenance/cool_sword/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/maintenance/cool_sword/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	RegisterSignal(computer_installing, COMSIG_ITEM_EQUIPPED, PROC_REF(host_equipped))
 	RegisterSignal(computer_installing, COMSIG_ITEM_DROPPED, PROC_REF(host_dropped))
