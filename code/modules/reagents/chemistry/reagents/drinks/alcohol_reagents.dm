@@ -2921,6 +2921,7 @@
 	quality = DRINK_GOOD
 	taste_description = "rounded out whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/sazerac
 	name = "Sazerac"
@@ -2939,6 +2940,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "foamy lemony sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/ramos_gin_fizz
 	name = "Ramos Gin Fizz"
@@ -2957,6 +2959,7 @@
 	quality = DRINK_GOOD
 	taste_description = "glory and gunnery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/sangria
 	name = "Sangria"
@@ -3004,6 +3007,7 @@
 	quality = DRINK_GOOD
 	taste_description = "the warmth of a comfy fireplace"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/hot_toddy/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
