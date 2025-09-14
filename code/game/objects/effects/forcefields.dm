@@ -103,6 +103,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	desc = "A field that cannot be passed by people marked with a cosmic star."
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "cosmic_carpet"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	layer = GIB_LAYER
 	density = FALSE
