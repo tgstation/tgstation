@@ -151,6 +151,14 @@
 	surplus = 0
 	purchasable_from = UPLINK_CLOWN_OPS
 
+/datum/uplink_item/stealthy_tools/honk_supressor
+	name = "Bikehorn Suppressor"
+	desc = ""
+	item = /obj/item/suppressor/bikehorn
+	cost = 1
+	surplus = 5
+	purchasable_from = UPLINK_CLOWN_OPS
+
 /datum/uplink_item/badass/clownopclumsinessinjector //clowns can buy this too, but it's in the role-restricted items section for them
 	name = "Clumsiness Injector"
 	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clown operatives who wish to reconnect with their former clownish nature or for clown operatives who wish to torment and play with their prey before killing them."
