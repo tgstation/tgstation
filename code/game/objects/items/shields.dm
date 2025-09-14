@@ -5,6 +5,7 @@
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	abstract_type = /obj/item/shield
 	block_chance = 50
 	slot_flags = ITEM_SLOT_BACK
 	force = 10

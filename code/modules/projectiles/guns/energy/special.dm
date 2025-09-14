@@ -323,7 +323,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = /obj/item/stock_parts/power_store/cell/high
 	pin = null
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"

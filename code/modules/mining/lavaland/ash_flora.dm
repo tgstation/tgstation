@@ -185,6 +185,7 @@
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
+	abstract_type = /obj/item/food/grown/ash_flora
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100

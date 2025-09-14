@@ -257,3 +257,15 @@
 	time = 30 SECONDS
 	category = CAT_ENTERTAINMENT
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/crackpipe
+	name = "Glass Pipe"
+	result = /obj/item/cigarette/pipe/crackpipe
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/glass = 3,
+	)
+	tool_paths = list(
+		/obj/item/screwdriver,
+	)
+	category = CAT_ENTERTAINMENT

@@ -214,6 +214,7 @@
 	fire_sound = 'sound/items/xbow_lock.ogg'
 	can_be_sawn_off = FALSE
 	tac_reloads = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2)
 	var/draw_time = 3 SECONDS
 	SET_BASE_PIXEL(0, 0)
 

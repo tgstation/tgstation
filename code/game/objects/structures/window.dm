@@ -640,6 +640,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner,
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_MEDIUM_INSULATION
 	glass_material_datum = /datum/material/alloy/plasmaglass
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/window_plasma
 	melee = 80
@@ -716,7 +717,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -738,7 +739,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
-	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
@@ -756,6 +757,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/window/reinforced/plasma/fulltile/unanchored
 	anchored = FALSE

@@ -14,6 +14,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	status_flags = (CANPUSH | CANSTUN)
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 	radio_key = /obj/item/encryptionkey/headset_med
@@ -330,9 +331,10 @@
 	if(DOING_INTERACTION(src, TEND_DAMAGE_INTERACTION))
 		return
 
-	if((damage_type_healer == HEAL_ALL_DAMAGE && patient.get_total_damage() <= heal_threshold) || (!(damage_type_healer == HEAL_ALL_DAMAGE) && patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold))
-		to_chat(src, "[patient] is healthy! Your programming prevents you from tending the wounds of anyone with less than [heal_threshold + 1] [damage_type_healer == HEAL_ALL_DAMAGE ? "total" : damage_type_healer] damage.")
-		return
+	if (!(bot_access_flags & BOT_COVER_EMAGGED))
+		if((damage_type_healer == HEAL_ALL_DAMAGE && patient.get_total_damage() <= heal_threshold) || (!(damage_type_healer == HEAL_ALL_DAMAGE) && patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold))
+			to_chat(src, "[patient] is healthy! Your programming prevents you from tending the wounds of anyone with less than [heal_threshold + 1] [damage_type_healer == HEAL_ALL_DAMAGE ? "total" : damage_type_healer] damage.")
+			return
 
 	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
 	patient.visible_message("[src] is trying to tend the wounds of [patient]", span_userdanger("[src] is trying to tend your wounds!"))

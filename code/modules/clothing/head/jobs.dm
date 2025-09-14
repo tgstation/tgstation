@@ -398,6 +398,7 @@
 /obj/item/clothing/head/hats/hos
 	name = "generic head of security hat"
 	desc = "Please contact the Nanotrasen Costuming Department if found."
+	abstract_type = /obj/item/clothing/head/hats/hos
 	armor_type = /datum/armor/hats_hos
 	strip_delay = 8 SECONDS
 

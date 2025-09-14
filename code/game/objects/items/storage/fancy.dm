@@ -15,6 +15,7 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
+	abstract_type = /obj/item/storage/fancy
 	resistance_flags = FLAMMABLE
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	/// Used by examine to report what this thing is holding.

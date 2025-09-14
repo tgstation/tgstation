@@ -9,6 +9,7 @@
 */
 
 /obj/item/restraints
+	abstract_type = /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/weapons/restraints.dmi'
@@ -544,7 +545,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
 	breakouttime = 3.5 SECONDS//easy to apply, easy to break out of
 	gender = NEUTER
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
 	///Reference of the mob we will attempt to snare

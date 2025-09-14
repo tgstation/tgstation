@@ -1,6 +1,8 @@
 //Gun crafting parts til they can be moved elsewhere
 
 // PARTS //
+/obj/item/weaponcrafting
+	abstract_type = /obj/item/weaponcrafting
 
 /obj/item/weaponcrafting/Initialize(mapload)
 	. = ..()
@@ -14,6 +16,7 @@
 	desc = "A prototype modular receiver and trigger assembly for a firearm."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "receiver"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.5, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/weaponcrafting/receiver/create_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/pipegun)
@@ -26,7 +29,7 @@
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 6)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8)
 	resistance_flags = FLAMMABLE
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "riflestock"

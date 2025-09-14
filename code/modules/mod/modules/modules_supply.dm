@@ -18,8 +18,8 @@
 	. = ..()
 	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
 
-/obj/item/mod/module/gps/on_use()
-	attack_self(mod.wearer)
+/obj/item/mod/module/gps/on_use(mob/activator)
+	attack_self(mod.wearer) // todo: refactor to make compatable with pAIs.  Maybe ui_interact(activator)
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
@@ -40,8 +40,20 @@
 	var/load_time = 3 SECONDS
 	/// The max amount of crates you can carry.
 	var/max_crates = 3
+	/// Disallow mobs larger than this size in containers
+	var/max_mob_size = MOB_SIZE_SMALL
+	/// Items that allowed to be picked up by this module
+	var/list/accepted_items
 	/// The crates stored in the module.
 	var/list/stored_crates = list()
+
+
+/obj/item/mod/module/clamp/Initialize(mapload)
+	. = ..()
+	accepted_items = typecacheof(list(
+		/obj/structure/closet/crate,
+		/obj/item/delivery/big
+	))
 
 /obj/item/mod/module/clamp/on_select_use(atom/target)
 	. = ..()
@@ -49,7 +61,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/item/delivery/big))
+	if(is_type_in_typecache(target, accepted_items))
 		var/atom/movable/picked_crate = target
 		if(!check_crate_pickup(picked_crate))
 			return
@@ -92,7 +104,7 @@
 		balloon_alert(mod.wearer, "too many crates!")
 		return FALSE
 	for(var/mob/living/mob in target.get_all_contents())
-		if(mob.mob_size < MOB_SIZE_HUMAN)
+		if(mob.mob_size <= max_mob_size)
 			continue
 		balloon_alert(mod.wearer, "crate too heavy!")
 		return FALSE
@@ -124,10 +136,10 @@
 	overlay_state_active = "module_drill"
 	required_slots = list(ITEM_SLOT_GLOVES)
 
-/obj/item/mod/module/drill/on_activation()
+/obj/item/mod/module/drill/on_activation(mob/activator)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, PROC_REF(bump_mine))
 
-/obj/item/mod/module/drill/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/drill/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP)
 
 /obj/item/mod/module/drill/on_select_use(atom/target)
@@ -202,7 +214,7 @@
 	ore.forceMove(src)
 	ores += ore
 
-/obj/item/mod/module/orebag/on_use()
+/obj/item/mod/module/orebag/on_use(mob/activator)
 	for(var/obj/item/ore as anything in ores)
 		ore.forceMove(drop_location())
 		ores -= ore
@@ -333,7 +345,7 @@
 	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
 		callback = CALLBACK(src, PROC_REF(check_locker), locker))
 
-/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/magnet/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(istype(mod.wearer.pulling, /obj/structure/closet))
 		mod.wearer.stop_pulling()
 
@@ -483,13 +495,13 @@
 		TRAIT_NO_SLIP_ALL,
 	)
 
-/obj/item/mod/module/sphere_transform/activate()
+/obj/item/mod/module/sphere_transform/activate(mob/activator)
 	if(!mod.wearer.has_gravity())
-		balloon_alert(mod.wearer, "no gravity!")
+		balloon_alert(activator, "no gravity!")
 		return FALSE
 	return ..()
 
-/obj/item/mod/module/sphere_transform/on_activation()
+/obj/item/mod/module/sphere_transform/on_activation(mob/activator)
 	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
 	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
@@ -503,7 +515,7 @@
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
 
-/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/sphere_transform/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(!deleting)
 		playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE, frequency = -1)
 	mod.wearer.remove_offsets(REF(src))
@@ -516,9 +528,9 @@
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
 
-/obj/item/mod/module/sphere_transform/used()
+/obj/item/mod/module/sphere_transform/used(mob/activator)
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
-		balloon_alert(mod.wearer, "too much pressure!")
+		balloon_alert(activator, "too much pressure!")
 		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()

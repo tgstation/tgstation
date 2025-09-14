@@ -503,6 +503,32 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
+/// Checks if this door would be affected by any currently active RETA grants
+/obj/machinery/door/airlock/proc/has_active_reta_access()
+	if(!CONFIG_GET(flag/reta_enabled))
+		return FALSE
+
+	if(!length(req_access) && !length(req_one_access))
+		return FALSE
+
+	// Check if this door belongs to a department providing access via RETA
+	for(var/target_dept in GLOB.reta_active_grants)
+		var/list/active_origins = GLOB.reta_active_grants[target_dept]
+		for(var/origin_dept in active_origins)
+			var/list/origin_dept_access = GLOB.reta_dept_grants[origin_dept]
+			if(!origin_dept_access)
+				continue
+
+			for(var/required_access in req_access)
+				if(required_access in origin_dept_access)
+					return TRUE
+
+			for(var/required_access in req_one_access)
+				if(required_access in origin_dept_access)
+					return TRUE
+
+	return FALSE
+
 /**
  * Set the airlock state to a new value, change the icon state
  * and run the associated animation if required.
@@ -547,6 +573,8 @@
 				light_state = AIRLOCK_LIGHT_BOLTS
 			else if(emergency)
 				light_state = AIRLOCK_LIGHT_EMERGENCY
+			else if(has_active_reta_access())
+				light_state = AIRLOCK_LIGHT_RETA
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED

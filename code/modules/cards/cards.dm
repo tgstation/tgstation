@@ -102,7 +102,10 @@
 		card_atoms += card
 
 	if(istype(card_item, /obj/item/toy/cards/cardhand))
-		qdel(card_item)
+		var/obj/item/toy/cards/cardhand/recycled_cardhand = card_item
+		recycled_cardhand.card_atoms -= cards_to_add
+		if (!length(recycled_cardhand.fetch_card_atoms()))
+			qdel(card_item)
 
 	update_appearance()
 	return cards_to_add

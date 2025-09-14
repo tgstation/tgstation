@@ -11,6 +11,7 @@
 	health = 100
 	can_be_held = TRUE
 	maxHealth = 100
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	path_image_color = "#80dae7"
 	bot_ui = "RepairBot"
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_ENGINEERING)

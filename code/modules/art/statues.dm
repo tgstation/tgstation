@@ -7,6 +7,8 @@
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = ""
+	/// Abstract root type
+	abstract_type = /obj/structure/statue
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 100
@@ -18,8 +20,6 @@
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
-	/// Abstract root type
-	var/abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()
