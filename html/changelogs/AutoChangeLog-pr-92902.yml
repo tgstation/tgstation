@@ -1,0 +1,4 @@
+author: "WebcomicArtist"
+delete-after: True
+changes:
+  - balance: "EMPs now drain cells better, starting at 3 emps to drain a basic cell, up to 8 for bluespace."
