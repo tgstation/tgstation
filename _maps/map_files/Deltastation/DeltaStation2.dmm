@@ -16366,7 +16366,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "eaI" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/item/paper_bin{
 	pixel_x = -6
 	},
@@ -21909,7 +21909,7 @@
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
 "fwg" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
@@ -35832,7 +35832,7 @@
 "iRo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/storage/bag/tray,
 /obj/item/clothing/suit/apron/chef,
@@ -37800,7 +37800,7 @@
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "jof" = (
-/obj/structure/table/wood/silent_alarm/north,
+/obj/structure/table/wood,
 /obj/machinery/door/window/right/directional/south{
 	name = "Library Desk";
 	req_access = list("library")
@@ -51231,7 +51231,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "mFX" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "Security Desk";
 	pixel_x = -8;
@@ -60726,7 +60726,7 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "pdT" = (
-/obj/structure/table/wood/silent_alarm/east,
+/obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/coin,
 /obj/machinery/door/firedoor,
 /obj/item/storage/wallet/random,
@@ -62355,7 +62355,7 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "pzh" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "Departures Customs Desk";
 	pixel_x = -8;
@@ -66945,7 +66945,7 @@
 	pixel_x = 6;
 	req_access = list("security")
 	},
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -67700,7 +67700,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
 "qKH" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6
@@ -70353,7 +70353,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/item/folder/yellow,
 /obj/item/pen,
 /obj/machinery/door/poddoor/preopen{
@@ -72263,7 +72263,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "rSi" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/west{
 	name = "Engineering Desk";
 	req_access = list("engineering")
@@ -77247,7 +77247,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "tbg" = (
-/obj/structure/table/reinforced/silent_alarm/north,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/folder/yellow{
 	pixel_x = -6
@@ -79191,7 +79191,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/cmo)
 "tCD" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
@@ -80831,7 +80831,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "tWI" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin,
 /obj/item/pen,
@@ -88616,7 +88616,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "vRO" = (
-/obj/structure/table/reinforced/silent_alarm/north,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/folder/yellow{
 	pixel_x = -6
@@ -88835,7 +88835,7 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "vUf" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/structure/desk_bell{
 	pixel_x = 7;
@@ -94517,7 +94517,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "xsn" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "genetics_shutters";

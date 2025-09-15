@@ -9,6 +9,7 @@
 	var/result_path
 	var/wall_external = FALSE // For frames that are external to the wall they are placed on, like light fixtures and cameras.
 	var/pixel_shift //The amount of pixels
+	var/tableframe = FALSE //Whether it can be installed on tables
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user) > 1)
@@ -32,13 +33,13 @@
 
 	return TRUE
 
-/obj/item/wallframe/proc/attach(turf/on_wall, mob/user)
+/obj/item/wallframe/proc/attach(target, mob/user)
 	if(result_path)
 		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
-		user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
-			span_notice("You attach [src] to the wall."),
+		user.visible_message(span_notice("[user.name] attaches [src] to \the [target]."),
+			span_notice("You attach [src] to \the [target]."),
 			span_hear("You hear clicking."))
-		var/floor_to_wall = get_dir(user, on_wall)
+		var/floor_to_wall = get_dir(user, target)
 
 		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
 		hanging_object.setDir(floor_to_wall)

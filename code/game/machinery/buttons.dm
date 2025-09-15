@@ -17,6 +17,10 @@
 	var/skin = ""
 	///Whether it is possible to change the panel skin
 	var/can_alter_skin = TRUE
+	///Whether the button flashes when pressed
+	var/silent = FALSE
+	///Whether the button is table mounted on init
+	var/table_bound = FALSE
 
 	var/obj/item/assembly/device
 	var/obj/item/electronics/airlock/board
@@ -65,7 +69,20 @@
 			board.accesses = req_one_access
 
 	setup_device()
-	find_and_hang_on_wall()
+	if(table_bound)
+		if(dir)
+			switch(dir)
+				if(NORTH)
+					pixel_y = 24
+				if(SOUTH)
+					pixel_y = -24
+				if(EAST)
+					pixel_x = 24
+				if(WEST)
+					pixel_x = -24
+	else
+		find_and_hang_on_wall()
+
 	register_context()
 
 /obj/machinery/button/Destroy()
@@ -151,6 +168,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	device = new_device
+	if(device.assembly_flags & ASSEMBLY_SILENCE_BUTTON)
+		silent = TRUE
 	SEND_SIGNAL(new_device, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, src, user)
 	to_chat(user, span_notice("You add \the [new_device] to the button."))
 
@@ -303,11 +322,13 @@
 
 	if(!allowed(user))
 		balloon_alert(user, "access denied")
-		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
+		if(!silent)
+			flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 		return FALSE
 
 	use_energy(5 JOULES)
-	flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
+	if(!silent)
+		flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
 
 	if(device)
 		device.pulsed(user)
@@ -523,3 +544,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 24
+	tableframe = TRUE

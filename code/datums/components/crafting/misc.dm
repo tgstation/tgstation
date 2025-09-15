@@ -68,7 +68,7 @@
 
 /datum/crafting_recipe/silent_alarm
 	name = "Silent Alarm"
-	result = /obj/item/silent_alarm
+	result = /obj/item/assembly/silent_alarm
 	time = 4 SECONDS
 	reqs = list(
 		/obj/item/wallframe/button = 1,

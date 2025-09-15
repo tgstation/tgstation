@@ -1,22 +1,27 @@
-/obj/item/silent_alarm
+/obj/machinery/button/silent_alarm
+	name = "Silent alarm"
+	desc = "A small button that silently notifies security when pressed"
+	silent = TRUE
+	device_type = /obj/item/assembly/silent_alarm
+
+/obj/item/assembly/silent_alarm
 	name = "Silent alarm electronics"
-	desc = "A small button that silently notifies security when pressed. Can be placed under tables."
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "button"
+	desc = "The internal electronics of a silent alarm button"
+	icon_state = "control"
+	COOLDOWN_DECLARE(announce_cooldown)
+	assembly_flags = ASSEMBLY_SILENCE_BUTTON | ASSEMBLY_NO_DUPLICATES
 
-/obj/structure/table/proc/attach_silent_alarm(mob/user, obj/item/silent_alarm/alarm)
-	silent_alarm_rigged = TRUE
-	silent_alarm_direction = get_dir(user, src)
-	user.visible_message(span_notice("[user.name] rigs a silent alarm under \the [src]."),
-		span_notice("You rig a silent alarm under \the [src]."))
-	qdel(alarm)
-
-/obj/structure/table/proc/trip_silent_alarm(area/alarm_area, mob/living/user)
-	user.visible_message(self_message = span_warning("You discreetly reach under \the [src] and activate the silent alarm!"))
-	if(COOLDOWN_FINISHED(src,tripped_alarm))
-		aas_config_announce(/datum/aas_config_entry/silent_alarm_trigger, list("LOCATION" = alarm_area.name), null, list(RADIO_CHANNEL_SECURITY), "Message")
-		COOLDOWN_START(src, tripped_alarm, 1 MINUTES)
-
+/obj/item/assembly/silent_alarm/activate(mob/user)
+	if(is_within_radio_jammer_range(src))
+		COOLDOWN_START(src, announce_cooldown, 30 SECONDS)
+		return
+	var/location = get_area_name(user)
+	if(!location)
+		location = get_area_name(src)
+	if(!COOLDOWN_FINISHED(src, announce_cooldown))
+		return
+	aas_config_announce(/datum/aas_config_entry/silent_alarm_trigger, list("LOCATION" = location), null, list(RADIO_CHANNEL_SECURITY), "Message")
+	COOLDOWN_START(src, announce_cooldown, 1 MINUTES)
 
 /datum/aas_config_entry/silent_alarm_trigger
 	name = "RC Alert: Emergency"
@@ -27,66 +32,18 @@
 		"LOCATION" = "will be replaced with the location of the triggered alarm",
 	)
 
-/obj/structure/table/silent_alarm
-	silent_alarm_rigged = TRUE
+/obj/machinery/button/silent_alarm/north
+	table_bound = TRUE
+	dir = NORTH
 
-/obj/structure/table/reinforced/silent_alarm
-	silent_alarm_rigged = TRUE
+/obj/machinery/button/silent_alarm/south
+	table_bound = TRUE
+	dir = SOUTH
 
-/obj/structure/table/reinforced/rglass/silent_alarm
-	silent_alarm_rigged = TRUE
+/obj/machinery/button/silent_alarm/east
+	table_bound = TRUE
+	dir = EAST
 
-/obj/structure/table/wood/silent_alarm
-	silent_alarm_rigged = TRUE
-
-
-/obj/structure/table/silent_alarm/north
-	silent_alarm_direction = SOUTH
-
-/obj/structure/table/silent_alarm/south
-	silent_alarm_direction = NORTH
-
-/obj/structure/table/silent_alarm/east
-	silent_alarm_direction = WEST
-
-/obj/structure/table/silent_alarm/west
-	silent_alarm_direction = EAST
-
-
-/obj/structure/table/reinforced/silent_alarm/north
-	silent_alarm_direction = SOUTH
-
-/obj/structure/table/reinforced/silent_alarm/south
-	silent_alarm_direction = NORTH
-
-/obj/structure/table/reinforced/silent_alarm/east
-	silent_alarm_direction = WEST
-
-/obj/structure/table/reinforced/silent_alarm/west
-	silent_alarm_direction = EAST
-
-
-/obj/structure/table/reinforced/rglass/silent_alarm/north
-	silent_alarm_direction = SOUTH
-
-/obj/structure/table/reinforced/rglass/silent_alarm/south
-	silent_alarm_direction = NORTH
-
-/obj/structure/table/reinforced/rglass/silent_alarm/east
-	silent_alarm_direction = WEST
-
-/obj/structure/table/reinforced/rglass/silent_alarm/west
-	silent_alarm_direction = EAST
-
-
-/obj/structure/table/wood/silent_alarm/north
-	silent_alarm_direction = SOUTH
-
-/obj/structure/table/wood/silent_alarm/south
-	silent_alarm_direction = NORTH
-
-/obj/structure/table/wood/silent_alarm/east
-	silent_alarm_direction = WEST
-
-/obj/structure/table/wood/silent_alarm/west
-	silent_alarm_direction = EAST
+/obj/machinery/button/silent_alarm/west
+	table_bound = TRUE
+	dir = WEST

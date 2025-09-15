@@ -4268,7 +4268,7 @@
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "aEa" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/south{
 	name = "Desk Door";
@@ -13613,10 +13613,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/storage)
-"dDR" = (
-/obj/structure/table/reinforced/silent_alarm/north,
-/turf/open/floor/iron/dark,
-/area/station/service/bar)
 "dEc" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -15247,7 +15243,7 @@
 /turf/open/floor/iron,
 /area/station/science/lower)
 "ehd" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Security Front Desk";
 	req_access = list("security")
@@ -17159,7 +17155,7 @@
 /turf/open/floor/plating,
 /area/station/security/courtroom)
 "eTH" = (
-/obj/structure/table/reinforced/silent_alarm/north,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -17863,7 +17859,7 @@
 /turf/open/floor/tram,
 /area/station/hallway/primary/tram/center)
 "fhy" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
@@ -25057,7 +25053,7 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
 "hQZ" = (
-/obj/structure/table/reinforced/silent_alarm/north,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/south{
 	name = "Access Queue"
 	},
@@ -31554,7 +31550,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "kcP" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	name = "Atmospherics Blast Door";
@@ -33869,7 +33865,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "kNk" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/south{
 	name = "Genetics Lab Desk";
@@ -46019,7 +46015,7 @@
 	req_access = list("hydroponics")
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "pib" = (
@@ -49990,7 +49986,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "qAB" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Security Front Desk";
 	req_access = list("security")
@@ -52713,15 +52709,6 @@
 /obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
-"rwM" = (
-/obj/structure/table/reinforced/silent_alarm/north,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	name = "Kitchen Counter Shutters";
-	id = "playerscantreadthis"
-	},
-/turf/open/floor/iron/checker,
-/area/station/service/kitchen)
 "rwN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58236,7 +58223,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "ttK" = (
-/obj/structure/table/reinforced/silent_alarm/north,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -62132,7 +62119,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "uGo" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
@@ -67610,7 +67597,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "wAh" = (
-/obj/structure/table/reinforced/silent_alarm/north,
+/obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
@@ -68931,7 +68918,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "xbN" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/structure/desk_bell{
 	pixel_x = -7
 	},
@@ -68985,7 +68972,7 @@
 	req_access = list("hydroponics")
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "xcH" = (
@@ -169690,7 +169677,7 @@ llE
 vaq
 mdp
 mUL
-rwM
+fhg
 vJt
 mHc
 wwK
@@ -169701,7 +169688,7 @@ qid
 vnI
 jPK
 nKz
-dDR
+crT
 wcv
 mHc
 sxW

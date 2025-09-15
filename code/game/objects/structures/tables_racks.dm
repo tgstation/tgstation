@@ -295,9 +295,9 @@
 
 	var/interaction_key = "table_flip_[REF(src)]"
 	if(!is_flipped)
-		if(silent_alarm_rigged && silent_alarm_direction == get_dir(user,src))
+		/*if(silent_alarm_rigged && silent_alarm_direction == get_dir(user,src))
 			trip_silent_alarm(get_area(src), user)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN*/
 		if(!can_flip)
 			return
 		if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
@@ -362,15 +362,13 @@
 	if(is_flipped)
 		return .
 
-	if(istype(tool, /obj/item/silent_alarm))
-		var/interact_dir = get_dir(user, src)
-		if(silent_alarm_rigged)
-			balloon_alert(user, "there is already a silent alarm rigged under this table!")
-			return
-		if(!(interact_dir in GLOB.cardinals))
-			balloon_alert(user, "stand directly adjacent to the table!")
-			return
-		attach_silent_alarm(user, tool)
+	if(istype(tool, /obj/item/wallframe))
+		var/obj/item/wallframe/frame = tool
+		if(frame.tableframe)
+			if(frame.try_build(get_turf(src), user))
+				frame.attach(src, user)
+				return TRUE
+			return FALSE
 
 	if(istype(tool, /obj/item/toy/cards/deck))
 		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))

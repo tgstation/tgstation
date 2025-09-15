@@ -10195,7 +10195,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "cLw" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
 	pixel_x = -6;
@@ -16209,7 +16209,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "exm" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "robotics";
@@ -19435,7 +19435,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ftJ" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "gene_desk_shutters";
@@ -25800,7 +25800,7 @@
 /area/station/security/prison)
 "hmt" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced/silent_alarm/north,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/north{
 	name = "Security Checkpoint";
 	req_access = list("security")
@@ -30839,11 +30839,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
-"iKY" = (
-/obj/structure/table/wood/silent_alarm/north,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/station/service/bar)
 "iLa" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
@@ -32799,7 +32794,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/toilet)
 "joa" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	req_access = list("brig_entrance")
 	},
@@ -34442,7 +34437,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "jLZ" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "briggate";
@@ -44325,7 +44320,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "mBQ" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "rnd";
@@ -62085,7 +62080,7 @@
 	req_access = list("shipping")
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
@@ -68498,7 +68493,7 @@
 	},
 /area/station/science/ordnance/office)
 "tku" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
 	name = "Cargo Desk";
@@ -79275,7 +79270,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
 "wwn" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/left/directional/west{
 	name = "Reception Window"
 	},
@@ -82546,7 +82541,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "xqU" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "kitchencounter";
@@ -83675,7 +83670,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "xGp" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/left/directional/east{
 	name = "Atmospherics Desk";
 	req_access = list("atmospherics")
@@ -253394,7 +253389,7 @@ fXw
 abZ
 qfz
 mNP
-iKY
+vNU
 tvt
 pQD
 lsA

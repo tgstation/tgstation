@@ -3896,7 +3896,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/science/robotics)
 "bki" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/east{
 	req_access = list("robotics")
@@ -16816,7 +16816,7 @@
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
 "eUY" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/item/folder{
 	pixel_x = 1;
 	pixel_y = 3
@@ -20307,7 +20307,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "fVQ" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Arrivals Security Checkpoint";
 	req_access = list("security")
@@ -23308,7 +23308,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison/safe)
 "gMI" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
 	pixel_x = -2;
@@ -25624,7 +25624,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "huW" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/start/hangover,
 /obj/structure/disposalpipe/segment{
@@ -29637,7 +29637,7 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "iCd" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	req_access = list("brig_entrance")
 	},
@@ -33962,7 +33962,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "jJC" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/item/paper_bin{
 	pixel_x = 2;
 	pixel_y = 7
@@ -35728,7 +35728,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/engine_smes)
 "klI" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
 	pixel_x = -6;
@@ -42859,6 +42859,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "mqa" = (
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
 	pixel_x = -2;
@@ -42878,7 +42879,6 @@
 	name = "Warden's Place"
 	},
 /obj/item/storage/fancy/donut_box,
-/obj/structure/table/reinforced/silent_alarm/west,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "mqb" = (
@@ -45147,7 +45147,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/port/aft)
 "nak" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/item/pen,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/east{
@@ -54599,7 +54599,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "pLV" = (
-/obj/structure/table/reinforced/silent_alarm/west,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west{
 	name = "Pharmacy Desk";
@@ -54910,7 +54910,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/medbay/central)
 "pPt" = (
-/obj/structure/table/reinforced/silent_alarm/east,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "hop";
@@ -63722,7 +63722,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
 "suy" = (
-/obj/structure/table/reinforced/silent_alarm/south,
+/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/door/poddoor/shutters/preopen{
