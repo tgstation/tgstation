@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Things that recharge \"all cells on your person\" now avoid recharging Ethereal stomachs, and thus, will no longer cause spontaneous overcharge or weird chat messages"
