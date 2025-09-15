@@ -1,0 +1,6 @@
+author: "Melbert, Toriate"
+delete-after: True
+changes:
+  - rscdel: "Removed ninja's EMP burst"
+  - rscadd: "Replaced ninja's throwing stars with energy throwing stars, which EMP on hit and embed, and can't be caught."
+  - sound: "Throwing stars now make stab sounds instead of thud sounds"
