@@ -34,7 +34,7 @@
 	var/connector_type = "standard"
 	///Does the cell start without any charge?
 	var/empty = FALSE
-	// How much extra damage the cells take from emps to prevent stuff like bluespace cells taking 40 shots to drain.
+	// Damage multiplier the cells take from emps to prevent stuff like bluespace cells taking 40 shots to drain.
 	var/emp_damage_modifier
 
 /obj/item/stock_parts/power_store/get_cell()
