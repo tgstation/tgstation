@@ -215,14 +215,14 @@
 	..()
 	if(istype(C, /obj/item/stack/rods/lava))
 		var/obj/item/stack/rods/lava/R = C
-		var/obj/structure/lattice/lava/H = locate(/obj/structure/lattice/lava, src)
+		var/obj/structure/lattice/catwalk/lava/H = locate(/obj/structure/lattice/catwalk/lava, src)
 		if(H)
 			to_chat(user, span_warning("There is already a lattice here!"))
 			return
 		if(R.use(1))
 			to_chat(user, span_notice("You construct a lattice."))
 			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
-			new /obj/structure/lattice/lava(locate(x, y, z))
+			new /obj/structure/lattice/catwalk/lava(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
