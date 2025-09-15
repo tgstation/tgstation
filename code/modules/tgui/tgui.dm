@@ -343,7 +343,7 @@
 		var/datum/callback/ui_callback = VERB_CALLBACK(src, PROC_REF(on_act_message), act_type, payload, state)
 		if(INTELIGENT_TRY_QUEUE_VERB(ui_callback, VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSverb_manager))
 			if(GLOB.active_tracker)
-				GLOB.active_tracker.name_to_use = "[GLOB.active_tracker.name_to_use]-queued"
+				GLOB.active_tracker.name_to_use = "nullified_act"
 		else
 			ui_callback.InvokeAsync()
 		return FALSE

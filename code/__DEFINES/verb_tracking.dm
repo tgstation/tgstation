@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(average_verb_cost)
 /// Should we collect verb costs
 GLOBAL_VAR_INIT(collect_verb_costs, TRUE)
 /// List of all the "marked nullifiers" (things like "nullified_verb" which mark the average cost of queuing a "thing")
-GLOBAL_LIST_INIT(nullifiying_verblikes, list("nullified_verb", "nullified_click", "nullified_topic"))
+GLOBAL_LIST_INIT(nullifiying_verblikes, list("nullified_verb", "nullified_click", "nullified_topic", "nullified_act"))
 
 /proc/cmp_verb_cost_desc(list/a, list/b)
 	return b[VERB_LIST_COST] - a[VERB_LIST_COST]
