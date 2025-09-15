@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	gases[species][MOLES] += amount
 	total_moles += amount
 	//heat transfer
-	if(abs(temperature - incoming_temp) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+	if(abs(temperature - incoming_temp) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && incoming_temp)
 		var/self_heat_capacity = heat_capacity()
 		var/giver_heat_capacity = species.specific_heat * amount
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	//heat transfer
 	var/temperature_delta = abs(temperature - incoming_gas.temperature)
-	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && incoming_gas.temperature)
 		var/self_heat_capacity = heat_capacity()
 		var/giver_heat_capacity = incoming_gas.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
@@ -835,3 +835,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	/// Associative list of species to moles
 	var/list/gas_species
 	var/temperature
+
+/datum/gas_holder/proc/heat_capacity()
+	. = 0
+	for(var/datum/gas/gas_type in gas_species)
+		var/gas_data = gas_type.specific_heat
+		. += gas_data * gas_species[gas_type]

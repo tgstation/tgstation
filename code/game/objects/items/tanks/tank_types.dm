@@ -67,7 +67,7 @@
 	force = 10
 
 /obj/item/tank/internals/anesthetic/populate_gas()
-	var/datum/gas_holder/incoming = new()
+	var/datum/gas_holder/incoming = new(src)
 	incoming.gas_species = list( \
 	/datum/gas/oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD, \
 	/datum/gas/nitrous_oxide = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD, \
@@ -241,7 +241,7 @@
 /obj/item/tank/internals/emergency_oxygen/engi/clown/n2o
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/n2o/populate_gas()
-	var/datum/gas_holder/incoming = new()
+	var/datum/gas_holder/incoming = new(src)
 	incoming.gas_species = list( \
 	/datum/gas/oxygen = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.95, \
 	/datum/gas/nitrous_oxide = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.05, \
@@ -251,7 +251,7 @@
 /obj/item/tank/internals/emergency_oxygen/engi/clown/bz
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/bz/populate_gas()
-	var/datum/gas_holder/incoming = new()
+	var/datum/gas_holder/incoming = new(src)
 	incoming.gas_species = list( \
 	/datum/gas/oxygen = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.9, \
 	/datum/gas/bz = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.1,\
@@ -262,7 +262,7 @@
 	distribute_pressure = TANK_CLOWN_RELEASE_PRESSURE + 2
 
 /obj/item/tank/internals/emergency_oxygen/engi/clown/helium/populate_gas()
-	var/datum/gas_holder/incoming = new()
+	var/datum/gas_holder/incoming = new(src)
 	incoming.gas_species = list( \
 	/datum/gas/oxygen = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.75, \
 	/datum/gas/helium = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.25 , \
