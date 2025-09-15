@@ -65,7 +65,7 @@
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 
 	if(hardly_wounded && !easily_wounded)
-		damage *= 0.85
+		damage /= 2
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		damage *= 1.1
