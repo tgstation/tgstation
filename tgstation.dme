@@ -2154,6 +2154,7 @@
 #include "code\game\machinery\big_manipulator.dm"
 #include "code\game\machinery\botlaunchpad.dm"
 #include "code\game\machinery\buttons.dm"
+#include "code\game\objects\items\devices\silent_alarm.dm"
 #include "code\game\machinery\cell_charger.dm"
 #include "code\game\machinery\civilian_bounties.dm"
 #include "code\game\machinery\constructable_frame.dm"

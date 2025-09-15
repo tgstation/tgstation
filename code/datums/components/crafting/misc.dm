@@ -65,3 +65,13 @@
 		/obj/item/storage/bubblegum_wrapper = 1,
 	)
 	category = CAT_MISC
+
+/datum/crafting_recipe/silent_alarm
+	name = "Silent Alarm"
+	result = /obj/item/silent_alarm
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/wallframe/button = 1,
+		/obj/item/encryptionkey/headset_sec = 1,
+		)
+	category = CAT_MISC

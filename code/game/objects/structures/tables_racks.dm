@@ -58,6 +58,11 @@
 	var/unflip_table_sound = 'sound/items/trayhit/trayhit2.ogg'
 	/// What sound does the table make when we flip the table?
 	var/flipped_table_sound = 'sound/items/trayhit/trayhit1.ogg'
+	/// If there is a silent alarm attached to the table
+	var/silent_alarm_rigged
+	/// Direction of silent alarm that is attached to the table
+	var/silent_alarm_direction
+	COOLDOWN_DECLARE(tripped_alarm)
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -211,6 +216,8 @@
 	. = ..()
 	if(is_flipped)
 		. += span_notice("It's been flipped on its side!")
+	if(silent_alarm_rigged && (is_flipped || silent_alarm_direction == get_dir(user, src)))
+		. += span_notice("There is a silent alarm rigged under this table.")
 	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
@@ -286,17 +293,20 @@
 	if(!istype(user) || !user.can_interact_with(src))
 		return
 
-	if(!can_flip)
-		return
-
 	var/interaction_key = "table_flip_[REF(src)]"
 	if(!is_flipped)
+		if(silent_alarm_rigged && silent_alarm_direction == get_dir(user,src))
+			trip_silent_alarm(get_area(src), user)
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if(!can_flip)
+			return
 		if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
 			user.balloon_alert_to_viewers("flipping table...")
 		if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
 			flip_table(get_dir(user, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
+	if(!can_flip)
+		return
 	if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
 		user.balloon_alert_to_viewers("flipping table upright...")
 	if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
@@ -351,6 +361,16 @@
 
 	if(is_flipped)
 		return .
+
+	if(istype(tool, /obj/item/silent_alarm))
+		var/interact_dir = get_dir(user, src)
+		if(silent_alarm_rigged)
+			balloon_alert(user, "There is already a silent alarm rigged under this table!")
+			return
+		if(!(interact_dir in GLOB.cardinals))
+			balloon_alert(user, "Stand directly adjacent to the table!")
+			return
+		attach_silent_alarm(user, tool)
 
 	if(istype(tool, /obj/item/toy/cards/deck))
 		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
