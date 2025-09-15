@@ -68,6 +68,8 @@
 	if(HAS_TRAIT(owner, TRAIT_BLOODY_MESS))
 		if(easily_wounded && !hardly_wounded) //Super sucks to be you.
 			damage *= 1.5
+		else if(hardly_Wounded && !easily_wounded)
+			damage *= 0.5
 	else
 		damage = min(damage, considered_damage_cap)
 
