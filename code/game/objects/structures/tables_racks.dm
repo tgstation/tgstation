@@ -365,10 +365,10 @@
 	if(istype(tool, /obj/item/silent_alarm))
 		var/interact_dir = get_dir(user, src)
 		if(silent_alarm_rigged)
-			balloon_alert(user, "There is already a silent alarm rigged under this table!")
+			balloon_alert(user, "there is already a silent alarm rigged under this table!")
 			return
 		if(!(interact_dir in GLOB.cardinals))
-			balloon_alert(user, "Stand directly adjacent to the table!")
+			balloon_alert(user, "stand directly adjacent to the table!")
 			return
 		attach_silent_alarm(user, tool)
 
