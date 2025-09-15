@@ -180,7 +180,7 @@
 	var/datum/mutation/hulk/smasher = locate(/datum/mutation/hulk) in hulkman.dna.mutations
 	if(!smasher || !damage || smasher.no_recoil) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky. Also, if our type of hulk doesn't cause recoil damage, return.
 		return
-	hulkman.apply_damage(damage, BRUTE, arm, wound_bonus = damage/2) //enough damage to regularly result in at least a breakage.
+	hulkman.apply_damage(damage, BRUTE, arm, wound_bonus = 0) //enough damage to regularly result in at least a breakage.
 
 /turf/closed/wall/attack_hand(mob/user, list/modifiers)
 	. = ..()
