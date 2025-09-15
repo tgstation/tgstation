@@ -35,7 +35,7 @@
 	///Does the cell start without any charge?
 	var/empty = FALSE
 	// Damage multiplier the cells take from emps to prevent stuff like bluespace cells taking 40 shots to drain.
-	var/emp_damage_modifier
+	var/emp_damage_modifier = 1
 
 /obj/item/stock_parts/power_store/get_cell()
 	return src
