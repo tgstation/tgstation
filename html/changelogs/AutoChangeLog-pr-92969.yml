@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "vending machines now randomly shock if electrified & can be untilted again by hand"
