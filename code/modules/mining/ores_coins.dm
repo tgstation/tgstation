@@ -161,6 +161,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 	mine_experience = 0
+	mats_per_unit = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/ore/glass/basalt
 
 /obj/item/stack/ore/plasma
