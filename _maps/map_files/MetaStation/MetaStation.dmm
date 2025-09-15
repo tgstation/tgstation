@@ -5432,7 +5432,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "bUk" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/south,
 /obj/machinery/door/firedoor,
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
@@ -8432,7 +8432,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "cYJ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/south,
 /obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
@@ -11381,7 +11381,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "dZb" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/east,
 /obj/machinery/door/firedoor,
 /obj/item/folder{
 	pixel_x = -6
@@ -14226,7 +14226,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay/central)
 "eVa" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/north,
 /obj/machinery/door/window/right/directional/south{
 	name = "Reception Window"
 	},
@@ -24199,7 +24199,7 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "isX" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/east,
 /obj/machinery/door/window/left/directional/east{
 	name = "Engineering Desk";
 	req_access = list("engineering")
@@ -28425,7 +28425,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "jLQ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/north,
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "Head of Personnel's Desk";
 	req_access = list("hop")
@@ -29033,7 +29033,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "jVZ" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/east,
 /obj/machinery/door/window/right/directional/west{
 	name = "Outer Window"
 	},
@@ -36853,7 +36853,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mJT" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/east,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
@@ -39109,7 +39109,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "nuk" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/south,
 /obj/machinery/door/firedoor,
 /obj/structure/desk_bell{
 	pixel_x = 7
@@ -42186,7 +42186,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "oBM" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/east,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/east{
 	name = "Hydroponics Desk";
@@ -44324,7 +44324,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pof" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/south,
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -50863,7 +50863,7 @@
 	id = "medsecprivacy";
 	name = "Privacy Shutter"
 	},
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/north,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	req_access = list("security")
@@ -51918,7 +51918,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "rQl" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/east,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
@@ -61890,7 +61890,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "vjX" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/silent_alarm/west,
 /obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3

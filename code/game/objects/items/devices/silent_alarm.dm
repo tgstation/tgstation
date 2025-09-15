@@ -36,6 +36,9 @@
 /obj/structure/table/reinforced/rglass/silent_alarm
 	silent_alarm_rigged = TRUE
 
+/obj/structure/table/wood/silent_alarm
+	silent_alarm_rigged = TRUE
+
 
 /obj/structure/table/silent_alarm/north
 	silent_alarm_direction = SOUTH
@@ -73,4 +76,17 @@
 	silent_alarm_direction = WEST
 
 /obj/structure/table/reinforced/rglass/silent_alarm/west
+	silent_alarm_direction = EAST
+
+
+/obj/structure/table/wood/silent_alarm/north
+	silent_alarm_direction = SOUTH
+
+/obj/structure/table/wood/silent_alarm/south
+	silent_alarm_direction = NORTH
+
+/obj/structure/table/wood/silent_alarm/east
+	silent_alarm_direction = WEST
+
+/obj/structure/table/wood/silent_alarm/west
 	silent_alarm_direction = EAST
