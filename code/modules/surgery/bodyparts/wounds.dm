@@ -59,13 +59,13 @@
 	// note that these are fed into an exponent, so these are magnified
 	var/easily_wounded = HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED)
 	var/hardly_wounded = HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED)
+	var/considered_damage_cap = WOUND_MAX_CONSIDERED_DAMAGE
 	if(easily_wounded && !hardly_wounded)
-		damage *= 1.5
-	else
-		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
+		considered_damage_cap *= 1.5
+	else if(hardly_wounded && !easily_wounded)
+		considered_damage_cap /= 2
 
-	if(hardly_wounded && !easily_wounded)
-		damage /= 2
+	damage = min(damage, considered_damage_cap)
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		damage *= 1.1
