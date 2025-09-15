@@ -299,6 +299,7 @@
 	icon_state = null
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	inhand_icon_state = null
+	abstract_type = /obj/item/clothing/head/helmet/plate/crusader/prophet
 	flags_1 = 0
 	armor_type = /datum/armor/crusader_prophet
 	worn_y_offset = 6

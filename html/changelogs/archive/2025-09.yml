@@ -362,3 +362,67 @@
   - admin: Add GPS debug tool to admin debug box
   tiramisuapimancer:
   - bugfix: you can actually get the hat stabilizer modsuit module on the black market
+2025-09-13:
+  FalloutFalcon:
+  - rscadd: Soda cans show up in the silver slime drink table.
+  - rscadd: Examine tag for items that are not mean to show up ingame.
+  - refactor: Standardizes how gifts rule out abstract types.
+  - bugfix: gifts no longer check if something has an inhand, massively expanding
+      the list of potential items.
+  JohnFulpWillard:
+  - rscdel: Merged ghosts and spirits into one species.
+  - balance: Spirit's passthrough ability is now tied down 7 tiles from a tombstone,
+      but is no longer affected by holy water nor does it make them drop their equipped
+      gear.
+  - balance: Ghosts can now be healed.
+  Melbert:
+  - rscdel: Captain's no longer sorted under Security in places such as the manifest
+      or job selection
+  - refactor: Refactored a lot of code relating to human face and voice, ie, what
+      shows up in examine and in say. Report anything odd when examining people, with
+      ID cards, when talking over radio, or when disguised
+  - refactor: Refactored ling mimic voice and traitor voice changer
+  - rscdel: Potted plants no longer hide voice. They still hide appearance, though
+  - qol: Honorifics now show in examine / in world, rather than only when speaking.
+  - rscadd: There's a 1/5 chance that Paradox Clone spawns a second clone if there
+      are enough candidates. Neither clone is aware of or on a team with the other
+      - There can only be one.
+  - rscadd: Paradox Clones are now tasked to `Be the only [x] alive`, meaning means
+      of identity cloning (such as Genetics or Changelings) may throw a wrench in
+      your plan.
+  lelandkemble:
+  - qol: Eating ice cream no longer curses you
+  loganuk:
+  - map: Catwalk - Atmos and Engineering split, new access hallway, new stairs to
+      AI sat, HFR re-located, space for passion projects, new lighting, So many changes
+      to document. [C.A.T]
+  necromanceranne:
+  - bugfix: Syndicate Tomes once again can be used to beat the shit out of people.
+  - image: The rebellion mask now renders beneath your hair.
+  - qol: The rebellion mask now lets you plug in internals.
+2025-09-14:
+  ArcaneMusic:
+  - rscadd: Boulders from ore-vents can now be used on lava tiles, to create a temporary
+      bridge to cross. Just don't be standing on it when it sinks back into the lava!
+  - map: Re-added the gulag boulder-vent to the lavaland gulag.
+  - bugfix: Lava tiles will now properly burn its contents when a catwalk or similar
+      crossing disappears above itself.
+  LemonInTheDark:
+  - bugfix: Moving diagonally will no longer lead to stutter stepping (it's tickbound)
+2025-09-15:
+  JohnFulpWillard:
+  - rscadd: Added a new PDA theme and 3 secret ones you may find in maintenance.
+  Melbert:
+  - bugfix: Food-tray-to-oven-tray transfer works again
+  lelandkemble:
+  - bugfix: Filled worn trashbags are no longer spriteless
+  necromanceranne:
+  - balance: Shortbows and divine bows do more damage. The divine bow also launches
+      arrows at a higher velocity than normal bows.
+  - image: Flaming arrows now have proper sprites.
+  - balance: Flaming arrows now deal BURN damage. And also deal an appropriate amount
+      of damage for an arrow.
+  - rscadd: Ashen bows and arrows, made from sinew and bone. And leather for the bow.
+  - rscadd: Ashen arrows deal significantly more damage to mining mobs.
+  - balance: Arrow quivers are made from wood rather than cardboard.
+  - qol: Shortbows and ashen bows have the ability to be renamed.

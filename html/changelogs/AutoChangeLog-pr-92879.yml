@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscdel: "Merged ghosts and spirits into one species."
-  - balance: "Spirit's passthrough ability is now tied down 7 tiles from a tombstone, but is no longer affected by holy water nor does it make them drop their equipped gear."
-  - balance: "Ghosts can now be healed."
