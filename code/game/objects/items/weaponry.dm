@@ -416,6 +416,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 4
 	embed_type = /datum/embedding/throwing_star
 	armour_penetration = 40
+	mob_throw_hit_sound = 'sound/items/weapons/pierce.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
