@@ -423,8 +423,14 @@
 /datum/action/cooldown/borg_meson/Activate()
 	if(usr.sight & SEE_TURFS)
 		usr.clear_sight(SEE_TURFS)
+		owner.lighting_cutoff_red += 5
+		owner.lighting_cutoff_green += 15
+		owner.lighting_cutoff_blue += 5
 	else
 		usr.add_sight(SEE_TURFS)
+		owner.lighting_cutoff_red -= 5
+		owner.lighting_cutoff_green -= 15
+		owner.lighting_cutoff_blue -= 5
 
 /obj/item/robot_model/engineering/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/borg_meson/night_vision = new(loc)
@@ -770,7 +776,6 @@
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/datum/weakref/night_vision_ref
-	var/obj/item/shield_module/shield
 
 /obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/borg_meson/night_vision = new(loc)
@@ -984,15 +989,14 @@
 	name = "Toggle Thermal Night Vision"
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "meson"
-	var/list/lighting_color_cutoffs
 
 /datum/action/cooldown/borg_thermal/Activate()
 	if(usr.sight & SEE_TURFS)
 		usr.clear_sight(SEE_TURFS|SEE_MOBS)
-		usr.lighting_cutoff = 0
+		usr.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 	else
 		usr.add_sight(SEE_TURFS|SEE_MOBS)
-		usr.lighting_cutoff = 30
+		usr.lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	usr.sync_lighting_plane_cutoff()
 
 /obj/item/robot_model/saboteur/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)

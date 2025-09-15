@@ -556,4 +556,4 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(borg, "absorbed!")
 		borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
 		damage *= 0.5
-	. = ..()
+	return ..()

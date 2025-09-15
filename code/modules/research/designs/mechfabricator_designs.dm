@@ -1658,7 +1658,7 @@
 	build_path = /obj/item/borg/upgrade/rped
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2.5,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT*2.5
 	)
 	construction_time = 12 SECONDS
