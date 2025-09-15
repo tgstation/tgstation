@@ -171,7 +171,11 @@
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(new_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	if(new_minerals < 1)
 		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
-	var/list/available_mats = difflist(first = SSore_generation.ore_vent_minerals, second = mineral_breakdown, skiprep = 1)
+
+	var/list/available_mats = SSore_generation.ore_vent_minerals.Copy()
+	if(length(mineral_breakdown))
+		available_mats -= expand_weights(mineral_breakdown)
+		mineral_breakdown.Cut()
 	for(var/i in 1 to new_minerals)
 		if(!length(SSore_generation.ore_vent_minerals) && map_loading)
 			// We should prevent this from happening in SSore_generation, but if not then we crash here
@@ -179,18 +183,14 @@
 		var/datum/material/new_material
 		if(map_loading)
 			if(length(available_mats))
-				new_material = pick(GLOB.ore_vent_minerals_lavaland)
-				var/datum/material/surrogate_mat = pick(SSore_generation.ore_vent_minerals)
-				available_mats -= surrogate_mat
-				SSore_generation.ore_vent_minerals -= surrogate_mat
-			else
 				new_material = pick(available_mats)
 				available_mats -= new_material
-				SSore_generation.ore_vent_minerals -= new_material
+			else
+				new_material = pick(GLOB.ore_vent_minerals_lavaland)
+			SSore_generation.ore_vent_minerals -= new_material
 		else
 			new_material = pick(GLOB.ore_vent_minerals_lavaland)
 		mineral_breakdown[new_material] = rand(1, 4)
-
 
 /**
  * Returns the quantity of mineral sheets in each ore vent's boulder contents roll.
@@ -201,7 +201,7 @@
  * @params ore_floor The number of minerals already rolled. Used to scale the logarithmic function.
  */
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
-	return SHEET_MATERIAL_AMOUNT * round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1))
+	return SHEET_MATERIAL_AMOUNT * max(round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1)), 1)
 
 /**
  * This confirms that the user wants to start the wave defense event, and that they can start it.
