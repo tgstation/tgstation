@@ -598,6 +598,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/bambostaff/Initialize(mapload)
 	. = ..()
@@ -706,7 +707,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A handmade crutch. Also makes a decent bludgeon if you need it."
 	icon_state = "crutch_wood"
 	inhand_icon_state = "crutch_wood"
-	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/cane/white
 	name = "white cane"
@@ -833,6 +834,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 1
 	attack_verb_continuous = list("clubs", "bludgeons")
 	attack_verb_simple = list("club", "bludgeon")
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/chainofcommand/tailwhip
 	name = "liz o' nine tails"
@@ -841,6 +843,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "tailwhip"
 	item_flags = NONE
 	can_hasten = FALSE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1)
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
 	name = "cat o' nine tails"
@@ -859,12 +862,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("smacks", "whacks", "slams", "smashes")
 	attack_verb_simple = list("smack", "whack", "slam", "smash")
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	///The vehicle counterpart for the board
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasn't my fault
-	S.buckle_mob(user)
+	var/obj/vehicle/ridden/scooter/skateboard/skate = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasn't my fault
+	skate.buckle_mob(user)
 	qdel(src)
 
 /obj/item/melee/skateboard/improvised
@@ -944,7 +948,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	demolition_mod = 1.25
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_HUGE
 	/// Are we able to do a homerun?

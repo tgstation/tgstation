@@ -214,6 +214,7 @@
 	fire_sound = 'sound/items/xbow_lock.ogg'
 	can_be_sawn_off = FALSE
 	tac_reloads = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2)
 	var/draw_time = 3 SECONDS
 	SET_BASE_PIXEL(0, 0)
 
@@ -295,6 +296,7 @@
 	inhand_icon_state = "pipegun"
 	worn_icon_state = "pipegun"
 	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 6, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 
 	projectile_damage_multiplier = 1.35
@@ -329,6 +331,7 @@
 	icon_state = "pipepistol"
 	inhand_icon_state = "pipepistol"
 	worn_icon_state = "gun"
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.55)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	projectile_damage_multiplier = 0.50
 	spread = 15 //kinda inaccurate

@@ -262,9 +262,10 @@
 	if(ispath(recipe.result, /turf))
 		result = craft_turf.place_on_top(recipe.result)
 	else if(ispath(recipe.result, /obj/item/stack))
+		var/res_amount = recipe.result_amount || 1
 		//we don't merge the stack right away but try to put it in the hand of the crafter
-		result = new recipe.result(craft_turf, recipe.result_amount || 1, /*merge =*/FALSE)
-		set_materials = FALSE //stacks are bit too complex for it for now, but you're free to change that.
+		result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount )
+		set_materials = FALSE //We've already set the materials on init. Don't do it again
 	else
 		result = new recipe.result(craft_turf)
 		if(result.atom_storage && recipe.delete_contents)
@@ -282,7 +283,7 @@
 		qdel(holder)
 	result.on_craft_completion(stuff_to_use, recipe, crafter)
 	if(set_materials)
-		result.set_custom_materials(total_materials)
+		result.set_custom_materials(total_materials, 1)
 	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
 		if(component.loc != result || isturf(result))
 			qdel(component)

@@ -323,6 +323,7 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	display_panel = FALSE
 	settable_temperature_range = 50
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	///The beaker within the heater
 	var/obj/item/reagent_containers/beaker = null
 	/// How quickly it delivers heat to the reagents. In watts per joule of the thermal energy difference of the reagent from the temperature difference of the current and target temperatures.

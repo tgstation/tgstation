@@ -295,6 +295,7 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	grind_results = list(/datum/reagent/mercury = 5)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	///The reagents datum that this object is attached to, so we know where we are when it's added to something.
 	var/datum/reagents/attached_to_reagents
 
@@ -352,6 +353,7 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 
 #undef DETAILED_CHEM_OUTPUT
 #undef SHORTENED_CHEM_OUTPUT
