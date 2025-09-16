@@ -174,7 +174,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
-	. = FALSE
 	if(QDELETED(target))
 		return
 	if(!materials.mat_container || panel_open || !powered())
@@ -199,7 +198,6 @@
 
 		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
 			unload_mineral(smelted_ore) //if rejected unload
-		. = TRUE
 
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
