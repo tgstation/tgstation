@@ -299,6 +299,8 @@
 	return ..()
 
 /obj/machinery/button/proc/remove_assembly(mob/user)
+	if(device.assembly_flags & ASSEMBLY_SILENCE_BUTTON)
+		silent = FALSE
 	SEND_SIGNAL(device, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, src, user)
 	user.put_in_hands(device)
 	to_chat(user, span_notice("You remove \the [device] from the button frame."))
