@@ -409,3 +409,66 @@
       crossing disappears above itself.
   LemonInTheDark:
   - bugfix: Moving diagonally will no longer lead to stutter stepping (it's tickbound)
+2025-09-15:
+  JohnFulpWillard:
+  - rscadd: Added a new PDA theme and 3 secret ones you may find in maintenance.
+  Melbert:
+  - bugfix: Food-tray-to-oven-tray transfer works again
+  lelandkemble:
+  - bugfix: Filled worn trashbags are no longer spriteless
+  necromanceranne:
+  - balance: Shortbows and divine bows do more damage. The divine bow also launches
+      arrows at a higher velocity than normal bows.
+  - image: Flaming arrows now have proper sprites.
+  - balance: Flaming arrows now deal BURN damage. And also deal an appropriate amount
+      of damage for an arrow.
+  - rscadd: Ashen bows and arrows, made from sinew and bone. And leather for the bow.
+  - rscadd: Ashen arrows deal significantly more damage to mining mobs.
+  - balance: Arrow quivers are made from wood rather than cardboard.
+  - qol: Shortbows and ashen bows have the ability to be renamed.
+2025-09-16:
+  Ghommie:
+  - balance: Clocks, both mounted or tabletop, now improve room's beauty a little.
+  - balance: Buffed the torsion ratchet MOD module (from that bepis node with several
+      modsuit mod designs in it). You can also have more than one at a time.
+  - balance: The secondary action of the chain of command (the chained whip) also
+      boosts action speed and not just move speed.
+  - qol: The chain of command now has contextual tip for its secondary action, and
+      plays the whip attack animation when it's done.
+  - balance: Tree logs (not hydroponics towercaps) give more planks when cut. From
+      1 -> 10.
+  - bugfix: The megaphone MOD module also has a TTS filter when active, just like
+      the handheld version.
+  - qol: Accessories other than the first are now displayed on worn clothing.
+  - refactor: Underwater basketweaving refactored so it doesn't show in the crafting
+      menu unless you've the skillchip active.
+  LemonInTheDark:
+  - balance: AIs viewing the crew monitor will no longer be told ahead of time if
+      they cannot jump to a player.
+  Melbert:
+  - bugfix: Things that recharge "all cells on your person" now avoid recharging Ethereal
+      stomachs, and thus, will no longer cause spontaneous overcharge or weird chat
+      messages
+  - bugfix: Spades work on trays again
+  - qol: Poppy seeds now give better feedback when unable to harvest
+  - qol: Poppy seeds now have an immutable gene indicating they can be sliced for
+      sap
+  - rscdel: Lilys and Geraniums can no longer be tapped for sap
+  Melbert, Toriate:
+  - rscdel: Removed ninja's EMP burst
+  - rscadd: Replaced ninja's throwing stars with energy throwing stars, which EMP
+      on hit and embed, and can't be caught.
+  - sound: Throwing stars now make stab sounds instead of thud sounds
+  RusselNotSCP:
+  - rscadd: You can now make 15 new classic (and some less classic) cocktails. Includes
+      old standards like the Old Fashioned, Daiquiri, Ramos Gin Fizz, and more!
+  SyncIt21:
+  - bugfix: vending machines now randomly shock if electrified & can be untilted again
+      by hand
+  WebcomicArtist:
+  - balance: EMPs now drain cells better, starting at 3 emps to drain a basic cell,
+      up to 8 for bluespace.
+  lelandkemble:
+  - balance: Poly talks less now
+  - balance: The "Bolt Lights" wire is now the "Feedback" wire, and controls both
+      lights and sounds for the airlock.
