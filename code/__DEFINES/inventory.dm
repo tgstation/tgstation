@@ -86,7 +86,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-//Make sure to update check_obscured_slots() if you add more.
+//Make sure to update obscured_slots if you add more.
 #define HIDEGLOVES (1<<0)
 #define HIDESUITSTORAGE (1<<1)
 #define HIDEJUMPSUIT (1<<2) //these first four are only used in exterior suits
@@ -308,6 +308,24 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/pickaxe,
 	/obj/item/resonator,
 	/obj/item/spear,
+	/obj/item/gun/ballistic/bow/ashenbow,
+))
+
+// Allowed list for personal carry firearms and holsters
+
+GLOBAL_LIST_INIT(personal_carry_allowed, list(
+	/obj/item/storage/belt/holster,
+	/obj/item/gun/ballistic/automatic/pistol,
+	/obj/item/gun/ballistic/revolver,
+	/obj/item/gun/energy/disabler/smoothbore,
+))
+
+/// Allowed list for improvised firearms
+
+GLOBAL_LIST_INIT(improvised_firearm_allowed, list(
+	/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+	/obj/item/gun/energy/laser/musket,
+	/obj/item/gun/energy/disabler/smoothbore,
 ))
 
 /// List of all "tools" that can fit into belts or work from toolboxes

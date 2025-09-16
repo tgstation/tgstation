@@ -685,8 +685,52 @@
 	name = "Complex Harvest"
 	description = "Halves the maximum yield of the plant, and prevents it from benefiting from pollination's yield bonus."
 	icon = FA_ICON_SLASH
-	trait_flags = TRAIT_HALVES_YIELD|TRAIT_NO_POLLINATION
+	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD|TRAIT_NO_POLLINATION
 	mutability_flags = NONE
+
+/// Poppy's unique trait that allows slicing for sap
+/datum/plant_gene/trait/opium_production
+	name = "Sap Buds"
+	description = "Using a knife or other sharp object on the plant between ages 200 seconds to 400 seconds will yield a sap."
+	trait_flags = NONE
+	icon = FA_ICON_PILLS
+	/// Has parent plant been harvested for sap already?
+	var/extracted = FALSE
+
+/datum/plant_gene/trait/opium_production/on_plant_in_tray(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
+	RegisterSignal(tray, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_extract))
+	extracted = FALSE // just in case...
+
+/datum/plant_gene/trait/opium_production/on_unplanted_from_tray(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
+	UnregisterSignal(tray, COMSIG_ATOM_ITEM_INTERACTION)
+
+/// Redirect tray item interaction so we can have custom extracting behavior
+/datum/plant_gene/trait/opium_production/proc/try_extract(obj/machinery/hydroponics/source, mob/living/user, obj/item/tool, ...)
+	SIGNAL_HANDLER
+
+	if(!tool.sharpness || tool.tool_behaviour == TOOL_SHOVEL)
+		return NONE
+
+	if(source.age < 10)
+		to_chat(user, span_warning("The [LOWER_TEXT(source.myseed.plantname)] are too young to extract sap from!"))
+		return ITEM_INTERACT_FAILURE
+	if(source.age > 19)
+		to_chat(user, span_warning("The [LOWER_TEXT(source.myseed.plantname)] are too old to extract sap from!"))
+		return ITEM_INTERACT_FAILURE
+	if(extracted)
+		to_chat(user, span_warning("The [LOWER_TEXT(source.myseed.plantname)] have already been harvested for sap!"))
+		return ITEM_INTERACT_FAILURE
+
+	extracted = TRUE
+	new /obj/item/food/drug/opium/raw(source.drop_location(), source.myseed.potency)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
+	playsound(tool, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
+	user.visible_message(
+		span_notice("[user] carefully slices open a [source.myseed.species] pod, extracting a sap."),
+		span_notice("You carefully slice the [source.myseed.species]'s pod, collecting the fragrant, alluring sap."),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	return ITEM_INTERACT_SUCCESS
 
 /// Starthistle's essential invasive spreading
 /datum/plant_gene/trait/invasive/galaxythistle

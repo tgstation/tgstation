@@ -1,0 +1,6 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - qol: "Added new helpful modules, such as decal painter for engineering and chembag for medical borg."
+  - rscadd: "Added miner cyborg shield module. In lavaland (low) pressure, it protects you from 50% of incoming damage in exchange of your cell charge."
+  - rscadd: "Added BS syringe upgrade for medical cyborg."

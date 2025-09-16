@@ -3,6 +3,7 @@
 	name = "MOD module"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	icon_state = "module"
+	abstract_type = /obj/item/mod/module
 	/// If it can be removed
 	var/removable = TRUE
 	/// If it's passive, togglable, usable or active
@@ -105,32 +106,29 @@
 	return TRUE
 
 /// Called when the module is selected from the TGUI, radial or the action button
-/obj/item/mod/module/proc/on_select()
-	if(!mod.wearer)
-		if(ismob(mod.loc))
-			balloon_alert(mod.loc, "not equipped!")
+/obj/item/mod/module/proc/on_select(mob/activator)
+	if(!mod.wearer && !(allow_flags & MODULE_ALLOW_UNWORN)) //No wearer and cannot be used unworn
+		balloon_alert(activator, "not equipped!")
 		return
-	if(((!mod.active || mod.activating) && !(allow_flags & MODULE_ALLOW_INACTIVE)) || module_type == MODULE_PASSIVE)
-		if(mod.wearer)
-			balloon_alert(mod.wearer, "not active!")
+	if(((!mod.active || mod.activating) && !(allow_flags & (MODULE_ALLOW_INACTIVE | MODULE_ALLOW_UNWORN))) || module_type == MODULE_PASSIVE) // not active
+		balloon_alert(activator, "not active!")
 		return
-	if(!has_required_parts(mod.mod_parts, need_active = TRUE))
-		if(mod.wearer)
-			balloon_alert(mod.wearer, "required parts inactive!")
-			var/list/slot_strings = list()
-			for(var/slot in required_slots)
-				var/list/slot_list = parse_slot_flags(slot)
-				slot_strings += (length(slot_list) == 1 ? "" : "one of ") + english_list(slot_list, and_text = " or ")
-			to_chat(mod.wearer, span_warning("[src] requires these slots to be deployed: [english_list(slot_strings)]"))
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+	if(!has_required_parts(mod.mod_parts, need_active = TRUE) && !(allow_flags & MODULE_ALLOW_UNWORN)) // Doesn't have parts
+		balloon_alert(activator, "required parts inactive!")
+		var/list/slot_strings = list()
+		for(var/slot in required_slots)
+			var/list/slot_list = parse_slot_flags(slot)
+			slot_strings += (length(slot_list) == 1 ? "" : "one of ") + english_list(slot_list, and_text = " or ")
+		to_chat(activator, span_warning("[src] requires these slots to be deployed: [english_list(slot_strings)]"))
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
-			deactivate()
+			deactivate(activator)
 		else
-			activate()
+			activate(activator)
 	else
-		used()
+		used(activator)
 	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED, src)
 
 /// Apply a cooldown until this item can be used again
@@ -141,16 +139,16 @@
 	SEND_SIGNAL(src, COMSIG_MODULE_COOLDOWN_STARTED, applied_cooldown)
 
 /// Called when the module is activated
-/obj/item/mod/module/proc/activate()
+/obj/item/mod/module/proc/activate(mob/activator)
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
-		balloon_alert(mod.wearer, "on cooldown!")
+		balloon_alert(activator, "on cooldown!")
 		return FALSE
 	if(!mod.active || mod.activating || !mod.get_charge())
-		balloon_alert(mod.wearer, "unpowered!")
+		balloon_alert(activator, "unpowered!")
 		return FALSE
 	if(!(allow_flags & MODULE_ALLOW_PHASEOUT) && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
-		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
+		to_chat(activator, span_warning("You cannot activate this right now."))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE)
 		return FALSE
@@ -160,25 +158,25 @@
 		mod.selected_module = src
 		if(device)
 			if(mod.wearer.put_in_hands(device))
-				balloon_alert(mod.wearer, "[device] extended")
+				balloon_alert(activator, "[device] extended")
 				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey))
 			else
-				balloon_alert(mod.wearer, "can't extend [device]!")
+				balloon_alert(activator, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
 				return FALSE
 		else
 			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
 			update_signal(used_button)
-			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
+			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use") // As of now, only wearers can "use" mods
 	active = TRUE
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
-	on_activation()
+	on_activation(activator)
 	update_clothing_slots()
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/deactivate(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/proc/deactivate(mob/activator, display_message = TRUE, deleting = FALSE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
@@ -192,12 +190,15 @@
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
 	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED, mod.wearer)
-	on_deactivation(display_message = TRUE, deleting = FALSE)
+	on_deactivation(activator, display_message = TRUE, deleting = FALSE)
 	update_clothing_slots()
 	return TRUE
 
 /// Call to update all slots visually affected by this module
 /obj/item/mod/module/proc/update_clothing_slots()
+	if(!mod.wearer)
+		return
+
 	var/updated_slots = mod.slot_flags
 	if (mask_worn_overlay)
 		for (var/obj/item/part as anything in mod.get_parts())
@@ -208,24 +209,25 @@
 	mod.wearer.update_clothing(updated_slots)
 
 /// Called when the module is used
-/obj/item/mod/module/proc/used()
+/obj/item/mod/module/proc/used(mob/activator)
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
-		balloon_alert(mod.wearer, "on cooldown!")
+		balloon_alert(activator, "on cooldown!")
 		return FALSE
 	if(!check_power(use_energy_cost))
-		balloon_alert(mod.wearer, "not enough charge!")
+		balloon_alert(activator, "not enough charge!")
 		return FALSE
 	if(!(allow_flags & MODULE_ALLOW_PHASEOUT) && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
-		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
+		to_chat(activator, span_warning("You cannot activate this right now."))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE)
 		return FALSE
 	start_cooldown()
-	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_clothing), mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
+	if(mod.wearer)
+		addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_clothing), mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	update_clothing_slots()
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
-	on_use()
+	on_use(activator)
 	return TRUE
 
 /// Called when an activated module without a device is used
@@ -257,15 +259,15 @@
 	return TRUE
 
 /// Called from the module's activate()
-/obj/item/mod/module/proc/on_activation()
+/obj/item/mod/module/proc/on_activation(mob/activator)
 	return
 
 /// Called from the module's deactivate()
-/obj/item/mod/module/proc/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/proc/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	return
 
 /// Called from the module's used()
-/obj/item/mod/module/proc/on_use()
+/obj/item/mod/module/proc/on_use(mob/activator)
 	return
 
 /// Called on the MODsuit's process if it is an active module

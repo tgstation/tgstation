@@ -41,7 +41,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/wall_healer/free/directional/south{
 	use_power = 0
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -176,7 +176,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/west{
+/obj/machinery/wall_healer/free/directional/west{
 	use_power = 0
 	},
 /obj/machinery/light/directional/west,
@@ -222,7 +222,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Z" = (
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/white,
