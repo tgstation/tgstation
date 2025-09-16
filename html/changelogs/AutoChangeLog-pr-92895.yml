@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "fillets that you cut from fish will now inherit the name of the fish they were cut from (eg. catfish fillet, char fillet etc.)"
+  - bugfix: "Material prefixes won't appear twice when processing items with custom materials being processed with a tool."
