@@ -172,25 +172,25 @@
 	if(new_minerals < 1)
 		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
 
-	var/list/available_mats = SSore_generation.ore_vent_minerals.Copy()
-	if(length(mineral_breakdown))
-		available_mats -= expand_weights(mineral_breakdown)
-		mineral_breakdown.Cut()
-	for(var/i in 1 to new_minerals)
-		if(!length(SSore_generation.ore_vent_minerals) && map_loading)
-			// We should prevent this from happening in SSore_generation, but if not then we crash here
-			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
-		var/datum/material/new_material
-		if(map_loading)
-			if(length(available_mats))
-				new_material = pick(available_mats)
-				available_mats -= new_material
-			else
-				new_material = pick(GLOB.ore_vent_minerals_lavaland)
-			SSore_generation.ore_vent_minerals -= new_material
+	var/list/available_minerals = SSore_generation.ore_vent_minerals
+	if(map_loading && available_minerals.len < new_minerals)
+		CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
+
+	var/list/datum/material/picked_minerals = list()
+	for(var/_ in 1 to new_minerals)
+		if(length(mineral_breakdown))
+			picked_minerals += pick_weight(mineral_breakdown)
 		else
-			new_material = pick(GLOB.ore_vent_minerals_lavaland)
-		mineral_breakdown[new_material] = rand(1, 4)
+			picked_minerals += map_loading ? pick(available_minerals) : pick_weight(GLOB.ore_vent_minerals_lavaland)
+
+	mineral_breakdown.Cut()
+	for(var/datum/material/mineral as anything in picked_minerals)
+		if(map_loading)
+			if(mineral in available_minerals)
+				available_minerals -= mineral
+			else
+				continue
+		mineral_breakdown[mineral] = rand(1, 4)
 
 /**
  * Returns the quantity of mineral sheets in each ore vent's boulder contents roll.
@@ -472,8 +472,8 @@
 	unique_vent = TRUE
 	boulder_size = BOULDER_SIZE_SMALL
 	mineral_breakdown = list(
-		/datum/material/iron = 50,
-		/datum/material/glass = 50,
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
 	)
 
 /obj/structure/ore_vent/random
