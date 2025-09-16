@@ -163,7 +163,7 @@
 	for(var/obj/item/stack/ore/gathered_ore as anything in gathered_ores)
 		var/obj/item/smelted_ore = gathered_ore.on_orm_collection()
 		if(isnull(smelted_ore))
-			return ..()
+			continue
 
 		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
 			unload_mineral(smelted_ore)

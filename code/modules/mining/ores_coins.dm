@@ -49,7 +49,9 @@
  * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
  */
 /obj/item/stack/ore/proc/on_orm_collection()
-	return refined_type || src
+	var/refined_atom = new refined_type(drop_location(), amount)
+	qdel(src)
+	return refined_atom
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -121,11 +123,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 	AddComponent(/datum/component/storm_hating)
-
-/obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
-	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount)
-	qdel(src)
-	return glass
 
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
