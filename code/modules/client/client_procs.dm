@@ -281,7 +281,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return FALSE
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
-OVERRIDE_INTERNAL_VERB(/client, AllowUpload, filename, filelength)
+/client/AllowUpload(filename, filelength)
+	var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee)
+	ASYNC
+		. = _AllowUpload(filename, filelength)
+	store_cost.usage_at_end = TICK_USAGE; \
+	store_cost.finished_on = world.time; \
+	store_cost.enter_average(); \
+
+/client/proc/_AllowUpload(filename, filelength)
 	var/client_max_file_size = CONFIG_GET(number/upload_limit)
 	if (holder)
 		var/admin_max_file_size = CONFIG_GET(number/upload_limit_admin)
