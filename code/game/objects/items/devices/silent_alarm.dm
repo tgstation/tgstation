@@ -15,12 +15,9 @@
 	if(is_within_radio_jammer_range(src))
 		COOLDOWN_START(src, announce_cooldown, 1.5 MINUTES)
 		return
-	var/location = get_area_name(user)
-	if(!location)
-		location = get_area_name(src)
 	if(!COOLDOWN_FINISHED(src, announce_cooldown))
 		return
-	aas_config_announce(/datum/aas_config_entry/silent_alarm_trigger, list("LOCATION" = location), null, list(RADIO_CHANNEL_SECURITY), "Message")
+	aas_config_announce(/datum/aas_config_entry/silent_alarm_trigger, list("LOCATION" = get_area_name(src)), null, list(RADIO_CHANNEL_SECURITY), "Message")
 	COOLDOWN_START(src, announce_cooldown, 3 MINUTES)
 
 /datum/aas_config_entry/silent_alarm_trigger
