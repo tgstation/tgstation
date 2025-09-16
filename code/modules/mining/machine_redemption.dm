@@ -167,7 +167,6 @@
 
 		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
 			unload_mineral(smelted_ore)
-			return ITEM_INTERACT_FAILURE
 
 	return ITEM_INTERACT_SUCCESS
 
