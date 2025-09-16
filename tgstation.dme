@@ -2770,6 +2770,7 @@
 #include "code\game\objects\items\stacks\sheets\leather.dm"
 #include "code\game\objects\items\stacks\sheets\light.dm"
 #include "code\game\objects\items\stacks\sheets\mineral.dm"
+#include "code\game\objects\items\stacks\sheets\nuggets.dm"
 #include "code\game\objects\items\stacks\sheets\runed_metal.dm"
 #include "code\game\objects\items\stacks\sheets\sheet_types.dm"
 #include "code\game\objects\items\stacks\sheets\sheets.dm"

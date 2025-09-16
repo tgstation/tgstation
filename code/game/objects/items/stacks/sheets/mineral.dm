@@ -228,34 +228,6 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 /obj/item/stack/sheet/mineral/gold/fifty
 	amount = 50
 
-// A small denominational amount, in the same vein as glass shards.
-
-/obj/item/stack/gold_nugget
-	name = "gold nugget"
-	desc = "A tiny chunk of precious, shiny metal."
-	icon = 'icons/obj/ore.dmi'
-	icon_state = "gold_nugget"
-	singular_name = "gold nugget"
-	w_class = WEIGHT_CLASS_TINY
-	force = 2
-	throwforce = 3
-	max_amount = 30
-	mats_per_unit = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
-	grind_results = list(/datum/reagent/gold = 2)
-	armor_type = /datum/armor/item_shard
-	material_type = null
-
-/obj/item/stack/gold_nugget/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
-	. = ..()
-	update_appearance()
-
-/obj/item/stack/gold_nugget/update_icon_state()
-	. = ..()
-	var/amount = get_amount()
-	if(amount <= 5)
-		icon_state = "gold_nugget[amount > 1 ? "[amount]" : ""]"
-	else
-		icon_state = "gold_nuggets"
 
 /*
  * Silver
