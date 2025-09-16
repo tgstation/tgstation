@@ -2028,13 +2028,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		new_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
 		new_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
 
-	var/obj/item/bodypart/new_part
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
 		// update all our existing limbs
 		var/path = new_bodypart_overrides?[old_part.body_zone]
 		if(path)
+			var/obj/item/bodypart/new_part
 			new_part = new path()
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
@@ -2051,6 +2051,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			continue
 		var/path = new_bodypart_overrides[zone]
 		if(path)
+			var/obj/item/bodypart/new_part
 			new_part = new path()
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
