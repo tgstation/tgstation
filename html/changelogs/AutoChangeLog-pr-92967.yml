@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "The megaphone MOD module also has a TTS filter when active, just like the handheld version."

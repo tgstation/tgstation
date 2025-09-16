@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - refactor: "Underwater basketweaving refactored so it doesn't show in the crafting menu unless you've the skillchip active."

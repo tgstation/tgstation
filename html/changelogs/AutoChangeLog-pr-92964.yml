@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "The secondary action of the chain of command (the chained whip) also boosts action speed and not just move speed."
-  - qol: "The chain of command now has contextual tip for its secondary action, and plays the whip attack animation when it's done."

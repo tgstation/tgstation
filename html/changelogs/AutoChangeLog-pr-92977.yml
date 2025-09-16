@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - balance: "AIs viewing the crew monitor will no longer be told ahead of time if they cannot jump to a player."

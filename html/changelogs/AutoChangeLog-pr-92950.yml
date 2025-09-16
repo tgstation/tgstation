@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - balance: "The \"Bolt Lights\" wire is now the \"Feedback\" wire, and controls both lights and sounds for the airlock."
