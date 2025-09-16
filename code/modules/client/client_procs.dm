@@ -284,12 +284,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/AllowUpload(filename, filelength)
 	var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee)
 	ASYNC
-		. = _AllowUpload(filename, filelength)
-	store_cost.usage_at_end = TICK_USAGE; \
-	store_cost.finished_on = world.time; \
-	store_cost.enter_average(); \
+		. = __AllowUpload(filename, filelength)
+	store_cost.usage_at_end = TICK_USAGE
+	store_cost.finished_on = world.time
+	store_cost.enter_average()
 
-/client/proc/_AllowUpload(filename, filelength)
+/client/proc/__AllowUpload(filename, filelength)
 	var/client_max_file_size = CONFIG_GET(number/upload_limit)
 	if (holder)
 		var/admin_max_file_size = CONFIG_GET(number/upload_limit_admin)
