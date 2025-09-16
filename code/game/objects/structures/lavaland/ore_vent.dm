@@ -185,7 +185,7 @@
 			available_minerals -= mineral
 		else
 			mineral = mineral || pick_weight(GLOB.ore_vent_minerals_lavaland)
-		picked_minerals += mineral
+		picked_minerals |= mineral
 
 	mineral_breakdown.Cut()
 	for(var/datum/material/mineral as anything in picked_minerals)
