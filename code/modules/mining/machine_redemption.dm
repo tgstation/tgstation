@@ -152,6 +152,9 @@
 	signal.send_to_receivers()
 
 /obj/machinery/mineral/ore_redemption/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!materials.mat_container || panel_open || !powered())
+		return ..()
+
 	var/list/obj/item/stack/ore/gathered_ores = list()
 	if(istype(tool, /obj/item/stack/ore))
 		gathered_ores += tool
