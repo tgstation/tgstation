@@ -12231,6 +12231,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "cYD" = (
@@ -16026,6 +16027,7 @@
 /obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/trimline/neutral,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "dWf" = (
@@ -17539,6 +17541,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "esb" = (
@@ -18691,6 +18694,7 @@
 	},
 /obj/effect/landmark/start/head_of_personnel,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "eGw" = (
@@ -26834,6 +26838,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gBO" = (
@@ -29116,6 +29121,7 @@
 /obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/trimline/neutral,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "hfk" = (
@@ -31033,6 +31039,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "hHx" = (
@@ -31947,6 +31954,17 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"hTF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/button/silent_alarm/east,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "hTR" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -32142,6 +32160,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/aft)
 "hWW" = (
@@ -35282,6 +35301,7 @@
 /obj/structure/chair/office,
 /obj/effect/landmark/start/cargo_technician,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "iJv" = (
@@ -39728,6 +39748,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/large,
 /area/station/security/checkpoint/escape)
 "jMk" = (
@@ -40043,6 +40064,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "jPZ" = (
@@ -40480,6 +40502,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "jVS" = (
@@ -43247,6 +43270,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "kGI" = (
@@ -52732,6 +52756,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "mZK" = (
@@ -54790,6 +54815,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "nBJ" = (
@@ -61681,6 +61707,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/bartender,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "pqw" = (
@@ -64803,6 +64830,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "pZy" = (
@@ -74989,6 +75017,7 @@
 	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "szy" = (
@@ -79700,6 +79729,7 @@
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/librarian,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/carpet/green,
 /area/station/service/library)
 "tHN" = (
@@ -124529,7 +124559,7 @@ uxC
 bYK
 xLZ
 iXc
-pyV
+hTF
 pyV
 fTP
 sJZ

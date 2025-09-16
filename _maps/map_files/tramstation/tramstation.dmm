@@ -2510,6 +2510,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "akQ" = (
@@ -4076,6 +4077,7 @@
 "aCd" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "aCe" = (
@@ -18800,6 +18802,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "fxM" = (
@@ -20290,6 +20293,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "gbn" = (
@@ -28097,6 +28101,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "iYy" = (
@@ -31951,6 +31956,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
+"kiG" = (
+/obj/machinery/button/silent_alarm/south,
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "kiN" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -35485,6 +35494,7 @@
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/structure/chair/office,
 /obj/structure/cable,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "lpg" = (
@@ -36520,6 +36530,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "lEW" = (
@@ -40223,6 +40234,15 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mZm" = (
+/obj/effect/turf_decal/siding/thinplating,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/silent_alarm/south,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/station/service/kitchen)
 "mZt" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -43486,6 +43506,7 @@
 	req_access = list("kitchen")
 	},
 /obj/effect/landmark/start/head_of_personnel,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "ofT" = (
@@ -45619,6 +45640,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "pal" = (
@@ -52450,6 +52472,7 @@
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/chair/office,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "rre" = (
@@ -54298,6 +54321,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "saj" = (
@@ -58317,6 +58341,7 @@
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "tvT" = (
@@ -69785,6 +69810,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "xti" = (
@@ -71613,6 +71639,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/roboticist,
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "ydu" = (
@@ -169676,7 +169703,7 @@ fad
 llE
 vaq
 mdp
-mUL
+mZm
 fhg
 vJt
 mHc
@@ -169687,7 +169714,7 @@ tOB
 qid
 vnI
 jPK
-nKz
+kiG
 crT
 wcv
 mHc

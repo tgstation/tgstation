@@ -1902,6 +1902,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "aFJ" = (
@@ -14377,6 +14378,7 @@
 /obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron/white/smooth_edge,
 /area/station/medical/pharmacy)
 "faK" = (
@@ -18752,6 +18754,11 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
+"gAd" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/machinery/button/silent_alarm/east,
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "gAg" = (
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/firealarm/directional/west,
@@ -26928,6 +26935,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "jqY" = (
@@ -36730,6 +36738,10 @@
 /obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"mFF" = (
+/obj/machinery/button/silent_alarm/south,
+/turf/open/floor/iron/kitchen,
+/area/station/service/kitchen)
 "mFR" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
@@ -37325,6 +37337,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "mPW" = (
@@ -38965,6 +38978,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"nsQ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/machinery/button/silent_alarm/south,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "nsY" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -60717,6 +60741,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/white,
 /area/station/medical/exam_room)
 "uNt" = (
@@ -62448,6 +62473,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vwZ" = (
@@ -64263,6 +64289,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "wdI" = (
@@ -65743,6 +65770,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/science/lab)
 "wDe" = (
@@ -95154,7 +95182,7 @@ hRB
 cXe
 iwQ
 tlb
-tlb
+gAd
 tlb
 lwB
 tDf
@@ -97205,7 +97233,7 @@ cdk
 fTl
 hTZ
 bJo
-cdk
+mFF
 rPg
 fIY
 ruP
@@ -162741,7 +162769,7 @@ oqs
 gbS
 gbS
 oqs
-dAS
+nsQ
 tkR
 oxU
 xIN

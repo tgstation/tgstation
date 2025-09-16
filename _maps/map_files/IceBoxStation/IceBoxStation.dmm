@@ -3762,6 +3762,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -12021,6 +12022,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -13734,6 +13736,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/cargo_technician,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "dKP" = (
@@ -14737,6 +14740,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "eaq" = (
@@ -23530,6 +23534,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "gCQ" = (
@@ -25730,6 +25735,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "hkY" = (
@@ -31074,6 +31080,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"iOf" = (
+/obj/effect/landmark/start/botanist,
+/obj/structure/chair/office/light,
+/obj/machinery/button/silent_alarm/south,
+/turf/open/floor/glass,
+/area/station/service/hydroponics)
 "iOh" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -45558,6 +45570,7 @@
 "mWY" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/button/silent_alarm/south,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/auxiliary)
 "mXa" = (
@@ -47391,6 +47404,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "nwn" = (
@@ -47468,6 +47482,17 @@
 "nxM" = (
 /turf/closed/wall,
 /area/station/maintenance/department/medical/morgue)
+"nxO" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/effect/landmark/start/chemist,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/button/silent_alarm/east,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "nxP" = (
 /obj/structure/gulag_vent/ice,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -48354,6 +48379,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "nIu" = (
@@ -74031,6 +74057,11 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"uPV" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/button/silent_alarm/south,
+/turf/open/floor/iron,
+/area/station/service/bar)
 "uPY" = (
 /obj/item/stack/sheet/mineral/wood,
 /obj/effect/decal/cleanable/generic,
@@ -74992,6 +75023,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
+"vfQ" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/machinery/button/silent_alarm/west,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/service/kitchen)
 "vfS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -76830,6 +76868,7 @@
 	dir = 10
 	},
 /obj/effect/landmark/start/depsec/medical,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "vHm" = (
@@ -84135,6 +84174,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "xMT" = (
@@ -251083,7 +251123,7 @@ xgy
 xgy
 uYE
 rxJ
-lGN
+iOf
 ozU
 fuc
 lso
@@ -252890,7 +252930,7 @@ dEV
 hjA
 azw
 pxV
-oQD
+nxO
 vDh
 azw
 aXg
@@ -253388,7 +253428,7 @@ tdU
 fXw
 abZ
 qfz
-mNP
+uPV
 vNU
 tvt
 pQD
@@ -255192,7 +255232,7 @@ vzH
 uuO
 uuO
 uuO
-uuO
+vfQ
 uuO
 uuO
 guA
