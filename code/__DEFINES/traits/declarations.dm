@@ -416,6 +416,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
+#define TRAIT_SOOTHED_HEADACHE "soothed-headache"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// We place people into a fireman carry quicker than standard
 #define TRAIT_QUICK_CARRY "quick-carry"
@@ -619,7 +620,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLIND_TOOL "blind_tool"
 
 /// The person with this trait always appears as 'unknown'.
-#define TRAIT_UNKNOWN "unknown"
+#define TRAIT_UNKNOWN_APPEARANCE "unknown_appearance"
+/// The person with this trait always talks as 'unknown'
+#define TRAIT_UNKNOWN_VOICE "unknown_voice"
+/// Spoken voice always matches any worn ID. If no worn ID, defaults to actual name.
+#define TRAIT_VOICE_MATCHES_ID "voice_matches_id"
 
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
@@ -724,7 +729,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGICALLY_PHASED "magically_phased"
 
 //SKILLS
-#define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"

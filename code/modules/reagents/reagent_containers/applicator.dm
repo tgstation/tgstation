@@ -2,6 +2,7 @@
 /obj/item/reagent_containers/applicator
 	name = "generic reagent applicator"
 	desc = "Report this please."
+	abstract_type = /obj/item/reagent_containers/applicator
 	has_variable_transfer_amount = FALSE
 	grind_results = list()
 	/// Action string displayed in vis_message
