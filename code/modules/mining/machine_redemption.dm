@@ -151,17 +151,23 @@
 	))
 	signal.send_to_receivers()
 
-/obj/machinery/mineral/ore_redemption/base_item_interaction(mob/living/user, obj/item/stack/ore/gathered_ore, list/modifiers)
-	if(!istype(gathered_ore))
+/obj/machinery/mineral/ore_redemption/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/list/obj/item/stack/ore/gathered_ores = list()
+	if(istype(tool, /obj/item/stack/ore))
+		gathered_ores += tool
+	else if(tool.atom_storage && !tool.atom_storage.locked)
+		tool.atom_storage.remove_type(/obj/item/stack/ore, src, check_adjacent = TRUE, user = user, gathered_ores)
+	if(!gathered_ores.len)
 		return ..()
 
-	var/obj/item/smelted_ore = gathered_ore.on_orm_collection()
-	if(isnull(smelted_ore))
-		return ..()
+	for(var/obj/item/stack/ore/gathered_ore as anything in gathered_ores)
+		var/obj/item/smelted_ore = gathered_ore.on_orm_collection()
+		if(isnull(smelted_ore))
+			return ..()
 
-	if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
-		unload_mineral(smelted_ore)
-		return ITEM_INTERACT_FAILURE
+		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+			unload_mineral(smelted_ore)
+			return ITEM_INTERACT_FAILURE
 
 	return ITEM_INTERACT_SUCCESS
 
