@@ -21,13 +21,9 @@ SUBSYSTEM_DEF(ore_generation)
 	 */
 	var/list/ore_vent_minerals = list()
 
-	/// A tracker of how many of each ore vent size we have in the game. Useful for tracking purposes.
-
 /datum/controller/subsystem/ore_generation/Initialize()
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
-		if(length(ore_vent_minerals) <= 0) //But break early if there's none left.
-			break
 		if(vent.unique_vent)
 			continue //Ya'll already got your minerals.
 		vent.generate_mineral_breakdown(map_loading = TRUE)

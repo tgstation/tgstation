@@ -3,6 +3,7 @@
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
 #define MINERALS_PER_BOULDER 3
+#define MAX_MINERAL_PICK_ATTEMPTS 10
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -172,21 +173,33 @@
 	if(new_minerals < 1)
 		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
 
+	//should have enough minerals for the vent during round start
 	var/list/available_minerals = SSore_generation.ore_vent_minerals
 	if(map_loading && available_minerals.len < new_minerals)
 		CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
 
 	var/list/datum/material/picked_minerals = list()
 	for(var/_ in 1 to new_minerals)
-		var/datum/material/mineral = length(mineral_breakdown) ? pick_weight(mineral_breakdown) : null
+		var/datum/material/mineral
+
+		//pick an unique mineral but try only MAX_MINERAL_PICK_ATTEMPTS times before giving up else we could be stuck here forever
+		var/attempts = 0
+		do
+			mineral = length(mineral_breakdown) ? pick_weight(mineral_breakdown) : null
+			if(map_loading)
+				if(!mineral || !available_minerals.Find(mineral))
+					mineral = pick(available_minerals)
+			else
+				mineral = mineral || pick_weight(GLOB.ore_vent_minerals_lavaland)
+			attempts += 1
+		while(attempts < MAX_MINERAL_PICK_ATTEMPTS && picked_minerals.Find(mineral))
+
+		//register the picked mineral, removing it from the round start available minerals if nessassary
 		if(map_loading)
-			if(!mineral || !available_minerals.Find(mineral))
-				mineral = pick(available_minerals)
 			available_minerals -= mineral
-		else
-			mineral = mineral || pick_weight(GLOB.ore_vent_minerals_lavaland)
 		picked_minerals |= mineral
 
+	//assign random weights to picked minerals
 	mineral_breakdown.Cut()
 	for(var/datum/material/mineral as anything in picked_minerals)
 		mineral_breakdown[mineral] = rand(1, 4)
@@ -613,3 +626,4 @@
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
 #undef MINERALS_PER_BOULDER
+#undef MAX_MINERAL_PICK_ATTEMPTS
