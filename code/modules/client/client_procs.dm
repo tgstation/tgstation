@@ -283,8 +283,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee)
-	ASYNC
-		. = __AllowUpload(filename, filelength)
+	. = __AllowUpload(filename, filelength)
 	store_cost.usage_at_end = TICK_USAGE
 	store_cost.finished_on = world.time
 	store_cost.enter_average()
