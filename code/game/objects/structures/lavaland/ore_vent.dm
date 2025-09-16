@@ -178,15 +178,13 @@
 
 	var/list/datum/material/picked_minerals = list()
 	for(var/_ in 1 to new_minerals)
-		var/datum/material/mineral
+		var/datum/material/mineral = length(mineral_breakdown) ? pick_weight(mineral_breakdown) : null
 		if(map_loading)
-			if(length(mineral_breakdown))
-				mineral = pick_weight(mineral_breakdown)
 			if(!mineral || !available_minerals.Find(mineral))
 				mineral = pick(available_minerals)
 			available_minerals -= mineral
 		else
-			mineral = length(mineral_breakdown) ? pick_weight(mineral_breakdown) : pick_weight(GLOB.ore_vent_minerals_lavaland)
+			mineral = mineral || pick_weight(GLOB.ore_vent_minerals_lavaland)
 		picked_minerals += mineral
 
 	mineral_breakdown.Cut()
