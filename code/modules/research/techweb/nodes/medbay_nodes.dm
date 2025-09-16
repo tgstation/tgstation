@@ -49,6 +49,8 @@
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
 		"med_spray_bottle",
+		"inhaler",
+		"inhaler_canister",
 		"medigel",
 		"medipen_refiller",
 		"soda_dispenser",

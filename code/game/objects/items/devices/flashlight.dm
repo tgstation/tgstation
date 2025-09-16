@@ -1064,6 +1064,7 @@
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	spawn_blacklisted = TRUE
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
@@ -1077,3 +1078,127 @@
 #undef SUCCESS
 #undef NO_FUEL
 #undef ALREADY_LIT
+
+#define SLOWDOWN_ON 1
+
+/obj/item/flashlight/lamp/space_bubble
+	name = "space furnace"
+	desc = "A heavy furnace capable of forming a temporary bubble that holds in breathable air."
+	icon_state = "space_lamp"
+	worn_icon_state = "space_lamp"
+	inhand_icon_state = "space_lamp"
+	w_class = WEIGHT_CLASS_HUGE
+	throw_range = 2
+	slot_flags = ITEM_SLOT_BACK
+	item_flags = SLOWS_WHILE_IN_HAND
+	heat = 2500
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
+	)
+	light_color = LIGHT_COLOR_ORANGE
+	start_on = FALSE
+	sound_on = 'sound/effects/fire_puff.ogg'
+	sound_off = 'sound/items/weapons/gun/bow/bow_fire.ogg'
+
+	///The timer we track until the bubble deletes itself.
+	var/bubble_timer
+	///The amount of time that the bubble will survive for once turned on. This can't be changed normally but is a var for admins.
+	var/bubble_duration = (15 MINUTES)
+	///Boolean on whether or not a pyroclastic anomaly core has been inserted, allowing the item to be used.
+	var/installed_pyro_core = FALSE
+	///The proximity monitor & visual bubble that grants space protection to people nearby, while active.
+	var/datum/proximity_monitor/advanced/bubble/space_protection/space_bubble
+
+/obj/item/flashlight/lamp/space_bubble/Initialize(mapload)
+	AddElement(/datum/element/update_icon_updates_onmob)
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+	update_appearance(UPDATE_DESC)
+
+/obj/item/flashlight/lamp/space_bubble/Destroy(force)
+	if(space_bubble)
+		QDEL_NULL(space_bubble)
+	return ..()
+
+/obj/item/flashlight/lamp/space_bubble/init_slapcrafting()
+	return
+
+/obj/item/flashlight/lamp/space_bubble/update_icon_state()
+	. = ..()
+	if(light_on)
+		worn_icon_state = "[initial(worn_icon_state)]-on"
+	else
+		worn_icon_state = initial(worn_icon_state)
+
+/obj/item/flashlight/lamp/space_bubble/update_desc(updates)
+	. = ..()
+	if(installed_pyro_core)
+		desc = initial(desc)
+		return
+	desc = initial(desc) + " Requires a pyroclastic anomaly core to function."
+
+/obj/item/flashlight/lamp/space_bubble/get_temperature()
+	return light_on * heat
+
+/obj/item/flashlight/lamp/space_bubble/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(light_on && istype(tool, /obj/item/cigarette))
+		var/obj/item/cigarette/cig = tool
+		if(cig.lit)
+			return NONE
+		cig.light(flavor_text = "[user] lights up \the [cig] using the burning coming out of the [src]. Damn.")
+		return ITEM_INTERACT_SUCCESS
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro) || installed_pyro_core)
+		return NONE
+	user.balloon_alert(user, "core inserted")
+	qdel(tool)
+	installed_pyro_core = TRUE
+	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
+	update_appearance(UPDATE_DESC)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/flashlight/lamp/space_bubble/toggle_light(mob/user)
+	if(!installed_pyro_core)
+		user.balloon_alert(user, "core missing!")
+		return FALSE
+	var/datum/gas_mixture/environment = loc?.return_air()
+	var/affected_pressure = environment.return_pressure()
+	if(!light_on && (affected_pressure < ONE_ATMOSPHERE))
+		user.balloon_alert(user, "no pressure!")
+		return FALSE
+	. = ..()
+	if(light_on)
+		if(istype(space_bubble))
+			QDEL_NULL(space_bubble)
+		bubble_timer = addtimer(CALLBACK(src, PROC_REF(start_bubble_close), "dies down..."), bubble_duration, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+		space_bubble = new(src, 4, FALSE, src)
+		slowdown = SLOWDOWN_ON
+		drag_slowdown = SLOWDOWN_ON
+		user.update_equipment_speed_mods()
+		return
+	close_bubble(user)
+
+///Uses an arg for special flavortext to be balloon alerted to everyone, then gives an extra 5 seconds before killing the bubble.
+/obj/item/flashlight/lamp/space_bubble/proc/start_bubble_close(special_flavortext)
+	if(special_flavortext)
+		balloon_alert_to_viewers(special_flavortext)
+	var/mob/living/potential_mob = recursive_loc_check(src, /mob/living) || null
+	addtimer(CALLBACK(src, PROC_REF(toggle_light), potential_mob), 5 SECONDS, TIMER_UNIQUE|TIMER_DELETE_ME)
+
+///Closes the bubble and cleans up after itself. Optional 'user' arg for the mob turning us off.
+/obj/item/flashlight/lamp/space_bubble/proc/close_bubble(mob/user)
+	QDEL_NULL(space_bubble)
+	if(bubble_timer)
+		deltimer(bubble_timer)
+	slowdown = initial(slowdown)
+	drag_slowdown = initial(drag_slowdown)
+	if(user)
+		user.update_equipment_speed_mods()
+
+#undef SLOWDOWN_ON
+
+///Pre-core activated one for admin spawning.
+/obj/item/flashlight/lamp/space_bubble/preactivated
+	installed_pyro_core = TRUE

@@ -6,6 +6,7 @@
 	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "seed" // Unknown plant seed - these shouldn't exist in-game.
 	worn_icon_state = "seed"
+	abstract_type = /obj/item/seeds
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	/// Name of plant when planted.
@@ -452,9 +453,11 @@
 
 /**
  * Override for seeds with unique text for their analyzer. (No newlines at the start or end of unique text!)
- * Returns null if no unique text, or a string of text if there is.
+ * Returns null if no unique data
+ * Return an assoc list (label = text) to add a new line to the analyzer
+ * Return an assoc list (label = list(text = tooltip, text = tooltip)) to add a new collapsible section to the analyzer
  */
-/obj/item/seeds/proc/get_unique_analyzer_text()
+/obj/item/seeds/proc/get_unique_analyzer_data()
 	return null
 
 /**
@@ -656,3 +659,11 @@
 			plant_overlay.icon_state = "[icon_grow][t_growthstate]"
 	plant_overlay.pixel_z = plant_icon_offset
 	return plant_overlay
+
+/// Called when the seed is set in a tray
+/obj/item/seeds/proc/on_planted(obj/machinery/hydroponics/parent)
+	return
+
+/// Called when the seed is removed from a tray - possibly from being harvested, possibly from being uprooted
+/obj/item/seeds/proc/on_unplanted(obj/machinery/hydroponics/parent)
+	return
