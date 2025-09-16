@@ -156,7 +156,7 @@
 	if(istype(tool, /obj/item/stack/ore))
 		gathered_ores += tool
 	else if(tool.atom_storage && !tool.atom_storage.locked)
-		tool.atom_storage.remove_type(/obj/item/stack/ore, src, check_adjacent = TRUE, user = user, gathered_ores)
+		tool.atom_storage.remove_type(/obj/item/stack/ore, src, check_adjacent = TRUE, user = user, inserted = gathered_ores)
 	if(!gathered_ores.len)
 		return ..()
 
