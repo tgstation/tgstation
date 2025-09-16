@@ -49,9 +49,7 @@
  * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
  */
 /obj/item/stack/ore/proc/on_orm_collection()
-	if(isnull(refined_type))
-		return null
-	return src
+	return refined_type || src
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -161,7 +159,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 	mine_experience = 0
-	mats_per_unit = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/ore/glass/basalt
 
 /obj/item/stack/ore/plasma

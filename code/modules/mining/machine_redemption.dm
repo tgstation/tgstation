@@ -151,7 +151,22 @@
 	))
 	signal.send_to_receivers()
 
+/obj/machinery/mineral/ore_redemption/base_item_interaction(mob/living/user, obj/item/stack/ore/gathered_ore, list/modifiers)
+	if(!istype(gathered_ore))
+		return ..()
+
+	var/obj/item/smelted_ore = gathered_ore.on_orm_collection()
+	if(isnull(smelted_ore))
+		return ..()
+
+	if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		unload_mineral(smelted_ore)
+		return ITEM_INTERACT_FAILURE
+
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
+	. = FALSE
 	if(QDELETED(target))
 		return
 	if(!materials.mat_container || panel_open || !powered())
@@ -170,13 +185,13 @@
 
 	//smelting the ore
 	for(var/obj/item/stack/ore/gathered_ore as anything in ore_list)
-		var/obj/item/smelted_ore = gathered_ore.on_orm_collection(src)
+		var/obj/item/smelted_ore = gathered_ore.on_orm_collection()
 		if(isnull(smelted_ore))
 			continue
 
 		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
 			unload_mineral(smelted_ore) //if rejected unload
-
+		. = TRUE
 
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
