@@ -46,6 +46,7 @@
 /obj/machinery/power/shuttle_engine/on_construction(mob/user)
 	. = ..()
 	if(anchored)
+		engine_state = ENGINE_WRENCHED
 		connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
 		if(!connected_ship_ref?.resolve())
 			AddElement(/datum/element/connect_loc, connections)
