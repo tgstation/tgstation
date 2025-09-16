@@ -130,6 +130,6 @@
 	catastropic_dismemberment = TRUE
 	armour_penetration = 50
 	ignore_range_hit_prone_targets = TRUE
-	mecha_damage = 2 // this is a damage multiplier var
-	object_damage = 2 // same normal damage
+	var/mecha_damage = 2 // this is a damage multiplier var
+	var/object_damage = 2 // same normal damage
 	paralyze = 100 // same as sniper rifle
