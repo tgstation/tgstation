@@ -13,7 +13,7 @@
 
 /obj/item/assembly/silent_alarm/activate(mob/user)
 	if(is_within_radio_jammer_range(src))
-		COOLDOWN_START(src, announce_cooldown, 30 SECONDS)
+		COOLDOWN_START(src, announce_cooldown, 1.5 MINUTES)
 		return
 	var/location = get_area_name(user)
 	if(!location)
@@ -21,7 +21,7 @@
 	if(!COOLDOWN_FINISHED(src, announce_cooldown))
 		return
 	aas_config_announce(/datum/aas_config_entry/silent_alarm_trigger, list("LOCATION" = location), null, list(RADIO_CHANNEL_SECURITY), "Message")
-	COOLDOWN_START(src, announce_cooldown, 1 MINUTES)
+	COOLDOWN_START(src, announce_cooldown, 3 MINUTES)
 
 /datum/aas_config_entry/silent_alarm_trigger
 	name = "RC Alert: Emergency"
