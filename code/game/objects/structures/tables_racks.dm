@@ -293,20 +293,17 @@
 	if(!istype(user) || !user.can_interact_with(src))
 		return
 
+	if(!can_flip)
+		return
+
 	var/interaction_key = "table_flip_[REF(src)]"
 	if(!is_flipped)
-		/*if(silent_alarm_rigged && silent_alarm_direction == get_dir(user,src))
-			trip_silent_alarm(get_area(src), user)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN*/
-		if(!can_flip)
-			return
 		if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
 			user.balloon_alert_to_viewers("flipping table...")
 		if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
 			flip_table(get_dir(user, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!can_flip)
-		return
+
 	if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
 		user.balloon_alert_to_viewers("flipping table upright...")
 	if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
