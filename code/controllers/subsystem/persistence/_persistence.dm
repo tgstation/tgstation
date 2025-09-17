@@ -302,19 +302,21 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/get_save_flags()
 	var/flags = NONE
 
-	if(CONFIG_GET(flag/persistent_save_objects))
+	var/list/persistent_save_flags = CONFIG_GET(keyed_list/persistent_save_flags)
+
+	if(persistent_save_flags["objects"])
 		flags |= SAVE_OBJECTS
-	if(CONFIG_GET(flag/persistent_save_mobs))
+	if(persistent_save_flags["mobs"])
 		flags |= SAVE_MOBS
-	if(CONFIG_GET(flag/persistent_save_turfs))
+	if(persistent_save_flags["turfs"])
 		flags |= SAVE_TURFS
-	if(CONFIG_GET(flag/persistent_save_areas))
+	if(persistent_save_flags["areas"])
 		flags |= SAVE_AREAS
-	if(CONFIG_GET(flag/persistent_save_space))
+	if(persistent_save_flags["space"])
 		flags |= SAVE_SPACE
-	if(CONFIG_GET(flag/persistent_save_object_properties))
+	if(persistent_save_flags["object_properties"])
 		flags |= SAVE_OBJECT_PROPERTIES
-	if(CONFIG_GET(flag/persistent_save_atmos))
+	if(persistent_save_flags["atmos"])
 		flags |= SAVE_ATMOS
 
 	return flags
