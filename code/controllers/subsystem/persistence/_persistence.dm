@@ -1,7 +1,5 @@
 #define FILE_RECENT_MAPS "data/RecentMaps.json"
 #define KEEP_ROUNDS_MAP 3
-#define OLDEST GLOBAL_PROC_REF(cmp_text_asc)
-#define NEWEST GLOBAL_PROC_REF(cmp_text_dsc)
 #define INFINITE_AUTOSAVES -1
 
 SUBSYSTEM_DEF(persistence)
@@ -185,7 +183,8 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(number/persistent_max_autosaves) == INFINITE_AUTOSAVES)
 		return
 
-	var/list/all_saves = get_all_saves(OLDEST)
+	// organize by oldest saves first
+	var/list/all_saves = get_all_saves(GLOBAL_PROC_REF(cmp_text_asc))
 	if(!all_saves.len)
 		return // no saves exist yet
 
@@ -202,7 +201,8 @@ SUBSYSTEM_DEF(persistence)
 
 /// Returns the directory path to the last save if it exists
 /datum/controller/subsystem/persistence/proc/get_last_save()
-	var/list/all_saves = get_all_saves(NEWEST)
+	// organize by newest saves first
+	var/list/all_saves = get_all_saves(GLOBAL_PROC_REF(cmp_text_dsc))
 	if(!all_saves.len)
 		return // no saves exist yet
 
@@ -402,6 +402,4 @@ ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Saves all z-levels that a
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
-#undef OLDEST
-#undef NEWEST
 #undef INFINITE_AUTOSAVES
