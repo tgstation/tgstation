@@ -1,0 +1,4 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - code_imp: "Caches individual gases for gas reactions."
