@@ -1426,7 +1426,7 @@
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/capacitor = 2,
 		/datum/stock_part/micro_laser = 1,
-		/obj/item/stack/sheet/mineral/bluespace_crystal = 2)
+		/obj/item/stack/sheet/bluespace_crystal = 2)
 	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/fishing_portal_generator/emagged
