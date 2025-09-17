@@ -17,6 +17,34 @@
 	///The name of this option shown in the radial menu on the fishing portal generator
 	var/radial_name = "Aquarium"
 
+/// Portal sources have a cooldown system to prevent spam fishing
+/datum/fish_source/portal/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	. = ..()
+	if(.)
+		return .
+
+	if(istype(parent, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = parent
+
+		// Check if portal is anchored
+		if(!portal.anchored)
+			return "The portal must be anchored to maintain dimensional stability for fishing."
+
+		// Check cooldown
+		var/time_since_last = world.time - portal.last_fishing_time
+		if(time_since_last < portal.portal_cooldown_time)
+			var/remaining_cooldown = (portal.portal_cooldown_time - time_since_last) / 10
+			return "The portal is recharging, [remaining_cooldown] seconds remaining."
+
+	return null
+
+/// Update the last fishing time when starting to fish
+/datum/fish_source/portal/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = parent
+		portal.last_fishing_time = world.time
+
 /datum/fish_source/portal/beach
 	fish_table = list(
 		FISHING_DUD = 7,
@@ -96,17 +124,17 @@
 /datum/fish_source/portal/hyperspace
 	background = "background_space"
 	fish_table = list(
-		FISHING_DUD = 5,
+		FISHING_DUD = 10, // Increased from 5 to 10
 		/obj/item/fish/starfish = 6,
 		/obj/item/fish/baby_carp = 6,
-		/obj/item/stack/ore/bluespace_crystal = 2,
-		/mob/living/basic/carp = 2,
+		/obj/item/stack/ore/bluespace_crystal = 1, // Reduced from 2 to 1
+		/mob/living/basic/carp = 1, // Reduced from 2 to 1
 	)
 	fish_counts = list(
-		/obj/item/stack/ore/bluespace_crystal = 10,
+		/obj/item/stack/ore/bluespace_crystal = 5, // Reduced from 10 to 5
 	)
 	catalog_description = "Hyperspace dimension (Fishing portal generator)"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 35 // Increased from 20 to 35
 	radial_name = "Hyperspace"
 	overlay_state = "portal_hyperspace"
 	radial_state = "space_rocket"
@@ -116,24 +144,24 @@
 /datum/fish_source/portal/syndicate
 	background = "background_lavaland"
 	fish_table = list(
-		FISHING_DUD = 5,
+		FISHING_DUD = 10, // Increased from 5 to 10
 		/obj/item/fish/donkfish = 5,
-		/obj/item/fish/emulsijack = 5,
-		/obj/item/fish/jumpercable = 5,
-		/obj/item/fish/chainsawfish = 2,
-		/obj/item/fish/pike/armored = 2,
+		/obj/item/fish/emulsijack = 3, // Reduced from 5 to 3
+		/obj/item/fish/jumpercable = 3, // Reduced from 5 to 3
+		/obj/item/fish/chainsawfish = 1, // Reduced from 2 to 1
+		/obj/item/fish/pike/armored = 1, // Reduced from 2 to 1
 	)
 	fish_counts = list(
 		/obj/item/fish/chainsawfish = 1,
 		/obj/item/fish/pike/armored = 1,
 	)
 	fish_count_regen = list(
-		/obj/item/fish/chainsawfish = 7 MINUTES,
-		/obj/item/fish/pike/armored = 7 MINUTES,
+		/obj/item/fish/chainsawfish = 15 MINUTES, // Increased from 7 to 15 minutes
+		/obj/item/fish/pike/armored = 15 MINUTES, // Increased from 7 to 15 minutes
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 40 // Increased from 25 to 40
 	overlay_state = "portal_syndicate"
 	radial_state = "syndi_snake"
 	associated_safe_turfs = list(/turf/open/water)

@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner, /obj/item/fishing_rod/tech, /obj/item/fish_analyzer)
 	traits = EXPERIMENT_TRAIT_TYPECACHE
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS )
-	required_atoms = list(/obj/item/fish = 3)
+	required_atoms = list(/obj/item/fish = 5)
 	scan_message = "Scan different species of fish"
 	///Further experiments added to the techweb when this one is completed.
 	var/list/next_experiments = list(/datum/experiment/scanning/fish/second)
@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	name = "Fish Scanning Experiment 2"
 	description = "An experiment requiring more fish species to be scanned to unlock the 'Ocean' setting for the fishing portal."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS )
-	required_atoms = list(/obj/item/fish = 7)
+	required_atoms = list(/obj/item/fish = 10)
 	next_experiments = list(/datum/experiment/scanning/fish/third)
 	fish_source_reward = /datum/fish_source/portal/ocean
 
@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	name = "Fish Scanning Experiment 3"
 	description = "An experiment requiring even more fish species to be scanned to unlock the 'Chasm' setting for the fishing portal."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS )
-	required_atoms = list(/obj/item/fish = 11)
+	required_atoms = list(/obj/item/fish = 15)
 	next_experiments = list(/datum/experiment/scanning/fish/fourth, /datum/experiment/scanning/fish/holographic)
 	fish_source_reward = /datum/fish_source/portal/chasm
 
@@ -111,6 +111,6 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	name = "Fish Scanning Experiment 4"
 	description = "An experiment requiring lotsa fish species to unlock the 'Hyperspace' setting for the fishing portal."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS )
-	required_atoms = list(/obj/item/fish = 17)
+	required_atoms = list(/obj/item/fish = 25)
 	next_experiments = null
 	fish_source_reward = /datum/fish_source/portal/hyperspace

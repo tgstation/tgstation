@@ -3,8 +3,8 @@
 	desc = "Fishing anywhere, anytime... anyway what was I talking about?"
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "portal"
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	anchored = FALSE
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
+	anchored = TRUE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/fishing_portal_generator
 
@@ -20,6 +20,10 @@
 	var/all_destinations = FALSE
 	/// If the current active fishing spot is from multitool linkage, this value is the atom it would originally belong to.
 	var/atom/current_linked_atom
+	/// Cooldown timer for fishing portal usage to prevent spam
+	var/portal_cooldown_time = 30 SECONDS
+	/// When the portal was last used for fishing
+	var/last_fishing_time = 0
 
 /obj/machinery/fishing_portal_generator/Initialize(mapload)
 	. = ..()
