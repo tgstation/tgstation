@@ -10,7 +10,7 @@
 	icon_state = "control"
 	COOLDOWN_DECLARE(announce_cooldown)
 	assembly_flags = ASSEMBLY_SILENCE_BUTTON | ASSEMBLY_NO_DUPLICATES
-	var/broadcast_channels = list(RADIO_CHANNEL_SECURITY)
+	var/list/broadcast_channels = list(RADIO_CHANNEL_SECURITY)
 
 /obj/item/assembly/silent_alarm/activate(mob/user)
 	if(is_within_radio_jammer_range(src))
