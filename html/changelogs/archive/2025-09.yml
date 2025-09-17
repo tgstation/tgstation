@@ -472,3 +472,17 @@
   - balance: Poly talks less now
   - balance: The "Bolt Lights" wire is now the "Feedback" wire, and controls both
       lights and sounds for the airlock.
+2025-09-17:
+  Aliceee2ch:
+  - qol: Added new helpful modules, such as decal painter for engineering and chembag
+      for medical borg.
+  - rscadd: Added miner cyborg shield module. In lavaland (low) pressure, it protects
+      you from 50% of incoming damage in exchange of your cell charge.
+  - rscadd: Added BS syringe upgrade for medical cyborg.
+  Ghommie:
+  - qol: fillets that you cut from fish will now inherit the name of the fish they
+      were cut from (eg. catfish fillet, char fillet etc.)
+  - bugfix: Material prefixes won't appear twice when processing items with custom
+      materials being processed with a tool.
+  SyncIt21:
+  - bugfix: ORM's smelt ores correctly when inserted by hand/bag

@@ -49,9 +49,7 @@
  * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
  */
 /obj/item/stack/ore/proc/on_orm_collection()
-	if(isnull(refined_type))
-		return null
-	return src
+	return isnull(refined_type) ? null : src
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	..()
