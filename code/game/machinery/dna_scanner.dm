@@ -167,18 +167,6 @@
 	var/list/genetic_makeup_buffer = list()
 	var/list/mutations = list()
 	var/max_mutations = 6
-	var/read_only = FALSE //Well,it's still a floppy disk
-	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
-	unique_reskin = list(
-			"Red" = "datadisk0",
-			"Dark Blue" = "datadisk1",
-			"Yellow" = "datadisk2",
-			"Black" = "datadisk3",
-			"Green" = "datadisk4",
-			"Purple" = "datadisk5",
-			"Grey" = "datadisk6",
-			"Light Blue" = "datadisk7",
-	)
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
@@ -200,11 +188,3 @@
 	for(var/datum/mutation/mut as anything in subtypesof(/datum/mutation))
 		var/datum/mutation/ref = GET_INITIALIZED_MUTATION(mut)
 		mutations += ref
-
-/obj/item/disk/data/attack_self(mob/user)
-	read_only = !read_only
-	to_chat(user, span_notice("You flip the write-protect tab to [read_only ? "protected" : "unprotected"]."))
-
-/obj/item/disk/data/examine(mob/user)
-	. = ..()
-	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."

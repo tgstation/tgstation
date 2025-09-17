@@ -2490,6 +2490,7 @@
 #include "code\game\objects\items\fireaxe.dm"
 #include "code\game\objects\items\flamethrower.dm"
 #include "code\game\objects\items\flatpacks.dm"
+#include "code\game\objects\items\floppy_disk.dm"
 #include "code\game\objects\items\forensicsspoofer.dm"
 #include "code\game\objects\items\frog_statue.dm"
 #include "code\game\objects\items\gift.dm"
