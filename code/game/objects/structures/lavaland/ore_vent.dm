@@ -202,7 +202,7 @@
 	//assign random weights to picked minerals
 	mineral_breakdown.Cut()
 	for(var/datum/material/mineral as anything in picked_minerals)
-		mineral_breakdown[mineral] = rand(1, 4)
+		mineral_breakdown[mineral] = rand(1, new_minerals)
 
 /**
  * Returns the quantity of mineral sheets in each ore vent's boulder contents roll.
