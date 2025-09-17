@@ -168,10 +168,12 @@
 	var/list/possible_points = list()
 	var/list/used_points = list()
 
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
+
 	while(transition_pick.len)
 		var/datum/space_level/level = pick_n_take(transition_pick)
 
-		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && CONFIG_GET(flag/persistent_save_space_empty_z_levels) && CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && SSpersistence.map_configs_cache)
+		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && persistent_save_z_levels[ZTRAIT_ICE_RUINS] && SSpersistence.map_configs_cache)
 			point = grid[CHORDS_TO_1D(level.xi, level.yi, grid_diameter)]
 
 		level.xi = point.x
@@ -198,12 +200,14 @@
 			point = new /datum/space_transition_point(x, y, grid)
 			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
 
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
+
 	// Translate the grid we made to the z-levels
 	var/list/used_points = list()
 	for(var/i in 1 to transition_levels.len)
 		var/datum/space_level/level = transition_levels[i]
 
-		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && CONFIG_GET(flag/persistent_save_space_empty_z_levels) && CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && SSpersistence.map_configs_cache)
+		if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && persistent_save_z_levels[ZTRAIT_ICE_RUINS] && SSpersistence.map_configs_cache)
 			point = grid[CHORDS_TO_1D(level.xi, level.yi, grid_diameter)]
 		else
 			point = grid[i]

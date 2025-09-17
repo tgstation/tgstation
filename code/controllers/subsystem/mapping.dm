@@ -133,7 +133,10 @@ SUBSYSTEM_DEF(mapping)
 	var/list/FailedZs = list()
 
 #ifndef LOWMEMORYMODE
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_RUINS])
+
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
+
+	if(CONFIG_GET(flag/persistent_save_enabled) && persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_RUINS])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_RUINS])
 			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
 				continue
@@ -146,7 +149,7 @@ SUBSYSTEM_DEF(mapping)
 			add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 			++space_levels_so_far
 
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_space_empty_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_EMPTY])
+	if(CONFIG_GET(flag/persistent_save_enabled) && persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && SSpersistence.map_configs_cache?[ZTRAIT_SPACE_EMPTY])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_SPACE_EMPTY])
 			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
 				continue
@@ -159,7 +162,7 @@ SUBSYSTEM_DEF(mapping)
 			empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_EMPTY = TRUE))
 			++space_levels_so_far
 
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_ICE_RUINS])
+	if(CONFIG_GET(flag/persistent_save_enabled) && persistent_save_z_levels[ZTRAIT_ICE_RUINS] && SSpersistence.map_configs_cache?[ZTRAIT_ICE_RUINS])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_ICE_RUINS])
 			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
 				continue
@@ -173,7 +176,7 @@ SUBSYSTEM_DEF(mapping)
 		if(LAZYLEN(FailedZs))
 			CRASH("Ice wilds failed to load!")
 
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_away_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_AWAY])
+	if(CONFIG_GET(flag/persistent_save_enabled) && persistent_save_z_levels[ZTRAIT_AWAY] && SSpersistence.map_configs_cache?[ZTRAIT_AWAY])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_AWAY])
 			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
 				continue
@@ -481,6 +484,7 @@ Used by the AI doomsday and the self-destruct nuke.
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 
 	if(CONFIG_GET(flag/persistent_save_enabled))
 		SSpersistence.cache_z_levels_map_configs()
@@ -490,7 +494,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	// load the station
 	station_start = world.maxz + 1
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_station_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_STATION])
+	if(CONFIG_GET(flag/persistent_save_enabled) && persistent_save_z_levels[ZTRAIT_STATION] && SSpersistence.map_configs_cache?[ZTRAIT_STATION])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_STATION])
 			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
 				continue
@@ -509,7 +513,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
-	if(CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_save_mining_z_levels) && SSpersistence.map_configs_cache?[ZTRAIT_MINING])
+	if(CONFIG_GET(flag/persistent_save_enabled) && persistent_save_z_levels[ZTRAIT_MINING] && SSpersistence.map_configs_cache?[ZTRAIT_MINING])
 		for(var/datum/map_config/persistent_map in SSpersistence.map_configs_cache[ZTRAIT_MINING])
 			if(IS_PERSISTENT_MAP_LOADED(persistent_map.map_file))
 				continue

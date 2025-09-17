@@ -231,6 +231,8 @@ SUBSYSTEM_DEF(persistence)
 	sortTim(last_save_files, GLOBAL_PROC_REF(cmp_persistent_saves_asc))
 	last_save = copytext(last_save, 1, -1) // drop the "/" from the directory
 
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
+
 	for(var/json_file in last_save_files)
 		// need to reformat the file name and directory to work with load_map_config()
 		json_file = copytext(json_file, 1, -5) // drop the ".json" from file name
@@ -243,28 +245,28 @@ SUBSYSTEM_DEF(persistence)
 
 		// for multi-z maps if a trait is found on ANY z-levels, the entire map is considered to have that trait
 		for(var/level in map_config.traits)
-			if(CONFIG_GET(flag/persistent_save_centcom_z_levels) && (ZTRAIT_CENTCOM in level))
+			if(persistent_save_z_levels[ZTRAIT_CENTCOM] && (ZTRAIT_CENTCOM in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_CENTCOM])
 				matching_z_levels[ZTRAIT_CENTCOM] |= map_config
-			else if(CONFIG_GET(flag/persistent_save_station_z_levels) && (ZTRAIT_STATION in level))
+			else if(persistent_save_z_levels[ZTRAIT_STATION] && (ZTRAIT_STATION in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_STATION])
 				matching_z_levels[ZTRAIT_STATION] |= map_config
-			else if(CONFIG_GET(flag/persistent_save_mining_z_levels) && (ZTRAIT_MINING in level))
+			else if(persistent_save_z_levels[ZTRAIT_MINING] && (ZTRAIT_MINING in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_MINING])
 				matching_z_levels[ZTRAIT_MINING] |= map_config
-			else if(CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && (ZTRAIT_SPACE_RUINS in level))
+			else if(persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && (ZTRAIT_SPACE_RUINS in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_SPACE_RUINS])
 				matching_z_levels[ZTRAIT_SPACE_RUINS] |= map_config
-			else if(CONFIG_GET(flag/persistent_save_space_empty_z_levels) && (ZTRAIT_SPACE_EMPTY in level))
+			else if(persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && (ZTRAIT_SPACE_EMPTY in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_SPACE_EMPTY])
 				matching_z_levels[ZTRAIT_SPACE_EMPTY] |= map_config
-			else if(CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && (ZTRAIT_ICE_RUINS in level))
+			else if(persistent_save_z_levels[ZTRAIT_ICE_RUINS] && (ZTRAIT_ICE_RUINS in level))
 				LAZYINITLIST(matching_z_levels[ZTRAIT_ICE_RUINS])
 				matching_z_levels[ZTRAIT_ICE_RUINS] |= map_config
-			else if(CONFIG_GET(flag/persistent_save_transitional_z_levels) && (ZTRAIT_RESERVED in level)) // for shuttles in transit (hyperspace)
+			else if(persistent_save_z_levels[ZTRAIT_RESERVED] && (ZTRAIT_RESERVED in level)) // for shuttles in transit (hyperspace)
 				LAZYINITLIST(matching_z_levels[ZTRAIT_RESERVED])
 				matching_z_levels[ZTRAIT_RESERVED] |= map_config
-			else if(CONFIG_GET(flag/persistent_save_away_z_levels) && (ZTRAIT_AWAY in level)) // gateway away missions
+			else if(persistent_save_z_levels[ZTRAIT_AWAY] && (ZTRAIT_AWAY in level)) // gateway away missions
 				LAZYINITLIST(matching_z_levels[ZTRAIT_AWAY])
 				matching_z_levels[ZTRAIT_AWAY] |= map_config
 
@@ -320,6 +322,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
 	var/map_save_directory = get_current_persistence_map_directory()
 	var/save_flags = get_save_flags()
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 
 	for(var/z in 1 to world.maxz)
 		var/list/level_traits = list()
@@ -331,21 +334,21 @@ SUBSYSTEM_DEF(persistence)
 		level_traits += list(z_traits)
 
 		// skip saving certain z-levels depending on config settings
-		if(!CONFIG_GET(flag/persistent_save_centcom_z_levels) && is_centcom_level(z))
+		if(!persistent_save_z_levels[ZTRAIT_CENTCOM] && is_centcom_level(z))
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_station_z_levels) && is_station_level(z))
+		else if(!persistent_save_z_levels[ZTRAIT_STATION] && is_station_level(z))
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_space_empty_z_levels) && is_space_empty_level(z))
+		else if(!persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && is_space_empty_level(z))
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_space_ruin_z_levels) && is_space_ruins_level(z))
+		else if(!persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && is_space_ruins_level(z))
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_ice_ruin_z_levels) && is_ice_ruins_level(z))
+		else if(!persistent_save_z_levels[ZTRAIT_ICE_RUINS] && is_ice_ruins_level(z))
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_mining_z_levels) && is_mining_level(z))
+		else if(!persistent_save_z_levels[ZTRAIT_MINING] && is_mining_level(z))
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_transitional_z_levels) && is_reserved_level(z)) // for shuttles in transit (hyperspace)
+		else if(!persistent_save_z_levels[ZTRAIT_RESERVED] && is_reserved_level(z)) // for shuttles in transit (hyperspace)
 			continue
-		else if(!CONFIG_GET(flag/persistent_save_away_z_levels) && is_away_level(z)) // gateway away missions
+		else if(!persistent_save_z_levels[ZTRAIT_AWAY] && is_away_level(z)) // gateway away missions
 			continue
 
 		var/bottom_z = z
@@ -383,7 +386,7 @@ SUBSYSTEM_DEF(persistence)
 		)
 
 		// saving station z-levels but not mining, we need to make sure minetype is included
-		if(is_station_level(z) && !CONFIG_GET(flag/persistent_save_mining_z_levels))
+		if(is_station_level(z) && !persistent_save_z_levels[ZTRAIT_MINING])
 			json_data["minetype"] = SSmapping.current_map.minetype
 
 		// consult is_on_a_planet() proc to see how planetary is determined
