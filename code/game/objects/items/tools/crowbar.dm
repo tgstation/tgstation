@@ -219,15 +219,15 @@
 	if(radio_alert && COOLDOWN_FINISHED(src, alert_cooldown))
 
 		if(!collective_access) //Return if the door has literally no access at all
-			return COMPONENT_JAWS_ALLOW
+			return COMPONENT_TOOL_ALLOW_FORCE_OPEN
 
 		for(var/possible_public_access in collective_access) //Return if the door has otherwise unimportant access
 			if((possible_public_access in ignored_access))
-				return COMPONENT_JAWS_ALLOW
+				return COMPONENT_TOOL_ALLOW_FORCE_OPEN
 
 		sound_the_alarms(user, target)
 		COOLDOWN_START(src, alert_cooldown, alert_cooldown_time)
-	return COMPONENT_JAWS_ALLOW
+	return COMPONENT_TOOL_ALLOW_FORCE_OPEN
 
 ///Our alert for our jaws of life.
 /obj/item/crowbar/power/proc/sound_the_alarms(mob/user, obj/machinery/door/airlock/target)
