@@ -154,7 +154,7 @@
 	)
 	COOLDOWN_DECLARE(alert_cooldown)
 	/// How long between announcements from our jaws of life. Keeps the jaws from getting too radio spammy.
-	var/alert_cooldown_time = 1 MINUTE
+	var/alert_cooldown_time = 1 MINUTES
 
 /obj/item/crowbar/power/get_all_tool_behaviours()
 	return list(first_tool_behavior, second_tool_behavior)
