@@ -706,7 +706,7 @@
 			job_icon.Scale(ICON_SIZE_X / 2, ICON_SIZE_X / 2)
 			job_overlay = mutable_appearance(job_icon, offset_spokesman = src, alpha = 120, layer = src.layer+0.02)
 			var/matrix/job_matrix = matrix()
-			job_matrix.Translate(6, 14)
+			job_matrix.Translate(6, 14) //this is completely arbitruary just what I thought looked good.
 			job_overlay.transform = job_matrix
 
 	update_appearance(UPDATE_ICON)

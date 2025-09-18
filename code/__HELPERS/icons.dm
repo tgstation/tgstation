@@ -1399,6 +1399,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 			var/datum/outfit/job_outfit = job_instance.outfit
 			if(!job_outfit || !job_outfit::id_trim)
+				//AI and Borgs don't have outfits, but they do have icons, so get those instead.
 				if(istype(job_instance, /datum/job/ai))
 					sechud_icon = icon('icons/mob/huds/hud.dmi', "hudai")
 				else if(istype(job_instance, /datum/job/cyborg))
