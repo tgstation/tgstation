@@ -226,6 +226,7 @@
 				return COMPONENT_JAWS_ALLOW
 
 		sound_the_alarms(user, target)
+		COOLDOWN_START(src, alert_cooldown, alert_cooldown_time)
 	return COMPONENT_JAWS_ALLOW
 
 ///Our alert for our jaws of life.
@@ -234,7 +235,6 @@
 			"PERSON" = user.name,
 			"LOCATION" = get_area_name(target),
 			"TOOL" = name), src, list(RADIO_CHANNEL_SECURITY), RADIO_CHANNEL_SECURITY)
-		COOLDOWN_START(src, alert_cooldown, alert_cooldown_time)
 
 /datum/aas_config_entry/jaws_entry_alert
 	// This tool screams into the radio whenever the user successfully pries open an airlock.
