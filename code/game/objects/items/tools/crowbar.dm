@@ -214,7 +214,7 @@
 			if(possible_blacklisted_access in blacklisted_access)
 				playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				user.balloon_alert(user, "cannot pry open!")
-				return COMPONENT_JAWS_DO_NOT_ALLOW
+				return COMPONENT_TOOL_DO_NOT_ALLOW_FORCE_OPEN
 
 	if(radio_alert && COOLDOWN_FINISHED(src, alert_cooldown))
 
