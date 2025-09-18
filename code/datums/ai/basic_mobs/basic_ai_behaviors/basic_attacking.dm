@@ -39,6 +39,9 @@
 		var/mob/living/pawn = controller.pawn
 		if (world.time < pawn.next_move)
 			return AI_BEHAVIOR_INSTANT
+		// Dead mobs should not be able to attack
+		if (pawn.stat == DEAD)
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	if(!targeting_strategy.can_attack(controller.pawn, target))
@@ -87,6 +90,9 @@
 
 /datum/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/basic/basic_mob = controller.pawn
+	// Dead mobs should not be able to attack
+	if(basic_mob.stat == DEAD)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	//targeting strategy will kill the action if not real anymore
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])

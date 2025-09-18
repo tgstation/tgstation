@@ -231,6 +231,9 @@
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	// Dead mobs should not be able to attack
+	if(stat == DEAD)
+		return FALSE
 	if(!early_melee_attack(target, modifiers, ignore_cooldown))
 		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
