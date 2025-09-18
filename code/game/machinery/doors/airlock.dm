@@ -1287,9 +1287,10 @@
 		prying_so_hard = FALSE
 		return
 
-	if(SEND_SIGNAL(tool, COMSIG_TOOL_FORCE_OPEN_AIRLOCK, user, src) & COMPONENT_JAWS_DO_NOT_ALLOW)
-		prying_so_hard = FALSE
-		return
+	if(!isnull(tool))
+		if(SEND_SIGNAL(tool, COMSIG_TOOL_FORCE_OPEN_AIRLOCK, user, src) & COMPONENT_JAWS_DO_NOT_ALLOW)
+			prying_so_hard = FALSE
+			return
 
 	prying_so_hard = FALSE
 
