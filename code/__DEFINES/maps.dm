@@ -67,7 +67,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define MAP_DIRECTORY_MAPS "_maps"
 #define MAP_DIRECTORY_DATA "data"
 #define MAP_PERSISTENT_DIRECTORY "_maps/persistence/" // make sure to update .gitignore if you change this
-#define MAP_DIRECTORY_WHITELIST list(MAP_DIRECTORY_MAPS,MAP_DIRECTORY_DATA, MAP_PERSISTENT_DIRECTORY)
+#define MAP_DIRECTORY_WHITELIST list(MAP_DIRECTORY_MAPS, MAP_DIRECTORY_DATA, MAP_PERSISTENT_DIRECTORY)
 
 /// Special map path value for custom adminloaded stations.
 #define CUSTOM_MAP_PATH "custom"
