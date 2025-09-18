@@ -1395,15 +1395,24 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		icon_cache = list()
 		unknown_huds = list()
 		for(var/datum/job/job_instance as anything in SSjob.all_occupations)
+			var/icon/sechud_icon
+
 			var/datum/outfit/job_outfit = job_instance.outfit
 			if(!job_outfit || !job_outfit::id_trim)
-				continue
-			var/datum/id_trim/job_trim = job_outfit::id_trim
-			var/icon_state = job_trim::sechud_icon_state
-			if(!icon_state || icon_state == SECHUD_UNKNOWN)
-				icon_state = "hud_noid"
-				unknown_huds[job_instance.type] = TRUE
-			var/icon/sechud_icon = icon('icons/mob/huds/hud.dmi', icon_state)
+				if(istype(job_instance, /datum/job/ai))
+					sechud_icon = icon('icons/mob/huds/hud.dmi', "hudai")
+				else if(istype(job_instance, /datum/job/cyborg))
+					sechud_icon = icon('icons/mob/huds/hud.dmi', "hudcyborg")
+				else
+					continue
+
+			if(isnull(sechud_icon))
+				var/datum/id_trim/job_trim = job_outfit::id_trim
+				var/icon_state = job_trim::sechud_icon_state
+				if(!icon_state || icon_state == SECHUD_UNKNOWN)
+					icon_state = "hud_noid"
+					unknown_huds[job_instance.type] = TRUE
+				sechud_icon = icon('icons/mob/huds/hud.dmi', icon_state)
 			sechud_icon.Crop(1, 17, 8, 24)
 			icon_cache[job_instance.type] = sechud_icon
 
