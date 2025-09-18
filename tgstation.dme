@@ -1588,6 +1588,7 @@
 #include "code\datums\elements\muffles_speech.dm"
 #include "code\datums\elements\nav_computer_icon.dm"
 #include "code\datums\elements\nerfed_pulling.dm"
+#include "code\datums\elements\new_immerse.dm"
 #include "code\datums\elements\no_crit_hitting.dm"
 #include "code\datums\elements\noisy_movement.dm"
 #include "code\datums\elements\noticable_organ.dm"

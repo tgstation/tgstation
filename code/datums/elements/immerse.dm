@@ -1,10 +1,3 @@
-/// A list of movables that shouldn't be affected by the element, either because it'd look bad or barely perceptible
-GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
-	/obj/effect,
-	/mob/dead,
-	/obj/projectile,
-)))
-
 /**
  * A visual element that makes movables entering the attached turfs look immersed into that turf.
  *
@@ -376,7 +369,6 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_INSET_OVERLAY
-	layer = WATER_VISUAL_OVERLAY_LAYER
 	plane = FLOAT_PLANE
 	/**
 	 * The actual overlay used to make the mob look like it's half-covered in water.
