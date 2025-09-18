@@ -1188,11 +1188,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ELEVATING_OBJECT "elevating_object"
 /// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
 #define TRAIT_ELEVATED_TURF "elevated_turf"
-/**
- * With this, the immerse overlay will give the atom its own submersion visual overlay
- * instead of one that's also shared with other movables, thus making editing its appearance possible.
- */
-#define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"

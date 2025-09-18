@@ -67,7 +67,7 @@
 /turf/open/water/proc/make_immersed(atom/movable/triggering_atom)
 	if(immerse_added || is_type_in_typecache(triggering_atom, GLOB.immerse_ignored_movable))
 		return FALSE
-	AddElement(/datum/element/immerse_new, immerse_overlay, immerse_overlay_alpha)
+	AddElement(/datum/element/immerse, immerse_overlay, immerse_overlay_alpha)
 	immerse_added = TRUE
 	if(is_swimming_tile)
 		AddElement(/datum/element/swimming_tile, stamina_entry_cost, ticking_stamina_cost, ticking_oxy_damage, exhaust_swimmer_prob)
@@ -162,7 +162,7 @@
 	// the immerse trait to be repeatedly removed and readded as someone moves within the pool,
 	// replacing the status effect over and over, which can be seen through the status effect alert icon.
 	if(!immerse_added)
-		AddElement(/datum/element/immerse_new, immerse_overlay, immerse_overlay_alpha)
+		AddElement(/datum/element/immerse, immerse_overlay, immerse_overlay_alpha)
 		immerse_added = TRUE
 	icon_state = "pool_[rand(1, 4)]"
 	var/obj/effect/abstract/shared_particle_holder/holder = add_shared_particles(/particles/hotspring_steam, "hot_springs_[GET_TURF_PLANE_OFFSET(src)]", pool_size = 4)

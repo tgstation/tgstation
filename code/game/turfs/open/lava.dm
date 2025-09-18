@@ -73,7 +73,7 @@
 		START_PROCESSING(SSobj, src)
 	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
-	AddElement(/datum/element/immerse_new, "immerse", 215)
+	AddElement(/datum/element/immerse, "immerse", 215)
 	immerse_added = TRUE
 
 /**
@@ -84,7 +84,7 @@
 /turf/open/lava/Entered(atom/movable/arrived)
 	. = ..()
 	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
-		AddElement(/datum/element/immerse_new, "immerse", 215)
+		AddElement(/datum/element/immerse, "immerse", 215)
 		immerse_added = TRUE
 	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
