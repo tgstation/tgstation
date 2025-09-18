@@ -152,6 +152,9 @@
 		ACCESS_AUX_BASE,
 		ACCESS_EXTERNAL_AIRLOCKS,
 	)
+	COOLDOWN_DECLARE(alert_cooldown)
+	/// How long between announcements from our jaws of life. Keeps the jaws from getting too radio spammy.
+	var/alert_cooldown_time = 1 MINUTE
 
 /obj/item/crowbar/power/get_all_tool_behaviours()
 	return list(first_tool_behavior, second_tool_behavior)
@@ -213,7 +216,7 @@
 				user.balloon_alert(user, "cannot pry open!")
 				return COMPONENT_JAWS_DO_NOT_ALLOW
 
-	if(radio_alert)
+	if(radio_alert && COOLDOWN_FINISHED(src, alert_cooldown))
 
 		if(!collective_access) //Return if the door has literally no access at all
 			return COMPONENT_JAWS_ALLOW
@@ -231,6 +234,7 @@
 			"PERSON" = user.name,
 			"LOCATION" = get_area_name(target),
 			"TOOL" = name), src, list(RADIO_CHANNEL_SECURITY), RADIO_CHANNEL_SECURITY)
+		COOLDOWN_START(src, alert_cooldown, alert_cooldown_time)
 
 /datum/aas_config_entry/jaws_entry_alert
 	// This tool screams into the radio whenever the user successfully pries open an airlock.
