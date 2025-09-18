@@ -29,7 +29,7 @@
 		return "gurgles"
 	return  tongue.temp_say_mod || tongue.say_mod || ..()
 
-/mob/living/carbon/human/get_voice()
+/mob/living/carbon/human/get_voice(add_id_name)
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
 		return "Unknown"
 	var/id_name = get_id_name("")
