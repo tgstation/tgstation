@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(persistence)
 
 	save_world()
 
-/// Saves map z-levels in the world based on PERSISTENT_SAVE_ENABLED config options in game_options.txt
+/// Saves map z-levels in the world based on PERSISTENT_SAVE_ENABLED config options in config/persistence.txt
 /datum/controller/subsystem/persistence/proc/save_world()
 	log_world("World map save initiated at [time_stamp()]")
 	to_chat(world, span_boldannounce("World map save initiated at [time_stamp()]"))
