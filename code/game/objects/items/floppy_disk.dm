@@ -57,17 +57,23 @@
 	var/sticker_changed = FALSE
 	/// Custom description
 	var/custom_description
+	/// Initial sticker overlay
+	var/initial_sticker_icon_state
 
 /obj/item/disk/Initialize(mapload)
 	. = ..()
-	add_overlay("o_empty")
+	if(initial_sticker_icon_state)
+		add_overlay(initial_sticker_icon_state)
+	else
+		add_overlay("o_empty")
 
 /obj/item/disk/examine(mob/user)
 	. = ..()
-	. += span_notice("The write-protect tab is set to [span_bold("[read_only ? "\"protected\"" : "\"unprotected\""]")].")
+	. += span_notice("The write-protect tab is set to [span_bold("[read_only ? "protected" : "unprotected"]")].")
 
 	if(custom_description)
-		. += span_notice("There's something scribbled on the sticker.")
+		. += span_notice("There's something scribbled on the sticker:")
+		. += "<br>"
 		. += span_notice(span_italics("[custom_description]"))
 
 /obj/item/disk/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -99,7 +105,7 @@
 	if(read_only_locked)
 		to_chat(user, span_warning("The write-portect tab seems to be stuck in place!"))
 	read_only = !read_only
-	to_chat(user, span_notice("You flip the write-protect tab to [read_only ? "\"protected\"" : "\"unprotected\""]."))
+	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"].]"))
 
 /obj/item/disk_stack
 	name = "stack of floppy disks"
@@ -120,7 +126,7 @@
 
 /obj/item/disk_stack/examine(mob/user)
 	. = ..()
-	. += span_notice("There are [span_bold("[length(stacked_disks) + 1]")] disks in the stack.")
+	. += span_notice("There are [span_bold("[length(stacked_disks)]")] disks in the stack.")
 
 /obj/item/disk/proc/handle_interaction(mob/living/user, obj/item/other)
   if(istype(other, /obj/item/disk_stack))
