@@ -1093,10 +1093,9 @@
 	.[/datum/job/ai::title] = minutes
 
 /mob/living/silicon/ai/get_voice(add_id_name)
-	. = ..()
-	if(ai_voicechanger && ai_voicechanger.changing_voice)
+	if(ai_voicechanger?.changing_voice)
 		return ai_voicechanger.say_name
-	return
+	return ..()
 
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
