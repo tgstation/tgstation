@@ -171,7 +171,7 @@
 		inhand_icon_change = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	RegisterSignal(src, COMSIG_JAWS_OF_LIFE_FORCE_OPEN_AIRLOCK, PROC_REF(on_force_open))
+	RegisterSignal(src, COMSIG_TOOL_FORCE_OPEN_AIRLOCK, PROC_REF(on_force_open))
 
 /obj/item/crowbar/power/examine()
 	. = ..()
@@ -196,7 +196,7 @@
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /*
- * Signal proc for [COMSIG_JAWS_OF_LIFE_FORCE_OPEN_AIRLOCK].
+ * Signal proc for [COMSIG_TOOL_FORCE_OPEN_AIRLOCK].
  *
  * Determines if our jaws of life is restricted from opening some doors, and whether or not we need to alert over the radio whenever they are used to
  * pry open a door. Useful if you want to restrict jaws of life in some fashion.
