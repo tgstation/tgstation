@@ -1372,51 +1372,24 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return copy
 
 /// Returns the (isolated) security HUD icon for the given job.
-/proc/get_job_hud_icon(datum/job/job, include_unknown = FALSE) as /icon
+/proc/get_job_hud_icon(datum/job/job) as /icon
 	RETURN_TYPE(/icon)
+	var/static/list/icon_cache = list()
 
-	var/static/list/icon_cache
-	var/static/list/unknown_huds
 	if(isnull(job))
 		return
 	if(!is_job(job))
 		if(ispath(job, /datum/job))
-			job = locate(job) in SSjob.all_occupations
+			SSjob.get_job_type(job)
 		else if(istext(job))
-			for(var/datum/job/job_instance as anything in SSjob.all_occupations)
-				if(cmptext(job_instance.title, job) || cmptext(job_instance.config_tag, job))
-					job = job_instance
-					break
-		if(!job)
+			SSjob.get_job(job)
+		if(isnull(job))
 			return null
 
-	// populate the cache if it hasn't been already
-	if(isnull(icon_cache))
-		icon_cache = list()
-		unknown_huds = list()
-		for(var/datum/job/job_instance as anything in SSjob.all_occupations)
-			var/icon/sechud_icon
-
-			var/datum/outfit/job_outfit = job_instance.outfit
-			if(!job_outfit || !job_outfit::id_trim)
-				//AI and Borgs don't have outfits, but they do have icons, so get those instead.
-				if(istype(job_instance, /datum/job/ai))
-					sechud_icon = icon('icons/mob/huds/hud.dmi', "hudai")
-				else if(istype(job_instance, /datum/job/cyborg))
-					sechud_icon = icon('icons/mob/huds/hud.dmi', "hudcyborg")
-				else
-					continue
-
-			if(isnull(sechud_icon))
-				var/datum/id_trim/job_trim = job_outfit::id_trim
-				var/icon_state = job_trim::sechud_icon_state
-				if(!icon_state || icon_state == SECHUD_UNKNOWN)
-					icon_state = "hud_noid"
-					unknown_huds[job_instance.type] = TRUE
-				sechud_icon = icon('icons/mob/huds/hud.dmi', icon_state)
-			sechud_icon.Crop(1, 17, 8, 24)
-			icon_cache[job_instance.type] = sechud_icon
-
+	//add it to the cache if it isn't already
 	var/job_type = job.type
-	if(icon_cache[job_type] && (include_unknown || !unknown_huds[job_type]))
-		return icon(icon_cache[job_type])
+	if(!icon_cache[job_type])
+		var/datum/job/job_instance = locate(job_type) in SSjob.all_occupations
+		icon_cache[job_type] = job_instance.get_lobby_icon()
+
+	return icon(icon_cache[job_type])

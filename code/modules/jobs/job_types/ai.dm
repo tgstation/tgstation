@@ -89,3 +89,8 @@
 
 /datum/job/ai/on_respawn(mob/new_character)
 	new_character.AIize()
+
+/datum/job/ai/get_lobby_icon()
+	var/icon/sechud_icon = icon('icons/mob/huds/hud.dmi', "hudai")
+	sechud_icon.Crop(1, 17, 8, 24)
+	return sechud_icon

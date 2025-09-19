@@ -699,7 +699,7 @@
 	//only go if the station trait is selected, otherwise it'll show "Assistant" every round.
 	var/datum/station_trait/overflow_job_bureaucracy/overflow_job = locate() in SSstation.station_traits
 	if(overflow_job && isnull(job_overlay))
-		var/icon/job_icon = get_job_hud_icon(SSjob.overflow_role, include_unknown = TRUE)
+		var/icon/job_icon = get_job_hud_icon(SSjob.overflow_role)
 		if(isnull(job_icon))
 			stack_trace("[SSjob.overflow_role::title] was selected as the Job Overflow but has no icon!")
 		else

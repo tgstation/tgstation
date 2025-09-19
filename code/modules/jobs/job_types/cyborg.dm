@@ -38,3 +38,8 @@
 
 /datum/job/cyborg/on_respawn(mob/new_character)
 	new_character.Robotize(TRUE)
+
+/datum/job/cyborg/get_lobby_icon()
+	var/icon/sechud_icon = icon('icons/mob/huds/hud.dmi', "hudcyborg")
+	sechud_icon.Crop(1, 17, 8, 24)
+	return sechud_icon
