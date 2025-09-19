@@ -103,6 +103,7 @@
 	desc = "A box of buckshot rounds for a shotgun. For when you don't want to miss."
 	item = /obj/item/storage/box/lethalshot
 	cost = 1
+	spy_bounty_requirements = /obj/item/gun/ballistic/shotgun
 
 /datum/uplink_item/spy_unique/shotgun_ammo/breacher_slug
 	name = "Box of Breacher Slugs"
