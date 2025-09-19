@@ -103,14 +103,14 @@
 		if(size >= RUFRAN_GIGANTIC_SIZE)
 			w_class = WEIGHT_CLASS_GIGANTIC
 			interaction_flags_item = NONE
-			change_squeak_frequency(0.4)
+			change_squeak_frequency(0.6)
 		else if(size >= RUFRAN_HUGE_SIZE)
 			w_class = WEIGHT_CLASS_HUGE
 			AddComponent(/datum/component/two_handed, require_twohands = TRUE)
-			change_squeak_frequency(0.6)
+			change_squeak_frequency(0.7)
 		else if(size >= RUFRAN_BIG_SIZE)
 			w_class = WEIGHT_CLASS_BULKY
-			change_squeak_frequency(0.8)
+			change_squeak_frequency(0.85)
 		return
 
 
