@@ -5820,6 +5820,7 @@
 #include "code\modules\projectiles\ammunition\special\syringe.dm"
 #include "code\modules\projectiles\boxes_magazines\_box_magazine.dm"
 #include "code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
+#include "code\modules\projectiles\boxes_magazines\speedloaders.dm"
 #include "code\modules\projectiles\boxes_magazines\external\grenade.dm"
 #include "code\modules\projectiles\boxes_magazines\external\lmg.dm"
 #include "code\modules\projectiles\boxes_magazines\external\pistol.dm"
