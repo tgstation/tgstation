@@ -482,7 +482,7 @@
 	. = ..()
 
 	if(!spawn_count)
-		update_icon_state()
+		update_overlays()
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
