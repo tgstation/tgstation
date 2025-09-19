@@ -295,6 +295,8 @@
 
 /obj/item/storage/fancy/cigarettes/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
@@ -305,6 +307,8 @@
 
 /obj/item/storage/fancy/cigarettes/dromedaryco/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_uplift
 	name = "\improper Uplift Smooth packet"
@@ -315,6 +319,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_uplift/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_robust
 	name = "\improper Robust packet"
@@ -325,6 +331,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_robust/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold
 	name = "\improper Robust Gold packet"
@@ -335,6 +343,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_greytide
 	name = "\improper Mainthol Grey packet"
@@ -345,6 +355,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_greytide/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"
@@ -355,6 +367,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_carp/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	name = "cigarette packet"
@@ -365,6 +379,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_midori
 	name = "\improper Midori Tabako packet"
@@ -375,6 +391,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_midori/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy
 	name = "\improper Timmy's First Candy Smokes packet"
@@ -393,6 +411,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims
 	name = "\improper Shady Jim's Super Slims packet"
@@ -403,6 +423,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
 	name = "\improper Xeno Filtered packet"
@@ -413,6 +435,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis
 	name = "\improper Freak Brothers' Special packet"
@@ -423,6 +447,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_mindbreaker
 	name = "\improper Leary's Delight packet"
@@ -433,6 +459,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_mindbreaker/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
@@ -455,6 +483,8 @@
 
 /obj/item/storage/fancy/cigarettes/rollingpapers/empty
 	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /////////////
 //CIGAR BOX//
@@ -481,6 +511,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/empty
 	spawn_count = 0
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
@@ -500,6 +531,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba/empty
 	spawn_count = 0
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
@@ -510,6 +542,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/havana/empty
 	spawn_count = 0
+	open_status = FANCY_CONTAINER_OPEN
 
 /*
  * Heart Shaped Box w/ Chocolates
