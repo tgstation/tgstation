@@ -10,9 +10,9 @@
 		/obj/effect/spawner/random/trash/crushed_can = 15,
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
+		/obj/effect/spawner/random/trash/cigpack = 5,
 		/obj/effect/spawner/random/trash/bacteria = 5,
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
-		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
 		/obj/item/light/tube/broken = 5,
 		/obj/item/light/bulb/broken = 5,
@@ -22,6 +22,7 @@
 		/obj/item/stack/cable_coil = 3,
 		/obj/item/stack/cable_coil/cut = 3,
 		/obj/item/reagent_containers/syringe = 3,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 2,
 		/obj/item/food/deadmouse = 2,
 		/obj/item/reagent_containers/cup/glass/sillycup = 2,
 		/obj/item/c_tube = 2,
@@ -67,6 +68,29 @@
 			loot -= /mob/living/basic/mouse
 			loot -= /mob/living/basic/snail
 	return ..()
+
+/obj/effect/spawner/random/trash/cigpack
+	name = "empty cigarette pack spawner"
+	loot = list(
+		/obj/item/storage/fancy/cigarettes/empty = 3,
+		/obj/item/storage/fancy/cigarettes/dromedaryco/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_uplift/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_robust/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_robustgold/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_greytide/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_carp/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_midori/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_candy/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_xeno/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_cannabis/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker/empty = 3,
+		/obj/item/storage/fancy/cigarettes/rollingpapers/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigars/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigars/cohiba/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigars/havana/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate/empty = 1,
+	)
 
 /obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
