@@ -78,6 +78,10 @@
 	for(var/obj/item/toy/plush/plush_type as anything in breeding_blacklist_parent_types)
 		for(var/obj/item/toy/plush/plush_subtype as anything in typesof(plush_type))
 			breeding_blacklist[plush_subtype] = TRUE
+
+/obj/item/toy/plush/proc/change_squeak_frequency(new_freq)
+	var/datum/component/squeak/squeak = GetComponent(/datum/component/squeak)
+	squeak.frequency = new_freq
 // Troutstation edit end
 
 /obj/item/toy/plush/Destroy()

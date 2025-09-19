@@ -83,7 +83,13 @@
 	var/size = RUFRAN_NORMAL_SIZE
 
 /obj/item/toy/plush/rufran/attackby(obj/item/dnainjector/serum, mob/user, list/modifiers, list/attack_modifiers)
-	if((serum.used==FALSE && size < RUFRAN_GIGANTIC_SIZE && /datum/mutation/gigantism in serum.add_mutations) || (serum.used==FALSE && size < RUFRAN_GIGANTIC_SIZE && serum.add_mutations[1].name == "Gigantism")) // holy shit if you can make this cleaner PLEASE
+	if(serum.used)
+		to_chat(user, span_warning("This injector is used up!"))
+		return
+	if(size >= RUFRAN_GIGANTIC_SIZE)
+		to_chat(user, span_warning("[src] can't get any bigger!"))
+		return
+	if((/datum/mutation/gigantism in serum.add_mutations) || (serum.add_mutations[1].name == "Gigantism")) // holy shit if you can make this cleaner PLEASE
 		to_chat(user, span_notice("You inject [src] with the gigantism serum!"))
 		size += RUFRAN_SIZE_INCREMENT
 		AddElement(/datum/element/item_scaling, size, size)
@@ -97,18 +103,16 @@
 		if(size >= RUFRAN_GIGANTIC_SIZE)
 			w_class = WEIGHT_CLASS_GIGANTIC
 			interaction_flags_item = NONE
+			change_squeak_frequency(0.4)
 		else if(size >= RUFRAN_HUGE_SIZE)
 			w_class = WEIGHT_CLASS_HUGE
 			AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+			change_squeak_frequency(0.6)
 		else if(size >= RUFRAN_BIG_SIZE)
 			w_class = WEIGHT_CLASS_BULKY
+			change_squeak_frequency(0.8)
 		return
-	if(serum.used==TRUE)
-		to_chat(user, span_warning("This injector is used up!"))
-		return
-	if(size >= RUFRAN_GIGANTIC_SIZE)
-		to_chat(user, span_warning("[src] can't get any bigger!"))
-		return
+
 
 /obj/item/toy/plush/rufran/examine()
 	. = ..()

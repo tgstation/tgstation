@@ -5,6 +5,7 @@
 
 	var/squeak_chance = 100
 	var/volume = 30
+	var/frequency = 1 // Troutstation edit
 
 	// This is so shoes don't squeak every step
 	var/steps = 0
@@ -75,9 +76,9 @@
 
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
-			playsound(parent, pick_weight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
+			playsound(parent, pick_weight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, frequency = frequency) // Troutstation edit (added frequency)
 		else
-			playsound(parent, pick_weight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
+			playsound(parent, pick_weight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, frequency = frequency) // Troutstation edit (added frequency)
 
 /datum/component/squeak/proc/step_squeak(obj/item/clothing/source)
 	SIGNAL_HANDLER
