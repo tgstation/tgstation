@@ -90,7 +90,7 @@
 	return FALSE
 
 /obj/item/assembly/voice/proc/send_pulse()
-	visible_message("clicks", visible_message_flags = EMOTE_MESSAGE)
+	visible_message("clicks.", visible_message_flags = EMOTE_MESSAGE)
 	playsound(src, 'sound/effects/whirthunk.ogg', 30)
 	addtimer(CALLBACK(src, PROC_REF(pulse)), 2 SECONDS)
 

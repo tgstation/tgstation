@@ -319,14 +319,21 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "2"
 	return "0"
 
-/// Get what this atom sounds like when speaking
-/atom/proc/get_voice()
+/**
+ * Get what this atom sounds like when speaking
+ *
+ * * add_id_name - If TRUE, ID information such as honorifics are added into the voice
+ */
+/atom/proc/get_voice(add_id_name = FALSE)
 	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
 
-/// Get what this atom appears like in chat when speaking
-/// visible_name - If TRUE, returns the visible name rather than the voice
+/**
+ * Get what this atom appears like in chat when speaking
+ *
+ * * visible_name - If TRUE, returns the visible name rather than the voice
+ */
 /atom/proc/get_message_voice(visible_name)
-	return visible_name ? get_visible_name() : get_voice()
+	return visible_name ? get_visible_name(add_id_name = TRUE) : get_voice(add_id_name = TRUE)
 
 //HACKY VIRTUALSPEAKER STUFF BEYOND THIS POINT
 //these exist mostly to deal with the AIs hrefs and job stuff.
@@ -349,7 +356,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 	radio = _radio
 	source = M
 	if(istype(M))
-		name = radio.anonymize ? "Unknown" : M.get_voice()
+		name = radio.anonymize ? "Unknown" : M.get_voice(add_id_name = TRUE)
 		verb_say = M.get_default_say_verb()
 		verb_ask = M.verb_ask
 		verb_exclaim = M.verb_exclaim
