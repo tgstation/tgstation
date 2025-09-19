@@ -1,4 +1,4 @@
-name: Generate documentation
+name: Generate web assets
 on:
   schedule:
     - cron: "44 */6 * * *"
@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
 jobs:
-  generate_documentation:
+  generate_web_assets:
     permissions:
       contents: write # for JamesIves/github-pages-deploy-action to push changes in repo
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
@@ -26,6 +26,7 @@ jobs:
           ~/dmdoc
           touch dmdoc/.nojekyll
           echo codedocs.tgstation13.org > dmdoc/CNAME
+          mv tgui/public/ dmdoc/assets
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.7.3
         with:
