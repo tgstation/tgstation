@@ -88,6 +88,7 @@
 	name = "machinery"
 	icon = 'icons/obj/machines/fax.dmi'
 	desc = "Some kind of machine."
+	abstract_type = /obj/machinery
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
@@ -161,11 +162,11 @@
 	acid = 70
 
 ///Needed by machine frame & flatpacker i.e the named arg board
-/obj/machinery/New(loc, obj/item/circuitboard/board, ...)
+/obj/machinery/New(location, obj/item/circuitboard/board, ...)
 	if(istype(board))
 		circuit = board
 		//we don't want machines that override Initialize() have the board passed as a param e.g. atmos
-		return ..(loc)
+		return ..(location)
 
 	return ..()
 

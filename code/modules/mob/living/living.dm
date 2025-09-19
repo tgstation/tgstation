@@ -1170,6 +1170,8 @@
 	var/effective_grab_state = pulledby.grab_state
 	//The amount of damage inflicted on a failed resist attempt.
 	var/damage_on_resist_fail = rand(7, 13)
+	// Base chance to escape a grab. Divided by effective grab state
+	var/escape_chance = BASE_GRAB_RESIST_CHANCE
 
 	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
 		effective_grab_state++
@@ -1194,13 +1196,19 @@
 		var/puller_drunkenness = human_puller.get_drunk_amount()
 		if(puller_drunkenness && HAS_TRAIT(human_puller, TRAIT_DRUNKEN_BRAWLER))
 			damage_on_resist_fail += clamp((human_puller.getFireLoss() + human_puller.getBruteLoss()) / 10, 3, 20)
-			effective_grab_state ++
+			effective_grab_state++
+
+		var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
+		if(puller_art?.can_use(human_puller))
+			damage_on_resist_fail += puller_art.grab_damage_modifier
+			effective_grab_state += puller_art.grab_state_modifier
+			escape_chance += puller_art.grab_escape_chance_modifier
 
 	//We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1). Otherwise, break out immediately!
 	if(effective_grab_state >= GRAB_AGGRESSIVE)
 		// see defines/combat.dm, this should be baseline 60%
 		// Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
-		var/resist_chance = clamp(BASE_GRAB_RESIST_CHANCE / effective_grab_state, 0, 100)
+		var/resist_chance = clamp(escape_chance / effective_grab_state, 0, 100)
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -2470,11 +2478,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(GRAB_KILL)
 			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
-
-/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
-/mob/living/proc/is_face_visible()
-	return TRUE
-
 /// Sprite to show for photocopying mob butts
 /mob/living/proc/get_butt_sprite()
 	return null
@@ -2950,7 +2953,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
 /mob/living/proc/compare_fitness(mob/living/scouter)
-	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return span_warning("It's impossible to tell whether this person lifts.")
 
 	var/our_fitness_level = calculate_fitness()

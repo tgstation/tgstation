@@ -1,3 +1,6 @@
+#define PLANT_ANALYZER_STAT_TAB 1
+#define PLANT_ANALYZER_CHEM_TAB 2
+
 /obj/item/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth, genetic traits and chemicals."
@@ -12,12 +15,20 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	/// Cached data from ui_interact
 	var/list/last_scan_data
+	/// Weakref to the last thing we scanned
+	var/datum/weakref/last_tray_scanned
 	/// Cached data for the product grinder results
 	var/static/list/product_grinder_results = list()
+	/// If TRUE the UI opens to the second tab / the chem tab
+	var/shown_tab = PLANT_ANALYZER_STAT_TAB
 
 /obj/item/plant_analyzer/Initialize(mapload)
 	. = ..()
 	register_item_context()
+
+/obj/item/plant_analyzer/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/plant_analyzer/add_item_context(
 	obj/item/source,
@@ -48,20 +59,13 @@
 
 /// When we use the analyzer in hand - try to show the results of the last scan
 /obj/item/plant_analyzer/interact(mob/user)
-	. = ..()
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
-		return ITEM_INTERACT_BLOCKING
-	if(!last_scan_data)
-		return ITEM_INTERACT_BLOCKING
-	ui_interact(user)
-	return ITEM_INTERACT_SUCCESS
+		return
+	if(last_scan_data)
+		return ..()
 
 /// When we attack something, try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(!user.can_read(src))
-		return ITEM_INTERACT_BLOCKING
-
 	if(isliving(interacting_with))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		var/mob/living/living_target = interacting_with
@@ -70,20 +74,12 @@
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
-	if(analyze(user, interacting_with))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	shown_tab = PLANT_ANALYZER_STAT_TAB
+	return analyze(user, interacting_with)
 
 /// Same as above, but with right click. Right-clicking scans for chemicals.
 /obj/item/plant_analyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(!user.can_read(src))
-		return ITEM_INTERACT_BLOCKING
-
-	if(do_plant_chem_scan(interacting_with, user))
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
+	return do_plant_chem_scan(interacting_with, user)
 
 /*
  * Scan the target on chemical scan mode. This prints chemical genes and reagents to the user.
@@ -99,8 +95,10 @@
 		var/mob/living/living_target = scan_target
 		if(living_target.mob_biotypes & MOB_PLANT)
 			plant_biotype_chem_scan(scan_target, user)
-		return TRUE
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 
+	shown_tab = PLANT_ANALYZER_CHEM_TAB
 	return analyze(user, scan_target)
 
 /*
@@ -138,8 +136,22 @@
 		ui = new(user, src, "PlantAnalyzer", "Plant Analyzer")
 		ui.open()
 
+/obj/item/plant_analyzer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("setTab")
+			var/tab = params["tab"]
+			if(tab == PLANT_ANALYZER_STAT_TAB || tab == PLANT_ANALYZER_CHEM_TAB)
+				shown_tab = tab
+			return TRUE
+
 /obj/item/plant_analyzer/ui_data(mob/user)
-	return last_scan_data
+	var/list/data = list()
+	data["active_tab"] = shown_tab
+	data += last_scan_data
+	return data
 
 /obj/item/plant_analyzer/ui_static_data(mob/user)
 	var/list/data = list()
@@ -155,13 +167,22 @@
 		data["trait_db"] += trait_data
 	return data
 
+/obj/item/plant_analyzer/process(seconds_per_tick)
+	var/atom/real_last_tray_scanned = last_tray_scanned?.resolve()
+	if(QDELETED(real_last_tray_scanned))
+		return PROCESS_KILL
+
+	if(loc.Adjacent(real_last_tray_scanned))
+		analyze(null, real_last_tray_scanned)
+
 /// Called when our analyzer is used on something
 /obj/item/plant_analyzer/proc/analyze(mob/user, atom/target)
 	var/obj/item/graft/graft
 	var/obj/item/seeds/seed
 	var/obj/machinery/hydroponics/tray
 
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	if(user)
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 
 	if (istype(target, /obj/machinery/hydroponics))
 		tray = target
@@ -179,11 +200,18 @@
 			seed = scanned_object.get_plant_seed()
 
 	if (!seed && !tray && !graft)
-		return FALSE
+		return NONE
+
+	if(user)
+		if(!user.can_read(src))
+			return ITEM_INTERACT_BLOCKING
+		START_PROCESSING(SSobj, src)
+		last_tray_scanned = WEAKREF(tray) // sets it to null if no tray
 
 	last_scan_data = list(
 		"tray_data" = null,
 		"seed_data" = null,
+		"plant_data" = null,
 		"graft_data" = null,
 	)
 
@@ -191,6 +219,7 @@
 		last_scan_data["tray_data"] = list(
 			"plant_health" = tray.plant_health,
 			"plant_age" = tray.age,
+			"is_dead" = tray.plant_status == HYDROTRAY_PLANT_DEAD,
 			"name" = tray.name,
 			"icon" = tray.icon,
 			"icon_state" = tray.icon_state,
@@ -210,14 +239,26 @@
 			"toxins_max" = MAX_TRAY_TOXINS,
 			"reagents" = list(),
 		)
-		for(var/datum/reagent/reagent in tray.reagents.reagent_list)
+		for(var/datum/reagent/reagent as anything in tray.reagents.reagent_list)
 			last_scan_data["tray_data"]["reagents"] += list(list(
 				"name" = reagent.name,
-				"volume" = reagent.volume
+				"volume" = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL),
+				"color" = reagent.color,
 			))
 
 	if(seed)
 		last_scan_data["seed_data"] = make_seed_data(seed)
+
+	if(isitem(target) && target.reagents)
+		last_scan_data["plant_data"] = list(
+			"reagents" = list(),
+		)
+		for(var/datum/reagent/reagent as anything in target.reagents.reagent_list)
+			last_scan_data["plant_data"]["reagents"] += list(list(
+				"name" = reagent.name,
+				"volume" = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL),
+				"color" = reagent.color,
+			))
 
 	if(graft)
 		last_scan_data["graft_data"] = list(
@@ -230,12 +271,12 @@
 			"endurance" = graft.endurance,
 			"weed_rate" = graft.weed_rate,
 			"weed_chance" = graft.weed_chance,
-			"graft_gene" = graft.stored_trait.type
+			"graft_gene" = graft.stored_trait.type,
 		)
 
-	ui_interact(user)
-
-	return TRUE
+	if(user)
+		ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/plant_analyzer/proc/make_seed_data(obj/item/seeds/seed)
@@ -293,4 +334,15 @@
 		seed_data["juice_name"] = product_grinder_results[seed.product]["juice_name"]
 		seed_data["grind_results"] = product_grinder_results[seed.product]["grind_results"]
 
+	seed_data["unique_labels"] = list()
+	seed_data["unique_collapsibles"] = list()
+	var/list/unique_data = seed.get_unique_analyzer_data()
+	for(var/label in unique_data)
+		seed_data[islist(unique_data[label]) ? "unique_collapsibles" : "unique_labels"] += list(list(
+			"label" = label,
+			"data" = unique_data[label],
+		))
 	return seed_data
+
+#undef PLANT_ANALYZER_STAT_TAB
+#undef PLANT_ANALYZER_CHEM_TAB

@@ -91,11 +91,21 @@
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
+	//Heads up to other binary chat listeners that a new AI is online and listening to Binary.
+	if(announce_init_to_others && !is_centcom_level(z)) //Skip new syndicate AIs and also new AIs on centcom Z
+		for(var/mob/McMobby as anything in GLOB.player_list)
+			if(McMobby == src)
+				continue
+			if(!McMobby.binarycheck())
+				continue
+			to_chat(McMobby,span_binarysay("<span class=[SPAN_COMMAND]>\[ SYSTEM \] NEW REMOTE HOST HAS CONNECTED TO THIS CHANNEL -- ID: [src]</span>"), type = MESSAGE_TYPE_RADIO)
+
 /mob/living/silicon/ai/weak_syndie
 	radio = /obj/item/radio/headset/silicon/ai/evil
 	radio_enabled = TRUE
 	interaction_range = 1
 	sprint = 5
+	announce_init_to_others = FALSE
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -771,7 +781,7 @@
 	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
-	control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
+	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!
 	radio_enabled = FALSE //No talking on the built-in radio for you either!
 	forceMove(card)
 	card.AI = src
@@ -797,17 +807,17 @@
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	var/raw_translation = translate_language(speaker, message_language, raw_message, spans, message_mods)
 	var/atom/movable/source = speaker.GetSource() || speaker // is the speaker virtual/radio
-	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
+	var/treated_message = source.generate_messagepart(raw_translation, spans, message_mods)
 
 	var/start = "Relayed Speech: "
-	var/namepart
-	var/list/stored_name = list(null)
-	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
-	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
+	var/namepart = speaker.get_message_voice()
 	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+	// if voice is concealed, job is concealed
+	// on the other hand we don't care about TRAIT_UNKNOWN_APPEARANCE
+	// (AI can associate voice -> name -> crew record -> job)
+	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN_VOICE))
 		if (isliving(speaker))
 			var/mob/living/living_speaker = speaker
 			if(living_speaker.job)
@@ -989,7 +999,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_shell"
 
-/datum/action/innate/deploy_shell/Trigger(trigger_flags)
+/datum/action/innate/deploy_shell/Trigger(mob/clicker, trigger_flags)
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
@@ -1002,7 +1012,7 @@
 	button_icon_state = "ai_last_shell"
 	var/mob/living/silicon/robot/last_used_shell
 
-/datum/action/innate/deploy_last_shell/Trigger(trigger_flags)
+/datum/action/innate/deploy_last_shell/Trigger(mob/clicker, trigger_flags)
 	if(!owner)
 		return
 	if(last_used_shell)
@@ -1082,11 +1092,15 @@
 	. = ..()
 	.[/datum/job/ai::title] = minutes
 
-/mob/living/silicon/ai/GetVoice()
+/mob/living/silicon/ai/get_voice()
 	. = ..()
 	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return
+
+/mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
+	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
+	src.control_disabled = control_disabled
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

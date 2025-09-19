@@ -326,7 +326,7 @@
 			var/department_name = department.department_name
 			output += "<div class='column'><label class='rolegroup [label_class]'>[tgui_fancy ? "<input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""] \
 			[department_name]</label><div class='content'>"
-			for(var/datum/job/job_datum as anything in department.department_jobs)
+			for(var/datum/job/job_datum as anything in department.get_jobban_jobs())
 				if(break_counter > 0 && (break_counter % 3 == 0))
 					output += "<br>"
 				break_counter++

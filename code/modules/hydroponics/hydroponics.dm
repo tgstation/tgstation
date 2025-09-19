@@ -111,16 +111,16 @@
 		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
+		context[SCREENTIP_CONTEXT_RMB] = "Empty nutrients"
+
 		switch(plant_status)
 			if(HYDROTRAY_PLANT_DEAD)
 				context[SCREENTIP_CONTEXT_LMB] = "Remove dead plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
 			if(HYDROTRAY_PLANT_HARVESTABLE)
 				context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
-		return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
 	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
@@ -529,18 +529,23 @@
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
-	var/old_seed = myseed
+	var/obj/item/seeds/old_seed = myseed
 	myseed = new_seed
+	for(var/datum/plant_gene/trait/gene in old_seed?.genes)
+		gene.on_unplanted_from_tray(src, old_seed)
 	if(old_seed && delete_old_seed)
 		qdel(old_seed)
 	set_plant_status(new_seed ? HYDROTRAY_PLANT_GROWING : HYDROTRAY_NO_PLANT) //To make sure they can't just put in another seed and insta-harvest it
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
+	for(var/datum/plant_gene/trait/gene in myseed?.genes)
+		gene.on_plant_in_tray(src, myseed)
 	age = 0
 	update_appearance()
 	if(isnull(myseed))
 		remove_shared_particles(/particles/pollen)
+
 
 /*
  * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
@@ -1204,6 +1209,12 @@
 
 /obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)
+
+/obj/machinery/hydroponics/soil/rich
+	name = "rich soil"
+	desc = "A rich patch of dirt, usually used in gardens."
+	icon_state = "rich_soil"
+	maxnutri = 20
 
 ///The usb port circuit
 

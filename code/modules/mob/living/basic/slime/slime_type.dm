@@ -10,6 +10,12 @@
 	///The hexcode used by the slime to colour their victims
 	var/rgb_code
 
+/datum/slime_type/Destroy(force)
+	if(!force)
+		stack_trace("Something tried to delete a \"/datum/slime_type\", this should never happen as could lead to slime colors being broken!")
+		return QDEL_HINT_LETMELIVE
+	return ..()
+
 //TIER 0
 
 /datum/slime_type/grey

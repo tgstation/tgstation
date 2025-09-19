@@ -106,8 +106,8 @@
 	var/backup_power_timer = 0
 	/// Paired with backup_power_timer. Records its remaining time when something happens to interrupt power regen
 	var/backup_power_time
-	/// Bolt lights show by default
-	var/lights = TRUE
+	/// Lights and sounds enabled by default
+	var/feedback = TRUE
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
 	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
@@ -503,6 +503,32 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
+/// Checks if this door would be affected by any currently active RETA grants
+/obj/machinery/door/airlock/proc/has_active_reta_access()
+	if(!CONFIG_GET(flag/reta_enabled))
+		return FALSE
+
+	if(!length(req_access) && !length(req_one_access))
+		return FALSE
+
+	// Check if this door belongs to a department providing access via RETA
+	for(var/target_dept in GLOB.reta_active_grants)
+		var/list/active_origins = GLOB.reta_active_grants[target_dept]
+		for(var/origin_dept in active_origins)
+			var/list/origin_dept_access = GLOB.reta_dept_grants[origin_dept]
+			if(!origin_dept_access)
+				continue
+
+			for(var/required_access in req_access)
+				if(required_access in origin_dept_access)
+					return TRUE
+
+			for(var/required_access in req_one_access)
+				if(required_access in origin_dept_access)
+					return TRUE
+
+	return FALSE
+
 /**
  * Set the airlock state to a new value, change the icon state
  * and run the associated animation if required.
@@ -547,6 +573,8 @@
 				light_state = AIRLOCK_LIGHT_BOLTS
 			else if(emergency)
 				light_state = AIRLOCK_LIGHT_EMERGENCY
+			else if(has_active_reta_access())
+				light_state = AIRLOCK_LIGHT_RETA
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED
@@ -565,7 +593,7 @@
 	else
 		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
 
-	if(lights && hasPower() && light_state)
+	if(feedback && hasPower() && light_state)
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
@@ -597,7 +625,8 @@
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
 			if(!(unres_sides & heading))
 				continue
-			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+			floorlight.color = LIGHT_COLOR_DEFAULT
 			switch (heading)
 				if (NORTH)
 					floorlight.pixel_w = 0
@@ -634,7 +663,8 @@
 			use_energy(50 JOULES)
 			playsound(src, soundin = doorClose, vol = 30, vary = TRUE)
 		if(DOOR_DENY_ANIMATION)
-			playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
+			if(feedback)
+				playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
 			addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/proc/handle_deny_end()
@@ -1487,7 +1517,7 @@
 	if(!open())
 		set_airlock_state(AIRLOCK_CLOSED)
 	obj_flags |= EMAGGED
-	lights = FALSE
+	feedback = FALSE
 	locked = TRUE
 	loseMainPower()
 	loseBackupPower()
@@ -1682,7 +1712,7 @@
 	data["id_scanner"] = !aiDisabledIdScanner
 	data["emergency"] = emergency // access
 	data["locked"] = locked // bolted
-	data["lights"] = lights // bolt lights
+	data["feedback"] = feedback // lights and sounds
 	data["safe"] = safe // safeties
 	data["speed"] = normalspeed // safe speed
 	data["welded"] = welded // welded
@@ -1696,7 +1726,7 @@
 	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
 	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
 	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
-	wire["lights"] = !wires.is_cut(WIRE_BOLTLIGHT)
+	wire["feedback"] = !wires.is_cut(WIRE_FEEDBACK)
 	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
 	wire["timing"] = !wires.is_cut(WIRE_TIMING)
 
@@ -1744,7 +1774,7 @@
 			toggle_bolt(usr)
 			. = TRUE
 		if("light-toggle")
-			lights = !lights
+			feedback = !feedback
 			update_appearance()
 			. = TRUE
 		if("safe-toggle")

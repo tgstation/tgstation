@@ -243,6 +243,124 @@
 	impact_light_intensity = 7
 	impact_light_range = 2.5
 	impact_light_color_override = COLOR_LIME
+	// Subtract this from SM damage on hit for lasers
+	var/integrity_heal
+	// Subtract this from SM energy on hit for lasers
+	var/energy_reduction
+	// Add this to SM psi coefficient on hit for lasers
+	var/psi_change
+
+/obj/projectile/beam/emitter/hitscan/bluelens
+	name = "electrodisruptive beam"
+	light_color = LIGHT_COLOR_BLUE
+	muzzle_type = /obj/effect/projectile/muzzle/pulse
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/bluelens
+	impact_type = /obj/effect/projectile/impact/pulse
+	hitscan_light_color_override = COLOR_BLUE_LIGHT
+	muzzle_flash_color_override = COLOR_BLUE_LIGHT
+	impact_light_color_override = COLOR_BLUE_LIGHT
+	damage_type = STAMINA
+	integrity_heal = 0.25
+	energy_reduction = 60
+
+/obj/projectile/beam/emitter/hitscan/bioregen
+	name = "bioregenerative beam"
+	light_color = LIGHT_COLOR_BRIGHT_YELLOW
+	muzzle_type = /obj/effect/projectile/muzzle/solar
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/bioregen
+	impact_type = /obj/effect/projectile/impact/solar
+	hitscan_light_color_override = COLOR_LIGHT_YELLOW
+	muzzle_flash_color_override = COLOR_LIGHT_YELLOW
+	impact_light_color_override = COLOR_LIGHT_YELLOW
+	damage_type = STAMINA
+	damage = 0
+	var/healing_done = 5
+
+/obj/projectile/beam/emitter/hitscan/bioregen/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!iscarbon(target))
+		return
+	var/mob/living/carbon/healed_guy = target
+	healed_guy.heal_bodypart_damage(brute = healing_done, burn = healing_done, updating_health = FALSE)
+
+/obj/projectile/beam/emitter/hitscan/incend
+	name = "conflagratory beam"
+	light_color = LIGHT_COLOR_ORANGE
+	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/redlens
+	impact_type = /obj/effect/projectile/impact/heavy_laser
+	hitscan_light_color_override = COLOR_ORANGE
+	muzzle_flash_color_override = COLOR_ORANGE
+	impact_light_color_override = COLOR_ORANGE
+	damage = 20
+	integrity_heal = -0.15
+	energy_reduction = -150
+	psi_change = -0.1
+
+/obj/projectile/beam/emitter/hitscan/incend/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/burnt_guy = target
+	burnt_guy.adjust_fire_stacks(5)
+	burnt_guy.ignite_mob()
+
+/obj/projectile/beam/emitter/hitscan/psy
+	name = "psychosiphoning beam"
+	light_color = LIGHT_COLOR_PINK
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter/psy
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/psy
+	impact_type = /obj/effect/projectile/impact/laser/emitter/psy
+	hitscan_light_color_override = COLOR_BLUSH_PINK
+	muzzle_flash_color_override = COLOR_BLUSH_PINK
+	impact_light_color_override = COLOR_BLUSH_PINK
+	damage = 0
+	energy_reduction = -25
+	psi_change = 0.25
+
+/obj/projectile/beam/emitter/hitscan/psy/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/siphoned = target
+	siphoned.mob_mood.adjust_sanity(-25)
+	to_chat(siphoned, span_warning("Suddenly, everything feels just a little bit worse!"))
+
+/obj/projectile/beam/emitter/hitscan/magnetic
+	name = "magnetogenerative beam"
+	light_color = COLOR_SILVER
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter/magnetic
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/magnetic
+	impact_type = /obj/effect/projectile/impact/laser/emitter/magnetic
+	hitscan_light_color_override = COLOR_SILVER
+	muzzle_flash_color_override = COLOR_SILVER
+	impact_light_color_override = COLOR_SILVER
+	damage = 0
+
+/obj/projectile/beam/emitter/hitscan/magnetic/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/turf/turf_to_magnet = get_turf(target)
+	goonchem_vortex(turf_to_magnet, FALSE, 4)
+
+/obj/projectile/beam/emitter/hitscan/blast
+	name = "hyperconcussive beam"
+	light_color = LIGHT_COLOR_ORANGE
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter/magnetic
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/magnetic
+	impact_type = /obj/effect/projectile/impact/laser/emitter/magnetic
+	hitscan_light_color_override = COLOR_ORANGE
+	muzzle_flash_color_override = COLOR_ORANGE
+	impact_light_color_override = COLOR_ORANGE
+	damage = 0
+	integrity_heal = -2
+	energy_reduction = -500
+
+
+/obj/projectile/beam/emitter/hitscan/blast/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/turf/turf_to_explode = get_turf(target)
+	explosion(turf_to_explode, 0, 1, 2)
+
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"

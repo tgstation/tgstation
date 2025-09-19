@@ -1,5 +1,6 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
+	abstract_type = /mob/living
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 	hud_type = /datum/hud/living
@@ -136,6 +137,8 @@
 	/// Cell tracker datum we use to manage the pipes around us, for faster ventcrawling
 	/// Should only exist if you're in a pipe
 	var/datum/cell_tracker/pipetracker
+	/// Cooldown for welded vent movement messages to prevent spam
+	COOLDOWN_DECLARE(welded_vent_message_cd)
 
 	var/smoke_delay = 0 ///used to prevent spam with smoke reagent reaction on mob.
 

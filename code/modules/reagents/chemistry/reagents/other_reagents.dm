@@ -138,10 +138,11 @@
 	var/cool_temp = cooling_temperature
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
-	if(hotspot && !isspaceturf(exposed_turf))
+	if(hotspot && !isspaceturf(exposed_turf)) // the water evaporates in an endothermic reaction
 		if(exposed_turf.air)
 			var/datum/gas_mixture/air = exposed_turf.air
-			air.temperature = max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp),TCMB)
+			air.temperature = min(max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp), T0C), air.temperature) // the outer min temperature check is for weird phenomena like freon combustion
+			exposed_turf.temperature = clamp(min(exposed_turf.temperature-(cool_temp*1000), exposed_turf.temperature/cool_temp), T20C, exposed_turf.temperature) // turfs normally don't go below T20C so I'll just clamp it to that in case of weird phenomena.
 			air.react(src)
 			qdel(hotspot)
 
@@ -2527,7 +2528,7 @@
 /datum/reagent/glitter
 	name = "Glitter"
 	description = "The herpes of arts and crafts."
-	data = list("colors"=list(COLOR_WHITE = 100))
+	data = list("colors" = list(COLOR_WHITE = 100))
 	color = COLOR_WHITE //pure white
 	taste_description = "plastic"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2540,6 +2541,7 @@
 
 /datum/reagent/glitter/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
+
 	if(!istype(exposed_turf))
 		return
 	exposed_turf.spawn_glitter(data["colors"])
@@ -2548,7 +2550,7 @@
 	. = ..()
 
 	if(src.data["colors"])
-		color = pick(src.data["colors"])
+		color = pick_weight(src.data["colors"])
 	else
 		color = COLOR_WHITE
 
@@ -2561,32 +2563,25 @@
 		data["colors"] = blend_weighted_lists(mix_data["colors"], data["colors"], prop_current)
 
 	if(data["colors"])
-		color = pick(data["colors"])
+		color = pick_weight(data["colors"])
 	else
 		color = COLOR_WHITE
 
 /datum/reagent/glitter/random
-	name = "Unrandomised Randomised Glitter"
-	description = "You shouldn't be seeing this, please make an issue report describing how you found it."
-
-	var/list/possible_colors = list(
-		list(COLOR_WHITE = 100),
-		list("#ff8080" = 100),
-		list("#4040ff" = 100),
-		list("#ff5555" = 34, "#55ff55" = 33, "#5555ff" = 33),
+	name = "Glitter (Random)"
+	// The weighted list of random color choices that can be chosen upon spawning
+	var/static/list/possible_colors = list(
+		COLOR_WHITE = 25,
+		"#ff8080" = 25,
+		"#4040ff" = 25,
+		"#ff5555" = 8,
+		"#55ff55" = 9,
+		"#5555ff" = 8,
 	)
 
 /datum/reagent/glitter/random/on_new(data)
-	. = ..()
-
-	var/list/color_list = pick(possible_colors)
-
-	var/datum/reagents/our_holder = src.holder
-	var/our_volume = src.volume
-	var/list/our_data = list("colors" = color_list)
-
-	our_holder.remove_reagent(/datum/reagent/glitter/random, our_volume)
-	our_holder.add_reagent(/datum/reagent/glitter, our_volume, data = our_data)
+	src.data["colors"] = possible_colors
+	return ..()
 
 /datum/reagent/confetti
 	name = "Confetti"

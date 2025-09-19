@@ -78,6 +78,8 @@
 	idle_power_cost = 0 //magic
 	use_energy_cost = 0 //magic too
 	max_charges = 5
+	recharge_start_delay = 20 SECONDS
+	charge_increment_delay = 3 SECONDS
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
 	required_slots = list()
@@ -290,7 +292,7 @@
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/chameleon)
 	cooldown_time = 0.5 SECONDS
-	allow_flags = MODULE_ALLOW_INACTIVE
+	allow_flags = list(MODULE_ALLOW_INACTIVE|MODULE_ALLOW_UNWORN)
 	/// A list of all the items the suit can disguise as.
 	var/list/possible_disguises = list()
 	/// The path of the item we're disguised as.
@@ -312,17 +314,17 @@
 		return_look()
 	possible_disguises = null
 
-/obj/item/mod/module/chameleon/used()
+/obj/item/mod/module/chameleon/used(mob/activator)
 	if(mod.active || mod.activating)
-		balloon_alert(mod.wearer, "unit active!")
+		balloon_alert(activator, "unit active!")
 		return FALSE
 	return ..()
 
-/obj/item/mod/module/chameleon/on_use()
+/obj/item/mod/module/chameleon/on_use(mob/activator)
 	if(current_disguise)
 		return_look()
 		return
-	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
+	var/picked_name = tgui_input_list(activator, "Select look to change into", "Chameleon Settings", possible_disguises)
 	if(!possible_disguises[picked_name] || mod.active || mod.activating)
 		return
 	current_disguise = possible_disguises[picked_name]
@@ -417,7 +419,7 @@
 	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
 	required_slots = list(ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_OCLOTHING)
 	/// List of traits added when the suit is activated
-	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
+	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN_APPEARANCE, TRAIT_UNKNOWN_VOICE, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
 	. = ..()
@@ -465,7 +467,7 @@
 	device = /obj/item/gun/medbeam/mod
 	incompatible_modules = list(/obj/item/mod/module/medbeam)
 	removable = TRUE
-	cooldown_time = 0.5
+	cooldown_time = 0.05 SECONDS
 	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/gun/medbeam/mod
@@ -504,10 +506,10 @@
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
-/obj/item/mod/module/stealth/wraith/on_activation()
+/obj/item/mod/module/stealth/wraith/on_activation(mob/activator)
 	return // Don't activate stealth when the module is activated because the stealth portion of the module is fully passive
 
-/obj/item/mod/module/stealth/wraith/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/stealth/wraith/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	. = ..()
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 

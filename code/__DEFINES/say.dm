@@ -48,7 +48,10 @@
 #define MODE_KEY_PUPPET "j"
 
 #define MODE_ALIEN "alientalk"
+#define MODE_KEY_ALIEN "a"
+
 #define MODE_HOLOPAD "holopad"
+#define MODE_KEY_HOLOPAD "h"
 
 #define MODE_CHANGELING "changeling"
 #define MODE_KEY_CHANGELING "g"
@@ -121,6 +124,9 @@
 #define MSG_AUDIBLE (1<<1)
 
 
+// Say mode message handling return flags, exist for readability.
+/// Say mode has handled the message.
+#define SAYMODE_MESSAGE_HANDLED (1<<0)
 
 // Used in visible_message_flags, audible_message_flags and runechat_flags
 /// Automatically applies emote related spans/fonts/formatting to the message
@@ -137,6 +143,3 @@
 ///Defines for priorities for the bubble_icon_override comp
 #define BUBBLE_ICON_PRIORITY_ACCESSORY 2
 #define BUBBLE_ICON_PRIORITY_ORGAN 1
-
-/// Sent from /atom/movable/proc/compose_message() to find an honorific. Compatible with NAME_PART_INDEX: (list/stored_name, mob/living/carbon/carbon_human)
-#define COMSIG_ID_GET_HONORIFIC "id_get_honorific"

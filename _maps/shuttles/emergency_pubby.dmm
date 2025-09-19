@@ -590,7 +590,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{

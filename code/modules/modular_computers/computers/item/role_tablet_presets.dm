@@ -337,7 +337,7 @@
 		lube_flags = NO_SLIP_WHEN_WALKING,\
 		on_slip_callback = CALLBACK(src, PROC_REF(AfterSlip)),\
 		can_slip_callback = CALLBACK(src, PROC_REF(try_slip)),\
-		slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT),\
+		slot_whitelist = ITEM_SLOT_ID | ITEM_SLOT_BELT,\
 	)
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 
@@ -394,6 +394,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/portrait_printer,
 	)
 
 /obj/item/modular_computer/pda/curator/Initialize(mapload)

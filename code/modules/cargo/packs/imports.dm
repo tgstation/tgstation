@@ -65,6 +65,14 @@
 	contains = list(/obj/item/stack/sheet/mineral/bamboo/fifty)
 	crate_name = "bamboo cuttings crate"
 
+/datum/supply_pack/imports/wind_turbine
+	name = "Wind Turbine Crate"
+	desc = "Includes a portable wind turbine for charging small devices and appliances. Considered obsolete in the frontier, \
+		but perfect for officers who think walking laps around the station is 'innovative engineering'."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/portable_wind_turbine/loaded)
+	crate_name = "wind turbine crate"
+
 /datum/supply_pack/imports/bananium
 	name = "A Single Sheet of Bananium"
 	desc = "Don't let the clown know that he can order this. It costs a fortune even for this much."
@@ -91,7 +99,7 @@
 	desc = "I'm not sure why you bothered to buy this...and why does it cost so much?"
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
-		/obj/effect/spawner/random/maintenance/three,
+		/obj/effect/spawner/random/maintenance/dumpster,
 		/obj/effect/spawner/random/trash/garbage = 5,
 	)
 	crate_name = "putrid dumpster"

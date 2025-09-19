@@ -43,6 +43,10 @@
 	. = ..()
 	cached_flat_icon = null
 
+/// Called to get what name this card represents
+/obj/item/card/proc/get_displayed_name(honorifics = FALSE)
+	return null
+
 /// If no cached_flat_icon exists, this proc creates it and crops it. This proc then returns the cached_flat_icon. Intended for use displaying ID card icons in chat.
 /obj/item/card/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
@@ -146,13 +150,16 @@
 		SSid_access.apply_trim_to_card(src, trim)
 	else
 		update_label()
-		update_icon()
+		update_appearance()
+
+	// Apply any active RETA grants to this new ID card
+	// This will only do something if there are active grants, so it's safe to call always
+	apply_active_reta_grants_to_card(src)
 
 	register_item_context()
 	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, PROC_REF(update_in_wallet))
-	RegisterSignal(src, COMSIG_ID_GET_HONORIFIC, PROC_REF(return_message_name_part))
 	if(prob(1))
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
@@ -184,19 +191,25 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
 	return ..()
 
-/obj/item/card/id/proc/return_message_name_part(datum/source, list/stored_name, mob/living/carbon/carbon_human)
-	SIGNAL_HANDLER
-	var/voice_name = carbon_human.GetVoice()
-	var/end_string = ""
-	var/return_string = ""
-	if(carbon_human.name != voice_name)
-		end_string += " (as [registered_name])"
-	if(trim && honorific_position != HONORIFIC_POSITION_NONE && (carbon_human.name == voice_name)) //The voice and name are the same, so we display the title.
-		return_string += honorific_title
-	else
-		return_string += voice_name //Name on the ID ain't the same as the speaker, so we display their real name with no title.
-	return_string += end_string
-	stored_name[NAME_PART_INDEX] = return_string
+/obj/item/card/id/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	if(!(slot & ITEM_SLOT_ID))
+		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
+
+/obj/item/card/id/dropped(mob/user, silent = FALSE)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
+
+/// Getter for the registered name, with optional honorifics
+/obj/item/card/id/get_displayed_name(honorifics = FALSE)
+	if(honorifics && honorific_position != HONORIFIC_POSITION_NONE && honorific_title)
+		return honorific_title
+	return registered_name
 
 /obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
@@ -210,7 +223,7 @@
 
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
-	if ((!big_pointer && !pointer_color) || HAS_TRAIT(user, TRAIT_UNKNOWN))
+	if ((!big_pointer && !pointer_color) || HAS_TRAIT(user, TRAIT_UNKNOWN_APPEARANCE))
 		return
 	if (point.icon_state != /obj/effect/temp_visual/point::icon_state) //it differs from the original icon_state already.
 		return
@@ -646,7 +659,7 @@
 		switch(var_name)
 			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
-				update_icon()
+				update_appearance()
 			if(NAMEOF(src, trim))
 				if(ispath(trim))
 					SSid_access.apply_trim_to_card(src, trim)
@@ -893,12 +906,19 @@
 	return .
 
 /obj/item/card/id/GetAccess()
-	return access.Copy()
+	var/list/total_access = access.Copy()
+
+	// Add all RETA temporary access from all departments - code/modules/reta/reta_system.dm
+	for(var/dept in reta_temp_access)
+		if(reta_temp_access[dept])
+			total_access |= reta_temp_access[dept]
+
+	return total_access
 
 /obj/item/card/id/GetID()
 	return src
 
-/obj/item/card/id/RemoveID()
+/obj/item/card/id/remove_id()
 	return src
 
 /// Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.
@@ -933,6 +953,10 @@
 		assignment_string = assignment
 
 	name = "[name_string] ([assignment_string])"
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human = loc
+		human.update_visible_name()
 
 /// Re-generates the honorific title. Returns the compiled honorific_title value
 /obj/item/card/id/proc/update_honorific()
@@ -1868,7 +1892,7 @@
 		REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 		user.log_message("reset \the [initial(name)] named \"[src]\" to default.", LOG_GAME)
 		update_label()
-		update_icon()
+		update_appearance()
 		forged = FALSE
 		to_chat(user, span_notice("You successfully reset the ID card."))
 		return
@@ -1928,7 +1952,7 @@
 		ADD_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 
 	update_label()
-	update_icon()
+	update_appearance()
 	forged = TRUE
 	to_chat(user, span_notice("You successfully forge the ID card."))
 	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
@@ -1938,7 +1962,7 @@
 
 	var/mob/living/carbon/human/owner = user
 	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
 
 	if (registered_account)
 		return
@@ -2046,28 +2070,8 @@
 	. = ..()
 	register_context()
 
-/obj/item/card/cardboard/equipped(mob/user, slot, initial = FALSE)
-	. = ..()
-	if(slot == ITEM_SLOT_ID)
-		RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(return_visible_name))
-		RegisterSignal(user, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(return_message_name_part))
-
-/obj/item/card/cardboard/dropped(mob/user, silent = FALSE)
-	. = ..()
-	UnregisterSignal(user, list(COMSIG_HUMAN_GET_VISIBLE_NAME, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART))
-
-/obj/item/card/cardboard/proc/return_visible_name(mob/living/carbon/human/source, list/identity)
-	SIGNAL_HANDLER
-	identity[VISIBLE_NAME_ID] = scribbled_name
-
-/obj/item/card/cardboard/proc/return_message_name_part(mob/living/carbon/human/source, list/stored_name, visible_name)
-	SIGNAL_HANDLER
-	if(visible_name)
-		return
-	var/voice_name = source.GetVoice()
-	if(source.name != voice_name)
-		voice_name += " (as [scribbled_name])"
-	stored_name[NAME_PART_INDEX] = voice_name
+/obj/item/card/cardboard/get_displayed_name(honorifics = FALSE)
+	return scribbled_name
 
 /obj/item/card/cardboard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.can_write(tool, TRUE))

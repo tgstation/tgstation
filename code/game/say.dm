@@ -62,7 +62,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return
 	spans |= speech_span
 	language ||= get_selected_language()
-	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	if(!message_mods[SAY_MOD_VERB])
+		message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced)
 
 /// Called when this movable hears a message from a source.
@@ -148,37 +149,20 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq, radio_freq_name)]\] " : ""
 	//Speaker name
-	var/namepart
-	var/list/stored_name = list(null)
-
-	if(iscarbon(speaker)) //First, try to pull the modified title from a carbon's ID. This will override both visual and audible names.
-		var/mob/living/carbon/carbon_human = speaker
-		var/obj/item/id_slot = carbon_human.get_item_by_slot(ITEM_SLOT_ID)
-		if(id_slot)
-			var/obj/item/card/id/id_card = id_slot?.GetID()
-			if(id_card)
-				SEND_SIGNAL(id_card, COMSIG_ID_GET_HONORIFIC, stored_name, carbon_human)
-
-	if(!stored_name[NAME_PART_INDEX]) //Otherwise, we just use whatever the name signal gives us.
-		SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
-
-	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
+	var/namepart = speaker.get_message_voice(visible_name)
 
 	//End name span.
 	var/endspanpart = "</span>"
 
-	//Message
-	var/messagepart
+	// Language icon.
 	var/languageicon = ""
-	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
-	else
-		messagepart = speaker.say_quote(raw_message, spans, message_mods)
-
+	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
 		if(istype(dialect) && dialect.display_icon(src))
 			languageicon = "[dialect.get_icon()] "
 
+	// The actual message part.
+	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)
 	messagepart = " <span class='message'>[messagepart]</span></span>"
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
@@ -219,14 +203,20 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return verb_say
 
 /**
- * This prock is used to generate a message for chat
- * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`.
+ * This proc is used to generate the 'message' part of a chat message.
+ * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`,
+ * or the `taps their microphone.` part of `Grey Tider taps their microphone.`.
  *
  * input - The message to be said
  * spans - A list of spans to attach to the message. Includes the atom's speech span by default
  * message_mods - A list of message modifiers, i.e. whispering/singing
  */
-/atom/movable/proc/say_quote(input, list/spans = list(speech_span), list/message_mods = list())
+/atom/movable/proc/generate_messagepart(input, list/spans = list(speech_span), list/message_mods = list())
+	// If we only care about the emote part, early return.
+	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		return apply_message_emphasis(message_mods[MODE_CUSTOM_SAY_EMOTE])
+
+	// Otherwise, we format our full quoted message.
 	if(!input)
 		input = "..."
 
@@ -329,8 +319,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "2"
 	return "0"
 
-/atom/proc/GetVoice()
+/// Get what this atom sounds like when speaking
+/atom/proc/get_voice()
 	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
+
+/// Get what this atom appears like in chat when speaking
+/// visible_name - If TRUE, returns the visible name rather than the voice
+/atom/proc/get_message_voice(visible_name)
+	return visible_name ? get_visible_name() : get_voice()
 
 //HACKY VIRTUALSPEAKER STUFF BEYOND THIS POINT
 //these exist mostly to deal with the AIs hrefs and job stuff.
@@ -353,7 +349,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 	radio = _radio
 	source = M
 	if(istype(M))
-		name = radio.anonymize ? "Unknown" : M.GetVoice()
+		name = radio.anonymize ? "Unknown" : M.get_voice()
 		verb_say = M.get_default_say_verb()
 		verb_ask = M.verb_ask
 		verb_exclaim = M.verb_exclaim

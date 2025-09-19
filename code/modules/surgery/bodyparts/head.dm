@@ -34,7 +34,7 @@
 	/// Replacement name
 	var/real_name = ""
 	/// Flags related to appearance, such as hair, lips, etc
-	var/head_flags = HEAD_ALL_FEATURES
+	var/head_flags = HEAD_DEFAULT_FEATURES
 
 	/// Hair style
 	var/hairstyle = "Bald"
@@ -210,8 +210,20 @@
 	. = ..()
 	AddElement(/datum/element/toy_talk)
 
-/obj/item/bodypart/head/GetVoice()
+/obj/item/bodypart/head/get_voice()
 	return "The head of [real_name]"
+
+/obj/item/bodypart/head/update_bodypart_damage_state()
+	if (head_flags & HEAD_NO_DISFIGURE)
+		return ..()
+
+	var/old_states = brutestate + burnstate
+	. = ..()
+	var/new_states = brutestate + burnstate
+	if(new_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES)
+		add_bodypart_trait(TRAIT_DISFIGURED)
+	else if(old_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES)
+		remove_bodypart_trait(TRAIT_DISFIGURED)
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'

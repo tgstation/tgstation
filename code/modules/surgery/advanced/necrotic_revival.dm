@@ -23,7 +23,7 @@
 	implements = list(
 		/obj/item/reagent_containers/syringe = 100,
 		/obj/item/pen = 30)
-	time = 50
+	time = 5 SECONDS
 	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 	require_all_chems = FALSE
 
