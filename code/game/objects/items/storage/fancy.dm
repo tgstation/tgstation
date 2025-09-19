@@ -231,7 +231,7 @@
 
 	register_context()
 	if(!spawn_count)
-		update_icon_state()
+		update_appearance()
 
 /obj/item/storage/fancy/cigarettes/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -482,7 +482,7 @@
 	. = ..()
 
 	if(!spawn_count)
-		update_overlays()
+		update_appearance()
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
