@@ -27,6 +27,8 @@
 		/obj/effect/spawner/random/bureaucracy/pen = 2,
 		/obj/item/c_tube = 2,
 		/obj/item/plate_shard = 2,
+		/obj/item/lighter/greyscale/empty = 2,
+		/obj/item/lighter/empty = 1,
 		/obj/item/trash/candle = 1,
 		/obj/item/trash/flare = 1,
 		/obj/item/rag = 1,
