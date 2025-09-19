@@ -73,7 +73,8 @@
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/atom_deconstruct(disassembled = TRUE)
-	new build_material(get_turf(src), number_of_mats)
+	if(!isnull(build_material) && number_of_mats >= 1)
+		new build_material(get_turf(src), number_of_mats)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF)
@@ -189,3 +190,50 @@
 	turf_we_place_on.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	qdel(src)
+
+/obj/structure/lattice/catwalk/boulder
+	name = "boulder platform"
+	desc = "A boulder, floating on the molten hot deadly lava. More like a BOATlder."
+	icon = 'icons/obj/ore.dmi'
+	icon_state = "boulder_platform"
+	base_icon_state = "boulder_platform"
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
+	build_material = null
+	/// The type of particle to make before the platform collapses.
+	var/warning_particle = /particles/smoke/ash
+
+/obj/structure/lattice/catwalk/boulder/Initialize(mapload)
+	. = ..()
+	fast_emissive_blocker(src)
+	AddElement(/datum/element/elevation, pixel_shift = 8)
+
+/obj/structure/lattice/catwalk/boulder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(ismetaltile(attacking_item))
+		balloon_alert(user, "too unstable!")
+		return FALSE
+	return ..()
+
+/obj/structure/lattice/catwalk/boulder/CanAllowThrough(atom/movable/mover, border_dir)
+	if(istype(mover, /obj/structure/ore_box))
+		self_destruct()
+		return TRUE
+	. = ..()
+
+/obj/structure/lattice/catwalk/boulder/proc/pre_self_destruct()
+	if(istype(loc, /turf/open/lava/plasma))
+		add_overlay("plasma_cracks")
+	else
+		add_overlay("lava_cracks")
+	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = QUAD_EASING|EASE_IN)
+	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 2 SECONDS)
+
+/**
+ * Handles platforms deleting themselves with a visual effect and message.
+ */
+/obj/structure/lattice/catwalk/boulder/proc/self_destruct()
+	visible_message(span_notice("\The [src] sinks and dissapears!"))
+	playsound(src, 'sound/effects/gas_hissing.ogg', 20)
+	remove_shared_particles(warning_particle)
+	deconstruct()

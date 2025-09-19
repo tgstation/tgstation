@@ -5,6 +5,7 @@
 /obj/item/mecha_parts/mecha_equipment
 	name = "mecha equipment"
 	icon = 'icons/obj/devices/mecha_equipment.dmi'
+	abstract_type = /obj/item/mecha_parts/mecha_equipment
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300

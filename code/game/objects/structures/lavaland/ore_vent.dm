@@ -3,6 +3,7 @@
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
 #define MINERALS_PER_BOULDER 3
+#define MAX_MINERAL_PICK_ATTEMPTS 10
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -171,26 +172,37 @@
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(new_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	if(new_minerals < 1)
 		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
-	var/list/available_mats = difflist(first = SSore_generation.ore_vent_minerals, second = mineral_breakdown, skiprep = 1)
-	for(var/i in 1 to new_minerals)
-		if(!length(SSore_generation.ore_vent_minerals) && map_loading)
-			// We should prevent this from happening in SSore_generation, but if not then we crash here
-			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
-		var/datum/material/new_material
-		if(map_loading)
-			if(length(available_mats))
-				new_material = pick(GLOB.ore_vent_minerals_lavaland)
-				var/datum/material/surrogate_mat = pick(SSore_generation.ore_vent_minerals)
-				available_mats -= surrogate_mat
-				SSore_generation.ore_vent_minerals -= surrogate_mat
-			else
-				new_material = pick(available_mats)
-				available_mats -= new_material
-				SSore_generation.ore_vent_minerals -= new_material
-		else
-			new_material = pick(GLOB.ore_vent_minerals_lavaland)
-		mineral_breakdown[new_material] = rand(1, 4)
 
+	//should have enough minerals for the vent during round start
+	var/list/available_minerals = SSore_generation.ore_vent_minerals
+	if(map_loading && available_minerals.len < new_minerals)
+		CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
+
+	var/list/datum/material/picked_minerals = list()
+	for(var/_ in 1 to new_minerals)
+		var/datum/material/mineral
+
+		//pick an unique mineral but try only MAX_MINERAL_PICK_ATTEMPTS times before giving up else we could be stuck here forever
+		var/attempts = 0
+		do
+			mineral = length(mineral_breakdown) ? pick_weight(mineral_breakdown) : null
+			if(map_loading)
+				if(!mineral || !available_minerals.Find(mineral))
+					mineral = pick(available_minerals)
+			else
+				mineral = mineral || pick_weight(GLOB.ore_vent_minerals_lavaland)
+			attempts += 1
+		while(attempts < MAX_MINERAL_PICK_ATTEMPTS && picked_minerals.Find(mineral))
+
+		//register the picked mineral, removing it from the round start available minerals if nessassary
+		if(map_loading)
+			available_minerals -= mineral
+		picked_minerals |= mineral
+
+	//assign random weights to picked minerals
+	mineral_breakdown.Cut()
+	for(var/datum/material/mineral as anything in picked_minerals)
+		mineral_breakdown[mineral] = rand(1, new_minerals)
 
 /**
  * Returns the quantity of mineral sheets in each ore vent's boulder contents roll.
@@ -201,7 +213,7 @@
  * @params ore_floor The number of minerals already rolled. Used to scale the logarithmic function.
  */
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
-	return SHEET_MATERIAL_AMOUNT * round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1))
+	return SHEET_MATERIAL_AMOUNT * max(round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1)), 1)
 
 /**
  * This confirms that the user wants to start the wave defense event, and that they can start it.
@@ -423,6 +435,15 @@
 	new_rock.boulder_size = boulder_size
 	new_rock.durability = rand(2, boulder_size) //randomize durability a bit for some flavor.
 	new_rock.boulder_string = boulder_icon_state
+
+	switch(boulder_size)
+		if(BOULDER_SIZE_SMALL)
+			new_rock.platform_lifespan = PLATFORM_LIFE_SMALL
+		if(BOULDER_SIZE_MEDIUM)
+			new_rock.platform_lifespan = PLATFORM_LIFE_MEDIUM
+		if(BOULDER_SIZE_LARGE)
+			new_rock.platform_lifespan = PLATFORM_LIFE_LARGE
+
 	new_rock.update_appearance(UPDATE_ICON_STATE)
 
 	//start the cooldown & return the boulder
@@ -463,8 +484,8 @@
 	unique_vent = TRUE
 	boulder_size = BOULDER_SIZE_SMALL
 	mineral_breakdown = list(
-		/datum/material/iron = 50,
-		/datum/material/glass = 50,
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
 	)
 
 /obj/structure/ore_vent/random
@@ -605,3 +626,4 @@
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
 #undef MINERALS_PER_BOULDER
+#undef MAX_MINERAL_PICK_ATTEMPTS

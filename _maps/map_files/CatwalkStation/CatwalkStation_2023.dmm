@@ -36027,12 +36027,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "kpz" = (
-/obj/structure/rack,
-/obj/item/aicard,
-/obj/item/pai_card,
-/obj/item/circuitboard/aicore,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/modular_computer/preset/research,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "kpC" = (
@@ -40037,6 +40034,10 @@
 /area/station/commons/fitness/recreation)
 "lAu" = (
 /obj/structure/cable,
+/obj/structure/rack,
+/obj/item/aicard,
+/obj/item/pai_card,
+/obj/item/circuitboard/aicore,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "lAE" = (
@@ -82617,7 +82618,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "xZp" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/modular_computer/preset/research,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "xZG" = (

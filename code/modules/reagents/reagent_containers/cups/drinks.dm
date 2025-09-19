@@ -6,6 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks/drinks.dmi'
 	icon_state = "glass_empty"
+	abstract_type = /obj/item/reagent_containers/cup/glass
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	resistance_flags = NONE
 

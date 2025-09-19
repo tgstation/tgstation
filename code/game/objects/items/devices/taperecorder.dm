@@ -159,7 +159,7 @@
 		return
 
 	mytape.timestamp += mytape.used_capacity
-	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: [raw_message]"
+	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.get_voice()]: [raw_message]"
 
 
 /obj/item/taperecorder/verb/record()

@@ -1,4 +1,5 @@
 /turf/open
+	abstract_type = /turf/open
 	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	///negative for faster, positive for slower

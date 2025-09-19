@@ -16,6 +16,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
+	emp_damage_modifier = 1
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
@@ -53,6 +54,7 @@
 	desc = "A power cell with a slightly higher capacity than normal!"
 	icon_state = "9v_cell"
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
+
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = STANDARD_CELL_RATE * 0.5
 
@@ -83,6 +85,7 @@
 
 /obj/item/stock_parts/power_store/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
+	emp_damage_modifier = 0.5
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	chargerate = STANDARD_CELL_RATE * 0.75
 
@@ -97,6 +100,7 @@
 /obj/item/stock_parts/power_store/cell/ninja
 	name = "black power cell"
 	icon_state = "bscell"
+	emp_damage_modifier = 3
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE
@@ -104,10 +108,11 @@
 /obj/item/stock_parts/power_store/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
+	emp_damage_modifier = 3
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
-	
+
 
 /obj/item/stock_parts/power_store/cell/high/empty
 	empty = TRUE
@@ -115,6 +120,7 @@
 /obj/item/stock_parts/power_store/cell/super
 	name = "super-capacity power cell"
 	icon_state = "scell"
+	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	chargerate = STANDARD_CELL_RATE
@@ -125,6 +131,7 @@
 /obj/item/stock_parts/power_store/cell/hyper
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
+	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	chargerate = STANDARD_CELL_RATE * 1.5
@@ -136,6 +143,7 @@
 	name = "bluespace power cell"
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
+	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
 	chargerate = STANDARD_CELL_RATE * 2
@@ -146,6 +154,7 @@
 /obj/item/stock_parts/power_store/cell/infinite
 	name = "infinite-capacity power cell"
 	icon_state = "icell"
+	emp_damage_modifier = 0
 	maxcharge = INFINITY //little disappointing if you examine it and it's not huge
 	custom_materials = list(/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT)
 	chargerate = INFINITY
@@ -172,6 +181,7 @@
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	maxcharge = STANDARD_CELL_CHARGE * 0.3
+	emp_damage_modifier = 0.5 //It's biological, so
 	charge_light_type = null
 	connector_type = null
 	custom_materials = null
@@ -185,6 +195,7 @@
 /obj/item/stock_parts/power_store/cell/emproof
 	name = "\improper EMP-proof cell"
 	desc = "An EMP-proof cell."
+	emp_damage_modifier = 0
 	maxcharge = STANDARD_CELL_CHARGE * 0.5
 
 /obj/item/stock_parts/power_store/cell/emproof/Initialize(mapload)
@@ -242,6 +253,7 @@
 	connector_type = null
 	custom_materials = null
 	grind_results = null
+	emp_damage_modifier = 0
 
 /obj/item/stock_parts/power_store/cell/ethereal/examine(mob/user)
 	. = ..()

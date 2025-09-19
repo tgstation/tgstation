@@ -3,6 +3,7 @@
 	desc = "..."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
+	abstract_type = /obj/item/reagent_containers
 	w_class = WEIGHT_CLASS_TINY
 	sound_vary = TRUE
 	/// The maximum amount of reagents per transfer that will be moved out of this reagent container.

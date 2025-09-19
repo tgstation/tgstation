@@ -6,6 +6,7 @@
 	name = "grown_weapon"
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
+	abstract_type = /obj/item/grown
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	/// Should we pixel offset ourselves at init? for mapping
@@ -13,7 +14,7 @@
 	/// The reagent this plant distill to. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/distill_reagent
 
-// This may look like it's doing nothing but it's necessary, we do this to have kwargs work in New (for passing into Initialize)  
+// This may look like it's doing nothing but it's necessary, we do this to have kwargs work in New (for passing into Initialize)
 /obj/item/grown/New(loc, obj/item/seeds/new_seed)
 	return ..()
 

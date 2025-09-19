@@ -11,6 +11,7 @@
 	icon = 'icons/obj/drinks/soda.dmi'
 	icon_state = "cola"
 	icon_state_preview = "cola"
+	abstract_type = /obj/item/reagent_containers/cup/soda_cans
 	reagent_flags = NONE
 	spillable = FALSE
 	custom_price = PAYCHECK_CREW * 0.9

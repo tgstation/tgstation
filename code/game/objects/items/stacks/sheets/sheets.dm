@@ -3,6 +3,7 @@
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	icon_state = "sheet-metal_3"
+	abstract_type = /obj/item/stack/sheet
 	full_w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	throwforce = 5

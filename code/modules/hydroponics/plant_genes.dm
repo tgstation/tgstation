@@ -123,7 +123,7 @@
 	/// Flag - Traits that share an ID cannot be placed on the same plant.
 	var/trait_ids
 	/// Flag - Modifications made to the final product.
-	var/trait_flags
+	var/trait_flags = TRAIT_SHOW_EXAMINE
 	/// A blacklist of seeds that a trait cannot be attached to.
 	var/list/obj/item/seeds/seed_blacklist
 
@@ -178,9 +178,28 @@
 		return FALSE
 
 	// Add on any bonus lines on examine
-	if(description)
+	if(description && (trait_flags & TRAIT_SHOW_EXAMINE))
 		RegisterSignal(our_plant, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	return TRUE
+
+/**
+ * on_plant_in_tray is called when a seed with this trait is placed in a hydroponics tray
+ *
+ * * tray - the hydroponics tray the seed is placed in
+ * * seed - the seed being placed in the tray
+ */
+/datum/plant_gene/trait/proc/on_plant_in_tray(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
+	return
+
+/**
+ * on_unplanted_from_tray is called when a seed with this trait is removed from a hydroponics tray
+ * (this can be done from being harvested, being uprooted, etc.)
+ *
+ * * tray - the hydroponics tray the seed is removed from
+ * * seed - the seed being removed from the tray
+ */
+/datum/plant_gene/trait/proc/on_unplanted_from_tray(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
+	return
 
 /// Add on any unique examine text to the plant's examine text.
 /datum/plant_gene/trait/proc/examine(obj/item/our_plant, mob/examiner, list/examine_list)
@@ -335,7 +354,7 @@
 	to_chat(eater, span_notice("You feel energized as you bite into [our_plant]."))
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	for(var/obj/item/stock_parts/power_store/found_cell in eater.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/found_cell in eater.get_all_cells())
 		var/newcharge = min(our_seed.potency * 0.01 * found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge
@@ -499,7 +518,7 @@
 	description = "The reagent volume is doubled, halving the plant yield instead."
 	icon = FA_ICON_FLASK_VIAL
 	rate = 2
-	trait_flags = TRAIT_HALVES_YIELD
+	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/maxchem/on_new_plant(obj/item/our_plant, newloc)
@@ -895,7 +914,7 @@
 	description = "It consumes nutriments to heat up other reagents, halving the yield."
 	icon = FA_ICON_TEMPERATURE_ARROW_UP
 	trait_ids = TEMP_CHANGE_ID
-	trait_flags = TRAIT_HALVES_YIELD
+	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /**
@@ -907,7 +926,7 @@
 	description = "It consumes nutriments to cool down other reagents, halving the yield."
 	icon = FA_ICON_TEMPERATURE_ARROW_DOWN
 	trait_ids = TEMP_CHANGE_ID
-	trait_flags = TRAIT_HALVES_YIELD
+	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /// Prevents species mutation, while still allowing wild mutation harvest and Floral Somatoray species mutation.  Trait acts as a tag for hydroponics.dm to recognise.

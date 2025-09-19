@@ -1,6 +1,7 @@
 /obj/item/clothing/under/rank/medical
 	icon = 'icons/obj/clothing/under/medical.dmi'
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
+	abstract_type = /obj/item/clothing/under/rank/medical
 	armor_type = /datum/armor/clothing_under/rank_medical
 
 /datum/armor/clothing_under/rank_medical

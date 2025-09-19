@@ -778,30 +778,21 @@
 		user.electrocute_act(15, src, flags = SHOCK_NOGLOVES)
 	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-	var/list/chargeable_batteries = list()
-	for(var/obj/item/stock_parts/power_store/C in user.get_all_contents())
-		if(C.charge < (C.maxcharge * 0.95)) // otherwise the PDA always gets recharged
-			chargeable_batteries |= C
+	var/list/chargeable_items = user.get_all_cells(max_percent = 0.95) // otherwise the PDA always gets recharged
 
 	lightning_fx(user, stunner)
 	var/recharges = rand(1, 2)
-	if(!length(chargeable_batteries))
+	if(!length(chargeable_items))
 		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
-	for(var/obj/item/stock_parts/power_store/to_charge as anything in chargeable_batteries)
-		if(!recharges)
-			return
+	while(length(chargeable_items) && recharges)
 		recharges--
-		to_charge = pick(chargeable_batteries)
+		var/obj/item/to_charge_base = pick_n_take(chargeable_items)
+		var/obj/item/stock_parts/power_store/to_charge = chargeable_items[to_charge_base]
 		to_charge.charge = to_charge.maxcharge
-		// The device powered by the cell is assumed to be its location.
-		var/obj/device = to_charge.loc
-		// If it's not an object, or the loc's assigned power_store isn't the cell, undo.
-		if(!istype(device) || (device.get_cell() != to_charge))
-			device = to_charge
-		device.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
-		to_chat(user, span_notice("[device] feels energized!"))
-		lightning_fx(device, 0.8 SECONDS)
+		to_charge_base.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
+		to_chat(user, span_notice("[to_charge_base] feels energized!"))
+		lightning_fx(to_charge_base, 0.8 SECONDS)
 
 /obj/item/relic/proc/lightning_fx(atom/shocker, time)
 	var/lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", layer = ABOVE_MOB_LAYER)

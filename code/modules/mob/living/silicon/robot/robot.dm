@@ -312,6 +312,12 @@
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
+	var/obj/item/shield_module/shield_module = locate(/obj/item/shield_module) in src
+	if(shield_module && shield_module.active)
+		add_overlay(shield_module.shield_overlay)
+	else if (shield_module && !shield_module.active)
+		cut_overlay(shield_module.shield_overlay)
+
 	if(opened)
 		if(wiresexposed)
 			add_overlay("ov-opencover +w")

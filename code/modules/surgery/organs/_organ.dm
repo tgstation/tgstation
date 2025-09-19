@@ -1,6 +1,7 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/medical/organs/organs.dmi'
+	abstract_type = /obj/item/organ
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	/// The mob that owns this organ.

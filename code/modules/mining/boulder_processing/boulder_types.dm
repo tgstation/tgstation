@@ -69,10 +69,9 @@
 		/datum/material/titanium = 8,
 		/datum/material/uranium = 3,
 	)
-
 	set_custom_materials(list(pick_weight(expanded_gulag_minerals) = SHEET_MATERIAL_AMOUNT))
 
-///lowgrade boulder, most commonly spawned
+///lowgrade boulder, Exists as an admin spawn for testing
 /obj/item/boulder/shabby
 	name = "shabby boulder"
 	desc = "A bizarre, twisted boulder. Wait, wait no, it's just a rock."

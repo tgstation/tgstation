@@ -6,6 +6,7 @@
 /obj/item/food/cheese
 	name = "the concept of cheese"
 	desc = "This probably shouldn't exist."
+	abstract_type = /obj/item/food/cheese
 	tastes = list("cheese" = 1)
 	food_reagents = list(/datum/reagent/consumable/nutriment/fat = 3)
 	foodtypes = DAIRY

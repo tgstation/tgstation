@@ -2,6 +2,7 @@
 	name = "this is bait"
 	desc = "you got baited."
 	icon = 'icons/obj/fishing.dmi'
+	abstract_type = /obj/item/food/bait
 	/// Quality trait of this bait
 	var/bait_quality = TRAIT_BASIC_QUALITY_BAIT
 	/// Icon state added to main fishing rod icon when this bait is equipped

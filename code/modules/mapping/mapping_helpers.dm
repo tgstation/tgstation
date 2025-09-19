@@ -179,7 +179,7 @@
 				qdel(src)
 				return
 			if(9 to 11)
-				airlock.lights = FALSE
+				airlock.feedback = FALSE
 				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
 				airlock.locked = TRUE
 			if(12 to 15)
