@@ -13,6 +13,7 @@ export interface IconSettings {
   icon: string | null;
   iconState: string | null;
   iconSize: number;
+  applyIcon?: boolean;
 }
 
 export function SpawnPanel() {
@@ -22,6 +23,7 @@ export function SpawnPanel() {
     icon: null,
     iconState: null,
     iconSize: 100,
+    applyIcon: false,
   });
 
   useEffect(() => {

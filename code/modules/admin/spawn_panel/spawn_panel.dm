@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 	var/atom/selected_atom = null
 	var/selected_atom_icon = null
 	var/selected_atom_icon_state = null
+	var/apply_icon_override = FALSE
 	var/list/available_icon_states = null
 	var/atom_icon_size = 100
 	var/atom_amount = 1
@@ -90,6 +91,11 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 			SStgui.update_uis(src)
 			return TRUE
 
+		if("set-apply-icon-override")
+			apply_icon_override = !!params["value"]
+			SStgui.update_uis(src)
+			return TRUE
+
 		if("reset-DMI-icon")
 			selected_atom_icon = null
 			selected_atom_icon_state = null
@@ -150,9 +156,12 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 				"where_target_type" = params["where_target_type"] || WHERE_FLOOR_BELOW_MOB,
 				"atom_icon_size" = params["atom_icon_size"],
 				"offset_type" = params["offset_type"] || OFFSET_RELATIVE,
-				"selected_atom_icon" = selected_atom_icon,
-				"selected_atom_icon_state" = selected_atom_icon_state,
+				"apply_icon_override" = apply_icon_override,
 				)
+
+			if(apply_icon_override)
+				spawn_params["selected_atom_icon"] = selected_atom_icon
+				spawn_params["selected_atom_icon_state"] = selected_atom_icon_state
 
 			spawn_item(spawn_params, usr)
 			return TRUE
@@ -244,9 +253,12 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 					"where_target_type" = where_target_type,
 					"target" = target,
 					"atom_icon_size" = atom_icon_size,
-					"selected_atom_icon" = selected_atom_icon,
-					"selected_atom_icon_state" = selected_atom_icon_state,
+					"apply_icon_override" = apply_icon_override,
 				)
+
+				if(apply_icon_override)
+					spawn_params["selected_atom_icon"] = selected_atom_icon
+					spawn_params["selected_atom_icon_state"] = selected_atom_icon_state
 
 				if(where_target_type == WHERE_TARGETED_LOCATION || where_target_type == WHERE_TARGETED_LOCATION_POD)
 					spawn_params["X"] = clicked_turf.x
@@ -275,6 +287,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 	data["icon"] = selected_atom_icon
 	data["iconState"] = selected_atom_icon_state
 	data["iconSize"] = atom_icon_size
+	data["apply_icon_override"] = apply_icon_override
 	var/list/states = list()
 	if(available_icon_states)
 		for(var/state in available_icon_states)

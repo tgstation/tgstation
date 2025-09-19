@@ -125,11 +125,12 @@
 
 		created_atom.flags_1 |= ADMIN_SPAWNED_1
 
-		if(spawn_params["selected_atom_icon"])
-			created_atom.icon = file(spawn_params["selected_atom_icon"])
+		if(spawn_params["apply_icon_override"])
+			if(spawn_params["selected_atom_icon"])
+				created_atom.icon = file(spawn_params["selected_atom_icon"])
 
-		if(spawn_params["selected_atom_icon_state"])
-			created_atom.icon_state = spawn_params["selected_atom_icon_state"]
+			if(spawn_params["selected_atom_icon_state"])
+				created_atom.icon_state = spawn_params["selected_atom_icon_state"]
 
 		if(spawn_params["atom_icon_size"])
 			if(ismob(created_atom))

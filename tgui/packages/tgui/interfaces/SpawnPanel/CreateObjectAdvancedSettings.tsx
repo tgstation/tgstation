@@ -9,6 +9,7 @@ interface SpawnPanelData {
   iconState: string;
   iconStates: string[];
   selected_object?: string;
+  apply_icon_override?: boolean;
 }
 
 interface CreateObjectAdvancedSettingsProps {
@@ -95,6 +96,22 @@ export function CreateObjectAdvancedSettings(
             }}
           />
         </Table.Cell>
+      </Table.Row>
+      <Table.Row className="candystripe" lineHeight="26px">
+        <Table.Cell pl={1}>Explicitly set icon:</Table.Cell>
+        <Table.Cell>
+          <Button.Checkbox
+            checked={!!iconSettings.applyIcon}
+            onClick={() => {
+              const next = !iconSettings.applyIcon;
+              onIconSettingsChange({ applyIcon: next });
+              act('set-apply-icon-override', { value: next });
+            }}
+          >
+            Enable
+          </Button.Checkbox>
+        </Table.Cell>
+        <Table.Cell pr={1} />
       </Table.Row>
       <Table.Row className="candystripe" lineHeight="26px">
         <Table.Cell pl={1}>Icon scale:</Table.Cell>

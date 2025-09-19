@@ -125,6 +125,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       offset: parseOffset(offset),
       atom_name: objectName,
       atom_icon_size: iconSettings.iconSize,
+      apply_icon_override: iconSettings.applyIcon ?? false,
       ...changedSettings,
     };
     act('update-settings', currentSettings);
@@ -225,6 +226,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       atom_name: objectName,
       atom_icon_size: iconSettings.iconSize,
       selected_atom: data.selected_object,
+      apply_icon_override: iconSettings.applyIcon ?? false,
     };
 
     act('update-settings', currentSettings);
