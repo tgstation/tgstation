@@ -78,7 +78,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold/empty = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp/empty = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori/empty = 5,
-		/obj/item/storage/fancy/cigarettes/rollingpapers/empty = 3,
+		/obj/item/storage/fancy/rollingpapers/empty = 3,
 		/obj/item/storage/fancy/cigarettes/cigars/empty = 3,
 		/obj/item/storage/fancy/cigarettes/cigars/cohiba/empty = 3,
 		/obj/item/storage/fancy/cigarettes/cigars/havana/empty = 3,

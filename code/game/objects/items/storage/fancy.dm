@@ -230,6 +230,8 @@
 	. = ..()
 
 	register_context()
+	if(!spawn_count)
+		update_icon_state()
 
 /obj/item/storage/fancy/cigarettes/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -476,15 +478,19 @@
 	has_open_closed_states = FALSE
 	storage_type = /datum/storage/rolling_paper_pack
 
+/obj/item/storage/fancy/rollingpapers/Initialize(mapload)
+	. = ..()
+
+	if(!spawn_count)
+		update_icon_state()
+
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
 	if(!contents.len)
 		. += "[base_icon_state]_empty"
 
-/obj/item/storage/fancy/cigarettes/rollingpapers/empty
+/obj/item/storage/fancy/rollingpapers/empty
 	spawn_count = 0
-	spawn_coupon = FALSE
-	open_status = FANCY_CONTAINER_OPEN
 
 /////////////
 //CIGAR BOX//
