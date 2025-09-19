@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	AddComponent(/datum/component/storm_hating)
 
 /obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
-	var/obj/item/stack/sheet/glass = new refined_type(null, amount) //spawned in null loc, otherwise the newly spawned glass would be collected separately, causing issues.
+	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount, merge = FALSE) //The newly spawned glass should not merge with other stacks on the turf, else it could cause issues.
 	qdel(src)
 	return glass
 
