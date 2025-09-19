@@ -136,7 +136,7 @@
 		/obj/item/vending_refill/wardrobe/science_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/robo_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/gene_wardrobe = 1,
-		/obj/item/vending_refill/wardrobe/eng_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/engi_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/atmos_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/cargo_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/hydro_wardrobe = 1,
@@ -212,7 +212,7 @@
 	icon_state = "vending_restock"
 	loot = list(
 		/obj/item/vending_refill/syndichem = 1,
-		/obj/item/vending_refill/cigarette&syndicate = 1,
+		/obj/item/vending_refill/cigarette/syndicate = 1,
 		/obj/item/vending_refill/plasmaresearch = 1,
 		/obj/item/vending_refill/donksnackvendor = 1,
 		/obj/item/vending_refill/donksoft = 1,
