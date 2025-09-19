@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Honorifics will no longer interfere with voice detectors and similar things"
