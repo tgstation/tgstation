@@ -57407,6 +57407,7 @@
 /obj/machinery/camera/autoname/directional/south{
 	c_tag = "Medbay - Upper Medical Storage South"
 	},
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/east,
 /turf/open/openspace,
 /area/station/medical/storage)
 "qBl" = (

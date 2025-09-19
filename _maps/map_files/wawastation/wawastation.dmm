@@ -53742,6 +53742,7 @@
 /obj/item/wheelchair{
 	pixel_y = 3
 	},
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/paramedic)
 "stw" = (

@@ -276,6 +276,7 @@
 		Cannot access certain high security areas due to safety concerns."
 	icon_state = "jaws_paramedic"
 	inhand_icon_state = "jawsparamedic"
+	w_class = WEIGHT_CLASS_BULKY
 	toolspeed = 1
 	active_text = "bonesetting"
 	second_tool_behavior = TOOL_BONESET
