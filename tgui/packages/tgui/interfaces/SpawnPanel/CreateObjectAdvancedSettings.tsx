@@ -108,7 +108,7 @@ export function CreateObjectAdvancedSettings(
               act('set-apply-icon-override', { value: next });
             }}
           >
-            Enable
+            Enabled
           </Button.Checkbox>
         </Table.Cell>
         <Table.Cell pr={1} />
