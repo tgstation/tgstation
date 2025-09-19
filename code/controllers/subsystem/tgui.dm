@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(tgui)
 /datum/controller/subsystem/tgui/OnConfigLoad()
 	var/storage_iframe = CONFIG_GET(string/storage_cdn_iframe)
 
-	if(storage_iframe && storage_iframe != /datum/config_entry/string/storage_cdn_iframe::config_entry_value)
+	if(storage_iframe && storage_iframe != /datum/config_entry/string/storage_cdn_iframe::default)
 		basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", storage_iframe)
 		return
 
