@@ -154,6 +154,13 @@
 	desc = "A heavily reinforced catwalk used to build bridges in hostile environments. It doesn't look like anything could make this budge."
 	resistance_flags = INDESTRUCTIBLE
 
+/obj/structure/lattice/catwalk/mining/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
+	// Allow cable placement even though we're indestructible
+	if(istype(C, /obj/item/stack/cable_coil))
+		var/turf/T = get_turf(src)
+		return T.attackby(C, user)
+	return ..()
+
 /obj/structure/lattice/catwalk/mining/deconstruction_hints(mob/user)
 	return
 
