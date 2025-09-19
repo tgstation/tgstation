@@ -128,23 +128,25 @@
 	name = "wardrobe vending restock spawner"
 	icon_state = "vending_restock"
 	loot = list(
-		/obj/item/vending_refill/wardrobe/atmos_wardrobe = 1,
-		/obj/item/vending_refill/wardrobe/cent_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/det_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/med_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/chem_wardrobe = 1
+		/obj/item/vending_refill/wardrobe/viro_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/sec_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/science_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/robo_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/gene_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/eng_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/atmos_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/cargo_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/hydro_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/chap_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/chef_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/chap_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/curator_wardrobe= 1,
-		/obj/item/vending_refill/wardrobe/robotics_wardrobe = 1,
-		/obj/item/vending_refill/wardrobe/chem_wardrobe = 1,
-		/obj/item/vending_refill/wardrobe/gene_wardrobe = 1,
-		/obj/item/vending_refill/wardrobe/viro_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/jani_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/law_wardrobe = 1,
+
 	)
 
 
@@ -159,7 +161,7 @@
 		/obj/item/vending_refill/boozeomat = 1,
 		/obj/item/vending_refill/sustenance = 1,
 		/obj/item/vending_refill/sovietsoda = 1,
-		/obj/item/vending_refill/shamblers = 1,
+		/obj/item/vending_refill/cola/shamblers = 1,
 	)
 
 /obj/effect/spawner/random/engineering/vending_restock/medical
@@ -210,7 +212,7 @@
 	icon_state = "vending_restock"
 	loot = list(
 		/obj/item/vending_refill/syndichem = 1,
-		/obj/item/vending_refill/syndismoke = 1,
+		/obj/item/vending_refill/cigarette&syndicate = 1,
 		/obj/item/vending_refill/plasmaresearch = 1,
 		/obj/item/vending_refill/donksnackvendor = 1,
 		/obj/item/vending_refill/donksoft = 1,
@@ -225,7 +227,7 @@
 
 		/obj/item/vending_refill/magivend = 1,
 		/obj/item/vending_refill/liberation = 1,
-		/obj/item/vending_refill/cent_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/cent_wardrobe = 1,
 
 	)
 

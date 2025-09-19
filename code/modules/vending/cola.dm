@@ -151,7 +151,9 @@
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Thirsty for DNA? Satiate your craving!;Over 1 trillion souls drank!;Made with real DNA!;The hivemind demands your thirst!;Drink up!;Absorb your thirst."
 	light_mask = "shamblers-light-mask"
+	refill_canister = /obj/item/vending_refill/cola/shamblers
 	light_color = COLOR_MOSTLY_PURE_PINK
+
 
 /obj/item/vending_refill/cola/shamblers
 	machine_name = "Shambler's Vendor"
