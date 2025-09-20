@@ -58,10 +58,10 @@
 	var/weed_rate = 1
 	///Percentage chance per tray update to grow weeds
 	var/weed_chance = 5
-	///Determines if the plant has had a graft removed or not.
-	var/grafted = FALSE
+	///How many grafts or cuttings have been taken from this plant.
+	var/grafts_taken = 0
 	///Type-path of trait to be applied when grafting a plant.
-	var/graft_gene
+	var/datum/plant_gene/graft_gene = /datum/plant_gene/trait/repeated_harvest
 	///Determines if the plant should be allowed to mutate early at 30+ instability.
 	var/seed_flags = MUTATE_EARLY
 
@@ -186,19 +186,22 @@
 // Harvest procs
 /obj/item/seeds/proc/getYield()
 	var/return_yield = yield
-
+	var/obj/machinery/hydroponics/parent = loc
+	// Handle hydroponics malus for soil lovers like rootcrops.
+	if(!(parent.tray_flags & SOIL) && get_gene(/datum/plant_gene/trait/soil_lover))
+		return_yield *= SOIL_LOVER_HYDRO_YIELD_MALUS
+	// Determine if the plant should get a yield bonus from bee pollination.
 	for(var/datum/plant_gene/trait/trait in genes)
 		if(trait.trait_flags & TRAIT_NO_POLLINATION)
 			return return_yield
 
-	var/obj/machinery/hydroponics/parent = loc
 	if(istype(loc, /obj/machinery/hydroponics))
 		if(parent.yieldmod == 0)
 			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
 		else
 			return_yield *= (parent.yieldmod)
 
-	return return_yield
+	return round(return_yield)
 
 
 /obj/item/seeds/proc/harvest(mob/user)
@@ -235,7 +238,13 @@
 				t_prod.seed.set_instability(round(instability * 0.5))
 			continue
 		else
-			t_prod = new product(output_loc, new_seed = src)
+			// Create a descendent seed so we can modify our offspring before creating a grown from it.
+			var/obj/item/seeds/descendent_seed = Copy()
+			// Cuck potency if a soil lover such as a root crop is grown in water.
+			if(!(parent.tray_flags & SOIL) && get_gene(/datum/plant_gene/trait/soil_lover))
+				descendent_seed.set_potency(round(potency * RANDOM_DECIMAL(SOIL_LOVER_HYDRO_POTENCY_MIN, SOIL_LOVER_HYDRO_POTENCY_MAX)))
+
+			t_prod = new product(output_loc, new_seed = descendent_seed)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = LOWER_TEXT(parent.myseed.plantname)
 		if(productdesc)
@@ -552,24 +561,11 @@
  * Creates a graft from this plant.
  *
  * Creates a new graft from this plant.
- * Sets the grafts trait to this plants graftable trait.
- * Gives the graft a reference to this plant.
- * Copies all the relevant stats from this plant to the graft.
+ * Passes this plant to the new graft so it can make a copy.
  * Returns the created graft.
  */
 /obj/item/seeds/proc/create_graft()
-	var/obj/item/graft/snip = new(loc, graft_gene)
-	snip.parent_name = plantname
-	snip.name += " ([plantname])"
-
-	// Copy over stats so the graft can outlive its parent.
-	snip.lifespan = lifespan
-	snip.endurance = endurance
-	snip.production = production
-	snip.weed_rate = weed_rate
-	snip.weed_chance = weed_chance
-	snip.yield = yield
-
+	var/obj/item/graft/snip = new(loc, src)
 	return snip
 
 /**
@@ -584,25 +580,25 @@
  * - [snip][/obj/item/graft]: The graft being used applied to this plant.
  */
 /obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
-	. = TRUE
-	var/datum/plant_gene/new_trait = snip.stored_trait
+	var/datum/plant_gene/new_trait = snip.plant_dna.graft_gene || /datum/plant_gene/trait/repeated_harvest
+	new_trait = new new_trait()
 	if(new_trait?.can_add(src))
-		genes += new_trait.Copy()
+		genes += new_trait
 	else
-		. = FALSE
+		return
 
 	// Adjust stats based on graft stats
-	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.lifespan - lifespan)))))
-	set_endurance(round(max(endurance, (endurance + (2/3)*(snip.endurance - endurance)))))
-	set_production(round(max(production, (production + (2/3)*(snip.production - production)))))
-	set_weed_rate(round(max(weed_rate, (weed_rate + (2/3)*(snip.weed_rate - weed_rate)))))
-	set_weed_chance(round(max(weed_chance, (weed_chance+ (2/3)*(snip.weed_chance - weed_chance)))))
-	set_yield(round(max(yield, (yield + (2/3)*(snip.yield - yield)))))
+	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.plant_dna.lifespan - lifespan)))))
+	set_endurance(round(max(endurance, (endurance + (2/3)*(snip.plant_dna.endurance - endurance)))))
+	set_production(round(max(production, (production + (2/3)*(snip.plant_dna.production - production)))))
+	set_weed_rate(round(max(weed_rate, (weed_rate + (2/3)*(snip.plant_dna.weed_rate - weed_rate)))))
+	set_weed_chance(round(max(weed_chance, (weed_chance+ (2/3)*(snip.plant_dna.weed_chance - weed_chance)))))
+	set_yield(round(max(yield, (yield + (2/3)*(snip.plant_dna.yield - yield)))))
 
 	// Add in any reagents, too.
 	reagents_from_genes()
-
-	return
+	// Return the new trait so the tray can know we were successful and display its name.
+	return new_trait
 
 /*
  * Both `/item/food/grown` and `/item/grown` implement a seed variable which tracks
@@ -647,7 +643,7 @@
 		reagents_from_genes()
 
 /// Returns a mutable appearance to be used as an overlay for the plant in hydro trays.
-/obj/item/seeds/proc/get_tray_overlay(age, status)
+/obj/item/seeds/proc/get_tray_overlay(age, status, tray_offset)
 	var/mutable_appearance/plant_overlay = mutable_appearance(growing_icon, layer = OBJ_LAYER + 0.01)
 	switch(status)
 		if(HYDROTRAY_PLANT_DEAD)
@@ -657,7 +653,7 @@
 		else
 			var/t_growthstate = clamp(round((age / maturation) * growthstages), 1, growthstages)
 			plant_overlay.icon_state = "[icon_grow][t_growthstate]"
-	plant_overlay.pixel_z = plant_icon_offset
+	plant_overlay.pixel_z = plant_icon_offset + tray_offset
 	return plant_overlay
 
 /// Called when the seed is set in a tray
