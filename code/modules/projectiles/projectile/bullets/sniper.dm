@@ -134,7 +134,7 @@
 	var/object_damage = 2 // same normal damage
 	paralyze = 100 // same as sniper rifle
 
-obj/projectile/bullet/mm20x138/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/bullet/mm20x138/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isobj(target) && (blocked != 100))
 		var/obj/thing_to_break = target
 		var/damage_to_deal = object_damage
