@@ -12,6 +12,7 @@
 		/obj/item/gun/ballistic/revolver/peashooter,
 		/obj/item/grown/corncob/pepper,
 		/obj/item/stack/rods, // kebab
+		/obj/item/paper/paperslip/fortune, // fortune cookie
 	)
 
 	for(var/path in subtypesof(/obj/item/food))
