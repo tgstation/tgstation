@@ -3,6 +3,7 @@
 	name = "MOD module"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	icon_state = "module"
+	abstract_type = /obj/item/mod/module
 	/// If it can be removed
 	var/removable = TRUE
 	/// If it's passive, togglable, usable or active

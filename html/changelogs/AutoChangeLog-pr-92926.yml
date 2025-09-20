@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - code_imp: "Heat capacity calculation for gas mixtures has been slightly optimized."

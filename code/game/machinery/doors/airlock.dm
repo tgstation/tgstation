@@ -106,8 +106,8 @@
 	var/backup_power_timer = 0
 	/// Paired with backup_power_timer. Records its remaining time when something happens to interrupt power regen
 	var/backup_power_time
-	/// Bolt lights show by default
-	var/lights = TRUE
+	/// Lights and sounds enabled by default
+	var/feedback = TRUE
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
 	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
@@ -593,7 +593,7 @@
 	else
 		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
 
-	if(lights && hasPower() && light_state)
+	if(feedback && hasPower() && light_state)
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
@@ -663,7 +663,8 @@
 			use_energy(50 JOULES)
 			playsound(src, soundin = doorClose, vol = 30, vary = TRUE)
 		if(DOOR_DENY_ANIMATION)
-			playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
+			if(feedback)
+				playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
 			addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/proc/handle_deny_end()
@@ -1516,7 +1517,7 @@
 	if(!open())
 		set_airlock_state(AIRLOCK_CLOSED)
 	obj_flags |= EMAGGED
-	lights = FALSE
+	feedback = FALSE
 	locked = TRUE
 	loseMainPower()
 	loseBackupPower()
@@ -1711,7 +1712,7 @@
 	data["id_scanner"] = !aiDisabledIdScanner
 	data["emergency"] = emergency // access
 	data["locked"] = locked // bolted
-	data["lights"] = lights // bolt lights
+	data["feedback"] = feedback // lights and sounds
 	data["safe"] = safe // safeties
 	data["speed"] = normalspeed // safe speed
 	data["welded"] = welded // welded
@@ -1725,7 +1726,7 @@
 	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
 	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
 	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
-	wire["lights"] = !wires.is_cut(WIRE_BOLTLIGHT)
+	wire["feedback"] = !wires.is_cut(WIRE_FEEDBACK)
 	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
 	wire["timing"] = !wires.is_cut(WIRE_TIMING)
 
@@ -1773,7 +1774,7 @@
 			toggle_bolt(usr)
 			. = TRUE
 		if("light-toggle")
-			lights = !lights
+			feedback = !feedback
 			update_appearance()
 			. = TRUE
 		if("safe-toggle")

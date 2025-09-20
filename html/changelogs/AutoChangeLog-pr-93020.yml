@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Removed some redundant code from core hearing code. Report if you hear anything weird."

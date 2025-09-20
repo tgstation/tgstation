@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Lava no longer slows you down while running on heatproof catwalks. Also, heatproof support lattices are heatproof catwalks now, which is more accurate to their sprites."

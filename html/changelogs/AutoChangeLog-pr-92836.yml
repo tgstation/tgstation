@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix map z-level generation starting position. Z-levels used to cluster together near the edges and will now instead be spread out evenly from the center."

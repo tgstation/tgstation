@@ -2,6 +2,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/anomaly.dmi'
+	abstract_type = /obj/item
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	burning_particles = /particles/smoke/burning/small
 	pass_flags_self = PASSITEM
