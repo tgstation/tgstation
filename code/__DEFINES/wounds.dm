@@ -1,7 +1,8 @@
 // ~wound damage/rolling defines
 /// the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage. See [/obj/item/bodypart/proc/check_wounding]
 #define WOUND_DAMAGE_EXPONENT 1.4
-/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference)
+/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference). Does not apply if the mob has TRAIT_BLOODY_MESS.
+/// This is further affected by TRAIT_EASILY_WOUNDED increasing the max considered damage (before applying the exponent) by 50%, and TRAIT_HARDLY_WOUNDED reducing it by 50%.
 #define WOUND_MAX_CONSIDERED_DAMAGE 25
 /// an attack must do this much damage after armor in order to roll for being a wound (so pressure damage/being on fire doesn't proc it)
 #define WOUND_MINIMUM_DAMAGE 5
