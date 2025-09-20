@@ -13313,8 +13313,8 @@
 /area/station/engineering/atmos/storage/gas)
 "eED" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/structure/crate,
 /obj/structure/cable,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "eEG" = (
@@ -20681,7 +20681,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "hjt" = (
-/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "hjw" = (
@@ -21052,6 +21051,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "hpv" = (
@@ -56083,6 +56083,7 @@
 /obj/machinery/light/small/dim/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/west,
+/obj/vehicle/ridden/golfcart/loaded,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "tnG" = (
@@ -57101,6 +57102,10 @@
 	pixel_y = 7
 	},
 /obj/machinery/light/small/broken/directional/east,
+/obj/item/key/golfcart{
+	pixel_x = -6;
+	pixel_y = 10
+	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "tGX" = (
