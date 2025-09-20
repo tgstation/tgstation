@@ -5,6 +5,7 @@
 	var/list/food_trash = /obj/effect/spawner/random/trash/food_packaging::loot
 	// list of pieces of trash we never want to include because they are special or rare (usually mutated botany plants)
 	var/list/food_trash_blacklist = list(
+		/obj/item/grown/bananapeel, // already added to botanical_waste spawner
 		/obj/item/grown/bananapeel/bombanana,
 		/obj/item/grown/bananapeel/mimanapeel,
 		/obj/item/grown/bananapeel/bluespace,
