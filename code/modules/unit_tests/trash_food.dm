@@ -13,11 +13,13 @@
 		/obj/item/grown/corncob/pepper,
 	)
 
-	for(var/obj/item/food/throwaway in subtypesof(/obj/item/food))
-		var/trash = throwaway.trash_type
+	for(var/path in subtypesof(/obj/item/food))
+		var/obj/item/food/food = path
+		var/trash = food::trash_type
 		if(!trash)
 			continue
 		if(trash in food_trash_blacklist)
 			continue
 
-		TEST_ASSERT(food_trash[trash], "[throwaway.type] must include its trash_type for loot table /obj/effect/spawner/random/trash/food_packaging or be added to this unit tests food_trash_blacklist")
+		TEST_ASSERT(food_trash[trash], "[food] must include its trash_type for loot table /obj/effect/spawner/random/trash/food_packaging or be added to this unit tests food_trash_blacklist")
+

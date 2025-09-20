@@ -77,7 +77,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robust/empty = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold/empty = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp/empty = 5,
-		//obj/item/storage/fancy/cigarettes/cigpack_midori/empty = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_midori/empty = 5,
 		/obj/item/storage/fancy/rollingpapers/empty = 3,
 		/obj/item/storage/fancy/cigarettes/cigars/empty = 3,
 		/obj/item/storage/fancy/cigarettes/cigars/cohiba/empty = 3,
@@ -151,7 +151,7 @@
 		/obj/item/popsicle_stick = 1,
 		/obj/item/trash/ready_donk = 1,
 		/obj/item/trash/tray = 1,
-		//obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/plate = 1,
 	)
 
