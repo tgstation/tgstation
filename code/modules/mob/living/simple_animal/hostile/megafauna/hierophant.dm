@@ -366,14 +366,14 @@ Difficulty: Hard
 	for(var/t in RANGE_TURFS(1, source))
 		var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, src, FALSE)
 		B.damage = 30
-	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
+	animate(src, alpha = 0, time = 2, easing = SINE_EASING|EASE_OUT) //fade out
 	SLEEP_CHECK_DEATH(1, src)
 	visible_message(span_hierophant_warning("[src] fades out!"))
 	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	SLEEP_CHECK_DEATH(2, src)
 	forceMove(T)
 	SLEEP_CHECK_DEATH(1, src)
-	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
+	animate(src, alpha = 255, time = 2, easing = SINE_EASING|EASE_IN) //fade IN
 	SLEEP_CHECK_DEATH(1, src)
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	visible_message(span_hierophant_warning("[src] fades in!"))
