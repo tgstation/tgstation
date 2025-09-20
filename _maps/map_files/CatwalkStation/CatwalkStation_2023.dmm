@@ -4169,10 +4169,6 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
-"bnZ" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/service/kitchen)
 "boh" = (
 /obj/item/radio/intercom/directional/east,
 /obj/structure/lattice/catwalk,
@@ -40504,11 +40500,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "lHE" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
 /obj/machinery/holopad,
-/turf/open/floor/wood/large,
+/turf/open/floor/glass,
 /area/station/service/kitchen)
 "lHK" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -42691,7 +42684,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "moE" = (
-/obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /turf/open/floor/wood/large,
@@ -62940,14 +62932,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
-"sic" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/turf/open/floor/wood/large,
-/area/station/service/bar)
 "sik" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -108977,7 +108961,7 @@ gse
 own
 bmH
 sKL
-sic
+hDk
 xpV
 jpy
 apu
@@ -177337,7 +177321,7 @@ hRX
 hRX
 hRX
 hRX
-bnZ
+hRX
 jFI
 cqj
 qeX
