@@ -6879,7 +6879,6 @@
 /turf/open/openspace,
 /area/station/maintenance/port/aft)
 "caV" = (
-/obj/structure/window/spawner/directional/east,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
@@ -8798,7 +8797,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "cCj" = (
-/obj/structure/window/spawner/directional/east,
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bowl/soup/stew{
 	desc = "Exactly what it says on the tin.";
@@ -13641,8 +13639,6 @@
 "dZA" = (
 /obj/structure/table/wood,
 /obj/item/gun/magic/wand/nothing,
-/obj/structure/window/spawner/directional/south,
-/obj/structure/window/spawner/directional/west,
 /turf/open/floor/wood,
 /area/station/service/theater)
 "dZF" = (
@@ -21312,7 +21308,6 @@
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/engineering/atmos/project)
 "giz" = (
-/obj/structure/window/spawner/directional/east,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
@@ -22319,10 +22314,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "gwv" = (
-/obj/machinery/door/window/right/directional/west{
-	name = "Theater Stage";
-	req_access = list("theatre")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/service/theater)
@@ -26914,8 +26905,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/processing)
 "hNy" = (
-/obj/structure/window/spawner/directional/south,
-/obj/structure/window/spawner/directional/east,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
@@ -29347,7 +29336,6 @@
 /obj/item/toy/figure/mime{
 	pixel_x = -5
 	},
-/obj/structure/window/spawner/directional/west,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
 /area/station/service/theater)
@@ -50275,7 +50263,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/structure/window/spawner/directional/west,
 /obj/effect/spawner/random/structure/musician/piano/random_piano,
 /turf/open/floor/wood,
 /area/station/service/theater)
@@ -78718,7 +78705,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/port)
 "wPG" = (
-/obj/structure/window/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "wPI" = (
