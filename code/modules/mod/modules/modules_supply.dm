@@ -140,6 +140,8 @@
 	var/ballin = FALSE
 	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
 	var/last_bumpmine_tick = -1
+	/// Cooldown on gibtonite detonation warnings
+	COOLDOWN_DECLARE(gibtonite_warning_cd)
 
 /obj/item/mod/module/drill/on_install()
 	. = ..()
@@ -190,10 +192,12 @@
 		bumped_into.attackby(src, bumper)
 		return
 
+	if (!COOLDOWN_FINISHED(src, gibtonite_warning_cd))
+		return
+
+	COOLDOWN_START(src, gibtonite_warning_cd, 3 SECONDS)
 	playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected! Drills disabled."))
-	if (active)
-		deactivate(bumper, display_message = FALSE)
+	to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected!"))
 
 /obj/item/mod/module/drill/proc/on_module_activated(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
@@ -582,6 +586,7 @@
 	hide_upgrade = TRUE
 	overlay_state_inactive = "module_bileworm_bracing"
 	user_traits += TRAIT_LAVA_IMMUNE
+	mod.balloon_alert(user, "plating reinforced!")
 	if (active)
 		ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, REF(src))
 	update_clothing_slots()
