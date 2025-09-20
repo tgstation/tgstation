@@ -473,3 +473,200 @@
   - map: Adjusts Turret Placement in the AI Upload on Nebulastation
   - map: Adds an External Security Camera to the Starboard Vault Wall overlooking
       the AI Upload on Nebulastation
+2025-08-20:
+  Cameron-The-Raven:
+  - bugfix: Brains will no longer runtime when owner-less
+  panvxv:
+  - bugfix: Fixed bots unable to buckle people to themselves.
+  scriptis:
+  - rscadd: nepotism
+2025-08-21:
+  Absolucy:
+  - bugfix: Digital clocks now process on the correct subsystem.
+  panvxv:
+  - rscadd: Added Disabler SMG Single-Pack
+  - rscadd: Added Laser Carbine Sigle-Pack
+  - balance: Moved Laser Guns crate from security to armory category in cargo
+  - balance: Increased amount of Energy Guns to 3 in Energy Guns crate
+  - balance: Increased amount of NT BR to 3 and magazines to 6 in NT BR crate
+  - rscadd: Added seclight attachment for swat, riot, press helmets
+  - bugfix: Fixed bulletproof helmets switching sprites to normal sec helmet
+  - image: Added sprites of Swat helmet and riot helmet with attached seclight
+  - image: Reworked part of helmet sprites - seclight
+2025-08-22:
+  LT3:
+  - bugfix: Fixed techfab category of janitor holographic sign projector
+  Paxilmaniac:
+  - qol: MOD tethers are now a little easier to click on
+  Pickle-Coding:
+  - bugfix: Fixes water evaporation cooling the air to 2.7 Kelvin.
+  - balance: Water evaporation can cool the floor.
+  SmArtKar:
+  - bugfix: Fixed spraypainted items glowing in the dark
+  - code_imp: Stacking status effects without visual overlays will no longer try to
+      create them and fail to do so.
+  - bugfix: Fixed newspapers not lighting on fire from lighters
+  - bugfix: Fixed table flipping sound/alert spam
+  - bugfix: Fixed plant analyzer blocking all interactions in the darkness
+  - bugfix: Nerfs the Safety Moth. Fixed incident displays displaying adverts even
+      while depowered/broken
+  SyncIt21:
+  - bugfix: converting reagents now computes correct purity & ph when conversion threshold
+      is set
+  - bugfix: converting reagents transfers reagent data correctly only when not filtering
+      sub types
+  - code_imp: converting reagents is faster performance wise
+  carpotoxin:
+  - bugfix: Mutant bodypart overlays (tails and et cetera) that are gender-specific
+      now display correctly
+  lelandkemble:
+  - bugfix: Lizard now have lizard brains
+  necromanceranne:
+  - rscadd: Adds the surplus energy sword; the mall katana of the future. It cuts
+      like shit, but if you're desperate enough, you could kill someone with it. Just
+      remember to keep it charged.
+  - balance: Energy swords are huge objects while activated.
+  paganiy:
+  - bugfix: the interns recalculated the damage of the shotguns catridges and made
+      corrections
+2025-08-23:
+  lelandkemble:
+  - bugfix: Fishing gloves MODule now actually lowers the difficulty of fishing like
+      it says
+2025-08-24:
+  grungussuss:
+  - qol: '*jump emote will not print a message'
+  lelandkemble:
+  - bugfix: Cargo's warehouse is now magically charged enough to cast the Grand Ritual
+  tontyGH:
+  - bugfix: New player tutorials will no longer look extremely broken
+2025-08-25:
+  Hatterhat:
+  - bugfix: Stamina and projectile speed multipliers on pellet-cloud projectiles (e.g.
+      buckshot, rubber shot, flechettes) now respect appropriate multipliers when
+      fired from appropriate guns.
+  JohnFulpWillard:
+  - bugfix: The escape menu now works for non-widescreen users.
+  Melbert:
+  - bugfix: Wackier hallucinations should rear their head again
+  - bugfix: Ghost eyes hallucination works properly
+  Paxilmaniac:
+  - rscadd: Lets small items be stuck into slices of cheese or lunch meat
+  - balance: Pills in food no longer alert you that you've just swallowed one if you
+      like the food they were stuck in (yum... cheese...)
+  - image: changes the sprites of the bolt action rifles
+  Rhials:
+  - bugfix: Solo fugitives now spawn with a mechanical toolbox, as intended.
+  SmArtKar:
+  - bugfix: Fixed metal hydrogen being blocked from all material storages
+  - bugfix: Fixed barricades not transforming into walls when adding wood to them
+  - bugfix: '"Move To Top" verb no longer destroys wall-mounted intercoms'
+  dj-34:
+  - bugfix: Camera flash sound now plays before customization, fixing the delayed
+      sound issue caused by it.
+2025-08-26:
+  Melbert:
+  - rscadd: 'Adds 5 rewards to the Spy item pool: Penbang, Camera Flash, Dagger-Boot,
+      Monster Cube Box, and the Spider Bite martial art'
+  Yobrocharlie:
+  - bugfix: fixed caves.dmm's runtimes for a downstream
+2025-08-27:
+  Ben10Omintrix:
+  - balance: red raptors are now able to attack while ridden
+  Pepsilawn:
+  - balance: Blood beams no longer converts iron sheets into cult metal.
+  - bugfix: Fixes gas miners erroneously connecting to surrounding pipes, causing
+      runtimes
+  SmArtKar:
+  - bugfix: Machine Override mobs will no longer target/be targeted by AI turrets
+  - bugfix: Fixed crusher trophies sometimes not dropping when they should/dropping
+      duplicates
+  - bugfix: You can no longer adjust surgical breath masks to break their sprites.
+  - bugfix: Fixed chasm jaunters not working while you're buckled to a mob or an object
+  - code_imp: Updated chasm jaunters to use signals instead of being hardcoded in
+      chasm code.
+  - bugfix: Blood scrubber overflow no longer explodes the server
+  SyncIt21:
+  - bugfix: plumbing pill press highlights selected option & its window has been scaled
+      to fit all options
+  - bugfix: air alarm scrubber toggle mode button has its background colour again
+  - bugfix: vending machines with all products free now makes stuff actually free
+      even without ID
+  - bugfix: unconnected Thermomachine pipe is visible again
+  carpotoxin:
+  - bugfix: Fixes the external_bodyshapes variable of organs, like the lizard snout
+      which now actually flags lizards as having a snouted bodyshape
+  - bugfix: Dullahan's head relay properly flags their head bodypart to skip out on
+      the regeneration
+  loganuk:
+  - bugfix: Bitrunner virtual area smuggling exploit
+  - bugfix: Restores jumping emote sound
+  - bugfix: Prevented pink sprite when wearing trashbag on Janitor biosuit slot.
+  - bugfix: Admin Secrets - "Cure all diseases" now adds immunity to that disease
+  necromanceranne:
+  - admin: AFK logout report timers are now determined by a config rather than a hardcoded
+      value.
+  tontyGH:
+  - qol: Added [OPTIONAL] keybinds to for Swap Left/Right hands. Check your keybinds.
+      [NOT OPTIONAL]
+2025-08-28:
+  Ghommie:
+  - balance: As a continued effort to promote art and culture among the crew, the
+      "Marlowe Treeby's Art Galaxy" application has been made available for download
+      on all computer devices, with no access restrictions. Printing can still only
+      be done on a stationary console. The curator's PDA has it preinstalled now.
+  Glamyr:
+  - bugfix: Xenobio pens on tramstation now has cameras
+  - qol: Lone freezer on tramstation ordnance connected to burn chamber
+  - qol: Circuit lab on tramstation now have MMI roundstart
+  - map: Moved ordnance canisters on tramstation
+  - map: Placed robo access desk opp of rnd
+  - map: Removed AI Monitor Upload from xenobio
+  SmArtKar:
+  - image: Resprited all mineral overlays (from mining scanners)
+  - code_imp: Slightly improved mining scanner code
+  - rscadd: A lot of lavaland mobs now have minor glowy bits, making them easier to
+      spot in the dark. Same applies to their attacks!
+  - bugfix: Legion brood (skulls) no longer float inside of rocks, or get damaged
+      by atmos.
+  - image: Legion broods now have an animation and multiple random variants.
+  - image: Brimdemons now play an animation while firing their beam.
+  - bugfix: Ensured that biogens cannot brick themselves via various means
+  - code_imp: Updated biogen code
+  - bugfix: Fixed raptors and their riders having weird/confusing pixel offsets
+  SyncIt21:
+  - image: modified BSRPED inhand sprites to match the newer version
+  - image: removed secret 1% probability of showing old BSRPED sprite
+  loganuk:
+  - bugfix: Prevents vent crawlers getting trapped in a static vent or scrubber.
+2025-08-29:
+  LT3:
+  - code_imp: Improved powernet light flickering
+  Pepsilawn:
+  - bugfix: Wawastation's garden tables won't fling you around anymore
+  loganuk:
+  - bugfix: Moves bots elsewhere on wawa AI Sat to stop girder blockage at round start.
+2025-08-30:
+  Ghommie:
+  - balance: The speed of tools used in a crafting recipe now affect the time spent
+      on it. Report any recipe that takes awfully little or too long to complete.
+  - balance: Non-humanoid mobs can now benefit from being skilled at mining when swinging
+      that pickaxe.
+  Rhials:
+  - bugfix: Fugitive hunters spawn again.
+  - bugfix: When lacking a reference picture for plastic surgery, the alert message
+      will be sent to the surgery performer instead of everyone nearby.
+  SmArtKar:
+  - bugfix: Fixed recovered crew blood-related runtimes
+  lelandkemble:
+  - qol: You will no longer fall asleep from bloodloss upon arriving in the Mansus.
+  loganuk:
+  - bugfix: Service achievement not being in end of round report
+2025-08-31:
+  FalloutFalcon:
+  - bugfix: some rogue bitrunning gimmick items have there silly names now.
+  Melbert:
+  - config: Default max roundstart traitors per ruleset upped from 1 per 38 players
+      to 1 per 24 players.
+  SmArtKar:
+  - bugfix: Fixed nonhuman meat being unusable for any material crafting

@@ -1,5 +1,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
+	abstract_type = /obj/item/mecha_parts/mecha_equipment/weapon
 	range = MECHA_RANGED
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/vehicles/mecha/weapdestr.ogg'
@@ -668,7 +669,6 @@
 		if(autocuff && iscarbon(target))
 			var/mob/living/carbon/carbontarget = target
 			carbontarget.set_handcuffed(new cuff_type(carbontarget))
-			carbontarget.update_handcuffed()
 		return
 
 	if(istype(target, /obj/machinery/door))

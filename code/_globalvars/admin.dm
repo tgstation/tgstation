@@ -16,6 +16,9 @@ GLOBAL_VAR_INIT(admin_notice, "") // Admin notice that all clients see when join
 // A list of all the special byond lists that need to be handled different by vv
 GLOBAL_LIST_INIT(vv_special_lists, init_special_list_names())
 
+// Stores the value set for the AFK timer callback
+GLOBAL_VAR(logout_timer_set)
+
 /proc/init_special_list_names()
 	var/list/output = list()
 	var/obj/sacrifice = new

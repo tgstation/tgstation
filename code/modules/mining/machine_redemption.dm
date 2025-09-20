@@ -151,6 +151,28 @@
 	))
 	signal.send_to_receivers()
 
+/obj/machinery/mineral/ore_redemption/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!materials.mat_container || panel_open || !powered())
+		return ..()
+
+	var/list/obj/item/stack/ore/gathered_ores = list()
+	if(istype(tool, /obj/item/stack/ore))
+		gathered_ores += tool
+	else if(tool.atom_storage && !tool.atom_storage.locked)
+		tool.atom_storage.remove_type(/obj/item/stack/ore, src, check_adjacent = TRUE, user = user, inserted = gathered_ores)
+	if(!gathered_ores.len)
+		return ..()
+
+	for(var/obj/item/stack/ore/gathered_ore as anything in gathered_ores)
+		var/obj/item/smelted_ore = gathered_ore.on_orm_collection()
+		if(isnull(smelted_ore))
+			continue
+
+		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+			unload_mineral(smelted_ore)
+
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
@@ -170,13 +192,12 @@
 
 	//smelting the ore
 	for(var/obj/item/stack/ore/gathered_ore as anything in ore_list)
-		if(isnull(gathered_ore.refined_type))
+		var/obj/item/smelted_ore = gathered_ore.on_orm_collection()
+		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(gathered_ore, ore_multiplier) <= 0)
-			unload_mineral(gathered_ore) //if rejected unload
-
-		SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
+		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+			unload_mineral(smelted_ore) //if rejected unload
 
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
@@ -344,7 +365,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets", user_data = ID_DATA(usr))
+				materials.use_materials(alloy.materials, multiplier = amount, action = "withdrawn", name = "sheets", user_data = ID_DATA(usr))
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)

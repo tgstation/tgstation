@@ -1,6 +1,7 @@
 /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
+	abstract_type = /obj/item/bodypart
 	force = 3
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
@@ -194,7 +195,7 @@
 	var/unarmed_sharpness = NONE
 
 	/// Traits that are given to the holder of the part. This does not update automatically on life(), only when the organs are initially generated or inserted!
-	var/list/bodypart_traits = list()
+	var/list/bodypart_traits
 	/// The name of the trait source that the organ gives. Should not be altered during the events of gameplay, and will cause problems if it is.
 	var/bodypart_trait_source = BODYPART_TRAIT
 	/// List of the above datums which have actually been instantiated, managed automatically
@@ -390,7 +391,7 @@
 	if(current_gauze)
 		check_list += span_notice("\tThere is some [current_gauze.name] wrapped around it.")
 	else if(can_bleed())
-		switch(get_modified_bleed_rate())
+		switch(cached_bleed_rate)
 			if(0.2 to 1)
 				check_list += span_warning("\tIt's lightly bleeding.")
 			if(1 to 2)
@@ -811,17 +812,17 @@
 
 	if(speed_modifier)
 		old_owner.update_bodypart_speed_modifier()
-	if(length(bodypart_traits))
+	if(LAZYLEN(bodypart_traits))
 		old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 	UnregisterSignal(old_owner, list(
 		SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
-	SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
+		SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
 		SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD),
 		SIGNAL_ADDTRAIT(TRAIT_NOBLOOD),
-		))
+	))
 
-	UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_COMPONENT_CLEAN_ACT))
+	UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_SET_BODY_POSITION))
 
 /// Apply ownership of a limb to someone, giving the appropriate traits, updates and signals
 /obj/item/bodypart/proc/apply_ownership(mob/living/carbon/new_owner)
@@ -831,7 +832,7 @@
 
 	if(speed_modifier)
 		owner.update_bodypart_speed_modifier()
-	if(length(bodypart_traits))
+	if(LAZYLEN(bodypart_traits))
 		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	if(initial(can_be_disabled))
@@ -851,6 +852,7 @@
 
 	RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_owner_clean))
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(refresh_bleed_rate))
 
 	forceMove(owner)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_forced_removal)) //this must be set after we moved, or we insta gib
@@ -871,7 +873,7 @@
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 
-	if(!length(bodypart_traits))
+	if(!LAZYLEN(bodypart_traits))
 		return
 
 	owner.remove_traits(bodypart_traits, bodypart_trait_source)
@@ -1276,6 +1278,7 @@
 /// Refresh the cache of our rate of bleeding sans any modifiers
 /// ANYTHING ADDED TO THIS PROC NEEDS TO CALL IT WHEN ITS EFFECT CHANGES
 /obj/item/bodypart/proc/refresh_bleed_rate()
+	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/old_bleed_rate = cached_bleed_rate
@@ -1298,20 +1301,17 @@
 	for(var/datum/wound/iter_wound as anything in wounds)
 		cached_bleed_rate += iter_wound.blood_flow
 
+	if(owner.body_position == LYING_DOWN)
+		cached_bleed_rate *= 0.75
+
+	if(grasped_by)
+		cached_bleed_rate *= 0.7
+
 	// Our bleed overlay is based directly off bleed_rate, so go aheead and update that would you?
 	if(cached_bleed_rate != old_bleed_rate)
 		update_part_wound_overlay()
 
 	return cached_bleed_rate
-
-/// Returns our bleed rate, taking into account laying down and grabbing the limb
-/obj/item/bodypart/proc/get_modified_bleed_rate()
-	var/bleed_rate = cached_bleed_rate
-	if(owner.body_position == LYING_DOWN)
-		bleed_rate *= 0.75
-	if(grasped_by)
-		bleed_rate *= 0.7
-	return bleed_rate
 
 /obj/item/bodypart/proc/update_part_wound_overlay()
 	if(!owner)
@@ -1489,3 +1489,17 @@
 		return "metal"
 
 	return "error"
+
+/// Add a trait to the bodypart traits list, then applies the trait if necessary
+/obj/item/bodypart/proc/add_bodypart_trait(new_trait)
+	LAZYOR(bodypart_traits, new_trait)
+	if(isnull(owner))
+		return
+	ADD_TRAIT(owner, new_trait, bodypart_trait_source)
+
+/// Remove a trait from the bodypart traits list, then removes the trait if necessary
+/obj/item/bodypart/proc/remove_bodypart_trait(old_trait)
+	LAZYREMOVE(bodypart_traits, old_trait)
+	if(isnull(owner))
+		return
+	REMOVE_TRAIT(owner, old_trait, bodypart_trait_source)

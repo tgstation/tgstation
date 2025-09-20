@@ -134,9 +134,10 @@
 		subjectname = source.name
 
 	var/datum/blood_type/blood_type = source.get_bloodtype()
-	color = blood_type.get_color()
-
-	blood_dna = source.get_blood_dna_list()
+	if (blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+		var/list/transition_filter = color_transition_filter(blood_type.get_color())
+		color = transition_filter["color"]
+		blood_dna = source.get_blood_dna_list()
 
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source
@@ -155,8 +156,10 @@
 
 	if(source.exotic_bloodtype)
 		var/datum/blood_type/blood_type = get_blood_type(source.exotic_bloodtype)
-		color = blood_type.get_color()
-		blood_dna = list("[blood_type.dna_string]" = blood_type)
+		if (blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+			var/list/transition_filter = color_transition_filter(blood_type.get_color())
+			color = transition_filter["color"]
+			blood_dna = list("[blood_type.dna_string]" = blood_type)
 
 	return ..()
 
@@ -170,8 +173,9 @@
 	var/list/blood_data = source.data
 	name = "[blood_data["real_name"] || "mystery"] [initial(name)]"
 	var/datum/blood_type/blood_type = blood_data["blood_type"]
-	if(blood_type)
-		color = blood_type.get_color()
+	if(blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+		var/list/transition_filter = color_transition_filter(blood_type.get_color())
+		color = transition_filter["color"]
 		blood_dna = list("[blood_type.dna_string]" = blood_type)
 	else
 		color = source.color

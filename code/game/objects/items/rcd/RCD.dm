@@ -165,8 +165,8 @@
 
 			//check if we can build our window on the grill
 			if(target_turf.is_blocked_turf(exclude_mobs = !is_full_tile, source_atom = null, ignore_atoms = structures_to_ignore, type_list = TRUE))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
-				balloon_alert(user, "something is blocking the turf")
+				playsound(user, SFX_TOOL_SWITCH, 20, TRUE)
+				balloon_alert(user, "tile is blocked!")
 				return FALSE
 
 		/**

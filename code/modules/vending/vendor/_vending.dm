@@ -38,6 +38,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic"
+	abstract_type = /obj/machinery/vending
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	verb_say = "beeps"
@@ -396,11 +397,12 @@
 
 /obj/machinery/vending/vv_edit_var(vname, vval)
 	. = ..()
-	if (vname == NAMEOF(src, all_products_free))
+	if(vname == NAMEOF(src, all_products_free))
 		if (all_products_free)
-			RemoveComponentSource(src, /datum/component/payment)
+			qdel(GetComponent(/datum/component/payment))
 		else
 			AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
+		update_static_data_for_all_viewers()
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()

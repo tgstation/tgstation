@@ -416,6 +416,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
+#define TRAIT_SOOTHED_HEADACHE "soothed-headache"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// We place people into a fireman carry quicker than standard
 #define TRAIT_QUICK_CARRY "quick-carry"
@@ -619,7 +620,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLIND_TOOL "blind_tool"
 
 /// The person with this trait always appears as 'unknown'.
-#define TRAIT_UNKNOWN "unknown"
+#define TRAIT_UNKNOWN_APPEARANCE "unknown_appearance"
+/// The person with this trait always talks as 'unknown'
+#define TRAIT_UNKNOWN_VOICE "unknown_voice"
+/// Spoken voice always matches any worn ID. If no worn ID, defaults to actual name.
+#define TRAIT_VOICE_MATCHES_ID "voice_matches_id"
 
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
@@ -724,7 +729,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGICALLY_PHASED "magically_phased"
 
 //SKILLS
-#define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
@@ -833,6 +837,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
 
+/// Used for ticking the crate as being strong pulled
+#define TRAIT_STRONGPULL "strongpull"
+
 // cargo traits
 ///If the item will block the cargo shuttle from flying to centcom
 #define TRAIT_BANNED_FROM_CARGO_SHUTTLE "banned_from_cargo_shuttle"
@@ -859,6 +866,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
 /// This atom has a quality_food_ingredient element attached
 #define TRAIT_QUALITY_FOOD_INGREDIENT "quality_food_ingredient"
+/// This (edible) atom won't inherit the item of the item it was processed from in the form "a slice of [name]"
+#define TRAIT_FOOD_DONT_INHERIT_NAME_FROM_PROCESSED "food_dont_inherit_name_from_processed"
 /// The items needs two hands to be carried
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
 /// Can't be catched when thrown
@@ -1066,6 +1075,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
 #define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
+
+///trait that stops our ai controlled mob from moving at all due to ai planning
+#define TRAIT_AI_MOVEMENT_HALTED "ai_movement_halted"
 
 /// this is used to bypass tongue language restrictions but not tongue disabilities
 #define TRAIT_TOWER_OF_BABEL "tower_of_babel"
@@ -1555,5 +1567,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait that allows an item to perform holy rites akin to a nullrod
 #define TRAIT_NULLROD_ITEM "nullrod_item"
+
+/// Trait specifying that an AI has a remote connection to an integrated circuit
+#define TRAIT_CONNECTED_TO_CIRCUIT "connected_to_circuit"
 
 // END TRAIT DEFINES

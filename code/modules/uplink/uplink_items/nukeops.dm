@@ -218,7 +218,7 @@
 	name = ".357 Speed Loader (Revolver)"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 		For when you really need a lot of things dead. Unlike field agents, operatives get a premium price for their speedloaders!"
-	item = /obj/item/ammo_box/a357
+	item = /obj/item/ammo_box/speedloader/c357
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/revolver/phasic
@@ -226,7 +226,7 @@
 	desc = "A speed loader that contains seven additional .357 Magnum phasic rounds; usable with the Syndicate revolver. \
 		These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
 		The name is a misnomer. It doesn't contain any lead whatsoever!"
-	item = /obj/item/ammo_box/a357/phasic
+	item = /obj/item/ammo_box/speedloader/c357/phasic
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/revolver/heartseeker
@@ -234,7 +234,7 @@
 	desc = "A speed loader that contains seven additional .357 Magnum heartseeker rounds; usable with the Syndicate revolver. \
 		Able to veer straight into targets! Don't miss a shot with heartseeker! As seen in the hit NTFlik horror-space western film, Forget-Me-Not!	\
 		Brought to you by Roseus Galactic!"
-	item = /obj/item/ammo_box/a357/heartseeker
+	item = /obj/item/ammo_box/speedloader/c357/heartseeker
 	cost = 3
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
@@ -723,6 +723,7 @@
 	item = /obj/item/mod/module/injector
 	cost = 2
 	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	uplink_item_flags = NONE
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
@@ -730,6 +731,7 @@
 	item = /obj/item/mod/module/holster
 	cost = 2
 	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	uplink_item_flags = NONE
 
 /datum/uplink_item/device_tools/medgun_mod
 	name = "Medbeam Gun Module"

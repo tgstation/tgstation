@@ -7,7 +7,7 @@
 	if(!HAS_TRAIT(src, TRAIT_STASIS)) //No hunger in stasis
 		handle_nutrition(seconds_per_tick)
 
-	handle_slime_stasis(seconds_per_tick)
+	handle_slime_stasis()
 
 /mob/living/basic/slime/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	..()
@@ -17,7 +17,7 @@
 		remove_status_effect(/datum/status_effect/freon, SLIME_COLD)
 
 ///Handles if a slime's environment would cause it to enter stasis. Ignores TRAIT_STASIS
-/mob/living/basic/slime/proc/handle_slime_stasis(seconds_per_tick)
+/mob/living/basic/slime/proc/handle_slime_stasis()
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/bz_percentage = 0

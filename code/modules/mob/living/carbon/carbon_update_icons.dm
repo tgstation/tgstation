@@ -1,7 +1,3 @@
-/mob/living/carbon/update_obscured_slots(obscured_flags)
-	..()
-	update_body()
-
 /// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)
 	switch(feature_key)
@@ -338,7 +334,7 @@
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
 
-/mob/living/carbon/update_worn_mask(update_obscured = TRUE)
+/mob/living/carbon/update_worn_mask()
 	remove_overlay(FACEMASK_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -349,15 +345,13 @@
 		inv.update_appearance()
 
 	if(wear_mask)
-		if(update_obscured)
-			update_obscured_slots(wear_mask.flags_inv)
-		if(!(check_obscured_slots() & ITEM_SLOT_MASK))
+		if(!(obscured_slots & HIDEMASK))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
 
-/mob/living/carbon/update_worn_neck(update_obscured = TRUE)
+/mob/living/carbon/update_worn_neck()
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -365,15 +359,13 @@
 		inv.update_appearance()
 
 	if(wear_neck)
-		if(update_obscured)
-			update_obscured_slots(wear_neck.flags_inv)
-		if(!(check_obscured_slots() & ITEM_SLOT_NECK))
+		if(!(obscured_slots & HIDENECK))
 			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/update_worn_back(update_obscured = TRUE)
+/mob/living/carbon/update_worn_back()
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
@@ -381,24 +373,20 @@
 		inv.update_appearance()
 
 	if(back)
-		if(update_obscured)
-			update_obscured_slots(back.flags_inv)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
 
-/mob/living/carbon/update_worn_legcuffs(update_obscured = TRUE)
+/mob/living/carbon/update_worn_legcuffs()
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		if(update_obscured)
-			update_obscured_slots(legcuffed.flags_inv)
 		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
-/mob/living/carbon/update_worn_head(update_obscured = TRUE)
+/mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -409,20 +397,16 @@
 		inv.update_appearance()
 
 	if(head)
-		if(update_obscured)
-			update_obscured_slots(head.flags_inv)
-		if(!(check_obscured_slots() & ITEM_SLOT_HEAD))
+		if(!(obscured_slots & HIDEHEADGEAR))
 			overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
 
 
-/mob/living/carbon/update_worn_handcuffs(update_obscured = TRUE)
+/mob/living/carbon/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		if(update_obscured)
-			update_obscured_slots(handcuffed.flags_inv)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
@@ -466,7 +450,7 @@
 
 	. = list()
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+		. += emissive_blocker(standing.icon, standing.icon_state, src)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 /// worn_overlays to use when you'd want to use KEEP_APART. Don't use KEEP_APART neither there nor here, as it would break floating overlays
