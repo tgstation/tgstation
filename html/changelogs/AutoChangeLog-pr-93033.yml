@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - bugfix: "Fixes unable to place power cables on reinforced catwalk in Lavaland"

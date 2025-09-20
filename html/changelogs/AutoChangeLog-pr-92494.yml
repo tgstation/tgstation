@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: " Multitooling a pod door controller now picks from a list of doors available for that player(crafted, set via controller) only and can auto generate new IDs for you"

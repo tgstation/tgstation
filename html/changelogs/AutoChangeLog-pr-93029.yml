@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "no BSOD when clicking table row buttons in controller overview window"

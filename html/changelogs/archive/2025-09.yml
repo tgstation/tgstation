@@ -502,3 +502,38 @@
   - bugfix: ore vents should no longer be produce 0 material boulders
   theselfish:
   - balance: a ushanka no longer can protect brainy as much as a metal helmet
+2025-09-20:
+  Aliceee2ch:
+  - bugfix: Removed rogue decal in DeltaStation garden
+  - bugfix: Added missing RD computer in RD office (Catwalk)
+  - map: Replaced one of RND consoles on bridge with RD computer (Catwalk)
+  Hatterhat:
+  - balance: General ammo boxes (not speedloaders, not stripper clips) can no longer
+      multiload into currently loaded magazines (revolver cylinders, internal magazines).
+  - balance: Speedloaders are now a separate type from ammo boxes, and can only multiload
+      into currently loaded magazines e.g. revolver cylinders.
+  - qol: Ammo boxes, magazines, and speedloaders now have fancier types for spawning
+      in by admins.
+  Melbert:
+  - bugfix: Honorifics will no longer interfere with voice detectors and similar things
+  SyncIt21:
+  - qol: ' Multitooling a pod door controller now picks from a list of doors available
+      for that player(crafted, set via controller) only and can auto generate new
+      IDs for you'
+  - bugfix: no BSOD when clicking table row buttons in controller overview window
+  Y0SH1M4S73R:
+  - bugfix: You no longer need 40 welding fuel to start welding or unwelding shuttle
+      engines, despite only consuming 1.
+  - bugfix: Shuttle engines constructed from anchored machine frames start in the
+      wrenched-but-unwelded state.
+  - bugfix: Expanding custom shuttles from shuttle frames is once again possible without
+      href exploitation.
+  - bugfix: Shuttle expansion now correctly checks for other shuttle docking ports
+      the expanded shuttle's footprint would encroach upon.
+  - qol: Tries to make some of the buttons in the custom shuttle UI more indicative
+      of what they actually do.
+  loganuk:
+  - bugfix: Fixes unable to place power cables on reinforced catwalk in Lavaland
+  - bugfix: Allows health analysers to scan Cyborg MMIs and show a brain (or not)
+  theselfish:
+  - spellcheck: HDD has been properly capitalised in the server robbery thing.

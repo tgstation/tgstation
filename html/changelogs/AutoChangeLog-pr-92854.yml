@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - balance: "General ammo boxes (not speedloaders, not stripper clips) can no longer multiload into currently loaded magazines (revolver cylinders, internal magazines)."
-  - balance: "Speedloaders are now a separate type from ammo boxes, and can only multiload into currently loaded magazines e.g. revolver cylinders."
-  - qol: "Ammo boxes, magazines, and speedloaders now have fancier types for spawning in by admins."
