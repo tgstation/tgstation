@@ -8168,7 +8168,6 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "csM" = (
-/obj/structure/chair/stool/bar/directional/north,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
