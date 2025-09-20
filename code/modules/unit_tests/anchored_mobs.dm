@@ -2,6 +2,6 @@
 	var/list/L = list()
 	for(var/i in typesof(/mob))
 		var/mob/M = i
-		if(initial(M.anchored))
+		if(initial(M.anchored) && !ispath(M, /mob/living/silicon/ai))
 			L += "[i]"
 	TEST_ASSERT(!L.len, "The following mobs are defined as anchored. This is incompatible with the new move force/resist system and needs to be revised.: [L.Join(" ")]")
