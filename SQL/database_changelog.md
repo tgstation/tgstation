@@ -18,6 +18,20 @@ In any query remember to add a prefix to the table names if you use one.
 
 ---
 
+Version 5.33, xx September 2025, by Ghommie
+Added `pda_themes_progress` as the second 'progress' subtype of 'datum/award/scores'
+
+```sql
+CREATE TABLE `pda_themes_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
+) ENGINE=InnoDB;
+```
+
+---
+
 Version 5.32, 31 May 2025, by TealSeer
 Change column name of `manifest` table because `character` is a reserved word.
 

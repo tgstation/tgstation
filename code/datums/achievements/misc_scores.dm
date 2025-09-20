@@ -92,3 +92,34 @@
 		))
 		index++
 	return data
+
+/datum/award/score/progress/pda_themes
+	name = "Unlocked PDA Themes"
+	desc = "Track how many unlockable PDA themes, namely from maintenances disks, you've installed on your PDA (or another that you stole) so that you can use them on future rounds as well."
+	database_id = PDA_THEMES_SCORE
+	track_high_scores = FALSE //This is purely personal progress
+
+/datum/award/score/progress/pda_themes/get_table()
+	return "pda_themes_progress"
+
+/datum/award/score/progress/pda_themes/get_progress(datum/achievement_data/holder)
+	var/list/data = list(
+		"name" = "PDA Themes",
+		"entries" = list(),
+	)
+	var/list/unlockable_themes = subtypesof(/datum/computer_file/program/maintenance/theme)
+	var/list/unlocked_themes = holder.data[type]
+	var/unlocked_len = length(unlocked_themes)
+	var/unlockable_len = length(unlockable_themes)
+	data["percent"] = unlocked_len/unlockable_len
+	data["value_text"] = "[unlocked_len] / [unlockable_len]"
+	for(var/datum/computer_file/program/maintenance/theme/theme as anything in unlockable_themes)
+		var/unlocked = (initial(theme.theme_id) in unlocked_themes)
+		var/entry_name = "[unlocked ? full_capitalize(initial(theme.theme_name)) : "??????" ]"
+		data["entries"] += list(list(
+			"name" = entry_name,
+			// "icon" = WIP,
+			"height" = ICON_SIZE_Y * 1.5, // 48 pixels should be right?
+			"width" = ICON_SIZE_X * 1.5,
+		))
+	return data
