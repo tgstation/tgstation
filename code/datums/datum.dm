@@ -367,8 +367,11 @@
 /datum/proc/update_filters(start_index = null)
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
-	if (!start_index)
+	if (start_index)
+		filter_cache.Cut(start_index)
+	else
 		atom_cast.filters = null
+		filter_cache.Cut()
 
 	for (var/index in start_index || 1 to length(filter_data))
 		var/list/filter_info = filter_data[index]
@@ -376,8 +379,9 @@
 		arguments -= "priority"
 		if (start_index) // See https://www.byond.com/forum/post/2980598 as to why we cannot just override the existing filter
 			atom_cast.filters -= filter_info["name"] // We're trapped in the belly of this horrible machine
-		atom_cast.filters += filter(arglist(arguments)) // And the machine is bleeding to death
+		filter_cache += filter(arglist(arguments)) // And the machine is bleeding to death
 
+	atom_cast.filters = filter_cache
 	UNSETEMPTY(filter_data)
 
 /obj/item/update_filters(start_index = null)
