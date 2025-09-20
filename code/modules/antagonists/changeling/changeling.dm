@@ -394,15 +394,42 @@
 		to_chat(owner.current, span_warning("We cannot evolve this ability!"))
 		return FALSE
 
+	//Pre-requisite power check
+	var/datum/action/changeling/power = new sting_path()
+	if(!can_give(power))
+		to_chat(owner.current, span_warning("We lack the pre-requisite abilities to evolve this ability"))
+		qdel(power)
+		return FALSE
+
 	//To avoid potential exploits by buying new powers while in stasis, which clears your verblist. // Probably not a problem anymore, but whatever.
 	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
 		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return FALSE
 
-	var/success = give_power(sting_path)
+	var/list/prerequisite_list = power.part_of_prereq
+	var/list/owned_power = purchased_powers.Copy()
+	//this way we can compare it as if we own the power already
+	owned_power += power
+	var/owned_length = owned_power.len
+	for(var/datum/action/changeling/parent_action as anything in prerequisite_list)
+		var/list/prerequisite_powers = parent_action.prereq_ability
+		owned_power = owned_power - prerequisite_powers
+		var/diff_size = owned_length - owned_power.len
+		if(diff_size == prerequisite_list.len)
+			to_chat(owner.current, span_notice("[parent_action] is now available to purchase."))
+
+	var/success = give_power(power)
 	if(success)
-		genetic_points -= initial(sting_path.dna_cost)
+		genetic_points -= initial(power.dna_cost)
 	return success
+
+/// Check if we can give the power by checking if we have the prerequisite power or not
+/datum/antagonist/changeling/proc/can_give(datum/action/changeling/power)
+	for(var/ref_power in power.prereq_ability)
+		if(!purchased_powers[ref_power])
+			return FALSE
+	return TRUE
+
 
 /**
  * Gives a passed changeling power datum to the player
@@ -414,17 +441,15 @@
  * * power_path - The path of the power we will be giving to our attached player.
  */
 
-/datum/antagonist/changeling/proc/give_power(power_path)
-	var/datum/action/changeling/new_action = new power_path()
-
-	if(!new_action)
+/datum/antagonist/changeling/proc/give_power(datum/action/changeling/power_path)
+	if(!power_path)
 		to_chat(owner.current, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
 		CRASH("Changeling give_power was unable to grant a new changeling action for path [power_path]!")
 
-	purchased_powers[power_path] = new_action
-	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
-	log_changeling_power("[key_name(owner)] adapted the [new_action.name] power")
-	SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, new_action.name)
+	purchased_powers[power_path.type] = power_path //so we keep the assoc path to power instance
+	power_path.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
+	log_changeling_power("[key_name(owner)] adapted the [power_path.name] power")
+	SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, power_path.name)
 
 	return TRUE
 

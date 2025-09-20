@@ -505,6 +505,14 @@
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
 
+//Similar to spray_blood but we provide the target turf and create blood splatter toward it. For finer directions not supported by spray_blood.
+/mob/living/carbon/proc/spray_blood_targeted(turf/target_turf, splatter_strength = 3)
+	// Check if we can bleed and if our splatter can even go anywhere
+	if(!isturf(loc) || can_bleed(BLOOD_COVER_TURFS) != BLEED_SPLATTER)
+		return
+	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc, get_static_viruses(), get_blood_dna_list(), splatter_strength)
+	our_splatter.fly_towards(target_turf, splatter_strength)
+
 /mob/living/proc/make_blood_trail(turf/target_turf, turf/start, was_facing, movement_direction)
 	if(!has_gravity() || !isturf(start))
 		return
