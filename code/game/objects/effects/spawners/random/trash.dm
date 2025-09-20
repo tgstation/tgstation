@@ -127,6 +127,7 @@
 		/obj/item/trash/can/food/jellyfish = 1,
 		/obj/item/trash/can/food/desert_snails = 1,
 		/obj/item/trash/can/food/larvae = 1,
+		/obj/item/trash/can/food/pine_nuts = 1,
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/popcorn/salty = 1,
 		/obj/item/trash/energybar = 1,
