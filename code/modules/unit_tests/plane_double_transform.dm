@@ -33,8 +33,7 @@
 				consider making a new render plate that they can both draw to instead, or something of that nature.")
 
 		// Now we walk for filters that take from us
-		for(var/filter_id in plane.filter_data)
-			var/list/filter = plane.filter_data[filter_id]
+		for(var/list/filter in plane.filter_data)
 			if(!filter["render_source"])
 				continue
 			var/atom/movable/screen/plane_master/target = render_target_to_plane[filter["render_source"]]
