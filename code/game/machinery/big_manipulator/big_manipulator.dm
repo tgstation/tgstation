@@ -82,11 +82,11 @@
 
 	for(var/i = 1; i <= length(pickup_points); i++)
 		var/datum/interaction_point/point = pickup_points[i]
-		try_create_point_overlay(point, "pickup", i)
+		point_overlays += try_create_point_overlay(point, "pickup", i)
 
 	for(var/i = 1; i <= length(dropoff_points); i++)
 		var/datum/interaction_point/point = dropoff_points[i]
-		try_create_point_overlay(point, "dropoff", i)
+		point_overlays += try_create_point_overlay(point, "dropoff", i)
 
 	main_hud.overlays += point_overlays
 	hud_points += main_hud
@@ -812,7 +812,6 @@
 	current_task_duration = 0
 	if(current_task == CURRENT_TASK_STOPPING)
 		current_task = CURRENT_TASK_NONE
-	SStgui.update_uis(src) // Update UI immediately
 
 /// Completes the stopping task and transitions to TASK_NONE
 /obj/machinery/big_manipulator/proc/complete_stopping_task()
