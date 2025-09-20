@@ -59,3 +59,17 @@
 		return
 	user.mob.button_pressed_F12()
 	return TRUE
+
+/datum/keybinding/client/close_every_ui
+	hotkey_keys = list("Northwest") // HOME key
+	name = "close_every_ui"
+	full_name = "Close Open UIs"
+	description = "Closes all UI windows you have open."
+	keybind_signal = COMSIG_KB_CLIENT_CLOSEUI_DOWN
+
+/datum/keybinding/client/close_every_ui/down(client/user, turf/target)
+	. = ..()
+	if(.)
+		return
+	SStgui.close_user_uis(user.mob)
+	return TRUE
