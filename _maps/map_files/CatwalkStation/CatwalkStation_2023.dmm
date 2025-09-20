@@ -3466,6 +3466,7 @@
 	codes_txt = "delivery;dir=8";
 	location = "Restaurant"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
 "bcc" = (
@@ -19215,6 +19216,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
 "fGm" = (
@@ -20362,7 +20364,6 @@
 "fWV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
 "fWW" = (
@@ -20961,6 +20962,7 @@
 /obj/structure/cable,
 /obj/structure/chair/stool/bar/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
 "gfc" = (
@@ -48962,6 +48964,7 @@
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "ofL" = (
@@ -62332,6 +62335,7 @@
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
 "sbn" = (
@@ -67070,6 +67074,7 @@
 "tAJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "tAK" = (
@@ -70832,7 +70837,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/mail_sorting/service/bar,
 /turf/closed/wall,
 /area/station/service/bar)
 "uzM" = (
@@ -73764,6 +73768,7 @@
 	pixel_x = 6;
 	pixel_y = 15
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "vsh" = (
