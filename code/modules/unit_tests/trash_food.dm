@@ -11,6 +11,7 @@
 		/obj/item/food/egg,
 		/obj/item/gun/ballistic/revolver/peashooter,
 		/obj/item/grown/corncob/pepper,
+		/obj/item/stack/rods, // kebab
 	)
 
 	for(var/path in subtypesof(/obj/item/food))
@@ -22,4 +23,3 @@
 			continue
 
 		TEST_ASSERT(food_trash[trash], "[food] must include its trash_type for loot table /obj/effect/spawner/random/trash/food_packaging or be added to this unit tests food_trash_blacklist")
-
