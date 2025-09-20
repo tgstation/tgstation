@@ -55,9 +55,12 @@
 	*/
 	var/list/cooldowns
 
-
 	/// List for handling persistent filters.
 	var/list/filter_data
+	/// An accursed beast of a list that contains our filters. Why? Because var/list/filters on atoms/images isn't actually a list
+	/// but a snowflaked skinwalker pretending to be one, which doesn't support half the list procs/operations and the other half behaves weirdly
+	/// so we cut down on filter creation and appearance update costs by editing *this* list, and then assigning ours to it
+	var/list/filter_cache
 
 #ifdef REFERENCE_TRACKING
 	/// When was this datum last touched by a reftracker?
@@ -321,33 +324,43 @@
  * * name - Filter name
  * * priority - Priority used when sorting the filter.
  * * params - Parameters of the filter.
+ * * update - If we should update our actual filters list, or wait until something updates it later
  */
 /datum/proc/add_filter(name, priority, list/params, update = TRUE)
+	ASSERT(isatom(src) || isimage(src))
+	var/atom/atom_cast = src // filters only work with images or atoms.
 	LAZYINITLIST(filter_data)
+	LAZYINITLIST(filter_cache)
 	var/list/copied_parameters = params.Copy()
 	copied_parameters["name"] = name
 	copied_parameters["priority"] = priority
 	for (var/list/filter_info as anything in filter_data)
 		if (filter_info["name"] == name)
 			filter_data -= filter_info
+			filter_cache -= name
 			break
-	BINARY_INSERT_LIST(list(copied_parameters), filter_data, copied_parameters, "priority", COMPARE_KEY)
-	if (!update)
-		return
+
+	BINARY_INSERT_DEFINE(list(copied_parameters), filter_data, SORT_VAR_NO_TYPE, copied_parameters, SORT_PRIORITY_INDEX, COMPARE_KEY)
 
 	for (var/index in 1 to length(filter_data))
 		var/list/filter_info = filter_data[index]
-		if (filter_info["name"] == name)
-			update_filters(index) // Only update from the index we care about to avoid unnecessarily recreating filters
-			return
+		if (filter_info["name"] != name)
+			continue
+		var/list/arguments = filter_info.Copy()
+		arguments -= "priority"
+		filter_cache.Insert(index, filter(arglist(arguments)))
 
-///A version of add_filter that takes a list of filters to add rather than being individual, to limit calls to update_filters().
+	if (update)
+		atom_cast.filters = filter_cache
+
+/// A version of add_filter that takes a list of filters to add rather than being individual, to limit appearance updates
 /datum/proc/add_filters(list/list/filters, update = TRUE)
-	LAZYINITLIST(filter_data)
+	ASSERT(isatom(src) || isimage(src))
+	var/atom/atom_cast = src // filters only work with images or atoms.
 	for (var/list/individual_filter as anything in filters)
 		add_filter(individual_filter["name"], individual_filter["priority"], individual_filter, update = FALSE)
 	if (update)
-		update_filters()
+		atom_cast.filters = filter_cache
 
 /// Reapplies all the filters. If start_index is passed, only a portion of all filters are reapplied starting from said index
 /datum/proc/update_filters(start_index = null)
@@ -376,24 +389,28 @@
  * * name - Filter name
  * * new_params - New parameters of the filter
  * * overwrite - TRUE means we replace the parameter list completely. FALSE means we only replace the things on new_params.
- * * update - If we should call update_filters once we're done
+ * * update - If we should apply our filter cache to our actual filters
  */
 /datum/proc/modify_filter(name, list/new_params, overwrite = FALSE, update = TRUE)
-	var/filter = get_filter(name)
-	if (!filter)
-		return
-
+	ASSERT(isatom(src) || isimage(src))
+	var/atom/atom_cast = src // filters only work with images or atoms.
 	for (var/index in 1 to length(filter_data))
 		var/list/filter_info = filter_data[index]
 		if (filter_info["name"] != name)
 			continue
+
 		if (overwrite)
 			filter_data[index] = new_params
 		else
 			for (var/thing in new_params)
 				filter_info[thing] = new_params[thing]
+
+		var/list/arguments = filter_info.Copy()
+		arguments -= "priority"
+		filter_cache[index] = filter(arglist(arguments))
+
 		if (update)
-			update_filters(index)
+			atom_cast.filters = filter_cache
 		return
 
 /** Update a filter's parameter and animate this change. If the filter doesn't exist we won't do anything.
@@ -454,7 +471,7 @@
 		if (filter_info["name"] != name)
 			continue
 
-		remove_filter(name)
+		remove_filter(name, update = FALSE)
 		add_filter(name, new_priority, filter_info)
 		return
 
@@ -465,7 +482,7 @@
 	return atom_cast.filters[name]
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
-/datum/proc/remove_filter(name_or_names)
+/datum/proc/remove_filter(name_or_names, update = TRUE)
 	ASSERT(isatom(src) || isimage(src))
 	if(!filter_data)
 		return
@@ -473,19 +490,23 @@
 	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
 	. = FALSE
 	var/list/new_data = list()
+	var/list/new_cache = list()
 	for (var/index in 1 to length(filter_data))
 		var/list/filter_info = filter_data[index]
 		if (!(filter_info["name"] in names))
 			new_data += list(filter_info)
-	for (var/filter_name in names)
-		atom_cast.filters -= filter_name
+			new_cache += filter_cache[index]
 	filter_data = new_data
+	filter_cache = new_cache
+	if (update)
+		atom_cast.filters = filter_cache
 	return .
 
 /datum/proc/clear_filters()
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	filter_data = null
+	filter_cache = null
 	atom_cast.filters = null
 
 /// Calls qdel on itself, because signals dont allow callbacks
