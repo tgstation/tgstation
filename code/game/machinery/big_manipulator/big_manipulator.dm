@@ -71,7 +71,7 @@
 
   for(var/i = 1; i <= length(pickup_points); i++)
     var/datum/interaction_point/point = pickup_points[i]
-    var/turf/target_turf = point.interaction_turf.resolve()
+    var/turf/target_turf = point.interaction_turf
     if(target_turf)
       var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
       var/turf/manip_turf = get_turf(src)
@@ -81,7 +81,7 @@
 
   for(var/i = 1; i <= length(dropoff_points); i++)
     var/datum/interaction_point/point = dropoff_points[i]
-    var/turf/target_turf = point.interaction_turf.resolve()
+    var/turf/target_turf = point.interaction_turf
     if(target_turf)
       var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
       var/turf/manip_turf = get_turf(src)
@@ -306,7 +306,7 @@
 	if(!point || !point.interaction_turf)
 		return
 
-	var/turf/old_turf = point.interaction_turf.resolve()
+	var/turf/old_turf = point.interaction_turf
 	if(!old_turf)
 		return
 
@@ -319,7 +319,7 @@
 	// if manipulator is not anchored, allow points to be anywhere (even in walls) to not mess up your stuff when moving it
 	if(!anchored)
 		if(new_turf)
-			point.interaction_turf = WEAKREF(new_turf)
+			point.interaction_turf = new_turf
 		return
 
 	if(!new_turf || isclosedturf(new_turf))
@@ -331,7 +331,7 @@
 	if(new_turf == old_turf)
 		return
 
-	point.interaction_turf = WEAKREF(new_turf)
+	point.interaction_turf = new_turf
 
 /// Finds a suitable turf near the given location
 /obj/machinery/big_manipulator/proc/find_suitable_turf_near(turf/center)
@@ -619,7 +619,7 @@
 		var/list/point_data = list()
 		point_data["name"] = point.name
 		point_data["id"] = REF(point)
-		var/turf/resolved_turf = point.interaction_turf.resolve()
+		var/turf/resolved_turf = point.interaction_turf
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = "PICK"
 		var/list/filter_names = list()
@@ -638,7 +638,7 @@
 		var/list/point_data = list()
 		point_data["name"] = point.name
 		point_data["id"] = REF(point)
-		var/turf/resolved_turf = point.interaction_turf.resolve()
+		var/turf/resolved_turf = point.interaction_turf
 		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
 		point_data["mode"] = point.interaction_mode
 		var/list/filter_names = list()
@@ -803,7 +803,7 @@
 			if(!new_turf || isclosedturf(new_turf))
 				return FALSE
 
-			target_point.interaction_turf = WEAKREF(new_turf)
+			target_point.interaction_turf = new_turf
 			update_hud()
 			return TRUE
 

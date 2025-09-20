@@ -1,11 +1,9 @@
-// Interactions moved here to de-clutter the main file
-
 /// Selects which atom to pick up from this point for interaction with available dropoff points
 /obj/machinery/big_manipulator/proc/find_pickup_candidate_for_pickup_point(datum/interaction_point/pickup_point)
 	if(!pickup_point)
 		return null
 
-	var/turf/pickup_turf = pickup_point.interaction_turf?.resolve()
+	var/turf/pickup_turf = pickup_point.interaction_turf
 	if(!pickup_turf)
 		return null
 
@@ -212,7 +210,7 @@
 	if(!origin_point) // no origin point - nowhere to begin the cycle from
 		return handle_no_work_available()
 
-	var/turf/origin_turf = origin_point.interaction_turf.resolve()
+	var/turf/origin_turf = origin_point.interaction_turf
 	if(!origin_turf)
 		return
 
@@ -228,7 +226,7 @@
 
 	start_task(CURRENT_TASK_INTERACTING, 0.2 SECONDS)
 
-	var/turf/origin_turf = origin_point.interaction_turf.resolve()
+	var/turf/origin_turf = origin_point.interaction_turf
 	if(!origin_turf)
 		return handle_no_work_available()
 
@@ -299,7 +297,7 @@
 	if(!target_point)
 		return FALSE
 
-	var/target_dir = get_dir(get_turf(src), target_point.interaction_turf.resolve())
+	var/target_dir = get_dir(get_turf(src), target_point.interaction_turf)
 	var/target_angle = dir2angle(target_dir)
 	var/current_angle = manipulator_arm.transform.get_angle()
 	var/angle_diff = closer_angle_difference(current_angle, target_angle)
@@ -383,7 +381,7 @@
 /obj/machinery/big_manipulator/proc/try_use_thing(datum/interaction_point/destination_point, atom/movable/target, hand_is_empty = FALSE)
 	var/obj/obj_resolve = held_object?.resolve()
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
-	var/destination_turf = destination_point.interaction_turf.resolve()
+	var/destination_turf = destination_point.interaction_turf
 
 	if(!obj_resolve || !monkey_resolve || !destination_turf) // if something that's supposed to be here is not here anymore
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
@@ -413,7 +411,7 @@
 /// Checks what should we do with the `held_object` after `USE`-ing it.
 /obj/machinery/big_manipulator/proc/check_for_cycle_end_drop(datum/interaction_point/drop_point, item_used = TRUE)
 	var/obj/obj_resolve = held_object.resolve()
-	var/turf/drop_turf = drop_point.interaction_turf.resolve()
+	var/turf/drop_turf = drop_point.interaction_turf
 
 	if(drop_point.worker_interaction == WORKER_SINGLE_USE && item_used)
 		obj_resolve.forceMove(drop_turf)
@@ -433,7 +431,7 @@
 
 /// Throws the held object in the direction of the interaction point.
 /obj/machinery/big_manipulator/proc/throw_thing(datum/interaction_point/drop_point)
-	var/drop_turf = drop_point.interaction_turf.resolve()
+	var/drop_turf = drop_point.interaction_turf
 	var/throw_range = drop_point.throw_range
 	var/atom/movable/held_atom = held_object.resolve()
 
@@ -471,7 +469,7 @@
 	else
 		monkey_resolve.UnarmedAttack(type_to_use)
 
-	var/turf/dest_turf = destination_point.interaction_turf.resolve()
+	var/turf/dest_turf = destination_point.interaction_turf
 	if(dest_turf)
 		do_attack_animation(dest_turf)
 		manipulator_arm.do_attack_animation(dest_turf)

@@ -1,8 +1,8 @@
 /datum/interaction_point
 	var/name = "interaction point"
 
-	/// The weakref to the turf this interaction point represents.
-	var/datum/weakref/interaction_turf
+	/// The turf this interaction point represents.
+	var/turf/interaction_turf
 	/// Should we check our filters while interacting with this point?
 	var/should_use_filters = FALSE
 	/// How should this point be interacted with?
@@ -37,7 +37,7 @@
 		qdel(src)
 		return
 
-	interaction_turf = WEAKREF(new_turf)
+	interaction_turf = new_turf
 
 	if(length(new_filters))
 		atom_filters = new_filters
@@ -60,11 +60,9 @@
 /datum/interaction_point/proc/find_type_priority()
 	for(var/datum/manipulator_priority/take_type in interaction_priorities)
 		if(take_type.what_type == /turf)
-			return interaction_turf.resolve()
+			return interaction_turf
 
-		var/turf/resolved_turf = interaction_turf.resolve()
-
-		for(var/type_in_priority in resolved_turf.contents)
+		for(var/type_in_priority in interaction_turf.contents)
 			if(!istype(type_in_priority, take_type.what_type))
 				continue
 
@@ -82,9 +80,8 @@
 
 	// All atoms on the turf that can be interacted with.
 	var/list/atoms_on_the_turf = list()
-	var/turf/resolved_turf = interaction_turf.resolve()
-	if(resolved_turf)
-		for(var/atom/movable/movable_atom in resolved_turf.contents)
+	if(interaction_turf)
+		for(var/atom/movable/movable_atom in interaction_turf.contents)
 			atoms_on_the_turf += movable_atom
 
 	// For pickup points, we want points that have atoms to pick up
@@ -154,11 +151,10 @@
 
 /// Checks if the interaction point is valid.
 /datum/interaction_point/proc/is_valid()
-	var/turf/resolved_turf = interaction_turf?.resolve()
-	if(!resolved_turf)
+	if(!interaction_turf)
 		return FALSE
 
-	if(isclosedturf(resolved_turf))
+	if(isclosedturf(interaction_turf))
 		return FALSE
 	return TRUE
 
