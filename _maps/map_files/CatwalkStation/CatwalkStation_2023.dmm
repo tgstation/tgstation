@@ -12767,6 +12767,7 @@
 	pixel_y = 5
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood,
 /area/station/service/bar)
 "dMM" = (
@@ -19747,9 +19748,27 @@
 /turf/open/openspace,
 /area/station/cargo/storage)
 "fPh" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/structure/table/wood,
+/obj/machinery/coffeemaker/impressa,
+/obj/item/storage/box/coffeepack{
+	pixel_x = 15;
+	pixel_y = 10
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 15;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 13;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 13;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 13;
+	pixel_y = -1
 	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
@@ -24749,19 +24768,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
-"hiV" = (
-/obj/structure/table/wood,
-/obj/machinery/coffeemaker/impressa,
-/obj/item/storage/box/coffeepack{
-	pixel_x = 15;
-	pixel_y = 10
-	},
-/obj/item/storage/box/coffeepack{
-	pixel_x = 15;
-	pixel_y = 10
-	},
-/turf/open/floor/wood,
-/area/station/service/bar)
 "hja" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -24773,8 +24779,11 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/construction)
 "hjL" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "hkm" = (
@@ -31524,13 +31533,6 @@
 "jes" = (
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/science)
-"jez" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/camera/autoname/directional/east,
-/turf/open/floor/wood,
-/area/station/service/bar)
 "jeA" = (
 /obj/structure/railing{
 	dir = 8
@@ -64822,6 +64824,7 @@
 /obj/structure/rack,
 /obj/item/stack/package_wrap,
 /obj/item/holosign_creator/robot_seat/restaurant,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/wood/large,
 /area/station/service/kitchen)
 "sON" = (
@@ -69274,6 +69277,9 @@
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
+"ugw" = (
+/turf/open/floor/wood,
+/area/station/service/bar)
 "ugE" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/machinery/airalarm/directional/north,
@@ -108140,7 +108146,7 @@ nDm
 nDm
 voY
 qoU
-jez
+apu
 apu
 sQI
 lAF
@@ -108397,8 +108403,8 @@ fWY
 fWY
 uzI
 fWY
-fWY
 wvi
+ugw
 sQI
 bQU
 bNt
@@ -108655,7 +108661,7 @@ uxl
 ofE
 hjL
 fPh
-hiV
+ugw
 uGf
 tWQ
 bNt
