@@ -2478,11 +2478,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(GRAB_KILL)
 			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
-
-/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
-/mob/living/proc/is_face_visible()
-	return TRUE
-
 /// Sprite to show for photocopying mob butts
 /mob/living/proc/get_butt_sprite()
 	return null
@@ -2958,7 +2953,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
 /mob/living/proc/compare_fitness(mob/living/scouter)
-	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return span_warning("It's impossible to tell whether this person lifts.")
 
 	var/our_fitness_level = calculate_fitness()

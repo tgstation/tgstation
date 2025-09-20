@@ -180,7 +180,7 @@
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
-	if(!I.on_equipped(src, ITEM_SLOT_HANDS, initial = visuals_only))
+	if(!has_equipped(I, ITEM_SLOT_HANDS, initial = visuals_only))
 		return FALSE
 	update_held_items()
 	I.pixel_x = I.base_pixel_x
@@ -295,10 +295,7 @@
 				location = turf
 				break
 
-	I.forceMove(location)
-	I.layer = initial(I.layer)
-	SET_PLANE_EXPLICIT(I, initial(I.plane), location)
-	I.dropped(src)
+	transferItemToLoc(I, location, force = TRUE, silent = TRUE, animated = !ignore_animation)
 	return FALSE
 
 /// Returns true if a mob is holding something
@@ -424,13 +421,10 @@
 	if(!item_dropping)
 		return FALSE
 
-	if(client)
-		client.screen -= item_dropping
+	client?.screen -= item_dropping
 
-	if(observers?.len)
-		for(var/mob/dead/observe as anything in observers)
-			if(observe.client)
-				observe.client.screen -= item_dropping
+	for(var/mob/dead/observe as anything in observers)
+		observe.client?.screen -= item_dropping
 
 	item_dropping.layer = initial(item_dropping.layer)
 	SET_PLANE_EXPLICIT(item_dropping, initial(item_dropping.plane), newloc)
@@ -441,7 +435,7 @@
 		else
 			item_dropping.forceMove(newloc)
 
-	item_dropping.dropped(src, silent)
+	has_unequipped(item_dropping, silent)
 	SEND_SIGNAL(item_dropping, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, item_dropping, force, newloc, no_move, invdrop, silent)
 	return TRUE
@@ -520,7 +514,14 @@
 
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	return item.on_equipped(src, slot, initial)
+
+/// This proc is called after an item has been removed from a mob but before it has been officially deslotted.
+/mob/proc/has_unequipped(obj/item/item, silent = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	item.dropped(src, silent)
+	return TRUE
 
 /**
  * Equip an item to the slot or delete
@@ -683,3 +684,19 @@
 			. += item
 		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
 			qdel(item)
+
+/**
+ * Iterates over all contents of the mob to find all items with a cell (or loose cells)
+ * Useful instead of iterating contents for cells, as it recurses storage and avoids returning abstract cells (like Ethereals)
+ *
+ * * max_percent: The maximum charge percent (0.0-1.0) the cell can have to be included in the results
+ *
+ * Returns an assoc list of item - its cell
+ */
+/mob/living/proc/get_all_cells(max_percent = 1.0)
+	var/list/cell_items = list()
+	for(var/obj/item/stored in get_all_gear())
+		var/obj/item/stock_parts/power_store/stored_cell = stored.get_cell()
+		if(stored_cell && stored_cell.charge <= (stored_cell.maxcharge * max_percent))
+			cell_items[stored] = stored_cell
+	return cell_items

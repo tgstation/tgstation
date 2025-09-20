@@ -621,7 +621,7 @@
 /area/shuttle/escape)
 "qi" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -741,7 +741,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/wall_healer/free/directional/south{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/blue,

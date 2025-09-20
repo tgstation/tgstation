@@ -58,6 +58,7 @@
 	if(!smoothing_flags)
 		update_appearance()
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_LAVA_STOPPED), PROC_REF(drop_contents_into_lava))
 
 /turf/open/lava/Destroy()
 	checked_atoms = null
@@ -214,14 +215,14 @@
 	..()
 	if(istype(C, /obj/item/stack/rods/lava))
 		var/obj/item/stack/rods/lava/R = C
-		var/obj/structure/lattice/lava/H = locate(/obj/structure/lattice/lava, src)
+		var/obj/structure/lattice/catwalk/lava/H = locate(/obj/structure/lattice/catwalk/lava, src)
 		if(H)
 			to_chat(user, span_warning("There is already a lattice here!"))
 			return
 		if(R.use(1))
 			to_chat(user, span_notice("You construct a lattice."))
 			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
-			new /obj/structure/lattice/lava(locate(x, y, z))
+			new /obj/structure/lattice/catwalk/lava(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
@@ -347,6 +348,17 @@
 		return TRUE
 
 	return FALSE
+
+/**
+ * Called when a lava stopper (Catwalks/boulder platforms) is removed and it's contents need to be subjected to the lava underneath.
+ */
+/turf/open/lava/proc/drop_contents_into_lava()
+	SIGNAL_HANDLER
+	balloon_alert_to_viewers("[pick("splash","pshhhh","hiss","blorble")]!")
+	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
+	for(var/atom/movable/each_content as anything in contents)
+		on_atom_inited(src, each_content)
+	return TRUE
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)
 	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)

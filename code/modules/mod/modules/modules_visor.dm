@@ -12,12 +12,12 @@
 	/// The traits given by the visor.
 	var/list/visor_traits = list()
 
-/obj/item/mod/module/visor/on_activation()
+/obj/item/mod/module/visor/on_activation(mob/activator)
 	if(length(visor_traits))
 		mod.wearer.add_traits(visor_traits, REF(src))
 	mod.wearer.update_sight()
 
-/obj/item/mod/module/visor/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/visor/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(length(visor_traits))
 		mod.wearer.remove_traits(visor_traits, REF(src))
 	mod.wearer.update_sight()
@@ -91,10 +91,10 @@
 	incompatible_modules = list(/obj/item/mod/module/night, /obj/item/mod/module/visor/night)
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
-/obj/item/mod/module/night/on_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
+/obj/item/mod/module/night/on_activation(mob/activator)
+	mod.wearer.add_traits(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
 	mod.wearer.update_sight()
 
-/obj/item/mod/module/night/on_deactivation(display_message = TRUE, deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
+/obj/item/mod/module/night/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
+	mod.wearer.remove_traits(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
 	mod.wearer.update_sight()
