@@ -1723,20 +1723,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"pb" = (
-/obj/structure/cable/multilayer,
-/obj/structure/cable/layer1,
-/obj/structure/safe/floor,
-/obj/item/sticker/syndicate/apc,
-/obj/item/grenade/empgrenade,
-/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
-/obj/item/ai_module/core/full/cybersun,
-/obj/item/reagent_containers/condiment/donksauce,
-/mob/living/basic/cybersun_ai_core{
-	donk_ai_master = 1
-	},
-/turf/open/floor/plating/reinforced,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "pc" = (
 /obj/structure/table/wood,
 /obj/item/cardpack/series_one{
@@ -3167,6 +3153,12 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"BC" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal{
+	desc = "An ominous looking wall.";
+	name = "reinforced wall"
+	},
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "BE" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/terminal{
@@ -4294,16 +4286,6 @@
 /obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"Lz" = (
-/obj/structure/cable/layer1,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/supplied/protect_station{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/machinery/light/red/dim/directional/east,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "LC" = (
 /obj/structure/cable/layer1,
 /obj/machinery/door/firedoor,
@@ -4517,12 +4499,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"MR" = (
-/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal{
-	desc = "An ominous looking wall.";
-	name = "reinforced wall"
-	},
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ne" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
@@ -5257,6 +5233,20 @@
 /obj/effect/mapping_helpers/bombable_wall,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
+"TG" = (
+/obj/structure/cable/multilayer,
+/obj/structure/cable/layer1,
+/obj/structure/safe/floor,
+/obj/item/sticker/syndicate/apc,
+/obj/item/grenade/empgrenade,
+/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/item/reagent_containers/condiment/donksauce,
+/mob/living/basic/cybersun_ai_core{
+	donk_ai_master = 1
+	},
+/turf/open/floor/plating/reinforced,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "TH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/light/warm/directional/south,
@@ -5830,6 +5820,16 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
+"XV" = (
+/obj/structure/cable/layer1,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/supplied/protect_station{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "XW" = (
 /obj/structure/holosign/barrier/cyborg/cybersun_ai_shield,
 /turf/open/floor/circuit/red,
@@ -6652,10 +6652,10 @@ DM
 SY
 ot
 ve
-MR
+BC
 rd
-MR
-MR
+BC
+BC
 tl
 tl
 jY
@@ -6700,8 +6700,8 @@ QA
 lA
 nE
 IL
-MR
-MR
+BC
+BC
 tl
 dc
 UV
@@ -6740,13 +6740,13 @@ xn
 Nw
 eN
 Oh
-MR
+BC
 zQ
 Gk
 iv
 qK
 Bg
-MR
+BC
 tl
 dU
 Xu
@@ -6790,8 +6790,8 @@ iv
 iv
 ot
 XW
-pb
-MR
+TG
+BC
 tl
 YR
 LI
@@ -6830,13 +6830,13 @@ WO
 BE
 yb
 Im
-MR
+BC
 kl
 Gk
 iv
 PX
 ss
-MR
+BC
 tl
 Xe
 VA
@@ -6880,8 +6880,8 @@ QA
 kl
 nE
 SK
-MR
-MR
+BC
+BC
 tl
 Pd
 vm
@@ -6922,10 +6922,10 @@ DM
 SY
 ot
 ve
-MR
+BC
 bY
-MR
-MR
+BC
+BC
 kI
 tl
 tl
@@ -7052,7 +7052,7 @@ hV
 vx
 tm
 Gg
-Lz
+XV
 bu
 cv
 gb
