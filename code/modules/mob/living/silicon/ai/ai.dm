@@ -1048,14 +1048,20 @@
 	set name = "Move Upwards"
 	set category = "IC"
 
+	var/turf/old_turf = eyeobj.loc
 	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
+	    // Notify that the actual z-level the AI is looking at has changed.
+		on_look_z_changed(old_turf, eyeobj.loc)
 		to_chat(src, span_notice("You move upwards."))
 
 /mob/living/silicon/ai/down()
 	set name = "Move Down"
 	set category = "IC"
 
+	var/turf/old_turf = eyeobj.loc
 	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
+		// Notify that the actual z-level the AI is looking at has changed.
+		on_look_z_changed(old_turf, eyeobj.loc)
 		to_chat(src, span_notice("You move down."))
 
 /// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
