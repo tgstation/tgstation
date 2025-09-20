@@ -9,6 +9,7 @@
 		/obj/item/grown/bananapeel/bombanana,
 		/obj/item/grown/bananapeel/mimanapeel,
 		/obj/item/grown/bananapeel/bluespace,
+		/obj/item/food/grown/bungopit,
 		/obj/item/food/egg,
 		/obj/item/gun/ballistic/revolver/peashooter,
 		/obj/item/grown/corncob/pepper,
