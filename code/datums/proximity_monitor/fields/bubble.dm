@@ -13,6 +13,8 @@
 	var/list/edgeturf_effects = list()
 	///atom that contains all the fields in its vis_contents
 	var/atom/movable/field_effect_holder/my_movable
+	/// The current "glide host" - the topmost atom
+	var/atom/movable/current_glide_host
 
 /datum/proximity_monitor/advanced/bubble/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	. = ..()
@@ -22,10 +24,11 @@
 	var/atom/movable/movable_host = _host
 	my_movable = new(get_turf(movable_host))
 	my_movable.transform = my_movable.transform.Scale(current_range, current_range)
-	my_movable.set_glide_size(movable_host.glide_size)
+	reset_glide_host()
 	draw_effect()
 
 /datum/proximity_monitor/advanced/bubble/Destroy()
+	set_glide_host(null)
 	for(var/coordinates in edgeturf_effects)
 		var/obj/effect/overlay/vis/field/effect_to_remove = edgeturf_effects[coordinates]
 		edgeturf_effects -= coordinates
@@ -34,6 +37,27 @@
 	QDEL_IN(my_movable, ANIMATE_DAMPENER_TIME)
 	my_movable = null
 	return ..()
+
+/datum/proximity_monitor/advanced/bubble/proc/set_glide_host(atom/movable/new_glide_host)
+	if(current_glide_host)
+		UnregisterSignal(current_glide_host, list(COMSIG_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
+		current_glide_host = null
+	if(!QDELETED(new_glide_host) && new_glide_host != host)
+		RegisterSignal(new_glide_host, COMSIG_QDELETING, PROC_REF(reset_glide_host))
+		RegisterSignal(new_glide_host, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(update_glide_size))
+		current_glide_host = new_glide_host
+		my_movable.set_glide_size(new_glide_host.glide_size)
+	else
+		my_movable.set_glide_size(initial(my_movable.glide_size))
+
+/datum/proximity_monitor/advanced/bubble/proc/reset_glide_host(datum/source)
+	SIGNAL_HANDLER
+	if(isnull(source) || source == current_glide_host)
+		set_glide_host(get_atom_on_turf(host))
+
+/datum/proximity_monitor/advanced/bubble/proc/update_glide_size(datum/source, new_glide_size)
+	SIGNAL_HANDLER
+	my_movable.set_glide_size(new_glide_size)
 
 /datum/proximity_monitor/advanced/bubble/proc/setup_effect_directions()
 	effect_direction_images = list(
@@ -50,9 +74,11 @@
 /datum/proximity_monitor/advanced/bubble/on_moved(atom/movable/source, atom/old_loc)
 	. = ..()
 	my_movable.forceMove(get_turf(source))
+	reset_glide_host()
 
 /datum/proximity_monitor/advanced/bubble/on_z_change(datum/source)
 	recalculate_field(full_recalc = TRUE)
+	reset_glide_host()
 
 ///rendering all the field visuals. first we render the corners, then we connect them
 /datum/proximity_monitor/advanced/bubble/proc/draw_effect()
