@@ -489,6 +489,16 @@
 			return quirk
 	return null
 
+/// Helper to easily add a personality by a typepath
+/mob/living/proc/add_personality(personality_type)
+	var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
+	personality.apply_to_mob(src)
+
+/// Helper to easily remove a personality by a typepath
+/mob/living/proc/remove_personality(personality_type)
+	var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
+	personality.remove_from_mob(src)
+
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
 	if(HAS_TRAIT(src, TRAIT_HUSK))
@@ -526,6 +536,8 @@
 			emote("deathgasp")
 		station_timestamp_timeofdeath = station_time_timestamp()
 
+	if(!HAS_TRAIT(src, TRAIT_FAKEDEATH) && !silent)
+		send_death_moodlets(/datum/mood_event/see_death)
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.

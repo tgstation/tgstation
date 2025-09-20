@@ -89,7 +89,11 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/quirks = list()
+	/// Lazylist of all quirks the mob has. These are not singletons
+	var/list/quirks
+	/// Lazylist of all typepaths of personalities the mob has.
+	var/list/personalities
+
 	///a list of surgery datums. generally empty, they're added when the player wants them.
 	var/list/surgeries = list()
 	///Mob specific surgery speed modifier
