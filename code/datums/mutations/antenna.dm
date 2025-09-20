@@ -68,10 +68,12 @@
 	if (!owner)
 		return
 	ADD_TRAIT(grant_to, TRAIT_MIND_READER, GENETIC_MUTATION)
+	RegisterSignal(grant_to, COMSIG_MOB_EXAMINATE, PROC_REF(on_examining))
 
 /datum/action/cooldown/spell/pointed/mindread/Remove(mob/remove_from)
 	. = ..()
 	REMOVE_TRAIT(remove_from, TRAIT_MIND_READER, GENETIC_MUTATION)
+	UnregisterSignal(remove_from, COMSIG_MOB_EXAMINATE)
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -88,7 +90,7 @@
 
 /datum/action/cooldown/spell/pointed/mindread/cast(mob/living/cast_on)
 	. = ..()
-	if(cast_on.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+	if(cast_on.can_block_magic(antimagic_flags, charge_cost = 0))
 		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
 			you are stopped by a mental blockage. It seems you've been foiled."))
 		return
@@ -117,6 +119,37 @@
 		var/mob/living/carbon/carbon_cast_on = cast_on
 		to_chat(owner, span_boldnotice("You find that their intent is to [carbon_cast_on.combat_mode ? "harm" : "help"]..."))
 		to_chat(owner, span_boldnotice("You uncover that [carbon_cast_on.p_their()] true identity is [carbon_cast_on.mind.name]."))
+
+/datum/action/cooldown/spell/pointed/mindread/proc/on_examining(mob/examiner, atom/examining)
+	SIGNAL_HANDLER
+	if(!isliving(examining) || examiner == examining)
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(read_mind), examiner, examining)
+
+/datum/action/cooldown/spell/pointed/mindread/proc/read_mind(mob/living/examiner, mob/living/examined)
+	set waitfor = FALSE
+
+	if(examined.stat >= UNCONSCIOUS)
+		return
+	if(examined.mob_biotypes & (MOB_UNDEAD|MOB_SPIRIT|MOB_MINERAL|MOB_ROBOTIC))
+		return
+
+	var/antimagic = examined.can_block_magic(antimagic_flags, charge_cost = 0)
+	var/read_text = ""
+	if(!antimagic)
+		read_text = examined.get_typing_text()
+		if(!read_text)
+			return
+
+	sleep(0.5 SECONDS) // small pause so it comes after all examine effects
+	if(QDELETED(examiner))
+		return
+	if(antimagic)
+		to_chat(examiner, boxed_message(span_warning("You attempt to analyze [examined]'s current thoughts, but fail to penetrate [examined.p_their()] mind - It seems you've been foiled.")))
+		return
+
+	to_chat(examiner, boxed_message(span_notice("You analyze [examined]'s current thoughts... \"[read_text]\"...")))
 
 /datum/mutation/mindreader/New(datum/mutation/copymut)
 	..()
