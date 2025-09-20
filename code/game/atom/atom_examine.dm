@@ -4,12 +4,6 @@
 	/// Text that appears preceding the name in [/atom/proc/examine_title]
 	var/examine_thats = "That's"
 
-/mob/living/carbon/human
-	examine_thats = "This is"
-
-/mob/living/silicon/robot
-	examine_thats = "This is"
-
 /**
  * Called when a mob examines this atom: [/mob/verb/examinate]
  *
@@ -80,6 +74,9 @@
  */
 /atom/proc/examine_tags(mob/user)
 	. = list()
+	if(abstract_type == type)
+		.[span_hypnophrase("abstract")] = "This is an abstract concept, you should report this to a strange entity called GITHUB!"
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_TAGS, user, .)
 
 /// What this atom should be called in examine tags

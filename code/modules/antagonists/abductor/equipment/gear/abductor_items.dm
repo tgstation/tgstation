@@ -2,6 +2,7 @@
 	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
+	abstract_type = /obj/item/abductor
 
 /obj/item/proc/AbductorCheck(mob/user)
 	if (HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))

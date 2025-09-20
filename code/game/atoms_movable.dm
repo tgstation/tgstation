@@ -1,4 +1,5 @@
 /atom/movable
+	abstract_type = /atom/movable
 	layer = OBJ_LAYER
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
