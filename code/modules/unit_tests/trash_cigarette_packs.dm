@@ -5,8 +5,9 @@
 	var/list/cigpack_trash = /obj/effect/spawner/random/trash/cigpack::loot
 
 	for(var/cigpack in subtypesof(/obj/item/storage/fancy/cigarettes))
-		TEST_ASSERT(cigpack in cigpack_trash, "[cigpack] must include its empty subtype for loot table /obj/effect/spawner/random/trash/cigpack")
+		TEST_ASSERT(is_path_in_list(cigpack, cigpack_trash), "[cigpack] must include its empty subtype for loot table /obj/effect/spawner/random/trash/cigpack")
 
 	for(var/cigars in subtypesof(/obj/item/storage/fancy/cigarettes/cigars))
-		TEST_ASSERT(cigars in cigpack_trash, "[cigars] must include its empty subtype for loot table /obj/effect/spawner/random/trash/cigpack")
+		TEST_ASSERT(is_path_in_list(cigars, cigpack_trash), "[cigars] must include its empty subtype for loot table /obj/effect/spawner/random/trash/cigpack")
+
 
