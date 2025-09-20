@@ -277,7 +277,7 @@
 		if(!isnull(details[SKIN_PIXEL_X]))
 			cyborg.base_pixel_x = details[SKIN_PIXEL_X]
 		if(!isnull(details[SKIN_PIXEL_Y]))
-			cyborg.base_pixel_y = details[SKIN_PIXEL_Y]
+			cyborg.base_pixel_z = details[SKIN_PIXEL_Y]
 		if(!isnull(details[SKIN_LIGHT_KEY]))
 			special_light_key = details[SKIN_LIGHT_KEY]
 		if(!isnull(details[SKIN_HAT_OFFSET]))
