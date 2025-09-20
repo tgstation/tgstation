@@ -148,7 +148,8 @@
 	if(antimagic)
 		to_chat(examiner, boxed_message(span_warning("You attempt to analyze [examined]'s current thoughts, but fail to penetrate [examined.p_their()] mind - It seems you've been foiled.")))
 		return
-
+	if(prob(10))
+		to_chat(examined, span_danger("You feel something foreign enter your mind."))
 	to_chat(examiner, boxed_message(span_notice("You analyze [examined]'s current thoughts... \"[read_text]\"...")))
 
 /datum/mutation/mindreader/New(datum/mutation/copymut)
