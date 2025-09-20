@@ -78,7 +78,7 @@
 	/// Templates necessary for this ruleset to be executed
 	VAR_PROTECTED/list/ruleset_lazy_templates
 	/// Extra logging information can be set here, to be output into any admin messaging and dynamic logs.
-	var/log_data
+	VAR_FINAL/log_data
 
 /datum/dynamic_ruleset/New(list/dynamic_config)
 	for(var/new_var in dynamic_config?[config_tag])
