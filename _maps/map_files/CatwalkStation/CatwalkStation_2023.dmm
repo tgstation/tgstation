@@ -7789,6 +7789,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"cox" = (
+/obj/structure/railing,
+/obj/machinery/door/firedoor/border_only,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/hallway/primary/central)
 "coI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/cleanable/dirt,
@@ -9763,6 +9771,7 @@
 	name = "Service Hall"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "cQP" = (
@@ -12201,6 +12210,7 @@
 "dEq" = (
 /obj/machinery/light/warm/dim/directional/west,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/wood/large,
 /area/station/service/kitchen)
 "dEu" = (
@@ -14856,6 +14866,14 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
+"eqZ" = (
+/obj/structure/railing,
+/obj/machinery/door/firedoor/border_only,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/hallway/primary/central)
 "erj" = (
 /obj/structure/stairs/south,
 /turf/open/floor/iron/stairs{
@@ -28405,6 +28423,7 @@
 /area/station/science/xenobiology)
 "ikR" = (
 /obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "ikZ" = (
@@ -35612,6 +35631,9 @@
 /area/station/medical/medbay/central)
 "klJ" = (
 /obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "kmh" = (
@@ -36384,6 +36406,12 @@
 	},
 /turf/open/openspace,
 /area/station/maintenance/port/aft)
+"kvF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/hallway/primary/central)
 "kvH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/security{
@@ -38803,6 +38831,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
+"lhE" = (
+/obj/structure/railing,
+/obj/machinery/door/firedoor/border_only,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/hallway/primary/central)
 "lhX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -55464,6 +55500,12 @@
 /obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron,
 /area/station/science/research)
+"qaA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/hallway/primary/central)
 "qaI" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp,
@@ -62335,6 +62377,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sbd" = (
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "sbh" = (
@@ -68540,6 +68583,7 @@
 	name = "Kitchen"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "tVR" = (
@@ -77061,6 +77105,9 @@
 "wog" = (
 /obj/machinery/camera/autoname/directional/east,
 /obj/structure/sign/departments/psychology/directional/east,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "woh" = (
@@ -178063,8 +178110,8 @@ tnu
 gSq
 ikR
 klJ
-dEN
-kSZ
+kvF
+lhE
 dUb
 dUb
 dUb
@@ -178321,7 +178368,7 @@ dEN
 sbd
 pzb
 vNc
-kSZ
+cox
 dUb
 dUb
 fDE
@@ -178578,7 +178625,7 @@ dEN
 sbd
 ukT
 vIw
-kSZ
+cox
 dUb
 dUb
 fDE
@@ -178833,9 +178880,9 @@ dEN
 scT
 dEN
 wog
-dEN
-dEN
-kSZ
+qaA
+qaA
+eqZ
 dUb
 dUb
 fDE
