@@ -349,6 +349,7 @@
 		var/list/arguments = filter_info.Copy()
 		arguments -= "priority"
 		filter_cache.Insert(index, filter(arglist(arguments)))
+		break
 
 	if (update)
 		atom_cast.filters = filter_cache
