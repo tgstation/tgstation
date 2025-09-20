@@ -51730,6 +51730,10 @@
 	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
+"oVO" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood/large,
+/area/station/service/library)
 "oVY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -82446,6 +82450,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/art)
+"xXa" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/glass/reinforced,
+/area/station/service/library)
 "xXe" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/dark/smooth_half,
@@ -178035,9 +178043,9 @@ sch
 oZJ
 cdy
 tsd
-rlE
-rlE
-rlE
+xXa
+xXa
+xXa
 ige
 haE
 rIi
@@ -178553,7 +178561,7 @@ hOO
 hOO
 hOO
 qRA
-aTt
+oVO
 hyS
 uii
 dEN
@@ -179324,7 +179332,7 @@ wpA
 sJR
 uRU
 nmS
-aTt
+oVO
 aum
 umH
 ipQ
