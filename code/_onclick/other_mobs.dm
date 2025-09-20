@@ -15,6 +15,8 @@
  * (Potentially) gives feedback to the mob if they cannot.
  */
 /mob/living/proc/can_unarmed_attack()
+	if(stat == DEAD)
+		return FALSE
 	return !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
 
 /mob/living/carbon/can_unarmed_attack()

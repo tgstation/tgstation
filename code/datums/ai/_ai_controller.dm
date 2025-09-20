@@ -342,7 +342,14 @@ multiple modular subtrees with behaviors
 ///Can this pawn interact with objects?
 /datum/ai_controller/proc/ai_can_interact()
 	SHOULD_CALL_PARENT(TRUE)
-	return !QDELETED(pawn)
+	if(QDELETED(pawn))
+		return FALSE
+	// Dead mobs should not be able to interact with objects
+	if(isliving(pawn))
+		var/mob/living/living_pawn = pawn
+		if(living_pawn.stat == DEAD)
+			return FALSE
+	return TRUE
 
 ///Interact with objects
 /datum/ai_controller/proc/ai_interact(target, combat_mode, list/modifiers)

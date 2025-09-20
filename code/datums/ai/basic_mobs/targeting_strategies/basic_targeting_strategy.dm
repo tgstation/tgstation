@@ -14,6 +14,10 @@
 	if(isnull(our_controller))
 		return FALSE
 
+	// Dead mobs should not attack anything
+	if(living_mob.stat == DEAD)
+		return FALSE
+
 	if(isturf(the_target) || isnull(the_target)) // bail out on invalids
 		return FALSE
 
