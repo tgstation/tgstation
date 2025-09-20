@@ -78,7 +78,9 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_FORCESAY)
 
 /**
- * Gets whatever text is currently in the say box and saves it to the datum.
+ * Gets whatever text is currently in this mob's say box and returns it.
+ *
+ * Note: Sleeps, due to waiting for say to respond.
  */
 /mob/proc/get_typing_text()
 	if(!client?.tgui_say?.window_open)
@@ -112,6 +114,7 @@
 		delegate_speech(alter_entry(payload), target_channel)
 		return TRUE
 	if(type == "save")
+		saved_text = "" // so we can differentiate null (nothing saved) and empty (nothing typed)
 		var/target_channel = payload["channel"]
 		if(target_channel == SAY_CHANNEL || target_channel == RADIO_CHANNEL)
 			saved_text = payload["entry"] // only save IC text

@@ -128,8 +128,6 @@
 	INVOKE_ASYNC(src, PROC_REF(read_mind), examiner, examining)
 
 /datum/action/cooldown/spell/pointed/mindread/proc/read_mind(mob/living/examiner, mob/living/examined)
-	set waitfor = FALSE
-
 	if(examined.stat >= UNCONSCIOUS)
 		return
 	if(examined.mob_biotypes & (MOB_UNDEAD|MOB_SPIRIT|MOB_MINERAL|MOB_ROBOTIC))
@@ -142,7 +140,7 @@
 		if(!read_text)
 			return
 
-	sleep(0.5 SECONDS) // small pause so it comes after all examine effects
+	sleep(0.5 SECONDS) // small pause so it comes after all examine text and effects
 	if(QDELETED(examiner))
 		return
 	if(antimagic)
