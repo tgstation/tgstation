@@ -37,10 +37,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 		pm_iterator.add_filter(name, priority, params, update)
 
 ///Full override so we can just use filterrific
-/atom/movable/plane_master_controller/remove_filter(name_or_names)
+/atom/movable/plane_master_controller/remove_filter(name_or_names, update = TRUE)
 	. = ..()
 	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
-		pm_iterator.remove_filter(name_or_names)
+		pm_iterator.remove_filter(name_or_names, update)
 
 /atom/movable/plane_master_controller/update_filters(start_index = null)
 	. = ..()
