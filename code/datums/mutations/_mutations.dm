@@ -19,10 +19,7 @@
 #define POSITIVE_INSTABILITY_MAJOR 35
 
 /datum/mutation
-	var/name
-
-/datum/mutation
-	name = "mutation"
+	var/name = "mutation"
 	/// Description of the mutation
 	var/desc = "A mutation."
 	/// Is this mutation currently locked?
