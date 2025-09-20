@@ -33,6 +33,7 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/fetch,
 	)
+	//can this mob breed?
 	var/can_breed = TRUE
 
 /mob/living/basic/stoat/Initialize(mapload)
