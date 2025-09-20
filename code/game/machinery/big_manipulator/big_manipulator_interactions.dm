@@ -159,7 +159,7 @@
 
 	// For strict robin, don't wrap around if no point is available
 	if(!allow_wrap_around)
-		schedule_delayed_cycle_retry()
+		schedule_next_cycle()
 
 	return NONE
 
@@ -192,8 +192,7 @@
 	if(current_task == CURRENT_TASK_STOPPING)
 		return
 
-	// Only schedule immediate cycles when we have a held object (need to drop it off)
-	// or when we're in a clean state (NONE or IDLE)
+	// Allow scheduling if manipulator is idle, none, or if we have a held object (need to drop it off)
 	if(current_task != CURRENT_TASK_IDLE && current_task != CURRENT_TASK_NONE && !held_object)
 		return
 
@@ -210,40 +209,9 @@
 		complete_stopping_task()
 		return FALSE
 
-	// Set idle state and schedule a delayed retry instead of immediate cycle
 	start_task(CURRENT_TASK_IDLE, CYCLE_SKIP_TIMEOUT)
-	schedule_delayed_cycle_retry()
+	schedule_next_cycle()
 	return FALSE
-
-/// Schedules a delayed retry of the cycle to avoid infinite loops
-/obj/machinery/big_manipulator/proc/schedule_delayed_cycle_retry()
-	if(cycle_timer_running)
-		return
-
-	// Don't schedule retries during stopping task
-	if(current_task == CURRENT_TASK_STOPPING)
-		return
-
-	cycle_timer_running = TRUE
-	addtimer(CALLBACK(src, PROC_REF(retry_cycle_after_delay)), CYCLE_SKIP_TIMEOUT)
-
-/// Retries the cycle after a delay
-/obj/machinery/big_manipulator/proc/retry_cycle_after_delay()
-	cycle_timer_running = FALSE
-
-	// Check if we should still be running
-	if(!on || current_task == CURRENT_TASK_STOPPING)
-		return
-
-	// Double-check that we're not already in a cycle
-	if(cycle_timer_running)
-		return
-
-	// Try to find work again
-	if(held_object)
-		run_dropoff_phase()
-	else
-		run_pickup_phase()
 
 /// Updates the round robin index for the specified transfer type.
 /obj/machinery/big_manipulator/proc/update_roundrobin_index(transfer_type)
