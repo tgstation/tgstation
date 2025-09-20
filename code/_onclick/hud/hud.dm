@@ -464,10 +464,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		show_to.client?.screen += reuse
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12()
-	set name = "F12"
-	set hidden = TRUE
-
+DEFINE_VERB(/mob, button_pressed_F12, "F12", "", TRUE, "")
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
 		to_chat(usr, span_info("Switched HUD mode. Press F12 to toggle."))
