@@ -9,7 +9,6 @@
 	payment_department = NO_FREEBIES
 	light_mask = "custom-light-mask"
 	panel_type = "panel20"
-	allow_custom = TRUE
 	refill_canister = /obj/item/vending_refill/custom
 	fish_source_path = /datum/fish_source/vending/custom
 

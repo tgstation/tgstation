@@ -234,7 +234,6 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "theater-light-mask"
-	allow_custom = TRUE
 
 /obj/machinery/vending/autodrobe/Initialize(mapload)
 	product_categories = list(
