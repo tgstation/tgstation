@@ -39777,11 +39777,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
-"lyq" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/water,
-/area/station/maintenance/port/fore)
 "lys" = (
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
@@ -114350,7 +114345,7 @@ bfw
 kHv
 uPu
 ojU
-lyq
+llv
 cnv
 lDE
 tjg
