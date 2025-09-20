@@ -56,42 +56,41 @@
 	/// List of all HUD icons resembling interaction points.
 	var/list/hud_points = list()
 
+/obj/machinery/big_manipulator/proc/try_create_point_overlay(datum/interaction_point/point, point_type, index)
+	var/turf/target_turf = point.interaction_turf
+	if(!target_turf)
+		return null
+
+	var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "[point_type]_[index]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+	var/turf/manip_turf = get_turf(src)
+	point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
+	point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
+	return point_appearance
+
 /obj/machinery/big_manipulator/proc/update_hud()
-  LAZYCLEARLIST(hud_points)
+	LAZYCLEARLIST(hud_points)
 
-  var/image/main_hud = hud_list[BIG_MANIP_HUD]
-  if(!main_hud)
-    return
+	var/image/main_hud = hud_list[BIG_MANIP_HUD]
+	if(!main_hud)
+		return
 
-  main_hud.loc = get_turf(src)
-  main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+	main_hud.loc = get_turf(src)
+	main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 
-  main_hud.overlays.Cut()
-  var/list/point_overlays = list()
+	main_hud.overlays.Cut()
+	var/list/point_overlays = list()
 
-  for(var/i = 1; i <= length(pickup_points); i++)
-    var/datum/interaction_point/point = pickup_points[i]
-    var/turf/target_turf = point.interaction_turf
-    if(target_turf)
-      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
-      var/turf/manip_turf = get_turf(src)
-      point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
-      point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
-      point_overlays += point_appearance
+	for(var/i = 1; i <= length(pickup_points); i++)
+		var/datum/interaction_point/point = pickup_points[i]
+		try_create_point_overlay(point, "pickup", i)
 
-  for(var/i = 1; i <= length(dropoff_points); i++)
-    var/datum/interaction_point/point = dropoff_points[i]
-    var/turf/target_turf = point.interaction_turf
-    if(target_turf)
-      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
-      var/turf/manip_turf = get_turf(src)
-      point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
-      point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
-      point_overlays += point_appearance
+	for(var/i = 1; i <= length(dropoff_points); i++)
+		var/datum/interaction_point/point = dropoff_points[i]
+		try_create_point_overlay(point, "dropoff", i)
 
-  main_hud.overlays += point_overlays
-  hud_points += main_hud
-  set_hud_image_active(BIG_MANIP_HUD)
+	main_hud.overlays += point_overlays
+	hud_points += main_hud
+	set_hud_image_active(BIG_MANIP_HUD)
 
 /// Attempts to find the closest open turf to the manipulator
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
@@ -535,7 +534,7 @@
 		on = new_power_state
 		cycle_timer_running = FALSE
 		// Set stopping task instead of ending current task immediately
-		if(current_task != CURRENT_TASK_NONE || current_task != CURRENT_TASK_STOPPING)
+		if(current_task != CURRENT_TASK_NONE && current_task != CURRENT_TASK_STOPPING)
 			start_task(CURRENT_TASK_STOPPING, 0)
 			// Schedule automatic completion of stopping task
 			addtimer(CALLBACK(src, PROC_REF(complete_stopping_task)), 1 SECONDS)
@@ -544,21 +543,13 @@
 		SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/validate_all_points()
-	var/list/pickup_to_remove = list()
 	for(var/datum/interaction_point/point in pickup_points)
 		if(!point.is_valid())
-			pickup_to_remove += point
+			qdel(point)
 
-	for(var/datum/interaction_point/point_to_remove in pickup_to_remove)
-		pickup_points.Remove(point_to_remove)
-
-	var/list/dropoff_to_remove = list()
 	for(var/datum/interaction_point/point in dropoff_points)
 		if(!point.is_valid())
-			dropoff_to_remove += point
-
-	for(var/datum/interaction_point/point_to_remove in dropoff_to_remove)
-		dropoff_points.Remove(point_to_remove)
+			qdel(point)
 
 	if(is_operational)
 		update_hud()
@@ -767,45 +758,33 @@
 
 		if("move_to")
 			var/button_number = text2num(value["buttonNumber"])
+			var/list/new_offset = get_directions_offset(button_number)
+			var/turf/new_turf = locate(x + new_offset[1], y + new_offset[2], z)
+			var/turf/manipulator_turf = get_turf(src)
+			if(!manipulator_turf)
+				return FALSE
 
-			var/dx = 0
-			var/dy = 0
-			switch(button_number)
-				if(1)
-					dx = -1
-					dy = 1
-				if(2)
-					dx = 0
-					dy = 1
-				if(3)
-					dx = 1
-					dy = 1
-				if(4)
-					dx = -1
-					dy = 0
-				if(5)
-					dx = 0
-					dy = 0
-				if(6)
-					dx = 1
-					dy = 0
-				if(7)
-					dx = -1
-					dy = -1
-				if(8)
-					dx = 0
-					dy = -1
-				if(9)
-					dx = 1
-					dy = -1
-
-			var/turf/new_turf = locate(x + dx, y + dy, z)
+			new_turf = locate(manipulator_turf.x + new_offset[1], manipulator_turf.y + new_offset[2], manipulator_turf.z)
 			if(!new_turf || isclosedturf(new_turf))
 				return FALSE
 
 			target_point.interaction_turf = new_turf
 			update_hud()
 			return TRUE
+
+/obj/machinery/big_manipulator/proc/get_directions_offset(button_number)
+	var/list/offsets = list(
+		list(-1, 1),  // 1: northwest
+		list(0, 1),   // 2: north
+		list(1, 1),   // 3: northeast
+		list(-1, 0),  // 4: west
+		list(0, 0),   // 5: center
+		list(1, 0),   // 6: east
+		list(-1, -1), // 7: southwest
+		list(0, -1),  // 8: south
+		list(1, -1)   // 9: southeast
+	)
+	return offsets[button_number]
 
 /// Cycles the given value in the given list. Retuns the next value in the list, or the first one if the list isn't long enough.
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
