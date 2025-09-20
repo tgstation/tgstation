@@ -332,8 +332,14 @@
 			filter_data -= filter_info
 			break
 	BINARY_INSERT_LIST(list(copied_parameters), filter_data, copied_parameters, "priority", COMPARE_KEY)
-	if (update)
-		update_filters()
+	if (!update)
+		return
+
+	for (var/index in 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
+		if (filter_info["name"] == name)
+			update_filters(index) // Only update from the index we care about to avoid unnecessarily recreating filters
+			return
 
 ///A version of add_filter that takes a list of filters to add rather than being individual, to limit calls to update_filters().
 /datum/proc/add_filters(list/list/filters, update = TRUE)
@@ -343,18 +349,24 @@
 	if (update)
 		update_filters()
 
-/// Reapplies all the filters.
-/datum/proc/update_filters()
+/// Reapplies all the filters. If start_index is passed, only a portion of all filters are reapplied starting from said index
+/datum/proc/update_filters(start_index = null)
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
-	atom_cast.filters = null
-	for (var/list/filter_info as anything in filter_data)
+	if (!start_index)
+		atom_cast.filters = null
+
+	for (var/index in start_index || 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
 		var/list/arguments = filter_info.Copy()
 		arguments -= "priority"
-		atom_cast.filters += filter(arglist(arguments))
+		if (start_index) // See https://www.byond.com/forum/post/2980598 as to why we cannot just override the existing filter
+			atom_cast.filters -= filter_info["name"] // We're trapped in the belly of this horrible machine
+		atom_cast.filters += filter(arglist(arguments)) // And the machine is bleeding to death
+
 	UNSETEMPTY(filter_data)
 
-/obj/item/update_filters()
+/obj/item/update_filters(start_index = null)
 	. = ..()
 	update_item_action_buttons()
 
@@ -371,24 +383,18 @@
 	if (!filter)
 		return
 
-	if (overwrite)
-		for (var/index in 1 to length(filter_data))
-			var/list/filter_info = filter_data[index]
-			if (filter_info["name"] != name)
-				continue
-			filter_data[index] = new_params
-			if (update)
-				update_filters()
-			return
-		return
-
-	for (var/list/filter_info as anything in filter_data)
+	for (var/index in 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
 		if (filter_info["name"] != name)
 			continue
-		for (var/thing in new_params)
-			filter_info[thing] = new_params[thing]
-	if (update)
-		update_filters()
+		if (overwrite)
+			filter_data[index] = new_params
+		else
+			for (var/thing in new_params)
+				filter_info[thing] = new_params[thing]
+		if (update)
+			update_filters(index)
+		return
 
 /** Update a filter's parameter and animate this change. If the filter doesn't exist we won't do anything.
  * Basically a [datum/proc/modify_filter] call but with animations. Unmodified filter parameters are kept.
@@ -442,7 +448,6 @@
 		var/list/this_step = transition_steps[transition_step]
 		animate(this_step["params"], time = this_step["duration"], easing = this_step["easing"], flags = this_step["flags"])
 
-
 /// Updates the priority of the passed filter key
 /datum/proc/change_filter_priority(name, new_priority)
 	for (var/list/filter_info as anything in filter_data)
@@ -460,22 +465,21 @@
 	return atom_cast.filters[name]
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
-/datum/proc/remove_filter(name_or_names, update = TRUE)
+/datum/proc/remove_filter(name_or_names)
+	ASSERT(isatom(src) || isimage(src))
 	if(!filter_data)
 		return
-
+	var/atom/atom_cast = src // filters only work with images or atoms.
 	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
 	. = FALSE
 	var/list/new_data = list()
 	for (var/index in 1 to length(filter_data))
 		var/list/filter_info = filter_data[index]
-		if (filter_info["name"] in names)
-			names -= filter_info["name"]
-		else
+		if (!(filter_info["name"] in names))
 			new_data += list(filter_info)
+	for (var/filter_name in names)
+		atom_cast.filters -= filter_name
 	filter_data = new_data
-	if(. && update)
-		update_filters()
 	return .
 
 /datum/proc/clear_filters()
