@@ -1,122 +1,72 @@
-/*
-  _____        _   _             _  _ _    _
- |_   _|_ _ __| |_(_)_ _  __ _  | || (_)__| |_ ___ _ _ _  _
-   | |/ _` (_-< / / | ' \/ _` | | __ | (_-<  _/ _ \ '_| || |
-   |_|\__,_/__/_\_\_|_||_\__, | |_||_|_/__/\__\___/_|  \_, |
-                         |___/                         |__/
-*/
-
-/// Builds an ordered list of interaction points based on tasking strategy
-/obj/machinery/big_manipulator/proc/build_ordered_points(list/points, tasking_type, roundrobin_history)
-	if(!length(points))
-		return list()
-
-	switch(tasking_type)
-		if(TASKING_PREFER_FIRST)
-			return points.Copy()
-
-		if(TASKING_ROUND_ROBIN, TASKING_STRICT_ROBIN)
-			return build_round_robin_order(points, roundrobin_history)
-
-	return points.Copy()
-
-/// Builds round-robin ordered list starting from the given index
-/obj/machinery/big_manipulator/proc/build_round_robin_order(list/points, start_index)
-	var/list/ordered = list()
-	var/safe_index = clamp(start_index, 1, length(points))
-
-	for(var/i = safe_index, i <= length(points), i++)
-		ordered += points[i]
-
-	for(var/i = 1, i < safe_index, i++)
-		ordered += points[i]
-
-	return ordered
-
-/// Updates round-robin history for the given point and tasking type
-/obj/machinery/big_manipulator/proc/update_roundrobin_history(datum/interaction_point/used_point, list/points, tasking_type, roundrobin_history)
-	if(tasking_type != TASKING_ROUND_ROBIN)
-		return
-
-	var/found_index = points.Find(used_point)
-	if(found_index)
-		roundrobin_history = found_index + 1
-		if(roundrobin_history > length(points))
-			roundrobin_history = 1
-		return roundrobin_history
-
-	return roundrobin_history
-
-
-/*
-  ___ _    _               ___     _     _
- | _ (_)__| |___  _ _ __  | _ \___(_)_ _| |_ ___
- |  _/ / _| / / || | '_ \ |  _/ _ \ | ' \  _(_-<
- |_| |_\__|_\_\\_,_| .__/ |_| \___/_|_||_\__/__/
-                   |_|
-*/
-
-/// Finds a suitable pickup candidate that can be delivered to available dropoff points
+/// Selects which atom to pick up from this point for interaction with available dropoff points
 /obj/machinery/big_manipulator/proc/find_pickup_candidate_for_pickup_point(datum/interaction_point/pickup_point)
-	if(!pickup_point?.interaction_turf)
+	if(!pickup_point)
 		return null
 
 	var/turf/pickup_turf = pickup_point.interaction_turf
-	if(!length(dropoff_points))
+	if(!pickup_turf)
 		return null
 
-	// Build ordered list of dropoff points according to current tasking
-	var/list/ordered_destinations = build_ordered_points(dropoff_points, dropoff_tasking, roundrobin_history_dropoff)
+	// Build ordered list of dropoff points according to current tasking and round-robin index
+	var/list/destinations = dropoff_points
+	if(!length(destinations))
+		return null
 
-	// For each destination in order, try to find a pickup item that it can accept (if it can)
-	for(var/datum/interaction_point/dest_point in ordered_destinations)
-		if(!dest_point?.is_valid())
+	var/list/ordered = list()
+	switch(dropoff_tasking)
+		if(TASKING_PREFER_FIRST)
+			ordered = destinations.Copy()
+
+		if(TASKING_ROUND_ROBIN)
+			if(roundrobin_history_dropoff < 1 || roundrobin_history_dropoff > length(destinations))
+				roundrobin_history_dropoff = 1
+			for(var/i = roundrobin_history_dropoff, i <= length(destinations), i++)
+				ordered += destinations[i]
+			for(var/i2 = 1, i2 < roundrobin_history_dropoff, i2++)
+				ordered += destinations[i2]
+
+		if(TASKING_STRICT_ROBIN)
+			if(roundrobin_history_dropoff < 1 || roundrobin_history_dropoff > length(destinations))
+				roundrobin_history_dropoff = 1
+			for(var/j = roundrobin_history_dropoff, j <= length(destinations), j++)
+				ordered += destinations[j]
+			for(var/j2 = 1, j2 < roundrobin_history_dropoff, j2++)
+				ordered += destinations[j2]
+
+	// For each destination in order, try to find a pickup item that it can accept
+	for(var/datum/interaction_point/dest_point in ordered)
+		if(!dest_point || !dest_point.is_valid())
 			continue
 
-		var/atom/movable/candidate = find_compatible_candidate(pickup_turf, dest_point)
-		if(candidate)
-			// Update round-robin history if needed
-			roundrobin_history_dropoff = update_roundrobin_history(dest_point, dropoff_points, dropoff_tasking, roundrobin_history_dropoff)
-			return candidate
+		for(var/atom/movable/candidate in pickup_turf.contents)
+			if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
+				continue
+
+			if(!dest_point.check_filters_for_atom(candidate))
+				continue
+
+			if(dest_point.is_available(TRANSFER_TYPE_DROPOFF, candidate))
+
+				if(dropoff_tasking == TASKING_ROUND_ROBIN)
+					var/found_index = destinations.Find(dest_point)
+					if(found_index)
+						roundrobin_history_dropoff = found_index + 1
+						if(roundrobin_history_dropoff > length(destinations))
+							roundrobin_history_dropoff = 1
+				return candidate
 
 	return null
-
-/// Finds a compatible candidate on the pickup turf for the given destination point
-/obj/machinery/big_manipulator/proc/find_compatible_candidate(turf/pickup_turf, datum/interaction_point/dest_point)
-	for(var/atom/movable/candidate in pickup_turf.contents)
-		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
-			continue
-
-		if(!dest_point.check_filters_for_atom(candidate))
-			continue
-
-		if(dest_point.is_available(TRANSFER_TYPE_DROPOFF, candidate))
-			return candidate
-
-	return null
-
-/// Checks if a point is available for the given transfer type
-/obj/machinery/big_manipulator/proc/is_point_available(datum/interaction_point/point, transfer_type, atom/movable/target)
-	if(transfer_type == TRANSFER_TYPE_DROPOFF)
-		return point.is_available(transfer_type, target)
-	else
-		return !!find_pickup_candidate_for_pickup_point(point)
-
-/// Updates the appropriate round-robin history based on transfer type
-/obj/machinery/big_manipulator/proc/update_roundrobin_for_transfer(transfer_type, new_index, list/points)
-	if(transfer_type == TRANSFER_TYPE_DROPOFF)
-		roundrobin_history_dropoff = new_index
-	else
-		roundrobin_history_pickup = new_index
 
 /// Calculates the next interaction point the manipulator should transfer the item to or pick up it from.
 /obj/machinery/big_manipulator/proc/find_next_point(tasking_type, transfer_type)
 	if(!tasking_type)
 		tasking_type = TASKING_PREFER_FIRST
+
 	if(!transfer_type)
 		return NONE
 
 	var/atom/movable/target = held_object?.resolve()
+
 	var/list/interaction_points = transfer_type == TRANSFER_TYPE_DROPOFF ? dropoff_points : pickup_points
 	if(!length(interaction_points))
 		return NONE
@@ -126,42 +76,67 @@
 
 	switch(tasking_type)
 		if(TASKING_PREFER_FIRST)
-			return find_first_available_point(interaction_points, transfer_type, target)
+			for(var/datum/interaction_point/this_point in interaction_points)
+				// For pickup: only consider points that have a candidate that can be delivered
+				if(!is_dropoff)
+					if(find_pickup_candidate_for_pickup_point(this_point))
+						return this_point
+				else if(this_point.is_available(transfer_type, target))
+					return this_point
+
+			return NONE
 
 		if(TASKING_ROUND_ROBIN)
-			return find_round_robin_point(interaction_points, transfer_type, target, roundrobin_history, TRUE)
+			var/datum/interaction_point/this_point = interaction_points[roundrobin_history]
+			var/point_ok = is_dropoff ? this_point.is_available(transfer_type, target) : !!find_pickup_candidate_for_pickup_point(this_point)
+			if(point_ok)
+				roundrobin_history += 1
+				if(roundrobin_history > length(interaction_points))
+					roundrobin_history = 1
+				if(is_dropoff)
+					roundrobin_history_dropoff = roundrobin_history
+				else
+					roundrobin_history_pickup = roundrobin_history
+				return this_point
+
+			var/initial_index = roundrobin_history
+			roundrobin_history += 1
+			if(roundrobin_history > length(interaction_points))
+				roundrobin_history = 1
+
+			while(roundrobin_history != initial_index)
+				this_point = interaction_points[roundrobin_history]
+				point_ok = is_dropoff ? this_point.is_available(transfer_type, target) : !!find_pickup_candidate_for_pickup_point(this_point)
+				if(point_ok)
+					roundrobin_history += 1
+					if(roundrobin_history > length(interaction_points))
+						roundrobin_history = 1
+					if(is_dropoff)
+						roundrobin_history_dropoff = roundrobin_history
+					else
+						roundrobin_history_pickup = roundrobin_history
+					return this_point
+
+				roundrobin_history += 1
+				if(roundrobin_history > length(interaction_points))
+					roundrobin_history = 1
+			return NONE
 
 		if(TASKING_STRICT_ROBIN)
-			return find_round_robin_point(interaction_points, transfer_type, target, roundrobin_history, FALSE)
+			var/datum/interaction_point/this_point = interaction_points[roundrobin_history]
+			var/point_ok = is_dropoff ? this_point.is_available(transfer_type, target) : !!find_pickup_candidate_for_pickup_point(this_point)
+			if(point_ok)
+				roundrobin_history += 1
+				if(roundrobin_history > length(interaction_points))
+					roundrobin_history = 1
+				if(is_dropoff)
+					roundrobin_history_dropoff = roundrobin_history
+				else
+					roundrobin_history_pickup = roundrobin_history
+				return this_point
 
-	return NONE
-
-/// Finds the first available point in the list
-/obj/machinery/big_manipulator/proc/find_first_available_point(list/points, transfer_type, atom/movable/target)
-	for(var/datum/interaction_point/point in points)
-		if(is_point_available(point, transfer_type, target))
-			return point
-	return NONE
-
-/// Finds a point using round-robin logic
-/obj/machinery/big_manipulator/proc/find_round_robin_point(list/points, transfer_type, atom/movable/target, roundrobin_history, allow_wrap_around)
-	var/list/ordered_points = build_ordered_points(points, TASKING_ROUND_ROBIN, roundrobin_history)
-
-	for(var/datum/interaction_point/point in ordered_points)
-		if(is_point_available(point, transfer_type, target))
-			var/found_index = points.Find(point)
-			if(found_index)
-				var/new_index = found_index + 1
-				if(new_index > length(points))
-					new_index = 1
-				update_roundrobin_for_transfer(transfer_type, new_index, points)
-			return point
-
-	// For strict robin, don't wrap around if no point is available
-	if(!allow_wrap_around)
-		schedule_next_cycle()
-
-	return NONE
+			schedule_next_cycle()
+			return NONE
 
 /// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
 /obj/machinery/big_manipulator/proc/try_kickstart(mob/user)
@@ -215,14 +190,14 @@
 
 /// Updates the round robin index for the specified transfer type.
 /obj/machinery/big_manipulator/proc/update_roundrobin_index(transfer_type)
-	var/list/points = transfer_type == TRANSFER_TYPE_PICKUP ? pickup_points : dropoff_points
-	var/current_index = transfer_type == TRANSFER_TYPE_PICKUP ? roundrobin_history_pickup : roundrobin_history_dropoff
-
-	var/new_index = current_index + 1
-	if(new_index > length(points))
-		new_index = 1
-
-	update_roundrobin_for_transfer(transfer_type, new_index, points)
+	if(transfer_type == TRANSFER_TYPE_PICKUP)
+		roundrobin_history_pickup += 1
+		if(roundrobin_history_pickup > length(pickup_points))
+			roundrobin_history_pickup = 1
+	else if(transfer_type == TRANSFER_TYPE_DROPOFF)
+		roundrobin_history_dropoff += 1
+		if(roundrobin_history_dropoff > length(dropoff_points))
+			roundrobin_history_dropoff = 1
 
 /// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
 /obj/machinery/big_manipulator/proc/run_pickup_phase()
@@ -277,7 +252,7 @@
 		held_object = WEAKREF(target)
 		manipulator_arm.update_claw(held_object)
 
-	// Schedule the dropoff phase after a successful pickup to avoid overlapping tasks (I hate this)
+	// Schedule the dropoff phase after a successful pickup to avoid overlapping tasks
 	if(!hand_is_empty)
 		schedule_next_cycle()
 
@@ -357,8 +332,8 @@
 
 	// Animating a single rotation step
 
-	// YES, this has to be done like that because byond or whatever is mother-fucking stupid and `animate`ing a 180+ degree turn
-	// fucking fails and instead squashes the icon vertically or horizontally, whichever it feels like this time
+	// YES, this has to be done like that because byond or whatever is stupid and `animate`ing a 180+ degree turn
+	// fucking fails and squashes the icon vertically (or horizontally, whichever it feels like) instead
 
 	var/next_angle = current_angle + rotation_step
 	var/matrix/next_matrix = matrix()
@@ -370,11 +345,11 @@
 	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_point, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), BASE_INTERACTION_TIME / speed_multiplier)
 
 /*
-  ___                     __  __   ___     _     _
- |   \ _ _ ___ _ __  ___ / _|/ _| | _ \___(_)_ _| |_ ___
- | |) | '_/ _ \ '_ \/ _ \  _|  _| |  _/ _ \ | ' \  _(_-<
- |___/|_| \___/ .__/\___/_| |_|   |_| \___/_|_||_\__/__/
-              |_|
+  ___         _   _           _   _            ___     _     _
+ |   \ ___ __| |_(_)_ _  __ _| |_(_)___ _ _   | _ \___(_)_ _| |_ ___
+ | |) / -_|_-<  _| | ' \/ _` |  _| / _ \ ' \  |  _/ _ \ | ' \  _(_-<
+ |___/\___/__/\__|_|_||_\__,_|\__|_\___/_||_| |_| \___/_|_||_\__/__/
+
 */
 
 /// Moves the item onto the turf.
