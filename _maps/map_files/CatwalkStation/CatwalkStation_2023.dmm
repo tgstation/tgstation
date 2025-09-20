@@ -48994,7 +48994,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "ofE" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8
 	},
@@ -177337,7 +177336,7 @@ laD
 hRX
 hRX
 hRX
-bnZ
+hRX
 bnZ
 jFI
 cqj
