@@ -1,0 +1,6 @@
+author: "YakiAttaki"
+delete-after: True
+changes:
+  - rscadd: "Added the ability to pick up stoats"
+  - rscadd: "Stoats can now breed!"
+  - rscadd: "Baby stoat mobs are now a thing. Aww, so cute!"
