@@ -15509,15 +15509,6 @@
 /obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/checker,
 /area/station/maintenance/hallway/abandoned_recreation)
-"eCl" = (
-/obj/structure/cable,
-/obj/structure/chair/stool/bar/directional/north,
-/obj/effect/landmark/start/hangover,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/station/commons/lounge)
 "eCu" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -33268,8 +33259,8 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/starboard)
 "jBU" = (
-/obj/structure/table/glass,
 /obj/item/reagent_containers/cup/glass/mug/tea,
+/obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
 "jBW" = (
@@ -110719,7 +110710,7 @@ vsQ
 xHc
 jBU
 jBU
-eCl
+csk
 pWr
 nyB
 bNt
