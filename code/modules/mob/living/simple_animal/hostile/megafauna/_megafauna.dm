@@ -43,8 +43,6 @@
 	var/crusher_achievement_type
 	/// Score given to players when megafauna is killed
 	var/score_achievement_type
-	/// If the megafauna was actually killed (not just dying, then transforming into another type)
-	var/elimination = 0
 	/// Modifies attacks when at lower health
 	var/anger_modifier = 0
 	/// Name for the GPS signal of the megafauna

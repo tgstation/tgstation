@@ -444,7 +444,7 @@ Difficulty: Hard
 	visible_message(span_hierophant_warning("[src] shrinks, releasing a massive burst of energy!"))
 	hierophant_burst(null, get_turf(src), 10)
 	set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
-	..(force_grant)
+	..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/celebrate_kill(mob/living/L)
 	visible_message(span_hierophant_warning("\"[pick(kill_phrases)]\""))
