@@ -235,7 +235,7 @@
 		if(carbon_victim.get_eye_protection() < FLASH_PROTECTION_SENSITIVE) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
 			return DEVIATION_NONE
 
-	var/turf/attacker_turf = get_turf(atttacker)
+	var/turf/attacker_turf = get_turf(attacker)
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
