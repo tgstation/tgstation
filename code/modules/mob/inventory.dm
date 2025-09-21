@@ -95,8 +95,12 @@
 /mob/proc/get_num_held_items()
 	. = 0
 	for(var/i in 1 to held_items.len)
-		if(held_items[i])
-			.++
+		if(!held_items[i])
+			continue
+		var/obj/item/gripped_item = held_items[i]
+		if(HAS_TRAIT_FROM(gripped_item, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)) //prostetic limbs are not held items, they are part of the body.
+			continue
+		.++
 
 //Sad that this will cause some overhead, but the alias seems necessary
 //*I* may be happy with a million and one references to "indexes" but others won't be
@@ -451,9 +455,12 @@
 	var/list/items = list()
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
+			if(!(include_flags & INCLUDE_PROSTHETICS) && HAS_TRAIT_FROM(item_contents, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)) //prostetic limbs are not equipped items, they are part of the body.
+				continue
 			items += item_contents
 	if (!(include_flags & INCLUDE_HELD))
 		items -= held_items
+
 	return items
 
 /**
