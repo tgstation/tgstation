@@ -103,24 +103,31 @@
 	storage_type = /datum/storage/bag/ore
 	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/spam_protection = FALSE
-	var/mob/listeningTo
-	///Cooldown on balloon alerts when picking ore
+	/// The mob this bag is currently "listening to" for movement
+	var/mob/listening_to
+	/// A connector used to also check for when items enter the tile the current user is standing on
+	var/datum/component/connect_loc_behalf/connector
+	/// Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
-	if(listeningTo == user)
+	if(listening_to == user)
 		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	if(listening_to)
+		UnregisterSignal(listening_to, COMSIG_MOVABLE_MOVED)
+		qdel(connector)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
-	listeningTo = user
+	var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_listener_turf_entered))
+	connector = AddComponent(/datum/component/connect_loc_behalf, user, loc_connections)
+	listening_to = user
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
+	if(listening_to)
+		QDEL_NULL(connector)
+		UnregisterSignal(listening_to, COMSIG_MOVABLE_MOVED)
+		listening_to = null
 
 /obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/boulder))
@@ -129,6 +136,13 @@
 		return ITEM_INTERACT_BLOCKING
 
 	return NONE
+
+/obj/item/storage/bag/ore/proc/on_listener_turf_entered(datum/source, atom/movable/thing, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	// isturf(old_loc) check is important, else we just immediately scoop anything we deposit on the floor right back up
+	// don't change it to `old_loc == src` either, as that'd still cause problems if you're holding multiple bags
+	if(listening_to && isturf(old_loc) && is_type_in_typecache(thing, atom_storage.can_hold))
+		pickup_ores(listening_to)
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
