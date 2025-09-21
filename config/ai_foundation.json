@@ -1,0 +1,33 @@
+{
+  "ai_control_enabled": true,
+  "cadence_seconds": 1.5,
+  "max_rollouts_per_cycle": 200,
+  "exploration_multipliers": {
+    "Routine Upkeep": 1.6,
+    "Maintenance & Logistics": 1.35,
+    "Medical Response": 0.9,
+    "Security & Emergency": 0.8,
+    "Social & Support": 1.1
+  },
+  "emergency_modifiers": {
+    "blue": 0.85,
+    "red": 0.7,
+    "delta": 0.6
+  },
+  "safety_thresholds": {
+    "max_hazard_score": 0.65,
+    "max_chain_failures": 2
+  },
+  "rate_limits": {
+    "item_toggle_seconds": 5,
+    "aggressive_action_seconds": 8
+  },
+  "telemetry": {
+    "rolling_window_minutes": 30,
+    "persistence_hours": 24
+  },
+  "reservation": {
+    "default_expiry_seconds": 5,
+    "retry_delay_seconds": 3
+  }
+}

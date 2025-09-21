@@ -1,0 +1,14 @@
+{
+  "ai_control_enabled": false,
+  "exploration_multipliers": {
+    "Routine Upkeep": 1.2,
+    "Maintenance & Logistics": 1.1,
+    "Medical Response": 0.85,
+    "Security & Emergency": 0.75,
+    "Social & Support": 1.0
+  },
+  "safety_thresholds": {
+    "max_hazard_score": 0.5
+  },
+  "notes": "Example override toggles subsystem off and dials back exploration for staging environments."
+}
