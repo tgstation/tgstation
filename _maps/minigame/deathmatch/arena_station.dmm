@@ -876,7 +876,7 @@
 /area/deathmatch)
 "Kz" = (
 /obj/effect/spawner/random/trash/box,
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/c357,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "KC" = (
