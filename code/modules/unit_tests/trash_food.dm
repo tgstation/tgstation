@@ -16,6 +16,7 @@
 		/obj/item/grown/corncob,
 		/obj/item/grown/corncob/pepper,
 		// misc waste products that don't belong in trash spawner
+		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/stack/rods, // kebab
 		/obj/item/paper/paperslip/fortune, // fortune cookie
 		/obj/item/dice/fudge, // /obj/item/food/fudgedice

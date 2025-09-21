@@ -152,7 +152,6 @@
 		/obj/item/popsicle_stick = 1,
 		/obj/item/trash/ready_donk = 1,
 		/obj/item/trash/tray = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/plate = 1,
 	)
 
