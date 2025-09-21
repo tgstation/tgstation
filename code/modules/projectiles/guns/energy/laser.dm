@@ -60,7 +60,7 @@
 	spread = 14
 	pin = /obj/item/firing_pin/implant/pindicate
 
-/obj/item/gun/energy/laser/carbine/cybersun/
+/obj/item/gun/energy/laser/carbine/cybersun/unrestricted
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/carbine/practice
