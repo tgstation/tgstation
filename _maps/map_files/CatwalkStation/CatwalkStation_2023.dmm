@@ -2178,20 +2178,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
-"aIG" = (
-/obj/machinery/meter{
-	name = "N20 meter"
-	},
-/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "N20 Multideck Adapter";
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "aIL" = (
 /obj/effect/spawner/random/entertainment/gambling{
 	pixel_x = 6;
@@ -13091,6 +13077,17 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/openspace,
 /area/station/engineering/break_room)
+"dRM" = (
+/obj/machinery/meter{
+	name = "Plasma meter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
+	name = "Plasma Multideck Adapter";
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "dRO" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics Testing Room"
@@ -13355,13 +13352,6 @@
 /turf/open/openspace,
 /area/station/engineering/lobby)
 "dVG" = (
-/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "Plasma Multideck Adapter";
-	dir = 4
-	},
-/obj/machinery/meter{
-	name = "Plasma meter"
-	},
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 1
 	},
@@ -17927,11 +17917,15 @@
 /turf/open/openspace,
 /area/station/commons/dorms)
 "fmP" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
+	name = "Plasma Multideck Adapter";
+	dir = 4
+	},
+/obj/machinery/meter{
+	name = "Plasma meter"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -24096,6 +24090,11 @@
 /obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"gYW" = (
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/machinery/light/directional/east,
+/turf/open/floor/catwalk_floor,
+/area/station/engineering/atmos/upper)
 "gYY" = (
 /obj/effect/spawner/random/structure/girder,
 /obj/effect/spawner/random/structure/grille,
@@ -34427,9 +34426,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/tcommsat/server)
-"jPG" = (
-/turf/open/floor/catwalk_floor,
-/area/station/engineering/atmos/upper)
 "jPR" = (
 /obj/structure/chair/office,
 /turf/open/floor/iron/dark/textured_large,
@@ -35041,6 +35037,11 @@
 /obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/qm)
+"jZr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/open/floor/catwalk_floor,
+/area/station/engineering/atmos/upper)
 "jZs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35450,7 +35451,6 @@
 	dir = 1;
 	name = "Unfiltered"
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -45278,14 +45278,18 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos/upper)
 "ncd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
+	name = "N20 Multideck Adapter";
+	dir = 4
+	},
+/obj/machinery/meter{
+	name = "N20 meter"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -48539,17 +48543,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"nXE" = (
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/machinery/meter{
-	name = "Plasma meter"
-	},
-/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "Plasma Multideck Adapter";
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "nXQ" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -50132,13 +50125,6 @@
 /turf/open/floor/iron/stairs/right,
 /area/station/service/library)
 "ovf" = (
-/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "N20 Multideck Adapter";
-	dir = 4
-	},
-/obj/machinery/meter{
-	name = "N20 meter"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -50149,7 +50135,6 @@
 /area/station/engineering/atmos/upper)
 "ovw" = (
 /obj/structure/closet/radiation,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/upper)
 "ovx" = (
@@ -54465,11 +54450,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "pJZ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 1
+	},
+/obj/machinery/meter{
+	name = "C02 meter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
+	name = "CO2 Multideck Adapter";
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -56002,6 +55991,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
+"qgg" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/meter{
+	name = "N20 meter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
+	name = "N20 Multideck Adapter";
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "qgi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -56896,6 +56899,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/construction/storage_wing)
+"qtf" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "qtM" = (
 /obj/machinery/libraryscanner,
 /obj/machinery/camera/autoname/directional/north,
@@ -83522,13 +83529,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "ykF" = (
-/obj/machinery/meter{
-	name = "C02 meter"
-	},
-/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "CO2 Multideck Adapter";
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 1
 	},
@@ -125577,7 +125577,7 @@ sVP
 xHp
 xtM
 pXM
-jow
+jZr
 iwI
 pXs
 unl
@@ -125834,7 +125834,7 @@ xax
 ato
 xtM
 fQn
-jPG
+apu
 vGZ
 jow
 hCT
@@ -132257,7 +132257,7 @@ heR
 unl
 oin
 ieE
-ieE
+gYW
 xVn
 ieE
 fIV
@@ -192397,7 +192397,7 @@ rqo
 otP
 euu
 ijs
-ijs
+qtf
 pgD
 oBM
 ijs
@@ -194451,9 +194451,9 @@ rSB
 cHR
 mYY
 bzo
-npp
 ijs
 ijs
+qtf
 raf
 ijs
 bJK
@@ -194708,7 +194708,7 @@ rpM
 rRY
 dst
 gbc
-myc
+npp
 ijs
 ijs
 clY
@@ -194965,7 +194965,7 @@ bxd
 pmG
 rqo
 nhU
-ijs
+myc
 ijs
 ijs
 ijs
@@ -195479,7 +195479,7 @@ mDG
 mDG
 bJK
 sRP
-jQa
+ijs
 ijs
 ijs
 ijs
@@ -195736,7 +195736,7 @@ mDG
 ocS
 rqo
 sbo
-nXE
+jQa
 ijs
 ijs
 ijs
@@ -195993,7 +195993,7 @@ fws
 dDL
 bJK
 sRP
-ijs
+dRM
 ijs
 ijs
 ijs
@@ -196507,9 +196507,9 @@ fws
 heR
 rqo
 lCt
-bPi
 ijs
 ijs
+qtf
 ckP
 sRP
 rqo
@@ -196764,7 +196764,7 @@ fws
 dDL
 bJK
 sRP
-aIG
+bPi
 ijs
 ijs
 uwy
@@ -197021,7 +197021,7 @@ fws
 dDL
 bJK
 kvy
-ijs
+qgg
 ijs
 ijs
 ijs
