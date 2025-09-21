@@ -423,7 +423,7 @@
 /datum/action/cooldown/borg_meson/Activate()
 	var/mob/living/silicon/robot/borg = owner
 	if(borg.sight & SEE_TURFS)
-		borg.sight_mode = 0
+		borg.sight_mode = BORGDEFAULT
 	else
 		borg.sight_mode = BORGMESON
 	borg.update_sight()
@@ -989,7 +989,7 @@
 /datum/action/cooldown/borg_thermal/Activate()
 	var/mob/living/silicon/robot/borg = owner
 	if(borg.sight & SEE_MOBS)
-		borg.sight_mode = 0
+		borg.sight_mode = BORGDEFAULT
 	else
 		borg.sight_mode = BORGTHERM
 	borg.update_sight()
