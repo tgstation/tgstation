@@ -3550,10 +3550,6 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
-"bdu" = (
-/obj/machinery/light/warm/dim/directional/north,
-/turf/open/floor/wood/parquet,
-/area/station/commons/lounge)
 "bdw" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -18133,11 +18129,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/maintenance{
-	name = "Event Storage"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/wood{
+	name = "Curator Office"
+	},
 /turf/open/floor/wood,
 /area/station/service/library/printer)
 "fqj" = (
@@ -21972,7 +21968,7 @@
 /area/station/commons/dorms)
 "gqj" = (
 /obj/machinery/door/airlock/wood{
-	name = "Event Storage"
+	name = "Curator Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/library,
 /obj/machinery/door/firedoor,
@@ -25331,10 +25327,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "hsh" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Maintenance Access"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
+/obj/machinery/door/airlock/wood{
+	name = "Curator Office"
+	},
 /turf/open/floor/wood/large,
 /area/station/maintenance/hallway/abandoned_recreation)
 "hsi" = (
@@ -28847,6 +28843,14 @@
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
+"ire" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/warm/dim/directional/west,
+/turf/open/floor/wood/large,
+/area/station/commons/lounge)
 "irh" = (
 /turf/closed/wall,
 /area/station/medical/cryo)
@@ -30092,11 +30096,11 @@
 /turf/open/floor/plating/airless,
 /area/station/maintenance/port/aft)
 "iIJ" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Service Hall Maintenance"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
 /obj/structure/cable,
+/obj/machinery/door/airlock/wood{
+	name = "Curator Office"
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/hallway/abandoned_recreation)
 "iIL" = (
@@ -66566,11 +66570,13 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "tpU" = (
-/obj/machinery/door/airlock/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/wood{
+	name = "Curator Office"
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "tqQ" = (
@@ -80846,7 +80852,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "xxZ" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	name = "Curator Office"
+	},
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -108684,7 +108692,7 @@ xAj
 xAt
 own
 wik
-uxl
+ire
 ofE
 hjL
 fPh
@@ -109197,7 +109205,7 @@ peX
 kgN
 sWI
 own
-bdu
+siP
 uxl
 moE
 tmV
