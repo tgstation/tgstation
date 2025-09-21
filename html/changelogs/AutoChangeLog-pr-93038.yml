@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactors immerse element to use alpha filters instead of static overlays. It should look much prettier now."

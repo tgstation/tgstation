@@ -15709,10 +15709,10 @@
 	},
 /area/station/hallway/primary/fore)
 "dRh" = (
-/obj/machinery/telecomms/bus/preset_four,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/telecomms/bus/preset_two,
 /turf/open/floor/iron/telecomms,
 /area/station/tcommsat/server)
 "dRo" = (
@@ -39973,10 +39973,10 @@
 /turf/open/floor/iron,
 /area/station/security/range)
 "jPC" = (
-/obj/machinery/telecomms/bus/preset_two,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/telecomms/bus/preset_four,
 /turf/open/floor/iron/telecomms,
 /area/station/tcommsat/server)
 "jPE" = (
@@ -47677,9 +47677,6 @@
 /area/station/engineering/atmos/mix)
 "lKk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/green/corner{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,

@@ -165,15 +165,21 @@
 
 /obj/item/mod/module/megaphone/on_activation(mob/activator)
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(add_tts_filter))
 
 /obj/item/mod/module/megaphone/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOB_SAY))
 
 /obj/item/mod/module/megaphone/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	speech_args[SPEECH_SPANS] |= voicespan
 	drain_power(use_energy_cost)
+
+/obj/item/mod/module/megaphone/proc/add_tts_filter(mob/living/carbon/user, list/message_args)
+	SIGNAL_HANDLER
+	///A sharper and louder sound with a bit of echo
+	message_args[TREAT_TTS_FILTER_ARG] += "acrusher=samples=2:level_out=6,aecho=delays=90:decays=0.3,aemphasis=type=cd,acontrast=30,crystalizer=i=5"
 
 ///Criminal Capture - Generates hardlight bags you can put people in and sinch.
 /obj/item/mod/module/criminalcapture
