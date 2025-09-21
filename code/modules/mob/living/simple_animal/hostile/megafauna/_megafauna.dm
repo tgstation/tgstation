@@ -79,6 +79,8 @@
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
 	if(crusher_loot)
+		if (islist(crusher_loot))
+			crusher_loot = string_list(crusher_loot)
 		AddElement(\
 			/datum/element/crusher_loot,\
 			trophy_type = crusher_loot,\
