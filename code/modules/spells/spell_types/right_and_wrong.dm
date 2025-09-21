@@ -65,7 +65,6 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/laser/thermal/inferno,
 	/obj/item/gun/energy/lasercannon,
 	/obj/item/gun/energy/mindflayer,
-	/obj/item/gun/energy/minigun,
 	/obj/item/gun/energy/plasmacutter/adv,
 	/obj/item/gun/energy/pulse,
 	/obj/item/gun/energy/pulse/carbine,
