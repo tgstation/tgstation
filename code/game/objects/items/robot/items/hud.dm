@@ -22,16 +22,6 @@
 	icon_state = "securityhudnight"
 	sight_mode = BORGXRAY
 
-/obj/item/borg/sight/thermal
-	name = "\proper thermal vision"
-	sight_mode = BORGTHERM
-	icon_state = "thermal"
-
-/obj/item/borg/sight/meson
-	name = "\proper meson vision"
-	sight_mode = BORGMESON
-	icon_state = "meson"
-
 /obj/item/borg/sight/material
 	name = "\proper material vision"
 	sight_mode = BORGMATERIAL
