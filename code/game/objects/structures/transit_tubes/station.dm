@@ -252,12 +252,12 @@
 	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
 	if(!isliving(AM))
-		if(!COOLDOWN_FINISHED(src,freight_output))
-			if(COOLDOWN_FINISHED(src,freight_message))
+		if(!COOLDOWN_FINISHED(src, freight_output))
+			if(COOLDOWN_FINISHED(src, freight_message))
 				AM.visible_message(span_notice("Freight pod dispenser is recharging. Please wait."))
-				COOLDOWN_START(src,freight_message, 10 SECONDS)
+				COOLDOWN_START(src, freight_message, 10 SECONDS)
 			return
-		COOLDOWN_START(src,freight_output, 2 SECONDS)
+		COOLDOWN_START(src, freight_output, 2 SECONDS)
 
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
