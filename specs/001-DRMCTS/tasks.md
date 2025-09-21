@@ -10,11 +10,11 @@
 - [X] T003 [P] Seed `/mnt/z/Backup/SS13/gurtstation/config/ai_foundation.json` plus example overrides under `/mnt/z/Backup/SS13/gurtstation/config/example/` to expose default exploration multipliers and safety thresholds.
 
 ## Phase 3.2: Tests First (TDD)
-- [ ] T004 [P] Promote the admin blackboard contract tests into `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_blackboard_contract.dm`, ensuring they fail until endpoints exist.
-- [ ] T005 [P] Add janitor workflow integration test covering Acceptance Scenario #2 in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_janitor_flow.dm`.
-- [ ] T006 [P] Add player takeover handoff integration test for Acceptance Scenario #3 in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_takeover.dm`.
-- [ ] T007 [P] Add emergency reprioritization integration test for Acceptance Scenario #1 in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_emergency.dm`.
-- [ ] T008 [P] Add equipment contention edge-case integration test in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_reservations.dm` validating priority queue rules.
+- [X] T004 [P] Promote the admin blackboard contract tests into `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_blackboard_contract.dm`, ensuring they fail until endpoints exist.
+- [X] T005 [P] Add janitor workflow integration test covering Acceptance Scenario #2 in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_janitor_flow.dm`.
+- [X] T006 [P] Add player takeover handoff integration test for Acceptance Scenario #3 in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_takeover.dm`.
+- [X] T007 [P] Add emergency reprioritization integration test for Acceptance Scenario #1 in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_emergency.dm`.
+- [X] T008 [P] Add equipment contention edge-case integration test in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_reservations.dm` validating priority queue rules.
 
 ## Phase 3.3: Core Implementation
 - [ ] T009 [P] Implement `/datum/ai_control_policy` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/control_policy.dm`, loading defaults from config and exposing alert-level overrides.
