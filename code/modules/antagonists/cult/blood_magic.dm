@@ -388,7 +388,7 @@
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
 	if(!cast_spell(M, user))
 		return
-	log_combat(user, M, "used a cult spell on", source.name, "")
+	log_combat(user, M, "used a cult spell on", src, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
@@ -573,7 +573,6 @@
 		if(do_after(user, 3 SECONDS, C))
 			if(!C.handcuffed)
 				C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult/used(C))
-				C.update_handcuffed()
 				C.adjust_silence(10 SECONDS)
 				to_chat(user, span_notice("You shackle [C]."))
 				log_combat(user, C, "shackled")
@@ -665,7 +664,7 @@
 				candidate.color = prev_color
 				return
 			candidate.grab_ghost()
-			user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!"))
+			user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a [construct_class]!"))
 			make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
 			uses--
 			qdel(candidate)

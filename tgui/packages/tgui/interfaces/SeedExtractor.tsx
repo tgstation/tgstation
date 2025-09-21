@@ -358,8 +358,8 @@ export const ReagentTooltip = (props) => {
   props.reagents.forEach((reagent) => {
     rate_total += reagent.rate;
   });
-  let reagent_volumes: number[] = [];
-  let reagent_percentages: number[] = [];
+  const reagent_volumes: number[] = [];
+  const reagent_percentages: number[] = [];
   props.reagents.forEach((reagent) => {
     reagent_percentages.push(reagent.rate / Math.max(1, rate_total));
     reagent_volumes.push(

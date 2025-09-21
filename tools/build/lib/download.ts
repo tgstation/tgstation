@@ -4,7 +4,7 @@ import Juke from "../juke/index.js";
 
 export function downloadFile(url: string, file: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    let file_stream = fs.createWriteStream(file);
+    const file_stream = fs.createWriteStream(file);
     https
       .get(url, function (response) {
         if (response.statusCode === 302 && response.headers.location) {

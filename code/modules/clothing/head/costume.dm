@@ -1,6 +1,7 @@
 /obj/item/clothing/head/costume
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	abstract_type = /obj/item/clothing/head/costume
 
 /obj/item/clothing/head/costume/powdered_wig
 	name = "powdered wig"
@@ -55,7 +56,7 @@
 	desc = "Just like from one of those chinese cartoons!"
 	greyscale_colors = "#494955#EEEEEE"
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/costume/maid"
+	icon_state = "/obj/item/clothing/head/costume/maid_headband"
 	post_init_icon_state = "maid"
 	greyscale_config = /datum/greyscale_config/maid_headband
 	greyscale_config_worn = /datum/greyscale_config/maid_headband/worn

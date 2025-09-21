@@ -138,10 +138,11 @@
 	var/cool_temp = cooling_temperature
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
-	if(hotspot && !isspaceturf(exposed_turf))
+	if(hotspot && !isspaceturf(exposed_turf)) // the water evaporates in an endothermic reaction
 		if(exposed_turf.air)
 			var/datum/gas_mixture/air = exposed_turf.air
-			air.temperature = max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp),TCMB)
+			air.temperature = min(max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp), T0C), air.temperature) // the outer min temperature check is for weird phenomena like freon combustion
+			exposed_turf.temperature = clamp(min(exposed_turf.temperature-(cool_temp*1000), exposed_turf.temperature/cool_temp), T20C, exposed_turf.temperature) // turfs normally don't go below T20C so I'll just clamp it to that in case of weird phenomena.
 			air.react(src)
 			qdel(hotspot)
 
@@ -589,7 +590,7 @@
 						exposed_human.skin_tone = "mixed3"
 			//take current alien color and darken it slightly
 			else if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(exposed_human, TRAIT_FIXED_MUTANT_COLORS))
-				var/list/existing_color = rgb2num(exposed_human.dna.features["mcolor"])
+				var/list/existing_color = rgb2num(exposed_human.dna.features[FEATURE_MUTANT_COLOR])
 				var/list/darkened_color = list()
 				// Reduces each part of the color by 16
 				for(var/channel in existing_color)
@@ -599,7 +600,7 @@
 				var/list/new_hsv = rgb2hsv(new_color)
 				// Can't get too dark now
 				if(new_hsv[3] >= 50)
-					exposed_human.dna.features["mcolor"] = new_color
+					exposed_human.dna.features[FEATURE_MUTANT_COLOR] = new_color
 			exposed_human.update_body(is_creating = TRUE)
 
 		if((methods & INGEST) && show_message)
@@ -623,7 +624,7 @@
 		if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 			affected_human.skin_tone = "orange"
 		else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Aliens with custom colors simply get turned orange
-			affected_human.dna.features["mcolor"] = "#ff8800"
+			affected_human.dna.features[FEATURE_MUTANT_COLOR] = "#ff8800"
 		affected_human.update_body(is_creating = TRUE)
 		if(SPT_PROB(3.5, seconds_per_tick))
 			if(affected_human.w_uniform)
@@ -2525,45 +2526,74 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/glitter
-	name = "Generic Glitter"
-	description = "if you can see this description, contact a coder."
+	name = "Glitter"
+	description = "The herpes of arts and crafts."
+	data = list("colors" = list(COLOR_WHITE = 100))
 	color = COLOR_WHITE //pure white
 	taste_description = "plastic"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/glitter_type = /obj/effect/decal/cleanable/glitter
+
+/datum/reagent/glitter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(25, seconds_per_tick))
+		affected_mob.emote("cough")
+		expose_turf(get_turf(affected_mob), 0)
 
 /datum/reagent/glitter/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
+
 	if(!istype(exposed_turf))
 		return
-	exposed_turf.spawn_unique_cleanable(glitter_type)
+	exposed_turf.spawn_glitter(data["colors"])
 
-/datum/reagent/glitter/pink
-	name = "Pink Glitter"
-	description = "pink sparkles that get everywhere"
-	color = "#ff8080" //A light pink color
-	glitter_type = /obj/effect/decal/cleanable/glitter/pink
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+/datum/reagent/glitter/on_new(data)
+	. = ..()
 
-/datum/reagent/glitter/white
-	name = "White Glitter"
-	description = "white sparkles that get everywhere"
-	glitter_type = /obj/effect/decal/cleanable/glitter/white
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	if(src.data["colors"])
+		color = pick_weight(src.data["colors"])
+	else
+		color = COLOR_WHITE
 
-/datum/reagent/glitter/blue
-	name = "Blue Glitter"
-	description = "blue sparkles that get everywhere"
-	color = "#4040FF" //A blueish color
-	glitter_type = /obj/effect/decal/cleanable/glitter/blue
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+/datum/reagent/glitter/on_merge(list/mix_data, amount)
+	. = ..()
 
-/datum/reagent/glitter/confetti
+	var/prop_current = (volume-amount)/(volume)
+
+	if(mix_data)
+		data["colors"] = blend_weighted_lists(mix_data["colors"], data["colors"], prop_current)
+
+	if(data["colors"])
+		color = pick_weight(data["colors"])
+	else
+		color = COLOR_WHITE
+
+/datum/reagent/glitter/random
+	name = "Glitter (Random)"
+	// The weighted list of random color choices that can be chosen upon spawning
+	var/static/list/possible_colors = list(
+		COLOR_WHITE = 25,
+		"#ff8080" = 25,
+		"#4040ff" = 25,
+		"#ff5555" = 8,
+		"#55ff55" = 9,
+		"#5555ff" = 8,
+	)
+
+/datum/reagent/glitter/random/on_new(data)
+	src.data["colors"] = possible_colors
+	return ..()
+
+/datum/reagent/confetti
 	name = "Confetti"
 	description = "Tiny plastic flakes that are impossible to sweep up."
 	color = "#7dd87b"
-	glitter_type = /obj/effect/decal/cleanable/confetti
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/confetti/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if(!istype(exposed_turf))
+		return
+	exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/confetti)
 
 /datum/reagent/pax
 	name = "Pax"
@@ -2697,15 +2727,15 @@
 	. = ..()
 	yuck_cycle = 0 // reset vomiting
 
-/datum/reagent/yuck/on_transfer(atom/A, methods=TOUCH, trans_volume)
-	if((methods & INGEST) || !iscarbon(A))
-		return ..()
+/datum/reagent/yuck/expose_mob(mob/living/carbon/exposed_mob, methods, expose_volume, show_message, touch_protection)
+	. = ..()
+	if(!(methods & INGEST) || !iscarbon(exposed_mob))
+		return
 
-	A.reagents.remove_reagent(type, trans_volume)
-	A.reagents.add_reagent(/datum/reagent/fuel, trans_volume * 0.75)
-	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
-
-	return ..()
+	var/datum/reagents/mob_reagents = exposed_mob.reagents
+	mob_reagents.remove_reagent(type, expose_volume)
+	mob_reagents.add_reagent(/datum/reagent/fuel, expose_volume * 0.75)
+	mob_reagents.add_reagent(/datum/reagent/water, expose_volume * 0.25)
 
 //monkey powder heehoo
 /datum/reagent/monkey_powder

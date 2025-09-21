@@ -9,7 +9,7 @@ import {
   Table,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { getGasColor } from '../constants';
@@ -86,13 +86,14 @@ export const BluespaceVendor = (props) => {
                 <Stack.Item>
                   <NumberInput
                     animated
+                    tickWhileDragging
                     value={tank_filling_amount}
                     step={1}
                     width="63px"
                     unit="% tank filling goal"
                     minValue={0}
                     maxValue={100}
-                    onDrag={(value) =>
+                    onChange={(value) =>
                       act('pumping_rate', {
                         rate: value,
                       })
@@ -194,7 +195,7 @@ const GasDisplay = (props: GasDisplayProps) => {
           <Button
             icon="play"
             tooltipPosition="left"
-            tooltip={'Start adding ' + name + '.'}
+            tooltip={`Start adding ${name}.`}
             disabled={!inserted_tank}
             onClick={() =>
               act('start_pumping', {
@@ -207,7 +208,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             disabled={selected_gas !== id}
             icon="minus"
             tooltipPosition="left"
-            tooltip={'Stop adding ' + name + '.'}
+            tooltip={`Stop adding ${name}.`}
             onClick={() =>
               act('stop_pumping', {
                 gas_id: id,

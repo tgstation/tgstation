@@ -67,7 +67,7 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(mob/user, obj_color, set_layer, from_flatpack = FALSE)
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(mob/user, obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
 		piping_layer = board.pipe_layer
@@ -126,9 +126,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	var/mutable_appearance/thermo_overlay = new(icon)
-	var/image/pipe = get_pipe_image(thermo_overlay, "pipe", dir, pipe_color, piping_layer)
-	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
+	var/image/pipe = get_pipe_image('icons/obj/machines/atmospherics/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
+	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)

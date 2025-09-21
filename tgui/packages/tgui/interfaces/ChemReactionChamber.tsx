@@ -13,7 +13,7 @@ import { round, toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { MixingData, Reagent } from './ChemMixingChamber';
+import type { MixingData, Reagent } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {
   ph: number;
@@ -50,6 +50,7 @@ export const ChemReactionChamber = (props) => {
                   <Stack.Item mt={0.3}>{'Target:'}</Stack.Item>
                   <Stack.Item>
                     <NumberInput
+                      tickWhileDragging
                       width="65px"
                       unit="K"
                       step={10}
@@ -57,7 +58,7 @@ export const ChemReactionChamber = (props) => {
                       value={round(targetTemp, 0.1)}
                       minValue={0}
                       maxValue={1000}
-                      onDrag={(value) =>
+                      onChange={(value) =>
                         act('temperature', {
                           target: value,
                         })
@@ -76,7 +77,7 @@ export const ChemReactionChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        format={(value) => `${toFixed(value)} K`}
                       />
                     </Stack.Item>
                     <Stack.Item grow>
@@ -156,13 +157,14 @@ export const ChemReactionChamber = (props) => {
                   <LabeledList>
                     <LabeledList.Item label="Acidic pH limit">
                       <NumberInput
+                        tickWhileDragging
                         value={reagentAcidic}
                         minValue={0}
                         maxValue={14}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) =>
+                        onChange={(value) =>
                           act('acidic', {
                             target: value,
                           })
@@ -171,13 +173,14 @@ export const ChemReactionChamber = (props) => {
                     </LabeledList.Item>
                     <LabeledList.Item label="Alkaline pH limit">
                       <NumberInput
+                        tickWhileDragging
                         value={reagentAlkaline}
                         minValue={0}
                         maxValue={14}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) =>
+                        onChange={(value) =>
                           act('alkaline', {
                             target: value,
                           })
@@ -204,13 +207,14 @@ export const ChemReactionChamber = (props) => {
                     </Stack.Item>
                     <Stack.Item>
                       <NumberInput
+                        tickWhileDragging
                         value={reagentQuantity}
                         minValue={1}
                         maxValue={100}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) => setReagentQuantity(value)}
+                        onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />
                     </Stack.Item>
@@ -222,7 +226,7 @@ export const ChemReactionChamber = (props) => {
                       <Stack.Item key={reagent.name}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ':'}
+                            {`${reagent.name}:`}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.volume}
@@ -272,7 +276,7 @@ export const ChemReactionChamber = (props) => {
                     <Stack.Item key={reagent.name}>
                       <Stack fill>
                         <Stack.Item mt={0.25} textColor="label">
-                          {reagent.name + ':'}
+                          {`${reagent.name}:`}
                         </Stack.Item>
                         <Stack.Item mt={0.25} grow>
                           {reagent.volume}

@@ -4,7 +4,7 @@ import {
   NumberInput,
   Section,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { getGasLabel } from '../constants';
@@ -45,13 +45,14 @@ export const AtmosFilter = (props) => {
             <LabeledList.Item label="Transfer Rate">
               <NumberInput
                 animated
+                tickWhileDragging
                 step={1}
                 value={rate}
                 width="63px"
                 unit="L/s"
                 minValue={0}
                 maxValue={max_rate}
-                onDrag={(value) =>
+                onChange={(value) =>
                   act('rate', {
                     rate: value,
                   })

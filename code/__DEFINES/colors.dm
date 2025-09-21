@@ -124,6 +124,7 @@
 #define COLOR_SCIENCE_PINK "#C96DBF"
 #define COLOR_MOSTLY_PURE_PINK "#E4005B"
 #define COLOR_ADMIN_PINK "#D100D1"
+#define COLOR_TONGUE_PINK "#ff6ea0"
 #define COLOR_BLUSH_PINK "#DE5D83"
 #define COLOR_FADED_PINK "#ff80d5"
 #define COLOR_MAGENTA "#FF00FF"
@@ -453,6 +454,7 @@
 #define COLOR_AMMO_DUMDUM "#ffe601"
 #define COLOR_AMMO_HOTSHOT "#ff7b00"
 #define COLOR_AMMO_ICEBLOX "#0de3ff"
+#define COLOR_AMMO_HELLFIRE "#f60021"
 
 // defines for other ammo type colors (should this be merged with above?)
 #define COLOR_AMMO_INCENDIARY "#f4001f"

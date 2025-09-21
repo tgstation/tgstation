@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored filters to utilize binary insertion instead of timSort. The server should run somewhat faster now, hopefully."

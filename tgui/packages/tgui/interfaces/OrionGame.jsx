@@ -153,7 +153,7 @@ const AdventureStatus = (props) => {
                 />
               </Stack.Item>
               <Stack.Item
-                className={'moods32x32 mood' + (settlermoods[settler] + 1)}
+                className={`moods32x32 mood${settlermoods[settler] + 1}`}
               />
             </Stack>
           ))}
@@ -165,7 +165,7 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="hamburger"
-                content={'Food Left: ' + food}
+                content={`Food Left: ${food}`}
                 color="green"
               />
             </Stack.Item>
@@ -173,7 +173,7 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="gas-pump"
-                content={'Fuel Left: ' + fuel}
+                content={`Fuel Left: ${fuel}`}
                 color="olive"
               />
             </Stack.Item>
@@ -181,7 +181,7 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="wrench"
-                content={'Hull Parts: ' + hull}
+                content={`Hull Parts: ${hull}`}
                 color="average"
               />
             </Stack.Item>
@@ -189,7 +189,7 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="server"
-                content={'Electronics: ' + electronics}
+                content={`Electronics: ${electronics}`}
                 color="blue"
               />
             </Stack.Item>
@@ -197,7 +197,7 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="rocket"
-                content={'Engine Parts: ' + engine}
+                content={`Engine Parts: ${engine}`}
                 color="violet"
               />
             </Stack.Item>

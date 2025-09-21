@@ -19,6 +19,7 @@
 
 //  Generic non-item
 /obj/item/storage/bag
+	abstract_type = /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_BULKY
 	storage_type = /datum/storage/bag
@@ -83,6 +84,7 @@
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
+	worn_icon_state = "bluetrashbag"
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 	storage_type = /datum/storage/bag/trash/bluespace

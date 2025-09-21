@@ -194,8 +194,27 @@
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
+	RegisterSignals(src, list(COMSIG_ITEM_GRILLED_RESULT, COMSIG_ITEM_BAKED_RESULT, COMSIG_ITEM_MICROWAVE_COOKED, COMSIG_OBJ_DECOMPOSITION_RESULT), PROC_REF(convert_to_bad_food))
 	if(stink_particles)
 		add_shared_particles(stink_particles)
+
+///Prevents grilling burnt shit from well, burning.
+/obj/item/food/badrecipe/proc/OnGrill()
+	SIGNAL_HANDLER
+	return COMPONENT_HANDLED_GRILLING
+
+/**
+ * The bad food reagent is cleared when cooked rather than just spawned and the reagents of the item this is from are transferred to this instead,
+ * So we want to convert most of the consumable reagents into bad food, which is what makes the burned mess a bad thing to eat, taste aside.
+ */
+/obj/item/food/badrecipe/proc/convert_to_bad_food(atom/source)
+	SIGNAL_HANDLER
+	var/bad_food_amount = 0
+	for(var/datum/reagent/consumable/food_reagent in reagents.reagent_list)
+		var/amount_to_remove = food_reagent.volume * rand(6, 8) * 0.1 //around 60% to 80% of the volume is to be converted.
+		reagents.remove_reagent(food_reagent.type, amount_to_remove, safety = FALSE)
+		bad_food_amount += amount_to_remove
+	reagents.add_reagent(/datum/reagent/toxin/bad_food, bad_food_amount, reagtemp = reagents.chem_temp)
 
 /obj/item/food/badrecipe/Destroy(force)
 	if (stink_particles)
@@ -226,11 +245,6 @@
 /obj/item/food/badrecipe/moldy/bacteria/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
-
-///Prevents grilling burnt shit from well, burning.
-/obj/item/food/badrecipe/proc/OnGrill()
-	SIGNAL_HANDLER
-	return COMPONENT_HANDLED_GRILLING
 
 /obj/item/food/spidereggs
 	name = "spider eggs"
@@ -705,6 +719,7 @@
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
 	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT / 4)
 
 /obj/item/food/candied_pineapple
 	name = "candied pineapple"

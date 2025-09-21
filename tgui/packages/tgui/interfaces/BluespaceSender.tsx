@@ -11,7 +11,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { getGasColor } from '../constants';
@@ -72,13 +72,14 @@ export const BluespaceSender = (props) => {
               />
               <NumberInput
                 animated
+                tickWhileDragging
                 value={gas_transfer_rate}
                 step={0.01}
                 width="63px"
                 unit="moles/S"
                 minValue={0}
                 maxValue={1}
-                onDrag={(value) =>
+                onChange={(value) =>
                   act('rate', {
                     rate: value,
                   })
@@ -103,7 +104,7 @@ export const BluespaceSender = (props) => {
             </>
           }
         >
-          <Box>{'The vendors have made ' + credits + ' credits so far.'}</Box>
+          <Box>{`The vendors have made ${credits} credits so far.`}</Box>
           <Divider />
           <LabeledList>
             {gases.map((gas, index) => (
@@ -130,12 +131,13 @@ const GasDisplay = (props: GasDisplayProps) => {
           <NumberInput
             animated
             fluid
+            tickWhileDragging
             value={price}
             step={1}
             unit="per mole"
             minValue={0}
             maxValue={100}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('price', {
                 gas_price: value,
                 gas_type: id,
@@ -152,7 +154,7 @@ const GasDisplay = (props: GasDisplayProps) => {
           />
         </Stack.Item>
         <Stack.Item color="label" grow={2}>
-          {toFixed(amount, 2) + ' moles'}
+          {`${toFixed(amount, 2)} moles`}
         </Stack.Item>
       </Stack>
     </LabeledList.Item>

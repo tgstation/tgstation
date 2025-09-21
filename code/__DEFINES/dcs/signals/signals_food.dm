@@ -50,6 +50,8 @@
 	#define COMPONENT_HANDLED_GRILLING (1<<0)
 ///Called when an object is turned into another item through grilling ontop of a griddle
 #define COMSIG_ITEM_GRILLED "item_grill_completed"
+///Sent to the newly spawned object when it's grilled on a griddle.
+#define COMSIG_ITEM_GRILLED_RESULT "item_grilled_result"
 
 ///Called when the object is grilled by the grill (not to be confused by the griddle, but oh gee the two should be merged in one)
 #define COMSIG_ITEM_BARBEQUE_GRILLED "item_barbeque_grilled"
@@ -67,6 +69,11 @@
 	#define COMPONENT_BAKING_BAD_RESULT (1<<2)
 ///Called when an object is turned into another item through baking in an oven
 #define COMSIG_ITEM_BAKED "item_bake_completed"
+///Sent to the newly spawned object when it's baked in an oven.
+#define COMSIG_ITEM_BAKED_RESULT "item_baked_result"
+
+///Called on the result spawned during decomposition: (obj/decomposed)
+#define COMSIG_OBJ_DECOMPOSITION_RESULT "obj_decomposition_result"
 
 //Drink
 

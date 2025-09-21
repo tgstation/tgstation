@@ -104,7 +104,7 @@
 	for(var/obj/item/toy/crayon/crayon in collected_tools)
 		if(!is_type_in_typecache(crayon, valid_types))
 			continue
-		if(final_check ? crayon.use_charges(user, 10) : crayon.check_empty(user, 10))
+		if(final_check ? crayon.use_charges(user, 10) : !crayon.check_empty(user, 10))
 			return TRUE
 	return FALSE
 

@@ -8,7 +8,7 @@
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
@@ -24,6 +24,18 @@
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = initial(head_cover.flash_protect)
+
+/obj/item/mod/module/welding/syndicate
+	complexity = 0
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/stealth/wraith)
+	overlay_state_inactive = "module_armorbooster_on"
+	use_mod_colors = TRUE
+	mask_worn_overlay = TRUE
+
+/obj/item/mod/module/welding/syndicate/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	return ..()
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray
@@ -69,11 +81,11 @@
 	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
 
-/obj/item/mod/module/magboot/on_activation()
+/obj/item/mod/module/magboot/on_activation(mob/activator)
 	mod.wearer.add_traits(active_traits, REF(src))
 	mod.update_speed()
 
-/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/magboot/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_traits(active_traits, REF(src))
 	mod.update_speed()
 
@@ -128,7 +140,7 @@
 	if (key == "cut_tethers")
 		SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
-/obj/item/mod/module/tether/on_deactivation(display_message, deleting)
+/obj/item/mod/module/tether/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
 /obj/projectile/tether
@@ -210,6 +222,7 @@
 	anchor.pixel_x = hitx
 	anchor.pixel_y = hity
 	anchor.anchored = TRUE
+	anchor.reset_pixel_pos = TRUE
 	anchor.parent_module = parent_module
 	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module))
 
@@ -226,6 +239,8 @@
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	/// MODsuit tether module that created our projectile
 	var/obj/item/mod/module/tether/parent_module
+	/// Should we reset our pixel positions next time we move?
+	var/reset_pixel_pos = FALSE
 
 /obj/item/tether_anchor/Initialize(mapload)
 	. = ..()
@@ -243,8 +258,12 @@
 
 /obj/item/tether_anchor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	if (default_unfasten_wrench(user, tool))
+		pixel_x = 0
+		pixel_y = 0
+		reset_pixel_pos = FALSE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/tether_anchor/attack_hand_secondary(mob/user, list/modifiers)
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
@@ -261,6 +280,13 @@
 	balloon_alert(user, "attached tether")
 	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/tether_anchor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (reset_pixel_pos)
+		pixel_x = 0
+		pixel_y = 0
+		reset_pixel_pos = FALSE
 
 /obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
@@ -382,7 +408,7 @@
 /obj/item/mod/module/constructor/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, REF(src))
 
-/obj/item/mod/module/constructor/on_use()
+/obj/item/mod/module/constructor/on_use(mob/activator)
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_energy_cost)
 
@@ -396,7 +422,7 @@
 		relatively easy to install into most other suits."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
+	incompatible_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/infiltrator)
 	required_slots = list(ITEM_SLOT_HEAD)
 
 /obj/item/mod/module/headprotector/on_part_activation()

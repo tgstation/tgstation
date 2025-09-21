@@ -109,6 +109,24 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
+	if(istype(tool, /obj/item/storage/part_replacer))
+		var/obj/item/storage/part_replacer/replacer = tool
+		if(!opened)
+			balloon_alert(user, "chassis cover is closed!")
+			return ITEM_INTERACT_BLOCKING
+		if(!istype(model, /obj/item/robot_model/engineering))
+			balloon_alert(user, "wrong cyborg model!")
+			return ITEM_INTERACT_BLOCKING
+		if(locate(/obj/item/borg/upgrade/rped) in src)
+			balloon_alert(user, "already has a RPED!")
+			return ITEM_INTERACT_BLOCKING
+		qdel(tool)
+		var/obj/item/borg/upgrade/smallrped/lilrped = new
+		if(apply_upgrade(lilrped, user))
+			balloon_alert(user, "[replacer] installed")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
 	if(istype(tool, /obj/item/ai_module))
 		if(!opened)
 			balloon_alert(user, "chassis cover is closed!")
@@ -172,7 +190,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "toner filled")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/flashlight))
+	if(istype(tool, /obj/item/flashlight) && !istype(tool, /obj/item/flashlight/emp)) //subtypes my behated. OOP was a dumb idea
 		if(user.combat_mode)
 			return NONE
 		if(!opened)
@@ -517,3 +535,25 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		spark_system.start()
 		. = TRUE
 	return ..() || .
+
+/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
+	var/mob/living/silicon/robot/borg = src
+	var/obj/item/shield_module/shield = locate() in borg
+	if(!shield)
+		return ..()
+	if(borg.cell.charge <= 0.4 * STANDARD_CELL_CHARGE)
+		balloon_alert(borg, "not enough energy!")
+		if(shield.active)
+			shield.active = FALSE
+			playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
+			borg.cut_overlay(shield.shield_overlay)
+			return
+	if(shield && shield.active)
+		if(!lavaland_equipment_pressure_check(get_turf(borg)))
+			balloon_alert(borg, "the shield didn't absorb the damage!")
+			return ..()
+		playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
+		balloon_alert(borg, "absorbed!")
+		borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
+		damage *= 0.5
+	return ..()

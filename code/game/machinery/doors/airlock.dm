@@ -106,8 +106,8 @@
 	var/backup_power_timer = 0
 	/// Paired with backup_power_timer. Records its remaining time when something happens to interrupt power regen
 	var/backup_power_time
-	/// Bolt lights show by default
-	var/lights = TRUE
+	/// Lights and sounds enabled by default
+	var/feedback = TRUE
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
 	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
@@ -503,17 +503,43 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
+/// Checks if this door would be affected by any currently active RETA grants
+/obj/machinery/door/airlock/proc/has_active_reta_access()
+	if(!CONFIG_GET(flag/reta_enabled))
+		return FALSE
+
+	if(!length(req_access) && !length(req_one_access))
+		return FALSE
+
+	// Check if this door belongs to a department providing access via RETA
+	for(var/target_dept in GLOB.reta_active_grants)
+		var/list/active_origins = GLOB.reta_active_grants[target_dept]
+		for(var/origin_dept in active_origins)
+			var/list/origin_dept_access = GLOB.reta_dept_grants[origin_dept]
+			if(!origin_dept_access)
+				continue
+
+			for(var/required_access in req_access)
+				if(required_access in origin_dept_access)
+					return TRUE
+
+			for(var/required_access in req_one_access)
+				if(required_access in origin_dept_access)
+					return TRUE
+
+	return FALSE
+
 /**
  * Set the airlock state to a new value, change the icon state
  * and run the associated animation if required.
  */
-/obj/machinery/door/airlock/proc/set_airlock_state(new_state, animated = FALSE)
+/obj/machinery/door/airlock/proc/set_airlock_state(new_state, animated = FALSE, force_type = DEFAULT_DOOR_CHECKS)
 	if(!new_state)
 		new_state = density ? AIRLOCK_CLOSED : AIRLOCK_OPEN
 	airlock_state = new_state
 	if(animated)
 		operating = TRUE
-		run_animation(airlock_state)
+		run_animation(airlock_state, force_type)
 		return
 	operating = FALSE
 	set_animation()
@@ -547,6 +573,8 @@
 				light_state = AIRLOCK_LIGHT_BOLTS
 			else if(emergency)
 				light_state = AIRLOCK_LIGHT_EMERGENCY
+			else if(has_active_reta_access())
+				light_state = AIRLOCK_LIGHT_RETA
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED
@@ -565,7 +593,7 @@
 	else
 		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
 
-	if(lights && hasPower() && light_state)
+	if(feedback && hasPower() && light_state)
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
@@ -597,7 +625,8 @@
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
 			if(!(unres_sides & heading))
 				continue
-			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+			floorlight.color = LIGHT_COLOR_DEFAULT
 			switch (heading)
 				if (NORTH)
 					floorlight.pixel_w = 0
@@ -613,18 +642,30 @@
 					floorlight.pixel_z = 0
 			. += floorlight
 
-/obj/machinery/door/airlock/run_animation(animation)
+/obj/machinery/door/airlock/run_animation(animation, force_type = DEFAULT_DOOR_CHECKS)
 	if(animation == DOOR_DENY_ANIMATION)
 		if(machine_stat)
 			return
-		set_airlock_state(AIRLOCK_DENY, animated = FALSE)
+		set_airlock_state(AIRLOCK_DENY, animated = FALSE, force_type = force_type)
 
 	return ..()
 
-/obj/machinery/door/airlock/animation_effects(animation)
-	if(animation == DOOR_DENY_ANIMATION)
-		playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
-		addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
+/obj/machinery/door/airlock/animation_effects(animation, force_type = DEFAULT_DOOR_CHECKS)
+	if(force_type == BYPASS_DOOR_CHECKS)
+		playsound(src, soundin = 'sound/machines/airlock/airlockforced.ogg', vol = 30, vary = TRUE)
+		return
+
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			use_energy(50 JOULES)
+			playsound(src, soundin = doorOpen, vol = 30, vary = TRUE)
+		if(DOOR_CLOSING_ANIMATION)
+			use_energy(50 JOULES)
+			playsound(src, soundin = doorClose, vol = 30, vary = TRUE)
+		if(DOOR_DENY_ANIMATION)
+			if(feedback)
+				playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
+			addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/proc/handle_deny_end()
 	if(airlock_state == AIRLOCK_DENY)
@@ -1294,7 +1335,7 @@
 				addtimer(CALLBACK(cyclelinkedairlock, PROC_REF(close)), BYPASS_DOOR_CHECKS)
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
-	set_airlock_state(AIRLOCK_OPENING, animated = TRUE)
+	set_airlock_state(AIRLOCK_OPENING, animated = TRUE, force_type = forced)
 	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
 	sleep(transparent_delay)
 	set_opacity(0)
@@ -1323,19 +1364,14 @@
 		if(DEFAULT_DOOR_CHECKS) // Regular behavior.
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
-			use_energy(50 JOULES)
-			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_energy(50 JOULES)
-			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS) // No power usage, special sound, get it open.
-			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 			return TRUE
 
 		else
@@ -1368,7 +1404,7 @@
 	if(killthis)
 		SSexplosions.med_mov_atom += killthis
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
-	set_airlock_state(AIRLOCK_CLOSING, animated = TRUE)
+	set_airlock_state(AIRLOCK_CLOSING, animated = TRUE, force_type = forced)
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		set_density(TRUE)
@@ -1406,12 +1442,9 @@
 		if(DEFAULT_DOOR_CHECKS to FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_energy(50 JOULES)
-			playsound(src, doorClose, 30, TRUE)
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS)
-			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 			return TRUE
 
 		else
@@ -1484,7 +1517,7 @@
 	if(!open())
 		set_airlock_state(AIRLOCK_CLOSED)
 	obj_flags |= EMAGGED
-	lights = FALSE
+	feedback = FALSE
 	locked = TRUE
 	loseMainPower()
 	loseBackupPower()
@@ -1499,20 +1532,26 @@
 		return ..()
 	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
 		to_chat(user, span_warning("[src] refuses to budge!"))
+		user.log_message("Tried to pry open [src], located at [loc_name(src)], but failed due to the airlock being sealed.", LOG_GAME)
 		return
 	add_fingerprint(user)
 	user.visible_message(span_warning("[user] begins prying open [src]."),\
 						span_noticealien("You begin digging your claws into [src] with all your might!"),\
 						span_warning("You hear groaning metal..."))
+	user.log_message("Started prying open [src], located at [loc_name(src)].", LOG_GAME)
 	var/time_to_open = 5 //half a second
 	if(hasPower())
 		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
 		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
-
 	if(do_after(user, time_to_open, src))
 		if(density && !open(BYPASS_DOOR_CHECKS)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
+			user.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to the airlock getting sealed during the do_after.", LOG_GAME)
+			return
+		user.log_message("Successfully pried open [src], located at [loc_name(src)].", LOG_GAME)
+		return
+	user.log_message("Tried and failed to pry open [src], located at [loc_name(src)], due to getting interrupted.", LOG_GAME)
 
 /obj/machinery/door/airlock/hostile_lockdown(mob/origin)
 	// Must be powered and have working AI wire.
@@ -1673,7 +1712,7 @@
 	data["id_scanner"] = !aiDisabledIdScanner
 	data["emergency"] = emergency // access
 	data["locked"] = locked // bolted
-	data["lights"] = lights // bolt lights
+	data["feedback"] = feedback // lights and sounds
 	data["safe"] = safe // safeties
 	data["speed"] = normalspeed // safe speed
 	data["welded"] = welded // welded
@@ -1687,7 +1726,7 @@
 	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
 	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
 	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
-	wire["lights"] = !wires.is_cut(WIRE_BOLTLIGHT)
+	wire["feedback"] = !wires.is_cut(WIRE_FEEDBACK)
 	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
 	wire["timing"] = !wires.is_cut(WIRE_TIMING)
 
@@ -1735,7 +1774,7 @@
 			toggle_bolt(usr)
 			. = TRUE
 		if("light-toggle")
-			lights = !lights
+			feedback = !feedback
 			update_appearance()
 			. = TRUE
 		if("safe-toggle")

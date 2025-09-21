@@ -8,7 +8,7 @@
 	icon_state = "roman"
 	inhand_icon_state = "armor"
 	can_adjust = FALSE
-	strip_delay = 100
+	strip_delay = 10 SECONDS
 	resistance_flags = NONE
 
 /obj/item/clothing/under/costume/jabroni
@@ -127,6 +127,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	can_adjust = FALSE
 
@@ -296,7 +297,7 @@
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/clothing_under/costume_russian_officer
-	strip_delay = 50
+	strip_delay = 5 SECONDS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	can_adjust = FALSE

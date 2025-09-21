@@ -11,6 +11,7 @@
 
 //Parent to shields and blades because muh copypasted code.
 /datum/action/changeling/weapon
+	abstract_type = /datum/action/changeling/weapon
 	name = "Organic Weapon"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
@@ -87,6 +88,7 @@
 
 //Parent to space suits and armor.
 /datum/action/changeling/suit
+	abstract_type = /datum/action/changeling/suit
 	name = "Organic Suit"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
@@ -642,17 +644,16 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
-/obj/item/clothing/head/helmet/changeling_hivehead/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/organ/monster_core/regenerative_core/legion) || !holds_reagents)
-		return
-	visible_message(span_boldwarning("As [user] shoves [attacking_item] into [src], [src] begins to mutate."))
+/obj/item/clothing/head/helmet/changeling_hivehead/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/organ/monster_core/regenerative_core/legion) || !holds_reagents)
+		return NONE
+	visible_message(span_boldwarning("As [user] shoves [tool] into [src], [src] begins to mutate."))
 	var/mob/living/carbon/wearer = loc
 	playsound(wearer, 'sound/effects/blob/attackblob.ogg', 60, TRUE)
 	wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
 	wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
-	qdel(attacking_item)
-
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /datum/action/cooldown/hivehead_spawn_minions
 	name = "Release Bees"
@@ -670,7 +671,7 @@
 /datum/action/cooldown/hivehead_spawn_minions/PreActivate(atom/target)
 	if(owner.movement_type & VENTCRAWLING)
 		owner.balloon_alert(owner, "unavailable here")
-		return
+		return FALSE
 	return ..()
 
 /datum/action/cooldown/hivehead_spawn_minions/Activate(atom/target)
@@ -680,7 +681,7 @@
 	if(owner.stat >= HARD_CRIT)
 		spawns = 1
 	for(var/i in 1 to spawns)
-		var/mob/living/basic/summoned_minion = new spawn_type(get_turf(owner))
+		var/mob/living/basic/summoned_minion = new spawn_type(owner.drop_location())
 		summoned_minion.faction = list("[REF(owner)]")
 		minion_additional_changes(summoned_minion)
 
@@ -709,7 +710,7 @@
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "legion_head"
 	cooldown_time = 15 SECONDS
-	spawn_type = /mob/living/basic/legion_brood
+	spawn_type = /mob/living/basic/mining/legion_brood
 	spawn_count = 4
 
 /datum/action/cooldown/hivehead_spawn_minions/legion/do_tell()
@@ -717,6 +718,6 @@
 	playsound(owner, 'sound/effects/blob/attackblob.ogg', 60, TRUE)
 
 /datum/action/cooldown/hivehead_spawn_minions/legion/minion_additional_changes(mob/living/basic/minion)
-	var/mob/living/basic/legion_brood/brood = minion
+	var/mob/living/basic/mining/legion_brood/brood = minion
 	if (istype(brood))
 		brood.assign_creator(owner, FALSE)

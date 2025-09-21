@@ -34,6 +34,17 @@
 	src.use_large_steam_sprite = use_large_steam_sprite
 	src.added_reagents = added_reagents
 
+	var/obj/item/item_parent = parent
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !positive_result || !item_parent.custom_materials || isstack(parent))
+		return
+
+	var/atom/result = new cook_result
+	if(!item_parent.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when grilled compared to just spawned don't match"
+		var/what_it_should_be = item_parent.get_materials_english_list()
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 /datum/component/grillable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED, PROC_REF(on_grill_placed))
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_ON, PROC_REF(on_grill_turned_on))
@@ -136,7 +147,6 @@
 	if(isstack(parent)) //Check if its a sheet, for grilling multiple things in a stack
 		var/obj/item/stack/stack_parent = original_object
 		grilled_result = new cook_result(original_object.loc, stack_parent.amount)
-
 	else
 		grilled_result = new cook_result(original_object.loc)
 		if(istype(original_object, /obj/item/food) && istype(grilled_result, /obj/item/food))
@@ -147,12 +157,15 @@
 
 	if(IsEdible(grilled_result) && positive_result)
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
-		grilled_result.reagents.clear_reagents()
+	//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
+	if(grilled_result.reagents && original_object.reagents)
+		grilled_result.reagents?.clear_reagents()
 		original_object.reagents?.trans_to(grilled_result, original_object.reagents.total_volume)
 		if(added_reagents) // Add any new reagents that should be added
 			grilled_result.reagents.add_reagent_list(added_reagents)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
+	SEND_SIGNAL(grilled_result, COMSIG_ITEM_GRILLED_RESULT, parent)
 	if(who_placed_us)
 		ADD_TRAIT(grilled_result, TRAIT_FOOD_CHEF_MADE, who_placed_us)
 

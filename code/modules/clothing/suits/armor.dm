@@ -2,14 +2,15 @@
 	name = "armor"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+	abstract_type = /obj/item/clothing/suit/armor
 	allowed = null
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	strip_delay = 60
-	equip_delay_other = 40
+	strip_delay = 6 SECONDS
+	equip_delay_other = 4 SECONDS
 	max_integrity = 250
 	resistance_flags = NONE
 	armor_type = /datum/armor/suit_armor
@@ -67,7 +68,7 @@
 /obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
@@ -158,7 +159,7 @@
 	armor_type = /datum/armor/armor_hos
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 
 /datum/armor/armor_hos
 	melee = 30
@@ -176,7 +177,7 @@
 	icon_state = "hostrench"
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 	name = "head of security's winter trenchcoat"
@@ -203,7 +204,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
-	strip_delay = 70
+	strip_delay = 7 SECONDS
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
@@ -227,7 +228,7 @@
 /obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /datum/armor/armor_secjacket //Gotta compensate those extra covered limbs
 	melee = 25
@@ -294,8 +295,8 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_riot
-	strip_delay = 80
-	equip_delay_other = 60
+	strip_delay = 8 SECONDS
+	equip_delay_other = 6 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
 /obj/item/clothing/suit/armor/riot/Initialize(mapload)
@@ -323,8 +324,8 @@
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/balloon_vest
 	siemens_coefficient = 0
-	strip_delay = 70
-	equip_delay_other = 50
+	strip_delay = 7 SECONDS
+	equip_delay_other = 5 SECONDS
 
 /datum/armor/balloon_vest
 	melee = 10
@@ -356,8 +357,8 @@
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/armor_bulletproof
-	strip_delay = 70
-	equip_delay_other = 50
+	strip_delay = 7 SECONDS
+	equip_delay_other = 5 SECONDS
 
 /datum/armor/armor_bulletproof
 	melee = 15
@@ -414,7 +415,7 @@
 	icon_state = "heavy"
 	inhand_icon_state = "swat_suit"
 	armor_type = /datum/armor/armor_swat
-	strip_delay = 120
+	strip_delay = 12 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
@@ -569,8 +570,8 @@
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."
 	icon_state = "durathread"
 	inhand_icon_state = null
-	strip_delay = 60
-	equip_delay_other = 40
+	strip_delay = 6 SECONDS
+	equip_delay_other = 4 SECONDS
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
@@ -755,6 +756,9 @@
 	acid = 50
 	wound = 30
 
+/obj/item/clothing/suit/armor/durability
+	abstract_type = /obj/item/clothing/suit/armor/durability
+
 /obj/item/clothing/suit/armor/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	take_damage(1, BRUTE, 0, 0)
 
@@ -765,8 +769,8 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/watermelon
-	strip_delay = 60
-	equip_delay_other = 40
+	strip_delay = 6 SECONDS
+	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
 
@@ -799,8 +803,8 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/watermelon
-	strip_delay = 60
-	equip_delay_other = 40
+	strip_delay = 6 SECONDS
+	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
 
@@ -816,7 +820,7 @@
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_OCLOTHING, \
 		charges = 1, \
-		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
 		expiration = CALLBACK(src, PROC_REF(decay)) \
 	)
 
@@ -834,8 +838,8 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/barrelmelon
-	strip_delay = 60
-	equip_delay_other = 40
+	strip_delay = 6 SECONDS
+	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 10
 

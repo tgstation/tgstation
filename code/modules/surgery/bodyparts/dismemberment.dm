@@ -206,10 +206,9 @@
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1)
 	. = ..()
 	if(arm_owner.handcuffed)
-		arm_owner.handcuffed.forceMove(drop_location())
-		arm_owner.handcuffed.dropped(arm_owner)
+		var/obj/item/lost_cuffs = arm_owner.handcuffed
 		arm_owner.set_handcuffed(null)
-		arm_owner.update_handcuffed()
+		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
@@ -222,13 +221,8 @@
 	. = ..()
 	if(special || !leg_owner)
 		return
-	if(leg_owner.legcuffed)
-		leg_owner.legcuffed.forceMove(drop_location())
-		leg_owner.legcuffed.dropped(leg_owner)
-		leg_owner.legcuffed = null
-		leg_owner.update_worn_legcuffs()
-	if(leg_owner.shoes)
-		leg_owner.dropItemToGround(leg_owner.shoes, force = TRUE)
+	leg_owner.dropItemToGround(leg_owner.legcuffed, force = TRUE)
+	leg_owner.dropItemToGround(leg_owner.shoes, force = TRUE)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!special)
@@ -244,6 +238,12 @@
 			pill.forceMove(src)
 
 	name = "[owner.real_name]'s head"
+
+	/// If our owner loses their head, update their name as their face ~cannot be seen~ does not exist anymore
+	if (ishuman(owner))
+		var/mob/living/carbon/human/as_human = owner
+		as_human.update_visible_name()
+
 	return ..()
 
 ///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
@@ -350,6 +350,11 @@
 	if(old_real_name)
 		new_head_owner.real_name = old_real_name
 	real_name = new_head_owner.real_name
+
+	/// Update our owner's name with ours
+	if (ishuman(owner))
+		var/mob/living/carbon/human/as_human = owner
+		as_human.update_visible_name()
 
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/applicator/pill/pill in src)

@@ -3,10 +3,11 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	abstract_type = /obj/item/clothing/mask
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_MASK
-	strip_delay = 40
-	equip_delay_other = 40
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
 	visor_vars_to_toggle = NONE
 	unique_reskin_changes_base_icon_state = TRUE
 

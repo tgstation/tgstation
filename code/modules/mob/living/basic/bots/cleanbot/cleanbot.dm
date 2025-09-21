@@ -106,6 +106,7 @@
 		/obj/item/trash,
 		/obj/item/food/deadmouse,
 		/obj/effect/decal/remains,
+		/obj/item/cigbutt,
 	))
 	///drawings we hunt
 	var/static/list/cleanable_drawings = typecacheof(list(/obj/effect/decal/cleanable/crayon))
@@ -305,9 +306,14 @@
 		return
 
 	var/mob/living/carbon/stabbed_carbon = shanked_victim
-	var/assigned_role = stabbed_carbon.mind?.assigned_role.title
-	if(!isnull(assigned_role))
-		update_title(assigned_role)
+
+	if(ishuman(shanked_victim))
+		var/mob/living/carbon/human/stabbed_human = shanked_victim
+		var/obj/item/card/id/id = stabbed_human.wear_id?.GetID()
+		if(!isnull(id))
+			var/assigned_role = id.assignment
+			if(!isnull(assigned_role))
+				update_title(assigned_role)
 
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack), stabbed_carbon, src)

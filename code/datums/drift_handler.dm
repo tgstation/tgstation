@@ -209,8 +209,6 @@
 
 /datum/drift_handler/proc/attempt_halt(movement_dir, continuous_move, atom/backup)
 	if ((backup.density || !backup.CanPass(parent, get_dir(backup, parent))) && (get_dir(parent, backup) == movement_dir || parent.loc == backup.loc))
-		if (drift_force >= INERTIA_FORCE_THROW_FLOOR)
-			parent.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		return FALSE
 
 	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB || isnull(drifting_loop))
