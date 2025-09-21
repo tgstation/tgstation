@@ -79,7 +79,7 @@
 	VAR_FINAL/static/regex/stutter_regex
 
 /datum/status_effect/speech/stutter/on_creation(mob/living/new_owner, ...)
-	stutter_regex ||= regex(@@(^[ "'()[\]{}.!?,:;_`~-]*\b)([^aeoiuh\d\s]h|qu|[^\d])(.*)@, "i")
+	stutter_regex ||= regex(@@^([\s"'()[\]{}.!?,:;_`~-]*\b)([^aeoiuh\d]h|qu|[^\d])(.*)@, "i")
 	return ..()
 
 /datum/status_effect/speech/stutter/apply_speech(original_word, index)
