@@ -256,3 +256,4 @@ define_sanity_output.txt
 # Running OpenDream locally
 tgstation.json
 rust_g64.dll
+sync.ffs_db
