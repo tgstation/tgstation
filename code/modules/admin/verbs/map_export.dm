@@ -253,12 +253,19 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					location = place_area.type
 					place = pull_from.type
 
+/*
 				//====Saving shuttles only / non shuttles only====
 				var/is_shuttle_area = ispath(location, /area/shuttle)
-				if((is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_IGNORE) || (!is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_ONLY))
+				var/is_custom_shuttle_area = ispath(location, /area/shuttle/custom)
+				if(!(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES) && is_shuttle_area && !is_custom_shuttle_area)
 					place = /turf/template_noop
 					location = /area/template_noop
+
+					// we do want to save the shuttle docking ports so arrivals/cargo/mining shuttles don't break
+					/obj/docking_port/stationary/get_save_vars()
 					pull_from = null
+*/
+
 				//====Saving holodeck areas====
 				// All hologram objects get skipped and floor tiles get replaced with empty plating
 				if(ispath(location, /area/station/holodeck) && istype(place, /turf/open/floor/holofloor))
@@ -275,6 +282,23 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				current_header += "(\n"
 				//Add objects to the header file
 				var/empty = TRUE
+
+
+				//====Saving shuttles only / non shuttles only====
+				var/is_shuttle_area = ispath(location, /area/shuttle)
+				var/is_custom_shuttle_area = ispath(location, /area/shuttle/custom)
+				if(!(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES) && is_shuttle_area && !is_custom_shuttle_area)
+					place = /turf/template_noop
+					location = /area/template_noop
+					// save the shuttle docking ports so arrivals/cargo/mining/etc. shuttles don't break
+					var//obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
+					if(shuttle_port)
+						var/metadata = generate_tgm_metadata(shuttle_port)
+						current_header += "[empty ? "" : ",\n"][shuttle_port.type][metadata]"
+						empty = FALSE
+
+					pull_from = null
+
 				//====SAVING OBJECTS====
 				if(save_flag & SAVE_OBJECTS)
 					for(var/obj/thing in pull_from)
@@ -286,7 +310,10 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						if(is_multi_tile_object(thing) && (thing.loc != pull_from))
 							continue
 
-						var/metadata = generate_tgm_metadata(thing)
+						var/metadata
+						if(save_flag & SAVE_OBJECT_VARIABLES)
+							metadata = generate_tgm_metadata(thing)
+
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
 						//====SAVING SPECIAL DATA====

@@ -1,11 +1,23 @@
-//Bits to save
-#define SAVE_OBJECTS (1 << 1) //! Save objects?
-#define SAVE_MOBS (1 << 2) //! Save Mobs?
-#define SAVE_TURFS (1 << 3) //! Save turfs?
-#define SAVE_AREAS (1 << 4) //! Save areas?
-#define SAVE_SPACE (1 << 5) //! Save space areas? (If not they will be saved as NOOP)
-#define SAVE_OBJECT_PROPERTIES (1 << 6) //! Save custom properties of objects (obj.on_object_saved() output)
-#define SAVE_ATMOS (1 << 7) //! Save turf atmos
+/// Save objects types
+#define SAVE_OBJECTS (1 << 1)
+/// Save objects variables from obj.get_save_vars()
+#define SAVE_OBJECTS_VARIABLES (1 << 2)
+/// Save objects custom properties from obj.on_object_saved()
+#define SAVE_OBJECTS_PROPERTIES (1 << 3)
+/// Save mobs types (excludes mob/living/carbon)
+#define SAVE_MOBS (1 << 4)
+/// Save turfs types, if disabled, this will save turfs as /turf/template_noop
+#define SAVE_TURFS (1 << 5)
+/// Save turfs atmospheric properties (gases, temperature, etc.)
+#define SAVE_TURFS_ATMOS (1 << 6)
+/// Save space turfs, if disabled, this will replace objects, mobs, and areas that are on space turfs with /template_noop
+#define SAVE_TURFS_SPACE (1 << 7)
+/// Save areas types, if disabled, this will save areas as /area/template_noop
+#define SAVE_AREAS (1 << 8)
+/// Save areas types for default shuttles like arrivals, cargo, mining, whiteship, etc. (does not include custom shuttles), if disabled, uses /template_noop
+#define SAVE_AREAS_DEFAULT_SHUTTLES (1 << 9)
+/// Save areas types for custom shuttles that players make, if disabled, uses /template_noop
+#define SAVE_AREAS_CUSTOM_SHUTTLES (1 << 10)
 
 //Ignore turf if it contains
 #define SAVE_SHUTTLEAREA_DONTCARE 0
