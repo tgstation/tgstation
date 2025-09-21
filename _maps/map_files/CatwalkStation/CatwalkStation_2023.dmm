@@ -283,15 +283,15 @@
 /turf/open/floor/iron/white/textured_edge,
 /area/station/medical/surgery)
 "aeu" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
 	name = "O2 Multideck Adapter";
 	dir = 8
 	},
 /obj/machinery/meter{
 	name = "O2 meter"
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -2180,13 +2180,16 @@
 /area/station/security/brig)
 "aIG" = (
 /obj/machinery/meter{
-	name = "Plasma meter"
+	name = "N20 meter"
 	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "Plasma Multideck Adapter";
+	name = "N20 Multideck Adapter";
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "aIL" = (
@@ -5866,6 +5869,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"bMA" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 5
+	},
+/turf/open/floor/iron/smooth,
+/area/station/engineering/atmos/upper)
 "bNk" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
@@ -6001,9 +6010,12 @@
 "bPi" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Plasma to Port"
+	name = "N2O to Port"
 	},
-/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "bPr" = (
@@ -6614,11 +6626,11 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/port/aft)
 "bYt" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 9
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -7520,11 +7532,11 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
 "ckP" = (
-/obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Mix Outlet Pump"
 	},
+/obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "ckY" = (
@@ -7616,6 +7628,17 @@
 /obj/item/geiger_counter,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"clY" = (
+/obj/machinery/meter{
+	name = "Mix Meter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/cyan/visible{
+	dir = 8;
+	name = "Air Mix Multideck Adapter"
+	},
+/obj/effect/turf_decal/tile/neutral/full,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "clZ" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/machinery/airalarm/directional/south,
@@ -8361,15 +8384,15 @@
 /turf/open/floor/wood/large,
 /area/station/service/library/private)
 "cxO" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
 	name = "N2 Multideck Adapter";
 	dir = 8
 	},
 /obj/machinery/meter{
 	name = "N2 meter"
+	},
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -12695,12 +12718,13 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "dLw" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 9
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "dLI" = (
@@ -13331,13 +13355,13 @@
 /area/station/engineering/lobby)
 "dVG" = (
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "N20 Multideck Adapter";
+	name = "Plasma Multideck Adapter";
 	dir = 4
 	},
 /obj/machinery/meter{
-	name = "N20 meter"
+	name = "Plasma meter"
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/effect/turf_decal/tile/purple/half{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
@@ -17898,7 +17922,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/effect/turf_decal/tile/purple/half{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
@@ -22190,11 +22214,11 @@
 /area/station/science/ordnance/storage)
 "gvO" = (
 /obj/machinery/computer/atmos_control/carbon_tank,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -24858,10 +24882,10 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/fore)
 "hkv" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
+/obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "hkw" = (
@@ -30568,10 +30592,10 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "iNF" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/machinery/computer/atmos_control/nitrogen_tank,
+/obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
-/obj/machinery/computer/atmos_control/nitrogen_tank,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "iNI" = (
@@ -34409,11 +34433,11 @@
 /turf/open/floor/grass,
 /area/station/hallway/secondary/entry)
 "jQa" = (
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "N2O to Port"
+	name = "Plasma to Port"
 	},
-/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "jQb" = (
@@ -35413,11 +35437,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "kfY" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/atmospherics/components/binary/pump/off/general/visible{
 	dir = 1;
 	name = "Unfiltered"
 	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "kgg" = (
@@ -36163,10 +36188,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "krN" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/machinery/computer/atmos_control/air_tank,
+/obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
 	},
-/obj/machinery/computer/atmos_control/air_tank,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "krQ" = (
@@ -36957,10 +36982,10 @@
 /turf/open/floor/carpet,
 /area/station/maintenance/starboard/lesser)
 "kAX" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/machinery/computer/atmos_control/oxygen_tank,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/computer/atmos_control/oxygen_tank,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "kAZ" = (
@@ -42597,8 +42622,8 @@
 /turf/open/floor/glass,
 /area/station/commons/fitness/recreation)
 "mkE" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 9
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -45242,6 +45267,18 @@
 /obj/machinery/air_sensor/nitrogen_tank,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine/n2,
+/area/station/engineering/atmos/upper)
+"ncd" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "nct" = (
 /obj/structure/disposalpipe/segment{
@@ -48494,13 +48531,13 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "nXE" = (
-/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "N20 Multideck Adapter";
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/meter{
-	name = "N20 meter"
+	name = "Plasma meter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
+	name = "Plasma Multideck Adapter";
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
@@ -50086,15 +50123,18 @@
 /turf/open/floor/iron/stairs/right,
 /area/station/service/library)
 "ovf" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "Plasma Multideck Adapter";
+	name = "N20 Multideck Adapter";
 	dir = 4
 	},
 /obj/machinery/meter{
-	name = "Plasma meter"
+	name = "N20 meter"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -54416,11 +54456,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "pJZ" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -59012,6 +59052,14 @@
 /obj/structure/sign/poster/contraband/missing_gloves/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"raf" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Air to Mix"
+	},
+/obj/effect/turf_decal/tile/neutral/full,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "rah" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/bottle/iron{
@@ -60377,6 +60425,16 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
+"ruh" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/engineering/atmos/upper)
 "rui" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -65314,9 +65372,7 @@
 /turf/open/floor/wood/tile,
 /area/station/maintenance/port/aft)
 "sTd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "sTg" = (
@@ -66369,7 +66425,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/lesser)
 "tkj" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
@@ -69440,13 +69496,13 @@
 	},
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "ugI" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "ugL" = (
@@ -70638,7 +70694,6 @@
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/port)
 "uwy" = (
-/obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/meter{
 	name = "Mix Meter"
 	},
@@ -70646,6 +70701,7 @@
 	dir = 8;
 	name = "Mix Multideck Adapter"
 	},
+/obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "uwA" = (
@@ -74986,6 +75042,16 @@
 /obj/effect/spawner/random/bureaucracy/pen,
 /turf/open/openspace,
 /area/station/maintenance/port/aft)
+"vHX" = (
+/obj/machinery/atmospherics/pipe/multiz/cyan/visible{
+	dir = 8;
+	name = "Air Mix Multideck Adapter"
+	},
+/obj/machinery/meter{
+	name = "Mix Meter"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/engineering/atmos/upper)
 "vIc" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -76531,10 +76597,10 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/medbay/central)
 "wgJ" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "wgM" = (
@@ -81914,10 +81980,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/machinery/computer/atmos_control/plasma_tank,
+/obj/effect/turf_decal/tile/purple/half{
 	dir = 1
 	},
-/obj/machinery/computer/atmos_control/plasma_tank,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "xNn" = (
@@ -82505,11 +82571,14 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
 "xWB" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/computer/atmos_control/nitrous_tank,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
@@ -83148,7 +83217,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 9
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/effect/turf_decal/tile/purple/half{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
@@ -83442,15 +83511,15 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "ykF" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/meter{
 	name = "C02 meter"
 	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
 	name = "CO2 Multideck Adapter";
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
@@ -127807,7 +127876,7 @@ uWL
 hHR
 rMX
 xae
-ugI
+ruh
 gSZ
 qZg
 alA
@@ -128838,7 +128907,7 @@ gEq
 wgJ
 wHV
 sTd
-alA
+bMA
 oHb
 xUc
 unl
@@ -129095,7 +129164,7 @@ nex
 ykF
 alA
 alA
-alA
+vHX
 kyd
 sZK
 uyV
@@ -131405,7 +131474,7 @@ uSy
 mBX
 usg
 imh
-pJZ
+ncd
 uKu
 nCK
 xwG
@@ -194374,7 +194443,7 @@ bzo
 npp
 ijs
 ijs
-ijs
+raf
 ijs
 bJK
 miz
@@ -194631,7 +194700,7 @@ gbc
 myc
 ijs
 ijs
-ijs
+clY
 alG
 bJK
 nEU
