@@ -33,7 +33,7 @@
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
 	grant_actions_by_list(attack_action_types)
-	ADD_TRAIT(src, TRAIT_UNCONVERTABLE) //You cannot convert them while they're battling.
+	ADD_TRAIT(src, TRAIT_UNCONVERTABLE, INNATE_TRAIT) //You cannot convert them while they're battling.
 
 //Prevents elites from attacking members of their faction (can't hurt themselves either) and lets them mine rock with an attack despite not being able to smash walls.
 /mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget(atom/attacked_target)
@@ -349,7 +349,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	mychild.revive(HEAL_ALL)
 	if(boosted)
 		times_won++
-		mychild.maxHealth *= ELITE_POST_BATTLE_HEALTH_MULTIPLIER.4
+		mychild.maxHealth *= ELITE_POST_BATTLE_HEALTH_MULTIPLIER
 		mychild.health = mychild.maxHealth
 	if(times_won == 1)
 		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
@@ -360,6 +360,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			Bear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight. In such a case, you will regain your full max health.\n\
 			Also, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
 		to_chat(mychild, span_boldbig("Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!"))
+
 	REMOVE_TRAIT(mychild, TRAIT_UNCONVERTABLE, INNATE_TRAIT)
 
 /obj/item/tumor_shard

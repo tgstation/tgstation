@@ -226,18 +226,24 @@
 	if(HAS_TRAIT(victim, TRAIT_SPINNING))
 		return DEVIATION_NONE
 
+	// I don't want to mess with cyborgs' deep-rooted weakness to fleshes
+	if(issilicon(victim))
+		return DEVIATION_NONE
+
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		if(carbon_victim.get_eye_protection() < FLASH_PROTECTION_SENSITIVE) // If we have really bad flash sensitivity, usually due to really sensitive eyes, we get flashed from all directions
 			return DEVIATION_NONE
 
+	var/turf/attacker_turf = get_turf(atttacker)
+
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
-	if(victim.loc == attacker.loc)
+	if(victim.loc == attacker_turf)
 		return DEVIATION_PARTIAL
 
 	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
-	var/victim_to_attacker = get_dir(victim, attacker)
+	var/victim_to_attacker = get_dir(victim, attacker_turf)
 	// The victim's dir is necessarily a cardinal value.
 	var/victim_dir = victim.dir
 
