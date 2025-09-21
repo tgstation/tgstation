@@ -2524,6 +2524,7 @@
 "aNJ" = (
 /obj/machinery/light/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "aNL" = (
@@ -16977,6 +16978,13 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
+"eWX" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/disposal/incinerator)
 "eXe" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -34272,6 +34280,7 @@
 /area/station/security/mechbay)
 "jNH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "jNL" = (
@@ -64143,7 +64152,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "sAL" = (
-/obj/effect/decal/cleanable/cobweb,
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -81937,6 +81945,9 @@
 "xMN" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/broken_flooring/side/directional/east,
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "xMV" = (
@@ -189546,7 +189557,7 @@ krH
 shx
 aNJ
 lcD
-lcD
+eWX
 sCl
 xMN
 iRu
