@@ -17,11 +17,11 @@
 - [X] T008 [P] Add equipment contention edge-case integration test in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_reservations.dm` validating priority queue rules.
 
 ## Phase 3.3: Core Implementation
-- [ ] T009 [P] Implement `/datum/ai_control_policy` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/control_policy.dm`, loading defaults from config and exposing alert-level overrides.
-- [ ] T010 [P] Implement `/datum/ai_duty_objective` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/duty_objective.dm`, sourcing authoritative goal data from `/datum/job`.
-- [ ] T011 [P] Implement `/datum/ai_context_snapshot` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/context_snapshot.dm` with expiry and data-gathering helpers.
-- [ ] T012 [P] Implement `/datum/ai_decision_telemetry` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/telemetry_record.dm` including exploration bonus clamping and buffer linkage.
-- [ ] T013 [P] Implement `/datum/ai_equipment_reservation` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/equipment_reservation.dm` supporting priority scoring and expirations.
+- [X] T009 [P] Implement `/datum/ai_control_policy` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/control_policy.dm`, loading defaults from config and exposing alert-level overrides.
+- [X] T010 [P] Implement `/datum/ai_duty_objective` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/duty_objective.dm`, sourcing authoritative goal data from `/datum/job`.
+- [X] T011 [P] Implement `/datum/ai_context_snapshot` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/context_snapshot.dm` with expiry and data-gathering helpers.
+- [X] T012 [P] Implement `/datum/ai_decision_telemetry` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/telemetry_record.dm` including exploration bonus clamping and buffer linkage.
+- [X] T013 [P] Implement `/datum/ai_equipment_reservation` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/equipment_reservation.dm` supporting priority scoring and expirations.
 - [ ] T014 [P] Implement `/datum/ai_crew_profile` in `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/crew_profile.dm`, wiring taxonomy weights, risk tolerance, rate limiting, and takeover safeguards.
 - [ ] T015 Implement `SUBSYSTEM_DEF(ai_control_foundation)` in `/mnt/z/Backup/SS13/gurtstation/code/controllers/subsystem/ai_control_foundation.dm`, registering it in `/mnt/z/Backup/SS13/gurtstation/code/controllers/subsystem.dm` and wiring config toggles, cadence (1.5 s average), and stat instrumentation.
 - [ ] T016 Integrate the subsystem with human lifecycle hooks in `/mnt/z/Backup/SS13/gurtstation/code/modules/mob/living/carbon/human/ai_control.dm`, covering eligibility checks and immediate player handoff.
