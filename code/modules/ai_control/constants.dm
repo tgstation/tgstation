@@ -96,3 +96,11 @@ GLOBAL_DATUM(ai_control_policy, /datum/ai_control_policy)
 
 /// Feature flag helper until dedicated config entries are wired.
 #define AI_CREW_ENABLED (GLOB.ai_control_policy && GLOB.ai_control_policy.enabled)
+
+/// Blackboard buffer sizing + logging helpers.
+#define AI_BLACKBOARD_LOCAL_EVENT_LIMIT 10
+#define AI_BLACKBOARD_RADIO_EVENT_LIMIT 10
+#define AI_BLACKBOARD_ALERT_EVENT_LIMIT 10
+
+#define AI_PERCEPTION_LOG_PREFIX "AI_PERCEPTION "
+

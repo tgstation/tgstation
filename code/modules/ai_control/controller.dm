@@ -1,5 +1,3 @@
-/datum/blackboard_stub
-/datum/perception_stub
 /datum/option_runner_stub
 
 /// Crew human controller integrating the AI control foundation with Dream Maker's
@@ -36,9 +34,9 @@
 	/// Marker used to skip planning work when suspended or overridden.
 	var/controller_suspended = FALSE
 
-	/// Placeholder hooks populated in later tasks.
-	var/datum/blackboard_stub/blackboard_component
-	var/datum/perception_stub/perception_component
+	/// Runtime components wired in during core implementation.
+	var/datum/ai_blackboard/blackboard_component
+	var/datum/ai_perception/perception_component
 	var/datum/option_runner_stub/option_runner
 
 /datum/ai_controller/crew_human/New(atom/new_pawn, datum/controller/subsystem/ai/subsystem_override)
@@ -106,9 +104,21 @@
 
 /datum/ai_controller/crew_human/proc/initialize_controller_state()
 	sync_policy(policy)
+	ensure_runtime_components(pawn)
 	if(pawn)
 		attach_profile_to_pawn()
 	schedule_next_planning_cycle(TRUE)
+
+/datum/ai_controller/crew_human/proc/ensure_runtime_components(atom/target_pawn = pawn)
+	if(!blackboard_component)
+		blackboard_component = new /datum/ai_blackboard
+	if(!perception_component)
+		perception_component = new /datum/ai_perception(src, blackboard_component)
+	else
+		perception_component.set_owner(src)
+		perception_component.set_blackboard(blackboard_component)
+	if(perception_component && target_pawn)
+		perception_component.attach_to_mob(target_pawn)
 
 /datum/ai_controller/crew_human/proc/sync_policy(datum/ai_control_policy/new_policy)
 	if(!new_policy)
@@ -124,6 +134,7 @@
 	var/mob/living/carbon/human/human = pawn
 	if(!human)
 		return
+	ensure_runtime_components(human)
 	if(!profile)
 		profile = new /datum/ai_crew_profile(human, policy)
 	else
@@ -139,12 +150,16 @@
 	profile.deactivate()
 	profile.set_player_override(FALSE)
 	profile.set_mob(null)
+	if(perception_component)
+		perception_component.attach_to_mob(null)
 
 /datum/ai_controller/crew_human/proc/cleanup_profile()
 	if(profile)
 		qdel(profile)
 	profile = null
 	last_snapshot = null
+	if(blackboard_component)
+		blackboard_component.reset()
 
 /datum/ai_controller/crew_human/proc/release_from_subsystem()
 	if(ai_subsystem)
@@ -175,7 +190,10 @@
 	if(subsystem && subsystem != ai_subsystem)
 		ai_subsystem = subsystem
 	last_backpressure_state = backpressure_state
+	ensure_runtime_components(pawn)
 	poll_gateway_results()
+	if(perception_component)
+		perception_component.refresh_radio_sources()
 	if(controller_suspended || !profile)
 		return
 	if(!profile.is_active() || !profile.can_plan())

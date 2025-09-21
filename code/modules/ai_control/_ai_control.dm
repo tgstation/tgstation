@@ -8,4 +8,6 @@
 #include "telemetry_record.dm"
 #include "equipment_reservation.dm"
 #include "crew_profile.dm"
+#include "blackboard.dm"
+#include "perception.dm"
 #include "controller.dm"
