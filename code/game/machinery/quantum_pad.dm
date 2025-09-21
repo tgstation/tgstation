@@ -92,7 +92,7 @@
 	return ..()
 
 /obj/machinery/quantumpad/interact(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
-	if(!target_pad || QDELETED(target_pad))
+	if(QDELETED(target_pad))
 		if(map_pad_link_id && initMappedLink())
 			target_pad = linked_pad
 		else
