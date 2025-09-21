@@ -382,12 +382,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 	var/mob/living/simple_animal/hostile/asteroid/elite/elite = interacting_with
 	if(elite.stat != DEAD || elite.sentience_type != SENTIENCE_BOSS || !elite.key)
-		user.visible_message(span_notice("It appears [E] is unable to be revived right now. Perhaps try again later."))
+		user.visible_message(span_notice("It appears [elite] is unable to be revived right now. Perhaps try again later."))
 		return ITEM_INTERACT_BLOCKING
 	elite.faction = list("[REF(user)]")
 	elite.revive(HEAL_ALL)
 	user.visible_message(span_notice("[user] stabs [elite] with [src], reviving it."))
-	elite.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
+	elite.playsound_local(get_turf(elite), 'sound/effects/magic.ogg', 40, 0)
 	to_chat(elite, span_userdanger("You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk."))
 	to_chat(elite, span_boldbig("Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!"))
 	elite.maxHealth *= ELITE_POST_BATTLE_HEALTH_MULTIPLIER
