@@ -3564,6 +3564,11 @@
 "beg" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/safe)
+"beC" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/structure/ladder,
+/turf/open/floor/iron/smooth,
+/area/station/engineering/atmos/upper)
 "beF" = (
 /obj/structure/table/wood/fancy,
 /obj/item/lead_pipe{
@@ -16503,7 +16508,7 @@
 /area/station/commons/storage/primary)
 "eQV" = (
 /obj/structure/ladder,
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/hallway)
 "eRb" = (
@@ -43507,6 +43512,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"myc" = (
+/obj/machinery/meter{
+	name = "C02 meter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
+	name = "CO2 Multideck Adapter";
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "myd" = (
 /obj/machinery/portable_atmospherics/scrubber/huge/movable,
 /obj/effect/turf_decal/bot,
@@ -53877,17 +53893,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
-"pCN" = (
-/obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "CO2 Multideck Adapter";
-	dir = 8
-	},
-/obj/machinery/meter{
-	name = "C02 meter"
-	},
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "pDf" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -69637,6 +69642,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/lesser)
+"ujY" = (
+/obj/structure/ladder,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "uka" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -131655,7 +131665,7 @@ vwk
 xWB
 alA
 neS
-alA
+beC
 oHb
 vwk
 unl
@@ -194361,7 +194371,7 @@ rSB
 cHR
 mYY
 bzo
-ijs
+npp
 ijs
 ijs
 ijs
@@ -194618,7 +194628,7 @@ rpM
 rRY
 dst
 gbc
-npp
+myc
 ijs
 ijs
 ijs
@@ -194875,7 +194885,7 @@ bxd
 pmG
 rqo
 nhU
-pCN
+ijs
 ijs
 ijs
 ijs
@@ -197191,7 +197201,7 @@ sRP
 ijs
 ijs
 ijs
-ijs
+ujY
 sRP
 rqo
 fws
