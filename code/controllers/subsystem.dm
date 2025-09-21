@@ -7,6 +7,10 @@
 	* Changing the name is required
 **/
 
+#ifndef SS_AI
+#define SS_AI SSai
+#endif
+
 /datum/controller/subsystem
 	// Metadata; you should define these.
 
