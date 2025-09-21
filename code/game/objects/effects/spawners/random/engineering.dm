@@ -129,7 +129,7 @@
 	icon_state = "vending_restock"
 	loot = list(
 		/obj/item/vending_refill/wardrobe/det_wardrobe = 1,
-		/obj/item/vending_refill/wardrobe/med_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/medi_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/chem_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/viro_wardrobe = 1,
 		/obj/item/vending_refill/wardrobe/sec_wardrobe = 1,
