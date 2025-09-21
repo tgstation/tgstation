@@ -352,3 +352,8 @@
 
 ///from mob/living/befriend()
 #define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"
+
+/// From /datum/element/death_drops/on_death(mob/living/target, gibbed) : (list/loot, gibbed)
+#define COMSIG_LIVING_DROP_LOOT "living_drop_loot"
+	/// Prevent loot from being dropped
+	#define COMPONENT_NO_LOOT_DROP (1<<0)
