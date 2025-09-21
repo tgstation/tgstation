@@ -120,8 +120,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		if (get_dist(src, living_mob) > flash_range)
 			continue
 
-		if(living_mob.flash_act(affect_silicon = TRUE))
-			living_mob.log_message("was AOE flashed by an automated portable flasher", LOG_ATTACK)
+		if(bulb.flash_mob(living_mob, extra_log =  "by [src]"))
 			living_mob.Paralyze(strength)
 			flashed = TRUE
 
@@ -175,10 +174,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if(!COOLDOWN_FINISHED(src, flash_cooldown))
 		return
 
-	if(iscarbon(proximity_check_mob))
-		var/mob/living/carbon/proximity_carbon = proximity_check_mob
-		if (proximity_carbon.move_intent != MOVE_INTENT_WALK && anchored)
-			flash()
+	if(!isliving(proximity_check_mob))
+		return
+
+	var/mob/living/proximity_living = proximity_check_mob
+	if (proximity_living.move_intent != MOVE_INTENT_WALK && anchored)
+		flash()
 
 /obj/machinery/flasher/portable/vv_edit_var(vname, vval)
 	. = ..()

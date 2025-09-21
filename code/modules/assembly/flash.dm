@@ -62,7 +62,7 @@
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		flash_carbon(user, user, confusion_duration = 15 SECONDS, targeted = FALSE)
+		flash_mob(user, user, confusion_duration = 15 SECONDS, targeted = FALSE)
 		return FALSE
 	return TRUE
 
@@ -91,8 +91,8 @@
 	if(user)
 		targets -= user
 		to_chat(user, span_danger("[src] emits a blinding light!"))
-	for(var/mob/living/carbon/nearby_carbon in targets)
-		flash_carbon(nearby_carbon, user, confusion_duration, targeted = FALSE, generic_message = TRUE)
+	for(var/mob/living/nearby_living in targets)
+		flash_mob(nearby_living, user, confusion_duration, targeted = FALSE, generic_message = TRUE)
 	return TRUE
 
 /obj/item/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
@@ -136,13 +136,13 @@
  * * targeted - determines if it was aoe or targeted
  * * generic_message - checks if it should display default message.
  */
-/obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/flashed, mob/user, confusion_duration = 15 SECONDS, targeted = TRUE, generic_message = FALSE)
+/obj/item/assembly/flash/proc/flash_mob(mob/living/flashed, mob/user, confusion_duration = 15 SECONDS, targeted = TRUE, generic_message = FALSE, extra_log =  null)
 	if(!istype(flashed))
-		return
+		return FALSE
 	if(user)
-		log_combat(user, flashed, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+		log_combat(user, flashed, "[targeted? "flashed(targeted)" : "flashed(AOE)"] [extra_log]", src)
 	else //caused by emp/remote signal
-		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]", LOG_ATTACK)
+		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"] [extra_log]", LOG_ATTACK)
 
 	if(generic_message && flashed != user)
 		to_chat(flashed, span_danger("[src] emits a blinding light!"))
@@ -150,9 +150,9 @@
 	var/deviation = calculate_deviation(flashed, user || src)
 
 	if(user)
-		var/sigreturn = SEND_SIGNAL(user, COMSIG_MOB_PRE_FLASHED_CARBON, flashed, src, deviation)
+		var/sigreturn = SEND_SIGNAL(user, COMSIG_MOB_PRE_FLASHED_MOB, flashed, src, deviation)
 		if(sigreturn & STOP_FLASH)
-			return
+			return FALSE
 
 		if(sigreturn & DEVIATION_OVERRIDE_FULL)
 			deviation = DEVIATION_FULL
@@ -163,28 +163,53 @@
 
 	//If you face away from someone they shouldn't notice any effects.
 	if(deviation == DEVIATION_FULL)
-		return
+		return FALSE
 
-	if(targeted)
-		var/flash_result = flashed.flash_act(1, 1)
-		if(flash_result == FLASH_COMPLETED)
-			return //Behavior was overwritten, so we just skip the flashy stunny part and go with the override behavior instead
-
-		if(flash_result)
+	if(!targeted)
+		if(flashed.flash_act(affect_silicon = TRUE))
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
-			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
-			//easy way to make sure that you can only long stun someone who is facing in your direction
-			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
-			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
-			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
+			return TRUE
+		return FALSE
 
-		else if(user)
+	var/flash_result = flashed.flash_act(1, override_blindness_check = TRUE, affect_silicon = TRUE)
+
+	if(!flash_result)
+		if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
 		else
 			to_chat(flashed, span_danger("[src] fails to blind you!"))
-	else
-		if(flashed.flash_act())
+		return FALSE
+
+	if(flash_result != FLASH_COMPLETED) //If the behavior was overwritten, we just skip the flashy stunny part and go with the override behavior instead
+		if(issilicon(flashed))
+			if(flashed.is_blind())
+				var/flash_duration = rand(8,12) SECONDS
+				flashed.Paralyze(flash_duration)
+				flashed.set_temp_blindness_if_lower(flash_duration)
+				if(user)
+					user.visible_message(span_warning("[user] overloads [flashed]'s sensors and computing with the flash!"), span_danger("You overload [flashed]'s sensors and computing with the flash!"))
+				else
+					to_chat(flashed, "[src] overloads your sensors and computing!")
+			else
+				flashed.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
+				flashed.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
+				if(user)
+					user.visible_message(span_warning("[user] blinds [flashed] with the flash!"), span_danger("You blind [flashed] with the flash!"))
+				else
+					to_chat(flashed, "you're blinded by [src]!")
+		else
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+			//easy way to make sure that you can only long stun someone who is facing in your direction
+			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
+			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
+			if(user)
+				visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
+			else
+				to_chat(flashed, "you're blinded by [src]!")
+
+	if(user)
+		SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, flashed, src, deviation)
+	return TRUE
 
 /**
  * Handles the directionality of the attack
@@ -241,28 +266,14 @@
 		return FALSE
 
 	. = TRUE
-	if(iscarbon(M))
-		flash_carbon(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
+	if(!issilicon(M))
+		flash_mob(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
 		return
-	if(issilicon(M))
-		var/mob/living/silicon/robot/flashed_borgo = M
-		log_combat(user, flashed_borgo, "flashed", src)
-		update_icon(ALL, TRUE)
-		if(flashed_borgo.flash_act(affect_silicon = TRUE))
-			if(flashed_borgo.is_blind())
-				var/flash_duration = rand(8,12) SECONDS
-				flashed_borgo.Paralyze(flash_duration)
-				flashed_borgo.set_temp_blindness_if_lower(flash_duration)
-				user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors and computing with the flash!"), span_danger("You overload [flashed_borgo]'s sensors and computing with the flash!"))
-			else
-				user.visible_message(span_warning("[user] blinds [flashed_borgo] with the flash!"), span_danger("You blind [flashed_borgo] with the flash!"))
-			flashed_borgo.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
-			flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
-		else
-			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
-		return
+	flash_silicon(M, user)
 
 	user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to blind [M] with the flash!"))
+
+/obj/item/assembly/flash/proc/flash_silicon(mob/living/silicon/silicon)
 
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
@@ -354,42 +365,44 @@
 /obj/item/assembly/flash/hypnotic/burn_out()
 	return
 
-/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, confusion_duration = 15, targeted = TRUE, generic_message = FALSE)
-	if(!istype(M))
-		return
+/obj/item/assembly/flash/hypnotic/flash_mob(mob/living/flashed, mob/user, confusion_duration = 15, targeted = TRUE, generic_message = FALSE, extra_log =  null)
 	if(user)
-		log_combat(user, M, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
+		log_combat(user, flashed, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"] [extra_log]", src)
 	else //caused by emp/remote signal
-		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", LOG_ATTACK)
-	if(generic_message && M != user)
-		to_chat(M, span_notice("[src] emits a soothing light..."))
-	if(targeted)
-		if(M.flash_act(1, 1))
-			var/hypnosis = FALSE
-			if(M.hypnosis_vulnerable())
-				hypnosis = TRUE
-			if(user)
-				user.visible_message(span_danger("[user] blinds [M] with the flash!"), span_danger("You hypno-flash [M]!"))
+		flashed.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"] [extra_log]", LOG_ATTACK)
 
-			if(!hypnosis)
-				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
-				M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
-				M.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
-				M.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
-				M.adjust_pacifism(10 SECONDS)
-			else
-				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
+	if(generic_message && flashed != user)
+		to_chat(flashed, span_notice("[src] emits a soothing light..."))
 
-		else if(user)
-			user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to hypno-flash [M]!"))
+	if(!targeted)
+		if(!flashed.flash_act(affect_silicon = FALSE)) //just making it clear that this cannot work on bots, AI, borgs and drones (because hypnosis would conflict with AI laws etc.)
+			return FALSE
+
+		to_chat(flashed, span_notice("Such a pretty light..."))
+		flashed.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
+		flashed.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
+		flashed.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
+		flashed.adjust_pacifism(4 SECONDS)
+		return TRUE
+
+	if(!flashed.flash_act(1, override_blindness_check = TRUE, affect_silicon = FALSE)) // Doesn't work on AI, bots, borgs and drones (see above)
+		if(user)
+			user.visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_warning("You fail to hypno-flash [flashed]!"))
 		else
-			to_chat(M, span_danger("[src] fails to blind you!"))
+			to_chat(flashed, span_danger("[src] fails to blind you!"))
+		return TRUE
 
-	else if(M.flash_act())
-		to_chat(M, span_notice("Such a pretty light..."))
-		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
-		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
-		M.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
-		M.adjust_pacifism(4 SECONDS)
+	if(user)
+		user.visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_danger("You hypno-flash [flashed]!"))
+	else
+		to_chat(flashed, "You're blinded by [src]!")
+	if(!flashed.hypnosis_vulnerable())
+		to_chat(flashed, span_hypnophrase("The light makes you feel oddly relaxed..."))
+		flashed.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+		flashed.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
+		flashed.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
+		flashed.adjust_pacifism(10 SECONDS)
+	else
+		flashed.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER
