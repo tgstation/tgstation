@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  title: AI Administrator Blackboard API
+  version: 0.1.0
+paths:
+  /admin/ai/blackboard:
+    get:
+      summary: Stream overview of all AI-controlled crew
+      description: Returns paginated list of current AI crew with objective summaries and recent actions.
+      responses:
+        '200':
+          description: Blackboard snapshot
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [crew, generated_at]
+                properties:
+                  generated_at:
+                    type: string
+                    format: date-time
+                  crew:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AICrewSummary'
+  /admin/ai/crew/{profile_id}:
+    get:
+      summary: Detailed telemetry for a single AI crew profile
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Telemetry timeline
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryTimeline'
+  /admin/ai/config:
+    patch:
+      summary: Update exploration scaling and safety settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyUpdateRequest'
+      responses:
+        '200':
+          description: Updated policy snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicySnapshot'
+components:
+  schemas:
+    AICrewSummary:
+      type: object
+      required: [profile_id, job_id, current_objective, status, action_category_weights]
+      properties:
+        profile_id:
+          type: string
+        job_id:
+          type: string
+        status:
+          type: string
+          enum: [AI_ACTIVE, PLAYER_OVERRIDE, EMERGENCY_LOCKDOWN]
+        current_objective:
+          type: string
+        action_category_weights:
+          type: object
+          additionalProperties:
+            type: number
+        recent_actions:
+          type: array
+          items:
+            type: object
+            required: [verb, result, timestamp]
+            properties:
+              verb:
+                type: string
+              result:
+                type: string
+                enum: [success, partial, failure, aborted]
+              timestamp:
+                type: string
+                format: date-time
+    TelemetryTimeline:
+      type: object
+      required: [profile_id, entries]
+      properties:
+        profile_id:
+          type: string
+        entries:
+          type: array
+          items:
+            type: object
+            required: [sequence_id, selected_action, exploration_bonus, rollout_count, result]
+            properties:
+              sequence_id:
+                type: integer
+              selected_action:
+                type: string
+              exploration_bonus:
+                type: number
+              rollout_count:
+                type: integer
+                maximum: 200
+              result:
+                type: string
+                enum: [success, partial, failure, aborted]
+              notes:
+                type: string
+    PolicyUpdateRequest:
+      type: object
+      required: [action_category_defaults]
+      properties:
+        action_category_defaults:
+          type: object
+          properties:
+            Routine Upkeep:
+              type: number
+            Maintenance & Logistics:
+              type: number
+            Medical Response:
+              type: number
+            Security & Emergency:
+              type: number
+            Social & Support:
+              type: number
+        emergency_modifiers:
+          type: object
+          properties:
+            alert_level:
+              type: string
+              enum: [green, blue, red, delta]
+            c_pi_scale:
+              type: number
+        telemetry_retention_minutes:
+          type: integer
+          minimum: 10
+          maximum: 120
+    PolicySnapshot:
+      allOf:
+        - $ref: '#/components/schemas/PolicyUpdateRequest'
+        - type: object
+          required: [version, updated_at]
+          properties:
+            version:
+              type: integer
+            updated_at:
+              type: string
+              format: date-time
