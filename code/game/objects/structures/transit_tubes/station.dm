@@ -251,7 +251,7 @@
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
 	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
-	if(!istype(AM, /mob/living))
+	if(!isliving(AM))
 		if(!COOLDOWN_FINISHED(src,freight_output))
 			if(COOLDOWN_FINISHED(src,freight_message))
 				AM.visible_message(span_notice("Freight pod dispenser is recharging. Please wait."))
