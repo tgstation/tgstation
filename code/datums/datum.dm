@@ -359,7 +359,7 @@
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	for (var/list/individual_filter as anything in filters)
-		add_filter(individual_filter["name"], individual_filter["priority"], individual_filter, update = FALSE)
+		add_filter(individual_filter["name"], individual_filter["priority"], individual_filter["params"], update = FALSE)
 	if (update)
 		atom_cast.filters = filter_cache
 
