@@ -161,10 +161,8 @@
 		log_entry_data[DETSCAN_CATEGORY_FIBER] = atom_fibers.Copy()
 
 	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
-	var/list/blood_copy = list()
 	if(length(blood))
-		blood_copy = blood.Copy()
-		log_entry_data[DETSCAN_CATEGORY_BLOOD] = blood_copy
+		log_entry_data[DETSCAN_CATEGORY_BLOOD] = blood.Copy()
 
 	if(ishuman(scanned_atom))
 		var/mob/living/carbon/human/scanned_human = scanned_atom
