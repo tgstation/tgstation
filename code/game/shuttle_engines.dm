@@ -46,6 +46,7 @@
 /obj/machinery/power/shuttle_engine/on_construction(mob/user)
 	. = ..()
 	if(anchored)
+		engine_state = ENGINE_WRENCHED
 		connect_to_shuttle(port = SSshuttle.get_containing_shuttle(src)) //connect to a new ship, if needed
 		if(!connected_ship_ref?.resolve())
 			AddElement(/datum/element/connect_loc, connections)
@@ -134,7 +135,7 @@
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, span_warning("\The [src] needs to be wrenched to the floor!"))
 		if(ENGINE_WRENCHED)
-			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5), heat_required = HIGH_TEMPERATURE_REQUIRED))
+			if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to weld \the [src] to the floor."), \
@@ -147,7 +148,7 @@
 				alter_engine_power(engine_power)
 
 		if(ENGINE_WELDED)
-			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5), heat_required = HIGH_TEMPERATURE_REQUIRED))
+			if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to cut \the [src] free from the floor."), \

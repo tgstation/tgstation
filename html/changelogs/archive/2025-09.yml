@@ -486,3 +486,92 @@
       materials being processed with a tool.
   SyncIt21:
   - bugfix: ORM's smelt ores correctly when inserted by hand/bag
+2025-09-18:
+  LT3:
+  - bugfix: '''a box full of shotgun darts with increased chemical storage capacity''
+      now has a shorter name'
+  Pickle-Coding:
+  - code_imp: Caches individual gases for gas reactions.
+  RealWinterFrost & TheSelfish:
+  - rscadd: Multicolours ushankas, woo!
+  - rscadd: Security now has a hat to fight off the frost.
+2025-09-19:
+  SyncIt21:
+  - bugfix: ore vents have unique distribution of at most 4 minerals without rare
+      ones being repeated
+  - bugfix: ore vents should no longer be produce 0 material boulders
+  theselfish:
+  - balance: a ushanka no longer can protect brainy as much as a metal helmet
+2025-09-20:
+  Aliceee2ch:
+  - bugfix: Removed rogue decal in DeltaStation garden
+  - bugfix: Added missing RD computer in RD office (Catwalk)
+  - map: Replaced one of RND consoles on bridge with RD computer (Catwalk)
+  Hatterhat:
+  - balance: General ammo boxes (not speedloaders, not stripper clips) can no longer
+      multiload into currently loaded magazines (revolver cylinders, internal magazines).
+  - balance: Speedloaders are now a separate type from ammo boxes, and can only multiload
+      into currently loaded magazines e.g. revolver cylinders.
+  - qol: Ammo boxes, magazines, and speedloaders now have fancier types for spawning
+      in by admins.
+  Melbert:
+  - bugfix: Honorifics will no longer interfere with voice detectors and similar things
+  SyncIt21:
+  - qol: ' Multitooling a pod door controller now picks from a list of doors available
+      for that player(crafted, set via controller) only and can auto generate new
+      IDs for you'
+  - bugfix: no BSOD when clicking table row buttons in controller overview window
+  Y0SH1M4S73R:
+  - bugfix: You no longer need 40 welding fuel to start welding or unwelding shuttle
+      engines, despite only consuming 1.
+  - bugfix: Shuttle engines constructed from anchored machine frames start in the
+      wrenched-but-unwelded state.
+  - bugfix: Expanding custom shuttles from shuttle frames is once again possible without
+      href exploitation.
+  - bugfix: Shuttle expansion now correctly checks for other shuttle docking ports
+      the expanded shuttle's footprint would encroach upon.
+  - qol: Tries to make some of the buttons in the custom shuttle UI more indicative
+      of what they actually do.
+  loganuk:
+  - bugfix: Fixes unable to place power cables on reinforced catwalk in Lavaland
+  - bugfix: Allows health analysers to scan Cyborg MMIs and show a brain (or not)
+  theselfish:
+  - spellcheck: HDD has been properly capitalised in the server robbery thing.
+2025-09-21:
+  Aliceee2ch:
+  - bugfix: Added missing insulated gloves in WawaStation tech storage
+  - map: Remapped gateway museum area.
+  AyIong:
+  - qol: Chat tabs are scrollable now (with your mouse wheel yeah) if they are too
+      much or your screen resolution sucks
+  Ezel:
+  - map: makes psychology office in metastation feel a little more open
+  Ghommie:
+  - bugfix: Shivs cannot be erroneously crafted via crafting menu anymore. That'd
+      cause you to get a generic glass shiv if you were to use sturdier shards like
+      plasma or titanium.
+  - rscdel: Removed the recipe for cable handcuffs from the crafting menu.
+  - bugfix: You can once again craft custom material stuff like carving blocks and
+      toilets made of sand once again.
+  - qol: The direction of your character changes when moving inside a cardboard box.
+  Hatterhat:
+  - bugfix: Lava no longer slows you down while running on heatproof catwalks. Also,
+      heatproof support lattices are heatproof catwalks now, which is more accurate
+      to their sprites.
+  Melbert:
+  - spellcheck: Replaced ooc ic in RCD, RPLD, and alien power feedback
+  - code_imp: Removed some redundant code from core hearing code. Report if you hear
+      anything weird.
+  Pink-MB:
+  - bugfix: Intercomms work for Cyborgs
+  YakiAttaki:
+  - rscadd: Added the ability to pick up stoats
+  - rscadd: Stoats can now breed!
+  - rscadd: Baby stoat mobs are now a thing. Aww, so cute!
+  lelandkemble:
+  - spellcheck: Changed det hat candy corn text to more neutral language
+  - bugfix: Apcs will no longer bluescreen without a screen
+  - map: Moved one RPD from atmos to engi on Nebula
+  - bugfix: Locked reflector boxes no longer repeat "can't rotate" forever
+  timothymtorres:
+  - bugfix: Fix blink animation for eyes with no eyelids
