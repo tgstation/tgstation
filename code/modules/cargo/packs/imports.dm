@@ -99,7 +99,7 @@
 	desc = "I'm not sure why you bothered to buy this...and why does it cost so much?"
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
-		/obj/effect/spawner/random/maintenance/three,
+		/obj/effect/spawner/random/maintenance/dumpster,
 		/obj/effect/spawner/random/trash/garbage = 5,
 	)
 	crate_name = "putrid dumpster"
@@ -224,8 +224,8 @@
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(
 		/obj/item/food/rationpack,
-		/obj/item/ammo_box/strilka310,
-		/obj/item/ammo_box/strilka310/surplus,
+		/obj/item/ammo_box/speedloader/strilka310,
+		/obj/item/ammo_box/speedloader/strilka310/surplus,
 		/obj/effect/spawner/random/armory/strilka,
 		/obj/item/gun_maintenance_supplies,
 		/obj/item/clothing/suit/armor/vest/russian,

@@ -262,14 +262,6 @@
 /obj/effect/turf_decal/caution/red,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"ch" = (
-/obj/structure/table/wood,
-/obj/machinery/light/directional/south,
-/obj/item/papercutter{
-	pixel_x = -4
-	},
-/turf/open/floor/wood,
-/area/virtual_domain)
 "cj" = (
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -891,15 +883,6 @@
 	icon_state = "L13"
 	},
 /obj/effect/spawner/random/trash,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"hv" = (
-/obj/structure/bed/medical/emergency,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/obj/machinery/vending/wallmed/directional/west,
-/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "hw" = (
@@ -1837,6 +1820,14 @@
 /area/virtual_domain)
 "ps" = (
 /turf/closed/wall,
+/area/virtual_domain)
+"pu" = (
+/obj/structure/table/wood,
+/obj/machinery/light/directional/south,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
+/turf/open/floor/wood,
 /area/virtual_domain)
 "pv" = (
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -3698,19 +3689,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"Fa" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/night{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/night,
-/obj/item/clothing/glasses/night{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/turf/template_noop,
-/area/virtual_domain/safehouse)
 "Fc" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
@@ -4105,7 +4083,7 @@
 /area/virtual_domain)
 "Il" = (
 /obj/structure/lattice,
-/obj/item/ammo_box/strilka310/surplus,
+/obj/item/ammo_box/speedloader/strilka310/surplus,
 /turf/open/space/basic,
 /area/virtual_domain)
 "Io" = (
@@ -5207,6 +5185,15 @@
 /obj/structure/frame/machine/secured,
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain)
+"RG" = (
+/obj/structure/bed/medical/emergency,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/machinery/wall_healer/free/directional/west,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "RI" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/decoration/showcase,
@@ -5685,6 +5672,19 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"VQ" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/night{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/night{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "VT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -6726,7 +6726,7 @@ uS
 uS
 ML
 DP
-ch
+pu
 uS
 ND
 AP
@@ -7276,7 +7276,7 @@ oD
 pB
 hX
 zQ
-Fa
+VQ
 hX
 hX
 hX
@@ -7696,7 +7696,7 @@ Nh
 zg
 Fj
 NO
-hv
+RG
 uA
 yN
 Ff

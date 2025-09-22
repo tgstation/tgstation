@@ -72,7 +72,7 @@
 /datum/market_item/misc/hat_stabilizer
 	name = "MOD Hat Stabilizer Module"
 	desc = "Don't sacrifice style for substance with this module! Hats not included."
-	item = /obj/item/mod/module/tanner
+	item = /obj/item/mod/module/hat_stabilizer
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 3
 	stock_max = 2

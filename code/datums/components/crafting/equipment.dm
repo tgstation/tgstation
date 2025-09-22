@@ -156,6 +156,9 @@
 		/obj/item/flashlight = 2,
 		/obj/item/restraints/handcuffs/cable = 1
 	)
+	blacklist = list(
+		/obj/item/flashlight/lamp/space_bubble,
+	)
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/flashlight_eyes/New()
@@ -276,7 +279,7 @@
 	time = 1 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/leather = 4,
-		/obj/item/stack/sheet/cardboard = 4
+		/obj/item/stack/sheet/mineral/wood = 1,
 	)
 	category = CAT_EQUIPMENT
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)

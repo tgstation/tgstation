@@ -72,13 +72,14 @@ export const BluespaceSender = (props) => {
               />
               <NumberInput
                 animated
+                tickWhileDragging
                 value={gas_transfer_rate}
                 step={0.01}
                 width="63px"
                 unit="moles/S"
                 minValue={0}
                 maxValue={1}
-                onDrag={(value) =>
+                onChange={(value) =>
                   act('rate', {
                     rate: value,
                   })
@@ -130,12 +131,13 @@ const GasDisplay = (props: GasDisplayProps) => {
           <NumberInput
             animated
             fluid
+            tickWhileDragging
             value={price}
             step={1}
             unit="per mole"
             minValue={0}
             maxValue={100}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('price', {
                 gas_price: value,
                 gas_type: id,

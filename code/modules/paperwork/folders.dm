@@ -61,6 +61,9 @@
 	if(IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Rename"
 		return CONTEXTUAL_SCREENTIP_SET
+	if((held_item.tool_behaviour == TOOL_KNIFE || held_item.tool_behaviour == TOOL_WIRECUTTER) && !contents.len)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut apart"
+		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)
@@ -93,6 +96,8 @@
 		return insertables_act(user, tool)
 	if(IS_WRITING_UTENSIL(tool))
 		return writing_utensil_act(user, tool)
+	if(tool.tool_behaviour == TOOL_KNIFE || tool.tool_behaviour == TOOL_WIRECUTTER)
+		return sharp_thing_act(user, tool)
 	return NONE
 
 /obj/item/folder/proc/insertables_act(mob/living/user, obj/item/tool)
@@ -114,6 +119,16 @@
 
 	name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/folder/proc/sharp_thing_act(mob/user, obj/item/sharp_tool)
+	if(contents.len)
+		balloon_alert(user, "empty [src] first!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "cut apart")
+	qdel(src)
+	user.put_in_hands(new /obj/item/stack/sheet/cardboard)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/folder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
