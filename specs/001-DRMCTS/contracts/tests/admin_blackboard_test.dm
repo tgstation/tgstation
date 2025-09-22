@@ -6,7 +6,11 @@
 	var/list/response = call_admin_ai_endpoint("GET", "/admin/ai/blackboard")
 	ASSERT(response, "Blackboard GET must return payload")
 	ASSERT(islist(response["crew"]), "Crew list required")
-	FAIL("Contract not implemented; remove once endpoint exists")
+	ASSERT(istext(response["generated_at"]), "Generated timestamp required")
+	if(length(response["crew"]))
+		var/list/entry = response["crew"][1]
+		ASSERT(istext(entry?["profile_id"]), "Crew entry requires profile_id")
+		ASSERT(islist(entry?["action_category_weights"]), "Crew entry requires weights")
 
 /datum/unit_test/admin_blackboard_contract/TestTelemetryDetail
 	name = "AI Blackboard API returns telemetry timeline"

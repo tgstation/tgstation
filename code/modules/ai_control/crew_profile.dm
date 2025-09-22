@@ -23,6 +23,10 @@
 	var/decision_sequence = 0
 	/// Last execution timestamps for rate-limited metrics.
 	var/list/rate_limit_timestamps = list()
+	/// Globally unique identifier used by admin endpoints and telemetry.
+	var/profile_id
+
+/datum/ai_crew_profile/var/static/profile_sequence = 0
 
 /datum/ai_crew_profile/New(mob/living/carbon/human/target, datum/ai_control_policy/policy, risk_tolerance = AI_RISK_TOLERANCE_NORMAL)
 	..()
@@ -34,6 +38,8 @@
 	refresh_duty_objectives()
 	rate_limit_timestamps = list()
 	status_flags = AI_CREW_STATUS_ACTIVE
+	if(!profile_id)
+		profile_id = generate_profile_id()
 
 /// Resolve the weak reference into a mob (if still valid).
 /datum/ai_crew_profile/proc/get_mob()
@@ -204,6 +210,13 @@
 
 /datum/ai_crew_profile/proc/get_policy()
 	return policy
+
+/datum/ai_crew_profile/proc/get_profile_id()
+	return profile_id
+
+/datum/ai_crew_profile/proc/generate_profile_id()
+	profile_sequence++
+	return "ai_profile_[profile_sequence]"
 
 /datum/ai_crew_profile/proc/get_rate_limit_seconds(metric, default_value = 0)
 	if(policy)
