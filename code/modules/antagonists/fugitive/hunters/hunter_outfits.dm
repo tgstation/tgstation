@@ -85,7 +85,7 @@
 
 	if(istype(equip_to.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/uniform = equip_to.w_uniform
-		uniform.set_sensor_mode(NO_SENSORS)
+		uniform.set_sensor_mode(SENSOR_OFF)
 		uniform.set_has_sensor(NO_SENSORS)
 
 /datum/outfit/russian_hunter/leader
