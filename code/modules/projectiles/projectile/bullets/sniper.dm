@@ -117,3 +117,29 @@
 	ricochet_incidence_leeway = 90
 	ricochet_decay_damage = 1
 	ricochet_shoots_firer = FALSE
+
+// 20x138mm bullet (lahti-l39) //
+
+/obj/projectile/bullet/mm20x138
+	name ="20x138mm bullet"
+	speed = 3.5
+	range = 400 // same as sniper rifle
+	damage = 400
+	paralyze = 100
+	dismemberment = 50
+	catastropic_dismemberment = TRUE
+	armour_penetration = 50
+	ignore_range_hit_prone_targets = TRUE
+	var/mecha_damage = 2 // this is a damage multiplier var
+	var/object_damage = 2 // same normal damage
+	paralyze = 100 // same as sniper rifle
+
+/obj/projectile/bullet/mm20x138/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(isobj(target) && (blocked != 100))
+		var/obj/thing_to_break = target
+		var/damage_to_deal = object_damage
+		if(ismecha(thing_to_break) && mecha_damage)
+			damage_to_deal += mecha_damage
+		if(damage_to_deal)
+			thing_to_break.take_damage(damage_to_deal, BRUTE, BULLET, FALSE)
+	return ..()
