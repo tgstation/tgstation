@@ -215,8 +215,16 @@
 	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
 	icon_state = "psyker_headset"
 	worn_icon_state = "syndie_headset"
-	clothing_traits = list(TRAIT_ECHOLOCATION_EXTRA_RANGE)
 
 /obj/item/radio/headset/psyker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection)
+
+/obj/item/radio/headset/psyker/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		ADD_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+
+/obj/item/radio/headset/psyker/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
