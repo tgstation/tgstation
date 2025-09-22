@@ -435,6 +435,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SECURITY_HUD "sec_hud"
 #define TRAIT_SECURITY_HUD_ID_ONLY "sec_hud_lesser"
 #define TRAIT_ABDUCTOR_HUD "abductor_hud"
+/// Stop the user from seeing the sechud. Only works for trait handled sechuds.
+#define TRAIT_BLOCK_SECHUD "block_sechud"
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
 #define TRAIT_BOT_PATH_HUD "bot_path_hud"
