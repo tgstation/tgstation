@@ -195,6 +195,11 @@
 	return // I don't care about you anymore
 
 /mob/living/carbon/human/send_death_moodlets(datum/mood_event/moodlet)
+	for(var/datum/surgery/organ_manipulation/manipulation in surgeries)
+		// This check exists so debraining someone doesn't make the surgeon super sad
+		if(manipulation.location == BODY_ZONE_HEAD && body_position == LYING_DOWN)
+			return
+
 	. = ..()
 	var/memory_type = ispath(moodlet, /datum/mood_event/see_death/gibbed) ? /datum/memory/witness_gib : /datum/memory/witnessed_death
 	add_memory_in_range(src, 7, memory_type, protagonist = src)
