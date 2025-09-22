@@ -31,8 +31,8 @@
 - [X] T020 Wire telemetry stubs by creating `/mnt/z/Backup/SS13/gurtstation/code/modules/ai_control/telemetry_manager.dm` to buffer decision records, respect policy retention limits, and prepare batched inserts using the SQL schema added in T002.
 - [X] T021 Wire admin configuration entries in `/mnt/z/Backup/SS13/gurtstation/code/controllers/configuration/entries/ai_foundation.dm` so feature flags, gateway URLs, and tuning parameters hot-reload and notify active controllers.
 - [X] T022 Implement planner/parser gateway admin tooling in `/mnt/z/Backup/SS13/gurtstation/code/modules/admin/ai_blackboard.dm`, starting with a `GET /admin/ai/blackboard` endpoint that surfaces controller summaries using the new subsystem data structures.
-- [ ] T023 Extend the same module with `GET /admin/ai/crew/{profile_id}` to stream buffered telemetry from the manager stub, returning contract-compliant JSON.
-- [ ] T024 Add `PATCH /admin/ai/config` to apply runtime configuration changes via the policy datum and log administrator overrides.
+- [X] T023 Extend the same module with `GET /admin/ai/crew/{profile_id}` to stream buffered telemetry from the manager stub, returning contract-compliant JSON.
+- [X] T024 Add `PATCH /admin/ai/config` to apply runtime configuration changes via the policy datum and log administrator overrides.
 - [ ] T025 Build the TGUI AI blackboard interface in `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/interfaces/AIFoundationBlackboard.tsx` plus a supporting data store under `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/stores/ai_foundation.ts` that consumes the new endpoints and surfaces planner/parser health.
 - [ ] T026 Update the Admin Config TGUI in `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/interfaces/AdminConfig.tsx` (or existing config panels) to expose gateway URLs, exploration multipliers, safety sliders, and presets tied to the new config entry.
 
