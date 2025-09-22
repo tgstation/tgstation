@@ -236,6 +236,21 @@ GLOBAL_DATUM(admin_ai_gateway, /datum/admin_ai_gateway)
 			apply_emergency_modifiers(emergency_modifiers)
 			applied["emergency_modifiers"] = emergency_modifiers.Copy()
 
+		var/list/safety_thresholds = extract_safety_thresholds(payload["safety_thresholds"])
+		if(length(safety_thresholds))
+			apply_safety_thresholds(safety_thresholds)
+			applied["safety_thresholds"] = safety_thresholds.Copy()
+
+		var/list/rate_limits = extract_rate_limits(payload["rate_limits"])
+		if(length(rate_limits))
+			apply_rate_limits(rate_limits)
+			applied["rate_limits"] = rate_limits.Copy()
+
+		var/list/gateway_overrides = extract_gateway_overrides(payload["gateway"])
+		if(length(gateway_overrides))
+			apply_gateway_overrides(gateway_overrides)
+			applied["gateway"] = gateway_overrides.Copy()
+
 		var/telemetry_minutes = extract_telemetry_minutes(payload["telemetry_retention_minutes"])
 		if(telemetry_minutes)
 			CONFIG_SET(number/ai_control_telemetry_minutes, telemetry_minutes)
@@ -320,6 +335,83 @@ GLOBAL_DATUM(admin_ai_gateway, /datum/admin_ai_gateway)
 		if("delta" in modifiers)
 			CONFIG_SET(number/ai_control_emergency_delta, modifiers["delta"])
 
+	proc/extract_safety_thresholds(source)
+		var/list/result = list()
+		if(!islist(source))
+			return result
+		for(var/key in list("max_hazard_score", "max_chain_failures"))
+			if(!(key in source))
+				continue
+			var/value = source[key]
+			if(!isnum(value))
+				continue
+			if(key == "max_hazard_score")
+				value = clamp(value, 0, 1)
+			else
+				value = clamp(round(value), 0, 10)
+			result[key] = value
+		return result
+
+	proc/apply_safety_thresholds(list/thresholds)
+		if(!islist(thresholds) || !length(thresholds))
+			return
+		if("max_hazard_score" in thresholds)
+			CONFIG_SET(number/ai_control_max_hazard, thresholds["max_hazard_score"])
+		if("max_chain_failures" in thresholds)
+			CONFIG_SET(number/ai_control_max_chain_failures, thresholds["max_chain_failures"])
+
+	proc/extract_rate_limits(source)
+		var/list/result = list()
+		if(!islist(source))
+			return result
+		for(var/key in list("item_toggle_seconds", "aggressive_action_seconds"))
+			if(!(key in source))
+				continue
+			var/value = source[key]
+			if(!isnum(value))
+				continue
+			value = clamp(round(value), 0, 600)
+			result[key] = value
+		return result
+
+	proc/apply_rate_limits(list/limits)
+		if(!islist(limits) || !length(limits))
+			return
+		if("item_toggle_seconds" in limits)
+			CONFIG_SET(number/ai_control_item_toggle_seconds, limits["item_toggle_seconds"])
+		if("aggressive_action_seconds" in limits)
+			CONFIG_SET(number/ai_control_aggressive_seconds, limits["aggressive_action_seconds"])
+
+	proc/extract_gateway_overrides(source)
+		var/list/result = list()
+		if(!islist(source))
+			return result
+		if(istext(source["planner_url"]))
+			result["planner_url"] = source["planner_url"]
+		if(istext(source["parser_url"]))
+			result["parser_url"] = source["parser_url"]
+		if(isnum(source["planner_timeout_ds"]))
+			result["planner_timeout_ds"] = clamp(round(source["planner_timeout_ds"]), 5, 300)
+		if(isnum(source["parser_timeout_ds"]))
+			result["parser_timeout_ds"] = clamp(round(source["parser_timeout_ds"]), 5, 300)
+		if(isnum(source["retry_ds"]))
+			result["retry_ds"] = clamp(round(source["retry_ds"]), 1, 100)
+		return result
+
+	proc/apply_gateway_overrides(list/overrides)
+		if(!islist(overrides) || !length(overrides))
+			return
+		if("planner_url" in overrides)
+			CONFIG_SET(string/ai_gateway_planner_url, overrides["planner_url"])
+		if("parser_url" in overrides)
+			CONFIG_SET(string/ai_gateway_parser_url, overrides["parser_url"])
+		if("planner_timeout_ds" in overrides)
+			CONFIG_SET(number/ai_gateway_planner_timeout_ds, overrides["planner_timeout_ds"])
+		if("parser_timeout_ds" in overrides)
+			CONFIG_SET(number/ai_gateway_parser_timeout_ds, overrides["parser_timeout_ds"])
+		if("retry_ds" in overrides)
+			CONFIG_SET(number/ai_gateway_retry_ds, overrides["retry_ds"])
+
 	proc/extract_telemetry_minutes(value)
 		if(!isnum(value))
 			return 0
@@ -356,3 +448,226 @@ GLOBAL_DATUM(admin_ai_gateway, /datum/admin_ai_gateway)
 			"error" = reason,
 			"status" = status_code,
 		)
+
+#define AI_BLACKBOARD_REFRESH_COOLDOWN (5 SECONDS)
+
+ADMIN_VERB(open_ai_blackboard, R_ADMIN, "AI Foundation Blackboard", "Inspect AI crew controllers, planner health, and runtime config.", ADMIN_CATEGORY_DEBUG)
+	usr.holder?.open_ai_blackboard_panel("AIFoundationBlackboard")
+
+ADMIN_VERB(open_ai_foundation_config, R_ADMIN, "AI Foundation Config", "Adjust exploration multipliers, safety thresholds, and gateway tuning for the AI foundation.", ADMIN_CATEGORY_DEBUG)
+	usr.holder?.open_ai_blackboard_panel("AdminConfig")
+
+/datum/admins/proc/open_ai_blackboard_panel(interface_name)
+	if(!check_rights(R_ADMIN))
+		return
+	var/datum/admin_ai_blackboard_panel/ui = new(usr)
+	if(istext(interface_name) && length(interface_name))
+		ui.interface_id = interface_name
+	ui.ui_interact(usr)
+
+/datum/admin_ai_blackboard_panel
+	var/interface_id = "AIFoundationBlackboard"
+	var/list/cached_blackboard
+	var/last_blackboard_refresh = 0
+	var/list/cached_timelines = list()
+	var/list/policy_snapshot
+	var/list/last_patch_response
+
+/datum/admin_ai_blackboard_panel/ui_state(mob/user)
+	return ADMIN_STATE(R_ADMIN)
+
+/datum/admin_ai_blackboard_panel/ui_interact(mob/user, datum/tgui/ui)
+	refresh_blackboard(TRUE)
+	refresh_policy_snapshot()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, interface_id || "AIFoundationBlackboard")
+		ui.open()
+
+/datum/admin_ai_blackboard_panel/ui_static_data(mob/user)
+	return list(
+		"refresh_cooldown_ds" = AI_BLACKBOARD_REFRESH_COOLDOWN,
+	)
+
+/datum/admin_ai_blackboard_panel/ui_data(mob/user)
+	refresh_blackboard(FALSE)
+	var/list/data = list()
+	data["blackboard"] = cached_blackboard?.Copy() || list("crew" = list())
+	data["last_refresh_ds"] = last_blackboard_refresh
+	data["now_ds"] = world.time
+	data["timelines"] = build_timeline_payload()
+	data["gateway_status"] = build_gateway_status()
+	data["policy"] = policy_snapshot?.Copy()
+	data["last_patch_response"] = last_patch_response?.Copy()
+	return data
+
+/datum/admin_ai_blackboard_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(..())
+		return
+	if(!check_rights(R_ADMIN))
+		return
+
+	switch(action)
+		if("refresh")
+			refresh_blackboard(TRUE)
+			ui?.update()
+			return TRUE
+
+		if("loadTimeline")
+			var/profile_id = params["profile_id"]
+			var/force = params?["force"]
+			load_timeline(profile_id, !!force)
+			ui?.update()
+			return TRUE
+
+		if("clearTimeline")
+			var/profile_id = params["profile_id"]
+			if(istext(profile_id))
+				cached_timelines -= profile_id
+				ui?.update()
+				return TRUE
+
+		if("patchConfig")
+			if(apply_config_patch(params))
+				ui?.update()
+				return TRUE
+
+	return FALSE
+
+/datum/admin_ai_blackboard_panel/proc/refresh_blackboard(force)
+	if(!force && world.time < (last_blackboard_refresh + AI_BLACKBOARD_REFRESH_COOLDOWN))
+		return cached_blackboard
+
+	var/list/result = call_admin_ai_endpoint("GET", "/admin/ai/blackboard")
+	if(!islist(result))
+		cached_blackboard = list("error" = "unknown", "crew" = list())
+		last_blackboard_refresh = world.time
+		return cached_blackboard
+
+	if(result["error"])
+		cached_blackboard = list(
+			"error" = result["error"],
+			"status" = result["status"],
+			"crew" = list(),
+		)
+		last_blackboard_refresh = world.time
+		return cached_blackboard
+
+	cached_blackboard = result.Copy()
+	last_blackboard_refresh = world.time
+	return cached_blackboard
+
+/datum/admin_ai_blackboard_panel/proc/load_timeline(profile_id, force)
+	if(!istext(profile_id) || !length(profile_id))
+		return null
+
+	var/list/entry = cached_timelines[profile_id]
+	if(!force && islist(entry) && islist(entry["timeline"]))
+		return entry
+
+	var/list/result = call_admin_ai_endpoint("GET", "/admin/ai/crew/[profile_id]")
+	if(!islist(result))
+		return null
+
+	if(result["error"])
+		cached_timelines[profile_id] = list(
+			"timeline" = list(
+				"error" = result["error"],
+				"status" = result?["status"],
+				"profile_id" = profile_id,
+			),
+			"fetched_at" = world.time,
+		)
+		return cached_timelines[profile_id]
+
+	cached_timelines[profile_id] = list(
+		"timeline" = result.Copy(),
+		"fetched_at" = world.time,
+	)
+	return cached_timelines[profile_id]
+
+/datum/admin_ai_blackboard_panel/proc/build_timeline_payload()
+	if(!length(cached_timelines))
+		return list()
+	var/list/output = list()
+	for(var/profile_id in cached_timelines)
+		var/list/entry = cached_timelines[profile_id]
+		if(!islist(entry))
+			continue
+		var/list/timeline = entry["timeline"]
+		if(!islist(timeline))
+			continue
+		output[profile_id] = timeline.Copy()
+	return output
+
+/datum/admin_ai_blackboard_panel/proc/build_gateway_status()
+	var/list/status = list()
+	var/datum/controller/subsystem/ai/ss = SS_AI
+	if(!ss)
+		return status
+
+	status["feature_enabled"] = ss.is_enabled()
+	status["backpressure_state"] = ss.get_backpressure_state()
+	status["tick_usage"] = round(ss.last_tick_usage, 0.1)
+	status["planner_queue"] = length(ss.planner_queue)
+	status["parser_queue"] = length(ss.parser_queue)
+	status["inflight"] = length(ss.inflight_gateway)
+	status["deferred"] = length(ss.gateway_client?.deferred_requests)
+	status["last_policy_refresh"] = ss.last_policy_refresh
+
+	var/datum/ai_control_policy/policy = get_policy()
+	if(policy)
+		status["planner_url"] = policy.get_gateway_url(AI_GATEWAY_CHANNEL_PLANNER)
+		status["parser_url"] = policy.get_gateway_url(AI_GATEWAY_CHANNEL_PARSER)
+		status["planner_timeout_ds"] = policy.get_gateway_timeout_ds(AI_GATEWAY_CHANNEL_PLANNER)
+		status["parser_timeout_ds"] = policy.get_gateway_timeout_ds(AI_GATEWAY_CHANNEL_PARSER)
+		status["retry_ds"] = policy.get_gateway_retry_ds()
+
+	return status
+
+/datum/admin_ai_blackboard_panel/proc/get_policy()
+	var/datum/controller/subsystem/ai/ss = SS_AI
+	var/datum/ai_control_policy/policy = ss?.get_policy()
+	if(!policy)
+		policy = GLOB.ai_control_policy
+	return policy
+
+/datum/admin_ai_blackboard_panel/proc/refresh_policy_snapshot()
+	var/datum/ai_control_policy/policy = get_policy()
+	policy_snapshot = policy ? policy.to_list() : null
+
+/datum/admin_ai_blackboard_panel/proc/apply_config_patch(list/params)
+	if(!islist(params))
+		return FALSE
+
+	var/list/payload = list()
+	if(islist(params["action_category_defaults"]))
+		payload["action_category_defaults"] = params["action_category_defaults"].Copy()
+	if(islist(params["emergency_modifiers"]))
+		payload["emergency_modifiers"] = params["emergency_modifiers"].Copy()
+	if(islist(params["safety_thresholds"]))
+		payload["safety_thresholds"] = params["safety_thresholds"].Copy()
+	if(islist(params["rate_limits"]))
+		payload["rate_limits"] = params["rate_limits"].Copy()
+	if(islist(params["gateway"]))
+		payload["gateway"] = params["gateway"].Copy()
+	if(isnum(params["telemetry_retention_minutes"]))
+		payload["telemetry_retention_minutes"] = params["telemetry_retention_minutes"]
+
+	if(!length(payload))
+		return FALSE
+
+	var/list/result = call_admin_ai_endpoint("PATCH", "/admin/ai/config", payload)
+	if(!islist(result))
+		last_patch_response = list("error" = "patch_failed")
+		return FALSE
+
+	if(result["error"])
+		last_patch_response = result.Copy()
+		return FALSE
+
+	last_patch_response = result.Copy()
+	refresh_policy_snapshot()
+	return TRUE
+
+#undef AI_BLACKBOARD_REFRESH_COOLDOWN

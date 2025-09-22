@@ -33,8 +33,8 @@
 - [X] T022 Implement planner/parser gateway admin tooling in `/mnt/z/Backup/SS13/gurtstation/code/modules/admin/ai_blackboard.dm`, starting with a `GET /admin/ai/blackboard` endpoint that surfaces controller summaries using the new subsystem data structures.
 - [X] T023 Extend the same module with `GET /admin/ai/crew/{profile_id}` to stream buffered telemetry from the manager stub, returning contract-compliant JSON.
 - [X] T024 Add `PATCH /admin/ai/config` to apply runtime configuration changes via the policy datum and log administrator overrides.
-- [ ] T025 Build the TGUI AI blackboard interface in `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/interfaces/AIFoundationBlackboard.tsx` plus a supporting data store under `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/stores/ai_foundation.ts` that consumes the new endpoints and surfaces planner/parser health.
-- [ ] T026 Update the Admin Config TGUI in `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/interfaces/AdminConfig.tsx` (or existing config panels) to expose gateway URLs, exploration multipliers, safety sliders, and presets tied to the new config entry.
+- [X] T025 Build the TGUI AI blackboard interface in `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/interfaces/AIFoundationBlackboard.tsx` plus a supporting data store under `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/stores/ai_foundation.ts` that consumes the new endpoints and surfaces planner/parser health.
+- [X] T026 Update the Admin Config TGUI in `/mnt/z/Backup/SS13/gurtstation/tgui/packages/tgui/interfaces/AdminConfig.tsx` (or existing config panels) to expose gateway URLs, exploration multipliers, safety sliders, and presets tied to the new config entry.
 
 ## Phase 3.4: Integration & Stability
 - [ ] T027 [P] Add unit coverage for control policy scaling/reset behavior in `/mnt/z/Backup/SS13/gurtstation/code/modules/unit_tests/ai_control_policy_unit.dm`.
