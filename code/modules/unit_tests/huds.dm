@@ -2,7 +2,7 @@
 /datum/unit_test/huds
 
 /datum/unit_test/huds/Run()
-	var/datum/atom_hud/testhud = GLOB.trait_to_hud[TRAIT_SECURITY_HUD]
+	var/datum/atom_hud/testhud = GLOB.huds[GLOB.trait_to_hud[TRAIT_SECURITY_HUD]]
 	var/mob/living/carbon/human/consistent/dummy = allocate(__IMPLIED_TYPE__)
 
 	ADD_TRAIT(dummy, TRAIT_SECURITY_HUD, TRAIT_SOURCE_UNIT_TESTS)
