@@ -230,8 +230,6 @@
 /mob/living/silicon/pai/proc/toggle_hud(mode)
 	if(isnull(mode))
 		return FALSE
-	var/datum/atom_hud/hud
-	var/hud_on
 	if(mode == PAI_TOGGLE_MEDICAL_HUD)
 		if(HAS_TRAIT_FROM(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT))
 			REMOVE_TRAIT(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT)
