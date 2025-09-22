@@ -48,10 +48,8 @@
 	announce_personality_change()
 
 /datum/quirk/erratic/proc/replace_personalities(list/new_personalities)
-	for(var/existing in quirk_holder.personalities)
-		quirk_holder.remove_personality(existing)
-	for(var/incoming in new_personalities)
-		quirk_holder.add_personality(incoming)
+	quirk_holder.clear_personalities()
+	quirk_holder.add_personalities(new_personalities)
 
 /datum/quirk/erratic/proc/announce_personality_change()
 	var/list/new_personality = list()

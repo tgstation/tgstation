@@ -5,9 +5,10 @@
 	randomize_by_default = FALSE
 
 /datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value)
-	if(isdummy(target) || CONFIG_GET(flag/disable_human_mood) || isnull(target.mob_mood))
+	if(isdummy(target) || !ishuman(target) || isnull(target.mob_mood))
 		return
-	// melbert todo : this is applied to antags like wizard
+	if(CONFIG_GET(flag/disable_human_mood) || !CONFIG_GET(flag/roundstart_traits))
+		return
 	for(var/personality_key in value)
 		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]
 		personality.apply_to_mob(target)

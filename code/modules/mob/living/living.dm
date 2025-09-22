@@ -34,9 +34,7 @@
 		else
 			effect.be_replaced()
 
-	for(var/personality_type in personalities)
-		var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
-		personality.remove_from_mob(src) // must be done for the personalities which process
+	clear_personalities() // must be done for the personalities which process
 
 	buckled?.unbuckle_mob(src,force=1)
 
