@@ -8,8 +8,15 @@
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	w_class = WEIGHT_CLASS_BULKY
 	storage_type = /datum/storage/holster
-	clothing_traits = list(TRAIT_GUNFLIP)
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
+
+/obj/item/storage/belt/holster/equipped(mob/user, slot)
+	. = ..()
+	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
+		ADD_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
+
+/obj/item/storage/belt/holster/dropped(mob/user)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 
 /obj/item/storage/belt/holster/energy
 	name = "energy shoulder holsters"
