@@ -1,5 +1,3 @@
-/datum/option_runner_stub
-
 /// Crew human controller integrating the AI control foundation with Dream Maker's
 /// existing AI controller infrastructure. Handles profile lifecycles, exposes
 /// stubs for perception/blackboard/option coordination, and cooperates with the
@@ -37,7 +35,7 @@
 	/// Runtime components wired in during core implementation.
 	var/datum/ai_blackboard/blackboard_component
 	var/datum/ai_perception/perception_component
-	var/datum/option_runner_stub/option_runner
+	var/datum/ai_option_runner/option_runner
 
 /datum/ai_controller/crew_human/New(atom/new_pawn, datum/controller/subsystem/ai/subsystem_override)
 	ai_subsystem = subsystem_override || SS_AI
@@ -119,6 +117,10 @@
 		perception_component.set_blackboard(blackboard_component)
 	if(perception_component && target_pawn)
 		perception_component.attach_to_mob(target_pawn)
+	if(!option_runner)
+		option_runner = new /datum/ai_option_runner(src)
+	else
+		option_runner.set_controller(src)
 
 /datum/ai_controller/crew_human/proc/sync_policy(datum/ai_control_policy/new_policy)
 	if(!new_policy)
@@ -129,6 +131,8 @@
 	planning_interval_ds = max(1, round((policy?.get_cadence() || AI_CONTROL_DEFAULT_CADENCE) * 10))
 	if(profile && policy)
 		profile.on_policy_updated(policy)
+	if(option_runner)
+		option_runner.on_policy_updated(policy)
 
 /datum/ai_controller/crew_human/proc/attach_profile_to_pawn()
 	var/mob/living/carbon/human/human = pawn
@@ -143,6 +147,8 @@
 			profile.on_policy_updated(policy)
 	profile.activate()
 	controller_suspended = FALSE
+	if(option_runner)
+		option_runner.on_profile_attached(profile)
 
 /datum/ai_controller/crew_human/proc/detach_profile()
 	if(!profile)
@@ -152,6 +158,8 @@
 	profile.set_mob(null)
 	if(perception_component)
 		perception_component.attach_to_mob(null)
+	if(option_runner)
+		option_runner.on_profile_detached()
 
 /datum/ai_controller/crew_human/proc/cleanup_profile()
 	if(profile)
@@ -160,6 +168,8 @@
 	last_snapshot = null
 	if(blackboard_component)
 		blackboard_component.reset()
+	if(option_runner)
+		option_runner.reset()
 
 /datum/ai_controller/crew_human/proc/release_from_subsystem()
 	if(ai_subsystem)
@@ -292,3 +302,8 @@
 
 /datum/ai_controller/crew_human/proc/get_option_runner()
 	return option_runner
+
+/datum/ai_controller/crew_human/proc/get_option_catalog(datum/ai_context_snapshot/snapshot)
+	if(!option_runner || !snapshot)
+		return list()
+	return option_runner.get_option_catalog(snapshot)

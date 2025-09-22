@@ -105,6 +105,16 @@ GLOBAL_DATUM(ai_control_policy, /datum/ai_control_policy)
 #define AI_GATEWAY_BACKOFF_HEAVY_DS 30
 #define AI_GATEWAY_BACKOFF_CRITICAL_DS 50
 
+/// Option runner state identifiers.
+#define AI_OPTION_STATE_IDLE 0
+#define AI_OPTION_STATE_RUNNING 1
+#define AI_OPTION_STATE_COMPLETE 2
+#define AI_OPTION_STATE_ABORTED 3
+
+/// Option scoring helpers.
+#define AI_OPTION_PRIORITY_DEFAULT 5
+#define AI_OPTION_DEFAULT_TIMEOUT_DS 50
+
 /// Feature flag helper until dedicated config entries are wired.
 #define AI_CREW_ENABLED (GLOB.ai_control_policy && GLOB.ai_control_policy.enabled)
 

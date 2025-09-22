@@ -10,5 +10,7 @@
 #include "crew_profile.dm"
 #include "blackboard.dm"
 #include "perception.dm"
+#include "options/base_option.dm"
+#include "options/generic.dm"
 #include "gateway.dm"
 #include "controller.dm"
