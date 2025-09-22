@@ -1483,8 +1483,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to atoms currently affected by projectile dampeners
 #define TRAIT_GOT_DAMPENED "got_dampened"
 
-/// humans with this trait will have their health visible to AIs without suit
-#define HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT "hmsensorsvisiblewithoutsuit"
+/// Having this trait allows the basic health hud to show up for this mob
+#define TRAIT_BASIC_HEALTH_HUD_VISIBLE "basic_health_hud_visible"
 /// Apply to movables to say "hey, this movable is technically flat on the floor, so it'd be mopped up by a mop"
 #define TRAIT_MOPABLE "mopable"
 

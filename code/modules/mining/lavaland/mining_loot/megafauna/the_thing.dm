@@ -37,7 +37,7 @@
 
 /obj/item/organ/brain/cybernetic/ai/on_mob_insert(mob/living/carbon/brain_owner, special, movement_flags)
 	. = ..()
-	brain_owner.add_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
+	brain_owner.add_traits(list(TRAIT_BASIC_HEALTH_HUD_VISIBLE, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
 	update_med_hud_status(brain_owner)
 	RegisterSignal(brain_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
 	RegisterSignal(brain_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
@@ -53,7 +53,7 @@
 /obj/item/organ/brain/cybernetic/ai/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	undeploy()
 	. = ..()
-	organ_owner.remove_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
+	organ_owner.remove_traits(list(TRAIT_BASIC_HEALTH_HUD_VISIBLE, TRAIT_NO_MINDSWAP, TRAIT_CORPSELOCKED), REF(src))
 	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
 
 	var/obj/item/implant/radio/radio = radio_weakref.resolve()

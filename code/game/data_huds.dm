@@ -23,26 +23,9 @@
 /// Sees health (0-100) status (alive, dead), but relies on suit sensors being on
 /datum/atom_hud/data/human/medical/basic
 
-/datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/human)
-	if(!istype(human))
-		return FALSE
-	if(HAS_TRAIT(human, HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT))
-		return TRUE
-	var/obj/item/clothing/under/undersuit = human.w_uniform
-	if(!istype(undersuit))
-		return FALSE
-	if(undersuit.has_sensor < HAS_SENSORS)
-		return FALSE
-	if(undersuit.sensor_mode <= SENSOR_VITALS)
-		return FALSE
-	return TRUE
-
-/datum/atom_hud/data/human/medical/basic/add_atom_to_single_mob_hud(mob/M, mob/living/carbon/H)
-	if(check_sensors(H))
-		..()
-
-/datum/atom_hud/data/human/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
-	check_sensors(H) ? add_atom_to_hud(H) : remove_atom_from_hud(H)
+/datum/atom_hud/data/human/medical/basic/add_atom_to_single_mob_hud(mob/requesting_mob, atom/hud_atom)
+	if(HAS_TRAIT(hud_atom, TRAIT_BASIC_HEALTH_HUD_VISIBLE))
+		return ..()
 
 /// Sees health (0-100) status (alive, dead), always
 /datum/atom_hud/data/human/medical/advanced
@@ -168,11 +151,6 @@ Medical HUD! Basic mode needs suit sensors on.
 			return "health-100"
 
 //HOOKS
-
-//called when a human changes suit sensors
-/mob/living/carbon/proc/update_suit_sensors()
-	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
-	B.update_suit_sensors(src)
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
