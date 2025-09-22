@@ -1,7 +1,6 @@
 /// Unit coverage for ai_equipment_reservation datum ensuring expiry and priority helpers behave.
 
 /datum/unit_test/ai_control_reservation_unit/renew_and_defaults
-	name = "AI Equipment Reservation: renew enforces default durations and stores priority"
 
 /datum/unit_test/ai_control_reservation_unit/renew_and_defaults/Run()
 	var/start_time = world.time
@@ -27,7 +26,6 @@
 	return UNIT_TEST_PASSED
 
 /datum/unit_test/ai_control_reservation_unit/expiry_helpers
-	name = "AI Equipment Reservation: expiry helpers clamp remaining time"
 
 /datum/unit_test/ai_control_reservation_unit/expiry_helpers/Run()
 	var/datum/ai_equipment_reservation/reservation = new

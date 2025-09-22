@@ -1,7 +1,6 @@
 /// Unit coverage for ai_control_policy datum enforcing scaling and reset behavior.
 
 /datum/unit_test/ai_control_policy_unit/reset_defaults
-	name = "AI Control Policy: reset_to_defaults restores baseline configuration"
 
 /datum/unit_test/ai_control_policy_unit/reset_defaults/Run()
 	var/datum/ai_control_policy/policy = new(list(
@@ -31,7 +30,6 @@
 	return UNIT_TEST_PASSED
 
 /datum/unit_test/ai_control_policy_unit/multiplier_scaling
-	name = "AI Control Policy: alert scaling clamps security multipliers"
 
 /datum/unit_test/ai_control_policy_unit/multiplier_scaling/Run()
 	var/datum/ai_control_policy/policy = new
