@@ -1665,37 +1665,50 @@
 	for(var/hud_trait in GLOB.trait_to_hud)
 		RegisterSignal(src, SIGNAL_ADDTRAIT(hud_trait), PROC_REF(hud_trait_enabled))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(hud_trait), PROC_REF(hud_trait_disabled))
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_BLOCK_SECHUD), PROC_REF(disable_sechud))
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_BLOCK_SECHUD), PROC_REF(enable_sechud))
+	for(var/hud_trait in GLOB.trait_blockers_to_hud)
+		RegisterSignal(src, SIGNAL_ADDTRAIT(hud_trait), PROC_REF(hud_trait_blocker_gained))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(hud_trait), PROC_REF(hud_trait_blocker_lost))
 
 /mob/proc/hud_trait_enabled(datum/source, new_trait)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(src, TRAIT_BLOCK_SECHUD) && (new_trait == TRAIT_SECURITY_HUD || new_trait == TRAIT_SECURITY_HUD_ID_ONLY))
-		return
+
+	for(var/blocker, blocked_traits in GLOB.trait_blockers_to_hud)
+		if(HAS_TRAIT(src, blocker) && (new_trait in blocked_traits))
+			return
+
 	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
 	datahud.show_to(src)
 
 /mob/proc/hud_trait_disabled(datum/source, lost_trait)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(src, TRAIT_BLOCK_SECHUD) && (lost_trait == TRAIT_SECURITY_HUD || lost_trait == TRAIT_SECURITY_HUD_ID_ONLY))
-		return // it may seem counterintuitive, but block_sechud now has total control of removing sechuds
+
+	for(var/blocker, blocked_traits in GLOB.trait_blockers_to_hud)
+		if(HAS_TRAIT(src, blocker) && (lost_trait in blocked_traits))
+			return // it may seem counterintuitive to check for blockers on trait removal, the blocker now has total reign over whether the hud should come back
+
 	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[lost_trait]]
 	datahud.hide_from(src)
 
-/mob/proc/disable_sechud(datum/source, new_trait)
+/mob/proc/hud_trait_blocker_gained(datum/source, new_trait)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(src, TRAIT_SECURITY_HUD))
-		var/datum/atom_hud/datahud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		datahud.hide_from(src)
-	if(HAS_TRAIT(src, TRAIT_SECURITY_HUD_ID_ONLY))
-		var/datum/atom_hud/datahud = GLOB.huds[DATA_HUD_SECURITY_BASIC]
+
+	for(var/trait in GLOB.trait_blockers_to_hud[new_trait])
+		if(!HAS_TRAIT(src, trait))
+			continue
+		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
 		datahud.hide_from(src)
 
-/mob/proc/enable_sechud(datum/source, new_trait)
+/mob/proc/hud_trait_blocker_lost(datum/source, new_trait)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(src, TRAIT_SECURITY_HUD))
-		var/datum/atom_hud/datahud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+
+	for(var/trait in GLOB.trait_blockers_to_hud[new_trait])
+		if(!HAS_TRAIT(src, trait))
+			continue
+		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
 		datahud.show_to(src)
-	if(HAS_TRAIT(src, TRAIT_SECURITY_HUD_ID_ONLY))
-		var/datum/atom_hud/datahud = GLOB.huds[DATA_HUD_SECURITY_BASIC]
-		datahud.show_to(src)
+
+/mob/proc/tests()
+	ADD_TRAIT(src, TRAIT_BLOCK_SECHUD, INNATE_TRAIT)
+
+/mob/proc/untests()
+	REMOVE_TRAIT(src, TRAIT_BLOCK_SECHUD, INNATE_TRAIT)
