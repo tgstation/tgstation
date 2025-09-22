@@ -537,3 +537,55 @@
   - bugfix: Allows health analysers to scan Cyborg MMIs and show a brain (or not)
   theselfish:
   - spellcheck: HDD has been properly capitalised in the server robbery thing.
+2025-09-21:
+  Aliceee2ch:
+  - bugfix: Added missing insulated gloves in WawaStation tech storage
+  - map: Remapped gateway museum area.
+  AyIong:
+  - qol: Chat tabs are scrollable now (with your mouse wheel yeah) if they are too
+      much or your screen resolution sucks
+  Ezel:
+  - map: makes psychology office in metastation feel a little more open
+  Ghommie:
+  - bugfix: Shivs cannot be erroneously crafted via crafting menu anymore. That'd
+      cause you to get a generic glass shiv if you were to use sturdier shards like
+      plasma or titanium.
+  - rscdel: Removed the recipe for cable handcuffs from the crafting menu.
+  - bugfix: You can once again craft custom material stuff like carving blocks and
+      toilets made of sand once again.
+  - qol: The direction of your character changes when moving inside a cardboard box.
+  Hatterhat:
+  - bugfix: Lava no longer slows you down while running on heatproof catwalks. Also,
+      heatproof support lattices are heatproof catwalks now, which is more accurate
+      to their sprites.
+  Melbert:
+  - spellcheck: Replaced ooc ic in RCD, RPLD, and alien power feedback
+  - code_imp: Removed some redundant code from core hearing code. Report if you hear
+      anything weird.
+  Pink-MB:
+  - bugfix: Intercomms work for Cyborgs
+  YakiAttaki:
+  - rscadd: Added the ability to pick up stoats
+  - rscadd: Stoats can now breed!
+  - rscadd: Baby stoat mobs are now a thing. Aww, so cute!
+  lelandkemble:
+  - spellcheck: Changed det hat candy corn text to more neutral language
+  - bugfix: Apcs will no longer bluescreen without a screen
+  - map: Moved one RPD from atmos to engi on Nebula
+  - bugfix: Locked reflector boxes no longer repeat "can't rotate" forever
+  timothymtorres:
+  - bugfix: Fix blink animation for eyes with no eyelids
+2025-09-22:
+  Aliceee2ch:
+  - bugfix: Fixed meson and thermal view action for cyborgs
+  - bugfix: You can't eject infinite toner from cyborg decal painter anymore.
+  - rscdel: Removed now unused cyborg meson and thermal goggles items.
+  Ghommie:
+  - bugfix: Fixed some recipes taking too long to make.
+  SmArtKar:
+  - refactor: Refactors immerse element to use alpha filters instead of static overlays.
+      It should look much prettier now.
+  - refactor: Refactored filters to utilize binary insertion instead of timSort. The
+      server should run somewhat faster now, hopefully.
+  Yobrocharlie:
+  - rscadd: Added the Lahti-L39 rifle

@@ -45211,6 +45211,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron/textured,
 /area/station/engineering/storage/tech)
 "pEk" = (

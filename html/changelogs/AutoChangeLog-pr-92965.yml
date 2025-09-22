@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Kickflippers now catch their board every time"

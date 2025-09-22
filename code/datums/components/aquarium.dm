@@ -540,7 +540,7 @@
 
 	var/list/highest_val_list = list(tracked_fish_by_type[1]) //In case there's only one type of fish in here...
 	var/highest_val = -1
-	for(var/fish_type as anything in can_survive_with)
+	for(var/fish_type in can_survive_with)
 		var/list/compatible_types = can_survive_with[fish_type]
 		var/fish_amount = fish_alive_by_type[fish_type]
 		for(var/obj/item/fish/fish_instance as anything in tracked_fish_by_type[fish_type])
