@@ -19,6 +19,7 @@
 	var/list/rate_limits
 	var/list/telemetry
 	var/list/reservation
+	var/list/gateway_config
 
 	/// Cached snapshot of the most recent config blob.
 	var/list/last_loaded_snapshot
@@ -63,6 +64,17 @@
 	reservation = list(
 		"default_expiry_seconds" = AI_CONTROL_DEFAULT_RESERVATION_SECONDS,
 		"retry_delay_seconds" = AI_CONTROL_DEFAULT_RESERVATION_RETRY_SECONDS,
+	)
+	gateway_config = list(
+		"planner" = list(
+			"url" = AI_GATEWAY_DEFAULT_PLANNER_URL,
+			"timeout_ds" = AI_GATEWAY_DEFAULT_TIMEOUT_DS,
+		),
+		"parser" = list(
+			"url" = AI_GATEWAY_DEFAULT_PARSER_URL,
+			"timeout_ds" = AI_GATEWAY_DEFAULT_TIMEOUT_DS,
+		),
+		"retry_ds" = AI_GATEWAY_DEFAULT_RETRY_DS,
 	)
 	last_loaded_snapshot = null
 
@@ -117,6 +129,9 @@
 	if(islist(config["reservation"]))
 		reservation = config["reservation"].Copy()
 
+	if(islist(config["gateway"]))
+		apply_gateway_config(config["gateway"])
+
 	if(isnum(config["telemetry_retention_minutes"]))
 		telemetry_retention_minutes = config["telemetry_retention_minutes"]
 
@@ -161,6 +176,48 @@
 	if(!islist(reservation))
 		reservation = list("default_expiry_seconds" = AI_CONTROL_DEFAULT_RESERVATION_SECONDS, "retry_delay_seconds" = AI_CONTROL_DEFAULT_RESERVATION_RETRY_SECONDS)
 
+	if(!islist(gateway_config))
+		reset_gateway_to_defaults()
+	else
+		enforce_gateway_constraints()
+
+/// Reset gateway configuration to baked-in defaults.
+/datum/ai_control_policy/proc/reset_gateway_to_defaults()
+	gateway_config = list(
+		"planner" = list(
+			"url" = AI_GATEWAY_DEFAULT_PLANNER_URL,
+			"timeout_ds" = AI_GATEWAY_DEFAULT_TIMEOUT_DS,
+		),
+		"parser" = list(
+			"url" = AI_GATEWAY_DEFAULT_PARSER_URL,
+			"timeout_ds" = AI_GATEWAY_DEFAULT_TIMEOUT_DS,
+		),
+		"retry_ds" = AI_GATEWAY_DEFAULT_RETRY_DS,
+	)
+
+/// Ensure gateway configuration adheres to safety bounds.
+/datum/ai_control_policy/proc/enforce_gateway_constraints()
+	if(!islist(gateway_config))
+		reset_gateway_to_defaults()
+		return
+
+	for(var/channel in list("planner", "parser"))
+		var/list/entry = gateway_config[channel]
+		if(!islist(entry))
+			gateway_config[channel] = list("url" = channel == "planner" ? AI_GATEWAY_DEFAULT_PLANNER_URL : AI_GATEWAY_DEFAULT_PARSER_URL, "timeout_ds" = AI_GATEWAY_DEFAULT_TIMEOUT_DS)
+			continue
+		if(!istext(entry["url"]))
+			entry["url"] = channel == "planner" ? AI_GATEWAY_DEFAULT_PLANNER_URL : AI_GATEWAY_DEFAULT_PARSER_URL
+		if(!isnum(entry["timeout_ds"]))
+			entry["timeout_ds"] = AI_GATEWAY_DEFAULT_TIMEOUT_DS
+		else
+			entry["timeout_ds"] = clamp(round(entry["timeout_ds"]), 5, 300)
+
+	if(!isnum(gateway_config["retry_ds"]))
+		gateway_config["retry_ds"] = AI_GATEWAY_DEFAULT_RETRY_DS
+	else
+		gateway_config["retry_ds"] = clamp(round(gateway_config["retry_ds"]), 1, 100)
+
 /// Internal helper to merge exploration multipliers with defaults.
 /datum/ai_control_policy/proc/apply_category_defaults(list/source)
 	var/list/new_defaults = list()
@@ -170,6 +227,32 @@
 			value = GLOB.ai_control_default_multipliers[category]
 		new_defaults[category] = max(0.1, value)
 	action_category_defaults = new_defaults
+
+/// Override planner/parser gateway configuration from config file input.
+/datum/ai_control_policy/proc/apply_gateway_config(list/source)
+	if(!islist(source))
+		return
+	reset_gateway_to_defaults()
+	if(islist(source["planner"]))
+		gateway_config["planner"] = merge_gateway_endpoint(gateway_config["planner"], source["planner"])
+	if(islist(source["parser"]))
+		gateway_config["parser"] = merge_gateway_endpoint(gateway_config["parser"], source["parser"])
+	if(isnum(source["retry_ds"]))
+		gateway_config["retry_ds"] = clamp(round(source["retry_ds"]), 1, 100)
+	else if(isnum(source["retry_seconds"]))
+		gateway_config["retry_ds"] = clamp(round(source["retry_seconds"] * 10), 1, 100)
+	enforce_gateway_constraints()
+
+/// Merge helper to keep endpoint input safe.
+/datum/ai_control_policy/proc/merge_gateway_endpoint(list/base, list/override)
+	var/list/result = base?.Copy() || list()
+	if(istext(override["url"]))
+		result["url"] = override["url"]
+	if(isnum(override["timeout_ds"]))
+		result["timeout_ds"] = clamp(round(override["timeout_ds"]), 5, 300)
+	else if(isnum(override["timeout_seconds"]))
+		result["timeout_ds"] = clamp(round(override["timeout_seconds"] * 10), 5, 300)
+	return result
 
 /// Return exploration multiplier for a category after alert scaling.
 /datum/ai_control_policy/proc/get_category_multiplier(category, alert_level)
@@ -199,6 +282,27 @@
 	if(!isnum(value))
 		return default_value
 	return max(value, 0)
+
+/datum/ai_control_policy/proc/get_gateway_url(channel)
+	var/list/entry = gateway_config?[channel]
+	if(!islist(entry))
+		return null
+	return entry["url"]
+
+/datum/ai_control_policy/proc/get_gateway_timeout_ds(channel)
+	var/list/entry = gateway_config?[channel]
+	if(!islist(entry))
+		return AI_GATEWAY_DEFAULT_TIMEOUT_DS
+	var/value = entry["timeout_ds"]
+	if(!isnum(value))
+		return AI_GATEWAY_DEFAULT_TIMEOUT_DS
+	return clamp(round(value), 5, 300)
+
+/datum/ai_control_policy/proc/get_gateway_retry_ds()
+	var/value = gateway_config?["retry_ds"]
+	if(!isnum(value))
+		return AI_GATEWAY_DEFAULT_RETRY_DS
+	return clamp(round(value), 1, 100)
 
 /datum/ai_control_policy/proc/get_safety_threshold(metric, default_value)
 	var/value = safety_thresholds?[metric]
@@ -231,4 +335,5 @@
 		"rate_limits" = rate_limits?.Copy(),
 		"telemetry" = telemetry?.Copy(),
 		"reservation" = reservation?.Copy(),
+		"gateway" = gateway_config?.Copy(),
 	)

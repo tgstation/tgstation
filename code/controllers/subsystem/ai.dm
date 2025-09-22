@@ -45,6 +45,8 @@ SUBSYSTEM_DEF(ai)
 	var/list/backpressure_log = list()
 	/// Timestamp of the most recent policy reload.
 	var/last_policy_refresh = 0
+	/// Gateway client responsible for dispatching planner/parser work.
+	var/datum/ai_gateway_client/gateway_client
 
 /datum/controller/subsystem/ai/PreInit()
 	policy = GLOB.ai_control_policy
@@ -54,12 +56,16 @@ SUBSYSTEM_DEF(ai)
 
 /datum/controller/subsystem/ai/Initialize()
 	sync_feature_flag(FALSE)
+	gateway_client = new /datum/ai_gateway_client(src)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai/fire(resumed = FALSE)
 	if(!feature_enabled)
 		if(!sync_feature_flag())
 			return
+
+	if(gateway_client)
+		gateway_client.sync_from_policy(policy)
 
 	update_backpressure_state()
 	cleanup_controllers()
@@ -70,6 +76,7 @@ SUBSYSTEM_DEF(ai)
 		if(MC_TICK_CHECK)
 			return
 
+	process_gateway_deferred()
 	process_gateway_dispatch()
 
 /datum/controller/subsystem/ai/proc/sync_feature_flag(reload_policy = TRUE)
@@ -91,6 +98,8 @@ SUBSYSTEM_DEF(ai)
 	if(policy.load_from_file())
 		policy.enforce_constraints()
 		last_policy_refresh = world.time
+		if(gateway_client)
+			gateway_client.sync_from_policy(policy)
 
 /datum/controller/subsystem/ai/proc/on_suspended()
 	for(var/datum/ai_controller/controller as anything in active_controllers)
@@ -222,6 +231,18 @@ SUBSYSTEM_DEF(ai)
 		if(MC_TICK_CHECK)
 			return
 
+/datum/controller/subsystem/ai/proc/process_gateway_deferred()
+	if(!gateway_client)
+		return
+	var/list/ready = gateway_client.collect_deferred_ready(backpressure_state)
+	if(!length(ready))
+		return
+	for(var/list/request as anything in ready)
+		if(!islist(request))
+			continue
+		request["status"] = "queued"
+		insert_gateway_request(request["channel"] == AI_GATEWAY_CHANNEL_PLANNER ? planner_queue : parser_queue, request)
+
 /datum/controller/subsystem/ai/proc/max_gateway_inflight()
 	switch(backpressure_state)
 		if(AI_BACKPRESSURE_CRITICAL)
@@ -245,8 +266,16 @@ SUBSYSTEM_DEF(ai)
 /datum/controller/subsystem/ai/proc/dispatch_gateway_request(list/request)
 	if(!islist(request))
 		return
+	if(!gateway_client)
+		gateway_client = new /datum/ai_gateway_client(src)
+	if(!gateway_client.can_dispatch(backpressure_state))
+		request["status"] = "deferred"
+		gateway_client.defer_request(request, backpressure_state)
+		return
 	request["status"] = "pending"
+	request["attempts"] = (request["attempts"] || 0) + 1
 	inflight_gateway += list(request)
+	gateway_client.dispatch(request)
 
 /datum/controller/subsystem/ai/proc/queue_gateway_work(channel, payload, datum/ai_controller/source, priority = AI_GATEWAY_PRIORITY_NORMAL)
 	if(!(channel in list(AI_GATEWAY_CHANNEL_PLANNER, AI_GATEWAY_CHANNEL_PARSER)))

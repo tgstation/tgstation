@@ -94,6 +94,17 @@ GLOBAL_DATUM(ai_control_policy, /datum/ai_control_policy)
 #define AI_GATEWAY_INFLIGHT_HEAVY 2
 #define AI_GATEWAY_INFLIGHT_CRITICAL 0
 
+/// Default planner/parser endpoints and dispatch tuning.
+#define AI_GATEWAY_DEFAULT_PLANNER_URL "http://127.0.0.1:15151/plan"
+#define AI_GATEWAY_DEFAULT_PARSER_URL "http://127.0.0.1:15152/parse"
+#define AI_GATEWAY_DEFAULT_TIMEOUT_DS 50
+#define AI_GATEWAY_DEFAULT_RETRY_DS 20
+
+/// Backoff applied when the subsystem reports elevated tick usage.
+#define AI_GATEWAY_BACKOFF_LIGHT_DS 10
+#define AI_GATEWAY_BACKOFF_HEAVY_DS 30
+#define AI_GATEWAY_BACKOFF_CRITICAL_DS 50
+
 /// Feature flag helper until dedicated config entries are wired.
 #define AI_CREW_ENABLED (GLOB.ai_control_policy && GLOB.ai_control_policy.enabled)
 
@@ -103,4 +114,3 @@ GLOBAL_DATUM(ai_control_policy, /datum/ai_control_policy)
 #define AI_BLACKBOARD_ALERT_EVENT_LIMIT 10
 
 #define AI_PERCEPTION_LOG_PREFIX "AI_PERCEPTION "
-

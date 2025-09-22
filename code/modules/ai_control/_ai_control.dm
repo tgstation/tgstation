@@ -10,4 +10,5 @@
 #include "crew_profile.dm"
 #include "blackboard.dm"
 #include "perception.dm"
+#include "gateway.dm"
 #include "controller.dm"
