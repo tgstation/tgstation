@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Reworked stammering. Only the first character is stammered, and digraphs are accounted for."
+  - qol: "Reworked drunken slurring. No longer inserts a bunch of random apostrophes, now creates more + longer drawn out words."
