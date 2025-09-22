@@ -243,18 +243,14 @@
 	if (wearer.glasses != src)
 		return
 
-	for(var/trait in clothing_traits)
-		REMOVE_CLOTHING_TRAIT(user, trait)
-
 	if (TRAIT_MEDICAL_HUD in clothing_traits)
-		clothing_traits = null
+		detach_clothing_traits(TRAIT_MEDICAL_HUD)
 	else if (TRAIT_SECURITY_HUD in clothing_traits)
-		clothing_traits = list(TRAIT_MEDICAL_HUD)
+		detach_clothing_traits(TRAIT_MEDICAL_HUD)
+		attach_clothing_traits(TRAIT_SECURITY_HUD)
 	else
-		clothing_traits = list(TRAIT_SECURITY_HUD)
-
-	for(var/trait in clothing_traits)
-		ADD_CLOTHING_TRAIT(user, trait)
+		detach_clothing_traits(TRAIT_MEDICAL_HUD)
+		attach_clothing_traits(TRAIT_SECURITY_HUD)
 
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"

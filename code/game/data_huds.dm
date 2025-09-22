@@ -20,6 +20,7 @@
 /datum/atom_hud/data/human/medical
 	hud_icons = list(STATUS_HUD, HEALTH_HUD)
 
+/// Sees health (0-100) status (alive, dead), but relies on suit sensors being on
 /datum/atom_hud/data/human/medical/basic
 
 /datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/human)
@@ -43,13 +44,16 @@
 /datum/atom_hud/data/human/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
 	check_sensors(H) ? add_atom_to_hud(H) : remove_atom_from_hud(H)
 
+/// Sees health (0-100) status (alive, dead), always
 /datum/atom_hud/data/human/medical/advanced
 
 /datum/atom_hud/data/human/security
 
+/// Only sees ID card job
 /datum/atom_hud/data/human/security/basic
 	hud_icons = list(ID_HUD)
 
+/// Sees ID card job, implants, and wanted status
 /datum/atom_hud/data/human/security/advanced
 	hud_icons = list(ID_HUD, IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD, WANTED_HUD)
 
