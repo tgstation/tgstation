@@ -575,3 +575,17 @@
   - bugfix: Locked reflector boxes no longer repeat "can't rotate" forever
   timothymtorres:
   - bugfix: Fix blink animation for eyes with no eyelids
+2025-09-22:
+  Aliceee2ch:
+  - bugfix: Fixed meson and thermal view action for cyborgs
+  - bugfix: You can't eject infinite toner from cyborg decal painter anymore.
+  - rscdel: Removed now unused cyborg meson and thermal goggles items.
+  Ghommie:
+  - bugfix: Fixed some recipes taking too long to make.
+  SmArtKar:
+  - refactor: Refactors immerse element to use alpha filters instead of static overlays.
+      It should look much prettier now.
+  - refactor: Refactored filters to utilize binary insertion instead of timSort. The
+      server should run somewhat faster now, hopefully.
+  Yobrocharlie:
+  - rscadd: Added the Lahti-L39 rifle
