@@ -197,7 +197,7 @@ export const AIFoundationBlackboard = () => {
 
   return (
     <Window title="AI Foundation Blackboard" width={960} height={600} resizable>
-      <Window.Content>
+      <Window.Content scrollable>
         <Stack fill>
           <Stack.Item grow basis="35%">
             <Stack fill vertical>

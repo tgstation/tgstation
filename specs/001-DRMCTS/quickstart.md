@@ -50,8 +50,8 @@
 ## Verification Log (2025-09-21)
 | Scenario | Status | Notes |
 | --- | --- | --- |
-| AI Janitor Workflow | Pending | Not executed in this environment; requires DreamDaemon server runtime. |
-| Emergency Reprioritization | Pending | Awaiting live server validation once automated harness available. |
-| Player Takeover Handoff | Pending | Needs interactive BYOND session to observe AI surrender. |
-| Security Equipment Contention | Pending | Requires multi-agent sandbox with reservation manager active. |
-| Configuration Adjustments | Pending | UI verified in code review only; functional test blocked by missing BYOND runtime. |
+| AI Janitor Workflow | Blocked | DreamDaemon runtime not available in this automation environment; ops to validate on staging. |
+| Emergency Reprioritization | Blocked | Requires live fire alert simulation on BYOND server; deferred to ops handoff. |
+| Player Takeover Handoff | Blocked | Lacks interactive BYOND session here; capture during next multiplayer playtest. |
+| Security Equipment Contention | Blocked | Multi-agent sandbox with reservation manager unavailable; schedule with QA cluster. |
+| Configuration Adjustments | Blocked | Admin Config TGUI can’t be exercised without runtime; ops will verify during deployment rehearsal. |
