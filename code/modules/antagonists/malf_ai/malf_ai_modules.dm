@@ -410,7 +410,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_malf_ai_undo_lockdown)), 90 SECONDS)
 
 	var/obj/machinery/computer/communications/random_comms_console = locate() in GLOB.shuttle_caller_list
-	random_comms_console?.post_status("alert", "lockdown")
+	if(random_comms_console)
+		// Use post_status with emergency override
+		var/datum/signal/lockdown_signal = new
+		lockdown_signal.data["command"] = "alert"
+		lockdown_signal.data["picture_state"] = "lockdown"
+		lockdown_signal.data["emergency_override"] = TRUE
+		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+		if(frequency)
+			var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+			frequency.post_signal(virtual_speaker, lockdown_signal)
 
 	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.", "Network Alert:", TRUE)
 	to_chat(owner, span_danger("Lockdown initiated. Network reset in 90 seconds."))
@@ -426,6 +435,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		INVOKE_ASYNC(locked_down, TYPE_PROC_REF(/obj/machinery/door, disable_lockdown))
 		CHECK_TICK
+
+	// Clear the lockdown emergency display
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(frequency)
+		var/datum/signal/clear_signal = new
+		clear_signal.data["command"] = "clear_emergency"
+		clear_signal.data["emergency_override"] = FALSE
+
+		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+		frequency.post_signal(virtual_speaker, clear_signal)
 
 /// Override Machine: Allows the AI to override a machine, animating it into an angry, living version of itself.
 /datum/ai_module/malf/destructive/override_machine

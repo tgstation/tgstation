@@ -162,6 +162,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+
+		// Set status displays to biohazard alert - critical level
+		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+		if(frequency)
+			var/datum/signal/biohazard_signal = new
+			biohazard_signal.data["command"] = "alert"
+			biohazard_signal.data["picture_state"] = "biohazard"
+			biohazard_signal.data["emergency_override"] = TRUE
+			var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+			frequency.post_signal(virtual_speaker, biohazard_signal)
+
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
@@ -174,6 +185,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+
+		// Set status displays to biohazard alert
+		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+		if(frequency)
+			var/datum/signal/biohazard_signal = new
+			biohazard_signal.data["command"] = "alert"
+			biohazard_signal.data["picture_state"] = "biohazard"
+			biohazard_signal.data["emergency_override"] = TRUE
+			var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+			frequency.post_signal(virtual_speaker, biohazard_signal)
+
 		has_announced = TRUE
 
 /// Create a blob spore and link it to us
@@ -252,6 +274,16 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs -= src
+
+	// Clear the biohazard emergency display when blob is destroyed
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(frequency)
+		var/datum/signal/clear_signal = new
+		clear_signal.data["command"] = "clear_emergency"
+		clear_signal.data["emergency_override"] = FALSE
+
+		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+		frequency.post_signal(virtual_speaker, clear_signal)
 
 	return ..()
 

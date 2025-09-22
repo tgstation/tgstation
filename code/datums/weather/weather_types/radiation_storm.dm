@@ -82,8 +82,11 @@
 	if (active)
 		signal.data["command"] = "alert"
 		signal.data["picture_state"] = "radiation"
+		signal.data["emergency_override"] = TRUE  // Flag this as an automated emergency
 	else
-		signal.data["command"] = "shuttle"
+		// Clear the emergency by sending a blank command that clears emergency overrides
+		signal.data["command"] = "clear_emergency"
+		signal.data["emergency_override"] = FALSE
 
 	var/atom/movable/virtualspeaker/virtual_speaker = new(null)
 	frequency.post_signal(virtual_speaker, signal)
