@@ -52,7 +52,7 @@
 	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
-#define MAX_EXO_TEMP 1064
+#define MAX_EXO_TEMP 800
 
 /datum/chemical_reaction/plasma_solidification
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
@@ -62,15 +62,17 @@
 
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/reaction_location = get_turf(holder.my_atom)
-	var/obj/nugget = new /obj/item/stack/nugget/plasma(reaction_location, round(created_volume))
+	var/obj/material_sheet = new /obj/item/stack/sheet/mineral/plasma(reaction_location, round(created_volume))
 
+	var/triggered_sparks = FALSE
 	for(var/creation_loop in 1 to round(created_volume))
 		var/datum/gas_mixture/enviro = reaction_location.return_air()
-		enviro.temperature = max(T20C, enviro.temperature * 1.1)
-		if(enviro.temperature >= MAX_EXO_TEMP)
-			nugget.visible_message("\The [nugget] reacts with the ambient heat and ignites the air!")
-			reaction_location.hotspot_expose(MAX_EXO_TEMP, CELL_VOLUME)
+		enviro.temperature = max(T20C, enviro.temperature * 1.05)
 		reaction_location.air_update_turf(FALSE, FALSE)
+		if(enviro.temperature >= MAX_EXO_TEMP && !triggered_sparks) //Only trigger once for performance concerns.
+			material_sheet.visible_message("\The [material_sheet] reacts with the ambient heat and ignites the air!")
+			reaction_location.hotspot_expose(MAX_EXO_TEMP, CELL_VOLUME)
+			triggered_sparks = TRUE
 
 /datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
@@ -83,10 +85,10 @@
 	if(!reaction_location)
 		return
 
-	new /obj/item/stack/nugget/gold(reaction_location, round(created_volume))
+	new /obj/item/stack/sheet/mineral/gold(reaction_location, round(created_volume))
 	for(var/creation_loop in 1 to round(created_volume))
 		var/datum/gas_mixture/enviro = reaction_location.return_air()
-		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.2), T20C, MAX_EXO_TEMP)
+		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.1), T20C, MAX_EXO_TEMP)
 		reaction_location.air_update_turf(FALSE, FALSE)
 
 /datum/chemical_reaction/uranium_solidification
@@ -97,20 +99,20 @@
 
 /datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/reaction_location = get_turf(holder.my_atom)
-	var/obj/nugget = new /obj/item/stack/nugget/uranium(reaction_location, round(created_volume))
+	var/obj/mineral_sheet = new /obj/item/stack/sheet/mineral/uranium(reaction_location, round(created_volume))
 
 	for(var/creation_loop in 1 to round(created_volume))
 		var/datum/gas_mixture/enviro = reaction_location.return_air()
-		enviro.temperature = max(T20C, enviro.temperature * 1.1)
+		enviro.temperature = max(T20C, enviro.temperature * 1.08)
 		if(enviro.temperature >= MAX_EXO_TEMP)
 			radiation_pulse(
-				nugget,
+				mineral_sheet,
 				max_range = 1,
 				threshold = RAD_VERY_LIGHT_INSULATION,
 				chance = (URANIUM_IRRADIATION_CHANCE / 4),
 				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 			)
-			nugget.propagate_radiation_pulse()
+			mineral_sheet.propagate_radiation_pulse()
 		reaction_location.air_update_turf(FALSE, FALSE)
 
 #undef MAX_EXO_TEMP
