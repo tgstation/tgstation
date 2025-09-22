@@ -1,0 +1,4 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - bugfix: "Fixes endless updates to det forensic scanner into the UI"

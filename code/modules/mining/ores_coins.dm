@@ -49,9 +49,7 @@
  * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
  */
 /obj/item/stack/ore/proc/on_orm_collection()
-	if(isnull(refined_type))
-		return null
-	return src
+	return isnull(refined_type) ? null : src
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -109,6 +107,7 @@
 	singular_name = "sand pile"
 	points = 1
 	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/sand
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
@@ -125,7 +124,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	AddComponent(/datum/component/storm_hating)
 
 /obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
-	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount)
+	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount, merge = FALSE) //The newly spawned glass should not merge with other stacks on the turf, else it could cause issues.
 	qdel(src)
 	return glass
 

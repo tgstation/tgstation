@@ -346,7 +346,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 	// Allows subsystems to declare other subsystems that must initialize after them.
 	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
-		for(var/dependent_type as anything in subsystem.dependents)
+		for(var/dependent_type in subsystem.dependents)
 			if(!ispath(dependent_type, /datum/controller/subsystem))
 				stack_trace("ERROR: MC: subsystem `[subsystem.type]` has an invalid dependent: `[dependent_type]`. Skipping")
 				continue
@@ -356,7 +356,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 	// Constructs a reverse-dependency graph.
 	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
-		for(var/dependency_type as anything in subsystem.dependencies)
+		for(var/dependency_type in subsystem.dependencies)
 			if(!ispath(dependency_type, /datum/controller/subsystem))
 				stack_trace("ERROR: MC: subsystem `[subsystem.type]` has an invalid dependency: `[dependency_type]`. Skipping")
 				continue
@@ -1035,4 +1035,3 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		return FALSE
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
-

@@ -543,7 +543,7 @@
 		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
 
 	var/list/raw_lines = list()
-	for (var/key as anything in recent_speech)
+	for (var/key in recent_speech)
 		raw_lines += recent_speech[key]
 
 	return raw_lines
