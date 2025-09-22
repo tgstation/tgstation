@@ -85,6 +85,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	assign_ritual()
 	equip_wizard()
 	owner.current.add_personality(/datum/personality/introvert)
+	owner.current.add_personality(/datum/personality/callous) // no sense of right and wrong
 	if(give_objectives)
 		create_objectives()
 	if(move_to_lair)
