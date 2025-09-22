@@ -646,6 +646,7 @@
 #include "code\controllers\subsystem.dm"
 #include "code\controllers\configuration\config_entry.dm"
 #include "code\controllers\configuration\configuration.dm"
+#include "code\controllers\configuration\entries\ai_foundation.dm"
 #include "code\controllers\configuration\entries\comms.dm"
 #include "code\controllers\configuration\entries\dbconfig.dm"
 #include "code\controllers\configuration\entries\game_options.dm"

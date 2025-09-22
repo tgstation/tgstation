@@ -10,6 +10,7 @@
 	var/result
 	var/notes
 	var/created_at = world.timeofday
+	var/created_at_tick = world.time
 
 	var/datum/ai_decision_telemetry/prev_entry
 	var/datum/ai_decision_telemetry/next_entry
@@ -19,6 +20,7 @@
 	src.profile_id = profile_id
 	src.sequence_id = sequence_id
 	created_at = world.timeofday
+	created_at_tick = world.time
 	set_candidate_actions(candidate_actions)
 	set_selected_action(selected_action)
 	set_exploration_bonus(exploration_bonus)
@@ -91,4 +93,5 @@
 		"result" = result,
 		"notes" = notes,
 		"created_at" = created_at,
+		"created_at_tick" = created_at_tick,
 	)

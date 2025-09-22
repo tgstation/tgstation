@@ -254,6 +254,73 @@
 		result["timeout_ds"] = clamp(round(override["timeout_seconds"] * 10), 5, 300)
 	return result
 
+/// Merge current configuration entry values into the active policy.
+
+/datum/ai_control_policy/proc/apply_entry_overrides()
+	if(!global.config || !global.config.loaded)
+		return
+	var/list/overrides = build_entry_overrides()
+	if(!islist(overrides))
+		return
+	apply_config(overrides)
+
+/// Build a config list compatible with apply_config() using admin entry values.
+/datum/ai_control_policy/proc/build_entry_overrides()
+	var/list/overrides = list()
+	overrides["ai_control_enabled"] = CONFIG_GET(flag/ai_control_enabled)
+	overrides["cadence_seconds"] = CONFIG_GET(number/ai_control_cadence_seconds)
+	overrides["max_rollouts_per_cycle"] = CONFIG_GET(number/ai_control_max_rollouts)
+	overrides["task_queue_limit"] = CONFIG_GET(number/ai_control_task_queue_limit)
+	overrides["telemetry_retention_minutes"] = CONFIG_GET(number/ai_control_telemetry_minutes)
+
+	overrides["exploration_multipliers"] = list(
+		AI_ACTION_CATEGORY_ROUTINE = CONFIG_GET(number/ai_control_multiplier_routine),
+		AI_ACTION_CATEGORY_LOGISTICS = CONFIG_GET(number/ai_control_multiplier_logistics),
+		AI_ACTION_CATEGORY_MEDICAL = CONFIG_GET(number/ai_control_multiplier_medical),
+		AI_ACTION_CATEGORY_SECURITY = CONFIG_GET(number/ai_control_multiplier_security),
+		AI_ACTION_CATEGORY_SUPPORT = CONFIG_GET(number/ai_control_multiplier_support),
+	)
+
+	overrides["emergency_modifiers"] = list(
+		"blue" = CONFIG_GET(number/ai_control_emergency_blue),
+		"red" = CONFIG_GET(number/ai_control_emergency_red),
+		"delta" = CONFIG_GET(number/ai_control_emergency_delta),
+	)
+
+	overrides["safety_thresholds"] = list(
+		"max_hazard_score" = CONFIG_GET(number/ai_control_max_hazard),
+		"max_chain_failures" = CONFIG_GET(number/ai_control_max_chain_failures),
+	)
+
+	overrides["rate_limits"] = list(
+		"item_toggle_seconds" = CONFIG_GET(number/ai_control_item_toggle_seconds),
+		"aggressive_action_seconds" = CONFIG_GET(number/ai_control_aggressive_seconds),
+	)
+
+	overrides["telemetry"] = list(
+		"rolling_window_minutes" = CONFIG_GET(number/ai_control_telemetry_minutes),
+		"persistence_hours" = 24,
+	)
+
+	overrides["reservation"] = list(
+		"default_expiry_seconds" = CONFIG_GET(number/ai_control_reservation_seconds),
+		"retry_delay_seconds" = CONFIG_GET(number/ai_control_reservation_retry_seconds),
+	)
+
+	overrides["gateway"] = list(
+		"planner" = list(
+			"url" = CONFIG_GET(string/ai_gateway_planner_url),
+			"timeout_ds" = CONFIG_GET(number/ai_gateway_planner_timeout_ds),
+		),
+		"parser" = list(
+			"url" = CONFIG_GET(string/ai_gateway_parser_url),
+			"timeout_ds" = CONFIG_GET(number/ai_gateway_parser_timeout_ds),
+		),
+		"retry_ds" = CONFIG_GET(number/ai_gateway_retry_ds),
+	)
+
+	return overrides
+
 /// Return exploration multiplier for a category after alert scaling.
 /datum/ai_control_policy/proc/get_category_multiplier(category, alert_level)
 	var/base = action_category_defaults?[category]

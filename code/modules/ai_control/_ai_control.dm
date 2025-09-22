@@ -6,6 +6,7 @@
 #include "duty_objective.dm"
 #include "context_snapshot.dm"
 #include "telemetry_record.dm"
+#include "telemetry_manager.dm"
 #include "equipment_reservation.dm"
 #include "crew_profile.dm"
 #include "blackboard.dm"

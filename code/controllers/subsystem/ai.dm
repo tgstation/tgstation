@@ -47,6 +47,8 @@ SUBSYSTEM_DEF(ai)
 	var/last_policy_refresh = 0
 	/// Gateway client responsible for dispatching planner/parser work.
 	var/datum/ai_gateway_client/gateway_client
+	/// Telemetry manager buffering decision logs before persistence.
+	var/datum/ai_telemetry_manager/telemetry_manager
 
 /datum/controller/subsystem/ai/PreInit()
 	policy = GLOB.ai_control_policy
@@ -57,7 +59,13 @@ SUBSYSTEM_DEF(ai)
 /datum/controller/subsystem/ai/Initialize()
 	sync_feature_flag(FALSE)
 	gateway_client = new /datum/ai_gateway_client(src)
+	telemetry_manager = new /datum/ai_telemetry_manager(src)
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/ai/OnConfigLoad()
+	. = ..()
+	sync_feature_flag(TRUE)
+	return .
 
 /datum/controller/subsystem/ai/fire(resumed = FALSE)
 	if(!feature_enabled)
@@ -66,6 +74,8 @@ SUBSYSTEM_DEF(ai)
 
 	if(gateway_client)
 		gateway_client.sync_from_policy(policy)
+	if(telemetry_manager)
+		telemetry_manager.sync_from_policy(policy)
 
 	update_backpressure_state()
 	cleanup_controllers()
@@ -95,11 +105,24 @@ SUBSYSTEM_DEF(ai)
 /datum/controller/subsystem/ai/proc/reload_policy_from_disk()
 	if(!policy)
 		return
-	if(policy.load_from_file())
-		policy.enforce_constraints()
-		last_policy_refresh = world.time
-		if(gateway_client)
-			gateway_client.sync_from_policy(policy)
+	policy.load_from_file()
+	policy.apply_entry_overrides()
+	policy.enforce_constraints()
+	last_policy_refresh = world.time
+	if(gateway_client)
+		gateway_client.sync_from_policy(policy)
+	if(telemetry_manager)
+		telemetry_manager.sync_from_policy(policy)
+	notify_policy_reloaded()
+
+/datum/controller/subsystem/ai/proc/notify_policy_reloaded()
+	if(!length(active_controllers))
+		return
+	for(var/datum/ai_controller/controller as anything in active_controllers.Copy())
+		if(!controller || QDELETED(controller))
+			continue
+		if(hascall(controller, "on_policy_reloaded"))
+			call(controller, "on_policy_reloaded")(policy)
 
 /datum/controller/subsystem/ai/proc/on_suspended()
 	for(var/datum/ai_controller/controller as anything in active_controllers)
@@ -331,3 +354,6 @@ SUBSYSTEM_DEF(ai)
 
 /datum/controller/subsystem/ai/proc/get_backpressure_state()
 	return backpressure_state
+
+/datum/controller/subsystem/ai/proc/get_telemetry_manager()
+	return telemetry_manager
