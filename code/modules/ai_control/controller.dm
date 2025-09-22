@@ -28,7 +28,7 @@
 	/// Next world.time (in deciseconds) we are allowed to initiate a planning cycle.
 	var/next_planning_window = 0
 	/// Baseline cadence (deciseconds) derived from policy config.
-	var/planning_interval_ds = max(1, round(AI_CONTROL_DEFAULT_CADENCE * 10))
+	var/planning_interval_ds = 15
 	/// Marker used to skip planning work when suspended or overridden.
 	var/controller_suspended = FALSE
 

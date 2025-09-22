@@ -4,6 +4,8 @@
  * modules (controllers, gateway client, telemetry) consume.
  */
 
+#include "../../modules/ai_control/constants_shared.dm"
+
 #ifndef SS_AI
 #define SS_AI SSai
 #endif

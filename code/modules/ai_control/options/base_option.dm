@@ -100,7 +100,7 @@
 	started_at_ds = world.time
 	return TRUE
 
-/datum/ai_option/proc/step()
+/datum/ai_option/proc/advance()
 	// Placeholder for future execution logic; return current state.
 	return state
 

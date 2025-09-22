@@ -1,5 +1,8 @@
 /// Administrator blackboard API facade for AI crew monitoring.
 
+#define AI_BLACKBOARD_ISO_TIME_FORMAT "YYYY-MM-DDThh:mm:ss"
+#define AI_BLACKBOARD_REFRESH_COOLDOWN (5 SECONDS)
+
 GLOBAL_DATUM(admin_ai_gateway, /datum/admin_ai_gateway)
 
 /proc/call_admin_ai_endpoint(method, path, payload = null)
@@ -441,7 +444,7 @@ GLOBAL_DATUM(admin_ai_gateway, /datum/admin_ai_gateway)
 	proc/format_iso_timestamp(time_ds)
 		if(!isnum(time_ds))
 			time_ds = world.realtime
-		return "[time2text(time_ds, \"YYYY-MM-DDThh:mm:ss\", TIMEZONE_UTC)]Z"
+		return "[time2text(time_ds, AI_BLACKBOARD_ISO_TIME_FORMAT, TIMEZONE_UTC)]Z"
 
 	proc/build_error(reason, status_code = 500)
 		return list(
@@ -449,13 +452,13 @@ GLOBAL_DATUM(admin_ai_gateway, /datum/admin_ai_gateway)
 			"status" = status_code,
 		)
 
-#define AI_BLACKBOARD_REFRESH_COOLDOWN (5 SECONDS)
-
 ADMIN_VERB(open_ai_blackboard, R_ADMIN, "AI Foundation Blackboard", "Inspect AI crew controllers, planner health, and runtime config.", ADMIN_CATEGORY_DEBUG)
-	usr.holder?.open_ai_blackboard_panel("AIFoundationBlackboard")
+	var/datum/admins/holder = usr?.client?.holder
+	holder?.open_ai_blackboard_panel("AIFoundationBlackboard")
 
 ADMIN_VERB(open_ai_foundation_config, R_ADMIN, "AI Foundation Config", "Adjust exploration multipliers, safety thresholds, and gateway tuning for the AI foundation.", ADMIN_CATEGORY_DEBUG)
-	usr.holder?.open_ai_blackboard_panel("AdminConfig")
+	var/datum/admins/holder = usr?.client?.holder
+	holder?.open_ai_blackboard_panel("AdminConfig")
 
 /datum/admins/proc/open_ai_blackboard_panel(interface_name)
 	if(!check_rights(R_ADMIN))
@@ -507,30 +510,26 @@ ADMIN_VERB(open_ai_foundation_config, R_ADMIN, "AI Foundation Config", "Adjust e
 	if(!check_rights(R_ADMIN))
 		return
 
-	switch(action)
-		if("refresh")
-			refresh_blackboard(TRUE)
-			ui?.update()
-			return TRUE
-
-		if("loadTimeline")
-			var/profile_id = params["profile_id"]
-			var/force = params?["force"]
-			load_timeline(profile_id, !!force)
-			ui?.update()
-			return TRUE
-
-		if("clearTimeline")
-			var/profile_id = params["profile_id"]
-			if(istext(profile_id))
-				cached_timelines -= profile_id
-				ui?.update()
+		switch(action)
+			if("refresh")
+				refresh_blackboard(TRUE)
 				return TRUE
 
-		if("patchConfig")
-			if(apply_config_patch(params))
-				ui?.update()
+			if("loadTimeline")
+				var/profile_id = params["profile_id"]
+				var/force = params?["force"]
+				load_timeline(profile_id, !!force)
 				return TRUE
+
+			if("clearTimeline")
+				var/profile_id = params["profile_id"]
+				if(istext(profile_id))
+					cached_timelines -= profile_id
+					return TRUE
+
+			if("patchConfig")
+				if(apply_config_patch(params))
+					return TRUE
 
 	return FALSE
 

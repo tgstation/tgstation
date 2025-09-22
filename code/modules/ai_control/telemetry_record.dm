@@ -9,8 +9,8 @@
 	var/rollout_count = 0
 	var/result
 	var/notes
-	var/created_at = world.timeofday
-	var/created_at_tick = world.time
+	var/created_at = 0
+	var/created_at_tick = 0
 
 	var/datum/ai_decision_telemetry/prev_entry
 	var/datum/ai_decision_telemetry/next_entry
