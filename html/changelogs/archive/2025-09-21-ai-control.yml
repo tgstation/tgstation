@@ -1,0 +1,5 @@
+2025-09-21:
+  Codex:
+  - rscadd: Shipped the AI-controlled human crew foundation with DR-MCTS planner hooks, subsystem backpressure, and telemetry pipeline scaffolding.
+  - admin: Added AI Foundation blackboard and runtime config panels for monitoring planner health, crew objectives, and safety overrides.
+  - code_imp: Expanded unit coverage for AI control policy scaling and equipment reservation expiry behavior.

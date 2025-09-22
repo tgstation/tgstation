@@ -93,6 +93,8 @@
 #include "ai_blackboard_contract.dm"
 #include "ai_control_emergency.dm"
 #include "ai_control_janitor_flow.dm"
+#include "ai_control_policy_unit.dm"
+#include "ai_control_reservation_unit.dm"
 #include "ai_control_reservations.dm"
 #include "ai_control_takeover.dm"
 #include "anchored_mobs.dm"

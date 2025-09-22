@@ -47,3 +47,11 @@
 - Disable AI control subsystem if further manual testing is paused (`call ai_control_subsystem.stop()`).
 - Archive telemetry logs for reference.
 
+## Verification Log (2025-09-21)
+| Scenario | Status | Notes |
+| --- | --- | --- |
+| AI Janitor Workflow | Pending | Not executed in this environment; requires DreamDaemon server runtime. |
+| Emergency Reprioritization | Pending | Awaiting live server validation once automated harness available. |
+| Player Takeover Handoff | Pending | Needs interactive BYOND session to observe AI surrender. |
+| Security Equipment Contention | Pending | Requires multi-agent sandbox with reservation manager active. |
+| Configuration Adjustments | Pending | UI verified in code review only; functional test blocked by missing BYOND runtime. |
