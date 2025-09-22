@@ -350,7 +350,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 	combo_hud_enabled = TRUE
 
 	for (var/hudtrait in ADMIN_HUDS)
-		ADD_TRAIT(src, hudtrait, ADMIN_TRAIT)
+		ADD_TRAIT(mob, hudtrait, ADMIN_TRAIT)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.show_to(mob)
@@ -365,7 +365,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 	combo_hud_enabled = FALSE
 
 	for (var/hudtrait in ADMIN_HUDS)
-		REMOVE_TRAIT(src, hudtrait, ADMIN_TRAIT)
+		REMOVE_TRAIT(mob, hudtrait, ADMIN_TRAIT)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.hide_from(mob)
