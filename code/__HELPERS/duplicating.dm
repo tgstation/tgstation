@@ -68,7 +68,7 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 
 	for(var/atom_vars in (original.vars - GLOB.duplicate_forbidden_vars))
 		var/var_value = original.vars[atom_vars]
-		if(isdatum(var_value) || ismob(var_value))
+		if(isdatum(var_value))
 			continue // this would reference the original's object, that will break when it is used or deleted.
 
 		if(islist(var_value))
