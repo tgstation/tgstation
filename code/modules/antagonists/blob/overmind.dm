@@ -4,6 +4,15 @@ GLOBAL_LIST_EMPTY(blob_cores)
 GLOBAL_LIST_EMPTY(overminds)
 GLOBAL_LIST_EMPTY(blob_nodes)
 
+/// Clean up blob references after overmind is destroyed - called asynchronously to avoid blocking Destroy()
+/proc/cleanup_overmind_blobs(mob/eye/blob/dead_overmind)
+	// Clear overmind reference from global blobs
+	for(var/BL in GLOB.blobs)
+		var/obj/structure/blob/B = BL
+		if(B && B.overmind == dead_overmind)
+			B.overmind = null
+			B.update_appearance() //reset anything that was ours
+
 
 /mob/eye/blob
 	name = "Blob Overmind"
@@ -157,6 +166,18 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			// If we get here, it means yes: the blob is kill
 			SSticker.news_report = BLOB_DESTROYED
+
+			// Clear the biohazard emergency display when blob is defeated - async to avoid blocking
+			spawn(0)
+				var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+				if(frequency)
+					var/datum/signal/clear_signal = new
+					clear_signal.data["command"] = "clear_emergency"
+					clear_signal.data["emergency_override"] = FALSE
+
+					var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+					frequency.post_signal(virtual_speaker, clear_signal)
+
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
@@ -209,6 +230,21 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_mobs |= minion
 
 /mob/eye/blob/proc/victory()
+	// Set victory flags immediately
+	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
+	if(B)
+		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
+		if(main_objective)
+			main_objective.completed = TRUE
+
+	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
+	SSticker.news_report = BLOB_WIN
+	SSticker.force_ending = FORCE_END_ROUND
+
+	// Handle the heavy victory operations asynchronously
+	addtimer(CALLBACK(src, PROC_REF(victory_sequence)), 0)
+
+/mob/eye/blob/proc/victory_sequence()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
 	sleep(10 SECONDS)
 	for(var/mob/living/live_guy as anything in GLOB.mob_living_list)
@@ -244,25 +280,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		check_area.SetInvisibility(INVISIBILITY_NONE)
 		check_area.blend_mode = 0
 
-	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
-	if(B)
-		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
-		if(main_objective)
-			main_objective.completed = TRUE
-	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
-	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = FORCE_END_ROUND
-
 /mob/eye/blob/Destroy()
 	QDEL_NULL(blobstrain)
 	QDEL_NULL(blob_power_hud)
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		if(B && B.overmind == src)
-			B.overmind = null
-			B.update_appearance() //reset anything that was ours
-	for(var/obj/structure/blob/blob_structure as anything in all_blobs)
-		blob_structure.overmind = null
+
+	// Clear references immediately without iterating to avoid blocking
 	all_blobs = null
 	resource_blobs = null
 	factory_blobs = null
@@ -275,15 +297,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs -= src
 
-	// Clear the biohazard emergency display when blob is destroyed
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(frequency)
-		var/datum/signal/clear_signal = new
-		clear_signal.data["command"] = "clear_emergency"
-		clear_signal.data["emergency_override"] = FALSE
-
-		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-		frequency.post_signal(virtual_speaker, clear_signal)
+	// Handle blob cleanup asynchronously to avoid blocking Destroy()
+	spawn(0)
+		cleanup_overmind_blobs(src)
 
 	return ..()
 
