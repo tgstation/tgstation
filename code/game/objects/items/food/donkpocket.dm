@@ -29,7 +29,7 @@
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), positive_result, TRUE, list(/datum/reagent/medicine/omnizine = omnizine_to_add))
 
 /obj/item/food/donkpocket/make_microwaveable()
-	AddElement(/datum/element/microwavable, warm_type, string_assoc_list(list(/datum/reagent/medicine/omnizine = omnizine_to_add)), !positive_result)
+	AddElement(/datum/element/microwavable, warm_type, string_assoc_list(list(/datum/reagent/medicine/omnizine = omnizine_to_add)), bad_recipe = !positive_result)
 
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"

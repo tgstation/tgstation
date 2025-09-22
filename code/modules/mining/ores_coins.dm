@@ -43,6 +43,14 @@
 	if(stack_overlays)
 		. += stack_overlays
 
+/**
+ * Called when the ore is collected by an ore redemption machine. returns the ore itself.
+ * Normally, ores without a refined type aren't collected by the orm.
+ * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
+ */
+/obj/item/stack/ore/proc/on_orm_collection()
+	return isnull(refined_type) ? null : src
+
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(!refined_type)
@@ -98,7 +106,8 @@
 	icon_state = "glass"
 	singular_name = "sand pile"
 	points = 1
-	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/sand
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
@@ -113,6 +122,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 	AddComponent(/datum/component/storm_hating)
+
+/obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
+	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount, merge = FALSE) //The newly spawned glass should not merge with other stacks on the turf, else it could cause issues.
+	qdel(src)
+	return glass
 
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
@@ -137,6 +151,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return TRUE
 
 	return FALSE
+
+/obj/item/stack/ore/glass/thirty
+	amount = 30
 
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"

@@ -4,12 +4,6 @@
 	/// Text that appears preceding the name in [/atom/proc/examine_title]
 	var/examine_thats = "That's"
 
-/mob/living/carbon/human
-	examine_thats = "This is"
-
-/mob/living/silicon/robot
-	examine_thats = "This is"
-
 /**
  * Called when a mob examines this atom: [/mob/verb/examinate]
  *
@@ -80,6 +74,9 @@
  */
 /atom/proc/examine_tags(mob/user)
 	. = list()
+	if(abstract_type == type)
+		.[span_hypnophrase("abstract")] = "This is an abstract concept, you should report this to a strange entity called GITHUB!"
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_TAGS, user, .)
 
 /// What this atom should be called in examine tags
@@ -165,7 +162,12 @@
 /atom/proc/get_name_chaser(mob/user, list/name_chaser = list())
 	return name_chaser
 
-/// Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face. By default just returns the atom's name. add_id_name will control whether or not we append "(as [id_name])".
-/// force_real_name will always return real_name and add (as face_name/id_name) if it doesn't match their appearance
-/atom/proc/get_visible_name(add_id_name, force_real_name)
+/**
+ * Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face.
+ * By default just returns the atom's name.
+ *
+ * * add_id_name - If TRUE, ID information such as honorifics or name (if mismatched) are appended
+ * * force_real_name - If TRUE, will always return real_name and add (as face_name/id_name) if it doesn't match their appearance
+ */
+/atom/proc/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
 	return name

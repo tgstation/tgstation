@@ -22,7 +22,7 @@
 ///Adds the subtype to the product list
 /obj/machinery/vending/subtype_vendor/RefreshParts()
 	products.Cut()
-	for(var/type in typesof(type_to_vend))
+	for(var/type in get_sane_item_types(type_to_vend))
 		LAZYADDASSOC(products, type, 50)
 
 	//no refill canister so we fill the records with their max amounts directly

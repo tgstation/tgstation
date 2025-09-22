@@ -1,5 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
+	abstract_type = /obj/item/clothing
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	integrity_failure = 0.4
@@ -85,6 +86,7 @@
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
+	spawn_blacklisted = TRUE
 	bite_consumption = 1
 	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
 	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
@@ -563,12 +565,12 @@ BLIND     // can't see anything
 	if(user.is_holding(src))
 		user.update_held_items()
 		return TRUE
-	if(up)
-		user.update_obscured_slots(visor_flags_inv)
 	user.update_clothing(slot_flags)
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
+	if(up)
+		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
 	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())

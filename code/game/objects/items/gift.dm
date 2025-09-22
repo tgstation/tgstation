@@ -111,13 +111,7 @@
 	var/static/list/obj/item/possible_gifts = null
 
 	if(isnull(possible_gifts))
-		possible_gifts = list()
-		for(var/type in subtypesof(/obj/item))
-			var/obj/item/thing = type
-			if(!initial(thing.icon_state) || !initial(thing.inhand_icon_state) || (initial(thing.item_flags) & ABSTRACT))
-				continue
-
-			possible_gifts += type
+		possible_gifts = get_sane_item_types(/obj/item)
 
 	var/gift_type = pick(possible_gifts)
 	return gift_type

@@ -411,6 +411,9 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.oddity_loot = maint_oddity_weight,
 	))
 
+//Loot pool that is copied from maint loot but doesn't get changed due to holidays
+GLOBAL_LIST_INIT(dumpster_loot, GLOB.maintenance_loot.Copy())
+
 GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when spawning garbage.
 			/obj/item/cigbutt,
 			/obj/item/trash/candy,

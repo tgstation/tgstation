@@ -103,6 +103,16 @@ ALLOW_ADMIN_ASAYCOLOR
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
 
+## Request Emergency Temporary Access - RETA System
+## Enables temporary department access when Requests Console emergency calls are made
+RETA_ENABLED
+
+## Duration in deciseconds for how long temporary access lasts (default: 3000 = 5 minutes)
+RETA_DURATION_DS 3000
+
+## Cooldown in deciseconds between RETA calls from the same origin to the same target department (default: 150 = 15 seconds)
+RETA_DEPT_COOLDOWN_DS 150
+
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
@@ -139,8 +149,9 @@ RESPAWN_DELAY 0
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
 
-## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
-GUEST_BAN
+## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting).
+## You probably want this enabled for a production server.
+#GUEST_BAN
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net

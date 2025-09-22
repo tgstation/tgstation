@@ -4,6 +4,8 @@
 // of the trauma.
 
 /datum/brain_trauma
+	/// Tracks abstract types of brain traumas, useful for determining traumas that should not exist
+	abstract_type = /datum/brain_trauma
 	var/name = "Brain Trauma"
 	var/desc = "A trauma caused by brain damage, which causes issues to the patient."
 	/// Description when detected by a health scanner
@@ -22,9 +24,6 @@
 	var/random_gain = TRUE
 	/// How hard is this to cure?
 	var/resilience = TRAUMA_RESILIENCE_BASIC
-
-	/// Tracks abstract types of brain traumas, useful for determining traumas that should not exist
-	var/abstract_type = /datum/brain_trauma
 
 /datum/brain_trauma/Destroy()
 	// Handles our references with our brain

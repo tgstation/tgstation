@@ -1,0 +1,4 @@
+author: "Gaxeer"
+delete-after: True
+changes:
+  - bugfix: "`/proc/duplicate_object` now properly sets copy location"
