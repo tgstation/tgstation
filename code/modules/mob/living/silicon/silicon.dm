@@ -421,12 +421,10 @@
 #define SILICON_HUD_TRAIT "silicon_hud"
 
 /mob/living/silicon/proc/remove_sensors()
-	for (var/hud_type in silicon_huds)
-		REMOVE_TRAIT(src, hud_type, SILICON_HUD_TRAIT)
+	remove_traits(silicon_huds, SILICON_HUD_TRAIT)
 
 /mob/living/silicon/proc/add_sensors()
-	for (var/hud_type in silicon_huds)
-		ADD_TRAIT(src, hud_type, SILICON_HUD_TRAIT)
+	add_traits(silicon_huds, SILICON_HUD_TRAIT)
 
 #undef SILICON_HUD_TRAIT
 
