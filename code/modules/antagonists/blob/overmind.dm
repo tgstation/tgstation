@@ -7,11 +7,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /// Clean up blob references after overmind is destroyed - called asynchronously to avoid blocking Destroy()
 /proc/cleanup_overmind_blobs(mob/eye/blob/dead_overmind)
 	// Clear overmind reference from global blobs
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		if(B && B.overmind == dead_overmind)
-			B.overmind = null
-			B.update_appearance() //reset anything that was ours
+	for(var/obj/structure/blob/blob_structure as anything in GLOB.blobs)
+		if(blob_structure && blob_structure.overmind == dead_overmind)
+			blob_structure.overmind = null
+			blob_structure.update_appearance() //reset anything that was ours
 
 
 /mob/eye/blob
@@ -168,15 +167,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			SSticker.news_report = BLOB_DESTROYED
 
 			// Clear the biohazard emergency display when blob is defeated - async to avoid blocking
-			spawn(0)
-				var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-				if(frequency)
-					var/datum/signal/clear_signal = new
-					clear_signal.data["command"] = "clear_emergency"
-					clear_signal.data["emergency_override"] = FALSE
-
-					var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-					frequency.post_signal(virtual_speaker, clear_signal)
+			INVOKE_ASYNC(src, PROC_REF(clear_biohazard_display))
 
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
@@ -229,6 +220,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/eye/blob/proc/register_new_minion(mob/living/minion)
 	blob_mobs |= minion
 
+/// Clear biohazard emergency display when blob is defeated
+/mob/eye/blob/proc/clear_biohazard_display()
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(frequency)
+		var/datum/signal/clear_signal = new
+		clear_signal.data["command"] = "clear_emergency"
+		clear_signal.data["emergency_override"] = FALSE
+
+		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+		frequency.post_signal(virtual_speaker, clear_signal)
+
 /mob/eye/blob/proc/victory()
 	// Set victory flags immediately
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
@@ -242,7 +244,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSticker.force_ending = FORCE_END_ROUND
 
 	// Handle the heavy victory operations asynchronously
-	addtimer(CALLBACK(src, PROC_REF(victory_sequence)), 0)
+	INVOKE_ASYNC(src, PROC_REF(victory_sequence))
 
 /mob/eye/blob/proc/victory_sequence()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
@@ -298,8 +300,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	GLOB.blob_telepathy_mobs -= src
 
 	// Handle blob cleanup asynchronously to avoid blocking Destroy()
-	spawn(0)
-		cleanup_overmind_blobs(src)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(cleanup_overmind_blobs), src)
 
 	return ..()
 
