@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add cooking oil, nutraslop, and beer keg to cargo supply packs. Nutraslop serving trays and cooking oil vats can now be pushed and moved."
